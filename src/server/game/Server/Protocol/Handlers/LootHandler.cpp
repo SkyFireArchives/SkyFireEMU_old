@@ -199,6 +199,10 @@ void WorldSession::HandleLootOpcode(WorldPacket & recv_data)
         return;
 
     GetPlayer()->SendLoot(guid, LOOT_CORPSE);
+
+    // interrupt cast
+    if (GetPlayer()->IsNonMeleeSpellCasted(false))
+        GetPlayer()->InterruptNonMeleeSpells(false);
 }
 
 void WorldSession::HandleLootReleaseOpcode(WorldPacket & recv_data)
@@ -379,7 +383,6 @@ void WorldSession::DoLootRelease(uint64 lguid)
                 pCreature->AllLootRemovedFromCorpse();
 
             pCreature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
-            pCreature->SetLootRecipient(NULL);
             loot->clear();
         }
         else

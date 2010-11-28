@@ -256,6 +256,8 @@ bool Group::AddInvite(Player *player)
 
     player->SetGroupInvite(this);
 
+    sScriptMgr.OnGroupInviteMember(this, player->GetGUID());
+
     return true;
 }
 
@@ -314,6 +316,7 @@ bool Group::AddMember(const uint64 &guid, const char* name)
         return false;
 
     SendUpdate();
+    sScriptMgr.OnGroupAddMember(this, guid);
 
     Player *player = sObjectMgr.GetPlayer(guid);
     if (player)
@@ -360,8 +363,10 @@ uint32 Group::RemoveMember(const uint64 &guid, const RemoveMethod &method)
 
     if (isLfgQueued())
         sLFGMgr.Leave(NULL, this);
-    else if (isLFGGroup())
+    else if (isLFGGroup() && !isLfgDungeonComplete())
         sLFGMgr.OfferContinue(this);
+
+    sScriptMgr.OnGroupRemoveMember(this, guid, method);
 
     // remove member and change leader (if need) only if strong more 2 members _before_ member remove
     if (GetMembersCount() > (isBGGroup() ? 1u : 2u))           // in BG group case allow 1 members group
@@ -426,6 +431,7 @@ void Group::ChangeLeader(const uint64 &guid)
     if (slot == m_memberSlots.end())
         return;
 
+    sScriptMgr.OnGroupChangeLeader(this, m_leaderGuid, guid);
     _setLeader(guid);
 
     WorldPacket data(SMSG_GROUP_SET_LEADER, slot->name.size()+1);
@@ -436,8 +442,9 @@ void Group::ChangeLeader(const uint64 &guid)
 
 void Group::Disband(bool hideDestroy /* = false */)
 {
-    Player *player;
+    sScriptMgr.OnGroupDisband(this);
 
+    Player *player;
     for (member_citerator citr = m_memberSlots.begin(); citr != m_memberSlots.end(); ++citr)
     {
         player = sObjectMgr.GetPlayer(citr->guid);
@@ -1607,10 +1614,6 @@ GroupJoinBattlegroundResult Group::CanJoinBattlegroundQueue(Battleground const* 
     // check for min / max count
     uint32 memberscount = GetMembersCount();
 
-    // only check for MinPlayerCount since MinPlayerCount == MaxPlayerCount for arenas...
-    if (bgOrTemplate->isArena() && memberscount != MinPlayerCount)
-        return ERR_ARENA_TEAM_PARTY_SIZE;
-
     if (memberscount > bgEntry->maxGroupSize)                // no MinPlayerCount for battlegrounds
         return ERR_BATTLEGROUND_NONE;                        // ERR_GROUP_JOIN_BATTLEGROUND_TOO_MANY handled on client side
 
@@ -1630,7 +1633,8 @@ GroupJoinBattlegroundResult Group::CanJoinBattlegroundQueue(Battleground const* 
     BattlegroundQueueTypeId bgQueueTypeIdRandom = BattlegroundMgr::BGQueueTypeId(BATTLEGROUND_RB, 0);
 
     // check every member of the group to be able to join
-    for (GroupReference *itr = GetFirstMember(); itr != NULL; itr = itr->next())
+    memberscount = 0;
+    for (GroupReference *itr = GetFirstMember(); itr != NULL; itr = itr->next(), ++memberscount)
     {
         Player *member = itr->getSource();
         // offline member? don't let join
@@ -1662,6 +1666,11 @@ GroupJoinBattlegroundResult Group::CanJoinBattlegroundQueue(Battleground const* 
         if (!member->HasFreeBattlegroundQueueId())
             return ERR_BATTLEGROUND_TOO_MANY_QUEUES;        // not blizz-like
     }
+
+    // only check for MinPlayerCount since MinPlayerCount == MaxPlayerCount for arenas...
+    if (bgOrTemplate->isArena() && memberscount != MinPlayerCount)
+        return ERR_ARENA_TEAM_PARTY_SIZE;
+
     return GroupJoinBattlegroundResult(bgOrTemplate->GetTypeID());
 }
 

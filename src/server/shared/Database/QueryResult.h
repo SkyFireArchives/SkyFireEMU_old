@@ -101,17 +101,14 @@ class ResultBind
     friend class PreparedResultSet;
     public:
 
-        ResultBind(MYSQL_STMT* stmt) : m_stmt(stmt), m_fieldCount(NULL), m_isNull(NULL), m_length(NULL), m_rBind(NULL) {}
+        ResultBind(MYSQL_STMT* stmt) : m_rBind(NULL), m_stmt(stmt), m_res(NULL), m_isNull(NULL), m_length(NULL), m_fieldCount(0) {}
+
         ~ResultBind()
         {
-            if (!m_fieldCount)
-                return;
-
             CleanUp();  // Clean up buffer
-            mysql_stmt_free_result(m_stmt);
         }
 
-        void BindResult(uint32& num_rows);
+        void BindResult(uint64& num_rows);
 
     protected:
         MYSQL_BIND* m_rBind;
@@ -164,7 +161,7 @@ class ResultBind
                     return 64;
 
                 case MYSQL_TYPE_GEOMETRY:
-                /* 
+                /*
                 Following types are not sent over the wire:
                 MYSQL_TYPE_ENUM:
                 MYSQL_TYPE_SET:
@@ -184,8 +181,10 @@ class PreparedResultSet
 {
     template<class T> friend class DatabaseWorkerPool;
     public:
-        PreparedResultSet(MYSQL_STMT* stmt) : num_rows(0), row_position(0)
+        PreparedResultSet(MYSQL_STMT* stmt)
         {
+            num_rows = 0;
+            row_position = 0;
             rbind = new ResultBind(stmt);
             rbind->BindResult(num_rows);
         }
@@ -196,23 +195,28 @@ class PreparedResultSet
 
         operator bool() { return num_rows > 0; }
 
+        bool GetBool(uint32 index);
         uint8 GetUInt8(uint32 index);
         int8 GetInt8(uint32 index);
         uint16 GetUInt16(uint32 index);
         int16 GetInt16(uint32 index);
         uint32 GetUInt32(uint32 index);
         int32 GetInt32(uint32 index);
+        uint64 GetUInt64(uint32 index);
+        int64 GetInt64(uint32 index);
         float GetFloat(uint32 index);
         std::string GetString(uint32 index);
+        const char* GetCString(uint32 index);
 
         bool NextRow();
+        uint64 GetRowCount() const { return num_rows; }
 
     private:
         bool CheckFieldIndex(uint32 index)  const
-        {   
+        {
             if (!rbind->IsValidIndex(index))
                 return false;
-        
+
             if (rbind->m_isNull[index])
                 return false;
 
@@ -220,8 +224,8 @@ class PreparedResultSet
         }
 
         ResultBind* rbind;
-        uint32 row_position;
-        uint32 num_rows;
+        uint64 row_position;
+        uint64 num_rows;
 };
 
 typedef ACE_Refcounted_Auto_Ptr<PreparedResultSet, ACE_Null_Mutex> PreparedQueryResult;

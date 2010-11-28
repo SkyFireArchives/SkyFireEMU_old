@@ -30,6 +30,8 @@
 #include "PreparedStatement.h"
 #include "Log.h"
 #include "QueryResult.h"
+#include "QueryHolder.h"
+#include "AdhocStatement.h"
 
 enum MySQLThreadBundle
 {
@@ -66,7 +68,7 @@ class DatabaseWorkerPool
 
         bool Open(const std::string& infoString, uint8 num_threads, MySQLThreadBundle mask)
         {
-            //- Only created bundled connection if configured            
+            //- Only created bundled connection if configured
             m_bundle_conn = NULL;
             if (mask != MYSQL_BUNDLE_NONE)
             {
@@ -96,13 +98,13 @@ class DatabaseWorkerPool
             sLog.outSQLDriver("Closing down %u connections on this DatabaseWorkerPool", (uint32)m_connections.value());
             /// Shuts down worker threads for this connection pool.
             m_queue->queue()->deactivate();
-    
+
             for (uint8 i = 0; i < m_async_connections.size(); i++)
             {
                 m_async_connections[i]->m_worker->wait();
                 --m_connections;
             }
-    
+
             if (m_bundleMask != MYSQL_BUNDLE_NONE)
             {
                 delete m_bundle_conn;
@@ -199,7 +201,12 @@ class DatabaseWorkerPool
 
         QueryResult Query(const char* sql)
         {
-            return GetConnection()->Query(sql);
+            ResultSet* result = GetConnection()->Query(sql);
+            if (!result || !result->GetRowCount())
+                return QueryResult(NULL);
+
+            result->NextRow();
+            return QueryResult(result);
         }
 
         QueryResult PQuery(const char* sql, ...)
@@ -242,7 +249,7 @@ class DatabaseWorkerPool
             Enqueue(task);
             return res;     //! Fool compiler, has no use yet
         }
-        
+
         SQLTransaction BeginTransaction()
         {
             return SQLTransaction(new Transaction);
@@ -250,7 +257,7 @@ class DatabaseWorkerPool
 
         void CommitTransaction(SQLTransaction transaction)
         {
-            #ifdef TRINITY_DEBUG
+            #ifdef SQLQUERY_LOG
             if (transaction->GetSize() == 0)
             {
                 sLog.outSQLDriver("Transaction contains 0 queries. Not executing.");
@@ -286,12 +293,12 @@ class DatabaseWorkerPool
             delete[] buf;
         }
 
-        MySQLThreadBundle GetBundleMask() { return m_bundleMask; } 
+        MySQLThreadBundle GetBundleMask() { return m_bundleMask; }
 
         PreparedQueryResult Query(PreparedStatement* stmt)
         {
             PreparedResultSet* ret = GetConnection()->Query(stmt);
-            if (!ret || !ret->num_rows)
+            if (!ret || !ret->GetRowCount())
                 return PreparedQueryResult(NULL);
 
             ret->NextRow();
@@ -305,7 +312,7 @@ class DatabaseWorkerPool
                 return 0;
             return (mysql_real_escape_string(GetConnection()->GetHandle(), to, from, length));
         }
-    
+
         void Enqueue(SQLOperation* op)
         {
             m_queue->enqueue(op);
@@ -334,7 +341,7 @@ class DatabaseWorkerPool
         ConnectionMap                   m_sync_connections;  //! Holds a mysql connection+thread per mapUpdate thread and unbundled runnnables.
         ACE_Thread_Mutex                m_connectionMap_mtx; //! For thread safe access to the synchroneous connection map
         T*                              m_bundle_conn;       //! Bundled connection (see Database.ThreadBundleMask config)
-        AtomicUInt                      m_connections;       //! Counter of MySQL connections; 
+        AtomicUInt                      m_connections;       //! Counter of MySQL connections;
         std::string                     m_infoString;        //! Infostring that is passed on to child connections.
         MySQLThreadBundle               m_bundleMask;        //! Our configured bundle mask (see enum)
 };

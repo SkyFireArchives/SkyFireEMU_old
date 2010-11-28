@@ -742,8 +742,8 @@ GameObject* GameObject::GetGameObject(WorldObject& object, uint64 guid)
 /*********************************************************/
 bool GameObject::hasQuest(uint32 quest_id) const
 {
-    QuestRelations const& qr = sObjectMgr.mGOQuestRelations;
-    for (QuestRelations::const_iterator itr = qr.lower_bound(GetEntry()); itr != qr.upper_bound(GetEntry()); ++itr)
+    QuestRelationBounds qr = sObjectMgr.GetGOQuestRelationBounds(GetEntry());
+    for (QuestRelations::const_iterator itr = qr.first; itr != qr.second; ++itr)
     {
         if (itr->second == quest_id)
             return true;
@@ -753,8 +753,8 @@ bool GameObject::hasQuest(uint32 quest_id) const
 
 bool GameObject::hasInvolvedQuest(uint32 quest_id) const
 {
-    QuestRelations const& qr = sObjectMgr.mGOQuestInvolvedRelations;
-    for (QuestRelations::const_iterator itr = qr.lower_bound(GetEntry()); itr != qr.upper_bound(GetEntry()); ++itr)
+    QuestRelationBounds qir = sObjectMgr.GetGOQuestInvolvedRelationBounds(GetEntry());
+    for (QuestRelations::const_iterator itr = qir.first; itr != qir.second; ++itr)
     {
         if (itr->second == quest_id)
             return true;
@@ -1710,9 +1710,9 @@ void GameObject::EventInform(uint32 eventId)
 }
 
 // overwrite WorldObject function for proper name localization
-const char* GameObject::GetNameForLocaleIdx(int32 loc_idx) const
+const char* GameObject::GetNameForLocaleIdx(LocaleConstant loc_idx) const
 {
-    if (loc_idx >= 0)
+    if (loc_idx != DEFAULT_LOCALE)
     {
         uint8 uloc_idx = uint8(loc_idx);
         if (GameObjectLocale const *cl = sObjectMgr.GetGameObjectLocale(GetEntry()))

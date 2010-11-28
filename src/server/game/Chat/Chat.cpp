@@ -90,6 +90,7 @@ ChatCommand * ChatHandler::getCommandTable()
     {
         { "account",        SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleBanAccountCommand,          "", NULL },
         { "character",      SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleBanCharacterCommand,        "", NULL },
+        { "playeraccount",  SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleBanAccountByCharCommand,    "", NULL },
         { "ip",             SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleBanIPCommand,               "", NULL },
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
@@ -132,7 +133,7 @@ ChatCommand * ChatHandler::getCommandTable()
     static ChatCommand characterCommandTable[] =
     {
         { "customize",      SEC_GAMEMASTER,     true,  &ChatHandler::HandleCharacterCustomizeCommand,     "", NULL },
-        { "changefaction",  SEC_GAMEMASTER,     true,  &ChatHandler::HandleCharacterChangeFactionCommand, "", NULL }, 
+        { "changefaction",  SEC_GAMEMASTER,     true,  &ChatHandler::HandleCharacterChangeFactionCommand, "", NULL },
         { "changerace",     SEC_GAMEMASTER,     true,  &ChatHandler::HandleCharacterChangeRaceCommand,    "", NULL },
         { "deleted",        SEC_GAMEMASTER,     true,  NULL,                                              "", characterDeletedCommandTable},
         { "erase",          SEC_CONSOLE,        true,  &ChatHandler::HandleCharacterEraseCommand,         "", NULL },
@@ -646,10 +647,11 @@ ChatCommand * ChatHandler::getCommandTable()
 
     static ChatCommand unbanCommandTable[] =
     {
-        { "account",        SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleUnBanAccountCommand,      "", NULL },
-        { "character",      SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleUnBanCharacterCommand,    "", NULL },
-        { "ip",             SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleUnBanIPCommand,           "", NULL },
-        { NULL,             0,                  false, NULL,                                           "", NULL }
+        { "account",        SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleUnBanAccountCommand,       "", NULL },
+        { "character",      SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleUnBanCharacterCommand,     "", NULL },
+        { "playeraccount",  SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleUnBanAccountByCharCommand, "", NULL },
+        { "ip",             SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleUnBanIPCommand,            "", NULL },
+        { NULL,             0,                  false, NULL,                                          "", NULL }
     };
 
     static ChatCommand wpCommandTable[] =
@@ -663,7 +665,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
 
-    static ChatCommand ticketResponseCommandTable[] = 
+    static ChatCommand ticketResponseCommandTable[] =
     {
         { "append",         SEC_MODERATOR,      false, &ChatHandler::HandleGMTicketResponseAppendCommand,   "", NULL },
         { "appendln",       SEC_MODERATOR,      false, &ChatHandler::HandleGMTicketResponseAppendLnCommand, "", NULL },
@@ -1672,9 +1674,8 @@ valid examples:
                             ItemLocale const *il = sObjectMgr.GetItemLocale(linkedItem->ItemId);
 
                             bool foundName = false;
-                            for (uint8 i = LOCALE_koKR; i < MAX_LOCALE; ++i)
+                            for (uint8 dbIndex = LOCALE_koKR; dbIndex < MAX_LOCALE; ++dbIndex)
                             {
-                                int8 dbIndex = sObjectMgr.GetIndexForLocale(LocaleConstant(i));
                                 if (dbIndex == -1 || il == NULL || uint8(dbIndex) >= il->Name.size())
                                     // using strange database/client combinations can lead to this case
                                     expectedName = linkedItem->Name1;
@@ -1683,7 +1684,7 @@ valid examples:
                                 if (suffix)
                                 {
                                     expectedName += " ";
-                                    expectedName += suffix[i];
+                                    expectedName += suffix[dbIndex];
                                 }
                                 if (expectedName == buffer)
                                 {

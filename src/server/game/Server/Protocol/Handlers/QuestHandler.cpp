@@ -33,6 +33,7 @@
 #include "Battleground.h"
 #include "BattlegroundAV.h"
 #include "ScriptMgr.h"
+#include "ConditionMgr.h"
 
 void WorldSession::HandleQuestgiverStatusQueryOpcode(WorldPacket & recv_data)
 {
@@ -572,21 +573,21 @@ uint32 WorldSession::getDialogStatus(Player *pPlayer, Object* questgiver, uint32
 {
     uint32 result = defstatus;
 
-    QuestRelations const* qir;
-    QuestRelations const* qr;
+    QuestRelationBounds qr;
+    QuestRelationBounds qir;
 
     switch(questgiver->GetTypeId())
     {
         case TYPEID_GAMEOBJECT:
         {
-            qir = &sObjectMgr.mGOQuestInvolvedRelations;
-            qr  = &sObjectMgr.mGOQuestRelations;
+            qr  = sObjectMgr.GetGOQuestRelationBounds(questgiver->GetEntry());
+            qir = sObjectMgr.GetGOQuestInvolvedRelationBounds(questgiver->GetEntry());
             break;
         }
         case TYPEID_UNIT:
         {
-            qir = &sObjectMgr.mCreatureQuestInvolvedRelations;
-            qr  = &sObjectMgr.mCreatureQuestRelations;
+            qr  = sObjectMgr.GetCreatureQuestRelationBounds(questgiver->GetEntry());
+            qir = sObjectMgr.GetCreatureQuestInvolvedRelationBounds(questgiver->GetEntry());
             break;
         }
         default:
@@ -595,12 +596,16 @@ uint32 WorldSession::getDialogStatus(Player *pPlayer, Object* questgiver, uint32
             return DIALOG_STATUS_NONE;
     }
 
-    for (QuestRelations::const_iterator i = qir->lower_bound(questgiver->GetEntry()); i != qir->upper_bound(questgiver->GetEntry()); ++i)
+    for (QuestRelations::const_iterator i = qir.first; i != qir.second; ++i)
     {
         uint32 result2 = 0;
         uint32 quest_id = i->second;
         Quest const *pQuest = sObjectMgr.GetQuestTemplate(quest_id);
         if (!pQuest) continue;
+
+        ConditionList conditions = sConditionMgr.GetConditionsForNotGroupedEntry(CONDITION_SOURCE_TYPE_QUEST_SHOW_MARK, pQuest->GetQuestId());
+        if (!sConditionMgr.IsPlayerMeetToConditions(pPlayer, conditions))
+            continue;
 
         QuestStatus status = pPlayer->GetQuestStatus(quest_id);
         if ((status == QUEST_STATUS_COMPLETE && !pPlayer->GetQuestRewardStatus(quest_id)) ||
@@ -618,12 +623,16 @@ uint32 WorldSession::getDialogStatus(Player *pPlayer, Object* questgiver, uint32
             result = result2;
     }
 
-    for (QuestRelations::const_iterator i = qr->lower_bound(questgiver->GetEntry()); i != qr->upper_bound(questgiver->GetEntry()); ++i)
+    for (QuestRelations::const_iterator i = qr.first; i != qr.second; ++i)
     {
         uint32 result2 = 0;
         uint32 quest_id = i->second;
         Quest const *pQuest = sObjectMgr.GetQuestTemplate(quest_id);
         if (!pQuest)
+            continue;
+
+        ConditionList conditions = sConditionMgr.GetConditionsForNotGroupedEntry(CONDITION_SOURCE_TYPE_QUEST_SHOW_MARK, pQuest->GetQuestId());
+        if (!sConditionMgr.IsPlayerMeetToConditions(pPlayer, conditions))
             continue;
 
         QuestStatus status = pPlayer->GetQuestStatus(quest_id);

@@ -1215,7 +1215,7 @@ void MovementInfo::OutDebug()
     }
 }
 
-WorldObject::WorldObject(): WorldLocation(), 
+WorldObject::WorldObject(): WorldLocation(),
 m_isWorldObject(false), m_name(""), m_isActive(false), m_zoneScript(NULL),
 m_transport(NULL), m_currMap(NULL), m_InstanceId(0),
 m_phaseMask(PHASEMASK_NORMAL), m_notifyflags(0), m_executed_notifies(0)
@@ -1436,7 +1436,7 @@ bool WorldObject::IsInRange3d(float x, float y, float z, float minRange, float m
     return distsq < maxdist * maxdist;
 }
 
-void Position::RelocateOffset(const Position & offset) 
+void Position::RelocateOffset(const Position & offset)
 {
     m_positionX = GetPositionX() + (offset.GetPositionX() * cos(GetOrientation()) + offset.GetPositionY() * sin(GetOrientation() + M_PI));
     m_positionY = GetPositionY() + (offset.GetPositionY() * cos(GetOrientation()) + offset.GetPositionX() * sin(GetOrientation()));
@@ -1634,7 +1634,7 @@ namespace Trinity
         public:
             MonsterChatBuilder(WorldObject const& obj, ChatMsg msgtype, int32 textId, uint32 language, uint64 targetGUID)
                 : i_object(obj), i_msgtype(msgtype), i_textId(textId), i_language(language), i_targetGUID(targetGUID) {}
-            void operator()(WorldPacket& data, int32 loc_idx)
+            void operator()(WorldPacket& data, LocaleConstant loc_idx)
             {
                 char const* text = sObjectMgr.GetTrinityString(i_textId,loc_idx);
 
@@ -1715,7 +1715,7 @@ void WorldObject::MonsterWhisper(int32 textId, uint64 receiver, bool IsBossWhisp
     if (!player || !player->GetSession())
         return;
 
-    uint32 loc_idx = player->GetSession()->GetSessionDbLocaleIndex();
+    LocaleConstant loc_idx = player->GetSession()->GetSessionDbLocaleIndex();
     char const* text = sObjectMgr.GetTrinityString(textId, loc_idx);
 
     WorldPacket data(SMSG_MESSAGECHAT, 200);

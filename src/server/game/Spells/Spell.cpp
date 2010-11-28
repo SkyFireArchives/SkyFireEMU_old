@@ -1875,7 +1875,8 @@ void Spell::SearchAreaTarget(std::list<Unit*> &TagUnitMap, float radius, SpellNo
             break;
     }
 
-    Trinity::SpellNotifierCreatureAndPlayer notifier(m_caster, TagUnitMap, radius, type, TargetType, pos, entry);
+    bool requireDeadTarget = bool(m_spellInfo->AttributesEx3 & SPELL_ATTR_EX3_REQUIRE_DEAD_TARGET);
+    Trinity::SpellNotifierCreatureAndPlayer notifier(m_caster, TagUnitMap, radius, type, TargetType, pos, entry, requireDeadTarget);
     if ((m_spellInfo->AttributesEx3 & SPELL_ATTR_EX3_PLAYERS_ONLY)
         || (TargetType == SPELL_TARGETS_ENTRY && !entry))
         m_caster->GetMap()->VisitWorld(pos->m_positionX, pos->m_positionY, radius, notifier);
@@ -2981,6 +2982,10 @@ void Spell::prepare(SpellCastTargets const* targets, AuraEffect const * triggere
     if (m_caster->GetTypeId() == TYPEID_PLAYER)
         m_caster->ToPlayer()->SetSpellModTakingSpell(this, false);
 
+    // Set combo point requirement
+    if (m_IsTriggeredSpell || m_CastItem || !m_caster->m_movedPlayer)
+        m_needComboPoints = false;
+
     SpellCastResult result = CheckCast(true);
     if (result != SPELL_CAST_OK && !IsAutoRepeat())          //always cast autorepeat dummy for triggering
     {
@@ -2997,10 +3002,6 @@ void Spell::prepare(SpellCastTargets const* targets, AuraEffect const * triggere
 
     // Prepare data for triggers
     prepareDataForTriggerSystem(triggeredByAura);
-
-    // Set combo point requirement
-    if (m_IsTriggeredSpell || m_CastItem || !m_caster->m_movedPlayer)
-        m_needComboPoints = false;
 
     // calculate cast time (calculated after first CheckCast check to prevent charge counting for first CheckCast fail)
     m_casttime = GetSpellCastTime(m_spellInfo, this);
@@ -3738,7 +3739,7 @@ void Spell::finish(bool ok)
         }
     }
 
-    if (IsMeleeAttackResetSpell())
+    if (IsAutoActionResetSpell())
     {
         bool found = false;
         Unit::AuraEffectList const& vIgnoreReset = m_caster->GetAuraEffectsByType(SPELL_AURA_IGNORE_MELEE_RESET);
@@ -3750,13 +3751,12 @@ void Spell::finish(bool ok)
                 break;
             }
         }
-        if (!found)
+        if (!found && !(m_spellInfo->AttributesEx2 & SPELL_ATTR_EX2_NOT_RESET_AUTO_ACTIONS))
         {
             m_caster->resetAttackTimer(BASE_ATTACK);
             if (m_caster->haveOffhandWeapon())
                 m_caster->resetAttackTimer(OFF_ATTACK);
-            if (!(m_spellInfo->AttributesEx2 & SPELL_ATTR_EX2_NOT_RESET_AUTOSHOT))
-                m_caster->resetAttackTimer(RANGED_ATTACK);
+            m_caster->resetAttackTimer(RANGED_ATTACK);
         }
     }
 
@@ -4165,7 +4165,7 @@ void Spell::SendLogExecute()
         data << uint32(m_spellInfo->Effect[i]);             // spell effect
 
         data.append(*m_effectExecuteData[i]);
-        
+
         delete m_effectExecuteData[i];
         m_effectExecuteData[i] = NULL;
     }

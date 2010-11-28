@@ -31,6 +31,8 @@
 #include "GossipDef.h"
 #include "SocialMgr.h"
 
+#define CHARTER_DISPLAY_ID 16161
+
 /*enum PetitionType // dbc data
 {
     PETITION_TYPE_GUILD      = 1,
@@ -38,14 +40,29 @@
 };*/
 
 // Charters ID in item_template
-#define GUILD_CHARTER               5863
-#define GUILD_CHARTER_COST          1000                    // 10 S
-#define ARENA_TEAM_CHARTER_2v2      23560
-#define ARENA_TEAM_CHARTER_2v2_COST 800000                  // 80 G
-#define ARENA_TEAM_CHARTER_3v3      23561
-#define ARENA_TEAM_CHARTER_3v3_COST 1200000                 // 120 G
-#define ARENA_TEAM_CHARTER_5v5      23562
-#define ARENA_TEAM_CHARTER_5v5_COST 2000000                 // 200 G
+enum CharterItemIDs
+{
+    GUILD_CHARTER                                 = 5863,
+    ARENA_TEAM_CHARTER_2v2                        = 23560,
+    ARENA_TEAM_CHARTER_3v3                        = 23561,
+    ARENA_TEAM_CHARTER_5v5                        = 23562
+};
+
+enum CharterTypes
+{
+    GUILD_CHARTER_TYPE                            = 9,
+    ARENA_TEAM_CHARTER_2v2_TYPE                   = 2,
+    ARENA_TEAM_CHARTER_3v3_TYPE                   = 3,
+    ARENA_TEAM_CHARTER_5v5_TYPE                   = 5
+};
+
+enum CharterCosts
+{
+    GUILD_CHARTER_COST                            = 1000,
+    ARENA_TEAM_CHARTER_2v2_COST                   = 800000,
+    ARENA_TEAM_CHARTER_3v3_COST                   = 1200000,
+    ARENA_TEAM_CHARTER_5v5_COST                   = 2000000
+};
 
 void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
 {
@@ -105,7 +122,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
 
         charterid = GUILD_CHARTER;
         cost = GUILD_CHARTER_COST;
-        type = 9;
+        type = GUILD_CHARTER_TYPE;
     }
     else
     {
@@ -121,17 +138,17 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
             case 1:
                 charterid = ARENA_TEAM_CHARTER_2v2;
                 cost = ARENA_TEAM_CHARTER_2v2_COST;
-                type = 2;                                   // 2v2
+                type = ARENA_TEAM_CHARTER_2v2_TYPE;
                 break;
             case 2:
                 charterid = ARENA_TEAM_CHARTER_3v3;
                 cost = ARENA_TEAM_CHARTER_3v3_COST;
-                type = 3;                                   // 3v3
+                type = ARENA_TEAM_CHARTER_3v3_TYPE;
                 break;
             case 3:
                 charterid = ARENA_TEAM_CHARTER_5v5;
                 cost = ARENA_TEAM_CHARTER_5v5_COST;
-                type = 5;                                   // 5v5
+                type = ARENA_TEAM_CHARTER_5v5_TYPE;
                 break;
             default:
                 sLog.outDebug("unknown selection at buy arena petition: %u", clientIndex);
@@ -145,7 +162,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
         }
     }
 
-    if (type == 9)
+    if (type == GUILD_CHARTER_TYPE)
     {
         if (sObjectMgr.GetGuildByName(name))
         {
@@ -256,7 +273,7 @@ void WorldSession::HandlePetitionShowSignOpcode(WorldPacket & recv_data)
     uint32 type = fields[0].GetUInt32();
 
     // if guild petition and has guild => error, return;
-    if (type == 9 && _player->GetGuildId())
+    if (type == GUILD_CHARTER_TYPE && _player->GetGuildId())
         return;
 
     result = CharacterDatabase.PQuery("SELECT playerguid FROM petition_sign WHERE petitionguid = '%u'", petitionguid_low);
@@ -332,7 +349,7 @@ void WorldSession::SendPetitionQueryOpcode(uint64 petitionguid)
     data << uint64(ownerguid);                              // charter owner guid
     data << name;                                           // name (guild/arena team)
     data << uint8(0);                                       // some string
-    if (type == 9)
+    if (type == GUILD_CHARTER_TYPE)
     {
         data << uint32(9);
         data << uint32(9);
@@ -358,7 +375,7 @@ void WorldSession::SendPetitionQueryOpcode(uint64 petitionguid)
 
     data << uint32(0);                                      // 14
 
-    if (type == 9)
+    if (type == GUILD_CHARTER_TYPE)
         data << uint32(0);                                  // 15 0 - guild, 1 - arena team
     else
         data << uint32(1);
@@ -395,7 +412,7 @@ void WorldSession::HandlePetitionRenameOpcode(WorldPacket & recv_data)
         return;
     }
 
-    if (type == 9)
+    if (type == GUILD_CHARTER_TYPE)
     {
         if (sObjectMgr.GetGuildByName(newname))
         {
@@ -717,7 +734,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
         return;
     }
 
-    if (type == 9)
+    if (type == GUILD_CHARTER_TYPE)
     {
         if (_player->GetGuildId())
         {
@@ -756,7 +773,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
 
     uint32 count;
     //if (signs < sWorld.getIntConfig(CONFIG_MIN_PETITION_SIGNS))
-    if (type == 9)
+    if (type == GUILD_CHARTER_TYPE)
         count = sWorld.getIntConfig(CONFIG_MIN_PETITION_SIGNS);
     else
         count = type-1;
@@ -768,7 +785,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
         return;
     }
 
-    if (type == 9)
+    if (type == GUILD_CHARTER_TYPE)
     {
         if (sObjectMgr.GetGuildByName(name))
         {
@@ -795,7 +812,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
     // delete charter item
     _player->DestroyItem(item->GetBagSlot(),item->GetSlot(), true);
 
-    if (type == 9)                                           // create guild
+    if (type == GUILD_CHARTER_TYPE)                         // create guild
     {
         Guild* guild = new Guild;
         if (!guild->Create(_player, name))
@@ -895,7 +912,7 @@ void WorldSession::SendPetitionShowList(uint64 guid)
     {
         data << uint32(1);                                  // index
         data << uint32(GUILD_CHARTER);                      // charter entry
-        data << uint32(16161);                              // charter display id
+        data << uint32(CHARTER_DISPLAY_ID);                 // charter display id
         data << uint32(GUILD_CHARTER_COST);                 // charter cost
         data << uint32(0);                                  // unknown
         data << uint32(9);                                  // required signs?
@@ -905,21 +922,21 @@ void WorldSession::SendPetitionShowList(uint64 guid)
         // 2v2
         data << uint32(1);                                  // index
         data << uint32(ARENA_TEAM_CHARTER_2v2);             // charter entry
-        data << uint32(16161);                              // charter display id
+        data << uint32(CHARTER_DISPLAY_ID);                 // charter display id
         data << uint32(ARENA_TEAM_CHARTER_2v2_COST);        // charter cost
         data << uint32(2);                                  // unknown
         data << uint32(2);                                  // required signs?
         // 3v3
         data << uint32(2);                                  // index
         data << uint32(ARENA_TEAM_CHARTER_3v3);             // charter entry
-        data << uint32(16161);                              // charter display id
+        data << uint32(CHARTER_DISPLAY_ID);                 // charter display id
         data << uint32(ARENA_TEAM_CHARTER_3v3_COST);        // charter cost
         data << uint32(3);                                  // unknown
         data << uint32(3);                                  // required signs?
         // 5v5
         data << uint32(3);                                  // index
         data << uint32(ARENA_TEAM_CHARTER_5v5);             // charter entry
-        data << uint32(16161);                              // charter display id
+        data << uint32(CHARTER_DISPLAY_ID);                 // charter display id
         data << uint32(ARENA_TEAM_CHARTER_5v5_COST);        // charter cost
         data << uint32(5);                                  // unknown
         data << uint32(5);                                  // required signs?
@@ -928,7 +945,7 @@ void WorldSession::SendPetitionShowList(uint64 guid)
     //{
     //    data << uint32(i);                      // index
     //    data << uint32(GUILD_CHARTER);          // charter entry
-    //    data << uint32(16161);                  // charter display id
+    //    data << uint32(CHARTER_DISPLAY_ID);     // charter display id
     //    data << uint32(GUILD_CHARTER_COST+i);   // charter cost
     //    data << uint32(0);                      // unknown
     //    data << uint32(9);                      // required signs?

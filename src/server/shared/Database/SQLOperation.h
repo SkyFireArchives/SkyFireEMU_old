@@ -22,8 +22,38 @@
 #include <ace/Method_Request.h>
 #include <ace/Activation_Queue.h>
 
-#include "Common.h"
-#include "Callback.h"
+#include "QueryResult.h"
+
+//- Forward declare (don't include header to prevent circular includes)
+class PreparedStatement;
+
+//- Union that holds element data
+union SQLElementUnion
+{
+    PreparedStatement* stmt;
+    const char* query;
+};
+
+//- Type specifier of our element data
+enum SQLElementDataType
+{
+    SQL_ELEMENT_RAW,
+    SQL_ELEMENT_PREPARED,
+};
+
+//- The element
+struct SQLElementData
+{
+    SQLElementUnion element;
+    SQLElementDataType type;
+};
+
+//- For ambigious resultsets
+union SQLResultSetUnion
+{
+    PreparedResultSet* presult;
+    ResultSet* qresult;
+};
 
 class MySQLConnection;
 
@@ -41,56 +71,5 @@ class SQLOperation : public ACE_Method_Request
 
         MySQLConnection* m_conn;
 };
-
-typedef ACE_Future<QueryResult> QueryResultFuture;
-/*! Raw, ad-hoc query. */
-class BasicStatementTask :  public SQLOperation
-{
-    public:
-        BasicStatementTask(const char* sql);
-        BasicStatementTask(const char* sql, QueryResultFuture result);
-        ~BasicStatementTask();
-
-        bool Execute();
-
-    private:
-        const char* m_sql;      //- Raw query to be executed
-        bool m_has_result;
-        QueryResultFuture m_result;
-};
-
-
-
-class SQLQueryHolder
-{
-    friend class SQLQueryHolderTask;
-    private:
-        typedef std::pair<const char*, QueryResult> SQLResultPair;
-        std::vector<SQLResultPair> m_queries;
-    public:
-        SQLQueryHolder() {}
-        ~SQLQueryHolder();
-        bool SetQuery(size_t index, const char *sql);
-        bool SetPQuery(size_t index, const char *format, ...) ATTR_PRINTF(3,4);
-        void SetSize(size_t size);
-        QueryResult GetResult(size_t index);
-        void SetResult(size_t index, QueryResult result);
-};
-
-typedef ACE_Future<SQLQueryHolder*> QueryResultHolderFuture;
-
-class SQLQueryHolderTask : public SQLOperation
-{
-    private:
-        SQLQueryHolder * m_holder;
-        QueryResultHolderFuture m_result;
-
-    public:
-        SQLQueryHolderTask(SQLQueryHolder *holder, QueryResultHolderFuture res)
-            : m_holder(holder), m_result(res){};
-        bool Execute();
-
-};
-
 
 #endif

@@ -466,6 +466,7 @@ void World::LoadConfigSettings(bool reload)
     rate_values[RATE_DROP_ITEM_LEGENDARY]  = sConfig.GetFloatDefault("Rate.Drop.Item.Legendary", 1.0f);
     rate_values[RATE_DROP_ITEM_ARTIFACT]   = sConfig.GetFloatDefault("Rate.Drop.Item.Artifact", 1.0f);
     rate_values[RATE_DROP_ITEM_REFERENCED] = sConfig.GetFloatDefault("Rate.Drop.Item.Referenced", 1.0f);
+    rate_values[RATE_DROP_ITEM_REFERENCED_AMOUNT] = sConfig.GetFloatDefault("Rate.Drop.Item.ReferencedAmount", 1.0f);
     rate_values[RATE_DROP_MONEY]  = sConfig.GetFloatDefault("Rate.Drop.Money", 1.0f);
     rate_values[RATE_XP_KILL]     = sConfig.GetFloatDefault("Rate.XP.Kill", 1.0f);
     rate_values[RATE_XP_QUEST]    = sConfig.GetFloatDefault("Rate.XP.Quest", 1.0f);
@@ -707,7 +708,7 @@ void World::LoadConfigSettings(bool reload)
 
     m_int_configs[CONFIG_CHARACTER_CREATING_DISABLED] = sConfig.GetIntDefault("CharacterCreating.Disabled", 0);
     m_int_configs[CONFIG_CHARACTER_CREATING_DISABLED_RACEMASK] = sConfig.GetIntDefault("CharacterCreating.Disabled.RaceMask", 0);
-    m_int_configs[CONFIG_CHARACTER_CREATING_DISABLED_CLASSMASK] = sConfig.GetIntDefault("CharacterCreating.Disabled.ClassMask", 0); 
+    m_int_configs[CONFIG_CHARACTER_CREATING_DISABLED_CLASSMASK] = sConfig.GetIntDefault("CharacterCreating.Disabled.ClassMask", 0);
 
     m_int_configs[CONFIG_CHARACTERS_PER_REALM] = sConfig.GetIntDefault("CharactersPerRealm", 10);
     if (m_int_configs[CONFIG_CHARACTERS_PER_REALM] < 1 || m_int_configs[CONFIG_CHARACTERS_PER_REALM] > 10)
@@ -1233,7 +1234,7 @@ void World::SetInitialWorldSettings()
 
     ///- Initialize config settings
     LoadConfigSettings();
-    
+
     ///- Initialize Allowed Security Level
     LoadDBAllowedSecurityLevel();
 
@@ -1248,7 +1249,7 @@ void World::SetInitialWorldSettings()
         || !MapManager::ExistMapAndVMap(1, 10311.3f, 832.463f)
         || !MapManager::ExistMapAndVMap(1,-2917.58f,-257.98f)
         || (m_int_configs[CONFIG_EXPANSION] && (
-            !MapManager::ExistMapAndVMap(530,10349.6f,-6357.29f) || 
+            !MapManager::ExistMapAndVMap(530,10349.6f,-6357.29f) ||
             !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f))))
     {
         exit(1);
@@ -1406,20 +1407,17 @@ void World::SetInitialWorldSettings()
     sLog.outString("Loading Vehicle Accessories...");
     sObjectMgr.LoadVehicleAccessories();                        // must be after LoadCreatureTemplates()
 
-    sLog.outString("Loading Creature Respawn Data...");     // must be after PackInstances()
+    sLog.outString("Loading Creature Respawn Data...");         // must be after PackInstances()
     sObjectMgr.LoadCreatureRespawnTimes();
 
     sLog.outString("Loading Gameobject Data...");
     sObjectMgr.LoadGameobjects();
 
-    sLog.outString("Loading Gameobject Respawn Data...");   // must be after PackInstances()
+    sLog.outString("Loading Gameobject Respawn Data...");       // must be after PackInstances()
     sObjectMgr.LoadGameobjectRespawnTimes();
 
     sLog.outString("Loading Objects Pooling Data...");
     sPoolMgr.LoadFromDB();
-
-    sLog.outString("Loading Game Event Data...");
-    sGameEventMgr.LoadFromDB();
 
     sLog.outString("Loading Weather Data...");
     sWeatherMgr.LoadWeatherData();
@@ -1428,13 +1426,19 @@ void World::SetInitialWorldSettings()
     sObjectMgr.LoadQuests();                                    // must be loaded after DBCs, creature_template, item_template, gameobject tables
 
     sLog.outString("Checking Quest Disables");
-    sDisableMgr.CheckQuestDisables();                       // must be after loading quests
+    sDisableMgr.CheckQuestDisables();                           // must be after loading quests
 
     sLog.outString("Loading Quest POI");
     sObjectMgr.LoadQuestPOI();
 
     sLog.outString("Loading Quests Relations...");
     sObjectMgr.LoadQuestRelations();                            // must be after quest load
+
+    sLog.outString("Loading Quest Pooling Data...");
+    sPoolMgr.LoadQuestPools();
+
+    sLog.outString("Loading Game Event Data...");               // must be after loading pools fully
+    sGameEventMgr.LoadFromDB();
 
     sLog.outString("Loading Dungeon boss data...");
     sLFGMgr.LoadDungeonEncounters();
@@ -1719,6 +1723,9 @@ void World::SetInitialWorldSettings()
     sLog.outString("Deleting expired bans...");
     LoginDatabase.Execute("DELETE FROM ip_banned WHERE unbandate <= UNIX_TIMESTAMP() AND unbandate<>bandate");
 
+    sLog.outString("Starting objects Pooling system...");
+    sPoolMgr.Initialize();
+
     sLog.outString("Calculate next daily quest reset time...");
     InitDailyQuestResetTime();
 
@@ -1727,9 +1734,6 @@ void World::SetInitialWorldSettings()
 
     sLog.outString("Calculate random battleground reset time..." );
     InitRandomBGResetTime();
-
-    sLog.outString("Starting objects Pooling system...");
-    sPoolMgr.Initialize();
 
     // possibly enable db logging; avoid massive startup spam by doing it here.
     if (sLog.GetLogDBLater())
@@ -2056,7 +2060,7 @@ namespace Trinity
         public:
             typedef std::vector<WorldPacket*> WorldPacketList;
             explicit WorldWorldTextBuilder(int32 textId, va_list* args = NULL) : i_textId(textId), i_args(args) {}
-            void operator()(WorldPacketList& data_list, int32 loc_idx)
+            void operator()(WorldPacketList& data_list, LocaleConstant loc_idx)
             {
                 char const* text = sObjectMgr.GetTrinityString(i_textId,loc_idx);
 
@@ -2293,6 +2297,72 @@ bool World::RemoveBanAccount(BanMode mode, std::string nameOrIP)
         //NO SQL injection as account is uint32
         LoginDatabase.PExecute("UPDATE account_banned SET active = '0' WHERE id = '%u'",account);
     }
+    return true;
+}
+
+/// Ban an account or ban an IP address, duration will be parsed using TimeStringToSecs if it is positive, otherwise permban
+BanReturn World::BanCharacter(std::string name, std::string duration, std::string reason, std::string author)
+{
+    Player *pBanned = sObjectMgr.GetPlayer(name.c_str());
+    uint32 guid = 0;
+
+    uint32 duration_secs = TimeStringToSecs(duration);
+
+    /// Pick a player to ban if not online
+    if (!pBanned)
+    {
+        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_GET_GUID_BY_NAME);
+        stmt->setString(0, name);
+        PreparedQueryResult resultCharacter = CharacterDatabase.Query(stmt);
+
+        if (!resultCharacter)
+            return BAN_NOTFOUND;                                    // Nobody to ban
+
+        guid = resultCharacter->GetUInt32(0);
+    }
+    else
+        guid = pBanned->GetGUIDLow();
+
+    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_BAN);
+    stmt->setUInt32(0, guid);
+    stmt->setUInt32(1, duration_secs);
+    stmt->setString(2, author);
+    stmt->setString(3, reason);
+    CharacterDatabase.Execute(stmt);
+
+    if (pBanned)
+        pBanned->GetSession()->KickPlayer();
+
+    return BAN_SUCCESS;
+}
+
+/// Remove a ban from a character
+bool World::RemoveBanCharacter(std::string name)
+{
+    Player *pBanned = sObjectMgr.GetPlayer(name.c_str());
+    uint32 guid = 0;
+
+    /// Pick a player to ban if not online
+    if (!pBanned)
+    {
+        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_GET_GUID_BY_NAME);
+        stmt->setString(0, name);
+        PreparedQueryResult resultCharacter = CharacterDatabase.Query(stmt);
+
+        if (!resultCharacter)
+            return false;
+
+        guid = resultCharacter->GetUInt32(0);
+    }
+    else
+        guid = pBanned->GetGUIDLow();
+
+    if (!guid)
+        return false;
+
+    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SET_NOT_BANNED);
+    stmt->setUInt32(0, guid);
+    CharacterDatabase.Execute(stmt);
     return true;
 }
 
@@ -2596,6 +2666,9 @@ void World::ResetDailyQuests()
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
         if (itr->second->GetPlayer())
             itr->second->GetPlayer()->ResetDailyQuestStatus();
+
+    // change available dailies
+    sPoolMgr.ChangeDailyQuests();
 }
 
 void World::LoadDBAllowedSecurityLevel()
@@ -2623,6 +2696,9 @@ void World::ResetWeeklyQuests()
 
     m_NextWeeklyQuestReset = time_t(m_NextWeeklyQuestReset + WEEK);
     sWorld.setWorldState(WS_WEEKLY_QUEST_RESET_TIME, uint64(m_NextWeeklyQuestReset));
+
+    // change available weeklies
+    sPoolMgr.ChangeWeeklyQuests();
 }
 
 void World::ResetRandomBG()

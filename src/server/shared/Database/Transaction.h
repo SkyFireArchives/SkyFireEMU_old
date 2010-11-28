@@ -24,27 +24,6 @@
 //- Forward declare (don't include header to prevent circular includes)
 class PreparedStatement;
 
-//- Union that holds element data
-union TransactionElementUnion
-{
-    PreparedStatement* stmt;
-    const char* query;
-};
-
-//- Type specifier of our element data
-enum TransactionElementDataType
-{
-    TRANSACTION_ELEMENT_RAW,
-    TRANSACTION_ELEMENT_PREPARED,
-};
-
-//- The transaction element
-struct TransactionElementData
-{
-    TransactionElementUnion element;
-    TransactionElementDataType type;
-};
-
 /*! Transactions, high level class. */
 class Transaction
 {
@@ -55,12 +34,12 @@ class Transaction
         void Append(PreparedStatement* statement);
         void Append(const char* sql);
         void PAppend(const char* sql, ...);
-    
+
         size_t GetSize() { return m_queries.size(); }
 
     protected:
         void Cleanup();
-        std::queue<TransactionElementData> m_queries;
+        std::queue<SQLElementData> m_queries;
 
     private:
         bool m_actioned;

@@ -8,23 +8,36 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
+if( CMAKE_COMPILER_IS_GNUCXX )
+  add_definitions(--no-warnings)
+elseif( MSVC )
+  add_definitions(/W0)
+endif()
+
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-  add_subdirectory(jemalloc)
-  set(JEMALLOC_LIB "jemalloc")
+  if(SERVERS)
+    add_subdirectory(jemalloc)
+    set(JEMALLOC_LIB "jemalloc")
+  endif()
 endif()
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
-  add_subdirectory(acelite)
-  add_subdirectory(zlib)
+  if(SERVERS)
+    add_subdirectory(acelite)
+    if(USE_MYSQL_SOURCES)
+      add_subdirectory(mysqllite)
+    endif()
+  endif()
   add_subdirectory(bzip2)
-  if(USE_MYSQL_SOURCES)
-    add_subdirectory(mysqllite)
-  endif(USE_MYSQL_SOURCES)
+  add_subdirectory(zlib)
 endif()
 
 add_subdirectory(g3dlite)
-add_subdirectory(sockets)
-add_subdirectory(gsoap)
+
+if(SERVERS)
+  add_subdirectory(sockets)
+  add_subdirectory(gsoap)
+endif()
 
 if(TOOLS)
   add_subdirectory(libmpq)

@@ -334,7 +334,8 @@ INSERT INTO `command` VALUES
 ('aura',3,'Syntax: .aura #spellid\r\n\r\nAdd the aura from spell #spellid to the selected Unit.'),
 ('ban',3,'Syntax: .ban $subcommand\nType .ban to see the list of possible subcommands or .help ban $subcommand to see info on subcommands'),
 ('ban account',3,'Syntax: .ban account $Name $bantime $reason\r\nBan account kick player.\r\n$bantime: negative value leads to permban, otherwise use a timestring like \"4d20h3s\".'),
-('ban character',3,'Syntax: .ban character $Name $bantime $reason\r\nBan account and kick player.\r\n$bantime: negative value leads to permban, otherwise use a timestring like \"4d20h3s\".'),
+('ban character',3,'Syntax: .ban character $Name $bantime $reason\nBan character and kick player.\n$bantime: negative value leads to permban, otherwise use a timestring like "4d20h3s".'),
+('ban playeraccount',3,'Syntax: .ban playeraccount $Name $bantime $reason\nBan account and kick player.\n$bantime: negative value leads to permban, otherwise use a timestring like "4d20h3s".'),
 ('ban ip',3,'Syntax: .ban ip $Ip $bantime $reason\r\nBan IP.\r\n$bantime: negative value leads to permban, otherwise use a timestring like \"4d20h3s\".'),
 ('baninfo',3,'Syntax: .baninfo $subcommand\nType .baninfo to see the list of possible subcommands or .help baninfo $subcommand to see info on subcommands'),
 ('baninfo account',3,'Syntax: .baninfo account $accountid\r\nWatch full information about a specific ban.'),
@@ -16106,6 +16107,31 @@ LOCK TABLES `pool_pool` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `pool_quest`
+--
+
+DROP TABLE IF EXISTS `pool_quest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pool_quest` (
+  `entry` int(10) unsigned NOT NULL DEFAULT '0',
+  `pool_entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`entry`),
+  KEY `idx_guid` (`entry`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pool_quest`
+--
+
+LOCK TABLES `pool_quest` WRITE;
+/*!40000 ALTER TABLE `pool_quest` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pool_quest` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pool_template`
 --
 
@@ -16230,6 +16256,7 @@ DROP TABLE IF EXISTS `quest_poi_points`;
 CREATE TABLE `quest_poi_points` (
   `questId` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `idx` int(10) unsigned NOT NULL DEFAULT '0',
   `x` int(10) NOT NULL DEFAULT '0',
   `y` int(10) NOT NULL DEFAULT '0',
   KEY `questId_id` (`questId`,`id`)
@@ -16944,7 +16971,7 @@ INSERT INTO `spell_bonus_data` (`entry`,`direct_bonus`,`dot_bonus`,`ap_bonus`,`a
 (53000, 0.229, -1, -1, -1, 'Priest - Penance Hurt (Rank 4)'),
 (17, 0.8068, -1, -1, -1, 'Priest - Power Word: Shield'),
 (596, 0.8068, -1, -1, -1, 'Priest - Prayer of Healing'),
-(33110, 0.8068, -1, -1, -1, 'Priest - Prayer of Mending Heal Proc'),
+(33110, 0.8068, 0, 0, 0, 'Priest - Prayer of Mending Heal Proc'),
 (33619, 0, 0, 0, 0, 'Priest - Reflective Shield'),
 (139, -1, 0.376, -1, -1, 'Priest - Renew'),
 (32379, 0.4296, -1, -1, -1, 'Priest - Shadow Word: Death'),
@@ -18850,7 +18877,7 @@ INSERT INTO `spell_proc_event` (`entry`,`SchoolMask`,`SpellFamilyName`,`SpellFam
 ( 49543, 0x00,   0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,   0,   9,  20), -- Bloodworms (Rank 3)
 ( 49208, 0x00,  15, 0x00400000, 0x00010000, 0x00000000, 0x00000000, 0x00000000,   0,   0,   0), -- Reaping (Rank 1)
 ( 49219, 0x00,   0, 0x00000000, 0x00000000, 0x00000000, 0x00000004, 0x00000000,   0,   0,   0), -- Blood-Caked Blade (Rank 1)
-( 49222, 0x00,   0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,   0,   0,   3), -- Bone Shield
+( 49222, 0x00,   0, 0x00000000, 0x00000000, 0x00000000, 0x000222A8, 0x00000000,   0,   0,   3), -- Bone Shield
 ( 49280, 0x00,   0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,   0,   0,   3), -- Lightning Shield (Rank 10)
 ( 49281, 0x00,   0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,   0,   0,   3), -- Lightning Shield (Rank 11)
 ( 49283, 0x00,   0, 0x00000000, 0x00000000, 0x00000000, 0x000222A8, 0x00000000,   0,   0,   3), -- Earth Shield (Rank 4)
@@ -26719,10 +26746,12 @@ LOCK TABLES `spell_script_names` WRITE;
 /*!40000 ALTER TABLE `spell_script_names` DISABLE KEYS */;
 INSERT INTO `spell_script_names` (`spell_id`,`ScriptName`) VALUES
 -- generic
-( 58601, 'spell_gen_remove_flight_auras'),
 (  6962, 'spell_gen_pet_summoned'),
+( 24750, 'spell_gen_trick'),
+( 24751, 'spell_gen_trick_or_treat'),
 ( 29266, 'spell_creature_permanent_feign_death'),
 ( 57685, 'spell_creature_permanent_feign_death'),
+( 58601, 'spell_gen_remove_flight_auras'),
 ( 58951, 'spell_creature_permanent_feign_death'),
 ( 70592, 'spell_creature_permanent_feign_death'),
 ( 70628, 'spell_creature_permanent_feign_death'),
@@ -26768,10 +26797,13 @@ INSERT INTO `spell_script_names` (`spell_id`,`ScriptName`) VALUES
 -- quest
 (  8913, 'spell_q55_sacred_cleansing'),
 ( 17271, 'spell_q5206_test_fetid_skull'),
+( 19512, 'spell_q6124_6129_apply_salve'),
 ( 34665, 'spell_q10255_administer_antidote'),
 ( 44936, 'spell_q11515_fel_siphon_dummy'),
 ( 45449, 'spell_q11587_arcane_prisoner_rescue'),
 ( 46023, 'spell_q11730_ultrasonic_screwdriver'),
+( 49587, 'spell_q12459_seeds_of_natures_wrath'),
+( 51840, 'spell_q12634_despawn_fruit_tosser'),
 ( 52308, 'spell_q12683_take_sputum_sample'),
 ( 55804, 'spell_q12937_relief_for_the_fallen'),
 -- item
@@ -27573,6 +27605,9 @@ INSERT INTO `trinity_string` (`entry`,`content_default`,`content_loc1`,`content_
 (1128, '%d - |cffffffff|Htaxinode:%u|h[%s %s]|h|r (Map:%u X:%f Y:%f Z:%f)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (1129, '%d - %s %s (Map:%u X:%f Y:%f Z:%f)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (1130, 'Can''t dump deleted characters, aborting.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(1131, 'The following characters match your query:', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(1132, 'Currently Banned Characters:', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(1133, '|   Character   |   BanDate    |   UnbanDate  |  Banned By    |   Ban Reason  |', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (1200, 'You try to view cinemitic %u but it doesn''t exist.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (1201, 'You try to view movie %u but it doesn''t exist.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (1300, 'Alliance', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),

@@ -329,6 +329,7 @@ enum Rates
     RATE_DROP_ITEM_LEGENDARY,
     RATE_DROP_ITEM_ARTIFACT,
     RATE_DROP_ITEM_REFERENCED,
+    RATE_DROP_ITEM_REFERENCED_AMOUNT,
     RATE_DROP_MONEY,
     RATE_XP_KILL,
     RATE_XP_QUEST,
@@ -454,7 +455,7 @@ enum WorldStates
 // DB scripting commands
 enum ScriptCommands
 {
-    SCRIPT_COMMAND_TALK                  = 0,                // source/target = Creature, target = any, datalong = talk type (0=say, 1=whisper, 2=yell, 3=emote text, 4=boss emote text), dataint = string_id
+    SCRIPT_COMMAND_TALK                  = 0,                // source/target = Creature, target = any, datalong = talk type (0=say, 1=whisper, 2=yell, 3=emote text, 4=boss emote text), datalong2 & 1 = player talk (instead of creature), dataint = string_id
     SCRIPT_COMMAND_EMOTE                 = 1,                // source/target = Creature, datalong = emote id, datalong2 = 0: set emote state; > 0: play emote state
     SCRIPT_COMMAND_FIELD_SET             = 2,                // source/target = Creature, datalong = field id, datalog2 = value
     SCRIPT_COMMAND_MOVE_TO               = 3,                // source/target = Creature, datalong2 = time to reach, x/y/z = destination
@@ -689,6 +690,8 @@ class World
         void KickAllLess(AccountTypes sec);
         BanReturn BanAccount(BanMode mode, std::string nameOrIP, std::string duration, std::string reason, std::string author);
         bool RemoveBanAccount(BanMode mode, std::string nameOrIP);
+        BanReturn BanCharacter(std::string name, std::string duration, std::string reason, std::string author);
+        bool RemoveBanCharacter(std::string name);
 
         uint32 IncreaseScheduledScriptsCount() { return (uint32)++m_scheduledScripts; }
         uint32 DecreaseScheduledScriptCount() { return (uint32)--m_scheduledScripts; }

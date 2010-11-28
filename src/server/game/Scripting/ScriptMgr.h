@@ -22,38 +22,50 @@
 #define SC_SCRIPTMGR_H
 
 #include "Common.h"
-#include "CompilerDefs.h"
-#include "DBCStructure.h"
-#include "Config.h"
-#include "ObjectMgr.h"
-#include "Battleground.h"
-#include "OutdoorPvPMgr.h"
-#include "SharedDefines.h"
-#include "Chat.h"
-#include "Weather.h"
-#include "AuctionHouseMgr.h"
-#include "ConditionMgr.h"
-#include "Vehicle.h"
-#include "Transport.h"
-#include "AchievementMgr.h"
+#include <ace/Singleton.h>
 
-class Player;
+#include "DBCStores.h"
+#include "Player.h"
+#include "SharedDefines.h"
+#include "World.h"
+#include "Weather.h"
+
+class AuctionHouseObject;
+class AuraScript;
+class Battleground;
+class BattlegroundMap;
+class Channel;
+class ChatCommand;
 class Creature;
 class CreatureAI;
-class InstanceScript;
-class SpellScript;
-class AuraScript;
-class Quest;
-class Item;
+class DynamicObject;
 class GameObject;
-class SpellCastTargets;
+class Guild;
+class GridMap;
+class Group;
+class InstanceMap;
+class InstanceScript;
+class Item;
 class Map;
-class Unit;
-class WorldObject;
-struct ItemPrototype;
-class Spell;
+class OutdoorPvP;
+class Player;
+class Quest;
 class ScriptMgr;
+class Spell;
+class SpellScript;
+class SpellCastTargets;
+class Transport;
+class Unit;
+class Vehicle;
+class WorldPacket;
 class WorldSocket;
+class WorldObject;
+
+struct AchievementCriteriaData;
+struct AuctionEntry;
+struct Condition;
+struct ItemPrototype;
+struct OutdoorPvPData;
 
 #define VISIBLE_RANGE       (166.0f)                        //MAX visible range (size of grid)
 #define DEFAULT_TEXT        "<Trinity Script Text Entry Missing!>"
@@ -67,7 +79,6 @@ void DoScriptText(int32 textEntry, WorldObject* pSource, Unit *pTarget = NULL);
     MailScript
     SessionScript
     CollisionScript
-    GroupScript
     ArenaTeamScript
 
 */
@@ -674,6 +685,15 @@ class PlayerScript : public ScriptObject
         // Called when a player's reputation changes (before it is actually changed)
         virtual void OnReputationChange(Player* /*player*/, uint32 /*factionID*/, int32& /*standing*/, bool /*incremental*/) { }
 
+        // Called when a duel is requested
+        virtual void OnDuelRequest(Player* /*target*/, Player* /*challenger*/) { }
+
+        // Called when a duel starts (after 3s countdown)
+        virtual void OnDuelStart(Player* /*player1*/, Player* /*player2*/) { }
+        
+        // Called when a duel ends
+        virtual void OnDuelEnd(Player* /*winner*/, Player* /*looser*/, DuelCompleteType /*type*/) { }
+
         // The following methods are called when a player sends a chat message
         virtual void OnChat(Player* /*player*/, uint32 /*type*/, uint32 /*lang*/, std::string /*msg*/) { }
         virtual void OnChat(Player* /*player*/, uint32 /*type*/, uint32 /*lang*/, std::string /*msg*/, Player* /*receiver*/) { }
@@ -686,7 +706,15 @@ class PlayerScript : public ScriptObject
         virtual void OnTextEmote(Player* /*player*/, uint32 /*text_emote*/, uint32 /*emoteNum*/, uint64 /*guid*/) { }
 
         // Called in Spell::cast
-        virtual void OnSpellCast(Player * /*player*/, Spell * /*spell*/, bool /*skipCheck*/) { }
+        virtual void OnSpellCast(Player* /*player*/, Spell * /*spell*/, bool /*skipCheck*/) { }
+
+        // Called when a player logs in or out
+        virtual void OnLogin(Player* /*player*/) { }
+        virtual void OnLogout(Player* /*player*/) { }
+
+        // Called when a player is created/deleted
+        virtual void OnCreate(Player* /*player*/) { }
+        virtual void OnDelete(uint64 /*guid*/) { }
 };
 
 class GuildScript : public ScriptObject
@@ -704,6 +732,21 @@ class GuildScript : public ScriptObject
         virtual void OnMOTDChanged(Guild* /*guild*/, std::string /*newMotd*/) { }
         virtual void OnGInfoChanged(Guild* /*guild*/, std::string /*newGInfo*/) { }
         virtual void OnDisband(Guild* /*guild*/) { }
+};
+
+class GroupScript : public ScriptObject
+{
+protected:
+	GroupScript(const char* name);
+
+public:
+    bool IsDatabaseBound() const { return false; }
+
+    virtual void OnAddMember(Group* /*group*/, uint64 /*guid*/) { }
+    virtual void OnInviteMember(Group* /*group*/, uint64 /*guid*/) { }
+    virtual void OnRemoveMember(Group* /*group*/, uint64 /*guid*/, RemoveMethod& /*method*/) { }
+    virtual void OnChangeLeader(Group* /*group*/, uint64 /*newLeaderGuid*/, uint64 /*oldLeaderGuid*/) { }
+    virtual void OnDisband(Group* /*group*/) { }
 };
 
 // Placed here due to ScriptRegistry::AddScript dependency.
@@ -735,7 +778,7 @@ class ScriptMgr
 
         void CreateSpellScripts(uint32 spell_id, std::list<SpellScript*>& script_vector);
         void CreateAuraScripts(uint32 spell_id, std::list<AuraScript*>& script_vector);
-        void CreateSpellScriptLoaders(uint32 spell_id, std::vector<std::pair<SpellScriptLoader*, SpellScriptsMap::iterator> >& script_vector);
+        void CreateSpellScriptLoaders(uint32 spell_id, std::vector<std::pair<SpellScriptLoader*, std::multimap<uint32, uint32>::iterator> >& script_vector);
 
     public: /* ServerScript */
 
@@ -885,6 +928,9 @@ class ScriptMgr
         void OnPlayerMoneyChanged(Player *player, int32& amount);
         void OnGivePlayerXP(Player *player, uint32& amount, Unit *victim);
         void OnPlayerReputationChange(Player *player, uint32 factionID, int32& standing, bool incremental);
+        void OnPlayerDuelRequest(Player* target, Player* challenger);
+        void OnPlayerDuelStart(Player* player1, Player* player2);
+        void OnPlayerDuelEnd(Player* winner, Player* looser, DuelCompleteType type);
         void OnPlayerChat(Player* player, uint32 type, uint32 lang, std::string msg);
         void OnPlayerChat(Player* player, uint32 type, uint32 lang, std::string msg, Player* receiver);
         void OnPlayerChat(Player* player, uint32 type, uint32 lang, std::string msg, Group* group);
@@ -892,7 +938,11 @@ class ScriptMgr
         void OnPlayerChat(Player* player, uint32 type, uint32 lang, std::string msg, Channel* channel);
         void OnPlayerEmote(Player* player, uint32 emote);
         void OnPlayerTextEmote(Player* player, uint32 text_emote, uint32 emoteNum, uint64 guid);
-        void OnPlayerSpellCast(Player *player, Spell *spell, bool skipCheck);
+        void OnPlayerSpellCast(Player* player, Spell *spell, bool skipCheck);
+        void OnPlayerLogin(Player* player);
+        void OnPlayerLogout(Player* player);
+        void OnPlayerCreate(Player* player);
+        void OnPlayerDelete(uint64 guid);
 
     public: /* GuildScript */
         void OnGuildAddMember(Guild *guild, Player *player, uint32& plRank);
@@ -900,6 +950,13 @@ class ScriptMgr
         void OnGuildMOTDChanged(Guild *guild, std::string newMotd);
         void OnGuildInfoChanged(Guild *guild, std::string newGInfo);
         void OnGuildDisband(Guild *guild);
+
+    public: /* GroupScript */
+        void OnGroupAddMember(Group* group, uint64 guid);
+        void OnGroupInviteMember(Group* group, uint64 guid);
+        void OnGroupRemoveMember(Group* group, uint64 guid, RemoveMethod method);
+        void OnGroupChangeLeader(Group* group, uint64 newLeaderGuid, uint64 oldLeaderGuid);
+        void OnGroupDisband(Group* group);
 
     public: /* ScriptRegistry */
 

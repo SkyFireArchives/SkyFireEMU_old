@@ -43,8 +43,8 @@ char const* petTypeSuffix[MAX_PET_TYPE] =
 #define PET_XP_FACTOR 0.05f
 
 Pet::Pet(Player *owner, PetType type) : Guardian(NULL, owner),
-m_resetTalentsCost(0), m_resetTalentsTime(0), m_usedTalentCount(0), 
-m_removed(false), m_owner(owner), m_happinessTimer(7500), m_petType(type), 
+m_resetTalentsCost(0), m_resetTalentsTime(0), m_usedTalentCount(0),
+m_removed(false), m_owner(owner), m_happinessTimer(7500), m_petType(type),
 m_duration(0), m_auraRaidUpdateMask(0), m_loading(false), m_declinedname(NULL)
 {
     m_unitTypeMask |= UNIT_MASK_PET;
@@ -499,7 +499,7 @@ void Pet::Update(uint32 diff)
     {
         case CORPSE:
         {
-            if (getPetType() != HUNTER_PET || m_deathTimer <= diff)
+            if (getPetType() != HUNTER_PET || m_corpseRemoveTime <= time(NULL))
             {
                 Remove(PET_SAVE_NOT_IN_SLOT);               //hunters' pets never get removed because of death, NEVER!
                 return;
@@ -953,8 +953,9 @@ bool Guardian::InitStatsForLevel(uint8 petlevel)
                 {
                     if (!pInfo)
                         SetCreateHealth(30 + 30*petlevel);
-                    SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, float(petlevel * 2.5f - (petlevel / 2)));
-                    SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, float(petlevel * 2.5f + (petlevel / 2)));
+                    float bonusDmg = m_owner->SpellBaseDamageBonus(SPELL_SCHOOL_MASK_NATURE) * 0.15f;
+                    SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, float(petlevel * 2.5f - (petlevel / 2) + bonusDmg));
+                    SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, float(petlevel * 2.5f + (petlevel / 2) + bonusDmg));
                     break;
                 }
                 case 15352: //earth elemental 36213

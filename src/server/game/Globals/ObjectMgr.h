@@ -174,7 +174,7 @@ typedef UNORDERED_MAP<uint64/*(instance,guid) pair*/,time_t> RespawnTimes;
 
 struct TrinityStringLocale
 {
-    StringVector Content;                       // 0 -> default, i -> i-1 locale index
+    StringVector Content;
 };
 
 typedef std::map<uint32,uint32> CreatureLinkedRespawnMap;
@@ -192,6 +192,7 @@ typedef UNORDERED_MAP<uint32,GossipMenuItemsLocale> GossipMenuItemsLocaleMap;
 typedef UNORDERED_MAP<uint32,PointOfInterestLocale> PointOfInterestLocaleMap;
 
 typedef std::multimap<uint32,uint32> QuestRelations;
+typedef std::pair<QuestRelations::const_iterator, QuestRelations::const_iterator> QuestRelationBounds;
 typedef std::multimap<uint32,ItemRequiredTarget> ItemRequiredTargetMap;
 typedef std::pair<ItemRequiredTargetMap::const_iterator, ItemRequiredTargetMap::const_iterator>  ItemRequiredTargetMapBounds;
 
@@ -394,6 +395,7 @@ class ObjectMgr
 
         Player* GetPlayer(const char* name) const { return sObjectAccessor.FindPlayerByName(name);}
         Player* GetPlayer(uint64 guid) const { return ObjectAccessor::FindPlayer(guid); }
+        Player* GetPlayerByLowGUID(uint32 lowguid) const;
 
         static GameObjectInfo const *GetGameObjectInfo(uint32 id) { return sGOStorage.LookupEntry<GameObjectInfo>(id); }
         int LoadReferenceVendor(int32 vendor, int32 item_id, std::set<uint32> *skip_vendors);
@@ -592,6 +594,9 @@ class ObjectMgr
         }
 
         void LoadGuilds();
+        void LoadGuildEvents(std::vector<Guild*>& GuildVector, QueryResult& result);
+        void LoadGuildBankEvents(std::vector<Guild*>& GuildVector, QueryResult& result);
+        void LoadGuildBanks(std::vector<Guild*>& GuildVector, QueryResult& result, PreparedQueryResult& itemResult);
         void LoadArenaTeams();
         void LoadGroups();
         void LoadQuests();
@@ -611,10 +616,35 @@ class ObjectMgr
         void LoadCreatureQuestRelations();
         void LoadCreatureInvolvedRelations();
 
-        QuestRelations mGOQuestRelations;
-        QuestRelations mGOQuestInvolvedRelations;
-        QuestRelations mCreatureQuestRelations;
-        QuestRelations mCreatureQuestInvolvedRelations;
+        QuestRelations* GetGOQuestRelationMap()
+        {
+            return &mGOQuestRelations;
+        }
+
+        QuestRelationBounds GetGOQuestRelationBounds(uint32 go_entry)
+        {
+            return mGOQuestRelations.equal_range(go_entry);
+        }
+
+        QuestRelationBounds GetGOQuestInvolvedRelationBounds(uint32 go_entry)
+        {
+            return mGOQuestInvolvedRelations.equal_range(go_entry);
+        }
+
+        QuestRelations* GetCreatureQuestRelationMap()
+        {
+            return &mCreatureQuestRelations;
+        }
+
+        QuestRelationBounds GetCreatureQuestRelationBounds(uint32 creature_entry)
+        {
+            return mCreatureQuestRelations.equal_range(creature_entry);
+        }
+
+        QuestRelationBounds GetCreatureQuestInvolvedRelationBounds(uint32 creature_entry)
+        {
+            return mCreatureQuestInvolvedRelations.equal_range(creature_entry);
+        }
 
         void LoadGameObjectScripts();
         void LoadQuestEndScripts();
@@ -836,16 +866,16 @@ class ObjectMgr
             if (itr == mTrinityStringLocaleMap.end()) return NULL;
             return &itr->second;
         }
-        const char *GetTrinityString(int32 entry, int locale_idx) const;
+        const char *GetTrinityString(int32 entry, LocaleConstant locale_idx) const;
         const char *GetTrinityStringForDBCLocale(int32 entry) const { return GetTrinityString(entry,DBCLocaleIndex); }
-        int32 GetDBCLocaleIndex() const { return DBCLocaleIndex; }
-        void SetDBCLocaleIndex(uint32 lang) { DBCLocaleIndex = GetIndexForLocale(LocaleConstant(lang)); }
+        LocaleConstant GetDBCLocaleIndex() const { return DBCLocaleIndex; }
+        void SetDBCLocaleIndex(LocaleConstant locale) { DBCLocaleIndex = locale; }
 
         void AddCorpseCellData(uint32 mapid, uint32 cellid, uint32 player_guid, uint32 instance);
         void DeleteCorpseCellData(uint32 mapid, uint32 cellid, uint32 player_guid);
 
         time_t GetCreatureRespawnTime(uint32 loguid, uint32 instance)
-        { 
+        {
             ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, m_CreatureRespawnTimesMtx, 0);
             return mCreatureRespawnTimes[MAKE_PAIR64(loguid,instance)];
         }
@@ -877,9 +907,6 @@ class ObjectMgr
         static bool IsValidCharterName(const std::string& name);
 
         static bool CheckDeclinedNames(std::wstring mainpart, DeclinedName const& names);
-
-        int GetIndexForLocale(LocaleConstant loc);
-        LocaleConstant GetLocaleForIndex(int i);
 
         GameTele const* GetGameTele(uint32 id) const
         {
@@ -926,8 +953,6 @@ class ObjectMgr
         ScriptNameMap &GetScriptNames() { return m_scriptNames; }
         const char * GetScriptName(uint32 id) { return id < m_scriptNames.size() ? m_scriptNames[id].c_str() : ""; }
         uint32 GetScriptId(const char *name);
-
-        int GetOrNewIndexForLocale(LocaleConstant loc);
 
         SpellClickInfoMapBounds GetSpellClickInfoMapBounds(uint32 creature_id) const
         {
@@ -1025,6 +1050,11 @@ class ObjectMgr
 
         QuestPOIMap         mQuestPOIMap;
 
+        QuestRelations mGOQuestRelations;
+        QuestRelations mGOQuestInvolvedRelations;
+        QuestRelations mCreatureQuestRelations;
+        QuestRelations mCreatureQuestInvolvedRelations;
+
         //character reserved names
         typedef std::set<std::wstring> ReservedNamesMap;
         ReservedNamesMap    m_ReservedNames;
@@ -1047,14 +1077,14 @@ class ObjectMgr
         typedef             std::vector<LocaleConstant> LocalForIndex;
         LocalForIndex        m_LocalForIndex;
 
-        int DBCLocaleIndex;
+        LocaleConstant DBCLocaleIndex;
 
     private:
         void LoadScripts(ScriptsType type);
         void CheckScripts(ScriptsType type, std::set<int32>& ids);
         void LoadCreatureAddons(SQLStorage& creatureaddons, char const* entryName, char const* comment);
         void ConvertCreatureAddonAuras(CreatureDataAddon* addon, char const* table, char const* guidEntryStr);
-        void LoadQuestRelationsHelper(QuestRelations& map,char const* table);
+        void LoadQuestRelationsHelper(QuestRelations& map, std::string table, bool starter, bool go);
         void PlayerCreateInfoAddItemHelper(uint32 race_, uint32 class_, uint32 itemId, int32 count);
 
         MailLevelRewardMap m_mailLevelRewardMap;

@@ -99,7 +99,7 @@ bool Map::ExistMap(uint32 mapid,int gx,int gy)
                 sLog.outError("Map file '%s' is from an incompatible clientversion. Please recreate using the mapextractor.",tmp);
             else
                 ret = true;
-        }                
+        }
     }
     delete [] tmp;
     fclose(pf);                                         //close file before return
@@ -367,18 +367,18 @@ Map::EnsureGridLoadedAtEnter(const Cell &cell, Player *player)
     NGridType *grid = getNGrid(cell.GridX(), cell.GridY());
     ASSERT(grid != NULL);
 
-    if (player)
-    {
-        sLog.outStaticDebug("Player %s enter cell[%u,%u] triggers loading of grid[%u,%u] on map %u", player->GetName(), cell.CellX(), cell.CellY(), cell.GridX(), cell.GridY(), GetId());
-    }
-    else
-    {
-        sLog.outStaticDebug("Active object nearby triggers loading of grid [%u,%u] on map %u", cell.GridX(), cell.GridY(), GetId());
-    }
-
     // refresh grid state & timer
     if (grid->GetGridState() != GRID_STATE_ACTIVE)
     {
+        if (player)
+        {
+            sLog.outStaticDebug("Player %s enter cell[%u,%u] triggers loading of grid[%u,%u] on map %u", player->GetName(), cell.CellX(), cell.CellY(), cell.GridX(), cell.GridY(), GetId());
+        }
+        else
+        {
+            sLog.outStaticDebug("Active object nearby triggers loading of grid [%u,%u] on map %u", cell.GridX(), cell.GridY(), GetId());
+        }
+
         ResetGridExpiry(*grid, 0.1f);
         grid->SetGridState(GRID_STATE_ACTIVE);
     }
@@ -1181,7 +1181,7 @@ bool GridMap::loadHeihgtData(FILE *in, uint32 offset, uint32 /*size*/)
 {
     map_heightHeader header;
     fseek(in, offset, SEEK_SET);
-    
+
     if (fread(&header, sizeof(header), 1, in) != 1 || header.fourcc != uint32(MAP_HEIGHT_MAGIC))
         return false;
 
@@ -1227,7 +1227,7 @@ bool  GridMap::loadLiquidData(FILE *in, uint32 offset, uint32 /*size*/)
 {
     map_liquidHeader header;
     fseek(in, offset, SEEK_SET);
-    
+
     if (fread(&header, sizeof(header), 1, in) != 1 || header.fourcc != uint32(MAP_LIQUID_MAGIC))
         return false;
 
@@ -2812,7 +2812,7 @@ inline Unit* Map::_GetScriptUnit(Object* obj, bool isSource, const ScriptInfo* s
     {
         pUnit = dynamic_cast<Unit*>(obj);
         if (!pUnit)
-            sLog.outError("%s %s object could not be casted to unit.", 
+            sLog.outError("%s %s object could not be casted to unit.",
                 scriptInfo->GetDebugInfo().c_str(), isSource ? "source" : "target");
     }
     return pUnit;
@@ -2852,7 +2852,7 @@ inline WorldObject* Map::_GetScriptWorldObject(Object* obj, bool isSource, const
 {
     WorldObject* pWorldObject = NULL;
     if (!obj)
-        sLog.outError("%s %s object is NULL.", 
+        sLog.outError("%s %s object is NULL.",
             scriptInfo->GetDebugInfo().c_str(), isSource ? "source" : "target");
     else
     {
@@ -3030,40 +3030,75 @@ void Map::ScriptsProcess()
         switch (step.script->command)
         {
             case SCRIPT_COMMAND_TALK:
-                // Source or target must be Creature.
-                if (Creature *cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
+                if (step.script->datalong > CHAT_TYPE_WHISPER)
                 {
-                    if (step.script->datalong > CHAT_TYPE_WHISPER)
+                    sLog.outError("%s invalid chat type (%u) specified, skipping.", step.script->GetDebugInfo().c_str(), step.script->datalong);
+                    break;
+                }
+                if (step.script->datalong2 & 0x1)
+                {
+                    if (Player *pSource = _GetScriptPlayerSourceOrTarget(source, target, step.script))
                     {
-                        sLog.outError("%s invalid chat type (%u) specified, skipping.", step.script->GetDebugInfo().c_str(), step.script->datalong);
-                        break;
-                    }
+                        uint64 targetGUID = target ? target->GetGUID() : 0;
+                        LocaleConstant loc_idx = pSource->GetSession()->GetSessionDbLocaleIndex();
+                        const std::string text(sObjectMgr.GetTrinityString(step.script->dataint, loc_idx));
 
-                    uint64 targetGUID = target ? target->GetGUID() : 0;
-                    switch (step.script->datalong)
-                    {
-                        case CHAT_TYPE_SAY:
-                            cSource->Say(step.script->dataint, LANG_UNIVERSAL, targetGUID);
-                            break;
-                        case CHAT_TYPE_YELL:
-                            cSource->Yell(step.script->dataint, LANG_UNIVERSAL, targetGUID);
-                            break;
-                        case CHAT_TYPE_TEXT_EMOTE:
-                            cSource->TextEmote(step.script->dataint, targetGUID);
-                            break;
-                        case CHAT_TYPE_BOSS_EMOTE:
-                            cSource->MonsterTextEmote(step.script->dataint, targetGUID, true);
-                            break;
-                        case CHAT_TYPE_WHISPER:
-                            if (!targetGUID || !IS_PLAYER_GUID(targetGUID))
-                            {
-                                sLog.outError("%s attempt to whisper to non-player unit, skipping.", step.script->GetDebugInfo().c_str());
+                        switch (step.script->datalong)
+                        {
+                            case CHAT_TYPE_SAY:
+                                pSource->Say(text, LANG_UNIVERSAL);
                                 break;
-                            }
-                            cSource->Whisper(step.script->dataint, targetGUID);
-                            break;
-                        default:
-                            break;                              // must be already checked at load
+                            case CHAT_TYPE_YELL:
+                                pSource->Yell(text, LANG_UNIVERSAL);
+                                break;
+                            case CHAT_TYPE_TEXT_EMOTE:
+                            case CHAT_TYPE_BOSS_EMOTE:
+                                pSource->TextEmote(text);
+                                break;
+                            case CHAT_TYPE_WHISPER:
+                                if (!targetGUID || !IS_PLAYER_GUID(targetGUID))
+                                {
+                                    sLog.outError("%s attempt to whisper to non-player unit, skipping.", step.script->GetDebugInfo().c_str());
+                                    break;
+                                }
+                                pSource->Whisper(text, LANG_UNIVERSAL, targetGUID);
+                                break;
+                            default:
+                                break;                              // must be already checked at load
+                        }
+                    }
+                }
+                else
+                {
+                    // Source or target must be Creature.
+                    if (Creature *cSource = _GetScriptCreatureSourceOrTarget(source, target, step.script))
+                    {
+                        uint64 targetGUID = target ? target->GetGUID() : 0;
+                        switch (step.script->datalong)
+                        {
+                            case CHAT_TYPE_SAY:
+                                cSource->Say(step.script->dataint, LANG_UNIVERSAL, targetGUID);
+                                break;
+                            case CHAT_TYPE_YELL:
+                                cSource->Yell(step.script->dataint, LANG_UNIVERSAL, targetGUID);
+                                break;
+                            case CHAT_TYPE_TEXT_EMOTE:
+                                cSource->TextEmote(step.script->dataint, targetGUID);
+                                break;
+                            case CHAT_TYPE_BOSS_EMOTE:
+                                cSource->MonsterTextEmote(step.script->dataint, targetGUID, true);
+                                break;
+                            case CHAT_TYPE_WHISPER:
+                                if (!targetGUID || !IS_PLAYER_GUID(targetGUID))
+                                {
+                                    sLog.outError("%s attempt to whisper to non-player unit, skipping.", step.script->GetDebugInfo().c_str());
+                                    break;
+                                }
+                                cSource->Whisper(step.script->dataint, targetGUID);
+                                break;
+                            default:
+                                break;                              // must be already checked at load
+                        }
                     }
                 }
                 break;
@@ -3086,7 +3121,7 @@ void Map::ScriptsProcess()
                     // Validate field number.
                     if (step.script->datalong <= OBJECT_FIELD_ENTRY || step.script->datalong >= cSource->GetValuesCount())
                         sLog.outError("%s wrong field %u (max count: %u) in object (TypeId: %u, Entry: %u, GUID: %u) specified, skipping.",
-                            step.script->GetDebugInfo().c_str(), step.script->datalong, 
+                            step.script->GetDebugInfo().c_str(), step.script->datalong,
                             cSource->GetValuesCount(), cSource->GetTypeId(), cSource->GetEntry(), cSource->GetGUIDLow());
                     else
                         cSource->SetUInt32Value(step.script->datalong, step.script->datalong2);
@@ -3109,7 +3144,7 @@ void Map::ScriptsProcess()
                     // Validate field number.
                     if (step.script->datalong <= OBJECT_FIELD_ENTRY || step.script->datalong >= cSource->GetValuesCount())
                         sLog.outError("%s wrong field %u (max count: %u) in object (TypeId: %u, Entry: %u, GUID: %u) specified, skipping.",
-                            step.script->GetDebugInfo().c_str(), step.script->datalong, 
+                            step.script->GetDebugInfo().c_str(), step.script->datalong,
                             source->GetValuesCount(), source->GetTypeId(), source->GetEntry(), source->GetGUIDLow());
                     else
                         cSource->SetFlag(step.script->datalong, step.script->datalong2);
@@ -3123,7 +3158,7 @@ void Map::ScriptsProcess()
                     // Validate field number.
                     if (step.script->datalong <= OBJECT_FIELD_ENTRY || step.script->datalong >= cSource->GetValuesCount())
                         sLog.outError("%s wrong field %u (max count: %u) in object (TypeId: %u, Entry: %u, GUID: %u) specified, skipping.",
-                            step.script->GetDebugInfo().c_str(), step.script->datalong, 
+                            step.script->GetDebugInfo().c_str(), step.script->datalong,
                             source->GetValuesCount(), source->GetTypeId(), source->GetEntry(), source->GetGUIDLow());
                     else
                         cSource->RemoveFlag(step.script->datalong, step.script->datalong2);
@@ -3251,7 +3286,7 @@ void Map::ScriptsProcess()
                     }
                     worldObject = dynamic_cast<WorldObject*>(source);
                 }
-                else 
+                else
                 {
                     pTarget = source->ToPlayer();
                     if (pTarget)
@@ -3267,7 +3302,7 @@ void Map::ScriptsProcess()
                     else
                     {
                         sLog.outError("%s neither source nor target is player (source: TypeId: %u, Entry: %u, GUID: %u; target: TypeId: %u, Entry: %u, GUID: %u), skipping.",
-                            step.script->GetDebugInfo().c_str(), 
+                            step.script->GetDebugInfo().c_str(),
                             source ? source->GetTypeId() : 0, source ? source->GetEntry() : 0, source ? source->GetGUIDLow() : 0,
                             target ? target->GetTypeId() : 0, target ? target->GetEntry() : 0, target ? target->GetGUIDLow() : 0);
                         break;

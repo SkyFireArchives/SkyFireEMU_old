@@ -437,8 +437,8 @@ bool Loot::FillLoot(uint32 lootId, LootStore const& store, Player* lootOwner, bo
         roundRobinPlayer = lootOwner->GetGUID();
 
         for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
-            if (Player* pl = itr->getSource())
-                FillNotNormalLootFor(pl);
+            if (Player* pl = itr->getSource())   // should actually be looted object instead of lootOwner but looter has to be really close so doesnt really matter
+                FillNotNormalLootFor(pl, pl->IsAtGroupRewardDistance(lootOwner));
 
         for (uint8 i = 0; i < items.size(); ++i)
         {
@@ -449,12 +449,12 @@ bool Loot::FillLoot(uint32 lootId, LootStore const& store, Player* lootOwner, bo
     }
     // ... for personal loot
     else
-        FillNotNormalLootFor(lootOwner);
+        FillNotNormalLootFor(lootOwner, true);
 
     return true;
 }
 
-void Loot::FillNotNormalLootFor(Player* pl)
+void Loot::FillNotNormalLootFor(Player* pl, bool withCurrency)
 {
     uint32 plguid = pl->GetGUIDLow();
 
@@ -470,20 +470,25 @@ void Loot::FillNotNormalLootFor(Player* pl)
     if (qmapitr == PlayerNonQuestNonFFAConditionalItems.end())
         FillNonQuestNonFFAConditionalLoot(pl);
 
+    // if not auto-processed player will have to come and pick it up manually
+    if (!withCurrency)
+        return;
+
     // Process currency items
     uint32 max_slot = GetMaxSlotInLootFor(pl);
-    uint32 itemId = 0;
+    LootItem const *item = NULL;
     uint32 itemsSize = uint32(items.size());
     for (uint32 i = 0; i < max_slot; ++i)
     {
         if (i < items.size())
-            itemId = items[i].itemid;
+            item = &items[i];
         else
-            itemId = quest_items[i-itemsSize].itemid;
+            item = &quest_items[i-itemsSize];
 
-        if (ItemPrototype const* proto = ObjectMgr::GetItemPrototype(itemId))
-            if (proto->BagFamily & BAG_FAMILY_MASK_CURRENCY_TOKENS)
-                pl->StoreLootItem(i, this);
+        if (!item->is_looted && item->freeforall && item->AllowedForPlayer(pl))
+            if (ItemPrototype const* proto = ObjectMgr::GetItemPrototype(item->itemid))
+                if (proto->BagFamily & BAG_FAMILY_MASK_CURRENCY_TOKENS)
+                    pl->StoreLootItem(i, this);
     }
 }
 
@@ -1226,7 +1231,8 @@ void LootTemplate::Process(Loot& loot, LootStore const& store, bool rate, uint16
             if (!Referenced)
                 continue;                                     // Error message already printed at loading stage
 
-            for (uint32 loop = 0; loop < i->maxcount; ++loop) // Ref multiplicator
+            uint32 maxcount = uint32(float(i->maxcount) * sWorld.getRate(RATE_DROP_ITEM_REFERENCED_AMOUNT));
+            for (uint32 loop = 0; loop < maxcount; ++loop)    // Ref multiplicator
                 Referenced->Process(loot, store, rate, lootMode, i->group);
         }
         else                                                  // Plain entries (not a reference, not grouped)

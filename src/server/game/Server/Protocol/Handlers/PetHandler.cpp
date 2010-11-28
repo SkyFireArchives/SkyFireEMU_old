@@ -415,7 +415,7 @@ bool WorldSession::CheckStableMaster(uint64 guid)
     if (guid == GetPlayer()->GetGUID())
     {
         if (!GetPlayer()->isGameMaster() && !GetPlayer()->HasAuraType(SPELL_AURA_OPEN_STABLE))
-        {    
+        {
             sLog.outStaticDebug("Player (GUID:%u) attempt open stable in cheating way.", GUID_LOPART(guid));
             return false;
         }
@@ -735,8 +735,8 @@ void WorldSession::HandlePetCastSpellOpcode(WorldPacket& recvPacket)
 
     caster->clearUnitState(UNIT_STAT_FOLLOW);
 
-    Spell *spell = new Spell(caster, spellInfo, spellId == 33395); // water elemental can cast freeze as triggered
-    spell->m_cast_count = spellId == 33395 ? 0 : castCount;                       // probably pending spell cast
+    Spell *spell = new Spell(caster, spellInfo, false); // water elemental can cast freeze as triggered
+    spell->m_cast_count = castCount;                    // probably pending spell cast
     spell->m_targets = targets;
 
     // TODO: need to check victim?

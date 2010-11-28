@@ -44,7 +44,7 @@ namespace Trinity
         public:
             BattlegroundChatBuilder(ChatMsg msgtype, int32 textId, Player const* source, va_list* args = NULL)
                 : i_msgtype(msgtype), i_textId(textId), i_source(source), i_args(args) {}
-            void operator()(WorldPacket& data, int32 loc_idx)
+            void operator()(WorldPacket& data, LocaleConstant loc_idx)
             {
                 char const* text = sObjectMgr.GetTrinityString(i_textId,loc_idx);
 
@@ -89,7 +89,7 @@ namespace Trinity
         public:
             Battleground2ChatBuilder(ChatMsg msgtype, int32 textId, Player const* source, int32 arg1, int32 arg2)
                 : i_msgtype(msgtype), i_textId(textId), i_source(source), i_arg1(arg1), i_arg2(arg2) {}
-            void operator()(WorldPacket& data, int32 loc_idx)
+            void operator()(WorldPacket& data, LocaleConstant loc_idx)
             {
                 char const* text = sObjectMgr.GetTrinityString(i_textId,loc_idx);
                 char const* arg1str = i_arg1 ? sObjectMgr.GetTrinityString(i_arg1,loc_idx) : "";
@@ -729,17 +729,15 @@ void Battleground::EndBattleground(uint32 winner)
         if (winner_arena_team && loser_arena_team && winner_arena_team != loser_arena_team)
         {
             loser_team_rating = loser_arena_team->GetRating();
-            loser_matchmaker_rating = loser_arena_team->GetAverageMMR(GetBgRaid(GetOtherTeam(winner)));
+            loser_matchmaker_rating = GetArenaMatchmakerRating(GetOtherTeam(winner));
             winner_team_rating = winner_arena_team->GetRating();
-            winner_matchmaker_rating = winner_arena_team->GetAverageMMR(GetBgRaid(winner));
+            winner_matchmaker_rating = GetArenaMatchmakerRating(winner);
             winner_change = winner_arena_team->WonAgainst(loser_matchmaker_rating);
             loser_change = loser_arena_team->LostAgainst(winner_matchmaker_rating);
             sLog.outDebug("--- Winner rating: %u, Loser rating: %u, Winner MMR: %u, Loser MMR: %u, Winner change: %u, Losser change: %u ---", winner_team_rating, loser_team_rating,
                 winner_matchmaker_rating, loser_matchmaker_rating, winner_change, loser_change);
             SetArenaTeamRatingChangeForTeam(winner, winner_change);
             SetArenaTeamRatingChangeForTeam(GetOtherTeam(winner), loser_change);
-            SetArenaMatchmakerRating(winner, winner_matchmaker_rating);
-            SetArenaMatchmakerRating(GetOtherTeam(winner), loser_matchmaker_rating);
             sLog.outArena("Arena match Type: %u for Team1Id: %u - Team2Id: %u ended. WinnerTeamId: %u. Winner rating: +%d, Loser rating: %d", m_ArenaType, m_ArenaTeamIds[BG_TEAM_ALLIANCE], m_ArenaTeamIds[BG_TEAM_HORDE], winner_arena_team->GetId(), winner_change, loser_change);
             if (sWorld.getBoolConfig(CONFIG_ARENA_LOG_EXTENDED_INFO))
                 for (Battleground::BattlegroundScoreMap::const_iterator itr = GetPlayerScoresBegin(); itr != GetPlayerScoresEnd(); itr++)
@@ -962,7 +960,7 @@ void Battleground::RemovePlayerAtLeave(uint64 guid, bool Transport, bool SendPac
                     ArenaTeam * winner_arena_team = sObjectMgr.GetArenaTeamById(GetArenaTeamIdForTeam(GetOtherTeam(team)));
                     ArenaTeam * loser_arena_team = sObjectMgr.GetArenaTeamById(GetArenaTeamIdForTeam(team));
                     if (winner_arena_team && loser_arena_team && winner_arena_team != loser_arena_team)
-                        loser_arena_team->MemberLost(plr, winner_arena_team->GetAverageMMR(GetBgRaid(team)));
+                        loser_arena_team->MemberLost(plr, GetArenaMatchmakerRating(GetOtherTeam(team)));
                 }
             }
             if (SendPacket)
@@ -984,7 +982,7 @@ void Battleground::RemovePlayerAtLeave(uint64 guid, bool Transport, bool SendPac
                 ArenaTeam * others_arena_team = sObjectMgr.GetArenaTeamById(GetArenaTeamIdForTeam(GetOtherTeam(team)));
                 ArenaTeam * players_arena_team = sObjectMgr.GetArenaTeamById(GetArenaTeamIdForTeam(team));
                 if (others_arena_team && players_arena_team)
-                    players_arena_team->OfflineMemberLost(guid, others_arena_team->GetAverageMMR(GetBgRaid(GetOtherTeam(team))));
+                    players_arena_team->OfflineMemberLost(guid, GetArenaMatchmakerRating(GetOtherTeam(team)));
             }
         }
 

@@ -79,10 +79,12 @@ enum ConditionSourceType
     CONDITION_SOURCE_TYPE_GOSSIP_MENU_OPTION             = 15,//DONE
     CONDITION_SOURCE_TYPE_CREATURE_TEMPLATE_VEHICLE      = 16,//DONE
     CONDITION_SOURCE_TYPE_SPELL                          = 17,//DONE
-    CONDITION_SOURCE_TYPE_ITEM_REQUIRED_TARGET           = 18//DONE
+    CONDITION_SOURCE_TYPE_ITEM_REQUIRED_TARGET           = 18,//DONE
+    CONDITION_SOURCE_TYPE_QUEST_ACCEPT                   = 19,//DONE
+    CONDITION_SOURCE_TYPE_QUEST_SHOW_MARK                = 20//DONE
 };
 
-#define MAX_CONDITIONSOURCETYPE                            19
+#define MAX_CONDITIONSOURCETYPE                            21
 
 struct Condition
 {
