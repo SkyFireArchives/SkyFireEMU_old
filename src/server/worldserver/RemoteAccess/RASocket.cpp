@@ -3,6 +3,8 @@
  *
  * Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
  *
+ * Copyright (C) 2010 CactusEMU <http://www.cactusemu.org/>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -186,7 +188,7 @@ void RASocket::OnRead()
 
                         Sendf("+Logged in.\r\n");
                         sLog.outRemote("User %s has logged in.\n",szLogin.c_str());
-                        Sendf("TC>");
+                        Sendf("C>");
                     }
                     else
                     {
@@ -208,7 +210,7 @@ void RASocket::OnRead()
                     ++pendingCommands;
                 }
                 else
-                    Sendf("TC>");
+                    Sendf("C>");
                 break;
                 ///</ul>
         };
@@ -229,7 +231,7 @@ void RASocket::zprint(void* callbackArg, const char * szText )
 void RASocket::commandFinished(void* callbackArg, bool /*success*/)
 {
     RASocket* raSocket = (RASocket*)callbackArg;
-    raSocket->Sendf("TC>");
+    raSocket->Sendf("C>");
     uint64 remainingCommands = --raSocket->pendingCommands;
 
     if (remainingCommands == 0)

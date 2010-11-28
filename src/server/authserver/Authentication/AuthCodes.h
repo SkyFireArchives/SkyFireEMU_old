@@ -3,6 +3,8 @@
  *
  * Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
  *
+ * Copyright (C) 2010 CactusEMU <http://www.cactusemu.org/>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -90,7 +92,7 @@ enum LoginResult
 //3.3.2 build 11403
 //3.3.3a build 11723
 
-#define POST_BC_ACCEPTED_CLIENT_BUILD                 {13287, 13205, 13164, 12340, 11723, 11403, 11159, 10571, 10505, 10146, 9947, 8606, 0}
+#define POST_BC_ACCEPTED_CLIENT_BUILD                 {13329, 13287, 13205, 13164, 12340, 11723, 11403, 11159, 10571, 10505, 10146, 9947, 8606, 0}
 #define PRE_BC_ACCEPTED_CLIENT_BUILD                  {5875, 6005, 0}
 
 #define POST_BC_EXP_FLAG                              0x2
