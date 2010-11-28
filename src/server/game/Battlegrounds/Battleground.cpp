@@ -689,8 +689,10 @@ void Battleground::EndBattleground(uint32 winner)
     ArenaTeam * loser_arena_team = NULL;
     uint32 loser_team_rating = 0;
     uint32 loser_matchmaker_rating = 0;
+    int32  loser_change = 0;
     uint32 winner_team_rating = 0;
     uint32 winner_matchmaker_rating = 0;
+    int32  winner_change = 0;
     WorldPacket data;
     int32 winmsg_id = 0;
 
@@ -730,8 +732,8 @@ void Battleground::EndBattleground(uint32 winner)
             loser_matchmaker_rating = loser_arena_team->GetAverageMMR(GetBgRaid(GetOtherTeam(winner)));
             winner_team_rating = winner_arena_team->GetRating();
             winner_matchmaker_rating = winner_arena_team->GetAverageMMR(GetBgRaid(winner));
-            int32 winner_change = winner_arena_team->WonAgainst(loser_matchmaker_rating);
-            int32 loser_change = loser_arena_team->LostAgainst(winner_matchmaker_rating);
+            winner_change = winner_arena_team->WonAgainst(loser_matchmaker_rating);
+            loser_change = loser_arena_team->LostAgainst(winner_matchmaker_rating);
             sLog.outDebug("--- Winner rating: %u, Loser rating: %u, Winner MMR: %u, Loser MMR: %u, Winner change: %u, Losser change: %u ---", winner_team_rating, loser_team_rating,
                 winner_matchmaker_rating, loser_matchmaker_rating, winner_change, loser_change);
             SetArenaTeamRatingChangeForTeam(winner, winner_change);
@@ -742,13 +744,7 @@ void Battleground::EndBattleground(uint32 winner)
             if (sWorld.getBoolConfig(CONFIG_ARENA_LOG_EXTENDED_INFO))
                 for (Battleground::BattlegroundScoreMap::const_iterator itr = GetPlayerScoresBegin(); itr != GetPlayerScoresEnd(); itr++)
                     if (Player* player = sObjectMgr.GetPlayer(itr->first))
-                    {
-                        std::string last_ip = "<unknown>";
-                        QueryResult_AutoPtr result = LoginDatabase.PQuery("SELECT last_ip FROM account WHERE id = %u", player->GetSession()->GetAccountId());
-                        if (result)
-                            last_ip = (result->Fetch())[0].GetCppString();
-                        sLog.outArena("Statistics for %s (GUID: %llu, Team: %d, IP: %s): %u damage, %u healing, %u killing blows", player->GetName(), itr->first, player->GetArenaTeamId(m_ArenaType == 5 ? 2 : m_ArenaType == 3), last_ip.c_str(), itr->second->DamageDone, itr->second->HealingDone, itr->second->KillingBlows);
-                    }
+                        sLog.outArena("Statistics for %s (GUID: %llu, Team: %d, IP: %s): %u damage, %u healing, %u killing blows", player->GetName(), itr->first, player->GetArenaTeamId(m_ArenaType == 5 ? 2 : m_ArenaType == 3), player->GetSession()->GetRemoteAddress().c_str(), itr->second->DamageDone, itr->second->HealingDone, itr->second->KillingBlows);
         }
         else
         {
@@ -767,9 +763,9 @@ void Battleground::EndBattleground(uint32 winner)
             if (isArena() && isRated() && winner_arena_team && loser_arena_team && winner_arena_team != loser_arena_team)
             {
                 if (team == winner)
-                    winner_arena_team->OfflineMemberLost(itr->first, loser_matchmaker_rating);
+                    winner_arena_team->OfflineMemberLost(itr->first, loser_matchmaker_rating, winner_change);
                 else
-                    loser_arena_team->OfflineMemberLost(itr->first, winner_matchmaker_rating);
+                    loser_arena_team->OfflineMemberLost(itr->first, winner_matchmaker_rating, loser_change);
             }
             continue;
         }
@@ -809,11 +805,11 @@ void Battleground::EndBattleground(uint32 winner)
                 if (member)
                     plr->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_RATED_ARENA, member->personal_rating);
 
-                winner_arena_team->MemberWon(plr,loser_matchmaker_rating);
+                winner_arena_team->MemberWon(plr,loser_matchmaker_rating, winner_change);
             }
             else
             {
-                loser_arena_team->MemberLost(plr, winner_matchmaker_rating);
+                loser_arena_team->MemberLost(plr, winner_matchmaker_rating, loser_change);
 
                 // Arena lost => reset the win_rated_arena having the "no_loose" condition
                 plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_RATED_ARENA, ACHIEVEMENT_CRITERIA_CONDITION_NO_LOOSE);
@@ -995,7 +991,7 @@ void Battleground::RemovePlayerAtLeave(uint64 guid, bool Transport, bool SendPac
         // remove from raid group if player is member
         if (Group *group = GetBgRaid(team))
         {
-            if (!group->RemoveMember(guid, 0))             // group was disbanded
+            if (!group->RemoveMember(guid))                // group was disbanded
             {
                 SetBgRaid(team, NULL);
                 delete group;

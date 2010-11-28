@@ -43,7 +43,6 @@ class WorldSession;
 class Player;
 struct ScriptAction;
 struct ScriptInfo;
-class QueryResult;
 class WorldSocket;
 class SystemMgr;
 
@@ -284,6 +283,7 @@ enum WorldIntConfigs
     CONFIG_ARENA_SEASON_ID,
     CONFIG_ARENA_START_RATING,
     CONFIG_ARENA_START_PERSONAL_RATING,
+    CONFIG_ARENA_START_MATCHMAKER_RATING,
     CONFIG_MAX_WHO,
     CONFIG_HONOR_AFTER_DUEL,
     CONFIG_PVP_TOKEN_MAP_TYPE,
@@ -737,7 +737,7 @@ class World
     protected:
         void _UpdateGameTime();
         // callback for UpdateRealmCharacters
-        void _UpdateRealmCharCount(QueryResult_AutoPtr resultCharCount, uint32 accountId);
+        void _UpdateRealmCharCount(QueryResult resultCharCount, uint32 accountId);
 
         void InitDailyQuestResetTime();
         void InitWeeklyQuestResetTime();

@@ -558,8 +558,11 @@ void WorldSession::HandleAddFriendOpcode(WorldPacket & recv_data)
         );
 }
 
-void WorldSession::HandleAddFriendOpcodeCallBack(QueryResult_AutoPtr result, std::string friendNote)
+void WorldSession::HandleAddFriendOpcodeCallBack(QueryResult result, std::string friendNote)
 {
+    if (!GetPlayer())
+        return;
+
     uint64 friendGuid;
     uint32 friendAcctid;
     uint32 team;
@@ -641,8 +644,11 @@ void WorldSession::HandleAddIgnoreOpcode(WorldPacket & recv_data)
     m_addIgnoreCallback = CharacterDatabase.AsyncPQuery("SELECT guid FROM characters WHERE name = '%s'", IgnoreName.c_str());
 }
 
-void WorldSession::HandleAddIgnoreOpcodeCallBack(QueryResult_AutoPtr result)
+void WorldSession::HandleAddIgnoreOpcodeCallBack(QueryResult result)
 {
+    if (!GetPlayer())
+        return;
+
     uint64 IgnoreGuid;
     FriendsResult ignoreResult;
 
@@ -1317,7 +1323,7 @@ void WorldSession::HandleWhoisOpcode(WorldPacket& recv_data)
 
     uint32 accid = plr->GetSession()->GetAccountId();
 
-    QueryResult_AutoPtr result = LoginDatabase.PQuery("SELECT username,email,last_ip FROM account WHERE id=%u", accid);
+    QueryResult result = LoginDatabase.PQuery("SELECT username,email,last_ip FROM account WHERE id=%u", accid);
     if (!result)
     {
         SendNotification(LANG_ACCOUNT_FOR_PLAYER_NOT_FOUND, charname.c_str());

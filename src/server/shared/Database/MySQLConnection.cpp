@@ -235,10 +235,10 @@ bool MySQLConnection::Execute(PreparedStatement* stmt)
     }
 }
 
-QueryResult_AutoPtr MySQLConnection::Query(const char* sql)
+QueryResult MySQLConnection::Query(const char* sql)
 {
     if (!sql)
-        return QueryResult_AutoPtr(NULL);
+        return QueryResult(NULL);
 
     MYSQL_RES *result = NULL;
     MYSQL_FIELD *fields = NULL;
@@ -246,13 +246,13 @@ QueryResult_AutoPtr MySQLConnection::Query(const char* sql)
     uint32 fieldCount = 0;
 
     if (!_Query(sql, &result, &fields, &rowCount, &fieldCount))
-        return QueryResult_AutoPtr(NULL);
+        return QueryResult(NULL);
 
-    QueryResult *queryResult = new QueryResult(result, fields, rowCount, fieldCount);
+    ResultSet *queryResult = new ResultSet(result, fields, rowCount, fieldCount);
 
     queryResult->NextRow();
 
-    return QueryResult_AutoPtr(queryResult);
+    return QueryResult(queryResult);
 }
 
 bool MySQLConnection::_Query(const char *sql, MYSQL_RES **pResult, MYSQL_FIELD **pFields, uint64* pRowCount, uint32* pFieldCount)
@@ -339,4 +339,13 @@ void MySQLConnection::PrepareStatement(uint32 index, const char* sql)
     MySQLPreparedStatement* mStmt = new MySQLPreparedStatement(stmt);
     m_stmts[index] = mStmt;
 }
-    
+
+PreparedResultSet* MySQLConnection::Query(PreparedStatement* stmt)
+{
+    this->Execute(stmt);
+    if (mysql_more_results(m_Mysql))
+    {
+        mysql_next_result(m_Mysql);
+    }
+    return new PreparedResultSet(stmt->m_stmt->GetSTMT());
+}
