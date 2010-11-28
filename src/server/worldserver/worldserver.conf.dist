@@ -1,5 +1,5 @@
 ################################################
-# Trinity Core World Server configuration file #
+#   CactusEMU World Server configuration file  #
 ################################################
 [worldserver]
 
@@ -14,7 +14,7 @@
 #        Data directory setting.
 #        Important: DataDir needs to be quoted, as it is a string which may
 #         contain space characters.
-#        Example: "@prefix@/share/trinitycore"
+#        Example: "@prefix@/share/cactusemu"
 #
 #    LogsDir
 #        Logs directory setting.
@@ -73,9 +73,9 @@
 RealmID = 1
 DataDir = "."
 LogsDir = ""
-LoginDatabaseInfo     = "127.0.0.1;3306;trinity;trinity;auth"
-WorldDatabaseInfo     = "127.0.0.1;3306;trinity;trinity;world"
-CharacterDatabaseInfo = "127.0.0.1;3306;trinity;trinity;characters"
+LoginDatabaseInfo     = "127.0.0.1;3306;cactusemu;cactusemu;auth"
+WorldDatabaseInfo     = "127.0.0.1;3306;cactusemu;cactusemu;world"
+CharacterDatabaseInfo = "127.0.0.1;3306;cactusemu;cactusemu;characters"
 LoginDatabase.WorkerThreads = 1
 WorldDatabase.WorkerThreads = 1
 CharacterDatabase.WorkerThreads = 1
@@ -1031,7 +1031,7 @@ OffhandCheckAtSpellUnlearn = 1
 ClientCacheVersion = 0
 Event.Announce = 0
 BeepAtStart = 1
-Motd = "Welcome to a Trinity Core server."
+Motd = "Welcome to a CactusEMU server."
 Server.LoginInfo = 0
 Command.LookupMaxResults = 0
 
