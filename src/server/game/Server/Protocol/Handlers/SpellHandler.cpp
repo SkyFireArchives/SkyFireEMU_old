@@ -315,11 +315,12 @@ void WorldSession::HandleGameobjectReportUse(WorldPacket& recvPacket)
 
 void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
 {
-    uint32 spellId;
+	// TODO: what is this unk?
+    uint32 spellId, unk_401;
     uint8  castCount, castFlags;
-    recvPacket >> castCount >> spellId >> castFlags;
+    recvPacket >> castCount >> spellId >> unk_401 >> castFlags;
 
-    sLog.outDebug("WORLD: got cast spell packet, castCount: %u, spellId: %u, castFlags: %u, data length = %u", castCount, spellId, castFlags, (uint32)recvPacket.size());
+    sLog.outDebug("WORLD: got cast spell packet, castCount: %u, spellId: %u, unknow 4.0.1 : %u, castFlags: %u, data length = %u", castCount, spellId, unk_401, castFlags, (uint32)recvPacket.size());
 
     // ignore for remote control state (for player case)
     Unit* mover = _player->m_mover;

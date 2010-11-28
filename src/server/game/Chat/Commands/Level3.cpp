@@ -3079,7 +3079,6 @@ bool ChatHandler::HandleLookupItemSetCommand(const char *args)
         ItemSetEntry const *set = sItemSetStore.LookupEntry(id);
         if (set)
         {
-            int loc = GetSessionDbcLocale();
             std::string name = set->name;
             if (!name.empty())
             {
@@ -4924,7 +4923,7 @@ bool ChatHandler::HandleResetHonorCommand (const char * args)
     target->SetHonorPoints(0);
 	//target->SetUInt32Value(PLAYER_FIELD_TODAY_CONTRIBUTION, 0);
 	//target->SetUInt32Value(PLAYER_FIELD_YESTERDAY_CONTRIBUTION, 0);
-    target->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EARN_HONORABLE_KILL);
+    //target->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EARN_HONORABLE_KILL);
 
     return true;
 }

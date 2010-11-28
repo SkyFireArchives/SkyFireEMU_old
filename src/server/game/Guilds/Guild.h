@@ -106,26 +106,26 @@ enum CommandErrors
 
 enum GuildEvents
 {
-    GE_PROMOTION                    = 0x00,
-    GE_DEMOTION                     = 0x01,
-    GE_MOTD                         = 0x02,
-    GE_JOINED                       = 0x03,
-    GE_LEFT                         = 0x04,
-    GE_REMOVED                      = 0x05,
-    GE_LEADER_IS                    = 0x06,
-    GE_LEADER_CHANGED               = 0x07,
-    GE_DISBANDED                    = 0x08,
-    GE_TABARDCHANGE                 = 0x09,
-    GE_UNK1                         = 0x0A,                 // string, string EVENT_GUILD_ROSTER_UPDATE tab content change?
-    GE_UNK2                         = 0x0B,                 // EVENT_GUILD_ROSTER_UPDATE
-    GE_SIGNED_ON                    = 0x0C,                 // ERR_FRIEND_ONLINE_SS
-    GE_SIGNED_OFF                   = 0x0D,                 // ERR_FRIEND_OFFLINE_S
-    GE_GUILDBANKBAGSLOTS_CHANGED    = 0x0E,                 // EVENT_GUILDBANKBAGSLOTS_CHANGED
-    GE_BANKTAB_PURCHASED            = 0x0F,                 // EVENT_GUILDBANK_UPDATE_TABS
-    GE_UNK5                         = 0x10,                 // EVENT_GUILDBANK_UPDATE_TABS
-    GE_GUILDBANK_UPDATE_MONEY       = 0x11,                 // EVENT_GUILDBANK_UPDATE_MONEY, string 0000000000002710 is 1 gold
-    GE_GUILD_BANK_MONEY_WITHDRAWN   = 0x12,                 // MSG_GUILD_BANK_MONEY_WITHDRAWN
-    GE_GUILDBANK_TEXT_CHANGED       = 0x13                  // EVENT_GUILDBANK_TEXT_CHANGED
+    GE_PROMOTION                    = 0xFF,//0x00,
+    GE_DEMOTION                     = 0xFF,//0x01,
+    GE_MOTD                         = 0x03,//0x02,
+    GE_JOINED                       = 0xFF,//0x03,
+    GE_LEFT                         = 0xFF,//0x04,
+    GE_REMOVED                      = 0xFF,//0x05,
+    GE_LEADER_IS                    = 0xFF,//0x06,
+    GE_LEADER_CHANGED               = 0xFF,//0x07,
+    GE_DISBANDED                    = 0xFF,//0x08,
+    GE_TABARDCHANGE                 = 0xFF,//0x09,
+    GE_UNK1                         = 0xFF,//0x0A,            // string, string EVENT_GUILD_ROSTER_UPDATE tab content change?
+    GE_UNK2                         = 0xFF,//0x0B,                 // EVENT_GUILD_ROSTER_UPDATE
+    GE_SIGNED_ON                    = 0x10,//0x0C,                 // ERR_FRIEND_ONLINE_SS
+    GE_SIGNED_OFF                   = 0xFF,//0x0D,                 // ERR_FRIEND_OFFLINE_S
+    GE_GUILDBANKBAGSLOTS_CHANGED    = 0xFF,//0x0E,                 // EVENT_GUILDBANKBAGSLOTS_CHANGED
+    GE_BANKTAB_PURCHASED            = 0xFF,//0x0F,                 // EVENT_GUILDBANK_UPDATE_TABS
+    GE_UNK5                         = 0xFF,//0x10,                 // EVENT_GUILDBANK_UPDATE_TABS
+    GE_GUILDBANK_UPDATE_MONEY       = 0xFF,//0x11,                 // EVENT_GUILDBANK_UPDATE_MONEY, string 0000000000002710 is 1 gold
+    GE_GUILD_BANK_MONEY_WITHDRAWN   = 0xFF,//0x12,                 // MSG_GUILD_BANK_MONEY_WITHDRAWN
+    GE_GUILDBANK_TEXT_CHANGED       = 0xFF,//0x13                 // EVENT_GUILDBANK_TEXT_CHANGED
 };
 
 enum PetitionTurns
@@ -251,6 +251,13 @@ typedef std::vector<GuildItemPosCount> GuildItemPosCountVec;
 
 struct MemberSlot
 {
+	struct Profession
+	{
+		uint32 skillID;
+		uint32 title;  //compagnon, artisan, ...
+		uint32 level;
+	};
+	
     uint64 LogoutTime;
     uint32 accountId;
     std::string Name;
@@ -264,6 +271,8 @@ struct MemberSlot
     uint32 BankRemMoney;
     uint32 BankResetTimeTab[GUILD_BANK_MAX_TABS];
     uint32 BankRemSlotsTab[GUILD_BANK_MAX_TABS];
+	uint32 achievementPoints;
+	Profession professions[2];
 };
 
 struct RankInfo
@@ -352,7 +361,8 @@ class Guild
         }
 
         void CreateRank(std::string name,uint32 rights);
-        void DelRank();
+        void DelRank(uint32 id);
+		void SwitchRank(uint32 oldRank, uint32 newRank);
         std::string GetRankName(uint32 rankId);
         uint32 GetRankRights(uint32 rankId);
         uint32 GetRanksSize() const { return m_Ranks.size(); }
@@ -428,6 +438,7 @@ class Guild
         void   LogBankEvent(SQLTransaction& trans, uint8 EventType, uint8 TabId, uint32 PlayerGuidLow, uint32 ItemOrMoney, uint16 ItemStackCount=0, uint8 DestTabId=0);
         bool   AddGBankItemToDB(uint32 GuildId, uint32 BankTab , uint32 BankTabSlot , uint32 GUIDLow, uint32 Entry, SQLTransaction& trans);
 
+		RankInfo & GetRankInfo(uint32 rankId) {return m_Ranks[rankId];}
     protected:
         void AddRank(const std::string& name,uint32 rights,uint32 money);
 

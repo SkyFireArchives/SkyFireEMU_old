@@ -20,6 +20,7 @@
 #define DBCSTORE_H
 
 #include "DBCFileLoader.h"
+#include "DBCfmt.h"
 #include "Logging/Log.h"
 #include "Field.h"
 #include "DatabaseWorkerPool.h"
@@ -75,6 +76,7 @@ class DBCStorage
 
         T const* LookupEntry(uint32 id) const { return (id>=nCount)?NULL:indexTable[id]; }
 		T* LookupEntryNoConst(uint32 id) const { return (id>=nCount)?NULL:indexTable[id]; }
+		void SetEntry(uint32 id, T* entry) { if(id>=nCount){ printf("ERROR"); return;} indexTable[id]=entry; }
         uint32  GetNumRows() const { return nCount; }
         char const* GetFormat() const { return fmt; }
         uint32 GetFieldCount() const { return fieldCount; }
@@ -260,7 +262,7 @@ class DBCStorage
             nCount = 0;
         }
 
-    private:
+	public:
         char const* fmt;
         uint32 nCount;
         uint32 fieldCount;

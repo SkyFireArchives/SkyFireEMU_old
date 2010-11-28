@@ -379,6 +379,7 @@ bool AchievementCriteriaDataSet::Meets(Player const* source, Unit const* target,
 AchievementMgr::AchievementMgr(Player *player)
 {
     m_player = player;
+	achievementPoints = 0;
 }
 
 AchievementMgr::~AchievementMgr()
@@ -402,6 +403,7 @@ void AchievementMgr::Reset()
     }
 
     m_completedAchievements.clear();
+	achievementPoints = 0;
     m_criteriaProgress.clear();
     DeleteFromDB(m_player->GetGUIDLow());
 
@@ -446,6 +448,7 @@ void AchievementMgr::DeleteFromDB(uint32 lowguid)
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     trans->PAppend("DELETE FROM character_achievement WHERE guid = %u",lowguid);
     trans->PAppend("DELETE FROM character_achievement_progress WHERE guid = %u",lowguid);
+	trans->PAppend("UPDATE guild_member SET achievementPoints = 0 WHERE guid = %u",lowguid);
     CharacterDatabase.CommitTransaction(trans);
 }
 
@@ -553,6 +556,14 @@ void AchievementMgr::SaveToDB(SQLTransaction& trans)
                 trans->Append(ssins.str().c_str());
         }
     }
+	
+	//sortir pour la guilde.
+	if(achievementPoints)
+	{
+		std::ostringstream ssguild;
+		ssguild << "UPDATE guild_member SET achievementPoints=" << achievementPoints << " WHERE guid = " << GetPlayer()->GetGUIDLow();
+		trans->Append(ssguild.str().c_str());
+	}
 }
 
 void AchievementMgr::LoadFromDB(PreparedQueryResult achievementResult, PreparedQueryResult criteriaResult)
@@ -570,6 +581,9 @@ void AchievementMgr::LoadFromDB(PreparedQueryResult achievementResult, PreparedQ
             CompletedAchievementData& ca = m_completedAchievements[achievement_id];
             ca.date = time_t(achievementResult->GetUInt64(1));
             ca.changed = false;
+			
+			if (AchievementEntry const* pAchievement = sAchievementStore.LookupEntry(achievement_id))
+				achievementPoints += pAchievement->points;
         } while (achievementResult->NextRow());
     }
 
@@ -599,7 +613,6 @@ void AchievementMgr::LoadFromDB(PreparedQueryResult achievementResult, PreparedQ
             progress.changed = false;
         } while (criteriaResult->NextRow());
     }
-
 }
 
 void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
@@ -1622,8 +1635,8 @@ bool AchievementMgr::IsCompletedCriteria(AchievementCriteriaEntry const* achieve
             return progress->counter >= achievementCriteria->loot_type.lootTypeCount;
         case ACHIEVEMENT_CRITERIA_TYPE_LEARN_SKILL_LINE:
             return progress->counter >= achievementCriteria->learn_skill_line.spellCount;
-        case ACHIEVEMENT_CRITERIA_TYPE_EARN_HONORABLE_KILL:
-            return progress->counter >= achievementCriteria->honorable_kill.killCount;
+        //case ACHIEVEMENT_CRITERIA_TYPE_EARN_HONORABLE_KILL:
+        //    return progress->counter >= achievementCriteria->honorable_kill.killCount;
         case ACHIEVEMENT_CRITERIA_TYPE_EARN_ACHIEVEMENT_POINTS:
             return progress->counter >= 9000;
         case ACHIEVEMENT_CRITERIA_TYPE_USE_LFD_TO_GROUP_WITH_PLAYERS:
@@ -1914,6 +1927,9 @@ void AchievementMgr::CompletedAchievement(AchievementEntry const* achievement)
     CompletedAchievementData& ca =  m_completedAchievements[achievement->ID];
     ca.date = time(NULL);
     ca.changed = true;
+	
+	if (AchievementEntry const* pAchievement = sAchievementStore.LookupEntry(achievement->ID))
+		achievementPoints += pAchievement->points;
 
     // don't insert for ACHIEVEMENT_FLAG_REALM_FIRST_KILL since otherwise only the first group member would reach that achievement
     // TODO: where do set this instead?
@@ -1973,9 +1989,9 @@ void AchievementMgr::CompletedAchievement(AchievementEntry const* achievement)
 
 void AchievementMgr::SendAllAchievementData()
 {
-    WorldPacket data(SMSG_ALL_ACHIEVEMENT_DATA, m_completedAchievements.size()*8+4+m_criteriaProgress.size()*38+4);
-    BuildAllDataPacket(&data);
-    GetPlayer()->GetSession()->SendPacket(&data);
+    //WorldPacket data(SMSG_ALL_ACHIEVEMENT_DATA, m_completedAchievements.size()*8+4+m_criteriaProgress.size()*38+4);
+    //BuildAllDataPacket(&data);
+    //GetPlayer()->GetSession()->SendPacket(&data);
 }
 
 void AchievementMgr::SendRespondInspectAchievements(Player* player)

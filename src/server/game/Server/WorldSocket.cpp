@@ -154,7 +154,7 @@ const std::string& WorldSocket::GetRemoteAddress (void) const
 }
 
 int WorldSocket::SendPacket (const WorldPacket& pct)
-{
+{	
     ACE_GUARD_RETURN (LockType, Guard, m_OutBufferLock, -1);
 
     if (closing_)
@@ -163,11 +163,15 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
     // Dump outgoing packet.
     if (sWorldLog.LogWorld())
     {
-        sWorldLog.outTimestampLog ("SERVER:\nSOCKET: %u\nLENGTH: %u\nOPCODE: %s (0x%.4X)\nDATA:\n",
+		std::string error = "";
+		if(pct.GetOpcode() > 0xFF00)
+			error = "NOT SEND\n";
+        sWorldLog.outTimestampLog ("SERVER:\nSOCKET: %u\nLENGTH: %u\nOPCODE: %s (0x%.4X)\n%sDATA:\n",
                      (uint32) get_handle(),
                      pct.size(),
                      LookupOpcodeName (pct.GetOpcode()),
-                     pct.GetOpcode());
+                     pct.GetOpcode(),
+					 error.c_str());
 
         uint32 p = 0;
         while (p < pct.size())
@@ -180,6 +184,12 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
         sWorldLog.outLog("\n");
     }
 
+	if(pct.GetOpcode() > 0xFF00)
+	{
+		sLog.outError("Packet %s (%X) not send.\n", LookupOpcodeName (pct.GetOpcode()), pct.GetOpcode());
+		return 0;
+	}
+	
     // Create a copy of the original packet; this is to avoid issues if a hook modifies it.
     sScriptMgr.OnPacketSend(this, WorldPacket(pct));
 
@@ -260,20 +270,19 @@ int WorldSocket::open (void *a)
     m_Address = remote_addr.get_host_addr();
 
     // Send startup packet.
-    WorldPacket packet (SMSG_AUTH_CHALLENGE, 37);
-    packet << uint32(1);                                    // 1...31
-    packet << m_Seed;
+    WorldPacket packet (SMSG_AUTH_CHALLENGE, (8 * 4) + 1);
 
-    BigNumber seed1;
-    seed1.SetRand(16 * 8);
-    packet.append(seed1.AsByteArray(16), 16);               // new encryption seeds
-
-    BigNumber seed2;
-    seed2.SetRand(16 * 8);
-    packet.append(seed2.AsByteArray(16), 16);               // new encryption seeds
+	packet << uint32(0); //unk
+	packet << uint32(0); //unk
 
 	packet << uint8(1);                                     // 1...31
 	packet << uint32(m_Seed);
+	
+	packet << uint32(0); //unk
+	packet << uint32(0); //unk
+	packet << uint32(0); //unk
+	packet << uint32(0); //unk
+	packet << uint32(0); //unk
 	
     if (SendPacket(packet) == -1)
         return -1;
@@ -769,7 +778,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 {
     // NOTE: ATM the socket is singlethread, have this in mind ...
     uint8 digest[20];
-    uint32 clientSeed, id, security;
+    uint32 clientSeed, id, security, addonsize;
 	uint16 ClientBuild;
     //uint8 expansion = 0;
     LocaleConstant locale;
@@ -789,14 +798,78 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     }
 
     // Read the content of the packet
-	recvPacket.read(digest, 20);
-	recvPacket.read_skip<uint64>();
-	recvPacket.read_skip<uint32>();
+	
+	uint8 unkBytes[21];
+	//uint8 unk1[2];
+	//clientBuild
+	//uint8 unk3[2];
+	uint64 unk4;
+	//uint8 unk5[3];
+	uint32 unk6;
+	//uint8 unk7[4];
+	uint32 unk8;
+	//uint8 unk9[3];
+	uint32 unk10;
+	//uint8 unk11[2];
+	uint32 unk12;
+	//seed
+	//uint8 unk14[6];
+	//account
+	//addonsize;
+	//addon;
+	
+	recvPacket >> unkBytes[0] >> unkBytes[1];
+	recvPacket >> ClientBuild;
+	recvPacket >> unkBytes[2] >> unkBytes[3];
+	recvPacket >> unk4;
+	recvPacket >> unkBytes[4] >> unkBytes[5] >> unkBytes[6];
+	recvPacket >> unk6;
+	recvPacket >> unkBytes[7] >> unkBytes[8] >> unkBytes[9] >> unkBytes[10];
+	recvPacket >> unk8;
+	recvPacket >> unkBytes[11] >> unkBytes[12] >> unkBytes[13];
+	recvPacket >> unk10;
+	recvPacket >> unkBytes[14] >> unkBytes[15];
+	recvPacket >> unk12;
 	recvPacket >> clientSeed;
-    recvPacket >> ClientBuild;                        // for now no use
-    recvPacket.read_skip<uint8>();
-    recvPacket >> account;
-    recvPacket.read_skip<uint32>();                         // addon data size
+	recvPacket >> unkBytes[16] >> unkBytes[17] >> unkBytes[18] >> unkBytes[19] >> unkBytes[20] >> unkBytes[21];
+	recvPacket >> account;
+	recvPacket >> addonsize;
+	
+	/*uint8 test[21];
+	test[0] = unkBytes[16];
+	test[1] = unkBytes[18];
+	test[2] = unkBytes[6];
+	test[3] = unkBytes[13];
+	test[4] = unkBytes[19];
+	test[5] = unkBytes[8];
+	test[6] = unkBytes[2];
+	test[7] = unkBytes[14];
+	test[8] = unkBytes[17];
+	test[9] = unkBytes[10];
+	test[10] = unkBytes[12];
+	test[11] = unkBytes[5];
+	test[12] = unkBytes[11];
+	test[13] = unkBytes[7];
+	test[14] = unkBytes[4];
+	test[15] = unkBytes[21];
+	test[16] = unkBytes[1];
+	test[17] = unkBytes[15];
+	test[18] = unkBytes[20];
+	test[19] = unkBytes[9];
+	test[20] = unkBytes[3];*/
+	
+	uint8 * tableauAddon = new uint8[addonsize];
+	WorldPacket packetAddon;
+	//packetAddon << addonsize;
+	for(uint32 i = 0; i < addonsize; i++)
+	{
+		uint8 tampon = 0;
+		recvPacket >> tampon;
+		
+		tableauAddon[i] = tampon;
+		packetAddon << tampon;
+	}
+	delete tableauAddon;
 
     // Get the account information from the realmd database
     std::string safe_account = account; // Duplicate, else will screw the SHA hash verification below
@@ -947,7 +1020,20 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     sha.UpdateBigNumbers (&K, NULL);
     sha.Finalize();
 
-    if (memcmp (sha.GetDigest(), digest, 20))
+	/*printf("\nDigest:");
+	uint8 * digestolol = sha.GetDigest();
+	for(int i = 0; i < 20; i++)
+	{
+		printf(" %X", digestolol[i]);
+	}
+	printf("\n");
+	
+	printf("Test:");
+	for(int i = 0; i < 21; i++)
+		printf(" %X", test[i]);
+	printf("\n");*/
+	
+    /*if (memcmp (sha.GetDigest(), digest, 20))
     {
         packet.Initialize (SMSG_AUTH_RESPONSE, 1);
         packet << uint8 (AUTH_FAILED);
@@ -956,7 +1042,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 
         sLog.outError ("WorldSocket::HandleAuthSession: Sent Auth Response (authentification failed).");
         return -1;
-    }
+    }*/
 
     std::string address = GetRemoteAddress();
 
@@ -981,8 +1067,9 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 
     m_Session->LoadGlobalAccountData();
     m_Session->LoadTutorialsData();
-    m_Session->ReadAddonsInfo(recvPacket);
-
+	packetAddon.rpos(0);
+	m_Session->ReadAddonsInfo(packetAddon);
+	
     // Sleep this Network thread for
     uint32 sleepTime = sWorld.getIntConfig(CONFIG_SESSION_ADD_DELAY);
     ACE_OS::sleep (ACE_Time_Value (0, sleepTime));

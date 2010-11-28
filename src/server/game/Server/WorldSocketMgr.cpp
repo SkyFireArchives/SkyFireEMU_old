@@ -24,6 +24,7 @@
 */
 
 #include "WorldSocketMgr.h"
+#include "Opcodes.h"
 
 #include <ace/ACE.h>
 #include <ace/Log_Msg.h>
@@ -237,6 +238,7 @@ WorldSocketMgr::WorldSocketMgr() :
     m_UseNoDelay(true),
     m_Acceptor (0)
 {
+	InitOpcodeTable();
 }
 
 WorldSocketMgr::~WorldSocketMgr()

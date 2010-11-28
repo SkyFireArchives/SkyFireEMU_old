@@ -19,6 +19,7 @@
  */
 
 #include "Common.h"
+#include "Object.h"
 #include "Language.h"
 #include "DatabaseEnv.h"
 #include "Log.h"
@@ -512,7 +513,7 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
     //when dying/logging out
     m_oldpetspell = 0;
     m_lastpetnumber = 0;
-
+	
     ////////////////////Rest System/////////////////////
     time_inn_enter=0;
     inn_pos_mapid=0;
@@ -555,8 +556,9 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
             m_Glyphs[i][g] = 0;
 
         m_talents[i] = new PlayerTalentMap();
+		
+		m_branchSpec[i] = 0;
     }
-
     for (uint8 i = 0; i < BASEMOD_END; ++i)
     {
         m_auraBaseMod[i][FLAT_MOD] = 0.0f;
@@ -733,6 +735,8 @@ bool Player::Create(uint32 guidlow, const std::string& name, uint8 race, uint8 c
     SetInGuild( 0 );
     SetUInt32Value(PLAYER_GUILDRANK, 0);
     SetUInt32Value(PLAYER_GUILD_TIMESTAMP, 0);
+	SetUInt32Value(PLAYER_GUILDDELETE_DATE, 0);
+	SetUInt32Value(PLAYER_GUILDLEVEL, 1);
 
     for (int i = 0; i < KNOWN_TITLES_SIZE; ++i)
         SetUInt64Value(PLAYER__FIELD_KNOWN_TITLES + i, 0);  // 0=disabled
@@ -1646,7 +1650,10 @@ bool Player::BuildEnumData(QueryResult result, WorldPacket * p_data)
     *p_data << fields[11].GetFloat();                       // y
     *p_data << fields[12].GetFloat();                       // z
 
-    *p_data << uint32(fields[13].GetUInt32());              // guild id
+	if(uint32 guildId = fields[13].GetUInt32())
+		*p_data << uint64(MAKE_NEW_GUID(guildId, 0, HIGHGUID_GUILD));
+	else 
+		*p_data << uint64(0);
 
     uint32 char_flags = 0;
     uint32 playerFlags = fields[14].GetUInt32();
@@ -2900,10 +2907,12 @@ void Player::InitStatsForLevel(bool reapplyMods)
     SetFloatValue(UNIT_FIELD_MAXRANGEDDAMAGE, 0.0f);
 
     SetInt32Value(UNIT_FIELD_ATTACK_POWER,            0);
-    SetInt32Value(UNIT_FIELD_ATTACK_POWER_MODS,       0);
+    SetInt32Value(UNIT_FIELD_ATTACK_POWER_MOD_POS,       0);
+	SetInt32Value(UNIT_FIELD_ATTACK_POWER_MOD_NEG,       0);
     SetFloatValue(UNIT_FIELD_ATTACK_POWER_MULTIPLIER,0.0f);
     SetInt32Value(UNIT_FIELD_RANGED_ATTACK_POWER,     0);
-    SetInt32Value(UNIT_FIELD_RANGED_ATTACK_POWER_MODS,0);
+    SetInt32Value(UNIT_FIELD_RANGED_ATTACK_POWER_MOD_POS,0);
+	SetInt32Value(UNIT_FIELD_RANGED_ATTACK_POWER_MOD_NEG,0);
     SetFloatValue(UNIT_FIELD_RANGED_ATTACK_POWER_MULTIPLIER,0.0f);
 
     // Base crit values (will be recalculated in UpdateAllStats() at loading and in _ApplyAllStatBonuses() at reset
@@ -4112,8 +4121,19 @@ bool Player::resetTalents(bool no_cost)
         }
     }
 
+	for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
+    {
+        TalentTreePrimarySpellsEntry const *talentInfo = sTalentTreePrimarySpellsStore.LookupEntry(i);
+		
+        if (!talentInfo || talentInfo->TalentTabID != GetTalentBranchSpec(m_activeSpec))
+            continue;
+		
+        removeSpell(talentInfo->SpellID, true);
+    }
+	
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     _SaveTalents(trans);
+	_SaveTalentBranchSpecs(trans);
     _SaveSpells(trans);
     CharacterDatabase.CommitTransaction(trans);
 
@@ -4142,12 +4162,6 @@ bool Player::resetTalents(bool no_cost)
     return true;
 }
 
-void Player::SetFreeTalentPoints(uint32 points)
-{
-    //sScriptMgr.OnPlayerFreeTalentPointsChanged(this, points);
-    //SetUInt32Value(PLAYER_CHARACTER_POINTS1,points);
-}
-
 Mail* Player::GetMail(uint32 id)
 {
     for (PlayerMails::iterator itr = m_mail.begin(); itr != m_mail.end(); ++itr)
@@ -4163,7 +4177,7 @@ void Player::_SetCreateBits(UpdateMask *updateMask, Player *target) const
         Object::_SetCreateBits(updateMask, target);
     else
     {
-        for (uint16 index = 0; index < m_valuesCount; index++)
+        for (uint16 index = 0; index < MAX_VALUES_COUNT_OTHER_PLAYER; index++)
             if (GetUInt32Value(index) != 0 && updateVisualBits.GetBit(index))
                 updateMask->SetBit(index);
     }
@@ -4187,6 +4201,8 @@ void Player::InitVisibleBits()
     updateVisualBits.SetBit(OBJECT_FIELD_GUID);
     updateVisualBits.SetBit(OBJECT_FIELD_TYPE);
     updateVisualBits.SetBit(OBJECT_FIELD_ENTRY);
+	updateVisualBits.SetBit(OBJECT_FIELD_DATA + 0);
+	updateVisualBits.SetBit(OBJECT_FIELD_DATA + 1);
     updateVisualBits.SetBit(OBJECT_FIELD_SCALE_X);
     updateVisualBits.SetBit(UNIT_FIELD_CHARM + 0);
     updateVisualBits.SetBit(UNIT_FIELD_CHARM + 1);
@@ -4247,13 +4263,14 @@ void Player::InitVisibleBits()
     updateVisualBits.SetBit(PLAYER_DUEL_ARBITER + 0);
     updateVisualBits.SetBit(PLAYER_DUEL_ARBITER + 1);
     updateVisualBits.SetBit(PLAYER_FLAGS);
-    //updateVisualBits.SetBit(PLAYER_GUILDID);
     updateVisualBits.SetBit(PLAYER_GUILDRANK);
+	//updateVisualBits.SetBit(PLAYER_GUILDDELETE_DATE);
+	updateVisualBits.SetBit(PLAYER_GUILDLEVEL);
     updateVisualBits.SetBit(PLAYER_BYTES);
     updateVisualBits.SetBit(PLAYER_BYTES_2);
     updateVisualBits.SetBit(PLAYER_BYTES_3);
     updateVisualBits.SetBit(PLAYER_DUEL_TEAM);
-    updateVisualBits.SetBit(PLAYER_GUILD_TIMESTAMP);
+    //updateVisualBits.SetBit(PLAYER_GUILD_TIMESTAMP);
     updateVisualBits.SetBit(UNIT_NPC_FLAGS);
 
     // PLAYER_QUEST_LOG_x also visible bit on official (but only on party/raid)...
@@ -4359,7 +4376,7 @@ bool Player::HasActiveSpell(uint32 spell) const
 TrainerSpellState Player::GetTrainerSpellState(TrainerSpell const* trainer_spell) const
 {
     if (!trainer_spell)
-        return TRAINER_SPELL_RED;
+        return TRAINER_SPELL_CANT_LEARN;
 
     bool hasSpell = true;
     for (uint8 i = 0; i < MAX_SPELL_EFFECTS ; ++i)
@@ -4375,15 +4392,15 @@ TrainerSpellState Player::GetTrainerSpellState(TrainerSpell const* trainer_spell
     }
     // known spell
     if (hasSpell)
-        return TRAINER_SPELL_GRAY;
+        return TRAINER_SPELL_ALREADY_LEARN;
 
     // check skill requirement
     if (trainer_spell->reqSkill && GetBaseSkillValue(trainer_spell->reqSkill) < trainer_spell->reqSkillValue)
-        return TRAINER_SPELL_RED;
+        return TRAINER_SPELL_CANT_LEARN;
 
     // check level requirement
     if (getLevel() < trainer_spell->reqLevel)
-        return TRAINER_SPELL_RED;
+        return TRAINER_SPELL_CANT_LEARN;
 
     for (uint8 i = 0; i < MAX_SPELL_EFFECTS ; ++i)
     {
@@ -4392,13 +4409,13 @@ TrainerSpellState Player::GetTrainerSpellState(TrainerSpell const* trainer_spell
 
         // check race/class requirement
         if (!IsSpellFitByClassAndRace(trainer_spell->learnedSpell[i]))
-            return TRAINER_SPELL_RED;
+            return TRAINER_SPELL_CANT_LEARN;
 
         if (SpellChainNode const* spell_chain = sSpellMgr.GetSpellChainNode(trainer_spell->learnedSpell[i]))
         {
             // check prev.rank requirement
             if (spell_chain->prev && !HasSpell(spell_chain->prev))
-                return TRAINER_SPELL_RED;
+                return TRAINER_SPELL_CANT_LEARN;
         }
 
         SpellsRequiringSpellMapBounds spellsRequired = sSpellMgr.GetSpellsRequiredForSpellBounds(trainer_spell->learnedSpell[i]);
@@ -4406,7 +4423,7 @@ TrainerSpellState Player::GetTrainerSpellState(TrainerSpell const* trainer_spell
         {
             // check additional spell requirement
             if (!HasSpell(itr->second))
-                return TRAINER_SPELL_RED;
+                return TRAINER_SPELL_CANT_LEARN;
         }
     }
 
@@ -4417,10 +4434,10 @@ TrainerSpellState Player::GetTrainerSpellState(TrainerSpell const* trainer_spell
         if (!trainer_spell->learnedSpell[i])
             continue;
         if ((sSpellMgr.IsPrimaryProfessionFirstRankSpell(trainer_spell->learnedSpell[i])) && (GetFreePrimaryProfessionPoints() == 0))
-            return TRAINER_SPELL_GREEN_DISABLED;
+            return TRAINER_SPELL_CANT_LEARN;
     }
 
-    return TRAINER_SPELL_GREEN;
+    return TRAINER_SPELL_CAN_LEARN;
 }
 
 /**
@@ -5631,6 +5648,8 @@ void Player::UpdateRating(CombatRating cr)
         case CR_WEAPON_SKILL_OFFHAND:
         case CR_WEAPON_SKILL_RANGED:
             break;
+		case CR_MASTERY:                                    // Not implemented
+			break;
         case CR_EXPERTISE:
             if (affectStats)
             {
@@ -6834,7 +6853,7 @@ bool Player::RewardHonor(Unit *uVictim, uint32 groupsize, int32 honor, bool pvpt
             ApplyModUInt32Value(PLAYER_FIELD_KILLS, 1, true);
             // and those in a lifetime
             //ApplyModUInt32Value(PLAYER_FIELD_LIFETIME_HONORABLE_KILLS, 1, true);
-            UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EARN_HONORABLE_KILL);
+            //UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EARN_HONORABLE_KILL);
             UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HK_CLASS, pVictim->getClass());
             UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HK_RACE, pVictim->getRace());
         }
@@ -7029,6 +7048,7 @@ void Player::UpdateZone(uint32 newZone, uint32 newArea)
     {
         sOutdoorPvPMgr.HandlePlayerLeaveZone(this, m_zoneUpdateId);
         sOutdoorPvPMgr.HandlePlayerEnterZone(this, newZone);
+		printf("Send World State");
         SendInitWorldStates(newZone, newArea);              // only if really enters to new zone, not just area change, works strange...
     }
 
@@ -7489,11 +7509,22 @@ void Player::_ApplyItemBonuses(ItemPrototype const *proto, uint8 slot, bool appl
                 ApplyRatingMod(CR_EXPERTISE, int32(val), apply);
                 break;
             case ITEM_MOD_ATTACK_POWER:
-                HandleStatModifier(UNIT_MOD_ATTACK_POWER, TOTAL_VALUE, float(val), apply);
-                HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED, TOTAL_VALUE, float(val), apply);
+				if(float(val) > 0)
+				{
+					HandleStatModifier(UNIT_MOD_ATTACK_POWER_POS, TOTAL_VALUE, float(val), apply);
+					HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(val), apply);
+				}
+				else
+				{
+					HandleStatModifier(UNIT_MOD_ATTACK_POWER_NEG, TOTAL_VALUE, -float(val), apply);
+					HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(val), apply);
+				}
                 break;
             case ITEM_MOD_RANGED_ATTACK_POWER:
-                HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED, TOTAL_VALUE, float(val), apply);
+				if(float(val) > 0)
+					HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(val), apply);
+				else
+					HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, -float(val), apply);
                 break;
 //            case ITEM_MOD_FERAL_ATTACK_POWER:
 //                ApplyFeralAPBonus(int32(val), apply);
@@ -13282,12 +13313,23 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
                             sLog.outDebug("+ %u EXPERTISE", enchant_amount);
                             break;
                         case ITEM_MOD_ATTACK_POWER:
-                            HandleStatModifier(UNIT_MOD_ATTACK_POWER, TOTAL_VALUE, float(enchant_amount), apply);
-                            HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED, TOTAL_VALUE, float(enchant_amount), apply);
+							if(float(enchant_amount) > 0)
+							{
+								HandleStatModifier(UNIT_MOD_ATTACK_POWER_POS, TOTAL_VALUE, float(enchant_amount), apply);
+								HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, float(enchant_amount), apply);
+							}
+							else
+							{
+								HandleStatModifier(UNIT_MOD_ATTACK_POWER_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
+								HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
+							}
                             sLog.outDebug("+ %u ATTACK_POWER", enchant_amount);
                             break;
                         case ITEM_MOD_RANGED_ATTACK_POWER:
-                            HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED, TOTAL_VALUE, float(enchant_amount), apply);
+							if(float(enchant_amount) > 0)
+								HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(enchant_amount), apply);
+							else
+								HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
                             sLog.outDebug("+ %u RANGED_ATTACK_POWER", enchant_amount);
                             break;
 //                        case ITEM_MOD_FERAL_ATTACK_POWER:
@@ -15577,6 +15619,7 @@ void Player::SendQuestReward(Quest const *pQuest, uint32 XP, Object * questGiver
     sLog.outDebug("WORLD: Sent SMSG_QUESTGIVER_QUEST_COMPLETE quest = %u", questid);
     sGameEventMgr.HandleQuestComplete(questid);
     WorldPacket data(SMSG_QUESTGIVER_QUEST_COMPLETE, (4+4+4+4+4));
+	data << uint8(0x80); // unk 4.0.1 flags
     data << uint32(questid);
 
     if (getLevel() < sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
@@ -16374,6 +16417,7 @@ bool Player::LoadFromDB(uint32 guid, SQLQueryHolder *holder)
     }
 
     _LoadTalents(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADTALENTS));
+	_LoadTalentBranchSpecs(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS));
     _LoadSpells(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADSPELLS));
 
     _LoadGlyphs(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADGLYPHS));
@@ -17776,6 +17820,7 @@ void Player::SaveToDB()
     _SaveDailyQuestStatus(trans);
     _SaveWeeklyQuestStatus(trans);
     _SaveTalents(trans);
+	_SaveTalentBranchSpecs(trans);
     _SaveSpells(trans);
     _SaveSpellCooldowns(trans);
     _SaveActions(trans);
@@ -19719,6 +19764,9 @@ bool Player::BuyItemFromVendorSlot(uint64 vendorguid, uint32 vendorslot, uint32 
         return false;
     }
 
+	if(count == pProto->BuyCount)
+		count = 1;
+
     // check current item amount if it limited
     if (crItem->maxcount != 0)
     {
@@ -20910,11 +20958,12 @@ void Player::SendInitialPacketsBeforeAddToMap()
 }
 
 void Player::SendInitialPacketsAfterAddToMap()
-{
+{	
     // update zone
     uint32 newzone, newarea;
     GetZoneAndAreaId(newzone,newarea);
-    UpdateZone(newzone,newarea);                            // also call SendInitWorldStates();
+	SendInitWorldStates(newzone, newarea);
+    UpdateZone(newzone,newarea);
 
     ResetTimeSync();
     SendTimeSync();
@@ -22790,7 +22839,9 @@ void Player::StoreLootItem(uint8 lootSlot, Loot* loot)
 
 uint32 Player::CalculateTalentsPoints() const
 {
-    uint32 base_talent = getLevel() < 10 ? 0 : getLevel()-9;
+    uint32 base_talent = 0;
+	if(getLevel() >= 10)
+		base_talent = (((getLevel() - 10 + 1) - ( ((getLevel() - 10 + 1) % 2) == 1 ? 1 : 0))/2)+1;
 
     if (getClass() != CLASS_DEATH_KNIGHT || GetMapId() != 609)
         return uint32(base_talent * sWorld.getRate(RATE_TALENT));
@@ -23059,7 +23110,7 @@ void Player::CompletedAchievement(AchievementEntry const* entry)
     GetAchievementMgr().CompletedAchievement(entry);
 }
 
-void Player::LearnTalent(uint32 talentId, uint32 talentRank)
+void Player::LearnTalent(uint32 talentId, uint32 talentRank, bool one)
 {
     uint32 CurTalentPoints = GetFreeTalentPoints();
 
@@ -23078,7 +23129,49 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank)
 
     if (!talentTabInfo)
         return;
-
+	
+	//TODO: CHANGER DE CODE! IL EST DEGUEULASSE!
+	if(one && talentTabInfo->TalentTabID != GetTalentBranchSpec(m_activeSpec))
+	{
+		uint32 pointInBranchSpec = 0;
+		for(PlayerTalentMap::iterator itr = m_talents[m_activeSpec]->begin(); itr != m_talents[m_activeSpec]->end(); itr++)
+		{
+			for(uint32 i = 0; i < sTalentStore.GetNumRows(); i++)
+			{
+				const TalentEntry * thisTalent = sTalentStore.LookupEntry(i);
+				if(thisTalent) 
+				{
+					int thisrank = -1;
+					for(int j = 0; j < 5; j++)
+						if(thisTalent->RankID[j] == itr->first)
+						{
+							thisrank = j;
+							break;
+						}
+					if(thisrank != -1)
+					{
+						if(thisTalent->TalentTab == GetTalentBranchSpec(m_activeSpec))
+						{
+							int8 curtalent_maxrank = -1;
+							for (int8 rank = MAX_TALENT_RANK-1; rank >= 0; --rank)
+							{
+								if (thisTalent->RankID[rank] && HasTalent(thisTalent->RankID[rank], m_activeSpec))
+								{
+									curtalent_maxrank = rank;
+									break;
+								}
+							}
+							if(curtalent_maxrank != -1 && thisrank == curtalent_maxrank)
+								pointInBranchSpec += curtalent_maxrank + 1;
+						}
+					}
+				}
+			}
+		}
+		if(pointInBranchSpec < 31)
+			return;
+	}
+	
     // prevent learn talent for different class (cheating)
     if ((getClassMask() & talentTabInfo->ClassMask) == 0)
         return;
@@ -23387,7 +23480,8 @@ void Player::BuildPlayerTalentsInfoData(WorldPacket *data)
         for (uint32 specIdx = 0; specIdx < m_specsCount; ++specIdx)
         {
             uint8 talentIdCount = 0;
-            size_t pos = data->wpos();
+			*data << uint32(GetTalentBranchSpec(specIdx));  //branchSpec
+			size_t pos = data->wpos();
             *data << uint8(talentIdCount);                  // [PH], talentIdCount
 
             // find class talent tabs (all players have 3 talent tabs)
@@ -23729,7 +23823,7 @@ void Player::SetMap(Map * map)
 
 void Player::_LoadGlyphs(PreparedQueryResult result)
 {
-    // SELECT spec, glyph1, glyph2, glyph3, glyph4, glyph5, glyph6 from character_glyphs WHERE guid = '%u'
+    // SELECT spec, glyph1, glyph2, glyph3, glyph4, glyph5, glyph6, glyph7, glyph8, glyph9 from character_glyphs WHERE guid = '%u'
     if (!result)
         return;
 
@@ -23745,6 +23839,9 @@ void Player::_LoadGlyphs(PreparedQueryResult result)
         m_Glyphs[spec][3] = result->GetUInt32(4);
         m_Glyphs[spec][4] = result->GetUInt32(5);
         m_Glyphs[spec][5] = result->GetUInt32(6);
+		m_Glyphs[spec][6] = result->GetUInt32(7);
+		m_Glyphs[spec][7] = result->GetUInt32(8);
+		m_Glyphs[spec][8] = result->GetUInt32(9);
     } while (result->NextRow());
 }
 
@@ -23753,9 +23850,34 @@ void Player::_SaveGlyphs(SQLTransaction& trans)
     trans->PAppend("DELETE FROM character_glyphs WHERE guid='%u'",GetGUIDLow());
     for (uint8 spec = 0; spec < m_specsCount; ++spec)
     {
-        trans->PAppend("INSERT INTO character_glyphs VALUES('%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u')",
-            GetGUIDLow(), spec, m_Glyphs[spec][0], m_Glyphs[spec][1], m_Glyphs[spec][2], m_Glyphs[spec][3], m_Glyphs[spec][4], m_Glyphs[spec][5]);
+        trans->PAppend("INSERT INTO character_glyphs VALUES('%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u')",
+            GetGUIDLow(), spec, m_Glyphs[spec][0], m_Glyphs[spec][1], m_Glyphs[spec][2], m_Glyphs[spec][3], m_Glyphs[spec][4], m_Glyphs[spec][5], m_Glyphs[spec][6], m_Glyphs[spec][7], m_Glyphs[spec][8]);
     }
+}
+
+void Player::_SaveTalentBranchSpecs(SQLTransaction& trans)
+{
+    trans->PAppend("DELETE FROM character_branchspec WHERE guid='%u'",GetGUIDLow());
+    for (uint8 spec = 0; spec < m_specsCount; ++spec)
+    {
+        trans->PAppend("INSERT INTO character_branchspec VALUES('%u', '%u', '%u')",
+					   GetGUIDLow(), spec, GetTalentBranchSpec(spec));
+    }
+}
+
+void Player::_LoadTalentBranchSpecs(PreparedQueryResult result)
+{
+	// SetPQuery(PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS, "SELECT branchSpec, spec FROM character_branchspec WHERE guid = '%u'", GUID_LOPART(m_guid));
+	if(result)
+	{
+		do
+		{
+			uint32 branchSpec = result->GetUInt32(0);
+			uint8 spec = result->GetUInt32(1);
+            SetTalentBranchSpec(branchSpec, spec);
+        }
+		while (result->NextRow());
+	}
 }
 
 void Player::_LoadTalents(PreparedQueryResult result)
@@ -23899,6 +24021,16 @@ void Player::ActivateSpec(uint8 spec)
             //    plrTalent->second->state = PLAYERSPELL_REMOVED;
         }
     }
+	
+	for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
+    {
+        TalentTreePrimarySpellsEntry const *talentInfo = sTalentTreePrimarySpellsStore.LookupEntry(i);
+		
+        if (!talentInfo || talentInfo->TalentTabID != GetTalentBranchSpec(m_activeSpec))
+            continue;
+		
+        removeSpell(talentInfo->SpellID, true);
+    }
 
     // set glyphs
     for (uint8 slot = 0; slot < MAX_GLYPH_SLOT_INDEX; ++slot)
@@ -23941,6 +24073,16 @@ void Player::ActivateSpec(uint8 spec)
         }
     }
 
+	for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
+    {
+        TalentTreePrimarySpellsEntry const *talentInfo = sTalentTreePrimarySpellsStore.LookupEntry(i);
+		
+        if (!talentInfo || talentInfo->TalentTabID != GetTalentBranchSpec(spec))
+            continue;
+		
+        learnSpell(talentInfo->SpellID, true);
+    }
+	
     // set glyphs
     for (uint8 slot = 0; slot < MAX_GLYPH_SLOT_INDEX; ++slot)
     {
@@ -24226,4 +24368,20 @@ float Player::GetAverageItemLevel()
     }
 
     return ((float)sum) / count;
+}
+
+void Player::SetInGuild(uint32 GuildId)
+{ 
+	//printf("DEBUG: set in guild %u, %lX", GuildId, MAKE_NEW_GUID(GuildId, 0, HIGHGUID_GUILD));
+	m_guildId = GuildId;
+	if(GuildId != 0)
+	{
+		SetUInt64Value(OBJECT_FIELD_DATA, MAKE_NEW_GUID(GuildId, 0, HIGHGUID_GUILD));
+		SetUInt32Value(OBJECT_FIELD_TYPE, GetUInt32Value(OBJECT_FIELD_TYPE) | TYPEMASK_IN_GUILD);
+	}
+	else
+	{
+		SetUInt64Value(OBJECT_FIELD_DATA, 0);
+		SetUInt32Value(OBJECT_FIELD_TYPE, GetUInt32Value(OBJECT_FIELD_TYPE) & ~TYPEMASK_IN_GUILD);
+	}
 }

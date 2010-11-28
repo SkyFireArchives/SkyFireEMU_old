@@ -594,6 +594,8 @@ class ObjectMgr
         }
 
         void LoadGuilds();
+	
+		void LoadGuildMemberProfessions(std::vector<Guild*>& GuildVector, QueryResult& result);
         void LoadGuildEvents(std::vector<Guild*>& GuildVector, QueryResult& result);
         void LoadGuildBankEvents(std::vector<Guild*>& GuildVector, QueryResult& result);
         void LoadGuildBanks(std::vector<Guild*>& GuildVector, QueryResult& result, PreparedQueryResult& itemResult);

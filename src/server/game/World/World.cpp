@@ -273,6 +273,7 @@ World::AddSession_ (WorldSession* s)
     packet << uint8 (0);                                    // BillingPlanFlags
     packet << uint32 (0);                                   // BillingTimeRested
     packet << uint8 (s->Expansion());                       // 0 - normal, 1 - TBC, 2 - WOTLK, must be set in database manually for each account
+	packet << uint8 (2);                                    // In my only dump, same as extension.
     s->SendPacket (&packet);
 
     s->SendAddonsInfo();
@@ -1253,7 +1254,7 @@ void World::SetInitialWorldSettings()
             !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f))))
     {
         exit(1);
-    }
+    }*/
 
     ///- Loading strings. Getting no records means core load has to be canceled because no error message can be output.
     sLog.outString();
@@ -1275,7 +1276,7 @@ void World::SetInitialWorldSettings()
 
     ///- Remove the bones (they should not exist in DB though) and old corpses after a restart
     CharacterDatabase.PExecute("DELETE FROM corpse WHERE corpse_type = '0' OR time < (UNIX_TIMESTAMP()-'%u')", 3 * DAY);
-*/
+
     ///- Load the DBC files
     sLog.outString("Initialize data stores...");
     LoadDBCStores(m_dataPath);

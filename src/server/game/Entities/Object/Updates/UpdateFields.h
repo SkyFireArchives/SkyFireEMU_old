@@ -21,7 +21,7 @@
 #ifndef _UPDATEFIELDS_AUTO_H
 #define _UPDATEFIELDS_AUTO_H
 
-// Auto generated for version 4, 0, 1, 12942
+// Auto generated for version 4, 0, 3, 13287
 
 enum EObjectFields
 {
@@ -176,19 +176,21 @@ enum EUnitFields
     UNIT_FIELD_BASE_HEALTH                    = OBJECT_END + 0x0083, // Size: 1, Type: INT, Flags: PRIVATE, OWNER
     UNIT_FIELD_BYTES_2                        = OBJECT_END + 0x0084, // Size: 1, Type: BYTES, Flags: PUBLIC
     UNIT_FIELD_ATTACK_POWER                   = OBJECT_END + 0x0085, // Size: 1, Type: INT, Flags: PRIVATE, OWNER
-    UNIT_FIELD_ATTACK_POWER_MODS              = OBJECT_END + 0x0086, // Size: 1, Type: TWO_SHORT, Flags: PRIVATE, OWNER
-    UNIT_FIELD_ATTACK_POWER_MULTIPLIER        = OBJECT_END + 0x0087, // Size: 1, Type: FLOAT, Flags: PRIVATE, OWNER
-    UNIT_FIELD_RANGED_ATTACK_POWER            = OBJECT_END + 0x0088, // Size: 1, Type: INT, Flags: PRIVATE, OWNER
-    UNIT_FIELD_RANGED_ATTACK_POWER_MODS       = OBJECT_END + 0x0089, // Size: 1, Type: TWO_SHORT, Flags: PRIVATE, OWNER
-    UNIT_FIELD_RANGED_ATTACK_POWER_MULTIPLIER = OBJECT_END + 0x008A, // Size: 1, Type: FLOAT, Flags: PRIVATE, OWNER
-    UNIT_FIELD_MINRANGEDDAMAGE                = OBJECT_END + 0x008B, // Size: 1, Type: FLOAT, Flags: PRIVATE, OWNER
-    UNIT_FIELD_MAXRANGEDDAMAGE                = OBJECT_END + 0x008C, // Size: 1, Type: FLOAT, Flags: PRIVATE, OWNER
-    UNIT_FIELD_POWER_COST_MODIFIER            = OBJECT_END + 0x008D, // Size: 7, Type: INT, Flags: PRIVATE, OWNER
-    UNIT_FIELD_POWER_COST_MULTIPLIER          = OBJECT_END + 0x0094, // Size: 7, Type: FLOAT, Flags: PRIVATE, OWNER
-    UNIT_FIELD_MAXHEALTHMODIFIER              = OBJECT_END + 0x009B, // Size: 1, Type: FLOAT, Flags: PRIVATE, OWNER
-    UNIT_FIELD_HOVERHEIGHT                    = OBJECT_END + 0x009C, // Size: 1, Type: FLOAT, Flags: PUBLIC
-    UNIT_FIELD_MAXITEMLEVEL                   = OBJECT_END + 0x009D, // Size: 1, Type: INT, Flags: PUBLIC
-    UNIT_END                                  = OBJECT_END + 0x009E,
+    UNIT_FIELD_ATTACK_POWER_MOD_POS           = OBJECT_END + 0x0086, // Size: 1, Type: INT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_ATTACK_POWER_MOD_NEG           = OBJECT_END + 0x0087, // Size: 1, Type: INT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_ATTACK_POWER_MULTIPLIER        = OBJECT_END + 0x0088, // Size: 1, Type: FLOAT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_RANGED_ATTACK_POWER            = OBJECT_END + 0x0089, // Size: 1, Type: INT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_RANGED_ATTACK_POWER_MOD_POS    = OBJECT_END + 0x008A, // Size: 1, Type: INT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_RANGED_ATTACK_POWER_MOD_NEG    = OBJECT_END + 0x008B, // Size: 1, Type: INT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_RANGED_ATTACK_POWER_MULTIPLIER = OBJECT_END + 0x008C, // Size: 1, Type: FLOAT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_MINRANGEDDAMAGE                = OBJECT_END + 0x008D, // Size: 1, Type: FLOAT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_MAXRANGEDDAMAGE                = OBJECT_END + 0x008E, // Size: 1, Type: FLOAT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_POWER_COST_MODIFIER            = OBJECT_END + 0x008F, // Size: 7, Type: INT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_POWER_COST_MULTIPLIER          = OBJECT_END + 0x0096, // Size: 7, Type: FLOAT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_MAXHEALTHMODIFIER              = OBJECT_END + 0x009D, // Size: 1, Type: FLOAT, Flags: PRIVATE, OWNER
+    UNIT_FIELD_HOVERHEIGHT                    = OBJECT_END + 0x009E, // Size: 1, Type: FLOAT, Flags: PUBLIC
+    UNIT_FIELD_MAXITEMLEVEL                   = OBJECT_END + 0x009F, // Size: 1, Type: INT, Flags: PUBLIC
+    UNIT_END                                  = OBJECT_END + 0x00A0,
 	
     PLAYER_DUEL_ARBITER                       = UNIT_END + 0x0000, // Size: 2, Type: LONG, Flags: PUBLIC
     PLAYER_FLAGS                              = UNIT_END + 0x0002, // Size: 1, Type: INT, Flags: PUBLIC
@@ -488,27 +490,29 @@ enum EUnitFields
     PLAYER_FIELD_BUYBACK_TIMESTAMP_1          = UNIT_END + 0x0476, // Size: 12, Type: INT, Flags: PRIVATE
     PLAYER_FIELD_KILLS                        = UNIT_END + 0x0482, // Size: 1, Type: TWO_SHORT, Flags: PRIVATE
     PLAYER_FIELD_LIFETIME_HONORBALE_KILLS     = UNIT_END + 0x0483, // Size: 1, Type: INT, Flags: PRIVATE
-    PLAYER_FIELD_BYTES2                       = UNIT_END + 0x0484, // Size: 1, Type: 6, Flags: PRIVATE
+    PLAYER_FIELD_BYTES2                       = UNIT_END + 0x0484, // Size: 1, Type: TWO_BYTES_SHORT, Flags: PRIVATE
     PLAYER_FIELD_WATCHED_FACTION_INDEX        = UNIT_END + 0x0485, // Size: 1, Type: INT, Flags: PRIVATE
     PLAYER_FIELD_COMBAT_RATING_1              = UNIT_END + 0x0486, // Size: 26, Type: INT, Flags: PRIVATE
     PLAYER_FIELD_ARENA_TEAM_INFO_1_1          = UNIT_END + 0x04A0, // Size: 21, Type: INT, Flags: PRIVATE
-    PLAYER_FIELD_MAX_LEVEL                    = UNIT_END + 0x04B5, // Size: 1, Type: INT, Flags: PRIVATE
-    PLAYER_FIELD_DAILY_QUESTS_1               = UNIT_END + 0x04B6, // Size: 25, Type: INT, Flags: PRIVATE
-    PLAYER_RUNE_REGEN_1                       = UNIT_END + 0x04CF, // Size: 4, Type: FLOAT, Flags: PRIVATE
-    PLAYER_NO_REAGENT_COST_1                  = UNIT_END + 0x04D3, // Size: 3, Type: INT, Flags: PRIVATE
-    PLAYER_FIELD_GLYPH_SLOTS_1                = UNIT_END + 0x04D6, // Size: 9, Type: INT, Flags: PRIVATE
-    PLAYER_FIELD_GLYPHS_1                     = UNIT_END + 0x04DF, // Size: 9, Type: INT, Flags: PRIVATE
-    PLAYER_GLYPHS_ENABLED                     = UNIT_END + 0x04E8, // Size: 1, Type: INT, Flags: PRIVATE
-    PLAYER_PET_SPELL_POWER                    = UNIT_END + 0x04E9, // Size: 1, Type: INT, Flags: PRIVATE
-    PLAYER_FIELD_RESEARCHING_1                = UNIT_END + 0x04EA, // Size: 8, Type: TWO_SHORT, Flags: PRIVATE
-    PLAYER_FIELD_RESERACH_SITE_1              = UNIT_END + 0x04F2, // Size: 8, Type: TWO_SHORT, Flags: PRIVATE
-    PLAYER_PROFESSION_SKILL_LINE_1            = UNIT_END + 0x04FA, // Size: 2, Type: INT, Flags: PRIVATE
-    PLAYER_FIELD_UI_HIT_MODIFIER              = UNIT_END + 0x04FC, // Size: 1, Type: FLOAT, Flags: PRIVATE
-    PLAYER_FIELD_UI_SPELL_HIT_MODIFIER        = UNIT_END + 0x04FD, // Size: 1, Type: FLOAT, Flags: PRIVATE
-    PLAYER_FIELD_HOME_REALM_TIME_OFFSET       = UNIT_END + 0x04FE, // Size: 1, Type: INT, Flags: PRIVATE
-    PLAYER_FIELD_PADDING                      = UNIT_END + 0x04FF, // Size: 1, Type: INT, Flags: NONE
+    PLAYER_FIELD_BATTLEGROUND_RATING          = UNIT_END + 0x04B5, // Size: 1, Type: INT, Flags: PRIVATE
+    PLAYER_FIELD_MAX_LEVEL                    = UNIT_END + 0x04B6, // Size: 1, Type: INT, Flags: PRIVATE
+    PLAYER_FIELD_DAILY_QUESTS_1               = UNIT_END + 0x04B7, // Size: 25, Type: INT, Flags: PRIVATE
+    PLAYER_RUNE_REGEN_1                       = UNIT_END + 0x04D0, // Size: 4, Type: FLOAT, Flags: PRIVATE
+    PLAYER_NO_REAGENT_COST_1                  = UNIT_END + 0x04D4, // Size: 3, Type: INT, Flags: PRIVATE
+    PLAYER_FIELD_GLYPH_SLOTS_1                = UNIT_END + 0x04D7, // Size: 9, Type: INT, Flags: PRIVATE
+    PLAYER_FIELD_GLYPHS_1                     = UNIT_END + 0x04E0, // Size: 9, Type: INT, Flags: PRIVATE
+    PLAYER_GLYPHS_ENABLED                     = UNIT_END + 0x04E9, // Size: 1, Type: INT, Flags: PRIVATE
+    PLAYER_PET_SPELL_POWER                    = UNIT_END + 0x04EA, // Size: 1, Type: INT, Flags: PRIVATE
+    PLAYER_FIELD_RESEARCHING_1                = UNIT_END + 0x04EB, // Size: 8, Type: TWO_SHORT, Flags: PRIVATE
+    PLAYER_FIELD_RESERACH_SITE_1              = UNIT_END + 0x04F3, // Size: 8, Type: TWO_SHORT, Flags: PRIVATE
+    PLAYER_PROFESSION_SKILL_LINE_1            = UNIT_END + 0x04FB, // Size: 2, Type: INT, Flags: PRIVATE
+    PLAYER_FIELD_UI_HIT_MODIFIER              = UNIT_END + 0x04FD, // Size: 1, Type: FLOAT, Flags: PRIVATE
+    PLAYER_FIELD_UI_SPELL_HIT_MODIFIER        = UNIT_END + 0x04FE, // Size: 1, Type: FLOAT, Flags: PRIVATE
+    PLAYER_FIELD_HOME_REALM_TIME_OFFSET       = UNIT_END + 0x04FF, // Size: 1, Type: INT, Flags: PRIVATE
     PLAYER_END                                = UNIT_END + 0x0500,
 };
+
+#define MAX_VALUES_COUNT_OTHER_PLAYER PLAYER_FIELD_INV_SLOT_HEAD
 
 enum EGameObjectFields
 {

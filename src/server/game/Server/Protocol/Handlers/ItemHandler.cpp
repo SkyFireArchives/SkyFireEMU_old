@@ -302,17 +302,35 @@ void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
                 sObjectMgr.GetLocaleString(il->Description, loc_idx, Description);
             }
         }
-                                                            // guess size
-        WorldPacket data(SMSG_ITEM_QUERY_SINGLE_RESPONSE, 600);
+
+ 
+		// Premiere partie, item.dbc
+        WorldPacket data(SMSG_ITEM_QUERY_SINGLE_RESPONSE, 12*4);
+		data << uint32(0x22);							// Random uint32 4.0.1
+		data << uint32(0x50238EC2);						// Random uint32 4.0.1
         data << pProto->ItemId;
-        data << pProto->Class;
-        data << pProto->SubClass;
-        data << int32(pProto->Unk0);                        // new 2.0.3, not exist in wdb cache?
-        data << Name;
-        data << uint8(0x00);                                //pProto->Name2; // blizz not send name there, just uint8(0x00); <-- \0 = empty string = empty name...
-        data << uint8(0x00);                                //pProto->Name3; // blizz not send name there, just uint8(0x00);
-        data << uint8(0x00);                                //pProto->Name4; // blizz not send name there, just uint8(0x00);
-        data << pProto->DisplayInfoID;
+		data << uint32(0x20);
+		data << pProto->ItemId;
+		data << pProto->Class;
+		data << pProto->SubClass;
+		data << int32(-1);
+		data << pProto->Material;
+		data << pProto->DisplayInfoID;
+		data << pProto->InventoryType;
+		data << pProto->Sheath;
+		SendPacket(&data);
+
+		uint32 bytecount = 0;
+		// Deuxieme parti, sparse-item.db2
+		data.Initialize(SMSG_ITEM_QUERY_SINGLE_RESPONSE, 600);
+		data << uint32(0x22);							// Random uint32 4.0.1
+		data << uint32(0x919BE54E);						// Random uint32 4.0.1
+        data << pProto->ItemId;
+
+		size_t pos = data.wpos();
+
+		data << uint32(bytecount);
+		data << pProto->ItemId;
         data << pProto->Quality;
         data << pProto->Flags;
         data << pProto->Flags2;
@@ -333,16 +351,16 @@ void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
         data << int32(pProto->MaxCount);
         data << int32(pProto->Stackable);
         data << pProto->ContainerSlots;
-        data << pProto->StatsCount;                         // item stats count
-        for (uint32 i = 0; i < pProto->StatsCount; ++i)
-        {
+        for (uint32 i = 0; i < 10; ++i)
             data << pProto->ItemStat[i].ItemStatType;
+		for (uint32 i = 0; i < 10; ++i)
             data << pProto->ItemStat[i].ItemStatValue;
+		for (uint32 i = 0; i < 10; ++i)
 			data << uint32(0);                              // 4.0.0
+		for (uint32 i = 0; i < 10; ++i)
 			data << uint32(0);                              // 4.0.0
-        }
         data << pProto->ScalingStatDistribution;            // scaling stats distribution
-        data << pProto->ScalingStatValue;                   // some kind of flags used to determine stat values column
+      //  data << pProto->ScalingStatValue;                   // some kind of flags used to determine stat values column
         //for (int i = 0; i < MAX_ITEM_PROTO_DAMAGES; ++i)
         //{
         //    data << pProto->Damage[i].DamageMin;
@@ -362,7 +380,7 @@ void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
 		data << uint32(0);                                  // DamageType
 		//data << pProto->AmmoType;
         data << pProto->Delay;
-        data << pProto->AmmoType;
+        //data << pProto->AmmoType;
         data << pProto->RangedModRange;
 
         for (int s = 0; s < MAX_ITEM_PROTO_SPELLS; ++s)
@@ -402,7 +420,13 @@ void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
             }
         }
         data << pProto->Bonding;
+		data << uint16(0x16);
+        data << Name;
+        data << uint8(0x00);                                //pProto->Name2; // blizz not send name there, just uint8(0x00); <-- \0 = empty string = empty name...
+        data << uint8(0x00);                                //pProto->Name3; // blizz not send name there, just uint8(0x00);
+        data << uint8(0x00);                                //pProto->Name4; // blizz not send name there, just uint8(0x00);
         data << Description;
+		data << uint32(0);
         data << pProto->PageText;
         data << pProto->LanguageID;
         data << pProto->PageMaterial;
@@ -412,7 +436,6 @@ void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
         data << pProto->Sheath;
         data << pProto->RandomProperty;
         data << pProto->RandomSuffix;
-        data << pProto->Block;
         data << pProto->ItemSet;
         data << pProto->MaxDurability;
         data << pProto->Area;
@@ -426,7 +449,6 @@ void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
         }
         data << pProto->socketBonus;
         data << pProto->GemProperties;
-        data << pProto->RequiredDisenchantSkill;
         data << pProto->ArmorDamageModifier;
         data << uint32(abs(pProto->Duration));              // added in 2.4.2.8209, duration (seconds)
         data << pProto->ItemLimitCategory;                  // WotLK, ItemLimitCategory
@@ -434,6 +456,9 @@ void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
 		data << float(0);                                   // damage/armor scaling factor
 		data << uint32(0);                                  // 4.0.0
 		data << uint32(0);                                  // 4.0.0
+
+		data.put<uint32>(pos, data.wpos()-16);
+
         SendPacket(&data);
     }
     else
@@ -652,9 +677,9 @@ void WorldSession::HandleBuyItemInSlotOpcode(WorldPacket & recv_data)
     sLog.outDebug("WORLD: Received CMSG_BUY_ITEM_IN_SLOT");
     uint64 vendorguid, bagguid;
     uint32 item, slot, count;
-    uint8 bagslot;
+    uint8 bagslot, unk;
 
-    recv_data >> vendorguid >> item  >> slot >> bagguid >> bagslot >> count;
+    recv_data >> vendorguid >> unk >> item  >> slot >> count >> bagguid >> bagslot;
 
     // client expects count starting at 1, and we send vendorslot+1 to client already
     if (slot > 0)
@@ -665,7 +690,7 @@ void WorldSession::HandleBuyItemInSlotOpcode(WorldPacket & recv_data)
     uint8 bag = NULL_BAG;                                   // init for case invalid bagGUID
 
     // find bag slot by bag guid
-    if (bagguid == _player->GetGUID())
+	if (bagguid == _player->GetGUID() || bagguid == 0)
         bag = INVENTORY_SLOT_BAG_0;
     else
     {
@@ -780,6 +805,7 @@ void WorldSession::SendListInventory(uint64 vendorguid)
                 int32 price = crItem->IsGoldRequired(pProto) ? uint32(floor(pProto->BuyPrice * discountMod)) : 0;
 
                 data << uint32(vendorslot+1);    // client expects counting to start at 1
+				data << uint32(1); // unknow value 4.0.1, always 1
                 data << uint32(crItem->item);
                 data << uint32(pProto->DisplayInfoID);
                 data << int32(crItem->maxcount <= 0 ? 0xFFFFFFFF : pCreature->GetVendorItemCurrentCount(crItem));
@@ -787,10 +813,34 @@ void WorldSession::SendListInventory(uint64 vendorguid)
                 data << uint32(pProto->MaxDurability);
                 data << uint32(pProto->BuyCount);
                 data << uint32(crItem->ExtendedCost);
+				data << uint8(0); // unk 4.0.1
             }
         }
     }
 
+	
+	//TODO: add error messages.
+    /*switch ( v13 )
+    {
+      case 2:
+        ConsoleWrite(v7, a2, (int)"You are too far away", 0);
+        break;
+      case 1:
+        ConsoleWrite(v7, a2, (int)"I don't think he likes you very much", 0);
+        break;
+      case 0:
+        ConsoleWrite(v7, a2, (int)"Vendor has no inventory", 0);
+        break;
+      case 3:
+        ConsoleWrite(v7, a2, (int)"Vendor is dead", 0);
+        break;
+      case 4:
+        ConsoleWrite(v7, a2, (int)"You can't shop while dead.", 0);
+        break;
+      default:
+        break;
+    }*/
+	
     if (count == 0)
     {
         data << uint8(0);

@@ -1,0 +1,1 @@
+ALTER TABLE `guild_member` ADD COLUMN `achievementPoints` int(11) NOT NULL AFTER `BankRemSlotsTab5`;

@@ -165,6 +165,10 @@ bool LoginQueryHolder::Initialize()
     stmt->setUInt32(0, lowGuid);
     res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADGLYPHS, stmt);
 
+	stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PLAYER_TALENTBRANCHSPECS);
+    stmt->setUInt32(0, lowGuid);
+    res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS, stmt);
+			  
     stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PLAYER_TALENTS);
     stmt->setUInt32(0, lowGuid);
     res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADTALENTS, stmt);
@@ -757,15 +761,23 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
         {
             data.Initialize(SMSG_GUILD_EVENT, (1+1+guild->GetMOTD().size()+1));
             data << uint8(GE_MOTD);
-            data << uint8(1);
+            data << uint8(2);
             data << guild->GetMOTD();
+			data << uint8(0);
             SendPacket(&data);
             sLog.outStaticDebug("WORLD: Sent guild-motd (SMSG_GUILD_EVENT)");
 
             guild->DisplayGuildBankTabsInfo(this);
 
             guild->BroadcastEvent(GE_SIGNED_ON, pCurrChar->GetGUID(), 1, pCurrChar->GetName(), "", "");
-        }
+			
+			WorldPacket data2(SMSG_GUILD_EVENT, 1+1+std::string(pCurrChar->GetName()).size()+8);
+			data2 << uint8(GE_SIGNED_ON);
+			data2 << uint8(1);
+			data2 << pCurrChar->GetName();
+			data2 << uint64(pCurrChar->GetGUID());
+			SendPacket(&data2);
+		}
         else
         {
             // remove wrong guild data
@@ -814,7 +826,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
     pCurrChar->SendInitialPacketsAfterAddToMap();
 
     CharacterDatabase.PExecute("UPDATE characters SET online = 1 WHERE guid = '%u'", pCurrChar->GetGUIDLow());
-    LoginDatabase.PExecute("UPDATE account SET online = 1 WHERE id = '%u'", GetAccountId());
+    LoginDatabase.PExecute("UPDATE account SET online = '%u' WHERE id = '%u'", realmID, GetAccountId());
     pCurrChar->SetInGameTime(getMSTime());
 
     // announce group about member online (must be after add to player list to receive announce to self)

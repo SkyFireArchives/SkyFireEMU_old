@@ -3488,11 +3488,13 @@ void ObjectMgr::LoadGuilds()
         "BankResetTimeTab0,BankRemSlotsTab0,BankResetTimeTab1,BankRemSlotsTab1,BankResetTimeTab2,BankRemSlotsTab2,"
     //   13                14               15                16               17                18
         "BankResetTimeTab3,BankRemSlotsTab3,BankResetTimeTab4,BankRemSlotsTab4,BankResetTimeTab5,BankRemSlotsTab5,"
-    //   19               20                21                22               23                24
+    //   19               20                21                22               23                      24
         "characters.name, characters.level, characters.class, characters.zone, characters.logout_time, characters.account "
+	//   25
+		"achievementPoints"
         "FROM guild_member LEFT JOIN characters ON characters.guid = guild_member.guid ORDER BY guildid ASC");
 
-    // load guild bank tab rights
+	// load guild bank tab rights
     //                                                                     0       1     2   3       4
     QueryResult guildBankTabRightsResult = CharacterDatabase.Query("SELECT guildid,TabId,rid,gbright,SlotPerDay FROM guild_bank_right ORDER BY guildid ASC, TabId ASC");
 
@@ -3533,7 +3535,10 @@ void ObjectMgr::LoadGuilds()
 
     for (GuildMap::iterator itr = mGuildMap.begin(); itr != mGuildMap.end(); ++itr)
         GuildVector[itr->second->GetId()] = (*itr).second;
-
+		
+	//                                                                                  0                         1                      2                       3                       4
+	QueryResult guildMembersSkillsResult = CharacterDatabase.Query("SELECT guild_member.guildid, character_skills.guid, character_skills.skill, character_skills.value, character_skills.max FROM character_skills LEFT JOIN guild_member ON guild_member.guid = character_skills.guid ORDER BY guild_member.guildid ASC");
+	
     //                                                             0        1          2            3            4        5          6
     QueryResult guildEventResult = CharacterDatabase.Query("SELECT LogGuid, EventType, PlayerGuid1, PlayerGuid2, NewRank, TimeStamp, guildid FROM guild_eventlog ORDER BY TimeStamp DESC, LogGuid DESC");
 
@@ -3546,6 +3551,7 @@ void ObjectMgr::LoadGuilds()
     PreparedStatement* guildBankItemStmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_ITEMS);
     PreparedQueryResult guildBankItemResult = CharacterDatabase.Query(guildBankItemStmt);
 
+	LoadGuildMemberProfessions(GuildVector, guildMembersSkillsResult);
     LoadGuildEvents(GuildVector, guildEventResult);
     LoadGuildBankEvents(GuildVector, guildBankEventResult);
     LoadGuildBanks(GuildVector, guildBankTabResult, guildBankItemResult);
@@ -3562,6 +3568,42 @@ void ObjectMgr::LoadGuilds()
 
     sLog.outString();
     sLog.outString(">> Loaded %u guild definitions", mGuildMap.size());
+}
+
+//guild_member.guildid, character_skills.guid, character_skills.skill, character_skills.value, character_skills.max
+void ObjectMgr::LoadGuildMemberProfessions(std::vector<Guild*>& GuildVector, QueryResult& result)
+{
+	if (result)
+    {
+        do
+        {
+            Field *fields = result->Fetch();
+            uint32 guildid = fields[0].GetUInt32();
+            if (guildid >= GuildVector.size() || GuildVector[guildid] == NULL)
+                continue;
+            
+			uint32 playerGUID = fields[1].GetUInt32(); //low
+            uint32 skillID = fields[2].GetUInt32();
+			uint32 skillLevel = fields[3].GetUInt32();
+			uint32 title = fields[4].GetUInt32() / 75;
+			SkillLineEntry const *skillInfo = sSkillLineStore.LookupEntry(skillID);
+			if (!skillInfo)
+				continue;
+			
+			if (skillInfo->categoryId != SKILL_CATEGORY_PROFESSION)
+				continue;
+			
+			if(GuildVector[guildid]->members.find(playerGUID) == GuildVector[guildid]->members.end())
+				continue;
+			
+			int actualPr = GuildVector[guildid]->members[playerGUID].professions[0].skillID == 0 ? 0 : 1;
+			
+			GuildVector[guildid]->members[playerGUID].professions[actualPr].skillID = skillID;
+			GuildVector[guildid]->members[playerGUID].professions[actualPr].level = skillLevel;
+			GuildVector[guildid]->members[playerGUID].professions[actualPr].title = title;
+        }
+        while (result->NextRow());
+    }
 }
 
 void ObjectMgr::LoadGuildEvents(std::vector<Guild*>& GuildVector, QueryResult& result)
@@ -3968,7 +4010,7 @@ void ObjectMgr::LoadQuests()
     //   142          143
         "StartScript, CompleteScript"
         " FROM quest_template");
-    if (result == NULL)
+    if (!result)
     {
         barGoLink bar(1);
         bar.step();

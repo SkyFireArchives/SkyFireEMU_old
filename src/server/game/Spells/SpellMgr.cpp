@@ -1836,6 +1836,20 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
     int32 basePoints = effBasePoints ? *effBasePoints : spellEntry->EffectBasePoints[effIndex];
     int32 randomPoints = int32(spellEntry->EffectDieSides[effIndex]);
 
+	float randomPoints_ScalingMultiplicator = 0.00f;
+ 	if(caster && spellEntry && spellEntry->SpellScalingId)
+	{
+		SpellScalingEntry const* spellScaling = sSpellScalingStore.LookupEntry(spellEntry->SpellScalingId);
+		uint32 casterLevel = caster->getLevel();
+		gtSpellScaling const* gtScaling = sGtSpellScalingStore.LookupEntry(casterLevel);
+		if(spellScaling && gtScaling)
+		{
+			basePoints+= float(spellScaling->coefMultiplier[effIndex] * gtScaling->coef); 
+			randomPoints_ScalingMultiplicator = spellScaling->coefRandomMultiplier[effIndex];
+			// TODO : Ajouter le coef reducteur, trouver comment il est interpreter
+		}
+	}
+	
     // base amount modification based on spell lvl vs caster lvl
     if (caster)
     {
@@ -1859,6 +1873,9 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
                 ? irand(1, randomPoints)
                 : irand(randomPoints, 1);
 
+			if(randomPoints_ScalingMultiplicator)
+				basePoints += irand(1, basePoints* (randomPoints_ScalingMultiplicator >= 1 ? randomPoints_ScalingMultiplicator : randomPoints_ScalingMultiplicator+1));
+			
             basePoints += randvalue;
             break;
     }

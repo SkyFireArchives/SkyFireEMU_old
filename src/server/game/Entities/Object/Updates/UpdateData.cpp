@@ -109,6 +109,8 @@ bool UpdateData::BuildPacket(WorldPacket *packet)
 
     ByteBuffer buf(4 + (m_outOfRangeGUIDs.empty() ? 0 : 1 + 4 + 9 * m_outOfRangeGUIDs.size()) + m_data.wpos());
 
+	buf << (uint16) 0;
+	
     buf << (uint32) (!m_outOfRangeGUIDs.empty() ? m_blockCount + 1 : m_blockCount);
 
     if (!m_outOfRangeGUIDs.empty())
@@ -126,6 +128,7 @@ bool UpdateData::BuildPacket(WorldPacket *packet)
 
     size_t pSize = buf.wpos();                              // use real used data size
 
+	//desactivated on live realms.
     if (pSize > 100)                                       // compress large packets
     {
         uint32 destsize = compressBound(pSize);

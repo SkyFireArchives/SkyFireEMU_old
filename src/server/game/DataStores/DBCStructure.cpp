@@ -20,6 +20,50 @@
 #include "DBCStructure.h"
 #include "DBCStores.h"
 
+SpellEntry::SpellEntry(SpellEntry_n const* spell)
+{
+	Id = spell->Id;
+	Attributes = spell->Attributes;
+	AttributesEx = spell->AttributesEx;
+	AttributesEx2 = spell->AttributesEx2;
+	AttributesEx3 = spell->AttributesEx3;
+	AttributesEx4 = spell->AttributesEx4;
+	AttributesEx5 = spell->AttributesEx5;
+	AttributesEx6 = spell->AttributesEx6;
+	AttributesEx7 = spell->AttributesEx7;
+	AttributesEx8 = spell->AttributesEx8;
+	CastingTimeIndex = spell->CastingTimeIndex;
+	DurationIndex = spell->DurationIndex;
+	powerType = spell->powerType;
+	rangeIndex = spell->rangeIndex;
+	speed = spell->speed;
+	SpellVisual[0] = spell->SpellVisual[0];
+	SpellVisual[1] = spell->SpellVisual[1];
+	SpellIconID = spell->SpellIconID;
+	activeIconID = spell->activeIconID;
+	SpellName = spell->SpellName;
+	Rank = spell->Rank;
+	SchoolMask = spell->SchoolMask;
+	runeCostID = spell->runeCostID;
+	SpellDifficultyId = spell->SpellDifficultyId;
+	SpellScalingId = spell->SpellScalingId;
+	SpellAuraOptionsId = spell->SpellAuraOptionsId;
+	SpellAuraRestrictionsId = spell->SpellAuraRestrictionsId;
+	SpellCastingRequirementsId = spell->SpellCastingRequirementsId;
+	SpellCategoriesId = spell->SpellCategoriesId;
+	SpellClassOptionsId = spell->SpellClassOptionsId;
+	SpellCooldownsId = spell->SpellCooldownsId;
+	SpellEquippedItemsId = spell->SpellEquippedItemsId;
+	SpellInterruptsId = spell->SpellInterruptsId;
+	SpellLevelsId = spell->SpellLevelsId;
+	SpellPowerId = spell->SpellPowerId;
+	SpellReagentsId = spell->SpellReagentsId;
+	SpellShapeshiftId = spell->SpellShapeshiftId;
+	SpellTargetRestrictionsId = spell->SpellTargetRestrictionsId;
+	SpellTotemsId = spell->SpellTotemsId;
+	
+	LoadSpellAddons();
+}
 void SpellEntry::LoadSpellAddons()
 {
 	SpellAuraOptionsEntry const* SpellAuraOptions = GetSpellAuraOptions();
@@ -86,7 +130,7 @@ void SpellEntry::LoadSpellAddons()
 	}
 	
 	SpellEquippedItemsEntry const* SpellEquippedItems = GetSpellEquippedItems();
-	EquippedItemClass = SpellEquippedItems ? SpellEquippedItems->EquippedItemClass : 0;
+	EquippedItemClass = SpellEquippedItems ? SpellEquippedItems->EquippedItemClass : -1;
 	EquippedItemInventoryTypeMask = SpellEquippedItems ? SpellEquippedItems->EquippedItemInventoryTypeMask : 0;
 	EquippedItemSubClassMask = SpellEquippedItems ? SpellEquippedItems->EquippedItemSubClassMask : 0;
 	
@@ -114,19 +158,16 @@ void SpellEntry::LoadSpellAddons()
 	}
 	
 	SpellScalingEntry const* SpellScaling = GetSpellScaling();
-	SpellScaling_unk1 = SpellScaling ? SpellScaling->unk1 : 0;
+	SpellScaling_unk1 = SpellScaling ? SpellScaling->unk2 : 0;
 	SpellScaling_unk2 = SpellScaling ? SpellScaling->unk2 : 0;
 	SpellScaling_unk3 = SpellScaling ? SpellScaling->unk3 : 0;
-	SpellScaling_unk4 = SpellScaling ? SpellScaling->unk4 : 0;
-	SpellScaling_unk5 = SpellScaling ? SpellScaling->unk5 : 0;
-	SpellScaling_unk6 = SpellScaling ? SpellScaling->unk6 : 0;
-	SpellScaling_unk7 = SpellScaling ? SpellScaling->unk7 : 0;
-	SpellScaling_unk8 = SpellScaling ? SpellScaling->unk8 : 0;
-	SpellScaling_unk9 = SpellScaling ? SpellScaling->unk9 : 0;
-	SpellScaling_unk10 = SpellScaling ? SpellScaling->unk10 : 0;
-	SpellScaling_unk11 = SpellScaling ? SpellScaling->unk11 : 0;
-	SpellScaling_unk12 = SpellScaling ? SpellScaling->unk12 : 0;
-	SpellScaling_unk13 = SpellScaling ? SpellScaling->unk13 : 0;
+	SpellScaling_spellFamilyName = SpellScaling ? SpellScaling->spellFamilyName : 0;
+	for(int i = 0; i < 3; i++)
+	{
+		coefMultiplier[i] = SpellScaling ? SpellScaling->coefMultiplier[i] : 0;
+		coefRandomMultiplier[i] = SpellScaling ? SpellScaling->coefRandomMultiplier[i] : 0;
+		coefUnknow[i] = SpellScaling ? SpellScaling->coefUnknow[i] : 0;
+	}
 	SpellScaling_unk14 = SpellScaling ? SpellScaling->unk14 : 0;
 	SpellScaling_unk15 = SpellScaling ? SpellScaling->unk15 : 0;
 	
