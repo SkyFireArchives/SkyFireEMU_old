@@ -48,6 +48,8 @@ char output_path[128] = ".";
 char input_path[128] = ".";
 uint32 maxAreaId = 0;
 
+static int const patchRev[] = {13164, 13205, 13287, 13329, 0};
+
 //**************************************************
 // Extractor options
 //**************************************************
@@ -58,7 +60,7 @@ enum Extract
 };
 
 // Select data for extract
-int   CONF_extract = EXTRACT_MAP | EXTRACT_DBC;
+int   CONF_extract = /*EXTRACT_MAP | */EXTRACT_DBC; //TODO : fix maps.
 // This option allow limit minimum height to some value (Allow save some memory)
 bool  CONF_allow_height_limit = true;
 float CONF_use_minHeight = -500.0f;
@@ -987,13 +989,12 @@ void LoadLocaleMPQFiles(int const locale)
     sprintf(filename,"%s/Data/%s/locale-%s.MPQ", input_path, langs[locale], langs[locale]);
     new MPQArchive(filename);
 
-    for(int i = 1; i < 5; ++i)
+    for(int i = 0; patchRev[i] != 0; ++i)
     {
-        char ext[3] = "";
-        if(i > 1)
-            sprintf(ext, "-%i", i);
+        char ext[7] = "";
+		sprintf(ext, "-%i", patchRev[i]);
 
-        sprintf(filename,"%s/Data/%s/patch-%s%s.MPQ", input_path, langs[locale], langs[locale], ext);
+        sprintf(filename,"%s/Data/Cache/%s/patch-%s%s.MPQ", input_path, langs[locale], langs[locale], ext);
         if(FileExists(filename))
             new MPQArchive(filename);
     }
