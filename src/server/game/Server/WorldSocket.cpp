@@ -1,22 +1,24 @@
 /*
-* Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
-*
-* Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-*/
+ * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ *
+ * Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
+ *
+ * Copyright (C) 2010 CactusEMU <http://www.cactusemu.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 
 #include <ace/Message_Block.h>
 #include <ace/OS_NS_string.h>
@@ -270,19 +272,18 @@ int WorldSocket::open (void *a)
     m_Address = remote_addr.get_host_addr();
 
     // Send startup packet.
-    WorldPacket packet (SMSG_AUTH_CHALLENGE, (8 * 4) + 1);
+    WorldPacket packet (SMSG_AUTH_CHALLENGE, (9 * 4) + 1);
 
-	packet << uint32(0); //unk
-	packet << uint32(0); //unk
-
-	packet << uint8(1);                                     // 1...31
+	packet << uint32(0);
+	packet << uint32(0);
 	packet << uint32(m_Seed);
-	
-	packet << uint32(0); //unk
-	packet << uint32(0); //unk
-	packet << uint32(0); //unk
-	packet << uint32(0); //unk
-	packet << uint32(0); //unk
+	packet << uint32(0);
+	packet << uint8(1);
+	packet << uint32(0);
+	packet << uint32(0);
+	packet << uint32(0);
+	packet << uint32(0);
+	packet << uint32(0);
 	
     if (SendPacket(packet) == -1)
         return -1;
@@ -799,68 +800,33 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 
     // Read the content of the packet
 	
-	uint8 unkBytes[21];
-	//uint8 unk1[2];
-	//clientBuild
-	//uint8 unk3[2];
+	uint8 unk15;
 	uint64 unk4;
-	//uint8 unk5[3];
 	uint32 unk6;
-	//uint8 unk7[4];
 	uint32 unk8;
-	//uint8 unk9[3];
 	uint32 unk10;
-	//uint8 unk11[2];
 	uint32 unk12;
-	//seed
-	//uint8 unk14[6];
-	//account
-	//addonsize;
-	//addon;
+	uint8 unk16;
 	
-	recvPacket >> unkBytes[0] >> unkBytes[1];
+	recvPacket >> unk15 >> digest[15];
 	recvPacket >> ClientBuild;
-	recvPacket >> unkBytes[2] >> unkBytes[3];
+	recvPacket >> digest[5] >> digest[19];
 	recvPacket >> unk4;
-	recvPacket >> unkBytes[4] >> unkBytes[5] >> unkBytes[6];
+	recvPacket >> digest[13] >> digest[10] >> digest[1];
 	recvPacket >> unk6;
-	recvPacket >> unkBytes[7] >> unkBytes[8] >> unkBytes[9] >> unkBytes[10];
+	recvPacket >> digest[12] >> digest[4] >> digest[18] >> digest[8];
 	recvPacket >> unk8;
-	recvPacket >> unkBytes[11] >> unkBytes[12] >> unkBytes[13];
+	recvPacket >> digest[11] >> digest[9] >> digest[2];
 	recvPacket >> unk10;
-	recvPacket >> unkBytes[14] >> unkBytes[15];
+	recvPacket >> digest[6] >> digest[16];
 	recvPacket >> unk12;
 	recvPacket >> clientSeed;
-	recvPacket >> unkBytes[16] >> unkBytes[17] >> unkBytes[18] >> unkBytes[19] >> unkBytes[20] >> unkBytes[21];
+	recvPacket >> unk16 >> digest[7] >> digest[0] >> digest[3] >> digest[17] >> digest[14];
 	recvPacket >> account;
 	recvPacket >> addonsize;
-	
-	/*uint8 test[21];
-	test[0] = unkBytes[16];
-	test[1] = unkBytes[18];
-	test[2] = unkBytes[6];
-	test[3] = unkBytes[13];
-	test[4] = unkBytes[19];
-	test[5] = unkBytes[8];
-	test[6] = unkBytes[2];
-	test[7] = unkBytes[14];
-	test[8] = unkBytes[17];
-	test[9] = unkBytes[10];
-	test[10] = unkBytes[12];
-	test[11] = unkBytes[5];
-	test[12] = unkBytes[11];
-	test[13] = unkBytes[7];
-	test[14] = unkBytes[4];
-	test[15] = unkBytes[21];
-	test[16] = unkBytes[1];
-	test[17] = unkBytes[15];
-	test[18] = unkBytes[20];
-	test[19] = unkBytes[9];
-	test[20] = unkBytes[3];*/
-	
+	//Why does this hack exist? In a beta revision, addonInfo was between clientSeed and accountName. 
 	uint8 * tableauAddon = new uint8[addonsize];
 	WorldPacket packetAddon;
-	//packetAddon << addonsize;
 	for(uint32 i = 0; i < addonsize; i++)
 	{
 		uint8 tampon = 0;
@@ -1019,21 +985,8 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     sha.UpdateData ((uint8 *) & seed, 4);
     sha.UpdateBigNumbers (&K, NULL);
     sha.Finalize();
-
-	/*printf("\nDigest:");
-	uint8 * digestolol = sha.GetDigest();
-	for(int i = 0; i < 20; i++)
-	{
-		printf(" %X", digestolol[i]);
-	}
-	printf("\n");
 	
-	printf("Test:");
-	for(int i = 0; i < 21; i++)
-		printf(" %X", test[i]);
-	printf("\n");*/
-	
-    /*if (memcmp (sha.GetDigest(), digest, 20))
+    if (memcmp (sha.GetDigest(), digest, 20))
     {
         packet.Initialize (SMSG_AUTH_RESPONSE, 1);
         packet << uint8 (AUTH_FAILED);
@@ -1042,7 +995,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 
         sLog.outError ("WorldSocket::HandleAuthSession: Sent Auth Response (authentification failed).");
         return -1;
-    }*/
+    }
 
     std::string address = GetRemoteAddress();
 
