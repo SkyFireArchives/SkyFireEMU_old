@@ -218,15 +218,15 @@ int Master::Run()
     sLog.outString( "%s (core-daemon)", _FULLVERSION );
     sLog.outString( "<Ctrl-C> to stop.\n" );
 
-    sLog.outString( " ______                       __");
-    sLog.outString( "/\\__  _\\       __          __/\\ \\__");
-    sLog.outString( "\\/_/\\ \\/ _ __ /\\_\\    ___ /\\_\\ \\ ,_\\  __  __");
-    sLog.outString( "   \\ \\ \\/\\`'__\\/\\ \\ /' _ `\\/\\ \\ \\ \\/ /\\ \\/\\ \\");
-    sLog.outString( "    \\ \\ \\ \\ \\/ \\ \\ \\/\\ \\/\\ \\ \\ \\ \\ \\_\\ \\ \\_\\ \\");
-    sLog.outString( "     \\ \\_\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_\\ \\__\\\\/`____ \\");
-    sLog.outString( "      \\/_/\\/_/   \\/_/\\/_/\\/_/\\/_/\\/__/ `/___/> \\");
-    sLog.outString( "                                 C O R E  /\\___/");
-    sLog.outString( "http://TrinityCore.org                    \\/__/\n");
+    sLog.outString( "CCCCCCCCC      A      CCCCCCCCC TTTTTTTTTT  UU      UU  SSSSSSSSS");
+    sLog.outString( "CC           AA AA    CC            TT      UU      UU  SS");
+    sLog.outString( "CC         AA     AA  CC            TT      UU      UU  SS");
+    sLog.outString( "CC         AA     AA  CC            TT      UU      UU  SS        EEEE MM MM U  U");
+    sLog.outString( "CC         AAAAAAAAA  CC            TT      UU      UU  SSSSSSSSS E    M M M U  U");
+    sLog.outString( "CC         AA     AA  CC            TT      UU      UU         SS EEEE M   M U  U");
+    sLog.outString( "CC         AA     AA  CC            TT      UU      UU         SS E    M   M U  U");
+    sLog.outString( "CCCCCCCCC  AA     AA  CCCCCCCCC     TT      UUUUUUUUUU  SSSSSSSSS EEEE M   M UUUU");
+    sLog.outString( "");
 
     /// worldd PID file creation
     std::string pidfile = sConfig.GetStringDefault("PidFile", "");
