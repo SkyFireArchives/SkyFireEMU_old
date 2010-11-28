@@ -3080,28 +3080,8 @@ bool ChatHandler::HandleLookupItemSetCommand(const char *args)
         if (set)
         {
             int loc = GetSessionDbcLocale();
-            std::string name = set->name[loc];
-            if (name.empty())
-                continue;
-
-            if (!Utf8FitTo(name, wnamepart))
-            {
-                loc = 0;
-                for (; loc < MAX_LOCALE; ++loc)
-                {
-                    if (loc == GetSessionDbcLocale())
-                        continue;
-
-                    name = set->name[loc];
-                    if (name.empty())
-                        continue;
-
-                    if (Utf8FitTo(name, wnamepart))
-                        break;
-                }
-            }
-
-            if (loc < MAX_LOCALE)
+            std::string name = set->name;
+            if (!name.empty())
             {
                 if (maxResults && count++ == maxResults)
                 {
@@ -3111,9 +3091,9 @@ bool ChatHandler::HandleLookupItemSetCommand(const char *args)
 
                 // send item set in "id - [namedlink locale]" format
                 if (m_session)
-                    PSendSysMessage(LANG_ITEMSET_LIST_CHAT,id,id,name.c_str(),localeNames[loc]);
+                    PSendSysMessage(LANG_ITEMSET_LIST_CHAT,id,id,name.c_str(),localeNames);
                 else
-                    PSendSysMessage(LANG_ITEMSET_LIST_CONSOLE,id,name.c_str(),localeNames[loc]);
+                    PSendSysMessage(LANG_ITEMSET_LIST_CONSOLE,id,name.c_str(),localeNames);
 
                 if (!found)
                     found = true;
@@ -3152,29 +3132,8 @@ bool ChatHandler::HandleLookupSkillCommand(const char *args)
         SkillLineEntry const *skillInfo = sSkillLineStore.LookupEntry(id);
         if (skillInfo)
         {
-            int loc = GetSessionDbcLocale();
-            std::string name = skillInfo->name[loc];
-            if (name.empty())
-                continue;
-
-            if (!Utf8FitTo(name, wnamepart))
-            {
-                loc = 0;
-                for (; loc < MAX_LOCALE; ++loc)
-                {
-                    if (loc == GetSessionDbcLocale())
-                        continue;
-
-                    name = skillInfo->name[loc];
-                    if (name.empty())
-                        continue;
-
-                    if (Utf8FitTo(name, wnamepart))
-                        break;
-                }
-            }
-
-            if (loc < MAX_LOCALE)
+            std::string name = skillInfo->name;
+            if (!name.empty())
             {
                 if (maxResults && count++ == maxResults)
                 {
@@ -3198,9 +3157,9 @@ bool ChatHandler::HandleLookupSkillCommand(const char *args)
 
                 // send skill in "id - [namedlink locale]" format
                 if (m_session)
-                    PSendSysMessage(LANG_SKILL_LIST_CHAT,id,id,name.c_str(),localeNames[loc],knownStr,valStr);
+                    PSendSysMessage(LANG_SKILL_LIST_CHAT,id,id,name.c_str(),localeNames,knownStr,valStr);
                 else
-                    PSendSysMessage(LANG_SKILL_LIST_CONSOLE,id,name.c_str(),localeNames[loc],knownStr,valStr);
+                    PSendSysMessage(LANG_SKILL_LIST_CONSOLE,id,name.c_str(),localeNames,knownStr,valStr);
 
                 if (!found)
                     found = true;
@@ -3239,29 +3198,8 @@ bool ChatHandler::HandleLookupSpellCommand(const char *args)
         SpellEntry const *spellInfo = sSpellStore.LookupEntry(id);
         if (spellInfo)
         {
-            int loc = GetSessionDbcLocale();
-            std::string name = spellInfo->SpellName[loc];
-            if (name.empty())
-                continue;
-
-            if (!Utf8FitTo(name, wnamepart))
-            {
-                loc = 0;
-                for (; loc < MAX_LOCALE; ++loc)
-                {
-                    if (loc == GetSessionDbcLocale())
-                        continue;
-
-                    name = spellInfo->SpellName[loc];
-                    if (name.empty())
-                        continue;
-
-                    if (Utf8FitTo(name, wnamepart))
-                        break;
-                }
-            }
-
-            if (loc < MAX_LOCALE)
+            std::string name = spellInfo->SpellName;
+            if (!name.empty())
             {
                 if (maxResults && count++ == maxResults)
                 {
@@ -3294,9 +3232,9 @@ bool ChatHandler::HandleLookupSpellCommand(const char *args)
                     ss << GetTrinityString(LANG_SPELL_RANK) << rank;
 
                 if (m_session)
-                    ss << " " << localeNames[loc] << "]|h|r";
+                    ss << " " << localeNames << "]|h|r";
                 else
-                    ss << " " << localeNames[loc];
+                    ss << " " << localeNames;
 
                 if (talent)
                     ss << GetTrinityString(LANG_TALENT);
@@ -3637,29 +3575,8 @@ bool ChatHandler::HandleLookupFactionCommand(const char *args)
         {
             FactionState const* repState = target ? target->GetReputationMgr().GetState(factionEntry) : NULL;
 
-            int loc = GetSessionDbcLocale();
-            std::string name = factionEntry->name[loc];
-            if (name.empty())
-                continue;
-
-            if (!Utf8FitTo(name, wnamepart))
-            {
-                loc = 0;
-                for (; loc < MAX_LOCALE; ++loc)
-                {
-                    if (loc == GetSessionDbcLocale())
-                        continue;
-
-                    name = factionEntry->name[loc];
-                    if (name.empty())
-                        continue;
-
-                    if (Utf8FitTo(name, wnamepart))
-                        break;
-                }
-            }
-
-            if (loc < MAX_LOCALE)
+            std::string name = factionEntry->name;
+            if (!name.empty())
             {
                 if (maxResults && count++ == maxResults)
                 {
@@ -3671,9 +3588,9 @@ bool ChatHandler::HandleLookupFactionCommand(const char *args)
                 // or              "id - [faction] [no reputation]" format
                 std::ostringstream ss;
                 if (m_session)
-                    ss << id << " - |cffffffff|Hfaction:" << id << "|h[" << name << " " << localeNames[loc] << "]|h|r";
+                    ss << id << " - |cffffffff|Hfaction:" << id << "|h[" << name << " " << localeNames << "]|h|r";
                 else
-                    ss << id << " - " << name << " " << localeNames[loc];
+                    ss << id << " - " << name << " " << localeNames;
 
                 if (repState)                               // and then target != NULL also
                 {
@@ -3735,29 +3652,8 @@ bool ChatHandler::HandleLookupTaxiNodeCommand(const char * args)
         TaxiNodesEntry const *nodeEntry = sTaxiNodesStore.LookupEntry(id);
         if (nodeEntry)
         {
-            int loc = GetSessionDbcLocale();
-            std::string name = nodeEntry->name[loc];
-            if (name.empty())
-                continue;
-
-            if (!Utf8FitTo(name, wnamepart))
-            {
-                loc = 0;
-                for (; loc < MAX_LOCALE; ++loc)
-                {
-                    if (loc == GetSessionDbcLocale())
-                        continue;
-
-                    name = nodeEntry->name[loc];
-                    if (name.empty())
-                        continue;
-
-                    if (Utf8FitTo(name, wnamepart))
-                        break;
-                }
-            }
-
-            if (loc < MAX_LOCALE)
+            std::string name = nodeEntry->name;
+            if (!name.empty())
             {
                 if (maxResults && count++ == maxResults)
                 {
@@ -3767,10 +3663,10 @@ bool ChatHandler::HandleLookupTaxiNodeCommand(const char * args)
 
                 // send taxinode in "id - [name] (Map:m X:x Y:y Z:z)" format
                 if (m_session)
-                    PSendSysMessage (LANG_TAXINODE_ENTRY_LIST_CHAT, id, id, name.c_str(),localeNames[loc],
+                    PSendSysMessage (LANG_TAXINODE_ENTRY_LIST_CHAT, id, id, name.c_str(),localeNames,
                         nodeEntry->map_id,nodeEntry->x,nodeEntry->y,nodeEntry->z);
                 else
-                    PSendSysMessage (LANG_TAXINODE_ENTRY_LIST_CONSOLE, id, name.c_str(), localeNames[loc],
+                    PSendSysMessage (LANG_TAXINODE_ENTRY_LIST_CONSOLE, id, name.c_str(), localeNames,
                         nodeEntry->map_id,nodeEntry->x,nodeEntry->y,nodeEntry->z);
 
                 if (!found)
@@ -4957,7 +4853,7 @@ bool ChatHandler::HandleListAurasCommand (const char * /*args*/)
 
         AuraApplication const * aurApp = itr->second;
         Aura const * aura = aurApp->GetBase();
-        char const* name = aura->GetSpellProto()->SpellName[GetSessionDbcLocale()];
+        char const* name = aura->GetSpellProto()->SpellName;
 
         if (m_session)
         {
@@ -4990,7 +4886,7 @@ bool ChatHandler::HandleListAurasCommand (const char * /*args*/)
         {
             //bool talent = GetTalentSpellCost((*itr)->GetId()) > 0;
 
-            char const* name = (*itr)->GetSpellProto()->SpellName[GetSessionDbcLocale()];
+            char const* name = (*itr)->GetSpellProto()->SpellName;
 
             std::ostringstream ss_name;
             ss_name << "|cffffffff|Hspell:" << (*itr)->GetId() << "|h[" << name << "]|h|r";
@@ -5024,10 +4920,10 @@ bool ChatHandler::HandleResetHonorCommand (const char * args)
         return false;
 
     target->SetUInt32Value(PLAYER_FIELD_KILLS, 0);
-    target->SetUInt32Value(PLAYER_FIELD_LIFETIME_HONORABLE_KILLS, 0);
+    //target->SetUInt32Value(PLAYER_FIELD_LIFETIME_HONORABLE_KILLS, 0);
     target->SetHonorPoints(0);
-    target->SetUInt32Value(PLAYER_FIELD_TODAY_CONTRIBUTION, 0);
-    target->SetUInt32Value(PLAYER_FIELD_YESTERDAY_CONTRIBUTION, 0);
+	//target->SetUInt32Value(PLAYER_FIELD_TODAY_CONTRIBUTION, 0);
+	//target->SetUInt32Value(PLAYER_FIELD_YESTERDAY_CONTRIBUTION, 0);
     target->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EARN_HONORABLE_KILL);
 
     return true;

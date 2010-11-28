@@ -377,7 +377,7 @@ class Battleground
         bool IsRandom() { return m_IsRandom; }
 
         // Set methods:
-        void SetName(char const* Name)      { m_Name = Name; }
+        void SetName(const char* Name)      { m_Name = Name; }
         void SetTypeID(BattlegroundTypeId TypeID) { m_TypeID = TypeID; }
         void SetRandomTypeID(BattlegroundTypeId TypeID) { m_RandomTypeID = TypeID; }
         //here we can count minlevel and maxlevel for players

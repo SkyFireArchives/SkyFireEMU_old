@@ -124,7 +124,7 @@ void Corpse::SaveToDB()
     ss  << "', "
         << GetUInt32Value(CORPSE_FIELD_BYTES_1) << ", "
         << GetUInt32Value(CORPSE_FIELD_BYTES_2) << ", "
-        << GetUInt32Value(CORPSE_FIELD_GUILD) << ", "
+        << uint32(0) /*GetUInt32Value(CORPSE_FIELD_GUILD)*/ << ", "
         << GetUInt32Value(CORPSE_FIELD_FLAGS) << ", "
         << GetUInt32Value(CORPSE_FIELD_DYNAMIC_FLAGS) << ", "
         << uint64(m_time) << ", "
@@ -175,7 +175,7 @@ bool Corpse::LoadFromDB(uint32 guid, Field *fields)
     _LoadIntoDataField(fields[6].GetString(), CORPSE_FIELD_ITEM, EQUIPMENT_SLOT_END);
     SetUInt32Value(CORPSE_FIELD_BYTES_1, fields[7].GetUInt32());
     SetUInt32Value(CORPSE_FIELD_BYTES_2, fields[8].GetUInt32());
-    SetUInt32Value(CORPSE_FIELD_GUILD, fields[9].GetUInt32());
+    //SetUInt32Value(CORPSE_FIELD_GUILD, fields[9].GetUInt32());
     SetUInt32Value(CORPSE_FIELD_FLAGS, fields[10].GetUInt32());
     SetUInt32Value(CORPSE_FIELD_DYNAMIC_FLAGS, fields[11].GetUInt32());
     SetUInt64Value(CORPSE_FIELD_OWNER, MAKE_NEW_GUID(fields[17].GetUInt32(), 0, HIGHGUID_PLAYER));

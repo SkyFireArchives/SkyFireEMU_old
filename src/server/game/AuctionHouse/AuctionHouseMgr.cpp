@@ -691,7 +691,7 @@ void AuctionHouseObject::BuildListAuctionItems(WorldPacket& data, Player* player
 
                 if (itemRandProp)
                 {
-                    char* const* temp = itemRandProp->nameSuffix;
+                    DBCString temp = itemRandProp->nameSuffix;
                     //char* temp = itemRandProp->nameSuffix;
 
                     // dbc local name
@@ -701,13 +701,13 @@ void AuctionHouseObject::BuildListAuctionItems(WorldPacket& data, Player* player
                         {
                             // Append the suffix (ie: of the Monkey) to the name using localization
                             name += " ";
-                            name += temp[locdbc_idx];
+                            name += temp;
                         }
                         else
                         {
                             // Invalid localization? Append the suffix using default enUS
                             name += " ";
-                            name += temp[LOCALE_enUS];
+                            name += temp;
                         }
                     }
                 }

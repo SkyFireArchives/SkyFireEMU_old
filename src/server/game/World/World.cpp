@@ -1240,7 +1240,7 @@ void World::SetInitialWorldSettings()
     ///- Init highest guids before any table loading to prevent using not initialized guids in some code.
     sObjectMgr.SetHighestGuids();
 
-    ///- Check the existence of the map files for all races' startup areas.
+    /*///- Check the existence of the map files for all races' startup areas.
     if (!MapManager::ExistMapAndVMap(0,-6240.32f, 331.033f)
         || !MapManager::ExistMapAndVMap(0,-8949.95f,-132.493f)
         || !MapManager::ExistMapAndVMap(1,-618.518f,-4251.67f)
@@ -1251,7 +1251,6 @@ void World::SetInitialWorldSettings()
             !MapManager::ExistMapAndVMap(530,10349.6f,-6357.29f) || 
             !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f))))
     {
-        sLog.outError("Correct *.map files not found in path '%smaps' or *.vmtree/*.vmtile files in '%svmaps'. Please place *.map/*.vmtree/*.vmtile files in appropriate directories or correct the DataDir value in the worldserver.conf file.",m_dataPath.c_str(),m_dataPath.c_str());
         exit(1);
     }
 
@@ -1275,7 +1274,7 @@ void World::SetInitialWorldSettings()
 
     ///- Remove the bones (they should not exist in DB though) and old corpses after a restart
     CharacterDatabase.PExecute("DELETE FROM corpse WHERE corpse_type = '0' OR time < (UNIX_TIMESTAMP()-'%u')", 3 * DAY);
-
+*/
     ///- Load the DBC files
     sLog.outString("Initialize data stores...");
     LoadDBCStores(m_dataPath);
@@ -1762,7 +1761,7 @@ void World::DetectDBCLang()
     uint8 default_locale = MAX_LOCALE;
     for (uint8 i = default_locale-1; i < MAX_LOCALE; --i)  // -1 will be 255 due to uint8
     {
-        if (strlen(race->name[i]) > 0)                     // check by race names
+        if (strlen(race->name) > 0)                     // check by race names
         {
             default_locale = i;
             m_availableDbcLocaleMask |= (1 << i);

@@ -183,7 +183,9 @@ LanguageDesc lang_description[LANGUAGES_COUNT] =
     { LANG_DRAENEI,     29932, SKILL_LANG_DRAENEI      },
     { LANG_ZOMBIE,          0, 0                       },
     { LANG_GNOMISH_BINARY,  0, 0                       },
-    { LANG_GOBLIN_BINARY,   0, 0                       }
+    { LANG_GOBLIN_BINARY,   0, 0                       },
+    { LANG_WORGEN,      69270, SKILL_LANG_WORGEN       },
+    { LANG_GOBLIN,      69269, SKILL_LANG_GOBLIN       }
 };
 
 LanguageDesc const* GetLanguageDescByID(uint32 lang)
@@ -1031,28 +1033,28 @@ void ObjectMgr::LoadEquipmentTemplates()
             if (!eqInfo->equipentry[j])
                continue;
 
-            ItemEntry const *dbcitem = sItemStore.LookupEntry(eqInfo->equipentry[j]);
+            //ItemEntry const *dbcitem = sItemStore.LookupEntry(eqInfo->equipentry[j]);
 
-            if (!dbcitem)
-            {
-                sLog.outErrorDb("Unknown item (entry=%u) in creature_equip_template.equipentry%u for entry = %u, forced to 0.", eqInfo->equipentry[j], j+1, i);
-                const_cast<EquipmentInfo*>(eqInfo)->equipentry[j] = 0;
-                continue;
-            }
+            //if (!dbcitem)
+            //{
+            //    sLog.outErrorDb("Unknown item (entry=%u) in creature_equip_template.equipentry%u for entry = %u, forced to 0.", eqInfo->equipentry[j], j+1, i);
+            //    const_cast<EquipmentInfo*>(eqInfo)->equipentry[j] = 0;
+            //    continue;
+            //}
 
-            if (dbcitem->InventoryType != INVTYPE_WEAPON &&
-                    dbcitem->InventoryType != INVTYPE_SHIELD &&
-                    dbcitem->InventoryType != INVTYPE_RANGED &&
-                    dbcitem->InventoryType != INVTYPE_2HWEAPON &&
-                    dbcitem->InventoryType != INVTYPE_WEAPONMAINHAND &&
-                    dbcitem->InventoryType != INVTYPE_WEAPONOFFHAND &&
-                    dbcitem->InventoryType != INVTYPE_HOLDABLE &&
-                    dbcitem->InventoryType != INVTYPE_THROWN &&
-                    dbcitem->InventoryType != INVTYPE_RANGEDRIGHT)
-            {
-                sLog.outErrorDb("Item (entry=%u) in creature_equip_template.equipentry%u for entry = %u is not equipable in a hand, forced to 0.", eqInfo->equipentry[j], j+1, i);
-                const_cast<EquipmentInfo*>(eqInfo)->equipentry[j] = 0;
-            }
+            //if (dbcitem->InventoryType != INVTYPE_WEAPON &&
+            //        dbcitem->InventoryType != INVTYPE_SHIELD &&
+            //        dbcitem->InventoryType != INVTYPE_RANGED &&
+            //        dbcitem->InventoryType != INVTYPE_2HWEAPON &&
+            //        dbcitem->InventoryType != INVTYPE_WEAPONMAINHAND &&
+            //        dbcitem->InventoryType != INVTYPE_WEAPONOFFHAND &&
+            //        dbcitem->InventoryType != INVTYPE_HOLDABLE &&
+            //        dbcitem->InventoryType != INVTYPE_THROWN &&
+            //        dbcitem->InventoryType != INVTYPE_RANGEDRIGHT)
+            //{
+            //    sLog.outErrorDb("Item (entry=%u) in creature_equip_template.equipentry%u for entry = %u is not equipable in a hand, forced to 0.", eqInfo->equipentry[j], j+1, i);
+            //    const_cast<EquipmentInfo*>(eqInfo)->equipentry[j] = 0;
+            //}
         }
     }
     sLog.outString(">> Loaded %u equipment template", sEquipmentStorage.RecordCount);
@@ -1979,7 +1981,7 @@ void ObjectMgr::LoadItemPrototypes()
     for (uint32 i = 1; i < sItemStorage.MaxEntry; ++i)
     {
         ItemPrototype const* proto = sItemStorage.LookupEntry<ItemPrototype >(i);
-        ItemEntry const *dbcitem = sItemStore.LookupEntry(i);
+        //ItemEntry const *dbcitem = sItemStore.LookupEntry(i);
         if (!proto)
         {
             /* to many errors, and possible not all items really used in game
@@ -1989,13 +1991,13 @@ void ObjectMgr::LoadItemPrototypes()
             continue;
         }
 
-        if (dbcitem)
+        if (true/*dbcitem*/)
         {
-            if (proto->Class != dbcitem->Class)
-            {
-                sLog.outErrorDb("Item (Entry: %u) not correct class %u, must be %u (still using DB value).",i,proto->Class,dbcitem->Class);
-                // It safe let use Class from DB
-            }
+            //if (proto->Class != dbcitem->Class)
+            //{
+            //    sLog.outErrorDb("Item (Entry: %u) not correct class %u, must be %u (still using DB value).",i,proto->Class,dbcitem->Class);
+            //    // It safe let use Class from DB
+            //}
             /* disabled: have some strange wrong cases for Subclass values.
                for enable also uncomment Subclass field in ItemEntry structure and in Itemfmt[]
             if (proto->SubClass != dbcitem->SubClass)
@@ -2005,34 +2007,34 @@ void ObjectMgr::LoadItemPrototypes()
             }
             */
 
-            if (proto->Unk0 != dbcitem->Unk0)
-            {
-                sLog.outErrorDb("Item (Entry: %u) not correct %i Unk0, must be %i (still using DB value).",i,proto->Unk0,dbcitem->Unk0);
-                // It safe let use Unk0 from DB
-            }
+            //if (proto->Unk0 != dbcitem->Unk0)
+            //{
+            //    sLog.outErrorDb("Item (Entry: %u) not correct %i Unk0, must be %i (still using DB value).",i,proto->Unk0,dbcitem->Unk0);
+            //    // It safe let use Unk0 from DB
+            //}
 
-            if (proto->Material != dbcitem->Material)
-            {
-                sLog.outErrorDb("Item (Entry: %u) not correct %i material, must be %i (still using DB value).",i,proto->Material,dbcitem->Material);
-                // It safe let use Material from DB
-            }
+            //if (proto->Material != dbcitem->Material)
+            //{
+            //    sLog.outErrorDb("Item (Entry: %u) not correct %i material, must be %i (still using DB value).",i,proto->Material,dbcitem->Material);
+            //    // It safe let use Material from DB
+            //}
 
-            if (proto->InventoryType != dbcitem->InventoryType)
-            {
-                sLog.outErrorDb("Item (Entry: %u) not correct %u inventory type, must be %u (still using DB value).",i,proto->InventoryType,dbcitem->InventoryType);
-                // It safe let use InventoryType from DB
-            }
+            //if (proto->InventoryType != dbcitem->InventoryType)
+            //{
+            //    sLog.outErrorDb("Item (Entry: %u) not correct %u inventory type, must be %u (still using DB value).",i,proto->InventoryType,dbcitem->InventoryType);
+            //    // It safe let use InventoryType from DB
+            //}
 
-            if (proto->DisplayInfoID != dbcitem->DisplayId)
-            {
-                sLog.outErrorDb("Item (Entry: %u) not correct %u display id, must be %u (using it).",i,proto->DisplayInfoID,dbcitem->DisplayId);
-                const_cast<ItemPrototype*>(proto)->DisplayInfoID = dbcitem->DisplayId;
-            }
-            if (proto->Sheath != dbcitem->Sheath)
-            {
-                sLog.outErrorDb("Item (Entry: %u) not correct %u sheath, must be %u  (using it).",i,proto->Sheath,dbcitem->Sheath);
-                const_cast<ItemPrototype*>(proto)->Sheath = dbcitem->Sheath;
-            }
+            //if (proto->DisplayInfoID != dbcitem->DisplayId)
+            //{
+            //    sLog.outErrorDb("Item (Entry: %u) not correct %u display id, must be %u (using it).",i,proto->DisplayInfoID,dbcitem->DisplayId);
+            //    const_cast<ItemPrototype*>(proto)->DisplayInfoID = dbcitem->DisplayId;
+            //}
+            //if (proto->Sheath != dbcitem->Sheath)
+            //{
+            //    sLog.outErrorDb("Item (Entry: %u) not correct %u sheath, must be %u  (using it).",i,proto->Sheath,dbcitem->Sheath);
+            //    const_cast<ItemPrototype*>(proto)->Sheath = dbcitem->Sheath;
+            //}
         }
         else
             sLog.outErrorDb("Item (Entry: %u) not correct (not listed in list of existed items).",i);
@@ -2350,15 +2352,15 @@ void ObjectMgr::LoadItemPrototypes()
                     continue;
                 }
 
-                if (BAG_FAMILY_MASK_CURRENCY_TOKENS & mask)
-                {
-                    CurrencyTypesEntry const* ctEntry = sCurrencyTypesStore.LookupEntry(proto->ItemId);
-                    if (!ctEntry)
-                    {
-                        sLog.outErrorDb("Item (Entry: %u) has currency bag family bit set in BagFamily but not listed in CurrencyTypes.dbc, remove bit",i);
-                        const_cast<ItemPrototype*>(proto)->BagFamily &= ~mask;
-                    }
-                }
+                //if (BAG_FAMILY_MASK_CURRENCY_TOKENS & mask)
+                //{
+                //    CurrencyTypesEntry const* ctEntry = sCurrencyTypesStore.LookupEntry(proto->ItemId);
+                //    if (!ctEntry)
+                //    {
+                //        sLog.outErrorDb("Item (Entry: %u) has currency bag family bit set in BagFamily but not listed in CurrencyTypes.dbc, remove bit",i);
+                //        const_cast<ItemPrototype*>(proto)->BagFamily &= ~mask;
+                //    }
+                //}
             }
         }
 
@@ -6669,7 +6671,7 @@ std::string ObjectMgr::GeneratePetName(uint32 entry)
     if (list0.empty() || list1.empty())
     {
         CreatureInfo const *cinfo = GetCreatureTemplate(entry);
-        char* petname = GetPetName(cinfo->family, sWorld.GetDefaultDbcLocale());
+        const char* petname = GetPetName(cinfo->family);
         if (!petname)
             petname = cinfo->Name;
         return std::string(petname);

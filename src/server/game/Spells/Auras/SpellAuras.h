@@ -181,6 +181,8 @@ class Aura
         void _DeleteRemovedApplications();
     protected:
         SpellEntry const * const m_spellProto;
+		SpellEffectEntry const* m_spellEffect;
+	
         uint64 const m_casterGuid;
         uint64 const m_castItemGuid;                        // it is NOT safe to keep a pointer to the item because it may get deleted
         time_t const m_applyTime;

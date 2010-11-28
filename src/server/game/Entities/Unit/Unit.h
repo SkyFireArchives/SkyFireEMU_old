@@ -517,8 +517,8 @@ enum CombatRating
     CR_HIT_TAKEN_MELEE          = 11,
     CR_HIT_TAKEN_RANGED         = 12,
     CR_HIT_TAKEN_SPELL          = 13,
-    CR_CRIT_TAKEN_MELEE         = 14,
-    CR_CRIT_TAKEN_RANGED        = 15,
+    CR_CRIT_TAKEN_MELEE         = 14,                     // COMBAT_RATING_RESILIENCE_CRIT_TAKEN
+    CR_CRIT_TAKEN_RANGED        = 15,                     // COMBAT_RATING_RESILIENCE_PLAYER_DAMAGE_TAKEN
     CR_CRIT_TAKEN_SPELL         = 16,
     CR_HASTE_MELEE              = 17,
     CR_HASTE_RANGED             = 18,
@@ -527,7 +527,8 @@ enum CombatRating
     CR_WEAPON_SKILL_OFFHAND     = 21,
     CR_WEAPON_SKILL_RANGED      = 22,
     CR_EXPERTISE                = 23,
-    CR_ARMOR_PENETRATION        = 24
+    CR_ARMOR_PENETRATION        = 24,
+	CR_MASTERY                  = 25
 };
 
 #define MAX_COMBAT_RATING         25
@@ -592,14 +593,17 @@ enum UnitFlags
 // Value masks for UNIT_FIELD_FLAGS_2
 enum UnitFlags2
 {
-    UNIT_FLAG2_FEIGN_DEATH      = 0x00000001,
-    UNIT_FLAG2_UNK1             = 0x00000002,               // Hide unit model (show only player equip)
-    UNIT_FLAG2_COMPREHEND_LANG  = 0x00000008,
-    UNIT_FLAG2_MIRROR_IMAGE     = 0x00000010,
-    UNIT_FLAG2_FORCE_MOVE       = 0x00000040,
-    UNIT_FLAG2_DISARM_OFFHAND   = 0x00000080,
-    UNIT_FLAG2_DISARM_RANGED    = 0x00000400,               //this does not disable ranged weapon display (maybe additional flag needed?)
-    UNIT_FLAG2_REGENERATE_POWER = 0x00000800
+    UNIT_FLAG2_FEIGN_DEATH          = 0x00000001,
+    UNIT_FLAG2_UNK1                 = 0x00000002,               // Hide unit model (show only player equip)
+    UNIT_FLAG2_COMPREHEND_LANG      = 0x00000008,
+    UNIT_FLAG2_MIRROR_IMAGE         = 0x00000010,
+    UNIT_FLAG2_FORCE_MOVE           = 0x00000040,
+    UNIT_FLAG2_DISARM_OFFHAND       = 0x00000080,
+    UNIT_FLAG2_DISARM_RANGED        = 0x00000400,               //this does not disable ranged weapon display (maybe additional flag needed?)
+    UNIT_FLAG2_REGENERATE_POWER     = 0x00000800,
+	UNIT_FLAG2_WORGEN_TRANSFORM     = 0x00080000,           // transform to worgen
+	UNIT_FLAG2_WORGEN_TRANSFORM2    = 0x00100000,           // transform to worgen, but less animation?
+	UNIT_FLAG2_WORGEN_TRANSFORM3    = 0x00200000            // transform to worgen, but less animation?
 };
 
 /// Non Player Character flags

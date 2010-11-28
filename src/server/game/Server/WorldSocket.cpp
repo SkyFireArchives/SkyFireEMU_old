@@ -260,7 +260,7 @@ int WorldSocket::open (void *a)
     m_Address = remote_addr.get_host_addr();
 
     // Send startup packet.
-    WorldPacket packet (SMSG_AUTH_CHALLENGE, 24);
+    WorldPacket packet (SMSG_AUTH_CHALLENGE, 37);
     packet << uint32(1);                                    // 1...31
     packet << m_Seed;
 
@@ -272,6 +272,9 @@ int WorldSocket::open (void *a)
     seed2.SetRand(16 * 8);
     packet.append(seed2.AsByteArray(16), 16);               // new encryption seeds
 
+	packet << uint8(1);                                     // 1...31
+	packet << uint32(m_Seed);
+	
     if (SendPacket(packet) == -1)
         return -1;
 
@@ -493,7 +496,7 @@ int WorldSocket::handle_input_header (void)
     EndianConvertReverse(header.size);
     EndianConvert(header.cmd);
 
-    if ((header.size < 4) || (header.size > 10240) || (header.cmd  > 10240))
+    if ((header.size < 4) || (header.size > 10240))
     {
         sLog.outError ("WorldSocket::handle_input_header: client sent malformed packet size = %d , cmd = %d",
                        header.size, header.cmd);
@@ -766,19 +769,14 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 {
     // NOTE: ATM the socket is singlethread, have this in mind ...
     uint8 digest[20];
-    uint32 clientSeed;
-    uint32 unk2, unk3, unk5, unk6, unk7;
-    uint64 unk4;
-    uint32 BuiltNumberClient;
-    uint32 id, security;
+    uint32 clientSeed, id, security;
+	uint16 ClientBuild;
     //uint8 expansion = 0;
     LocaleConstant locale;
     std::string account;
     SHA1Hash sha1;
-    BigNumber v, s, g, N;
-    WorldPacket packet, SendAddonPacked;
-
-    BigNumber K;
+    BigNumber v, s, g, N, K;
+	WorldPacket packet;
 
     if (sWorld.IsClosed())
     {
@@ -791,21 +789,14 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     }
 
     // Read the content of the packet
-    recvPacket >> BuiltNumberClient;                        // for now no use
-    recvPacket >> unk2;
+	recvPacket.read(digest, 20);
+	recvPacket.read_skip<uint64>();
+	recvPacket.read_skip<uint32>();
+	recvPacket >> clientSeed;
+    recvPacket >> ClientBuild;                        // for now no use
+    recvPacket.read_skip<uint8>();
     recvPacket >> account;
-    recvPacket >> unk3;
-    recvPacket >> clientSeed;
-    recvPacket >> unk5 >> unk6 >> unk7;
-    recvPacket >> unk4;
-    recvPacket.read (digest, 20);
-
-    sLog.outStaticDebug ("WorldSocket::HandleAuthSession: client %u, unk2 %u, account %s, unk3 %u, clientseed %u",
-                BuiltNumberClient,
-                unk2,
-                account.c_str(),
-                unk3,
-                clientSeed);
+    recvPacket.read_skip<uint32>();                         // addon data size
 
     // Get the account information from the realmd database
     std::string safe_account = account; // Duplicate, else will screw the SHA hash verification below

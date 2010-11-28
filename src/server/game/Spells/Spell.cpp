@@ -4019,7 +4019,7 @@ void Spell::SendSpellGo()
 
 void Spell::WriteAmmoToPacket(WorldPacket * data)
 {
-    uint32 ammoInventoryType = 0;
+    /*uint32 ammoInventoryType = 0;
     uint32 ammoDisplayID = 0;
 
     if (m_caster->GetTypeId() == TYPEID_PLAYER)
@@ -4086,7 +4086,7 @@ void Spell::WriteAmmoToPacket(WorldPacket * data)
     }
 
     *data << uint32(ammoDisplayID);
-    *data << uint32(ammoInventoryType);
+    *data << uint32(ammoInventoryType);*/
 }
 
 void Spell::WriteSpellGoTargets(WorldPacket * data)
@@ -4489,8 +4489,8 @@ void Spell::TakeAmmo()
                 m_caster->ToPlayer()->DestroyItemCount(pItem, count, true);
             }
         }
-        else if (uint32 ammo = m_caster->ToPlayer()->GetUInt32Value(PLAYER_AMMO_ID))
-            m_caster->ToPlayer()->DestroyItemCount(ammo, 1, true);
+        //else if (uint32 ammo = m_caster->ToPlayer()->GetUInt32Value(PLAYER_AMMO_ID))
+        //    m_caster->ToPlayer()->DestroyItemCount(ammo, 1, true);
     }
 }
 
@@ -6409,7 +6409,7 @@ SpellCastResult Spell::CheckItems()
                         if (!m_caster->ToPlayer()->HasItemCount(ammo, 1))
                             return SPELL_FAILED_NO_AMMO;
                     };  break;
-                    case ITEM_SUBCLASS_WEAPON_GUN:
+                    /*case ITEM_SUBCLASS_WEAPON_GUN:
                     case ITEM_SUBCLASS_WEAPON_BOW:
                     case ITEM_SUBCLASS_WEAPON_CROSSBOW:
                     {
@@ -6451,7 +6451,7 @@ SpellCastResult Spell::CheckItems()
                             m_caster->ToPlayer()->SetUInt32Value(PLAYER_AMMO_ID, 0);
                             return SPELL_FAILED_NO_AMMO;
                         }
-                    };  break;
+                    };  break;*/
                     case ITEM_SUBCLASS_WEAPON_WAND:
                         break;
                     default:

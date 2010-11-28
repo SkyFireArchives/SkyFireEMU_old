@@ -3321,7 +3321,7 @@ bool ChatHandler::HandleCharacterReputationCommand(const char* args)
     for (FactionStateList::const_iterator itr = targetFSL.begin(); itr != targetFSL.end(); ++itr)
     {
         FactionEntry const *factionEntry = sFactionStore.LookupEntry(itr->second.ID);
-        char const* factionName = factionEntry ? factionEntry->name[loc] : "#Not found#";
+        char const* factionName = factionEntry ? factionEntry->name : "#Not found#";
         ReputationRank rank = target->GetReputationMgr().GetRank(factionEntry);
         std::string rankName = GetTrinityString(ReputationRankStrIndex[rank]);
         std::ostringstream ss;
@@ -4311,29 +4311,8 @@ bool ChatHandler::HandleLookupTitleCommand(const char* args)
         CharTitlesEntry const *titleInfo = sCharTitlesStore.LookupEntry(id);
         if (titleInfo)
         {
-            int loc = GetSessionDbcLocale();
-            std::string name = titleInfo->name[loc];
-            if (name.empty())
-                continue;
-
-            if (!Utf8FitTo(name, wnamepart))
-            {
-                loc = 0;
-                for (; loc < MAX_LOCALE; ++loc)
-                {
-                    if (loc == GetSessionDbcLocale())
-                        continue;
-
-                    name = titleInfo->name[loc];
-                    if (name.empty())
-                        continue;
-
-                    if (Utf8FitTo(name, wnamepart))
-                        break;
-                }
-            }
-
-            if (loc < MAX_LOCALE)
+            std::string name = titleInfo->name;
+            if (!name.empty())
             {
                 if (maxResults && counter == maxResults)
                 {
@@ -4352,9 +4331,9 @@ bool ChatHandler::HandleLookupTitleCommand(const char* args)
 
                 // send title in "id (idx:idx) - [namedlink locale]" format
                 if (m_session)
-                    PSendSysMessage(LANG_TITLE_LIST_CHAT,id,titleInfo->bit_index,id,titleNameStr,localeNames[loc],knownStr,activeStr);
+                    PSendSysMessage(LANG_TITLE_LIST_CHAT,id,titleInfo->bit_index,id,titleNameStr,localeNames,knownStr,activeStr);
                 else
-                    PSendSysMessage(LANG_TITLE_LIST_CONSOLE,id,titleInfo->bit_index,titleNameStr,localeNames[loc],knownStr,activeStr);
+                    PSendSysMessage(LANG_TITLE_LIST_CONSOLE,id,titleInfo->bit_index,titleNameStr,localeNames,knownStr,activeStr);
 
                 ++counter;
             }
@@ -4404,7 +4383,7 @@ bool ChatHandler::HandleTitlesAddCommand(const char* args)
 
     char const* targetName = target->GetName();
     char titleNameStr[80];
-    snprintf(titleNameStr,80,titleInfo->name[GetSessionDbcLocale()],targetName);
+    snprintf(titleNameStr,80,titleInfo->name,targetName);
 
     target->SetTitle(titleInfo);
     PSendSysMessage(LANG_TITLE_ADD_RES, id, titleNameStr, tNameLink.c_str());
@@ -4453,7 +4432,7 @@ bool ChatHandler::HandleTitlesRemoveCommand(const char* args)
 
     char const* targetName = target->GetName();
     char titleNameStr[80];
-    snprintf(titleNameStr,80,titleInfo->name[GetSessionDbcLocale()],targetName);
+    snprintf(titleNameStr,80,titleInfo->name,targetName);
 
     PSendSysMessage(LANG_TITLE_REMOVE_RES, id, titleNameStr, tNameLink.c_str());
 
@@ -4524,7 +4503,7 @@ bool ChatHandler::HandleCharacterTitlesCommand(const char* args)
         CharTitlesEntry const *titleInfo = sCharTitlesStore.LookupEntry(id);
         if (titleInfo && target->HasTitle(titleInfo))
         {
-            std::string name = titleInfo->name[loc];
+            std::string name = titleInfo->name;
             if (name.empty())
                 continue;
 

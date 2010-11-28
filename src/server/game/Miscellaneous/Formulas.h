@@ -31,7 +31,7 @@ namespace Trinity
     {
         inline float hk_honor_at_level_f(uint8 level, uint32 count = 1)
         {
-            float honor = count * level * 1.55f;
+            float honor = count * level * 1.55f; //TODO: change this for cataclysm. Probably divided by 40.
             sScriptMgr.OnHonorCalculation(honor, level, count);
             return honor;
         }

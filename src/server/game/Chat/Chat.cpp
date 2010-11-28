@@ -1606,27 +1606,21 @@ valid examples:
                                 return false;
                             }
 
-                            for (uint8 i=0; i<MAX_LOCALE; ++i)
-                            {
-                                uint32 skillLineNameLength = strlen(skillLine->name[i]);
-                                if (skillLineNameLength > 0 && strncmp(skillLine->name[i], buffer, skillLineNameLength) == 0)
-                                {
-                                    // found the prefix, remove it to perform spellname validation below
-                                    // -2 = strlen(": ")
-                                    uint32 spellNameLength = strlen(buffer)-skillLineNameLength-2;
-                                    memmove(buffer, buffer+skillLineNameLength+2, spellNameLength+1);
-                                }
-                            }
+							uint32 skillLineNameLength = strlen(skillLine->name);
+							if (skillLineNameLength > 0 && strncmp(skillLine->name, buffer, skillLineNameLength) == 0)
+							{
+								// found the prefix, remove it to perform spellname validation below
+								// -2 = strlen(": ")
+								uint32 spellNameLength = strlen(buffer)-skillLineNameLength-2;
+								memmove(buffer, buffer+skillLineNameLength+2, spellNameLength+1);
+							}
                         }
                         bool foundName = false;
-                        for (uint8 i=0; i<MAX_LOCALE; ++i)
-                        {
-                            if (*linkedSpell->SpellName[i] && strcmp(linkedSpell->SpellName[i], buffer) == 0)
-                            {
-                                foundName = true;
-                                break;
-                            }
-                        }
+						if (*linkedSpell->SpellName && strcmp(linkedSpell->SpellName, buffer) == 0)
+						{
+							foundName = true;
+							break;
+						}
                         if (!foundName)
                             return false;
                     }
@@ -1664,7 +1658,7 @@ valid examples:
                     }
                     else if (linkedItem)
                     {
-                        char* const* suffix = itemSuffix?itemSuffix->nameSuffix:(itemProperty?itemProperty->nameSuffix:NULL);
+                        DBCString suffix = itemSuffix?itemSuffix->nameSuffix:(itemProperty?itemProperty->nameSuffix:NULL);
 
                         std::string expectedName = std::string(linkedItem->Name1);
                         if (suffix)
@@ -1709,14 +1703,11 @@ valid examples:
                     else if (linkedAchievement)
                     {
                         bool foundName = false;
-                        for (uint8 i=0; i<MAX_LOCALE; ++i)
-                        {
-                            if (*linkedAchievement->name[i] && strcmp(linkedAchievement->name[i], buffer) == 0)
-                            {
-                                foundName = true;
-                                break;
-                            }
-                        }
+						if (*linkedAchievement->name && strcmp(linkedAchievement->name, buffer) == 0)
+						{
+							foundName = true;
+							break;
+						}
                         if (!foundName)
                             return false;
                     }

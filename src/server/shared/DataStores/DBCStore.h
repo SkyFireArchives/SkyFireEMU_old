@@ -74,6 +74,7 @@ class DBCStorage
         ~DBCStorage() { Clear(); }
 
         T const* LookupEntry(uint32 id) const { return (id>=nCount)?NULL:indexTable[id]; }
+		T* LookupEntryNoConst(uint32 id) const { return (id>=nCount)?NULL:indexTable[id]; }
         uint32  GetNumRows() const { return nCount; }
         char const* GetFormat() const { return fmt; }
         uint32 GetFieldCount() const { return fieldCount; }

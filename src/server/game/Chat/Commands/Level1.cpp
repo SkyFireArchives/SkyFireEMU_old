@@ -384,9 +384,9 @@ bool ChatHandler::HandleGPSCommand(const char* args)
     else PSendSysMessage("no VMAP available for area info");
 
     PSendSysMessage(LANG_MAP_POSITION,
-        obj->GetMapId(), (mapEntry ? mapEntry->name[GetSessionDbcLocale()] : "<unknown>"),
-        zone_id, (zoneEntry ? zoneEntry->area_name[GetSessionDbcLocale()] : "<unknown>"),
-        area_id, (areaEntry ? areaEntry->area_name[GetSessionDbcLocale()] : "<unknown>"),
+        obj->GetMapId(), (mapEntry ? mapEntry->name : "<unknown>"),
+        zone_id, (zoneEntry ? zoneEntry->area_name : "<unknown>"),
+        area_id, (areaEntry ? areaEntry->area_name : "<unknown>"),
         obj->GetPhaseMask(),
         obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation(),
         cell.GridX(), cell.GridY(), cell.CellX(), cell.CellY(), obj->GetInstanceId(),
@@ -397,9 +397,9 @@ bool ChatHandler::HandleGPSCommand(const char* args)
         (obj->GetTypeId() == TYPEID_PLAYER ? "player" : "creature"), obj->GetName(),
         (obj->GetTypeId() == TYPEID_PLAYER ? "GUID" : "Entry"), (obj->GetTypeId() == TYPEID_PLAYER ? obj->GetGUIDLow(): obj->GetEntry()));
     sLog.outDebug(GetTrinityString(LANG_MAP_POSITION),
-        obj->GetMapId(), (mapEntry ? mapEntry->name[sWorld.GetDefaultDbcLocale()] : "<unknown>"),
-        zone_id, (zoneEntry ? zoneEntry->area_name[sWorld.GetDefaultDbcLocale()] : "<unknown>"),
-        area_id, (areaEntry ? areaEntry->area_name[sWorld.GetDefaultDbcLocale()] : "<unknown>"),
+        obj->GetMapId(), (mapEntry ? mapEntry->name : "<unknown>"),
+        zone_id, (zoneEntry ? zoneEntry->area_name : "<unknown>"),
+        area_id, (areaEntry ? areaEntry->area_name : "<unknown>"),
         obj->GetPhaseMask(),
         obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation(),
         cell.GridX(), cell.GridY(), cell.CellX(), cell.CellY(), obj->GetInstanceId(),
@@ -1864,28 +1864,8 @@ bool ChatHandler::HandleLookupAreaCommand(const char* args)
         if (areaEntry)
         {
             int loc = GetSessionDbcLocale ();
-            std::string name = areaEntry->area_name[loc];
-            if (name.empty())
-                continue;
-
-            if (!Utf8FitTo (name, wnamepart))
-            {
-                loc = 0;
-                for (; loc < MAX_LOCALE; ++loc)
-                {
-                    if (loc == GetSessionDbcLocale ())
-                        continue;
-
-                    name = areaEntry->area_name[loc];
-                    if (name.empty ())
-                        continue;
-
-                    if (Utf8FitTo (name, wnamepart))
-                        break;
-                }
-            }
-
-            if (loc < MAX_LOCALE)
+            std::string name = areaEntry->area_name;
+			if (!name.empty () && Utf8FitTo (name, wnamepart))
             {
                 if (maxResults && count++ == maxResults)
                 {

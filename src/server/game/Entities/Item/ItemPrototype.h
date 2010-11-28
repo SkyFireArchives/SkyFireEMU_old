@@ -69,10 +69,18 @@ enum ItemModType
     ITEM_MOD_SPELL_POWER              = 45,
     ITEM_MOD_HEALTH_REGEN             = 46,
     ITEM_MOD_SPELL_PENETRATION        = 47,
-    ITEM_MOD_BLOCK_VALUE              = 48
+    ITEM_MOD_BLOCK_VALUE              = 48,
+    ITEM_MOD_MASTERY_RATING           = 49,
+    ITEM_MOD_EXTRA_ARMOR              = 50,
+    ITEM_MOD_FIRE_RESISTANCE          = 51,
+    ITEM_MOD_FROST_RESISTANCE         = 52,
+    ITEM_MOD_HOLY_RESISTANCE          = 53,
+    ITEM_MOD_SHADOW_RESISTANCE        = 54,
+    ITEM_MOD_NATURE_RESISTANCE        = 55,
+    ITEM_MOD_ARCANE_RESISTANCE        = 56
 };
 
-#define MAX_ITEM_MOD                    49
+#define MAX_ITEM_MOD                    57
 
 enum ItemSpelltriggerType
 {
@@ -191,7 +199,8 @@ enum ItemFlagsExtra
     ITEM_FLAGS_EXTRA_HORDE_ONLY              = 0x00000001,
     ITEM_FLAGS_EXTRA_ALLIANCE_ONLY           = 0x00000002,
     ITEM_FLAGS_EXTRA_EXT_COST_REQUIRES_GOLD  = 0x00000004, // when item uses extended cost, gold is also required
-    ITEM_FLAGS_EXTRA_NEED_ROLL_DISABLED      = 0x00000100
+    ITEM_FLAGS_EXTRA_NEED_ROLL_DISABLED      = 0x00000100,
+	ITEM_FLAGS_EXTRA_CASTER_WEAPON           = 0x00000200, // uses caster specific dbc file for DPS calculations
 };
 
 enum BAG_FAMILY_MASK
@@ -611,16 +620,16 @@ struct ItemPrototype
     _ItemStat ItemStat[MAX_ITEM_PROTO_STATS];
     uint32 ScalingStatDistribution;                         // id from ScalingStatDistribution.dbc
     uint32 ScalingStatValue;                                // mask for selecting column in ScalingStatValues.dbc
-    _Damage Damage[MAX_ITEM_PROTO_DAMAGES];
-    uint32 Armor;
-    uint32 HolyRes;
-    uint32 FireRes;
-    uint32 NatureRes;
-    uint32 FrostRes;
-    uint32 ShadowRes;
-    uint32 ArcaneRes;
+    _Damage Damage[MAX_ITEM_PROTO_DAMAGES];                 // TODO: remove it
+    uint32 Armor;                                           // TODO: remove it
+    uint32 HolyRes;                                         // TODO: remove it
+    uint32 FireRes;                                         // TODO: remove it
+    uint32 NatureRes;                                       // TODO: remove it
+    uint32 FrostRes;                                        // TODO: remove it
+    uint32 ShadowRes;                                       // TODO: remove it
+    uint32 ArcaneRes;                                       // TODO: remove it
     uint32 Delay;
-    uint32 AmmoType;
+    uint32 AmmoType;                                        // TODO: remove it
     float  RangedModRange;
     _Spell Spells[MAX_ITEM_PROTO_SPELLS];
     uint32 Bonding;
@@ -681,15 +690,7 @@ struct ItemPrototype
         return (Stackable == 2147483647 || Stackable <= 0) ? uint32(0x7FFFFFFF-1) : uint32(Stackable);
     }
 
-    float getDPS() const
-    {
-        if (Delay == 0)
-            return 0;
-        float temp = 0;
-        for (int i = 0; i < MAX_ITEM_PROTO_DAMAGES; ++i)
-            temp+=Damage[i].DamageMin + Damage[i].DamageMax;
-        return temp*500/Delay;
-    }
+    float getDPS() const;
 
     int32 getFeralBonus(int32 extraDPS = 0) const
     {
@@ -726,6 +727,10 @@ struct ItemPrototype
         }
         return itemLevel;
     }
+
+	uint32 GetArmor() const;
+	float GetMinDamage() const { return floor(getDPS() * float(Delay) / 1000.0f * 0.7f + 0.5f); }
+	float GetMaxDamage() const { return floor(getDPS() * float(Delay) / 1000.0f * 1.3f + 0.5f); }
 
     bool IsPotion() const { return Class == ITEM_CLASS_CONSUMABLE && SubClass == ITEM_SUBCLASS_POTION; }
     bool IsWeaponVellum() const { return Class == ITEM_CLASS_TRADE_GOODS && SubClass == ITEM_SUBCLASS_WEAPON_ENCHANTMENT; }
