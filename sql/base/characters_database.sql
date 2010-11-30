@@ -325,6 +325,8 @@ CREATE TABLE `characters` (
   `power5` int(10) unsigned NOT NULL default'0',
   `power6` int(10) unsigned NOT NULL default'0',
   `power7` int(10) unsigned NOT NULL default'0',
+  `power8` int(10) unsigned NOT NULL default'0',
+  `power9` int(10) unsigned NOT NULL default'0',
   `latency` int(11) unsigned NOT NULL default '0',
   `speccount` tinyint(3) unsigned NOT NULL default 1,
   `activespec` tinyint(3) unsigned NOT NULL default 0,
@@ -685,6 +687,9 @@ CREATE TABLE `character_glyphs` (
   `glyph4` int(11) unsigned DEFAULT '0',
   `glyph5` int(11) unsigned DEFAULT '0',
   `glyph6` int(11) unsigned DEFAULT '0',
+  `glyph7` int(11) unsigned DEFAULT '0',
+  `glyph8` int(11) unsigned DEFAULT '0',
+  `glyph9` int(11) unsigned DEFAULT '0',
   PRIMARY KEY (`guid`,`spec`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1072,6 +1077,8 @@ CREATE TABLE `character_stats` (
   `maxpower5` int(10) UNSIGNED NOT NULL default '0',
   `maxpower6` int(10) UNSIGNED NOT NULL default '0',
   `maxpower7` int(10) UNSIGNED NOT NULL default '0',
+  `maxpower8` int(10) UNSIGNED NOT NULL default '0',
+  `maxpower9` int(10) UNSIGNED NOT NULL default '0',
   `strength` int(10) UNSIGNED NOT NULL default '0',
   `agility` int(10) UNSIGNED NOT NULL default '0',
   `stamina` int(10) UNSIGNED NOT NULL default '0',
@@ -1635,6 +1642,7 @@ CREATE TABLE `guild_member` (
   `BankRemSlotsTab4` int(11) unsigned NOT NULL default '0',
   `BankResetTimeTab5` int(11) unsigned NOT NULL default '0',
   `BankRemSlotsTab5` int(11) unsigned NOT NULL default '0',
+  `achievementPoints` int(11) unsigned NOT NULL default '0',
   KEY `guildid_key` (`guildid`),
   KEY `guildid_rank_key` (`guildid`,`rank`),
   UNIQUE KEY `guid_key` (`guid`)

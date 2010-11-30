@@ -229,6 +229,7 @@ void Object::BuildCreateUpdateBlockForPlayer(UpdateData *data, Player *target) c
 		updateMask.SetCount(m_valuesCount);
 	else
 		updateMask.SetCount(MAX_VALUES_COUNT_OTHER_PLAYER);
+	
     _SetCreateBits(&updateMask, target);
     _BuildValuesUpdate(updatetype, &buf, &updateMask, target);
     data->AddUpdateBlock(buf);

@@ -29,11 +29,11 @@ class WorldPacket;
 enum OBJECT_UPDATE_TYPE
 {
     UPDATETYPE_VALUES               = 0,
-    UPDATETYPE_MOVEMENT             = 0xFF,
+    //UPDATETYPE_MOVEMENT             = 0xFF, //deleted in 4.0.3.
     UPDATETYPE_CREATE_OBJECT        = 1,
     UPDATETYPE_CREATE_OBJECT2       = 2,
     UPDATETYPE_OUT_OF_RANGE_OBJECTS = 3,
-    UPDATETYPE_NEAR_OBJECTS         = 0xFF
+    //UPDATETYPE_NEAR_OBJECTS         = 0xFF //deleted in 4.0.3.
 };
 
 enum OBJECT_UPDATE_FLAGS

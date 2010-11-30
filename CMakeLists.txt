@@ -1,5 +1,7 @@
 # Copyright (C) 2005-2010 Trinity <http://www.trinitycore.org/>
 #
+# Copyright (C) 2005-2010 CactusEMU <http://www.cactusemu.com/>
+#
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
@@ -9,7 +11,7 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 # Set projectname (must be done AFTER setting configurationtypes)
-project(TrinityCore)
+project(CactusEMU)
 
 # CMake policies (can not be handled elsewhere)
 cmake_minimum_required(VERSION 2.6)
