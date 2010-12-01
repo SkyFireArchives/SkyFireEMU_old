@@ -32,6 +32,7 @@
 #include "WorldSession.h"
 #include "UpdateMask.h"
 #include "Player.h"
+#include "ClassPlayer.h"
 #include "Vehicle.h"
 #include "SkillDiscovery.h"
 #include "QuestDef.h"
@@ -683,6 +684,8 @@ bool Player::Create(uint32 guidlow, const std::string& name, uint8 race, uint8 c
 
     Object::_Create(guidlow, 0, HIGHGUID_PLAYER);
 
+	ASSERT(getClass() == class_);
+	
     m_name = name;
 
     PlayerInfo const* info = sObjectMgr.GetPlayerInfo(race, class_);
@@ -15920,11 +15923,11 @@ float Player::GetFloatValueFromArray(Tokens const& data, uint16 index)
     return result;
 }
 
-bool Player::LoadFromDB(uint32 guid, SQLQueryHolder *holder)
+Player* Player::LoadFromDB(uint32 guid, SQLQueryHolder * holder, WorldSession * session)
 {
-    ////                                                     0     1        2     3     4        5      6    7      8     9           10              11
+	////                                                     0     1        2     3     4        5      6    7      8     9           10              11
     //QueryResult *result = CharacterDatabase.PQuery("SELECT guid, account,name, race, class, gender, level, xp, money, playerBytes, playerBytes2, playerFlags,"
-     // 12          13          14          15   16           17        18        19         20         21          22           23                 24
+	// 12          13          14          15   16           17        18        19         20         21          22           23                 24
     //"position_x, position_y, position_z, map, orientation, taximask, cinematic, totaltime, leveltime, rest_bonus, logout_time, is_logout_resting, resettalents_cost,"
     // 25                 26       27       28       29       30         31           32             33        34    35      36                 37         38
     //"resettalents_time, trans_x, trans_y, trans_z, trans_o, transguid, extra_flags, stable_slots, at_login, zone, online, death_expire_time, taxi_path, instance_mode_mask,"
@@ -15933,13 +15936,74 @@ bool Player::LoadFromDB(uint32 guid, SQLQueryHolder *holder)
     // 50      51      52      53      54      55      56      57      58      59      60           61         62          63             64              65      66           67
     //"health, power1, power2, power3, power4, power5, power6, power7, power8, power9, instance_id, speccount, activespec, exploredZones, equipmentCache, ammoId, knownTitles, actionBars FROM characters WHERE guid = '%u'", guid);
     PreparedQueryResult result = holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADFROM);
-
+	
     if (!result)
     {
         sLog.outError("Player (GUID: %u) not found in table `characters`, can't load. ",guid);
         return false;
     }
+	
+	uint32 pClass = result->GetUInt32(4);
+	Player* player = NULL;
+	switch(pClass)
+	{
+		case CLASS_WARRIOR:
+			player = new WarriorPlayer(session);
+			break;
+		case CLASS_PALADIN:
+			player = new PaladinPlayer(session);
+			break;
+		case CLASS_HUNTER:
+			player = new HunterPlayer(session);
+			break;
+		case CLASS_ROGUE:
+			player = new RoguePlayer(session);
+			break;
+		case CLASS_PRIEST:
+			player = new PriestPlayer(session);
+			break;
+		case CLASS_DEATH_KNIGHT:
+			player = new DKPlayer(session);
+			break;
+		case CLASS_SHAMAN:
+			player = new ShamanPlayer(session);
+			break;
+		case CLASS_MAGE:
+			player = new MagePlayer(session);
+			break;
+		case CLASS_WARLOCK:
+			player = new WarlockPlayer(session);
+			break;
+		case CLASS_DRUID:
+			player = new DruidPlayer(session);
+			break;
+		default:
+			printf("\nClass %u doesn't exist.\n", class_);
+			ASSERT(false);
+			break;
+	}
+	
+	ASSERT(player != NULL);
+	
+	if(player->_LoadFromDB(guid, holder, result))
+		return player;
+	return NULL;
+}
 
+//On envoie le result pour ne pas perdre de temps à refaire le calcul...
+bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResult & result)
+{
+	////                                                     0     1        2     3     4        5      6    7      8     9           10              11
+    //QueryResult *result = CharacterDatabase.PQuery("SELECT guid, account,name, race, class, gender, level, xp, money, playerBytes, playerBytes2, playerFlags,"
+	// 12          13          14          15   16           17        18        19         20         21          22           23                 24
+    //"position_x, position_y, position_z, map, orientation, taximask, cinematic, totaltime, leveltime, rest_bonus, logout_time, is_logout_resting, resettalents_cost,"
+    // 25                 26       27       28       29       30         31           32             33        34    35      36                 37         38
+    //"resettalents_time, trans_x, trans_y, trans_z, trans_o, transguid, extra_flags, stable_slots, at_login, zone, online, death_expire_time, taxi_path, instance_mode_mask,"
+    // 39           40                41                 42                    43          44          45              46           47               48              49
+    //"arenaPoints, totalHonorPoints, todayHonorPoints, yesterdayHonorPoints, totalKills, todayKills, yesterdayKills, chosenTitle, knownCurrencies, watchedFaction, drunk,"
+    // 50      51      52      53      54      55      56      57      58      59      60           61         62          63             64              65      66           67
+    //"health, power1, power2, power3, power4, power5, power6, power7, power8, power9, instance_id, speccount, activespec, exploredZones, equipmentCache, ammoId, knownTitles, actionBars FROM characters WHERE guid = '%u'", guid);
+    
     uint32 dbAccountId = result->GetUInt32(1);
 
     // check if the character's account in the db and the logged in account match.

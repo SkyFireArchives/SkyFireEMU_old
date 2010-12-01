@@ -21,6 +21,7 @@
 #include "ProgressBar.h"
 #include "Log.h"
 #include "MapManager.h"
+#include "ScriptMgr.h"
 
 ////////////////////////////////////////////////////////////
 // template class ActivePoolData
@@ -364,7 +365,16 @@ void PoolGroup<Creature>::Spawn1Object(PoolObject* obj)
         // We use spawn coords to spawn
         if (!map->Instanceable() && map->IsLoaded(data->posX, data->posY))
         {
-            Creature* pCreature = new Creature;
+            CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(data->id);
+			if (!ci)
+				return;
+			
+			Creature* pCreature = NULL;
+			if(ci->ScriptID)
+				pCreature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+			if(pCreature == NULL)
+				pCreature = new Creature();
+			
             //sLog.outDebug("Spawning creature %u",guid);
             if (!pCreature->LoadFromDB(obj->guid, map))
             {

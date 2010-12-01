@@ -1027,6 +1027,8 @@ class Player : public Unit, public GridObject<Player>
 
         static bool BuildEnumData(QueryResult result,  WorldPacket * p_data);
 
+		virtual uint8 getClass() const = 0;
+	
         void SetInWater(bool apply);
 
         bool IsInWater() const { return m_isInWater; }
@@ -1417,7 +1419,8 @@ class Player : public Unit, public GridObject<Player>
         /***                   LOAD SYSTEM                     ***/
         /*********************************************************/
 
-        bool LoadFromDB(uint32 guid, SQLQueryHolder *holder);
+		static Player* LoadFromDB(uint32 guid, SQLQueryHolder * holder, WorldSession * session);
+		bool _LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResult & result);
         bool isBeingLoaded() const { return GetSession()->PlayerLoading();}
 
         void Initialize(uint32 guid);

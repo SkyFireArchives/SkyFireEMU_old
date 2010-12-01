@@ -1527,7 +1527,16 @@ bool ObjectMgr::MoveCreData(uint32 guid, uint32 mapId, Position pos)
         // We use spawn coords to spawn
         if (!map->Instanceable() && map->IsLoaded(data.posX, data.posY))
         {
-            Creature *creature = new Creature;
+            CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(data.id);
+			if (!ci)
+				return 0;
+			
+			Creature* creature = NULL;
+			if(ci->ScriptID)
+				creature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+			if(creature == NULL)
+				creature = new Creature();
+			
             if (!creature->LoadFromDB(guid, map))
             {
                 sLog.outError("AddCreature: cannot add creature entry %u to map", guid);
@@ -1578,7 +1587,16 @@ uint32 ObjectMgr::AddCreData(uint32 entry, uint32 /*team*/, uint32 mapId, float 
         // We use spawn coords to spawn
         if (!map->Instanceable() && !map->IsRemovalGrid(x, y))
         {
-            Creature* creature = new Creature;
+            CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(entry);
+			if (!ci)
+				return 0;
+			
+			Creature* creature = NULL;
+			if(ci->ScriptID)
+				creature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+			if(creature == NULL)
+				creature = new Creature();
+			
             if (!creature->LoadFromDB(guid, map))
             {
                 sLog.outError("AddCreature: cannot add creature entry %u to map", entry);

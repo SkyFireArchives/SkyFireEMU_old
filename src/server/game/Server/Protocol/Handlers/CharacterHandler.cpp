@@ -38,6 +38,7 @@
 #include "Log.h"
 #include "Opcodes.h"
 #include "Player.h"
+#include "ClassPlayer.h"
 #include "PlayerDump.h"
 #include "SharedDefines.h"
 #include "SocialMgr.h"
@@ -540,7 +541,47 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
         sLog.outDebug("Character creation %s (account %u) has unhandled tail data: [%u]", name.c_str(), GetAccountId(), unk);
     }
 
-    Player * pNewChar = new Player(this);
+    Player* pNewChar = NULL;
+	switch(class_)
+	{
+		case CLASS_WARRIOR:
+			pNewChar = new WarriorPlayer(this);
+			break;
+		case CLASS_PALADIN:
+			pNewChar = new PaladinPlayer(this);
+			break;
+		case CLASS_HUNTER:
+			pNewChar = new HunterPlayer(this);
+			break;
+		case CLASS_ROGUE:
+			pNewChar = new RoguePlayer(this);
+			break;
+		case CLASS_PRIEST:
+			pNewChar = new PriestPlayer(this);
+			break;
+		case CLASS_DEATH_KNIGHT:
+			pNewChar = new DKPlayer(this);
+			break;
+		case CLASS_SHAMAN:
+			pNewChar = new ShamanPlayer(this);
+			break;
+		case CLASS_MAGE:
+			pNewChar = new MagePlayer(this);
+			break;
+		case CLASS_WARLOCK:
+			pNewChar = new WarlockPlayer(this);
+			break;
+		case CLASS_DRUID:
+			pNewChar = new DruidPlayer(this);
+			break;
+		default:
+			printf("\nClass %u doesn't exist.\n", class_);
+			ASSERT(false);
+			break;
+	}
+	
+	ASSERT(pNewChar);
+	
     if (!pNewChar->Create(sObjectMgr.GenerateLowGuid(HIGHGUID_PLAYER), name, race_, class_, gender, skin, face, hairStyle, hairColor, facialHair, outfitId))
     {
         // Player not create (race/class problem?)
@@ -669,12 +710,10 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
 {
     uint64 playerGuid = holder->GetGuid();
 
-    Player* pCurrChar = new Player(this);
-     // for send server info and strings (config)
-    ChatHandler chH = ChatHandler(pCurrChar);
+	// "GetAccountId() == db stored account id" checked in LoadFromDB (prevent login not own character using cheating tools)
+    Player* pCurrChar = Player::LoadFromDB(GUID_LOPART(playerGuid), holder, this);
 
-    // "GetAccountId() == db stored account id" checked in LoadFromDB (prevent login not own character using cheating tools)
-    if (!pCurrChar->LoadFromDB(GUID_LOPART(playerGuid), holder))
+    if (!pCurrChar)
     {
         KickPlayer();                                       // disconnect client, player no set to session and it will not deleted or saved at kick
         delete pCurrChar;                                   // delete it manually
@@ -683,6 +722,9 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
         return;
     }
 
+	// for send server info and strings (config)
+    ChatHandler chH = ChatHandler(pCurrChar);
+	
     pCurrChar->GetMotionMaster()->Initialize();
 
     SetPlayer(pCurrChar);

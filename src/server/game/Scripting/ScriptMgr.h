@@ -29,6 +29,7 @@
 #include "SharedDefines.h"
 #include "World.h"
 #include "Weather.h"
+#include "Creature.h"
 
 class AuctionHouseObject;
 class AuraScript;
@@ -68,7 +69,7 @@ struct ItemPrototype;
 struct OutdoorPvPData;
 
 #define VISIBLE_RANGE       (166.0f)                        //MAX visible range (size of grid)
-#define DEFAULT_TEXT        "<Trinity Script Text Entry Missing!>"
+#define DEFAULT_TEXT        "<CactusEMU Script Text Entry Missing!>"
 
 // Generic scripting text function.
 void DoScriptText(int32 textEntry, WorldObject* pSource, Unit *pTarget = NULL);
@@ -436,6 +437,9 @@ class CreatureScript : public ScriptObject, public UpdatableScript<Creature>
 
         // Called when a CreatureAI object is needed for the creature.
         virtual CreatureAI* GetAI(Creature* /*creature*/) const { return NULL; }
+	
+		// Called when a new Creature will eb created
+		virtual Creature * GetCreatureScriptedClass() const { return NULL; }
 };
 
 class GameObjectScript : public ScriptObject, public UpdatableScript<GameObject>
@@ -845,6 +849,7 @@ class ScriptMgr
         bool OnQuestReward(Player* player, Creature* creature, Quest const* quest, uint32 opt);
         uint32 GetDialogStatus(Player* player, Creature* creature);
         CreatureAI* GetCreatureAI(Creature* creature);
+		Creature* GetCreatureScriptedClass(uint32 scriptID);
         void OnCreatureUpdate(Creature* creature, uint32 diff);
 
     public: /* GameObjectScript */

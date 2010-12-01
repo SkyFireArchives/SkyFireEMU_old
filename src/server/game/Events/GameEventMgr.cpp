@@ -30,6 +30,7 @@
 #include "GossipDef.h"
 #include "Player.h"
 #include "BattlegroundMgr.h"
+#include "ScriptMgr.h"
 
 bool GameEventMgr::CheckOneGameEvent(uint16 entry) const
 {
@@ -1277,7 +1278,16 @@ void GameEventMgr::GameEventSpawn(int16 event_id)
             // We use spawn coords to spawn
             if (!map->Instanceable() && map->IsLoaded(data->posX, data->posY))
             {
-                Creature* pCreature = new Creature;
+                CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(data->id);
+				if (!ci)
+					continue;
+				
+				Creature* pCreature = NULL;
+				if(ci->ScriptID)
+					pCreature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+				if(pCreature == NULL)
+					pCreature = new Creature();
+				
                 //sLog.outDebug("Spawning creature %u",*itr);
                 if (!pCreature->LoadFromDB(*itr, map))
                     delete pCreature;

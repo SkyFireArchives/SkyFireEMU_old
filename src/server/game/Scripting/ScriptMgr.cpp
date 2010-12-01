@@ -745,6 +745,14 @@ uint32 ScriptMgr::GetDialogStatus(Player* player, Creature* creature)
     return tmpscript->GetDialogStatus(player, creature);
 }
 
+Creature* ScriptMgr::GetCreatureScriptedClass(uint32 scriptID)
+{
+	ASSERT(scriptID);
+	
+	GET_SCRIPT_RET(CreatureScript, scriptID, tmpscript, NULL);
+	return tmpscript->GetCreatureScriptedClass();
+}
+
 CreatureAI* ScriptMgr::GetCreatureAI(Creature* creature)
 {
     ASSERT(creature);

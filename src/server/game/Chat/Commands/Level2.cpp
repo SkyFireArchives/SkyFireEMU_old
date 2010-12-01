@@ -46,6 +46,7 @@
 #include "Transport.h"
 #include "TargetedMovementGenerator.h"                      // for HandleNpcUnFollowCommand
 #include "CreatureGroups.h"
+#include "ScriptMgr.h"
 
 //mute player for some times
 bool ChatHandler::HandleMuteCommand(const char* args)
@@ -988,7 +989,16 @@ bool ChatHandler::HandleNpcAddCommand(const char* args)
         return true;
     }
 
-    Creature* pCreature = new Creature;
+	CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(id);
+    if (!ci)
+        return false;
+	
+	Creature* pCreature = NULL;
+	if(ci->ScriptID)
+		pCreature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+	if(pCreature == NULL)
+		pCreature = new Creature();
+
     if (!pCreature->Create(sObjectMgr.GenerateLowGuid(HIGHGUID_UNIT), map, chr->GetPhaseMaskForSpawn(), id, 0, (uint32)teamval, x, y, z, o))
     {
         delete pCreature;
@@ -2821,7 +2831,16 @@ bool ChatHandler::HandleWpModifyCommand(const char* args)
                 wpCreature->DeleteFromDB();
                 wpCreature->AddObjectToRemoveList();
                 // re-create
-                Creature* wpCreature2 = new Creature;
+				CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(VISUAL_WAYPOINT);
+				if (!ci)
+					return false;
+				
+				Creature* wpCreature2 = NULL;
+				if(ci->ScriptID)
+					wpCreature2 = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+				if(wpCreature2 == NULL)
+					wpCreature2 = new Creature();
+		
                 if (!wpCreature2->Create(sObjectMgr.GenerateLowGuid(HIGHGUID_UNIT), map, chr->GetPhaseMaskForSpawn(), VISUAL_WAYPOINT, 0, 0, chr->GetPositionX(), chr->GetPositionY(), chr->GetPositionZ(), chr->GetOrientation()))
                 {
                     PSendSysMessage(LANG_WAYPOINT_VP_NOTCREATED, VISUAL_WAYPOINT);
@@ -3026,7 +3045,16 @@ bool ChatHandler::HandleWpShowCommand(const char* args)
             Map *map = chr->GetMap();
             float o = chr->GetOrientation();
 
-            Creature* wpCreature = new Creature;
+            CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(id);
+			if (!ci)
+				return false;
+			
+			Creature* wpCreature = NULL;
+			if(ci->ScriptID)
+				wpCreature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+			if(wpCreature == NULL)
+				wpCreature = new Creature();
+			
             if (!wpCreature->Create(sObjectMgr.GenerateLowGuid(HIGHGUID_UNIT), map, chr->GetPhaseMaskForSpawn(), id, 0, 0, x, y, z, o))
             {
                 PSendSysMessage(LANG_WAYPOINT_VP_NOTCREATED, id);
@@ -3078,7 +3106,16 @@ bool ChatHandler::HandleWpShowCommand(const char* args)
         float o = chr->GetOrientation();
         Map *map = chr->GetMap();
 
-        Creature* pCreature = new Creature;
+        CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(id);
+		if (!ci)
+			return false;
+		
+		Creature* pCreature = NULL;
+		if(ci->ScriptID)
+			pCreature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+		if(pCreature == NULL)
+			pCreature = new Creature();
+		
         if (!pCreature->Create(sObjectMgr.GenerateLowGuid(HIGHGUID_UNIT),map, chr->GetPhaseMaskForSpawn(), id, 0, 0, x, y, z, o))
         {
             PSendSysMessage(LANG_WAYPOINT_VP_NOTCREATED, id);
@@ -3126,7 +3163,16 @@ bool ChatHandler::HandleWpShowCommand(const char* args)
         float o = chr->GetOrientation();
         Map *map = chr->GetMap();
 
-        Creature* pCreature = new Creature;
+        CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(id);
+		if (!ci)
+			return false;
+		
+		Creature* pCreature = NULL;
+		if(ci->ScriptID)
+			pCreature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+		if(pCreature == NULL)
+			pCreature = new Creature();
+		
         if (!pCreature->Create(sObjectMgr.GenerateLowGuid(HIGHGUID_UNIT), map, chr->GetPhaseMaskForSpawn(), id, 0, 0, x, y, z, o))
         {
             PSendSysMessage(LANG_WAYPOINT_NOTCREATED, id);
