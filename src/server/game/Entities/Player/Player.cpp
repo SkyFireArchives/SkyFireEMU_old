@@ -15978,7 +15978,7 @@ Player* Player::LoadFromDB(uint32 guid, SQLQueryHolder * holder, WorldSession * 
 			player = new DruidPlayer(session);
 			break;
 		default:
-			printf("\nClass %u doesn't exist.\n", class_);
+			printf("\nClass %u doesn't exist.\n", pClass);
 			ASSERT(false);
 			break;
 	}
