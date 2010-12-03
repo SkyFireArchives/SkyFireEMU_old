@@ -55,7 +55,7 @@ enum Opcodes
     SMSG_CHAR_ENUM                                  = 0x775E, // (0x429C)(0x003B) //
     SMSG_CHAR_DELETE                                = 0xE75D, // (0x63BC)(0x003C) //
     CMSG_PLAYER_LOGIN                               = 0x05A1, // (0x1621)(0x003D) //
-    SMSG_NEW_WORLD                                  = 0xFFF9, // NF(0xA094)(0x003E) //
+    SMSG_NEW_WORLD                                  = 0x38C8, // (0xA094)(0x003E) //
     SMSG_TRANSFER_PENDING                           = 0xFFF8, // NF(0x6210)(0x003F) //
     SMSG_TRANSFER_ABORTED                           = 0xFFF7, // NF(0x0B55)(0x0040) //
     SMSG_CHARACTER_LOGIN_FAILED                     = 0x2C56, // (0xCBD9)(0x0041) //
@@ -563,7 +563,7 @@ enum Opcodes
     CMSG_GUILD_SWITCH_RANK                          = 0xFFC5, // NF(0x0A04)(0x0000) //si up, 0 si down) uint32(rank) uint64 playerGUID 
     CMSG_GUILD_SET_PUBLIC_NOTE                      = 0x0234, // NF()(0x0234) // 
     CMSG_GUILD_SET_OFFICER_NOTE                     = 0x0235, // NF()(0x0235) // 
-    SMSG_LOGIN_VERIFY_WORLD                         = 0xFFC4, // NF(0x4A5D)(0x0236) //
+    SMSG_LOGIN_VERIFY_WORLD                         = 0xEC7C, // (0x4A5D)(0x0236) //
     CMSG_CLEAR_EXPLORATION                          = 0x0237, // NF()(0x0237) // 
     CMSG_SEND_MAIL                                  = 0x0238, // NF()(0x0238) // 
     SMSG_SEND_MAIL_RESULT                           = 0x8F77, // (0xE351)(0x0239) //

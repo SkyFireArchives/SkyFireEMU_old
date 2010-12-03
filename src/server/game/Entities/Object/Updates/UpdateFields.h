@@ -514,7 +514,7 @@ enum EUnitFields
     PLAYER_END                                = UNIT_END + 0x0500,
 };
 
-#define MAX_VALUES_COUNT_OTHER_PLAYER PLAYER_FIELD_INV_SLOT_HEAD
+#define PLAYER_END_NOT_SELF PLAYER_FIELD_INV_SLOT_HEAD
 
 enum EGameObjectFields
 {

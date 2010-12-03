@@ -975,7 +975,7 @@ ChatLogTimestamp = 0
 
 GameType = 0
 RealmZone = 1
-Expansion = 2
+Expansion = 3
 DBC.Locale = 255
 DeclinedNames = 0
 StrictPlayerNames = 0

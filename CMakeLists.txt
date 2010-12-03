@@ -59,13 +59,6 @@ if( UNIX )
   find_package(BZip2)
 endif()
 
-# Find current revision of downloaded sourcetree
-execute_process(
-  COMMAND hg tip --template {rev}
-  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-  OUTPUT_VARIABLE HG_REVISION
-)
-
 # print out the results before continuing
 include(cmake/showoptions.cmake)
 

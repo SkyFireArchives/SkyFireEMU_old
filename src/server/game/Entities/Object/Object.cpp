@@ -225,10 +225,7 @@ void Object::BuildCreateUpdateBlockForPlayer(UpdateData *data, Player *target) c
     _BuildMovementUpdate(&buf, flags);
 
     UpdateMask updateMask;
-	if(GetTypeId() != TYPEID_PLAYER || target == this)
-		updateMask.SetCount(m_valuesCount);
-	else
-		updateMask.SetCount(MAX_VALUES_COUNT_OTHER_PLAYER);
+	updateMask.SetCount(m_valuesCount);
 	
     _SetCreateBits(&updateMask, target);
     _BuildValuesUpdate(updatetype, &buf, &updateMask, target);
@@ -407,46 +404,6 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         }
     }
 
-    // 0x8
-    if (flags & UPDATEFLAG_LOWGUID)
-    {
-        switch(GetTypeId())
-        {
-            case TYPEID_OBJECT:
-            case TYPEID_ITEM:
-            case TYPEID_CONTAINER:
-            case TYPEID_GAMEOBJECT:
-            case TYPEID_DYNAMICOBJECT:
-            case TYPEID_CORPSE:
-                *data << uint32(GetGUIDLow());              // GetGUIDLow()
-                break;
-            case TYPEID_UNIT:
-            {
-                if (this->ToCreature()->canFly())
-                    flags |= MOVEMENTFLAG_LEVITATING;
-
-                *data << uint32(0x0000000B);                // unk, can be 0xB or 0xC
-                break;
-            }
-            case TYPEID_PLAYER:
-                if (flags & UPDATEFLAG_SELF)
-                    *data << uint32(0x0000002F);            // unk, can be 0x15 or 0x22
-                else
-                    *data << uint32(0x00000008);            // unk, can be 0x7 or 0x8
-                break;
-            default:
-                *data << uint32(0x00000000);                // unk
-                break;
-        }
-    }
-
-    // 0x10
-    if (flags & UPDATEFLAG_HIGHGUID)
-    {
-        // not high guid
-        *data << uint32(0x00000000);                // unk
-    }
-
     // 0x4
     if (flags & UPDATEFLAG_HAS_TARGET)                       // packed guid (current target guid)
     {
@@ -469,11 +426,28 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         *data << float(0);                                  // facing adjustment
     }
 
+	// 0x800
+	if (flags & UPDATEFLAG_UNK2)
+	{
+		*data << uint16(0) << uint16(0) << uint16(0); //unk
+	}
+	
     // 0x200
     if (flags & UPDATEFLAG_ROTATION)
     {
         *data << uint64(((GameObject*)this)->GetRotation());
     }
+	
+	// 0x1000
+	if (flags & UPDATEFLAG_UNK3)
+	{
+		uint8 bytes = 0;
+		*data << bytes;
+		for(uint8 i = 0; i < bytes; i++) //example :P
+		{
+			*data << uint32(0);
+		}
+	}
 }
 
 void Object::_BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask *updateMask, Player *target) const
@@ -483,7 +457,7 @@ void Object::_BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask 
 
 	uint32 valuesCount = m_valuesCount;
 	if(GetTypeId() == TYPEID_PLAYER && target != this)
-		valuesCount = MAX_VALUES_COUNT_OTHER_PLAYER;
+		valuesCount = PLAYER_END_NOT_SELF;
 	
     bool IsActivateToQuest = false;
     if (updatetype == UPDATETYPE_CREATE_OBJECT || updatetype == UPDATETYPE_CREATE_OBJECT2)
@@ -526,7 +500,7 @@ void Object::_BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask 
         }
     }
 
-    WPAssert(updateMask && updateMask->GetCount() == valuesCount);
+    WPAssert(updateMask && updateMask->GetCount() == m_valuesCount);
 
     *data << (uint8)updateMask->GetBlockCount();
     data->append(updateMask->GetMask(), updateMask->GetLength());
@@ -797,23 +771,31 @@ void Object::_LoadIntoDataField(const char* data, uint32 startOffset, uint32 cou
     }
 }
 
-void Object::_SetUpdateBits(UpdateMask *updateMask, Player* /*target*/) const
+void Object::_SetUpdateBits(UpdateMask *updateMask, Player* target) const
 {
     uint32 *value = m_uint32Values;
     uint32 *mirror = m_uint32Values_mirror;
 
-    for (uint16 index = 0; index < m_valuesCount; ++index, ++value, ++mirror)
+	uint32 valuesCount = m_valuesCount;
+	if(GetTypeId() == TYPEID_PLAYER && target != this)
+		valuesCount = PLAYER_END_NOT_SELF;
+	
+    for (uint16 index = 0; index < valuesCount; ++index, ++value, ++mirror)
     {
         if (*mirror != *value)
             updateMask->SetBit(index);
     }
 }
 
-void Object::_SetCreateBits(UpdateMask *updateMask, Player* /*target*/) const
+void Object::_SetCreateBits(UpdateMask *updateMask, Player* target) const
 {
     uint32 *value = m_uint32Values;
 
-    for (uint16 index = 0; index < m_valuesCount; ++index, ++value)
+	uint32 valuesCount = m_valuesCount;
+	if(GetTypeId() == TYPEID_PLAYER && target != this)
+		valuesCount = PLAYER_END_NOT_SELF;
+	
+    for (uint16 index = 0; index < valuesCount; ++index, ++value)
     {
         if (*value)
             updateMask->SetBit(index);
