@@ -15943,7 +15943,7 @@ Player* Player::LoadFromDB(uint32 guid, SQLQueryHolder * holder, WorldSession * 
         return false;
     }
 	
-	uint32 pClass = result->GetUInt32(4);
+	uint8 pClass = result->GetUInt8(4);
 	Player* player = NULL;
 	switch(pClass)
 	{

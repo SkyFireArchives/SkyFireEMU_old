@@ -35,7 +35,8 @@ void MapManager::LoadTransports()
 
     uint32 count = 0;
 
-    if (!result)
+	//The client crash with transports. They are now not handled in SMSG_UPDATE_OBJECT. Temp hard fix.
+    if (true || !result)
     {
         barGoLink bar(1);
         bar.step();
