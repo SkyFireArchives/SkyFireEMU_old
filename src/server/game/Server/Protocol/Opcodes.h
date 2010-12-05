@@ -262,7 +262,7 @@ enum Opcodes
     SMSG_TRIGGER_CINEMATIC                          = 0x00FA, // NF()(0x00FA) // 
     CMSG_NEXT_CINEMATIC_CAMERA                      = 0x00FB, // NF()(0x00FB) // 
     CMSG_COMPLETE_CINEMATIC                         = 0x00FC, // NF()(0x00FC) // 
-    SMSG_TUTORIAL_FLAGS                             = 0x8203, // (0x4B31)(0x00FD) //
+    SMSG_TUTORIAL_FLAGS                             = 0x8657, // (0x4B31)(0x00FD) //
     CMSG_TUTORIAL_FLAG                              = 0x00FE, // NF()(0x00FE) // 
     CMSG_TUTORIAL_CLEAR                             = 0x00FF, // NF()(0x00FF) // 
     CMSG_TUTORIAL_RESET                             = 0x0100, // NF()(0x0100) // 
