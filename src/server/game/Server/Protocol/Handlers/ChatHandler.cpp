@@ -278,8 +278,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         case CHAT_MSG_WHISPER:
         {
             std::string to, msg;
+			recv_data >> msg;
             recv_data >> to;
-            recv_data >> msg;
 
             if (_player->getLevel() < sWorld.getIntConfig(CONFIG_CHAT_WHISPER_LEVEL_REQ))
             {
@@ -558,8 +558,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         case CHAT_MSG_CHANNEL:
         {
             std::string channel, msg;
+			recv_data >> msg;
             recv_data >> channel;
-            recv_data >> msg;
 
             if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
                 return;
