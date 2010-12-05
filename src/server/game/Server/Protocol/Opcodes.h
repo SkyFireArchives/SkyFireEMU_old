@@ -70,9 +70,9 @@ enum Opcodes
     CMSG_PLAYER_LOGOUT                              = 0x3557, // (0xCA18)(0x004A) //
     CMSG_LOGOUT_REQUEST                             = 0x8E56, // (0x62D1)(0x004B) //
     SMSG_LOGOUT_RESPONSE                            = 0xFFF4, // NF(0x63BC)(0x004C) //
-    SMSG_LOGOUT_COMPLETE                            = 0x7F56, // (0x8311)(0x004D) //
+    SMSG_LOGOUT_COMPLETE                            = 0x8C7F, // (0x8311)(0x004D) //
     CMSG_LOGOUT_CANCEL                              = 0x3F56, // (0x2B19)(0x004E) //
-    SMSG_LOGOUT_CANCEL_ACK                          = 0x8C7F, // (0xA395)(0x004F) //
+    SMSG_LOGOUT_CANCEL_ACK                          = 0xCD56, // (0xA395)(0x004F) //
     CMSG_NAME_QUERY                                 = 0xC57E, // (0x4354)(0x0050) //
     SMSG_NAME_QUERY_RESPONSE                        = 0x4D5E, // (0x0A14)(0x0051) //
     CMSG_PET_NAME_QUERY                             = 0xFFF0, // NF(0xABF1)(0x0052) //
@@ -1239,7 +1239,7 @@ enum Opcodes
     SMSG_EQUIPMENT_SET_USE_RESULT                   = 0xF657, // (0x02D9)(0x04D6) //EquipmentSetResult?
     UMSG_UNKNOWN_1239                               = 0x04D7, // NF()(0x04D7) // // not found 3.2
     SMSG_UNKNOWN_1240                               = 0xA676, // (0x83DC)(0x04D8) //t64, string, doing nothing
-    CMSG_CHAR_FACTION_CHANGE                        = 0x04D9, // NF()(0x04D9) // // lua: CreateCharacter (PFC client response)
+    CMSG_CHAR_FACTION_CHANGE                        = 0x4F75, // NF()(0x04D9) // // lua: CreateCharacter (PFC client response)
     SMSG_CHAR_FACTION_CHANGE                        = 0xCC76, // (0x42FD)(0x04DA) //to 1241 (PFC server response)
     UMSG_UNKNOWN_1243                               = 0x04DB, // NF()(0x04DB) // // not found 3.2
     UMSG_UNKNOWN_1244                               = 0x04DC, // NF()(0x04DC) // // not found 3.2
