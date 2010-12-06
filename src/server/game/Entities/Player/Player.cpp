@@ -20739,6 +20739,7 @@ void Player::UpdateTriggerVisibility()
         return;
 
     UpdateData udata;
+    udata.m_map = uint16(GetMapId());
     WorldPacket packet;
     for (ClientGUIDs::iterator itr=m_clientGUIDs.begin(); itr != m_clientGUIDs.end(); ++itr)
     {
@@ -21558,6 +21559,7 @@ void Player::UpdateForQuestWorldObjects()
         return;
 
     UpdateData udata;
+    udata.m_map = uint16(GetMapId());
     WorldPacket packet;
     for (ClientGUIDs::iterator itr=m_clientGUIDs.begin(); itr != m_clientGUIDs.end(); ++itr)
     {

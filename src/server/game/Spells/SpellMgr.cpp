@@ -1846,7 +1846,7 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
 		gtSpellScaling const* gtScaling = sGtSpellScalingStore.LookupEntry(casterLevel);
 		if(spellScaling && gtScaling)
 		{
-			basePoints+= float(spellScaling->coefMultiplier[effIndex] * gtScaling->coef); 
+			basePoints += int32(spellScaling->coefMultiplier[effIndex] * gtScaling->coef); 
 			randomPoints_ScalingMultiplicator = spellScaling->coefRandomMultiplier[effIndex];
 			// TODO : Ajouter le coef reducteur, trouver comment il est interpreter
 		}
@@ -1876,7 +1876,7 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
                 : irand(randomPoints, 1);
 
 			if(randomPoints_ScalingMultiplicator)
-				basePoints += irand(1, basePoints* (randomPoints_ScalingMultiplicator >= 1 ? randomPoints_ScalingMultiplicator : randomPoints_ScalingMultiplicator+1));
+				basePoints += irand(1, int32(basePoints* (randomPoints_ScalingMultiplicator >= 1 ? randomPoints_ScalingMultiplicator : randomPoints_ScalingMultiplicator+1)));
 			
             basePoints += randvalue;
             break;

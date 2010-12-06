@@ -238,6 +238,7 @@ void BattlegroundSA::StartShips()
                     continue;
 
                 UpdateData data;
+                data.m_map = uint16(p->GetMapId());
                 WorldPacket pkt;
                 GetBGObject(i)->BuildValuesUpdateBlockForPlayer(&data, p);
                 data.BuildPacket(&pkt);

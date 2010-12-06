@@ -29,7 +29,7 @@
 #include "World.h"
 #include "zlib.h"
 
-UpdateData::UpdateData() : m_blockCount(0)
+UpdateData::UpdateData() : m_blockCount(0), m_map(0)
 {
 }
 
@@ -111,7 +111,7 @@ bool UpdateData::BuildPacket(WorldPacket *packet)
 
     ByteBuffer buf(1 + 4 + (m_outOfRangeGUIDs.empty() ? 0 : 1 + 4 + 9 * m_outOfRangeGUIDs.size()) + m_data.wpos());
 
-	buf << (uint16) 0;
+	buf << (uint16) m_map;
 	
     buf << (uint32) (!m_outOfRangeGUIDs.empty() ? m_blockCount + 1 : m_blockCount);
 
