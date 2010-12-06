@@ -266,7 +266,8 @@ void ExtractDBCFiles(int locale, bool basicLocale)
                     }
                 }
 				
-                if (name.rfind(".dbc") == name.length() - strlen(".dbc"))
+                if (name.rfind(".dbc") == name.length() - strlen(".dbc") ||
+					name.rfind(".db2") == name.length() - strlen(".db2"))
                 {
                     //Verify if this dbc isn't in the list yet. StormLibs return some extra dbcs :P
                     if(i != 0)
