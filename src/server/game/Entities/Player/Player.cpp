@@ -4136,6 +4136,8 @@ bool Player::resetTalents(bool no_cost)
         removeSpell(talentInfo->SpellID, true);
     }
 	
+	m_branchSpec[m_activeSpec] = 0;
+	
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     _SaveTalents(trans);
 	_SaveTalentBranchSpecs(trans);
