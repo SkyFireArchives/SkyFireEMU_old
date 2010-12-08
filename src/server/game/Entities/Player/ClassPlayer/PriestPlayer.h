@@ -6,8 +6,8 @@
 class PriestPlayer: public Player
 {
 public:
-	PriestPlayer(WorldSession * session): Player(session) {}
-	virtual uint8 getClass() const { return CLASS_PRIEST; }
+    PriestPlayer(WorldSession * session): Player(session) {}
+    virtual uint8 getClass() const { return CLASS_PRIEST; }
 };
 
 #endif

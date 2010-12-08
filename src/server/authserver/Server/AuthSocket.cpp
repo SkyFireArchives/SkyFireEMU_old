@@ -848,18 +848,18 @@ bool AuthSocket::_HandleRealmList()
         if (_expversion & POST_BC_EXP_FLAG) // 2.4.3 and 3.1.3 cliens
         {
             if (i->second.gamebuild != _build)
-			{
-				sLog.outStaticDebug("Realm not added because of not correct build : %u != %u", i->second.gamebuild, _build);
+            {
+                sLog.outStaticDebug("Realm not added because of not correct build : %u != %u", i->second.gamebuild, _build);
                 continue;
-			}
+            }
         }
         else if (_expversion & PRE_BC_EXP_FLAG) // 1.12.1 and 1.12.2 clients are compatible with eachother
         {
             if (!AuthHelper::IsPreBCAcceptedClientBuild(i->second.gamebuild))
-			{
+            {
                 continue;
-			}
-		}
+            }
+        }
 
         uint8 AmountOfCharacters;
 

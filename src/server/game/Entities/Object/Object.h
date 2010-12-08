@@ -59,7 +59,7 @@ enum TypeMask
     TYPEMASK_GAMEOBJECT     = 0x00000020,
     TYPEMASK_DYNAMICOBJECT  = 0x00000040,
     TYPEMASK_CORPSE         = 0x00000080,
-	TYPEMASK_IN_GUILD       = 0x00010000,                       //only player with guild
+    TYPEMASK_IN_GUILD       = 0x00010000,                       //only player with guild
     TYPEMASK_SEER           = TYPEMASK_UNIT | TYPEMASK_DYNAMICOBJECT
 };
 

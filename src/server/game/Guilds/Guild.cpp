@@ -172,15 +172,15 @@ bool Guild::AddMember(uint64 plGuid, uint32 plRank)
     newmember.OFFnote = "";
     newmember.Pnote   = "";
     newmember.LogoutTime = time(NULL);
-	
-	for(int i = 0; i < 2; i++)
-	{		
-		newmember.professions[i].skillID = 0;
-		newmember.professions[i].title = 0;
-		newmember.professions[i].level = 0;
+    
+    for(int i = 0; i < 2; i++)
+    {        
+        newmember.professions[i].skillID = 0;
+        newmember.professions[i].title = 0;
+        newmember.professions[i].level = 0;
     }
-	
-	newmember.BankResetTimeMoney = 0;                       // this will force update at first query
+    
+    newmember.BankResetTimeMoney = 0;                       // this will force update at first query
     for (uint8 i = 0; i < GUILD_BANK_MAX_TABS; ++i)
         newmember.BankResetTimeTab[i] = 0;
     members[GUID_LOPART(plGuid)] = newmember;
@@ -411,7 +411,7 @@ bool Guild::LoadMembersFromDB(QueryResult guildMembersResult)
         newmember.ZoneId                = fields[22].GetUInt32();
         newmember.LogoutTime            = fields[23].GetUInt64();
         newmember.accountId             = fields[24].GetInt32();
-		newmember.achievementPoints     = fields[25].GetUInt32();
+        newmember.achievementPoints     = fields[25].GetUInt32();
 
         //this code will remove unexisting character guids from guild
         if (newmember.Level < 1 /*|| newmember.Level > STRONG_MAX_LEVEL*/) // can be at broken `data` field
@@ -657,37 +657,37 @@ void Guild::DelRank(uint32 id)
     if (m_Ranks.size() <= GUILD_RANKS_MIN_COUNT)
         return;
 
-	if(id == GR_GUILDMASTER)
-		return;
-	
-	m_Ranks.erase(m_Ranks.begin()+id);
+    if(id == GR_GUILDMASTER)
+        return;
+    
+    m_Ranks.erase(m_Ranks.begin()+id);
     CharacterDatabase.PExecute("DELETE FROM guild_rank WHERE rid >= '%u' AND guildid='%u'", id, m_Id);
-	CharacterDatabase.PExecute("UPDATE guild_rank SET rid = rid - 1 WHERE rid > '%u' AND guildid='%u'", id, m_Id);
+    CharacterDatabase.PExecute("UPDATE guild_rank SET rid = rid - 1 WHERE rid > '%u' AND guildid='%u'", id, m_Id);
 }
 
 void Guild::SwitchRank(uint32 oldID, uint32 newID)
 {
-	if(oldID == GR_GUILDMASTER || newID == GR_GUILDMASTER)
-		return;
-	
-	if(oldID == newID)
-		return;
-	
-	if(oldID > GUILD_RANKS_MIN_COUNT || newID > GUILD_RANKS_MIN_COUNT)
-		return;
-	
-	RankInfo old = m_Ranks[oldID];
-	m_Ranks[oldID] = m_Ranks[newID];
-	m_Ranks[newID] = old;
-	
-	//c'est gros, c'est laid, mais je voit pas comment faire autrement x)
-	CharacterDatabase.PExecute("UPDATE guild_rank SET rid = 11 WHERE rid = '%u' AND guildid='%u'", oldID, m_Id);
-	CharacterDatabase.PExecute("UPDATE guild_rank SET rid = '%u' WHERE rid = '%u' AND guildid='%u'", oldID, newID, m_Id);
-	CharacterDatabase.PExecute("UPDATE guild_rank SET rid = '%u' WHERE rid = 11 AND guildid='%u'", newID, m_Id);
-	
-	CharacterDatabase.PExecute("UPDATE guild_bank_right SET rid = 11 WHERE rid = '%u' AND guildid='%u'", oldID, m_Id);
-	CharacterDatabase.PExecute("UPDATE guild_bank_right SET rid = '%u' WHERE rid = '%u' AND guildid='%u'", oldID, newID, m_Id);
-	CharacterDatabase.PExecute("UPDATE guild_bank_right SET rid = '%u' WHERE rid = 11 AND guildid='%u'", newID, m_Id);
+    if(oldID == GR_GUILDMASTER || newID == GR_GUILDMASTER)
+        return;
+    
+    if(oldID == newID)
+        return;
+    
+    if(oldID > GUILD_RANKS_MIN_COUNT || newID > GUILD_RANKS_MIN_COUNT)
+        return;
+    
+    RankInfo old = m_Ranks[oldID];
+    m_Ranks[oldID] = m_Ranks[newID];
+    m_Ranks[newID] = old;
+    
+    //c'est gros, c'est laid, mais je voit pas comment faire autrement x)
+    CharacterDatabase.PExecute("UPDATE guild_rank SET rid = 11 WHERE rid = '%u' AND guildid='%u'", oldID, m_Id);
+    CharacterDatabase.PExecute("UPDATE guild_rank SET rid = '%u' WHERE rid = '%u' AND guildid='%u'", oldID, newID, m_Id);
+    CharacterDatabase.PExecute("UPDATE guild_rank SET rid = '%u' WHERE rid = 11 AND guildid='%u'", newID, m_Id);
+    
+    CharacterDatabase.PExecute("UPDATE guild_bank_right SET rid = 11 WHERE rid = '%u' AND guildid='%u'", oldID, m_Id);
+    CharacterDatabase.PExecute("UPDATE guild_bank_right SET rid = '%u' WHERE rid = '%u' AND guildid='%u'", oldID, newID, m_Id);
+    CharacterDatabase.PExecute("UPDATE guild_bank_right SET rid = '%u' WHERE rid = 11 AND guildid='%u'", newID, m_Id);
 }
 
 std::string Guild::GetRankName(uint32 rankId)
@@ -772,9 +772,9 @@ void Guild::Roster(WorldSession *session /*= NULL*/)
     data << MOTD;
     data << GINFO;
 
-	uint32 totalBytesToSend = uint32(uint32(members.size()) / uint32(8)) + 1;
-	for(uint32 i = 0; i < totalBytesToSend; i++)
-		data << uint8(0); //unk
+    uint32 totalBytesToSend = uint32(uint32(members.size()) / uint32(8)) + 1;
+    for(uint32 i = 0; i < totalBytesToSend; i++)
+        data << uint8(0); //unk
     
     for (MemberList::const_iterator itr = members.begin(); itr != members.end(); ++itr)
     {
@@ -782,81 +782,81 @@ void Guild::Roster(WorldSession *session /*= NULL*/)
         {
             data << uint64(pl->GetGUID());
             data << uint8(0);                               //unk
-			data << uint32(itr->second.RankId);
+            data << uint32(itr->second.RankId);
             data << float(0);
-			data << uint8(1);                               //connecté
-			data << uint32(pl->GetAchievementMgr().GetAchievementPoints());                               //points de haut-fait
-			data << uint32(/*pl->GetZoneId()*/ 4395);
+            data << uint8(1);                               //connecté
+            data << uint32(pl->GetAchievementMgr().GetAchievementPoints());                               //points de haut-fait
+            data << uint32(/*pl->GetZoneId()*/ 4395);
             data << uint8(pl->getLevel());
-			data << uint64(0);                              //unk, seulement 0
-			data << pl->GetName();
+            data << uint64(0);                              //unk, seulement 0
+            data << pl->GetName();
             data << uint8(pl->getClass());
-			for(int i = 0; i < 2; i++)
-			{
-				data << uint32(itr->second.professions[i].title);                          //apprenti-compagnon-artisan...
-				data << uint32(itr->second.professions[i].level);                          //level métier
-				data << uint32(itr->second.professions[i].skillID);                          //skillID métier
-			}
+            for(int i = 0; i < 2; i++)
+            {
+                data << uint32(itr->second.professions[i].title);                          //apprenti-compagnon-artisan...
+                data << uint32(itr->second.professions[i].level);                          //level métier
+                data << uint32(itr->second.professions[i].skillID);                          //skillID métier
+            }
             data << itr->second.Pnote;
-			data << uint64(0);                              //unk, seulement 0
+            data << uint64(0);                              //unk, seulement 0
             data << itr->second.OFFnote;
-			data << uint32(0);                              //unk, seulement 0
+            data << uint32(0);                              //unk, seulement 0
         }
         else
         {
-			data << uint64(MAKE_NEW_GUID(itr->first, 0, HIGHGUID_PLAYER));
+            data << uint64(MAKE_NEW_GUID(itr->first, 0, HIGHGUID_PLAYER));
             data << uint8(0);                               //unk
-			data << uint32(itr->second.RankId);
+            data << uint32(itr->second.RankId);
             data << float(float(time(NULL)-itr->second.LogoutTime) / DAY);
-			data << uint8(0);                               //non-connecté
-			data << uint32(itr->second.achievementPoints);  //points de haut-fait
-			data << uint32(itr->second.ZoneId);
+            data << uint8(0);                               //non-connecté
+            data << uint32(itr->second.achievementPoints);  //points de haut-fait
+            data << uint32(itr->second.ZoneId);
             data << uint8(itr->second.Level);
-			data << uint64(0);                              //unk, seulement 0
-			data << itr->second.Name;
+            data << uint64(0);                              //unk, seulement 0
+            data << itr->second.Name;
             data << uint8(itr->second.Class);
-			for(int i = 0; i < 2; i++)
-			{
-				data << uint32(itr->second.professions[i].title);                          //apprenti-compagnon-artisan...
-				data << uint32(itr->second.professions[i].level);                          //level métier
-				data << uint32(itr->second.professions[i].skillID);                          //skillID métier
-			}
+            for(int i = 0; i < 2; i++)
+            {
+                data << uint32(itr->second.professions[i].title);                          //apprenti-compagnon-artisan...
+                data << uint32(itr->second.professions[i].level);                          //level métier
+                data << uint32(itr->second.professions[i].skillID);                          //skillID métier
+            }
             data << itr->second.Pnote;
-			data << uint64(0);                              //unk, seulement 0
+            data << uint64(0);                              //unk, seulement 0
             data << itr->second.OFFnote;
-			data << uint32(0);                              //unk, seulement 0
+            data << uint32(0);                              //unk, seulement 0
         }
     }
     if (session)
         session->SendPacket(&data);
     else
         BroadcastPacket(&data);
-	
-	WorldPacket data7(SMSG_GUILD_RANK);
-	data7 << (uint32)m_Ranks.size();
-	for(uint32 i = 0; i < m_Ranks.size(); i++)
-	{
-		data7 << (uint32)i;
-		for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
-			data7 << (uint32)m_Ranks[i].TabRight[j];
-		data7 << (uint32)m_Ranks[i].BankMoneyPerDay;
-		for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
-			data7 << (uint32)m_Ranks[i].TabSlotPerDay[j];
-		data7 << (uint32)i; //unk.
-		data7 << m_Ranks[i].Name;
-		data7 << (uint32)GetRankRights(i);
-	}
-	if (session)
+    
+    WorldPacket data7(SMSG_GUILD_RANK);
+    data7 << (uint32)m_Ranks.size();
+    for(uint32 i = 0; i < m_Ranks.size(); i++)
+    {
+        data7 << (uint32)i;
+        for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
+            data7 << (uint32)m_Ranks[i].TabRight[j];
+        data7 << (uint32)m_Ranks[i].BankMoneyPerDay;
+        for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
+            data7 << (uint32)m_Ranks[i].TabSlotPerDay[j];
+        data7 << (uint32)i; //unk.
+        data7 << m_Ranks[i].Name;
+        data7 << (uint32)GetRankRights(i);
+    }
+    if (session)
         session->SendPacket(&data7);
-	else
+    else
         BroadcastPacket(&data7);
-	
+    
     sLog.outDebug("WORLD: Sent (SMSG_GUILD_ROSTER)");
 }
 
 void Guild::Query(WorldSession *session)
 {
-	printf("Sending SMSG_GUILD_QUERY_RESPONSE\n");
+    printf("Sending SMSG_GUILD_QUERY_RESPONSE\n");
     WorldPacket data(SMSG_GUILD_QUERY_RESPONSE, (8*32+200));// we can only guess size
 
     data << uint64(MAKE_NEW_GUID(m_Id, 0, HIGHGUID_GUILD));
@@ -870,12 +870,12 @@ void Guild::Query(WorldSession *session)
             data << (uint8)0;                               // null string
     }
 
-	for(int i = 0; i < 10; i++)
-		data << uint32(0);                                  // something new in Cata (link with rank.)
-	
-	for(int i = 0; i < 10; i++)
-		data << uint32(0);                                  // something new in Cata (link with rank.)
-	
+    for(int i = 0; i < 10; i++)
+        data << uint32(0);                                  // something new in Cata (link with rank.)
+    
+    for(int i = 0; i < 10; i++)
+        data << uint32(0);                                  // something new in Cata (link with rank.)
+    
     data << uint32(m_EmblemStyle);
     data << uint32(m_EmblemColor);
     data << uint32(m_BorderStyle);

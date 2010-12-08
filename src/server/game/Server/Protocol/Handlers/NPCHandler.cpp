@@ -157,7 +157,7 @@ void WorldSession::SendTrainerList(uint64 guid, const std::string& strTitle)
     WorldPacket data(SMSG_TRAINER_LIST, 8+4+4+trainer_spells->spellList.size()*38 + strTitle.size()+1);
     data << guid;
     data << uint32(trainer_spells->trainerType);
-	data << uint32(0x0F); // unknow 4.0.1 (mask ?)
+    data << uint32(0x0F); // unknow 4.0.1 (mask ?)
     size_t count_pos = data.wpos();
     data << uint32(trainer_spells->spellList.size());
 
@@ -197,10 +197,10 @@ void WorldSession::SendTrainerList(uint64 guid, const std::string& strTitle)
                                                             // primary prof. learn confirmation dialog
         //data << uint32(primary_prof_first_rank ? 1 : 0);    // must be equal prev. field to have learn button in enabled state
         
-		data << uint8(tSpell->reqLevel);
+        data << uint8(tSpell->reqLevel);
         data << uint32(tSpell->reqSkill);
         data << uint32(tSpell->reqSkillValue);
-		data << uint32(0); // unk 4.0.1
+        data << uint32(0); // unk 4.0.1
         //prev + req or req + 0
         uint8 maxReq = 0;
         for (uint8 i = 0; i < MAX_SPELL_EFFECTS ; ++i)
@@ -246,7 +246,7 @@ void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket & recv_data)
     uint64 guid;
     uint32 spellId, unk = 0;
 
-	// unk uint32 added in 4.0.1
+    // unk uint32 added in 4.0.1
     recv_data >> guid >> unk >> spellId;
     sLog.outDebug("WORLD: Received CMSG_TRAINER_BUY_SPELL NpcGUID=%u, learn spell id is: %u",uint32(GUID_LOPART(guid)), spellId);
 

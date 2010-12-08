@@ -6,8 +6,8 @@
 class HunterPlayer: public Player
 {
 public:
-	HunterPlayer(WorldSession * session): Player(session) {}
-	virtual uint8 getClass() const { return CLASS_HUNTER; }
+    HunterPlayer(WorldSession * session): Player(session) {}
+    virtual uint8 getClass() const { return CLASS_HUNTER; }
 };
 
 #endif

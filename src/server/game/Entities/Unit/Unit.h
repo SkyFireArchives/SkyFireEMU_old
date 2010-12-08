@@ -401,9 +401,9 @@ enum UnitMods
     UNIT_MOD_RESISTANCE_SHADOW,
     UNIT_MOD_RESISTANCE_ARCANE,
     UNIT_MOD_ATTACK_POWER_POS,
-	UNIT_MOD_ATTACK_POWER_NEG,
+    UNIT_MOD_ATTACK_POWER_NEG,
     UNIT_MOD_ATTACK_POWER_RANGED_POS,
-	UNIT_MOD_ATTACK_POWER_RANGED_NEG,
+    UNIT_MOD_ATTACK_POWER_RANGED_NEG,
     UNIT_MOD_DAMAGE_MAINHAND,
     UNIT_MOD_DAMAGE_OFFHAND,
     UNIT_MOD_DAMAGE_RANGED,
@@ -532,7 +532,7 @@ enum CombatRating
     CR_WEAPON_SKILL_RANGED      = 22,
     CR_EXPERTISE                = 23,
     CR_ARMOR_PENETRATION        = 24,
-	CR_MASTERY                  = 25
+    CR_MASTERY                  = 25
 };
 
 #define MAX_COMBAT_RATING         25
@@ -605,9 +605,9 @@ enum UnitFlags2
     UNIT_FLAG2_DISARM_OFFHAND       = 0x00000080,
     UNIT_FLAG2_DISARM_RANGED        = 0x00000400,               //this does not disable ranged weapon display (maybe additional flag needed?)
     UNIT_FLAG2_REGENERATE_POWER     = 0x00000800,
-	UNIT_FLAG2_WORGEN_TRANSFORM     = 0x00080000,           // transform to worgen
-	UNIT_FLAG2_WORGEN_TRANSFORM2    = 0x00100000,           // transform to worgen, but less animation?
-	UNIT_FLAG2_WORGEN_TRANSFORM3    = 0x00200000            // transform to worgen, but less animation?
+    UNIT_FLAG2_WORGEN_TRANSFORM     = 0x00080000,           // transform to worgen
+    UNIT_FLAG2_WORGEN_TRANSFORM2    = 0x00100000,           // transform to worgen, but less animation?
+    UNIT_FLAG2_WORGEN_TRANSFORM3    = 0x00200000            // transform to worgen, but less animation?
 };
 
 /// Non Player Character flags

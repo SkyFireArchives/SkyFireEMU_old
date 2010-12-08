@@ -240,128 +240,128 @@ bool ItemCanGoIntoBag(ItemPrototype const *pProto, ItemPrototype const *pBagProt
 
 uint32 ItemPrototype::GetArmor() const
 {
-	if(Quality >= ITEM_QUALITY_HEIRLOOM)                    // heirlooms have it's own dbc...
-		return 0;
-	
-	if(Class == ITEM_CLASS_ARMOR && SubClass == ITEM_SUBCLASS_ARMOR_SHIELD)
-	{
-		if(ItemArmorShieldEntry const* ias = sItemArmorShieldStore.LookupEntry(ItemLevel))
-		{
-			return uint32(floor(ias->Value[Quality] + 0.5f));
-		}
-		return 0;
-	}
-	
-	ItemArmorQualityEntry const* iaq = sItemArmorQualityStore.LookupEntry(ItemLevel);
-	ItemArmorTotalEntry const* iat = sItemArmorTotalStore.LookupEntry(ItemLevel);
-	
-	if(!iaq || !iat)
-		return 0;
-	
-	if(InventoryType != INVTYPE_HEAD && InventoryType != INVTYPE_CHEST && InventoryType != INVTYPE_SHOULDERS
-	   && InventoryType != INVTYPE_LEGS && InventoryType != INVTYPE_FEET && InventoryType != INVTYPE_WRISTS
-	   && InventoryType != INVTYPE_HANDS && InventoryType != INVTYPE_WAIST && InventoryType != INVTYPE_CLOAK
-	   && InventoryType != INVTYPE_ROBE)
-		return 0;
-	
-	ArmorLocationEntry const* al = NULL;
-	
-	if(InventoryType == INVTYPE_ROBE)
-		al = sArmorLocationStore.LookupEntry(INVTYPE_CHEST);
-	else
-		al = sArmorLocationStore.LookupEntry(InventoryType);
-	
-	if(!al)
-		return 0;
-	
-	float iatMult, alMult;
-	
-	switch(SubClass)
-	{
-		case ITEM_SUBCLASS_ARMOR_CLOTH:
-			iatMult = iat->Value[0];
-			alMult = al->Value[0];
-			break;
-		case ITEM_SUBCLASS_ARMOR_LEATHER:
-			iatMult = iat->Value[1];
-			alMult = al->Value[1];
-			break;
-		case ITEM_SUBCLASS_ARMOR_MAIL:
-			iatMult = iat->Value[2];
-			alMult = al->Value[2];
-			break;
-		case ITEM_SUBCLASS_ARMOR_PLATE:
-			iatMult = iat->Value[3];
-			alMult = al->Value[3];
-			break;
-		default:
-			return 0;
-	}
-	
-	return uint32(floor(iaq->Value[Quality] * iatMult * alMult + 0.5f));
+    if(Quality >= ITEM_QUALITY_HEIRLOOM)                    // heirlooms have it's own dbc...
+        return 0;
+    
+    if(Class == ITEM_CLASS_ARMOR && SubClass == ITEM_SUBCLASS_ARMOR_SHIELD)
+    {
+        if(ItemArmorShieldEntry const* ias = sItemArmorShieldStore.LookupEntry(ItemLevel))
+        {
+            return uint32(floor(ias->Value[Quality] + 0.5f));
+        }
+        return 0;
+    }
+    
+    ItemArmorQualityEntry const* iaq = sItemArmorQualityStore.LookupEntry(ItemLevel);
+    ItemArmorTotalEntry const* iat = sItemArmorTotalStore.LookupEntry(ItemLevel);
+    
+    if(!iaq || !iat)
+        return 0;
+    
+    if(InventoryType != INVTYPE_HEAD && InventoryType != INVTYPE_CHEST && InventoryType != INVTYPE_SHOULDERS
+       && InventoryType != INVTYPE_LEGS && InventoryType != INVTYPE_FEET && InventoryType != INVTYPE_WRISTS
+       && InventoryType != INVTYPE_HANDS && InventoryType != INVTYPE_WAIST && InventoryType != INVTYPE_CLOAK
+       && InventoryType != INVTYPE_ROBE)
+        return 0;
+    
+    ArmorLocationEntry const* al = NULL;
+    
+    if(InventoryType == INVTYPE_ROBE)
+        al = sArmorLocationStore.LookupEntry(INVTYPE_CHEST);
+    else
+        al = sArmorLocationStore.LookupEntry(InventoryType);
+    
+    if(!al)
+        return 0;
+    
+    float iatMult, alMult;
+    
+    switch(SubClass)
+    {
+        case ITEM_SUBCLASS_ARMOR_CLOTH:
+            iatMult = iat->Value[0];
+            alMult = al->Value[0];
+            break;
+        case ITEM_SUBCLASS_ARMOR_LEATHER:
+            iatMult = iat->Value[1];
+            alMult = al->Value[1];
+            break;
+        case ITEM_SUBCLASS_ARMOR_MAIL:
+            iatMult = iat->Value[2];
+            alMult = al->Value[2];
+            break;
+        case ITEM_SUBCLASS_ARMOR_PLATE:
+            iatMult = iat->Value[3];
+            alMult = al->Value[3];
+            break;
+        default:
+            return 0;
+    }
+    
+    return uint32(floor(iaq->Value[Quality] * iatMult * alMult + 0.5f));
 }
 
 float ItemPrototype::getDPS() const
 {
-	float damage = 0.0f;
-	
-	if(Class == ITEM_CLASS_WEAPON)
-	{
-		if(Quality >= ITEM_QUALITY_HEIRLOOM)                // heirlooms have it's own dbc...
-			return damage;
-		
-		ItemDamageEntry const* id = NULL;
-		
-		switch(InventoryType)
-		{
-			case INVTYPE_WEAPON:
-			case INVTYPE_WEAPONMAINHAND:
-			case INVTYPE_WEAPONOFFHAND:
-				if(Flags2 & ITEM_FLAGS_EXTRA_CASTER_WEAPON)      // caster weapon flag
-					id = sItemDamageOneHandCasterStore.LookupEntry(ItemLevel);
-				else
-					id = sItemDamageOneHandStore.LookupEntry(ItemLevel);
-				break;
-			case INVTYPE_2HWEAPON:
-				if(Flags2 & ITEM_FLAGS_EXTRA_CASTER_WEAPON)      // caster weapon flag
-					id = sItemDamageTwoHandCasterStore.LookupEntry(ItemLevel);
-				else
-					id = sItemDamageTwoHandStore.LookupEntry(ItemLevel);
-				break;
-			case INVTYPE_AMMO:
-				id = sItemDamageAmmoStore.LookupEntry(ItemLevel);
-				break;
-			case INVTYPE_RANGED:
-			case INVTYPE_THROWN:
-			case INVTYPE_RANGEDRIGHT:
-				switch(SubClass)
-			{
-				case ITEM_SUBCLASS_WEAPON_BOW:
-				case ITEM_SUBCLASS_WEAPON_GUN:
-				case ITEM_SUBCLASS_WEAPON_CROSSBOW:
-					id = sItemDamageRangedStore.LookupEntry(ItemLevel);
-					break;
-				case ITEM_SUBCLASS_WEAPON_THROWN:
-					id = sItemDamageThrownStore.LookupEntry(ItemLevel);
-					break;
-				case ITEM_SUBCLASS_WEAPON_WAND:
-					id = sItemDamageWandStore.LookupEntry(ItemLevel);
-					break;
-				default:
-					break;
-			}
-				break;
-			default:
-				break;
-		}
-		
-		if(!id)
-			return damage;
-		
-		return id->Value[Quality];
-	}
-	
-	return damage;
+    float damage = 0.0f;
+    
+    if(Class == ITEM_CLASS_WEAPON)
+    {
+        if(Quality >= ITEM_QUALITY_HEIRLOOM)                // heirlooms have it's own dbc...
+            return damage;
+        
+        ItemDamageEntry const* id = NULL;
+        
+        switch(InventoryType)
+        {
+            case INVTYPE_WEAPON:
+            case INVTYPE_WEAPONMAINHAND:
+            case INVTYPE_WEAPONOFFHAND:
+                if(Flags2 & ITEM_FLAGS_EXTRA_CASTER_WEAPON)      // caster weapon flag
+                    id = sItemDamageOneHandCasterStore.LookupEntry(ItemLevel);
+                else
+                    id = sItemDamageOneHandStore.LookupEntry(ItemLevel);
+                break;
+            case INVTYPE_2HWEAPON:
+                if(Flags2 & ITEM_FLAGS_EXTRA_CASTER_WEAPON)      // caster weapon flag
+                    id = sItemDamageTwoHandCasterStore.LookupEntry(ItemLevel);
+                else
+                    id = sItemDamageTwoHandStore.LookupEntry(ItemLevel);
+                break;
+            case INVTYPE_AMMO:
+                id = sItemDamageAmmoStore.LookupEntry(ItemLevel);
+                break;
+            case INVTYPE_RANGED:
+            case INVTYPE_THROWN:
+            case INVTYPE_RANGEDRIGHT:
+                switch(SubClass)
+            {
+                case ITEM_SUBCLASS_WEAPON_BOW:
+                case ITEM_SUBCLASS_WEAPON_GUN:
+                case ITEM_SUBCLASS_WEAPON_CROSSBOW:
+                    id = sItemDamageRangedStore.LookupEntry(ItemLevel);
+                    break;
+                case ITEM_SUBCLASS_WEAPON_THROWN:
+                    id = sItemDamageThrownStore.LookupEntry(ItemLevel);
+                    break;
+                case ITEM_SUBCLASS_WEAPON_WAND:
+                    id = sItemDamageWandStore.LookupEntry(ItemLevel);
+                    break;
+                default:
+                    break;
+            }
+                break;
+            default:
+                break;
+        }
+        
+        if(!id)
+            return damage;
+        
+        return id->Value[Quality];
+    }
+    
+    return damage;
 }
 
 Item::Item()
@@ -949,38 +949,38 @@ uint8 Item::CanBeMergedPartlyWith(ItemPrototype const* proto) const
 
 bool Item::IsFitToSpellRequirements(SpellEntry const* spellInfo) const
 {
-	ItemPrototype const* proto = GetProto();
-	
-	if (spellInfo->EquippedItemClass != -1)                 // -1 == any item class
-	{
-		// Special case - accept vellum for armor/weapon requirements
-		if ((spellInfo->EquippedItemClass == ITEM_CLASS_ARMOR && proto->IsArmorVellum())
-			||(spellInfo->EquippedItemClass == ITEM_CLASS_WEAPON && proto->IsWeaponVellum()))
-			if (sSpellMgr.IsSkillTypeSpell(spellInfo->Id, SKILL_ENCHANTING)) // only for enchanting spells
-				return true;
-		
-		if (spellInfo->EquippedItemClass != int32(proto->Class))
-			return false;                                   //  wrong item class
-		
-		if (spellInfo->EquippedItemSubClassMask != 0)        // 0 == any subclass
-		{
-			if ((spellInfo->EquippedItemSubClassMask & (1 << proto->SubClass)) == 0)
-				return false;                               // subclass not present in mask
-		}
-	}
-	
-	if (spellInfo->EquippedItemInventoryTypeMask != 0)       // 0 == any inventory type
-	{
-		// Special case - accept weapon type for main and offhand requirements
-		if (proto->InventoryType == INVTYPE_WEAPON &&
-			(spellInfo->EquippedItemInventoryTypeMask & (1 << INVTYPE_WEAPONMAINHAND) ||
-			 spellInfo->EquippedItemInventoryTypeMask & (1 << INVTYPE_WEAPONOFFHAND)))
-			return true;
-		else if ((spellInfo->EquippedItemInventoryTypeMask & (1 << proto->InventoryType)) == 0)
-			return false;                                   // inventory type not present in mask
-	}
-	
-	return true;
+    ItemPrototype const* proto = GetProto();
+    
+    if (spellInfo->EquippedItemClass != -1)                 // -1 == any item class
+    {
+        // Special case - accept vellum for armor/weapon requirements
+        if ((spellInfo->EquippedItemClass == ITEM_CLASS_ARMOR && proto->IsArmorVellum())
+            ||(spellInfo->EquippedItemClass == ITEM_CLASS_WEAPON && proto->IsWeaponVellum()))
+            if (sSpellMgr.IsSkillTypeSpell(spellInfo->Id, SKILL_ENCHANTING)) // only for enchanting spells
+                return true;
+        
+        if (spellInfo->EquippedItemClass != int32(proto->Class))
+            return false;                                   //  wrong item class
+        
+        if (spellInfo->EquippedItemSubClassMask != 0)        // 0 == any subclass
+        {
+            if ((spellInfo->EquippedItemSubClassMask & (1 << proto->SubClass)) == 0)
+                return false;                               // subclass not present in mask
+        }
+    }
+    
+    if (spellInfo->EquippedItemInventoryTypeMask != 0)       // 0 == any inventory type
+    {
+        // Special case - accept weapon type for main and offhand requirements
+        if (proto->InventoryType == INVTYPE_WEAPON &&
+            (spellInfo->EquippedItemInventoryTypeMask & (1 << INVTYPE_WEAPONMAINHAND) ||
+             spellInfo->EquippedItemInventoryTypeMask & (1 << INVTYPE_WEAPONOFFHAND)))
+            return true;
+        else if ((spellInfo->EquippedItemInventoryTypeMask & (1 << proto->InventoryType)) == 0)
+            return false;                                   // inventory type not present in mask
+    }
+    
+    return true;
 }
 
 bool Item::IsTargetValidForItemUse(Unit* pUnitTarget)

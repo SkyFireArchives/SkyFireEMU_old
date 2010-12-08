@@ -516,7 +516,7 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
     //when dying/logging out
     m_oldpetspell = 0;
     m_lastpetnumber = 0;
-	
+    
     ////////////////////Rest System/////////////////////
     time_inn_enter=0;
     inn_pos_mapid=0;
@@ -559,8 +559,8 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
             m_Glyphs[i][g] = 0;
 
         m_talents[i] = new PlayerTalentMap();
-		
-		m_branchSpec[i] = 0;
+        
+        m_branchSpec[i] = 0;
     }
     for (uint8 i = 0; i < BASEMOD_END; ++i)
     {
@@ -578,9 +578,9 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
 
     // Honor System
     m_lastHonorUpdateTime = time(NULL);
-	m_honorPoints = 0;
-	m_arenaPoints = 0;
-	
+    m_honorPoints = 0;
+    m_arenaPoints = 0;
+    
     m_IsBGRandomWinner = false;
 
     // Player summoning
@@ -684,8 +684,8 @@ bool Player::Create(uint32 guidlow, const std::string& name, uint8 race, uint8 c
 
     Object::_Create(guidlow, 0, HIGHGUID_PLAYER);
 
-	ASSERT(getClass() == class_);
-	
+    ASSERT(getClass() == class_);
+    
     m_name = name;
 
     PlayerInfo const* info = sObjectMgr.GetPlayerInfo(race, class_);
@@ -740,8 +740,8 @@ bool Player::Create(uint32 guidlow, const std::string& name, uint8 race, uint8 c
     SetInGuild( 0 );
     SetUInt32Value(PLAYER_GUILDRANK, 0);
     SetUInt32Value(PLAYER_GUILD_TIMESTAMP, 0);
-	SetUInt32Value(PLAYER_GUILDDELETE_DATE, 0);
-	SetUInt32Value(PLAYER_GUILDLEVEL, 1);
+    SetUInt32Value(PLAYER_GUILDDELETE_DATE, 0);
+    SetUInt32Value(PLAYER_GUILDLEVEL, 1);
 
     for (int i = 0; i < KNOWN_TITLES_SIZE; ++i)
         SetUInt64Value(PLAYER__FIELD_KNOWN_TITLES + i, 0);  // 0=disabled
@@ -843,23 +843,23 @@ bool Player::Create(uint32 guidlow, const std::string& name, uint8 race, uint8 c
         SetPower(POWER_MANA,GetMaxPower(POWER_MANA));
     }
 
-	//if(getPowerType() == POWER_RUNIC_POWER)
-	//{
-	//    SetPower(POWER_RUNE, 8);
-	//    SetMaxPower(POWER_RUNE, 8);
-	//    SetPower(POWER_RUNIC_POWER, 0);
-	//    SetMaxPower(POWER_RUNIC_POWER, 1000);
-	//}
-	//if(getPowerType() == POWER_FOCUS)
-	//{
-	//    SetPower(POWER_FOCUS, 100);
-	//    SetMaxPower(POWER_FOCUS, 100);
-	//}
+    //if(getPowerType() == POWER_RUNIC_POWER)
+    //{
+    //    SetPower(POWER_RUNE, 8);
+    //    SetMaxPower(POWER_RUNE, 8);
+    //    SetPower(POWER_RUNIC_POWER, 0);
+    //    SetMaxPower(POWER_RUNIC_POWER, 1000);
+    //}
+    //if(getPowerType() == POWER_FOCUS)
+    //{
+    //    SetPower(POWER_FOCUS, 100);
+    //    SetMaxPower(POWER_FOCUS, 100);
+    //}
 
-	if(getPowerType() != POWER_MANA)                        // hide additional mana bar if we have no mana    
-	{
+    if(getPowerType() != POWER_MANA)                        // hide additional mana bar if we have no mana    
+    {
         SetPower(POWER_MANA, 0);
-		SetMaxPower(POWER_MANA, 0);
+        SetMaxPower(POWER_MANA, 0);
     }
 
     // original spells
@@ -1655,10 +1655,10 @@ bool Player::BuildEnumData(QueryResult result, WorldPacket * p_data)
     *p_data << fields[11].GetFloat();                       // y
     *p_data << fields[12].GetFloat();                       // z
 
-	if(uint32 guildId = fields[13].GetUInt32())
-		*p_data << uint64(MAKE_NEW_GUID(guildId, 0, HIGHGUID_GUILD));
-	else 
-		*p_data << uint64(0);
+    if(uint32 guildId = fields[13].GetUInt32())
+        *p_data << uint64(MAKE_NEW_GUID(guildId, 0, HIGHGUID_GUILD));
+    else 
+        *p_data << uint64(0);
 
     uint32 char_flags = 0;
     uint32 playerFlags = fields[14].GetUInt32();
@@ -2215,9 +2215,9 @@ void Player::RegenerateAll()
         if (getClass() == CLASS_DEATH_KNIGHT)
             Regenerate(POWER_RUNIC_POWER);
 
-		if (getClass() == CLASS_HUNTER)
-			Regenerate(POWER_FOCUS);
-		
+        if (getClass() == CLASS_HUNTER)
+            Regenerate(POWER_FOCUS);
+        
         m_regenTimerCount -= 2000;
     }
 
@@ -2261,9 +2261,9 @@ void Player::Regenerate(Powers power)
                 addvalue += -20 * RageDecreaseRate;               // 2 rage by tick (= 2 seconds => 1 rage/sec)
             }
         }   break;
-		case POWER_FOCUS:
-			addvalue = 12;
-			break;
+        case POWER_FOCUS:
+            addvalue = 12;
+            break;
         case POWER_ENERGY:                                  // Regenerate energy (rogue)
             addvalue += 0.01f * m_regenTimer;
             break;
@@ -2913,11 +2913,11 @@ void Player::InitStatsForLevel(bool reapplyMods)
 
     SetInt32Value(UNIT_FIELD_ATTACK_POWER,            0);
     SetInt32Value(UNIT_FIELD_ATTACK_POWER_MOD_POS,       0);
-	SetInt32Value(UNIT_FIELD_ATTACK_POWER_MOD_NEG,       0);
+    SetInt32Value(UNIT_FIELD_ATTACK_POWER_MOD_NEG,       0);
     SetFloatValue(UNIT_FIELD_ATTACK_POWER_MULTIPLIER,0.0f);
     SetInt32Value(UNIT_FIELD_RANGED_ATTACK_POWER,     0);
     SetInt32Value(UNIT_FIELD_RANGED_ATTACK_POWER_MOD_POS,0);
-	SetInt32Value(UNIT_FIELD_RANGED_ATTACK_POWER_MOD_NEG,0);
+    SetInt32Value(UNIT_FIELD_RANGED_ATTACK_POWER_MOD_NEG,0);
     SetFloatValue(UNIT_FIELD_RANGED_ATTACK_POWER_MULTIPLIER,0.0f);
 
     // Base crit values (will be recalculated in UpdateAllStats() at loading and in _ApplyAllStatBonuses() at reset
@@ -3601,7 +3601,7 @@ bool Player::IsNeedCastPassiveSpellAtLearn(SpellEntry const* spellInfo) const
 {
     // note: form passives activated with shapeshift spells be implemented by HandleShapeshiftBoosts instead of spell_learn_spell
     // talent dependent passives activated at form apply have proper stance data
-	bool need_cast = (!spellInfo->Stances || (m_form != 0 && (spellInfo->Stances & (1<<(m_form-1)))));
+    bool need_cast = (!spellInfo->Stances || (m_form != 0 && (spellInfo->Stances & (1<<(m_form-1)))));
 
     //Check CasterAuraStates
     return need_cast && (!spellInfo->CasterAuraState || HasAuraState(AuraState(spellInfo->CasterAuraState)));
@@ -4126,21 +4126,21 @@ bool Player::resetTalents(bool no_cost)
         }
     }
 
-	for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
+    for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
     {
         TalentTreePrimarySpellsEntry const *talentInfo = sTalentTreePrimarySpellsStore.LookupEntry(i);
-		
+        
         if (!talentInfo || talentInfo->TalentTabID != GetTalentBranchSpec(m_activeSpec))
             continue;
-		
+        
         removeSpell(talentInfo->SpellID, true);
     }
-	
-	m_branchSpec[m_activeSpec] = 0;
-	
+    
+    m_branchSpec[m_activeSpec] = 0;
+    
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     _SaveTalents(trans);
-	_SaveTalentBranchSpecs(trans);
+    _SaveTalentBranchSpecs(trans);
     _SaveSpells(trans);
     CharacterDatabase.CommitTransaction(trans);
 
@@ -4208,8 +4208,8 @@ void Player::InitVisibleBits()
     updateVisualBits.SetBit(OBJECT_FIELD_GUID);
     updateVisualBits.SetBit(OBJECT_FIELD_TYPE);
     updateVisualBits.SetBit(OBJECT_FIELD_ENTRY);
-	updateVisualBits.SetBit(OBJECT_FIELD_DATA + 0);
-	updateVisualBits.SetBit(OBJECT_FIELD_DATA + 1);
+    updateVisualBits.SetBit(OBJECT_FIELD_DATA + 0);
+    updateVisualBits.SetBit(OBJECT_FIELD_DATA + 1);
     updateVisualBits.SetBit(OBJECT_FIELD_SCALE_X);
     updateVisualBits.SetBit(UNIT_FIELD_CHARM + 0);
     updateVisualBits.SetBit(UNIT_FIELD_CHARM + 1);
@@ -4271,8 +4271,8 @@ void Player::InitVisibleBits()
     updateVisualBits.SetBit(PLAYER_DUEL_ARBITER + 1);
     updateVisualBits.SetBit(PLAYER_FLAGS);
     updateVisualBits.SetBit(PLAYER_GUILDRANK);
-	//updateVisualBits.SetBit(PLAYER_GUILDDELETE_DATE);
-	updateVisualBits.SetBit(PLAYER_GUILDLEVEL);
+    //updateVisualBits.SetBit(PLAYER_GUILDDELETE_DATE);
+    updateVisualBits.SetBit(PLAYER_GUILDLEVEL);
     updateVisualBits.SetBit(PLAYER_BYTES);
     updateVisualBits.SetBit(PLAYER_BYTES_2);
     updateVisualBits.SetBit(PLAYER_BYTES_3);
@@ -4300,8 +4300,8 @@ void Player::InitVisibleBits()
 
 void Player::BuildCreateUpdateBlockForPlayer(UpdateData *data, Player *target) const
 {
-	Unit::BuildCreateUpdateBlockForPlayer(data, target);
-	
+    Unit::BuildCreateUpdateBlockForPlayer(data, target);
+    
     for (uint8 i = 0; i < EQUIPMENT_SLOT_END; ++i)
     {
         if (m_items[i] == NULL)
@@ -5655,8 +5655,8 @@ void Player::UpdateRating(CombatRating cr)
         case CR_WEAPON_SKILL_OFFHAND:
         case CR_WEAPON_SKILL_RANGED:
             break;
-		case CR_MASTERY:                                    // Not implemented
-			break;
+        case CR_MASTERY:                                    // Not implemented
+            break;
         case CR_EXPERTISE:
             if (affectStats)
             {
@@ -7055,7 +7055,7 @@ void Player::UpdateZone(uint32 newZone, uint32 newArea)
     {
         sOutdoorPvPMgr.HandlePlayerLeaveZone(this, m_zoneUpdateId);
         sOutdoorPvPMgr.HandlePlayerEnterZone(this, newZone);
-		printf("Send World State");
+        printf("Send World State");
         SendInitWorldStates(newZone, newArea);              // only if really enters to new zone, not just area change, works strange...
     }
 
@@ -7516,22 +7516,22 @@ void Player::_ApplyItemBonuses(ItemPrototype const *proto, uint8 slot, bool appl
                 ApplyRatingMod(CR_EXPERTISE, int32(val), apply);
                 break;
             case ITEM_MOD_ATTACK_POWER:
-				if(float(val) > 0)
-				{
-					HandleStatModifier(UNIT_MOD_ATTACK_POWER_POS, TOTAL_VALUE, float(val), apply);
-					HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(val), apply);
-				}
-				else
-				{
-					HandleStatModifier(UNIT_MOD_ATTACK_POWER_NEG, TOTAL_VALUE, -float(val), apply);
-					HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(val), apply);
-				}
+                if(float(val) > 0)
+                {
+                    HandleStatModifier(UNIT_MOD_ATTACK_POWER_POS, TOTAL_VALUE, float(val), apply);
+                    HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(val), apply);
+                }
+                else
+                {
+                    HandleStatModifier(UNIT_MOD_ATTACK_POWER_NEG, TOTAL_VALUE, -float(val), apply);
+                    HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(val), apply);
+                }
                 break;
             case ITEM_MOD_RANGED_ATTACK_POWER:
-				if(float(val) > 0)
-					HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(val), apply);
-				else
-					HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, -float(val), apply);
+                if(float(val) > 0)
+                    HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(val), apply);
+                else
+                    HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, -float(val), apply);
                 break;
 //            case ITEM_MOD_FERAL_ATTACK_POWER:
 //                ApplyFeralAPBonus(int32(val), apply);
@@ -13320,23 +13320,23 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
                             sLog.outDebug("+ %u EXPERTISE", enchant_amount);
                             break;
                         case ITEM_MOD_ATTACK_POWER:
-							if(float(enchant_amount) > 0)
-							{
-								HandleStatModifier(UNIT_MOD_ATTACK_POWER_POS, TOTAL_VALUE, float(enchant_amount), apply);
-								HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, float(enchant_amount), apply);
-							}
-							else
-							{
-								HandleStatModifier(UNIT_MOD_ATTACK_POWER_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
-								HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
-							}
+                            if(float(enchant_amount) > 0)
+                            {
+                                HandleStatModifier(UNIT_MOD_ATTACK_POWER_POS, TOTAL_VALUE, float(enchant_amount), apply);
+                                HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, float(enchant_amount), apply);
+                            }
+                            else
+                            {
+                                HandleStatModifier(UNIT_MOD_ATTACK_POWER_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
+                                HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
+                            }
                             sLog.outDebug("+ %u ATTACK_POWER", enchant_amount);
                             break;
                         case ITEM_MOD_RANGED_ATTACK_POWER:
-							if(float(enchant_amount) > 0)
-								HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(enchant_amount), apply);
-							else
-								HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
+                            if(float(enchant_amount) > 0)
+                                HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(enchant_amount), apply);
+                            else
+                                HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
                             sLog.outDebug("+ %u RANGED_ATTACK_POWER", enchant_amount);
                             break;
 //                        case ITEM_MOD_FERAL_ATTACK_POWER:
@@ -15626,7 +15626,7 @@ void Player::SendQuestReward(Quest const *pQuest, uint32 XP, Object * questGiver
     sLog.outDebug("WORLD: Sent SMSG_QUESTGIVER_QUEST_COMPLETE quest = %u", questid);
     sGameEventMgr.HandleQuestComplete(questid);
     WorldPacket data(SMSG_QUESTGIVER_QUEST_COMPLETE, (4+4+4+4+4));
-	data << uint8(0x80); // unk 4.0.1 flags
+    data << uint8(0x80); // unk 4.0.1 flags
     data << uint32(questid);
 
     if (getLevel() < sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
@@ -15927,9 +15927,9 @@ float Player::GetFloatValueFromArray(Tokens const& data, uint16 index)
 
 Player* Player::LoadFromDB(uint32 guid, SQLQueryHolder * holder, WorldSession * session)
 {
-	////                                                     0     1        2     3     4        5      6    7      8     9           10              11
+    ////                                                     0     1        2     3     4        5      6    7      8     9           10              11
     //QueryResult *result = CharacterDatabase.PQuery("SELECT guid, account,name, race, class, gender, level, xp, money, playerBytes, playerBytes2, playerFlags,"
-	// 12          13          14          15   16           17        18        19         20         21          22           23                 24
+    // 12          13          14          15   16           17        18        19         20         21          22           23                 24
     //"position_x, position_y, position_z, map, orientation, taximask, cinematic, totaltime, leveltime, rest_bonus, logout_time, is_logout_resting, resettalents_cost,"
     // 25                 26       27       28       29       30         31           32             33        34    35      36                 37         38
     //"resettalents_time, trans_x, trans_y, trans_z, trans_o, transguid, extra_flags, stable_slots, at_login, zone, online, death_expire_time, taxi_path, instance_mode_mask,"
@@ -15938,66 +15938,66 @@ Player* Player::LoadFromDB(uint32 guid, SQLQueryHolder * holder, WorldSession * 
     // 50      51      52      53      54      55      56      57      58      59      60           61         62          63             64              65      66           67
     //"health, power1, power2, power3, power4, power5, power6, power7, power8, power9, instance_id, speccount, activespec, exploredZones, equipmentCache, ammoId, knownTitles, actionBars FROM characters WHERE guid = '%u'", guid);
     PreparedQueryResult result = holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADFROM);
-	
+    
     if (!result)
     {
         sLog.outError("Player (GUID: %u) not found in table `characters`, can't load. ",guid);
         return false;
     }
-	
-	uint8 pClass = result->GetUInt8(4);
-	Player* player = NULL;
-	switch(pClass)
-	{
-		case CLASS_WARRIOR:
-			player = new WarriorPlayer(session);
-			break;
-		case CLASS_PALADIN:
-			player = new PaladinPlayer(session);
-			break;
-		case CLASS_HUNTER:
-			player = new HunterPlayer(session);
-			break;
-		case CLASS_ROGUE:
-			player = new RoguePlayer(session);
-			break;
-		case CLASS_PRIEST:
-			player = new PriestPlayer(session);
-			break;
-		case CLASS_DEATH_KNIGHT:
-			player = new DKPlayer(session);
-			break;
-		case CLASS_SHAMAN:
-			player = new ShamanPlayer(session);
-			break;
-		case CLASS_MAGE:
-			player = new MagePlayer(session);
-			break;
-		case CLASS_WARLOCK:
-			player = new WarlockPlayer(session);
-			break;
-		case CLASS_DRUID:
-			player = new DruidPlayer(session);
-			break;
-		default:
-			printf("\nClass %u doesn't exist.\n", pClass);
-			ASSERT(false);
-			break;
-	}
-	
-	ASSERT(player != NULL);
-	
-	if(player->_LoadFromDB(guid, holder, result))
-		return player;
-	return NULL;
+    
+    uint8 pClass = result->GetUInt8(4);
+    Player* player = NULL;
+    switch(pClass)
+    {
+        case CLASS_WARRIOR:
+            player = new WarriorPlayer(session);
+            break;
+        case CLASS_PALADIN:
+            player = new PaladinPlayer(session);
+            break;
+        case CLASS_HUNTER:
+            player = new HunterPlayer(session);
+            break;
+        case CLASS_ROGUE:
+            player = new RoguePlayer(session);
+            break;
+        case CLASS_PRIEST:
+            player = new PriestPlayer(session);
+            break;
+        case CLASS_DEATH_KNIGHT:
+            player = new DKPlayer(session);
+            break;
+        case CLASS_SHAMAN:
+            player = new ShamanPlayer(session);
+            break;
+        case CLASS_MAGE:
+            player = new MagePlayer(session);
+            break;
+        case CLASS_WARLOCK:
+            player = new WarlockPlayer(session);
+            break;
+        case CLASS_DRUID:
+            player = new DruidPlayer(session);
+            break;
+        default:
+            printf("\nClass %u doesn't exist.\n", pClass);
+            ASSERT(false);
+            break;
+    }
+    
+    ASSERT(player != NULL);
+    
+    if(player->_LoadFromDB(guid, holder, result))
+        return player;
+    return NULL;
 }
 
 //On envoie le result pour ne pas perdre de temps à refaire le calcul...
 bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResult & result)
 {
-	////                                                     0     1        2     3     4        5      6    7      8     9           10              11
+    ////                                                     0     1        2     3     4        5      6    7      8     9           10              11
     //QueryResult *result = CharacterDatabase.PQuery("SELECT guid, account,name, race, class, gender, level, xp, money, playerBytes, playerBytes2, playerFlags,"
-	// 12          13          14          15   16           17        18        19         20         21          22           23                 24
+    // 12          13          14          15   16           17        18        19         20         21          22           23                 24
     //"position_x, position_y, position_z, map, orientation, taximask, cinematic, totaltime, leveltime, rest_bonus, logout_time, is_logout_resting, resettalents_cost,"
     // 25                 26       27       28       29       30         31           32             33        34    35      36                 37         38
     //"resettalents_time, trans_x, trans_y, trans_z, trans_o, transguid, extra_flags, stable_slots, at_login, zone, online, death_expire_time, taxi_path, instance_mode_mask,"
@@ -16485,7 +16485,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
     }
 
     _LoadTalents(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADTALENTS));
-	_LoadTalentBranchSpecs(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS));
+    _LoadTalentBranchSpecs(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS));
     _LoadSpells(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADSPELLS));
 
     _LoadGlyphs(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADGLYPHS));
@@ -17888,7 +17888,7 @@ void Player::SaveToDB()
     _SaveDailyQuestStatus(trans);
     _SaveWeeklyQuestStatus(trans);
     _SaveTalents(trans);
-	_SaveTalentBranchSpecs(trans);
+    _SaveTalentBranchSpecs(trans);
     _SaveSpells(trans);
     _SaveSpellCooldowns(trans);
     _SaveActions(trans);
@@ -19832,8 +19832,8 @@ bool Player::BuyItemFromVendorSlot(uint64 vendorguid, uint32 vendorslot, uint32 
         return false;
     }
 
-	if(count == pProto->BuyCount)
-		count = 1;
+    if(count == pProto->BuyCount)
+        count = 1;
 
     // check current item amount if it limited
     if (crItem->maxcount != 0)
@@ -21027,11 +21027,11 @@ void Player::SendInitialPacketsBeforeAddToMap()
 }
 
 void Player::SendInitialPacketsAfterAddToMap()
-{	
+{    
     // update zone
     uint32 newzone, newarea;
     GetZoneAndAreaId(newzone,newarea);
-	SendInitWorldStates(newzone, newarea);
+    SendInitWorldStates(newzone, newarea);
     UpdateZone(newzone,newarea);
 
     ResetTimeSync();
@@ -21264,8 +21264,8 @@ void Player::learnQuestRewardedSpells(Quest const* quest)
     {
         if (spellInfo->Effect[i] == SPELL_EFFECT_LEARN_SPELL && !HasSpell(spellInfo->EffectTriggerSpell[i]))
         {
-			found = true;
-			break;
+            found = true;
+            break;
         }
     }
 
@@ -22910,8 +22910,8 @@ void Player::StoreLootItem(uint8 lootSlot, Loot* loot)
 uint32 Player::CalculateTalentsPoints() const
 {
     uint32 base_talent = 0;
-	if(getLevel() >= 10)
-		base_talent = (((getLevel() - 10 + 1) - ( ((getLevel() - 10 + 1) % 2) == 1 ? 1 : 0))/2)+1;
+    if(getLevel() >= 10)
+        base_talent = (((getLevel() - 10 + 1) - ( ((getLevel() - 10 + 1) % 2) == 1 ? 1 : 0))/2)+1;
 
     if (getClass() != CLASS_DEATH_KNIGHT || GetMapId() != 609)
         return uint32(base_talent * sWorld.getRate(RATE_TALENT));
@@ -23199,49 +23199,49 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank, bool one)
 
     if (!talentTabInfo)
         return;
-	
-	//TODO: CHANGER DE CODE! IL EST DEGUEULASSE!
-	if(one && talentTabInfo->TalentTabID != GetTalentBranchSpec(m_activeSpec))
-	{
-		uint32 pointInBranchSpec = 0;
-		for(PlayerTalentMap::iterator itr = m_talents[m_activeSpec]->begin(); itr != m_talents[m_activeSpec]->end(); itr++)
-		{
-			for(uint32 i = 0; i < sTalentStore.GetNumRows(); i++)
-			{
-				const TalentEntry * thisTalent = sTalentStore.LookupEntry(i);
-				if(thisTalent) 
-				{
-					int thisrank = -1;
-					for(int j = 0; j < 5; j++)
-						if(thisTalent->RankID[j] == itr->first)
-						{
-							thisrank = j;
-							break;
-						}
-					if(thisrank != -1)
-					{
-						if(thisTalent->TalentTab == GetTalentBranchSpec(m_activeSpec))
-						{
-							int8 curtalent_maxrank = -1;
-							for (int8 rank = MAX_TALENT_RANK-1; rank >= 0; --rank)
-							{
-								if (thisTalent->RankID[rank] && HasTalent(thisTalent->RankID[rank], m_activeSpec))
-								{
-									curtalent_maxrank = rank;
-									break;
-								}
-							}
-							if(curtalent_maxrank != -1 && thisrank == curtalent_maxrank)
-								pointInBranchSpec += curtalent_maxrank + 1;
-						}
-					}
-				}
-			}
-		}
-		if(pointInBranchSpec < 31)
-			return;
-	}
-	
+    
+    //TODO: CHANGER DE CODE! IL EST DEGUEULASSE!
+    if(one && talentTabInfo->TalentTabID != GetTalentBranchSpec(m_activeSpec))
+    {
+        uint32 pointInBranchSpec = 0;
+        for(PlayerTalentMap::iterator itr = m_talents[m_activeSpec]->begin(); itr != m_talents[m_activeSpec]->end(); itr++)
+        {
+            for(uint32 i = 0; i < sTalentStore.GetNumRows(); i++)
+            {
+                const TalentEntry * thisTalent = sTalentStore.LookupEntry(i);
+                if(thisTalent) 
+                {
+                    int thisrank = -1;
+                    for(int j = 0; j < 5; j++)
+                        if(thisTalent->RankID[j] == itr->first)
+                        {
+                            thisrank = j;
+                            break;
+                        }
+                    if(thisrank != -1)
+                    {
+                        if(thisTalent->TalentTab == GetTalentBranchSpec(m_activeSpec))
+                        {
+                            int8 curtalent_maxrank = -1;
+                            for (int8 rank = MAX_TALENT_RANK-1; rank >= 0; --rank)
+                            {
+                                if (thisTalent->RankID[rank] && HasTalent(thisTalent->RankID[rank], m_activeSpec))
+                                {
+                                    curtalent_maxrank = rank;
+                                    break;
+                                }
+                            }
+                            if(curtalent_maxrank != -1 && thisrank == curtalent_maxrank)
+                                pointInBranchSpec += curtalent_maxrank + 1;
+                        }
+                    }
+                }
+            }
+        }
+        if(pointInBranchSpec < 31)
+            return;
+    }
+    
     // prevent learn talent for different class (cheating)
     if ((getClassMask() & talentTabInfo->ClassMask) == 0)
         return;
@@ -23550,8 +23550,8 @@ void Player::BuildPlayerTalentsInfoData(WorldPacket *data)
         for (uint32 specIdx = 0; specIdx < m_specsCount; ++specIdx)
         {
             uint8 talentIdCount = 0;
-			*data << uint32(GetTalentBranchSpec(specIdx));  //branchSpec
-			size_t pos = data->wpos();
+            *data << uint32(GetTalentBranchSpec(specIdx));  //branchSpec
+            size_t pos = data->wpos();
             *data << uint8(talentIdCount);                  // [PH], talentIdCount
 
             // find class talent tabs (all players have 3 talent tabs)
@@ -23909,9 +23909,9 @@ void Player::_LoadGlyphs(PreparedQueryResult result)
         m_Glyphs[spec][3] = result->GetUInt32(4);
         m_Glyphs[spec][4] = result->GetUInt32(5);
         m_Glyphs[spec][5] = result->GetUInt32(6);
-		m_Glyphs[spec][6] = result->GetUInt32(7);
-		m_Glyphs[spec][7] = result->GetUInt32(8);
-		m_Glyphs[spec][8] = result->GetUInt32(9);
+        m_Glyphs[spec][6] = result->GetUInt32(7);
+        m_Glyphs[spec][7] = result->GetUInt32(8);
+        m_Glyphs[spec][8] = result->GetUInt32(9);
     } while (result->NextRow());
 }
 
@@ -23931,23 +23931,23 @@ void Player::_SaveTalentBranchSpecs(SQLTransaction& trans)
     for (uint8 spec = 0; spec < m_specsCount; ++spec)
     {
         trans->PAppend("INSERT INTO character_branchspec VALUES('%u', '%u', '%u')",
-					   GetGUIDLow(), spec, GetTalentBranchSpec(spec));
+                       GetGUIDLow(), spec, GetTalentBranchSpec(spec));
     }
 }
 
 void Player::_LoadTalentBranchSpecs(PreparedQueryResult result)
 {
-	// SetPQuery(PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS, "SELECT branchSpec, spec FROM character_branchspec WHERE guid = '%u'", GUID_LOPART(m_guid));
-	if(result)
-	{
-		do
-		{
-			uint32 branchSpec = result->GetUInt32(0);
-			uint8 spec = result->GetUInt32(1);
+    // SetPQuery(PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS, "SELECT branchSpec, spec FROM character_branchspec WHERE guid = '%u'", GUID_LOPART(m_guid));
+    if(result)
+    {
+        do
+        {
+            uint32 branchSpec = result->GetUInt32(0);
+            uint8 spec = result->GetUInt32(1);
             SetTalentBranchSpec(branchSpec, spec);
         }
-		while (result->NextRow());
-	}
+        while (result->NextRow());
+    }
 }
 
 void Player::_LoadTalents(PreparedQueryResult result)
@@ -24091,14 +24091,14 @@ void Player::ActivateSpec(uint8 spec)
             //    plrTalent->second->state = PLAYERSPELL_REMOVED;
         }
     }
-	
-	for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
+    
+    for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
     {
         TalentTreePrimarySpellsEntry const *talentInfo = sTalentTreePrimarySpellsStore.LookupEntry(i);
-		
+        
         if (!talentInfo || talentInfo->TalentTabID != GetTalentBranchSpec(m_activeSpec))
             continue;
-		
+        
         removeSpell(talentInfo->SpellID, true);
     }
 
@@ -24143,16 +24143,16 @@ void Player::ActivateSpec(uint8 spec)
         }
     }
 
-	for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
+    for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
     {
         TalentTreePrimarySpellsEntry const *talentInfo = sTalentTreePrimarySpellsStore.LookupEntry(i);
-		
+        
         if (!talentInfo || talentInfo->TalentTabID != GetTalentBranchSpec(spec))
             continue;
-		
+        
         learnSpell(talentInfo->SpellID, true);
     }
-	
+    
     // set glyphs
     for (uint8 slot = 0; slot < MAX_GLYPH_SLOT_INDEX; ++slot)
     {
@@ -24442,16 +24442,16 @@ float Player::GetAverageItemLevel()
 
 void Player::SetInGuild(uint32 GuildId)
 { 
-	//printf("DEBUG: set in guild %u, %lX", GuildId, MAKE_NEW_GUID(GuildId, 0, HIGHGUID_GUILD));
-	m_guildId = GuildId;
-	if(GuildId != 0)
-	{
-		SetUInt64Value(OBJECT_FIELD_DATA, MAKE_NEW_GUID(GuildId, 0, HIGHGUID_GUILD));
-		SetUInt32Value(OBJECT_FIELD_TYPE, GetUInt32Value(OBJECT_FIELD_TYPE) | TYPEMASK_IN_GUILD);
-	}
-	else
-	{
-		SetUInt64Value(OBJECT_FIELD_DATA, 0);
-		SetUInt32Value(OBJECT_FIELD_TYPE, GetUInt32Value(OBJECT_FIELD_TYPE) & ~TYPEMASK_IN_GUILD);
-	}
+    //printf("DEBUG: set in guild %u, %lX", GuildId, MAKE_NEW_GUID(GuildId, 0, HIGHGUID_GUILD));
+    m_guildId = GuildId;
+    if(GuildId != 0)
+    {
+        SetUInt64Value(OBJECT_FIELD_DATA, MAKE_NEW_GUID(GuildId, 0, HIGHGUID_GUILD));
+        SetUInt32Value(OBJECT_FIELD_TYPE, GetUInt32Value(OBJECT_FIELD_TYPE) | TYPEMASK_IN_GUILD);
+    }
+    else
+    {
+        SetUInt64Value(OBJECT_FIELD_DATA, 0);
+        SetUInt32Value(OBJECT_FIELD_TYPE, GetUInt32Value(OBJECT_FIELD_TYPE) & ~TYPEMASK_IN_GUILD);
+    }
 }

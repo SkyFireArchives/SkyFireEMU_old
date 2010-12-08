@@ -220,7 +220,7 @@ bool WorldSession::Update(uint32 diff)
                         else if (_player->IsInWorld())
                         {
                             sScriptMgr.OnPacketReceive(m_Socket, WorldPacket(*packet));
-							(this->*opHandle.handler)(*packet);
+                            (this->*opHandle.handler)(*packet);
                             if (sLog.IsOutDebug() && packet->rpos() < packet->wpos())
                                 LogUnprocessedTail(packet);
                         }
@@ -820,7 +820,7 @@ void WorldSession::ReadAddonsInfo(WorldPacket &data)
     ByteBuffer addonInfo;
     addonInfo.resize(size);
 
-	printf("addon size : %u\n", size);
+    printf("addon size : %u\n", size);
     if (uncompress(const_cast<uint8*>(addonInfo.contents()), &uSize, const_cast<uint8*>(data.contents() + pos), data.size() - pos) == Z_OK)
     {
         uint32 addonsCount;

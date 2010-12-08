@@ -35,7 +35,7 @@ void MapManager::LoadTransports()
 
     uint32 count = 0;
 
-	//The client crash with transports. They are now not handled in SMSG_UPDATE_OBJECT. Temp hard fix.
+    //The client crash with transports. They are now not handled in SMSG_UPDATE_OBJECT. Temp hard fix.
     if (true || !result)
     {
         barGoLink bar(1);
@@ -668,16 +668,16 @@ void Transport::BuildStopMovePacket(Map const* targetMap)
 uint32 Transport::AddNPCPassenger(uint32 tguid, uint32 entry, float x, float y, float z, float o, uint32 anim)
 {
     Map* map = GetMap();
-	
+    
     CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(entry);
     if (!ci)
         return 0;
-	
-	Creature* pCreature = NULL;
-	if(ci->ScriptID)
-		pCreature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
-	if(pCreature == NULL)
-		pCreature = new Creature();
+    
+    Creature* pCreature = NULL;
+    if(ci->ScriptID)
+        pCreature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+    if(pCreature == NULL)
+        pCreature = new Creature();
 
     if (!pCreature->Create(sObjectMgr.GenerateLowGuid(HIGHGUID_UNIT), GetMap(), GetPhaseMask(), entry, 0, GetGOInfo()->faction, 0, 0, 0, 0))
     {

@@ -253,13 +253,13 @@ typedef std::vector<GuildItemPosCount> GuildItemPosCountVec;
 
 struct MemberSlot
 {
-	struct Profession
-	{
-		uint32 skillID;
-		uint32 title;  //compagnon, artisan, ...
-		uint32 level;
-	};
-	
+    struct Profession
+    {
+        uint32 skillID;
+        uint32 title;  //compagnon, artisan, ...
+        uint32 level;
+    };
+    
     uint64 LogoutTime;
     uint32 accountId;
     std::string Name;
@@ -273,8 +273,8 @@ struct MemberSlot
     uint32 BankRemMoney;
     uint32 BankResetTimeTab[GUILD_BANK_MAX_TABS];
     uint32 BankRemSlotsTab[GUILD_BANK_MAX_TABS];
-	uint32 achievementPoints;
-	Profession professions[2];
+    uint32 achievementPoints;
+    Profession professions[2];
 };
 
 struct RankInfo
@@ -364,7 +364,7 @@ class Guild
 
         void CreateRank(std::string name,uint32 rights);
         void DelRank(uint32 id);
-		void SwitchRank(uint32 oldRank, uint32 newRank);
+        void SwitchRank(uint32 oldRank, uint32 newRank);
         std::string GetRankName(uint32 rankId);
         uint32 GetRankRights(uint32 rankId);
         uint32 GetRanksSize() const { return m_Ranks.size(); }
@@ -440,7 +440,7 @@ class Guild
         void   LogBankEvent(SQLTransaction& trans, uint8 EventType, uint8 TabId, uint32 PlayerGuidLow, uint32 ItemOrMoney, uint16 ItemStackCount=0, uint8 DestTabId=0);
         bool   AddGBankItemToDB(uint32 GuildId, uint32 BankTab , uint32 BankTabSlot , uint32 GUIDLow, uint32 Entry, SQLTransaction& trans);
 
-		RankInfo & GetRankInfo(uint32 rankId) {return m_Ranks[rankId];}
+        RankInfo & GetRankInfo(uint32 rankId) {return m_Ranks[rankId];}
     protected:
         void AddRank(const std::string& name,uint32 rights,uint32 money);
 

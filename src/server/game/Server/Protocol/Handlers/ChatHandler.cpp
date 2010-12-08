@@ -70,60 +70,60 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
     uint32 type = 0;
     uint32 lang;
 
-	// Les types sont maintenant gerés par opcode, un opcode par type
-	// Changement en place depuis la 4.0.1 13164
-	switch(recv_data.GetOpcode())
-	{
-		case CMSG_MESSAGECHAT_SAY:
-			type = CHAT_MSG_SAY;
-			break;
-		case CMSG_MESSAGECHAT_YELL:
-			type = CHAT_MSG_YELL;
-			break;
-		case CMSG_MESSAGECHAT_CHANNEL:
-			type = CHAT_MSG_CHANNEL;
-			break;
-		case CMSG_MESSAGECHAT_WHISPER:
-			type = CHAT_MSG_WHISPER;
-			break;
-		case CMSG_MESSAGECHAT_GUILD:
-			type = CHAT_MSG_GUILD;
-			break;
-		case CMSG_MESSAGECHAT_OFFICER:
-			type = CHAT_MSG_OFFICER;
-			break;
-		case CMSG_MESSAGECHAT_AFK:
-			type = CHAT_MSG_AFK;
-			break;
-		case CMSG_MESSAGECHAT_DND:
-			type = CHAT_MSG_DND;
-			break;
-		case CMSG_MESSAGECHAT_EMOTE:
-			type = CHAT_MSG_EMOTE;
-			break;
-		case CMSG_MESSAGECHAT_PARTY:
-			type = CHAT_MSG_PARTY;
-			break;
-		case CMSG_MESSAGECHAT_PARTY_LEADER:
-			type = CHAT_MSG_PARTY_LEADER;
-			break;
-		case CMSG_MESSAGECHAT_RAID:
-			type = CHAT_MSG_RAID;
-			break;
-		case CMSG_MESSAGECHAT_RAID_LEADER:
-			type = CHAT_MSG_RAID_LEADER;
-			break;
-		case CMSG_MESSAGECHAT_BATTLEGROUND:
-			type = CHAT_MSG_BATTLEGROUND;
-			break;
-		case CMSG_MESSAGECHAT_RAID_WARNING:
-			type = CHAT_MSG_RAID_WARNING;
-			break;
-		default:
-			sLog.outDetail("HandleMessagechatOpcode : Opcode chat de type inconnu (%u)", recv_data.GetOpcode());
-			recv_data.hexlike();
-			return;
-	}
+    // Les types sont maintenant gerés par opcode, un opcode par type
+    // Changement en place depuis la 4.0.1 13164
+    switch(recv_data.GetOpcode())
+    {
+        case CMSG_MESSAGECHAT_SAY:
+            type = CHAT_MSG_SAY;
+            break;
+        case CMSG_MESSAGECHAT_YELL:
+            type = CHAT_MSG_YELL;
+            break;
+        case CMSG_MESSAGECHAT_CHANNEL:
+            type = CHAT_MSG_CHANNEL;
+            break;
+        case CMSG_MESSAGECHAT_WHISPER:
+            type = CHAT_MSG_WHISPER;
+            break;
+        case CMSG_MESSAGECHAT_GUILD:
+            type = CHAT_MSG_GUILD;
+            break;
+        case CMSG_MESSAGECHAT_OFFICER:
+            type = CHAT_MSG_OFFICER;
+            break;
+        case CMSG_MESSAGECHAT_AFK:
+            type = CHAT_MSG_AFK;
+            break;
+        case CMSG_MESSAGECHAT_DND:
+            type = CHAT_MSG_DND;
+            break;
+        case CMSG_MESSAGECHAT_EMOTE:
+            type = CHAT_MSG_EMOTE;
+            break;
+        case CMSG_MESSAGECHAT_PARTY:
+            type = CHAT_MSG_PARTY;
+            break;
+        case CMSG_MESSAGECHAT_PARTY_LEADER:
+            type = CHAT_MSG_PARTY_LEADER;
+            break;
+        case CMSG_MESSAGECHAT_RAID:
+            type = CHAT_MSG_RAID;
+            break;
+        case CMSG_MESSAGECHAT_RAID_LEADER:
+            type = CHAT_MSG_RAID_LEADER;
+            break;
+        case CMSG_MESSAGECHAT_BATTLEGROUND:
+            type = CHAT_MSG_BATTLEGROUND;
+            break;
+        case CMSG_MESSAGECHAT_RAID_WARNING:
+            type = CHAT_MSG_RAID_WARNING;
+            break;
+        default:
+            sLog.outDetail("HandleMessagechatOpcode : Opcode chat de type inconnu (%u)", recv_data.GetOpcode());
+            recv_data.hexlike();
+            return;
+    }
 
     recv_data >> lang;
 
@@ -265,7 +265,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
                 return;
 
             if (msg.empty())
-				return;
+                return;
 
             if (type == CHAT_MSG_SAY)
                 GetPlayer()->Say(msg, lang);
@@ -278,7 +278,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         case CHAT_MSG_WHISPER:
         {
             std::string to, msg;
-			recv_data >> msg;
+            recv_data >> msg;
             recv_data >> to;
 
             if (_player->getLevel() < sWorld.getIntConfig(CONFIG_CHAT_WHISPER_LEVEL_REQ))
@@ -558,7 +558,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         case CHAT_MSG_CHANNEL:
         {
             std::string channel, msg;
-			recv_data >> msg;
+            recv_data >> msg;
             recv_data >> channel;
 
             if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))

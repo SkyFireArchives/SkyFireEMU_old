@@ -6,8 +6,8 @@
 class DruidPlayer: public Player
 {
 public:
-	DruidPlayer(WorldSession * session): Player(session) {}
-	virtual uint8 getClass() const { return CLASS_DRUID; }
+    DruidPlayer(WorldSession * session): Player(session) {}
+    virtual uint8 getClass() const { return CLASS_DRUID; }
 };
 
 #endif

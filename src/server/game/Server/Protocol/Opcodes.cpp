@@ -32,20 +32,20 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES];
 
 static void DefineOpcode( int opcode, const char* name, SessionStatus status, void (WorldSession::*handler)(WorldPacket& recvPacket) )
 {
-	opcodeTable[opcode].name = name;
-	opcodeTable[opcode].status = status;
-	opcodeTable[opcode].handler = handler;
+    opcodeTable[opcode].name = name;
+    opcodeTable[opcode].status = status;
+    opcodeTable[opcode].handler = handler;
 }
 
 #define OPCODE( name, status, handler ) DefineOpcode( name, #name, status, handler )
 
 void InitOpcodeTable()
 {
-	for( int i = 0; i < NUM_MSG_TYPES; ++i )
-	{
-		DefineOpcode( i, "UNKNOWN", STATUS_NEVER, &WorldSession::Handle_NULL );
-	}
-	
+    for( int i = 0; i < NUM_MSG_TYPES; ++i )
+    {
+        DefineOpcode( i, "UNKNOWN", STATUS_NEVER, &WorldSession::Handle_NULL );
+    }
+    
     //OPCODE( MSG_NULL_ACTION,                              STATUS_NEVER,    &WorldSession::Handle_NULL                     ); //0x000
     //OPCODE( CMSG_BOOTME,                                  STATUS_NEVER,    &WorldSession::Handle_NULL                     ); //0x001
     //OPCODE( CMSG_DBLOOKUP,                                STATUS_NEVER,    &WorldSession::Handle_NULL                     ); //0x002
@@ -195,22 +195,22 @@ void InitOpcodeTable()
     OPCODE( SMSG_GUILD_EVENT,                             STATUS_NEVER,    &WorldSession::Handle_ServerSide               ); //0x092
     OPCODE( SMSG_GUILD_COMMAND_RESULT,                    STATUS_NEVER,    &WorldSession::Handle_ServerSide               ); //0x093
     OPCODE( UMSG_UPDATE_GUILD,                            STATUS_NEVER,    &WorldSession::Handle_NULL                     ); //0x094
-    OPCODE( CMSG_MESSAGECHAT_SAY,						  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_YELL,						  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_CHANNEL,				      STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_WHISPER,					  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095	
-	OPCODE( CMSG_MESSAGECHAT_GUILD,						  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_OFFICER,					  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_AFK,						  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_DND,						  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_EMOTE,						  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_PARTY,						  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_PARTY_LEADER,				  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_RAID,						  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_RAID_LEADER,				  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_BATTLEGROUND,				  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095	
-	OPCODE( CMSG_MESSAGECHAT_BATTLEGROUND_LEADER,		  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
-	OPCODE( CMSG_MESSAGECHAT_RAID_WARNING,			  	  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095	
+    OPCODE( CMSG_MESSAGECHAT_SAY,                          STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_YELL,                          STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_CHANNEL,                      STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_WHISPER,                      STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095    
+    OPCODE( CMSG_MESSAGECHAT_GUILD,                          STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_OFFICER,                      STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_AFK,                          STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_DND,                          STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_EMOTE,                          STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_PARTY,                          STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_PARTY_LEADER,                  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_RAID,                          STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_RAID_LEADER,                  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_BATTLEGROUND,                  STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095    
+    OPCODE( CMSG_MESSAGECHAT_BATTLEGROUND_LEADER,          STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095
+    OPCODE( CMSG_MESSAGECHAT_RAID_WARNING,                    STATUS_LOGGEDIN, &WorldSession::HandleMessagechatOpcode         ); //0x095    
     OPCODE( SMSG_MESSAGECHAT,                             STATUS_NEVER,    &WorldSession::Handle_ServerSide               ); //0x096
     OPCODE( CMSG_JOIN_CHANNEL,                            STATUS_LOGGEDIN, &WorldSession::HandleJoinChannel               ); //0x097
     OPCODE( CMSG_LEAVE_CHANNEL,                           STATUS_LOGGEDIN, &WorldSession::HandleLeaveChannel              ); //0x098
@@ -625,7 +625,7 @@ void InitOpcodeTable()
     OPCODE( CMSG_GUILD_RANK,                              STATUS_LOGGEDIN, &WorldSession::HandleGuildRankOpcode           ); //0x231
     OPCODE( CMSG_GUILD_ADD_RANK,                          STATUS_LOGGEDIN, &WorldSession::HandleGuildAddRankOpcode        ); //0x232
     OPCODE( CMSG_GUILD_DEL_RANK,                          STATUS_LOGGEDIN, &WorldSession::HandleGuildDelRankOpcode        ); //0x233
-	OPCODE( CMSG_GUILD_SWITCH_RANK,                       STATUS_LOGGEDIN, &WorldSession::HandleGuildSwitchRankOpcode     ); //0x000
+    OPCODE( CMSG_GUILD_SWITCH_RANK,                       STATUS_LOGGEDIN, &WorldSession::HandleGuildSwitchRankOpcode     ); //0x000
     OPCODE( CMSG_GUILD_SET_PUBLIC_NOTE,                   STATUS_LOGGEDIN, &WorldSession::HandleGuildSetPublicNoteOpcode  ); //0x234
     OPCODE( CMSG_GUILD_SET_OFFICER_NOTE,                  STATUS_LOGGEDIN, &WorldSession::HandleGuildSetOfficerNoteOpcode ); //0x235
     OPCODE( SMSG_LOGIN_VERIFY_WORLD,                      STATUS_NEVER,    &WorldSession::Handle_ServerSide               ); //0x236

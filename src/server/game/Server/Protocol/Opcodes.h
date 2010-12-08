@@ -557,7 +557,7 @@ enum Opcodes
     SMSG_GOSSIP_POI                                 = 0x1002, // (0x0BD9)(0x0224) //
     CMSG_CHAT_IGNORED                               = 0x0225, // NF()(0x0225) // 
     CMSG_GUILD_RANK                                 = 0xFFC7, // NF(0x4A81)(0x0231) // 
-	SMSG_GUILD_RANK                                 = 0xFFC7, // NF(0x4090)() //
+    SMSG_GUILD_RANK                                 = 0xFFC7, // NF(0x4090)() //
     CMSG_GUILD_ADD_RANK                             = 0x0232, // NF()(0x0232) // 
     CMSG_GUILD_DEL_RANK                             = 0xFFC6, // NF(0x4205)(0x0233) // 
     CMSG_GUILD_SWITCH_RANK                          = 0xFFC5, // NF(0x0A04)(0x0000) //si up, 0 si down) uint32(rank) uint64 playerGUID 

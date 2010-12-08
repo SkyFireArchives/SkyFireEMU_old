@@ -49,9 +49,9 @@ enum OBJECT_UPDATE_FLAGS
     UPDATEFLAG_VEHICLE      = 0x0080,
     UPDATEFLAG_POSITION     = 0x0100,
     UPDATEFLAG_ROTATION     = 0x0200,
-	UPDATEFLAG_UNK1         = 0x0400, //not found.
-	UPDATEFLAG_UNK2         = 0x0800, //added in 4.0.3
-	UPDATEFLAG_UNK3         = 0x1000, //added in 4.0.3
+    UPDATEFLAG_UNK1         = 0x0400, //not found.
+    UPDATEFLAG_UNK2         = 0x0800, //added in 4.0.3
+    UPDATEFLAG_UNK3         = 0x1000, //added in 4.0.3
 };
 
 class UpdateData

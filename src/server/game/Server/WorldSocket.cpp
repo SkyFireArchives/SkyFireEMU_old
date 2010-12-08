@@ -156,7 +156,7 @@ const std::string& WorldSocket::GetRemoteAddress (void) const
 }
 
 int WorldSocket::SendPacket (const WorldPacket& pct)
-{	
+{    
     ACE_GUARD_RETURN (LockType, Guard, m_OutBufferLock, -1);
 
     if (closing_)
@@ -165,15 +165,15 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
     // Dump outgoing packet.
     if (sWorldLog.LogWorld())
     {
-		std::string error = "";
-		if(pct.GetOpcode() > 0xFF00)
-			error = "NOT SEND\n";
+        std::string error = "";
+        if(pct.GetOpcode() > 0xFF00)
+            error = "NOT SEND\n";
         sWorldLog.outTimestampLog ("SERVER:\nSOCKET: %u\nLENGTH: %u\nOPCODE: %s (0x%.4X)\n%sDATA:\n",
                      (uint32) get_handle(),
                      pct.size(),
                      LookupOpcodeName (pct.GetOpcode()),
                      pct.GetOpcode(),
-					 error.c_str());
+                     error.c_str());
 
         uint32 p = 0;
         while (p < pct.size())
@@ -186,12 +186,12 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
         sWorldLog.outLog("\n");
     }
 
-	if(pct.GetOpcode() > 0xFF00)
-	{
-		sLog.outError("Packet %s (%X) not send.\n", LookupOpcodeName (pct.GetOpcode()), pct.GetOpcode());
-		return 0;
-	}
-	
+    if(pct.GetOpcode() > 0xFF00)
+    {
+        sLog.outError("Packet %s (%X) not send.\n", LookupOpcodeName (pct.GetOpcode()), pct.GetOpcode());
+        return 0;
+    }
+    
     // Create a copy of the original packet; this is to avoid issues if a hook modifies it.
     sScriptMgr.OnPacketSend(this, WorldPacket(pct));
 
@@ -274,17 +274,17 @@ int WorldSocket::open (void *a)
     // Send startup packet.
     WorldPacket packet (SMSG_AUTH_CHALLENGE, (9 * 4) + 1);
 
-	packet << uint32(0);
-	packet << uint32(0);
-	packet << uint32(m_Seed);
-	packet << uint32(0);
-	packet << uint8(1);
-	packet << uint32(0);
-	packet << uint32(0);
-	packet << uint32(0);
-	packet << uint32(0);
-	packet << uint32(0);
-	
+    packet << uint32(0);
+    packet << uint32(0);
+    packet << uint32(m_Seed);
+    packet << uint32(0);
+    packet << uint8(1);
+    packet << uint32(0);
+    packet << uint32(0);
+    packet << uint32(0);
+    packet << uint32(0);
+    packet << uint32(0);
+    
     if (SendPacket(packet) == -1)
         return -1;
 
@@ -780,13 +780,13 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     // NOTE: ATM the socket is singlethread, have this in mind ...
     uint8 digest[20];
     uint32 clientSeed, id, security, addonsize;
-	uint16 ClientBuild;
+    uint16 ClientBuild;
     //uint8 expansion = 0;
     LocaleConstant locale;
     std::string account;
     SHA1Hash sha1;
     BigNumber v, s, g, N, K;
-	WorldPacket packet;
+    WorldPacket packet;
 
     if (sWorld.IsClosed())
     {
@@ -799,43 +799,43 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     }
 
     // Read the content of the packet
-	
-	uint8 unk15;
-	uint64 unk4;
-	uint32 unk6;
-	uint32 unk8;
-	uint32 unk10;
-	uint32 unk12;
-	uint8 unk16;
-	
-	recvPacket >> unk15 >> digest[15];
-	recvPacket >> ClientBuild;
-	recvPacket >> digest[5] >> digest[19];
-	recvPacket >> unk4;
-	recvPacket >> digest[13] >> digest[10] >> digest[1];
-	recvPacket >> unk6;
-	recvPacket >> digest[12] >> digest[4] >> digest[18] >> digest[8];
-	recvPacket >> unk8;
-	recvPacket >> digest[11] >> digest[9] >> digest[2];
-	recvPacket >> unk10;
-	recvPacket >> digest[6] >> digest[16];
-	recvPacket >> unk12;
-	recvPacket >> clientSeed;
-	recvPacket >> unk16 >> digest[7] >> digest[0] >> digest[3] >> digest[17] >> digest[14];
-	recvPacket >> account;
-	recvPacket >> addonsize;
-	//Why does this hack exist? In a beta revision, addonInfo was between clientSeed and accountName. 
-	uint8 * tableauAddon = new uint8[addonsize];
-	WorldPacket packetAddon;
-	for(uint32 i = 0; i < addonsize; i++)
-	{
-		uint8 tampon = 0;
-		recvPacket >> tampon;
-		
-		tableauAddon[i] = tampon;
-		packetAddon << tampon;
-	}
-	delete tableauAddon;
+    
+    uint8 unk15;
+    uint64 unk4;
+    uint32 unk6;
+    uint32 unk8;
+    uint32 unk10;
+    uint32 unk12;
+    uint8 unk16;
+    
+    recvPacket >> unk15 >> digest[15];
+    recvPacket >> ClientBuild;
+    recvPacket >> digest[5] >> digest[19];
+    recvPacket >> unk4;
+    recvPacket >> digest[13] >> digest[10] >> digest[1];
+    recvPacket >> unk6;
+    recvPacket >> digest[12] >> digest[4] >> digest[18] >> digest[8];
+    recvPacket >> unk8;
+    recvPacket >> digest[11] >> digest[9] >> digest[2];
+    recvPacket >> unk10;
+    recvPacket >> digest[6] >> digest[16];
+    recvPacket >> unk12;
+    recvPacket >> clientSeed;
+    recvPacket >> unk16 >> digest[7] >> digest[0] >> digest[3] >> digest[17] >> digest[14];
+    recvPacket >> account;
+    recvPacket >> addonsize;
+    //Why does this hack exist? In a beta revision, addonInfo was between clientSeed and accountName. 
+    uint8 * tableauAddon = new uint8[addonsize];
+    WorldPacket packetAddon;
+    for(uint32 i = 0; i < addonsize; i++)
+    {
+        uint8 tampon = 0;
+        recvPacket >> tampon;
+        
+        tableauAddon[i] = tampon;
+        packetAddon << tampon;
+    }
+    delete tableauAddon;
 
     // Get the account information from the realmd database
     std::string safe_account = account; // Duplicate, else will screw the SHA hash verification below
@@ -985,7 +985,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     sha.UpdateData ((uint8 *) & seed, 4);
     sha.UpdateBigNumbers (&K, NULL);
     sha.Finalize();
-	
+    
     if (memcmp (sha.GetDigest(), digest, 20))
     {
         packet.Initialize (SMSG_AUTH_RESPONSE, 1);
@@ -1020,9 +1020,9 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 
     m_Session->LoadGlobalAccountData();
     m_Session->LoadTutorialsData();
-	packetAddon.rpos(0);
-	m_Session->ReadAddonsInfo(packetAddon);
-	
+    packetAddon.rpos(0);
+    m_Session->ReadAddonsInfo(packetAddon);
+    
     // Sleep this Network thread for
     uint32 sleepTime = sWorld.getIntConfig(CONFIG_SESSION_ADD_DELAY);
     ACE_OS::sleep (ACE_Time_Value (0, sleepTime));

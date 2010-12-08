@@ -202,7 +202,7 @@ enum ItemFlagsExtra
     ITEM_FLAGS_EXTRA_ALLIANCE_ONLY           = 0x00000002,
     ITEM_FLAGS_EXTRA_EXT_COST_REQUIRES_GOLD  = 0x00000004, // when item uses extended cost, gold is also required
     ITEM_FLAGS_EXTRA_NEED_ROLL_DISABLED      = 0x00000100,
-	ITEM_FLAGS_EXTRA_CASTER_WEAPON           = 0x00000200, // uses caster specific dbc file for DPS calculations
+    ITEM_FLAGS_EXTRA_CASTER_WEAPON           = 0x00000200, // uses caster specific dbc file for DPS calculations
 };
 
 enum BAG_FAMILY_MASK
@@ -730,9 +730,9 @@ struct ItemPrototype
         return itemLevel;
     }
 
-	uint32 GetArmor() const;
-	float GetMinDamage() const { return floor(getDPS() * float(Delay) / 1000.0f * 0.7f + 0.5f); }
-	float GetMaxDamage() const { return floor(getDPS() * float(Delay) / 1000.0f * 1.3f + 0.5f); }
+    uint32 GetArmor() const;
+    float GetMinDamage() const { return floor(getDPS() * float(Delay) / 1000.0f * 0.7f + 0.5f); }
+    float GetMaxDamage() const { return floor(getDPS() * float(Delay) / 1000.0f * 1.3f + 0.5f); }
 
     bool IsPotion() const { return Class == ITEM_CLASS_CONSUMABLE && SubClass == ITEM_SUBCLASS_POTION; }
     bool IsWeaponVellum() const { return Class == ITEM_CLASS_TRADE_GOODS && SubClass == ITEM_SUBCLASS_WEAPON_ENCHANTMENT; }

@@ -6,8 +6,8 @@
 class ShamanPlayer: public Player
 {
 public:
-	ShamanPlayer(WorldSession * session): Player(session) {}
-	virtual uint8 getClass() const { return CLASS_SHAMAN; }
+    ShamanPlayer(WorldSession * session): Player(session) {}
+    virtual uint8 getClass() const { return CLASS_SHAMAN; }
 };
 
 #endif

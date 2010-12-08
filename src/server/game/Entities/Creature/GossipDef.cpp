@@ -429,7 +429,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
     std::string Details    = pQuest->GetDetails();
     std::string Objectives = pQuest->GetObjectives();
     std::string EndText    = pQuest->GetEndText();
-	std::string unk = "";
+    std::string unk = "";
 
     int loc_idx = pSession->GetSessionDbLocaleIndex();
     if (loc_idx >= 0)
@@ -450,18 +450,18 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
     data << Title;
     data << Details;
     data << Objectives;
-	data << unk;											// 4.0.1, unknow
-	data << unk;											// 4.0.1, unknow
-	data << unk;											// 4.0.1, unknow
-	data << unk;											// 4.0.1, unknow
-	data << uint32(0);                                      // 4.0.1, unknow
-	data << uint32(0);										// 4.0.1, unknow
+    data << unk;                                            // 4.0.1, unknow
+    data << unk;                                            // 4.0.1, unknow
+    data << unk;                                            // 4.0.1, unknow
+    data << unk;                                            // 4.0.1, unknow
+    data << uint32(0);                                      // 4.0.1, unknow
+    data << uint32(0);                                        // 4.0.1, unknow
     data << uint8(ActivateAccept ? 1 : 0);                  // auto finish
     data << uint32(pQuest->GetFlags());                     // 3.3.3 questFlags
     data << uint32(pQuest->GetSuggestedPlayers());
-	data << uint8(0);                                       // 4.0.1, unknow
+    data << uint8(0);                                       // 4.0.1, unknow
     data << uint8(0);                                       // IsFinished? value is sent back to server in quest accept packet
-	data << uint32(0);										// 4.0.1, unknow
+    data << uint32(0);                                        // 4.0.1, unknow
 
    /* if (pQuest->HasFlag(QUEST_FLAGS_HIDDEN_REWARDS))
     {
@@ -477,11 +477,11 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
         data << uint32(pQuest->GetRewChoiceItemsCount());
         for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
             data << uint32(pQuest->RewChoiceItemId[i]);
-		for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
+        for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
             data << uint32(pQuest->RewChoiceItemCount[i]);
-		for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
-		{
-			IProto = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
+        for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
+        {
+            IProto = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
             if (IProto)
                 data << uint32(IProto->DisplayInfoID);
             else
@@ -490,12 +490,12 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
 
         data << uint32(pQuest->GetRewItemsCount());
 
-		for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
-			data << uint32(pQuest->RewItemId[i]);
-		for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
+        for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
+            data << uint32(pQuest->RewItemId[i]);
+        for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
             data << uint32(pQuest->RewItemCount[i]);
         for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
-		{
+        {
             IProto = sObjectMgr.GetItemPrototype(pQuest->RewItemId[i]);
 
             if (IProto)
@@ -504,8 +504,8 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
                 data << uint32(0);
         }
 
-		data << uint32(0); // unknow 4.0.1
-		data << uint32(0); // unknow 4.0.1
+        data << uint32(0); // unknow 4.0.1
+        data << uint32(0); // unknow 4.0.1
         data << uint32(pQuest->GetRewOrReqMoney());
         data << uint32(pQuest->XPValue(pSession->GetPlayer())*sWorld.getRate(RATE_XP_QUEST));
   //  }
@@ -520,9 +520,9 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
     data << uint32(pQuest->GetRewArenaPoints());            // reward arena points
     data << uint32(0);                                      // unk*/
 
-	data << uint32(0); // unknow 4.0.1
-	data << uint32(0); // unknow 4.0.1
-	data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
 
     for (int i = 0; i < QUEST_REPUTATIONS_COUNT; ++i)
         data << uint32(pQuest->RewRepFaction[i]);
@@ -533,17 +533,17 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
     for (int i = 0; i < QUEST_REPUTATIONS_COUNT; ++i)
         data << int32(pQuest->RewRepValue[i]);
 
-	data << uint32(0); // unknow 4.0.1
-	data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
 
-	for(int i = 0; i < 4; i++)
-		data << uint32(0);
+    for(int i = 0; i < 4; i++)
+        data << uint32(0);
 
-	for(int i = 0; i < 4; i++)
-		data << uint32(0);
+    for(int i = 0; i < 4; i++)
+        data << uint32(0);
 
-	data << uint32(0);
-	data << uint32(0);
+    data << uint32(0);
+    data << uint32(0);
 
     data << uint32(QUEST_EMOTE_COUNT);
     for (uint32 i=0; i < QUEST_EMOTE_COUNT; ++i)
@@ -618,16 +618,16 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
     data << float(0);                                       // new reward honor (multipled by ~62 at client side)
     data << uint32(pQuest->GetSrcItemId());                 // source item id
     data << uint32(pQuest->GetFlags() & 0xFFFF);            // quest flags
-	data << uint32(0);                                      // new 4.0.1
+    data << uint32(0);                                      // new 4.0.1
     data << uint32(pQuest->GetCharTitleId());               // CharTitleId, new 2.4.0, player gets this title (id from CharTitles)
     data << uint32(pQuest->GetPlayersSlain());              // players slain
     data << uint32(pQuest->GetBonusTalents());              // bonus talents
     data << uint32(pQuest->GetRewArenaPoints());            // bonus arena points
-	data << uint32(0);                                      // new 4.0.1
-	data << uint32(0);                                      // new 4.0.1
+    data << uint32(0);                                      // new 4.0.1
+    data << uint32(0);                                      // new 4.0.1
     data << uint32(0);                                      // review rep show mask
-	data << uint32(0);                                      // new 4.0.1
-	data << uint32(0);                                      // new 4.0.1
+    data << uint32(0);                                      // new 4.0.1
+    data << uint32(0);                                      // new 4.0.1
 
     int iI;
 
@@ -697,26 +697,26 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
     for (iI = 0; iI < QUEST_OBJECTIVES_COUNT; ++iI)
         data << ObjectiveText[iI];
 
-	for(iI = 0; iI < 4; ++iI)                               // 4.0.0 currency reward id and count
-	{
-		data << uint32(0);
-		data << uint32(0);
-	}
+    for(iI = 0; iI < 4; ++iI)                               // 4.0.0 currency reward id and count
+    {
+        data << uint32(0);
+        data << uint32(0);
+    }
 
-	for(iI = 0; iI < 4; ++iI)                               // 4.0.0 currency required id and count
-	{
-		data << uint32(0);
-		data << uint32(0);
-	}
+    for(iI = 0; iI < 4; ++iI)                               // 4.0.0 currency required id and count
+    {
+        data << uint32(0);
+        data << uint32(0);
+    }
 
-	data << "";												// 4.0.1 unk quete string
-	data << "";												// 4.0.1 unk quete string
-	data << "";												// 4.0.1 unk quete string
-	data << "";												// 4.0.1 unk quete string
+    data << "";                                                // 4.0.1 unk quete string
+    data << "";                                                // 4.0.1 unk quete string
+    data << "";                                                // 4.0.1 unk quete string
+    data << "";                                                // 4.0.1 unk quete string
 
-	data << uint32(0);										// 4.0.1 unk
-	data << uint32(0);										// 4.0.1 unk
-	
+    data << uint32(0);                                        // 4.0.1 unk
+    data << uint32(0);                                        // 4.0.1 unk
+    
     pSession->SendPacket(&data);
     sLog.outDebug("WORLD: Sent SMSG_QUEST_QUERY_RESPONSE questid=%u", pQuest->GetQuestId());
 }
@@ -725,7 +725,7 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
 {
     std::string Title = pQuest->GetTitle();
     std::string OfferRewardText = pQuest->GetOfferRewardText();
-	std::string unk_401 = "";
+    std::string unk_401 = "";
 
     int loc_idx = pSession->GetSessionDbLocaleIndex();
     if (loc_idx >= 0)
@@ -744,13 +744,13 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
     data << Title;
     data << OfferRewardText;
 
-	data << unk_401;                                        // unk string, 4.0.1
-	data << unk_401;                                        // unk string, 4.0.1
-	data << unk_401;                                        // unk string, 4.0.1
-	data << unk_401;                                        // unk string, 4.0.1
+    data << unk_401;                                        // unk string, 4.0.1
+    data << unk_401;                                        // unk string, 4.0.1
+    data << unk_401;                                        // unk string, 4.0.1
+    data << unk_401;                                        // unk string, 4.0.1
 
-	data << uint32(0);                                      // unk uint32, 4.0.1
-	data << uint32(0);                                      // unk uint32, 4.0.1
+    data << uint32(0);                                      // unk uint32, 4.0.1
+    data << uint32(0);                                      // unk uint32, 4.0.1
 
     data << uint8(EnableNext ? 1 : 0);                      // Auto Finish
     data << uint32(pQuest->GetFlags());                     // 3.3.3 questFlags
@@ -828,11 +828,11 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
         data << uint32(pQuest->GetRewChoiceItemsCount());
         for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
             data << uint32(pQuest->RewChoiceItemId[i]);
-		for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
+        for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
             data << uint32(pQuest->RewChoiceItemCount[i]);
-		for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
-		{
-			IProto = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
+        for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
+        {
+            IProto = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
             if (IProto)
                 data << uint32(IProto->DisplayInfoID);
             else
@@ -841,12 +841,12 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
 
         data << uint32(pQuest->GetRewItemsCount());
 
-		for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
-			data << uint32(pQuest->RewItemId[i]);
-		for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
+        for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
+            data << uint32(pQuest->RewItemId[i]);
+        for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
             data << uint32(pQuest->RewItemCount[i]);
         for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
-		{
+        {
             IProto = sObjectMgr.GetItemPrototype(pQuest->RewItemId[i]);
 
             if (IProto)
@@ -855,8 +855,8 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
                 data << uint32(0);
         }
 
-		data << uint32(0); // unknow 4.0.1
-		data << uint32(0); // unknow 4.0.1
+        data << uint32(0); // unknow 4.0.1
+        data << uint32(0); // unknow 4.0.1
         data << uint32(pQuest->GetRewOrReqMoney());
         data << uint32(pQuest->XPValue(pSession->GetPlayer())*sWorld.getRate(RATE_XP_QUEST));
   //  }
@@ -871,9 +871,9 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
     data << uint32(pQuest->GetRewArenaPoints());            // reward arena points
     data << uint32(0);                                      // unk*/
 
-	data << uint32(0); // unknow 4.0.1
-	data << uint32(0); // unknow 4.0.1
-	data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
 
     for (int i = 0; i < QUEST_REPUTATIONS_COUNT; ++i)
         data << uint32(pQuest->RewRepFaction[i]);
@@ -884,17 +884,17 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
     for (int i = 0; i < QUEST_REPUTATIONS_COUNT; ++i)
         data << int32(pQuest->RewRepValue[i]);
 
-	data << uint32(0); // unknow 4.0.1
-	data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
 
-	for(int i = 0; i < 4; i++)
-		data << uint32(0);
+    for(int i = 0; i < 4; i++)
+        data << uint32(0);
 
-	for(int i = 0; i < 4; i++)
-		data << uint32(0);
+    for(int i = 0; i < 4; i++)
+        data << uint32(0);
 
-	data << uint32(0);
-	data << uint32(0);
+    data << uint32(0);
+    data << uint32(0);
 
     pSession->SendPacket(&data);
     sLog.outDebug("WORLD: Sent SMSG_QUESTGIVER_OFFER_REWARD NPCGuid=%u, questid=%u", GUID_LOPART(npcGUID), pQuest->GetQuestId());
@@ -967,14 +967,14 @@ void PlayerMenu::SendQuestGiverRequestItems(Quest const *pQuest, uint64 npcGUID,
             data << uint32(0);
     }
 
-	// Added in 4.0.1
-	uint32 counter = 0;
-	data << counter;
-	for(uint32 i = 0; i < counter; i++)
-	{
-		data << uint32(0);
-		data << uint32(0);
-	}
+    // Added in 4.0.1
+    uint32 counter = 0;
+    data << counter;
+    for(uint32 i = 0; i < counter; i++)
+    {
+        data << uint32(0);
+        data << uint32(0);
+    }
 
     if (!Completable)
         data << uint32(0x00);
@@ -984,7 +984,7 @@ void PlayerMenu::SendQuestGiverRequestItems(Quest const *pQuest, uint64 npcGUID,
     data << uint32(0x04);
     data << uint32(0x08);
     data << uint32(0x10);
-	data << uint32(0x40); // added in 4.0.1
+    data << uint32(0x40); // added in 4.0.1
 
     pSession->SendPacket(&data);
     sLog.outDebug("WORLD: Sent SMSG_QUESTGIVER_REQUEST_ITEMS NPCGuid=%u, questid=%u", GUID_LOPART(npcGUID), pQuest->GetQuestId());

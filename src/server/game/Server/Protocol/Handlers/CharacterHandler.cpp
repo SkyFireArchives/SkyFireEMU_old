@@ -168,10 +168,10 @@ bool LoginQueryHolder::Initialize()
     stmt->setUInt32(0, lowGuid);
     res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADGLYPHS, stmt);
 
-	stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PLAYER_TALENTBRANCHSPECS);
+    stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PLAYER_TALENTBRANCHSPECS);
     stmt->setUInt32(0, lowGuid);
     res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS, stmt);
-			  
+              
     stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PLAYER_TALENTS);
     stmt->setUInt32(0, lowGuid);
     res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADTALENTS, stmt);
@@ -542,46 +542,46 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
     }
 
     Player* pNewChar = NULL;
-	switch(class_)
-	{
-		case CLASS_WARRIOR:
-			pNewChar = new WarriorPlayer(this);
-			break;
-		case CLASS_PALADIN:
-			pNewChar = new PaladinPlayer(this);
-			break;
-		case CLASS_HUNTER:
-			pNewChar = new HunterPlayer(this);
-			break;
-		case CLASS_ROGUE:
-			pNewChar = new RoguePlayer(this);
-			break;
-		case CLASS_PRIEST:
-			pNewChar = new PriestPlayer(this);
-			break;
-		case CLASS_DEATH_KNIGHT:
-			pNewChar = new DKPlayer(this);
-			break;
-		case CLASS_SHAMAN:
-			pNewChar = new ShamanPlayer(this);
-			break;
-		case CLASS_MAGE:
-			pNewChar = new MagePlayer(this);
-			break;
-		case CLASS_WARLOCK:
-			pNewChar = new WarlockPlayer(this);
-			break;
-		case CLASS_DRUID:
-			pNewChar = new DruidPlayer(this);
-			break;
-		default:
-			printf("\nClass %u doesn't exist.\n", class_);
-			ASSERT(false);
-			break;
-	}
-	
-	ASSERT(pNewChar);
-	
+    switch(class_)
+    {
+        case CLASS_WARRIOR:
+            pNewChar = new WarriorPlayer(this);
+            break;
+        case CLASS_PALADIN:
+            pNewChar = new PaladinPlayer(this);
+            break;
+        case CLASS_HUNTER:
+            pNewChar = new HunterPlayer(this);
+            break;
+        case CLASS_ROGUE:
+            pNewChar = new RoguePlayer(this);
+            break;
+        case CLASS_PRIEST:
+            pNewChar = new PriestPlayer(this);
+            break;
+        case CLASS_DEATH_KNIGHT:
+            pNewChar = new DKPlayer(this);
+            break;
+        case CLASS_SHAMAN:
+            pNewChar = new ShamanPlayer(this);
+            break;
+        case CLASS_MAGE:
+            pNewChar = new MagePlayer(this);
+            break;
+        case CLASS_WARLOCK:
+            pNewChar = new WarlockPlayer(this);
+            break;
+        case CLASS_DRUID:
+            pNewChar = new DruidPlayer(this);
+            break;
+        default:
+            printf("\nClass %u doesn't exist.\n", class_);
+            ASSERT(false);
+            break;
+    }
+    
+    ASSERT(pNewChar);
+    
     if (!pNewChar->Create(sObjectMgr.GenerateLowGuid(HIGHGUID_PLAYER), name, race_, class_, gender, skin, face, hairStyle, hairColor, facialHair, outfitId))
     {
         // Player not create (race/class problem?)
@@ -710,7 +710,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
 {
     uint64 playerGuid = holder->GetGuid();
 
-	// "GetAccountId() == db stored account id" checked in LoadFromDB (prevent login not own character using cheating tools)
+    // "GetAccountId() == db stored account id" checked in LoadFromDB (prevent login not own character using cheating tools)
     Player* pCurrChar = Player::LoadFromDB(GUID_LOPART(playerGuid), holder, this);
 
     if (!pCurrChar)
@@ -722,9 +722,9 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
         return;
     }
 
-	// for send server info and strings (config)
+    // for send server info and strings (config)
     ChatHandler chH = ChatHandler(pCurrChar);
-	
+    
     pCurrChar->GetMotionMaster()->Initialize();
 
     SetPlayer(pCurrChar);
@@ -807,21 +807,21 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
             data << uint8(GE_MOTD);
             data << uint8(2);
             data << guild->GetMOTD();
-			data << uint8(0);
+            data << uint8(0);
             SendPacket(&data);
             sLog.outStaticDebug("WORLD: Sent guild-motd (SMSG_GUILD_EVENT)");
 
             guild->DisplayGuildBankTabsInfo(this);
 
             guild->BroadcastEvent(GE_SIGNED_ON, pCurrChar->GetGUID(), 1, pCurrChar->GetName(), "", "");
-			
-			WorldPacket data2(SMSG_GUILD_EVENT, 1+1+std::string(pCurrChar->GetName()).size()+8);
-			data2 << uint8(GE_SIGNED_ON);
-			data2 << uint8(1);
-			data2 << pCurrChar->GetName();
-			data2 << uint64(pCurrChar->GetGUID());
-			SendPacket(&data2);
-		}
+            
+            WorldPacket data2(SMSG_GUILD_EVENT, 1+1+std::string(pCurrChar->GetName()).size()+8);
+            data2 << uint8(GE_SIGNED_ON);
+            data2 << uint8(1);
+            data2 << pCurrChar->GetName();
+            data2 << uint64(pCurrChar->GetGUID());
+            SendPacket(&data2);
+        }
         else
         {
             // remove wrong guild data

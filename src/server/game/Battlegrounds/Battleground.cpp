@@ -1519,18 +1519,18 @@ Creature* Battleground::AddCreature(uint32 entry, uint32 type, uint32 teamval, f
     if (!map)
         return NULL;
 
-	CreatureInfo const *cinfo = sObjectMgr.GetCreatureTemplate(entry);
+    CreatureInfo const *cinfo = sObjectMgr.GetCreatureTemplate(entry);
     if (!cinfo)
     {
         sLog.outErrorDb("Battleground::AddCreature: entry %u does not exist.", entry);
         return NULL;
     }
-	
+    
     Creature* pCreature = NULL;
-	if(cinfo->ScriptID)
-		pCreature = sScriptMgr.GetCreatureScriptedClass(cinfo->ScriptID);
-	if(pCreature == NULL)
-		pCreature = new Creature();
+    if(cinfo->ScriptID)
+        pCreature = sScriptMgr.GetCreatureScriptedClass(cinfo->ScriptID);
+    if(pCreature == NULL)
+        pCreature = new Creature();
 
     if (!pCreature->Create(sObjectMgr.GenerateLowGuid(HIGHGUID_UNIT), map, PHASEMASK_NORMAL, entry, 0, teamval, x, y, z, o))
     {
@@ -1540,7 +1540,7 @@ Creature* Battleground::AddCreature(uint32 entry, uint32 type, uint32 teamval, f
     }
 
     pCreature->SetHomePosition(x, y, z, o);
-	
+    
     //force using DB speeds
     pCreature->SetSpeed(MOVE_WALK,  cinfo->speed_walk);
     pCreature->SetSpeed(MOVE_RUN,   cinfo->speed_run);

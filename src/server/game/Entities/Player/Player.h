@@ -139,9 +139,9 @@ typedef std::map<uint32, SpellCooldown> SpellCooldowns;
 
 enum TrainerSpellState
 {
-	TRAINER_SPELL_CAN_LEARN     = 01,
-	TRAINER_SPELL_ALREADY_LEARN = 03,
-	TRAINER_SPELL_CANT_LEARN    = 10  // TODO : trouver la bonne valeur
+    TRAINER_SPELL_CAN_LEARN     = 01,
+    TRAINER_SPELL_ALREADY_LEARN = 03,
+    TRAINER_SPELL_CANT_LEARN    = 10  // TODO : trouver la bonne valeur
 };
 
 enum ActionButtonUpdateState
@@ -791,7 +791,7 @@ enum PlayerLoginQueryIndex
     PLAYER_LOGIN_QUERY_LOADRANDOMBG             = 27,
     PLAYER_LOGIN_QUERY_LOADARENASTATS           = 28,
     PLAYER_LOGIN_QUERY_LOADBANNED               = 29,
-	PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS    = 30,
+    PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS    = 30,
     MAX_PLAYER_LOGIN_QUERY                      = 31
 };
 
@@ -1027,8 +1027,8 @@ class Player : public Unit, public GridObject<Player>
 
         static bool BuildEnumData(QueryResult result,  WorldPacket * p_data);
 
-		virtual uint8 getClass() const = 0;
-	
+        virtual uint8 getClass() const = 0;
+    
         void SetInWater(bool apply);
 
         bool IsInWater() const { return m_isInWater; }
@@ -1419,8 +1419,8 @@ class Player : public Unit, public GridObject<Player>
         /***                   LOAD SYSTEM                     ***/
         /*********************************************************/
 
-		static Player* LoadFromDB(uint32 guid, SQLQueryHolder * holder, WorldSession * session);
-		bool _LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResult & result);
+        static Player* LoadFromDB(uint32 guid, SQLQueryHolder * holder, WorldSession * session);
+        bool _LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResult & result);
         bool isBeingLoaded() const { return GetSession()->PlayerLoading();}
 
         void Initialize(uint32 guid);
@@ -1563,7 +1563,7 @@ class Player : public Unit, public GridObject<Player>
         uint32 GetReputation(uint32 factionentry);
         std::string GetGuildName();
         uint32 GetFreeTalentPoints() const { return m_freeTalentPoints; }
-		void SetFreeTalentPoints(uint32 points) { m_freeTalentPoints = points; }
+        void SetFreeTalentPoints(uint32 points) { m_freeTalentPoints = points; }
         bool resetTalents(bool no_cost = false);
         uint32 resetTalentsCost() const;
         void InitTalentForLevel();
@@ -1576,9 +1576,9 @@ class Player : public Unit, public GridObject<Player>
         bool AddTalent(uint32 spell, uint8 spec, bool learning);
         bool HasTalent(uint32 spell_id, uint8 spec) const;
 
-		void SetTalentBranchSpec(uint32 branchSpec, uint8 spec) { m_branchSpec[spec] = branchSpec; }
-		uint32 GetTalentBranchSpec(uint8 spec) const { return m_branchSpec[spec]; }
-	
+        void SetTalentBranchSpec(uint32 branchSpec, uint8 spec) { m_branchSpec[spec] = branchSpec; }
+        uint32 GetTalentBranchSpec(uint8 spec) const { return m_branchSpec[spec]; }
+    
         uint32 CalculateTalentsPoints() const;
 
         // Dual Spec
@@ -1722,7 +1722,7 @@ class Player : public Unit, public GridObject<Player>
         void RemoveFromGroup() { RemoveFromGroup(GetGroup(),GetGUID()); }
         void SendUpdateToOutOfRangeGroupMembers();
 
-		void SetInGuild(uint32 GuildId);
+        void SetInGuild(uint32 GuildId);
         void SetRank(uint32 rankId){ SetUInt32Value(PLAYER_GUILDRANK, rankId); }
         void SetGuildIdInvited(uint32 GuildId) { m_GuildIdInvited = GuildId; }
         uint32 GetGuildId() { return m_guildId;  }
@@ -2281,7 +2281,7 @@ class Player : public Unit, public GridObject<Player>
 
         void SendCinematicStart(uint32 CinematicSequenceId);
         void SendMovieStart(uint32 MovieId);
-	
+    
         /*********************************************************/
         /***                 INSTANCE SYSTEM                   ***/
         /*********************************************************/
@@ -2449,7 +2449,7 @@ class Player : public Unit, public GridObject<Player>
         void _LoadBGData(PreparedQueryResult result);
         void _LoadGlyphs(PreparedQueryResult result);
         void _LoadTalents(PreparedQueryResult result);
-		void _LoadTalentBranchSpecs(PreparedQueryResult result);
+        void _LoadTalentBranchSpecs(PreparedQueryResult result);
 
         /*********************************************************/
         /***                   SAVE SYSTEM                     ***/
@@ -2468,7 +2468,7 @@ class Player : public Unit, public GridObject<Player>
         void _SaveBGData(SQLTransaction& trans);
         void _SaveGlyphs(SQLTransaction& trans);
         void _SaveTalents(SQLTransaction& trans);
-		void _SaveTalentBranchSpecs(SQLTransaction& trans);
+        void _SaveTalentBranchSpecs(SQLTransaction& trans);
         void _SaveStats(SQLTransaction& trans);
 
         void _SetCreateBits(UpdateMask *updateMask, Player *target) const;
@@ -2487,9 +2487,9 @@ class Player : public Unit, public GridObject<Player>
         /***                  HONOR SYSTEM                     ***/
         /*********************************************************/
         time_t m_lastHonorUpdateTime;
-		uint32 m_honorPoints;
-		uint32 m_arenaPoints;
-		
+        uint32 m_honorPoints;
+        uint32 m_arenaPoints;
+        
         void outDebugValues() const;
         uint64 m_lootGuid;
 
@@ -2529,8 +2529,8 @@ class Player : public Unit, public GridObject<Player>
 
         uint8 m_activeSpec;
         uint8 m_specsCount;
-		uint32 m_branchSpec[MAX_TALENT_SPECS];
-		uint32 m_freeTalentPoints;
+        uint32 m_branchSpec[MAX_TALENT_SPECS];
+        uint32 m_freeTalentPoints;
 
         uint32 m_Glyphs[MAX_TALENT_SPECS][MAX_GLYPH_SLOT_INDEX];
 

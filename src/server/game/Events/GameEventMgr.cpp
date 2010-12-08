@@ -1279,15 +1279,15 @@ void GameEventMgr::GameEventSpawn(int16 event_id)
             if (!map->Instanceable() && map->IsLoaded(data->posX, data->posY))
             {
                 CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(data->id);
-				if (!ci)
-					continue;
-				
-				Creature* pCreature = NULL;
-				if(ci->ScriptID)
-					pCreature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
-				if(pCreature == NULL)
-					pCreature = new Creature();
-				
+                if (!ci)
+                    continue;
+                
+                Creature* pCreature = NULL;
+                if(ci->ScriptID)
+                    pCreature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+                if(pCreature == NULL)
+                    pCreature = new Creature();
+                
                 //sLog.outDebug("Spawning creature %u",*itr);
                 if (!pCreature->LoadFromDB(*itr, map))
                     delete pCreature;

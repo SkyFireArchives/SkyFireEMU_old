@@ -1528,15 +1528,15 @@ bool ObjectMgr::MoveCreData(uint32 guid, uint32 mapId, Position pos)
         if (!map->Instanceable() && map->IsLoaded(data.posX, data.posY))
         {
             CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(data.id);
-			if (!ci)
-				return 0;
-			
-			Creature* creature = NULL;
-			if(ci->ScriptID)
-				creature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
-			if(creature == NULL)
-				creature = new Creature();
-			
+            if (!ci)
+                return 0;
+            
+            Creature* creature = NULL;
+            if(ci->ScriptID)
+                creature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+            if(creature == NULL)
+                creature = new Creature();
+            
             if (!creature->LoadFromDB(guid, map))
             {
                 sLog.outError("AddCreature: cannot add creature entry %u to map", guid);
@@ -1588,15 +1588,15 @@ uint32 ObjectMgr::AddCreData(uint32 entry, uint32 /*team*/, uint32 mapId, float 
         if (!map->Instanceable() && !map->IsRemovalGrid(x, y))
         {
             CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(entry);
-			if (!ci)
-				return 0;
-			
-			Creature* creature = NULL;
-			if(ci->ScriptID)
-				creature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
-			if(creature == NULL)
-				creature = new Creature();
-			
+            if (!ci)
+                return 0;
+            
+            Creature* creature = NULL;
+            if(ci->ScriptID)
+                creature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+            if(creature == NULL)
+                creature = new Creature();
+            
             if (!creature->LoadFromDB(guid, map))
             {
                 sLog.outError("AddCreature: cannot add creature entry %u to map", entry);
@@ -3289,9 +3289,9 @@ void ObjectMgr::LoadPlayerInfo()
             if (sWorld.getIntConfig(CONFIG_EXPANSION) < 2 && class_ == CLASS_DEATH_KNIGHT)
                 continue;
 
-			if (sWorld.getIntConfig(CONFIG_EXPANSION) < 3 && (race == RACE_GOBLIN || race == RACE_WORGEN))
-				continue;
-			
+            if (sWorld.getIntConfig(CONFIG_EXPANSION) < 3 && (race == RACE_GOBLIN || race == RACE_WORGEN))
+                continue;
+            
             // fatal error if no level 1 data
             if (!pInfo->levelInfo || pInfo->levelInfo[0].stats[0] == 0)
             {
@@ -3513,11 +3513,11 @@ void ObjectMgr::LoadGuilds()
         "BankResetTimeTab3,BankRemSlotsTab3,BankResetTimeTab4,BankRemSlotsTab4,BankResetTimeTab5,BankRemSlotsTab5,"
     //   19               20                21                22               23                      24
         "characters.name, characters.level, characters.class, characters.zone, characters.logout_time, characters.account "
-	//   25
-		"achievementPoints"
+    //   25
+        "achievementPoints"
         "FROM guild_member LEFT JOIN characters ON characters.guid = guild_member.guid ORDER BY guildid ASC");
 
-	// load guild bank tab rights
+    // load guild bank tab rights
     //                                                                     0       1     2   3       4
     QueryResult guildBankTabRightsResult = CharacterDatabase.Query("SELECT guildid,TabId,rid,gbright,SlotPerDay FROM guild_bank_right ORDER BY guildid ASC, TabId ASC");
 
@@ -3558,10 +3558,10 @@ void ObjectMgr::LoadGuilds()
 
     for (GuildMap::iterator itr = mGuildMap.begin(); itr != mGuildMap.end(); ++itr)
         GuildVector[itr->second->GetId()] = (*itr).second;
-		
-	//                                                                                  0                         1                      2                       3                       4
-	QueryResult guildMembersSkillsResult = CharacterDatabase.Query("SELECT guild_member.guildid, character_skills.guid, character_skills.skill, character_skills.value, character_skills.max FROM character_skills LEFT JOIN guild_member ON guild_member.guid = character_skills.guid ORDER BY guild_member.guildid ASC");
-	
+        
+    //                                                                                  0                         1                      2                       3                       4
+    QueryResult guildMembersSkillsResult = CharacterDatabase.Query("SELECT guild_member.guildid, character_skills.guid, character_skills.skill, character_skills.value, character_skills.max FROM character_skills LEFT JOIN guild_member ON guild_member.guid = character_skills.guid ORDER BY guild_member.guildid ASC");
+    
     //                                                             0        1          2            3            4        5          6
     QueryResult guildEventResult = CharacterDatabase.Query("SELECT LogGuid, EventType, PlayerGuid1, PlayerGuid2, NewRank, TimeStamp, guildid FROM guild_eventlog ORDER BY TimeStamp DESC, LogGuid DESC");
 
@@ -3574,7 +3574,7 @@ void ObjectMgr::LoadGuilds()
     PreparedStatement* guildBankItemStmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_ITEMS);
     PreparedQueryResult guildBankItemResult = CharacterDatabase.Query(guildBankItemStmt);
 
-	LoadGuildMemberProfessions(GuildVector, guildMembersSkillsResult);
+    LoadGuildMemberProfessions(GuildVector, guildMembersSkillsResult);
     LoadGuildEvents(GuildVector, guildEventResult);
     LoadGuildBankEvents(GuildVector, guildBankEventResult);
     LoadGuildBanks(GuildVector, guildBankTabResult, guildBankItemResult);
@@ -3596,7 +3596,7 @@ void ObjectMgr::LoadGuilds()
 //guild_member.guildid, character_skills.guid, character_skills.skill, character_skills.value, character_skills.max
 void ObjectMgr::LoadGuildMemberProfessions(std::vector<Guild*>& GuildVector, QueryResult& result)
 {
-	if (result)
+    if (result)
     {
         do
         {
@@ -3605,25 +3605,25 @@ void ObjectMgr::LoadGuildMemberProfessions(std::vector<Guild*>& GuildVector, Que
             if (guildid >= GuildVector.size() || GuildVector[guildid] == NULL)
                 continue;
             
-			uint32 playerGUID = fields[1].GetUInt32(); //low
+            uint32 playerGUID = fields[1].GetUInt32(); //low
             uint32 skillID = fields[2].GetUInt32();
-			uint32 skillLevel = fields[3].GetUInt32();
-			uint32 title = fields[4].GetUInt32() / 75;
-			SkillLineEntry const *skillInfo = sSkillLineStore.LookupEntry(skillID);
-			if (!skillInfo)
-				continue;
-			
-			if (skillInfo->categoryId != SKILL_CATEGORY_PROFESSION)
-				continue;
-			
-			if(GuildVector[guildid]->members.find(playerGUID) == GuildVector[guildid]->members.end())
-				continue;
-			
-			int actualPr = GuildVector[guildid]->members[playerGUID].professions[0].skillID == 0 ? 0 : 1;
-			
-			GuildVector[guildid]->members[playerGUID].professions[actualPr].skillID = skillID;
-			GuildVector[guildid]->members[playerGUID].professions[actualPr].level = skillLevel;
-			GuildVector[guildid]->members[playerGUID].professions[actualPr].title = title;
+            uint32 skillLevel = fields[3].GetUInt32();
+            uint32 title = fields[4].GetUInt32() / 75;
+            SkillLineEntry const *skillInfo = sSkillLineStore.LookupEntry(skillID);
+            if (!skillInfo)
+                continue;
+            
+            if (skillInfo->categoryId != SKILL_CATEGORY_PROFESSION)
+                continue;
+            
+            if(GuildVector[guildid]->members.find(playerGUID) == GuildVector[guildid]->members.end())
+                continue;
+            
+            int actualPr = GuildVector[guildid]->members[playerGUID].professions[0].skillID == 0 ? 0 : 1;
+            
+            GuildVector[guildid]->members[playerGUID].professions[actualPr].skillID = skillID;
+            GuildVector[guildid]->members[playerGUID].professions[actualPr].level = skillLevel;
+            GuildVector[guildid]->members[playerGUID].professions[actualPr].title = title;
         }
         while (result->NextRow());
     }

@@ -787,11 +787,11 @@ bool ChatHandler::HandleDebugSpawnVehicle(const char* args)
     if (!ve)
         return false;
 
-	Creature* v = NULL;
-	if(ci->ScriptID)
-		v = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
-	if(v == NULL)
-		v = new Creature();
+    Creature* v = NULL;
+    if(ci->ScriptID)
+        v = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+    if(v == NULL)
+        v = new Creature();
 
     Map *map = m_session->GetPlayer()->GetMap();
 

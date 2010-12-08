@@ -225,8 +225,8 @@ void Object::BuildCreateUpdateBlockForPlayer(UpdateData *data, Player *target) c
     _BuildMovementUpdate(&buf, flags);
 
     UpdateMask updateMask;
-	updateMask.SetCount(m_valuesCount);
-	
+    updateMask.SetCount(m_valuesCount);
+    
     _SetCreateBits(&updateMask, target);
     _BuildValuesUpdate(updatetype, &buf, &updateMask, target);
     data->AddUpdateBlock(buf);
@@ -427,28 +427,28 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         *data << float(0);                                  // facing adjustment
     }
 
-	// 0x800
-	if (flags & UPDATEFLAG_UNK2)
-	{
-		*data << uint16(0) << uint16(0) << uint16(0); //unk
-	}
-	
+    // 0x800
+    if (flags & UPDATEFLAG_UNK2)
+    {
+        *data << uint16(0) << uint16(0) << uint16(0); //unk
+    }
+    
     // 0x200
     if (flags & UPDATEFLAG_ROTATION)
     {
         *data << uint64(((GameObject*)this)->GetRotation());
     }
-	
-	// 0x1000
-	if (flags & UPDATEFLAG_UNK3)
-	{
-		uint8 bytes = 0;
-		*data << bytes;
-		for(uint8 i = 0; i < bytes; i++) //example :P
-		{
-			*data << uint32(0);
-		}
-	}
+    
+    // 0x1000
+    if (flags & UPDATEFLAG_UNK3)
+    {
+        uint8 bytes = 0;
+        *data << bytes;
+        for(uint8 i = 0; i < bytes; i++) //example :P
+        {
+            *data << uint32(0);
+        }
+    }
 }
 
 void Object::_BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask *updateMask, Player *target) const
@@ -456,10 +456,10 @@ void Object::_BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask 
     if (!target)
         return;
 
-	uint32 valuesCount = m_valuesCount;
-	if(GetTypeId() == TYPEID_PLAYER && target != this)
-		valuesCount = PLAYER_END_NOT_SELF;
-	
+    uint32 valuesCount = m_valuesCount;
+    if(GetTypeId() == TYPEID_PLAYER && target != this)
+        valuesCount = PLAYER_END_NOT_SELF;
+    
     bool IsActivateToQuest = false;
     if (updatetype == UPDATETYPE_CREATE_OBJECT || updatetype == UPDATETYPE_CREATE_OBJECT2)
     {
@@ -779,10 +779,10 @@ void Object::_SetUpdateBits(UpdateMask *updateMask, Player* target) const
     uint32 *value = m_uint32Values;
     uint32 *mirror = m_uint32Values_mirror;
 
-	uint32 valuesCount = m_valuesCount;
-	if(GetTypeId() == TYPEID_PLAYER && target != this)
-		valuesCount = PLAYER_END_NOT_SELF;
-	
+    uint32 valuesCount = m_valuesCount;
+    if(GetTypeId() == TYPEID_PLAYER && target != this)
+        valuesCount = PLAYER_END_NOT_SELF;
+    
     for (uint16 index = 0; index < valuesCount; ++index, ++value, ++mirror)
     {
         if (*mirror != *value)
@@ -794,10 +794,10 @@ void Object::_SetCreateBits(UpdateMask *updateMask, Player* target) const
 {
     uint32 *value = m_uint32Values;
 
-	uint32 valuesCount = m_valuesCount;
-	if(GetTypeId() == TYPEID_PLAYER && target != this)
-		valuesCount = PLAYER_END_NOT_SELF;
-	
+    uint32 valuesCount = m_valuesCount;
+    if(GetTypeId() == TYPEID_PLAYER && target != this)
+        valuesCount = PLAYER_END_NOT_SELF;
+    
     for (uint16 index = 0; index < valuesCount; ++index, ++value)
     {
         if (*value)

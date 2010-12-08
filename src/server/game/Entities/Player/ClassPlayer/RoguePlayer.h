@@ -6,8 +6,8 @@
 class RoguePlayer: public Player
 {
 public:
-	RoguePlayer(WorldSession * session): Player(session) {}
-	virtual uint8 getClass() const { return CLASS_ROGUE; }
+    RoguePlayer(WorldSession * session): Player(session) {}
+    virtual uint8 getClass() const { return CLASS_ROGUE; }
 };
 
 #endif

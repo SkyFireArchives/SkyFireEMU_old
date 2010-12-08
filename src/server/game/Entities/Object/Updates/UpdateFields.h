@@ -193,7 +193,7 @@ enum EUnitFields
     UNIT_FIELD_HOVERHEIGHT                    = OBJECT_END + 0x009E, // Size: 1, Type: FLOAT, Flags: PUBLIC
     UNIT_FIELD_MAXITEMLEVEL                   = OBJECT_END + 0x009F, // Size: 1, Type: INT, Flags: PUBLIC
     UNIT_END                                  = OBJECT_END + 0x00A0,
-	
+    
     PLAYER_DUEL_ARBITER                       = UNIT_END + 0x0000, // Size: 2, Type: LONG, Flags: PUBLIC
     PLAYER_FLAGS                              = UNIT_END + 0x0002, // Size: 1, Type: INT, Flags: PUBLIC
     PLAYER_GUILDRANK                          = UNIT_END + 0x0003, // Size: 1, Type: INT, Flags: PUBLIC
