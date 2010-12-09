@@ -390,7 +390,7 @@ enum Opcodes
     SMSG_PET_MODE                                   = 0xFA0B, // (0x4A1C)(0x017A) //
     CMSG_GOSSIP_HELLO                               = 0x1D55, // (0x2A75)(0x017B) //
     CMSG_GOSSIP_SELECT_OPTION                       = 0x8E7C, // (0x0271)(0x017C) //
-    SMSG_GOSSIP_MESSAGE                             = 0xD12A, // (0xAB3D)(0x017D) //
+    SMSG_GOSSIP_MESSAGE                             = 0xD57E, // (0xAB3D)(0x017D) //
     SMSG_GOSSIP_COMPLETE                            = 0x430B, // (0x6BF9)(0x017E) //
     CMSG_NPC_TEXT_QUERY                             = 0x5654, // (0x2BBD)(0x017F) //
     SMSG_NPC_TEXT_UPDATE                            = 0x365E, // (0x8310)(0x0180) //
