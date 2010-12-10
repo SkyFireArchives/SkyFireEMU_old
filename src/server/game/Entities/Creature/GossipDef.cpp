@@ -143,7 +143,7 @@ void PlayerMenu::SendGossipMenu(uint32 TitleTextId, uint64 objectGUID)
 {
     WorldPacket data(SMSG_GOSSIP_MESSAGE, (100));         // guess size
     data << uint64(objectGUID);
-    data << uint32(mGossipMenu.GetMenuId());              // new 2.4.0
+    data << uint32(mGossipMenu.GetMenuId());
     data << uint32(TitleTextId);
     data << uint32(mGossipMenu.MenuItemCount());          // max count 0x10
 
@@ -152,13 +152,13 @@ void PlayerMenu::SendGossipMenu(uint32 TitleTextId, uint64 objectGUID)
         GossipMenuItem const& gItem = mGossipMenu.GetItem(iI);
         data << uint32(iI);
         data << uint8(gItem.m_gIcon);
-        data << uint8(gItem.m_gCoded);                    // makes pop up box password
+        data << uint8(gItem.m_gCoded);                      // makes pop up box password
         data << uint32(gItem.m_gBoxMoney);                  // money required to open menu, 2.0.3
         data << gItem.m_gMessage;                           // text for gossip item
         data << gItem.m_gBoxMessage;                        // accept text (related to money) pop up box, 2.0.3
     }
 
-    data << uint32(mQuestMenu.MenuItemCount());           // max count 0x20
+    data << uint32(mQuestMenu.MenuItemCount());             // max count 0x20
 
     for (uint32 iI = 0; iI < mQuestMenu.MenuItemCount(); ++iI)
     {
@@ -202,7 +202,6 @@ void PlayerMenu::SendPointOfInterest(float X, float Y, uint32 Icon, uint32 Flags
     data << locName;
 
     pSession->SendPacket(&data);
-    //sLog.outDebug("WORLD: Sent SMSG_GOSSIP_POI");
 }
 
 void PlayerMenu::SendPointOfInterest(uint32 poi_id)
@@ -230,7 +229,6 @@ void PlayerMenu::SendPointOfInterest(uint32 poi_id)
     data << icon_name;
 
     pSession->SendPacket(&data);
-    //sLog.outDebug("WORLD: Sent SMSG_GOSSIP_POI");
 }
 
 void PlayerMenu::SendTalking(uint32 textID)
@@ -429,7 +427,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
     std::string Details    = pQuest->GetDetails();
     std::string Objectives = pQuest->GetObjectives();
     std::string EndText    = pQuest->GetEndText();
-    std::string unk = "";
+    std::string unk        = "";
 
     int loc_idx = pSession->GetSessionDbLocaleIndex();
     if (loc_idx >= 0)
@@ -455,70 +453,53 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
     data << unk;                                            // 4.0.1, unknow
     data << unk;                                            // 4.0.1, unknow
     data << uint32(0);                                      // 4.0.1, unknow
-    data << uint32(0);                                        // 4.0.1, unknow
+    data << uint32(0);                                      // 4.0.1, unknow
     data << uint8(ActivateAccept ? 1 : 0);                  // auto finish
     data << uint32(pQuest->GetFlags());                     // 3.3.3 questFlags
     data << uint32(pQuest->GetSuggestedPlayers());
     data << uint8(0);                                       // 4.0.1, unknow
     data << uint8(0);                                       // IsFinished? value is sent back to server in quest accept packet
-    data << uint32(0);                                        // 4.0.1, unknow
+    data << uint32(0);                                      // 4.0.1, unknow
 
-   /* if (pQuest->HasFlag(QUEST_FLAGS_HIDDEN_REWARDS))
+    ItemPrototype const* IProto;
+    data << uint32(pQuest->GetRewChoiceItemsCount());
+    for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
+        data << uint32(pQuest->RewChoiceItemId[i]);
+    for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
+        data << uint32(pQuest->RewChoiceItemCount[i]);
+    for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
     {
-        data << uint32(0);                                  // Rewarded chosen items hidden
-        data << uint32(0);                                  // Rewarded items hidden
-        data << uint32(0);                                  // Rewarded money hidden
-        data << uint32(0);                                  // Rewarded XP hidden
+        IProto = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
+        if (IProto)
+            data << uint32(IProto->DisplayInfoID);
+        else
+            data << uint32(0x00);
     }
-    else
-    {*/
-        ItemPrototype const* IProto;
 
-        data << uint32(pQuest->GetRewChoiceItemsCount());
-        for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
-            data << uint32(pQuest->RewChoiceItemId[i]);
-        for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
-            data << uint32(pQuest->RewChoiceItemCount[i]);
-        for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
-        {
-            IProto = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
-            if (IProto)
-                data << uint32(IProto->DisplayInfoID);
-            else
-                data << uint32(0x00);
-        }
+    data << uint32(pQuest->GetRewItemsCount());
 
-        data << uint32(pQuest->GetRewItemsCount());
+    for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
+        data << uint32(pQuest->RewItemId[i]);
+    for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
+        data << uint32(pQuest->RewItemCount[i]);
+    for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
+    {
+        IProto = sObjectMgr.GetItemPrototype(pQuest->RewItemId[i]);
 
-        for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
-            data << uint32(pQuest->RewItemId[i]);
-        for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
-            data << uint32(pQuest->RewItemCount[i]);
-        for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
-        {
-            IProto = sObjectMgr.GetItemPrototype(pQuest->RewItemId[i]);
+        if (IProto)
+            data << uint32(IProto->DisplayInfoID);
+        else
+            data << uint32(0);
+    }
 
-            if (IProto)
-                data << uint32(IProto->DisplayInfoID);
-            else
-                data << uint32(0);
-        }
-
-        data << uint32(0); // unknow 4.0.1
-        data << uint32(0); // unknow 4.0.1
-        data << uint32(pQuest->GetRewOrReqMoney());
-        data << uint32(pQuest->XPValue(pSession->GetPlayer())*sWorld.getRate(RATE_XP_QUEST));
-  //  }
+    data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
+    data << uint32(pQuest->GetRewOrReqMoney());
+    data << uint32(pQuest->XPValue(pSession->GetPlayer())*sWorld.getRate(RATE_XP_QUEST));
 
     // rewarded honor points. Multiply with 10 to satisfy client
     //data << 10 * Trinity::Honor::hk_honor_at_level(pSession->GetPlayer()->getLevel(), pQuest->GetRewHonorableKills());
     data << float(0);                                       // new 3.3.0, honor multiplier?
-    /*data << uint32(pQuest->GetRewSpell());                  // reward spell, this spell will display (icon) (casted if RewSpellCast == 0)
-    data << int32(pQuest->GetRewSpellCast());               // casted spell
-    data << uint32(pQuest->GetCharTitleId());               // CharTitleId, new 2.4.0, player gets this title (id from CharTitles)
-    data << uint32(pQuest->GetBonusTalents());              // bonus talents
-    data << uint32(pQuest->GetRewArenaPoints());            // reward arena points
-    data << uint32(0);                                      // unk*/
 
     data << uint32(0); // unknow 4.0.1
     data << uint32(0); // unknow 4.0.1
@@ -623,11 +604,11 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
     data << uint32(pQuest->GetPlayersSlain());              // players slain
     data << uint32(pQuest->GetBonusTalents());              // bonus talents
     data << uint32(pQuest->GetRewArenaPoints());            // bonus arena points
-    data << uint32(0);                                      // new 4.0.1
-    data << uint32(0);                                      // new 4.0.1
+    data << uint32(0);                                      // reward skill line id
+    data << uint32(0);                                      // reward skill points
     data << uint32(0);                                      // review rep show mask
-    data << uint32(0);                                      // new 4.0.1
-    data << uint32(0);                                      // new 4.0.1
+    data << uint32(0);                                      // questgiver portrait ID
+    data << uint32(0);                                      // quest turn in portrait ID
 
     int iI;
 
@@ -684,8 +665,8 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
             data << uint32(pQuest->ReqCreatureOrGOId[iI]);
         }
         data << uint32(pQuest->ReqCreatureOrGOCount[iI]);
-        data << uint32(pQuest->ReqSourceId[iI]);
-        data << uint32(0);                                  // req source count?
+        data << uint32(pQuest->ReqSourceId[iI]);            // item drop intermediate ID
+        data << uint32(0);                                  // item drop intermediate count
     }
 
     for (iI = 0; iI < QUEST_ITEM_OBJECTIVES_COUNT; ++iI)
@@ -709,13 +690,13 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
         data << uint32(0);
     }
 
-    data << "";                                                // 4.0.1 unk quete string
-    data << "";                                                // 4.0.1 unk quete string
-    data << "";                                                // 4.0.1 unk quete string
-    data << "";                                                // 4.0.1 unk quete string
+    data << "";                                                // questgiver portrait text
+    data << "";                                                // questgiver portrait unk
+    data << "";                                                // quest turn in portrait text
+    data << "";                                                // quest turn in portrait unk
 
-    data << uint32(0);                                        // 4.0.1 unk
-    data << uint32(0);                                        // 4.0.1 unk
+    data << uint32(0);                                        // seems to be a sound?
+    data << uint32(0);                                        // also appears to be a sound
     
     pSession->SendPacket(&data);
     sLog.outDebug("WORLD: Sent SMSG_QUEST_QUERY_RESPONSE questid=%u", pQuest->GetQuestId());
@@ -771,106 +752,45 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
         data << uint32(pQuest->OfferRewardEmote[i]);
     }
 
-    /*ItemPrototype const *pItem;
+    ItemPrototype const* IProto;
 
     data << uint32(pQuest->GetRewChoiceItemsCount());
-    for (uint32 i=0; i < pQuest->GetRewChoiceItemsCount(); ++i)
-    {
-        pItem = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
-
+    for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
         data << uint32(pQuest->RewChoiceItemId[i]);
+    for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
         data << uint32(pQuest->RewChoiceItemCount[i]);
-
-        if (pItem)
-            data << uint32(pItem->DisplayInfoID);
+    for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
+    {
+        IProto = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
+        if (IProto)
+            data << uint32(IProto->DisplayInfoID);
         else
-            data << uint32(0);
+            data << uint32(0x00);
     }
 
     data << uint32(pQuest->GetRewItemsCount());
-    for (uint32 i = 0; i < pQuest->GetRewItemsCount(); ++i)
-    {
-        pItem = sObjectMgr.GetItemPrototype(pQuest->RewItemId[i]);
-        data << uint32(pQuest->RewItemId[i]);
-        data << uint32(pQuest->RewItemCount[i]);
 
-        if (pItem)
-            data << uint32(pItem->DisplayInfoID);
+    for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
+        data << uint32(pQuest->RewItemId[i]);
+    for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
+        data << uint32(pQuest->RewItemCount[i]);
+    for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
+    {
+        IProto = sObjectMgr.GetItemPrototype(pQuest->RewItemId[i]);
+
+        if (IProto)
+            data << uint32(IProto->DisplayInfoID);
         else
             data << uint32(0);
     }
 
+    data << uint32(0); // unknow 4.0.1
+    data << uint32(0); // unknow 4.0.1
     data << uint32(pQuest->GetRewOrReqMoney());
     data << uint32(pQuest->XPValue(pSession->GetPlayer())*sWorld.getRate(RATE_XP_QUEST));
 
     // rewarded honor points. Multiply with 10 to satisfy client
-    data << 10 * Trinity::Honor::hk_honor_at_level(pSession->GetPlayer()->getLevel(), pQuest->GetRewHonorableKills());
-    data << float(0);                                       // unk, honor multiplier?
-    data << uint32(0x08);                                   // unused by client?
-    data << uint32(pQuest->GetRewSpell());                  // reward spell, this spell will display (icon) (casted if RewSpellCast == 0)
-    data << int32(pQuest->GetRewSpellCast());               // casted spell
-    data << uint32(0);                                      // unknown
-    data << uint32(pQuest->GetBonusTalents());              // bonus talents
-    data << uint32(pQuest->GetRewArenaPoints());               // arena points
-    data << uint32(0);
-
-    for (int i = 0; i < QUEST_REPUTATIONS_COUNT; ++i)        // reward factions ids
-        data << uint32(pQuest->RewRepFaction[i]);
-
-    for (int i = 0; i < QUEST_REPUTATIONS_COUNT; ++i)        // columnid in QuestFactionReward.dbc (zero based)?
-        data << int32(pQuest->RewRepValueId[i]);
-
-    for (int i = 0; i < QUEST_REPUTATIONS_COUNT; ++i)        // reward reputation override?
-        data << uint32(pQuest->RewRepValue[i]);*/
-
-        ItemPrototype const* IProto;
-
-        data << uint32(pQuest->GetRewChoiceItemsCount());
-        for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
-            data << uint32(pQuest->RewChoiceItemId[i]);
-        for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
-            data << uint32(pQuest->RewChoiceItemCount[i]);
-        for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
-        {
-            IProto = sObjectMgr.GetItemPrototype(pQuest->RewChoiceItemId[i]);
-            if (IProto)
-                data << uint32(IProto->DisplayInfoID);
-            else
-                data << uint32(0x00);
-        }
-
-        data << uint32(pQuest->GetRewItemsCount());
-
-        for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
-            data << uint32(pQuest->RewItemId[i]);
-        for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
-            data << uint32(pQuest->RewItemCount[i]);
-        for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
-        {
-            IProto = sObjectMgr.GetItemPrototype(pQuest->RewItemId[i]);
-
-            if (IProto)
-                data << uint32(IProto->DisplayInfoID);
-            else
-                data << uint32(0);
-        }
-
-        data << uint32(0); // unknow 4.0.1
-        data << uint32(0); // unknow 4.0.1
-        data << uint32(pQuest->GetRewOrReqMoney());
-        data << uint32(pQuest->XPValue(pSession->GetPlayer())*sWorld.getRate(RATE_XP_QUEST));
-  //  }
-
-    // rewarded honor points. Multiply with 10 to satisfy client
-    //data << 10 * Trinity::Honor::hk_honor_at_level(pSession->GetPlayer()->getLevel(), pQuest->GetRewHonorableKills());
     data << float(0);                                       // new 3.3.0, honor multiplier?
-    /*data << uint32(pQuest->GetRewSpell());                  // reward spell, this spell will display (icon) (casted if RewSpellCast == 0)
-    data << int32(pQuest->GetRewSpellCast());               // casted spell
-    data << uint32(pQuest->GetCharTitleId());               // CharTitleId, new 2.4.0, player gets this title (id from CharTitles)
-    data << uint32(pQuest->GetBonusTalents());              // bonus talents
-    data << uint32(pQuest->GetRewArenaPoints());            // reward arena points
-    data << uint32(0);                                      // unk*/
-
     data << uint32(0); // unknow 4.0.1
     data << uint32(0); // unknow 4.0.1
     data << uint32(0); // unknow 4.0.1
@@ -904,7 +824,6 @@ void PlayerMenu::SendQuestGiverRequestItems(Quest const *pQuest, uint64 npcGUID,
 {
     // We can always call to RequestItems, but this packet only goes out if there are actually
     // items.  Otherwise, we'll skip straight to the OfferReward
-
     std::string Title = pQuest->GetTitle();
     std::string RequestItemsText = pQuest->GetRequestItemsText();
 
