@@ -235,8 +235,8 @@ enum Opcodes
     SMSG_MOVE_LAND_WALK                             = 0x00DF, // NF()(0x00DF) // 
     MSG_MOVE_SET_RAW_POSITION_ACK                   = 0xFFDB, // NF(0xA23C)(0x00E0) //
     CMSG_MOVE_SET_RAW_POSITION                      = 0xFFDA, // NF(0xCB75)(0x00E1) //
-    SMSG_FORCE_RUN_SPEED_CHANGE                     = 0x00E2, // NF()(0x00E2) // 
-    CMSG_FORCE_RUN_SPEED_CHANGE_ACK                 = 0x00E3, // NF()(0x00E3) // 
+    SMSG_FORCE_RUN_SPEED_CHANGE                     = 0x7F5E, // ()(0x00E2) // 
+    CMSG_FORCE_RUN_SPEED_CHANGE_ACK                 = 0xEC5D, // ()(0x00E3) // 
     SMSG_FORCE_RUN_BACK_SPEED_CHANGE                = 0x00E4, // NF()(0x00E4) // 
     CMSG_FORCE_RUN_BACK_SPEED_CHANGE_ACK            = 0x00E5, // NF()(0x00E5) // 
     SMSG_FORCE_SWIM_SPEED_CHANGE                    = 0x00E6, // NF()(0x00E6) // 
