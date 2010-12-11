@@ -139,9 +139,9 @@ typedef std::map<uint32, SpellCooldown> SpellCooldowns;
 
 enum TrainerSpellState
 {
+    TRAINER_SPELL_ALREADY_LEARN = 00,
     TRAINER_SPELL_CAN_LEARN     = 01,
-    TRAINER_SPELL_ALREADY_LEARN = 03,
-    TRAINER_SPELL_CANT_LEARN    = 10  // TODO : trouver la bonne valeur
+    TRAINER_SPELL_CANT_LEARN    = 02
 };
 
 enum ActionButtonUpdateState

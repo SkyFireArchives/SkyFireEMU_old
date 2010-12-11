@@ -190,7 +190,7 @@ void WorldSession::SendTrainerList(uint64 guid, const std::string& strTitle)
         TrainerSpellState state = _player->GetTrainerSpellState(tSpell);
 
         data << uint32(tSpell->spell);                      // learned spell (or cast-spell in profession case)
-        data << uint8(1);
+        data << uint8(state);
         data << uint32(floor(tSpell->spellCost * fDiscountMod));
 
         //data << uint32(primary_prof_first_rank && can_learn_primary_prof ? 1 : 0);
