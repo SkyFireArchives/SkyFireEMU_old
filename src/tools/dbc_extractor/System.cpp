@@ -26,6 +26,8 @@
 
 static int const patchRev[] = {13164, 13205, 13287, 13329};
 #define PATCH_REV_COUNT 4
+#define CLIENT_BUILD 13329
+
 static char* const langs[] = {"enGB", "enUS", "deDE", "esES", "frFR", "koKR", "zhCN", "zhTW", "enCN", "enTW", "esMX", "ruRU" };
 #define LANG_COUNT 12
 HANDLE localeMPQ[PATCH_REV_COUNT+1];
@@ -348,6 +350,11 @@ int main(/*int argc, char * arg[]*/)
                 FirstLocale = i;
                 build = ReadBuild(FirstLocale);
                 printf("Detected base client build: %u\n", build);
+                if(build != CLIENT_BUILD)
+                {
+                    printf("ERROR: your client is not up-to-date. Client build should be %u", CLIENT_BUILD);
+                    return 0;
+                }
                 ExtractDBCFiles(i, true);
             }
             else
