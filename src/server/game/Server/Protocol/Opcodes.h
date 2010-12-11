@@ -308,7 +308,7 @@ enum Opcodes
     CMSG_SET_ACTION_BUTTON                          = 0x355C, // ()(0x0128) // 
     SMSG_ACTION_BUTTONS                             = 0x4574, // (0xEB74)(0x0129) //
     SMSG_INITIAL_SPELLS                             = 0x565D, // (0xC2B0)(0x012A) //
-    SMSG_LEARNED_SPELL                              = 0x9004, // (0xCAFC)(0x012B) //
+    SMSG_LEARNED_SPELL                              = 0x9454, // (0xCAFC)(0x012B) //
     SMSG_SUPERCEDED_SPELL                           = 0x267F, // (0x4378)(0x012C) //
     CMSG_NEW_SPELL_SLOT                             = 0x012D, // NF()(0x012D) // NOT IN CLIENT 335 AND 401
     CMSG_CAST_SPELL                                 = 0x4C56, // (0xC390)(0x012E) //
