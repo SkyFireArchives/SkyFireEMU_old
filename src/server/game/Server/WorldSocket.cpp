@@ -166,7 +166,7 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
     if (sWorldLog.LogWorld())
     {
         std::string error = "";
-        if(pct.GetOpcode() > 0xFF00)
+        if(pct.GetOpcode() > OPCODE_NOT_FOUND)
             error = "NOT SEND\n";
         sWorldLog.outTimestampLog ("SERVER:\nSOCKET: %u\nLENGTH: %u\nOPCODE: %s (0x%.4X)\n%sDATA:\n",
                      (uint32) get_handle(),
@@ -186,9 +186,9 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
         sWorldLog.outLog("\n");
     }
 
-    if(pct.GetOpcode() > 0xFF00)
+    if(pct.GetOpcode() > OPCODE_NOT_FOUND)
     {
-        sLog.outError("Packet %s (%X) not send.\n", LookupOpcodeName (pct.GetOpcode()), pct.GetOpcode());
+        sLog.outDebug("Packet %s (%X) not send.\n", LookupOpcodeName (pct.GetOpcode()), pct.GetOpcode());
         return 0;
     }
     
