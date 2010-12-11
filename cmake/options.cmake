@@ -14,7 +14,7 @@ option(SERVERS          "Build worldserver and authserver"                      
 option(SCRIPTS          "Build core with scripts included"                            1)
 option(TOOLS            "Build dbc/map/vmap extraction/assembler tools"               0)
 if( WIN32 )
-    option(TOOLS        "Build hook & dll injector"                                   0)
+    option(INJECTOR        "Build hook & dll injector"                                   0)
 endif()
 option(USE_SCRIPTPCH    "Use precompiled headers when compiling scripts"              1)
 option(USE_COREPCH      "Use precompiled headers when compiling servers"              1)
