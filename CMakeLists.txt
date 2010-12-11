@@ -62,6 +62,11 @@ endif()
 # print out the results before continuing
 include(cmake/showoptions.cmake)
 
+if( WIN32 )
+    message("You can build the CactusPatcher (permanent patcher) yourself. Visual Studio Project is located in src/redirect/Patcher/")
+    message("")
+endif()
+
 # add and generate revision.h
 add_subdirectory(src/genrevision)
 
