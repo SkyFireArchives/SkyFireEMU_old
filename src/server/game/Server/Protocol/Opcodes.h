@@ -40,6 +40,11 @@
 /// List of Opcodes
 enum Opcodes
 {
+  //F: if 1, opcodeID not found
+  //X: opcodeID 13329
+  //Y: opcodeID 13264
+  //Z: opcodeID WoTLK
+  //name                                             =   FXXXX  // (  Y   )(  Z   ) //
     CMSG_WORLD_TELEPORT                              = 0x00589, // (0x5211)(0x0008) //
     CMSG_TELEPORT_TO_UNIT                            = 0x10001, // (0xCB9D)(0x0009) //
     SMSG_CHECK_FOR_BOTS                              = 0x01574, // (0x29A9)(0x0015) //
