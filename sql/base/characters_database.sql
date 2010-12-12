@@ -242,6 +242,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `power7` int(10) unsigned NOT NULL DEFAULT '0',
   `power8` int(10) unsigned NOT NULL DEFAULT '0',
   `power9` int(10) unsigned NOT NULL DEFAULT '0',
+  `power10` int(10) unsigned NOT NULL DEFAULT '0',
   `latency` int(11) unsigned NOT NULL DEFAULT '0',
   `speccount` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `activespec` tinyint(3) unsigned NOT NULL DEFAULT '0',
