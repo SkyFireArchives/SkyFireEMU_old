@@ -222,7 +222,8 @@ enum BAG_FAMILY_MASK
     BAG_FAMILY_MASK_SOULBOUND_EQUIPMENT       = 0x00000800,
     BAG_FAMILY_MASK_VANITY_PETS               = 0x00001000,
     BAG_FAMILY_MASK_CURRENCY_TOKENS           = 0x00002000,
-    BAG_FAMILY_MASK_QUEST_ITEMS               = 0x00004000
+    BAG_FAMILY_MASK_QUEST_ITEMS               = 0x00004000,
+    BAG_FAMILY_MASK_FISHING                   = 0x00008000
 };
 
 enum SocketColor
@@ -318,10 +319,11 @@ enum ItemSubclassContainer
     ITEM_SUBCLASS_GEM_CONTAINER                 = 5,
     ITEM_SUBCLASS_MINING_CONTAINER              = 6,
     ITEM_SUBCLASS_LEATHERWORKING_CONTAINER      = 7,
-    ITEM_SUBCLASS_INSCRIPTION_CONTAINER         = 8
+    ITEM_SUBCLASS_INSCRIPTION_CONTAINER         = 8,
+    ITEM_SUBCLASS_FISHING_CONTAINER             = 9
 };
 
-#define MAX_ITEM_SUBCLASS_CONTAINER               9
+#define MAX_ITEM_SUBCLASS_CONTAINER               10
 
 enum ItemSubclassWeapon
 {
@@ -364,10 +366,12 @@ enum ItemSubclassGem
     ITEM_SUBCLASS_GEM_ORANGE                    = 5,
     ITEM_SUBCLASS_GEM_META                      = 6,
     ITEM_SUBCLASS_GEM_SIMPLE                    = 7,
-    ITEM_SUBCLASS_GEM_PRISMATIC                 = 8
+    ITEM_SUBCLASS_GEM_PRISMATIC                 = 8,
+    ITEM_SUBCLASS_HYDRAULIC                     = 9,
+    ITEM_SUBCLASS_COGWHEEL                      = 10,
 };
 
-#define MAX_ITEM_SUBCLASS_GEM                     9
+#define MAX_ITEM_SUBCLASS_GEM                     11
 
 enum ItemSubclassArmor
 {
@@ -445,10 +449,11 @@ enum ItemSubclassRecipe
     ITEM_SUBCLASS_FIRST_AID_MANUAL              = 7,
     ITEM_SUBCLASS_ENCHANTING_FORMULA            = 8,
     ITEM_SUBCLASS_FISHING_MANUAL                = 9,
-    ITEM_SUBCLASS_JEWELCRAFTING_RECIPE          = 10
+    ITEM_SUBCLASS_JEWELCRAFTING_RECIPE          = 10,
+    ITEM_SUBCLASS_INSCRIPTION_TECHNIQUE         = 11
 };
 
-#define MAX_ITEM_SUBCLASS_RECIPE                  11
+#define MAX_ITEM_SUBCLASS_RECIPE                  12
 
 enum ItemSubclassMoney
 {
@@ -469,10 +474,11 @@ enum ItemSubclassQuiver
 
 enum ItemSubclassQuest
 {
-    ITEM_SUBCLASS_QUEST                         = 0
+    ITEM_SUBCLASS_QUEST                         = 0,
+    ITEM_SUBCLASS_QUEST_2                       = 1
 };
 
-#define MAX_ITEM_SUBCLASS_QUEST                   1
+#define MAX_ITEM_SUBCLASS_QUEST                   2
 
 enum ItemSubclassKey
 {
@@ -496,10 +502,11 @@ enum ItemSubclassJunk
     ITEM_SUBCLASS_JUNK_PET                      = 2,
     ITEM_SUBCLASS_JUNK_HOLIDAY                  = 3,
     ITEM_SUBCLASS_JUNK_OTHER                    = 4,
-    ITEM_SUBCLASS_JUNK_MOUNT                    = 5
+    ITEM_SUBCLASS_JUNK_MOUNT                    = 5,
+    ITEM_SUBCLASS_JUNK_OTHER_2                  = 12  //1 item.
 };
 
-#define MAX_ITEM_SUBCLASS_JUNK                    6
+#define MAX_ITEM_SUBCLASS_JUNK                    13
 
 enum ItemSubclassGlyph
 {
