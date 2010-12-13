@@ -19030,7 +19030,48 @@ void Player::AddSpellMod(SpellModifier* mod, bool apply)
     sLog.outDebug("Player::AddSpellMod %d", mod->spellId);
     uint32 Opcode = (mod->type == SPELLMOD_FLAT) ? SMSG_SET_FLAT_SPELL_MODIFIER : SMSG_SET_PCT_SPELL_MODIFIER;
 
+    //uint32 count1
+    //while count1-- > 0
+        //uint32 count2
+        //uint8 mod->op
+        //while count2-- > 0
+            //uint8 eff
+            //uint32 value
+    
+    
+    WorldPacket data(Opcode);
+    data << uint32(1); //number of spell mod to add
+    size_t wpos_count2 = data.wpos();
+    uint32 count2 = 0;
+    data << uint32(count2);
+    data << uint8(mod->op);
     int i = 0;
+    flag96 _mask = 0;
+    for (int eff = 0; eff < 96; ++eff)
+    {
+        if (eff != 0 && eff%32 == 0)
+            _mask[i++] = 0;
+        
+        _mask[i] = uint32(1) << (eff-(32*i));
+        if (mod->mask & _mask)
+        {
+            int32 val = 0;
+            for (SpellModList::iterator itr = m_spellMods[mod->op].begin(); itr != m_spellMods[mod->op].end(); ++itr)
+            {
+                if ((*itr)->type == mod->type && (*itr)->mask & _mask)
+                    val += (*itr)->value;
+            }
+            val += apply ? mod->value : -(mod->value);
+            data << uint8(eff);
+            data << int32(val);
+            count2++;
+        }
+    }
+    data.put(wpos_count2, count2);
+    
+    SendDirectMessage(&data);
+    
+    /*int i = 0;
     flag96 _mask = 0;
     for (int eff = 0; eff < 96; ++eff)
     {
@@ -19051,9 +19092,9 @@ void Player::AddSpellMod(SpellModifier* mod, bool apply)
             data << uint8(eff);
             data << uint8(mod->op);
             data << int32(val);
-            SendDirectMessage(&data);
+            //SendDirectMessage(&data);
         }
-    }
+    }*/
 
     if (apply)
         m_spellMods[mod->op].push_back(mod);
@@ -19196,7 +19237,7 @@ void Player::SendProficiency(ItemClass itemClass, uint32 itemSubclassMask)
 {
     WorldPacket data(SMSG_SET_PROFICIENCY, 1 + 4);
     data << uint8(itemClass) << uint32(itemSubclassMask);
-    GetSession()->SendPacket (&data);
+    //GetSession()->SendPacket (&data);
 }
 
 void Player::RemovePetitionsAndSigns(uint64 guid, uint32 type)

@@ -1176,7 +1176,7 @@ enum Opcodes
     SMSG_PET_UPDATE_COMBO_POINTS                     = 0x0D20B, // (0x8BF5)(0x0492) //
     CMSG_ENABLETAXI                                  = 0x101F1, // (  nf  )(0x0493) //
     SMSG_PRE_RESURRECT                               = 0x0665F, // (0xA231)(0x0494) //
-    SMSG_AURA_UPDATE_ALL                             = 0x01C76, // (0xE298)(0x0495) //
+    SMSG_AURA_UPDATE_ALL                             = 0x05756, // (0xE298)(0x0495) //
     SMSG_AURA_UPDATE                                 = 0x0CE7D, // (0xA3D4)(0x0496) //
     CMSG_FLOOD_GRACE_CHEAT                           = 0x101F2, // (  nf  )(0x0497) //
     SMSG_SERVER_FIRST_ACHIEVEMENT                    = 0x0A92A, // (0xCA10)(0x0498) //

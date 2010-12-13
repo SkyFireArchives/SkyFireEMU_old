@@ -66,6 +66,7 @@ SpellEntry::SpellEntry(SpellEntry_n const* spell)
     
     LoadSpellAddons();
 }
+
 void SpellEntry::LoadSpellAddons()
 {
     SpellAuraOptionsEntry const* SpellAuraOptions = GetSpellAuraOptions();

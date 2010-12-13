@@ -425,10 +425,15 @@ void LoadDBCStores(const std::string& dataPath)
     LoadDBC(availableDbcLocales,bar,bad_dbc_files,sSpellTotemsStore,         dbcPath,"SpellTotems.dbc"/*, &CustomSpellTotemsEntryfmt, &CustomSpellTotemsEntryIndex*/);
     LoadDBC(availableDbcLocales,bar,bad_dbc_files,sTrueSpellStore,           dbcPath,"Spell.dbc"/*, &CustomSpellEntryfmt, &CustomSpellEntryIndex*/);
     
+    for(uint32 i = 1; i < sSpellEffectStore.GetNumRows(); ++i)
+    {
+        if(SpellEffectEntry const *spellEffect = sSpellEffectStore.LookupEntry(i))
+            sSpellEffectMap[spellEffect->EffectSpellId].effects[spellEffect->EffectIndex] = spellEffect;
+    }
     
     sSpellStore.Clear();
     sSpellStore.nCount = sTrueSpellStore.nCount;
-    sSpellStore.fieldCount = sTrueSpellStore.fieldCount;
+    sSpellStore.fieldCount = strlen(sSpellStore.fmt);
     sSpellStore.indexTable = new SpellEntry*[sSpellStore.nCount];
     for (uint32 i = 0; i < sTrueSpellStore.GetNumRows(); ++i)
     {
@@ -445,12 +450,6 @@ void LoadDBCStores(const std::string& dataPath)
         {
             sSpellStore.indexTable[i] = NULL;
         }
-    }
-    
-    for(uint32 i = 1; i < sSpellEffectStore.GetNumRows(); ++i)
-    {
-        if(SpellEffectEntry const *spellEffect = sSpellEffectStore.LookupEntry(i))
-            sSpellEffectMap[spellEffect->EffectSpellId].effects[spellEffect->EffectIndex] = spellEffect;
     }
     
     for (uint32 j = 0; j < sSkillLineAbilityStore.GetNumRows(); ++j)
@@ -492,7 +491,7 @@ void LoadDBCStores(const std::string& dataPath)
     LoadDBC(availableDbcLocales,bar,bad_dbc_files,sSpellRadiusStore,         dbcPath,"SpellRadius.dbc");
     LoadDBC(availableDbcLocales,bar,bad_dbc_files,sSpellRangeStore,          dbcPath,"SpellRange.dbc");
     LoadDBC(availableDbcLocales,bar,bad_dbc_files,sSpellRuneCostStore,       dbcPath,"SpellRuneCost.dbc");
-    LoadDBC(availableDbcLocales,bar,bad_dbc_files,sSpellShapeshiftStore,     dbcPath,"SpellShapeshiftForm.dbc");
+    LoadDBC(availableDbcLocales,bar,bad_dbc_files,sSpellShapeshiftFormStore,     dbcPath,"SpellShapeshiftForm.dbc");
     //LoadDBC(availableDbcLocales,bar,bad_dbc_files,sStableSlotPricesStore,    dbcPath,"StableSlotPrices.dbc");
     LoadDBC(availableDbcLocales,bar,bad_dbc_files,sSummonPropertiesStore,    dbcPath,"SummonProperties.dbc");
     LoadDBC(availableDbcLocales,bar,bad_dbc_files,sTalentStore,              dbcPath,"Talent.dbc");

@@ -795,7 +795,17 @@ enum SpellEffects
     SPELL_EFFECT_TALENT_SPEC_SELECT        = 162,
     SPELL_EFFECT_163                       = 163,
     SPELL_EFFECT_REMOVE_AURA               = 164,
-    TOTAL_SPELL_EFFECTS                    = 165
+    SPELL_EFFECT_165                       = 165,
+    SPELL_EFFECT_166                       = 166,
+    SPELL_EFFECT_167                       = 167,
+    SPELL_EFFECT_168                       = 168,
+    SPELL_EFFECT_169                       = 169,
+    SPELL_EFFECT_170                       = 170,
+    SPELL_EFFECT_171                       = 171,
+    SPELL_EFFECT_172                       = 172,
+    SPELL_EFFECT_173                       = 173,
+    SPELL_EFFECT_174                       = 174,
+    TOTAL_SPELL_EFFECTS                    = 175
 };
 
 enum SpellCastResult
