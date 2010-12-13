@@ -230,16 +230,16 @@ pEffect SpellEffects[TOTAL_SPELL_EFFECTS]=
     &Spell::EffectActivateSpec,                             //162 SPELL_EFFECT_TALENT_SPEC_SELECT       activate primary/secondary spec
     &Spell::EffectNULL,                                     //163 unused
     &Spell::EffectRemoveAura,                               //164 SPELL_EFFECT_REMOVE_AURA
-    &Spell::EffectNULL,                                     //165 unused
-    &Spell::EffectNULL,                                     //166 unused
-    &Spell::EffectNULL,                                     //167 unused
-    &Spell::EffectNULL,                                     //168 unused
-    &Spell::EffectNULL,                                     //169 unused
-    &Spell::EffectNULL,                                     //170 unused
-    &Spell::EffectNULL,                                     //171 unused
-    &Spell::EffectNULL,                                     //172 unused
-    &Spell::EffectNULL,                                     //173 unused
-    &Spell::EffectNULL,                                     //174 unused
+    &Spell::EffectNULL,                                     //165
+    &Spell::EffectNULL,                                     //166
+    &Spell::EffectNULL,                                     //167
+    &Spell::EffectNULL,                                     //168
+    &Spell::EffectNULL,                                     //169
+    &Spell::EffectNULL,                                     //170
+    &Spell::EffectNULL,                                     //171
+    &Spell::EffectNULL,                                     //172
+    &Spell::EffectNULL,                                     //173
+    &Spell::EffectNULL,                                     //174
 };
 
 void Spell::EffectNULL(SpellEffIndex /*effIndex*/)
