@@ -1,0 +1,1 @@
+ALTER TABLE `character_stats` ADD COLUMN `maxpower10` int(10) UNSIGNED NOT NULL DEFAULT '0' AFTER `maxpower9`;

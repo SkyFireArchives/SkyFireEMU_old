@@ -769,6 +769,7 @@ CREATE TABLE IF NOT EXISTS `character_stats` (
   `maxpower7` int(10) unsigned NOT NULL DEFAULT '0',
   `maxpower8` int(10) unsigned NOT NULL DEFAULT '0',
   `maxpower9` int(10) unsigned NOT NULL DEFAULT '0',
+  `maxpower10` int(10) unsigned NOT NULL DEFAULT '0',
   `strength` int(10) unsigned NOT NULL DEFAULT '0',
   `agility` int(10) unsigned NOT NULL DEFAULT '0',
   `stamina` int(10) unsigned NOT NULL DEFAULT '0',
