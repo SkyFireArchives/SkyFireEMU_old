@@ -83,7 +83,7 @@ enum Opcodes
     CMSG_PET_NAME_QUERY                              = 0x10006, // (0xABF1)(0x0052) //
     SMSG_PET_NAME_QUERY_RESPONSE                     = 0x0E20A, // (0x090C)(0x0053) //
     CMSG_GUILD_QUERY                                 = 0x10007, // (0x4B18)(0x0054) //
-    SMSG_GUILD_QUERY_RESPONSE                        = 0x03208, // (0xEA1D)(0x0055) //
+    SMSG_GUILD_QUERY_RESPONSE                        = 0x0365C, // (0xEA1D)(0x0055) //
     CMSG_ITEM_QUERY_SINGLE                           = 0x00180, // (0x5621)(0x0056) //
     CMSG_ITEM_QUERY_MULTIPLE                         = 0x10008, // (  nf  )(0x0057) //
     SMSG_ITEM_QUERY_SINGLE_RESPONSE                  = 0x00828, // (0x8014)(0x0058) //
