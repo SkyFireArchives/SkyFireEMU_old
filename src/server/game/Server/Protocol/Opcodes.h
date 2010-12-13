@@ -285,7 +285,7 @@ enum Opcodes
     CMSG_SPLIT_ITEM                                  = 0x10047, // (  nf  )(0x010E) //
     CMSG_AUTOEQUIP_ITEM_SLOT                         = 0x10048, // (  nf  )(0x010F) //
     OBSOLETE_DROP_ITEM                               = 0x10049, // (  nf  )(0x0110) //
-    CMSG_DESTROYITEM                                 = 0x1004A, // (  nf  )(0x0111) //
+    CMSG_DESTROYITEM                                 = 0x01E5C, // (  nf  )(0x0111) //
     SMSG_INVENTORY_CHANGE_FAILURE                    = 0x0D655, // (0x4319)(0x0112) //
     SMSG_OPEN_CONTAINER                              = 0x01C5F, // (0x6AB0)(0x0113) //
     CMSG_INSPECT                                     = 0x0AF7F, // (0x2334)(0x0114) //
@@ -450,7 +450,7 @@ enum Opcodes
     SMSG_TRAINER_BUY_FAILED                          = 0x0257E, // (0xE371)(0x01B4) //
     CMSG_BINDER_ACTIVATE                             = 0x01D7F, // (0xE39C)(0x01B5) //
     SMSG_PLAYERBINDERROR                             = 0x0765C, // (0xC3FC)(0x01B6) //
-    CMSG_BANKER_ACTIVATE                             = 0x10073, // (  nf  )(0x01B7) //
+    CMSG_BANKER_ACTIVATE                             = 0x09C5E, // (  nf  )(0x01B7) //
     SMSG_SHOW_BANK                                   = 0x10074, // (  nf  )(0x01B8) //
     CMSG_BUY_BANK_SLOT                               = 0x10075, // (  nf  )(0x01B9) //
     SMSG_BUY_BANK_SLOT_RESULT                        = 0x10076, // (  nf  )(0x01BA) //
@@ -997,7 +997,7 @@ enum Opcodes
     SMSG_VOICE_CHAT_STATUS                           = 0x08923, // (0x627D)(0x03E3) //
     CMSG_REPORT_PVP_AFK                              = 0x1018C, // (  nf  )(0x03E4) //
     SMSG_REPORT_PVP_AFK_RESULT                       = 0x0A75F, // (0x239D)(0x03E5) //
-    CMSG_GUILD_BANKER_ACTIVATE                       = 0x1018D, // (  nf  )(0x03E6) //
+    CMSG_GUILD_BANKER_ACTIVATE                       = 0x0045E, // (  nf  )(0x03E6) //
     CMSG_GUILD_BANK_QUERY_TAB                        = 0x1018E, // (  nf  )(0x03E7) //
     SMSG_GUILD_BANK_LIST                             = 0x0B822, // (0xE3D0)(0x03E8) //
     CMSG_GUILD_BANK_SWAP_ITEMS                       = 0x1018F, // (  nf  )(0x03E9) //
