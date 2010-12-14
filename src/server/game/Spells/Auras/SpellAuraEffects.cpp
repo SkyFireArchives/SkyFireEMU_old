@@ -4053,6 +4053,30 @@ void AuraEffect::HandleAuraModRoot(AuraApplication const * aurApp, uint8 mode, b
     Unit * target = aurApp->GetTarget();
 
     target->SetControlled(apply, UNIT_STAT_ROOT);
+    
+    if(apply)
+    {
+        switch (GetSpellProto()->Id)
+        {
+            case 69001: //Transform: Worgen. not used?
+            {
+                if(target->GetTypeId() == TYPEID_PLAYER)
+                    target->ToPlayer()->setInWorgenForm();
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    else 
+    {
+        switch (GetSpellProto()->Id)
+        {
+            default:
+                break;
+        }
+    }
+
 }
 
 void AuraEffect::HandlePreventFleeing(AuraApplication const * aurApp, uint8 mode, bool apply) const
@@ -4212,7 +4236,7 @@ void AuraEffect::HandleAuraControlVehicle(AuraApplication const * aurApp, uint8 
 /*********************************************************/
 /***                  MODIFY SPEED                     ***/
 /*********************************************************/
-void AuraEffect::HandleAuraModIncreaseSpeed(AuraApplication const * aurApp, uint8 mode, bool /*apply*/) const
+void AuraEffect::HandleAuraModIncreaseSpeed(AuraApplication const * aurApp, uint8 mode, bool apply) const
 {
     if (!(mode & AURA_EFFECT_HANDLE_CHANGE_AMOUNT_MASK))
         return;
@@ -4220,6 +4244,30 @@ void AuraEffect::HandleAuraModIncreaseSpeed(AuraApplication const * aurApp, uint
     Unit * target = aurApp->GetTarget();
 
     target->UpdateSpeed(MOVE_RUN, true);
+    
+    if(apply)
+    {
+        switch (GetId())
+        {
+            case 68992: //Darkflight, worgen's sprint spell.
+            {
+                if(target->GetTypeId() == TYPEID_PLAYER)
+                    target->ToPlayer()->setInWorgenForm(UNIT_FLAG2_WORGEN_TRANSFORM2);
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    else 
+    {
+        switch (GetId())
+        {
+            default:
+                break;
+        }
+    }
+
 }
 
 void AuraEffect::HandleAuraModIncreaseMountedSpeed(AuraApplication const * aurApp, uint8 mode, bool /*apply*/) const

@@ -11791,6 +11791,12 @@ void Unit::SetInCombatState(bool PvP, Unit* enemy)
             UpdateSpeed(MOVE_FLIGHT, true);
         }
     }
+    
+    if(GetTypeId() == TYPEID_PLAYER && ToPlayer()->getRace() == RACE_WORGEN)
+    {
+        //TODO: make a hackfix for worgen starting zone.
+        ToPlayer()->setInWorgenForm(UNIT_FLAG2_WORGEN_TRANSFORM3);
+    }
 
     for (Unit::ControlList::iterator itr = m_Controlled.begin(); itr != m_Controlled.end(); ++itr)
     {

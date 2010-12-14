@@ -6468,6 +6468,43 @@ void Player::SendMovieStart(uint32 MovieId)
     SendDirectMessage(&data);
 }
 
+bool Player::isInWorgenForm()
+{
+ 	return GetUInt32Value(UNIT_FIELD_FLAGS_2) & IN_WORGEN_FORM ? true : false;
+}
+
+void Player::setInHumanForm()
+{
+    if(isInCombat())
+        return;
+    
+ 	uint32 newFlag = GetUInt32Value(UNIT_FIELD_FLAGS_2) & ~IN_WORGEN_FORM;
+ 	SetUInt32Value(UNIT_FIELD_FLAGS_2, newFlag);
+    m_ExtraFlags &= ~PLAYER_EXTRA_WORGEN_FORM;
+}
+
+void Player::setInWorgenForm(uint32 form)
+{
+ 	if(isInWorgenForm())
+        return;
+ 	SetFlag(UNIT_FIELD_FLAGS_2, form);
+    m_ExtraFlags |= PLAYER_EXTRA_WORGEN_FORM;
+}
+
+bool Player::toggleWorgenForm(uint32 form)
+{
+    if(isInWorgenForm())
+    {
+        setInHumanForm();
+        return false;
+    }
+    else
+    {
+        setInWorgenForm(form);
+        return true;
+    }
+}
+
 void Player::CheckAreaExploreAndOutdoor()
 {
     if (!isAlive())
@@ -16613,6 +16650,10 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
         }
     }
 
+    //TODO: find why the player is not in worgen form at login with this code.
+    //if(extraflags & PLAYER_EXTRA_WORGEN_FORM)
+    //    setInWorgenForm(IN_WORGEN_FORM);
+    
     _LoadDeclinedNames(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADDECLINEDNAMES));
 
     m_achievementMgr.LoadFromDB(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADACHIEVEMENTS), holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADCRITERIAPROGRESS));

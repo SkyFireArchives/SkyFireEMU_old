@@ -1211,6 +1211,12 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     m_caster->SendMessageToSet(&data,true);
                     return;
                 }
+                case 68996:                                 // Two forms (worgen transformation spell)
+                {
+                    if(m_caster->GetTypeId() == TYPEID_PLAYER && !m_caster->isInCombat())
+                        m_caster->ToPlayer()->toggleWorgenForm();
+                    return;
+                }
             }
 
             break;
