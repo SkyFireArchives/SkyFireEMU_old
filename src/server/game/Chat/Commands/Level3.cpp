@@ -1410,6 +1410,34 @@ bool ChatHandler::HandleSetSkillCommand(const char *args)
     return true;
 }
 
+bool ChatHandler::HandleAchievementAddCommand(const char *args)
+{
+    if (!*args)
+        return false;
+
+    uint32 achievementId = atoi((char*)args);
+    if (!achievementId)
+    {
+        if (char* cId = extractKeyFromLink((char*)args, "Hachievement"))
+            achievementId = atoi(cId);
+        if (!achievementId)
+            return false;
+    }
+
+    Player* target = getSelectedPlayer();
+    if (!target)
+    {
+        SendSysMessage(LANG_NO_CHAR_SELECTED);
+        SetSentErrorMessage(true);
+        return false;
+    }
+
+    if (AchievementEntry const* pAE = GetAchievementStore()->LookupEntry(achievementId))
+        target->CompletedAchievement(pAE, true);
+
+    return true;
+}
+
 bool ChatHandler::HandleUnLearnCommand(const char *args)
 {
     if (!*args)
@@ -6773,10 +6801,10 @@ bool ChatHandler::HandleInstanceUnbindCommand(const char *args)
     if (pDiff)
         diff = atoi(pDiff);
     uint16 counter = 0;
-    int16 MapId = 0;
+    uint16 MapId = 0;
 
     if (strcmp(pMap, "all"))
-        if (!(MapId = atoi(pMap)))
+        if (!(MapId = uint16(atoi(pMap))))
             return false;
 
     for(uint8 i = 0; i < MAX_DIFFICULTY; ++i)

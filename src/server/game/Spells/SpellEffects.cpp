@@ -2166,9 +2166,10 @@ void Spell::EffectPowerBurn(SpellEffIndex effIndex)
     // NO - Not a typo - EffectPowerBurn uses effect value multiplier - not effect damage multiplier
     float dmgMultiplier = SpellMgr::CalculateSpellEffectValueMultiplier(m_spellInfo, effIndex, m_originalCaster, this);
 
-    newDamage = int32(newDamage * dmgMultiplier);
+    // add log data before multiplication (need power amount, not damage)
+    ExecuteLogEffectTakeTargetPower(effIndex, unitTarget, powerType, newDamage, 0.0f);
 
-    ExecuteLogEffectTakeTargetPower(effIndex, unitTarget, powerType, newDamage, dmgMultiplier);
+    newDamage = int32(newDamage * dmgMultiplier);
 
     m_damage += newDamage;
 }
@@ -3459,6 +3460,8 @@ void Spell::EffectEnchantItemPerm(SpellEffIndex effIndex)
 
         // add new enchanting if equipped
         item_owner->ApplyEnchantment(itemTarget,PERM_ENCHANTMENT_SLOT,true);
+
+        itemTarget->SetSoulboundTradeable(NULL, item_owner, false);
     }
 }
 
@@ -3518,6 +3521,8 @@ void Spell::EffectEnchantItemPrismatic(SpellEffIndex effIndex)
 
     // add new enchanting if equipped
     item_owner->ApplyEnchantment(itemTarget,PRISMATIC_ENCHANTMENT_SLOT,true);
+
+    itemTarget->SetSoulboundTradeable(NULL, item_owner, false);
 }
 
 void Spell::EffectEnchantItemTmp(SpellEffIndex effIndex)
