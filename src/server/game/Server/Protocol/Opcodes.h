@@ -417,7 +417,7 @@ enum Opcodes
     SMSG_QUESTGIVER_QUEST_FAILED                     = 0x02E77, // (0x6B39)(0x0192) //
     CMSG_QUESTLOG_SWAP_QUEST                         = 0x10068, // (  nf  )(0x0193) //
     CMSG_QUESTLOG_REMOVE_QUEST                       = 0x0C67F, // (  nf  )(0x0194) //
-    SMSG_QUESTLOG_FULL                               = 0x1006A, // (  nf  )(0x0195) //
+    SMSG_QUESTLOG_FULL                               = 0x05557, // (  nf  )(0x0195) //
     SMSG_QUESTUPDATE_FAILED                          = 0x0DC5D, // (0x0AB5)(0x0196) //
     SMSG_QUESTUPDATE_FAILEDTIMER                     = 0x03F5D, // (0x8BB4)(0x0197) //
     SMSG_QUESTUPDATE_COMPLETE                        = 0x04575, // (0x4AF5)(0x0198) //
@@ -1129,7 +1129,7 @@ enum Opcodes
     CMSG_SET_GLYPH                                   = 0x101D5, // (  nf  )(0x0467) //
     SMSG_ACHIEVEMENT_EARNED                          = 0x101D6, // (  nf  )(0x0468) //
     SMSG_DYNAMIC_DROP_ROLL_RESULT                    = 0x101D7, // (  nf  )(0x0469) //
-    SMSG_CRITERIA_UPDATE                             = 0x101D8, // (  nf  )(0x046A) //
+    SMSG_CRITERIA_UPDATE                             = 0x03E55, // (  nf  )(0x046A) //
     CMSG_QUERY_INSPECT_ACHIEVEMENTS                  = 0x06E55, // (  nf  )(0x046B) //
     SMSG_RESPOND_INSPECT_ACHIEVEMENTS                = 0x101DA, // (0xE303)(0x046C) //
     CMSG_DISMISS_CONTROLLED_VEHICLE                  = 0x101DB, // (  nf  )(0x046D) //
