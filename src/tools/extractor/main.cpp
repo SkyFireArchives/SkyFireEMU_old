@@ -54,13 +54,13 @@ int main(int argc, char * arg[])
     
     for (int i = 0; i < argc; ++i)  
     {
-        if(strcmp(arg[i], ARG_MAP))
+        if(strcmp(arg[i], ARG_MAP) == 0)
             extractMap = true;
-        if(strcmp(arg[i], ARG_NOMAP))
+        if(strcmp(arg[i], ARG_NOMAP) == 0)
             extractMap = false;
-        if(strcmp(arg[i], ARG_DBC))
+        if(strcmp(arg[i], ARG_DBC) == 0)
             extractDBC = true;
-        if(strcmp(arg[i], ARG_NODBC))
+        if(strcmp(arg[i], ARG_NODBC) == 0)
             extractDBC = false;
     }
     

@@ -1282,7 +1282,7 @@ enum Opcodes
     SMSG_UNKNOWN_1329                                = 0x02D57, // (0x02B8)(0x0531) //
     SMSG_SEND_QUEUED_PACKETS                         = 0x01400, // (  nf  )(  nf  ) //
     CMSG_REDIRECT_AUTH_PROOF                         = 0x08C0A, // (  nf  )(  nf  ) //
-    NUM_MSG_TYPES                                    = 0x10270  // last unknow opcode + 1.
+    NUM_MSG_TYPES                                    = 0x102B4  // last unknow opcode + 1.
 };
 
 extern void InitOpcodeTable();

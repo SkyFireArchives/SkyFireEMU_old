@@ -19,6 +19,8 @@
 #ifndef FILELOADER_H
 #define FILELOADER_H
 
+#include "headers.h"
+#include "typedefs.h"
 #include "MPQFile.h"
 
 #define FILE_FORMAT_VERSION    18

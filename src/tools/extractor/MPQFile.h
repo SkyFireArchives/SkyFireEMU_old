@@ -19,8 +19,7 @@
 #ifndef MPQFILE_H
 #define MPQFILE_H
 
-#include "StormLib/src/StormLib.h"
-#include "StormLib/src/StormCommon.h"
+#include "headers.h"
 
 class MPQFile
 {

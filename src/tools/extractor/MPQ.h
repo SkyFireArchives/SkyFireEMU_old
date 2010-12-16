@@ -19,8 +19,7 @@
 #ifndef MPQ_H
 #define MPQ_H
 
-#include "StormLib/src/StormLib.h"
-#include "StormLib/src/StormCommon.h"
+#include "headers.h"
 
 void LoadLocaleMPQFiles(int const locale);
 void LoadMapMPQFiles();
