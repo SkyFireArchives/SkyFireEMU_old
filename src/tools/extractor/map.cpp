@@ -100,7 +100,7 @@ void ExtractMapsFromMpq(uint32 build)
                     continue;
                 sprintf(mpq_filename, "World\\Maps\\%s\\%s_%u_%u.adt", map_ids[z].name, map_ids[z].name, x, y);
                 sprintf(output_filename, "./maps/%03u%02u%02u.map", map_ids[z].id, y, x);
-                ConvertADT(mpq_filename, output_filename, y, x, build);
+                ConvertADT(mpq_filename, output_filename, y, x, build, WorldMPQ);
             }
             // draw progress bar
             //printf("Processing........................%d%%\r", (100 * (y+1)) / WDT_MAP_SIZE);
@@ -216,9 +216,6 @@ float CONF_flat_liquid_delta_limit = 0.001f; // If max - min less this value - l
 
 bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 build, HANDLE _mpq)
 {
-    if(_mpq == NULL)
-        _mpq = WorldMPQ;
-    
     ADT_file adt(filename, _mpq);
     
     if (adt.isEof())

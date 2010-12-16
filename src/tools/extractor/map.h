@@ -23,6 +23,6 @@
 
 void ExtractMapsFromMpq(uint32 build);
 
-bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 build, HANDLE mpq = NULL);
+bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 build, HANDLE mpq);
 
 #endif
