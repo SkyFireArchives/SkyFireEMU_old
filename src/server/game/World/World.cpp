@@ -1245,7 +1245,7 @@ void World::SetInitialWorldSettings()
     sObjectMgr.SetHighestGuids();
 
     ///- Check the existence of the map files for all races' startup areas.
-    if (!MapManager::ExistMapAndVMap(0,-6240.32f, 331.033f)
+    /*if (!MapManager::ExistMapAndVMap(0,-6240.32f, 331.033f)
         || !MapManager::ExistMapAndVMap(0,-8949.95f,-132.493f)
         || !MapManager::ExistMapAndVMap(1,-618.518f,-4251.67f)
         || !MapManager::ExistMapAndVMap(0, 1676.35f, 1677.45f)
@@ -1256,7 +1256,7 @@ void World::SetInitialWorldSettings()
             !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f))))
     {
         exit(1);
-    }
+    }*/
 
     ///- Loading strings. Getting no records means core load has to be canceled because no error message can be output.
     sLog.outString();

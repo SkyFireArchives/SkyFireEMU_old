@@ -27,7 +27,10 @@ void LoadLocaleMPQFiles(int const locale)
     sprintf(filename,"%s/Data/%s/locale-%s.MPQ", input_path, langs[locale], langs[locale]);
     printf("Loading %s\n", filename);
     if(!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &localeMPQ[0]))
+    {
+        printf("%i\n", GetLastError());
         assert(false && "\nLoad of MPQ failed");
+    }
 	
     for(int i = 0; i < PATCH_REV_COUNT; ++i)
     {
@@ -37,7 +40,7 @@ void LoadLocaleMPQFiles(int const locale)
         sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
         if(!SFileOpenPatchArchive(localeMPQ[0], filename, langs[locale], MPQ_OPEN_READ_ONLY))
         {
-            printf("%u\n", GetLastError());
+            printf("%i\n", GetLastError());
             assert(false && "Load of MPQ patch failed");
         }
     }
@@ -53,7 +56,10 @@ void LoadLocaleMPQFiles(int const locale)
         sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
         printf("Loading %s\n", filename);
         if(!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &localeMPQ[i+1]))
+        {
+            printf("%i\n", GetLastError());
             assert(false && "Load of MPQ failed");
+        }
 		
         for(int j = i; j < PATCH_REV_COUNT; ++j)
         {
@@ -63,7 +69,7 @@ void LoadLocaleMPQFiles(int const locale)
             sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
             if(!SFileOpenPatchArchive(localeMPQ[i+1], filename, langs[locale], MPQ_OPEN_READ_ONLY))
             {
-                printf("%u\n", GetLastError());
+                printf("%i\n", GetLastError());
                 assert(false && "Load of MPQ patch failed");
             }
         }
@@ -80,7 +86,10 @@ void LoadMapMPQFiles()
     sprintf(filename,"%s/Data/world.MPQ", input_path);
     printf("Loading %s\n", filename);
     if(!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &WorldMPQ))
+    {
+        printf("%i\n", GetLastError());
         assert(false && "\nLoad of MPQ failed");
+    }
 	
     for(int i = 0; i < PATCH_REV_COUNT; ++i)
     {
@@ -91,7 +100,7 @@ void LoadMapMPQFiles()
         printf("    -%i\n", patchRev[i]);
         if(!SFileOpenPatchArchive(WorldMPQ, filename, "base", MPQ_OPEN_READ_ONLY))
         {
-            printf("%u\n", GetLastError());
+            printf("%i\n", GetLastError());
             assert(false && "Load of MPQ patch failed");
         }
     }
@@ -103,7 +112,10 @@ void LoadMapMPQFiles()
         sprintf(filename, "%s/Data/expansion%u.MPQ", input_path, j+1);
         printf("Loading %s\n", filename);
         if(!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &ExpansionsMPQ[j]))
+        {
+            printf("%i\n", GetLastError());
             assert(false && "\nLoad of MPQ failed");
+        }
         
         for(int i = 0; i < PATCH_REV_COUNT; ++i)
         {
@@ -114,7 +126,7 @@ void LoadMapMPQFiles()
             printf("    -%i\n", patchRev[i]);
             if(!SFileOpenPatchArchive(ExpansionsMPQ[j], filename, "base", MPQ_OPEN_READ_ONLY))
             {
-                printf("%u\n", GetLastError());
+                printf("%i\n", GetLastError());
                 assert(false && "Load of MPQ patch failed");
             }
         }

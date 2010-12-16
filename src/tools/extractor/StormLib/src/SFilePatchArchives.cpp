@@ -501,7 +501,6 @@ bool WINAPI SFileOpenPatchArchive(
     {
         if((ha->pStream->StreamFlags & STREAM_FLAG_READ_ONLY) == 0)
 		{
-			printf("omg");
             nError = ERROR_ACCESS_DENIED;
 		}
     }
