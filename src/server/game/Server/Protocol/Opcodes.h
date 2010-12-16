@@ -430,7 +430,7 @@ enum Opcodes
     SMSG_LIST_INVENTORY                              = 0x04E5E, // (0xE375)(0x019F) //
     CMSG_SELL_ITEM                                   = 0x0DF77, // (0x8BB5)(0x01A0) //
     SMSG_SELL_ITEM                                   = 0x02F7E, // (0x2BB5)(0x01A1) //
-    CMSG_BUY_ITEM                                    = 0x05C7D, // (0xCB5C)(0x01A3) //
+    CMSG_BUY_ITEM                                    = 0x08457, // (0xCB5C)(0x01A3) //
     SMSG_BUY_ITEM                                    = 0x04676, // (0x8AF4)(0x01A4) //
     SMSG_BUY_FAILED                                  = 0x0F757, // (0x83DD)(0x01A5) //
     CMSG_TAXICLEARALLNODES                           = 0x1006C, // (  nf  )(0x01A6) //
@@ -511,7 +511,7 @@ enum Opcodes
     MSG_SAVE_GUILD_EMBLEM                            = 0x09D74, // (0x0AF1)(0x01F1) //
     MSG_TABARDVENDOR_ACTIVATE                        = 0x0B575, // (0x0A50)(0x01F2) //
     SMSG_PLAY_SPELL_VISUAL                           = 0x0055C, // (0x63BD)(0x01F3) //
-    CMSG_ZONEUPDATE                                  = 0x101A2, // (0x2AD8)(0x01F4) //
+    CMSG_ZONEUPDATE                                  = 0x05C7D, // (0x2AD8)(0x01F4) //
     SMSG_PARTYKILLLOG                                = 0x0E775, // (0xCA39)(0x01F5) //
     SMSG_COMPRESSED_UPDATE_OBJECT                    = 0x06C7D, // (0xCB74)(0x01F6) //
     SMSG_PLAY_SPELL_IMPACT                           = 0x03D74, // (0x4A30)(0x01F7) //
