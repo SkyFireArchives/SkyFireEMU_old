@@ -226,38 +226,59 @@ set(ZLIB_BZIP2_FILES
            ${CMAKE_CURRENT_SOURCE_DIR}/StormLib/src/zlib/zutil.c
 )
 
-set(dbcextractor_SRCS
-           ${CMAKE_CURRENT_SOURCE_DIR}/System.cpp
+set(extractor_SRCS
+	${CMAKE_CURRENT_SOURCE_DIR}/adt.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/adt.h
+	${CMAKE_CURRENT_SOURCE_DIR}/dbc.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/dbc.h
+	${CMAKE_CURRENT_SOURCE_DIR}/DBCFile.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/DBCFile.h
+	${CMAKE_CURRENT_SOURCE_DIR}/FileLoader.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FileLoader.h
+	${CMAKE_CURRENT_SOURCE_DIR}/headers.h
+	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/map.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/map.h
+	${CMAKE_CURRENT_SOURCE_DIR}/misc.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/misc.h
+	${CMAKE_CURRENT_SOURCE_DIR}/MPQ.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MPQ.h
+	${CMAKE_CURRENT_SOURCE_DIR}/MPQFile.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MPQFile.h
+	${CMAKE_CURRENT_SOURCE_DIR}/typedefs.h
+	${CMAKE_CURRENT_SOURCE_DIR}/wdt.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/wdt.h
+	
 )
 
-set(dbc_C_FLAGS "-D_7ZIP_ST -DBZ_STRICT_ANSI")
+set(extractor_C_FLAGS "-D_7ZIP_ST -DBZ_STRICT_ANSI")
 
 if(WIN32)
     if(MSVC)
-        set(dbc_C_FLAGS "-D_7ZIP_ST -DWIN32")
+        set(extractor_C_FLAGS "-D_7ZIP_ST -DWIN32")
     endif()
-    set(dbc_SRC_ADDITIONAL_FILES ${ZLIB_BZIP2_FILES})
+    set(extractor_SRC_ADDITIONAL_FILES ${ZLIB_BZIP2_FILES})
 endif()
 
 if(APPLE)
-    set(dbc_LINK_FLAGS "-lz -lbz2 -framework Carbon")
-    set(dbc_PUBLIC_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/StormLib/src/StormLib.h ${CMAKE_CURRENT_SOURCE_DIR}/StormLib/src/StormPort.h)
+    set(extractor_LINK_FLAGS "-lz -lbz2 -framework Carbon")
+    set(extractor_PUBLIC_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/StormLib/src/StormLib.h ${CMAKE_CURRENT_SOURCE_DIR}/StormLib/src/StormPort.h)
 endif()
 
 if (${CMAKE_SYSTEM_NAME} STREQUAL Linux)
-    set(dbc_LINK_FLAGS "-lz -lbz2")
+    set(extractor_LINK_FLAGS "-lz -lbz2")
 endif()
 
-add_executable(dbcextractor ${StormLib_SRCS}  ${ZLIB_BZIP2_FILES} ${dbcextractor_SRCS})
+add_executable(extractor ${StormLib_SRCS}  ${ZLIB_BZIP2_FILES} ${extractor_SRCS})
 
 if(APPLE)
-	set_target_properties(dbcextractor PROPERTIES COMPILE_FLAGS "${dbc_C_FLAGS}" LINK_FLAGS "${dbc_LINK_FLAGS}" PUBLIC_HEADER "${PUBLIC_HEADERS}")
+	set_target_properties(extractor PROPERTIES COMPILE_FLAGS "${extractor_C_FLAGS}" LINK_FLAGS "${extractor_LINK_FLAGS}" PUBLIC_HEADER "${PUBLIC_HEADERS}")
 else()
-	set_target_properties(dbcextractor PROPERTIES COMPILE_FLAGS "${dbc_C_FLAGS}" LINK_FLAGS "${dbc_LINK_FLAGS}")
+	set_target_properties(extractor PROPERTIES COMPILE_FLAGS "${extractor_C_FLAGS}" LINK_FLAGS "${extractor_LINK_FLAGS}")
 endif()
 
 if( UNIX )
-  install(TARGETS dbcextractor DESTINATION bin)
+  install(TARGETS extractor DESTINATION bin)
 elseif( WIN32 )
-  install(TARGETS dbcextractor DESTINATION "${CMAKE_INSTALL_PREFIX}")
+  install(TARGETS extractor DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif()
