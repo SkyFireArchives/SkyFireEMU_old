@@ -396,7 +396,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                 if(temp > 0)
                     attPowerMod_pos += temp;
                 else
-                    attPowerMod_neg += temp;
+                    attPowerMod_neg -= temp;
 
             }
         }
@@ -410,7 +410,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
             if(temp > 0)
                 attPowerMod_pos += temp;
             else
-                attPowerMod_neg += temp;
+                attPowerMod_neg -= temp;
         }
 
         AuraEffectList const& mAPbyArmor = GetAuraEffectsByType(SPELL_AURA_MOD_ATTACK_POWER_OF_ARMOR);
@@ -421,7 +421,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
             if(temp > 0)
                 attPowerMod_pos += temp;
             else
-                attPowerMod_neg += temp;
+                attPowerMod_neg -= temp;
         }
     }
 
@@ -1238,7 +1238,7 @@ void Guardian::UpdateAttackPowerAndDamage(bool ranged)
     else 
     {
         SetModifierValue(UNIT_MOD_ATTACK_POWER_POS, BASE_VALUE, val);
-        SetModifierValue(UNIT_MOD_ATTACK_POWER_NEG, BASE_VALUE, bonusAP);
+        SetModifierValue(UNIT_MOD_ATTACK_POWER_NEG, BASE_VALUE, -bonusAP);
     }
 
     //in BASE_VALUE of UNIT_MOD_ATTACK_POWER for creatures we store data of meleeattackpower field in DB

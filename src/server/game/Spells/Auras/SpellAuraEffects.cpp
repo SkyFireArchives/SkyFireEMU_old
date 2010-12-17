@@ -5272,7 +5272,7 @@ void AuraEffect::HandleAuraModAttackPower(AuraApplication const * aurApp, uint8 
 
     Unit * target = aurApp->GetTarget();
 
-    if(float(GetAmount()) > 0)
+    if(float(GetAmount()) > 0.f)
         target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_POS, TOTAL_VALUE, float(GetAmount()), apply);
     else
         target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_NEG, TOTAL_VALUE, -float(GetAmount()), apply);
@@ -5288,7 +5288,7 @@ void AuraEffect::HandleAuraModRangedAttackPower(AuraApplication const * aurApp, 
     if ((target->getClassMask() & CLASSMASK_WAND_USERS) != 0)
         return;
 
-    if(float(GetAmount()) > 0)
+    if(float(GetAmount()) > 0.f)
         target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(GetAmount()), apply);
     else
         target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(GetAmount()), apply);
@@ -5302,7 +5302,7 @@ void AuraEffect::HandleAuraModAttackPowerPercent(AuraApplication const * aurApp,
     Unit * target = aurApp->GetTarget();
 
     //UNIT_FIELD_ATTACK_POWER_MULTIPLIER = multiplier - 1
-    if(float(GetAmount()) > 0)
+    if(float(GetAmount()) > 0.f)
         target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_POS, TOTAL_PCT, float(GetAmount()), apply);
     else
         target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_NEG, TOTAL_PCT, -float(GetAmount()), apply);
@@ -5319,7 +5319,7 @@ void AuraEffect::HandleAuraModRangedAttackPowerPercent(AuraApplication const * a
         return;
 
     //UNIT_FIELD_RANGED_ATTACK_POWER_MULTIPLIER = multiplier - 1
-    if(float(GetAmount()) > 0)
+    if(float(GetAmount()) > 0.f)
         target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_PCT, float(GetAmount()), apply);
     else
         target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_PCT, -float(GetAmount()), apply);
@@ -5401,7 +5401,7 @@ void AuraEffect::HandleModDamageDone(AuraApplication const * aurApp, uint8 mode,
                 if (GetAmount() > 0)
                     target->ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS,GetAmount(),apply);
                 else
-                    target->ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_NEG,GetAmount(),apply);
+                    target->ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_NEG,-GetAmount(),apply);
             }
         }
         else
@@ -5440,7 +5440,7 @@ void AuraEffect::HandleModDamageDone(AuraApplication const * aurApp, uint8 mode,
             for (int i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; i++)
             {
                 if ((GetMiscValue() & (1<<i)) != 0)
-                    target->ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_NEG+i,GetAmount(),apply);
+                    target->ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_NEG+i,-GetAmount(),apply);
             }
         }
         if (Guardian* pet = target->ToPlayer()->GetGuardianPet())
