@@ -119,9 +119,8 @@ void LoadMapMPQFiles()
         
         if(!IsValidMpqHandle((TMPQArchive*)ExpansionsMPQ[j]))
         {
-            printf("Load Failed!\n");
-            if(j == 2)
-                printf("\nYou must replace\n'SET accountType \"xx\"'\nin your WTF/config.wtf and WTF/launcher.wtf by\n'SET accountType \"CT\"'\nand then restart your launcher\n");
+            printf("Load of Expansion%u.MPQ Failed!\n", j+1);
+            printf("\nPlease verify you downloaded all the MPQs. You should replace\n'SET accountType \"xx\"'\nin your WTF/config.wtf and WTF/launcher.wtf by\n'SET accountType \"CT\"'\nand then restart your launcher\n");
             exit(1);
         }
         

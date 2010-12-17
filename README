@@ -36,7 +36,8 @@ SQL files to create the database can be found in the sql directory. Files
 to update your database from an older revision/version can be found in the
 sql/updates directory.
 
-The MapExtractor *needs* that you finished *all* the updates of the client.
+The extractor *needs* that you finished *all* the updates of the client.
 It includes the small updates at the end.
+You should also verify that the accountType setting is set to "CT" in your WTF/launcher.wtf and WTF/config.wtf.
 
 See the docs/UnixInstall.txt file for installation instructions on Linux.
