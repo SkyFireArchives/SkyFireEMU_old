@@ -80,8 +80,8 @@ enum Opcodes
     SMSG_LOGOUT_CANCEL_ACK                           = 0x0CD56, // (0xA395)(0x004F) //
     CMSG_NAME_QUERY                                  = 0x0C57E, // (0x4354)(0x0050) //
     SMSG_NAME_QUERY_RESPONSE                         = 0x04D5E, // (0x0A14)(0x0051) //
-    CMSG_PET_NAME_QUERY                              = 0x10006, // (0xABF1)(0x0052) //
-    SMSG_PET_NAME_QUERY_RESPONSE                     = 0x0E20A, // (0x090C)(0x0053) //
+    CMSG_PET_NAME_QUERY                              = 0x01E5E, // (0xABF1)(0x0052) //
+    SMSG_PET_NAME_QUERY_RESPONSE                     = 0x0E65E, // (0x090C)(0x0053) //
     CMSG_GUILD_QUERY                                 = 0x10007, // (0x4B18)(0x0054) //
     SMSG_GUILD_QUERY_RESPONSE                        = 0x0365C, // (0xEA1D)(0x0055) //
     CMSG_ITEM_QUERY_SINGLE                           = 0x00180, // (0x5621)(0x0056) //
@@ -873,7 +873,7 @@ enum Opcodes
     SMSG_LFG_UPDATE_PLAYER                           = 0x00C5E, // (0x0238)(0x0367) //
     SMSG_LFG_UPDATE_PARTY                            = 0x0A775, // (0x0B1D)(0x0368) //
     SMSG_LFG_UPDATE_LIST                             = 0x08674, // (0x2BD1)(0x0369) //
-    CMSG_LFG_SET_ROLES                               = 0x0F65F, // (  nf  )(0x036A) //
+    CMSG_LFG_SET_ROLES                               = 0x00509, // (  nf  )(0x036A) //
     CMSG_LFG_SET_NEEDS                               = 0x10145, // (  nf  )(0x036B) //
     CMSG_LFG_SET_BOOT_VOTE                           = 0x10146, // (  nf  )(0x036C) //
     SMSG_LFG_BOOT_PROPOSAL_UPDATE                    = 0x0CC56, // (0x8399)(0x036D) //
