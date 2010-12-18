@@ -919,11 +919,26 @@ struct SpellScaling
     
     uint32 cast;
     
+    bool canScale;
     SpellScaling(uint8 playerLevel_, const SpellEntry * spellEntry_)
     {
         playerLevel = playerLevel_;
         spellEntry = spellEntry_;
+        for(int i = 0; i < 3; i++)
+        {
+            avg[i] = 0.f;
+            min[i] = 0.f;
+            max[i] = 0.f;
+            pts[i] = 0.f;
+        }
+        cast = 0;
+        canScale = false;
         
+        if(!spellEntry->SpellScalingId)
+            return;
+        
+        if(!spellEntry->SpellScaling_class)
+            return;
         
         float base_coef = spellEntry->base_coef;
         uint8 base_level = spellEntry->base_level_coef;
@@ -966,6 +981,7 @@ struct SpellScaling
         }
         
         cast=round(cast/10)/100;
+        canScale = true;
     }
 };
 

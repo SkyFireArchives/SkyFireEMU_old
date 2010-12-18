@@ -1840,11 +1840,14 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
 
     float maxPoints = 0.00f;
     
-    if(caster && spellEntry && spellEntry->SpellScalingId)
+    if(caster)
     {
         SpellScaling values(caster->getLevel(), spellEntry);
-        basePoints = values.min[effIndex];
-        maxPoints = values.max[effIndex];
+        if(values.canScale)
+        {
+            basePoints = values.min[effIndex];
+            maxPoints = values.max[effIndex];
+        }
     }
     
     // base amount modification based on spell lvl vs caster lvl
@@ -1859,7 +1862,7 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
         basePoints += int32(level * basePointsPerLevel);
     }
 
-    if(maxPoints)
+    if(maxPoints != 0.00f)
         basePoints = irand(basePoints, maxPoints);
     else
     {
