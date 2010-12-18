@@ -186,8 +186,8 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket & recv_data)
         data << uint32(ci->type);                           // CreatureType.dbc
         data << uint32(ci->family);                         // CreatureFamily.dbc
         data << uint32(ci->rank);                           // Creature Rank (elite, boss, etc)
-        data << uint32(ci->KillCredit[0]);                  // new in 3.1, kill credit
-        data << uint32(ci->KillCredit[1]);                  // new in 3.1, kill credit
+        data << uint32(ci->KillCredit[0]);                  // kill credit
+        data << uint32(ci->KillCredit[1]);                  // kill credit
         data << uint32(ci->Modelid1);                       // Modelid1
         data << uint32(ci->Modelid2);                       // Modelid2
         data << uint32(ci->Modelid3);                       // Modelid3
@@ -198,6 +198,7 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket & recv_data)
         for (uint32 i = 0; i < 6; ++i)
             data << uint32(ci->questItems[i]);              // itemId[6], quest drop
         data << uint32(ci->movementId);                     // CreatureMovementInfo.dbc
+        data << uint32(expansion);                          // client will not allow interaction if this value is not in line with its stored exp
         SendPacket(&data);
         sLog.outDebug("WORLD: Sent SMSG_CREATURE_QUERY_RESPONSE");
     }
@@ -253,7 +254,8 @@ void WorldSession::HandleGameObjectQueryOpcode(WorldPacket & recv_data)
         data.append(info->raw.data, 24);
         data << float(info->size);                          // go size
         for (uint32 i = 0; i < 6; ++i)
-            data << uint32(info->questItems[i]);              // itemId[6], quest drop
+            data << uint32(info->questItems[i]);            // itemId[6], quest drop
+        data << uint32(0);                                  // go expansion field - TODO: add to database
         SendPacket(&data);
         sLog.outDebug("WORLD: Sent SMSG_GAMEOBJECT_QUERY_RESPONSE");
     }
