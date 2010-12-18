@@ -73,8 +73,6 @@ namespace CactusPatcher
                 }
 
             }
-
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -82,10 +80,8 @@ namespace CactusPatcher
             if (((Button)sender).Text == "Patch")
             {
                 System.Buffer.BlockCopy(patchedBytes, 0, wowExe, patchOffset, patchedBytes.Length);
-                try {File.Delete("Wow_backup.exe");}catch {};
-                try {File.Move("Wow.exe", "Wow_backup.exe");}catch(Exception es)
-                {
-                };
+                try { File.Delete("Wow_backup.exe"); } catch { }
+                try { File.Move("Wow.exe", "Wow_backup.exe"); } catch {}
 
                 if (WriteByteArrayToFile(wowExe, "Wow.exe") == true)
                 {
@@ -98,12 +94,11 @@ namespace CactusPatcher
                     label2.Text = "Error!";
                     label2.ForeColor = Color.Red;
                 }
-
             }
             else
             {
                 System.Buffer.BlockCopy(unpatchedBytes, 0, wowExe, patchOffset, unpatchedBytes.Length);
-                try {File.Delete("Wow.exe");File.Delete("Wow_backup.exe");}catch {};
+                try { File.Delete("Wow.exe"); File.Delete("Wow_backup.exe"); } catch {};
 
                 if (WriteByteArrayToFile(wowExe, "Wow.exe") == true)
                 {
@@ -131,6 +126,7 @@ namespace CactusPatcher
             br.Close();
             return buff;
         }
+
         public bool WriteByteArrayToFile(byte[] buff, string fileName)
         {
             bool response = false;
