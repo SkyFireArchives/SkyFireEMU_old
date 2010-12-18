@@ -346,7 +346,7 @@ void LFGMgr::Update(uint32 diff)
     LfgGuidList firstNew;
     while (!m_newToQueue.empty())
     {
-        sLog.outError("DEBUG:LFGMgr::Update: checking [" UI64FMTD "] m_newToQueue(%u), m_currentQueue(%u)", m_newToQueue.front(), m_newToQueue.size(), m_currentQueue.size());
+        sLog.outError("DEBUG:LFGMgr::Update: checking [" UI64FMTD "] m_newToQueue(%u), m_currentQueue(%u)", m_newToQueue.front(), (uint32)m_newToQueue.size(), (uint32)m_currentQueue.size());
 
         firstNew.push_back(m_newToQueue.front());
 
@@ -490,7 +490,7 @@ void LFGMgr::AddGuidToNewQueue(uint64 guid)
         }
         // Add to queue
         m_newToQueue.push_back(guid);
-        sLog.outError("DEBUG:LFGMgr::AddGuidToNewQueue: [" UI64FMTD "] added to m_newToQueue (size: %u)", guid, m_newToQueue.size());
+        sLog.outError("DEBUG:LFGMgr::AddGuidToNewQueue: [" UI64FMTD "] added to m_newToQueue (size: %u)", guid, (uint32)m_newToQueue.size());
     }
 }
 
@@ -531,7 +531,7 @@ void LFGMgr::AddToQueue(uint64 guid, LfgRolesMap* roles, LfgDungeonSet* dungeons
     for (LfgDungeonSet::const_iterator it = dungeons->begin(); it != dungeons->end(); ++it)
         pqInfo->dungeons.insert(*it);
 
-    sLog.outError("DEBUG:LFGMgr::AddToQueue: [" UI64FMTD "] joining with %u members", guid, pqInfo->roles.size());
+    sLog.outError("DEBUG:LFGMgr::AddToQueue: [" UI64FMTD "] joining with %u members", guid, (uint32)pqInfo->roles.size());
     m_QueueInfoMap[guid] = pqInfo;
     AddGuidToNewQueue(guid);
 }
@@ -557,7 +557,7 @@ bool LFGMgr::RemoveFromQueue(uint64 guid)
         m_QueueInfoMap.erase(it);
         ret = true;
     }
-    sLog.outError("DEBUG:LFGMgr::RemoveFromQueue: [" UI64FMTD "] %s - Queue(%u)", guid, before != m_QueueInfoMap.size() ? "Removed": "Not in queue", m_QueueInfoMap.size());
+    sLog.outError("DEBUG:LFGMgr::RemoveFromQueue: [" UI64FMTD "] %s - Queue(%u)", guid, before != m_QueueInfoMap.size() ? "Removed": "Not in queue", (uint32)m_QueueInfoMap.size());
     return ret;
 }
 
