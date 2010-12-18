@@ -122,6 +122,7 @@ void SpellEntry::LoadSpellAddons()
         EffectItemType[i] = SpellEffect ? SpellEffect->EffectItemType : 0;
         EffectMechanic[i] = SpellEffect ? SpellEffect->EffectMechanic : 0;
         EffectMiscValue[i] = SpellEffect ? SpellEffect->EffectMiscValue : 0;
+        EffectMiscValueB[i] = SpellEffect ? SpellEffect->EffectMiscValueB : 0;
         EffectPointsPerComboPoint[i] = SpellEffect ? SpellEffect->EffectPointsPerComboPoint : 0;
         EffectRadiusIndex[i] = SpellEffect ? SpellEffect->EffectRadiusIndex : 0;
         EffectRealPointsPerLevel[i] = SpellEffect ? SpellEffect->EffectRealPointsPerLevel : 0;
@@ -129,8 +130,6 @@ void SpellEntry::LoadSpellAddons()
         EffectTriggerSpell[i] = SpellEffect ? SpellEffect->EffectTriggerSpell : 0;
         EffectImplicitTargetA[i] = SpellEffect ? SpellEffect->EffectImplicitTargetA : 0;
         EffectImplicitTargetB[i] = SpellEffect ? SpellEffect->EffectImplicitTargetB : 0;
-        EffectSpellId[i] = SpellEffect ? SpellEffect->EffectSpellId : 0;
-        EffectIndex[i] = SpellEffect ? SpellEffect->EffectIndex : 0;
     }
     
     SpellEquippedItemsEntry const* SpellEquippedItems = GetSpellEquippedItems();
