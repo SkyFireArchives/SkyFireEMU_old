@@ -3590,7 +3590,7 @@ void ObjectMgr::LoadGuilds()
     CharacterDatabase.Execute(guildBankEventLogStmt);
 
     sLog.outString();
-    sLog.outString(">> Loaded %u guild definitions", mGuildMap.size());
+    sLog.outString(">> Loaded %u guild definitions", (uint32)mGuildMap.size());
 }
 
 //guild_member.guildid, character_skills.guid, character_skills.skill, character_skills.value, character_skills.max

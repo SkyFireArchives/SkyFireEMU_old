@@ -907,6 +907,68 @@ inline bool IsProfessionOrRidingSkill(uint32 skill)
     return  IsProfessionSkill(skill) || skill == SKILL_RIDING;
 }
 
+struct SpellScaling
+{
+    uint8 playerLevel;
+    const SpellEntry * spellEntry;
+    
+    float avg[3];
+    float min[3];
+    float max[3];
+    float pts[3];
+    
+    uint32 cast;
+    
+    SpellScaling(uint8 playerLevel_, const SpellEntry * spellEntry_)
+    {
+        playerLevel = playerLevel_;
+        spellEntry = spellEntry_;
+        
+        
+        float base_coef = spellEntry->base_coef;
+        uint8 base_level = spellEntry->base_level_coef;
+        
+        uint32 ct_min = spellEntry->ct_min;
+        uint32 ct_max = spellEntry->ct_max;
+        uint8 ct_level = spellEntry->ct_max_level;
+        
+        int8 class_ = spellEntry->SpellScaling_class;
+
+        float gtCoef = GetGtSpellScalingValue(class_, playerLevel_);
+        
+        gtCoef *= ( std::min(playerLevel,base_level) + ( base_coef * std::max(0,playerLevel-base_level) ) )/playerLevel;
+        
+        //cast time
+        cast = 0;
+        if(ct_max>0 && playerLevel_>1)
+            cast = ct_min+(((playerLevel-1)*(ct_max-ct_min))/(ct_level-1));
+        else
+            cast = ct_min;
+        
+        if(cast > ct_max)
+            cast = ct_max;
+        
+        //effects
+        for(uint8 effIndex = 0; effIndex < 3; effIndex++)
+        {
+            float mult = spellEntry->coefMultiplier[effIndex];
+            float randommult = spellEntry->coefRandomMultiplier[effIndex];
+            float othermult = spellEntry->coefOther[effIndex];
+            
+            avg[effIndex] = mult*gtCoef;
+            if(ct_max > 0)
+                avg[effIndex] *= cast/ct_max;
+            
+            min[effIndex]=round(avg[effIndex])-std::floor(avg[effIndex]*randommult/2);
+            max[effIndex]=round(avg[effIndex])+std::floor(avg[effIndex]*randommult/2);
+            pts[effIndex]=round(othermult*gtCoef);
+            avg[effIndex]=std::max(ceil(mult),round(avg[effIndex]));
+        }
+        
+        cast=round(cast/10)/100;
+    }
+};
+
 class SpellMgr
 {
     // Constructors

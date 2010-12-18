@@ -44,6 +44,8 @@ WMOAreaTableEntry const* GetWMOAreaTableEntryByTripple(int32 rootid, int32 adtid
 
 uint32 GetVirtualMapForMapAndZone(uint32 mapid, uint32 zoneId);
 
+float GetGtSpellScalingValue(int8 class_, uint8 level);
+
 enum ContentLevels
 {
     CONTENT_1_60 = 0,

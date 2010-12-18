@@ -1838,18 +1838,13 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
     int32 basePoints = effBasePoints ? *effBasePoints : spellEntry->EffectBasePoints[effIndex];
     int32 randomPoints = int32(spellEntry->EffectDieSides[effIndex]);
 
-    float randomPoints_ScalingMultiplicator = 0.00f;
-     if(caster && spellEntry && spellEntry->SpellScalingId)
+    float maxPoints = 0.00f;
+    
+    if(caster && spellEntry && spellEntry->SpellScalingId)
     {
-        SpellScalingEntry const* spellScaling = sSpellScalingStore.LookupEntry(spellEntry->SpellScalingId);
-        uint32 casterLevel = caster->getLevel();
-        gtSpellScaling const* gtScaling = sGtSpellScalingStore.LookupEntry(casterLevel);
-        if(spellScaling && gtScaling)
-        {
-            basePoints += int32(spellScaling->coefMultiplier[effIndex] * gtScaling->coef); 
-            randomPoints_ScalingMultiplicator = spellScaling->coefRandomMultiplier[effIndex];
-            // TODO : Ajouter le coef reducteur, trouver comment il est interpreter
-        }
+        SpellScaling values(caster->getLevel(), spellEntry);
+        basePoints = values.min[effIndex];
+        maxPoints = values.max[effIndex];
     }
     
     // base amount modification based on spell lvl vs caster lvl
@@ -1864,24 +1859,26 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
         basePoints += int32(level * basePointsPerLevel);
     }
 
-    // roll in a range <1;EffectDieSides> as of patch 3.3.3
-    switch(randomPoints)
+    if(maxPoints)
+        basePoints = irand(basePoints, maxPoints);
+    else
     {
-        case 0: break;
-        case 1: basePoints += 1; break;                     // range 1..1
-        default:
-            // range can have positive (1..rand) and negative (rand..1) values, so order its for irand
-            int32 randvalue = (randomPoints >= 1)
-                ? irand(1, randomPoints)
-                : irand(randomPoints, 1);
+        // not sure for Cataclysm.
+        // roll in a range <1;EffectDieSides> as of patch 3.3.3
+        switch(randomPoints)
+        {
+            case 0: break;
+            case 1: basePoints += 1; break;                     // range 1..1
+            default:
+                // range can have positive (1..rand) and negative (rand..1) values, so order its for irand
+                int32 randvalue = (randomPoints >= 1)
+                    ? irand(1, randomPoints)
+                    : irand(randomPoints, 1);
 
-            if(randomPoints_ScalingMultiplicator)
-                basePoints += irand(1, int32(basePoints* (randomPoints_ScalingMultiplicator >= 1 ? randomPoints_ScalingMultiplicator : randomPoints_ScalingMultiplicator+1)));
-            
-            basePoints += randvalue;
-            break;
+                basePoints += randvalue;
+                break;
+        }
     }
-
     int32 value = basePoints;
 
     // random damage

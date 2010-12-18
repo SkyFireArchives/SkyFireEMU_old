@@ -115,6 +115,7 @@ void SpellEntry::LoadSpellAddons()
         EffectApplyAuraName[i] = SpellEffect ? SpellEffect->EffectApplyAuraName : 0;
         EffectAmplitude[i] = SpellEffect ? SpellEffect->EffectAmplitude : 0;
         EffectBasePoints[i] = SpellEffect ? SpellEffect->EffectBasePoints : 0;
+        unk_multiplier[i] = SpellEffect ? SpellEffect->unk_multiplier : 0;
         EffectDamageMultiplier[i] = SpellEffect ? SpellEffect->EffectDamageMultiplier : 0;
         EffectChainTarget[i] = SpellEffect ? SpellEffect->EffectChainTarget : 0;
         EffectDieSides[i] = SpellEffect ? SpellEffect->EffectDieSides : 0;
@@ -161,18 +162,20 @@ void SpellEntry::LoadSpellAddons()
     }
     
     SpellScalingEntry const* SpellScaling = GetSpellScaling();
-    SpellScaling_unk1 = SpellScaling ? SpellScaling->unk2 : 0;
-    SpellScaling_unk2 = SpellScaling ? SpellScaling->unk2 : 0;
-    SpellScaling_unk3 = SpellScaling ? SpellScaling->unk3 : 0;
-    SpellScaling_spellFamilyName = SpellScaling ? SpellScaling->spellFamilyName : 0;
+    
+    
+    ct_min = SpellScaling ? SpellScaling->ct_min : 0;
+    ct_max = SpellScaling ? SpellScaling->ct_max : 0;
+    ct_max_level = SpellScaling ? SpellScaling->ct_max_level : 0;
+    SpellScaling_class = SpellScaling ? SpellScaling->class_ : 0;
     for(int i = 0; i < 3; i++)
     {
         coefMultiplier[i] = SpellScaling ? SpellScaling->coefMultiplier[i] : 0;
         coefRandomMultiplier[i] = SpellScaling ? SpellScaling->coefRandomMultiplier[i] : 0;
-        coefUnknow[i] = SpellScaling ? SpellScaling->coefUnknow[i] : 0;
+        coefOther[i] = SpellScaling ? SpellScaling->coefOther[i] : 0;
     }
-    SpellScaling_unk14 = SpellScaling ? SpellScaling->unk14 : 0;
-    SpellScaling_unk15 = SpellScaling ? SpellScaling->unk15 : 0;
+    base_coef = SpellScaling ? SpellScaling->base_coef : 0;
+    base_level_coef = SpellScaling ? SpellScaling->base_level_coef : 0;
     
     SpellShapeshiftEntry const* SpellShapeshift = GetSpellShapeshift();
     Stances = SpellShapeshift ? SpellShapeshift->Stances : 0;
