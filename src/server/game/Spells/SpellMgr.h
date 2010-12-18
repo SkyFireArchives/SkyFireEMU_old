@@ -35,6 +35,7 @@
 #include "Player.h"
 
 #include <map>
+#include <cmath>
 
 class Player;
 class Spell;
