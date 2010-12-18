@@ -332,6 +332,15 @@ uint32 GetSpellCastTime(SpellEntry const* spellInfo, Spell * spell)
     int32 castTime = spellCastTimeEntry->CastTime;
 
     if (spell && spell->GetCaster())
+    {
+        SpellScaling values(spell->GetCaster()->getLevel(), spell->GetSpellInfo());
+        if(values.canScale)
+        {
+            castTime = values.cast;
+        }
+    }
+    
+    if (spell && spell->GetCaster())
         spell->GetCaster()->ModSpellCastTime(spellInfo, castTime, spell);
 
     if (spellInfo->Attributes & SPELL_ATTR_REQ_AMMO && (!spell || !(spell->IsAutoRepeat())))

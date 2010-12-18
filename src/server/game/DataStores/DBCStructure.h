@@ -1618,8 +1618,8 @@ struct SpellReagentsEntry
 struct SpellScalingEntry
 {
     uint32    Id;                                           // 0
-    uint32    ct_min;                                       // 1        minimum cast time
-    uint32    ct_max;                                       // 2        maximum cast time
+    int32     ct_min;                                       // 1        minimum cast time
+    int32     ct_max;                                       // 2        maximum cast time
     uint32    ct_max_level;                                 // 3        first level with maximum cast time
     int32     class_;                                       // 4        Caster's class. Can be a negative value : MAX_CLASSES + 1 - class_.
     float     coefMultiplier[3];                            // 5-7
