@@ -77,12 +77,12 @@ class RealmdSignalHandler : public Trinity::SignalHandler
                 case SIGTERM:
                     stopEvent = true;
                     break;
-                #ifdef _WIN32
+#ifdef _WIN32
                 case SIGBREAK:
                     if (m_ServiceStatus != 1)
                         stopEvent = true;
                     break;
-                #endif /* _WIN32 */
+#endif /* _WIN32 */
             }
         }
 };
@@ -92,12 +92,12 @@ void usage(const char *prog)
 {
     sLog.outString("Usage: \n %s [<options>]\n"
         "    -c config_file           use config_file as configuration file\n\r"
-        #ifdef _WIN32
+#ifdef _WIN32
         "    Running as service functions:\n\r"
         "    --service                run as service\n\r"
         "    -s install               install service\n\r"
         "    -s uninstall             uninstall service\n\r"
-        #endif
+#endif
         ,prog);
 }
 
@@ -105,9 +105,10 @@ void usage(const char *prog)
 extern int main(int argc, char **argv)
 {
     sLog.SetLogDB(false);
+
     ///- Command line parsing to get the configuration file name
     char const* cfg_file = _TRINITY_REALM_CONFIG;
-    int c=1;
+    int c = 1;
     while(c < argc)
     {
         if (strcmp(argv[c],"-c") == 0)
@@ -122,7 +123,7 @@ extern int main(int argc, char **argv)
                 cfg_file = argv[c];
         }
 
-        #ifdef _WIN32
+#ifdef _WIN32
         ////////////
         //Services//
         ////////////
@@ -153,12 +154,11 @@ extern int main(int argc, char **argv)
                 return 1;
             }
         }
+
         if (strcmp(argv[c],"--service") == 0)
-        {
             WinServiceRun();
-        }
-        ////
-        #endif
+
+#endif
         ++c;
     }
 
@@ -231,20 +231,20 @@ extern int main(int argc, char **argv)
 
     // Initialise the signal handlers
     RealmdSignalHandler SignalINT, SignalTERM;
-    #ifdef _WIN32
+#ifdef _WIN32
     RealmdSignalHandler SignalBREAK;
-    #endif /* _WIN32 */
+#endif /* _WIN32 */
 
     // Register realmd's signal handlers
     ACE_Sig_Handler Handler;
     Handler.register_handler(SIGINT, &SignalINT);
     Handler.register_handler(SIGTERM, &SignalTERM);
-    #ifdef _WIN32
+#ifdef _WIN32
     Handler.register_handler(SIGBREAK, &SignalBREAK);
-    #endif /* _WIN32 */
+#endif /* _WIN32 */
 
     ///- Handle affinity for multiple processors and process priority on Windows
-    #ifdef _WIN32
+#ifdef _WIN32
     {
         HANDLE hProcess = GetCurrentProcess();
 
@@ -254,21 +254,16 @@ extern int main(int argc, char **argv)
             ULONG_PTR appAff;
             ULONG_PTR sysAff;
 
-            if (GetProcessAffinityMask(hProcess,&appAff,&sysAff))
+            if (GetProcessAffinityMask(hProcess, &appAff, &sysAff))
             {
                 ULONG_PTR curAff = Aff & appAff;            // remove non accessible processors
 
                 if (!curAff)
-                {
                     sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for realmd. Accessible processors bitmask (hex): %x",Aff,appAff);
-                }
+                else if (SetProcessAffinityMask(hProcess, curAff))
+                    sLog.outString("Using processors (bitmask, hex): %x", curAff);
                 else
-                {
-                    if (SetProcessAffinityMask(hProcess,curAff))
-                        sLog.outString("Using processors (bitmask, hex): %x", curAff);
-                    else
-                        sLog.outError("Can't set used processors (hex): %x", curAff);
-                }
+                    sLog.outError("Can't set used processors (hex): %x", curAff);
             }
             sLog.outString();
         }
@@ -277,17 +272,17 @@ extern int main(int argc, char **argv)
 
         if (Prio)
         {
-            if (SetPriorityClass(hProcess,HIGH_PRIORITY_CLASS))
+            if (SetPriorityClass(hProcess, HIGH_PRIORITY_CLASS))
                 sLog.outString("TrinityRealm process priority class set to HIGH");
             else
                 sLog.outError("Can't set realmd process priority class.");
             sLog.outString();
         }
     }
-    #endif
+#endif
 
     // maximum counter for next ping
-    uint32 numLoops = (sConfig.GetIntDefault("MaxPingTime", 30) * (MINUTE * 1000000 / 100000));
+    uint32 numLoops = (sConfig.GetIntDefault("MaxPingTime", 30) * (MINUTE * 10));
     uint32 loopCounter = 0;
 
     // possibly enable db logging; avoid massive startup spam by doing it here.
@@ -295,6 +290,7 @@ extern int main(int argc, char **argv)
     {
         sLog.outString("Enabling database logging...");
         sLog.SetLogDBLater(false);
+
         // login db needs thread for logging
         sLog.SetLogDB(true);
     }
@@ -317,8 +313,13 @@ extern int main(int argc, char **argv)
             LoginDatabase.Query("SELECT 1 FROM realmlist");
         }
 #ifdef _WIN32
-        if (m_ServiceStatus == 0) stopEvent = true;
-        while (m_ServiceStatus == 2) Sleep(1000);
+        if (m_ServiceStatus == 0)
+            stopEvent = true;
+        else
+        {
+            while (m_ServiceStatus == 2)
+                Sleep(1000);
+        }
 #endif
     }
 

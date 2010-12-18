@@ -50,8 +50,8 @@ RealmSocket::RealmSocket(void):
     reference_counting_policy().value(
             ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
-    msg_queue()->high_water_mark(8*1024*1024);
-    msg_queue()->low_water_mark(8*1024*1024);
+    msg_queue()->high_water_mark(8 * 1024 * 1024);
+    msg_queue()->low_water_mark(8 * 1024 * 1024);
 
 }
 
@@ -86,9 +86,7 @@ int RealmSocket::open(void * arg)
         return -1;
 
     if (session_ != NULL)
-    {
         session_->OnAccept();
-    }
 
     // reactor takes care of the socket from now on
     remove_reference();
@@ -275,9 +273,7 @@ int RealmSocket::handle_close(ACE_HANDLE h, ACE_Reactor_Mask /*m*/)
         peer ().close_writer ();
 
     if (session_ != NULL)
-    {
         session_->OnClose();
-    }
 
     return 0;
 }
@@ -292,14 +288,9 @@ int RealmSocket::handle_input(ACE_HANDLE /*= ACE_INVALID_HANDLE*/)
     ssize_t n = peer().recv(input_buffer_.wr_ptr(), space);
 
     if (n < 0)
-    {
         return errno == EWOULDBLOCK ? 0 : -1;
-    }
-    else if (n == 0)
-    {
-        // EOF
+    else if (n == 0) // EOF
         return -1;
-    }
 
     input_buffer_.wr_ptr((size_t)n);
 

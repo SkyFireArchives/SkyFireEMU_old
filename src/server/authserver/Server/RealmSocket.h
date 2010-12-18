@@ -75,7 +75,6 @@ class RealmSocket : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
     private:
         ssize_t noblk_send(ACE_Message_Block &message_block);
 
-    private:
         ACE_Message_Block input_buffer_;
         Session* session_;
         std::string remote_address_;
