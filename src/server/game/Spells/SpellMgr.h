@@ -908,6 +908,14 @@ inline bool IsProfessionOrRidingSkill(uint32 skill)
     return  IsProfessionSkill(skill) || skill == SKILL_RIDING;
 }
 
+inline float roundf(float value)
+{
+    float frac;
+    double inte;
+    frac = modf(value, &inte);
+    return frac < 0.5f ? (float)inte : (float)inte + 1; 
+}
+
 struct SpellScaling
 {
     uint8 playerLevel;
@@ -975,10 +983,10 @@ struct SpellScaling
             if(ct_max > 0)
                 avg[effIndex] *= cast/ct_max;
             
-            min[effIndex]=round(avg[effIndex])-std::floor(avg[effIndex]*randommult/2);
-            max[effIndex]=round(avg[effIndex])+std::floor(avg[effIndex]*randommult/2);
-            pts[effIndex]=round(othermult*gtCoef);
-            avg[effIndex]=std::max(ceil(mult),round(avg[effIndex]));
+            min[effIndex]=roundf(avg[effIndex])-std::floor(avg[effIndex]*randommult/2);
+            max[effIndex]=roundf(avg[effIndex])+std::floor(avg[effIndex]*randommult/2);
+            pts[effIndex]=roundf(othermult*gtCoef);
+            avg[effIndex]=std::max((float)ceil(mult),roundf(avg[effIndex]));
         }
         
         canScale = true;
