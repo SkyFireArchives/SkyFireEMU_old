@@ -2269,8 +2269,6 @@ class Player : public Unit, public GridObject<Player>
         void SetLfgDungeonDone(const uint32 entry) { m_LookingForGroup.donerandomDungeons.insert(entry); }
         std::string GetLfgComment() { return m_LookingForGroup.comment; }
         void SetLfgComment(std::string _comment) { m_LookingForGroup.comment = _comment; }
-        uint8 GetLfgRoles() { return m_LookingForGroup.roles; }
-        void SetLfgRoles(uint8 _roles) { m_LookingForGroup.roles = _roles; }
         bool GetLfgUpdate() { return m_LookingForGroup.update; }
         void SetLfgUpdate(bool update) { m_LookingForGroup.update = update; }
 
@@ -2335,6 +2333,9 @@ class Player : public Unit, public GridObject<Player>
         void SetAuraUpdateMaskForRaid(uint8 slot) { m_auraRaidUpdateMask |= (uint64(1) << slot); }
         Player* GetNextRandomRaidMember(float radius);
         PartyResult CanUninviteFromGroup() const;
+        uint8 GetRoles() { if(Group* grp = GetGroup()) { return grp->GetRoles(GetGUID()); } return 0; }
+        void SetRoles(uint8 _roles) { if(Group* grp = GetGroup()) { grp->SetRoles(GetGUID(), _roles); } }
+    
         // Battleground Group System
         void SetBattlegroundRaid(Group *group, int8 subgroup = -1);
         void RemoveFromBattlegroundRaid();

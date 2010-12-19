@@ -3,6 +3,8 @@
  *
  * Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
  *
+ * Copyright (C) 2010 CactusEMU <http://www.cactusemu.com/>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -61,8 +63,10 @@ void WorldSession::SendPartyResult(PartyOperation operation, const std::string& 
 void WorldSession::HandleGroupInviteOpcode(WorldPacket & recv_data)
 {
     std::string membername;
+    uint32 unk; //groupType?
     recv_data >> membername;
-
+    recv_data >> unk; //in CMSG_GROUP_ACCEPT too.
+    
     // attempt add selected player
 
     // cheating
@@ -193,8 +197,11 @@ void WorldSession::HandleGroupInviteOpcode(WorldPacket & recv_data)
     SendPartyResult(PARTY_OP_INVITE, membername, ERR_PARTY_RESULT_OK);
 }
 
-void WorldSession::HandleGroupAcceptOpcode(WorldPacket & /*recv_data*/)
+void WorldSession::HandleGroupAcceptOpcode(WorldPacket & recv_data)
 {
+    uint32 unk;
+    recv_data >> unk;
+    
     Group *group = GetPlayer()->GetGroupInvite();
     if (!group) return;
 
@@ -524,7 +531,7 @@ void WorldSession::HandleRaidTargetUpdateOpcode(WorldPacket & recv_data)
     }
 }
 
-void WorldSession::HandleGroupRaidConvertOpcode(WorldPacket & /*recv_data*/)
+void WorldSession::HandleGroupRaidConvertOpcode(WorldPacket & recv_data)
 {
     Group *group = GetPlayer()->GetGroup();
     if (!group)
@@ -538,9 +545,19 @@ void WorldSession::HandleGroupRaidConvertOpcode(WorldPacket & /*recv_data*/)
         return;
     /********************/
 
-    // everything's fine, do it (is it 0 (PARTY_OP_INVITE) correct code)
-    SendPartyResult(PARTY_OP_INVITE, "", ERR_PARTY_RESULT_OK);
-    group->ConvertToRaid();
+    bool toRaid = false;
+    recv_data >> toRaid;
+    if(toRaid)
+    {
+        // everything's fine, do it (is it 0 (PARTY_OP_INVITE) correct code)
+        SendPartyResult(PARTY_OP_INVITE, "", ERR_PARTY_RESULT_OK);
+        group->ConvertToRaid();
+    }
+    else 
+    {
+        SendPartyResult(PARTY_OP_INVITE, "", ERR_PARTY_RESULT_OK);
+        group->ConvertToGroup();
+    }
 }
 
 void WorldSession::HandleGroupChangeSubGroupOpcode(WorldPacket & recv_data)
@@ -960,4 +977,37 @@ void WorldSession::HandleOptOutOfLootOpcode(WorldPacket & recv_data)
     }
 
     GetPlayer()->SetPassOnGroupLoot(passOnLoot);
+}
+
+void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
+{
+    uint32 roles;
+    uint64 plrGUID;
+    recv_data >> roles;                                     // Player Group Roles
+    recv_data >> plrGUID;
+    
+    Player * plr = sObjectMgr.GetPlayer(plrGUID);
+    if(!plr)
+    {
+        sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Player not found", plrGUID);
+        return;
+    }
+    
+    Group* grp = plr->GetGroup();
+    if (!grp)
+    {
+        sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Not in group", plr->GetGUID());
+        return;
+    }
+    else if(grp != GetPlayer()->GetGroup())
+    {
+        sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "]  and [" UI64FMTD "] Not in group same group", plr->GetGUID(), GetPlayer()->GetGUID());
+        return;
+    }
+    else
+        sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Roles: %u", plr->GetGUID(), roles);
+    
+    plr->SetRoles(roles);
+    if(grp->isLFGGroup())
+        sLFGMgr.UpdateRoleCheck(grp, plr);
 }

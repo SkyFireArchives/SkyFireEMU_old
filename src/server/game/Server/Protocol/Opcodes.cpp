@@ -1268,4 +1268,7 @@ void InitOpcodeTable()
     OPCODE( SMSG_UNKNOWN_1304,                            STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_SEND_QUEUED_PACKETS,                     STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_REDIRECT_AUTH_PROOF,                     STATUS_NEVER,    &WorldSession::Handle_NULL                     );
+    OPCODE( CMSG_AUTO_DECLINE_GUILD_INVITES,              STATUS_NEVER,    &WorldSession::Handle_NULL                     );
+    OPCODE( CMSG_SET_PRIMARY_TALENT_TREE,                 STATUS_NEVER,    &WorldSession::Handle_NULL                     );
+    OPCODE( CMSG_GROUP_SET_ROLES,                         STATUS_LOGGEDIN, &WorldSession::HandleGroupSetRoles             );
 };

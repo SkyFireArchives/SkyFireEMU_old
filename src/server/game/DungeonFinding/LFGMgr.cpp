@@ -298,7 +298,7 @@ void LFGMgr::Update(uint32 diff)
                 continue;
             plr->GetSession()->SendLfgRoleCheckUpdate(pRoleCheck);
             plr->GetLfgDungeons()->clear();
-            plr->SetLfgRoles(ROLE_NONE);
+            plr->SetRoles(ROLE_NONE);
 
             if (itRoles->first == pRoleCheck->leader)
                 plr->GetSession()->SendLfgJoinResult(LFG_JOIN_FAILED, pRoleCheck->result);
@@ -631,7 +631,7 @@ void LFGMgr::Join(Player* plr)
     {
         sLog.outError("DEBUG:LFGMgr::Join: [" UI64FMTD "] joining with %u members. result: %u", guid, grp ? grp->GetMembersCount() : 1, result);
         plr->GetLfgDungeons()->clear();
-        plr->SetLfgRoles(ROLE_NONE);
+        plr->SetRoles(ROLE_NONE);
         plr->GetSession()->SendLfgJoinResult(result);
         plr->GetSession()->SendLfgUpdateParty(LFG_UPDATETYPE_ROLECHECK_FAILED);
         return;
@@ -658,7 +658,7 @@ void LFGMgr::Join(Player* plr)
     else
     {
         LfgRolesMap roles;
-        roles[plr->GetGUIDLow()] = plr->GetLfgRoles();
+        roles[plr->GetGUIDLow()] = plr->GetRoles();
 
         // Expand random dungeons        
         LfgLockStatusMap* playersLockMap = NULL;
@@ -747,14 +747,14 @@ void LFGMgr::Leave(Player* plr, Group* grp /* = NULL*/)
             {
                 plrg->GetSession()->SendLfgUpdateParty(LFG_UPDATETYPE_REMOVED_FROM_QUEUE);
                 plrg->GetLfgDungeons()->clear();
-                plrg->SetLfgRoles(ROLE_NONE);
+                plrg->SetRoles(ROLE_NONE);
             }
     }
     else
     {
         plr->GetSession()->SendLfgUpdatePlayer(LFG_UPDATETYPE_REMOVED_FROM_QUEUE);
         plr->GetLfgDungeons()->clear();
-        plr->SetLfgRoles(ROLE_NONE);
+        plr->SetRoles(ROLE_NONE);
     }
 }
 
@@ -1131,12 +1131,12 @@ void LFGMgr::UpdateRoleCheck(Group* grp, Player* plr /* = NULL*/)
     if (plr)
     {
         // Player selected no role.
-        if (plr->GetLfgRoles() < ROLE_TANK)
+        if (plr->GetRoles() < ROLE_TANK)
             pRoleCheck->result = LFG_ROLECHECK_NO_ROLE;
         else
         {
             // Check if all players have selected a role
-            pRoleCheck->roles[plr->GetGUIDLow()] = plr->GetLfgRoles();
+            pRoleCheck->roles[plr->GetGUIDLow()] = plr->GetRoles();
             uint8 size = 0;
             for (LfgRolesMap::const_iterator itRoles = pRoleCheck->roles.begin(); itRoles != pRoleCheck->roles.end() && itRoles->second != ROLE_NONE; ++itRoles)
                 ++size;
@@ -1206,7 +1206,7 @@ void LFGMgr::UpdateRoleCheck(Group* grp, Player* plr /* = NULL*/)
 
         session = plrg->GetSession();
         if (!newRoleCheck && plr)
-            session->SendLfgRoleChosen(plr->GetGUID(), plr->GetLfgRoles());
+            session->SendLfgRoleChosen(plr->GetGUID(), plr->GetRoles());
         session->SendLfgRoleCheckUpdate(pRoleCheck);
 
         switch(pRoleCheck->result)
@@ -1222,7 +1222,7 @@ void LFGMgr::UpdateRoleCheck(Group* grp, Player* plr /* = NULL*/)
                     session->SendLfgJoinResult(LFG_JOIN_PARTY_NOT_MEET_REQS, 0, playersLockMap);
                 session->SendLfgUpdateParty(LFG_UPDATETYPE_ROLECHECK_FAILED);
                 plrg->GetLfgDungeons()->clear();
-                plrg->SetLfgRoles(ROLE_NONE);
+                plrg->SetRoles(ROLE_NONE);
             }
             break;
         default:
@@ -1230,7 +1230,7 @@ void LFGMgr::UpdateRoleCheck(Group* grp, Player* plr /* = NULL*/)
                 session->SendLfgJoinResult(LFG_JOIN_FAILED, pRoleCheck->result);
             session->SendLfgUpdateParty(LFG_UPDATETYPE_ROLECHECK_FAILED);
             plrg->GetLfgDungeons()->clear();
-            plrg->SetLfgRoles(ROLE_NONE);
+            plrg->SetRoles(ROLE_NONE);
             break;
         }
     }
@@ -1561,7 +1561,7 @@ void LFGMgr::UpdateProposal(uint32 proposalId, uint32 lowGuid, bool accept)
             plr->SetLfgUpdate(true);
 
             // Update timers
-            uint8 role = plr->GetLfgRoles();
+            uint8 role = plr->GetRoles();
             if (role & ROLE_TANK)
             {
                 if (role & ROLE_HEALER || role & ROLE_DAMAGE)
@@ -1579,7 +1579,7 @@ void LFGMgr::UpdateProposal(uint32 proposalId, uint32 lowGuid, bool accept)
             else if (role & ROLE_DAMAGE)
                 m_WaitTimeDps = int32((m_WaitTimeDps * m_NumWaitTimeDps + waitTimesMap[plr->GetGUID()]) / ++m_NumWaitTimeDps);
 
-            grp->SetLfgRoles(plr->GetGUID(), pProposal->players[plr->GetGUIDLow()]->role);
+            grp->SetRoles(plr->GetGUID(), pProposal->players[plr->GetGUIDLow()]->role);
         }
 
         // Set the dungeon difficulty
@@ -1643,7 +1643,7 @@ void LFGMgr::RemoveProposal(LfgProposalMap::iterator itProposal, LfgUpdateType t
         {
             updateType = type;
             plr->GetLfgDungeons()->clear();
-            plr->SetLfgRoles(ROLE_NONE);
+            plr->SetRoles(ROLE_NONE);
 
             sLog.outError("DEBUG:LFGMgr::RemoveProposal: [" UI64FMTD "] didn't accept. Removing from queue and compatible cache", guid);
             RemoveFromQueue(guid);
@@ -1846,7 +1846,7 @@ void LFGMgr::RewardDungeonDoneFor(const uint32 dungeonId, Player* player)
     // Clear player related lfg stuff
     uint32 rDungeonId = (*player->GetLfgDungeons()->begin());
     player->GetLfgDungeons()->clear();
-    player->SetLfgRoles(ROLE_NONE);
+    player->SetRoles(ROLE_NONE);
 
     // Give rewards only if its a random dungeon
     LFGDungeonEntry const* dungeon = sLFGDungeonStore.LookupEntry(dungeonId);

@@ -3,6 +3,8 @@
  *
  * Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
  *
+ * Copyright (C) 2010 CactusEMU <http://www.cactusemu.com/>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -234,6 +236,29 @@ void Group::ConvertToRaid()
         CharacterDatabase.PExecute("UPDATE groups SET groupType='%u' WHERE guid='%u'", uint8(m_groupType), GUID_LOPART(m_guid));
     SendUpdate();
 
+    // update quest related GO states (quest activity dependent from raid membership)
+    for (member_citerator citr = m_memberSlots.begin(); citr != m_memberSlots.end(); ++citr)
+        if (Player* player = sObjectMgr.GetPlayer(citr->guid))
+            player->UpdateForQuestWorldObjects();
+}
+
+void Group::ConvertToGroup()
+{
+    if(m_memberSlots.size() > 5)
+        return;
+    
+    m_groupType = GroupType(GROUPTYPE_NORMAL);
+    
+    if (m_subGroupsCounts)
+    {
+        delete[] m_subGroupsCounts;
+        m_subGroupsCounts = NULL;;
+    }
+        
+    if (!isBGGroup())
+        CharacterDatabase.PExecute("UPDATE groups SET groupType='%u' WHERE guid='%u'", uint8(m_groupType), GUID_LOPART(m_guid));
+    SendUpdate();
+    
     // update quest related GO states (quest activity dependent from raid membership)
     for (member_citerator citr = m_memberSlots.begin(); citr != m_memberSlots.end(); ++citr)
         if (Player* player = sObjectMgr.GetPlayer(citr->guid))
@@ -1139,7 +1164,7 @@ void Group::SendUpdate()
             data << uint8(onlineState);                     // online-state
             data << uint8(citr2->group);                    // groupid
             data << uint8(citr2->flags);                    // See enum GroupMemberFlags
-            data << uint8(citr2->roles);                    // Lfg Roles
+            data << uint8(citr2->roles);                    // Roles
         }
 
         data << uint64(m_leaderGuid);                       // leader guid

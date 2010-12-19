@@ -873,7 +873,7 @@ enum Opcodes
     SMSG_LFG_UPDATE_PLAYER                           = 0x00C5E, // (0x0238)(0x0367) //
     SMSG_LFG_UPDATE_PARTY                            = 0x0A775, // (0x0B1D)(0x0368) //
     SMSG_LFG_UPDATE_LIST                             = 0x08674, // (0x2BD1)(0x0369) //
-    CMSG_LFG_SET_ROLES                               = 0x00509, // (  nf  )(0x036A) //
+    CMSG_LFG_SET_ROLES                               = 0x0F65F, // (  nf  )(0x036A) //
     CMSG_LFG_SET_NEEDS                               = 0x10145, // (  nf  )(0x036B) //
     CMSG_LFG_SET_BOOT_VOTE                           = 0x10146, // (  nf  )(0x036C) //
     SMSG_LFG_BOOT_PROPOSAL_UPDATE                    = 0x0CC56, // (0x8399)(0x036D) //
@@ -1284,6 +1284,7 @@ enum Opcodes
     CMSG_REDIRECT_AUTH_PROOF                         = 0x08C0A, // (  nf  )(  nf  ) //
     CMSG_AUTO_DECLINE_GUILD_INVITES                  = 0x00C7D, // (  nf  )(  nf  ) //
     CMSG_SET_PRIMARY_TALENT_TREE                     = 0x0B47D, // (  nf  )(  nf  ) //
+    CMSG_GROUP_SET_ROLES                             = 0x00509, // (  nf  )(  nf  ) //
     NUM_MSG_TYPES                                    = 0x102B5  // last unknow opcode + 1.
 };
 

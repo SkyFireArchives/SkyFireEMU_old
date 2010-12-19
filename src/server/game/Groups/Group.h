@@ -3,6 +3,8 @@
  *
  * Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
  *
+ * Copyright (C) 2010 CactusEMU <http://www.cactusemu.com/>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -224,7 +226,8 @@ class Group
         void   SetLfgKickActive(bool active) { m_LfgkicksActive = active; }
         uint8  GetLfgKicks() const { return m_Lfgkicks; }
         void   SetLfgKicks(uint8 kicks) { m_Lfgkicks = kicks; }
-        void   SetLfgRoles(uint64 guid, const uint8 roles)
+    
+        void   SetRoles(uint64 guid, const uint8 roles)
         {
             member_witerator slot = _getMemberWSlot(guid);
             if (slot == m_memberSlots.end())
@@ -233,7 +236,15 @@ class Group
             slot->roles = roles;
             SendUpdate();
         }
-
+        uint8 GetRoles(uint64 guid)
+        {
+            member_witerator slot = _getMemberWSlot(guid);
+            if (slot == m_memberSlots.end())
+                return 0;
+        
+            return slot->roles;
+        }
+    
         // properties accessories
         bool IsFull() const { return (m_groupType == GROUPTYPE_NORMAL) ? (m_memberSlots.size() >= MAXGROUPSIZE) : (m_memberSlots.size() >= MAXRAIDSIZE); }
         bool isLFGGroup()  const { return m_groupType & GROUPTYPE_LFG; }
@@ -312,9 +323,10 @@ class Group
         }
 
         void ConvertToLFG();
-        // some additional raid methods
         void ConvertToRaid();
-
+        void ConvertToGroup();
+        
+        // some additional raid methods
         void SetBattlegroundGroup(Battleground *bg) { m_bgGroup = bg; }
         GroupJoinBattlegroundResult CanJoinBattlegroundQueue(Battleground const* bgOrTemplate, BattlegroundQueueTypeId bgQueueTypeId, uint32 MinPlayerCount, uint32 MaxPlayerCount, bool isRated, uint32 arenaSlot);
 
