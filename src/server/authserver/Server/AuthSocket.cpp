@@ -706,7 +706,7 @@ bool AuthSocket::_HandleReconnectChallenge()
 
 #if TRINITY_ENDIAN == TRINITY_BIGENDIAN
     EndianConvert(*((uint16*)(buf[0])));
-#if TRINITY_ENDIAN == TRINITY_BIGENDIAN
+#endif //TRINITY_ENDIAN
     uint16 remaining = ((sAuthLogonChallenge_C *)&buf[0])->size;
     sLog.outStaticDebug("[ReconnectChallenge] got header, body is %#04x bytes", remaining);
 
