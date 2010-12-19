@@ -4036,9 +4036,9 @@ void ObjectMgr::LoadQuests()
         "RewCurrencyId1, RewCurrencyCount1, RewCurrencyId2, RewCurrencyCount2, RewCurrencyId3, RewCurrencyCount3, RewCurrencyId4, RewCurrencyCount4,"
     //   155             156                157             158                159             160                161             162
         "ReqCurrencyId1, ReqCurrencyCount1, ReqCurrencyId2, ReqCurrencyCount2, ReqCurrencyId3, ReqCurrencyCount3, ReqCurrencyId4, ReqCurrencyCount4,"
-    //   163                     164                    165                      166                    167          168
-        "QuestGiverPortraitText, QuestGiverPortraitUnk, QuestTurnInPortraitText, QuestTurnInPortaitUnk, SoundAccept, SoundTurnIn,"
-    //   169          170
+    //   163                     164                    165                      166                    167          168          169
+        "QuestGiverPortraitText, QuestGiverPortraitUnk, QuestTurnInPortraitText, QuestTurnInPortaitUnk, SoundAccept, SoundTurnIn, RequiredSpell,"
+    //   170          171
         "StartScript, CompleteScript"
         " FROM quest_template");
     if (!result)

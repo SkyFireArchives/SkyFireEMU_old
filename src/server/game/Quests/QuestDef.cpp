@@ -163,9 +163,10 @@ Quest::Quest(Field * questRecord)
     QuestTurnInPortaitUnk = questRecord[166].GetCppString();
     SoundAccept = questRecord[167].GetUInt32();
     SoundTurnIn = questRecord[168].GetUInt32();
+    RequiredSpell = questRecord[169].GetUInt32();
 
-    QuestStartScript = questRecord[169].GetUInt32();
-    QuestCompleteScript = questRecord[170].GetUInt32();
+    QuestStartScript = questRecord[170].GetUInt32();
+    QuestCompleteScript = questRecord[171].GetUInt32();
 
     QuestFlags |= SpecialFlags << 20;
     if (QuestFlags & QUEST_TRINITY_FLAGS_AUTO_ACCEPT)

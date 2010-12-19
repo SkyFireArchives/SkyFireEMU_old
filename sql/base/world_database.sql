@@ -16482,6 +16482,7 @@ CREATE TABLE `quest_template` (
   `QuestTurnInPortaitUnk` text DEFAULT NULL,
   `SoundAccept` int(11) unsigned NOT NULL DEFAULT '0',
   `SoundTurnIn` int(11) unsigned NOT NULL DEFAULT '0',
+  `RequiredSpell` int(11) unsigned NOT NULL DEFAULT '0',
   `StartScript` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `CompleteScript` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `WDBVerified` smallint(5) signed DEFAULT '1',

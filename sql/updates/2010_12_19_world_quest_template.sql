@@ -24,4 +24,5 @@ ALTER TABLE `quest_template` ADD (`RewSkillLineId` int(11) unsigned NOT NULL DEF
                                   `QuestTurnInPortraitText` text DEFAULT NULL AFTER `QuestGiverPortraitUnk`,
                                   `QuestTurnInPortaitUnk` text DEFAULT NULL AFTER `QuestTurnInPortraitText`,
                                   `SoundAccept` int(11) unsigned NOT NULL DEFAULT '0' AFTER `QuestTurnInPortraitUnk`,
-                                  `SoundTurnIn` int(11) unsigned NOT NULL DEFAULT '0' AFTER `SoundAccept`);
+                                  `SoundTurnIn` int(11) unsigned NOT NULL DEFAULT '0' AFTER `SoundAccept`,
+                                  `RequiredSpell` int(11) unsigned NOT NULL DEFAULT '0' AFTER `SoundTurnIn`);

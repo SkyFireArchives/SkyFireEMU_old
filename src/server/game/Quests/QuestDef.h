@@ -252,6 +252,7 @@ class Quest
         std::string GetQuestTurnInPortaitUnk() const { return QuestTurnInPortraitUnk; }
         uint32 GetSoundAccept() const { return SoundAccept; }
         uint32 GetSoundTurnIn() const { return SoundTurnIn; }
+        uint32 GetRequiredSpell() const { return RequiredSpell; }
         uint32 GetQuestStartScript() const { return QuestStartScript; }
         uint32 GetQuestCompleteScript() const { return QuestCompleteScript; }
         bool   IsRepeatable() const { return QuestFlags & QUEST_TRINITY_FLAGS_REPEATABLE; }
@@ -374,6 +375,7 @@ class Quest
         std::string QuestTurnInPortaitUnk;
         uint32 SoundAccept;
         uint32 SoundTurnIn;
+        uint32 RequiredSpell;
         uint32 QuestStartScript;
         uint32 QuestCompleteScript;
 };
