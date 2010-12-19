@@ -4037,7 +4037,7 @@ void ObjectMgr::LoadQuests()
     //   155             156                157             158                159             160                161             162
         "ReqCurrencyId1, ReqCurrencyCount1, ReqCurrencyId2, ReqCurrencyCount2, ReqCurrencyId3, ReqCurrencyCount3, ReqCurrencyId4, ReqCurrencyCount4,"
     //   163                     164                    165                      166                    167          168          169
-        "QuestGiverPortraitText, QuestGiverPortraitUnk, QuestTurnInPortraitText, QuestTurnInPortaitUnk, SoundAccept, SoundTurnIn, RequiredSpell,"
+        "QuestGiverPortraitText, QuestGiverPortraitUnk, QuestTurnInPortraitText, QuestTurnInPortraitUnk, SoundAccept, SoundTurnIn, RequiredSpell,"
     //   170          171
         "StartScript, CompleteScript"
         " FROM quest_template");

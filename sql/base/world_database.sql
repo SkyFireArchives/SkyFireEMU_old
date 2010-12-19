@@ -16479,7 +16479,7 @@ CREATE TABLE `quest_template` (
   `QuestGiverPortraitText` text DEFAULT NULL,
   `QuestGiverPortraitUnk` text DEFAULT NULL,
   `QuestTurnInPortraitText` text DEFAULT NULL,
-  `QuestTurnInPortaitUnk` text DEFAULT NULL,
+  `QuestTurnInPortraitUnk` text DEFAULT NULL,
   `SoundAccept` int(11) unsigned NOT NULL DEFAULT '0',
   `SoundTurnIn` int(11) unsigned NOT NULL DEFAULT '0',
   `RequiredSpell` int(11) unsigned NOT NULL DEFAULT '0',
