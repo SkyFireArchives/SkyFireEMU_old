@@ -512,7 +512,7 @@ enum Opcodes
     MSG_TABARDVENDOR_ACTIVATE                        = 0x0B575, // (0x0A50)(0x01F2) //
     SMSG_PLAY_SPELL_VISUAL                           = 0x0055C, // (0x63BD)(0x01F3) //
     CMSG_ZONEUPDATE                                  = 0x05C7D, // (0x2AD8)(0x01F4) //
-    SMSG_PARTYKILLLOG                                = 0x0E775, // (0xCA39)(0x01F5) //
+    SMSG_PARTYKILLLOG                                = 0x07657, // (0xCA39)(0x01F5) //
     SMSG_COMPRESSED_UPDATE_OBJECT                    = 0x06C7D, // (0xCB74)(0x01F6) //
     SMSG_PLAY_SPELL_IMPACT                           = 0x03D74, // (0x4A30)(0x01F7) //
     SMSG_EXPLORATION_EXPERIENCE                      = 0x0A476, // (0x8B58)(0x01F8) //
@@ -873,7 +873,7 @@ enum Opcodes
     SMSG_LFG_UPDATE_PLAYER                           = 0x00C5E, // (0x0238)(0x0367) //
     SMSG_LFG_UPDATE_PARTY                            = 0x0A775, // (0x0B1D)(0x0368) //
     SMSG_LFG_UPDATE_LIST                             = 0x08674, // (0x2BD1)(0x0369) //
-    CMSG_LFG_SET_ROLES                               = 0x00509, // (  nf  )(0x036A) //
+    CMSG_LFG_SET_ROLES                               = 0x0F65F, // (  nf  )(0x036A) //
     CMSG_LFG_SET_NEEDS                               = 0x10145, // (  nf  )(0x036B) //
     CMSG_LFG_SET_BOOT_VOTE                           = 0x10146, // (  nf  )(0x036C) //
     SMSG_LFG_BOOT_PROPOSAL_UPDATE                    = 0x0CC56, // (0x8399)(0x036D) //
@@ -1155,8 +1155,8 @@ enum Opcodes
     CMSG_GAMEOBJ_REPORT_USE                          = 0x0DF7E, // (  nf  )(0x0481) //
     SMSG_HIGHEST_THREAT_UPDATE                       = 0x03F7E, // (0xABF8)(0x0482) //
     SMSG_THREAT_UPDATE                               = 0x04E5F, // (0xEB5C)(0x0483) //
-    SMSG_THREAT_REMOVE                               = 0x03F7E, // (0x623D)(0x0484) //
-    SMSG_THREAT_CLEAR                                = 0x04E5F, // (0x43DD)(0x0485) //
+    SMSG_THREAT_REMOVE                               = 0x0665F, // (0x623D)(0x0484) //
+    SMSG_THREAT_CLEAR                                = 0x0E775, // (0x43DD)(0x0485) //
     SMSG_CONVERT_RUNE                                = 0x101E8, // (0x4B75)(0x0486) //
     SMSG_RESYNC_RUNES                                = 0x101E9, // (0x4AF0)(0x0487) //
     SMSG_ADD_RUNE_POWER                              = 0x101EA, // (0x4A3D)(0x0488) //
@@ -1171,7 +1171,7 @@ enum Opcodes
     SMSG_MODIFY_COOLDOWN                             = 0x05D5D, // (0x8AD9)(0x0491) //
     SMSG_PET_UPDATE_COMBO_POINTS                     = 0x0D20B, // (0x8BF5)(0x0492) //
     CMSG_ENABLETAXI                                  = 0x101F1, // (  nf  )(0x0493) //
-    SMSG_PRE_RESURRECT                               = 0x0665F, // (0xA231)(0x0494) //
+    SMSG_PRE_RESURRECT                               = 0x0957E, // (0xA231)(0x0494) //
     SMSG_AURA_UPDATE_ALL                             = 0x05756, // (0xE298)(0x0495) //
     SMSG_AURA_UPDATE                                 = 0x0CE7D, // (0xA3D4)(0x0496) //
     CMSG_FLOOD_GRACE_CHEAT                           = 0x101F2, // (  nf  )(0x0497) //
@@ -1189,7 +1189,7 @@ enum Opcodes
     SMSG_SERVER_BUCK_DATA_START                      = 0x101F9, // (  nf  )(0x04A3) //
     CMSG_QUERY_VEHICLE_STATUS                        = 0x101FA, // (  nf  )(0x04A4) //
     SMSG_BATTLEGROUND_INFO_THROTTLED                 = 0x101FC, // (0xC251)(0x04A6) //
-    SMSG_PLAYER_VEHICLE_DATA                         = 0x0E775, // (0xEB30)(0x04A7) //
+    SMSG_PLAYER_VEHICLE_DATA                         = 0x102B6, // (0xEB30)(0x04A7) //
     CMSG_PLAYER_VEHICLE_ENTER                        = 0x101FD, // (  nf  )(0x04A8) //
     CMSG_EJECT_PASSENGER                             = 0x101FE, // (  nf  )(0x04A9) //
     SMSG_PET_GUIDS                                   = 0x0FA08, // (0x03F0)(0x04AA) //
@@ -1212,7 +1212,7 @@ enum Opcodes
     CMSG_LEARN_PREVIEW_TALENTS_PET                   = 0x05476, // (  nf  )(0x04C2) //
     SMSG_ARENA_OPPONENT_UPDATE                       = 0x05B29, // (  nf  )(0x04C7) //
     SMSG_ARENA_TEAM_CHANGE_FAILED_QUEUED             = 0x0BF5C, // (0xA370)(0x04C8) //
-    SMSG_MULTIPLE_PACKETS                            = 0x0957E, // (0x0B5C)(0x04CD) //
+    SMSG_MULTIPLE_PACKETS                            = 0x06D76, // (0x0B5C)(0x04CD) //
     SMSG_FORCE_UNK1_SPEED_CHANGE                     = 0x10219, // (  nf  )(0x04CE) //
     CMSG_FORCE_UNK1_SPEED_CHANGE_ACK                 = 0x1021A, // (  nf  )(0x04CF) //
     SMSG_FORCE_UNK2_SPEED_CHANGE                     = 0x1021B, // (  nf  )(0x04D0) //
@@ -1258,7 +1258,7 @@ enum Opcodes
     SMSG_CAMERA_SHAKE                                = 0x10246, // (0xA3B0)(0x050A) //
     SMSG_UPDATE_ITEM_ENCHANTMENTS                    = 0x10247, // (0x6A90)(0x050B) //
     SMSG_REDIRECT_CLIENT                             = 0x09000, // (0x8400)(0x050D) //
-    CMSG_REDIRECTION_FAILED                          = 0x00509, // (0x1201)(0x050E) //
+    CMSG_REDIRECTION_FAILED                          = 0x102B4, // (0x1201)(0x050E) //
     SMSG_UNKNOWN_1295                                = 0x10249, // (  nf  )(0x050F) //
     CMSG_UNKNOWN_1296                                = 0x1024A, // (  nf  )(0x0510) //
     SMSG_FORCE_SEND_QUEUED_PACKETS                   = 0x1024B, // (  nf  )(0x0511) //
@@ -1271,7 +1271,7 @@ enum Opcodes
     CMSG_COMMENTATOR_SKIRMISH_QUEUE_COMMAND          = 0x0AF77, // (  nf  )(0x051B) //
     SMSG_UNKNOWN_1308                                = 0x10253, // (  nf  )(0x051C) //
     CMSG_TRANSFORM                                   = 0x04577, // (  nf  )(0x051D) //
-    SMSG_UNKNOWN_1310                                = 0x06D76, // (0xEA9C)(0x051E) //
+    SMSG_UNKNOWN_1310                                = 0x102B5, // (0xEA9C)(0x051E) //
     SMSG_UNKNOWN_1311                                = 0x01E76, // (0x8B5C)(0x051F) //
     SMSG_UNKNOWN_1312                                = 0x04D56, // (0x42BC)(0x0520) //
     SMSG_UNKNOWN_1314                                = 0x10256, // (  nf  )(0x0522) //
@@ -1284,7 +1284,8 @@ enum Opcodes
     CMSG_REDIRECT_AUTH_PROOF                         = 0x08C0A, // (  nf  )(  nf  ) //
     CMSG_AUTO_DECLINE_GUILD_INVITES                  = 0x00C7D, // (  nf  )(  nf  ) //
     CMSG_SET_PRIMARY_TALENT_TREE                     = 0x0B47D, // (  nf  )(  nf  ) //
-    NUM_MSG_TYPES                                    = 0x102B4  // last unknow opcode + 1.
+    CMSG_GROUP_SET_ROLES                             = 0x00509, // (  nf  )(  nf  ) //
+    NUM_MSG_TYPES                                    = 0x102B7  // last unknow opcode + 1.
 };
 
 extern void InitOpcodeTable();

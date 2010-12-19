@@ -116,7 +116,7 @@ void WorldSession::HandleLfgJoinOpcode(WorldPacket &recv_data)
         for (LfgDungeonSet::const_iterator it = newDungeons.begin(); it != newDungeons.end(); ++it)
             dungeons->insert(*it);
     }
-    GetPlayer()->SetLfgRoles(uint8(roles));
+    GetPlayer()->SetRoles(uint8(roles));
     GetPlayer()->SetLfgComment(comment);
     sLog.outDebug("CMSG_LFG_JOIN [" UI64FMTD "] as group: %u - Dungeons: %u", GetPlayer()->GetGUID(), grp ? 1 : 0, uint8(newDungeons.size()));
     newDungeons.clear();
@@ -159,7 +159,7 @@ void WorldSession::HandleLfgSetRolesOpcode(WorldPacket &recv_data)
     else
         sLog.outDebug("CMSG_LFG_SET_ROLES [" UI64FMTD "] Roles: %u", GetPlayer()->GetGUID(), roles);
 
-    GetPlayer()->SetLfgRoles(roles);
+    GetPlayer()->SetRoles(roles);
     sLFGMgr.UpdateRoleCheck(grp, GetPlayer());
 }
 

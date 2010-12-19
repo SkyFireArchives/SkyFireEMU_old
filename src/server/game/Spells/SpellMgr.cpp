@@ -364,6 +364,21 @@ bool IsPassiveSpell(SpellEntry const * spellInfo)
     return false;
 }
 
+bool IsRaidMarker(uint32 spellId)
+{
+    SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellId);
+    if (!spellInfo)
+        return false;
+    return IsRaidMarker(spellInfo);
+}
+
+bool IsRaidMarker(SpellEntry const * spellInfo)
+{
+    if (spellInfo->AttributesEx8 & SPELL_ATTR_EX8_RAID_MARKER)
+        return true;
+    return false;
+}
+
 bool IsAutocastableSpell(uint32 spellId)
 {
     SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellId);

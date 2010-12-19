@@ -306,6 +306,8 @@ bool IsSingleFromSpellSpecificPerCaster(SpellSpecific spellSpec1, SpellSpecific 
 bool IsSingleFromSpellSpecificPerTarget(SpellSpecific spellSpec1, SpellSpecific spellSpec2);
 bool IsPassiveSpell(uint32 spellId);
 bool IsPassiveSpell(SpellEntry const * spellInfo);
+bool IsRaidMarker(uint32 spellId);
+bool IsRaidMarker(SpellEntry const * spellInfo);
 bool IsAutocastableSpell(uint32 spellId);
 
 uint32 CalculatePowerCost(SpellEntry const * spellInfo, Unit const * caster, SpellSchoolMask schoolMask);
