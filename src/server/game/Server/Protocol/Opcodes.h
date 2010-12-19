@@ -1258,7 +1258,7 @@ enum Opcodes
     SMSG_CAMERA_SHAKE                                = 0x10246, // (0xA3B0)(0x050A) //
     SMSG_UPDATE_ITEM_ENCHANTMENTS                    = 0x10247, // (0x6A90)(0x050B) //
     SMSG_REDIRECT_CLIENT                             = 0x09000, // (0x8400)(0x050D) //
-    CMSG_REDIRECTION_FAILED                          = 0x00509, // (0x1201)(0x050E) //
+    CMSG_REDIRECTION_FAILED                          = 0x102B4, // (0x1201)(0x050E) //
     SMSG_UNKNOWN_1295                                = 0x10249, // (  nf  )(0x050F) //
     CMSG_UNKNOWN_1296                                = 0x1024A, // (  nf  )(0x0510) //
     SMSG_FORCE_SEND_QUEUED_PACKETS                   = 0x1024B, // (  nf  )(0x0511) //
@@ -1284,7 +1284,7 @@ enum Opcodes
     CMSG_REDIRECT_AUTH_PROOF                         = 0x08C0A, // (  nf  )(  nf  ) //
     CMSG_AUTO_DECLINE_GUILD_INVITES                  = 0x00C7D, // (  nf  )(  nf  ) //
     CMSG_SET_PRIMARY_TALENT_TREE                     = 0x0B47D, // (  nf  )(  nf  ) //
-    NUM_MSG_TYPES                                    = 0x102B4  // last unknow opcode + 1.
+    NUM_MSG_TYPES                                    = 0x102B5  // last unknow opcode + 1.
 };
 
 extern void InitOpcodeTable();

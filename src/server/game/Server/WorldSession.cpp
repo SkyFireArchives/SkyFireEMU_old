@@ -272,7 +272,7 @@ bool WorldSession::Update(uint32 diff)
                             LogUnprocessedTail(packet);
                         break;
                     case STATUS_NEVER:
-                        if(strcmp(LookupOpcodeName(packet->GetOpcode()), "UNKNOWN"))
+                        if(strcmp(LookupOpcodeName(packet->GetOpcode()), "UNKNOWN") == 0)
                         {
                             sLog.outDebug("received not found opcode 0x%.4X", packet->GetOpcode());
                         }

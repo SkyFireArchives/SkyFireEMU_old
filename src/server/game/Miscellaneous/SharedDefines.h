@@ -522,6 +522,39 @@ const uint32 ItemQualityColors[MAX_ITEM_QUALITY] = {
 #define SPELL_ATTR_EX7_HAS_CHARGE_EFFECT          0x00040000            // 18 Only spells that have Charge among effects.
 #define SPELL_ATTR_EX7_ZONE_TELEPORT              0x00080000            // 19 Teleports to specific zones.
 
+#define SPELL_ATTR_EX8_TAUNT                      0x00000001            // 0
+#define SPELL_ATTR_EX8_WORGEN_TRANSFORMATION      0x00000002            // 1
+#define SPELL_ATTR_EX8_UNK2                       0x00000004            // 2 3 spells : 72221, 90960, 90961
+#define SPELL_ATTR_EX8_UNK3                       0x00000008            // 3 summoning and unsummoning spells?
+#define SPELL_ATTR_EX8_UNK4                       0x00000010            // 4 
+#define SPELL_ATTR_EX8_UNK5                       0x00000020            // 5
+#define SPELL_ATTR_EX8_UNK6                       0x00000040            // 6 2 spells: 56817 and 83569
+#define SPELL_ATTR_EX8_UNK7                       0x00000080            // 7 
+#define SPELL_ATTR_EX8_UNK8                       0x00000100            // 8 +stats.
+#define SPELL_ATTR_EX8_UNK9                       0x00000200            // 9 
+#define SPELL_ATTR_EX8_CHANGE_MODEL               0x00000400            // 10
+#define SPELL_ATTR_EX8_UNK11                      0x00000800            // 11 one spell: 80224
+#define SPELL_ATTR_EX8_UNK12                      0x00001000            // 12 
+#define SPELL_ATTR_EX8_UNK13                      0x00002000            // 13
+#define SPELL_ATTR_EX8_UNK14                      0x00004000            // 14
+#define SPELL_ATTR_EX8_UNK15                      0x00008000            // 15 one spell: 76203
+#define SPELL_ATTR_EX8_UNK16                      0x00010000            // 16
+#define SPELL_ATTR_EX8_UNK17                      0x00020000            // 17
+#define SPELL_ATTR_EX8_UNK18                      0x00040000            // 18 spell with interactions?
+#define SPELL_ATTR_EX8_UNK19                      0x00080000            // 19 requires combo points?
+#define SPELL_ATTR_EX8_ARMOR_SPECIALIZATION       0x00100000            // 20 
+#define SPELL_ATTR_EX8_UNK21                      0x00200000            // 21
+#define SPELL_ATTR_EX8_UNK22                      0x00400000            // 22
+#define SPELL_ATTR_EX8_UNK23                      0x00800000            // 23 resurrection? soulstone?
+#define SPELL_ATTR_EX8_UNK24                      0x01000000            // 24 
+#define SPELL_ATTR_EX8_UNK25                      0x02000000            // 25
+#define SPELL_ATTR_EX8_RAID_MARKER                0x04000000            // 26 raid marker. 6 spells in 4.0.3a
+#define SPELL_ATTR_EX8_UNK27                      0x08000000            // 27 throw?
+#define SPELL_ATTR_EX8_GUILD_PERKS                0x10000000            // 28
+#define SPELL_ATTR_EX8_MASTERY                    0x20000000            // 29
+#define SPELL_ATTR_EX8_UNK30                      0x40000000            // 30 Not set in 4.0.3a
+#define SPELL_ATTR_EX8_UNK31                      0x80000000            // 31
+
 #define MIN_TALENT_SPEC         0
 #define MAX_TALENT_SPEC         1
 #define MIN_TALENT_SPECS        1
