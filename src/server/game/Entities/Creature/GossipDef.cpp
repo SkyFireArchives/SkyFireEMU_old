@@ -604,11 +604,11 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
     data << uint32(pQuest->GetPlayersSlain());              // players slain
     data << uint32(pQuest->GetBonusTalents());              // bonus talents
     data << uint32(pQuest->GetRewArenaPoints());            // bonus arena points
-    data << uint32(0);                                      // reward skill line id
-    data << uint32(0);                                      // reward skill points
-    data << uint32(0);                                      // review rep show mask
-    data << uint32(0);                                      // questgiver portrait ID
-    data << uint32(0);                                      // quest turn in portrait ID
+    data << uint32(pQuest->GetRewSkillLineId());            // reward skill line id
+    data << uint32(pQuest->GetRewSkillPoints());            // reward skill points
+    data << uint32(pQuest->GetRewRepMask());                // review rep show mask
+    data << uint32(pQuest->GetQuestGiverPortrait());        // questgiver portrait ID
+    data << uint32(pQuest->GetQuestTurnInPortrait());       // quest turn in portrait ID
 
     int iI;
 
@@ -666,7 +666,7 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
         }
         data << uint32(pQuest->ReqCreatureOrGOCount[iI]);
         data << uint32(pQuest->ReqSourceId[iI]);            // item drop intermediate ID
-        data << uint32(0);                                  // item drop intermediate count
+        data << uint32(pQuest->ReqSourceCount[iI]);         // item drop intermediate count
     }
 
     for (iI = 0; iI < QUEST_ITEM_OBJECTIVES_COUNT; ++iI)
@@ -680,23 +680,23 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
 
     for(iI = 0; iI < 4; ++iI)                               // 4.0.0 currency reward id and count
     {
-        data << uint32(0);
-        data << uint32(0);
+        data << uint32(pQuest->RewCurrencyId[iI]);
+        data << uint32(pQuest->RewCurrencyCount[iI]);
     }
 
     for(iI = 0; iI < 4; ++iI)                               // 4.0.0 currency required id and count
     {
-        data << uint32(0);
-        data << uint32(0);
+        data << uint32(pQuest->ReqCurrencyId[iI]);
+        data << uint32(pQuest->ReqCurrencyCount[iI]);
     }
 
-    data << "";                                                // questgiver portrait text
-    data << "";                                                // questgiver portrait unk
-    data << "";                                                // quest turn in portrait text
-    data << "";                                                // quest turn in portrait unk
+    data << pQuest->GetQuestGiverPortraitText();               // questgiver portrait text
+    data << pQuest->GetQuestGiverPortraitUnk();                // questgiver portrait unk
+    data << pQuest->GetQuestTurnInPortraitText();              // quest turn in portrait text
+    data << pQuest->GetQuestTurnInPortaitUnk();                // quest turn in portrait unk
 
-    data << uint32(0);                                        // seems to be a sound?
-    data << uint32(0);                                        // also appears to be a sound
+    data << uint32(pQuest->GetSoundAccept());
+    data << uint32(pQuest->GetSoundTurnIn());
     
     pSession->SendPacket(&data);
     sLog.outDebug("WORLD: Sent SMSG_QUEST_QUERY_RESPONSE questid=%u", pQuest->GetQuestId());

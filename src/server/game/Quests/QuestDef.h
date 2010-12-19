@@ -42,6 +42,7 @@ class ObjectMgr;
 #define QUEST_DEPLINK_COUNT 10
 #define QUEST_REPUTATIONS_COUNT 5
 #define QUEST_EMOTE_COUNT 4
+#define QUEST_CURRENCY_COUNT 4
 
 enum QuestFailedReasons
 {
@@ -215,6 +216,11 @@ class Quest
         uint32 GetPlayersSlain() const { return PlayersSlain; }
         uint32 GetBonusTalents() const { return BonusTalents; }
         int32  GetRewArenaPoints() const {return RewArenaPoints; }
+        uint32 GetRewSkillLineId() const { return RewSkillLineId; }
+        uint32 GetRewSkillPoints() const { return RewSkillPoints; }
+        uint32 GetRewRepMask() const { return RewRepMask; }
+        uint32 GetQuestGiverPortrait() const { return QuestGiverPortrait; }
+        uint32 GetQuestTurnInPortrait() const { return QuestTurnInPortait; }
         uint32 GetXPId() const { return XPId; }
         uint32 GetSrcItemId() const { return SrcItemId; }
         uint32 GetSrcItemCount() const { return SrcItemCount; }
@@ -240,6 +246,12 @@ class Quest
         uint32 GetPointOpt() const { return PointOpt; }
         uint32 GetIncompleteEmote() const { return IncompleteEmote; }
         uint32 GetCompleteEmote() const { return CompleteEmote; }
+        std::string GetQuestGiverPortraitText() const { return QuestGiverPortraitText; }
+        std::string GetQuestGiverPortraitUnk() const { return QuestGiverPortraitUnk; }
+        std::string GetQuestTurnInPortraitText() const { return QuestTurnInPortraitText; }
+        std::string GetQuestTurnInPortaitUnk() const { return QuestTurnInPortraitUnk; }
+        uint32 GetSoundAccept() const { return SoundAccept; }
+        uint32 GetSoundTurnIn() const { return SoundTurnIn; }
         uint32 GetQuestStartScript() const { return QuestStartScript; }
         uint32 GetQuestCompleteScript() const { return QuestCompleteScript; }
         bool   IsRepeatable() const { return QuestFlags & QUEST_TRINITY_FLAGS_REPEATABLE; }
@@ -272,6 +284,11 @@ class Quest
         uint32 DetailsEmoteDelay[QUEST_EMOTE_COUNT];
         uint32 OfferRewardEmote[QUEST_EMOTE_COUNT];
         uint32 OfferRewardEmoteDelay[QUEST_EMOTE_COUNT];
+        uint32 RewCurrencyId[QUEST_CURRENCY_COUNT];
+        uint32 RewCurrencyCount[QUEST_CURRENCY_COUNT];
+        uint32 ReqCurrencyId[QUEST_CURRENCY_COUNT];
+        uint32 ReqCurrencyCount[QUEST_CURRENCY_COUNT];
+        
 
         uint32 GetReqItemsCount() const { return m_reqitemscount; }
         uint32 GetReqCreatureOrGOcount() const { return m_reqCreatureOrGOcount; }
@@ -346,6 +363,17 @@ class Quest
         uint32 PointOpt;
         uint32 IncompleteEmote;
         uint32 CompleteEmote;
+        uint32 RewSkillLineId;
+        uint32 RewSkillPoints;
+        uint32 RewRepMask;
+        uint32 QuestGiverPortrait;
+        uint32 QuestTurnInPortrait;
+        std::string QuestGiverPortraitText;
+        std::string QuestGiverPortraitUnk;
+        std::string QuestTurnInPortraitText;
+        std::string QuestTurnInPortaitUnk;
+        uint32 SoundAccept;
+        uint32 SoundTurnIn;
         uint32 QuestStartScript;
         uint32 QuestCompleteScript;
 };
