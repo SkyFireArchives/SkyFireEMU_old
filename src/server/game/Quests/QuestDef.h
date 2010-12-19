@@ -249,7 +249,7 @@ class Quest
         std::string GetQuestGiverPortraitText() const { return QuestGiverPortraitText; }
         std::string GetQuestGiverPortraitUnk() const { return QuestGiverPortraitUnk; }
         std::string GetQuestTurnInPortraitText() const { return QuestTurnInPortraitText; }
-        std::string GetQuestTurnInPortaitUnk() const { return QuestTurnInPortraitUnk; }
+        std::string GetQuestTurnInPortraitUnk() const { return QuestTurnInPortraitUnk; }
         uint32 GetSoundAccept() const { return SoundAccept; }
         uint32 GetSoundTurnIn() const { return SoundTurnIn; }
         uint32 GetRequiredSpell() const { return RequiredSpell; }
@@ -372,7 +372,7 @@ class Quest
         std::string QuestGiverPortraitText;
         std::string QuestGiverPortraitUnk;
         std::string QuestTurnInPortraitText;
-        std::string QuestTurnInPortaitUnk;
+        std::string QuestTurnInPortraitUnk;
         uint32 SoundAccept;
         uint32 SoundTurnIn;
         uint32 RequiredSpell;

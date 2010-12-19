@@ -695,7 +695,7 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
     data << pQuest->GetQuestGiverPortraitText();               // questgiver portrait text
     data << pQuest->GetQuestGiverPortraitUnk();                // questgiver portrait unk
     data << pQuest->GetQuestTurnInPortraitText();              // quest turn in portrait text
-    data << pQuest->GetQuestTurnInPortaitUnk();                // quest turn in portrait unk
+    data << pQuest->GetQuestTurnInPortraitUnk();               // quest turn in portrait unk
 
     data << uint32(pQuest->GetSoundAccept());
     data << uint32(pQuest->GetSoundTurnIn());

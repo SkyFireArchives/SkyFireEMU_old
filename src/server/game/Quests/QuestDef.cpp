@@ -160,7 +160,7 @@ Quest::Quest(Field * questRecord)
     QuestGiverPortraitText = questRecord[163].GetCppString();
     QuestGiverPortraitUnk = questRecord[164].GetCppString();
     QuestTurnInPortraitText = questRecord[165].GetCppString();
-    QuestTurnInPortaitUnk = questRecord[166].GetCppString();
+    QuestTurnInPortraitUnk = questRecord[166].GetCppString();
     SoundAccept = questRecord[167].GetUInt32();
     SoundTurnIn = questRecord[168].GetUInt32();
     RequiredSpell = questRecord[169].GetUInt32();
