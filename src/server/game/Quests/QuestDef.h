@@ -220,7 +220,7 @@ class Quest
         uint32 GetRewSkillPoints() const { return RewSkillPoints; }
         uint32 GetRewRepMask() const { return RewRepMask; }
         uint32 GetQuestGiverPortrait() const { return QuestGiverPortrait; }
-        uint32 GetQuestTurnInPortrait() const { return QuestTurnInPortait; }
+        uint32 GetQuestTurnInPortrait() const { return QuestTurnInPortrait; }
         uint32 GetXPId() const { return XPId; }
         uint32 GetSrcItemId() const { return SrcItemId; }
         uint32 GetSrcItemCount() const { return SrcItemCount; }
