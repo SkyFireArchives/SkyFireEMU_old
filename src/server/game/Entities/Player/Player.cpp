@@ -2036,10 +2036,10 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
 
                 data.Initialize(SMSG_NEW_WORLD, (20));
                 if (m_transport)
-                    data << (uint32)mapid << m_movementInfo.t_pos.PositionXYZOStream();
+                    data << m_movementInfo.t_pos.PositionXYZStream() << (uint32)mapid << (float)m_movementInfo.t_pos.m_orientation;
                 else
-                    data << (uint32)mapid << (float)x << (float)y << (float)z << (float)orientation;
-
+                    data << (float)x << (float)y << (float)z << (uint32)mapid << (float)orientation;
+                
                 GetSession()->SendPacket(&data);
                 SendSavedInstances();
             }

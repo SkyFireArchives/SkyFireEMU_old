@@ -60,7 +60,7 @@ enum Opcodes
     SMSG_CHAR_ENUM                                   = 0x0775E, // (0x429C)(0x003B) // TESTED
     SMSG_CHAR_DELETE                                 = 0x07F56, // (0x63BC)(0x003C) // TESTED
     CMSG_PLAYER_LOGIN                                = 0x005A1, // (0x1621)(0x003D) // TESTED
-    SMSG_NEW_WORLD                                   = 0x0E828, // (0xA094)(0x003E) // TESTED
+    SMSG_NEW_WORLD                                   = 0x038C8, // (0xA094)(0x003E) // TESTED
     SMSG_TRANSFER_PENDING                            = 0x0547F, // (0x6210)(0x003F) // TESTED
     SMSG_TRANSFER_ABORTED                            = 0x00E7E, // (0x0B55)(0x0040) // TESTED
     SMSG_CHARACTER_LOGIN_FAILED                      = 0x02C56, // (0xCBD9)(0x0041) //
@@ -232,7 +232,7 @@ enum Opcodes
     MSG_MOVE_TOGGLE_COLLISION_CHEAT                  = 0x10027, // (  nf  )(0x00D9) //
     MSG_MOVE_SET_FACING                              = 0x0865D, // (  nf  )(0x00DA) //
     MSG_MOVE_SET_PITCH                               = 0x10028, // (  nf  )(0x00DB) //
-    MSG_MOVE_WORLDPORT_ACK                           = 0x10029, // (0x6AD0)(0x00DC) //
+    MSG_MOVE_WORLDPORT_ACK                           = 0x0567E, // (0x6AD0)(0x00DC) // TESTED
     SMSG_MONSTER_MOVE                                = 0x0A65D, // (0x02B0)(0x00DD) //
     SMSG_MOVE_WATER_WALK                             = 0x1002A, // (  nf  )(0x00DE) //
     SMSG_MOVE_LAND_WALK                              = 0x1002B, // (  nf  )(0x00DF) //
