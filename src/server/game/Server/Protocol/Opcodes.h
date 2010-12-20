@@ -242,10 +242,10 @@ enum Opcodes
     CMSG_FORCE_RUN_SPEED_CHANGE_ACK                  = 0x0EC5D, // (  nf  )(0x00E3) //
     SMSG_FORCE_RUN_BACK_SPEED_CHANGE                 = 0x1002E, // (  nf  )(0x00E4) //
     CMSG_FORCE_RUN_BACK_SPEED_CHANGE_ACK             = 0x1002F, // (  nf  )(0x00E5) //
-    SMSG_FORCE_SWIM_SPEED_CHANGE                     = 0x0ED75, // (  nf  )(0x00E6) //
-    CMSG_FORCE_SWIM_SPEED_CHANGE_ACK                 = 0x0F677, // (  nf  )(0x00E7) //
-    SMSG_FORCE_MOVE_ROOT                             = 0x09657, // (  nf  )(0x00E8) //
-    CMSG_FORCE_MOVE_ROOT_ACK                         = 0x0CF7E, // (  nf  )(0x00E9) //
+    SMSG_FORCE_SWIM_SPEED_CHANGE                     = 0x0ED75, // (  nf  )(0x00E6) // TESTED
+    CMSG_FORCE_SWIM_SPEED_CHANGE_ACK                 = 0x0F677, // (  nf  )(0x00E7) // TESTED
+    SMSG_FORCE_MOVE_ROOT                             = 0x09657, // (  nf  )(0x00E8) // TESTED
+    CMSG_FORCE_MOVE_ROOT_ACK                         = 0x0CF7E, // (  nf  )(0x00E9) // TESTED
     SMSG_FORCE_MOVE_UNROOT                           = 0x10034, // (  nf  )(0x00EA) //
     CMSG_FORCE_MOVE_UNROOT_ACK                       = 0x10035, // (  nf  )(0x00EB) //
     MSG_MOVE_ROOT                                    = 0x09555, // (0x0275)(0x00EC) //
@@ -256,9 +256,9 @@ enum Opcodes
     MSG_MOVE_KNOCK_BACK                              = 0x02555, // (0xC210)(0x00F1) //
     SMSG_MOVE_FEATHER_FALL                           = 0x10038, // (  nf  )(0x00F2) //
     SMSG_MOVE_NORMAL_FALL                            = 0x10039, // (  nf  )(0x00F3) //
-    SMSG_MOVE_SET_HOVER                              = 0x08D5C, // (  nf  )(0x00F4) //
-    SMSG_MOVE_UNSET_HOVER                            = 0x07754, // (  nf  )(0x00F5) //
-    CMSG_MOVE_HOVER_ACK                              = 0x0067F, // (  nf  )(0x00F6) //
+    SMSG_MOVE_SET_HOVER                              = 0x08D5C, // (  nf  )(0x00F4) // TESTED
+    SMSG_MOVE_UNSET_HOVER                            = 0x07754, // (  nf  )(0x00F5) // TESTED
+    CMSG_MOVE_HOVER_ACK                              = 0x0067F, // (  nf  )(0x00F6) // TESTED
     MSG_MOVE_HOVER                                   = 0x0D575, // (0x0331)(0x00F7) //
     CMSG_TRIGGER_CINEMATIC_CHEAT                     = 0x1003D, // (  nf  )(0x00F8) //
     CMSG_OPENING_CINEMATIC                           = 0x0CF5F, // (  nf  )(0x00F9) //
