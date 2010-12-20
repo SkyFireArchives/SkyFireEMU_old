@@ -1864,12 +1864,12 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
 
     float maxPoints = 0.00f;
     float comboPointScaling = 0.00f;
-    if(caster)
+    if (caster)
     {
         SpellScaling values(caster->getLevel(), spellEntry);
-        if(values.canScale)
+        if (values.canScale)
         {
-            basePoints = values.min[effIndex];
+            basePoints = (int32)values.min[effIndex];
             maxPoints = values.max[effIndex];
             comboPointScaling = values.pts[effIndex];
         }
@@ -1885,8 +1885,8 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
         }
     }
 
-    if(maxPoints != 0.00f)
-        basePoints = irand(basePoints, maxPoints);
+    if (maxPoints != 0.00f)
+        basePoints = irand(basePoints, (int32)maxPoints);
     else
     {
         // not sure for Cataclysm.
@@ -1917,7 +1917,7 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
             {
                 if (float comboDamage = spellEntry->EffectPointsPerComboPoint[effIndex])
                 {
-                    if(comboPointScaling != 0.00f)
+                    if (comboPointScaling != 0.00f)
                         comboDamage = comboPointScaling;
                     
                     value += int32(comboDamage * comboPoints);

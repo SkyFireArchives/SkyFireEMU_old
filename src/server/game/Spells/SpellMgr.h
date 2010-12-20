@@ -913,9 +913,9 @@ inline bool IsProfessionOrRidingSkill(uint32 skill)
 inline float roundf(float value)
 {
     float frac;
-    double inte;
+    float inte;
     frac = modf(value, &inte);
-    return frac < 0.5f ? (float)inte : (float)inte + 1; 
+    return frac < 0.5f ? inte : inte + 1; 
 }
 
 struct SpellScaling

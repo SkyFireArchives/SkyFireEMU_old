@@ -3965,7 +3965,7 @@ void AuraEffect::HandleAuraModRoot(AuraApplication const * aurApp, uint8 mode, b
 
     target->SetControlled(apply, UNIT_STAT_ROOT);
     
-    if(apply)
+    if (apply)
     {
         switch (GetSpellProto()->Id)
         {
@@ -3981,11 +3981,11 @@ void AuraEffect::HandleAuraModRoot(AuraApplication const * aurApp, uint8 mode, b
     }
     else 
     {
-        switch (GetSpellProto()->Id)
+        /*switch (GetSpellProto()->Id)
         {
             default:
                 break;
-        }
+        }*/
     }
 
 }
@@ -4156,13 +4156,13 @@ void AuraEffect::HandleAuraModIncreaseSpeed(AuraApplication const * aurApp, uint
 
     target->UpdateSpeed(MOVE_RUN, true);
     
-    if(apply)
+    if (apply)
     {
         switch (GetId())
         {
-            case 68992: //Darkflight, worgen's sprint spell.
+            case 68992: // Darkflight, worgen's sprint spell.
             {
-                if(target->GetTypeId() == TYPEID_PLAYER)
+                if (target->GetTypeId() == TYPEID_PLAYER)
                     target->ToPlayer()->setInWorgenForm(UNIT_FLAG2_WORGEN_TRANSFORM2);
                 break;
             }
@@ -4172,11 +4172,11 @@ void AuraEffect::HandleAuraModIncreaseSpeed(AuraApplication const * aurApp, uint
     }
     else 
     {
-        switch (GetId())
+        /*switch (GetId())
         {
             default:
                 break;
-        }
+        }*/
     }
 
 }
