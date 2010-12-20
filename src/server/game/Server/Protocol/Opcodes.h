@@ -596,7 +596,7 @@ enum Opcodes
     CMSG_LEARN_TALENT                                = 0x100B7, // (  nf  )(0x0251) //
     SMSG_RESURRECT_FAILED                            = 0x0D557, // (0xAA78)(0x0252) //
     CMSG_TOGGLE_PVP                                  = 0x05C7F, // (  nf  )(0x0253) // TESTED
-    SMSG_ZONE_UNDER_ATTACK                           = 0x0E801, // (0x6215)(0x0254) //
+    SMSG_ZONE_UNDER_ATTACK                           = 0x0EC55, // (0x6215)(0x0254) // CONFIRMED
     MSG_AUCTION_HELLO                                = 0x0D574, // (0x8371)(0x0255) //
     CMSG_AUCTION_SELL_ITEM                           = 0x0567C, // (  nf  )(0x0256) //
     CMSG_AUCTION_REMOVE_ITEM                         = 0x09F5D, // (  nf  )(0x0257) //
