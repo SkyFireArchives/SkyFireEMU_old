@@ -305,14 +305,12 @@ uint32 ItemPrototype::GetArmor() const
     return uint32(floor(iaq->Value[Quality] * iatMult * alMult + 0.5f));
 }
 
-float ItemPrototype::getDPS() const
+ItemDamageEntry const * ItemPrototype::getItemDamageEntry() const
 {
-    float damage = 0.0f;
-    
     if(Class == ITEM_CLASS_WEAPON)
     {
         if(Quality >= ITEM_QUALITY_HEIRLOOM)                // heirlooms have it's own dbc...
-            return damage;
+            return NULL;
         
         ItemDamageEntry const* id = NULL;
         
@@ -359,13 +357,18 @@ float ItemPrototype::getDPS() const
                 break;
         }
         
-        if(!id)
-            return damage;
-        
-        return id->Value[Quality];
+        if(id)
+            return id;
     }
-    
-    return damage;
+    return NULL;
+}
+
+float ItemPrototype::getDPS() const
+{
+    ItemDamageEntry const* id = getItemDamageEntry();
+    if(id)
+        return id->Value[Quality];
+    return 0.0f;
 }
 
 Item::Item()

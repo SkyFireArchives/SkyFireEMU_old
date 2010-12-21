@@ -625,20 +625,11 @@ struct ItemPrototype
     int32  MaxCount;                                        // <= 0: no limit
     int32  Stackable;                                       // 0: not allowed, -1: put in player coin info tab and don't limit stacking (so 1 slot)
     uint32 ContainerSlots;
-    uint32 StatsCount;
     _ItemStat ItemStat[MAX_ITEM_PROTO_STATS];
     uint32 ScalingStatDistribution;                         // id from ScalingStatDistribution.dbc
     uint32 ScalingStatValue;                                // mask for selecting column in ScalingStatValues.dbc
-    _Damage Damage[MAX_ITEM_PROTO_DAMAGES];                 // TODO: remove it
-    uint32 Armor;                                           // TODO: remove it
-    uint32 HolyRes;                                         // TODO: remove it
-    uint32 FireRes;                                         // TODO: remove it
-    uint32 NatureRes;                                       // TODO: remove it
-    uint32 FrostRes;                                        // TODO: remove it
-    uint32 ShadowRes;                                       // TODO: remove it
-    uint32 ArcaneRes;                                       // TODO: remove it
+    uint32 damageType;
     uint32 Delay;
-    uint32 AmmoType;                                        // TODO: remove it
     float  RangedModRange;
     _Spell Spells[MAX_ITEM_PROTO_SPELLS];
     uint32 Bonding;
@@ -699,8 +690,6 @@ struct ItemPrototype
         return (Stackable == 2147483647 || Stackable <= 0) ? uint32(0x7FFFFFFF-1) : uint32(Stackable);
     }
 
-    float getDPS() const;
-
     int32 getFeralBonus(int32 extraDPS = 0) const
     {
         // 0x02A5F3 - is mask for Melee weapon from ItemSubClassMask.dbc
@@ -738,6 +727,9 @@ struct ItemPrototype
     }
 
     uint32 GetArmor() const;
+    
+    ItemDamageEntry const* getItemDamageEntry() const;
+    float getDPS() const;
     float GetMinDamage() const { return floor(getDPS() * float(Delay) / 1000.0f * 0.7f + 0.5f); }
     float GetMaxDamage() const { return floor(getDPS() * float(Delay) / 1000.0f * 1.3f + 0.5f); }
 
