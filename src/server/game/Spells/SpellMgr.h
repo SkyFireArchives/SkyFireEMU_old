@@ -913,7 +913,7 @@ inline bool IsProfessionOrRidingSkill(uint32 skill)
 inline float roundf(float value)
 {
     float frac;
-    float inte;
+    double inte;
     frac = modf(value, &inte);
     return frac < 0.5f ? inte : inte + 1; 
 }
