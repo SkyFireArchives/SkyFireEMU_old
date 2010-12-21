@@ -734,6 +734,8 @@ ChatCommand * ChatHandler::getCommandTable()
         { "loadpath",       SEC_ADMINISTRATOR,  false, &ChatHandler::HandleReloadAllPaths,             "", NULL },
         { "ticket",         SEC_MODERATOR,      false,  NULL,                                          "", ticketCommandTable },
 
+		{ "opcode",         SEC_MODERATOR,      false, &ChatHandler::HandleOpcodeTestCommand,          "", NULL },
+
         { "aura",           SEC_ADMINISTRATOR,  false, &ChatHandler::HandleAuraCommand,                "", NULL },
         { "unaura",         SEC_ADMINISTRATOR,  false, &ChatHandler::HandleUnAuraCommand,              "", NULL },
         { "nameannounce",   SEC_MODERATOR,      false, &ChatHandler::HandleNameAnnounceCommand,        "", NULL },

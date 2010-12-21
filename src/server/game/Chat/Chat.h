@@ -305,6 +305,8 @@ class ChatHandler
         bool HandleModifyPhaseCommand(const char* args);
         bool HandleModifyGenderCommand(const char* args);
 
+		bool HandleOpcodeTestCommand(const char* args);
+
         //-----------------------Npc Commands-----------------------
         bool HandleNpcAddCommand(const char* args);
         bool HandleNpcAddMoveCommand(const char* args);
