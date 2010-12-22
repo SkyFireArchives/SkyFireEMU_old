@@ -724,8 +724,8 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                         Item *item = m_caster->ToPlayer()->GetWeaponForAttack(RANGED_ATTACK);
                         if (item)
                         {
-                            float dmg_min = item->GetProto()->Damage->DamageMin;
-                            float dmg_max = item->GetProto()->Damage->DamageMax;
+                            float dmg_min = item->GetProto()->GetMinDamage();
+                            float dmg_max = item->GetProto()->GetMaxDamage();
                             if (dmg_max == 0.0f && dmg_min > dmg_max)
                                 damage += int32(dmg_min);
                             else

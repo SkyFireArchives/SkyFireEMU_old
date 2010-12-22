@@ -362,27 +362,9 @@ void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
         for (uint32 i = 0; i < 10; ++i)
             data << uint32(0);                              // 4.0.0
         data << pProto->ScalingStatDistribution;            // scaling stats distribution
-      //  data << pProto->ScalingStatValue;                   // some kind of flags used to determine stat values column
-        //for (int i = 0; i < MAX_ITEM_PROTO_DAMAGES; ++i)
-        //{
-        //    data << pProto->Damage[i].DamageMin;
-        //    data << pProto->Damage[i].DamageMax;
-        //    data << pProto->Damage[i].DamageType;
-        //}
-
-        // resistances (7)
-        //data << pProto->Armor;
-        //data << pProto->HolyRes;
-        //data << pProto->FireRes;
-        //data << pProto->NatureRes;
-        //data << pProto->FrostRes;
-        //data << pProto->ShadowRes;
-        //data << pProto->ArcaneRes;
 
         data << uint32(0);                                  // DamageType
-        //data << pProto->AmmoType;
         data << pProto->Delay;
-        //data << pProto->AmmoType;
         data << pProto->RangedModRange;
 
         for (int s = 0; s < MAX_ITEM_PROTO_SPELLS; ++s)

@@ -219,7 +219,7 @@ enum Opcodes
     MSG_MOVE_SET_RUN_SPEED_CHEAT                     = 0x10020, // (  nf  )(0x00CC) //
     MSG_MOVE_SET_RUN_SPEED                           = 0x0A454, // (0x8379)(0x00CD) //
     MSG_MOVE_SET_RUN_BACK_SPEED_CHEAT                = 0x10021, // (  nf  )(0x00CE) //
-    MSG_MOVE_SET_RUN_BACK_SPEED                      = 0x0065F, // (0x0270)(0x00CF) //
+    MSG_MOVE_SET_RUN_BACK_SPEED                      = 0x04F77, // (0x0270)(0x00CF) //
     MSG_MOVE_SET_WALK_SPEED_CHEAT                    = 0x10022, // (  nf  )(0x00D0) //
     MSG_MOVE_SET_WALK_SPEED                          = 0x0EF57, // (0xEAB5)(0x00D1) //
     MSG_MOVE_SET_SWIM_SPEED_CHEAT                    = 0x10023, // (  nf  )(0x00D2) //
@@ -242,10 +242,10 @@ enum Opcodes
     CMSG_FORCE_RUN_SPEED_CHANGE_ACK                  = 0x0EC5D, // (  nf  )(0x00E3) //
     SMSG_FORCE_RUN_BACK_SPEED_CHANGE                 = 0x1002E, // (  nf  )(0x00E4) //
     CMSG_FORCE_RUN_BACK_SPEED_CHANGE_ACK             = 0x1002F, // (  nf  )(0x00E5) //
-    SMSG_FORCE_SWIM_SPEED_CHANGE                     = 0x10030, // (  nf  )(0x00E6) //
-    CMSG_FORCE_SWIM_SPEED_CHANGE_ACK                 = 0x10031, // (  nf  )(0x00E7) //
-    SMSG_FORCE_MOVE_ROOT                             = 0x10032, // (  nf  )(0x00E8) //
-    CMSG_FORCE_MOVE_ROOT_ACK                         = 0x10033, // (  nf  )(0x00E9) //
+    SMSG_FORCE_SWIM_SPEED_CHANGE                     = 0x0ED75, // (  nf  )(0x00E6) // TESTED
+    CMSG_FORCE_SWIM_SPEED_CHANGE_ACK                 = 0x0F677, // (  nf  )(0x00E7) // TESTED
+    SMSG_FORCE_MOVE_ROOT                             = 0x09657, // (  nf  )(0x00E8) // TESTED
+    CMSG_FORCE_MOVE_ROOT_ACK                         = 0x0CF7E, // (  nf  )(0x00E9) // TESTED
     SMSG_FORCE_MOVE_UNROOT                           = 0x10034, // (  nf  )(0x00EA) //
     CMSG_FORCE_MOVE_UNROOT_ACK                       = 0x10035, // (  nf  )(0x00EB) //
     MSG_MOVE_ROOT                                    = 0x09555, // (0x0275)(0x00EC) //
@@ -256,9 +256,9 @@ enum Opcodes
     MSG_MOVE_KNOCK_BACK                              = 0x02555, // (0xC210)(0x00F1) //
     SMSG_MOVE_FEATHER_FALL                           = 0x10038, // (  nf  )(0x00F2) //
     SMSG_MOVE_NORMAL_FALL                            = 0x10039, // (  nf  )(0x00F3) //
-    SMSG_MOVE_SET_HOVER                              = 0x1003A, // (  nf  )(0x00F4) //
-    SMSG_MOVE_UNSET_HOVER                            = 0x1003B, // (  nf  )(0x00F5) //
-    CMSG_MOVE_HOVER_ACK                              = 0x1003C, // (  nf  )(0x00F6) //
+    SMSG_MOVE_SET_HOVER                              = 0x08D5C, // (  nf  )(0x00F4) // TESTED
+    SMSG_MOVE_UNSET_HOVER                            = 0x07754, // (  nf  )(0x00F5) // TESTED
+    CMSG_MOVE_HOVER_ACK                              = 0x0067F, // (  nf  )(0x00F6) // TESTED
     MSG_MOVE_HOVER                                   = 0x0D575, // (0x0331)(0x00F7) //
     CMSG_TRIGGER_CINEMATIC_CHEAT                     = 0x1003D, // (  nf  )(0x00F8) //
     CMSG_OPENING_CINEMATIC                           = 0x0CF5F, // (  nf  )(0x00F9) //
@@ -596,7 +596,7 @@ enum Opcodes
     CMSG_LEARN_TALENT                                = 0x100B7, // (  nf  )(0x0251) //
     SMSG_RESURRECT_FAILED                            = 0x0D557, // (0xAA78)(0x0252) //
     CMSG_TOGGLE_PVP                                  = 0x05C7F, // (  nf  )(0x0253) // TESTED
-    SMSG_ZONE_UNDER_ATTACK                           = 0x0E801, // (0x6215)(0x0254) //
+    SMSG_ZONE_UNDER_ATTACK                           = 0x0EC55, // (0x6215)(0x0254) // CONFIRMED
     MSG_AUCTION_HELLO                                = 0x0D574, // (0x8371)(0x0255) //
     CMSG_AUCTION_SELL_ITEM                           = 0x0567C, // (  nf  )(0x0256) //
     CMSG_AUCTION_REMOVE_ITEM                         = 0x09F5D, // (  nf  )(0x0257) //
@@ -733,8 +733,8 @@ enum Opcodes
     CMSG_FORCE_WALK_SPEED_CHANGE_ACK                 = 0x100F5, // (  nf  )(0x02DB) //
     SMSG_FORCE_SWIM_BACK_SPEED_CHANGE                = 0x100F6, // (  nf  )(0x02DC) //
     CMSG_FORCE_SWIM_BACK_SPEED_CHANGE_ACK            = 0x100F7, // (  nf  )(0x02DD) //
-    SMSG_FORCE_TURN_RATE_CHANGE                      = 0x100F8, // (  nf  )(0x02DE) //
-    CMSG_FORCE_TURN_RATE_CHANGE_ACK                  = 0x100F9, // (  nf  )(0x02DF) //
+    SMSG_FORCE_TURN_RATE_CHANGE                      = 0x0375E, // (  nf  )(0x02DE) // TESTED
+    CMSG_FORCE_TURN_RATE_CHANGE_ACK                  = 0x0665D, // (  nf  )(0x02DF) // TESTED
     MSG_PVP_LOG_DATA                                 = 0x100FA, // (0x0762)(0x02E0) //
     CMSG_LEAVE_BATTLEFIELD                           = 0x07757, // (0xAA15)(0x02E1) //
     CMSG_AREA_SPIRIT_HEALER_QUERY                    = 0x0EF55, // (  nf  )(0x02E2) //
@@ -830,14 +830,14 @@ enum Opcodes
     SMSG_INSTANCE_DIFFICULTY                         = 0x0A55E, // (0x0B19)(0x033B) //
     MSG_GM_RESETINSTANCELIMIT                        = 0x1012F, // (  nf  )(0x033C) //
     SMSG_MOTD                                        = 0x0077C, // (0x4394)(0x033D) //
-    SMSG_MOVE_SET_FLIGHT                             = 0x10130, // (  nf  )(0x033E) //
+    SMSG_MOVE_SET_FLIGHT                             = 0x0C57F, // (  nf  )(0x033E) //
     SMSG_MOVE_UNSET_FLIGHT                           = 0x10131, // (  nf  )(0x033F) //
     CMSG_MOVE_FLIGHT_ACK                             = 0x10132, // (  nf  )(0x0340) //
     MSG_MOVE_START_SWIM_CHEAT                        = 0x02755, // (0x0A1C)(0x0341) //
     MSG_MOVE_STOP_SWIM_CHEAT                         = 0x03D54, // (0x6AF8)(0x0342) //
-    SMSG_MOVE_SET_CAN_FLY                            = 0x0675D, // (0xEBF1)(0x0343) //
-    SMSG_MOVE_UNSET_CAN_FLY                          = 0x10133, // (  nf  )(0x0344) //
-    CMSG_MOVE_SET_CAN_FLY_ACK                        = 0x10134, // (  nf  )(0x0345) //
+    SMSG_MOVE_SET_CAN_FLY                            = 0x00C5F, // (0xEBF1)(0x0343) // TESTED
+    SMSG_MOVE_UNSET_CAN_FLY                          = 0x0DC57, // (  nf  )(0x0344) // TESTED
+    CMSG_MOVE_SET_CAN_FLY_ACK                        = 0x05E75, // (  nf  )(0x0345) // TESTED
     CMSG_MOVE_SET_FLY                                = 0x10135, // (  nf  )(0x0346) //
     CMSG_SOCKET_GEMS                                 = 0x10136, // (  nf  )(0x0347) //
     CMSG_ARENA_TEAM_CREATE                           = 0x10137, // (  nf  )(0x0348) //
@@ -896,8 +896,8 @@ enum Opcodes
     MSG_MOVE_SET_FLIGHT_SPEED                        = 0x05576, // (0x0310)(0x037E) //
     MSG_MOVE_SET_FLIGHT_BACK_SPEED_CHEAT             = 0x10150, // (  nf  )(0x037F) //
     MSG_MOVE_SET_FLIGHT_BACK_SPEED                   = 0x05C55, // (0xE2BC)(0x0380) //
-    SMSG_FORCE_FLIGHT_SPEED_CHANGE                   = 0x10151, // (  nf  )(0x0381) //
-    CMSG_FORCE_FLIGHT_SPEED_CHANGE_ACK               = 0x10152, // (  nf  )(0x0382) //
+    SMSG_FORCE_FLIGHT_SPEED_CHANGE                   = 0x03F7D, // (  nf  )(0x0381) // TESTED
+    CMSG_FORCE_FLIGHT_SPEED_CHANGE_ACK               = 0x0265D, // (  nf  )(0x0382) // TESTED
     SMSG_FORCE_FLIGHT_BACK_SPEED_CHANGE              = 0x10153, // (  nf  )(0x0383) //
     CMSG_FORCE_FLIGHT_BACK_SPEED_CHANGE_ACK          = 0x10154, // (  nf  )(0x0384) //
     SMSG_SPLINE_SET_FLIGHT_SPEED                     = 0x0DD5C, // (0x0A15)(0x0385) //
@@ -1288,6 +1288,10 @@ enum Opcodes
     NUM_MSG_TYPES                                    = 0x102B7  // last unknow opcode + 1.
 };
 
+/*
+NOTES:
+0x1850 open reforging
+*/
 extern void InitOpcodeTable();
 
 /// Player state

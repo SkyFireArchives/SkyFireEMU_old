@@ -78,17 +78,18 @@ bool Player::UpdateStats(Stats stat)
             UpdateShieldBlockValue();
             break;
         case STAT_AGILITY:
-            UpdateArmor();
             UpdateAllCritPercentages();
             UpdateDodgePercentage();
             break;
-        case STAT_STAMINA:   UpdateMaxHealth(); break;
+        case STAT_STAMINA:   
+            UpdateMaxHealth(); 
+            break;
         case STAT_INTELLECT:
             UpdateMaxPower(POWER_MANA);
             UpdateAllSpellCritChances();
             UpdateArmor();                                  //SPELL_AURA_MOD_RESISTANCE_OF_INTELLECT_PERCENT, only armor currently
+            UpdateSpellPower();
             break;
-
         case STAT_SPIRIT:
             break;
 
@@ -142,6 +143,8 @@ void Player::ApplySpellPowerBonus(int32 amount, bool apply)
     ApplyModUInt32Value(PLAYER_FIELD_MOD_HEALING_DONE_POS, amount, apply);
     for (int i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; ++i)
         ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS + i, amount, apply);
+    
+    UpdateSpellPower();
 }
 
 void Player::UpdateSpellDamageAndHealingBonus()
@@ -167,6 +170,7 @@ bool Player::UpdateAllStats()
     // calls UpdateAttackPowerAndDamage() in UpdateArmor for SPELL_AURA_MOD_ATTACK_POWER_OF_ARMOR
     UpdateAttackPowerAndDamage(true);
     UpdateMaxHealth();
+    UpdateSpellPower();
 
     for (uint8 i = POWER_MANA; i < MAX_POWERS; ++i)
         UpdateMaxPower(Powers(i));
@@ -231,6 +235,18 @@ void Player::UpdateArmor()
     UpdateAttackPowerAndDamage();                           // armor dependent auras update for SPELL_AURA_MOD_ATTACK_POWER_OF_ARMOR
 }
 
+void Player::UpdateSpellPower()
+{
+    uint32 spellPowerFromIntellect = GetStat(STAT_INTELLECT) - 10;
+    
+    //apply only the diff between the last and the new value.
+    ApplyModUInt32Value(PLAYER_FIELD_MOD_HEALING_DONE_POS, spellPowerFromIntellect - m_spellPowerFromIntellect, true);
+    for (int i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; ++i)
+        ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS + i, spellPowerFromIntellect - m_spellPowerFromIntellect, true);
+    
+    m_spellPowerFromIntellect = spellPowerFromIntellect;
+}
+
 float Player::GetHealthBonusFromStamina()
 {
     float stamina = GetStat(STAT_STAMINA);
@@ -238,7 +254,7 @@ float Player::GetHealthBonusFromStamina()
     float baseStam = stamina < 20 ? stamina : 20;
     float moreStam = stamina - baseStam;
 
-    return baseStam + (moreStam*10.0f);
+    return baseStam + (moreStam*14.0f);
 }
 
 float Player::GetManaBonusFromIntellect()
@@ -760,23 +776,13 @@ void Player::UpdateManaRegen()
     // Apply PCT bonus from SPELL_AURA_MOD_POWER_REGEN_PERCENT aura on spirit base regen
     power_regen *= GetTotalAuraMultiplierByMiscValue(SPELL_AURA_MOD_POWER_REGEN_PERCENT, POWER_MANA);
 
-    // Mana regen from SPELL_AURA_MOD_POWER_REGEN aura
-    float power_regen_mp5 = (GetTotalAuraModifierByMiscValue(SPELL_AURA_MOD_POWER_REGEN, POWER_MANA) + m_baseManaRegen) / 5.0f;
-
-    // Get bonus from SPELL_AURA_MOD_MANA_REGEN_FROM_STAT aura
-    AuraEffectList const& regenAura = GetAuraEffectsByType(SPELL_AURA_MOD_MANA_REGEN_FROM_STAT);
-    for (AuraEffectList::const_iterator i = regenAura.begin(); i != regenAura.end(); ++i)
-    {
-        power_regen_mp5 += GetStat(Stats((*i)->GetMiscValue())) * (*i)->GetAmount() / 500.0f;
-    }
-
     // Set regen rate in cast state apply only on spirit based regen
     int32 modManaRegenInterrupt = GetTotalAuraModifier(SPELL_AURA_MOD_MANA_REGEN_INTERRUPT);
     if (modManaRegenInterrupt > 100)
         modManaRegenInterrupt = 100;
-    SetStatFloatValue(UNIT_FIELD_POWER_REGEN_INTERRUPTED_FLAT_MODIFIER, power_regen_mp5 + power_regen * modManaRegenInterrupt / 100.0f);
+    SetStatFloatValue(UNIT_FIELD_POWER_REGEN_INTERRUPTED_FLAT_MODIFIER, power_regen * modManaRegenInterrupt / 100.0f);
 
-    SetStatFloatValue(UNIT_FIELD_POWER_REGEN_FLAT_MODIFIER, power_regen_mp5 + power_regen);
+    SetStatFloatValue(UNIT_FIELD_POWER_REGEN_FLAT_MODIFIER, power_regen);
 }
 
 void Player::_ApplyAllStatBonuses()
@@ -1111,7 +1117,6 @@ void Guardian::UpdateArmor()
 
     value  = GetModifierValue(unitMod, BASE_VALUE);
     value *= GetModifierValue(unitMod, BASE_PCT);
-    value += GetStat(STAT_AGILITY) * 2.0f;
     value += GetModifierValue(unitMod, TOTAL_VALUE) + bonus_armor;
     value *= GetModifierValue(unitMod, TOTAL_PCT);
 

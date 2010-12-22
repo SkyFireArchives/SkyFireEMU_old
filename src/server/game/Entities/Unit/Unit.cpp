@@ -997,9 +997,9 @@ void Unit::CalculateSpellDamageTaken(SpellNonMeleeDamage *damageInfo, int32 dama
                 }
 
                 if (attackType != RANGED_ATTACK)
-                    ApplyResilience(pVictim, NULL, &damage, crit, CR_CRIT_TAKEN_MELEE);
+                    ApplyResilience(pVictim, &damage, crit, CR_CRIT_TAKEN_MELEE);
                 else
-                    ApplyResilience(pVictim, NULL, &damage, crit, CR_CRIT_TAKEN_RANGED);
+                    ApplyResilience(pVictim, &damage, crit, CR_CRIT_TAKEN_RANGED);
             }
             break;
         // Magical Attacks
@@ -1013,7 +1013,7 @@ void Unit::CalculateSpellDamageTaken(SpellNonMeleeDamage *damageInfo, int32 dama
                     damage = SpellCriticalDamageBonus(spellInfo, damage, pVictim);
                 }
 
-                ApplyResilience(pVictim, NULL, &damage, crit, CR_CRIT_TAKEN_SPELL);
+                ApplyResilience(pVictim, &damage, crit, CR_CRIT_TAKEN_SPELL);
             }
             break;
     }
@@ -1251,9 +1251,9 @@ void Unit::CalculateMeleeDamage(Unit *pVictim, uint32 damage, CalcDamageInfo *da
 
     int32 resilienceReduction = damageInfo->damage;
     if (attackType != RANGED_ATTACK)
-        ApplyResilience(pVictim, NULL, &resilienceReduction, (damageInfo->hitOutCome == MELEE_HIT_CRIT), CR_CRIT_TAKEN_MELEE);
+        ApplyResilience(pVictim, &resilienceReduction, (damageInfo->hitOutCome == MELEE_HIT_CRIT), CR_CRIT_TAKEN_MELEE);
     else
-        ApplyResilience(pVictim, NULL, &resilienceReduction, (damageInfo->hitOutCome == MELEE_HIT_CRIT), CR_CRIT_TAKEN_RANGED);
+        ApplyResilience(pVictim, &resilienceReduction, (damageInfo->hitOutCome == MELEE_HIT_CRIT), CR_CRIT_TAKEN_RANGED);
     resilienceReduction = damageInfo->damage - resilienceReduction;
     damageInfo->damage      -= resilienceReduction;
     damageInfo->cleanDamage += resilienceReduction;
@@ -2972,13 +2972,10 @@ float Unit::GetUnitCriticalChance(WeaponAttackType attackType, const Unit *pVict
     // reduce crit chance from Rating for players
     if (attackType != RANGED_ATTACK)
     {
-        ApplyResilience(pVictim, &crit, NULL, false, CR_CRIT_TAKEN_MELEE);
         // Glyph of barkskin
         if (pVictim->HasAura(63057) && pVictim->HasAura(22812))
             crit -= 25.0f;
     }
-    else
-        ApplyResilience(pVictim, &crit, NULL, false, CR_CRIT_TAKEN_RANGED);
 
     // Apply crit chance from defence skill
     crit += (int32(GetMaxSkillValueForLevel(pVictim)) - int32(pVictim->GetDefenseSkillValue(this))) * 0.04f;
@@ -10608,7 +10605,6 @@ bool Unit::isSpellCrit(Unit *pVictim, SpellEntry const *spellProto, SpellSchoolM
                     crit_chance += pVictim->GetTotalAuraModifierByMiscMask(SPELL_AURA_MOD_ATTACKER_SPELL_CRIT_CHANCE, schoolMask);
                     // Modify critical chance by victim SPELL_AURA_MOD_ATTACKER_SPELL_AND_WEAPON_CRIT_CHANCE
                     crit_chance += pVictim->GetTotalAuraModifier(SPELL_AURA_MOD_ATTACKER_SPELL_AND_WEAPON_CRIT_CHANCE);
-                    ApplyResilience(pVictim, &crit_chance, NULL, false, CR_CRIT_TAKEN_SPELL);
                 }
                 // scripted (increase crit chance ... against ... target by x%
                 AuraEffectList const& mOverrideClassScript = GetAuraEffectsByType(SPELL_AURA_OVERRIDE_CLASS_SCRIPTS);
@@ -13362,7 +13358,7 @@ uint32 Unit::GetCreatePowers(Powers power) const
         case POWER_MANA:        return GetCreateMana();
         case POWER_RAGE:        return 1000;
         case POWER_FOCUS:
-            if(GetTypeId() == TYPEID_PLAYER && ((Player const*)this)->getClass() == CLASS_HUNTER)
+            if(GetTypeId() == TYPEID_PLAYER && (ToPlayer()->getClass() == CLASS_HUNTER))
                 return 100;
             return (GetTypeId() == TYPEID_PLAYER || !((Creature const*)this)->isPet() || ((Pet const*)this)->getPetType() != HUNTER_PET ? 0 : 100);
         case POWER_ENERGY:      return 100;
@@ -15889,7 +15885,7 @@ void Unit::SetAuraStack(uint32 spellId, Unit *target, uint32 stack)
         aura->SetStackAmount(stack);
 }
 
-void Unit::ApplyResilience(const Unit *pVictim, float *crit, int32 *damage, bool isCrit, CombatRating type) const
+void Unit::ApplyResilience(const Unit *pVictim, int32 *damage, bool isCrit, CombatRating type) const
 {
     if (IsVehicle() || pVictim->IsVehicle())
         return;
@@ -15924,9 +15920,6 @@ void Unit::ApplyResilience(const Unit *pVictim, float *crit, int32 *damage, bool
     switch (type)
     {
         case CR_CRIT_TAKEN_MELEE:
-            // Crit chance reduction works against nonpets
-            if (crit)
-                *crit -= target->ToPlayer()->GetMeleeCritChanceReduction();
             if (source && damage)
             {
                 if (isCrit)
@@ -15935,9 +15928,6 @@ void Unit::ApplyResilience(const Unit *pVictim, float *crit, int32 *damage, bool
             }
             break;
         case CR_CRIT_TAKEN_RANGED:
-            // Crit chance reduction works against nonpets
-            if (crit)
-                *crit -= target->ToPlayer()->GetRangedCritChanceReduction();
             if (source && damage)
             {
                 if (isCrit)
@@ -15946,9 +15936,6 @@ void Unit::ApplyResilience(const Unit *pVictim, float *crit, int32 *damage, bool
             }
             break;
         case CR_CRIT_TAKEN_SPELL:
-            // Crit chance reduction works against nonpets
-            if (crit)
-                *crit -= target->ToPlayer()->GetSpellCritChanceReduction();
             if (source && damage)
             {
                 if (isCrit)
