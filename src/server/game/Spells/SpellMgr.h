@@ -959,6 +959,9 @@ struct SpellScaling
 
         float gtCoef = GetGtSpellScalingValue(class_, playerLevel_);
         
+        if(gtCoef == -1.0f)
+            return;
+        
         gtCoef *= ( std::min(playerLevel,base_level) + ( base_coef * std::max(0,playerLevel-base_level) ) )/playerLevel;
         
         //cast time
