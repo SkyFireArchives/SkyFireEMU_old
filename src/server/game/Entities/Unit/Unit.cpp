@@ -9543,10 +9543,10 @@ Unit* Unit::GetCharm() const
     return NULL;
 }
 
-void Unit::SetMinion(Minion *minion, bool apply)
+void Unit::SetMinion(Minion *minion, bool apply, PetSlot slot)
 {
     sLog.outDebug("SetMinion %u for %u, apply %u", minion->GetEntry(), GetEntry(), apply);
-
+    
     if (apply)
     {
         if (!minion->AddUInt64Value(UNIT_FIELD_SUMMONEDBY, GetGUID()))
@@ -9572,7 +9572,7 @@ void Unit::SetMinion(Minion *minion, bool apply)
                 {
                     // remove existing minion pet
                     if (oldPet->isPet())
-                        ((Pet*)oldPet)->Remove(PET_SAVE_AS_CURRENT);
+                        ((Pet*)oldPet)->Remove(PET_SLOT_ACTUAL_PET_SLOT);
                     else
                         oldPet->UnSummon();
                     SetPetGUID(minion->GetGUID());
@@ -9583,6 +9583,20 @@ void Unit::SetMinion(Minion *minion, bool apply)
             {
                 SetPetGUID(minion->GetGUID());
                 SetMinionGUID(0);
+            }
+            
+            if(slot == PET_SLOT_UNK_SLOT)
+            {
+                if(minion->isPet() && minion->ToPet()->getPetType() == HUNTER_PET)
+                    assert(false);
+                slot = PET_SLOT_OTHER_PET;
+            }
+            
+            if(GetTypeId() == TYPEID_PLAYER)
+            {
+                ToPlayer()->m_currentPetSlot = slot;
+                if(slot >= PET_SLOT_HUNTER_FIRST && slot <= PET_SLOT_HUNTER_LAST)
+                    ToPlayer()->setPetSlotUsed(slot, true);
             }
         }
 

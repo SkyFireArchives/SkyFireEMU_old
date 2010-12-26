@@ -869,7 +869,7 @@ void Creature::UpdateMaxPower(Powers power)
 void Creature::UpdateAttackPowerAndDamage(bool ranged)
 {
     UnitMods unitMod_pos = ranged ? UNIT_MOD_ATTACK_POWER_RANGED_POS : UNIT_MOD_ATTACK_POWER_POS;
-    UnitMods unitMod_neg = ranged ? UNIT_MOD_ATTACK_POWER_RANGED_POS : UNIT_MOD_ATTACK_POWER_NEG;
+    UnitMods unitMod_neg = ranged ? UNIT_MOD_ATTACK_POWER_RANGED_NEG : UNIT_MOD_ATTACK_POWER_NEG;
 
     uint16 index = UNIT_FIELD_ATTACK_POWER;
     uint16 index_mod_pos = UNIT_FIELD_ATTACK_POWER_MOD_POS;

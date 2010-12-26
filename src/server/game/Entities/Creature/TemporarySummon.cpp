@@ -231,7 +231,7 @@ void TempSummon::UnSummon()
     //ASSERT(!isPet());
     if (isPet())
     {
-        ((Pet*)this)->Remove(PET_SAVE_NOT_IN_SLOT);
+        ((Pet*)this)->Remove(PET_SLOT_OTHER_PET);
         ASSERT(!IsInWorld());
         return;
     }
@@ -281,7 +281,7 @@ void Minion::InitStats(uint32 duration)
     SetCreatorGUID(m_owner->GetGUID());
     setFaction(m_owner->getFaction());
 
-    m_owner->SetMinion(this, true);
+    m_owner->SetMinion(this, true, PET_SLOT_UNK_SLOT);
 }
 
 void Minion::RemoveFromWorld()
@@ -289,7 +289,7 @@ void Minion::RemoveFromWorld()
     if (!IsInWorld())
         return;
 
-    m_owner->SetMinion(this, false);
+    m_owner->SetMinion(this, false, PET_SLOT_UNK_SLOT);
     TempSummon::RemoveFromWorld();
 }
 

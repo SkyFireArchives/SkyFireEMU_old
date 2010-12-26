@@ -625,7 +625,6 @@ void InitOpcodeTable()
     OPCODE( MSG_LIST_STABLED_PETS,                        STATUS_LOGGEDIN, &WorldSession::HandleListStabledPetsOpcode     );
     OPCODE( CMSG_STABLE_PET,                              STATUS_LOGGEDIN, &WorldSession::HandleStablePet                 );
     OPCODE( CMSG_UNSTABLE_PET,                            STATUS_LOGGEDIN, &WorldSession::HandleUnstablePet               );
-    OPCODE( CMSG_BUY_STABLE_SLOT,                         STATUS_LOGGEDIN, &WorldSession::HandleBuyStableSlot             );
     OPCODE( SMSG_STABLE_RESULT,                           STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_STABLE_REVIVE_PET,                       STATUS_LOGGEDIN, &WorldSession::HandleStableRevivePet           );
     OPCODE( CMSG_STABLE_SWAP_PET,                         STATUS_LOGGEDIN, &WorldSession::HandleStableSwapPet             );

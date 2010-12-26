@@ -626,7 +626,6 @@ enum Opcodes
     MSG_LIST_STABLED_PETS                            = 0x05E5D, // (0x2A79)(0x026F) //
     CMSG_STABLE_PET                                  = 0x100C4, // (  nf  )(0x0270) //
     CMSG_UNSTABLE_PET                                = 0x100C5, // (0xFFFF)(0x0271) //
-    CMSG_BUY_STABLE_SLOT                             = 0x100C6, // (  nf  )(0x0272) //
     SMSG_STABLE_RESULT                               = 0x0E754, // (  nf  )(0x0273) //
     CMSG_STABLE_REVIVE_PET                           = 0x100C7, // (  nf  )(0x0274) //
     CMSG_STABLE_SWAP_PET                             = 0x100C8, // (  nf  )(0x0275) //
