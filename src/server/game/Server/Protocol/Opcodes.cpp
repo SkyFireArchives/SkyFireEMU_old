@@ -623,11 +623,9 @@ void InitOpcodeTable()
     OPCODE( CMSG_CANCEL_AUTO_REPEAT_SPELL,                STATUS_LOGGEDIN, &WorldSession::HandleCancelAutoRepeatSpellOpcode);
     OPCODE( MSG_GM_ACCOUNT_ONLINE,                        STATUS_NEVER,    &WorldSession::Handle_NULL                     );
     OPCODE( MSG_LIST_STABLED_PETS,                        STATUS_LOGGEDIN, &WorldSession::HandleListStabledPetsOpcode     );
-    OPCODE( CMSG_STABLE_PET,                              STATUS_LOGGEDIN, &WorldSession::HandleStablePet                 );
-    OPCODE( CMSG_UNSTABLE_PET,                            STATUS_LOGGEDIN, &WorldSession::HandleUnstablePet               );
     OPCODE( SMSG_STABLE_RESULT,                           STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_STABLE_REVIVE_PET,                       STATUS_LOGGEDIN, &WorldSession::HandleStableRevivePet           );
-    OPCODE( CMSG_STABLE_SWAP_PET,                         STATUS_LOGGEDIN, &WorldSession::HandleStableSwapPet             );
+    OPCODE( CMSG_STABLE_CHANGE_SLOT,                      STATUS_LOGGEDIN, &WorldSession::HandleStableChangeSlot          );
     OPCODE( MSG_QUEST_PUSH_RESULT,                        STATUS_LOGGEDIN, &WorldSession::HandleQuestPushResult           );
     OPCODE( SMSG_PLAY_MUSIC,                              STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_PLAY_OBJECT_SOUND,                       STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
@@ -1021,7 +1019,7 @@ void InitOpcodeTable()
     OPCODE( MSG_GUILD_BANK_MONEY_WITHDRAWN,               STATUS_LOGGEDIN, &WorldSession::HandleGuildBankMoneyWithdrawn   );
     OPCODE( MSG_GUILD_EVENT_LOG_QUERY,                    STATUS_LOGGEDIN, &WorldSession::HandleGuildEventLogQueryOpcode  );
     OPCODE( CMSG_MAELSTROM_RENAME_GUILD,                  STATUS_NEVER,    &WorldSession::Handle_NULL                     );
-    OPCODE( CMSG_GET_MIRRORIMAGE_DATA,                    STATUS_LOGGEDIN, &WorldSession::HandleMirrrorImageDataRequest                     );
+    OPCODE( CMSG_GET_MIRRORIMAGE_DATA,                    STATUS_LOGGEDIN, &WorldSession::HandleMirrrorImageDataRequest   );
     OPCODE( SMSG_MIRRORIMAGE_DATA,                        STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_FORCE_DISPLAY_UPDATE,                    STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_SPELL_CHANCE_RESIST_PUSHBACK,            STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
