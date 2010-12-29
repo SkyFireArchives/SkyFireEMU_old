@@ -318,6 +318,8 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `deleteInfos_Account` int(11) unsigned DEFAULT NULL,
   `deleteInfos_Name` varchar(12) DEFAULT NULL,
   `deleteDate` bigint(20) DEFAULT NULL,
+  `currentPetSlot` int(10) DEFAULT NULL,
+  `petSlotUsed` int(10) DEFAULT NULL,
   PRIMARY KEY (`guid`),
   KEY `idx_account` (`account`),
   KEY `idx_online` (`online`),

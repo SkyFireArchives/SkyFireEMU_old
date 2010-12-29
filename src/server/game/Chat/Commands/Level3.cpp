@@ -7337,10 +7337,10 @@ bool ChatHandler::HandleFreezeCommand(const char *args)
         {
             if (Pet *pet = player->GetPet())
             {
-                pet->SavePetToDB(PET_SAVE_AS_CURRENT);
+                pet->SavePetToDB(PET_SLOT_ACTUAL_PET_SLOT);
                 // not let dismiss dead pet
                 if (pet && pet->isAlive())
-                    player->RemovePet(pet,PET_SAVE_NOT_IN_SLOT);
+                    player->RemovePet(pet,PET_SLOT_OTHER_PET);
             }
         }
 

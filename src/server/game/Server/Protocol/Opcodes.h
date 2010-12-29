@@ -624,12 +624,9 @@ enum Opcodes
     CMSG_CANCEL_AUTO_REPEAT_SPELL                    = 0x0A45E, // (0xAB39)(0x026D) //
     MSG_GM_ACCOUNT_ONLINE                            = 0x100C3, // (  nf  )(0x026E) //
     MSG_LIST_STABLED_PETS                            = 0x05E5D, // (0x2A79)(0x026F) //
-    CMSG_STABLE_PET                                  = 0x100C4, // (  nf  )(0x0270) //
-    CMSG_UNSTABLE_PET                                = 0x100C5, // (0xFFFF)(0x0271) //
-    CMSG_BUY_STABLE_SLOT                             = 0x100C6, // (  nf  )(0x0272) //
     SMSG_STABLE_RESULT                               = 0x0E754, // (  nf  )(0x0273) //
     CMSG_STABLE_REVIVE_PET                           = 0x100C7, // (  nf  )(0x0274) //
-    CMSG_STABLE_SWAP_PET                             = 0x100C8, // (  nf  )(0x0275) //
+    CMSG_STABLE_CHANGE_SLOT                          = 0x00237, // (  nf  )(0x0275) //
     MSG_QUEST_PUSH_RESULT                            = 0x0B657, // (0xC231)(0x0276) //
     SMSG_PLAY_MUSIC                                  = 0x09C7F, // (0xC2F9)(0x0277) //
     SMSG_PLAY_OBJECT_SOUND                           = 0x0FC5D, // (0x4258)(0x0278) //

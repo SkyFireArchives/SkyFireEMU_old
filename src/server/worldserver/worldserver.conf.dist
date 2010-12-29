@@ -764,7 +764,7 @@ ChatLogTimestamp = 0
 #         (in range from 1 to 100). Going past 100 voids your warranty
 #         and you will not receive support for bugs you encounter.
 #        Change not recommended
-#        Default: 80
+#        Default: 85
 #
 #    MinDualSpecLevel
 #        Min level at which players can use Dual Spec functionality
@@ -993,7 +993,7 @@ CharactersPerRealm = 10
 HeroicCharactersPerRealm = 1
 CharacterCreating.MinLevelForHeroicCharacter = 55
 SkipCinematics = 0
-MaxPlayerLevel = 80
+MaxPlayerLevel = 85
 MinDualSpecLevel = 40
 StartPlayerLevel = 1
 StartHeroicPlayerLevel = 55
@@ -1395,7 +1395,7 @@ GM.WhisperingTo          = 2
 GM.InGMList.Level        = 3
 GM.InWhoList.Level       = 3
 GM.LogTrade              = 1
-GM.StartLevel            = 80
+GM.StartLevel            = 85
 GM.AllowInvite           = 0
 GM.AllowFriend           = 0
 GM.LowerSecurity         = 0
