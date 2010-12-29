@@ -2298,7 +2298,7 @@ bool ChatHandler::HandleLearnAllMyPetTalentsCommand(const char* /*args*/)
         return false;
     }
 
-    if (pet_family->petTalentType < 0)                       // not hunter pet
+    if (pet_family->petTalentType == PET_TALENT_TYPE_NOT_HUNTER_PET)                       // not hunter pet
     {
         SendSysMessage(LANG_WRONG_PET_TYPE);
         SetSentErrorMessage(true);

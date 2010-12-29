@@ -396,7 +396,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
 
     SetModifierValue(unitMod_pos, BASE_VALUE, val2);
 
-    float base_attPower  = (GetModifierValue(unitMod_pos, BASE_VALUE) - GetModifierValue(unitMod_neg, BASE_VALUE)) * (GetModifierValue(unitMod_pos, BASE_PCT) - GetModifierValue(unitMod_neg, BASE_PCT));
+    float base_attPower  = (GetModifierValue(unitMod_pos, BASE_VALUE) - GetModifierValue(unitMod_neg, BASE_VALUE)) * (GetModifierValue(unitMod_pos, BASE_PCT) + (1 - GetModifierValue(unitMod_neg, BASE_PCT)));
     float attPowerMod_pos = GetModifierValue(unitMod_pos, TOTAL_VALUE);
     float attPowerMod_neg = GetModifierValue(unitMod_neg, TOTAL_VALUE);
 
@@ -441,7 +441,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
         }
     }
 
-    float attPowerMultiplier = (GetModifierValue(unitMod_pos, TOTAL_PCT) -  GetModifierValue(unitMod_neg, TOTAL_PCT))- 1.0f;
+    float attPowerMultiplier = (GetModifierValue(unitMod_pos, TOTAL_PCT) + (1 - GetModifierValue(unitMod_neg, TOTAL_PCT)))- 1.0f;
 
     SetInt32Value(index, (uint32)base_attPower);            //UNIT_FIELD_(RANGED)_ATTACK_POWER field
     SetInt32Value(index_mod_pos, (uint32)attPowerMod_pos);          //UNIT_FIELD_(RANGED)_ATTACK_POWER_MOD_POS field
@@ -884,10 +884,10 @@ void Creature::UpdateAttackPowerAndDamage(bool ranged)
         index_mult = UNIT_FIELD_RANGED_ATTACK_POWER_MULTIPLIER;
     }
 
-    float base_attPower  = (GetModifierValue(unitMod_pos, BASE_VALUE) - GetModifierValue(unitMod_neg, BASE_VALUE)) * (GetModifierValue(unitMod_pos, BASE_PCT) - GetModifierValue(unitMod_neg, BASE_PCT));
+    float base_attPower  = (GetModifierValue(unitMod_pos, BASE_VALUE) - GetModifierValue(unitMod_neg, BASE_VALUE)) * (GetModifierValue(unitMod_pos, BASE_PCT) + (1 - GetModifierValue(unitMod_neg, BASE_PCT)));
     float attPowerMod_pos = GetModifierValue(unitMod_pos, TOTAL_VALUE);
     float attPowerMod_neg = GetModifierValue(unitMod_neg, TOTAL_VALUE);
-    float attPowerMultiplier = (GetModifierValue(unitMod_pos, TOTAL_PCT) - GetModifierValue(unitMod_neg, TOTAL_PCT)) - 1.0f;
+    float attPowerMultiplier = (GetModifierValue(unitMod_pos, TOTAL_PCT) + (1 - GetModifierValue(unitMod_neg, TOTAL_PCT))) - 1.0f;
 
     SetInt32Value(index, (uint32)base_attPower);            //UNIT_FIELD_(RANGED)_ATTACK_POWER field
     SetInt32Value(index_mod_pos, (uint32)attPowerMod_pos);          //UNIT_FIELD_(RANGED)_ATTACK_POWER_MODS field
@@ -1026,6 +1026,21 @@ bool Guardian::UpdateStats(Stats stat)
             mod = 0.45f;
             if (isPet())
             {
+                switch(ToPet()->GetTalentType())
+                {
+                    case PET_TALENT_TYPE_NOT_HUNTER_PET:
+                        break;
+                    case PET_TALENT_TYPE_FEROCITY:
+                        mod = 0.67f;
+                        break;
+                    case PET_TALENT_TYPE_TENACITY:
+                        mod = 0.78f;
+                        break;
+                    case PET_TALENT_TYPE_CUNNING:
+                        mod = 0.725f;
+                        break;
+                }
+                
                 PetSpellMap::const_iterator itr = (ToPet()->m_spells.find(62758)); // Wild Hunt rank 1
                 if (itr == ToPet()->m_spells.end())
                     itr = ToPet()->m_spells.find(62762);                            // Wild Hunt rank 2
@@ -1111,9 +1126,26 @@ void Guardian::UpdateArmor()
     float bonus_armor = 0.0f;
     UnitMods unitMod = UNIT_MOD_ARMOR;
 
-    // hunter and warlock pets gain 35% of owner's armor value
+    // warlock pets gain 35% of owner's armor value, for hunter pets it depends on pet talent type.
     if (isPet())
-        bonus_armor = 0.35f * float(m_owner->GetArmor());
+    {
+        float mod = 0.35f;
+        switch(ToPet()->GetTalentType())
+        {
+            case PET_TALENT_TYPE_NOT_HUNTER_PET:
+                break;
+            case PET_TALENT_TYPE_FEROCITY:
+                mod = 0.5f;
+                break;
+            case PET_TALENT_TYPE_TENACITY:
+                mod = 0.7f;
+                break;
+            case PET_TALENT_TYPE_CUNNING:
+                mod = 0.6f;
+                break;
+        }
+        bonus_armor = mod * float(m_owner->GetArmor());
+    }
 
     value  = GetModifierValue(unitMod, BASE_VALUE);
     value *= GetModifierValue(unitMod, BASE_PCT);
@@ -1208,7 +1240,7 @@ void Guardian::UpdateAttackPowerAndDamage(bool ranged)
             }
 
             bonusAP = owner->GetTotalAttackPowerValue(RANGED_ATTACK) * 0.22f * mod;
-            SetBonusDamage(int32(owner->GetTotalAttackPowerValue(RANGED_ATTACK) * 0.1287f * mod));
+            SetBonusDamage(int32(owner->GetTotalAttackPowerValue(RANGED_ATTACK) * 0.425f * mod));
         }
         else if (IsPetGhoul()) //ghouls benefit from deathknight's attack power (may be summon pet or not)
         {
@@ -1247,10 +1279,10 @@ void Guardian::UpdateAttackPowerAndDamage(bool ranged)
     }
 
     //in BASE_VALUE of UNIT_MOD_ATTACK_POWER for creatures we store data of meleeattackpower field in DB
-    float base_attPower  = (GetModifierValue(unitMod_pos, BASE_VALUE) - GetModifierValue(unitMod_neg, BASE_VALUE)) * (GetModifierValue(unitMod_pos, BASE_PCT) - GetModifierValue(unitMod_neg, BASE_PCT));
+    float base_attPower  = (GetModifierValue(unitMod_pos, BASE_VALUE) - GetModifierValue(unitMod_neg, BASE_VALUE)) * (GetModifierValue(unitMod_pos, BASE_PCT) + (1 - GetModifierValue(unitMod_neg, BASE_PCT)));
     float attPowerMod_pos = GetModifierValue(unitMod_pos, TOTAL_VALUE);
     float attPowerMod_neg = GetModifierValue(unitMod_neg, TOTAL_VALUE);
-    float attPowerMultiplier = (GetModifierValue(unitMod_pos, TOTAL_PCT) - GetModifierValue(unitMod_neg, TOTAL_PCT)) - 1.0f;
+    float attPowerMultiplier = (GetModifierValue(unitMod_pos, TOTAL_PCT) + (1 - GetModifierValue(unitMod_neg, TOTAL_PCT))) - 1.0f;
 
     //UNIT_FIELD_(RANGED)_ATTACK_POWER field
     SetInt32Value(UNIT_FIELD_ATTACK_POWER, (int32)base_attPower);
