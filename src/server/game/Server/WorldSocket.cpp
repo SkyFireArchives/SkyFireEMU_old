@@ -775,7 +775,7 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
     ACE_NOTREACHED (return 0);
 }
 
-int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
+int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
 {
     // NOTE: ATM the socket is singlethread, have this in mind ...
     uint8 digest[20];
