@@ -1,6 +1,6 @@
 /*
  *
- * Copyright (C) 2010 CactusEMU <http://www.cactusemu.com/>
+ * Copyright (C) 2010-2011 CactusEMU <http://www.cactusemu.com/>
  *
  * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
