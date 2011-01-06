@@ -135,7 +135,7 @@ enum Opcodes
     CMSG_GUILD_INFO                                  = 0x0AF5E, // (0x6B75)(0x0087) //
     SMSG_GUILD_INFO                                  = 0x07C7F, // (0x02DD)(0x0088) //
     CMSG_GUILD_ROSTER                                = 0x09556, // (0x22FD)(0x0089) //
-    SMSG_GUILD_ROSTER                                = 0x1000F, // (0x1303)(0x008A) //
+    SMSG_GUILD_ROSTER                                = 0x038B0, // (0x1303)(0x008A) //
     CMSG_GUILD_PROMOTE                               = 0x09982, // (0x4A00)(0x008B) // CONFIRMED
     CMSG_GUILD_DEMOTE                                = 0x01902, // (0x4200)(0x008C) // CONFIRMED
     CMSG_GUILD_LEAVE                                 = 0x09B42, // (0x0A80)(0x008D) // CONFIRMED
@@ -494,8 +494,8 @@ enum Opcodes
     CMSG_SETSHEATHED                                 = 0x02557, // (  nf  )(0x01E0) //
     SMSG_COOLDOWN_CHEAT                              = 0x02C7F, // (0x637C)(0x01E1) //
     SMSG_SPELL_DELAYED                               = 0x09675, // (0xA21C)(0x01E2) //
-    CMSG_QUEST_POI_QUERY                             = 0x10086, // (  nf  )(0x01E3) //
-    SMSG_QUEST_POI_QUERY_RESPONSE                    = 0x10087, // (0x8AB8)(0x01E4) //
+    CMSG_QUEST_POI_QUERY                             = 0x0FE75, // (  nf  )(0x01E3) //
+    SMSG_QUEST_POI_QUERY_RESPONSE                    = 0x02D5E, // (0x8AB8)(0x01E4) //
     CMSG_GHOST                                       = 0x10088, // (  nf  )(0x01E5) //
     CMSG_GM_INVIS                                    = 0x10089, // (  nf  )(0x01E6) //
     SMSG_INVALID_PROMOTION_CODE                      = 0x1008A, // (  nf  )(0x01E7) //
@@ -560,7 +560,7 @@ enum Opcodes
     SMSG_GOSSIP_POI                                  = 0x01456, // (0x0BD9)(0x0224) //
     CMSG_CHAT_IGNORED                                = 0x0C456, // (  nf  )(0x0225) //
     CMSG_GUILD_RANK                                  = 0x100A2, // (0x4A81)(0x0231) //
-    SMSG_GUILD_RANK                                  = 0x100A3, // (0x4090)(  nf  ) //
+    SMSG_GUILD_RANK                                  = 0x02840, // (0x4090)(  nf  ) //
     CMSG_GUILD_ADD_RANK                              = 0x100A4, // (  nf  )(0x0232) //
     CMSG_GUILD_DEL_RANK                              = 0x100A5, // (0x4205)(0x0233) //
     CMSG_GUILD_SWITCH_RANK                           = 0x100A6, // (0x0A04)(0x0000) //
@@ -1044,7 +1044,7 @@ enum Opcodes
     CMSG_EXPIRE_RAID_INSTANCE                        = 0x101A7, // (  nf  )(0x0415) //
     CMSG_NO_SPELL_VARIANCE                           = 0x101A8, // (  nf  )(0x0416) //
     CMSG_QUESTGIVER_STATUS_MULTIPLE_QUERY            = 0x02D5D, // (  nf  )(0x0417) //
-    SMSG_QUESTGIVER_STATUS_MULTIPLE                  = 0x101AA, // (  nf  )(0x0418) //
+    SMSG_QUESTGIVER_STATUS_MULTIPLE                  = 0x07D54, // (  nf  )(0x0418) //
     CMSG_SET_PLAYER_DECLINED_NAMES                   = 0x0277F, // (  nf  )(0x0419) //
     SMSG_SET_PLAYER_DECLINED_NAMES_RESULT            = 0x02676, // (0x8A34)(0x041A) // TESTED
     CMSG_QUERY_SERVER_BUCK_DATA                      = 0x101AC, // (  nf  )(0x041B) //
