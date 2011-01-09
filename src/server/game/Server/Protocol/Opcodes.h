@@ -376,8 +376,8 @@ enum Opcodes
     SMSG_DUEL_INBOUNDS                               = 0x09F54, // (0x2ADD)(0x0169) //
     SMSG_DUEL_COMPLETE                               = 0x0E777, // (0x6B74)(0x016A) //
     SMSG_DUEL_WINNER                                 = 0x0277D, // (0xEB95)(0x016B) //
-    CMSG_DUEL_ACCEPTED                               = 0x06F75, // (0x8295)(0x016C) //
-    CMSG_DUEL_CANCELLED                              = 0x0CC7E, // (0x6BDC)(0x016D) //
+    CMSG_DUEL_ACCEPTED                               = 0x0CC7E, // (0x8295)(0x016C) //
+    CMSG_DUEL_CANCELLED                              = 0x06F75, // (0x6BDC)(0x016D) //
     SMSG_MOUNTRESULT                                 = 0x06E7C, // (0x82FD)(0x016E) //
     SMSG_DISMOUNTRESULT                              = 0x0D77D, // (0xE39D)(0x016F) //
     SMSG_PUREMOUNT_CANCELLED_OBSOLETE                = 0x1005F, // (  nf  )(0x0170) //
