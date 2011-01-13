@@ -2,3 +2,13 @@ build/*
 *.orig
 *.diff
 *.rej
+*.bin
+CMakeFiles/*
+*.vcproj
+*.rule
+*.stamp
+*.depend
+*.cmake
+CMakeCache.txt
+CactusEMU.sln
+mysql_version.h
