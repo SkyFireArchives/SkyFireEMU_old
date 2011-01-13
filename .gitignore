@@ -29,3 +29,9 @@ mysql_version.h
 /src/server/shared/shared.dir/*
 /src/server/worldserver/Release/*
 /src/server/worldserver/worldserver.dir/*
+*.exp
+*.user
+*.lib
+*.pdb
+*.suo
+*.idb
