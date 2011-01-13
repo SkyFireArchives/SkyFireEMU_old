@@ -1,0 +1,56 @@
+This is not the official repository for the CactusDB. This is a corrected mirror 
+in the correct format. Much faster install with all the proper prepared statements.
+
+CactusEMU's official repository is located.
+https://github.com/CactusDB/CactusDB 
+There forum is located.
+http://forum.cactusemu.com/index.php
+
+Changelog from CactusDB.
+
+
+2010-12-09
+1.  Initial commit
+
+2.  * Full DB table
+    * Fixed file extension
+
+3.  * Added some missing items.
+    * Added ~13177 new creatures. Thanks to tudi.
+
+2010-12-11
+1.   * Release #2.
+    - 13179 new creatures
+    - over 13000 new items
+    - All item updates
+    - Playercreateinfo correct and added for Goblins Worgen and new race/classes
+    - New quest Points of Interest(actual quests coming next release)
+
+    Bugs:
+    Item table needs cleanup, blizzard doesnt delete items even if they no longer exist and just leave the spells that no longer exist
+    Item_enchantment_template needs more data
+    Achievement_Criteria_data needs reworking
+    (Core Change) item subclasses need updating
+
+    Thanks to:
+    Tudi for much of this
+    Maczuga for converting quest POIs
+    Synric for conversions
+    TheTyin for work
+
+
+2010-12-12
+1.   * Items will now properly grant stats. StatsCount is not included in the cache, but is required by CactusEMU. Hackfix to set StatsCount to 10.
+     * .01 implies a minor fix.
+	 
+2010-12-18
+1.	 * 2.1 release. For a list of requirements per milestone see http://wiki.cactusemu.com/index.php?title=DB_Milestones.
+     - Introduced roughly 5000 new quests.
+     - Removed quests that no longer exist from all types of questgivers
+     - Added a real fix for StatsCount on items
+     * These may or may not be correct. Ive spent alot of time on these, but my laptop with WoW on it died, 
+	    so I havent had the chance to test them myself. Please report bugs you may find.
+
+2010-12-19
+1.   Thanks to Silinoron who added the new Cata fields to the quest_template
+     *Populated Cata information for quest_template, please re-execute the table.
