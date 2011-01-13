@@ -1,3 +1,5 @@
+dep/*
+bin/*
 build/*
 *.orig
 *.diff
@@ -12,3 +14,18 @@ CMakeFiles/*
 CMakeCache.txt
 CactusEMU.sln
 mysql_version.h
+*.ncb
+/revision.h
+/src/genrevision/genrev.dir/*
+/src/server/authserver/Release/*
+/src/server/authserver/authserver.dir/*
+/src/server/collision/Release/*
+/src/server/collision/collision.dir/*
+/src/server/game/Release/*
+/src/server/game/game.dir/*
+/src/server/scripts/Release/*
+/src/server/scripts/scripts.dir/*
+/src/server/shared/Release/*
+/src/server/shared/shared.dir/*
+/src/server/worldserver/Release/*
+/src/server/worldserver/worldserver.dir/*
