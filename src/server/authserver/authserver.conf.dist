@@ -1,5 +1,5 @@
 ############################################
-# CactusEMU Auth Server configuration file #
+# SkyFire Auth Server configuration file #
 ############################################
 [authserver]
 
@@ -165,5 +165,5 @@ WrongPass.BanType = 0
 #
 ###############################################################################
 
-LoginDatabaseInfo = "127.0.0.1;3306;cactusemu;cactusemu;auth"
+LoginDatabaseInfo = "127.0.0.1;3306;user;password;auth"
 LoginDatabase.WorkerThreads = 1
