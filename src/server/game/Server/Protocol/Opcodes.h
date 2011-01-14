@@ -1043,7 +1043,7 @@ enum Opcodes
     CMSG_TOTEM_DESTROYED                             = 0x0355F, // (  nf  )(0x0414) //
     CMSG_EXPIRE_RAID_INSTANCE                        = 0x101A7, // (  nf  )(0x0415) //
     CMSG_NO_SPELL_VARIANCE                           = 0x101A8, // (  nf  )(0x0416) //
-    CMSG_QUESTGIVER_STATUS_MULTIPLE_QUERY            = 0x02D5D, // (  nf  )(0x0417) //
+    CMSG_QUESTGIVER_STATUS_MULTIPLE_QUERY            = 0x07D54, // (  nf  )(0x0417) //
     SMSG_QUESTGIVER_STATUS_MULTIPLE                  = 0x07D54, // (  nf  )(0x0418) //
     CMSG_SET_PLAYER_DECLINED_NAMES                   = 0x0277F, // (  nf  )(0x0419) //
     SMSG_SET_PLAYER_DECLINED_NAMES_RESULT            = 0x02676, // (0x8A34)(0x041A) // TESTED
