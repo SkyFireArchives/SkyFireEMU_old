@@ -1,7 +1,6 @@
 # output generic information about the core and buildtype chosen
 
-message("")
-message("* TrinityCore revision   : ${HG_REVISION}")
+message("* TrinityCore revision   : ${rev_id_str} (${rev_hash_str})")
 if( UNIX )
   message("* Build binaries in      : ${CMAKE_BUILD_TYPE} mode")
 endif()

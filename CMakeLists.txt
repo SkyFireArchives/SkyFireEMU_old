@@ -68,7 +68,7 @@ if( WIN32 )
 endif()
 
 # add and generate revision.h
-add_subdirectory(src/genrevision)
+add_subdirectory(src/genrev)
 
 # add dependencies
 add_subdirectory(dep)
