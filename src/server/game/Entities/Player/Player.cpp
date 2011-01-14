@@ -144,14 +144,14 @@ static uint32 copseReclaimDelay[MAX_DEATH_COUNT] = { 30, 60, 120 };
 
 PlayerTaxi::PlayerTaxi()
 {
-    // Taxi nodes
-    memset(m_taximask, 0, sizeof(m_taximask));
+	// Taxi nodes
+	memset(m_taximask, 0, sizeof(m_taximask));
 }
 
 void PlayerTaxi::InitTaxiNodesForLevel(uint32 race, uint32 chrClass, uint8 level)
 {
     // class specific initial known nodes
-    switch(chrClass)
+    switch (chrClass)
     {
         case CLASS_DEATH_KNIGHT:
         {
@@ -162,30 +162,55 @@ void PlayerTaxi::InitTaxiNodesForLevel(uint32 race, uint32 chrClass, uint8 level
     }
 
     // race specific initial known nodes: capital and taxi hub masks
-    switch(race)
+    switch (race)
     {
-        case RACE_HUMAN:    SetTaximaskNode(2);  break;     // Human
-        case RACE_ORC:      SetTaximaskNode(23); break;     // Orc
-        case RACE_DWARF:    SetTaximaskNode(6);  break;     // Dwarf
-        case RACE_NIGHTELF: SetTaximaskNode(26);
-                            SetTaximaskNode(27); break;     // Night Elf
-        case RACE_UNDEAD_PLAYER: SetTaximaskNode(11); break;// Undead
-        case RACE_TAUREN:   SetTaximaskNode(22); break;     // Tauren
-        case RACE_GNOME:    SetTaximaskNode(6);  break;     // Gnome
-        case RACE_TROLL:    SetTaximaskNode(23); break;     // Troll
-        case RACE_BLOODELF: SetTaximaskNode(82); break;     // Blood Elf
-        case RACE_DRAENEI:  SetTaximaskNode(94); break;     // Draenei
+        case RACE_HUMAN:
+            SetTaximaskNode(2);
+            break;
+        case RACE_ORC:
+            SetTaximaskNode(23);
+            break;
+        case RACE_DWARF:
+            SetTaximaskNode(6);
+            break;
+        case RACE_NIGHTELF:
+            SetTaximaskNode(26);
+            SetTaximaskNode(27);
+            break;
+        case RACE_UNDEAD_PLAYER:
+            SetTaximaskNode(11);
+            break;
+        case RACE_TAUREN:
+            SetTaximaskNode(22);
+            break;
+        case RACE_GNOME:
+            SetTaximaskNode(6);
+            break;
+        case RACE_TROLL:
+            SetTaximaskNode(23);
+            break;
+        case RACE_BLOODELF:
+            SetTaximaskNode(82);
+            break;
+        case RACE_DRAENEI:
+            SetTaximaskNode(94);
+            break;
     }
 
     // new continent starting masks (It will be accessible only at new map)
-    switch(Player::TeamForRace(race))
+    switch (Player::TeamForRace(race))
     {
-        case ALLIANCE: SetTaximaskNode(100); break;
-        case HORDE:    SetTaximaskNode(99);  break;
+        case ALLIANCE:
+            SetTaximaskNode(100);
+            break;
+        case HORDE:
+            SetTaximaskNode(99);
+            break;
     }
+
     // level dependent taxi hubs
     if (level >= 68)
-        SetTaximaskNode(213);                               //Shattered Sun Staging Area
+        SetTaximaskNode(213);                               // Shattered Sun Staging Area
 }
 
 void PlayerTaxi::LoadTaxiMask(const char* data)
@@ -194,8 +219,7 @@ void PlayerTaxi::LoadTaxiMask(const char* data)
 
     uint8 index;
     Tokens::iterator iter;
-    for (iter = tokens.begin(), index = 0;
-        (index < TaxiMaskSize) && (iter != tokens.end()); ++iter, ++index)
+    for (iter = tokens.begin(), index = 0; (index < TaxiMaskSize) && (iter != tokens.end()); ++iter, ++index)
     {
         // load and set bits only for existed taxi nodes
         m_taximask[index] = sTaxiNodesMask[index] & uint32(atol((*iter).c_str()));
@@ -283,6 +307,7 @@ std::ostringstream& operator<< (std::ostringstream& ss, PlayerTaxi const& taxi)
     for (uint8 i = 0; i < TaxiMaskSize; ++i)
         ss << taxi.m_taximask[i] << " ";
     ss << "'";
+
     return ss;
 }
 

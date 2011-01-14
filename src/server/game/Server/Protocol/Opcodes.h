@@ -231,7 +231,7 @@ enum Opcodes
     MSG_MOVE_SET_TURN_RATE                           = 0x0AC75, // (0xEA58)(0x00D8) //
     MSG_MOVE_TOGGLE_COLLISION_CHEAT                  = 0x10027, // (  nf  )(0x00D9) //
     MSG_MOVE_SET_FACING                              = 0x0865D, // (  nf  )(0x00DA) //
-    MSG_MOVE_SET_PITCH                               = 0x10028, // (  nf  )(0x00DB) //
+    MSG_MOVE_SET_PITCH                               = 0x00E7C, // (  nf  )(0x00DB) //
     MSG_MOVE_WORLDPORT_ACK                           = 0x0567E, // (0x6AD0)(0x00DC) // TESTED
     SMSG_MONSTER_MOVE                                = 0x0A65D, // (0x02B0)(0x00DD) //
     SMSG_MOVE_WATER_WALK                             = 0x1002A, // (  nf  )(0x00DE) //
@@ -440,7 +440,7 @@ enum Opcodes
     CMSG_TAXINODE_STATUS_QUERY                       = 0x00D76, // (  nf  )(0x01AA) //
     SMSG_TAXINODE_STATUS                             = 0x06F76, // (0xA330)(0x01AB) //
     CMSG_TAXIQUERYAVAILABLENODES                     = 0x10070, // (  nf  )(0x01AC) //
-    CMSG_ACTIVATETAXI                                = 0x10071, // (  nf  )(0x01AD) //
+    CMSG_ACTIVATETAXI                                = 0x0545F, // (  nf  )(0x01AD) //
     SMSG_ACTIVATETAXIREPLY                           = 0x06F7C, // (0x23D5)(0x01AE) //
     SMSG_NEW_TAXI_PATH                               = 0x0AE5E, // (0xA259)(0x01AF) //
     CMSG_TRAINER_LIST                                = 0x04474, // (0x0271)(0x01B0) //
@@ -469,7 +469,7 @@ enum Opcodes
     SMSG_PETITION_QUERY_RESPONSE                     = 0x07755, // (0x286D)(0x01C7) //
     SMSG_FISH_NOT_HOOKED                             = 0x03F76, // (0xCAB5)(0x01C8) //
     SMSG_FISH_ESCAPED                                = 0x01F77, // (0x431D)(0x01C9) //
-    CMSG_BUG                                         = 0x1007E, // (0x2B3C)(0x01CA) //
+    CMSG_BUG                                         = 0x0C554, // (0x2B3C)(0x01CA) //
     SMSG_NOTIFICATION                                = 0x0665E, // (0x0A31)(0x01CB) // TESTED
     CMSG_PLAYED_TIME                                 = 0x07E5E, // (0x8355)(0x01CC) //
     SMSG_PLAYED_TIME                                 = 0x0455C, // (  nf  )(0x01CD) // TESTED
@@ -1054,8 +1054,8 @@ enum Opcodes
     SMSG_PROPOSE_LEVEL_GRANT                         = 0x0B476, // (0xA358)(0x041F) //
     CMSG_ACCEPT_LEVEL_GRANT                          = 0x05674, // (  nf  )(0x0420) //
     SMSG_REFER_A_FRIEND_FAILURE                      = 0x07F7C, // (0xC259)(0x0421) //
-    SMSG_SPLINE_MOVE_SET_FLYING                      = 0x101B0, // (  nf  )(0x0422) //
-    SMSG_SPLINE_MOVE_UNSET_FLYING                    = 0x101B1, // (  nf  )(0x0423) //
+    SMSG_SPLINE_MOVE_SET_FLYING                      = 0x05D54, // (  nf  )(0x0422) //
+    SMSG_SPLINE_MOVE_UNSET_FLYING                    = 0x0257D, // (  nf  )(0x0423) //
     SMSG_SUMMON_CANCEL                               = 0x0645E, // (0x6B18)(0x0424) //
     CMSG_CHANGE_PERSONAL_ARENA_RATING                = 0x101B2, // (  nf  )(0x0425) //
     CMSG_ALTER_APPEARANCE                            = 0x101B3, // (  nf  )(0x0426) //
