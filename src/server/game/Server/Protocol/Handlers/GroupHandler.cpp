@@ -199,7 +199,9 @@ void WorldSession::HandleGroupInviteOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandleGroupAcceptOpcode(WorldPacket & recv_data)
 {
-    uint32 unk;
+    return; // Temp hack to fix a nasty crash in GroupAcceptOpcode.
+
+	uint32 unk;
     recv_data >> unk;
     
     Group *group = GetPlayer()->GetGroupInvite();
