@@ -13903,15 +13903,13 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
             break;
         case GOSSIP_OPTION_BATTLEFIELD:
         {
-            BattlegroundTypeId bgTypeId = sBattlegroundMgr.GetBattleMasterBG(pSource->GetEntry());
-
-            if (bgTypeId == BATTLEGROUND_TYPE_NONE)
+			if (pSource->GetTypeId() != TYPEID_UNIT || !pSource->ToCreature()->isBattleMaster())
             {
                 sLog.outError("a user (guid %u) requested battlegroundlist from a npc who is no battlemaster", GetGUIDLow());
                 return;
             }
 
-            GetSession()->SendBattlegGroundList(guid, bgTypeId);
+			GetSession()->SendBattlegGroundList(guid);
             break;
         }
     }

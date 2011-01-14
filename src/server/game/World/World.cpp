@@ -1557,9 +1557,6 @@ void World::SetInitialWorldSettings()
     sLog.outString("Loading GameObjects for quests...");
     sObjectMgr.LoadGameObjectForQuests();
 
-    sLog.outString("Loading BattleMasters...");
-    sBattlegroundMgr.LoadBattleMastersEntry();
-
     sLog.outString("Loading GameTeleports...");
     sObjectMgr.LoadGameTele();
 

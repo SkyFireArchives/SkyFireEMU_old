@@ -182,11 +182,11 @@ void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battlegro
 {
     // we can be in 2 queues in same time...
 
-    if (StatusID == 0 || !bg)
+    if (!bg)
     {
-        data->Initialize(SMSG_BATTLEFIELD_STATUS, 4+8);
+		StatusID = 0;
+        data->Initialize(SMSG_BATTLEFIELD_STATUS, 4);;
         *data << uint32(QueueSlot);                         // queue id (0...1)
-        *data << uint64(0);
         return;
     }
 
@@ -860,7 +860,7 @@ void BattlegroundMgr::DistributeArenaPoints()
     sWorld.SendWorldText(LANG_DIST_ARENA_POINTS_END);
 }
 
-void BattlegroundMgr::BuildBattlegroundListPacket(WorldPacket *data, const uint64& guid, Player* plr, BattlegroundTypeId bgTypeId, uint8 fromWhere)
+void BattlegroundMgr::BuildBattlegroundListPacket(WorldPacket *data, const uint64& guid, Player* plr, BattlegroundTypeId bgTypeId)
 {
     if (!plr)
         return;
@@ -873,55 +873,22 @@ void BattlegroundMgr::BuildBattlegroundListPacket(WorldPacket *data, const uint6
     loos_kills = Trinity::Honor::hk_honor_at_level(plr->getLevel(), loos_kills);
 
     data->Initialize(SMSG_BATTLEFIELD_LIST);
+    *data << uint8(0x2);                                    // unk
+    *data << uint8(0x31);                                   // unk
+    *data << uint32(0);                                     // unk
+    uint32 count = 0;
+    size_t count_pos = data->wpos();
+    *data << uint32(count);                                 // count
+    
+    *data << uint32(win_kills);                             // 3.3.3 winHonor
+    *data << uint32(bgTypeId);                              // bgtypeid
+    *data << uint32(win_arena);                             // 3.3.3 winArena
+    *data << uint32(loos_kills);                            // 3.3.3 lossHonor
+    *data << uint8(0x2D);                                   // unk
+    *data << uint32(loos_kills);                            // 3.3.3 lossHonor
+    *data << uint32(win_kills);                             // 3.3.3 winHonor
     *data << uint64(guid);                                  // battlemaster guid
-    *data << uint8(fromWhere);                              // from where you joined
-    *data << uint32(bgTypeId);                              // battleground id
-    *data << uint8(0);                                      // unk
-    *data << uint8(0);                                      // unk
 
-    // Rewards
-    *data << uint8(plr->GetRandomWinner());               // 3.3.3 hasWin
-    *data << uint32(win_kills);                           // 3.3.3 winHonor
-    *data << uint32(win_arena);                           // 3.3.3 winArena
-    *data << uint32(loos_kills);                          // 3.3.3 lossHonor
-
-    uint8 isRandom = bgTypeId == BATTLEGROUND_RB;
-
-    *data << uint8(isRandom);                               // 3.3.3 isRandom
-    if (isRandom)
-    {
-        // Rewards (random)
-        *data << uint8(plr->GetRandomWinner());           // 3.3.3 hasWin_Random
-        *data << uint32(win_kills);                       // 3.3.3 winHonor_Random
-        *data << uint32(win_arena);                       // 3.3.3 winArena_Random
-        *data << uint32(loos_kills);                      // 3.3.3 lossHonor_Random
-    }
-
-    if (bgTypeId == BATTLEGROUND_AA)                         // arena
-    {
-        *data << uint32(0);                                 // unk (count?)
-    }
-    else                                                    // battleground
-    {
-        size_t count_pos = data->wpos();
-        uint32 count = 0;
-        *data << uint32(0);                                 // number of bg instances
-
-        if (Battleground* bgTemplate = sBattlegroundMgr.GetBattlegroundTemplate(bgTypeId))
-        {
-            // expected bracket entry
-            if (PvPDifficultyEntry const* bracketEntry = GetBattlegroundBracketByLevel(bgTemplate->GetMapId(),plr->getLevel()))
-            {
-                BattlegroundBracketId bracketId = bracketEntry->GetBracketId();
-                for (std::set<uint32>::iterator itr = m_ClientBattlegroundIds[bgTypeId][bracketId].begin(); itr != m_ClientBattlegroundIds[bgTypeId][bracketId].end();++itr)
-                {
-                    *data << uint32(*itr);
-                    ++count;
-                }
-                data->put<uint32>(count_pos , count);
-            }
-        }
-    }
 }
 
 void BattlegroundMgr::SendToBattleground(Player *pl, uint32 instanceId, BattlegroundTypeId bgTypeId)
@@ -1112,49 +1079,6 @@ uint32 BattlegroundMgr::GetRatingDiscardTimer() const
 uint32 BattlegroundMgr::GetPrematureFinishTime() const
 {
     return sWorld.getIntConfig(CONFIG_BATTLEGROUND_PREMATURE_FINISH_TIMER);
-}
-
-void BattlegroundMgr::LoadBattleMastersEntry()
-{
-    mBattleMastersMap.clear();                              // need for reload case
-
-    QueryResult result = WorldDatabase.Query("SELECT entry,bg_template FROM battlemaster_entry");
-
-    uint32 count = 0;
-
-    if (!result)
-    {
-        barGoLink bar(1);
-        bar.step();
-
-        sLog.outString();
-        sLog.outString(">> Loaded 0 battlemaster entries - table is empty!");
-        return;
-    }
-
-    barGoLink bar(result->GetRowCount());
-
-    do
-    {
-        ++count;
-        bar.step();
-
-        Field *fields = result->Fetch();
-
-        uint32 entry = fields[0].GetUInt32();
-        uint32 bgTypeId  = fields[1].GetUInt32();
-        if (!sBattlemasterListStore.LookupEntry(bgTypeId))
-        {
-            sLog.outErrorDb("Table `battlemaster_entry` contain entry %u for not existed battleground type %u, ignored.",entry,bgTypeId);
-            continue;
-        }
-
-        mBattleMastersMap[entry] = BattlegroundTypeId(bgTypeId);
-
-    } while (result->NextRow());
-
-    sLog.outString();
-    sLog.outString(">> Loaded %u battlemaster entries", count);
 }
 
 HolidayIds BattlegroundMgr::BGTypeToWeekendHolidayId(BattlegroundTypeId bgTypeId)

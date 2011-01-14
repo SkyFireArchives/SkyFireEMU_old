@@ -50,7 +50,7 @@ class BattlegroundMgr
         /* Packet Building */
         void BuildPlayerJoinedBattlegroundPacket(WorldPacket *data, Player *plr);
         void BuildPlayerLeftBattlegroundPacket(WorldPacket *data, const uint64& guid);
-        void BuildBattlegroundListPacket(WorldPacket *data, const uint64& guid, Player *plr, BattlegroundTypeId bgTypeId, uint8 fromWhere);
+		void BuildBattlegroundListPacket(WorldPacket *data, const uint64& guid, Player *plr, BattlegroundTypeId bgtypeid);
         void BuildGroupJoinedBattlegroundPacket(WorldPacket *data, GroupJoinBattlegroundResult result);
         void BuildUpdateWorldStatePacket(WorldPacket *data, uint32 field, uint32 value);
         void BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg);
@@ -93,14 +93,6 @@ class BattlegroundMgr
         void ToggleTesting();
 
         void SetHolidayWeekends(uint32 mask);
-        void LoadBattleMastersEntry();
-        BattlegroundTypeId GetBattleMasterBG(uint32 entry) const
-        {
-            BattleMastersMap::const_iterator itr = mBattleMastersMap.find(entry);
-            if (itr != mBattleMastersMap.end())
-                return itr->second;
-            return BATTLEGROUND_WS;
-        }
 
         bool isArenaTesting() const { return m_ArenaTesting; }
         bool isTesting() const { return m_Testing; }
@@ -116,7 +108,6 @@ class BattlegroundMgr
         static bool IsBGWeekend(BattlegroundTypeId bgTypeId);
         void DoCompleteAchievement(uint32 achievement, Player * player = NULL);
     private:
-        BattleMastersMap    mBattleMastersMap;
 
         typedef std::map<BattlegroundTypeId, uint8> BattlegroundSelectionWeightMap; // TypeId and its selectionWeight
         /* Battlegrounds */
