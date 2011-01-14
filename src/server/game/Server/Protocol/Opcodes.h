@@ -1000,7 +1000,7 @@ enum Opcodes
     CMSG_GUILD_BANK_SWAP_ITEMS                       = 0x0557C, // (  nf  )(0x03E9) //
     CMSG_GUILD_BANK_BUY_TAB                          = 0x10190, // (  nf  )(0x03EA) //
     CMSG_GUILD_BANK_UPDATE_TAB                       = 0x10191, // (  nf  )(0x03EB) //
-    CMSG_GUILD_BANK_DEPOSIT_MONEY                    = 0x10192, // (  nf  )(0x03EC) //
+    CMSG_GUILD_BANK_DEPOSIT_MONEY                    = 0x0157C, // (  nf  )(0x03EC) //
     CMSG_GUILD_BANK_WITHDRAW_MONEY                   = 0x10193, // (  nf  )(0x03ED) //
     MSG_GUILD_BANK_LOG_QUERY                         = 0x0675C, // (0xEB34)(0x03EE) //
     CMSG_SET_CHANNEL_WATCH                           = 0x02D54, // (0xC37C)(0x03EF) //
