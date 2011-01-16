@@ -821,6 +821,7 @@ ByteBuffer& operator<<(ByteBuffer& b, LootView const& lv)
 
     size_t count_pos = b.wpos();                            // pos of item count byte
     b << uint8(0);                                          // item count placeholder
+	b << uint8(0);                                          // unk 4.0.x
 
     switch (lv.permission)
     {
