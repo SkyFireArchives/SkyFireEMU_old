@@ -144,8 +144,8 @@ static uint32 copseReclaimDelay[MAX_DEATH_COUNT] = { 30, 60, 120 };
 
 PlayerTaxi::PlayerTaxi()
 {
-	// Taxi nodes
-	memset(m_taximask, 0, sizeof(m_taximask));
+    // Taxi nodes
+    memset(m_taximask, 0, sizeof(m_taximask));
 }
 
 void PlayerTaxi::InitTaxiNodesForLevel(uint32 race, uint32 chrClass, uint8 level)
@@ -13903,13 +13903,13 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
             break;
         case GOSSIP_OPTION_BATTLEFIELD:
         {
-			if (pSource->GetTypeId() != TYPEID_UNIT || !pSource->ToCreature()->isBattleMaster())
+            if (pSource->GetTypeId() != TYPEID_UNIT || !pSource->ToCreature()->isBattleMaster())
             {
                 sLog.outError("a user (guid %u) requested battlegroundlist from a npc who is no battlemaster", GetGUIDLow());
                 return;
             }
 
-			GetSession()->SendBattlegGroundList(guid);
+            GetSession()->SendBattlegGroundList(guid);
             break;
         }
     }
@@ -16070,14 +16070,13 @@ Player* Player::LoadFromDB(uint32 guid, SQLQueryHolder * holder, WorldSession * 
             break;
         default:
             printf("\nClass %u doesn't exist.\n", pClass);
-            ASSERT(false);
             break;
     }
     
-    ASSERT(player != NULL);
-    
-    if(player->_LoadFromDB(guid, holder, result))
-        return player;
+    if (player && player)
+        if (player->_LoadFromDB(guid, holder, result))
+            return player;
+
     return NULL;
 }
 
@@ -16103,11 +16102,12 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
 
     // check if the character's account in the db and the logged in account match.
     // player should be able to load/delete character only with correct account!
-    if (dbAccountId != GetSession()->GetAccountId())
+    // TODO: Restore this check!
+    /*if (dbAccountId != GetSession()->GetAccountId())
     {
         sLog.outError("Player (GUID: %u) loading from wrong account (is: %u, should be: %u)",guid,GetSession()->GetAccountId(),dbAccountId);
         return false;
-    }
+    }*/
 
     if (holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADBANNED))
     {
@@ -23088,10 +23088,10 @@ void Player::StoreLootItem(uint8 lootSlot, Loot* loot)
 uint32 Player::CalculateTalentsPoints() const
 {
     uint32 base_talent = 0;
-    if (getLevel() >= 10 && getLevel() <= 81)
+    if(getLevel() >= 10 && getLevel() <= 81)
         base_talent = (((getLevel() - 10 + 1) - ( ((getLevel() - 10 + 1) % 2) == 1 ? 1 : 0))/2)+1;
-	else
-		base_talent = getLevel() - 44;
+    else
+        base_talent = getLevel() - 44;
 
     if (getClass() != CLASS_DEATH_KNIGHT || GetMapId() != 609)
         return uint32(base_talent * sWorld.getRate(RATE_TALENT));
