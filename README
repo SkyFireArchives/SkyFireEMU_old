@@ -1,8 +1,8 @@
-= CactusEMU -- General information =
+= TrinityCore -- General information =
 
-Copyright (C) CactusEMU (http://www.cactusemu.com)
+Copyright (C) TrinityCore (http://www.trinitycore.org)
 
-  CactusEMU is free software; you can redistribute it and/or modify
+  Trinity Core is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
@@ -16,8 +16,8 @@ Copyright (C) CactusEMU (http://www.cactusemu.com)
   along with this program; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-  In addition, as a special exception, the CactusEMU project
-  gives permission to link the code of its release of CactusEMU with
+  In addition, as a special exception, the Trinity Core project
+  gives permission to link the code of its release of Trinity Core with
   the OpenSSL project's "OpenSSL" library (or with modified versions of
   it that use the same license as the "OpenSSL" library), and distribute
   the linked executables.  You must obey the GNU General Public License
@@ -26,8 +26,12 @@ Copyright (C) CactusEMU (http://www.cactusemu.com)
   file, but you are not obligated to do so.  If you do not wish to do
   so, delete this exception statement from your version.
 
-CactusEMU is a World of Warcraft game server emulator. It is derived
-from Trinity Core, itself derived from MaNGOS. CactusEMU is based on their code.
+TrinityCore is a World of Warcraft game server emulator. It is derived
+from MaNGOS, the Massive Network Game Object Server, and is based on the
+code of that project.
+
+For further information on the TrinityCore project, please visit our
+project website at http://www.trinitycore.org.
 
 API documentation can be obtained by running the "make doc" command inside
 the doc directory.
@@ -35,9 +39,5 @@ the doc directory.
 SQL files to create the database can be found in the sql directory. Files
 to update your database from an older revision/version can be found in the
 sql/updates directory.
-
-The extractor *needs* that you finished *all* the updates of the client.
-It includes the small updates at the end.
-You should also verify that the accountType setting is set to "CT" in your WTF/launcher.wtf and WTF/config.wtf.
 
 See the docs/UnixInstall.txt file for installation instructions on Linux.
