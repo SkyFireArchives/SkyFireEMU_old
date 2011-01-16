@@ -36,9 +36,12 @@ set(scripts_STAT_SRCS
   ../game/AI/ScriptedAI/ScriptedSimpleAI.cpp
 )
 
-if(SCRIPTS)
+if(BASIC_SCRIPTS)
   include(Custom/CMakeLists.txt)
   include(World/CMakeLists.txt)
+endif()
+
+if(INSTANCE_SCRIPTS)
   include(OutdoorPvP/CMakeLists.txt)
   include(EasternKingdoms/CMakeLists.txt)
   include(Kalimdor/CMakeLists.txt)
