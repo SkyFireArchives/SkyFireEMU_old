@@ -39,7 +39,7 @@ set(scripts_STAT_SRCS
 if(BASIC_SCRIPTS)
   include(Custom/CMakeLists.txt)
   include(World/CMakeLists.txt)
-endif()
+ endif()
 
 if(INSTANCE_SCRIPTS)
   include(OutdoorPvP/CMakeLists.txt)
@@ -47,6 +47,7 @@ if(INSTANCE_SCRIPTS)
   include(Kalimdor/CMakeLists.txt)
   include(Outland/CMakeLists.txt)
   include(Northrend/CMakeLists.txt)
+  include(WorldBoss/CMakeLists.txt)
 endif()
 
 message(STATUS "SCRIPT PREPARATION COMPLETE")
