@@ -17947,7 +17947,7 @@ void Player::SaveToDB()
 
     ss << (uint64)m_deathExpireTime << ", '";
 
-    ss << /*m_taxi.SaveTaxiDestinationsToString()*/ << "', ";
+    ss << "" /*m_taxi.SaveTaxiDestinationsToString()*/ << "', ";
 
     ss << GetArenaPoints() << ", ";
 
