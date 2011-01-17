@@ -1553,7 +1553,76 @@ enum TextEmotes
     TEXTEMOTE_ENCOURAGE            = 375,
     TEXTEMOTE_ENEMY                = 376,
     TEXTEMOTE_EYEBROW              = 377,
-    TEXTEMOTE_TOAST                = 378
+    TEXTEMOTE_TOAST                = 378,
+    TEXTEMOTE_FAIL                 = 379,
+    TEXTEMOTE_HIGHFIVE             = 380,
+    TEXTEMOTE_ABSENT               = 381,
+    TEXTEMOTE_ARM                  = 382,
+    TEXTEMOTE_AWE                  = 383,
+    TEXTEMOTE_BACKPACK             = 384,
+    TEXTEMOTE_BADFEELING           = 385,
+    TEXTEMOTE_CHALLENGE            = 386,
+    TEXTEMOTE_CHUG                 = 387,
+    TEXTEMOTE_DING                 = 389,
+    TEXTEMOTE_FACEPALM             = 390,
+    TEXTEMOTE_FAINT                = 391,
+    TEXTEMOTE_GO                   = 392,
+    TEXTEMOTE_GOING                = 393,
+    TEXTEMOTE_GLOWER               = 394,
+    TEXTEMOTE_HEADACHE             = 395,
+    TEXTEMOTE_HICCUP               = 396,
+    TEXTEMOTE_HISS                 = 398,
+    TEXTEMOTE_HOLDHAND             = 399,
+    TEXTEMOTE_HURRY                = 401,
+    TEXTEMOTE_IDEA                 = 402,
+    TEXTEMOTE_JEALOUS              = 403,
+    TEXTEMOTE_LUCK                 = 404,
+    TEXTEMOTE_MAP                  = 405,
+    TEXTEMOTE_MERCY                = 406,
+    TEXTEMOTE_MUTTER               = 407,
+    TEXTEMOTE_NERVOUS              = 408,
+    TEXTEMOTE_OFFER                = 409,
+    TEXTEMOTE_PET                  = 410,
+    TEXTEMOTE_PINCH                = 411,
+    TEXTEMOTE_PROUD                = 413,
+    TEXTEMOTE_PROMISE              = 414,
+    TEXTEMOTE_PULSE                = 415,
+    TEXTEMOTE_PUNCH                = 416,
+    TEXTEMOTE_POUT                 = 417,
+    TEXTEMOTE_REGRET               = 418,
+    TEXTEMOTE_REVENGE              = 420,
+    TEXTEMOTE_ROLLEYES             = 421,
+    TEXTEMOTE_RUFFLE               = 422,
+    TEXTEMOTE_SAD                  = 423,
+    TEXTEMOTE_SCOFF                = 424,
+    TEXTEMOTE_SCOLD                = 425,
+    TEXTEMOTE_SCOWL                = 426,
+    TEXTEMOTE_SEARCH               = 427,
+    TEXTEMOTE_SHAKEFIST            = 428,
+    TEXTEMOTE_SHIFTY               = 429,
+    TEXTEMOTE_SHUDDER              = 430,
+    TEXTEMOTE_SIGNAL               = 431,
+    TEXTEMOTE_SILENCE              = 432,
+    TEXTEMOTE_SING                 = 433,
+    TEXTEMOTE_SMACK                = 434,
+    TEXTEMOTE_SNEAK                = 435,
+    TEXTEMOTE_SNEEZE               = 436,
+    TEXTEMOTE_SNORT                = 437,
+    TEXTEMOTE_SQUEAL               = 438,
+    TEXTEMOTE_STOPATTACK           = 439,
+    TEXTEMOTE_SUSPICIOUS           = 440,
+    TEXTEMOTE_THINK                = 441,
+    TEXTEMOTE_TRUCE                = 442,
+    TEXTEMOTE_TWIDDLE              = 443,
+    TEXTEMOTE_WARN                 = 444,
+    TEXTEMOTE_SNAP                 = 445,
+    TEXTEMOTE_CHARM                = 446,
+    TEXTEMOTE_COVEREARS            = 447,
+    TEXTEMOTE_CROSSARMS            = 448,
+    TEXTEMOTE_LOOK                 = 449,
+    TEXTEMOTE_OBJECT               = 450,
+    TEXTEMOTE_SWEAT                = 451,
+    TEXTEMOTE_YW                   = 453
 };
 
 enum Emote
@@ -1722,7 +1791,23 @@ enum Emote
     EMOTE_STATE_SIT_CHAIR_LOW          = 461,
     EMOTE_ONE_SHOT_STUN                = 462,
     EMOTE_ONESHOT_SPELLCAST_OMNI       = 463,
-    EMOTE_STATE_READYTHROWN            = 464
+    EMOTE_STATE_READYTHROWN            = 465,
+    EMOTE_ONESHOT_WORK_CHOPWOOD        = 466,
+    EMOTE_ONESHOT_WORK_MINING          = 467,
+    EMOTE_STATE_SPELL_CHANNEL_OMNI     = 468,
+    EMOTE_STATE_SPELL_CHANNEL_DIRECTED = 469,
+    EMOTE_STAND_STATE_NONE             = 470,
+    EMOTE_STATE_READYJOUST             = 471,
+    EMOTE_STATE_STRANGULATE            = 472,
+    EMOTE_STATE_STRANGULATE2           = 473,
+    EMOTE_STATE_READYSPELLOMNI         = 474,
+    EMOTE_STATE_HOLD_JOUST             = 475,
+    EMOTE_ONESHOT_CRY_JP               = 476,                // Only Jaina Proudmoore
+    EMOTE_ONESHOT_SPECIALUNARMED       = 477,
+    EMOTE_STATE_DANCE_NOSHEATHE        = 478,
+    EMOTE_ONESHOT_SNIFF                = 479,
+    EMOTE_ONESHOT_DRAGONSTOMP          = 480,
+    EMOTE_ONESHOT_KNOCKDOWN            = 482
 };
 
 enum Anim
@@ -1983,7 +2068,8 @@ enum LockType
     LOCKTYPE_SLOW_CLOSE            = 18,
     LOCKTYPE_FISHING               = 19,
     LOCKTYPE_INSCRIPTION           = 20,
-    LOCKTYPE_OPEN_FROM_VEHICLE     = 21
+    LOCKTYPE_OPEN_FROM_VEHICLE     = 21,
+    LOCKTYPE_ARCHAEOLOGY           = 22
 };
 
 enum TrainerType                                            // this is important type for npcs!
@@ -2021,47 +2107,56 @@ uint32 const CREATURE_TYPEMASK_MECHANICAL_OR_ELEMENTAL = (1 << (CREATURE_TYPE_ME
 // CreatureFamily.dbc
 enum CreatureFamily
 {
-    CREATURE_FAMILY_WOLF           = 1,
-    CREATURE_FAMILY_CAT            = 2,
-    CREATURE_FAMILY_SPIDER         = 3,
-    CREATURE_FAMILY_BEAR           = 4,
-    CREATURE_FAMILY_BOAR           = 5,
-    CREATURE_FAMILY_CROCOLISK      = 6,
-    CREATURE_FAMILY_CARRION_BIRD   = 7,
-    CREATURE_FAMILY_CRAB           = 8,
-    CREATURE_FAMILY_GORILLA        = 9,
-    CREATURE_FAMILY_HORSE_CUSTOM   = 10,                    // not exist in DBC but used for horse like beasts in DB
-    CREATURE_FAMILY_RAPTOR         = 11,
-    CREATURE_FAMILY_TALLSTRIDER    = 12,
-    CREATURE_FAMILY_FELHUNTER      = 15,
-    CREATURE_FAMILY_VOIDWALKER     = 16,
-    CREATURE_FAMILY_SUCCUBUS       = 17,
-    CREATURE_FAMILY_DOOMGUARD      = 19,
-    CREATURE_FAMILY_SCORPID        = 20,
-    CREATURE_FAMILY_TURTLE         = 21,
-    CREATURE_FAMILY_IMP            = 23,
-    CREATURE_FAMILY_BAT            = 24,
-    CREATURE_FAMILY_HYENA          = 25,
-    CREATURE_FAMILY_BIRD_OF_PREY   = 26,
-    CREATURE_FAMILY_WIND_SERPENT   = 27,
-    CREATURE_FAMILY_REMOTE_CONTROL = 28,
-    CREATURE_FAMILY_FELGUARD       = 29,
-    CREATURE_FAMILY_DRAGONHAWK     = 30,
-    CREATURE_FAMILY_RAVAGER        = 31,
-    CREATURE_FAMILY_WARP_STALKER   = 32,
-    CREATURE_FAMILY_SPOREBAT       = 33,
-    CREATURE_FAMILY_NETHER_RAY     = 34,
-    CREATURE_FAMILY_SERPENT        = 35,
-    CREATURE_FAMILY_MOTH           = 37,
-    CREATURE_FAMILY_CHIMAERA       = 38,
-    CREATURE_FAMILY_DEVILSAUR      = 39,
-    CREATURE_FAMILY_GHOUL          = 40,
-    CREATURE_FAMILY_SILITHID       = 41,
-    CREATURE_FAMILY_WORM           = 42,
-    CREATURE_FAMILY_RHINO          = 43,
-    CREATURE_FAMILY_WASP           = 44,
-    CREATURE_FAMILY_CORE_HOUND     = 45,
-    CREATURE_FAMILY_SPIRIT_BEAST   = 46
+    CREATURE_FAMILY_WOLF            = 1,
+    CREATURE_FAMILY_CAT             = 2,
+    CREATURE_FAMILY_SPIDER          = 3,
+    CREATURE_FAMILY_BEAR            = 4,
+    CREATURE_FAMILY_BOAR            = 5,
+    CREATURE_FAMILY_CROCOLISK       = 6,
+    CREATURE_FAMILY_CARRION_BIRD    = 7,
+    CREATURE_FAMILY_CRAB            = 8,
+    CREATURE_FAMILY_GORILLA         = 9,
+    CREATURE_FAMILY_HORSE_CUSTOM    = 10,                    // not exist in DBC but used for horse like beasts in DB
+    CREATURE_FAMILY_RAPTOR          = 11,
+    CREATURE_FAMILY_TALLSTRIDER     = 12,
+    CREATURE_FAMILY_FELHUNTER       = 15,
+    CREATURE_FAMILY_VOIDWALKER      = 16,
+    CREATURE_FAMILY_SUCCUBUS        = 17,
+    CREATURE_FAMILY_DOOMGUARD       = 19,
+    CREATURE_FAMILY_SCORPID         = 20,
+    CREATURE_FAMILY_TURTLE          = 21,
+    CREATURE_FAMILY_IMP             = 23,
+    CREATURE_FAMILY_BAT             = 24,
+    CREATURE_FAMILY_HYENA           = 25,
+    CREATURE_FAMILY_BIRD_OF_PREY    = 26,
+    CREATURE_FAMILY_WIND_SERPENT    = 27,
+    CREATURE_FAMILY_REMOTE_CONTROL  = 28,
+    CREATURE_FAMILY_FELGUARD        = 29,
+    CREATURE_FAMILY_DRAGONHAWK      = 30,
+    CREATURE_FAMILY_RAVAGER         = 31,
+    CREATURE_FAMILY_WARP_STALKER    = 32,
+    CREATURE_FAMILY_SPOREBAT        = 33,
+    CREATURE_FAMILY_NETHER_RAY      = 34,
+    CREATURE_FAMILY_SERPENT         = 35,
+    CREATURE_FAMILY_MOTH            = 37,
+    CREATURE_FAMILY_CHIMAERA        = 38,
+    CREATURE_FAMILY_DEVILSAUR       = 39,
+    CREATURE_FAMILY_GHOUL           = 40,
+    CREATURE_FAMILY_SILITHID        = 41,
+    CREATURE_FAMILY_WORM            = 42,
+    CREATURE_FAMILY_RHINO           = 43,
+    CREATURE_FAMILY_WASP            = 44,
+    CREATURE_FAMILY_CORE_HOUND      = 45,
+    CREATURE_FAMILY_SPIRIT_BEAST    = 46,
+    CREATURE_FAMILY_WATER_ELEMENTAL = 49,
+    CREATURE_FAMILY_FOX             = 50,
+    CREATURE_FAMILY_MONKEY          = 51,
+    CREATURE_FAMILY_DOG             = 52,
+    CREATURE_FAMILY_BEETLE          = 53,
+    CREATURE_FAMILY_SHALE_SPIDER    = 55,
+    CREATURE_FAMILY_ZOMBIE          = 56,
+    CREATURE_FAMILY_BEETLE_ZZOLD    = 57,
+    CREATURE_FAMILY_SILITHID2       = 59
 };
 
 enum CreatureTypeFlags
@@ -2130,7 +2225,14 @@ enum HolidayIds
     HOLIDAY_PILGRIMS_BOUNTY          = 404,
     HOLIDAY_WOTLK_LAUNCH             = 406,
     HOLIDAY_DAY_OF_DEAD              = 409,
-    HOLIDAY_CALL_TO_ARMS_ISLE_OF_C   = 420
+    HOLIDAY_CALL_TO_ARMS_ISLE_OF_C   = 420,
+    HOLIDAY_LOVE_IN_THE_AIR          = 423,
+    HOLIDAY_KALUAK_FISHIN_DERBY      = 424,
+    HOLIDAY_CALL_TO_ARMS_BG          = 435,                 // Call to Arms: The Battle for Gilneas
+    HOLIDAY_CALL_TO_ARMS_TP          = 436,                 // Call to Arms: Twin Peaks
+    HOLIDAY_10_V_10                  = 441,                 // Rated BG: 10v10
+    HOLIDAY_15_V_15                  = 442,                 // Rated BG: 15v15
+    HOLIDAY_25_V_25                  = 443                  // Rated BG: 25v25
 };
 
 // values based at QuestInfo.dbc
@@ -2189,7 +2291,11 @@ enum QuestSort
     QUEST_SORT_BREWFEST            = 370,
     QUEST_SORT_INSCRIPTION         = 371,
     QUEST_SORT_DEATH_KNIGHT        = 372,
-    QUEST_SORT_JEWELCRAFTING       = 373
+    QUEST_SORT_JEWELCRAFTING       = 373,
+    QUEST_SORT_NOBLEGARDEN         = 374,
+    QUEST_SORT_PILGRIMS_BOUNTY     = 375,
+    QUEST_SORT_LOVE_IS_IN_THE_AIR  = 376,
+    QUEST_SORT_ARCHAEOLOGY         = 377
 };
 
 inline uint8 ClassByQuestSort(int32 QuestSort)
@@ -2378,10 +2484,18 @@ enum SkillType
     SKILL_GENERAL_SHAMAN           = 801,
     SKILL_GENERAL_WARLOCK          = 802,
     SKILL_GENERAL_WARRIOR          = 803,
-    SKILL_GENERAL_PRIEST           = 804
+    SKILL_GENERAL_PRIEST           = 804,
+    SKILL_PET_WATER_ELEMENTAL      = 805,
+    SKILL_PET_FOX                  = 808,
+    SKILL_GLYPHS_ALL               = 810,
+    SKILL_PET_DOG                  = 811,
+    SKILL_MONKEY                   = 815,
+    SKILL_SHALE_SPIDER             = 817,
+    SKILL_BEETLE                   = 818,
+    SKILL_GUILD_PERKS_ALL          = 821
 };
 
-#define MAX_SKILL_TYPE               805
+#define MAX_SKILL_TYPE               822
 
 inline SkillType SkillByLockType(LockType locktype)
 {
@@ -2461,7 +2575,9 @@ enum TotemCategory
     TC_BLADED_PICKAXE              = 168,
     TC_FLINT_AND_TINDER            = 169,
     TC_RUNED_COBALT_ROD            = 189,
-    TC_RUNED_TITANIUM_ROD          = 190
+    TC_RUNED_TITANIUM_ROD          = 190,
+    TC_RUNED_ELEMENTIUM_ROD        = 209,
+    TC_HIGH_POWERED_BOLT_GUN       = 210
 };
 
 enum UnitDynFlags
@@ -2824,12 +2940,23 @@ enum BattlegroundTypeId
     BATTLEGROUND_DS            = 10,
     BATTLEGROUND_RV            = 11,
     BATTLEGROUND_IC            = 30,
-    BATTLEGROUND_RB            = 32,                        // random battleground
-    BATTLEGROUND_TP            = 108,                       // 4.0.0
-    BATTLEGROUND_BG            = 118                        // 4.0.0
+    BATTLEGROUND_RB            = 32,                        // Random Battleground
+    BATTLEGROUND_RA_BG         = 100,                       // Rated Battleground
+    BATTLEGROUND_RA_BG1        = 101,                       // Rated Battleground
+    BATTLEGROUND_RA_BG2        = 102,                       // Rated Battleground
+    BATTLEGROUND_TP            = 108,                       // Twin Peaks
+    BATTLEGROUND_BG            = 120,                       // The Battle for Gilneas
+    BATTLEGROUND_ICD           = 441,                       // Icecrown Citadel
+    BATTLEGROUND_RS            = 443,                       // The Ruby Sanctum
+    BATTLEGROUND_FL            = 522,                       // Firelands
+    BATTLEGROUND_FL2           = 523,                       // Firelands Terrain 2
+    BATTLEGROUND_TFW           = 530,                       // Throne of the Four Winds
+    BATTLEGROUND_BD            = 531,                       // Blackwing Descent
+    BATTLEGROUND_BT            = 532,                       // The Bastion of Twilight
+    BATTLEGROUND_BH            = 533                        // Baradin Hold
 };
 
-#define MAX_BATTLEGROUND_TYPE_ID 119
+#define MAX_BATTLEGROUND_TYPE_ID 543
 
 enum MailResponseType
 {
