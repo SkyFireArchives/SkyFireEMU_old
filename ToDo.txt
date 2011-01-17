@@ -1,0 +1,9 @@
+ToDo List
+
+-- Fix channels
+-- Fix Guild System
+-- Fix Battle Grounds
+-- Fix Flight masters
+-- Fix Auction House
+-- Fix Bank System
+-- Fix Profesions
