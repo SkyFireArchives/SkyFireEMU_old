@@ -40,6 +40,8 @@
 #include "BattlegroundDS.h"
 #include "BattlegroundRV.h"
 #include "BattlegroundIC.h"
+#include "BattlegroundBG.h"
+#include "BattlegroundTP.h"
 #include "BattlegroundRB.h"
 #include "Chat.h"
 #include "Map.h"
@@ -588,6 +590,12 @@ Battleground * BattlegroundMgr::CreateNewBattleground(BattlegroundTypeId bgTypeI
         case BATTLEGROUND_IC:
             bg = new BattlegroundIC(*(BattlegroundIC*)bg_template);
             break;
+        case BATTLEGROUND_BG:
+            bg = new BattlegroundBG(*(BattlegroundBG*)bg_template);
+            break;
+        case BATTLEGROUND_TP:
+            bg = new BattlegroundTP(*(BattlegroundTP*)bg_template);
+            break;
         case BATTLEGROUND_RB:
             bg = new BattlegroundRB(*(BattlegroundRB*)bg_template);
             break;
@@ -636,6 +644,8 @@ uint32 BattlegroundMgr::CreateBattleground(BattlegroundTypeId bgTypeId, bool IsA
         case BATTLEGROUND_DS: bg = new BattlegroundDS; break;
         case BATTLEGROUND_RV: bg = new BattlegroundRV; break;
         case BATTLEGROUND_IC: bg = new BattlegroundIC; break;
+        case BATTLEGROUND_BG: bg = new BattlegroundBG; break;
+        case BATTLEGROUND_TP: bg = new BattlegroundTP; break;
         case BATTLEGROUND_RB: bg = new BattlegroundRB; break;
         default:
             bg = new Battleground;
