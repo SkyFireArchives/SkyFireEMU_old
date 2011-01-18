@@ -5257,6 +5257,17 @@ void Player::RepopAtGraveyard()
         TeleportTo(m_homebindMapId, m_homebindX, m_homebindY, m_homebindZ, GetOrientation());
 }
 
+bool Player::CanJoinConstantChannelInZone(ChatChannelsEntry const* channel, AreaTableEntry const* zone)
+{
+    if (channel->flags & CHANNEL_DBC_FLAG_ZONE_DEP)
+    {
+        if (zone->flags & AREA_FLAG_ARENA_INSTANCE)
+            return false;
+        if ((channel->flags & CHANNEL_DBC_FLAG_CITY_ONLY) && !(zone->flags & AREA_FLAG_CAPITAL))
+            return false;
+    }
+    return true;
+}
 void Player::JoinedChannel(Channel *c)
 {
     m_channels.push_back(c);
@@ -5283,8 +5294,8 @@ void Player::CleanupChannels()
 
 void Player::UpdateLocalChannels(uint32 newZone)
 {
-    if (m_channels.empty())
-        return;
+	if (GetSession()->PlayerLoading() && !IsBeingTeleportedFar())
+        return;                                              // The client handles it automatically after loading, but not after teleporting
 
     AreaTableEntry const* current_zone = GetAreaEntryByAreaID(newZone);
     if (!current_zone)
@@ -5296,38 +5307,78 @@ void Player::UpdateLocalChannels(uint32 newZone)
 
     std::string current_zone_name = current_zone->area_name;
 
-    for (JoinedChannelsList::iterator i = m_channels.begin(), next; i != m_channels.end(); i = next)
-    {
-        next = i; ++next;
+	for (uint32 i = 0; i < sChatChannelsStore.GetNumRows(); ++i)
+	{
+		if (ChatChannelsEntry const* channel = sChatChannelsStore.LookupEntry(i))
+		{
+			if (!(channel->flags & CHANNEL_DBC_FLAG_ZONE_DEP))
+				continue;                                    // Not zone dependent, don't handle it here
 
-        // skip non built-in channels
-        if (!(*i)->IsConstant())
-            continue;
+			if ((channel->flags & CHANNEL_DBC_FLAG_GUILD_REQ) && GetGuildId())
+				continue;                                    // Should not join to these channels automatically
 
-        ChatChannelsEntry const* ch = GetChannelEntryFor((*i)->GetChannelId());
-        if (!ch)
-            continue;
+			Channel* usedChannel = NULL;
 
-        if ((ch->flags & 4) == 4)                            // global channel without zone name in pattern
-            continue;
+			for (JoinedChannelsList::iterator itr = m_channels.begin(); itr != m_channels.end(); ++itr)
+			{
+				if ((*itr)->GetChannelId() == i)
+				{
+					usedChannel = *itr;
+					break;
+				}
+			}
 
-        //  new channel
-        char new_channel_name_buf[100];
-        snprintf(new_channel_name_buf,100,ch->pattern,current_zone_name.c_str());
-        Channel* new_channel = cMgr->GetJoinChannel(new_channel_name_buf,ch->ChannelID);
+			Channel* removeChannel = NULL;
+			Channel* joinChannel = NULL;
+			bool sendRemove = true;
 
-        if ((*i) != new_channel)
-        {
-            new_channel->Join(GetGUID(),"");                // will output Changed Channel: N. Name
+			if (CanJoinConstantChannelInZone(channel, current_zone))
+			{
+				if (!(channel->flags & CHANNEL_DBC_FLAG_GLOBAL))
+				{
+					if (channel->flags & CHANNEL_DBC_FLAG_CITY_ONLY && usedChannel)
+						continue;                            // Already on the channel, as city channel names are not changing
 
-            // leave old channel
-            (*i)->Leave(GetGUID(),false);                   // not send leave channel, it already replaced at client
-            std::string name = (*i)->GetName();             // store name, (*i)erase in LeftChannel
-            LeftChannel(*i);                                // remove from player's channel list
-            cMgr->LeftChannel(name);                        // delete if empty
-        }
-    }
-    sLog.outDebug("Player: channels cleaned up!");
+					char new_channel_name_buf[100];
+					char const* currentNameExt;
+
+					if (channel->flags & CHANNEL_DBC_FLAG_CITY_ONLY)
+						currentNameExt = sObjectMgr.GetTrinityStringForDBCLocale(LANG_CHANNEL_CITY);
+					else
+						currentNameExt = current_zone_name.c_str();
+
+					snprintf(new_channel_name_buf, 100, channel->pattern, currentNameExt);
+
+					joinChannel = cMgr->GetJoinChannel(new_channel_name_buf, channel->ChannelID);
+					if (usedChannel)
+					{
+						if (joinChannel != usedChannel)
+						{
+							removeChannel = usedChannel;
+							sendRemove = false;              // Do not send leave channel, it already replaced at client
+						}
+						else
+							joinChannel = NULL;
+					}
+				}
+				else
+					joinChannel = cMgr->GetJoinChannel(channel->pattern, channel->ChannelID);
+			}
+			else
+				removeChannel = usedChannel;
+
+			if (joinChannel)
+				joinChannel->Join(GetGUID(), "");            // Changed Channel: ... or Joined Channel: ...
+
+			if (removeChannel)
+			{
+				removeChannel->Leave(GetGUID(), sendRemove); // Leave old channel
+				std::string name = removeChannel->GetName(); // Store name, (*i)erase in LeftChannel
+				LeftChannel(removeChannel);                  // Remove from player's channel list
+				cMgr->LeftChannel(name);                     // Delete if empty
+			}
+		}
+	}
 }
 
 void Player::LeaveLFGChannel()
@@ -24208,11 +24259,6 @@ void Player::ActivateSpec(uint8 spec)
         return;
 
     if (spec > GetSpecsCount())
-        return;
-
-    // TODO:
-    // HACK: this shouldn't be checked at such a low level function but rather at the moment the spell is casted
-    if (GetMap()->IsBattleground() && !HasAura(44521)) // In Battleground with no Preparation buff
         return;
 
     if (IsNonMeleeSpellCasted(false))
