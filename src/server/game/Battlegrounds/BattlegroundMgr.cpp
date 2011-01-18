@@ -376,6 +376,8 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
             case BATTLEGROUND_DS:                               // wotlk
             case BATTLEGROUND_RV:                               // wotlk
             case BATTLEGROUND_IC:                               // wotlk
+            case BATTLEGROUND_BG:                               // cataclysm
+            case BATTLEGROUND_TP:                               // cataclysm 
                 *data << uint32(0);
                 break;
             default:
