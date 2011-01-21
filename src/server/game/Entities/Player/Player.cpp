@@ -151,7 +151,7 @@ PlayerTaxi::PlayerTaxi()
 void PlayerTaxi::InitTaxiNodesForLevel(uint32 race, uint32 chrClass, uint8 level)
 {
     // class specific initial known nodes
-    switch(chrClass)
+    switch (chrClass)
     {
         case CLASS_DEATH_KNIGHT:
         {
@@ -162,30 +162,55 @@ void PlayerTaxi::InitTaxiNodesForLevel(uint32 race, uint32 chrClass, uint8 level
     }
 
     // race specific initial known nodes: capital and taxi hub masks
-    switch(race)
+    switch (race)
     {
-        case RACE_HUMAN:    SetTaximaskNode(2);  break;     // Human
-        case RACE_ORC:      SetTaximaskNode(23); break;     // Orc
-        case RACE_DWARF:    SetTaximaskNode(6);  break;     // Dwarf
-        case RACE_NIGHTELF: SetTaximaskNode(26);
-                            SetTaximaskNode(27); break;     // Night Elf
-        case RACE_UNDEAD_PLAYER: SetTaximaskNode(11); break;// Undead
-        case RACE_TAUREN:   SetTaximaskNode(22); break;     // Tauren
-        case RACE_GNOME:    SetTaximaskNode(6);  break;     // Gnome
-        case RACE_TROLL:    SetTaximaskNode(23); break;     // Troll
-        case RACE_BLOODELF: SetTaximaskNode(82); break;     // Blood Elf
-        case RACE_DRAENEI:  SetTaximaskNode(94); break;     // Draenei
+        case RACE_HUMAN:
+            SetTaximaskNode(2);
+            break;
+        case RACE_ORC:
+            SetTaximaskNode(23);
+            break;
+        case RACE_DWARF:
+            SetTaximaskNode(6);
+            break;
+        case RACE_NIGHTELF:
+            SetTaximaskNode(26);
+            SetTaximaskNode(27);
+            break;
+        case RACE_UNDEAD_PLAYER:
+            SetTaximaskNode(11);
+            break;
+        case RACE_TAUREN:
+            SetTaximaskNode(22);
+            break;
+        case RACE_GNOME:
+            SetTaximaskNode(6);
+            break;
+        case RACE_TROLL:
+            SetTaximaskNode(23);
+            break;
+        case RACE_BLOODELF:
+            SetTaximaskNode(82);
+            break;
+        case RACE_DRAENEI:
+            SetTaximaskNode(94);
+            break;
     }
 
     // new continent starting masks (It will be accessible only at new map)
-    switch(Player::TeamForRace(race))
+    switch (Player::TeamForRace(race))
     {
-        case ALLIANCE: SetTaximaskNode(100); break;
-        case HORDE:    SetTaximaskNode(99);  break;
+        case ALLIANCE:
+            SetTaximaskNode(100);
+            break;
+        case HORDE:
+            SetTaximaskNode(99);
+            break;
     }
+
     // level dependent taxi hubs
     if (level >= 68)
-        SetTaximaskNode(213);                               //Shattered Sun Staging Area
+        SetTaximaskNode(213);                               // Shattered Sun Staging Area
 }
 
 void PlayerTaxi::LoadTaxiMask(const char* data)
@@ -194,8 +219,7 @@ void PlayerTaxi::LoadTaxiMask(const char* data)
 
     uint8 index;
     Tokens::iterator iter;
-    for (iter = tokens.begin(), index = 0;
-        (index < TaxiMaskSize) && (iter != tokens.end()); ++iter, ++index)
+    for (iter = tokens.begin(), index = 0; (index < TaxiMaskSize) && (iter != tokens.end()); ++iter, ++index)
     {
         // load and set bits only for existed taxi nodes
         m_taximask[index] = sTaxiNodesMask[index] & uint32(atol((*iter).c_str()));
@@ -283,6 +307,7 @@ std::ostringstream& operator<< (std::ostringstream& ss, PlayerTaxi const& taxi)
     for (uint8 i = 0; i < TaxiMaskSize; ++i)
         ss << taxi.m_taximask[i] << " ";
     ss << "'";
+
     return ss;
 }
 
@@ -5232,6 +5257,17 @@ void Player::RepopAtGraveyard()
         TeleportTo(m_homebindMapId, m_homebindX, m_homebindY, m_homebindZ, GetOrientation());
 }
 
+bool Player::CanJoinConstantChannelInZone(ChatChannelsEntry const* channel, AreaTableEntry const* zone)
+{
+    if (channel->flags & CHANNEL_DBC_FLAG_ZONE_DEP)
+    {
+        if (zone->flags & AREA_FLAG_ARENA_INSTANCE)
+            return false;
+        if ((channel->flags & CHANNEL_DBC_FLAG_CITY_ONLY) && !(zone->flags & AREA_FLAG_CAPITAL))
+            return false;
+    }
+    return true;
+}
 void Player::JoinedChannel(Channel *c)
 {
     m_channels.push_back(c);
@@ -5258,8 +5294,8 @@ void Player::CleanupChannels()
 
 void Player::UpdateLocalChannels(uint32 newZone)
 {
-    if (m_channels.empty())
-        return;
+	if (GetSession()->PlayerLoading() && !IsBeingTeleportedFar())
+        return;                                              // The client handles it automatically after loading, but not after teleporting
 
     AreaTableEntry const* current_zone = GetAreaEntryByAreaID(newZone);
     if (!current_zone)
@@ -5271,38 +5307,78 @@ void Player::UpdateLocalChannels(uint32 newZone)
 
     std::string current_zone_name = current_zone->area_name;
 
-    for (JoinedChannelsList::iterator i = m_channels.begin(), next; i != m_channels.end(); i = next)
-    {
-        next = i; ++next;
+	for (uint32 i = 0; i < sChatChannelsStore.GetNumRows(); ++i)
+	{
+		if (ChatChannelsEntry const* channel = sChatChannelsStore.LookupEntry(i))
+		{
+			if (!(channel->flags & CHANNEL_DBC_FLAG_ZONE_DEP))
+				continue;                                    // Not zone dependent, don't handle it here
 
-        // skip non built-in channels
-        if (!(*i)->IsConstant())
-            continue;
+			if ((channel->flags & CHANNEL_DBC_FLAG_GUILD_REQ) && GetGuildId())
+				continue;                                    // Should not join to these channels automatically
 
-        ChatChannelsEntry const* ch = GetChannelEntryFor((*i)->GetChannelId());
-        if (!ch)
-            continue;
+			Channel* usedChannel = NULL;
 
-        if ((ch->flags & 4) == 4)                            // global channel without zone name in pattern
-            continue;
+			for (JoinedChannelsList::iterator itr = m_channels.begin(); itr != m_channels.end(); ++itr)
+			{
+				if ((*itr)->GetChannelId() == i)
+				{
+					usedChannel = *itr;
+					break;
+				}
+			}
 
-        //  new channel
-        char new_channel_name_buf[100];
-        snprintf(new_channel_name_buf,100,ch->pattern,current_zone_name.c_str());
-        Channel* new_channel = cMgr->GetJoinChannel(new_channel_name_buf,ch->ChannelID);
+			Channel* removeChannel = NULL;
+			Channel* joinChannel = NULL;
+			bool sendRemove = true;
 
-        if ((*i) != new_channel)
-        {
-            new_channel->Join(GetGUID(),"");                // will output Changed Channel: N. Name
+			if (CanJoinConstantChannelInZone(channel, current_zone))
+			{
+				if (!(channel->flags & CHANNEL_DBC_FLAG_GLOBAL))
+				{
+					if (channel->flags & CHANNEL_DBC_FLAG_CITY_ONLY && usedChannel)
+						continue;                            // Already on the channel, as city channel names are not changing
 
-            // leave old channel
-            (*i)->Leave(GetGUID(),false);                   // not send leave channel, it already replaced at client
-            std::string name = (*i)->GetName();             // store name, (*i)erase in LeftChannel
-            LeftChannel(*i);                                // remove from player's channel list
-            cMgr->LeftChannel(name);                        // delete if empty
-        }
-    }
-    sLog.outDebug("Player: channels cleaned up!");
+					char new_channel_name_buf[100];
+					char const* currentNameExt;
+
+					if (channel->flags & CHANNEL_DBC_FLAG_CITY_ONLY)
+						currentNameExt = sObjectMgr.GetTrinityStringForDBCLocale(LANG_CHANNEL_CITY);
+					else
+						currentNameExt = current_zone_name.c_str();
+
+					snprintf(new_channel_name_buf, 100, channel->pattern, currentNameExt);
+
+					joinChannel = cMgr->GetJoinChannel(new_channel_name_buf, channel->ChannelID);
+					if (usedChannel)
+					{
+						if (joinChannel != usedChannel)
+						{
+							removeChannel = usedChannel;
+							sendRemove = false;              // Do not send leave channel, it already replaced at client
+						}
+						else
+							joinChannel = NULL;
+					}
+				}
+				else
+					joinChannel = cMgr->GetJoinChannel(channel->pattern, channel->ChannelID);
+			}
+			else
+				removeChannel = usedChannel;
+
+			if (joinChannel)
+				joinChannel->Join(GetGUID(), "");            // Changed Channel: ... or Joined Channel: ...
+
+			if (removeChannel)
+			{
+				removeChannel->Leave(GetGUID(), sendRemove); // Leave old channel
+				std::string name = removeChannel->GetName(); // Store name, (*i)erase in LeftChannel
+				LeftChannel(removeChannel);                  // Remove from player's channel list
+				cMgr->LeftChannel(name);                     // Delete if empty
+			}
+		}
+	}
 }
 
 void Player::LeaveLFGChannel()
@@ -13878,15 +13954,13 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
             break;
         case GOSSIP_OPTION_BATTLEFIELD:
         {
-            BattlegroundTypeId bgTypeId = sBattlegroundMgr.GetBattleMasterBG(pSource->GetEntry());
-
-            if (bgTypeId == BATTLEGROUND_TYPE_NONE)
+            if (pSource->GetTypeId() != TYPEID_UNIT || !pSource->ToCreature()->isBattleMaster())
             {
                 sLog.outError("a user (guid %u) requested battlegroundlist from a npc who is no battlemaster", GetGUIDLow());
                 return;
             }
 
-            GetSession()->SendBattlegGroundList(guid, bgTypeId);
+            GetSession()->SendBattlegGroundList(guid);
             break;
         }
     }
@@ -16047,14 +16121,13 @@ Player* Player::LoadFromDB(uint32 guid, SQLQueryHolder * holder, WorldSession * 
             break;
         default:
             printf("\nClass %u doesn't exist.\n", pClass);
-            ASSERT(false);
             break;
     }
     
-    ASSERT(player != NULL);
-    
-    if(player->_LoadFromDB(guid, holder, result))
-        return player;
+    if (player && player)
+        if (player->_LoadFromDB(guid, holder, result))
+            return player;
+
     return NULL;
 }
 
@@ -16080,11 +16153,12 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
 
     // check if the character's account in the db and the logged in account match.
     // player should be able to load/delete character only with correct account!
-    if (dbAccountId != GetSession()->GetAccountId())
+    // TODO: Restore this check!
+    /*if (dbAccountId != GetSession()->GetAccountId())
     {
         sLog.outError("Player (GUID: %u) loading from wrong account (is: %u, should be: %u)",guid,GetSession()->GetAccountId(),dbAccountId);
         return false;
-    }
+    }*/
 
     if (holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADBANNED))
     {
@@ -17924,7 +17998,7 @@ void Player::SaveToDB()
 
     ss << (uint64)m_deathExpireTime << ", '";
 
-    ss << m_taxi.SaveTaxiDestinationsToString() << "', ";
+    ss << "" /*m_taxi.SaveTaxiDestinationsToString()*/ << "', ";
 
     ss << GetArenaPoints() << ", ";
 
@@ -23065,8 +23139,10 @@ void Player::StoreLootItem(uint8 lootSlot, Loot* loot)
 uint32 Player::CalculateTalentsPoints() const
 {
     uint32 base_talent = 0;
-    if(getLevel() >= 10)
+    if(getLevel() >= 10 && getLevel() <= 81)
         base_talent = (((getLevel() - 10 + 1) - ( ((getLevel() - 10 + 1) % 2) == 1 ? 1 : 0))/2)+1;
+    else
+        base_talent = getLevel() - 44;
 
     if (getClass() != CLASS_DEATH_KNIGHT || GetMapId() != 609)
         return uint32(base_talent * sWorld.getRate(RATE_TALENT));
@@ -24183,11 +24259,6 @@ void Player::ActivateSpec(uint8 spec)
         return;
 
     if (spec > GetSpecsCount())
-        return;
-
-    // TODO:
-    // HACK: this shouldn't be checked at such a low level function but rather at the moment the spell is casted
-    if (GetMap()->IsBattleground() && !HasAura(44521)) // In Battleground with no Preparation buff
         return;
 
     if (IsNonMeleeSpellCasted(false))

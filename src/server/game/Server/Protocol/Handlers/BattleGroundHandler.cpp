@@ -52,38 +52,28 @@ void WorldSession::HandleBattlemasterHelloOpcode(WorldPacket & recv_data)
     // Stop the npc if moving
     unit->StopMoving();
 
-    BattlegroundTypeId bgTypeId = sBattlegroundMgr.GetBattleMasterBG(unit->GetEntry());
-
-    if (!_player->GetBGAccessByLevel(bgTypeId))
-    {
-                                                            // temp, must be gossip message...
-        SendNotification(LANG_YOUR_BG_LEVEL_REQ_ERROR);
-        return;
-    }
-
-    SendBattlegGroundList(guid, bgTypeId);
+    SendBattlegGroundList(guid);
 }
 
 void WorldSession::SendBattlegGroundList(uint64 guid, BattlegroundTypeId bgTypeId)
 {
     WorldPacket data;
-    sBattlegroundMgr.BuildBattlegroundListPacket(&data, guid, _player, bgTypeId, 0);
+    sBattlegroundMgr.BuildBattlegroundListPacket(&data, guid, _player, bgTypeId);
     SendPacket(&data);
 }
 
 void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket & recv_data)
 {
-    uint64 guid;
+	uint8 joinAsGroup;
     uint32 bgTypeId_;
-    uint32 instanceId;
-    uint8 joinAsGroup;
+    uint32 unk, unk2;
     bool isPremade = false;
     Group * grp = NULL;
 
-    recv_data >> guid;                                      // battlemaster guid
+    recv_data >> joinAsGroup;                               // join as group (join as group = 0x80, else 0x0)
+    recv_data >> unk;                                       // unk
     recv_data >> bgTypeId_;                                 // battleground type id (DBC id)
-    recv_data >> instanceId;                                // instance id, 0 if First Available selected
-    recv_data >> joinAsGroup;                               // join as group
+	recv_data >> unk2;                                      // unk
 
     if (!sBattlemasterListStore.LookupEntry(bgTypeId_))
     {
@@ -99,8 +89,6 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket & recv_data)
 
     BattlegroundTypeId bgTypeId = BattlegroundTypeId(bgTypeId_);
 
-    sLog.outDebug("WORLD: Recvd CMSG_BATTLEMASTER_JOIN Message from (GUID: %u TypeId:%u)", GUID_LOPART(guid), GuidHigh2TypeId(GUID_HIPART(guid)));
-
     // can do this, since it's battleground, not arena
     BattlegroundQueueTypeId bgQueueTypeId = BattlegroundMgr::BGQueueTypeId(bgTypeId, 0);
     BattlegroundQueueTypeId bgQueueTypeIdRandom = BattlegroundMgr::BGQueueTypeId(BATTLEGROUND_RB, 0);
@@ -109,13 +97,8 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket & recv_data)
     if (_player->InBattleground())
         return;
 
-    // get bg instance or bg template if instance not found
-    Battleground *bg = NULL;
-    if (instanceId)
-        bg = sBattlegroundMgr.GetBattlegroundThroughClientInstance(instanceId, bgTypeId);
-
-    if (!bg)
-        bg = sBattlegroundMgr.GetBattlegroundTemplate(bgTypeId);
+    // get bg template
+    Battleground *bg = sBattlegroundMgr.GetBattlegroundTemplate(bgTypeId);
     if (!bg)
         return;
 
@@ -325,22 +308,10 @@ void WorldSession::HandleBattlefieldListOpcode(WorldPacket &recv_data)
     uint32 bgTypeId;
     recv_data >> bgTypeId;                                  // id from DBC
 
-    uint8 fromWhere;
-    recv_data >> fromWhere;                                 // 0 - battlemaster (lua: ShowBattlefieldList), 1 - UI (lua: RequestBattlegroundInstanceInfo)
-
-    uint8 unk1;
-    recv_data >> unk1;                                       // Unknown 3.2.2
-
-    BattlemasterListEntry const* bl = sBattlemasterListStore.LookupEntry(bgTypeId);
-    if (!bl)
-    {
-        sLog.outError("Battleground: invalid bgtype received.");
-        return;
-    }
-
     WorldPacket data;
-    sBattlegroundMgr.BuildBattlegroundListPacket(&data, 0, _player, BattlegroundTypeId(bgTypeId), fromWhere);
+    sBattlegroundMgr.BuildBattlegroundListPacket(&data, 0, _player, BattlegroundTypeId(bgTypeId));
     SendPacket(&data);
+
 }
 
 void WorldSession::HandleBattleFieldPortOpcode(WorldPacket &recv_data)

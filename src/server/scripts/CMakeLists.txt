@@ -36,14 +36,18 @@ set(scripts_STAT_SRCS
   ../game/AI/ScriptedAI/ScriptedSimpleAI.cpp
 )
 
-if(SCRIPTS)
+if(BASIC_SCRIPTS)
   include(Custom/CMakeLists.txt)
   include(World/CMakeLists.txt)
+ endif()
+
+if(INSTANCE_SCRIPTS)
   include(OutdoorPvP/CMakeLists.txt)
   include(EasternKingdoms/CMakeLists.txt)
   include(Kalimdor/CMakeLists.txt)
   include(Outland/CMakeLists.txt)
   include(Northrend/CMakeLists.txt)
+  include(WorldBoss/CMakeLists.txt)
 endif()
 
 message(STATUS "SCRIPT PREPARATION COMPLETE")
@@ -141,7 +145,7 @@ include_directories(
 
 add_library(scripts STATIC ${scripts_STAT_SRCS})
 
-add_dependencies(scripts genrev)
+add_dependencies(scripts revision.h)
 
 # Generate precompiled header
 if( USE_SCRIPTPCH )

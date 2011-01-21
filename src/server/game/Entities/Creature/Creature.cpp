@@ -888,31 +888,6 @@ bool Creature::isCanInteractWithBattleMaster(Player* pPlayer, bool msg) const
 {
     if (!isBattleMaster())
         return false;
-
-    BattlegroundTypeId bgTypeId = sBattlegroundMgr.GetBattleMasterBG(GetEntry());
-    if (!msg)
-        return pPlayer->GetBGAccessByLevel(bgTypeId);
-
-    if (!pPlayer->GetBGAccessByLevel(bgTypeId))
-    {
-        pPlayer->PlayerTalkClass->ClearMenus();
-        switch(bgTypeId)
-        {
-            case BATTLEGROUND_AV:  pPlayer->PlayerTalkClass->SendGossipMenu(7616,GetGUID()); break;
-            case BATTLEGROUND_WS:  pPlayer->PlayerTalkClass->SendGossipMenu(7599,GetGUID()); break;
-            case BATTLEGROUND_AB:  pPlayer->PlayerTalkClass->SendGossipMenu(7642,GetGUID()); break;
-            case BATTLEGROUND_EY:
-            case BATTLEGROUND_NA:
-            case BATTLEGROUND_BE:
-            case BATTLEGROUND_AA:
-            case BATTLEGROUND_RL:
-            case BATTLEGROUND_SA:
-            case BATTLEGROUND_DS:
-            case BATTLEGROUND_RV: pPlayer->PlayerTalkClass->SendGossipMenu(10024,GetGUID()); break;
-            default: break;
-        }
-        return false;
-    }
     return true;
 }
 

@@ -1,6 +1,5 @@
 # Copyright (C) 2005-2010 Trinity <http://www.trinitycore.org/>
 #
-# Copyright (C) 2010-2011 CactusEMU <http://www.cactusemu.com/>
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -11,7 +10,7 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 # Set projectname (must be done AFTER setting configurationtypes)
-project(CactusEMU)
+project(SkyFire)
 
 # CMake policies (can not be handled elsewhere)
 cmake_minimum_required(VERSION 2.6)
@@ -63,12 +62,12 @@ endif()
 include(cmake/showoptions.cmake)
 
 if( WIN32 )
-    message("You can build the CactusPatcher (permanent patcher) yourself. Visual Studio Project is located in src/redirect/Patcher/")
+    message("You can build the SkyFirePatcher (permanent patcher) yourself. Visual Studio Project is located in src/redirect/Patcher/")
     message("")
 endif()
 
 # add and generate revision.h
-add_subdirectory(src/genrevision)
+add_subdirectory(src/genrev)
 
 # add dependencies
 add_subdirectory(dep)

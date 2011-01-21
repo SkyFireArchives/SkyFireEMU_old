@@ -27,8 +27,8 @@
 #include "Define.h"
 #include "revision.h"
 
-#define _PACKAGENAME "TrinityCore "
-#define _CODENAME "LONG_COLD_WINTER"
+#define _PACKAGENAME "SkyFire/TrinityCore "
+#define _CODENAME "COLD_DAY_IN_HELL"
 
 #if TRINITY_ENDIAN == TRINITY_BIGENDIAN
 # define _ENDIAN_STRING "big-endian"

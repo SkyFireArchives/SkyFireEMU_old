@@ -1,5 +1,5 @@
 ################################################
-#   CactusEMU World Server configuration file  #
+#   SkyFire World Server configuration file  #
 ################################################
 [worldserver]
 
@@ -14,7 +14,7 @@
 #        Data directory setting.
 #        Important: DataDir needs to be quoted, as it is a string which may
 #         contain space characters.
-#        Example: "@prefix@/share/cactusemu"
+#        Example: "@prefix@/share/skyfire_emu"
 #
 #    LogsDir
 #        Logs directory setting.
@@ -73,9 +73,9 @@
 RealmID = 1
 DataDir = "."
 LogsDir = ""
-LoginDatabaseInfo     = "127.0.0.1;3306;cactusemu;cactusemu;auth"
-WorldDatabaseInfo     = "127.0.0.1;3306;cactusemu;cactusemu;world"
-CharacterDatabaseInfo = "127.0.0.1;3306;cactusemu;cactusemu;characters"
+LoginDatabaseInfo     = "127.0.0.1;3306;user;password;auth"
+WorldDatabaseInfo     = "127.0.0.1;3306;user;password;world"
+CharacterDatabaseInfo = "127.0.0.1;3306;user;password;characters"
 LoginDatabase.WorkerThreads = 1
 WorldDatabase.WorkerThreads = 1
 CharacterDatabase.WorkerThreads = 1
@@ -957,6 +957,11 @@ ChatLogTimestamp = 0
 #        Default: 1 (true)
 #                 0 (false)
 #
+#    ShowProgressBars
+#        Control show progress bars for load steps at server startup
+#        Default: 1 (true)
+#                 0 (false)
+#
 #    Motd
 #        Message of the Day. Displayed at worldlogin for every user
 #         Use '@' for a newline, and be sure to escape special characters.
@@ -1031,7 +1036,8 @@ OffhandCheckAtSpellUnlearn = 1
 ClientCacheVersion = 0
 Event.Announce = 0
 BeepAtStart = 1
-Motd = "Welcome to a CactusEMU server."
+ShowProgressBars = 1
+Motd = "Welcome to a SkyFire server."
 Server.LoginInfo = 0
 Command.LookupMaxResults = 0
 
