@@ -11,8 +11,7 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 option(SERVERS          "Build worldserver and authserver"                            1)
-option(BASIC_SCRIPTS    "Build core with basic scripts included"                      1)
-option(INSTANCE_SCRIPTS "Build core with Intance & Boss scripts included"             0)
+option(SCRIPTS    "Build core with basic scripts included"                            1)
 option(TOOLS            "Build dbc/map/vmap extraction/assembler tools"               0)
 if( WIN32 )
     option(INJECTOR        "Build hook & dll injector"                                0)
