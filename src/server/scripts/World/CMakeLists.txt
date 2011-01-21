@@ -1,9 +1,9 @@
 set(scripts_STAT_SRCS
   ${scripts_STAT_SRCS}
-  WorldBoss/boss_lethon.cpp
-  WorldBoss/boss_emeriss.cpp
-  WorldBoss/boss_ysondre.cpp
-  WorldBoss/boss_taerar.cpp
+  World/boss_lethon.cpp
+  World/boss_emeriss.cpp
+  World/boss_ysondre.cpp
+  World/boss_taerar.cpp
   World/npc_professions.cpp
   World/mob_generic_creature.cpp
   World/npc_taxi.cpp
