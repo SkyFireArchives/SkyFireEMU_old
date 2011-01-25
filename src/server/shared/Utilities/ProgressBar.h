@@ -24,22 +24,18 @@
 
 class barGoLink
 {
-    public:                                                 // constructors
-        barGoLink(int row_count);
-        ~barGoLink();
+    static char const * const empty;
+    static char const * const full;
 
-    public:                                                 // modifiers
+    uint64 rec_no;
+    uint64 rec_pos;
+    uint64 num_rec;
+    uint64 indic_len;
+
+    public:
+
         void step( void );
-
-        static void SetOutputState(bool on) { m_showOutput = on; }
-    private:
-        static bool m_showOutput;                           // not recommended change with existed active bar
-        static char const * const empty;
-        static char const * const full;
-
-        int rec_no;
-        int rec_pos;
-        int num_rec;
-        int indic_len;
+        barGoLink( uint64 );
+        ~barGoLink();
 };
 #endif

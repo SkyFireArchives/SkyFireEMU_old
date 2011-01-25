@@ -29,20 +29,19 @@ class Transaction
 {
     friend class TransactionTask;
     public:
+        Transaction() {}
         ~Transaction() { Cleanup(); }
 
         void Append(PreparedStatement* statement);
         void Append(const char* sql);
         void PAppend(const char* sql, ...);
 
-        size_t GetSize() { return m_queries.size(); }
+        size_t GetSize() const { return m_queries.size(); }
 
     protected:
         void Cleanup();
         std::queue<SQLElementData> m_queries;
 
-    private:
-        bool m_actioned;
 };
 typedef ACE_Refcounted_Auto_Ptr<Transaction, ACE_Null_Mutex> SQLTransaction;
 

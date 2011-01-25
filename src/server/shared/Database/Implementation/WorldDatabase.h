@@ -26,11 +26,11 @@ class WorldDatabaseConnection : public MySQLConnection
 {
     public:
         //- Constructors for sync and async connections
-        WorldDatabaseConnection() : MySQLConnection() {}
-        WorldDatabaseConnection(ACE_Activation_Queue* q) : MySQLConnection(q) {}
+        WorldDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) {}
+        WorldDatabaseConnection(ACE_Activation_Queue* q, MySQLConnectionInfo& connInfo) : MySQLConnection(q, connInfo) {}
 
         //- Loads databasetype specific prepared statements
-        bool Open(const std::string& infoString);
+        bool Open();
 };
 
 typedef DatabaseWorkerPool<WorldDatabaseConnection> WorldDatabaseWorkerPool;
@@ -43,12 +43,14 @@ enum WorldDatabaseStatements
         name for a suiting suffix.
     */
 
-    WORLD_DEL_CRESPAWNTIME,
-    WORLD_ADD_CRESPAWNTIME,
     WORLD_LOAD_QUEST_POOLS,
     WORLD_DEL_CRELINKED_RESPAWN,
     WORLD_REP_CRELINKED_RESPAWN,
     WORLD_DEL_GAMEOBJECT_RESPAWN_TIMES,
+    WORLD_DEL_CREATURE_RESPAWN_TIME,
+    WORLD_ADD_CREATURE_RESPAWN_TIME,
+    WORLD_DEL_GO_RESPAWN_TIME,
+    WORLD_ADD_GO_RESPAWN_TIME,
     MAX_WORLDDATABASE_STATEMENTS,
 };
 
