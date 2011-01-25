@@ -37,8 +37,8 @@
 #include "Pet.h"
 #include "BattlegroundMgr.h"
 #include "Battleground.h"
-#include "Guild.h"
 #include "ScriptMgr.h"
+#include "CreatureAI.h"
 
 enum StableResultCode
 {
@@ -108,8 +108,10 @@ void WorldSession::SendShowBank(uint64 guid)
 void WorldSession::HandleTrainerListOpcode(WorldPacket & recv_data)
 {
     uint64 guid;
+    uint32 spellId;
+    uint32 unk;
 
-    recv_data >> guid;
+    recv_data >> guid >> spellId >> unk;
     SendTrainerList(guid);
 }
 
@@ -351,6 +353,7 @@ void WorldSession::HandleGossipHelloOpcode(WorldPacket & recv_data)
         _player->PrepareGossipMenu(unit, unit->GetCreatureInfo()->GossipMenuId, true);
         _player->SendPreparedGossip(unit);
     }
+    unit->AI()->sGossipHello(_player);
 }
 
 /*void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket & recv_data)
@@ -692,31 +695,13 @@ void WorldSession::HandleRepairItemOpcode(WorldPacket & recv_data)
         sLog.outDebug("ITEM: Repair item, itemGUID = %u, npcGUID = %u", GUID_LOPART(itemGUID), GUID_LOPART(npcGUID));
 
         Item* item = _player->GetItemByGuid(itemGUID);
-
         if (item)
-            TotalCost= _player->DurabilityRepair(item->GetPos(),true,discountMod,guildBank>0?true:false);
+            TotalCost = _player->DurabilityRepair(item->GetPos(), true, discountMod, guildBank);
     }
     else
     {
         sLog.outDebug("ITEM: Repair all items, npcGUID = %u", GUID_LOPART(npcGUID));
-
-        TotalCost = _player->DurabilityRepairAll(true,discountMod,guildBank>0?true:false);
-    }
-    if (guildBank)
-    {
-        uint32 GuildId = _player->GetGuildId();
-        if (!GuildId)
-            return;
-        Guild *pGuild = sObjectMgr.GetGuildById(GuildId);
-        if (!pGuild)
-            return;
-
-        //- TODO: Fix poor function call design
-        SQLTransaction trans = CharacterDatabase.BeginTransaction();
-        pGuild->LogBankEvent(trans, GUILD_BANK_LOG_REPAIR_MONEY, 0, _player->GetGUIDLow(), TotalCost);
-        CharacterDatabase.CommitTransaction(trans);
-
-        pGuild->SendMoneyInfo(this, _player->GetGUIDLow());
+        TotalCost = _player->DurabilityRepairAll(true, discountMod, guildBank);
     }
 }
 

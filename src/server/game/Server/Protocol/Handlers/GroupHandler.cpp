@@ -192,16 +192,12 @@ void WorldSession::HandleGroupInviteOpcode(WorldPacket & recv_data)
     data << uint32(0);                                      // unk
     player->GetSession()->SendPacket(&data);
 
-    SendLfgUpdatePlayer(LFG_UPDATETYPE_REMOVED_FROM_QUEUE);
-    SendLfgUpdateParty(LFG_UPDATETYPE_REMOVED_FROM_QUEUE);
     SendPartyResult(PARTY_OP_INVITE, membername, ERR_PARTY_RESULT_OK);
 }
 
 void WorldSession::HandleGroupAcceptOpcode(WorldPacket & recv_data)
 {
-    return; // Temp hack to fix a nasty crash in GroupAcceptOpcode.
-
-	uint32 unk;
+    uint32 unk;
     recv_data >> unk;
     
     Group *group = GetPlayer()->GetGroupInvite();
@@ -241,14 +237,6 @@ void WorldSession::HandleGroupAcceptOpcode(WorldPacket & recv_data)
     if (!group->AddMember(GetPlayer()->GetGUID(), GetPlayer()->GetName()))
         return;
 
-    SendLfgUpdatePlayer(LFG_UPDATETYPE_REMOVED_FROM_QUEUE);
-    for (GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
-        if (Player *plrg = itr->getSource())
-        {
-            plrg->GetSession()->SendLfgUpdatePlayer(LFG_UPDATETYPE_CLEAR_LOCK_LIST);
-            plrg->GetSession()->SendLfgUpdateParty(LFG_UPDATETYPE_CLEAR_LOCK_LIST);
-        }
-
     group->BroadcastGroupUpdate();
 }
 
@@ -257,18 +245,18 @@ void WorldSession::HandleGroupDeclineOpcode(WorldPacket & /*recv_data*/)
     Group  *group  = GetPlayer()->GetGroupInvite();
     if (!group) return;
 
-    // remember leader if online
-    Player *leader = sObjectMgr.GetPlayer(group->GetLeaderGUID());
-
     // uninvite, group can be deleted
     GetPlayer()->UninviteFromGroup();
 
+    // remember leader if online
+    Player *leader = sObjectMgr.GetPlayer(group->GetLeaderGUID());
     if (!leader || !leader->GetSession())
         return;
 
     // report
-    WorldPacket data(SMSG_GROUP_DECLINE, 10);             // guess size
-    data << GetPlayer()->GetName();
+    std::string name = std::string(GetPlayer()->GetName());
+    WorldPacket data(SMSG_GROUP_DECLINE, name.length());
+    data << name.c_str();
     leader->GetSession()->SendPacket(&data);
 }
 
@@ -297,12 +285,15 @@ void WorldSession::HandleGroupUninviteGuidOpcode(WorldPacket & recv_data)
     if (!grp)
         return;
 
+    if (grp->IsLeader(guid))
+    {
+        SendPartyResult(PARTY_OP_UNINVITE, "", ERR_NOT_LEADER);
+        return;
+    }
+
     if (grp->IsMember(guid))
     {
-        if (grp->isLFGGroup())
-            sLFGMgr.InitBoot(grp, GUID_LOPART(GetPlayer()->GetGUID()), GUID_LOPART(guid), reason);
-        else
-            Player::RemoveFromGroup(grp, guid, GROUP_REMOVEMETHOD_KICK);
+        Player::RemoveFromGroup(grp, guid, GROUP_REMOVEMETHOD_KICK, GetPlayer()->GetGUID(), reason.c_str());
         return;
     }
 
@@ -344,10 +335,7 @@ void WorldSession::HandleGroupUninviteOpcode(WorldPacket & recv_data)
 
     if (uint64 guid = grp->GetMemberGUID(membername))
     {
-        if (grp->isLFGGroup())
-            sLFGMgr.InitBoot(grp, GUID_LOPART(GetPlayer()->GetGUID()), GUID_LOPART(guid), "");
-        else
-            Player::RemoveFromGroup(grp, guid, GROUP_REMOVEMETHOD_KICK);
+        Player::RemoveFromGroup(grp, guid, GROUP_REMOVEMETHOD_KICK, GetPlayer()->GetGUID());
         return;
     }
 
@@ -398,7 +386,7 @@ void WorldSession::HandleGroupDisbandOpcode(WorldPacket & /*recv_data*/)
     // everything's fine, do it
     SendPartyResult(PARTY_OP_LEAVE, GetPlayer()->GetName(), ERR_PARTY_RESULT_OK);
 
-    GetPlayer()->RemoveFromGroup();
+    GetPlayer()->RemoveFromGroup(GROUP_REMOVEMETHOD_LEAVE);
 }
 
 void WorldSession::HandleLootMethodOpcode(WorldPacket & recv_data)
@@ -868,7 +856,7 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
     uint64 Guid;
     recv_data >> Guid;
 
-    Player *player = sObjectMgr.GetPlayer(Guid);
+    Player *player = HashMapHolder<Player>::Find(Guid); 
     if (!player)
     {
         WorldPacket data(SMSG_PARTY_MEMBER_STATS_FULL, 3+4+2);
@@ -984,18 +972,19 @@ void WorldSession::HandleOptOutOfLootOpcode(WorldPacket & recv_data)
 void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
 {
     uint32 roles;
-    uint64 plrGUID;
+    uint64 guid = GetPlayer()->GetGUID();
     recv_data >> roles;                                     // Player Group Roles
-    recv_data >> plrGUID;
+    recv_data >> guid;
     
-    Player * plr = sObjectMgr.GetPlayer(plrGUID);
+    Player * plr = sObjectMgr.GetPlayer(guid);
     if(!plr)
     {
-        sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Player not found", plrGUID);
+        sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Player not found", guid);
         return;
     }
     
     Group* grp = plr->GetGroup();
+    uint64 gguid = grp->GetGUID();
     if (!grp)
     {
         sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Not in group", plr->GetGUID());
@@ -1010,6 +999,6 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
         sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Roles: %u", plr->GetGUID(), roles);
     
     plr->SetRoles(roles);
-    if(grp->isLFGGroup())
-        sLFGMgr.UpdateRoleCheck(grp, plr);
+    if (grp->isLFGGroup())
+        sLFGMgr.UpdateRoleCheck(gguid, guid, roles);
 }

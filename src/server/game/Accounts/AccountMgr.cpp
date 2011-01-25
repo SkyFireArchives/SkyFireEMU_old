@@ -19,19 +19,14 @@
  */
 
 #include "DatabaseEnv.h"
-
-
 #include "AccountMgr.h"
 #include "ObjectAccessor.h"
 #include "Player.h"
 #include "Util.h"
 #include "SHA1.h"
 
-AccountMgr::AccountMgr()
-{}
-
-AccountMgr::~AccountMgr()
-{}
+AccountMgr::AccountMgr() {}
+AccountMgr::~AccountMgr() {}
 
 AccountOpResult AccountMgr::CreateAccount(std::string username, std::string password)
 {
@@ -183,7 +178,7 @@ bool AccountMgr::GetName(uint32 acc_id, std::string &name)
     QueryResult result = LoginDatabase.PQuery("SELECT username FROM account WHERE id = '%u'", acc_id);
     if (result)
     {
-        name = (*result)[0].GetCppString();
+        name = (*result)[0].GetString();
         return true;
     }
 

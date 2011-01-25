@@ -224,6 +224,15 @@ void WorldSession::HandleOpenItemOpcode(WorldPacket& recvPacket)
         return;
     }
 
+    // Verify that the bag is an actual bag or wrapped item that can be used "normally"
+    if(!(proto->Flags & ITEM_PROTO_FLAG_OPENABLE) && !pItem->HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_WRAPPED))
+    {
+        pUser->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, pItem, NULL);
+        sLog.outError("Possible hacking attempt: Player %s [guid: %u] tried to open item [guid: %u, entry: %u] which is not openable!", 
+                pUser->GetName(), pUser->GetGUIDLow(), pItem->GetGUIDLow(), proto->ItemId);
+        return;
+    }
+
     // locked item
     uint32 lockId = proto->LockID;
     if (lockId)
@@ -318,11 +327,11 @@ void WorldSession::HandleGameobjectReportUse(WorldPacket& recvPacket)
 void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
 {
     // TODO: what is this unk?
-    uint32 spellId, unk_401;
+    uint32 spellId, unk;
     uint8  castCount, castFlags;
-    recvPacket >> castCount >> spellId >> unk_401 >> castFlags;
+    recvPacket >> castCount >> spellId >> unk >> castFlags;
 
-    sLog.outDebug("WORLD: got cast spell packet, castCount: %u, spellId: %u, unknow 4.0.1 : %u, castFlags: %u, data length = %u", castCount, spellId, unk_401, castFlags, (uint32)recvPacket.size());
+    sLog.outDebug("WORLD: got cast spell packet, castCount: %u, spellId: %u, unk: %u, castFlags: %u, data length = %u", castCount, spellId, unk, castFlags, (uint32)recvPacket.size());
 
     // ignore for remote control state (for player case)
     Unit* mover = _player->m_mover;
@@ -366,7 +375,10 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
     // Skip it to prevent "interrupt" message
     if (IsAutoRepeatRangedSpell(spellInfo) && _player->GetCurrentSpell(CURRENT_AUTOREPEAT_SPELL)
         && _player->GetCurrentSpell(CURRENT_AUTOREPEAT_SPELL)->m_spellInfo == spellInfo)
+    {
+        recvPacket.rfinish();
         return;
+    }
 
     // can't use our own spells when we're in possession of another unit,
     if (_player->isPossessing())

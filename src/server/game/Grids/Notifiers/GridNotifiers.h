@@ -145,7 +145,8 @@ namespace Trinity
             if (plr == i_source || (team && plr->GetTeam() != team) || skipped_receiver == plr)
                 return;
 
-            plr->GetSession()->SendPacket(i_message);
+            if (WorldSession* session = plr->GetSession())
+                session->SendPacket(i_message);
         }
     };
 
@@ -1214,6 +1215,19 @@ namespace Trinity
     private:
         float x, y, z, range;
         uint32 entry;
+    };
+
+    class AllWorldObjectsInRange
+    {
+    public:
+        AllWorldObjectsInRange(const WorldObject* pObject, float fMaxRange) : m_pObject(pObject), m_fRange(fMaxRange) {}
+        bool operator() (WorldObject* pGo)
+        {
+            return m_pObject->IsWithinDist(pGo, m_fRange, false);
+        }
+    private:
+        const WorldObject* m_pObject;
+        float m_fRange;
     };
 
     // Player checks and do

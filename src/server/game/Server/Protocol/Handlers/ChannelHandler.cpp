@@ -31,8 +31,25 @@ void WorldSession::HandleJoinChannel(WorldPacket& recvPacket)
     uint8 unknown1, unknown2;
     std::string channelname, pass;
 
-    recvPacket >> channel_id >> unknown1 >> unknown2 >>  unk;
+    recvPacket >> channel_id;
+
+    if (channel_id)
+    {
+        ChatChannelsEntry const* channel = sChatChannelsStore.LookupEntry(channel_id);
+        if (!channel)
+            return;
+
+        AreaTableEntry const* current_zone = GetAreaEntryByAreaID(_player->GetZoneId());
+        if (!current_zone)
+            return;
+
+        if (!_player->CanJoinConstantChannelInZone(channel, current_zone))
+            return;
+    }
+
+    recvPacket >> unknown1 >> unknown2;
     recvPacket >> channelname;
+    recvPacket >> unk;
 
     if (channelname.empty())
         return;
@@ -282,13 +299,8 @@ void WorldSession::HandleChannelModerate(WorldPacket& recvPacket)
 
 void WorldSession::HandleChannelDisplayListQuery(WorldPacket &recvPacket)
 {
-    sLog.outDebug("Opcode %u", recvPacket.GetOpcode());
-    //recvPacket.hexlike();
-    std::string channelname;
-    recvPacket >> channelname;
-    if (ChannelMgr* cMgr = channelMgr(_player->GetTeam()))
-        if (Channel *chn = cMgr->GetChannel(channelname, _player))
-            chn->List(_player);
+    // this should be OK because the 2 function _were_ the same
+    HandleChannelList(recvPacket);
 }
 
 void WorldSession::HandleGetChannelMemberCount(WorldPacket &recvPacket)

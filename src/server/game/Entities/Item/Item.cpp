@@ -78,7 +78,7 @@ void AddItemsSetItem(Player*player,Item *item)
 
     ++eff->item_count;
 
-    for (uint32 x=0; x<8; x++)
+    for (uint32 x = 0; x < MAX_ITEM_SET_SPELLS; x++)
     {
         if (!set->spells [x])
             continue;
@@ -86,16 +86,16 @@ void AddItemsSetItem(Player*player,Item *item)
         if (set->items_to_triggerspell[x] > eff->item_count)
             continue;
 
-        uint32 z=0;
-        for (; z<8; z++)
+        uint32 z = 0;
+        for (; z < MAX_ITEM_SET_SPELLS; z++)
             if (eff->spells[z] && eff->spells[z]->Id == set->spells[x])
                 break;
 
-        if (z < 8)
+        if (z < MAX_ITEM_SET_SPELLS)
             continue;
 
         //new spell
-        for (uint32 y=0; y<8; y++)
+        for (uint32 y = 0; y < MAX_ITEM_SET_SPELLS; y++)
         {
             if (!eff->spells[y])                             // free slot
             {
@@ -144,7 +144,7 @@ void RemoveItemsSetItem(Player*player,ItemPrototype const *proto)
 
     --eff->item_count;
 
-    for (uint32 x=0; x<8; x++)
+    for (uint32 x = 0; x < MAX_ITEM_SET_SPELLS; x++)
     {
         if (!set->spells[x])
             continue;
@@ -153,7 +153,7 @@ void RemoveItemsSetItem(Player*player,ItemPrototype const *proto)
         if (set->items_to_triggerspell[x] <= eff->item_count)
             continue;
 
-        for (uint32 z=0; z<8; z++)
+        for (uint32 z = 0; z < MAX_ITEM_SET_SPELLS; z++)
         {
             if (eff->spells[z] && eff->spells[z]->Id == set->spells[x])
             {
@@ -442,75 +442,62 @@ void Item::SaveToDB(SQLTransaction& trans)
     switch (uState)
     {
         case ITEM_NEW:
-        {
-            std::string text = m_text;
-            CharacterDatabase.escape_string(text);
-            std::ostringstream ss;
-            ss << "REPLACE INTO item_instance (guid,owner_guid,creatorGuid,giftCreatorGuid,count,duration,charges,flags,enchantments,randomPropertyId,durability,playedTime,text) VALUES (";
-            ss << guid << ",";
-            ss << GUID_LOPART(GetOwnerGUID()) << ",";
-            ss << GUID_LOPART(GetUInt64Value(ITEM_FIELD_CREATOR)) << ",";
-            ss << GUID_LOPART(GetUInt64Value(ITEM_FIELD_GIFTCREATOR)) << ",";
-            ss << GetCount() << ",";
-            ss << GetUInt32Value(ITEM_FIELD_DURATION) << ",'";
-            for (uint8 i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
-                ss << GetSpellCharges(i) << " ";
-
-            ss << "'," << GetUInt32Value(ITEM_FIELD_FLAGS) << ",'";
-            for (uint8 i = 0; i < MAX_ENCHANTMENT_SLOT; ++i)
-            {
-                ss << GetEnchantmentId(EnchantmentSlot(i)) << " ";
-                ss << GetEnchantmentDuration(EnchantmentSlot(i)) << " ";
-                ss << GetEnchantmentCharges(EnchantmentSlot(i)) << " ";
-            }
-
-            ss << "'," << GetItemRandomPropertyId() << ",";
-            ss << GetUInt32Value(ITEM_FIELD_DURABILITY) << ",";
-            ss << GetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME) << ",'";
-            ss << text << "')";
-
-            trans->Append(ss.str().c_str());
-        }break;
         case ITEM_CHANGED:
         {
-            std::string text = m_text;
-            CharacterDatabase.escape_string(text);
-            std::ostringstream ss;
-            ss << "UPDATE item_instance SET owner_guid = " << GUID_LOPART(GetOwnerGUID());
-            ss << ", creatorGuid = " << GUID_LOPART(GetUInt64Value(ITEM_FIELD_CREATOR));
-            ss << ", giftCreatorGuid = " << GUID_LOPART(GetUInt64Value(ITEM_FIELD_GIFTCREATOR));
-            ss << ", count = " << GetCount();
-            ss << ", duration = " << GetUInt32Value(ITEM_FIELD_DURATION);
-            ss << ", charges = '";
-            for (uint8 i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
-                ss << GetSpellCharges(i) << " ";
+            uint8 index = 0;
+            PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(uState == ITEM_NEW ? CHAR_ADD_ITEM_INSTANCE : CHAR_UPDATE_ITEM_INSTANCE);
+            stmt->setUInt32(  index, GetEntry());
+            stmt->setUInt32(++index, GUID_LOPART(GetOwnerGUID()));
+            stmt->setUInt32(++index, GUID_LOPART(GetUInt64Value(ITEM_FIELD_CREATOR)));
+            stmt->setUInt32(++index, GUID_LOPART(GetUInt64Value(ITEM_FIELD_GIFTCREATOR)));
+            stmt->setUInt32(++index, GetCount());
+            stmt->setUInt32(++index, GetUInt32Value(ITEM_FIELD_DURATION));
 
-            ss << "', flags = " << GetUInt32Value(ITEM_FIELD_FLAGS);
-            ss << ", enchantments = '";
+            std::ostringstream ssSpells;
+            for (uint8 i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
+                ssSpells << GetSpellCharges(i) << " ";
+            stmt->setString(++index, ssSpells.str());
+
+            stmt->setUInt32(++index, GetUInt32Value(ITEM_FIELD_FLAGS));
+
+            std::ostringstream ssEnchants;
             for (uint8 i = 0; i < MAX_ENCHANTMENT_SLOT; ++i)
             {
-                ss << GetEnchantmentId(EnchantmentSlot(i)) << " ";
-                ss << GetEnchantmentDuration(EnchantmentSlot(i)) << " ";
-                ss << GetEnchantmentCharges(EnchantmentSlot(i)) << " ";
+                ssEnchants << GetEnchantmentId(EnchantmentSlot(i)) << " ";
+                ssEnchants << GetEnchantmentDuration(EnchantmentSlot(i)) << " ";
+                ssEnchants << GetEnchantmentCharges(EnchantmentSlot(i)) << " ";
             }
+            stmt->setString(++index, ssEnchants.str());
 
-            ss << "', randomPropertyId = " << GetItemRandomPropertyId();
-            ss << ", durability = " << GetUInt32Value(ITEM_FIELD_DURABILITY);
-            ss << ", playedTime = " << GetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME);
-            ss << ", text = '" << text << "' WHERE guid = " << guid;
+            stmt->setInt32 (++index, GetItemRandomPropertyId());
+            stmt->setUInt32(++index, GetUInt32Value(ITEM_FIELD_DURABILITY));
+            stmt->setUInt32(++index, GetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME));
+            stmt->setString(++index, m_text);
+            stmt->setUInt32(++index, guid);
 
-            trans->Append(ss.str().c_str());
+            trans->Append(stmt);
 
-            if (HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_WRAPPED))
-                trans->PAppend("UPDATE character_gifts SET guid = '%u' WHERE item_guid = '%u'", GUID_LOPART(GetOwnerGUID()),GetGUIDLow());
-        }break;
+            if ((uState == ITEM_CHANGED) && HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_WRAPPED))
+            {
+                stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPDATE_GIFT_OWNER);
+                stmt->setUInt32(0, GUID_LOPART(GetOwnerGUID()));
+                stmt->setUInt32(1, guid);
+                trans->Append(stmt);
+            }
+            break;
+        }
         case ITEM_REMOVED:
         {
             PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
             stmt->setUInt32(0, guid);
             trans->Append(stmt);
+
             if (HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_WRAPPED))
-                trans->PAppend("DELETE FROM character_gifts WHERE item_guid = '%u'", GetGUIDLow());
+            {
+                stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_GIFT);
+                stmt->setUInt32(0, guid);
+                trans->Append(stmt);
+            }
             delete this;
             return;
         }
@@ -520,7 +507,7 @@ void Item::SaveToDB(SQLTransaction& trans)
     SetState(ITEM_UNCHANGED);
 }
 
-bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, PreparedQueryResult result, uint32 entry)
+bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entry)
 {
     //                                                    0                1      2         3        4      5             6                 7           8           9    10
     //result = CharacterDatabase.PQuery("SELECT creatorGuid, giftCreatorGuid, count, duration, charges, flags, enchantments, randomPropertyId, durability, playedTime, text FROM item_instance WHERE guid = '%u'", guid);
@@ -537,22 +524,16 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, PreparedQueryResult result
     if (!proto)
         return false;
 
-    if (!result)
-    {
-        sLog.outError("Item (GUID: %u owner: %u) not found in table `item_instance`, can't load. ", guid, GUID_LOPART(owner_guid));
-        return false;
-    }
-
     // set owner (not if item is only loaded for gbank/auction/mail
     if (owner_guid != 0)
         SetOwnerGUID(owner_guid);
 
     bool need_save = false;                                 // need explicit save data at load fixes
-    SetUInt64Value(ITEM_FIELD_CREATOR, MAKE_NEW_GUID(result->GetUInt32(0), 0, HIGHGUID_PLAYER));
-    SetUInt64Value(ITEM_FIELD_GIFTCREATOR, MAKE_NEW_GUID(result->GetUInt32(1), 0, HIGHGUID_PLAYER));
-    SetCount(result->GetUInt32(2));
+    SetUInt64Value(ITEM_FIELD_CREATOR, MAKE_NEW_GUID(fields[0].GetUInt32(), 0, HIGHGUID_PLAYER));
+    SetUInt64Value(ITEM_FIELD_GIFTCREATOR, MAKE_NEW_GUID(fields[1].GetUInt32(), 0, HIGHGUID_PLAYER));
+    SetCount(fields[2].GetUInt32());
 
-    uint32 duration = result->GetUInt32(3);
+    uint32 duration = fields[3].GetUInt32();
     SetUInt32Value(ITEM_FIELD_DURATION, duration);
     // update duration if need, and remove if not need
     if ((proto->Duration == 0) != (duration == 0))
@@ -561,12 +542,12 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, PreparedQueryResult result
         need_save = true;
     }
 
-    Tokens tokens = StrSplit(result->GetString(4), " ");
+    Tokens tokens(fields[4].GetString(), ' ', MAX_ITEM_PROTO_SPELLS);
     if (tokens.size() == MAX_ITEM_PROTO_SPELLS)
         for (uint8 i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
-            SetSpellCharges(i, atoi(tokens[i].c_str()));
+            SetSpellCharges(i, atoi(tokens[i]));
 
-    SetUInt32Value(ITEM_FIELD_FLAGS, result->GetUInt32(5));
+    SetUInt32Value(ITEM_FIELD_FLAGS, fields[5].GetUInt32());
     // Remove bind flag for items vs NO_BIND set
     if (IsSoulBound() && proto->Bonding == NO_BIND)
     {
@@ -574,13 +555,14 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, PreparedQueryResult result
         need_save = true;
     }
 
-    _LoadIntoDataField(result->GetString(6).c_str(), ITEM_FIELD_ENCHANTMENT_1_1, MAX_ENCHANTMENT_SLOT * MAX_ENCHANTMENT_OFFSET);
-    SetInt32Value(ITEM_FIELD_RANDOM_PROPERTIES_ID, result->GetInt32(7));
+    std::string enchants = fields[6].GetString();	
+    _LoadIntoDataField(enchants.c_str(), ITEM_FIELD_ENCHANTMENT_1_1, MAX_ENCHANTMENT_SLOT * MAX_ENCHANTMENT_OFFSET);
+    SetInt32Value(ITEM_FIELD_RANDOM_PROPERTIES_ID, fields[7].GetInt32());
     // recalculate suffix factor
     if (GetItemRandomPropertyId() < 0)
         UpdateItemSuffixFactor();
 
-    uint32 durability = result->GetUInt32(8);
+    uint32 durability = fields[8].GetUInt32();
     SetUInt32Value(ITEM_FIELD_DURABILITY, durability);
     // update max durability (and durability) if need
     SetUInt32Value(ITEM_FIELD_MAXDURABILITY, proto->MaxDurability);
@@ -590,18 +572,17 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, PreparedQueryResult result
         need_save = true;
     }
 
-    SetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME, result->GetUInt32(9));
-    SetText(result->GetString(10));
+    SetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME, fields[9].GetUInt32());
+    SetText(fields[10].GetString());
 
     if (need_save)                                           // normal item changed state set not work at loading
     {
-        std::ostringstream ss;
-        ss << "UPDATE item_instance SET duration = " << GetUInt32Value(ITEM_FIELD_DURABILITY)
-            << ", flags = " << GetUInt32Value(ITEM_FIELD_FLAGS)
-            << ", durability = " << GetUInt32Value(ITEM_FIELD_DURABILITY)
-            << " WHERE guid = " << guid;
-
-        CharacterDatabase.Execute(ss.str().c_str());
+        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPDATE_ITEM_INSTANCE_ON_LOAD);
+        stmt->setUInt32(0, GetUInt32Value(ITEM_FIELD_DURATION));
+        stmt->setUInt32(1, GetUInt32Value(ITEM_FIELD_FLAGS));
+        stmt->setUInt32(2, GetUInt32Value(ITEM_FIELD_DURABILITY));
+        stmt->setUInt32(3, guid);
+        CharacterDatabase.Execute(stmt);
     }
 
     return true;
@@ -1050,7 +1031,7 @@ void Item::ClearEnchantment(EnchantmentSlot slot)
     if (!GetEnchantmentId(slot))
         return;
 
-    for (uint8 x = 0; x < 3; ++x)
+    for (uint8 x = 0; x < MAX_ITEM_ENCHANTMENT_EFFECTS; ++x)
         SetUInt32Value(ITEM_FIELD_ENCHANTMENT_1_1 + slot*MAX_ENCHANTMENT_OFFSET + x, 0);
     SetState(ITEM_CHANGED, GetOwner());
 }
@@ -1195,7 +1176,9 @@ Item* Item::CloneItem(uint32 count, Player const* player) const
     newItem->SetUInt32Value(ITEM_FIELD_GIFTCREATOR,  GetUInt32Value(ITEM_FIELD_GIFTCREATOR));
     newItem->SetUInt32Value(ITEM_FIELD_FLAGS,        GetUInt32Value(ITEM_FIELD_FLAGS));
     newItem->SetUInt32Value(ITEM_FIELD_DURATION,     GetUInt32Value(ITEM_FIELD_DURATION));
-    newItem->SetItemRandomProperties(GetItemRandomPropertyId());
+    // player CAN be NULL in which case we must not update random properties because that accesses player's item update queue
+    if (player)
+        newItem->SetItemRandomProperties(GetItemRandomPropertyId());
     return newItem;
 }
 

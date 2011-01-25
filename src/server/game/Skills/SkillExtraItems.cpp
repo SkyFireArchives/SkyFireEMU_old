@@ -54,8 +54,6 @@ SkillExtraItemMap SkillExtraItemStore;
 // loads the extra item creation info from DB
 void LoadSkillExtraItemTable()
 {
-    uint32 count = 0;
-
     SkillExtraItemStore.clear();                            // need for reload
 
     //                                                 0        1                       2                       3
@@ -63,6 +61,8 @@ void LoadSkillExtraItemTable()
 
     if (result)
     {
+        uint32 count = 0;
+
         barGoLink bar(result->GetRowCount());
 
         do

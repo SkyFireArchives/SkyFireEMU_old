@@ -424,7 +424,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     if (flags & UPDATEFLAG_VEHICLE)                          // unused for now
     {
         *data << uint32(((Unit*)this)->GetVehicleKit()->GetVehicleInfo()->m_ID);  // vehicle id
-        *data << float(0);                                  // facing adjustment
+        *data << float(((Creature*)this)->GetOrientation());  // facing adjustment
     }
 
     // 0x800
@@ -669,13 +669,25 @@ void Object::_BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask 
                         switch(((GameObject*)this)->GetGoType())
                         {
                             case GAMEOBJECT_TYPE_CHEST:
-                                // enable quest object. Represent 9, but 1 for client before 2.3.0
-                                *data << uint16(9);
-                                *data << uint16(-1);
+                                if (target->isGameMaster())
+                                    *data << uint16(GO_DYNFLAG_LO_ACTIVATE);
+                                else
+                                    *data << uint16(GO_DYNFLAG_LO_ACTIVATE | GO_DYNFLAG_LO_SPARKLE);
+                                    *data << uint16(-1);
+                                break;
+                            case GAMEOBJECT_TYPE_GENERIC:
+                                if (target->isGameMaster())
+                                    *data << uint16(0);
+                                else
+                                    *data << uint16(GO_DYNFLAG_LO_SPARKLE);
+                                    *data << uint16(-1);
                                 break;
                             case GAMEOBJECT_TYPE_GOOBER:
-                                *data << uint16(1);
-                                *data << uint16(-1);
+                                if (target->isGameMaster())
+                                    *data << uint16(GO_DYNFLAG_LO_ACTIVATE);
+                                else
+                                    *data << uint16(GO_DYNFLAG_LO_ACTIVATE | GO_DYNFLAG_LO_SPARKLE);
+                                    *data << uint16(-1);
                                 break;
                             default:
                                 // unknown, not happen.
@@ -741,17 +753,13 @@ bool Object::LoadValues(const char* data)
 {
     if (!m_uint32Values) _InitValues();
 
-    Tokens tokens = StrSplit(data, " ");
+    Tokens tokens(data, ' ');
 
     if (tokens.size() != m_valuesCount)
         return false;
 
-    Tokens::iterator iter;
-    int index;
-    for (iter = tokens.begin(), index = 0; index < m_valuesCount; ++iter, ++index)
-    {
-        m_uint32Values[index] = atol((*iter).c_str());
-    }
+    for (uint16 index = 0; index < m_valuesCount; ++index)
+        m_uint32Values[index] = atol(tokens[index]);
 
     return true;
 }
@@ -761,17 +769,13 @@ void Object::_LoadIntoDataField(const char* data, uint32 startOffset, uint32 cou
     if (!data)
         return;
 
-    Tokens tokens = StrSplit(data, " ");
+    Tokens tokens(data, ' ', count);
 
     if (tokens.size() != count)
         return;
 
-    Tokens::iterator iter;
-    uint32 index;
-    for (iter = tokens.begin(), index = 0; index < count; ++iter, ++index)
-    {
-        m_uint32Values[startOffset + index] = atol((*iter).c_str());
-    }
+    for (uint32 index = 0; index < count; ++index)
+        m_uint32Values[startOffset + index] = atol(tokens[index]);
 }
 
 void Object::_SetUpdateBits(UpdateMask *updateMask, Player* target) const

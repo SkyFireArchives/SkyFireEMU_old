@@ -44,7 +44,6 @@
 #include "SocialMgr.h"
 #include "zlib.h"
 #include "ScriptMgr.h"
-#include "LFGMgr.h"
 #include "Transport.h"
 
 /// WorldSession constructor
@@ -283,6 +282,11 @@ bool WorldSession::Update(uint32 diff)
                                           packet->GetOpcode());
                         }
                         break;
+                    case STATUS_UNHANDLED:	
+                        sLog.outDebug("SESSION: received not handled opcode %s (0x%.4X)",	
+                            LookupOpcodeName(packet->GetOpcode()),	
+                            packet->GetOpcode());	
+                        break;
                 }
             }
             catch(ByteBufferException &)
@@ -332,11 +336,6 @@ void WorldSession::LogoutPlayer(bool Save)
 
     if (_player)
     {
-        sLFGMgr.Leave(_player);
-        GetPlayer()->GetSession()->SendLfgUpdateParty(LFG_UPDATETYPE_REMOVED_FROM_QUEUE);
-        GetPlayer()->GetSession()->SendLfgUpdatePlayer(LFG_UPDATETYPE_REMOVED_FROM_QUEUE);
-        GetPlayer()->GetSession()->SendLfgUpdateSearch(false);
-
         if (uint64 lguid = GetPlayer()->GetLootGUID())
             DoLootRelease(lguid);
 
@@ -418,14 +417,8 @@ void WorldSession::LogoutPlayer(bool Save)
             HandleMoveWorldportAckOpcode();
 
         ///- If the player is in a guild, update the guild roster and broadcast a logout message to other guild members
-        Guild *guild = sObjectMgr.GetGuildById(_player->GetGuildId());
-        if (guild)
-        {
-            guild->SetMemberStats(_player->GetGUID());
-            guild->UpdateLogoutTime(_player->GetGUID());
-
-            guild->BroadcastEvent(GE_SIGNED_OFF, _player->GetGUID(), 1, _player->GetName(), "", "");
-        }
+        if (Guild *pGuild = sObjectMgr.GetGuildById(_player->GetGuildId()))
+            pGuild->HandleMemberLogout(this);
 
         ///- Remove pet
         _player->RemovePet(NULL,PET_SLOT_ACTUAL_PET_SLOT, true);
@@ -467,6 +460,9 @@ void WorldSession::LogoutPlayer(bool Save)
         sSocialMgr.SendFriendStatus(_player, FRIEND_OFFLINE, _player->GetGUIDLow(), true);
         sSocialMgr.RemovePlayerSocial (_player->GetGUIDLow ());
 
+        // Call script hook before deletion
+        sScriptMgr.OnPlayerLogout(GetPlayer());
+
         ///- Remove the player from the world
         // the player may not be in the world when logging out
         // e.g if he got disconnected during a transfer to another map
@@ -486,7 +482,6 @@ void WorldSession::LogoutPlayer(bool Save)
         CharacterDatabase.PExecute("UPDATE characters SET online = 0 WHERE account = '%u'",
             GetAccountId());
         sLog.outDebug("SESSION: Sent SMSG_LOGOUT_COMPLETE Message");
-        sScriptMgr.OnPlayerLogout(GetPlayer());
     }
 
     m_playerLogout = false;
@@ -519,7 +514,7 @@ void WorldSession::SendNotification(const char *format,...)
     }
 }
 
-void WorldSession::SendNotification(int32 string_id,...)
+void WorldSession::SendNotification(uint32 string_id,...)
 {
     char const* format = GetTrinityString(string_id);
     if (format)
@@ -606,7 +601,8 @@ void WorldSession::LoadAccountData(PreparedQueryResult result, uint32 mask)
 
     do
     {
-        uint32 type = result->GetUInt32(0);
+        Field* fields = result->Fetch();
+        uint32 type = fields[0].GetUInt32();
         if (type >= NUM_ACCOUNT_DATA_TYPES)
         {
             sLog.outError("Table `%s` have invalid account data type (%u), ignore.",
@@ -621,10 +617,11 @@ void WorldSession::LoadAccountData(PreparedQueryResult result, uint32 mask)
             continue;
         }
 
-        m_accountData[type].Time = result->GetUInt32(1);
-        m_accountData[type].Data = result->GetString(2);
+        m_accountData[type].Time = fields[1].GetUInt32();
+        m_accountData[type].Data = fields[2].GetString();
 
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 }
 
 void WorldSession::SetAccountData(AccountDataType type, time_t time_, std::string data)
@@ -670,7 +667,7 @@ void WorldSession::SendAccountDataTimes(uint32 mask)
 
 void WorldSession::LoadTutorialsData()
 {
-    for (int aX = 0 ; aX < 8 ; ++aX)
+    for (int aX = 0 ; aX < MAX_CHARACTER_TUTORIAL_VALUES ; ++aX)
         m_Tutorials[ aX ] = 0;
 
     QueryResult result = CharacterDatabase.PQuery("SELECT tut0,tut1,tut2,tut3,tut4,tut5,tut6,tut7 FROM character_tutorial WHERE account = '%u'", GetAccountId());
@@ -681,7 +678,7 @@ void WorldSession::LoadTutorialsData()
         {
             Field *fields = result->Fetch();
 
-            for (int iI = 0; iI < 8; ++iI)
+            for (int iI = 0; iI < MAX_CHARACTER_TUTORIAL_VALUES; ++iI)
                 m_Tutorials[iI] = fields[iI].GetUInt32();
         }
         while (result->NextRow());
@@ -691,8 +688,8 @@ void WorldSession::LoadTutorialsData()
 
 void WorldSession::SendTutorialsData()
 {
-    WorldPacket data(SMSG_TUTORIAL_FLAGS, 4*8);
-    for (uint32 i = 0; i < 8; ++i)
+    WorldPacket data(SMSG_TUTORIAL_FLAGS, 4 * MAX_CHARACTER_TUTORIAL_VALUES);
+    for (uint32 i = 0; i < MAX_CHARACTER_TUTORIAL_VALUES; ++i)
         data << m_Tutorials[i];
     SendPacket(&data);
 }
@@ -825,7 +822,6 @@ void WorldSession::ReadAddonsInfo(WorldPacket &data)
     ByteBuffer addonInfo;
     addonInfo.resize(size);
 
-    //printf("addon size : %u\n", size);
     if (uncompress(const_cast<uint8*>(addonInfo.contents()), &uSize, const_cast<uint8*>(data.contents() + pos), data.size() - pos) == Z_OK)
     {
         uint32 addonsCount;
@@ -845,8 +841,6 @@ void WorldSession::ReadAddonsInfo(WorldPacket &data)
 
             addonInfo >> enabled >> crc >> unk1;
 
-            //printf("ADDON: Name: %s, Enabled: 0x%x, CRC: 0x%x, Unknown2: 0x%x\n", addonName.c_str(), enabled, crc, unk1);
-
             AddonInfo addon(addonName, enabled, crc, 2, true);
 
             SavedAddon const* savedAddon = sAddonMgr.GetAddonInfo(addonName);
@@ -856,18 +850,9 @@ void WorldSession::ReadAddonsInfo(WorldPacket &data)
 
                 if (addon.CRC != savedAddon->CRC)
                     match = false;
-
-                //if (!match)
-                //    sLog.outDetail("ADDON: %s was known, but didn't match known CRC (0x%x)!", addon.Name.c_str(), savedAddon->CRC);
-                //else
-                //    sLog.outDetail("ADDON: %s was known, CRC is correct (0x%x)", addon.Name.c_str(), savedAddon->CRC);
             }
             else
-            //{
                 sAddonMgr.SaveAddon(addon);
-
-            //    sLog.outDetail("ADDON: %s (0x%x) was not known, saving...", addon.Name.c_str(), addon.CRC);
-            //}
 
             // TODO: Find out when to not use CRC/pubkey, and other possible states.
             m_addonsList.push_back(addon);
@@ -920,9 +905,6 @@ void WorldSession::SendAddonsInfo()
             data << uint8(usepk);
             if (usepk)                                      // if CRC is wrong, add public key (client need it)
             {
-                //sLog.outDetail("ADDON: CRC (0x%x) for addon %s is wrong (does not match expected 0x%x), sending pubkey",
-                //    itr->CRC, itr->Name.c_str(), STANDARD_ADDON_CRC);
-
                 data.append(addonPublicKey, sizeof(addonPublicKey));
             }
 

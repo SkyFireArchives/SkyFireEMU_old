@@ -256,7 +256,7 @@ struct SpellValue
 {
     explicit SpellValue(SpellEntry const *proto)
     {
-        for (uint32 i = 0; i < 3; ++i)
+        for (uint32 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             EffectBasePoints[i] = proto->EffectBasePoints[i];
         MaxAffectedTargets = proto->MaxAffectedTargets;
         RadiusMod = 1.0f;
@@ -334,6 +334,7 @@ class Spell
         void EffectDualWield(SpellEffIndex effIndex);
         void EffectPickPocket(SpellEffIndex effIndex);
         void EffectAddFarsight(SpellEffIndex effIndex);
+        void EffectUntrainTalents(SpellEffIndex effIndex);
         void EffectHealMechanical(SpellEffIndex effIndex);
         void EffectJump(SpellEffIndex effIndex);
         void EffectJumpDest(SpellEffIndex effIndex);
@@ -414,6 +415,7 @@ class Spell
         void EffectRedirectThreat(SpellEffIndex effIndex);
         void EffectWMODamage(SpellEffIndex effIndex);
         void EffectWMORepair(SpellEffIndex effIndex);
+        void EffectWMOChange(SpellEffIndex effIndex);
         void EffectActivateRune(SpellEffIndex effIndex);
         void EffectCreateTamedPet(SpellEffIndex effIndex);
         void EffectDiscoverTaxi(SpellEffIndex effIndex);
@@ -597,6 +599,8 @@ class Spell
         bool m_referencedFromCurrentSpell;                  // mark as references to prevent deleted and access by dead pointers
         bool m_executedCurrently;                           // mark as executed to prevent deleted and access by dead pointers
         bool m_needComboPoints;
+        uint8 m_applyMultiplierMask;
+        float m_damageMultipliers[3];
 
         // Current targets, to be used in SpellEffects (MUST BE USED ONLY IN SPELL EFFECTS)
         Unit* unitTarget;
@@ -675,7 +679,7 @@ class Spell
         void SearchAreaTarget(std::list<Unit*> &unitList, float radius, SpellNotifyPushType type, SpellTargets TargetType, uint32 entry = 0);
         void SearchGOAreaTarget(std::list<GameObject*> &gobjectList, float radius, SpellNotifyPushType type, SpellTargets TargetType, uint32 entry = 0);
         void SearchChainTarget(std::list<Unit*> &unitList, float radius, uint32 unMaxTargets, SpellTargets TargetType);
-        WorldObject* SearchNearbyTarget(float range, SpellTargets TargetType);
+        WorldObject* SearchNearbyTarget(float range, SpellTargets TargetType, SpellEffIndex effIndex);
         bool IsValidSingleTargetEffect(Unit const* target, Targets type) const;
         bool IsValidSingleTargetSpell(Unit const* target) const;
         bool IsValidDeadOrAliveTarget(Unit const* target) const;

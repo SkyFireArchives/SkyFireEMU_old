@@ -183,15 +183,14 @@ void BattlegroundMgr::Update(uint32 diff)
 void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battleground *bg, uint8 QueueSlot, uint8 StatusID, uint32 Time1, uint32 Time2, uint8 arenatype, uint8 uiFrame)
 {
     // we can be in 2 queues in same time...
-
     if (!bg)
     {
-		StatusID = 0;
-        data->Initialize(SMSG_BATTLEFIELD_STATUS, 4);;
+        StatusID = 0;
+        data->Initialize(SMSG_BATTLEFIELD_STATUS, 4);
         *data << uint32(QueueSlot);                         // queue id (0...1)
         return;
     }
-
+    
     data->Initialize(SMSG_BATTLEFIELD_STATUS, (4+8+1+1+4+1+4+4+4));
     *data << uint32(QueueSlot);                             // queue id (0...1) - player can be in 2 queues in time
     // The following segment is read as uint64 in client but can be appended as their original type.
@@ -338,6 +337,10 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
                         *data << uint32(((BattlegroundSAScore*)itr2->second)->demolishers_destroyed);
                         *data << uint32(((BattlegroundSAScore*)itr2->second)->gates_destroyed);
                         break;
+                    case 628:                                   // IC
+                        *data << uint32(0x00000002);            // count of next fields
+                        *data << uint32(((BattlegroundICScore*)itr2->second)->BasesAssaulted);       // bases asssulted
+                        *data << uint32(((BattlegroundICScore*)itr2->second)->BasesDefended);        // bases defended
                     default:
                         *data << uint32(0);
                         break;
@@ -369,15 +372,17 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
                 *data << uint32(((BattlegroundSAScore*)itr2->second)->demolishers_destroyed);
                 *data << uint32(((BattlegroundSAScore*)itr2->second)->gates_destroyed);
                 break;
+            case BATTLEGROUND_IC:                           // wotlk
+                *data << uint32(0x00000002);                // count of next fields
+                *data << uint32(((BattlegroundICScore*)itr2->second)->BasesAssaulted);       // bases asssulted
+                *data << uint32(((BattlegroundICScore*)itr2->second)->BasesDefended);        // bases defended
+                break;
             case BATTLEGROUND_NA:
             case BATTLEGROUND_BE:
             case BATTLEGROUND_AA:
             case BATTLEGROUND_RL:
             case BATTLEGROUND_DS:                               // wotlk
             case BATTLEGROUND_RV:                               // wotlk
-            case BATTLEGROUND_IC:                               // wotlk
-            case BATTLEGROUND_BG:                               // cataclysm
-            case BATTLEGROUND_TP:                               // cataclysm 
                 *data << uint32(0);
                 break;
             default:
@@ -788,7 +793,7 @@ void BattlegroundMgr::CreateInitialBattlegrounds()
         }
 
         selectionWeight = fields[9].GetUInt8();
-        scriptId = sObjectMgr.GetScriptId(fields[10].GetString());
+        scriptId = sObjectMgr.GetScriptId(fields[10].GetCString());
         //sLog.outDetail("Creating battleground %s, %u-%u", bl->name[sWorld.GetDBClang()], MinLvl, MaxLvl);
         if (!CreateBattleground(bgTypeID, IsArena, MinPlayersPerTeam, MaxPlayersPerTeam, MinLvl, MaxLvl, bl->name, bl->mapid[0], AStartLoc[0], AStartLoc[1], AStartLoc[2], AStartLoc[3], HStartLoc[0], HStartLoc[1], HStartLoc[2], HStartLoc[3], scriptId))
             continue;
@@ -900,7 +905,6 @@ void BattlegroundMgr::BuildBattlegroundListPacket(WorldPacket *data, const uint6
     *data << uint32(loos_kills);                            // 3.3.3 lossHonor
     *data << uint32(win_kills);                             // 3.3.3 winHonor
     *data << uint64(guid);                                  // battlemaster guid
-
 }
 
 void BattlegroundMgr::SendToBattleground(Player *pl, uint32 instanceId, BattlegroundTypeId bgTypeId)

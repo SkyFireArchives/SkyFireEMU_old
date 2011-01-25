@@ -48,7 +48,7 @@ Channel::Channel(const std::string& name, uint32 channel_id, uint32 Team)
     }
     else                                                    // it's custom channel
     {
-		channel_id = 0;
+        channel_id = 0;
         m_flags |= CHANNEL_FLAG_CUSTOM;
         //load not built in channel if saved
         std::string _name(name);
@@ -61,17 +61,17 @@ Channel::Channel(const std::string& name, uint32 channel_id, uint32 Team)
             m_moderate = fields[1].GetBool();
             m_public = fields[2].GetBool();
             m_password  = fields[3].GetString();
-            const char* db_BannedList = fields[4].GetString();
+            const char* db_BannedList = fields[4].GetCString();
 
             m_IsSaved = true;
 
             if (db_BannedList)
             {
-                Tokens tokens = StrSplit(db_BannedList, " ");
+                Tokens tokens(db_BannedList, ' ');
                 Tokens::iterator iter;
                 for (iter = tokens.begin(); iter != tokens.end(); ++iter)
                 {
-                    uint64 banned_guid = atol((*iter).c_str());
+                    uint64 banned_guid = atol(*iter);
                     if (banned_guid)
                     {
                         sLog.outDebug("Channel(%s) loaded banned guid:" UI64FMTD "",name.c_str(), banned_guid);
@@ -1091,9 +1091,10 @@ void Channel::JoinNotify(uint64 guid)
     data << uint8(GetFlags());
     data << uint32(GetNumPlayers());
     data << GetName();
-	if (IsConstant())
-		SendToAllButOne(&data, guid);
-	else
+
+    if (IsConstant())
+        SendToAllButOne(&data, guid);
+    else
         SendToAll(&data);
 }
 
@@ -1104,9 +1105,9 @@ void Channel::LeaveNotify(uint64 guid)
     data << uint8(GetFlags());
     data << uint32(GetNumPlayers());
     data << GetName();
-	if (IsConstant())
-		SendToAllButOne(&data, guid);
-	else
-		SendToAll(&data);
-}
 
+    if (IsConstant())
+        SendToAllButOne(&data, guid);
+    else
+        SendToAll(&data);
+}

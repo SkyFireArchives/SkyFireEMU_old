@@ -35,8 +35,6 @@
 #define MAXRAIDSIZE 40
 #define MAX_RAID_SUBGROUPS MAXRAIDSIZE/MAXGROUPSIZE
 #define TARGETICONCOUNT 8
-#define GROUP_MAX_LFG_KICKS 3
-#define GROUP_LFG_KICK_VOTES_NEEDED 3
 
 class InstanceSave;
 class Player;
@@ -51,13 +49,6 @@ enum RollVote
     DISENCHANT        = 3,
     NOT_EMITED_YET    = 4,
     NOT_VALID         = 5
-};
-
-enum LfgDungeonStatus
-{
-    LFG_STATUS_SAVED     = 0,
-    LFG_STATUS_NOT_SAVED = 1,
-    LFG_STATUS_COMPLETE  = 2,
 };
 
 enum GroupMemberOnlineStatus
@@ -196,11 +187,11 @@ class Group
         bool   LoadGroupFromDB(const uint32 &guid, QueryResult result, bool loadMembers = true);
         bool   LoadMemberFromDB(uint32 guidLow, uint8 memberFlags, uint8 subgroup, uint8 roles);
         bool   AddInvite(Player *player);
-        uint32 RemoveInvite(Player *player);
+        void   RemoveInvite(Player *player);
         void   RemoveAllInvites();
         bool   AddLeaderInvite(Player *player);
         bool   AddMember(const uint64 &guid, const char* name);
-        uint32 RemoveMember(const uint64 &guid, const RemoveMethod &method = GROUP_REMOVEMETHOD_DEFAULT);
+        uint32 RemoveMember(const uint64 &guid, const RemoveMethod &method = GROUP_REMOVEMETHOD_DEFAULT, uint64 kicker = 0, const char* reason = NULL);
         void   ChangeLeader(const uint64 &guid);
         void   SetLootMethod(LootMethod method) { m_lootMethod = method; }
         void   SetLooterGuid(const uint64 &guid) { m_looterGuid = guid; }
@@ -209,25 +200,7 @@ class Group
         void   Disband(bool hideDestroy=false);
 
         // Dungeon Finder
-        void   SetLfgQueued(bool queued) { m_LfgQueued = queued; }
-        bool   isLfgQueued() { return m_LfgQueued; }
-        void   SetLfgStatus(uint8 status) { m_LfgStatus = status; }
-        uint8  GetLfgStatus() { return m_LfgStatus; }
-        bool   isLfgDungeonComplete() const { return m_LfgStatus == LFG_STATUS_COMPLETE; }
-        void   SetLfgDungeonEntry(uint32 dungeonEntry) { m_LfgDungeonEntry = dungeonEntry; }
-        uint32 GetLfgDungeonEntry(bool id = true)
-        {
-            if (id)
-                return (m_LfgDungeonEntry & 0x00FFFFFF);
-            else
-                return m_LfgDungeonEntry;
-        }
-        bool   isLfgKickActive() const { return m_LfgkicksActive; }
-        void   SetLfgKickActive(bool active) { m_LfgkicksActive = active; }
-        uint8  GetLfgKicks() const { return m_Lfgkicks; }
-        void   SetLfgKicks(uint8 kicks) { m_Lfgkicks = kicks; }
-    
-        void   SetRoles(uint64 guid, const uint8 roles)
+        void   SetLfgRoles(uint64& guid, const uint8 roles)
         {
             member_witerator slot = _getMemberWSlot(guid);
             if (slot == m_memberSlots.end())
@@ -236,17 +209,26 @@ class Group
             slot->roles = roles;
             SendUpdate();
         }
-        uint8 GetRoles(uint64 guid)
+        void   SetRoles(uint64 guid, const uint8 roles)
+        {
+            member_witerator slot = _getMemberWSlot(guid);
+            if (slot == m_memberSlots.end())
+                return;
+
+            slot->roles = roles;
+            SendUpdate();
+        }  
+        uint8  GetRoles(uint64 guid)
         {
             member_witerator slot = _getMemberWSlot(guid);
             if (slot == m_memberSlots.end())
                 return 0;
-        
+
             return slot->roles;
         }
-    
+
         // properties accessories
-        bool IsFull() const { return (m_groupType == GROUPTYPE_NORMAL) ? (m_memberSlots.size() >= MAXGROUPSIZE) : (m_memberSlots.size() >= MAXRAIDSIZE); }
+        bool IsFull() const { return isRaidGroup() ? (m_memberSlots.size() >= MAXRAIDSIZE) : (m_memberSlots.size() >= MAXGROUPSIZE); }
         bool isLFGGroup()  const { return m_groupType & GROUPTYPE_LFG; }
         bool isRaidGroup() const { return m_groupType & GROUPTYPE_RAID; }
         bool isBGGroup()   const { return m_bgGroup != NULL; }
@@ -518,10 +500,5 @@ class Group
         uint64              m_guid;
         uint32              m_counter;                      // used only in SMSG_GROUP_LIST
         uint32              m_maxEnchantingLevel;
-        bool                m_LfgQueued;
-        uint8               m_LfgStatus;
-        uint32              m_LfgDungeonEntry;
-        uint8               m_Lfgkicks;
-        bool                m_LfgkicksActive;
 };
 #endif

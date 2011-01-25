@@ -64,7 +64,7 @@ void WorldSession::SendBattlegGroundList(uint64 guid, BattlegroundTypeId bgTypeI
 
 void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket & recv_data)
 {
-	uint8 joinAsGroup;
+    uint8 joinAsGroup;
     uint32 bgTypeId_;
     uint32 unk, unk2;
     bool isPremade = false;
@@ -73,7 +73,7 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket & recv_data)
     recv_data >> joinAsGroup;                               // join as group (join as group = 0x80, else 0x0)
     recv_data >> unk;                                       // unk
     recv_data >> bgTypeId_;                                 // battleground type id (DBC id)
-	recv_data >> unk2;                                      // unk
+    recv_data >> unk2;                                      // unk
 
     if (!sBattlemasterListStore.LookupEntry(bgTypeId_))
     {
@@ -112,6 +112,15 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket & recv_data)
     // check queue conditions
     if (!joinAsGroup)
     {
+        if (GetPlayer()->isUsingLfg())
+        {
+            // player is using dungeon finder or raid finder
+            WorldPacket data;
+            sBattlegroundMgr.BuildGroupJoinedBattlegroundPacket(&data, ERR_LFG_CANT_USE_BATTLEGROUND);
+            GetPlayer()->GetSession()->SendPacket(&data);
+            return;
+        }
+
         // check Deserter debuff
         if (!_player->CanJoinToBattleground())
         {
@@ -311,7 +320,6 @@ void WorldSession::HandleBattlefieldListOpcode(WorldPacket &recv_data)
     WorldPacket data;
     sBattlegroundMgr.BuildBattlegroundListPacket(&data, 0, _player, BattlegroundTypeId(bgTypeId));
     SendPacket(&data);
-
 }
 
 void WorldSession::HandleBattleFieldPortOpcode(WorldPacket &recv_data)
@@ -437,7 +445,7 @@ void WorldSession::HandleBattleFieldPortOpcode(WorldPacket &recv_data)
             break;
         case 0:                                         // leave queue
             // if player leaves rated arena match before match start, it is counted as he played but he lost
-            if (ginfo.IsRated)
+            if (ginfo.IsRated && ginfo.IsInvitedToBGInstanceGUID)
             {
                 ArenaTeam * at = sObjectMgr.GetArenaTeamById(ginfo.Team);
                 if (at)

@@ -79,7 +79,7 @@ enum AchievementCriteriaCondition
     ACHIEVEMENT_CRITERIA_CONDITION_NO_DEATH  = 1,           // reset progress on death
     ACHIEVEMENT_CRITERIA_CONDITION_UNK1      = 2,           // only used in "Complete a daily quest every day for five consecutive days"
     ACHIEVEMENT_CRITERIA_CONDITION_MAP       = 3,           // requires you to be on specific map, reset at change
-    ACHIEVEMENT_CRITERIA_CONDITION_NO_LOOSE  = 4,           // only used in "Win 10 arenas without losing"
+    ACHIEVEMENT_CRITERIA_CONDITION_NO_LOSE   = 4,           // only used in "Win 10 arenas without losing"
     ACHIEVEMENT_CRITERIA_CONDITION_UNK2      = 9,           // unk
     ACHIEVEMENT_CRITERIA_CONDITION_UNK3      = 13,          // unk
 };
@@ -136,7 +136,6 @@ enum AchievementCriteriaTypes
     ACHIEVEMENT_CRITERIA_TYPE_WIN_ARENA = 32,
     ACHIEVEMENT_CRITERIA_TYPE_PLAY_ARENA = 33,
     ACHIEVEMENT_CRITERIA_TYPE_LEARN_SPELL = 34,
-    // TODO: this criteria has additional conditions which can not be found in the dbcs
     ACHIEVEMENT_CRITERIA_TYPE_HONORABLE_KILL = 35,
     ACHIEVEMENT_CRITERIA_TYPE_OWN_ITEM = 36,
     // TODO: the archievements 1162 and 1163 requires a special rating which can't be found in the dbc

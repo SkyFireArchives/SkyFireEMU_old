@@ -84,7 +84,13 @@ void WorldSession::HandlePetAction(WorldPacket & recv_data)
     }
 
     if (!pet->isAlive())
-        return;
+    {
+        SpellEntry const* spell = (flag == ACT_ENABLED || flag == ACT_PASSIVE) ? sSpellStore.LookupEntry(spellid) : NULL;
+        if (!spell)
+            return;
+        if (!(spell->Attributes & SPELL_ATTR_CASTABLE_WHILE_DEAD))
+            return;
+    }
 
     //TODO: allow control charmed player?
     if (pet->GetTypeId() == TYPEID_PLAYER && !(flag == ACT_COMMAND && spellid == COMMAND_ATTACK))
@@ -102,6 +108,33 @@ void WorldSession::HandlePetAction(WorldPacket & recv_data)
         for (std::vector<Unit*>::iterator itr = controlled.begin(); itr != controlled.end(); ++itr)
             HandlePetActionHelper(*itr, guid1, spellid, flag, guid2);
     }
+}
+
+void WorldSession::HandlePetStopAttack(WorldPacket &recv_data)
+{
+    uint64 guid;
+    recv_data >> guid;
+
+    sLog.outDebug("WORLD: Received CMSG_PET_STOP_ATTACK for GUID " UI64FMTD "", guid);
+
+    Unit* pet = ObjectAccessor::GetCreatureOrPetOrVehicle(*_player, guid);
+
+    if (!pet)
+    {
+        sLog.outError("HandlePetStopAttack: Pet %u does not exist", uint32(GUID_LOPART(guid)));
+        return;
+    }
+
+    if (pet != GetPlayer()->GetPet() && pet != GetPlayer()->GetCharm())
+    {
+        sLog.outError("HandlePetStopAttack: Pet GUID %u isn't a pet or charmed creature of player %s", uint32(GUID_LOPART(guid)), GetPlayer()->GetName());
+        return;
+    }
+
+    if (!pet->isAlive())
+        return;
+
+    pet->AttackStop();
 }
 
 void WorldSession::HandlePetActionHelper(Unit *pet, uint64 guid1, uint16 spellid, uint16 flag, uint64 guid2)
@@ -266,7 +299,7 @@ void WorldSession::HandlePetActionHelper(Unit *pet, uint64 guid1, uint16 spellid
                 if (pet->ToCreature()->GetGlobalCooldown() > 0)
                     return;
 
-            for (uint32 i = 0; i < 3; ++i)
+            for (uint32 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             {
                 if (spellInfo->EffectImplicitTargetA[i] == TARGET_UNIT_AREA_ENEMY_SRC || spellInfo->EffectImplicitTargetA[i] == TARGET_UNIT_AREA_ENEMY_DST || spellInfo->EffectImplicitTargetA[i] == TARGET_DEST_DYNOBJ_ENEMY)
                     return;
@@ -383,9 +416,9 @@ void WorldSession::SendPetNameQuery(uint64 petguid, uint32 petnumber)
     Creature* pet = ObjectAccessor::GetCreatureOrPetOrVehicle(*_player, petguid);
     if (!pet)
     {
-        WorldPacket data(SMSG_PET_NAME_QUERY_RESPONSE, (4+4+7+1));
+        WorldPacket data(SMSG_PET_NAME_QUERY_RESPONSE, (4+1+4+1));
         data << uint32(petnumber);
-        data << "Unknown";
+        data << uint8(0);
         data << uint32(0);
         data << uint8(0);
         _player->GetSession()->SendPacket(&data);
@@ -737,7 +770,7 @@ void WorldSession::HandlePetCastSpellOpcode(WorldPacket& recvPacket)
 
     caster->clearUnitState(UNIT_STAT_FOLLOW);
 
-    Spell *spell = new Spell(caster, spellInfo, false); // water elemental can cast freeze as triggered
+    Spell *spell = new Spell(caster, spellInfo, false);
     spell->m_cast_count = castCount;                    // probably pending spell cast
     spell->m_targets = targets;
 

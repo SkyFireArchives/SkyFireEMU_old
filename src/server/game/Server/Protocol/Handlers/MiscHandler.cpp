@@ -51,6 +51,7 @@
 #include "ScriptMgr.h"
 #include "MapManager.h"
 #include "InstanceScript.h"
+#include "LFGMgr.h"
 
 void WorldSession::HandleRepopRequestOpcode(WorldPacket & recv_data)
 {
@@ -143,6 +144,8 @@ void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket & recv_data)
         {
             if (!sScriptMgr.OnGossipSelectCode(_player, unit, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId), code.c_str()))
                 _player->OnGossipSelect(unit, gossipListId, menuId);
+
+            unit->AI()->sGossipSelectCode(_player, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId), code.c_str());
         }
         else
             sScriptMgr.OnGossipSelectCode(_player, go, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId), code.c_str());
@@ -153,6 +156,8 @@ void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket & recv_data)
         {
             if (!sScriptMgr.OnGossipSelect(_player, unit, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId)))
                 _player->OnGossipSelect(unit, gossipListId, menuId);
+
+            unit->AI()->sGossipSelect(_player, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId));
         }
         else
             sScriptMgr.OnGossipSelect(_player, go, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId));
@@ -164,7 +169,7 @@ void WorldSession::HandleWhoOpcode(WorldPacket & recv_data)
     sLog.outDebug("WORLD: Recvd CMSG_WHO Message");
     //recv_data.hexlike();
 
-    uint32 clientcount = 0;
+    uint32 matchcount = 0;
 
     uint32 level_min, level_max, racemask, classmask, zones_count, str_count;
     uint32 zoneids[10];                                     // 10 is client limit
@@ -228,10 +233,11 @@ void WorldSession::HandleWhoOpcode(WorldPacket & recv_data)
     uint32 security = GetSecurity();
     bool allowTwoSideWhoList = sWorld.getBoolConfig(CONFIG_ALLOW_TWO_SIDE_WHO_LIST);
     uint32 gmLevelInWhoList  = sWorld.getIntConfig(CONFIG_GM_LEVEL_IN_WHO_LIST);
+    uint32 displaycount = 0;
 
     WorldPacket data(SMSG_WHO, 50);                       // guess size
-    data << uint32(clientcount);                            // clientcount place holder, listed count
-    data << uint32(clientcount);                            // clientcount place holder, online count
+    data << uint32(matchcount);                           // placeholder, count of players matching criteria
+    data << uint32(displaycount);                         // placeholder, count of players displayed
 
     ACE_GUARD(ACE_Thread_Mutex, g, *HashMapHolder<Player>::GetLock());
     HashMapHolder<Player>::MapType& m = sObjectAccessor.GetPlayers();
@@ -328,6 +334,11 @@ void WorldSession::HandleWhoOpcode(WorldPacket & recv_data)
         if (!s_show)
             continue;
 
+        // 49 is maximum player count sent to client - can be overridden
+        // through config, but is unstable
+        if ((matchcount++) >= sWorld.getIntConfig(CONFIG_MAX_WHO))
+            continue;
+
         data << pname;                                    // player name
         data << gname;                                    // guild name
         data << uint32(lvl);                              // player level
@@ -336,15 +347,11 @@ void WorldSession::HandleWhoOpcode(WorldPacket & recv_data)
         data << uint8(gender);                            // player gender
         data << uint32(pzoneid);                          // player zone id
 
-        // 49 is maximum player count sent to client - can be overridden
-        // through config, but is unstable
-        if ((++clientcount) == sWorld.getIntConfig(CONFIG_MAX_WHO))
-            break;
+        ++displaycount;
     }
 
-    uint32 count = m.size();
-    data.put( 0, clientcount );                             // insert right count, listed count
-    data.put( 4, count > 50 ? count : clientcount );        // insert right count, online count
+    data.put(0, displaycount);                            // insert right count, count displayed
+    data.put(4, matchcount);                              // insert right count, count of matches
 
     SendPacket(&data);
     sLog.outDebug("WORLD: Send SMSG_WHO Message");
@@ -933,8 +940,8 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket & recv_data)
 
     // Check only if target map != current player's map
     // check if player can enter instance : instance not full, and raid instance not in encounter fight
-    if (GetPlayer()->GetMapId() != at->target_mapId && !sMapMgr.CanPlayerEnter(at->target_mapId, GetPlayer(), false))
-        return;
+    //if (GetPlayer()->GetMapId() != at->target_mapId && !sMapMgr.CanPlayerEnter(at->target_mapId, GetPlayer(), false))
+    //    return;
 
     // Check if we are in LfgGroup and trying to get out the dungeon
     if (GetPlayer()->GetGroup() && GetPlayer()->GetGroup()->isLFGGroup() && GetPlayer()->GetMap()->IsDungeon() && at->target_mapId != GetPlayer()->GetMapId())
@@ -1073,7 +1080,7 @@ void WorldSession::HandleSetActionButtonOpcode(WorldPacket& recv_data)
                 sLog.outError("MISC: Unknown action button type %u for action %u into button %u", type, action, button);
                 return;
         }
-        GetPlayer()->addActionButton(button, action, type, uint8(GetPlayer()->GetActiveSpec()));
+        GetPlayer()->addActionButton(button, action, type);
     }
 }
 
@@ -1333,13 +1340,13 @@ void WorldSession::HandleWhoisOpcode(WorldPacket& recv_data)
     }
 
     Field *fields = result->Fetch();
-    std::string acc = fields[0].GetCppString();
+    std::string acc = fields[0].GetString();
     if (acc.empty())
         acc = "Unknown";
-    std::string email = fields[1].GetCppString();
+    std::string email = fields[1].GetString();
     if (email.empty())
         email = "Unknown";
-    std::string lastip = fields[2].GetCppString();
+    std::string lastip = fields[2].GetString();
     if (lastip.empty())
         lastip = "Unknown";
 
@@ -1715,4 +1722,18 @@ void WorldSession::SendSetPhaseShift(uint32 PhaseShift)
     WorldPacket data(SMSG_SET_PHASE_SHIFT, 4);
     data << uint32(PhaseShift);
     SendPacket(&data);
+}
+
+void WorldSession::HandleHearthAndResurrect(WorldPacket& /*recv_data*/)
+{
+    if (_player->isInFlight())
+        return;
+
+    AreaTableEntry const *atEntry = sAreaStore.LookupEntry(_player->GetAreaId());
+    if (!atEntry || !(atEntry->flags & AREA_FLAG_OUTDOOR_PVP2))
+        return;
+
+    _player->BuildPlayerRepop();
+    _player->ResurrectPlayer(100);
+    _player->TeleportTo(_player->m_homebindMapId, _player->m_homebindX, _player->m_homebindY, _player->m_homebindZ, _player->GetOrientation());
 }

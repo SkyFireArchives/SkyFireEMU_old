@@ -64,8 +64,8 @@ class InstanceSave
         /* A map corresponding to the InstanceId/MapId does not always exist.
         InstanceSave objects may be created on player logon but the maps are
         created and loaded only when a player actually enters the instance. */
-        uint32 GetInstanceId() { return m_instanceid; }
-        uint32 GetMapId() { return m_mapid; }
+        uint32 GetInstanceId() const { return m_instanceid; }
+        uint32 GetMapId() const { return m_mapid; }
 
         /* Saved when the instance is generated for the first time */
         void SaveToDB();
@@ -74,7 +74,7 @@ class InstanceSave
 
         /* for normal instances this corresponds to max(creature respawn time) + X hours
            for raid/heroic instances this caches the global respawn time for the map */
-        time_t GetResetTime() { return m_resetTime; }
+        time_t GetResetTime() const { return m_resetTime; }
         void SetResetTime(time_t resetTime) { m_resetTime = resetTime; }
         time_t GetResetTimeForDB();
 
@@ -92,12 +92,12 @@ class InstanceSave
         /* instances cannot be reset (except at the global reset time)
            if there are players permanently bound to it
            this is cached for the case when those players are offline */
-        bool CanReset() { return m_canReset; }
+        bool CanReset() const { return m_canReset; }
         void SetCanReset(bool canReset) { m_canReset = canReset; }
 
         /* currently it is possible to omit this information from this structure
            but that would depend on a lot of things that can easily change in future */
-        Difficulty GetDifficulty() { return m_difficulty; }
+        Difficulty GetDifficulty() const { return m_difficulty; }
 
         typedef std::list<Player*> PlayerListType;
         typedef std::list<Group*> GroupListType;
@@ -144,8 +144,7 @@ class InstanceSaveManager
         };
         typedef std::multimap<time_t /*resetTime*/, InstResetEvent> ResetTimeQueue;
 
-        void CleanupInstances();
-        void PackInstances();
+        void CleanupAndPackInstances();
 
         void LoadResetTimes();
         time_t GetResetTimeFor(uint32 mapid, Difficulty d) const
@@ -181,7 +180,7 @@ class InstanceSaveManager
 
     private:
 
-        void _ResetOrWarnAll(uint32 mapid, Difficulty difficulty, bool warn, uint32 timeleft);
+        void _ResetOrWarnAll(uint32 mapid, Difficulty difficulty, bool warn, time_t resetTime);
         void _ResetInstance(uint32 mapid, uint32 instanceId);
         void _ResetSave(InstanceSaveHashMap::iterator &itr);
         void _DelHelper(const char *fields, const char *table, const char *queryTail,...);

@@ -38,24 +38,10 @@
 #include "Util.h"
 #include "LFGMgr.h"
 
-Group::Group()
+Group::Group() : m_leaderGuid(0), m_groupType(GROUPTYPE_NORMAL), m_bgGroup(NULL),
+m_lootMethod(FREE_FOR_ALL), m_looterGuid(0), m_lootThreshold(ITEM_QUALITY_UNCOMMON),
+m_subGroupsCounts(NULL), m_guid(0), m_counter(0), m_maxEnchantingLevel(0)
 {
-    m_leaderGuid        = 0;
-    m_groupType         = GroupType(0);
-    m_bgGroup           = NULL;
-    m_lootMethod        = LootMethod(0);
-    m_looterGuid        = 0;
-    m_lootThreshold     = ITEM_QUALITY_UNCOMMON;
-    m_subGroupsCounts   = NULL;
-    m_guid              = 0;
-    m_counter           = 0;
-    m_maxEnchantingLevel= 0;
-    m_LfgQueued         = false;
-    m_LfgStatus         = LFG_STATUS_NOT_SAVED;
-    m_LfgDungeonEntry   = 0;
-    m_Lfgkicks          = 0;
-    m_LfgkicksActive    = false;
-
     for (uint8 i = 0; i < TARGETICONCOUNT; ++i)
         m_targetIcons[i] = 0;
 }
@@ -124,7 +110,8 @@ bool Group::Create(const uint64 &guid, const char * name)
         // store group in database
         SQLTransaction trans = CharacterDatabase.BeginTransaction();
         trans->PAppend("DELETE FROM groups WHERE guid ='%u'", lowguid);
-        trans->PAppend("DELETE FROM group_member WHERE guid ='%u'", lowguid);
+        trans->PAppend("DELETE FROM group_member WHERE guid = %u OR memberGuid = %u", lowguid, GUID_LOPART(guid));
+        trans->PAppend("INSERT INTO group_member (guid, memberGuid, subgroup) VALUES (%u, %u, 0)", lowguid, GUID_LOPART(guid));
         trans->PAppend("INSERT INTO groups (guid,leaderGuid,lootMethod,looterGuid,lootThreshold,icon1,icon2,icon3,icon4,icon5,icon6,icon7,icon8,groupType,difficulty,raiddifficulty) "
             "VALUES ('%u','%u','%u','%u','%u','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','%u','%u','%u')",
             lowguid, GUID_LOPART(m_leaderGuid), uint32(m_lootMethod),
@@ -296,18 +283,20 @@ bool Group::AddLeaderInvite(Player *player)
     return true;
 }
 
-uint32 Group::RemoveInvite(Player *player)
+void Group::RemoveInvite(Player *player)
 {
-    m_invitees.erase(player);
-
-    player->SetGroupInvite(NULL);
-    return GetMembersCount();
+    if (player)
+    {
+        m_invitees.erase(player);
+        player->SetGroupInvite(NULL);
+    }
 }
 
 void Group::RemoveAllInvites()
 {
     for (InvitesList::iterator itr=m_invitees.begin(); itr != m_invitees.end(); ++itr)
-        (*itr)->SetGroupInvite(NULL);
+        if (*itr)
+            (*itr)->SetGroupInvite(NULL);
 
     m_invitees.clear();
 }
@@ -316,7 +305,7 @@ Player* Group::GetInvited(const uint64& guid) const
 {
     for (InvitesList::const_iterator itr = m_invitees.begin(); itr != m_invitees.end(); ++itr)
     {
-        if ((*itr)->GetGUID() == guid)
+        if ((*itr) && (*itr)->GetGUID() == guid)
             return (*itr);
     }
     return NULL;
@@ -326,7 +315,7 @@ Player* Group::GetInvited(const std::string& name) const
 {
     for (InvitesList::const_iterator itr = m_invitees.begin(); itr != m_invitees.end(); ++itr)
     {
-        if ((*itr)->GetName() == name)
+        if ((*itr) && (*itr)->GetName() == name)
             return (*itr);
     }
     return NULL;
@@ -334,9 +323,6 @@ Player* Group::GetInvited(const std::string& name) const
 
 bool Group::AddMember(const uint64 &guid, const char* name)
 {
-    if (isLfgQueued())
-        sLFGMgr.Leave(NULL, this);
-
     if (!_addMember(guid, name))
         return false;
 
@@ -346,7 +332,6 @@ bool Group::AddMember(const uint64 &guid, const char* name)
     Player *player = sObjectMgr.GetPlayer(guid);
     if (player)
     {
-        sLFGMgr.Leave(player);
         if (!IsLeader(player->GetGUID()) && !isBGGroup())
         {
             // reset the new member's instances, unless he is currently in one of them
@@ -382,19 +367,18 @@ bool Group::AddMember(const uint64 &guid, const char* name)
     return true;
 }
 
-uint32 Group::RemoveMember(const uint64 &guid, const RemoveMethod &method)
+uint32 Group::RemoveMember(const uint64 &guid, const RemoveMethod &method /* = GROUP_REMOVEMETHOD_DEFAULT */, uint64 kicker /* = 0 */, const char* reason /* = NULL */)
 {
     BroadcastGroupUpdate();
 
-    if (isLfgQueued())
-        sLFGMgr.Leave(NULL, this);
-    else if (isLFGGroup() && !isLfgDungeonComplete())
-        sLFGMgr.OfferContinue(this);
+    sScriptMgr.OnGroupRemoveMember(this, guid, method, kicker, reason);
 
-    sScriptMgr.OnGroupRemoveMember(this, guid, method);
+    // Lfg group vote kick handled in scripts
+    if (isLFGGroup() && method == GROUP_REMOVEMETHOD_KICK)
+        return m_memberSlots.size();
 
-    // remove member and change leader (if need) only if strong more 2 members _before_ member remove
-    if (GetMembersCount() > (isBGGroup() ? 1u : 2u))           // in BG group case allow 1 members group
+    // remove member and change leader (if need) only if strong more 2 members _before_ member remove (BG allow 1 member group)
+    if (GetMembersCount() > (isBGGroup() ? 1u : 2u))
     {
         bool leaderChanged = _removeMember(guid);
 
@@ -412,15 +396,9 @@ uint32 Group::RemoveMember(const uint64 &guid, const RemoveMethod &method)
                 player->GetSession()->SendPacket(&data);
             }
 
-            player->GetSession()->SendLfgUpdateParty(LFG_UPDATETYPE_LEADER);
-            if (isLFGGroup() && player->GetMap()->IsDungeon())
-                player->TeleportToBGEntryPoint();
-
             //we already removed player from group and in player->GetGroup() is his original group!
             if (Group* group = player->GetGroup())
-            {
                 group->SendUpdate();
-            }
             else
             {
                 data.Initialize(SMSG_GROUP_LIST, 1+1+1+1+8+4+4+8);
@@ -456,7 +434,6 @@ void Group::ChangeLeader(const uint64 &guid)
     if (slot == m_memberSlots.end())
         return;
 
-    sScriptMgr.OnGroupChangeLeader(this, m_leaderGuid, guid);
     _setLeader(guid);
 
     WorldPacket data(SMSG_GROUP_SET_LEADER, slot->name.size()+1);
@@ -487,11 +464,6 @@ void Group::Disband(bool hideDestroy /* = false */)
                 player->SetOriginalGroup(NULL);
             else
                 player->SetGroup(NULL);
-
-            if (isLFGGroup() && player->GetMap()->IsDungeon())
-                player->TeleportToBGEntryPoint();
-            player->GetSession()->SendLfgUpdateParty(LFG_UPDATETYPE_GROUP_DISBAND);
-            player->GetSession()->SendLfgUpdateParty(LFG_UPDATETYPE_LEADER);
         }
 
         // quest related GO state dependent from raid membership
@@ -1137,14 +1109,12 @@ void Group::SendUpdate()
         data << uint8(m_groupType);                         // group type (flags in 3.3)
         data << uint8(citr->group);
         data << uint8(citr->flags);
+        data << uint8(citr->roles);
         if (isLFGGroup())
         {
-            data << uint8(1);
-            data << uint8(m_LfgStatus);
-            data << uint32(m_LfgDungeonEntry);
+            data << uint8(sLFGMgr.GetState(m_guid) == LFG_STATE_FINISHED_DUNGEON ? 2 : 0); // FIXME - Dungeon save status? 2 = done
+            data << uint32(sLFGMgr.GetDungeon(m_guid));
         }
-        else
-            data << uint8(isBGGroup() ? 1 : 0);             // 2.0.x, isBattlegroundGroup?
 
         data << uint64(m_guid);
         data << uint32(m_counter++);                        // 3.3, value increases every time this packet gets sent
@@ -1326,8 +1296,6 @@ bool Group::_removeMember(const uint64 &guid)
                 player->SetOriginalGroup(NULL);
             else
                 player->SetGroup(NULL);
-
-            player->GetSession()->SendLfgUpdateParty(LFG_UPDATETYPE_LEADER);
         }
     }
 
@@ -1358,6 +1326,8 @@ void Group::_setLeader(const uint64 &guid)
     member_witerator slot = _getMemberWSlot(guid);
     if (slot == m_memberSlots.end())
         return;
+
+    sScriptMgr.OnGroupChangeLeader(this, m_leaderGuid, guid);
 
     if (!isBGGroup())
     {
@@ -1634,6 +1604,10 @@ void Group::UpdateLooterGuid(WorldObject* pLootedObject, bool ifneed)
 
 GroupJoinBattlegroundResult Group::CanJoinBattlegroundQueue(Battleground const* bgOrTemplate, BattlegroundQueueTypeId bgQueueTypeId, uint32 MinPlayerCount, uint32 /*MaxPlayerCount*/, bool isRated, uint32 arenaSlot)
 {
+    // check if this group is LFG group
+    if (isLFGGroup())
+        return ERR_LFG_CANT_USE_BATTLEGROUND;
+
     BattlemasterListEntry const* bgEntry = sBattlemasterListStore.LookupEntry(bgOrTemplate->GetTypeID());
     if (!bgEntry)
         return ERR_GROUP_JOIN_BATTLEGROUND_FAIL;            // shouldn't happen
@@ -1692,6 +1666,9 @@ GroupJoinBattlegroundResult Group::CanJoinBattlegroundQueue(Battleground const* 
         // check if member can join any more battleground queues
         if (!member->HasFreeBattlegroundQueueId())
             return ERR_BATTLEGROUND_TOO_MANY_QUEUES;        // not blizz-like
+        // check if someone in party is using dungeon system
+        if (member->isUsingLfg())
+            return ERR_LFG_CANT_USE_BATTLEGROUND;
     }
 
     // only check for MinPlayerCount since MinPlayerCount == MaxPlayerCount for arenas...
@@ -1853,8 +1830,8 @@ InstanceGroupBind* Group::GetBoundInstance(MapEntry const* mapEntry)
 {
     if (!mapEntry)
         return NULL;
-
-    Difficulty difficulty = GetDifficulty(mapEntry->IsRaid());
+/*
+    Difficulty difficulty = GetDifficulty(mapEntry->IsRaid()); // - Not work? cause crash when incorrect difficulty.
 
     // some instances only have one difficulty
     GetDownscaledMapDifficultyData(mapEntry->MapID,difficulty);
@@ -1864,6 +1841,7 @@ InstanceGroupBind* Group::GetBoundInstance(MapEntry const* mapEntry)
         return &itr->second;
     else
         return NULL;
+*/
 }
 
 

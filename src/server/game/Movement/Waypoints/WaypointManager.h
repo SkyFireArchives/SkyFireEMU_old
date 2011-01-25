@@ -59,7 +59,7 @@ class WaypointStore
             else return 0;
         }
 
-        inline uint32 GetRecordsCount() { return records; }
+        inline uint32 GetRecordsCount() const { return records; }
 };
 
 #define sWaypointMgr WaypointStore::instance()

@@ -95,7 +95,6 @@ void LootStore::Verify() const
 void LootStore::LoadLootTable()
 {
     LootTemplateMap::const_iterator tab;
-    uint32 count = 0;
 
     // Clearing store (for reloading case)
     Clear();
@@ -107,6 +106,8 @@ void LootStore::LoadLootTable()
 
     if (result)
     {
+        uint32 count = 0;
+
         barGoLink bar(result->GetRowCount());
 
         do
@@ -433,7 +434,7 @@ bool Loot::FillLoot(uint32 lootId, LootStore const& store, Player* lootOwner, bo
     items.reserve(MAX_NR_LOOT_ITEMS);
     quest_items.reserve(MAX_NR_QUEST_ITEMS);
 
-    tab->Process(*this, store, store.IsRatesAllowed(), lootMode);     // Processing is done there, callback via Loot::AddItem()
+    tab->Process(*this, store.IsRatesAllowed(), lootMode);          // Processing is done there, callback via Loot::AddItem()
 
     // Setting access rights for group loot case
     Group * pGroup = lootOwner->GetGroup();
@@ -821,7 +822,7 @@ ByteBuffer& operator<<(ByteBuffer& b, LootView const& lv)
 
     size_t count_pos = b.wpos();                            // pos of item count byte
     b << uint8(0);                                          // item count placeholder
-	b << uint8(0);                                          // unk 4.0.x
+    b << uint8(0);                                          // unk 4.0.x
 
     switch (lv.permission)
     {
@@ -874,8 +875,21 @@ ByteBuffer& operator<<(ByteBuffer& b, LootView const& lv)
         }
         case ALL_PERMISSION:
         case MASTER_PERMISSION:
+        case OWNER_PERMISSION:
         {
-            uint8 slot_type = (lv.permission == MASTER_PERMISSION) ? LOOT_SLOT_TYPE_MASTER : LOOT_SLOT_TYPE_ALLOW_LOOT;
+            uint8 slot_type = LOOT_SLOT_TYPE_ALLOW_LOOT;
+            switch (lv.permission)
+            {
+                case MASTER_PERMISSION:
+                    slot_type = LOOT_SLOT_TYPE_MASTER;
+                    break;
+                case OWNER_PERMISSION:
+                    slot_type = LOOT_SLOT_TYPE_OWNER;
+                    break;
+                default:
+                    break;
+            }
+
             for (uint8 i = 0; i < l.items.size(); ++i)
             {
                 if (!l.items[i].is_looted && !l.items[i].freeforall && l.items[i].conditions.empty() && l.items[i].AllowedForPlayer(lv.viewer))
@@ -891,6 +905,7 @@ ByteBuffer& operator<<(ByteBuffer& b, LootView const& lv)
             return b;                                       // nothing output more
     }
 
+    LootSlotType slotType = lv.permission == OWNER_PERMISSION ? LOOT_SLOT_TYPE_OWNER : LOOT_SLOT_TYPE_ALLOW_LOOT;
     QuestItemMap const& lootPlayerQuestItems = l.GetPlayerQuestItems();
     QuestItemMap::const_iterator q_itr = lootPlayerQuestItems.find(lv.viewer->GetGUIDLow());
     if (q_itr != lootPlayerQuestItems.end())
@@ -903,7 +918,7 @@ ByteBuffer& operator<<(ByteBuffer& b, LootView const& lv)
             {
                 b << uint8(l.items.size() + (qi - q_list->begin()));
                 b << item;
-                b << uint8(LOOT_SLOT_TYPE_ALLOW_LOOT);
+                b << uint8(slotType);
                 ++itemsShown;
             }
         }
@@ -919,8 +934,9 @@ ByteBuffer& operator<<(ByteBuffer& b, LootView const& lv)
             LootItem &item = l.items[fi->index];
             if (!fi->is_looted && !item.is_looted)
             {
-                b << uint8(fi->index) << item;
-                b << uint8(LOOT_SLOT_TYPE_ALLOW_LOOT);
+                b << uint8(fi->index);
+                b << item;
+                b << uint8(slotType);
                 ++itemsShown;
             }
         }
@@ -936,8 +952,9 @@ ByteBuffer& operator<<(ByteBuffer& b, LootView const& lv)
             LootItem &item = l.items[ci->index];
             if (!ci->is_looted && !item.is_looted)
             {
-                b << uint8(ci->index) << item;
-                b << uint8(LOOT_SLOT_TYPE_ALLOW_LOOT);
+                b << uint8(ci->index);
+                b << item;
+                b << uint8(slotType);
                 ++itemsShown;
             }
         }
@@ -1197,7 +1214,7 @@ void LootTemplate::CopyConditions(ConditionList conditions)
 }
 
 // Rolls for every item in the template and adds the rolled items the the loot
-void LootTemplate::Process(Loot& loot, LootStore const& store, bool rate, uint16 lootMode, uint8 groupId) const
+void LootTemplate::Process(Loot& loot, bool rate, uint16 lootMode, uint8 groupId) const
 {
     if (groupId)                                            // Group reference uses own processing of the group
     {
@@ -1243,7 +1260,7 @@ void LootTemplate::Process(Loot& loot, LootStore const& store, bool rate, uint16
 
             uint32 maxcount = uint32(float(i->maxcount) * sWorld.getRate(RATE_DROP_ITEM_REFERENCED_AMOUNT));
             for (uint32 loop = 0; loop < maxcount; ++loop)    // Ref multiplicator
-                Referenced->Process(loot, store, rate, lootMode, i->group);
+                Referenced->Process(loot, rate, lootMode, i->group);
         }
         else                                                  // Plain entries (not a reference, not grouped)
             loot.AddItem(*i);                                 // Chance is already checked, just add

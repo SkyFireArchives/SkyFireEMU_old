@@ -207,7 +207,7 @@ std::string CreateDumpString(char const* tableName, QueryResult result)
         if (i == 0) ss << "'";
         else ss << ", '";
 
-        std::string s = fields[i].GetCppString();
+        std::string s = fields[i].GetString();
         CharacterDatabase.escape_string(s);
         ss << s;
 
@@ -257,7 +257,7 @@ void StoreGUID(QueryResult result,uint32 field,std::set<uint32>& guids)
 void StoreGUID(QueryResult result,uint32 data,uint32 field, std::set<uint32>& guids)
 {
     Field* fields = result->Fetch();
-    std::string dataStr = fields[data].GetCppString();
+    std::string dataStr = fields[data].GetString();
     uint32 guid = atoi(gettoknth(dataStr, field).c_str());
     if (guid)
         guids.insert(guid);
@@ -581,7 +581,7 @@ DumpReturn PlayerDumpReader::LoadDump(const std::string& file, uint32 account, s
                 // item, owner, data field:item, owner guid
                 if (!changeGuid(line, 1, items, sObjectMgr.m_hiItemGuid))
                    ROLLBACK(DUMP_FILE_BROKEN);              // item_instance.guid update
-                if (!changenth(line, 2, newguid))           // item_instance.owner_guid update
+                if (!changenth(line, 3, newguid))           // item_instance.owner_guid update
                     ROLLBACK(DUMP_FILE_BROKEN);
                 break;
             }
@@ -597,7 +597,8 @@ DumpReturn PlayerDumpReader::LoadDump(const std::string& file, uint32 account, s
             {
                 //store a map of old pet id to new inserted pet id for use by type 5 tables
                 snprintf(currpetid, 20, "%s", getnth(line, 1).c_str());
-                if (strlen(lastpetid) == 0) snprintf(lastpetid, 20, "%s", currpetid);
+                if (*lastpetid == '\0')
+                    snprintf(lastpetid, 20, "%s", currpetid);
                 if (strcmp(lastpetid,currpetid) != 0)
                 {
                     snprintf(newpetid, 20, "%d", sObjectMgr.GeneratePetNumber());

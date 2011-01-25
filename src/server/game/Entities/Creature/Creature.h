@@ -68,6 +68,8 @@ enum CreatureFlagsExtra
 #define MAX_KILL_CREDIT 2
 #define CREATURE_REGEN_INTERVAL 2 * IN_MILLISECONDS
 
+#define MAX_CREATURE_QUEST_ITEMS 6
+
 // from `creature_template` table
 struct CreatureInfo
 {
@@ -133,7 +135,7 @@ struct CreatureInfo
     float   ModMana;
     float   ModArmor;
     bool    RacialLeader;
-    uint32  questItems[6];
+    uint32  questItems[MAX_CREATURE_QUEST_ITEMS];
     uint32  movementId;
     bool    RegenHealth;
     uint32  equipmentId;
@@ -247,6 +249,9 @@ struct CreatureData
     bool  is_dead;
     uint8 movementType;
     uint8 spawnMask;
+    uint32 npcflag;
+    uint32 unit_flags;                                      // enum UnitFlags mask values
+    uint32 dynamicflags;
     bool dbData;
 };
 
@@ -381,12 +386,12 @@ typedef UNORDERED_MAP<uint32 /*spellid*/, TrainerSpell> TrainerSpellMap;
 struct TrainerSpellData
 {
     TrainerSpellData() : trainerType(0) {}
+    ~TrainerSpellData() { spellList.clear(); }
 
     TrainerSpellMap spellList;
     uint32 trainerType;                                     // trainer type based at trainer spells, can be different from creature_template value.
                                                             // req. for correct show non-prof. trainers like weaponmaster, allowed values 0 and 2.
     TrainerSpell const* Find(uint32 spell_id) const;
-    void Clear() { spellList.clear(); }
 };
 
 typedef std::map<uint32,time_t> CreatureSpellCooldowns;
@@ -670,6 +675,8 @@ class Creature : public Unit, public GridObject<Creature>
 
         void SetGUIDTransport(uint32 guid) { guid_transport=guid; }
         uint32 GetGUIDTransport() { return guid_transport; }
+
+        void FarTeleportTo(Map* map, float X, float Y, float Z, float O);
     protected:
         bool CreateFromProto(uint32 guidlow, uint32 Entry, uint32 vehId, uint32 team, const CreatureData *data = NULL);
         bool InitEntry(uint32 entry, uint32 team=ALLIANCE, const CreatureData* data=NULL);
@@ -726,6 +733,7 @@ class Creature : public Unit, public GridObject<Creature>
 
         //Formation var
         CreatureGroup *m_formation;
+        bool TriggerJustRespawned;
 };
 
 class AssistDelayEvent : public BasicEvent

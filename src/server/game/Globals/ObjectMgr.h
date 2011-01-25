@@ -577,7 +577,7 @@ class ObjectMgr
 
         typedef std::set<Group *> GroupSet;
 
-        typedef UNORDERED_MAP<uint32, Guild *> GuildMap;
+        typedef std::vector <Guild *> GuildMap;
 
         typedef UNORDERED_MAP<uint32, ArenaTeam*> ArenaTeamMap;
 
@@ -614,11 +614,11 @@ class ObjectMgr
         void RemoveGroup(Group* group) { mGroupSet.erase(group); }
 
         Guild* GetGuildByLeader(uint64 const&guid) const;
-        Guild* GetGuildById(uint32 GuildId) const;
+        Guild* GetGuildById(uint32 guildId) const;
         Guild* GetGuildByName(const std::string& guildname) const;
-        std::string GetGuildNameById(uint32 GuildId) const;
-        void AddGuild(Guild* guild);
-        void RemoveGuild(uint32 Id);
+        std::string GetGuildNameById(uint32 guildId) const;
+        void AddGuild(Guild* pGuild);
+        void RemoveGuild(uint32 guildId);
 
         ArenaTeam* GetArenaTeamById(uint32 arenateamid) const;
         ArenaTeam* GetArenaTeamByName(const std::string& arenateamname) const;
@@ -632,6 +632,7 @@ class ObjectMgr
         CreatureModelInfo const *GetCreatureModelInfo(uint32 modelid);
         CreatureModelInfo const* GetCreatureModelRandomGender(uint32 display_id);
         uint32 ChooseDisplayId(uint32 team, const CreatureInfo *cinfo, const CreatureData *data = NULL);
+        static void ChooseCreatureFlags(const CreatureInfo *cinfo, uint32& npcflag, uint32& unit_flags, uint32& dynamicflags, const CreatureData *data = NULL);
         EquipmentInfo const *GetEquipmentInfo(uint32 entry);
         static CreatureDataAddon const *GetCreatureAddon(uint32 lowguid)
         {
@@ -800,11 +801,6 @@ class ObjectMgr
         }
 
         void LoadGuilds();
-    
-        void LoadGuildMemberProfessions(std::vector<Guild*>& GuildVector, QueryResult& result);
-        void LoadGuildEvents(std::vector<Guild*>& GuildVector, QueryResult& result);
-        void LoadGuildBankEvents(std::vector<Guild*>& GuildVector, QueryResult& result);
-        void LoadGuildBanks(std::vector<Guild*>& GuildVector, QueryResult& result, PreparedQueryResult& itemResult);
         void LoadArenaTeams();
         void LoadGroups();
         void LoadQuests();
@@ -934,8 +930,7 @@ class ObjectMgr
 
         void LoadVendors();
         void LoadTrainerSpell();
-        bool AddSpellToTrainer(uint32 entry, uint32 spell, Field *fields, std::set<uint32> *skip_trainers, std::set<uint32> *talentIds);
-        int  LoadReferenceTrainer(uint32 trainer, int32 spell, std::set<uint32> *skip_trainers, std::set<uint32> *talentIds);
+        void AddSpellToTrainer(uint32 entry, uint32 spell, uint32 spellCost, uint32 reqSkill, uint32 reqSkillValue, uint32 reqLevel);
 
         std::string GeneratePetName(uint32 entry);
         uint32 GetBaseXP(uint8 level);
@@ -1088,12 +1083,14 @@ class ObjectMgr
             return mCreatureRespawnTimes[MAKE_PAIR64(loguid,instance)];
         }
         void SaveCreatureRespawnTime(uint32 loguid, uint32 instance, time_t t);
+        void RemoveCreatureRespawnTime(uint32 loguid, uint32 instance);
         time_t GetGORespawnTime(uint32 loguid, uint32 instance)
         {
             ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, m_GORespawnTimesMtx, 0);
             return mGORespawnTimes[MAKE_PAIR64(loguid,instance)];
         }
         void SaveGORespawnTime(uint32 loguid, uint32 instance, time_t t);
+        void RemoveGORespawnTime(uint32 loguid, uint32 instance);
         void DeleteRespawnTimeForInstance(uint32 instance);
 
         // grid objects

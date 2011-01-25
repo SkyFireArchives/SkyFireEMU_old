@@ -27,7 +27,6 @@
 #include "World.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
-#include "MD5.h"
 #include "DatabaseEnv.h"
 
 #include "ArenaTeam.h"
@@ -378,10 +377,10 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
         return;
     }
 
-    QueryResult resultacct = LoginDatabase.PQuery("SELECT SUM(numchars) FROM realmcharacters WHERE acctid = '%d'", GetAccountId());
+    QueryResult resultacct = LoginDatabase.PQuery("SELECT IFNULL(SUM(numchars), 0) FROM realmcharacters WHERE acctid = '%d'", GetAccountId());
     if (resultacct)
     {
-        Field *fields=resultacct->Fetch();
+        Field *fields = resultacct->Fetch();
         uint32 acctcharcount = fields[0].GetUInt32();
 
         if (acctcharcount >= sWorld.getIntConfig(CONFIG_CHARACTERS_PER_ACCOUNT))
@@ -656,7 +655,7 @@ void WorldSession::HandleCharDeleteOpcode(WorldPacket & recv_data)
     {
         Field *fields = result->Fetch();
         accountId = fields[0].GetUInt32();
-        name = fields[1].GetCppString();
+        name = fields[1].GetString();
     }
 
     // prevent deleting other players' characters using cheating tools
@@ -791,8 +790,9 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
     //QueryResult *result = CharacterDatabase.PQuery("SELECT guildid,rank FROM guild_member WHERE guid = '%u'",pCurrChar->GetGUIDLow());
     if (PreparedQueryResult resultGuild = holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADGUILD))
     {
-        pCurrChar->SetInGuild(resultGuild->GetUInt32(0));
-        pCurrChar->SetRank(resultGuild->GetUInt8(1));
+        Field* fields = resultGuild->Fetch();
+        pCurrChar->SetInGuild(fields[0].GetUInt32());
+        pCurrChar->SetRank(fields[1].GetUInt8());
     }
     else if (pCurrChar->GetGuildId())                        // clear guild related fields in case wrong data about non existed membership
     {
@@ -802,32 +802,12 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
 
     if (pCurrChar->GetGuildId() != 0)
     {
-        Guild* guild = sObjectMgr.GetGuildById(pCurrChar->GetGuildId());
-        if (guild)
-        {
-            data.Initialize(SMSG_GUILD_EVENT, (1+1+guild->GetMOTD().size()+1));
-            data << uint8(GE_MOTD);
-            data << uint8(2);
-            data << guild->GetMOTD();
-            data << uint8(0);
-            SendPacket(&data);
-            sLog.outStaticDebug("WORLD: Sent guild-motd (SMSG_GUILD_EVENT)");
-
-            guild->DisplayGuildBankTabsInfo(this);
-
-            guild->BroadcastEvent(GE_SIGNED_ON, pCurrChar->GetGUID(), 1, pCurrChar->GetName(), "", "");
-            
-            WorldPacket data2(SMSG_GUILD_EVENT, 1+1+std::string(pCurrChar->GetName()).size()+8);
-            data2 << uint8(GE_SIGNED_ON);
-            data2 << uint8(1);
-            data2 << pCurrChar->GetName();
-            data2 << uint64(pCurrChar->GetGUID());
-            SendPacket(&data2);
-        }
+        if (Guild* pGuild = sObjectMgr.GetGuildById(pCurrChar->GetGuildId()))
+            pGuild->SendLoginInfo(this);
         else
         {
             // remove wrong guild data
-            sLog.outError("Player %s (GUID: %u) marked as member not existed guild (id: %u), removing guild membership for player.",pCurrChar->GetName(),pCurrChar->GetGUIDLow(),pCurrChar->GetGuildId());
+            sLog.outError("Player %s (GUID: %u) marked as member of not existing guild (id: %u), removing guild membership for player.",pCurrChar->GetName(),pCurrChar->GetGUIDLow(),pCurrChar->GetGuildId());
             pCurrChar->SetInGuild(0);
         }
     }
@@ -938,7 +918,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
     if (sWorld.IsShutdowning())
         sWorld.ShutdownMsg(true,pCurrChar);
 
-    if (sWorld.getBoolConfig(CONFIG_ALL_TAXI_PATHS))
+    if (pCurrChar)
         pCurrChar->SetTaxiCheater(true);
 
     if (pCurrChar->isGameMaster())
@@ -1025,13 +1005,13 @@ void WorldSession::HandleTutorialFlag(WorldPacket & recv_data)
 
 void WorldSession::HandleTutorialClear(WorldPacket & /*recv_data*/)
 {
-    for (int i = 0; i < 8; ++i)
+    for (int i = 0; i < MAX_CHARACTER_TUTORIAL_VALUES; ++i)
         SetTutorialInt(i, 0xFFFFFFFF);
 }
 
 void WorldSession::HandleTutorialReset(WorldPacket & /*recv_data*/)
 {
-    for (int i = 0; i < 8; ++i)
+    for (int i = 0; i < MAX_CHARACTER_TUTORIAL_VALUES; ++i)
         SetTutorialInt(i, 0x00000000);
 }
 
@@ -1126,7 +1106,7 @@ void WorldSession::HandleChangePlayerNameOpcodeCallBack(QueryResult result, std:
 
     uint32 guidLow = result->Fetch()[0].GetUInt32();
     uint64 guid = MAKE_NEW_GUID(guidLow, 0, HIGHGUID_PLAYER);
-    std::string oldname = result->Fetch()[1].GetCppString();
+    std::string oldname = result->Fetch()[1].GetString();
 
     CharacterDatabase.PExecute("UPDATE characters set name = '%s', at_login = at_login & ~ %u WHERE guid ='%u'", newname.c_str(), uint32(AT_LOGIN_RENAME), guidLow);
     CharacterDatabase.PExecute("DELETE FROM character_declinedname WHERE guid ='%u'", guidLow);
@@ -1377,7 +1357,7 @@ void WorldSession::HandleCharCustomize(WorldPacket& recv_data)
     CharacterDatabase.escape_string(newname);
     if (QueryResult result = CharacterDatabase.PQuery("SELECT name FROM characters WHERE guid ='%u'", GUID_LOPART(guid)))
     {
-        std::string oldname = result->Fetch()[0].GetCppString();
+        std::string oldname = result->Fetch()[0].GetString();
         std::string IP_str = GetRemoteAddress();
         sLog.outChar("Account: %d (IP: %s), Character[%s] (guid:%u) Customized to: %s", GetAccountId(), IP_str.c_str(), oldname.c_str(), GUID_LOPART(guid), newname.c_str());
     }
@@ -1503,6 +1483,7 @@ void WorldSession::HandleEquipmentSetUse(WorldPacket &recv_data)
 
 void WorldSession::HandleCharFactionOrRaceChange(WorldPacket& recv_data)
 {
+    // TODO: Move queries to prepared statements
     uint64 guid;
     std::string newname;
     uint8 gender, skin, face, hairStyle, hairColor, facialHair, race;
@@ -1787,7 +1768,7 @@ void WorldSession::HandleCharFactionOrRaceChange(WorldPacket& recv_data)
         {
             uint32 item_alliance = it->first;
             uint32 item_horde = it->second;
-            trans->PAppend("UPDATE `character_inventory` SET item_template = '%u' where item_template = '%u' AND guid = '%u'",
+            trans->PAppend("UPDATE `item_instance` ii, `character_inventory` ci SET ii.itemEntry = '%u' WHERE ii.itemEntry = '%u' AND ci.guid = '%u' AND ci.item = ii.guid",
                 team == BG_TEAM_ALLIANCE ? item_alliance : item_horde, team == BG_TEAM_ALLIANCE ? item_horde : item_alliance, guid);
         }
 

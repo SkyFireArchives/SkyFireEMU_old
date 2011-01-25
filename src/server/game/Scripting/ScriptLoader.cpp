@@ -445,7 +445,9 @@ void AddSC_boss_lord_marrowgar();       // Icecrown Citadel
 void AddSC_boss_lady_deathwhisper();
 void AddSC_boss_deathbringer_saurfang();
 void AddSC_boss_festergut();
+void AddSC_boss_rotface();
 void AddSC_boss_professor_putricide();
+void AddSC_boss_blood_prince_council();
 void AddSC_icecrown_citadel_teleport();
 void AddSC_instance_icecrown_citadel();
 
@@ -459,6 +461,7 @@ void AddSC_sholazar_basin();
 void AddSC_storm_peaks();
 void AddSC_zuldrak();
 void AddSC_crystalsong_forest();
+void AddSC_isle_of_conquest();
 
 //outland
 void AddSC_boss_exarch_maladaar();           //Auchindoun Auchenai Crypts
@@ -1104,7 +1107,9 @@ void AddNorthrendScripts()
     AddSC_boss_lady_deathwhisper();
     AddSC_boss_deathbringer_saurfang();
     AddSC_boss_festergut();
+    AddSC_boss_rotface();
     AddSC_boss_professor_putricide();
+    AddSC_boss_blood_prince_council();
     AddSC_icecrown_citadel_teleport();
     AddSC_instance_icecrown_citadel();
 
@@ -1118,6 +1123,7 @@ void AddNorthrendScripts()
     AddSC_storm_peaks();
     AddSC_zuldrak();
     AddSC_crystalsong_forest();
+    AddSC_isle_of_conquest();
 #endif
 }
 

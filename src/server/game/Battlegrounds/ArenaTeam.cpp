@@ -128,7 +128,7 @@ bool ArenaTeam::AddMember(const uint64& PlayerGuid)
         if (!result)
             return false;
 
-        plName = (*result)[0].GetCppString();
+        plName = (*result)[0].GetString();
         plClass = (*result)[1].GetUInt8();
 
         // check if player already in arenateam of that size
@@ -140,7 +140,14 @@ bool ArenaTeam::AddMember(const uint64& PlayerGuid)
     }
 
     plMMRating = sWorld.getIntConfig(CONFIG_ARENA_START_MATCHMAKER_RATING);
-    plPRating = sWorld.getIntConfig(CONFIG_ARENA_START_PERSONAL_RATING);
+    plPRating = 0;
+    
+    if (sWorld.getIntConfig(CONFIG_ARENA_START_PERSONAL_RATING) > 0)
+        plPRating = sWorld.getIntConfig(CONFIG_ARENA_START_PERSONAL_RATING);
+    else if (GetRating() >= 1000)
+        plPRating = 1000;
+
+    sWorld.getIntConfig(CONFIG_ARENA_START_PERSONAL_RATING);
 
     QueryResult result = CharacterDatabase.PQuery("SELECT matchmaker_rating FROM character_arena_stats WHERE guid='%u' AND slot='%u'", GUID_LOPART(PlayerGuid), GetSlot());
     if (result)
@@ -186,7 +193,7 @@ bool ArenaTeam::LoadArenaTeamFromDB(QueryResult arenaTeamDataResult)
     Field *fields = arenaTeamDataResult->Fetch();
 
     m_TeamId             = fields[0].GetUInt32();
-    m_Name               = fields[1].GetCppString();
+    m_Name               = fields[1].GetString();
     m_CaptainGuid        = MAKE_NEW_GUID(fields[2].GetUInt32(), 0, HIGHGUID_PLAYER);
     m_Type               = fields[3].GetUInt32();
     m_BackgroundColor    = fields[4].GetUInt32();
@@ -251,7 +258,7 @@ bool ArenaTeam::LoadMembersFromDB(QueryResult arenaTeamMembersResult)
         newmember.wins_week         = fields[3].GetUInt32();
         newmember.games_season      = fields[4].GetUInt32();
         newmember.wins_season       = fields[5].GetUInt32();
-        newmember.name              = fields[6].GetCppString();
+        newmember.name              = fields[6].GetString();
         newmember.Class             = fields[7].GetUInt8();
         newmember.personal_rating   = personalrating;
         newmember.matchmaker_rating = matchmakerrating;
@@ -644,6 +651,7 @@ int32 ArenaTeam::GetRatingMod(uint32 own_rating, uint32 enemy_rating, bool won, 
 
 int32 ArenaTeam::GetPersonalRatingMod(int32 base_rating, uint32 own_rating, uint32 enemy_rating)
 {
+    // max (2 * team rating gain/loss), min 0 gain/loss
     float chance = GetChanceAgainst(own_rating, enemy_rating);
     chance *= 2.0f;
     return (int32)ceil(float(base_rating) * chance);
@@ -654,7 +662,15 @@ void ArenaTeam::FinishGame(int32 mod)
     if (int32(m_stats.rating) + mod < 0)
         m_stats.rating = 0;
     else
+    {
         m_stats.rating += mod;
+        for (MemberList::iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
+            if (Player* member = ObjectAccessor::FindPlayer(itr->guid))
+            {
+                member->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HIGHEST_TEAM_RATING, m_stats.rating, m_Type);
+                member->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_REACH_TEAM_RATING, m_stats.rating, m_Type);
+            }
+    }
 
     m_stats.games_week += 1;
     m_stats.games_season += 1;
@@ -671,6 +687,7 @@ void ArenaTeam::FinishGame(int32 mod)
 int32 ArenaTeam::WonAgainst(uint32 againstRating)
 {
     // called when the team has won
+    // own team rating versus opponents matchmaker rating
     int32 mod = GetRatingMod(m_stats.rating, againstRating, true);
 
     // modify the team stats accordingly
@@ -685,6 +702,7 @@ int32 ArenaTeam::WonAgainst(uint32 againstRating)
 int32 ArenaTeam::LostAgainst(uint32 againstRating)
 {
     // called when the team has lost
+    // own team rating versus opponents matchmaker rating
     int32 mod = GetRatingMod(m_stats.rating, againstRating, false);
 
     // modify the team stats accordingly

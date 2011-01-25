@@ -26,6 +26,7 @@
 #include "Define.h"
 #include "Path.h"
 #include "Util.h"
+#include "Vehicle.h"
 
 #include <map>
 #include <set>
@@ -540,6 +541,8 @@ struct AreaTableEntry
     }
 };
 
+#define MAX_GROUP_AREA_IDS 6
+
 struct AreaGroupEntry
 {
     uint32  AreaGroupId;                                    // 0
@@ -836,14 +839,16 @@ struct FactionEntry
     int32       BaseRepValue[4];                            // 10-13    m_reputationBase
     uint32      ReputationFlags[4];                         // 14-17    m_reputationFlags
     uint32      team;                                       // 18       m_parentFactionID
-    //float     unk1;                                       // 19
-    //float     unk2;                                       // 20
-    //uint32    unk3                                        // 21
-    //uint32    unk4;                                       // 22
+    float       spilloverRateIn;                            // 19       Faction gains incoming rep * spilloverRateIn
+    float       spilloverRateOut;                           // 20       Faction outputs rep * spilloverRateOut as spillover reputation
+    uint32      spilloverMaxRankIn;                         // 21       The highest rank the faction will profit from incoming spillover
+    //uint32    spilloverRank_unk;                          // 22       It does not seem to be the max standing at which a faction outputs spillover ...so no idea
     DBCString name;                                         // 23       m_name_lang
     //DBCString description;                                // 24       m_description_lang
     //uint32                                                // 25                                                       // 56 string flags
 };
+
+#define MAX_FACTION_RELATIONS 4
 
 struct FactionTemplateEntry
 {
@@ -1113,7 +1118,9 @@ struct ItemDamageEntry
     float     Value[7];                                       // 1-7 multiplier for item quality
     uint32    Id2;                                            // 8 item level
 };
-    
+
+#define MAX_ITEM_EXTENDED_COST_REQUIREMENTS 5
+
 struct ItemExtendedCostEntry
 {
     uint32      ID;                                         // 0 extended-cost entry id
@@ -1137,6 +1144,8 @@ struct ItemLimitCategoryEntry
     uint32      mode;                                       // 3, 0 = have, 1 = equip (enum ItemLimitCategoryMode)
 };
 
+#define MAX_ITEM_ENCHANTMENT_EFFECTS 3
+
 struct ItemRandomPropertiesEntry
 {
     uint32    ID;                                           // 0        m_ID
@@ -1155,6 +1164,8 @@ struct ItemRandomSuffixEntry
 };
     
 #define MAX_ITEM_SET_ITEMS 10
+#define MAX_ITEM_SET_SPELLS 8
+
 struct ItemSetEntry
 {
     //uint32    id                                          // 0        m_ID
@@ -1275,6 +1286,16 @@ struct MovieEntry
     //DBCString filename;                                   // 1
     //uint32      unk1;                                     // 2 100 or 250
     //uint32      unk2;                                     // 3 4.0.0
+};
+
+#define MAX_OVERRIDE_SPELL 10
+
+struct OverrideSpellDataEntry
+{
+    uint32      id;                                         // 0
+    uint32      spellId[MAX_OVERRIDE_SPELL];                // 1-10
+    //uint32      unk0;                                     // 11
+    //uint32      unk0;                                     // 12
 };
 
 struct PvPDifficultyEntry
@@ -1468,6 +1489,7 @@ struct SoundEntriesEntry
 
 #define MAX_SPELL_EFFECTS 3
 #define MAX_EFFECT_MASK 7
+#define MAX_SPELL_REAGENTS 8
 
 // SpellAuraOptions.dbc
 struct SpellAuraOptionsEntry
@@ -2069,6 +2091,7 @@ struct SummonPropertiesEntry
 
 #define MAX_TALENT_RANK 5
 #define MAX_PET_TALENT_RANK 3                               // use in calculations, expected <= MAX_TALENT_RANK
+#define MAX_TALENT_TABS 3
 
 struct TalentEntry
 {
@@ -2149,6 +2172,8 @@ struct TotemCategoryEntry
     uint32    categoryType;                                 // 2 (one for specialization)
     uint32    categoryMask;                                 // 3 (compatibility mask for same type: different for totems, compatible from high to low for rods)
 };
+
+#define MAX_VEHICLE_SEATS 8
 
 struct VehicleEntry
 {
@@ -2240,7 +2265,7 @@ struct VehicleSeatEntry
     //uint32 unk2;                                          // 64 4.0.0
     //uint32 unk3;                                          // 65 4.0.1
 
-    bool IsUsable() const { return m_flags & 0x2000000; }
+    bool IsUsable() const { return m_flags & VEHICLE_SEAT_FLAG_USABLE; }
 };
 
 struct WMOAreaTableEntry

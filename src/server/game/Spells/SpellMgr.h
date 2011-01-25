@@ -253,7 +253,7 @@ inline float GetSpellMaxRange(uint32 id, bool positive)
 
 inline bool IsSpellHaveEffect(SpellEntry const *spellInfo, SpellEffects effect)
 {
-    for (int i= 0; i < 3; ++i)
+    for (int i= 0; i < MAX_SPELL_EFFECTS; ++i)
         if (SpellEffects(spellInfo->Effect[i]) == effect)
             return true;
     return false;
@@ -261,7 +261,7 @@ inline bool IsSpellHaveEffect(SpellEntry const *spellInfo, SpellEffects effect)
 
 inline bool IsSpellHaveAura(SpellEntry const *spellInfo, AuraType aura)
 {
-    for (int i= 0; i < 3; ++i)
+    for (int i= 0; i < MAX_SPELL_EFFECTS; ++i)
         if (AuraType(spellInfo->EffectApplyAuraName[i]) == aura)
             return true;
     return false;
@@ -389,7 +389,7 @@ inline bool IsPositionTarget(uint32 target)
 
 inline bool IsSpellWithCasterSourceTargetsOnly(SpellEntry const* spellInfo)
 {
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < MAX_SPELL_EFFECTS; ++i)
     {
         uint32 targetA = spellInfo->EffectImplicitTargetA[i];
         if (targetA && !IsCasterSourceTarget(targetA))
@@ -412,6 +412,13 @@ inline bool IsAreaOfEffectSpell(SpellEntry const *spellInfo)
     if (IsAreaEffectTarget[spellInfo->EffectImplicitTargetA[1]] || IsAreaEffectTarget[spellInfo->EffectImplicitTargetB[1]])
         return true;
     if (IsAreaEffectTarget[spellInfo->EffectImplicitTargetA[2]] || IsAreaEffectTarget[spellInfo->EffectImplicitTargetB[2]])
+        return true;
+    return false;
+}
+
+inline bool IsAreaOfEffectSpellEffect(SpellEntry const *spellInfo, uint8 effIndex)
+{
+    if (IsAreaEffectTarget[spellInfo->EffectImplicitTargetA[effIndex]] || IsAreaEffectTarget[spellInfo->EffectImplicitTargetB[effIndex]])
         return true;
     return false;
 }
@@ -521,7 +528,7 @@ inline uint32 GetAllSpellMechanicMask(SpellEntry const* spellInfo)
     uint32 mask = 0;
     if (spellInfo->Mechanic)
         mask |= 1<<spellInfo->Mechanic;
-    for (int i=0; i< 3; ++i)
+    for (int i = 0; i < MAX_SPELL_EFFECTS; ++i)
         if (spellInfo->Effect[i] && spellInfo->EffectMechanic[i])
             mask |= 1<<spellInfo->EffectMechanic[i];
     return mask;
@@ -557,53 +564,53 @@ enum ProcFlags
 {
    PROC_FLAG_NONE                            = 0x00000000,
 
-   PROC_FLAG_KILLED                          = 0x00000001,    // 00 Killed by agressor
+   PROC_FLAG_KILLED                          = 0x00000001,    // 00 Killed by agressor - not sure about this flag
    PROC_FLAG_KILL                            = 0x00000002,    // 01 Kill target (in most cases need XP/Honor reward)
 
-   PROC_FLAG_SUCCESSFUL_MELEE_HIT            = 0x00000004,    // 02 Successful melee auto attack
-   PROC_FLAG_TAKEN_MELEE_HIT                 = 0x00000008,    // 03 Taken damage from melee auto attack hit
+   PROC_FLAG_DONE_MELEE_AUTO_ATTACK          = 0x00000004,    // 02 Done melee auto attack
+   PROC_FLAG_TAKEN_MELEE_AUTO_ATTACK         = 0x00000008,    // 03 Taken melee auto attack
 
-   PROC_FLAG_SUCCESSFUL_MELEE_SPELL_HIT      = 0x00000010,    // 04 Successful attack by Spell that use melee weapon
-   PROC_FLAG_TAKEN_MELEE_SPELL_HIT           = 0x00000020,    // 05 Taken damage by Spell that use melee weapon
+   PROC_FLAG_DONE_SPELL_MELEE_DMG_CLASS      = 0x00000010,    // 04 Done attack by Spell that has dmg class melee
+   PROC_FLAG_TAKEN_SPELL_MELEE_DMG_CLASS     = 0x00000020,    // 05 Taken attack by Spell that has dmg class melee
 
-   PROC_FLAG_SUCCESSFUL_RANGED_HIT           = 0x00000040,    // 06 Successful Ranged auto attack
-   PROC_FLAG_TAKEN_RANGED_HIT                = 0x00000080,    // 07 Taken damage from ranged auto attack
+   PROC_FLAG_DONE_RANGED_AUTO_ATTACK         = 0x00000040,    // 06 Done ranged auto attack
+   PROC_FLAG_TAKEN_RANGED_AUTO_ATTACK        = 0x00000080,    // 07 Taken ranged auto attack
 
-   PROC_FLAG_SUCCESSFUL_RANGED_SPELL_HIT     = 0x00000100,    // 08 Successful Ranged attack by Spell that use ranged weapon
-   PROC_FLAG_TAKEN_RANGED_SPELL_HIT          = 0x00000200,    // 09 Taken damage by Spell that use ranged weapon
+   PROC_FLAG_DONE_SPELL_RANGED_DMG_CLASS     = 0x00000100,    // 08 Done attack by Spell that has dmg class ranged
+   PROC_FLAG_TAKEN_SPELL_RANGED_DMG_CLASS    = 0x00000200,    // 09 Taken attack by Spell that has dmg class ranged
 
-   PROC_FLAG_SUCCESSFUL_POSITIVE_SPELL_HIT   = 0x00000400,    // 10 Successful Positive spell hit
-   PROC_FLAG_TAKEN_POSITIVE_SPELL            = 0x00000800,    // 11 Taken Positive spell hit
-
-   PROC_FLAG_SUCCESSFUL_NEGATIVE_SPELL_HIT   = 0x00001000,    // 12 Successful Negative spell hit
-   PROC_FLAG_TAKEN_NEGATIVE_SPELL_HIT        = 0x00002000,    // 13 Taken Negative spell hit
-
-   PROC_FLAG_SUCCESSFUL_POSITIVE_MAGIC_SPELL = 0x00004000,    // 14 Successful Positive Magic spell hit
-   PROC_FLAG_TAKEN_POSITIVE_MAGIC_SPELL      = 0x00008000,    // 15 Taken Positive Magic spell hit
-
-   PROC_FLAG_SUCCESSFUL_NEGATIVE_MAGIC_SPELL = 0x00010000,    // 16 Successful Negative Magic spell hit
-   PROC_FLAG_TAKEN_NEGATIVE_MAGIC_SPELL      = 0x00020000,    // 17 Taken Negative Magic spell hit
-
-   PROC_FLAG_ON_DO_PERIODIC                  = 0x00040000,    // 18 Successful do periodic (damage / healing, determined from 14,16 flags)
-   PROC_FLAG_ON_TAKE_PERIODIC                = 0x00080000,    // 19 Taken spell periodic (damage / healing, determined from 15,17 flags)
-
-   PROC_FLAG_TAKEN_ANY_DAMAGE                = 0x00100000,    // 20 Taken any damage
-   PROC_FLAG_ON_TRAP_ACTIVATION              = 0x00200000,    // 21 On trap activation (possibly needs name change to ON_GAMEOBJECT_CAST or USE)
-
-   PROC_FLAG_TAKEN_OFFHAND_HIT               = 0x00400000,    // 22 Taken off-hand melee attacks (this is probably wrong)
-   PROC_FLAG_SUCCESSFUL_OFFHAND_HIT          = 0x00800000,    // 23 Successful off-hand melee attacks (this is probably wrong)
+   PROC_FLAG_DONE_SPELL_NONE_DMG_CLASS_POS   = 0x00000400,    // 10 Done positive spell that has dmg class none
+   PROC_FLAG_TAKEN_SPELL_NONE_DMG_CLASS_POS  = 0x00000800,    // 11 Taken positive spell that has dmg class none
+ 
+   PROC_FLAG_DONE_SPELL_NONE_DMG_CLASS_NEG   = 0x00001000,    // 12 Done negative spell that has dmg class none
+   PROC_FLAG_TAKEN_SPELL_NONE_DMG_CLASS_NEG  = 0x00002000,    // 13 Taken negative spell that has dmg class none
+ 
+   PROC_FLAG_DONE_SPELL_MAGIC_DMG_CLASS_POS  = 0x00004000,    // 14 Done positive spell that has dmg class magic
+   PROC_FLAG_TAKEN_SPELL_MAGIC_DMG_CLASS_POS = 0x00008000,    // 15 Taken positive spell that has dmg class magic
+ 
+   PROC_FLAG_DONE_SPELL_MAGIC_DMG_CLASS_NEG  = 0x00010000,    // 16 Done negative spell that has dmg class magic
+   PROC_FLAG_TAKEN_SPELL_MAGIC_DMG_CLASS_NEG = 0x00020000,    // 17 Taken negative spell that has dmg class magic
+ 
+   PROC_FLAG_DONE_PERIODIC                   = 0x00040000,    // 18 Successful do periodic (damage / healing)
+   PROC_FLAG_TAKEN_PERIODIC                  = 0x00080000,    // 19 Taken spell periodic (damage / healing)
+ 
+   PROC_FLAG_TAKEN_DAMAGE                    = 0x00100000,    // 20 Taken any damage
+   PROC_FLAG_DONE_TRAP_ACTIVATION            = 0x00200000,    // 21 On trap activation (possibly needs name change to ON_GAMEOBJECT_CAST or USE)
+ 
+   PROC_FLAG_DONE_MAINHAND_ATTACK            = 0x00400000,    // 22 Done main-hand melee attacks (spell and autoattack)
+   PROC_FLAG_DONE_OFFHAND_ATTACK             = 0x00800000,    // 23 Done off-hand melee attacks (spell and autoattack)
 
    PROC_FLAG_DEATH                           = 0x01000000     // 24 Died in any way
 };
 
-#define MELEE_BASED_TRIGGER_MASK (PROC_FLAG_SUCCESSFUL_MELEE_HIT        | \
-                                  PROC_FLAG_TAKEN_MELEE_HIT             | \
-                                  PROC_FLAG_SUCCESSFUL_MELEE_SPELL_HIT  | \
-                                  PROC_FLAG_TAKEN_MELEE_SPELL_HIT       | \
-                                  PROC_FLAG_SUCCESSFUL_RANGED_HIT       | \
-                                  PROC_FLAG_TAKEN_RANGED_HIT            | \
-                                  PROC_FLAG_SUCCESSFUL_RANGED_SPELL_HIT | \
-                                  PROC_FLAG_TAKEN_RANGED_SPELL_HIT)
+#define MELEE_BASED_TRIGGER_MASK (PROC_FLAG_DONE_MELEE_AUTO_ATTACK      | \
+                                  PROC_FLAG_TAKEN_MELEE_AUTO_ATTACK     | \
+                                  PROC_FLAG_DONE_SPELL_MELEE_DMG_CLASS  | \
+                                  PROC_FLAG_TAKEN_SPELL_MELEE_DMG_CLASS | \
+                                  PROC_FLAG_DONE_RANGED_AUTO_ATTACK     | \
+                                  PROC_FLAG_TAKEN_RANGED_AUTO_ATTACK    | \
+                                  PROC_FLAG_DONE_SPELL_RANGED_DMG_CLASS | \
+                                  PROC_FLAG_TAKEN_SPELL_RANGED_DMG_CLASS)
 
 enum ProcFlagsEx
 {
@@ -882,23 +889,30 @@ inline bool IsProfessionSkill(uint32 skill)
     return  IsPrimaryProfessionSkill(skill) || skill == SKILL_FISHING || skill == SKILL_COOKING || skill == SKILL_FIRST_AID;
 }
 
-#define SPELL_ATTR_CU_CONE_BACK         0x00000002
-#define SPELL_ATTR_CU_CONE_LINE         0x00000004
-#define SPELL_ATTR_CU_SHARE_DAMAGE      0x00000008
-#define SPELL_ATTR_CU_AURA_CC           0x00000040
-#define SPELL_ATTR_CU_DIRECT_DAMAGE     0x00000100
-#define SPELL_ATTR_CU_CHARGE            0x00000200
-#define SPELL_ATTR_CU_LINK_CAST         0x00000400
-#define SPELL_ATTR_CU_LINK_HIT          0x00000800
-#define SPELL_ATTR_CU_LINK_AURA         0x00001000
-#define SPELL_ATTR_CU_LINK_REMOVE       0x00002000
-#define SPELL_ATTR_CU_PICKPOCKET        0x00004000
-#define SPELL_ATTR_CU_EXCLUDE_SELF      0x00008000
-#define SPELL_ATTR_CU_NEGATIVE_EFF0     0x00010000
-#define SPELL_ATTR_CU_NEGATIVE_EFF1     0x00020000
-#define SPELL_ATTR_CU_NEGATIVE_EFF2     0x00040000
-#define SPELL_ATTR_CU_NEGATIVE          0x00070000
-#define SPELL_ATTR_CU_IGNORE_ARMOR      0x00080000
+enum SpellCustomAttributes
+{
+    SPELL_ATTR_CU_ENCHANT_PROC     = 0x00000001,
+    SPELL_ATTR_CU_CONE_BACK        = 0x00000002,
+    SPELL_ATTR_CU_CONE_LINE        = 0x00000004,
+    SPELL_ATTR_CU_SHARE_DAMAGE     = 0x00000008,
+    SPELL_ATTR_CU_NONE1            = 0x00000010,   // UNUSED
+    SPELL_ATTR_CU_NONE2            = 0x00000020,   // UNUSED
+    SPELL_ATTR_CU_AURA_CC          = 0x00000040,
+    SPELL_ATTR_CU_DIRECT_DAMAGE    = 0x00000100,
+    SPELL_ATTR_CU_CHARGE           = 0x00000200,
+    SPELL_ATTR_CU_LINK_CAST        = 0x00000400,
+    SPELL_ATTR_CU_LINK_HIT         = 0x00000800,
+    SPELL_ATTR_CU_LINK_AURA        = 0x00001000,
+    SPELL_ATTR_CU_LINK_REMOVE      = 0x00002000,
+    SPELL_ATTR_CU_PICKPOCKET       = 0x00004000,
+    SPELL_ATTR_CU_EXCLUDE_SELF     = 0x00008000,
+    SPELL_ATTR_CU_NEGATIVE_EFF0    = 0x00010000,
+    SPELL_ATTR_CU_NEGATIVE_EFF1    = 0x00020000,
+    SPELL_ATTR_CU_NEGATIVE_EFF2    = 0x00040000,
+    SPELL_ATTR_CU_IGNORE_ARMOR     = 0x00080000,
+
+    SPELL_ATTR_CU_NEGATIVE         = SPELL_ATTR_CU_NEGATIVE_EFF0 | SPELL_ATTR_CU_NEGATIVE_EFF1 | SPELL_ATTR_CU_NEGATIVE_EFF2,
+};
 
 typedef std::vector<uint32> SpellCustomAttribute;
 typedef std::vector<bool> EnchantCustomAttribute;
@@ -994,6 +1008,8 @@ struct SpellScaling
         canScale = true;
     }
 };
+
+bool IsPartOfSkillLine(uint32 skillId, uint32 spellId);
 
 class SpellMgr
 {
@@ -1147,10 +1163,10 @@ class SpellMgr
         SpellEntry const* GetSpellForDifficultyFromSpell(SpellEntry const* spell, Unit* Caster)
         {
             //spell never can be NULL in this case!
-            if (!Caster->ToCreature() || !Caster->ToCreature()->GetMap() ||  !Caster->ToCreature()->GetMap()->IsDungeon())
+            if (!Caster || !Caster->GetMap() ||  !Caster->GetMap()->IsDungeon())
                 return spell;
 
-            uint32 mode = uint32(Caster->ToCreature()->GetMap()->GetSpawnMode());
+            uint32 mode = uint32(Caster->GetMap()->GetSpawnMode());
             if (mode >= MAX_DIFFICULTY)
             {
                 sLog.outError("GetSpellForDifficultyFromSpell: Incorrect Difficulty for spell %u.", spell->Id);
@@ -1299,7 +1315,7 @@ class SpellMgr
 
         bool IsRankSpellDueToSpell(SpellEntry const *spellInfo_1,uint32 spellId_2) const;
         static bool canStackSpellRanks(SpellEntry const *spellInfo);
-        bool CanAurasStack(SpellEntry const *spellInfo_1, SpellEntry const *spellInfo_2, bool sameCaster) const;
+        bool CanAurasStack(Aura const *aura1, Aura const *aura2, bool sameCaster) const;
 
         SpellEntry const* SelectAuraRankForPlayerLevel(SpellEntry const* spellInfo, uint32 playerLevel) const;
 
@@ -1440,7 +1456,7 @@ class SpellMgr
 
         inline bool IsSpellWithCasterSourceTargetsOnly(SpellEntry const* spellInfo)
         {
-            for (int i = 0; i < 3; ++i)
+            for (int i = 0; i < MAX_SPELL_EFFECTS; ++i)
                 if (uint32 target = spellInfo->EffectImplicitTargetA[i])
                     if (!IsCasterSourceTarget(target))
                         return false;

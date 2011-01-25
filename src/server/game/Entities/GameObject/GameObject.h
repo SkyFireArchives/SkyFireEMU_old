@@ -29,12 +29,16 @@
 #include "LootMgr.h"
 #include "DatabaseEnv.h"
 
+class GameObjectAI;
+
 // GCC have alternative #pragma pack(N) syntax and old gcc version not support pack(push,N), also any gcc version not support it at some platform
 #if defined(__GNUC__)
 #pragma pack(1)
 #else
 #pragma pack(push,1)
 #endif
+
+#define MAX_GAMEOBJECT_QUEST_ITEMS 6
 
 // from `gameobject_template`
 struct GameObjectInfo
@@ -49,7 +53,7 @@ struct GameObjectInfo
     uint32  faction;
     uint32  flags;
     float   size;
-    uint32  questItems[6];
+    uint32  questItems[MAX_GAMEOBJECT_QUEST_ITEMS];
     union                                                   // different GO types have different data field
     {
         //0 GAMEOBJECT_TYPE_DOOR
@@ -120,7 +124,7 @@ struct GameObjectInfo
             uint32 serverOnly;                              //2
             uint32 large;                                   //3
             uint32 floatOnWater;                            //4
-            uint32 questID;                                 //5
+            int32 questID;                                  //5
         } _generic;
         //6 GAMEOBJECT_TYPE_TRAP
         struct
@@ -400,6 +404,7 @@ struct GameObjectInfo
             uint32 data[24];
         } raw;
     };
+    char const* AIName;
     uint32 ScriptId;
 
     // helpers
@@ -747,7 +752,11 @@ class GameObject : public WorldObject, public GridObject<GameObject>
 
         uint64 GetRotation() const { return m_rotation; }
         virtual uint32 GetScriptId() const { return GetGOInfo()->ScriptId; }
+        GameObjectAI* AI() const { return (GameObjectAI*)m_AI; }
+
+        std::string GetAIName() const;
     protected:
+        bool AIM_Initialize();
         uint32      m_spellId;
         time_t      m_respawnTime;                          // (secs) time of next respawn (or despawn if GO have owner()),
         uint32      m_respawnDelayTime;                     // (secs) if 0 then current GO state no dependent from timer
@@ -774,5 +783,6 @@ class GameObject : public WorldObject, public GridObject<GameObject>
         uint16 m_LootMode;                                  // bitmask, default LOOT_MODE_DEFAULT, determines what loot will be lootable
     private:
         void SwitchDoorOrButton(bool activate, bool alternative = false);
+        GameObjectAI* m_AI;
 };
 #endif

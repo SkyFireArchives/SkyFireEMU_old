@@ -29,6 +29,17 @@ class Unit;
 class Player;
 struct AISpellInfoType;
 
+// Default script texts
+enum GeneralScriptTexts
+{
+    DEFAULT_TEXT                = -1000000,
+    EMOTE_GENERIC_FRENZY_KILL   = -1000001,
+    EMOTE_GENERIC_FRENZY        = -1000002,
+    EMOTE_GENERIC_ENRAGED       = -1000003,
+    EMOTE_GENERIC_BERSERK       = -1000004,
+    EMOTE_GENERIC_BERSERK_RAID  = -1000005, // RaidBossEmote version of the previous one
+};
+
 //Selection method used by SelectTarget
 enum SelectAggroTarget
 {
@@ -37,6 +48,55 @@ enum SelectAggroTarget
     SELECT_TARGET_BOTTOMAGGRO,                              //Selects targets from bottom aggro to top
     SELECT_TARGET_NEAREST,
     SELECT_TARGET_FARTHEST,
+};
+
+// default predicate function to select target based on distance, player and/or aura criteria
+struct DefaultTargetSelector : public std::unary_function<Unit *, bool>
+{
+    const Unit *me;
+    float m_dist;
+    bool m_playerOnly;
+    int32 m_aura;
+
+    // pUnit: the reference unit
+    // dist: if 0: ignored, if > 0: maximum distance to the reference unit, if < 0: minimum distance to the reference unit
+    // playerOnly: self explaining
+    // aura: if 0: ignored, if > 0: the target shall have the aura, if < 0, the target shall NOT have the aura
+    DefaultTargetSelector(const Unit *pUnit, float dist, bool playerOnly, int32 aura) : me(pUnit), m_dist(dist), m_playerOnly(playerOnly), m_aura(aura) {}
+
+    bool operator() (const Unit *pTarget)
+    {
+        if (!me)
+            return false;
+
+        if (!pTarget)
+            return false;
+
+        if (m_playerOnly && (pTarget->GetTypeId() != TYPEID_PLAYER))
+            return false;
+
+        if (m_dist > 0.0f && !me->IsWithinCombatRange(pTarget, m_dist))
+            return false;
+
+        if (m_dist < 0.0f && me->IsWithinCombatRange(pTarget, -m_dist))
+            return false;
+
+        if (m_aura)
+        {
+            if (m_aura > 0)
+            {
+                if (!pTarget->HasAura(m_aura))
+                    return false;
+            }
+            else
+            {
+                if (pTarget->HasAura(-m_aura))
+                    return false;
+            }
+        }
+
+        return true;
+    }
 };
 
 class UnitAI
@@ -67,6 +127,20 @@ class UnitAI
 
         Unit* SelectTarget(SelectAggroTarget targetType, uint32 position = 0, float dist = 0.0f, bool playerOnly = false, int32 aura = 0);
         void SelectTargetList(std::list<Unit*> &targetList, uint32 num, SelectAggroTarget targetType, float dist = 0.0f, bool playerOnly = false, int32 aura = 0);
+
+        // Called at any Damage to any victim (before damage apply)
+        virtual void DamageDealt(Unit* /*victim*/, uint32& /*damage*/, DamageEffectType /*damageType*/) { }
+
+        // Called at any Damage from any attacker (before damage apply)
+        // Note: it for recalculation damage or special reaction at damage
+        // for attack reaction use AttackedBy called for not DOT damage in Unit::DealDamage also
+        virtual void DamageTaken(Unit* /*attacker*/, uint32& /*damage*/) {}
+
+        // Called when the creature receives heal
+        virtual void HealReceived(Unit* /*done_by*/, uint32& /*addhealth*/) {}
+
+        // Called when the unit heals
+        virtual void HealDone(Unit* /*done_to*/, uint32& /*addhealth*/) {}
 
         // Select the targets satifying the predicate.
         // predicate shall extend std::unary_function<Unit *, bool>
@@ -139,6 +213,14 @@ class UnitAI
 
         static AISpellInfoType *AISpellInfo;
         static void FillAISpellInfo();
+
+        virtual void sGossipHello(Player* /*player*/) {}
+        virtual void sGossipSelect(Player* /*player*/, uint32 /*sender*/, uint32 /*action*/) {}
+        virtual void sGossipSelectCode(Player* /*player*/, uint32 /*sender*/, uint32 /*action*/, const char* /*code*/) {}
+        virtual void sQuestAccept(Player* /*player*/, Quest const* /*quest*/) {}
+        virtual void sQuestSelect(Player* /*player*/, Quest const* /*quest*/) {}
+        virtual void sQuestComplete(Player* /*player*/, Quest const* /*quest*/) {}
+        virtual void sQuestReward(Player* /*player*/, Quest const* /*quest*/, uint32 /*opt*/) {}
 };
 
 class PlayerAI : public UnitAI

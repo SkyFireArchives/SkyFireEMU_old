@@ -20,7 +20,7 @@
 
 #include "Common.h"
 #include "QuestDef.h"
-#include "GameObject.h"
+#include "GameObjectAI.h"
 #include "ObjectMgr.h"
 #include "PoolMgr.h"
 #include "SpellMgr.h"
@@ -40,8 +40,9 @@
 #include "OutdoorPvPMgr.h"
 #include "BattlegroundAV.h"
 #include "ScriptMgr.h"
+#include "CreatureAISelector.h"
 
-GameObject::GameObject() : WorldObject(), m_goValue(new GameObjectValue)
+GameObject::GameObject() : WorldObject(), m_goValue(new GameObjectValue), m_AI(NULL)
 {
     m_objectType |= TYPEMASK_GAMEOBJECT;
     m_objectTypeId = TYPEID_GAMEOBJECT;
@@ -74,6 +75,20 @@ GameObject::~GameObject()
     delete m_goValue;
     //if (m_uint32Values)                                      // field array can be not exist if GameOBject not loaded
     //    CleanupsBeforeDelete();
+}
+
+bool GameObject::AIM_Initialize()
+{
+
+    m_AI = FactorySelector::SelectGameObjectAI(this);
+    if (!m_AI) return false;
+    m_AI->InitializeAI();
+    return true;
+}
+
+std::string GameObject::GetAIName() const
+{
+    return ObjectMgr::GetGameObjectInfo(GetEntry())->AIName;
 }
 
 void GameObject::CleanupsBeforeDelete(bool /*finalCleanup*/)
@@ -218,14 +233,21 @@ bool GameObject::Create(uint32 guidlow, uint32 name_id, Map *map, uint32 phaseMa
             SetGoAnimProgress(animprogress);
             break;
     }
-
     LastUsedScriptID = GetGOInfo()->ScriptId;
+    AIM_Initialize();
 
     return true;
 }
 
 void GameObject::Update(uint32 diff)
 {
+    if(!AI())
+    {
+        if (!AIM_Initialize())
+            sLog.outError("Could not initialize GameObjectAI");
+    } else
+        AI()->UpdateAI(diff);
+
     if (IS_MO_TRANSPORT(GetGUID()))
     {
         //((Transport*)this)->Update(p_time);
@@ -534,7 +556,6 @@ void GameObject::Update(uint32 diff)
             break;
         }
     }
-
     sScriptMgr.OnGameObjectUpdate(this, diff);
 }
 
@@ -709,7 +730,7 @@ bool GameObject::LoadFromDB(uint32 guid, Map *map)
             if (m_respawnTime && m_respawnTime <= time(NULL))
             {
                 m_respawnTime = 0;
-                sObjectMgr.SaveGORespawnTime(m_DBTableGuid,GetInstanceId(),0);
+                sObjectMgr.RemoveGORespawnTime(m_DBTableGuid, GetInstanceId());
             }
         }
     }
@@ -727,7 +748,7 @@ bool GameObject::LoadFromDB(uint32 guid, Map *map)
 
 void GameObject::DeleteFromDB()
 {
-    sObjectMgr.SaveGORespawnTime(m_DBTableGuid,GetInstanceId(),0);
+    sObjectMgr.RemoveGORespawnTime(m_DBTableGuid, GetInstanceId());
     sObjectMgr.DeleteGOData(m_DBTableGuid);
     WorldDatabase.PExecute("DELETE FROM gameobject WHERE guid = '%u'", m_DBTableGuid);
     WorldDatabase.PExecute("DELETE FROM game_event_gameobject WHERE guid = '%u'", m_DBTableGuid);
@@ -849,12 +870,15 @@ void GameObject::Respawn()
     if (m_spawnedByDefault && m_respawnTime > 0)
     {
         m_respawnTime = time(NULL);
-        sObjectMgr.SaveGORespawnTime(m_DBTableGuid,GetInstanceId(),0);
+        sObjectMgr.RemoveGORespawnTime(m_DBTableGuid, GetInstanceId());
     }
 }
 
 bool GameObject::ActivateToQuest(Player *pTarget) const
 {
+    if (pTarget->HasQuestForGO(GetEntry()))
+        return true;
+
     if (!sObjectMgr.IsGameObjectForQuests(GetEntry()))
         return false;
 
@@ -875,9 +899,15 @@ bool GameObject::ActivateToQuest(Player *pTarget) const
             }
             break;
         }
+        case GAMEOBJECT_TYPE_GENERIC:
+        {
+            if (GetGOInfo()->_generic.questID == -1 || pTarget->GetQuestStatus(GetGOInfo()->_generic.questID) == QUEST_STATUS_INCOMPLETE)
+                return true;
+            break;
+        }
         case GAMEOBJECT_TYPE_GOOBER:
         {
-            if (pTarget->GetQuestStatus(GetGOInfo()->goober.questId) == QUEST_STATUS_INCOMPLETE || GetGOInfo()->goober.questId == -1)
+            if (GetGOInfo()->goober.questId == -1 || pTarget->GetQuestStatus(GetGOInfo()->goober.questId) == QUEST_STATUS_INCOMPLETE)
                 return true;
             break;
         }
@@ -900,17 +930,15 @@ void GameObject::TriggeringLinkedGameObject(uint32 trapEntry, Unit* target)
 
     float range;
     SpellRangeEntry const * srentry = sSpellRangeStore.LookupEntry(trapSpell->rangeIndex);
-    //get owner to check hostility of GameObject
-    if (GetSpellMaxRangeForHostile(srentry) == GetSpellMaxRangeForHostile(srentry))
+    if (GetSpellMaxRangeForHostile(srentry) == GetSpellMaxRangeForFriend(srentry))
         range = GetSpellMaxRangeForHostile(srentry);
     else
-    {
+        // get owner to check hostility of GameObject
         if (Unit *owner = GetOwner())
             range = (float)owner->GetSpellMaxRangeForTarget(target, srentry);
         else
-            //if no owner assume that object is hostile to target
+            // if no owner assume that object is hostile to target
             range = GetSpellMaxRangeForHostile(srentry);
-    }
 
     // search nearest linked GO
     GameObject* trapGO = NULL;
@@ -1392,6 +1420,7 @@ void GameObject::Use(Unit* user)
                     return;
             }
 
+            user->RemoveAurasByType(SPELL_AURA_MOUNTED);
             spellId = info->spellcaster.spellId;
 
             AddUse();
@@ -1496,15 +1525,15 @@ void GameObject::Use(Unit* user)
                     {
                         case 179785:                        // Silverwing Flag
                             // check if it's correct bg
-                            if (bg->GetTypeID(true) == BATTLEGROUND_WS)
+                            if (bg->IsRandom() ? bg->GetTypeID(true) : bg->GetTypeID(false) == BATTLEGROUND_WS)
                                 bg->EventPlayerClickedOnFlag(player, this);
                             break;
                         case 179786:                        // Warsong Flag
-                            if (bg->GetTypeID(true) == BATTLEGROUND_WS)
+                            if (bg->IsRandom() ? bg->GetTypeID(true) : bg->GetTypeID(false) == BATTLEGROUND_WS)
                                 bg->EventPlayerClickedOnFlag(player, this);
                             break;
                         case 184142:                        // Netherstorm Flag
-                            if (bg->GetTypeID(true) == BATTLEGROUND_EY)
+                            if (bg->IsRandom() ? bg->GetTypeID(true) : bg->GetTypeID(false) == BATTLEGROUND_EY)
                                 bg->EventPlayerClickedOnFlag(player, this);
                             break;
                     }
@@ -1566,7 +1595,7 @@ void GameObject::CastSpell(Unit* target, uint32 spellId)
         return;
 
     bool self = false;
-    for (uint8 i = 0; i < 3; ++i)
+    for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
     {
         if (spellInfo->EffectImplicitTargetA[i] == TARGET_UNIT_CASTER)
         {

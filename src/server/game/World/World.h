@@ -71,18 +71,19 @@ enum ShutdownExitCode
 /// Timers for different object refresh rates
 enum WorldTimers
 {
-    WUPDATE_OBJECTS     = 0,
-    WUPDATE_SESSIONS    = 1,
-    WUPDATE_AUCTIONS    = 2,
-    WUPDATE_WEATHERS    = 3,
-    WUPDATE_UPTIME      = 4,
-    WUPDATE_CORPSES     = 5,
-    WUPDATE_EVENTS      = 6,
-    WUPDATE_CLEANDB     = 7,
-    WUPDATE_AUTOBROADCAST = 8,
-    WUPDATE_MAILBOXQUEUE = 9,
-    WUPDATE_DELETECHARS = 10,
-    WUPDATE_COUNT       = 11
+    WUPDATE_OBJECTS,
+    WUPDATE_SESSIONS,
+    WUPDATE_AUCTIONS,
+    WUPDATE_WEATHERS,
+    WUPDATE_UPTIME,
+    WUPDATE_CORPSES,
+    WUPDATE_EVENTS,
+    WUPDATE_CLEANDB,
+    WUPDATE_AUTOBROADCAST,
+    WUPDATE_MAILBOXQUEUE,
+    WUPDATE_DELETECHARS,
+    WUPDATE_PINGDB,
+    WUPDATE_COUNT
 };
 
 /// Configuration elements
@@ -306,19 +307,21 @@ enum WorldIntConfigs
     CONFIG_AUTOBROADCAST_CENTER,
     CONFIG_AUTOBROADCAST_INTERVAL,
     CONFIG_MAX_RESULTS_LOOKUP_COMMANDS,
+    CONFIG_DB_PING_INTERVAL,
     INT_CONFIG_VALUE_COUNT
 };
 
 /// Server rates
 enum Rates
 {
-    RATE_HEALTH=0,
+    RATE_HEALTH = 0,
     RATE_POWER_MANA,
     RATE_POWER_RAGE_INCOME,
     RATE_POWER_RAGE_LOSS,
     RATE_POWER_RUNICPOWER_INCOME,
     RATE_POWER_RUNICPOWER_LOSS,
     RATE_POWER_FOCUS,
+    RATE_POWER_ENERGY,
     RATE_SKILL_DISCOVERY,
     RATE_DROP_ITEM_POOR,
     RATE_DROP_ITEM_NORMAL,
@@ -509,6 +512,8 @@ struct CliCommandHolder
     ~CliCommandHolder() { delete[] m_command; }
 };
 
+typedef UNORDERED_MAP<uint32, WorldSession*> SessionMap;
+
 /// The World
 class World
 {
@@ -524,6 +529,7 @@ class World
         bool RemoveSession(uint32 id);
         /// Get the number of current active sessions
         void UpdateMaxSessionCounters();
+        const SessionMap& GetAllSessions() const { return m_sessions; }
         uint32 GetActiveAndQueuedSessionCount() const { return m_sessions.size(); }
         uint32 GetActiveSessionCount() const { return m_sessions.size() - m_QueuedPlayer.size(); }
         uint32 GetQueuedSessionCount() const { return m_QueuedPlayer.size(); }
@@ -564,7 +570,6 @@ class World
         bool RemoveQueuedPlayer(WorldSession* session);
         int32 GetQueuePos(WorldSession*);
         bool HasRecentlyDisconnected(WorldSession*);
-        uint32 GetQueueSize() const { return m_QueuedPlayer.size(); }
 
         /// \todo Actions on m_allowMovement still to be implemented
         /// Is movement allowed?
@@ -722,8 +727,8 @@ class World
 
         //used World DB version
         void LoadDBVersion();
-        char const* GetDBVersion() { return m_DBVersion.c_str(); }
-        char const* GetCreatureEventAIVersion() { return m_CreatureEventAIVersion.c_str(); }
+        char const* GetDBVersion() const { return m_DBVersion.c_str(); }
+        char const* GetCreatureEventAIVersion() const { return m_CreatureEventAIVersion.c_str(); }
 
         void RecordTimeDiff(const char * text, ...);
 
@@ -733,7 +738,7 @@ class World
 
         void ProcessStartEvent();
         void ProcessStopEvent();
-        bool GetEventKill() { return isEventKillStart; }
+        bool GetEventKill() const { return isEventKillStart; }
 
         bool isEventKillStart;
     protected:
@@ -767,7 +772,7 @@ class World
         uint32 m_updateTimeCount;
         uint32 m_currentTime;
 
-        typedef UNORDERED_MAP<uint32, WorldSession*> SessionMap;
+        //typedef UNORDERED_MAP<uint32, WorldSession*> SessionMap;
         SessionMap m_sessions;
         typedef UNORDERED_MAP<uint32, time_t> DisconnectMap;
         DisconnectMap m_disconnects;

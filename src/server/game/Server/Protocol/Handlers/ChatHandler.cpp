@@ -198,6 +198,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
                 switch(type)
                 {
                     case CHAT_MSG_PARTY:
+                    case CHAT_MSG_PARTY_LEADER:
                     case CHAT_MSG_RAID:
                     case CHAT_MSG_RAID_LEADER:
                     case CHAT_MSG_RAID_WARNING:
@@ -388,7 +389,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
                 {
                     sScriptMgr.OnPlayerChat(GetPlayer(), type, lang, msg, guild);
 
-                    guild->BroadcastToGuild(this, msg, lang == LANG_ADDON ? LANG_ADDON : LANG_UNIVERSAL);
+                    guild->BroadcastToGuild(this, false, msg, lang == LANG_ADDON ? LANG_ADDON : LANG_UNIVERSAL);
                 }
             }
 
@@ -417,7 +418,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
                 {
                     sScriptMgr.OnPlayerChat(GetPlayer(), type, lang, msg, guild);
 
-                    guild->BroadcastToOfficers(this, msg, lang == LANG_ADDON ? LANG_ADDON : LANG_UNIVERSAL);
+                    guild->BroadcastToGuild(this, true, msg, lang == LANG_ADDON ? LANG_ADDON : LANG_UNIVERSAL);
                 }
             }
             break;
@@ -637,7 +638,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandleEmoteOpcode(WorldPacket & recv_data)
 {
-    if (!GetPlayer()->isAlive())
+    if (!GetPlayer()->isAlive() || GetPlayer()->hasUnitState(UNIT_STAT_DIED)) 
         return;
 
     uint32 emote;
@@ -713,8 +714,11 @@ void WorldSession::HandleTextEmoteOpcode(WorldPacket & recv_data)
         case EMOTE_ONESHOT_NONE:
             break;
         default:
-            GetPlayer()->HandleEmoteCommand(emote_anim);
-            break;
+            // Only allow text-emotes for "dead" entities (feign death included)
+            if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+                break;
+             GetPlayer()->HandleEmoteCommand(emote_anim);
+             break;
     }
 
     Unit* unit = ObjectAccessor::GetUnit(*_player, guid);

@@ -970,22 +970,8 @@ bool ChatHandler::HandleNpcAddCommand(const char* args)
     {
         uint32 tguid = chr->GetTransport()->AddNPCPassenger(0, id, chr->GetTransOffsetX(), chr->GetTransOffsetY(), chr->GetTransOffsetZ(), chr->GetTransOffsetO());
         if (tguid > 0)
-        {
             WorldDatabase.PQuery("INSERT INTO creature_transport (guid, npc_entry, transport_entry,  TransOffsetX, TransOffsetY, TransOffsetZ, TransOffsetO) values (%u, %u, %f, %f, %f, %f, %u)", tguid, id, chr->GetTransport()->GetEntry(), chr->GetTransOffsetX(), chr->GetTransOffsetY(), chr->GetTransOffsetZ(), chr->GetTransOffsetO());
 
-            TransportCreatureProto *transportCreatureProto = new TransportCreatureProto;
-            transportCreatureProto->guid = tguid;
-            transportCreatureProto->npc_entry = id;
-            uint32 transportEntry = chr->GetTransport()->GetEntry();
-            transportCreatureProto->TransOffsetX = chr->GetTransOffsetX();
-            transportCreatureProto->TransOffsetY = chr->GetTransOffsetY();
-            transportCreatureProto->TransOffsetZ = chr->GetTransOffsetZ();
-            transportCreatureProto->TransOffsetO = chr->GetTransOffsetO();
-            transportCreatureProto->emote = 0;
-
-            sMapMgr.m_TransportNPCMap[transportEntry].insert(transportCreatureProto);
-            sMapMgr.m_TransportNPCs.insert(transportCreatureProto);
-        }
         return true;
     }
 
@@ -1983,10 +1969,10 @@ bool ChatHandler::HandleModifyMorphCommand(const char* args)
 //kick player
 bool ChatHandler::HandleKickPlayerCommand(const char *args)
 {
-/*    const char* kickName = strtok((char*)args, " ");
+    const char* kickName = strtok((char*)args, " ");
     char* kickReason = strtok(NULL, "\n");
-    std::string reason = "No Reason";
-    std::string kicker = "Console";
+    std::string reason = "No reason given";
+    std::string kicker = "CONSOLE";
     if (kickReason)
         reason = kickReason;
     if (m_session)
@@ -1994,15 +1980,18 @@ bool ChatHandler::HandleKickPlayerCommand(const char *args)
 
     if (!kickName)
     {
-        Player* player = getSelectedPlayer();
-        if (!player)
+        Player* target;
+        if (!extractPlayerTarget((char*)args,&target))
+            return false;
+
+        if (!target)
         {
-            SendSysMessage(LANG_NO_CHAR_SELECTED);
+            SendSysMessage(LANG_PLAYER_NOT_FOUND);
             SetSentErrorMessage(true);
             return false;
         }
 
-        if (player == m_session->GetPlayer())
+        if (m_session && target == m_session->GetPlayer())
         {
             SendSysMessage(LANG_COMMAND_KICKSELF);
             SetSentErrorMessage(true);
@@ -2010,19 +1999,15 @@ bool ChatHandler::HandleKickPlayerCommand(const char *args)
         }
 
         // check online security
-        if (HasLowerSecurity(player, 0))
+        if (HasLowerSecurity(target, 0))
             return false;
 
-        if (sWorld.getIntConfig(CONFIG_SHOW_KICK_IN_WORLD) == 1)
-        {
-            sWorld.SendWorldText(LANG_COMMAND_KICKMESSAGE, player->GetName(), kicker.c_str(), reason.c_str());
-        }
+        if (sWorld.getBoolConfig(CONFIG_SHOW_KICK_IN_WORLD))
+            sWorld.SendWorldText(LANG_COMMAND_KICKMESSAGE, target->GetName(), kicker.c_str(), reason.c_str());
         else
-        {
-            PSendSysMessage(LANG_COMMAND_KICKMESSAGE, player->GetName(), kicker.c_str(), reason.c_str());
-        }
+            PSendSysMessage(LANG_COMMAND_KICKMESSAGE, target->GetName(), kicker.c_str(), reason.c_str());
 
-        player->GetSession()->KickPlayer();
+        target->GetSession()->KickPlayer();
     }
     else
     {
@@ -2058,41 +2043,14 @@ bool ChatHandler::HandleKickPlayerCommand(const char *args)
 
         std::string nameLink = playerLink(name);
 
-        if (sWorld.KickPlayer(name))
-        {
-            if (sWorld.getIntConfig(CONFIG_SHOW_KICK_IN_WORLD) == 1)
-            {
-                sWorld.SendWorldText(LANG_COMMAND_KICKMESSAGE, nameLink.c_str(), kicker.c_str(), reason.c_str());
-            }
-            else
-            {
-                PSendSysMessage(LANG_COMMAND_KICKMESSAGE,nameLink.c_str());
-            }
-        }
+        if (sWorld.getBoolConfig(CONFIG_SHOW_KICK_IN_WORLD))
+            sWorld.SendWorldText(LANG_COMMAND_KICKMESSAGE, nameLink.c_str(), kicker.c_str(), reason.c_str());
         else
-        {
-            PSendSysMessage(LANG_COMMAND_KICKNOTFOUNDPLAYER,nameLink.c_str());
-            return false;
-        }
-    }*/
-    Player* target;
-    if (!extractPlayerTarget((char*)args,&target))
-        return false;
+            PSendSysMessage(LANG_COMMAND_KICKMESSAGE,nameLink.c_str());
 
-    if (m_session && target == m_session->GetPlayer())
-    {
-        SendSysMessage(LANG_COMMAND_KICKSELF);
-        SetSentErrorMessage(true);
-        return false;
+        player->GetSession()->KickPlayer();
     }
 
-    // check online security
-    if (HasLowerSecurity(target, 0))
-        return false;
-
-    // send before target pointer invalidate
-    PSendSysMessage(LANG_COMMAND_KICKMESSAGE,GetNameLink(target).c_str());
-    target->GetSession()->KickPlayer();
     return true;
 }
 
@@ -2222,17 +2180,17 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
     if (result)
     {
         Field* fields = result->Fetch();
-        username = fields[0].GetCppString();
+        username = fields[0].GetString();
         security = fields[1].GetUInt32();
-        email = fields[2].GetCppString();
+        email = fields[2].GetString();
 
         if (email.empty())
             email = "-";
 
         if (!m_session || m_session->GetSecurity() >= AccountTypes(security))
         {
-            last_ip = fields[3].GetCppString();
-            last_login = fields[4].GetCppString();
+            last_ip = fields[3].GetString();
+            last_login = fields[4].GetString();
         }
         else
         {
@@ -2540,7 +2498,7 @@ bool ChatHandler::HandleWpEventCommand(const char* args)
             a4 = fields[2].GetUInt32();
             a5 = fields[3].GetUInt32();
             a6 = fields[4].GetUInt32();
-            a7 = fields[5].GetString();
+            a7 = fields[5].GetCString();
             a8 = fields[6].GetFloat();
             a9 = fields[7].GetFloat();
             a10 = fields[8].GetFloat();
@@ -3075,7 +3033,7 @@ bool ChatHandler::HandleWpShowCommand(const char* args)
             {
                 wpCreature->SetDisplayId(target->GetDisplayId());
                 wpCreature->SetFloatValue(OBJECT_FIELD_SCALE_X, 0.5);
-                wpCreature->SetLevel(point > MAX_LEVEL ? MAX_LEVEL : point);
+                wpCreature->SetLevel(point > STRONG_MAX_LEVEL ? STRONG_MAX_LEVEL : point);
             }
         }
         while (result->NextRow());
@@ -3797,7 +3755,7 @@ bool ChatHandler::HandleLearnAllRecipesCommand(const char* args)
         if (!Utf8FitTo(name, wnamepart))
         {
             loc = 0;
-            for (; loc < MAX_LOCALE; ++loc)
+            for (; loc < TOTAL_LOCALES; ++loc)
             {
                 if (loc == GetSessionDbcLocale())
                     continue;
@@ -3811,7 +3769,7 @@ bool ChatHandler::HandleLearnAllRecipesCommand(const char* args)
             }
         }
 
-        if (loc < MAX_LOCALE)
+        if (loc < TOTAL_LOCALES)
         {
             targetSkillInfo = skillInfo;
             break;
@@ -3904,7 +3862,7 @@ bool ChatHandler::LookupPlayerSearchCommand(QueryResult result, int32 limit)
 
         Field* fields = result->Fetch();
         uint32 acc_id = fields[0].GetUInt32();
-        std::string acc_name = fields[1].GetCppString();
+        std::string acc_name = fields[1].GetString();
 
         QueryResult chars = CharacterDatabase.PQuery("SELECT guid,name FROM characters WHERE account = '%u'", acc_id);
         if (chars)
@@ -3918,7 +3876,7 @@ bool ChatHandler::LookupPlayerSearchCommand(QueryResult result, int32 limit)
             {
                 Field* charfields = chars->Fetch();
                 guid = charfields[0].GetUInt64();
-                name = charfields[1].GetCppString();
+                name = charfields[1].GetString();
 
                 PSendSysMessage(LANG_LOOKUP_PLAYER_CHARACTER,name.c_str(),guid);
                 ++i;

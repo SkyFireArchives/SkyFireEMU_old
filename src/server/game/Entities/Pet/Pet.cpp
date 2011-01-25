@@ -253,20 +253,18 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petentry, uint32 petnumber, bool c
     }
 
     SetUInt32Value(UNIT_FIELD_PET_NAME_TIMESTAMP, uint32(time(NULL))); // cast can't be helped here
-    SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, fields[5].GetUInt32());
     SetCreatorGUID(owner->GetGUID());
 
-    SetReactState(ReactStates(fields[6].GetUInt8()));
-
-    SetCanModifyStats(true);
-    SynchronizeLevelWithOwner();
     InitStatsForLevel(petlevel);
+    SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, fields[5].GetUInt32());
+
+    SynchronizeLevelWithOwner();
+
+    SetReactState(ReactStates(fields[6].GetUInt8()));
+    SetCanModifyStats(true);
 
     if (getPetType() == SUMMON_PET && !current)              //all (?) summon pets come with full health when called, but not when they are current
-    {
-        SetFullHealth();
         SetPower(POWER_MANA, GetMaxPower(POWER_MANA));
-    }
     else
     {
         uint32 savedhealth = fields[10].GetUInt32();
@@ -308,7 +306,7 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petentry, uint32 petnumber, bool c
     // load action bar, if data broken will fill later by default spells.
     if (!is_temporary_summoned)
     {
-        m_charmInfo->LoadPetActionBar(fields[13].GetCppString());
+        m_charmInfo->LoadPetActionBar(fields[13].GetString());
 
         _LoadSpells();
         InitTalentForLevel();                               // re-init to check talent count
@@ -340,7 +338,7 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petentry, uint32 petnumber, bool c
             Field *fields2 = result->Fetch();
             for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
             {
-                m_declinedname->name[i] = fields2[i].GetCppString();
+                m_declinedname->name[i] = fields2[i].GetString();
             }
         }
     }
@@ -707,44 +705,43 @@ void Pet::GivePetXP(uint32 xp)
 
     if (!isAlive())
         return;
+    
+    uint8 maxlevel = std::min((uint8)sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL), GetOwner()->getLevel());
+    uint8 petlevel = getLevel();
 
-    uint8 level = getLevel();
-
-    // If pet is detected to be equal to player level, don't hand out XP
-    if (level >= GetOwner()->getLevel())
+    // If pet is detected to be at, or above(?) the players level, don't hand out XP
+    if (petlevel >= maxlevel)
        return;
 
-    uint32 curXP = GetUInt32Value(UNIT_FIELD_PETEXPERIENCE);
     uint32 nextLvlXP = GetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP);
+    uint32 curXP = GetUInt32Value(UNIT_FIELD_PETEXPERIENCE);
     uint32 newXP = curXP + xp;
 
     // Check how much XP the pet should receive, and hand off have any left from previous levelups
-    while (newXP >= nextLvlXP && level < sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+    while (newXP >= nextLvlXP && petlevel < maxlevel)
     {
-        // Subtract newXP from amount needed for nextlevel
+        // Subtract newXP from amount needed for nextlevel, and give pet the level
         newXP -= nextLvlXP;
-        GivePetLevel(level+1);
-        SetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP, uint32(sObjectMgr.GetXPForLevel(level+1)*PET_XP_FACTOR));
+        ++petlevel;
 
-        // Make sure we're working with the upgraded levels for the pet XP-levels
-        level = getLevel();
+        GivePetLevel(petlevel);
+
         nextLvlXP = GetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP);
-
-        // Hitting the pet/playerlevel combolimitation, set UNIT_FIELD_PETEXPERIENCE (current XP) to 0
-        if (level >= GetOwner()->getLevel()) {
-          newXP = 0;
-          SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, newXP);
-          return;
-        }
     }
     // Not affected by special conditions - give it new XP
-    SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, newXP);
+    SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, petlevel < maxlevel ? newXP : 0);
 }
 
 void Pet::GivePetLevel(uint8 level)
 {
-    if (!level)
+    if (!level || level == getLevel())
         return;
+
+    if (getPetType()==HUNTER_PET)
+    {
+        SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, 0);
+        SetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP, uint32(sObjectMgr.GetXPForLevel(level)*PET_XP_FACTOR));
+    }
 
     InitStatsForLevel(level);
     InitLevelupSpellsForLevel();
@@ -1208,7 +1205,6 @@ void Pet::_SaveSpells(SQLTransaction& trans)
             case PETSPELL_UNCHANGED:
                 continue;
         }
-
         itr->second.state = PETSPELL_UNCHANGED;
     }
 }
@@ -1364,8 +1360,6 @@ bool Pet::addSpell(uint32 spell_id,ActiveStates active /*= ACT_DECIDE*/, PetSpel
             return false;
     }
 
-    uint32 oldspell_id = 0;
-
     PetSpell newspell;
     newspell.state = state;
     newspell.type = type;
@@ -1415,7 +1409,6 @@ bool Pet::addSpell(uint32 spell_id,ActiveStates active /*= ACT_DECIDE*/, PetSpel
                     if (newspell.active == ACT_ENABLED)
                         ToggleAutocast(itr2->first, false);
 
-                    oldspell_id = itr2->first;
                     unlearnSpell(itr2->first,false,false);
                     break;
                 }
@@ -2002,17 +1995,9 @@ void Pet::SynchronizeLevelWithOwner()
         // can't be greater owner level
         case HUNTER_PET:
             if (getLevel() > owner->getLevel())
-            {
                 GivePetLevel(owner->getLevel());
-                SetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP, sObjectMgr.GetXPForLevel(owner->getLevel())/5);
-                SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, 0);
-            }
-            if (getLevel() < owner->getLevel()-5)
-            {
-                GivePetLevel(owner->getLevel()-5);
-                SetUInt32Value(UNIT_FIELD_PETNEXTLEVELEXP, sObjectMgr.GetXPForLevel(owner->getLevel()-5)/5);
-                SetUInt32Value(UNIT_FIELD_PETEXPERIENCE, 0);
-            }
+            else if (getLevel() + 5 < owner->getLevel())
+                GivePetLevel(owner->getLevel() - 5);
             break;
         default:
             break;

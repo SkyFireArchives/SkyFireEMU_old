@@ -57,9 +57,6 @@ MapManager::~MapManager()
         delete *i;
     }
 
-    for (TransportNPCSet::iterator i = m_TransportNPCs.begin(); i != m_TransportNPCs.end(); ++i)
-        delete *i;
-
     Map::DeleteStateMachine();
 }
 
@@ -235,26 +232,6 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
         }
         else
             sLog.outDebug("Map::CanPlayerEnter - player '%s' is dead but does not have a corpse!", player->GetName());
-    }
-
-    //Get instance where player's group is bound & its map
-    if (pGroup)
-    {
-        InstanceGroupBind* boundedInstance = pGroup->GetBoundInstance(entry);
-        if (boundedInstance && boundedInstance->save)
-            if (Map *boundedMap = sMapMgr.FindMap(mapid,boundedInstance->save->GetInstanceId()))
-                if (!loginCheck && !boundedMap->CanEnter(player))
-                    return false;
-            /*
-                This check has to be moved to InstanceMap::CanEnter()
-                // Player permanently bounded to different instance than groups one
-                InstancePlayerBind* playerBoundedInstance = player->GetBoundInstance(mapid, player->GetDifficulty(entry->IsRaid()));
-                if (playerBoundedInstance && playerBoundedInstance->perm && playerBoundedInstance->save &&
-                    boundedInstance->save->GetInstanceId() != playerBoundedInstance->save->GetInstanceId())
-                {
-                    //TODO: send some kind of error message to the player
-                    return false;
-                }*/
     }
 
     //Other requirements

@@ -283,9 +283,11 @@ void WorldSession::HandleDestroyItemOpcode(WorldPacket & recv_data)
 // Only _static_ data send in this packet !!!
 void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
 {
-    //sLog.outDebug("WORLD: CMSG_ITEM_QUERY_SINGLE");
-    uint32 item;
-    recv_data >> item;
+    sLog.outDebug("WORLD: CMSG_ITEM_QUERY_SINGLE");
+    uint64 unk;
+    uint32 item, unk1;
+
+    recv_data >> unk >> item >> unk1;
 
     sLog.outDetail("STORAGE: Item Query = %u", item);
 
@@ -747,7 +749,8 @@ void WorldSession::SendListInventory(uint64 vendorguid)
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     // Stop the npc if moving
-    pCreature->StopMoving();
+    if (pCreature->hasUnitState(UNIT_STAT_MOVING))
+        pCreature->StopMoving();
 
     VendorItemData const* vItems = pCreature->GetVendorItems();
     if (!vItems)
@@ -1305,22 +1308,13 @@ void WorldSession::HandleSocketOpcode(WorldPacket& recv_data)
                 {
                     if (Gems[j])
                     {
-                        // destroyed gem
-                        if (OldEnchants[j])
-                        {
-                            if (SpellItemEnchantmentEntry const* enchantEntry = sSpellItemEnchantmentStore.LookupEntry(OldEnchants[j]))
-                                if (ItemPrototype const* jProto = ObjectMgr::GetItemPrototype(enchantEntry->GemID))
-                                    if (iGemProto->ItemLimitCategory == jProto->ItemLimitCategory)
-                                        --limit_newcount;
-                        }
-
                         // new gem
                         if (iGemProto->ItemLimitCategory == Gems[j]->GetProto()->ItemLimitCategory)
                             ++limit_newcount;
                     }
-                    // existed gem
                     else if (OldEnchants[j])
                     {
+                        // existing gem
                         if (SpellItemEnchantmentEntry const* enchantEntry = sSpellItemEnchantmentStore.LookupEntry(OldEnchants[j]))
                             if (ItemPrototype const* jProto = ObjectMgr::GetItemPrototype(enchantEntry->GemID))
                                 if (iGemProto->ItemLimitCategory == jProto->ItemLimitCategory)

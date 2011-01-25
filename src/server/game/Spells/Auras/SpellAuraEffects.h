@@ -23,6 +23,7 @@ class AuraEffect
         uint64 GetCasterGUID() const { return GetBase()->GetCasterGUID(); }
         Aura * GetBase() const { return m_base; }
         void GetTargetList(std::list<Unit*> & targetList) const;
+        void GetApplicationList(std::list<AuraApplication*> & applicationList) const;
 
         SpellEntry const * GetSpellProto() const { return m_spellProto; }
         uint32 GetId() const { return m_spellProto->Id; }
@@ -59,11 +60,12 @@ class AuraEffect
         void ResetPeriodic(bool resetPeriodicTimer = false) { if (resetPeriodicTimer) m_periodicTimer = m_amplitude; m_tickNumber = 0;}
 
         bool IsPeriodic() const { return m_isPeriodic; }
+        void SetPeriodic(bool isPeriodic) { m_isPeriodic = isPeriodic; }
         bool IsAffectedOnSpell(SpellEntry const *spell) const;
 
         void SendTickImmune(Unit * target, Unit *caster) const;
 
-        void PeriodicTick(Unit * target, Unit * caster) const;
+        void PeriodicTick(AuraApplication * aurApp, Unit * caster) const;
         void PeriodicDummyTick(Unit * target, Unit * caster) const;
         Unit* GetTriggerTarget(Unit * target) const;
         void TriggerSpell(Unit * target, Unit * caster) const;
@@ -71,7 +73,6 @@ class AuraEffect
 
         void CleanupTriggeredSpells(Unit * target);
 
-        static bool IsPeriodicAuraType(uint32 type);
         // add/remove SPELL_AURA_MOD_SHAPESHIFT (36) linked auras
         void HandleShapeshiftBoosts(Unit * target, bool apply) const;
     private:
@@ -220,7 +221,7 @@ class AuraEffect
         void HandleModMeleeRangedSpeedPct(AuraApplication const * aurApp, uint8 mode, bool apply) const;
         void HandleModCombatSpeedPct(AuraApplication const * aurApp, uint8 mode, bool apply) const;
         void HandleModAttackSpeed(AuraApplication const * aurApp, uint8 mode, bool apply) const;
-        void HandleHaste(AuraApplication const * aurApp, uint8 mode, bool apply) const;
+        void HandleModMeleeSpeedPct(AuraApplication const * aurApp, uint8 mode, bool apply) const;
         void HandleAuraModRangedHaste(AuraApplication const * aurApp, uint8 mode, bool apply) const;
         void HandleRangedAmmoHaste(AuraApplication const * aurApp, uint8 mode, bool apply) const;
         //   combat rating
@@ -256,6 +257,66 @@ class AuraEffect
         void HandleAuraConvertRune(AuraApplication const * aurApp, uint8 mode, bool apply) const;
         void HandleAuraLinked(AuraApplication const * aurApp, uint8 mode, bool apply) const;
         void HandleAuraOpenStable(AuraApplication const * aurApp, uint8 mode, bool apply) const;
+        void HandleAuraOverrideSpells(AuraApplication const * aurApp, uint8 mode, bool apply) const;
+        void HandleAuraSetVehicle(AuraApplication const * aurApp, uint8 mode, bool apply) const;
 };
 
+namespace Trinity
+{
+    // Binary predicate for sorting the priority of absorption aura effects
+    class AbsorbAuraOrderPred
+    {
+        public:
+            AbsorbAuraOrderPred() { }
+            bool operator() (AuraEffect * aurEffA, AuraEffect * aurEffB) const
+            {
+                SpellEntry const * spellProtoA = aurEffA->GetSpellProto();
+                SpellEntry const * spellProtoB = aurEffB->GetSpellProto();
+
+                // Wards
+                if ((spellProtoA->SpellFamilyName == SPELLFAMILY_MAGE) ||
+                    (spellProtoA->SpellFamilyName == SPELLFAMILY_WARLOCK))
+                    if (spellProtoA->Category == 56)
+                        return true;
+                if ((spellProtoB->SpellFamilyName == SPELLFAMILY_MAGE) ||
+                    (spellProtoB->SpellFamilyName == SPELLFAMILY_WARLOCK))
+                    if (spellProtoB->Category == 56)
+                        return false;
+
+                // Sacred Shield
+                if (spellProtoA->Id == 58597)
+                    return true;
+                if (spellProtoB->Id == 58597)
+                    return false;
+
+                // Fel Blossom
+                if (spellProtoA->Id == 28527)
+                    return true;
+                if (spellProtoB->Id == 28527)
+                    return false;
+
+                // Divine Aegis
+                if (spellProtoA->Id == 47753)
+                    return true;
+                if (spellProtoB->Id == 47753)
+                    return false;
+
+                // Ice Barrier
+                if (spellProtoA->Category == 471)
+                    return true;
+                if (spellProtoB->Category == 471)
+                    return false;
+
+                // Sacrifice
+                if ((spellProtoA->SpellFamilyName == SPELLFAMILY_WARLOCK) &&
+                    (spellProtoA->SpellIconID == 693))
+                    return true;
+                if ((spellProtoB->SpellFamilyName == SPELLFAMILY_WARLOCK) &&
+                    (spellProtoB->SpellIconID == 693))
+                    return false;
+
+                return false;
+            }
+    };
+}
 #endif
