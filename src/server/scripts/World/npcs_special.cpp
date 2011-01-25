@@ -820,9 +820,6 @@ void npc_doctor::npc_doctorAI::UpdateAI(const uint32 diff)
     {
         if (SummonPatient_Timer <= diff)
         {
-            Creature* Patient = NULL;
-            Location* Point = NULL;
-
             if (Coordinates.empty())
                 return;
 
@@ -838,22 +835,21 @@ void npc_doctor::npc_doctorAI::UpdateAI(const uint32 diff)
                 return;
             }
 
-            Point = *itr;
-
-            Patient = me->SummonCreature(patientEntry, Point->x, Point->y, Point->z, Point->o, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
-
-            if (Patient)
+            if (Location* Point = *itr)
             {
-                //303, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
-                Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
+                if (Creature* Patient = me->SummonCreature(patientEntry, Point->x, Point->y, Point->z, Point->o, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000))
+                {
+                    //303, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
+                    Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
 
-                Patients.push_back(Patient->GetGUID());
-                CAST_AI(npc_injured_patient::npc_injured_patientAI, Patient->AI())->Doctorguid = me->GetGUID();
+                    Patients.push_back(Patient->GetGUID());
+                    CAST_AI(npc_injured_patient::npc_injured_patientAI, Patient->AI())->Doctorguid = me->GetGUID();
 
-                if (Point)
-                    CAST_AI(npc_injured_patient::npc_injured_patientAI, Patient->AI())->Coord = Point;
+                    if (Point)
+                        CAST_AI(npc_injured_patient::npc_injured_patientAI, Patient->AI())->Coord = Point;
 
-                Coordinates.erase(itr);
+                    Coordinates.erase(itr);
+                }
             }
             SummonPatient_Timer = 10000;
             ++SummonPatientCount;
@@ -1673,13 +1669,11 @@ public:
 
         uint32 SpellTimer;
         bool IsViper;
-        bool Spawn;
 
         void EnterCombat(Unit * /*who*/) {}
 
         void Reset()
         {
-            Spawn = true;
             SpellTimer = 0;
 
             CreatureInfo const *Info = me->GetCreatureInfo();
@@ -1694,6 +1688,12 @@ public:
             uint32 delta = (rand() % 7) * 100;
             me->SetStatFloatValue(UNIT_FIELD_BASEATTACKTIME, float(Info->baseattacktime + delta));
             me->SetStatFloatValue(UNIT_FIELD_RANGED_ATTACK_POWER , float(Info->attackpower));
+
+            // Start attacking attacker of owner on first ai update after spawn - move in line of sight may choose better target
+            if (!me->getVictim() && me->isSummon())
+                if (Unit * Owner = CAST_SUM(me)->GetSummoner())
+                    if (Owner->getAttackerForHelper())
+                        AttackStart(Owner->getAttackerForHelper());
         }
 
         //Redefined for random target selection:
@@ -1719,22 +1719,8 @@ public:
 
         void UpdateAI(const uint32 diff)
         {
-            if (Spawn)
-            {
-                Spawn = false;
-                // Start attacking attacker of owner on first ai update after spawn - move in line of sight may choose better target
-                if (!me->getVictim() && me->isSummon())
-                    if (Unit * Owner = CAST_SUM(me)->GetSummoner())
-                        if (Owner->getAttackerForHelper())
-                            AttackStart(Owner->getAttackerForHelper());
-            }
-
-            if (!me->getVictim())
-            {
-                if (me->isInCombat())
-                    DoStopAttack();
+            if (!UpdateVictim())
                 return;
-            }
 
             if (SpellTimer <= diff)
             {
@@ -2014,6 +2000,12 @@ public:
     }
 };
 
+enum eTrainingDummy
+{
+    NPC_ADVANCED_TARGET_DUMMY                  = 2674,
+    NPC_TARGET_DUMMY                           = 2673
+};
+
 class npc_training_dummy : public CreatureScript
 {
 public:
@@ -2021,21 +2013,22 @@ public:
 
     struct npc_training_dummyAI : Scripted_NoMovementAI
     {
-        npc_training_dummyAI(Creature *c) : Scripted_NoMovementAI(c)
+        npc_training_dummyAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
         {
-            m_Entry = c->GetEntry();
+            uiEntry = pCreature->GetEntry();
         }
 
-        uint64 m_Entry;
-        uint32 ResetTimer;
-        uint32 DespawnTimer;
+        uint32 uiEntry;
+        uint32 uiResetTimer;
+        uint32 uiDespawnTimer;
+
         void Reset()
         {
             me->SetControlled(true,UNIT_STAT_STUNNED);//disable rotate
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);//imune to knock aways like blast wave
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_STUN, true);
-            ResetTimer = 10000;
-            DespawnTimer = 15000;
+
+            uiResetTimer = 5000;
+            uiDespawnTimer = 15000;
         }
 
         void EnterEvadeMode()
@@ -2048,48 +2041,49 @@ public:
 
         void DamageTaken(Unit * /*done_by*/, uint32 &damage)
         {
-            ResetTimer = 10000;
+            uiResetTimer = 5000;
             damage = 0;
         }
 
         void EnterCombat(Unit * /*who*/)
         {
-            if (m_Entry != 2674 && m_Entry != 2673)
+            if (uiEntry != NPC_ADVANCED_TARGET_DUMMY && uiEntry != NPC_TARGET_DUMMY)
                 return;
         }
 
-        void UpdateAI(const uint32 diff)
+        void UpdateAI(const uint32 uiDiff)
         {
             if (!UpdateVictim())
                 return;
+
             if (!me->hasUnitState(UNIT_STAT_STUNNED))
                 me->SetControlled(true,UNIT_STAT_STUNNED);//disable rotate
 
-            if (m_Entry != 2674 && m_Entry != 2673)
+            if (uiEntry != NPC_ADVANCED_TARGET_DUMMY && uiEntry != NPC_TARGET_DUMMY)
             {
-                if (ResetTimer <= diff)
+                if (uiResetTimer <= uiDiff)
                 {
                     EnterEvadeMode();
-                    ResetTimer = 10000;
+                    uiResetTimer = 5000;
                 }
                 else
-                    ResetTimer -= diff;
+                    uiResetTimer -= uiDiff;
                 return;
             }
             else
             {
-                if (DespawnTimer <= diff)
+                if (uiDespawnTimer <= uiDiff)
                     me->ForcedDespawn();
                 else
-                    DespawnTimer -= diff;
+                    uiDespawnTimer -= uiDiff;
             }
         }
         void MoveInLineOfSight(Unit * /*who*/){return;}
     };
 
-    CreatureAI *GetAI(Creature *creature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
-        return new npc_training_dummyAI(creature);
+        return new npc_training_dummyAI(pCreature);
     }
 };
 

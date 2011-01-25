@@ -1,19 +1,18 @@
 /*
- * Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -161,9 +160,16 @@ class boss_lady_deathwhisper : public CreatureScript
         {
             boss_lady_deathwhisperAI(Creature* pCreature) : BossAI(pCreature, DATA_LADY_DEATHWHISPER)
             {
-                ASSERT(instance);
                 bIntroDone = false;
                 uiDominateMindCount = RAID_MODE(0,1,1,3);
+            }
+
+            void InitializeAI()
+            {
+                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
+                    me->IsAIEnabled = false;
+                else if (!me->isDead())
+                    Reset();
             }
 
             void Reset()
@@ -289,8 +295,8 @@ class boss_lady_deathwhisper : public CreatureScript
                     DoScriptText(SAY_PHASE_2, me);
                     DoScriptText(SAY_PHASE_2_EMOTE, me);
                     DoStartMovement(me->getVictim());
-                    me->SetPower(POWER_MANA, 0);
                     uiDamage -= me->GetPower(POWER_MANA);
+                    me->SetPower(POWER_MANA, 0);
                     me->RemoveAurasDueToSpell(SPELL_MANA_BARRIER);
                     events.SetPhase(PHASE_TWO);
                     events.ScheduleEvent(EVENT_P2_FROSTBOLT, urand(10000, 12000), 0, PHASE_TWO);
@@ -730,8 +736,17 @@ class npc_vengeful_shade : public CreatureScript
 
             void SpellHitTarget(Unit * /*pTarget*/, const SpellEntry * spell)
             {
-                if (spell->Id == SPELL_VENGEFUL_BLAST)
-                    me->Kill(me);
+                switch (spell->Id)
+                {
+                    case SPELL_VENGEFUL_BLAST:
+                    case 72010:
+                    case 72011:
+                    case 72012:
+                        me->Kill(me);
+                        break;
+                    default:
+                        break;
+                }
             }
         };
 
@@ -748,17 +763,19 @@ class spell_deathwhisper_mana_barrier : public SpellScriptLoader
 
         class spell_deathwhisper_mana_barrier_AuraScript : public AuraScript
         {
-            void HandlePeriodicTick(AuraEffect const * /*aurEff*/, AuraApplication const * /*aurApp*/)
+            PrepareAuraScript(spell_deathwhisper_mana_barrier_AuraScript);
+
+            void HandlePeriodicTick(AuraEffect const* /*aurEff*/)
             {
+                PreventDefaultAction();
                 Unit* caster = GetCaster();
-                int32 missingHealth = caster->GetMaxHealth() - caster->GetHealth();
+                int32 missingHealth = int32(caster->GetMaxHealth() - caster->GetHealth());
                 caster->ModifyHealth(missingHealth);
                 caster->ModifyPower(POWER_MANA, -missingHealth);
             }
 
             void Register()
             {
-                PreventDefaultEffect(EFFECT_0);
                 OnEffectPeriodic += AuraEffectPeriodicFn(spell_deathwhisper_mana_barrier_AuraScript::HandlePeriodicTick, EFFECT_0, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
             }
         };
@@ -776,6 +793,7 @@ class spell_cultist_dark_martyrdom : public SpellScriptLoader
 
         class spell_cultist_dark_martyrdom_SpellScript : public SpellScript
         {
+            PrepareSpellScript(spell_cultist_dark_martyrdom_SpellScript)
             bool Validate(SpellEntry const* /*spellEntry*/)
             {
                 if (uint32 scriptId = sObjectMgr.GetScriptId("boss_lady_deathwhisper"))

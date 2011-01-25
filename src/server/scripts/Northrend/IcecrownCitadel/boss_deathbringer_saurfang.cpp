@@ -1,19 +1,18 @@
 /*
- * Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -234,10 +233,17 @@ class boss_deathbringer_saurfang : public CreatureScript
         {
             boss_deathbringer_saurfangAI(Creature* pCreature) : BossAI(pCreature, DATA_DEATHBRINGER_SAURFANG)
             {
-                ASSERT(instance);
                 ASSERT(pCreature->GetVehicleKit()); // we dont actually use it, just check if exists
                 bIntroDone = false;
                 uiFallenChampionCount = 0;
+            }
+
+            void InitializeAI()
+            {
+                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
+                    me->IsAIEnabled = false;
+                else if (!me->isDead())
+                    Reset();
             }
 
             void Reset()
@@ -248,11 +254,11 @@ class boss_deathbringer_saurfang : public CreatureScript
                 me->SetPower(POWER_ENERGY, 0);
                 DoCast(me, SPELL_ZERO_POWER, true);
                 DoCast(me, SPELL_BLOOD_LINK, true);
+                DoCast(me, SPELL_BLOOD_POWER, true);
                 DoCast(me, SPELL_MARK_OF_THE_FALLEN_CHAMPION_S, true);
                 DoCast(me, SPELL_RUNE_OF_BLOOD_S, true);
                 me->RemoveAurasDueToSpell(SPELL_BERSERK);
                 me->RemoveAurasDueToSpell(SPELL_FRENZY);
-                me->RemoveAurasDueToSpell(SPELL_BLOOD_POWER);
                 summons.DespawnAll();
                 instance->SetBossState(DATA_DEATHBRINGER_SAURFANG, NOT_STARTED);
             }
@@ -267,6 +273,7 @@ class boss_deathbringer_saurfang : public CreatureScript
                 events.ScheduleEvent(EVENT_RUNE_OF_BLOOD, 20000, 0, PHASE_COMBAT);
 
                 uiFallenChampionCount = 0;
+                instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_MARK_OF_THE_FALLEN_CHAMPION);
                 instance->SetBossState(DATA_DEATHBRINGER_SAURFANG, IN_PROGRESS);
             }
 
@@ -304,6 +311,7 @@ class boss_deathbringer_saurfang : public CreatureScript
             void JustReachedHome()
             {
                 instance->SetBossState(DATA_DEATHBRINGER_SAURFANG, FAIL);
+                instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_MARK_OF_THE_FALLEN_CHAMPION);
             }
 
             void KilledUnit(Unit *victim)
@@ -460,47 +468,49 @@ class boss_deathbringer_saurfang : public CreatureScript
             // intro setup
             void DoAction(const int32 action)
             {
-                if (action == PHASE_INTRO_A || action == PHASE_INTRO_H)
+                switch (action)
                 {
-                    if (GameObject* teleporter = GameObject::GetGameObject(*me, instance->GetData64(GO_SCOURGE_TRANSPORTER_SAURFANG)))
-                    {
-                        instance->HandleGameObject(0, false, teleporter);
-                        teleporter->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
-                    }
+                    case PHASE_INTRO_A:
+                    case PHASE_INTRO_H:
+                        if (GameObject* teleporter = GameObject::GetGameObject(*me, instance->GetData64(GO_SCOURGE_TRANSPORTER_SAURFANG)))
+                        {
+                            instance->HandleGameObject(0, false, teleporter);
+                            teleporter->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
+                        }
 
-                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                    // controls what events will execute
-                    events.SetPhase(uint32(action));
+                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                        // controls what events will execute
+                        events.SetPhase(uint32(action));
 
-                    me->SetHomePosition(deathbringerPos.GetPositionX(), deathbringerPos.GetPositionY(), deathbringerPos.GetPositionZ(), me->GetOrientation());
-                    me->GetMotionMaster()->MovePoint(POINT_SAURFANG, deathbringerPos.GetPositionX(), deathbringerPos.GetPositionY(), deathbringerPos.GetPositionZ());
+                        me->SetHomePosition(deathbringerPos.GetPositionX(), deathbringerPos.GetPositionY(), deathbringerPos.GetPositionZ(), me->GetOrientation());
+                        me->GetMotionMaster()->MovePoint(POINT_SAURFANG, deathbringerPos.GetPositionX(), deathbringerPos.GetPositionY(), deathbringerPos.GetPositionZ());
 
-                    events.ScheduleEvent(EVENT_INTRO_ALLIANCE_2, 2500, 0, PHASE_INTRO_A);
-                    events.ScheduleEvent(EVENT_INTRO_ALLIANCE_3, 20000, 0, PHASE_INTRO_A);
+                        events.ScheduleEvent(EVENT_INTRO_ALLIANCE_2, 2500, 0, PHASE_INTRO_A);
+                        events.ScheduleEvent(EVENT_INTRO_ALLIANCE_3, 20000, 0, PHASE_INTRO_A);
 
-                    events.ScheduleEvent(EVENT_INTRO_HORDE_2, 5000, 0, PHASE_INTRO_H);
+                        events.ScheduleEvent(EVENT_INTRO_HORDE_2, 5000, 0, PHASE_INTRO_H);
+                        break;
+                    case ACTION_CONTINUE_INTRO:
+                        events.ScheduleEvent(EVENT_INTRO_ALLIANCE_6, 6500+500, 0, PHASE_INTRO_A);
+                        events.ScheduleEvent(EVENT_INTRO_FINISH, 8000, 0, PHASE_INTRO_A);
+
+                        events.ScheduleEvent(EVENT_INTRO_HORDE_4, 6500, 0, PHASE_INTRO_H);
+                        events.ScheduleEvent(EVENT_INTRO_HORDE_9, 46700+1000+500, 0, PHASE_INTRO_H);
+                        events.ScheduleEvent(EVENT_INTRO_FINISH,  46700+1000+8000, 0, PHASE_INTRO_H);
+                        break;
+                    case ACTION_MARK_OF_THE_FALLEN_CHAMPION:
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 0.0f, true, -SPELL_MARK_OF_THE_FALLEN_CHAMPION))
+                        {
+                            ++uiFallenChampionCount;
+                            DoCast(target, SPELL_MARK_OF_THE_FALLEN_CHAMPION);
+                            me->SetPower(POWER_ENERGY, 0);
+                            if (Aura* bloodPower = me->GetAura(SPELL_BLOOD_POWER))
+                                bloodPower->RecalculateAmountOfEffects();
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                else if (action == ACTION_CONTINUE_INTRO)
-                {
-                    events.ScheduleEvent(EVENT_INTRO_ALLIANCE_6, 6500+500, 0, PHASE_INTRO_A);
-                    events.ScheduleEvent(EVENT_INTRO_FINISH, 8000, 0, PHASE_INTRO_A);
-
-                    events.ScheduleEvent(EVENT_INTRO_HORDE_4, 6500, 0, PHASE_INTRO_H);
-                    events.ScheduleEvent(EVENT_INTRO_HORDE_9, 46700+1000+500, 0, PHASE_INTRO_H);
-                    events.ScheduleEvent(EVENT_INTRO_FINISH,  46700+1000+8000, 0, PHASE_INTRO_H);
-                }
-                else if (action == ACTION_MARK_OF_THE_FALLEN_CHAMPION)
-                {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 0.0f, true, -SPELL_MARK_OF_THE_FALLEN_CHAMPION))
-                    {
-                        ++uiFallenChampionCount;
-                        me->RemoveAurasDueToSpell(SPELL_BLOOD_POWER);
-                        DoCast(target, SPELL_MARK_OF_THE_FALLEN_CHAMPION);
-                        me->SetPower(POWER_ENERGY, 0);
-                    }
-                }
-                else
-                    ASSERT(false);
             }
 
         private:
@@ -904,6 +914,7 @@ class spell_deathbringer_blood_link : public SpellScriptLoader
 
         class spell_deathbringer_blood_link_SpellScript : public SpellScript
         {
+            PrepareSpellScript(spell_deathbringer_blood_link_SpellScript)
             bool Validate(SpellEntry const* /*spellInfo*/)
             {
                 if (!sSpellStore.LookupEntry(SPELL_BLOOD_LINK_POWER))
@@ -916,9 +927,7 @@ class spell_deathbringer_blood_link : public SpellScriptLoader
             void HandleDummy(SpellEffIndex /*effIndex*/)
             {
                 GetHitUnit()->CastCustomSpell(SPELL_BLOOD_LINK_POWER, SPELLVALUE_BASE_POINT0, GetEffectValue(), GetHitUnit(), true);
-                if (!GetHitUnit()->HasAura(SPELL_BLOOD_POWER))
-                    GetHitUnit()->CastSpell(GetHitUnit(), SPELL_BLOOD_POWER, true);
-                else if (Aura* bloodPower = GetHitUnit()->GetAura(SPELL_BLOOD_POWER))
+                if (Aura* bloodPower = GetHitUnit()->GetAura(SPELL_BLOOD_POWER))
                     bloodPower->RecalculateAmountOfEffects();
                 PreventHitDefaultEffect(EFFECT_0);
             }
@@ -949,6 +958,8 @@ class spell_deathbringer_blood_link_aura : public SpellScriptLoader
 
         class spell_deathbringer_blood_link_AuraScript : public AuraScript
         {
+            PrepareAuraScript(spell_deathbringer_blood_link_AuraScript);
+
             bool Validate(SpellEntry const* /*spellInfo*/)
             {
                 if (!sSpellStore.LookupEntry(SPELL_MARK_OF_THE_FALLEN_CHAMPION))
@@ -956,8 +967,9 @@ class spell_deathbringer_blood_link_aura : public SpellScriptLoader
                 return true;
             }
 
-            void HandlePeriodicTick(AuraEffect const * /*aurEff*/, AuraApplication const * /*aurApp*/)
+            void HandlePeriodicTick(AuraEffect const* /*aurEff*/)
             {
+                PreventDefaultAction();
                 if (GetUnitOwner()->getPowerType() == POWER_ENERGY && GetUnitOwner()->GetPower(POWER_ENERGY) == GetUnitOwner()->GetMaxPower(POWER_ENERGY))
                     if (Creature* saurfang = GetUnitOwner()->ToCreature())
                         saurfang->AI()->DoAction(ACTION_MARK_OF_THE_FALLEN_CHAMPION);
@@ -965,15 +977,7 @@ class spell_deathbringer_blood_link_aura : public SpellScriptLoader
 
             void Register()
             {
-                PreventDefaultEffect(EFFECT_1);
                 OnEffectPeriodic += AuraEffectPeriodicFn(spell_deathbringer_blood_link_AuraScript::HandlePeriodicTick, EFFECT_1, SPELL_AURA_PERIODIC_DUMMY);
-            }
-
-            bool Load()
-            {
-                if (GetSpellProto()->Id != SPELL_BLOOD_LINK)
-                    return false;
-                return true;
             }
         };
 
@@ -990,6 +994,7 @@ class spell_deathbringer_blood_power : public SpellScriptLoader
 
         class spell_deathbringer_blood_power_SpellScript : public SpellScript
         {
+            PrepareSpellScript(spell_deathbringer_blood_power_SpellScript)
             void ModAuraValue()
             {
                 if (Aura* aura = GetHitAura())
@@ -1004,6 +1009,7 @@ class spell_deathbringer_blood_power : public SpellScriptLoader
 
         class spell_deathbringer_blood_power_AuraScript : public AuraScript
         {
+            PrepareAuraScript(spell_deathbringer_blood_power_AuraScript)
             void RecalculateHook(AuraEffect const* /*aurEffect*/, int32& amount, bool& canBeRecalculated)
             {
                 amount = GetUnitOwner()->GetPower(POWER_ENERGY);
@@ -1012,8 +1018,8 @@ class spell_deathbringer_blood_power : public SpellScriptLoader
 
             void Register()
             {
-                OnEffectCalcAmount += AuraEffectCalcAmountFn(spell_deathbringer_blood_power_AuraScript::RecalculateHook, EFFECT_0, SPELL_AURA_MOD_SCALE);
-                OnEffectCalcAmount += AuraEffectCalcAmountFn(spell_deathbringer_blood_power_AuraScript::RecalculateHook, EFFECT_1, SPELL_AURA_MOD_DAMAGE_PERCENT_DONE);
+                DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_deathbringer_blood_power_AuraScript::RecalculateHook, EFFECT_0, SPELL_AURA_MOD_SCALE);
+                DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_deathbringer_blood_power_AuraScript::RecalculateHook, EFFECT_1, SPELL_AURA_MOD_DAMAGE_PERCENT_DONE);
             }
 
             bool Load()
@@ -1042,6 +1048,7 @@ class spell_deathbringer_rune_of_blood : public SpellScriptLoader
 
         class spell_deathbringer_rune_of_blood_SpellScript : public SpellScript
         {
+            PrepareSpellScript(spell_deathbringer_rune_of_blood_SpellScript)
             bool Validate(SpellEntry const* /*spellInfo*/)
             {
                 if (!sSpellStore.LookupEntry(SPELL_BLOOD_LINK_DUMMY))
@@ -1075,6 +1082,7 @@ class spell_deathbringer_blood_nova : public SpellScriptLoader
 
         class spell_deathbringer_blood_nova_SpellScript : public SpellScript
         {
+            PrepareSpellScript(spell_deathbringer_blood_nova_SpellScript)
             bool Validate(SpellEntry const* /*spellInfo*/)
             {
                 if (!sSpellStore.LookupEntry(SPELL_BLOOD_LINK_DUMMY))
@@ -1108,9 +1116,10 @@ class achievement_ive_gone_and_made_a_mess : public AchievementCriteriaScript
 
         bool OnCheck(Player* /*source*/, Unit* target)
         {
-            if (Creature* saurfang = target->ToCreature())
-                if (saurfang->AI()->GetData(DATA_MADE_A_MESS))
-                    return true;
+            if (target)
+                if (Creature* saurfang = target->ToCreature())
+                    if (saurfang->AI()->GetData(DATA_MADE_A_MESS))
+                        return true;
 
             return false;
         }

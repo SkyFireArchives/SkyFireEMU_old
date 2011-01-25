@@ -1,17 +1,19 @@
-/* Copyright (C) 2006 - 2010 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+/*
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2006-2010 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* ScriptData
@@ -84,7 +86,8 @@ enum BossSpells
 /*######
 ## boss_jaraxxus
 ######*/
-class boss_jaraxxus : public CreatureScript
+
+class boss_jaraxxus : public CreatureScript
 {
 public:
     boss_jaraxxus() : CreatureScript("boss_jaraxxus") { }
@@ -246,7 +249,8 @@ public:
 
 };
 
-class mob_legion_flame : public CreatureScript
+
+class mob_legion_flame : public CreatureScript
 {
 public:
     mob_legion_flame() : CreatureScript("mob_legion_flame") { }
@@ -279,7 +283,8 @@ public:
 
 };
 
-class mob_infernal_volcano : public CreatureScript
+
+class mob_infernal_volcano : public CreatureScript
 {
 public:
     mob_infernal_volcano() : CreatureScript("mob_infernal_volcano") { }
@@ -356,7 +361,8 @@ public:
 
 };
 
-class mob_fel_infernal : public CreatureScript
+
+class mob_fel_infernal : public CreatureScript
 {
 public:
     mob_fel_infernal() : CreatureScript("mob_fel_infernal") { }
@@ -410,7 +416,8 @@ public:
 
 };
 
-class mob_nether_portal : public CreatureScript
+
+class mob_nether_portal : public CreatureScript
 {
 public:
     mob_nether_portal() : CreatureScript("mob_nether_portal") { }
@@ -481,7 +488,8 @@ public:
 
 };
 
-class mob_mistress_of_pain : public CreatureScript
+
+class mob_mistress_of_pain : public CreatureScript
 {
 public:
     mob_mistress_of_pain() : CreatureScript("mob_mistress_of_pain") { }

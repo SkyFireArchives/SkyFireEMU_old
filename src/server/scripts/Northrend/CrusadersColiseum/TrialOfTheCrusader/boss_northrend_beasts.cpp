@@ -1,17 +1,19 @@
-/* Copyright (C) 2006 - 2010 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+/*
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2006-2010 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 /* ScriptData
 SDName: northrend_beasts
@@ -106,7 +108,8 @@ enum BossSpells
     SPELL_FROTHING_RAGE     = 66759,
     SPELL_STAGGERED_DAZE    = 66758,
 };
-class boss_gormok : public CreatureScript
+
+class boss_gormok : public CreatureScript
 {
 public:
     boss_gormok() : CreatureScript("boss_gormok") { }
@@ -165,29 +168,26 @@ public:
             m_pInstance->SetData(TYPE_NORTHREND_BEASTS,GORMOK_IN_PROGRESS);
         }
 
-        void JustSummoned(Creature* pSummoned)
+        void JustSummoned(Creature* summon)
         {
-            Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
-            switch(pSummoned->GetEntry())
+            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
             {
-                case NPC_SNOBOLD_VASSAL:
-                    pSummoned->GetMotionMaster()->MoveJump(pTarget->GetPositionX(),pTarget->GetPositionY(),pTarget->GetPositionZ(),10.0f,20.0f);
+                if (summon->GetEntry() == NPC_SNOBOLD_VASSAL)
+                {
+                    summon->GetMotionMaster()->MoveJump(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 10.0f, 20.0f);
                     DoCast(me, SPELL_RISING_ANGER);
                     --m_uiSummonCount;
-                    break;
+                }
+                summon->AI()->AttackStart(target);
             }
-            pSummoned->AI()->AttackStart(pTarget);
-            Summons.Summon(pSummoned);
+            Summons.Summon(summon);
         }
 
-        void SummonedCreatureDespawn(Creature* pSummoned)
+        void SummonedCreatureDespawn(Creature* summon)
         {
-            switch(pSummoned->GetEntry())
-            {
-                case NPC_SNOBOLD_VASSAL:
-                    if (pSummoned->isAlive()) ++m_uiSummonCount;
-                    break;
-            }
+            if (summon->GetEntry() == NPC_SNOBOLD_VASSAL)
+                if (summon->isAlive())
+                    ++m_uiSummonCount;
         }
 
         void UpdateAI(const uint32 uiDiff)
@@ -223,7 +223,8 @@ public:
 
 };
 
-class mob_snobold_vassal : public CreatureScript
+
+class mob_snobold_vassal : public CreatureScript
 {
 public:
     mob_snobold_vassal() : CreatureScript("mob_snobold_vassal") { }
@@ -451,6 +452,7 @@ struct boss_jormungarAI : public ScriptedAI
                 case 4:
                     m_uiStage = 5;
                     m_uiSubmergeTimer = 5*IN_MILLISECONDS;
+                    break;
                 default:
                     m_uiStage = 7;
             }
@@ -561,7 +563,8 @@ struct boss_jormungarAI : public ScriptedAI
     }
 };
 
-class boss_acidmaw : public CreatureScript
+
+class boss_acidmaw : public CreatureScript
 {
     public:
     boss_acidmaw() : CreatureScript("boss_acidmaw") { }
@@ -594,7 +597,8 @@ struct boss_jormungarAI : public ScriptedAI
 
 };
 
-class boss_dreadscale : public CreatureScript
+
+class boss_dreadscale : public CreatureScript
 {
 public:
     boss_dreadscale() : CreatureScript("boss_dreadscale") { }
@@ -626,7 +630,8 @@ public:
 
 };
 
-class mob_slime_pool : public CreatureScript
+
+class mob_slime_pool : public CreatureScript
 {
 public:
     mob_slime_pool() : CreatureScript("mob_slime_pool") { }
@@ -661,7 +666,8 @@ public:
     };
 
 };
-class boss_icehowl : public CreatureScript
+
+class boss_icehowl : public CreatureScript
 {
 public:
     boss_icehowl() : CreatureScript("boss_icehowl") { }

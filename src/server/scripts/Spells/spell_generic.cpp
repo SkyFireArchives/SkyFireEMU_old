@@ -25,6 +25,41 @@
 #include "ScriptPCH.h"
 #include "SpellAuraEffects.h"
 
+class spell_gen_absorb0_hitlimit1 : public SpellScriptLoader
+{
+public:
+    spell_gen_absorb0_hitlimit1() : SpellScriptLoader("spell_gen_absorb0_hitlimit1") { }
+
+    class spell_gen_absorb0_hitlimit1_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_gen_absorb0_hitlimit1_AuraScript);
+
+        uint32 limit;
+
+        bool Load()
+        {
+            // Max absorb stored in 1 dummy effect
+            limit = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), EFFECT_1);
+            return true;
+        }
+
+        void Absorb(AuraEffect * /*aurEff*/, DamageInfo & dmgInfo, uint32 & absorbAmount)
+        {
+            absorbAmount = std::min(limit, absorbAmount);
+        }
+
+        void Register()
+        {
+             OnEffectAbsorb += AuraEffectAbsorbFn(spell_gen_absorb0_hitlimit1_AuraScript::Absorb, EFFECT_0);
+        }
+    };
+
+    AuraScript *GetAuraScript() const
+    {
+        return new spell_gen_absorb0_hitlimit1_AuraScript();
+    }
+};
+
 // 41337 Aura of Anger
 class spell_gen_aura_of_anger : public SpellScriptLoader
 {
@@ -33,6 +68,7 @@ public:
 
     class spell_gen_aura_of_anger_AuraScript : public AuraScript
     {
+        PrepareAuraScript(spell_gen_aura_of_anger_AuraScript)
         void HandleEffectPeriodicUpdate(AuraEffect * aurEff)
         {
             if (AuraEffect * aurEff1 = aurEff->GetBase()->GetEffect(EFFECT_1))
@@ -60,6 +96,7 @@ public:
 
     class spell_gen_burn_brutallus_AuraScript : public AuraScript
     {
+        PrepareAuraScript(spell_gen_burn_brutallus_AuraScript)
         void HandleEffectPeriodicUpdate(AuraEffect * aurEff)
         {
             if (aurEff->GetTickNumber() % 11 == 0)
@@ -92,6 +129,7 @@ public:
 
     class spell_gen_parachute_AuraScript : public AuraScript
     {
+        PrepareAuraScript(spell_gen_parachute_AuraScript)
         bool Validate(SpellEntry const * /*spellEntry*/)
         {
             if (!sSpellStore.LookupEntry(SPELL_PARACHUTE))
@@ -101,15 +139,15 @@ public:
             return true;
         }
 
-        void HandleEffectPeriodic(AuraEffect const * /*aurEff*/, AuraApplication const * aurApp)
+        void HandleEffectPeriodic(AuraEffect const * /*aurEff*/)
         {
-            if (Unit* pTarget = aurApp->GetTarget())
-                if (Player* pPlayerTarget = pTarget->ToPlayer())
-                    if (pPlayerTarget->IsFalling())
-                    {
-                        pPlayerTarget->RemoveAurasDueToSpell(SPELL_PARACHUTE);
-                        pPlayerTarget->CastSpell(pPlayerTarget, SPELL_PARACHUTE_BUFF, true);
-                    }
+            Unit* pTarget = GetTarget();
+            if (Player* pPlayerTarget = pTarget->ToPlayer())
+                if (pPlayerTarget->IsFalling())
+                {
+                    pPlayerTarget->RemoveAurasDueToSpell(SPELL_PARACHUTE);
+                    pPlayerTarget->CastSpell(pPlayerTarget, SPELL_PARACHUTE_BUFF, true);
+                }
         }
 
         void Register()
@@ -138,6 +176,7 @@ public:
 
     class spell_gen_pet_summonedSpellScript : public SpellScript
     {
+        PrepareSpellScript(spell_gen_pet_summonedSpellScript)
         void HandleScript(SpellEffIndex /*effIndex*/)
         {
             Unit *caster = GetCaster();
@@ -194,6 +233,7 @@ public:
 
     class spell_gen_remove_flight_auras_SpellScript : public SpellScript
     {
+        PrepareSpellScript(spell_gen_remove_flight_auras_SpellScript)
         void HandleScript(SpellEffIndex /*effIndex*/)
         {
             Unit *target = GetHitUnit();
@@ -229,6 +269,7 @@ public:
 
     class spell_gen_leeching_swarm_AuraScript : public AuraScript
     {
+        PrepareAuraScript(spell_gen_leeching_swarm_AuraScript)
         bool Validate(SpellEntry const * /*spellEntry*/)
         {
             if (!sSpellStore.LookupEntry(SPELL_LEECHING_SWARM_DMG))
@@ -238,19 +279,19 @@ public:
             return true;
         }
 
-        void HandleEffectPeriodic(AuraEffect const * aurEff, AuraApplication const * aurApp)
+        void HandleEffectPeriodic(AuraEffect const * aurEff)
         {
-            if (Unit* pTarget = aurApp->GetTarget())
-                if (Unit* pCaster = GetCaster())
-                {
-                    int32 lifeLeeched = pTarget->CountPctFromMaxHealth(aurEff->GetAmount());
-                    if (lifeLeeched < 250)
-                        lifeLeeched = 250;
-                    // Damage
-                    pCaster->CastCustomSpell(pTarget, SPELL_LEECHING_SWARM_DMG, &lifeLeeched, 0, 0, false);
-                    // Heal
-                    pCaster->CastCustomSpell(pCaster, SPELL_LEECHING_SWARM_HEAL, &lifeLeeched, 0, 0, false);
-                }
+            Unit* pTarget = GetTarget();
+            if (Unit* pCaster = GetCaster())
+            {
+                int32 lifeLeeched = pTarget->CountPctFromMaxHealth(aurEff->GetAmount());
+                if (lifeLeeched < 250)
+                    lifeLeeched = 250;
+                // Damage
+                pCaster->CastCustomSpell(pTarget, SPELL_LEECHING_SWARM_DMG, &lifeLeeched, 0, 0, false);
+                // Heal
+                pCaster->CastCustomSpell(pCaster, SPELL_LEECHING_SWARM_HEAL, &lifeLeeched, 0, 0, false);
+            }
         }
 
         void Register()
@@ -287,6 +328,7 @@ public:
 
     class spell_gen_trick_SpellScript : public SpellScript
     {
+        PrepareSpellScript(spell_gen_trick_SpellScript)
         bool Validate(SpellEntry const * /*spellEntry*/)
         {
             if (!sSpellStore.LookupEntry(SPELL_PIRATE_COSTUME_MALE))
@@ -357,6 +399,7 @@ public:
 
     class spell_gen_trick_or_treat_SpellScript : public SpellScript
     {
+        PrepareSpellScript(spell_gen_trick_or_treat_SpellScript)
         bool Validate(SpellEntry const * /*spellEntry*/)
         {
             if (!sSpellStore.LookupEntry(SPELL_TRICK))
@@ -396,11 +439,10 @@ class spell_creature_permanent_feign_death : public SpellScriptLoader
 
         class spell_creature_permanent_feign_deathAuraScript : public AuraScript
         {
-            void HandleEffectApply(AuraEffect const * /*aurEff*/, AuraApplication const * aurApp, AuraEffectHandleModes /*mode*/)
+            PrepareAuraScript(spell_creature_permanent_feign_deathAuraScript)
+            void HandleEffectApply(AuraEffect const * /*aurEff*/, AuraEffectHandleModes /*mode*/)
             {
-                Unit* pTarget = aurApp->GetTarget();
-                if (!pTarget)
-                    return;
+                Unit* pTarget = GetTarget();
 
                 pTarget->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_DEAD);
                 pTarget->SetFlag(UNIT_FIELD_FLAGS_2, UNIT_FLAG2_FEIGN_DEATH);
@@ -431,6 +473,7 @@ public:
 
     class spell_pvp_trinket_wotf_shared_cd_SpellScript : public SpellScript
     {
+        PrepareSpellScript(spell_pvp_trinket_wotf_shared_cd_SpellScript)
         bool Validate(SpellEntry const * /*spellEntry*/)
         {
             if (!sSpellStore.LookupEntry(SPELL_WILL_OF_THE_FORSAKEN_COOLDOWN_TRIGGER))
@@ -468,8 +511,167 @@ public:
     }
 };
 
+enum AnimalBloodPoolSpell
+{
+    SPELL_ANIMAL_BLOOD      = 46221,
+    SPELL_SPAWN_BLOOD_POOL  = 63471,
+};
+
+class spell_gen_animal_blood : public SpellScriptLoader
+{
+    public:
+        spell_gen_animal_blood() : SpellScriptLoader("spell_gen_animal_blood") { }
+
+        class spell_gen_animal_blood_AuraScript : public AuraScript
+        {
+            PrepareAuraScript(spell_gen_animal_blood_AuraScript);
+
+            bool Validate(SpellEntry const* /*spell*/)
+            {
+                if (!sSpellStore.LookupEntry(SPELL_SPAWN_BLOOD_POOL))
+                    return false;
+                return true;
+            }
+            
+            void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+            {
+                // Remove all auras with spell id 46221, except the one currently being applied
+                while (Aura* aur = GetUnitOwner()->GetOwnedAura(SPELL_ANIMAL_BLOOD, 0, 0, 0, GetAura()))
+                    GetUnitOwner()->RemoveOwnedAura(aur);
+            }
+
+            void OnRemove(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+            {
+                if (GetUnitOwner()->IsInWater())
+                    GetUnitOwner()->CastSpell(GetUnitOwner(), SPELL_SPAWN_BLOOD_POOL, true);
+            }
+
+            void Register()
+            {
+                OnEffectApply += AuraEffectRemoveFn(spell_gen_animal_blood_AuraScript::OnApply, EFFECT_0, SPELL_AURA_PERIODIC_TRIGGER_SPELL, AURA_EFFECT_HANDLE_REAL);
+                OnEffectRemove += AuraEffectRemoveFn(spell_gen_animal_blood_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_PERIODIC_TRIGGER_SPELL, AURA_EFFECT_HANDLE_REAL);
+            }
+        };
+
+        AuraScript* GetAuraScript() const
+        {
+            return new spell_gen_animal_blood_AuraScript();
+        }
+};
+
+enum DivineStormSpell
+{
+    SPELL_DIVINE_STORM  = 53385,
+};
+
+// 70769 Divine Storm!
+class spell_gen_divine_storm_cd_reset : public SpellScriptLoader
+{
+public:
+    spell_gen_divine_storm_cd_reset() : SpellScriptLoader("spell_gen_divine_storm_cd_reset") {}
+
+    class spell_gen_divine_storm_cd_reset_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_gen_divine_storm_cd_reset_SpellScript)
+        bool Validate(SpellEntry const * /*spellEntry*/)
+        {
+            if (!sSpellStore.LookupEntry(SPELL_DIVINE_STORM))
+                return false;
+            return true;
+        }
+
+        void HandleScript(SpellEffIndex /*effIndex*/)
+        {
+            if (Player *caster = GetCaster()->ToPlayer())
+                if (caster->HasSpellCooldown(SPELL_DIVINE_STORM))
+                    caster->RemoveSpellCooldown(SPELL_DIVINE_STORM, true);
+        }
+
+        void Register()
+        {
+            OnEffect += SpellEffectFn(spell_gen_divine_storm_cd_reset_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_DUMMY);
+        }
+    };
+
+    SpellScript* GetSpellScript() const
+    {
+        return new spell_gen_divine_storm_cd_reset_SpellScript();
+    }
+};
+
+class spell_gen_gunship_portal : public SpellScriptLoader
+{
+public:
+    spell_gen_gunship_portal() : SpellScriptLoader("spell_gen_gunship_portal") { }
+
+    class spell_gen_gunship_portalSpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_gen_gunship_portalSpellScript)
+        void HandleScript(SpellEffIndex /*effIndex*/)
+        {
+            Unit* caster = GetCaster();
+            if (!caster->ToPlayer())
+                return;
+
+            if (Battleground *bg = caster->ToPlayer()->GetBattleground())
+            {
+                if (bg->GetTypeID(true) == BATTLEGROUND_IC)
+                    bg->DoAction(1,caster->GetGUID());
+            }
+        }
+
+        void Register()
+        {
+            OnEffect += SpellEffectFn(spell_gen_gunship_portalSpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+        }
+    };
+
+    SpellScript* GetSpellScript() const
+    {
+        return new spell_gen_gunship_portalSpellScript();
+    }
+};
+
+enum parachuteIC
+{
+    SPELL_PARACHUTE_IC = 66657
+};
+
+class spell_gen_parachute_ic : public SpellScriptLoader
+{
+    public:
+        spell_gen_parachute_ic() : SpellScriptLoader("spell_gen_parachute_ic") { }
+
+        class spell_gen_parachute_icAuraScript : public AuraScript
+        {
+            PrepareAuraScript(spell_gen_parachute_icAuraScript)
+
+            void HandleTriggerSpell(AuraEffect const * /*aurEff*/)
+            {
+                Unit* target = GetTarget();
+
+                if (!target->ToPlayer())
+                    return;
+
+                if (target->ToPlayer()->m_movementInfo.fallTime > 2000)
+                    target->CastSpell(target,SPELL_PARACHUTE_IC,true);               
+            }
+
+            void Register()
+            {
+                OnEffectPeriodic += AuraEffectPeriodicFn(spell_gen_parachute_icAuraScript::HandleTriggerSpell, EFFECT_0, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
+            }
+        };
+
+        AuraScript *GetAuraScript() const
+        {
+            return new spell_gen_parachute_icAuraScript();
+        }
+};
+
 void AddSC_generic_spell_scripts()
 {
+    new spell_gen_absorb0_hitlimit1();
     new spell_gen_aura_of_anger();
     new spell_gen_burn_brutallus();
     new spell_gen_leeching_swarm();
@@ -480,4 +682,8 @@ void AddSC_generic_spell_scripts()
     new spell_gen_trick_or_treat();
     new spell_creature_permanent_feign_death();
     new spell_pvp_trinket_wotf_shared_cd();
+    new spell_gen_animal_blood();
+    new spell_gen_divine_storm_cd_reset();
+    new spell_gen_parachute_ic();
+    new spell_gen_gunship_portal();
 }

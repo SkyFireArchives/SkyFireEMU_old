@@ -1,19 +1,18 @@
 /*
- * Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -82,12 +81,19 @@ class boss_lord_marrowgar : public CreatureScript
         {
             boss_lord_marrowgarAI(Creature *pCreature) : BossAI(pCreature, DATA_LORD_MARROWGAR)
             {
-                ASSERT(instance);
                 bIntroDone = false;
                 uiBoneStormDuration = RAID_MODE(20000,30000,20000,30000);
                 fBaseSpeed = pCreature->GetSpeedRate(MOVE_RUN);
                 bBoneSlice = false;
                 coldflameLastPos.Relocate(pCreature);
+            }
+
+            void InitializeAI()
+            {
+                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
+                    me->IsAIEnabled = false;
+                else if (!me->isDead())
+                    Reset();
             }
 
             void Reset()
@@ -121,6 +127,7 @@ class boss_lord_marrowgar : public CreatureScript
             void JustReachedHome()
             {
                 instance->SetBossState(DATA_LORD_MARROWGAR, FAIL);
+                instance->SetData(DATA_BONED_ACHIEVEMENT, uint32(true));    // reset
             }
 
             void KilledUnit(Unit *victim)
@@ -349,7 +356,7 @@ class npc_bone_spike : public CreatureScript
             void JustDied(Unit * /*killer*/)
             {
                 events.Reset();
-                if (Unit* trapped = Unit::GetUnit((*me), uiTrappedGUID))
+                if (Player* trapped = ObjectAccessor::GetPlayer(*me, uiTrappedGUID))
                     trapped->RemoveAurasDueToSpell(SPELL_IMPALED);
             }
 
@@ -364,19 +371,20 @@ class npc_bone_spike : public CreatureScript
                     return;
 
                 events.Update(diff);
-                Unit* trapped = Unit::GetUnit(*me, uiTrappedGUID);
+                Player* trapped = ObjectAccessor::GetPlayer(*me, uiTrappedGUID);
                 if ((trapped && trapped->isAlive() && !trapped->HasAura(SPELL_IMPALED)) || !trapped)
                     me->Kill(me);
 
                 if (events.ExecuteEvent() == EVENT_FAIL_BONED)
                     if (InstanceScript* instance = me->GetInstanceScript())
-                        instance->SetData(COMMAND_FAIL_BONED, 0);
+                        instance->SetData(DATA_BONED_ACHIEVEMENT, uint32(false));
             }
 
-            void SetTrappedUnit(Unit* unit)
+            void SetGUID(const uint64& guid, int32 /*type = 0*/)
             {
-                unit->EnterVehicle(vehicle, 0);
-                uiTrappedGUID = unit->GetGUID();
+                uiTrappedGUID = guid;
+                if (Player* target = ObjectAccessor::GetPlayer(*me, guid))
+                    target->EnterVehicle(vehicle, 0);
             }
 
             void PassengerBoarded(Unit * who, int8 /*seatId*/, bool apply)
@@ -407,6 +415,7 @@ class spell_marrowgar_coldflame : public SpellScriptLoader
 
         class spell_marrowgar_coldflame_SpellScript : public SpellScript
         {
+            PrepareSpellScript(spell_marrowgar_coldflame_SpellScript)
             void HandleScriptEffect(SpellEffIndex /*effIndex*/)
             {
                 Unit* caster = GetCaster();
@@ -444,6 +453,7 @@ class spell_marrowgar_bone_spike_graveyard : public SpellScriptLoader
 
         class spell_marrowgar_bone_spike_graveyard_SpellScript : public SpellScript
         {
+            PrepareSpellScript(spell_marrowgar_bone_spike_graveyard_SpellScript)
             void HandleApplyAura(SpellEffIndex /*effIndex*/)
             {
                 CreatureAI* marrowgarAI = GetCaster()->ToCreature()->AI();
@@ -458,9 +468,9 @@ class spell_marrowgar_bone_spike_graveyard : public SpellScriptLoader
                     if (!target)
                         break;
                     yell = true;
-                    //marrowgarAI->DoCast(*itr, SPELL_IMPALE);    // this is the proper spell but if we use it we dont have any way to assign a victim to it
+                    //GetCaster()->CastSpell(target, SPELL_IMPALE, true); // this is the proper spell but if we use it we dont have any way to assign a victim to it
                     Creature* pBone = GetCaster()->SummonCreature(NPC_BONE_SPIKE, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0, TEMPSUMMON_CORPSE_DESPAWN);
-                    CAST_AI(npc_bone_spike::npc_bone_spikeAI, pBone->AI())->SetTrappedUnit(target);
+                    pBone->AI()->SetGUID(target->GetGUID());
                 }
 
                 if (yell)
@@ -493,6 +503,7 @@ class spell_marrowgar_bone_storm : public SpellScriptLoader
 
         class spell_marrowgar_bone_storm_SpellScript : public SpellScript
         {
+            PrepareSpellScript(spell_marrowgar_bone_storm_SpellScript)
             void RecalculateDamage(SpellEffIndex /*effIndex*/)
             {
                 int32 dmg = GetHitDamage();

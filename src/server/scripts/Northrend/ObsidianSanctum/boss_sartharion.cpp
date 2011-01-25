@@ -1194,7 +1194,7 @@ public:
                 m_uiShadowBreathTimer -= uiDiff;
 
             // Don't attack current target if he's not visible for us.
-            if(me->getVictim() && me->getVictim() && me->getVictim()->HasAura(57874, 0))
+            if (me->getVictim()->HasAura(57874, 0))
                 me->getThreatManager().modifyThreatPercent(me->getVictim(), -100);
 
             DoMeleeAttackIfReady();
@@ -1324,7 +1324,6 @@ public:
         mob_acolyte_of_shadronAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             pInstance = pCreature->GetInstanceScript();
-            Reset();
         }
 
         InstanceScript* pInstance;
@@ -1349,7 +1348,8 @@ public:
                     if (pTarget)
                         pTarget->AddAura(SPELL_GIFT_OF_TWILIGTH_SHA, pTarget);
                 }
-             }
+            }
+            
             me->AddAura(SPELL_TWILIGHT_SHIFT_ENTER,me);
         }
 

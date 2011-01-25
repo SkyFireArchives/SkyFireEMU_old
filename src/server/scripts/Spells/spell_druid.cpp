@@ -38,6 +38,7 @@ public:
 
     class spell_dru_glyph_of_starfire_SpellScript : public SpellScript
     {
+        PrepareSpellScript(spell_dru_glyph_of_starfire_SpellScript)
         bool Validate(SpellEntry const * /*spellEntry*/)
         {
             if (!sSpellStore.LookupEntry(DRUID_INCREASED_MOONFIRE_DURATION))
@@ -82,7 +83,96 @@ public:
     }
 };
 
+// 69366 - Moonkin Form passive
+class spell_dru_moonkin_form_passive : public SpellScriptLoader
+{
+public:
+    spell_dru_moonkin_form_passive() : SpellScriptLoader("spell_dru_moonkin_form_passive") { }
+
+    class spell_dru_moonkin_form_passive_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_dru_moonkin_form_passive_AuraScript);
+
+        uint32 absorbPct;
+
+        bool Load()
+        {
+            absorbPct = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), EFFECT_0, GetCaster());
+            return true;
+        }
+
+        void CalculateAmount(AuraEffect const * /*aurEff*/, int32 & amount, bool & canBeRecalculated)
+        {
+            // Set absorbtion amount to unlimited
+            amount = -1;
+        }
+
+        void Absorb(AuraEffect * /*aurEff*/, DamageInfo & dmgInfo, uint32 & absorbAmount)
+        {
+            // reduces all damage taken while Stunned in Cat Form
+            if (GetTarget()->GetUInt32Value(UNIT_FIELD_FLAGS) & (UNIT_FLAG_STUNNED))
+                absorbAmount = CalculatePctN(dmgInfo.GetDamage(), absorbPct);
+        }
+
+        void Register()
+        {
+             DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_moonkin_form_passive_AuraScript::CalculateAmount, EFFECT_1, SPELL_AURA_SCHOOL_ABSORB);
+             OnEffectAbsorb += AuraEffectAbsorbFn(spell_dru_moonkin_form_passive_AuraScript::Absorb, EFFECT_1);
+        }
+    };
+
+    AuraScript *GetAuraScript() const
+    {
+        return new spell_dru_moonkin_form_passive_AuraScript();
+    }
+};
+
+// 62606 - Savage Defense
+class spell_dru_savage_defense : public SpellScriptLoader
+{
+public:
+    spell_dru_savage_defense() : SpellScriptLoader("spell_dru_savage_defense") { }
+
+    class spell_dru_savage_defense_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_dru_savage_defense_AuraScript);
+
+        uint32 absorbPct;
+
+        bool Load()
+        {
+            absorbPct = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), EFFECT_0, GetCaster());
+            return true;
+        }
+
+        void CalculateAmount(AuraEffect const * /*aurEff*/, int32 & amount, bool & canBeRecalculated)
+        {
+            // Set absorbtion amount to unlimited
+            amount = -1;
+        }
+
+        void Absorb(AuraEffect * aurEff, DamageInfo & dmgInfo, uint32 & absorbAmount)
+        {
+            absorbAmount = uint32(CalculatePctN(GetTarget()->GetTotalAttackPowerValue(BASE_ATTACK), absorbPct));
+            aurEff->SetAmount(0);
+        }
+
+        void Register()
+        {
+             DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_savage_defense_AuraScript::CalculateAmount, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
+             OnEffectAbsorb += AuraEffectAbsorbFn(spell_dru_savage_defense_AuraScript::Absorb, EFFECT_0);
+        }
+    };
+
+    AuraScript *GetAuraScript() const
+    {
+        return new spell_dru_savage_defense_AuraScript();
+    }
+};
+
 void AddSC_druid_spell_scripts()
 {
     new spell_dru_glyph_of_starfire();
+    new spell_dru_moonkin_form_passive();
+    new spell_dru_savage_defense();
 }
