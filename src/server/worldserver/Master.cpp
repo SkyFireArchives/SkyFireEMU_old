@@ -180,16 +180,9 @@ int Master::Run()
     sLog.outString( "%s (core-daemon)", _FULLVERSION );
     sLog.outString( "<Ctrl-C> to stop.\n" );
 
-    sLog.outString( "CCCCCCCC     A     CCCCCCCC TTTTTTTTTT UU     UU SSSSSSSS");
-    sLog.outString( "CC         AA AA   CC           TT     UU     UU SS");
-    sLog.outString( "CC       AA     AA CC           TT     UU     UU SS");
-    sLog.outString( "CC       AA     AA CC           TT     UU     UU SS       EEEE MM MM U  U");
-    sLog.outString( "CC       AAAAAAAAA CC           TT     UU     UU SSSSSSSS E    M M M U  U");
-    sLog.outString( "CC       AA     AA CC           TT     UU     UU       SS EEEE M   M U  U");
-    sLog.outString( "CC       AA     AA CC           TT     UU     UU       SS E    M   M U  U");
-    sLog.outString( "CCCCCCCC AA     AA CCCCCCCC     TT     UUUUUUUUU SSSSSSSS EEEE M   M UUUU");
-    sLog.outString( "");
-
+	sLog.outString( "Welcome to Project SkyFire Cataclysm");
+	sLog.outString( "Portions of TrinityCore & CactusEMU");
+	sLog.outString( "http://www.projectskyfire.org/");
     /// worldd PID file creation
     std::string pidfile = sConfig.GetStringDefault("PidFile", "");
     if(!pidfile.empty())
