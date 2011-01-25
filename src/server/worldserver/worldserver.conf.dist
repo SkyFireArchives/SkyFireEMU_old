@@ -1,5 +1,5 @@
 ################################################
-#   SkyFire World Server configuration file  #
+#   SkyFire World Server configuration file   #
 ################################################
 [worldserver]
 
@@ -39,28 +39,22 @@
 #    WorldDatabase.WorkerThreads
 #    CharacterDatabase.WorkerThreads
 #        The amount of worker threads spawned to handle
-#        asynchroneous MySQL statements
+#        asynchronous (delayed) MySQL statements.
 #        Each worker thread is mirrored with its own
 #        connection to the MySQL server and their own
 #        thread on the MySQL server.
 #        Default: 1
 #
-#   LoginDatabase.ThreadBundleMask
-#   WorldDatabase.ThreadBundleMask
-#   CharacterDatabase.ThreadBundleMask
-#       Defines which runnable threads are bundled into one synchroneous
-#       connection. Runnables not specified in the mask will have their
-#       seperate connection to the MySQL server.
-#       Value is a bitmask consisting of:
-#           MYSQL_BUNDLE_NONE   = 0,     Each task will run their own MySQL connection
-#           MYSQL_BUNDLE_CLI    = 1,     Commandline interface thread
-#           MYSQL_BUNDLE_RA     = 2,     Remote admin thread
-#           MYSQL_BUNDLE_RAR    = 4,     Reactor runnable thread
-#           MYSQL_BUNDLE_WORLD  = 8,     WorldRunnable
-#           MYSQL_BUNDLE_ALL    = 15,    All bundled together
+#    LoginDatabase.SynchThreads
+#    WorldDatabase.SynchThreads	
+#    CharacterDatabase.SynchThreads	
+#        Description: The amount of MySQL connections spawned to handle.	
+#        Default:     1 - (LoginDatabase.WorkerThreads)	
+#                     1 - (WorldDatabase.WorkerThreads)
 #
 #    MaxPingTime
-#        Settings for maximum database-ping interval (minutes between pings)
+#        Settings for maximum database-ping interval (seconds between pings)
+#        Default: 30 - (minutes)
 #
 #    WorldServerPort
 #        Default WorldServerPort
@@ -79,9 +73,9 @@ CharacterDatabaseInfo = "127.0.0.1;3306;user;password;characters"
 LoginDatabase.WorkerThreads = 1
 WorldDatabase.WorkerThreads = 1
 CharacterDatabase.WorkerThreads = 1
-LoginDatabase.ThreadBundleMask = 15
-WorldDatabase.ThreadBundleMask = 15
-CharacterDatabase.ThreadBundleMask = 15
+LoginDatabase.SynchThreads     = 1	
+WorldDatabase.SynchThreads     = 1
+CharacterDatabase.SynchThreads = 2
 MaxPingTime = 30
 WorldServerPort = 8085
 BindIP = "0.0.0.0"
@@ -172,7 +166,7 @@ EAIErrorLevel = 2
 #
 #    PlayerSaveInterval
 #        Player save interval (in milliseconds)
-#        Default: 900000 (15 min)
+#        Default: 600000 (10 min)
 #
 #    PlayerSave.Stats.MinLevel
 #        Minimum level for saving character stats for external usage in database    
@@ -276,7 +270,7 @@ SessionAddDelay = 10000
 GridCleanUpDelay = 300000
 MapUpdateInterval = 100
 ChangeWeatherInterval = 600000
-PlayerSaveInterval = 900000
+PlayerSaveInterval = 600000
 PlayerSave.Stats.MinLevel = 0
 PlayerSave.Stats.SaveOnlyOnLogout = 1
 vmap.enableLOS = 0
@@ -552,6 +546,7 @@ RaLogFile = "ra_commands.log"
 ArenaLogFile = ""
 ArenaLog.ExtendedInfo = 0
 SQLDriverLogFile = ""
+SQLDriverQueryLogging = 0
 LogColors = ""
 EnableLogDB = 0
 DBLogLevel = 2
@@ -768,7 +763,7 @@ ChatLogTimestamp = 0
 #
 #    MinDualSpecLevel
 #        Min level at which players can use Dual Spec functionality
-#        Default: 40
+#        Default: 30
 #
 #    StartPlayerLevel
 #        Staring level that have character upon creation
@@ -957,11 +952,6 @@ ChatLogTimestamp = 0
 #        Default: 1 (true)
 #                 0 (false)
 #
-#    ShowProgressBars
-#        Control show progress bars for load steps at server startup
-#        Default: 1 (true)
-#                 0 (false)
-#
 #    Motd
 #        Message of the Day. Displayed at worldlogin for every user
 #         Use '@' for a newline, and be sure to escape special characters.
@@ -999,7 +989,7 @@ HeroicCharactersPerRealm = 1
 CharacterCreating.MinLevelForHeroicCharacter = 55
 SkipCinematics = 0
 MaxPlayerLevel = 85
-MinDualSpecLevel = 40
+MinDualSpecLevel = 30
 StartPlayerLevel = 1
 StartHeroicPlayerLevel = 55
 StartPlayerMoney = 0
@@ -1012,7 +1002,7 @@ RecruitAFriend.MaxDifference = 3
 InstantLogout = 1
 DisableWaterBreath = 4
 AllFlightPaths = 0
-InstantFlightPaths = 0
+InstantFlightPaths = 1
 AlwaysMaxSkillForLevel = 0
 ActivateWeather = 1
 CastUnstuck = 1
@@ -1036,7 +1026,6 @@ OffhandCheckAtSpellUnlearn = 1
 ClientCacheVersion = 0
 Event.Announce = 0
 BeepAtStart = 1
-ShowProgressBars = 1
 Motd = "Welcome to a SkyFire server."
 Server.LoginInfo = 0
 Command.LookupMaxResults = 0
@@ -1475,6 +1464,7 @@ Visibility.Notify.Period.InBGArenas   = 1000
 #    Rate.RunicPower.Income
 #    Rate.RunicPower.Loss
 #    Rate.Focus
+#    Rate.Energy
 #    Rate.Loyalty
 #        Health and power regeneration and rage income from damage.
 #        Default: 1
@@ -1665,6 +1655,7 @@ Rate.Rage.Loss = 1
 Rate.RunicPower.Income = 1
 Rate.RunicPower.Loss = 1
 Rate.Focus = 1
+Rate.Energy = 1
 Rate.Loyalty = 1
 Rate.Skill.Discovery = 1
 Rate.Drop.Item.Poor = 1
@@ -2077,8 +2068,8 @@ CharDelete.KeepDays = 30
 #
 #   DungeonFinder.Enable
 #        Enable Dungeon Finder system. Will enable dungeon finder and raid finder
-#        Default: 0 - off
-#                 1 - on
+#        Default: 1 - on
+#                 0 - off
 #
 ###############################################################################
 
@@ -2102,4 +2093,4 @@ LevelReq.Trade = 1
 LevelReq.Ticket = 1
 LevelReq.Auction = 1
 LevelReq.Mail = 1
-DungeonFinder.Enable = 0
+DungeonFinder.Enable = 1

@@ -149,7 +149,7 @@ if( NOT WIN32 )
   add_definitions(-D_TRINITY_CORE_CONFIG='"${CONF_DIR}/worldserver.conf"')
 endif()
 
-add_dependencies(worldserver revision.h)
+add_dependencies(worldserver genrev)
 
 if( UNIX )
   set(worldserver_LINK_FLAGS "-pthread -lncurses ${worldserver_LINK_FLAGS}")
