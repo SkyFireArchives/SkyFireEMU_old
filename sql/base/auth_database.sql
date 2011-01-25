@@ -139,6 +139,7 @@ CREATE TABLE IF NOT EXISTS `realmlist` (
   `timezone` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `allowedSecurityLevel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `population` float unsigned NOT NULL DEFAULT '0',
+  `online` int(11) NOT NULL DEFAULT '0',
   `gamebuild` int(11) unsigned NOT NULL DEFAULT '13329',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_name` (`name`)

@@ -272,29 +272,6 @@ INSERT INTO `battleground_template` (`id`,`MinPlayersPerTeam`,`MaxPlayersPerTeam
 UNLOCK TABLES;
 
 --
--- Table structure for table `battlemaster_entry`
---
-
-DROP TABLE IF EXISTS `battlemaster_entry`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `battlemaster_entry` (
-  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'Entry of a creature',
-  `bg_template` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'Battleground template id',
-  PRIMARY KEY (`entry`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `battlemaster_entry`
---
-
-LOCK TABLES `battlemaster_entry` WRITE;
-/*!40000 ALTER TABLE `battlemaster_entry` DISABLE KEYS */;
-/*!40000 ALTER TABLE `battlemaster_entry` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `command`
 --
 
@@ -780,6 +757,9 @@ CREATE TABLE `creature` (
   `curmana` int(10) unsigned NOT NULL DEFAULT '0',
   `DeathState` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `MovementType` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `npcflag` int(10) unsigned NOT NULL DEFAULT '0',
+  `unit_flags` int(10) unsigned NOT NULL DEFAULT '0',
+  `dynamicflags` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`),
   KEY `idx_map` (`map`),
   KEY `idx_id` (`id`)
@@ -945,7 +925,8 @@ CREATE TABLE `creature_classlevelstats` (
   `class` tinyint(1) NOT NULL,
   `basehp0` smallint(2) NOT NULL,
   `basehp1` smallint(2) NOT NULL,  
-  `basehp2` smallint(2) NOT NULL,  
+  `basehp2` smallint(2) NOT NULL, 
+  `basehp3` smallint(2) NOT NULL, 
   `basemana` smallint(2) NOT NULL,
   `basearmor` smallint(2) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1578,7 +1559,7 @@ DROP TABLE IF EXISTS `creature_respawn`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `creature_respawn` (
   `guid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
-  `respawntime` bigint(20) NOT NULL DEFAULT '0',
+  `respawntime` bigint(20) unsigned NOT NULL DEFAULT '0',,
   `instance` mediumint(8) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`instance`),
   KEY `instance` (`instance`)
@@ -2607,7 +2588,7 @@ DROP TABLE IF EXISTS `gameobject_respawn`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gameobject_respawn` (
   `guid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
-  `respawntime` bigint(20) NOT NULL DEFAULT '0',
+  `respawntime` bigint(20) unsigned NOT NULL DEFAULT '0',,
   `instance` mediumint(8) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`instance`),
   KEY `instance` (`instance`)
@@ -2701,6 +2682,7 @@ CREATE TABLE `gameobject_template` (
   `data21` int(10) unsigned NOT NULL DEFAULT '0',
   `data22` int(10) unsigned NOT NULL DEFAULT '0',
   `data23` int(10) unsigned NOT NULL DEFAULT '0',
+  `AIName` char(64) NOT NULL DEFAULT '',
   `ScriptName` varchar(64) NOT NULL DEFAULT '',
   `WDBVerified` smallint(5) signed DEFAULT '1',
   PRIMARY KEY (`entry`),
