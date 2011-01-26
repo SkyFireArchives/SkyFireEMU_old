@@ -21,4 +21,3 @@ FOREACH(file ${files})
     MESSAGE(STATUS "File \"${file}\" does not exist.")
   ENDIF(EXISTS "${file}")
 ENDFOREACH(file)
-

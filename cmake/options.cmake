@@ -1,7 +1,5 @@
 # Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
 #
-# Copyright (C) 2010 CactusEMU <http://www.cactusemu.com/>
-#
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
@@ -11,15 +9,11 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 option(SERVERS          "Build worldserver and authserver"                            1)
-option(SCRIPTS    "Build core with basic scripts included"                            1)
-option(TOOLS            "Build dbc/map/vmap extraction/assembler tools"               0)
-if( WIN32 )
-    option(INJECTOR        "Build hook & dll injector"                                0)
-endif()
+option(SCRIPTS          "Build core with scripts included"                            1)
+option(TOOLS            "Build map/vmap extraction/assembler tools"                   0)
 option(USE_SCRIPTPCH    "Use precompiled headers when compiling scripts"              1)
 option(USE_COREPCH      "Use precompiled headers when compiling servers"              1)
 option(USE_SFMT         "Use SFMT as random numbergenerator"                          0)
 option(WITH_WARNINGS    "Show all warnings during compile"                            0)
 option(WITH_COREDEBUG   "Include additional debug-code in core"                       0)
-option(WITH_SQLDEBUG    "Output SQL-queries to dedicated logfile"                     0)
 option(WITH_SQL         "Copy SQL files during installation"                          0)

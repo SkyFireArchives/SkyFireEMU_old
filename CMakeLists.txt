@@ -1,6 +1,5 @@
 # Copyright (C) 2005-2010 Trinity <http://www.trinitycore.org/>
 #
-#
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
@@ -58,16 +57,11 @@ if( UNIX )
   find_package(BZip2)
 endif()
 
+# Find revision ID and hash of the sourcetree
+include(cmake/genrev.cmake)
+
 # print out the results before continuing
 include(cmake/showoptions.cmake)
-
-if( WIN32 )
-    message("You can build the SkyFirePatcher (permanent patcher) yourself. Visual Studio Project is located in src/redirect/Patcher/")
-    message("")
-endif()
-
-# add and generate revision.h
-add_subdirectory(src/genrev)
 
 # add dependencies
 add_subdirectory(dep)
