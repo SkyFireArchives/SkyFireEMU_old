@@ -337,15 +337,22 @@ bool fillArchiveNameVector(std::vector<std::string>& pArchiveNames)
     for (std::vector<std::string>::iterator i = locales.begin(); i != locales.end(); ++i)
     {
         pArchiveNames.push_back(in_path + *i + "/locale-" + *i + ".MPQ");
-        pArchiveNames.push_back(in_path + *i + "/expansion-locale-" + *i + ".MPQ");
-        pArchiveNames.push_back(in_path + *i + "/lichking-locale-" + *i + ".MPQ");
+		pArchiveNames.push_back(in_path + *i + "/expansion1-locale-" + *i + ".MPQ"); 
+		pArchiveNames.push_back(in_path + *i + "/expansion2-locale-" + *i + ".MPQ"); 
+		pArchiveNames.push_back(in_path + *i + "/expansion3-locale-" + *i + ".MPQ");;
     }
 
     // open expansion and common files
-    pArchiveNames.push_back(input_path + string("common.MPQ"));
-    pArchiveNames.push_back(input_path + string("common-2.MPQ"));
-    pArchiveNames.push_back(input_path + string("expansion.MPQ"));
-    pArchiveNames.push_back(input_path + string("lichking.MPQ"));
+	pArchiveNames.push_back(input_path + string("World.MPQ")); 
+	pArchiveNames.push_back(input_path + string("expansion1.MPQ")); 
+	pArchiveNames.push_back(input_path + string("expansion2.MPQ")); 
+	pArchiveNames.push_back(input_path + string("expansion3.MPQ")); 
+		 
+	//mh is this useless? the extractor crash if this active! 
+	//pArchiveNames.push_back(input_path + string("wow-update-13164.MPQ")); 
+	//pArchiveNames.push_back(input_path + string("wow-update-13205.MPQ")); 
+	//pArchiveNames.push_back(input_path + string("wow-update-13287.MPQ")); 
+	//pArchiveNames.push_back(input_path + string("wow-update-13329.MPQ"));
 
     // now, scan for the patch levels in the core dir
     printf("Scanning patch levels from data directory.\n");
