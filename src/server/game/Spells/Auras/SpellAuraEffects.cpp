@@ -422,6 +422,9 @@ m_canBeRecalculated(true), m_spellmod(NULL), m_isPeriodic(false), m_periodicTime
     m_amount = CalculateAmount(caster);
 
     CalculateSpellMod();
+	
+	if (m_spellProto) 
+       return; 
 }
 
 AuraEffect::~AuraEffect()
