@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CactusPatcher", "CactusPatcher\CactusPatcher.csproj", "{1F50EA3B-6965-4AA8-ADAB-12ED51574C3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyFirePatcher", "SkyFirePatcher\SkyFirePatcher.csproj", "{1F50EA3B-6965-4AA8-ADAB-12ED51574C3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

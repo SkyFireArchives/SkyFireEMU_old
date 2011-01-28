@@ -136,5 +136,5 @@ bool FileExists(char * fileName)
 int mainInjector()
 {
 	DWORD ProcessID = GetPrcID("Wow.exe");
-    return InjectDLL(ProcessID, "CactusRedirect.dll");
+    return InjectDLL(ProcessID, "SkyFireRedirect.dll");
 }

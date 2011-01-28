@@ -4937,52 +4937,52 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                         m_caster->CastSpell(m_caster, 63919, true);
                     return;
                 }
-                case 71342:                                     // Big Love Rocket
-                {
-                    if (!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
-                        return;
+				case 71342:                                     // Big Love Rocket
+					{
+						if (!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
+							return;
 
-                    // Prevent stacking of mounts and client crashes upon dismounting
-                    unitTarget->RemoveAurasByType(SPELL_AURA_MOUNTED);
+						// Prevent stacking of mounts and client crashes upon dismounting
+						unitTarget->RemoveAurasByType(SPELL_AURA_MOUNTED);
 
-                    // Triggered spell id dependent on riding skill and zone
-                    bool canFly = true;
-                    uint32 v_map = GetVirtualMapForMapAndZone(unitTarget->GetMapId(), unitTarget->GetZoneId());
-                    if (v_map != 530 && v_map != 571)
-                        canFly = false;
+						// Triggered spell id dependent on riding skill and zone
+						bool canFly = true;
+						uint32 v_map = GetVirtualMapForMapAndZone(unitTarget->GetMapId(), unitTarget->GetZoneId());
+						if (v_map != 530 && v_map != 571)
+							canFly = false;
 
-                    if (canFly && v_map == 571 && !unitTarget->ToPlayer()->HasSpell(54197))
-                        canFly = false;
+						if (canFly && v_map == 571 && !unitTarget->ToPlayer()->HasSpell(54197))
+							canFly = false;
 
-                    float x, y, z;
-                    unitTarget->GetPosition(x, y, z);
-                    uint32 areaFlag = unitTarget->GetBaseMap()->GetAreaFlag(x, y, z);
-                    AreaTableEntry const *pArea = sAreaStore.LookupEntry(areaFlag);
-                    if (canFly && (pArea && pArea->flags & AREA_FLAG_NO_FLY_ZONE) || !pArea)
-                        canFly = false;
+						float x, y, z;
+						unitTarget->GetPosition(x, y, z);
+						uint32 areaFlag = unitTarget->GetBaseMap()->GetAreaFlag(x, y, z);
+						AreaTableEntry const *pArea = sAreaStore.LookupEntry(areaFlag);
+						if (!pArea || (canFly && (pArea->flags & AREA_FLAG_NO_FLY_ZONE)))
+							canFly = false;
 
-                    switch(unitTarget->ToPlayer()->GetBaseSkillValue(SKILL_RIDING))
-                    {
-                    case 0: unitTarget->CastSpell(unitTarget, 71343, true); break;
-                    case 75: unitTarget->CastSpell(unitTarget, 71344, true); break;
-                    case 150: unitTarget->CastSpell(unitTarget, 71345, true); break;
-                    case 225:
-                        {
-                        if (canFly)
-                                unitTarget->CastSpell(unitTarget, 71346, true);
-                            else
-                                unitTarget->CastSpell(unitTarget, 71345, true);
-                        }break;
-                    case 300:
-                        {
-                        if (canFly)
-                            unitTarget->CastSpell(unitTarget, 71347, true);
-                        else
-                            unitTarget->CastSpell(unitTarget, 71345, true);
-                        }break;
-                    }
-                    return;
-                }
+						switch(unitTarget->ToPlayer()->GetBaseSkillValue(SKILL_RIDING))
+						{
+						case 0: unitTarget->CastSpell(unitTarget, 71343, true); break;
+						case 75: unitTarget->CastSpell(unitTarget, 71344, true); break;
+						case 150: unitTarget->CastSpell(unitTarget, 71345, true); break;
+						case 225:
+							{
+								if (canFly)
+									unitTarget->CastSpell(unitTarget, 71346, true);
+								else
+									unitTarget->CastSpell(unitTarget, 71345, true);
+							}break;
+						case 300:
+							{
+								if (canFly)
+									unitTarget->CastSpell(unitTarget, 71347, true);
+								else
+									unitTarget->CastSpell(unitTarget, 71345, true);
+							}break;
+						}
+						return;
+					}
                 case 72286:                                     // Invincible
                 {
                     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)

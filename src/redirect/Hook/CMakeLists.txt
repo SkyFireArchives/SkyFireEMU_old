@@ -10,19 +10,19 @@
 
 file(GLOB sources_localdir *.cpp *.h)
 
-set(CactusRedirect_SRCS
+set(SkYFireRedirect_SRCS
   ${CactusRedirect_SRCS}
   ${sources_localdir}
 )
 
 set(CactusRedirect_LINK_FLAGS "/LIBPATH:\"${CMAKE_CURRENT_SOURCE_DIR}\"")
 
-add_library(CactusRedirect SHARED ${CactusRedirect_SRCS})
+add_library(SkyFireRedirect SHARED ${CactusRedirect_SRCS})
 
-set_target_properties(CactusRedirect PROPERTIES LINK_FLAGS "${CactusRedirect_LINK_FLAGS}")
+set_target_properties(SkyFireRedirect PROPERTIES LINK_FLAGS "${SkyFireRedirect_LINK_FLAGS}")
 
 if( UNIX )
-  install(TARGETS CactusRedirect DESTINATION bin)
+  install(TARGETS SkyFireRedirect DESTINATION bin)
 elseif( WIN32 )
-  install(TARGETS CactusRedirect DESTINATION "${CMAKE_INSTALL_PREFIX}")
+  install(TARGETS SkyFireRedirect DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif()

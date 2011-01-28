@@ -8,8 +8,8 @@
     <ProjectGuid>{1F50EA3B-6965-4AA8-ADAB-12ED51574C3C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CactusPatcher</RootNamespace>
-    <AssemblyName>CactusPatcher</AssemblyName>
+    <RootNamespace>SkyFirePatcher</RootNamespace>
+    <AssemblyName>SkyFirePatcher</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

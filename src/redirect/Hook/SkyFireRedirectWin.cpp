@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "CactusRedirectWin.h"
+#include "SkyFireRedirectWin.h"
 
 #include "stdafx.h"
 #include "detours.h"
