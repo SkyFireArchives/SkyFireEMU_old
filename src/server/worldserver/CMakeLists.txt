@@ -131,7 +131,6 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/src/server/game/Tools
   ${CMAKE_SOURCE_DIR}/src/server/game/Weather
   ${CMAKE_SOURCE_DIR}/src/server/game/World
-  ${CMAKE_SOURCE_DIR}/src/server/authserver/Server
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/CommandLine
   ${CMAKE_CURRENT_SOURCE_DIR}/RemoteAccess
@@ -162,10 +161,11 @@ target_link_libraries(worldserver
   game
   shared
   scripts
+  trinitysockets
   collision
   g3dlib
   gsoap
-  ${JEMALLOC_LIBRARY}
+  ${JEMALLOC_LIB}
   ${READLINE_LIBRARY}
   ${TERMCAP_LIBRARY}
   ${ACE_LIBRARY}
@@ -199,4 +199,3 @@ if( USE_COREPCH )
     add_native_precompiled_header(worldserver ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders/worldPCH)
   endif()
 endif()
-
