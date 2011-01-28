@@ -952,6 +952,11 @@ ChatLogTimestamp = 0
 #        Default: 1 (true)
 #                 0 (false)
 #
+#    ShowProgressBars
+#        Control show progress bars for load steps at server startup
+#        Default: 1 (true)
+#                 0 (false)
+#
 #    Motd
 #        Message of the Day. Displayed at worldlogin for every user
 #         Use '@' for a newline, and be sure to escape special characters.
@@ -1026,6 +1031,7 @@ OffhandCheckAtSpellUnlearn = 1
 ClientCacheVersion = 0
 Event.Announce = 0
 BeepAtStart = 1
+ShowProgressBars = 1
 Motd = "Welcome to a SkyFire server."
 Server.LoginInfo = 0
 Command.LookupMaxResults = 0
