@@ -8,7 +8,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
-namespace CactusPatcher
+namespace SkyFirePatcher
 {
     public partial class Form1 : Form
     {
