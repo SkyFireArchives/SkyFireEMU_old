@@ -21,6 +21,7 @@ CMakeFiles/
 *.dep
 *.idb
 *.vcproj
+*.user
 cmake_install.cmake
 /SkyFire.sln
 /CMakeCache.txt
