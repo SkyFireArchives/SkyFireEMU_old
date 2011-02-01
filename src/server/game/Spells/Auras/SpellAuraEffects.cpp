@@ -607,7 +607,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                         
                         // Arena - Dampening
                         if (AuraEffect const* pAurEff = caster->GetAuraEffect(74410, 0))
-                            amount *= int32((100.0f + pAurEff->GetAmount()) / 100.0f);int32((100.0f + pAurEff->GetAmount()) / 100.0f);int32((100.0f + pAurEff->GetAmount()) / 100.0f);
+                            amount *= int32((100.0f + pAurEff->GetAmount()) / 100.0f);
                         // Battleground - Dampening
                         else if (AuraEffect const* pAurEff = caster->GetAuraEffect(74411, 0))
                             amount *= int32((100.0f + pAurEff->GetAmount()) / 100.0f);
