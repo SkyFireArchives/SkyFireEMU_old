@@ -1,4 +1,8 @@
-# Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
+# Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+#
+# Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+#
+# Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -7,8 +11,6 @@
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-########### authserver ###############
 
 file(GLOB_RECURSE sources_authentication Authentication/*.cpp Authentication/*.h)
 file(GLOB_RECURSE sources_realms Realms/*.cpp Realms/*.h)
