@@ -1,6 +1,6 @@
 # output generic information about the core and buildtype chosen
 
-message("* TrinityCore revision   : ${rev_id_str} (${rev_hash_str})")
+message("* SkyFireEMU revision   : ${rev_id_str} (${rev_hash_str})")
 if( UNIX )
   message("* Build binaries in      : ${CMAKE_BUILD_TYPE} mode")
 endif()
@@ -35,6 +35,14 @@ if( TOOLS )
   message("* Build map/vmap tools   : Yes")
 else()
   message("* Build map/vmap tools   : No  (default)")
+endif()
+
+if( WIN32 )
+    if( INJECTOR )
+        message("* Build dll injector   : Yes")
+    else()
+        message("* Build dll injector   : No (default)") 
+    endif()
 endif()
 
 if( USE_COREPCH )
