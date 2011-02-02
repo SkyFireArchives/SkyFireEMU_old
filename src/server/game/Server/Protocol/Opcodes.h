@@ -134,13 +134,13 @@ enum Opcodes
     SMSG_GUILD_DECLINE                               = 0x0375F, // (0xABD9)(0x0086) //
     CMSG_GUILD_INFO                                  = 0x0AF5E, // (0x6B75)(0x0087) //
     SMSG_GUILD_INFO                                  = 0x07C7F, // (0x02DD)(0x0088) //
-    CMSG_GUILD_ROSTER                                = 0x09556, // (0x22FD)(0x0089) //
+    CMSG_GUILD_ROSTER                                = 0x00757, // (0x22FD)(0x0089) //
     SMSG_GUILD_ROSTER                                = 0x038B0, // (0x1303)(0x008A) //
     CMSG_GUILD_PROMOTE                               = 0x09982, // (0x4A00)(0x008B) // CONFIRMED
     CMSG_GUILD_DEMOTE                                = 0x01902, // (0x4200)(0x008C) // CONFIRMED
     CMSG_GUILD_LEAVE                                 = 0x09B42, // (0x0A80)(0x008D) // CONFIRMED
     CMSG_GUILD_REMOVE                                = 0x089C2, // (0x4281)(0x008E) // CONFIRMED
-    CMSG_GUILD_DISBAND                               = 0x01B42, // (0x0205)(0x008F) // CONFIRMED
+    CMSG_GUILD_DISBAND                               = 0x00982, // (0x0205)(0x008F) // CONFIRMED
     CMSG_GUILD_LEADER                                = 0x00D02, // (0x9900)(0x0090) // CONFIRMED
     CMSG_GUILD_MOTD                                  = 0x099C2, // (0x4A05)(0x0091) // CONFIRMED
     SMSG_GUILD_EVENT                                 = 0x0577D, // (0x8B14)(0x0092) //
@@ -559,7 +559,7 @@ enum Opcodes
     CMSG_CHARACTER_POINT_CHEAT                       = 0x100A0, // (  nf  )(0x0223) //
     SMSG_GOSSIP_POI                                  = 0x01456, // (0x0BD9)(0x0224) //
     CMSG_CHAT_IGNORED                                = 0x0C456, // (  nf  )(0x0225) //
-    CMSG_GUILD_RANK                                  = 0x0FFC7, // (0x4A81)(0x0231) //
+    CMSG_GUILD_RANK                                  = 0x100A2, // (0x4A81)(0x0231) //
     SMSG_GUILD_RANK                                  = 0x02840, // (0x4090)(  nf  ) //
     CMSG_GUILD_ADD_RANK                              = 0x100A4, // (  nf  )(0x0232) //
     CMSG_GUILD_DEL_RANK                              = 0x100A5, // (0x4205)(0x0233) //
@@ -1172,7 +1172,7 @@ enum Opcodes
     SMSG_AURA_UPDATE_ALL                             = 0x05756, // (0xE298)(0x0495) //
     SMSG_AURA_UPDATE                                 = 0x0CE7D, // (0xA3D4)(0x0496) //
     CMSG_FLOOD_GRACE_CHEAT                           = 0x101F2, // (  nf  )(0x0497) //
-    SMSG_SERVER_FIRST_ACHIEVEMENT                    = 0x0AD7E, // (0xCA10)(0x0498) //
+    SMSG_SERVER_FIRST_ACHIEVEMENT                    = 0x0A92A, // (0xCA10)(0x0498) //
     SMSG_PET_LEARNED_SPELL                           = 0x0F55E, // (0x2290)(0x0499) //
     SMSG_PET_REMOVED_SPELL                           = 0x09554, // (0x2A79)(0x049A) //
     CMSG_CHANGE_SEATS_ON_CONTROLLED_VEHICLE          = 0x101F3, // (  nf  )(0x049B) //
