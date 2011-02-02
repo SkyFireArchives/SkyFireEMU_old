@@ -559,7 +559,7 @@ enum Opcodes
     CMSG_CHARACTER_POINT_CHEAT                       = 0x100A0, // (  nf  )(0x0223) //
     SMSG_GOSSIP_POI                                  = 0x01456, // (0x0BD9)(0x0224) //
     CMSG_CHAT_IGNORED                                = 0x0C456, // (  nf  )(0x0225) //
-    CMSG_GUILD_RANK                                  = 0x100A2, // (0x4A81)(0x0231) //
+    CMSG_GUILD_RANK                                  = 0x0FFC7, // (0x4A81)(0x0231) //
     SMSG_GUILD_RANK                                  = 0x02840, // (0x4090)(  nf  ) //
     CMSG_GUILD_ADD_RANK                              = 0x100A4, // (  nf  )(0x0232) //
     CMSG_GUILD_DEL_RANK                              = 0x100A5, // (0x4205)(0x0233) //

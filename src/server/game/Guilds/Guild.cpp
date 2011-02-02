@@ -564,6 +564,30 @@ void Guild::Member::ChangeRank(uint8 newRank)
     CharacterDatabase.Execute(stmt);
 }
 
+void Guild::SwitchRank(uint32 oldID, uint32 newID)
+{
+    if (oldID == GR_GUILDMASTER || newID == GR_GUILDMASTER)
+        return;
+	
+    if (oldID == newID)
+        return;
+	
+    if (oldID > GUILD_RANKS_MIN_COUNT || newID > GUILD_RANKS_MIN_COUNT)
+        return;
+	
+    RankInfo old = m_ranks[oldID];
+    m_ranks[oldID] = m_ranks[newID];
+    m_ranks[newID] = old;
+   
+    CharacterDatabase.PExecute("UPDATE guild_rank SET rid = 11 WHERE rid = '%u' AND guildid='%u'", oldID, m_id);
+    CharacterDatabase.PExecute("UPDATE guild_rank SET rid = '%u' WHERE rid = '%u' AND guildid='%u'", oldID, newID, m_id);
+    CharacterDatabase.PExecute("UPDATE guild_rank SET rid = '%u' WHERE rid = 11 AND guildid='%u'", newID, m_id);
+    
+    CharacterDatabase.PExecute("UPDATE guild_bank_right SET rid = 11 WHERE rid = '%u' AND guildid='%u'", oldID, m_id);
+    CharacterDatabase.PExecute("UPDATE guild_bank_right SET rid = '%u' WHERE rid = '%u' AND guildid='%u'", oldID, newID, m_id);
+    CharacterDatabase.PExecute("UPDATE guild_bank_right SET rid = '%u' WHERE rid = 11 AND guildid='%u'", newID, m_id);
+}
+
 void Guild::Member::SaveToDB(SQLTransaction& trans) const
 {
     PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_GUILD_MEMBER);
@@ -628,29 +652,47 @@ void Guild::Member::WritePacket(WorldPacket& data) const
 {
     if (Player* player = FindPlayer())
     {
-        data << uint64(player->GetGUID());
-        data << uint8(1);
-        data << player->GetName();
+        data << uint8(0);
         data << uint32(m_rankId);
+        data << float(0);
+        data << uint8(1);                                                      //connected
+        data << uint32(player->GetAchievementMgr().GetAchievementPoints());    //Achievement 
+        data << uint32(/*player->GetZoneId()*/ 4395);
         data << uint8(player->getLevel());
+        data << uint64(0);                                                     //unk
+        data << player->GetName();
         data << uint8(player->getClass());
-        data << uint8(0);                               // new 2.4.0
-        data << uint32(player->GetZoneId());
+		for(int i = 0; i < 2; i++)
+		{
+            data << uint32(professions[i].title);                              //Profession Name
+            data << uint32(professions[i].level);                              //Profession level
+            data << uint32(professions[i].skillID);                            //Profession skillID
+		}
     }
     else
     {
         data << m_guid;
         data << uint8(0);
-        data << m_name;
         data << uint32(m_rankId);
-        data << uint8(m_level);
-        data << uint8(m_class);
-        data << uint8(0);                               // new 2.4.0
-        data << uint32(m_zoneId);
         data << float(float(::time(NULL) - m_logoutTime) / DAY);
-    }
-    data << m_publicNote;
-    data << m_officerNote;
+        data << uint8(0);                                                      //not-connected
+        data << uint32(/*achievementPoints*/0);                                //Achievement
+        data << uint32(player->GetZoneId());
+        data << uint8(m_level);
+        data << uint64(0);                                                     //unk
+        data << m_name;
+        data << uint8(m_class);
+        for(int i = 0; i < 2; i++)
+        {
+	        data << uint32(professions[i].title);                             //Profession Name
+	        data << uint32(professions[i].level);                            //Profession level
+	        data << uint32(professions[i].skillID);                           //Profession skillID
+        }
+	}
+     data << m_publicNote;
+     data << uint64(0);                                                         //unk, only 0
+     data << m_officerNote;
+     data << uint32(0);                                                         //unk, only 0
 }
 
 // Decreases amount of money/slots left for today.
@@ -736,6 +778,12 @@ void EmblemInfo::WritePacket(WorldPacket& data) const
     data << uint32(m_borderStyle);
     data << uint32(m_borderColor);
     data << uint32(m_backgroundColor);
+    
+    for(int i = 0; i < 10; i++)
+        data << uint32(0);                                  // something new in Cataclysm (link with rank.)
+    
+    for(int i = 0; i < 10; i++)
+        data << uint32(0);                                  // something new in Cataclysm (link with rank.)
 }
 
 void EmblemInfo::SaveToDB(uint32 guildId) const
@@ -1207,13 +1255,16 @@ void Guild::Disband()
 void Guild::HandleRoster(WorldSession *session /*= NULL*/)
 {
     // Guess size
-    WorldPacket data(SMSG_GUILD_ROSTER, (4 + m_motd.length() + 1 + m_info.length() + 1 + 4 + _GetRanksSize() * (4 + 4 + GUILD_BANK_MAX_TABS * (4 + 4)) + m_members.size() * 50));
+	WorldPacket data(SMSG_GUILD_ROSTER, (4 + m_motd.length() + 1 + m_info.length() + 1 + 2 + 4 + 2 + _GetRanksSize() * 100));
     data << uint32(m_members.size());
     data << m_motd;
     data << m_info;
 
-    data << uint32(_GetRanksSize());
-    for (Ranks::const_iterator ritr = m_ranks.begin(); ritr != m_ranks.end(); ++ritr)
+    uint32 totalBytesToSend = uint32(uint32(_GetRanksSize()) / uint32(8)) + 1;
+    for (uint32 i = 0; i < totalBytesToSend; i++)
+        data << uint8(0); //unk
+
+	for (Ranks::const_iterator ritr = m_ranks.begin(); ritr != m_ranks.end(); ++ritr)
         ritr->WritePacket(data);
 
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
@@ -1223,6 +1274,26 @@ void Guild::HandleRoster(WorldSession *session /*= NULL*/)
         session->SendPacket(&data);
     else
         BroadcastPacket(&data);
+
+	//WorldPacket data7(SMSG_GUILD_RANK);
+	//data7 << (uint32)m_ranks.size();
+	//for(uint32 i = 0; i < m_ranks.size(); i++)
+	//{
+	//	data7 << (uint32)i;
+	//	for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
+	//		data7 << (uint32)m_ranks[i].m_bankTabs[j];
+	//	data7 << (uint32)m_ranks[i].m_bankMoneyPerDay;
+	//	for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
+	//		data7 << (uint32)m_Ranks[i].TabSlotPerDay[j];
+	//	data7 << (uint32)i; //unk.
+	//	data7 << m_Ranks[i].m_name;
+	//	data7 << (uint32)GetRankRights(i);
+	//}
+	//if (session)
+    //    session->SendPacket(&data7);
+	//else
+    //    BroadcastPacket(&data7);
+
     sLog.outDebug("WORLD: Sent (SMSG_GUILD_ROSTER)");
 }
 
