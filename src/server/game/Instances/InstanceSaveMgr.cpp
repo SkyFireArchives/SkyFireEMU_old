@@ -278,7 +278,7 @@ void InstanceSaveManager::CleanupAndPackInstances()
     CharacterDatabase.DirectExecute("UPDATE characters AS tmp LEFT JOIN instance ON tmp.instance_id = instance.id SET tmp.instance_id = 0 WHERE tmp.instance_id > 0 AND instance.id IS NULL");
 
     // Create new index
-    CharacterDatabase.DirectExecute("ALTER TABLE instance ADD newid INT UNSIGNED AUTO_INCREMENT, ADD INDEX(newid)");
+    //CharacterDatabase.DirectExecute("ALTER TABLE instance ADD newid INT UNSIGNED AUTO_INCREMENT, ADD INDEX(newid)");
 
     // Update old ids
     CharacterDatabase.DirectExecute("UPDATE corpse                  AS tmp LEFT JOIN instance ON tmp.instance    = instance.id SET tmp.instance    = instance.newid WHERE tmp.instance    > 0");
@@ -292,7 +292,7 @@ void InstanceSaveManager::CleanupAndPackInstances()
     CharacterDatabase.Query("UPDATE instance SET id = newid");
 
     // Finally drop the no longer needed column
-    CharacterDatabase.Query("ALTER TABLE instance DROP COLUMN newid");
+    //CharacterDatabase.Query("ALTER TABLE instance DROP COLUMN newid");
     
     // Bake some cookies for click
     sLog.outString(">> Cleaned up and packed instances");
