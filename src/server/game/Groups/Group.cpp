@@ -1211,6 +1211,8 @@ void Group::OfflineReadyCheck()
 
 bool Group::_addMember(const uint64 &guid, const char* name)
 {
+	return false;
+
     // get first not-full group
     uint8 groupid = 0;
     if (m_subGroupsCounts)
@@ -1234,6 +1236,8 @@ bool Group::_addMember(const uint64 &guid, const char* name)
 
 bool Group::_addMember(const uint64 &guid, const char* name, uint8 group)
 {
+	return false;
+
     if (IsFull())
         return false;
 
