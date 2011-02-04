@@ -14055,7 +14055,7 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
         case GOSSIP_OPTION_LEARNDUALSPEC:
             if (GetSpecsCount() == 1 && !(getLevel() < sWorld.getIntConfig(CONFIG_MIN_DUALSPEC_LEVEL)))
             {
-                if (!HasEnoughMoney(10000000))
+                if (!HasEnoughMoney(100000))
                 {
                     SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, 0, 0, 0);
                     PlayerTalkClass->CloseGossip();
@@ -14063,7 +14063,7 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
                 }
                 else
                 {
-                    ModifyMoney(-10000000);
+                    ModifyMoney(-100000);
 
                     // Cast spells that teach dual spec
                     // Both are also ImplicitTarget self and must be cast by player
