@@ -38,7 +38,7 @@ void MapManager::LoadTransports()
 
     uint32 count = 0;
 
-    if (true || !result)
+    if (!result)
     {
         barGoLink bar(1);
         bar.step();
