@@ -1,5 +1,5 @@
 ################################################
-#   SkyFire World Server configuration file   #
+#   SkyFire World Server configuration file    #
 ################################################
 [worldserver]
 
@@ -273,12 +273,12 @@ ChangeWeatherInterval = 600000
 PlayerSaveInterval = 600000
 PlayerSave.Stats.MinLevel = 0
 PlayerSave.Stats.SaveOnlyOnLogout = 1
-vmap.enableLOS = 0
-vmap.enableHeight = 0
+vmap.enableLOS = 1
+vmap.enableHeight = 1
 vmap.ignoreMapIds = ""
 vmap.ignoreSpellIds = "7720"
-vmap.petLOS = 0
-vmap.enableIndoorCheck = 0
+vmap.petLOS = 1
+vmap.enableIndoorCheck = 1
 DetectPosCollision = 1
 TargetPosRecalculateRange = 1.5
 UpdateUptimeInterval = 10
