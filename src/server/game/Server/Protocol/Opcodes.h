@@ -41,8 +41,8 @@
 enum Opcodes
 {
   //F: if 1, opcodeID not found
-  //X: opcodeID 13329
-  //Y: opcodeID 13264
+  //X: opcodeID 13596
+  //Y: opcodeID 13329
   //Z: opcodeID WoTLK
   //name                                             =   FXXXX  // (  Y   )(  Z   ) //
     CMSG_WORLD_TELEPORT                              = 0x00589, // (0x5211)(0x0008) //
