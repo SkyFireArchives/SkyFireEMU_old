@@ -552,7 +552,7 @@ void InitOpcodeTable()
     OPCODE( CMSG_GMTICKET_SYSTEMSTATUS,                   STATUS_LOGGEDIN, &WorldSession::HandleGMTicketSystemStatusOpcode);
     OPCODE( SMSG_GMTICKET_SYSTEMSTATUS,                   STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_SPIRIT_HEALER_ACTIVATE,                  STATUS_LOGGEDIN, &WorldSession::HandleSpiritHealerActivateOpcode);
-    OPCODE( SMSG_QUEST_FORCE_REMOVE,                      STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
+    OPCODE( SMSG_QUEST_FORCE_REMOVED,                      STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_SKILL_BUY_STEP,                          STATUS_NEVER,    &WorldSession::Handle_NULL                     );
     OPCODE( CMSG_SKILL_BUY_RANK,                          STATUS_NEVER,    &WorldSession::Handle_NULL                     );
     OPCODE( SMSG_SPIRIT_HEALER_CONFIRM,                   STATUS_NEVER,    &WorldSession::Handle_ServerSide               );

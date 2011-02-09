@@ -272,18 +272,34 @@ int WorldSocket::open (void *a)
     m_Address = remote_addr.get_host_addr();
 
     // Send startup packet.
-    WorldPacket packet (SMSG_AUTH_CHALLENGE, (9 * 4) + 1);
+    WorldPacket packet (SMSG_AUTH_CHALLENGE, 37);
 
-    packet << uint32(0);
-    packet << uint32(0);
-    packet << uint32(m_Seed);
-    packet << uint32(0);
-    packet << uint8(1);
-    packet << uint32(0);
-    packet << uint32(0);
-    packet << uint32(0);
-    packet << uint32(0);
-    packet << uint32(0);
+    BigNumber key1, key2;
+    key1.SetRand(64);
+    key2.SetRand(64);
+    uint32* k1 = (uint32*)key1.AsByteArray();
+    uint32* k2 = (uint32*)key2.AsByteArray();
+    uint8 ConnectionCount = 1;
+
+	packet << k1[0];
+    packet << k2[1];
+    packet << k2[3];
+    packet << k1[3];
+    packet << ConnectionCount;
+    packet << m_Seed;
+    packet << k1[2];
+    packet << k1[1];
+    packet << k2[2];
+    packet << k2[0];
+	
+	
+    BigNumber seed1;
+    seed1.SetRand(16 * 8);
+    packet.append(seed1.AsByteArray(16), 16);               // new encryption seeds
+	
+    BigNumber seed2;
+	seed2.SetRand(16 * 8);
+    packet.append(seed2.AsByteArray(16), 16);               // new encryption seeds
     
     if (SendPacket(packet) == -1)
         return -1;
@@ -691,7 +707,7 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
     // manage memory ;)
     ACE_Auto_Ptr<WorldPacket> aptr (new_pct);
 
-    const ACE_UINT16 opcode = new_pct->GetOpcode();
+    const ACE_UINT32 opcode = new_pct->GetOpcode();
 
     if (closing_)
         return -1;
@@ -778,17 +794,58 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
 
 int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
 {
-    // NOTE: ATM the socket is singlethread, have this in mind ...
     uint8 digest[20];
-    uint32 clientSeed, id, security, addonsize;
-    uint16 ClientBuild;
-    //uint8 expansion = 0;
+	uint8 hash[20];
+    uint32 unk;
+    uint64 unk1;
+    uint32 unk2;
+    uint8 unk3;
+    uint32 unk4;
+    uint32 unk5;
+    uint16 clientBuild;
+    uint8 unk6;
+    uint32 m_addonSize;
+    uint32 clientSeed;
+    uint32 addonData;
+    std::string accountName;
+    uint32 id, security;
     LocaleConstant locale;
-    std::string account;
+
     SHA1Hash sha1;
     BigNumber v, s, g, N, K;
-    WorldPacket packet;
+    WorldPacket packet, SendAddonPacked;
+ 
+    recvPacket >> hash[14] >> hash[7] >> hash[16] >> hash[9] >> hash[4] >> hash[5] >> hash[15];
+    recvPacket >> unk;
+    recvPacket >> hash[18];
+    recvPacket >> unk1;
+    recvPacket >> unk2;
+    recvPacket >> hash[13];
+    recvPacket >> unk3;
+    recvPacket >> hash[10] >> hash[6];
+    recvPacket >> unk4 >> unk5;
+    recvPacket >> hash[19] >> hash[11] >> hash[17] >> hash[8] >> hash[12] >> hash[0];
+    recvPacket >> clientBuild;
+    recvPacket >> hash[3];
+    recvPacket >> unk6;
+    recvPacket >> clientSeed;
+    recvPacket >> hash[1] >> hash[2];
+    memcpy(digest, hash, 20);
 
+    recvPacket >> m_addonSize;
+    uint8 * tableauAddon = new uint8[m_addonSize];
+    WorldPacket packetAddon;
+    for(uint32 i = 0; i < m_addonSize; i++)
+    {
+        uint8 tampon = 0;
+        recvPacket >> tampon;
+        tableauAddon[i] = tampon;
+        packetAddon << tampon;
+    }
+    delete tableauAddon;
+
+    recvPacket >> accountName;
+   
     if (sWorld.IsClosed())
     {
         packet.Initialize(SMSG_AUTH_RESPONSE, 1);
@@ -799,47 +856,13 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
         return -1;
     }
 
-    // Read the content of the packet
-    
-    uint8 unk15;
-    uint64 unk4;
-    uint32 unk6;
-    uint32 unk8;
-    uint32 unk10;
-    uint32 unk12;
-    uint8 unk16;
-    
-    recvPacket >> unk15 >> digest[15];
-    recvPacket >> ClientBuild;
-    recvPacket >> digest[5] >> digest[19];
-    recvPacket >> unk4;
-    recvPacket >> digest[13] >> digest[10] >> digest[1];
-    recvPacket >> unk6;
-    recvPacket >> digest[12] >> digest[4] >> digest[18] >> digest[8];
-    recvPacket >> unk8;
-    recvPacket >> digest[11] >> digest[9] >> digest[2];
-    recvPacket >> unk10;
-    recvPacket >> digest[6] >> digest[16];
-    recvPacket >> unk12;
-    recvPacket >> clientSeed;
-    recvPacket >> unk16 >> digest[7] >> digest[0] >> digest[3] >> digest[17] >> digest[14];
-    recvPacket >> account;
-    recvPacket >> addonsize;
-    //Why does this hack exist? In a beta revision, addonInfo was between clientSeed and accountName. 
-    uint8 * tableauAddon = new uint8[addonsize];
-    WorldPacket packetAddon;
-    for(uint32 i = 0; i < addonsize; i++)
-    {
-        uint8 tampon = 0;
-        recvPacket >> tampon;
-        
-        tableauAddon[i] = tampon;
-        packetAddon << tampon;
-    }
-    delete tableauAddon;
+    sLog.outDebug ("WorldSocket::HandleAuthSession: Clientbuild %u, accountname %s, clientseed %u",
+                clientBuild,
+                accountName.c_str(),
+                clientSeed);
 
     // Get the account information from the realmd database
-    std::string safe_account = account; // Duplicate, else will screw the SHA hash verification below
+    std::string safe_account = accountName; // Duplicate, else will screw the SHA hash verification below
     LoginDatabase.escape_string (safe_account);
     // No SQL injection, username escaped.
 
@@ -975,7 +998,7 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     }
 
     // Check that Key and account name are the same on client and server
-    SHA1Hash sha;
+    /*SHA1Hash sha;
 
     uint32 t = 0;
     uint32 seed = m_Seed;
@@ -996,12 +1019,12 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
 
         sLog.outError ("WorldSocket::HandleAuthSession: Sent Auth Response (authentification failed).");
         return -1;
-    }
+    }*/
 
     std::string address = GetRemoteAddress();
 
     sLog.outStaticDebug ("WorldSocket::HandleAuthSession: Client '%s' authenticated successfully from %s.",
-                account.c_str(),
+                accountName.c_str(),
                 address.c_str());
 
     // Update the last_ip in the database
