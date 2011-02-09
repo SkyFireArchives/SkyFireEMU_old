@@ -30,7 +30,7 @@
 /// Correspondence between opcodes and their names
 OpcodeHandler opcodeTable[NUM_MSG_TYPES];
 
-static void DefineOpcode( int opcode, const char* name, SessionStatus status, void (WorldSession::*handler)(WorldPacket& recvPacket) )
+static void DefineOpcode(uint32 opcode, const char* name, SessionStatus status, void (WorldSession::*handler)(WorldPacket& recvPacket) )
 {
     opcodeTable[opcode].name = name;
     opcodeTable[opcode].status = status;

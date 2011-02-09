@@ -806,7 +806,6 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     uint8 unk6;
     uint32 m_addonSize;
     uint32 clientSeed;
-    uint32 addonData;
     std::string accountName;
     uint32 id, security;
     LocaleConstant locale;
@@ -837,10 +836,10 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     WorldPacket packetAddon;
     for(uint32 i = 0; i < m_addonSize; i++)
     {
-        uint8 tampon = 0;
-        recvPacket >> tampon;
-        tableauAddon[i] = tampon;
-        packetAddon << tampon;
+        uint8 ByteSize = 0;
+        recvPacket >> ByteSize;
+        tableauAddon[i] = ByteSize;
+        packetAddon << ByteSize;
     }
     delete tableauAddon;
 

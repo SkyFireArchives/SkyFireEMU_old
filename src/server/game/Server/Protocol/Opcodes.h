@@ -618,7 +618,7 @@ enum Opcodes
     SMSG_SET_PCT_SPELL_MODIFIER                      = 0x05F74, // (0x8B74)(0x0267) //
     CMSG_SET_AMMO                                    = 0x100BF, // (  nf  )(0x0268) //
     SMSG_CORPSE_RECLAIM_DELAY                        = 0x100C0, // (  nf  )(0x0269) //
-    CMSG_SET_ACTIVE_MOVER                            = 0x00676, // (0xCB54)(0x026A) //
+    CMSG_SET_ACTIVE_MOVER                            = 0x00B11, // (0xCB54)(0x026A) // 4.0.6.13596
     CMSG_PET_CANCEL_AURA                             = 0x00754, // (  nf  )(0x026B) //
     CMSG_PLAYER_AI_CHEAT                             = 0x100C2, // (  nf  )(0x026C) //
     CMSG_CANCEL_AUTO_REPEAT_SPELL                    = 0x0A45E, // (0xAB39)(0x026D) //
