@@ -14,8 +14,8 @@ namespace SkyFirePatcher
     {
 
         // WoW 4.0.6a 13623 (release)
-        byte[] unpatchedBytes = new byte[] { 0xB8, 0x00, 0x00, 0x00, 0x00 };
-        byte[] patchedBytes = new byte[] { 0xE8, 0x42, 0xE4, 0xFF, 0xFF };
+        byte[] unpatchedBytes = new byte[] { 0xE8, 0x42, 0xE4, 0xFF, 0xFF };
+        byte[] patchedBytes = new byte[] { 0xB8, 0x00, 0x00, 0x00, 0x00 };
         int patchOffset = 0x91229;
         int exeLength = 9217176;
         byte[] wowExe = null;
