@@ -14,10 +14,10 @@ namespace SkyFirePatcher
     {
 
         // WoW 4.0.6a 13623 (release)
-        byte[] unpatchedBytes = new byte[] { 0xE8, 0x42, 0xE4, 0xFF, 0xFF };
-        byte[] patchedBytes = new byte[] { 0xB8, 0x00, 0x00, 0x00, 0x00 };
-        int patchOffset = 0x091229;
-        int exeLength = 9216664;
+        byte[] unpatchedBytes = new byte[] { 0xB8, 0x00, 0x00, 0x00, 0x00 };
+        byte[] patchedBytes = new byte[] { 0xE8, 0x42, 0xE4, 0xFF, 0xFF };
+        int patchOffset = 0x91229;
+        int exeLength = 9217176;
         byte[] wowExe = null;
         
         // WoW 4.0.6 13596 (release)
@@ -58,7 +58,7 @@ namespace SkyFirePatcher
 
             if (wowExe != null)
             {
-                if (wowExe.Length != 9216664)
+                if (wowExe.Length != 9217176)
                 {
                     richTextBox1.AppendText("Wrong version, this patch will only work for WoW 4.0.6 13596. \n");
                     label2.Text = "Error";
