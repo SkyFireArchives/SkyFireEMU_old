@@ -145,9 +145,9 @@ enum Opcodes
     CMSG_GUILD_MOTD                                  = 0x099C2, // (0x4A05)(0x0091) //
     SMSG_GUILD_EVENT                                 = 0x0B7C4, // (0x8B14)(0x0092) // 4.0.6.13596
     SMSG_GUILD_COMMAND_RESULT                        = 0x0BE5D, // (0x8BF4)(0x0093) //
-    CMSG_MESSAGECHAT_SAY                             = 0x05A90, // (0x5200)(0x0000) //
-    CMSG_MESSAGECHAT_YELL                            = 0x03A10, // (0x7200)(0x0000) //
-    CMSG_MESSAGECHAT_CHANNEL                         = 0x03A88, // (0x5A20)(0x0000) //
+    CMSG_MESSAGECHAT_SAY                             = 0x0002A, // (0x5200)(0x0000) // 4.0.6.13623
+    CMSG_MESSAGECHAT_YELL                            = 0x00802, // (0x7200)(0x0000) // 4.0.6.13623
+    CMSG_MESSAGECHAT_CHANNEL                         = 0x00821, // (0x5A20)(0x0000) // 4.0.6.13623
     CMSG_MESSAGECHAT_WHISPER                         = 0x05A80, // (0xDA24)(0x0000) //
     CMSG_MESSAGECHAT_GUILD                           = 0x02A88, // (0x7A20)(0x0000) //
     CMSG_MESSAGECHAT_OFFICER                         = 0x07A98, // (0x9204)(0x0000) //
