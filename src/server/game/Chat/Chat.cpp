@@ -808,9 +808,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "bindsight",      SEC_ADMINISTRATOR,  false, &ChatHandler::HandleBindSightCommand,           "", NULL },
         { "unbindsight",    SEC_ADMINISTRATOR,  false, &ChatHandler::HandleUnbindSightCommand,         "", NULL },
         { "playall",        SEC_GAMEMASTER,     false, &ChatHandler::HandlePlayAllCommand,             "", NULL },
-		{ "opcode",         SEC_CONSOLE,        true, &ChatHandler::HandleOpcodeTestCommand,           "", NULL },
-
-        { NULL,             0,                  false, NULL,                                           "", NULL }
+		{ NULL,             0,                  false, NULL,                                           "", NULL }
     };
 
     if (load_command_table)
