@@ -66,19 +66,19 @@ struct ServerPktHeader
         if (isLargePacket())
         {
             sLog.outDebug("initializing large server to client packet. Size: %u, cmd: %u", size, cmd);
-            header[headerIndex++] = 0x80|(0xFF &(size>>16));
+            header[headerIndex++] = 0x80 | (0xFF & (size >> 16));
         }
-        header[headerIndex++] = 0xFF &(size>>8);
-        header[headerIndex++] = 0xFF &size;
+        header[headerIndex++] = 0xFF &(size >> 8);
+        header[headerIndex++] = 0xFF & size;
 
         header[headerIndex++] = 0xFF & cmd;
-        header[headerIndex++] = 0xFF & (cmd>>8);
+        header[headerIndex++] = 0xFF & (cmd >> 8);
     }
 
     uint8 getHeaderLength()
     {
         // cmd = 2 bytes, size= 2||3bytes
-        return 2+(isLargePacket()?3:2);
+        return 2 + (isLargePacket() ? 3 : 2);
     }
 
     bool isLargePacket()
@@ -110,8 +110,8 @@ m_Seed(static_cast<uint32> (rand32()))
 {
     reference_counting_policy().value (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
-    msg_queue()->high_water_mark(8*1024*1024);
-    msg_queue()->low_water_mark(8*1024*1024);
+    msg_queue()->high_water_mark(8 * 1024 * 1024);
+    msg_queue()->low_water_mark(8 * 1024 * 1024);
 }
 
 WorldSocket::~WorldSocket (void)
@@ -273,30 +273,14 @@ int WorldSocket::open (void *a)
 
     // Send startup packet.
     WorldPacket packet (SMSG_AUTH_CHALLENGE, 37);
-
-    BigNumber key1, key2;
-    key1.SetRand(64);
-    key2.SetRand(64);
-    uint32* k1 = (uint32*)key1.AsByteArray();
-    uint32* k2 = (uint32*)key2.AsByteArray();
-    uint8 ConnectionCount = 1;
-
-	packet << k1[0];
-    packet << k2[1];
-    packet << k2[3];
-    packet << k1[3];
-    packet << ConnectionCount;
-    packet << m_Seed;
-    packet << k1[2];
-    packet << k1[1];
-    packet << k2[2];
-    packet << k2[0];
-	
 	
     BigNumber seed1;
     seed1.SetRand(16 * 8);
     packet.append(seed1.AsByteArray(16), 16);               // new encryption seeds
-	
+    
+    packet << uint8(1);
+    packet << uint32(m_Seed);
+
     BigNumber seed2;
 	seed2.SetRand(16 * 8);
     packet.append(seed2.AsByteArray(16), 16);               // new encryption seeds
@@ -795,53 +779,41 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
 int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
 {
     uint8 digest[20];
-	uint8 hash[20];
-    uint32 unk;
-    uint64 unk1;
-    uint32 unk2;
-    uint8 unk3;
-    uint32 unk4;
-    uint32 unk5;
-    uint16 clientBuild;
-    uint8 unk6;
+	uint16 clientBuild, id, security;
     uint32 m_addonSize;
+    uint32 m_addonLenCompressed;
+    uint8* m_addonCompressed;
     uint32 clientSeed;
     std::string accountName;
-    uint32 id, security;
     LocaleConstant locale;
 
     SHA1Hash sha1;
     BigNumber v, s, g, N, K;
-    WorldPacket packet, SendAddonPacked;
- 
-    recvPacket >> hash[14] >> hash[7] >> hash[16] >> hash[9] >> hash[4] >> hash[5] >> hash[15];
-    recvPacket >> unk;
-    recvPacket >> hash[18];
-    recvPacket >> unk1;
-    recvPacket >> unk2;
-    recvPacket >> hash[13];
-    recvPacket >> unk3;
-    recvPacket >> hash[10] >> hash[6];
-    recvPacket >> unk4 >> unk5;
-    recvPacket >> hash[19] >> hash[11] >> hash[17] >> hash[8] >> hash[12] >> hash[0];
-    recvPacket >> clientBuild;
-    recvPacket >> hash[3];
-    recvPacket >> unk6;
-    recvPacket >> clientSeed;
-    recvPacket >> hash[1] >> hash[2];
-    memcpy(digest, hash, 20);
+    WorldPacket packet;
 
-    recvPacket >> m_addonSize;
-    uint8 * tableauAddon = new uint8[m_addonSize];
-    WorldPacket packetAddon;
-    for(uint32 i = 0; i < m_addonSize; i++)
-    {
-        uint8 ByteSize = 0;
-        recvPacket >> ByteSize;
-        tableauAddon[i] = ByteSize;
-        packetAddon << ByteSize;
-    }
-    delete tableauAddon;
+    recvPacket.read(digest, 7);
+    recvPacket.read_skip<uint32>();
+    recvPacket.read(digest, 1);
+    recvPacket.read_skip<uint64>();
+    recvPacket.read_skip<uint32>();
+    recvPacket.read(digest, 1);
+    recvPacket.read_skip<uint8>();
+    recvPacket.read(digest, 2);
+    recvPacket >> clientSeed;
+    recvPacket.read_skip<uint32>();
+    recvPacket.read(digest, 6);
+    recvPacket >> clientBuild;
+    recvPacket.read(digest, 1);
+    recvPacket.read_skip<uint8>();
+    recvPacket.read_skip<uint32>();
+    recvPacket.read(digest, 2);
+
+    uint32 ByteSize = 0, SizeUncompressed;
+    recvPacket >> ByteSize >> SizeUncompressed;
+    m_addonSize = SizeUncompressed;
+    m_addonLenCompressed = ByteSize - 4;
+    m_addonCompressed = new uint8[ByteSize - 4];
+    recvPacket.read(m_addonCompressed, ByteSize - 4);
 
     recvPacket >> accountName;
    
@@ -997,19 +969,19 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     }
 
     // Check that Key and account name are the same on client and server
-    /*SHA1Hash sha;
+    SHA1Hash sha;
 
     uint32 t = 0;
     uint32 seed = m_Seed;
 
-    sha.UpdateData (account);
-    sha.UpdateData ((uint8 *) & t, 4);
-    sha.UpdateData ((uint8 *) & clientSeed, 4);
-    sha.UpdateData ((uint8 *) & seed, 4);
-    sha.UpdateBigNumbers (&K, NULL);
+    sha.UpdateData(accountName);
+    sha.UpdateData((uint8 *) & t, 4);
+    sha.UpdateData((uint8 *) & clientSeed, 4);
+    sha.UpdateData((uint8 *) & seed, 4);
+    sha.UpdateBigNumbers(&K, NULL);
     sha.Finalize();
     
-    if (memcmp (sha.GetDigest(), digest, 20))
+    /*if (memcmp (sha.GetDigest(), digest, 20))
     {
         packet.Initialize (SMSG_AUTH_RESPONSE, 1);
         packet << uint8 (AUTH_FAILED);
@@ -1043,8 +1015,7 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
 
     m_Session->LoadGlobalAccountData();
     m_Session->LoadTutorialsData();
-    packetAddon.rpos(0);
-    m_Session->ReadAddonsInfo(packetAddon);
+    m_Session->ReadAddonsInfo(recvPacket);
     
     // Sleep this Network thread for
     uint32 sleepTime = sWorld.getIntConfig(CONFIG_SESSION_ADD_DELAY);

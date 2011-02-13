@@ -280,7 +280,7 @@ void LoadDBCStores(const std::string& dataPath)
 {
     std::string dbcPath = dataPath+"dbc/";
 
-    const uint32 DBCFilesCount = 90;
+    const uint32 DBCFilesCount = 112;
 
     barGoLink bar(DBCFilesCount);
 
@@ -694,13 +694,13 @@ void LoadDBCStores(const std::string& dataPath)
     }
 
     // Check loaded DBC files proper version
-    if (!sAreaStore.LookupEntry(3617)              ||       // last area (areaflag) added in 3.3.5a
-        !sCharTitlesStore.LookupEntry(177)         ||       // last char title added in 3.3.5a
-        !sGemPropertiesStore.LookupEntry(1629)     ||       // last added spell in 3.3.5a
-        //!sItemStore.LookupEntry(56806)             ||       // last gem property added in 3.3.5a
-        !sItemExtendedCostStore.LookupEntry(2997)  ||       // last item extended cost added in 3.3.5a
-        !sMapStore.LookupEntry(724)                ||       // last map added in 3.3.5a
-        !sSpellStore.LookupEntry(80864)            )        // last client known item added in 3.3.5a
+    if (!sAreaStore.LookupEntry(4445)              ||       // last area (areaflag) added in 4.0.6a
+        !sCharTitlesStore.LookupEntry(229)         ||       // last char title added in 4.0.6a
+        !sGemPropertiesStore.LookupEntry(1858)     ||       // last gem property added in 4.0.6a
+        !sItemExtendedCostStore.LookupEntry(3400)  ||       // last item extended cost added in 4.0.6a
+        !sMapStore.LookupEntry(767)                ||       // last map added in 4.0.6a
+        !sSpellStore.LookupEntry(96539)            )        // last added spell in 4.0.6a
+
     {
         sLog.outError("\nYou have _outdated_ DBC files. Please extract correct versions from current using client.");
         exit(1);

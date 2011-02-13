@@ -284,8 +284,12 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
             uint32 team = Player::TeamForRace(race_);
             switch(team)
             {
-                case ALLIANCE: disabled = mask & (1<<0); break;
-                case HORDE:    disabled = mask & (1<<1); break;
+                case ALLIANCE:
+                    disabled = mask & (1<<0);
+                    break;
+                case HORDE:
+                    disabled = mask & (1<<1);
+                    break;
             }
 
             if (disabled)
@@ -679,6 +683,14 @@ void WorldSession::HandleCharDeleteOpcode(WorldPacket & recv_data)
     WorldPacket data(SMSG_CHAR_DELETE, 1);
     data << (uint8)CHAR_DELETE_SUCCESS;
     SendPacket(&data);
+}
+
+void WorldSession::HandleUnk8508Opcode(WorldPacket& recv_data)
+{
+    sLog.outStaticDebug("WORLD: Recvd 0x8508");
+    uint32 unk;
+    uint8 unk1;
+    recv_data >> unk >> unk1;
 }
 
 void WorldSession::HandlePlayerLoginOpcode(WorldPacket & recv_data)

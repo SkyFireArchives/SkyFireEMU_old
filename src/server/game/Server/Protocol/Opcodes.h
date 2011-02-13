@@ -60,7 +60,7 @@ enum Opcodes
     SMSG_CHAR_ENUM                                   = 0x0ECCC, // (0x429C)(0x003B) // 4.0.6.13561
     SMSG_CHAR_DELETE                                 = 0x0BC80, // (0x63BC)(0x003C) // 4.0.6.13561
     CMSG_PLAYER_LOGIN                                = 0x08180, // (0x1621)(0x003D) // 4.0.6.13596
-    SMSG_NEW_WORLD                                   = 0x0450C, // (0xA094)(0x003E) // 4.0.6.13596
+    SMSG_NEW_WORLD                                   = 0x0451E, // (0xA094)(0x003E) // 4.0.6.13596
     SMSG_TRANSFER_PENDING                            = 0x07BE0, // (0x6210)(0x003F) // 4.0.6.13596
     SMSG_TRANSFER_ABORTED                            = 0x02BE0, // (0x0B55)(0x0040) // 4.0.6.13596
     SMSG_CHARACTER_LOGIN_FAILED                      = 0x039E8, // (0xCBD9)(0x0041) // 4.0.6.13596
@@ -265,7 +265,7 @@ enum Opcodes
     SMSG_TRIGGER_CINEMATIC                           = 0x0057D, // (  nf  )(0x00FA) //
     CMSG_NEXT_CINEMATIC_CAMERA                       = 0x0B2CC, // (  nf  )(0x00FB) // 4.0.6.13596
     CMSG_COMPLETE_CINEMATIC                          = 0x0CC55, // (  nf  )(0x00FC) //
-    SMSG_TUTORIAL_FLAGS                              = 0x08657, // (0x4B31)(0x00FD) //
+    SMSG_TUTORIAL_FLAGS                              = 0x03384, // (0x4B31)(0x00FD) // 4.0.6.13596
     CMSG_TUTORIAL_FLAG                               = 0x0E4CC, // (  nf  )(0x00FE) // 4.0.6.13596
     CMSG_TUTORIAL_CLEAR                              = 0x0A5E4, // (  nf  )(0x00FF) // 4.0.6.13596
     CMSG_TUTORIAL_RESET                              = 0x0DE75, // (  nf  )(0x0100) //
@@ -1226,7 +1226,7 @@ enum Opcodes
     CMSG_BATTLEFIELD_MGR_ENTRY_INVITE_RESPONSE       = 0x00100, // (0x1E11)(0x04DF) //
     SMSG_BATTLEFIELD_MGR_ENTERED                     = 0x10227, // (  nf  )(0x04E0) //
     SMSG_BATTLEFIELD_MGR_QUEUE_INVITE                = 0x10228, // (  nf  )(0x04E1) //
-    CMSG_BATTLEFIELD_MGR_QUEUE_INVITE_RESPONSE       = 0x005A0, // (0x5A11)(0x04E2) //
+    CMSG_BATTLEFIELD_MGR_QUEUE_INVITE_RESPONSE       = 0x08108, // (0x5A11)(0x04E2) // 4.0.6.13596
     CMSG_BATTLEFIELD_MGR_QUEUE_REQUEST               = 0x10229, // (0x1B62)(0x04E3) //
     SMSG_BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE      = 0x1022A, // (  nf  )(0x04E4) //
     SMSG_BATTLEFIELD_MGR_EJECT_PENDING               = 0x1022B, // (  nf  )(0x04E5) //
@@ -1282,6 +1282,7 @@ enum Opcodes
     CMSG_AUTO_DECLINE_GUILD_INVITES                  = 0x00C7D, // (  nf  )(  nf  ) //
     CMSG_SET_PRIMARY_TALENT_TREE                     = 0x0B47D, // (  nf  )(  nf  ) //
     CMSG_GROUP_SET_ROLES                             = 0x00509, // (  nf  )(  nf  ) //
+    CMSG_UNKNOWN_34056                               = 0x08508, // (  nf  )(  nf  ) // 4.0.6.13596
     NUM_MSG_TYPES                                    = 0x102B7  // last unknow opcode + 1.
 };
 
