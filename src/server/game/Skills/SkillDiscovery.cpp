@@ -22,7 +22,7 @@
 
 #include "DatabaseEnv.h"
 #include "Log.h"
-#include "ProgressBar.h"
+
 #include "World.h"
 #include "Util.h"
 #include "SkillDiscovery.h"
@@ -65,7 +65,7 @@ void LoadSkillDiscoveryTable()
         return;
     }
 
-    barGoLink bar(result->GetRowCount());
+    
 
     std::ostringstream ssNonDiscoverableEntries;
     std::set<uint32> reportedReqSpells;
@@ -73,7 +73,7 @@ void LoadSkillDiscoveryTable()
     do
     {
         Field *fields = result->Fetch();
-        bar.step();
+        
 
         uint32 spellId         = fields[0].GetUInt32();
         int32  reqSkillOrSpell = fields[1].GetInt32();

@@ -26,7 +26,7 @@
 
 #include "DisableMgr.h"
 #include "ObjectMgr.h"
-#include "ProgressBar.h"
+
 #include "SocialMgr.h"
 #include "LFGMgr.h"
 #include "LFGScripts.h"
@@ -87,20 +87,20 @@ void LFGMgr::LoadDungeonEncounters()
 
     if (!result)
     {
-        barGoLink bar(1);
-        bar.step();
+        
+        
 
         sLog.outString();
         sLog.outErrorDb(">> Loaded 0 dungeon encounter lfg associations. DB table `lfg_dungeon_encounters` is empty!");
         return;
     }
 
-    barGoLink bar(result->GetRowCount());
+    
 
     Field* fields = NULL;
     do
     {
-        bar.step();
+        
         fields = result->Fetch();
         uint32 achievementId = fields[0].GetUInt32();
         uint32 dungeonId = fields[1].GetUInt32();
@@ -147,20 +147,20 @@ void LFGMgr::LoadRewards()
 
     if (!result)
     {
-        barGoLink bar(1);
-        bar.step();
+        
+        
 
         sLog.outString();
         sLog.outErrorDb(">> Loaded 0 lfg dungeon rewards. DB table `lfg_dungeon_rewards` is empty!");
         return;
     }
 
-    barGoLink bar(result->GetRowCount());
+    
 
     Field* fields = NULL;
     do
     {
-        bar.step();
+        
         fields = result->Fetch();
         uint32 dungeonId = fields[0].GetUInt32();
         uint32 maxLevel = fields[1].GetUInt8();

@@ -49,7 +49,6 @@
 #include "MapManager.h"
 #include "Player.h"
 #include "GameEventMgr.h"
-#include "ProgressBar.h"
 #include "SharedDefines.h"
 #include "Formulas.h"
 #include "DisableMgr.h"
@@ -698,21 +697,21 @@ void BattlegroundMgr::CreateInitialBattlegrounds()
 
     if (!result)
     {
-        barGoLink bar(1);
+        
 
-        bar.step();
+        
 
         sLog.outString();
         sLog.outErrorDb(">> Loaded 0 battlegrounds. DB table `battleground_template` is empty.");
         return;
     }
 
-    barGoLink bar(result->GetRowCount());
+    
 
     do
     {
         Field *fields = result->Fetch();
-        bar.step();
+        
 
         uint32 bgTypeID_ = fields[0].GetUInt32();
         if (sDisableMgr.IsDisabledFor(DISABLE_TYPE_BATTLEGROUND, bgTypeID_, NULL))
