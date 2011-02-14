@@ -391,7 +391,7 @@ enum Opcodes
     SMSG_PET_NAME_INVALID                            = 0x01457, // (0x42D9)(0x0178) //
     SMSG_PET_SPELLS                                  = 0x0B780, // (0x03F0)(0x0179) // 
     SMSG_PET_MODE                                    = 0x079C0, // (0x4A1C)(0x017A) // 
-    CMSG_GOSSIP_HELLO                                = 0x074C8, // (0x2A75)(0x017B) // 
+    CMSG_GOSSIP_HELLO                                = 0x074C8, // (0x2A75)(0x017B) // 4.0.6a 13623
     CMSG_GOSSIP_SELECT_OPTION                        = 0x08E7C, // (0x0271)(0x017C) //
     SMSG_GOSSIP_MESSAGE                              = 0x0D57E, // (0xAB3D)(0x017D) //
     SMSG_GOSSIP_COMPLETE                             = 0x0475F, // (0x6BF9)(0x017E) //
@@ -909,7 +909,7 @@ enum Opcodes
     MSG_PARTY_ASSIGNMENT                             = 0x05E7F, // (  nf  )(0x038E) //
     SMSG_OFFER_PETITION_ERROR                        = 0x0BF7E, // (0x8B11)(0x038F) //
     SMSG_TIME_SYNC_REQ                               = 0x0AA80, // (0xA318)(0x0390) // 
-    CMSG_TIME_SYNC_RESP                              = 0x0A8AC, // (  nf  )(0x0391) // 
+    CMSG_TIME_SYNC_RESP                              = 0x0A8AC, // (  nf  )(0x0391) // 4.0.6a 13623
     CMSG_SEND_LOCAL_EVENT                            = 0x1015A, // (  nf  )(0x0392) //
     CMSG_SEND_GENERAL_TRIGGER                        = 0x1015B, // (  nf  )(0x0393) //
     CMSG_SEND_COMBAT_TRIGGER                         = 0x1015C, // (  nf  )(0x0394) //
@@ -1239,7 +1239,7 @@ enum Opcodes
     SMSG_GMRESPONSE_RECEIVED                         = 0x00F57, // (0x0A91)(0x04EF) //
     CMSG_GMRESPONSE_RESOLVE                          = 0x0455E, // (  nf  )(0x04F0) //
     SMSG_GMRESPONSE_STATUS_UPDATE                    = 0x0057C, // (0x8B39)(0x04F1) //
-    CMSG_WORLD_STATE_UI_TIMER_UPDATE                 = 0x03FA8, // (0x4A55)(0x0000) // 
+    CMSG_WORLD_STATE_UI_TIMER_UPDATE                 = 0x03FA8, // (0x4A55)(0x0000) // 4.0.6a 13623
     SMSG_WORLD_STATE_UI_TIMER_UPDATE                 = 0x05557, // (0xCA31)(0x04F7) //
     CMSG_CHAR_RACE_CHANGE                            = 0x0775C, // (  nf  )(0x04F8) //
     SMSG_TALENTS_INVOLUNTARILY_RESET                 = 0x04E54, // (0x0215)(0x04FA) //
