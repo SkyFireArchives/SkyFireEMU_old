@@ -781,8 +781,8 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     uint8 digest[20];
 	uint16 clientBuild, id, security;
     uint32 m_addonSize;
-    uint32 m_addonLenCompressed;
-    uint8* m_addonCompressed;
+    //uint32 m_addonLenCompressed;
+    //uint8* m_addonCompressed;
     uint32 clientSeed;
     std::string accountName;
     LocaleConstant locale;
@@ -808,12 +808,17 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     recvPacket.read_skip<uint32>();
     recvPacket.read(digest, 2);
 
-    uint32 ByteSize = 0, SizeUncompressed;
-    recvPacket >> ByteSize >> SizeUncompressed;
-    m_addonSize = SizeUncompressed;
-    m_addonLenCompressed = ByteSize - 4;
-    m_addonCompressed = new uint8[ByteSize - 4];
-    recvPacket.read(m_addonCompressed, ByteSize - 4);
+    recvPacket >> m_addonSize;
+    uint8 * tableauAddon = new uint8[m_addonSize];
+    WorldPacket packetAddon;
+    for(uint32 i = 0; i < m_addonSize; i++)
+    {
+        uint8 ByteSize = 0;
+        recvPacket >> ByteSize;
+        tableauAddon[i] = ByteSize;
+        packetAddon << ByteSize;
+    }
+    delete tableauAddon;
 
     recvPacket >> accountName;
    
@@ -1015,7 +1020,8 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
 
     m_Session->LoadGlobalAccountData();
     m_Session->LoadTutorialsData();
-    m_Session->ReadAddonsInfo(recvPacket);
+	packetAddon.rpos(0);
+    m_Session->ReadAddonsInfo(packetAddon);
     
     // Sleep this Network thread for
     uint32 sleepTime = sWorld.getIntConfig(CONFIG_SESSION_ADD_DELAY);
