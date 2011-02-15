@@ -192,7 +192,7 @@ enum Opcodes
     CMSG_GAMEOBJ_USE                                 = 0x029EC, // (  nf  )(0x00B1) // 4.0.6a 13623
     CMSG_DESTROY_ITEMS                               = 0x1001C, // (  nf  )(0x00B2) //
     SMSG_GAMEOBJECT_CUSTOM_ANIM                      = 0x02E8C, // (0x8230)(0x00B3) // 
-    CMSG_AREATRIGGER                                 = 0x0BD5E, // (0xAAB4)(0x00B4) //
+    CMSG_AREATRIGGER                                 = 0x0ADA8, // (0xAAB4)(0x00B4) // 4.0.6a 13623
     MSG_MOVE_START_FORWARD                           = 0x0EBAC, // (0x0B31)(0x00B5) // 4.0.6a 13623
     MSG_MOVE_START_BACKWARD                          = 0x072E4, // (0x0B50)(0x00B6) // 4.0.6a 13623
     MSG_MOVE_STOP                                    = 0x034E0, // (0x433C)(0x00B7) // 4.0.6a 13623
@@ -618,7 +618,7 @@ enum Opcodes
     SMSG_SET_PCT_SPELL_MODIFIER                      = 0x0A7E8, // (0x8B74)(0x0267) // 4.0.6a 13623
     CMSG_SET_AMMO                                    = 0x100BF, // (  nf  )(0x0268) //
     SMSG_CORPSE_RECLAIM_DELAY                        = 0x100C0, // (  nf  )(0x0269) //
-    CMSG_SET_ACTIVE_MOVER                            = 0x06CA0, // (0xCB54)(0x026A) // 
+    CMSG_SET_ACTIVE_MOVER                            = 0x06CA0, // (0xCB54)(0x026A) // 4.0.6a 13623
     CMSG_PET_CANCEL_AURA                             = 0x00754, // (  nf  )(0x026B) //
     CMSG_PLAYER_AI_CHEAT                             = 0x100C2, // (  nf  )(0x026C) //
     CMSG_CANCEL_AUTO_REPEAT_SPELL                    = 0x075CC, // (0xAB39)(0x026D) // 4.0.6a 13623
@@ -659,7 +659,7 @@ enum Opcodes
     SMSG_LFG_OFFER_CONTINUE                          = 0x063EC, // (0xCA78)(0x0293) // 4.0.6a 13623
     CMSG_MEETINGSTONE_CHEAT                          = 0x100D5, // (  nf  )(0x0294) //
     SMSG_MEETINGSTONE_SETQUEUE                       = 0x0245F, // (0xA215)(0x0295) //
-    CMSG_MEETINGSTONE_INFO                           = 0x0F984, // (  nf  )(0x0296) // 
+    CMSG_MEETINGSTONE_INFO                           = 0x0F984, // (  nf  )(0x0296) // 4.0.6a 13623
     SMSG_MEETINGSTONE_COMPLETE                       = 0x0F680, // (0xEA14)(0x0297) // 4.0.6a 13623
     SMSG_MEETINGSTONE_IN_PROGRESS                    = 0x0E7C4, // (0xE318)(0x0298) // 4.0.6a 13623
     SMSG_MEETINGSTONE_MEMBER_ADDED                   = 0x0F77C, // (0x43FD)(0x0299) // 4.0.6a 13623
@@ -1018,7 +1018,7 @@ enum Opcodes
     CMSG_GM_CHARACTER_SAVE                           = 0x10199, // (  nf  )(0x03FB) //
     SMSG_VOICESESSION_FULL                           = 0x0A456, // (0xCB90)(0x03FC) //
     MSG_GUILD_PERMISSIONS                            = 0x0F4C4, // (0x02D0)(0x03FD) // 4.0.6a 13623
-    MSG_GUILD_BANK_MONEY_WITHDRAWN                   = 0x06CE4, // (0x8B34)(0x03FE) // 
+    MSG_GUILD_BANK_MONEY_WITHDRAWN                   = 0x06CE4, // (0x8B34)(0x03FE) // 4.0.6a 13623
     MSG_GUILD_EVENT_LOG_QUERY                        = 0x069EC, // (0x23B8)(0x03FF) // 4.0.6a 13623
     CMSG_MAELSTROM_RENAME_GUILD                      = 0x1019A, // (  nf  )(0x0400) //
     CMSG_GET_MIRRORIMAGE_DATA                        = 0x00555, // (  nf  )(0x0401) //
@@ -1091,7 +1091,7 @@ enum Opcodes
     SMSG_CALENDAR_EVENT_UPDATED_ALERT                = 0x01654, // (0xE270)(0x0444) //
     SMSG_CALENDAR_EVENT_MODERATOR_STATUS_ALERT       = 0x06F54, // (0xCA98)(0x0445) //
     CMSG_CALENDAR_COMPLAIN                           = 0x01E75, // (  nf  )(0x0446) //
-    CMSG_CALENDAR_GET_NUM_PENDING                    = 0x0EFAC, // (  nf  )(0x0447) // 
+    CMSG_CALENDAR_GET_NUM_PENDING                    = 0x0EFAC, // (  nf  )(0x0447) // 4.0.6a 13623
     SMSG_CALENDAR_SEND_NUM_PENDING                   = 0x0D675, // (0x2BD0)(0x0448) //
     CMSG_SAVE_DANCE                                  = 0x101C3, // (  nf  )(0x0449) //
     SMSG_NOTIFY_DANCE                                = 0x0E75C, // (0x223D)(0x044A) //
@@ -1245,7 +1245,7 @@ enum Opcodes
     SMSG_TALENTS_INVOLUNTARILY_RESET                 = 0x04E54, // (0x0215)(0x04FA) //
     SMSG_UNKNOWN_1276                                = 0x1023A, // (0x2AD0)(0x04FC) //
     SMSG_LOOT_SLOT_CHANGED                           = 0x04C7C, // (0xC3BD)(0x04FD) //
-    CMSG_READY_FOR_ACCOUNT_DATA_TIMES                = 0x07DA8, // (0x6A99)(0x04FF) // 
+    CMSG_READY_FOR_ACCOUNT_DATA_TIMES                = 0x07DA8, // (0x6A99)(0x04FF) // 4.0.6a 13623
     CMSG_QUERY_QUESTS_COMPLETED                      = 0x0FE5E, // (  nf  )(0x0500) //
     SMSG_QUERY_QUESTS_COMPLETED_RESPONSE             = 0x1023D, // (  nf  )(0x0501) //
     CMSG_GM_REPORT_LAG                               = 0x08E5D, // (  nf  )(0x0502) //
