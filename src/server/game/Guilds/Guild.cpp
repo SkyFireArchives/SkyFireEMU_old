@@ -1275,24 +1275,26 @@ void Guild::HandleRoster(WorldSession *session /*= NULL*/)
     else
         BroadcastPacket(&data);
 
-	//WorldPacket data7(SMSG_GUILD_RANK);
-	//data7 << (uint32)m_ranks.size();
-	//for(uint32 i = 0; i < m_ranks.size(); i++)
-	//{
-	//	data7 << (uint32)i;
-	//	for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
-	//		data7 << (uint32)m_ranks[i].m_bankTabs[j];
-	//	data7 << (uint32)m_ranks[i].m_bankMoneyPerDay;
-	//	for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
-	//		data7 << (uint32)m_Ranks[i].TabSlotPerDay[j];
-	//	data7 << (uint32)i; //unk.
-	//	data7 << m_Ranks[i].m_name;
-	//	data7 << (uint32)GetRankRights(i);
-	//}
-	//if (session)
-    //    session->SendPacket(&data7);
-	//else
-    //    BroadcastPacket(&data7);
+	WorldPacket data7(SMSG_GUILD_RANK);
+	data7 << uint32(_GetRanksSize());
+	for(uint32 i = 0; i < _GetRanksSize(); i++)
+	{
+		data7 << (uint32)i;
+		for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
+			data7 << uint32(m_ranks[i].m_bankMoneyPerDay);
+		    
+		data7 << (uint32)m_ranks[i].m_bankMoneyPerDay;
+
+		for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
+			data7 << uint32(m_ranks[i].m_rights);
+		data7 << (uint32)i; //unk.
+		data7 << m_ranks[i].m_name;
+		data7 << (uint32)/*GuildBankRightsAndSlots(i)*/0;
+	}
+	if (session)
+        session->SendPacket(&data7);
+	else
+        BroadcastPacket(&data7);
 
     sLog.outDebug("WORLD: Sent (SMSG_GUILD_ROSTER)");
 }

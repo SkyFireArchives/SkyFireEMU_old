@@ -454,7 +454,6 @@ private:
         }
         void SetBankTabSlotsAndRights(uint8 tabId, GuildBankRightsAndSlots rightsAndSlots, bool saveToDB);
 
-    private:
         uint32 m_guildId;
 
         uint8  m_rankId;
@@ -673,7 +672,7 @@ public:
     bool AddMember(const uint64& guid, uint8 rankId = GUILD_RANK_NONE);
     void DeleteMember(const uint64& guid, bool isDisbanding = false, bool isKicked = false);
     bool ChangeMemberRank(const uint64& guid, uint8 newRank);
-	RankInfo & GetRankInfo(uint32 rankId) {return m_ranks[rankId];}
+	RankInfo & GetRankInfo(uint32 rankId) {return m_ranks[rankId]; }
 
     // Bank
     void SwapItems(Player* player, uint8 tabId, uint8 slotId, uint8 destTabId, uint8 destSlotId, uint32 splitedAmount);
