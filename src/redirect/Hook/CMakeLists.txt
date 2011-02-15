@@ -14,14 +14,14 @@
 
 file(GLOB sources_localdir *.cpp *.h)
 
-set(SkYFireRedirect_SRCS
-  ${CactusRedirect_SRCS}
+set(SkyFireRedirect_SRCS
+  ${SkyFireRedirect_SRCS}
   ${sources_localdir}
 )
 
-set(CactusRedirect_LINK_FLAGS "/LIBPATH:\"${CMAKE_CURRENT_SOURCE_DIR}\"")
+set(SkyFireRedirect_LINK_FLAGS "/LIBPATH:\"${CMAKE_CURRENT_SOURCE_DIR}\"")
 
-add_library(SkyFireRedirect SHARED ${CactusRedirect_SRCS})
+add_library(SkyFireRedirect SHARED ${SkyFireRedirect_SRCS})
 
 set_target_properties(SkyFireRedirect PROPERTIES LINK_FLAGS "${SkyFireRedirect_LINK_FLAGS}")
 

@@ -19461,15 +19461,6 @@ void Player::AddSpellMod(SpellModifier* mod, bool apply)
 {
     sLog.outDebug("Player::AddSpellMod %d", mod->spellId);
     uint32 Opcode = (mod->type == SPELLMOD_FLAT) ? SMSG_SET_FLAT_SPELL_MODIFIER : SMSG_SET_PCT_SPELL_MODIFIER;
-
-    //uint32 count1
-    //while count1-- > 0
-        //uint32 count2
-        //uint8 mod->op
-        //while count2-- > 0
-            //uint8 eff
-            //uint32 value
-    
     
     WorldPacket data(Opcode);
     data << uint32(1); //number of spell mod to add
@@ -19481,10 +19472,10 @@ void Player::AddSpellMod(SpellModifier* mod, bool apply)
     flag96 _mask = 0;
     for (int eff = 0; eff < 96; ++eff)
     {
-        if (eff != 0 && eff%32 == 0)
+        if (eff != 0 && eff % 32 == 0)
             _mask[i++] = 0;
         
-        _mask[i] = uint32(1) << (eff-(32*i));
+        _mask[i] = uint32(1) << (eff - (32 * i));
         if (mod->mask & _mask)
         {
             int32 val = 0;
@@ -23947,7 +23938,7 @@ void Player::AddKnownCurrency(uint32 itemId)
     //    SetFlag64(PLAYER_FIELD_KNOWN_CURRENCIES, (1LL << (ctEntry->BitIndex-1)));
 }
 
-void Player::UpdateFallInformationIfNeed(MovementInfo const& minfo,uint16 opcode)
+void Player::UpdateFallInformationIfNeed(MovementInfo const& minfo, uint32 opcode)
 {
     if (m_lastFallTime >= minfo.fallTime || m_lastFallZ <= minfo.pos.GetPositionZ() || opcode == MSG_MOVE_FALL_LAND)
         SetFallInformation(minfo.fallTime, minfo.pos.GetPositionZ());

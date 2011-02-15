@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `realmlist` (
   `allowedSecurityLevel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `population` float unsigned NOT NULL DEFAULT '0',
   `online` int(11) NOT NULL DEFAULT '0',
-  `gamebuild` int(11) unsigned NOT NULL DEFAULT '13329',
+  `gamebuild` int(11) unsigned NOT NULL DEFAULT '13623',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_name` (`name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Realm System';
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `realmlist` (
 # Dumping data for table auth.realmlist: 1 rows
 /*!40000 ALTER TABLE `realmlist` DISABLE KEYS */;
 INSERT INTO `realmlist` (`id`, `name`, `address`, `port`, `icon`, `color`, `timezone`, `allowedSecurityLevel`, `population`, `gamebuild`) VALUES
-	(1, 'SkyFireEMU', '127.0.0.1', 8085, 0, 0, 1, 0, 0, 13329);
+	(1, 'SkyFireEMU', '127.0.0.1', 8085, 0, 0, 1, 0, 0, 13623);
 /*!40000 ALTER TABLE `realmlist` ENABLE KEYS */;
 
 

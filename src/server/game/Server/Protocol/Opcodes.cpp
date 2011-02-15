@@ -30,7 +30,7 @@
 /// Correspondence between opcodes and their names
 OpcodeHandler opcodeTable[NUM_MSG_TYPES];
 
-static void DefineOpcode( int opcode, const char* name, SessionStatus status, void (WorldSession::*handler)(WorldPacket& recvPacket) )
+static void DefineOpcode(uint32 opcode, const char* name, SessionStatus status, void (WorldSession::*handler)(WorldPacket& recvPacket) )
 {
     opcodeTable[opcode].name = name;
     opcodeTable[opcode].status = status;
@@ -60,6 +60,7 @@ void InitOpcodeTable()
     OPCODE( SMSG_CHAR_CREATE,                             STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_CHAR_ENUM,                               STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_CHAR_DELETE,                             STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
+	OPCODE( CMSG_UNKNOWN_34056,                           STATUS_AUTHED,   &WorldSession::HandleUnk8508Opcode             );
     OPCODE( CMSG_PLAYER_LOGIN,                            STATUS_AUTHED,   &WorldSession::HandlePlayerLoginOpcode         );
     OPCODE( SMSG_NEW_WORLD,                               STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_TRANSFER_PENDING,                        STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
@@ -552,7 +553,7 @@ void InitOpcodeTable()
     OPCODE( CMSG_GMTICKET_SYSTEMSTATUS,                   STATUS_LOGGEDIN, &WorldSession::HandleGMTicketSystemStatusOpcode);
     OPCODE( SMSG_GMTICKET_SYSTEMSTATUS,                   STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_SPIRIT_HEALER_ACTIVATE,                  STATUS_LOGGEDIN, &WorldSession::HandleSpiritHealerActivateOpcode);
-    OPCODE( SMSG_QUEST_FORCE_REMOVE,                      STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
+    OPCODE( SMSG_QUEST_FORCE_REMOVED,                      STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_SKILL_BUY_STEP,                          STATUS_NEVER,    &WorldSession::Handle_NULL                     );
     OPCODE( CMSG_SKILL_BUY_RANK,                          STATUS_NEVER,    &WorldSession::Handle_NULL                     );
     OPCODE( SMSG_SPIRIT_HEALER_CONFIRM,                   STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
@@ -1268,4 +1269,5 @@ void InitOpcodeTable()
     OPCODE( CMSG_AUTO_DECLINE_GUILD_INVITES,              STATUS_NEVER,    &WorldSession::Handle_NULL                     );
     OPCODE( CMSG_SET_PRIMARY_TALENT_TREE,                 STATUS_NEVER,    &WorldSession::Handle_NULL                     );
     OPCODE( CMSG_GROUP_SET_ROLES,                         STATUS_LOGGEDIN, &WorldSession::HandleGroupSetRoles             );
+    OPCODE( SMSG_UNKNOWN_1310,                            STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
 };

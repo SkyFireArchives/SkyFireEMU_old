@@ -12,13 +12,28 @@ namespace SkyFirePatcher
 {
     public partial class Form1 : Form
     {
+
+        // WoW 4.0.6a 13623 (release)
+        byte[] unpatchedBytes = new byte[] { 0xE8, 0x42, 0xE4, 0xFF, 0xFF };
+        byte[] patchedBytes = new byte[] { 0xB8, 0x00, 0x00, 0x00, 0x00 };
+        int patchOffset = 0x91229;
+        int exeLength = 9217176;
+        byte[] wowExe = null;
+        
+        // WoW 4.0.6 13596 (release)
+        /*byte[] unpatchedBytes = new byte[] { 0xE8, 0x42, 0xE4, 0xFF, 0xFF };
+        byte[] patchedBytes = new byte[] { 0xB8, 0x00, 0x00, 0x00, 0x00 };
+        int patchOffset = 0x091369;
+        int exeLength = 9216664;
+        byte[] wowExe = null;*/
+
         // WoW 4.0.3 13329 (release)
-        byte[] unpatchedBytes = new byte[] { 0xE8, 0xC2, 0xE5, 0xFF, 0xFF };
+        /*byte[] unpatchedBytes = new byte[] { 0xE8, 0xC2, 0xE5, 0xFF, 0xFF };
         byte[] patchedBytes =   new byte[] { 0xB8, 0x00, 0x00, 0x00, 0x00 };
         int patchOffset = 0x08FAA9;
         int exeLength = 9175192;
 
-        byte[] wowExe = null;
+        byte[] wowExe = null;*/
 
         public Form1()
         {
@@ -43,9 +58,9 @@ namespace SkyFirePatcher
 
             if (wowExe != null)
             {
-                if (wowExe.Length != 9175192)
+                if (wowExe.Length != 9217176)
                 {
-                    richTextBox1.AppendText("Wrong version, this patch will only work for WoW 4.0.3 13329. \n");
+                    richTextBox1.AppendText("Wrong version, this patch will only work for WoW 4.0.6 13596. \n");
                     label2.Text = "Error";
                     label2.ForeColor = Color.Red;
                 }

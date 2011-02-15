@@ -87,8 +87,10 @@ enum LoginResult
 //3.3.5 build 13164?
 //3.3.5a build 13205
 //4.0.3a build 13329
+//4.0.6 build 13596
+//4.0.6a build 13623
 
-#define POST_WOTLK_ACCEPTED_CLIENT_BUILD              {13329, 0}
+#define POST_WOTLK_ACCEPTED_CLIENT_BUILD              {13623, 13596, 13329, 0}
 #define POST_BC_ACCEPTED_CLIENT_BUILD                 {13205, 13164, 12340, 11723, 11403, 11159, 10571, 10505, 10146, 9947, 8606, 0}
 #define PRE_BC_ACCEPTED_CLIENT_BUILD                  {5875, 6005, 0}
 

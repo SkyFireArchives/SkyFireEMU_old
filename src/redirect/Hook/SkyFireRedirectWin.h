@@ -1,3 +1,3 @@
-// CactusRedirectWin.h
+// SkyFireRedirectWin.h
 
 #pragma once

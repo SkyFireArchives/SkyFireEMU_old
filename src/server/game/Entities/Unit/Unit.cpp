@@ -3090,14 +3090,15 @@ void Unit::_AddAura(UnitAura * aura, Unit * caster)
                 aura->ModStackAmount(foundAura->GetStackAmount());
             }
             // Update periodic timers from the previous aura
-            for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
+            // ToDo Fix me
+			/*for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             {
                 AuraEffect *existingEff = foundAura->GetEffect(i);
                 AuraEffect *newEff = aura->GetEffect(i);
                 if (!existingEff || !newEff)
                     continue;
                 newEff->SetPeriodicTimer(existingEff->GetPeriodicTimer());
-            }
+            }*/
 
             // Use the new one to replace the old one
             // This is the only place where AURA_REMOVE_BY_STACK should be used
@@ -16461,75 +16462,79 @@ void Unit::ExitVehicle()
 
 void Unit::BuildMovementPacket(ByteBuffer *data) const
 {
-    switch (GetTypeId())
-    {
-        case TYPEID_UNIT:
-            if (canFly())
-                const_cast<Unit*>(this)->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
-            break;
-        case TYPEID_PLAYER:
-            // remove unknown, unused etc flags for now
-            const_cast<Unit*>(this)->RemoveUnitMovementFlag(MOVEMENTFLAG_SPLINE_ENABLED);
-            if (isInFlight())
-            {
-                WPAssert(const_cast<Unit*>(this)->GetMotionMaster()->GetCurrentMovementGeneratorType() == FLIGHT_MOTION_TYPE);
-                const_cast<Unit*>(this)->AddUnitMovementFlag(MOVEMENTFLAG_FORWARD | MOVEMENTFLAG_SPLINE_ENABLED);
-            }
-            break;
-        default:
-            break;
-    }
+	switch (GetTypeId())
+	{
+	case TYPEID_UNIT:
+		if (canFly())
+			const_cast<Unit*>(this)->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
+		break;
+	case TYPEID_PLAYER:
+		// remove unknown, unused etc flags for now
+		const_cast<Unit*>(this)->RemoveUnitMovementFlag(MOVEMENTFLAG_SPLINE_ENABLED);
+		if (isInFlight())
+		{
+			WPAssert(const_cast<Unit*>(this)->GetMotionMaster()->GetCurrentMovementGeneratorType() == FLIGHT_MOTION_TYPE);
+			const_cast<Unit*>(this)->AddUnitMovementFlag(MOVEMENTFLAG_FORWARD | MOVEMENTFLAG_SPLINE_ENABLED);
+		}
+		break;
+	default:
+		break;
+	}
 
-    *data << uint32(GetUnitMovementFlags()); // movement flags
-    *data << uint16(m_movementInfo.flags2);    // 2.3.0
-    *data << uint32(getMSTime());            // time
-    *data << GetPositionX();
-    *data << GetPositionY();
-    *data << GetPositionZ();
-    *data << GetOrientation();
+	*data << uint32(GetUnitMovementFlags()); // movement flags
+	*data << uint16(m_movementInfo.flags2); // 2.3.0
+	*data << uint32(getMSTime()); // time
+	*data << GetPositionX();
+	*data << GetPositionY();
+	*data << GetPositionZ();
+	*data << GetOrientation();
 
-    // 0x00000200
-    if (GetUnitMovementFlags() & MOVEMENTFLAG_ONTRANSPORT)
-    {
-        if (m_vehicle)
-            data->append(m_vehicle->GetBase()->GetPackGUID());
-        else if (GetTransport())
-            data->append(GetTransport()->GetPackGUID());
-        else
-        {
-            sLog.outError("Unit %u does not have transport!", GetEntry());
-            *data << (uint8)0;
-        }
-        *data << float (GetTransOffsetX());
-        *data << float (GetTransOffsetY());
-        *data << float (GetTransOffsetZ());
-        *data << float (GetTransOffsetO());
-        *data << uint32(GetTransTime());
-        *data << uint8 (GetTransSeat());
-        
-        if(m_movementInfo.flags2 & 0x400)
-            *data << uint32(0); //4.0.1
-    }
+	// 0x00000200
+	if (GetUnitMovementFlags() & MOVEMENTFLAG_ONTRANSPORT)
+	{
+		if (m_vehicle)
+			data->append(m_vehicle->GetBase()->GetPackGUID());
+		else if (GetTransport())
+			data->append(GetTransport()->GetPackGUID());
+		else
+		{
+			sLog.outError("Unit %u does not have transport!", GetEntry());
+			*data << (uint8)0;
+		}
+		*data << float (GetTransOffsetX());
+		*data << float (GetTransOffsetY());
+		*data << float (GetTransOffsetZ());
+		*data << float (GetTransOffsetO());
+		*data << uint32(GetTransTime());
+		*data << uint8 (GetTransSeat());
 
-    // 0x02200000
-    if ((GetUnitMovementFlags() & (MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING))
-        || (m_movementInfo.flags2 & MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING))
-        *data << (float)m_movementInfo.pitch;
+		if(m_movementInfo.flags2 & 0x400)
+			*data << uint32(0); //4.0.1
+	}
 
-    *data << (uint32)m_movementInfo.fallTime;
+	// 0x02200000
+	if ((GetUnitMovementFlags() & (MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING))
+		|| (m_movementInfo.flags2 & MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING))
+		*data << (float)m_movementInfo.pitch;
 
-    // 0x00001000
-    if (GetUnitMovementFlags() & MOVEMENTFLAG_JUMPING)
-    {
-        *data << (float)m_movementInfo.j_zspeed;
-        *data << (float)m_movementInfo.j_sinAngle;
-        *data << (float)m_movementInfo.j_cosAngle;
-        *data << (float)m_movementInfo.j_xyspeed;
-    }
+	//4.0.6
+	if (GetUnitMovementFlags() & MOVEMENTFLAG2_INTERPOLATED_TURNING) //& 0x800
+	{
+		*data << (uint32)m_movementInfo.fallTime;
+		*data << (float)m_movementInfo.j_zspeed;
 
-    // 0x04000000
-    if (GetUnitMovementFlags() & MOVEMENTFLAG_SPLINE_ELEVATION)
-        *data << (float)m_movementInfo.splineElevation;
+		// 0x00001000
+		if (GetUnitMovementFlags() & MOVEMENTFLAG_JUMPING)
+		{
+			*data << (float)m_movementInfo.j_sinAngle;
+			*data << (float)m_movementInfo.j_cosAngle;
+			*data << (float)m_movementInfo.j_xyspeed;
+		}
+	}
+
+	// 0x04000000
+	if (GetUnitMovementFlags() & MOVEMENTFLAG_SPLINE_ELEVATION)
+		*data << (float)m_movementInfo.splineElevation;
 }
 
 void Unit::SetFlying(bool apply)

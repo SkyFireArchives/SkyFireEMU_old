@@ -35,7 +35,6 @@
 #include "Item.h"
 #include "Language.h"
 #include "Logging/Log.h"
-#include "ProgressBar.h"
 #include <vector>
 
 enum eAuctionHouse
@@ -318,19 +317,19 @@ void AuctionHouseMgr::LoadAuctionItems()
 
     if (!result)
     {
-        barGoLink bar(1);
-        bar.step();
+        
+        
         sLog.outString();
         sLog.outString(">> Loaded 0 auction items");
         return;
     }
 
-    barGoLink bar(result->GetRowCount());
+    
 
     uint32 count = 0;
     do
     {
-        bar.step();
+        
     
         Field* fields = result->Fetch();
 
@@ -366,14 +365,14 @@ void AuctionHouseMgr::LoadAuctions()
     PreparedQueryResult result = CharacterDatabase.Query(stmt);
     if (!result)
     {
-        barGoLink bar(1);
-        bar.step();
+        
+        
         sLog.outString();
         sLog.outString(">> Loaded 0 auctions. DB table `auctionhouse` is empty.");
         return;
     }
 
-    barGoLink bar(result->GetRowCount());
+    
 
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
 
@@ -383,7 +382,7 @@ void AuctionHouseMgr::LoadAuctions()
     {
         Field* fields = result->Fetch();
 
-        bar.step();
+        
 
         aItem = new AuctionEntry();
         if (!aItem->LoadFromDB(fields))

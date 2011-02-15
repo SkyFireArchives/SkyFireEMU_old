@@ -9,7 +9,9 @@
 
 int(*origin_SelectSocket)(unsigned int a1);
 int __cdecl SelectSocket(unsigned int a1);
-DWORD __SelectSocket__ = 0x08EC70; // WoW 4.0.3 13329 (release)
+//DWORD __SelectSocket__ = 0x08EC70; // WoW 4.0.3 13329 (release)
+//DWORD __SelectSocket__ = 0x091369; // WoW 4.0.6 13596 (release)
+DWORD __SelectSocket__ = 0x091229; // WoW 4.0.6a 13623 (release)
 
 int _cdecl SelectSocket(unsigned int a1)
 {

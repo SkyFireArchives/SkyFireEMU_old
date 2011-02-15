@@ -14,6 +14,7 @@
 
 add_subdirectory(genrev)
 add_subdirectory(server)
+add_subdirectory(redirect)
 
 if(TOOLS)
   add_subdirectory(tools)

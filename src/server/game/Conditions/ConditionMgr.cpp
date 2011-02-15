@@ -25,7 +25,6 @@
 #include "SpellMgr.h"
 #include "GameEventMgr.h"
 #include "ObjectMgr.h"
-#include "ProgressBar.h"
 #include "InstanceScript.h"
 #include "ConditionMgr.h"
 #include "ScriptMgr.h"
@@ -381,20 +380,20 @@ void ConditionMgr::LoadConditions(bool isReload)
 
     if (!result)
     {
-        barGoLink bar(1);
+        
 
-        bar.step();
+        
 
         sLog.outString();
         sLog.outErrorDb(">> Loaded `conditions`, table is empty!");
         return;
     }
 
-    barGoLink bar(result->GetRowCount());
+    
 
     do
     {
-        bar.step();
+        
 
         Field *fields = result->Fetch();
 

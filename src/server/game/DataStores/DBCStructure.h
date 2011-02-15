@@ -632,6 +632,7 @@ struct BattlemasterListEntry
     uint32 maxGroupSizeRated;                               // 16 4.0.1
     uint32 maxPlayers;                                      // 17 4.0.1
     uint32 rated;                                           // 18 4.0.3 isRated? == 2.
+	//uint32 unk1;                                          // 19 4.0.3, value 2 for Rated Battlegrounds
 };
 
 #define MAX_OUTFIT_ITEMS 24
@@ -910,14 +911,16 @@ struct GameObjectDisplayInfoEntry
 {
     uint32      Displayid;                                  // 0        m_ID
     //DBCString filename;                                   // 1
-    //uint32  unk1[10];   //2-11
-    float   minX;
-    float   minY;
-    float   minZ;
-    float   maxX;
-    float   maxY;
-    float   maxZ;
-    //uint32  transport;  //18
+    //uint32  unk1[10];                                     // 2-11
+    float   minX;                                           // 12  
+    float   minY;                                           // 13
+    float   minZ;                                           // 14
+    float   maxX;                                           // 15 
+    float   maxY;                                           // 16  
+    float   maxZ;                                           // 17     
+    //uint32 transport;                                     // 18
+    //uint32 unk;                                           // 19
+    //uint32 unk1;                                          // 20
 };
 
 struct GemPropertiesEntry
@@ -2035,6 +2038,7 @@ struct SpellShapeshiftFormEntry
     //uint32 unk4;                                          // 10 unused always 0
     uint32 stanceSpell[MAX_SHAPESHIFT_SPELLS];              // 11-18 spells which appear in the bar after shapeshifting
     //uint32 unk5;                                          // 19 unk, only defined for flight form.
+	//uint32 unk6;                                          // 20
 };
 
 struct SpellDurationEntry

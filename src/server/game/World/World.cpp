@@ -64,7 +64,7 @@
 #include "Language.h"
 #include "CreatureGroups.h"
 #include "Transport.h"
-#include "ProgressBar.h"
+
 #include "ScriptMgr.h"
 #include "AddonMgr.h"
 #include "LFGMgr.h"
@@ -271,7 +271,7 @@ World::AddSession_ (WorldSession* s)
         return;
     }
 
-    WorldPacket packet(SMSG_AUTH_RESPONSE, 1 + 4 + 1 + 4 + 1);
+    WorldPacket packet(SMSG_AUTH_RESPONSE, 1 + 4 + 1 + 4 + 2 + 1);
     packet << uint8 (AUTH_OK);
     packet << uint32 (0);                                   // BillingTimeRemaining
     packet << uint8 (0);                                    // BillingPlanFlags
@@ -1833,21 +1833,21 @@ void World::LoadAutobroadcasts()
 
     if (!result)
     {
-        barGoLink bar(1);
-        bar.step();
+        
+        
 
         sLog.outString();
         sLog.outString(">> Loaded 0 autobroadcasts definitions");
         return;
     }
 
-    barGoLink bar(result->GetRowCount());
+    
 
     uint32 count = 0;
 
     do
     {
-        bar.step();
+        
 
         Field *fields = result->Fetch();
         std::string message = fields[0].GetString();
@@ -2793,21 +2793,21 @@ void World::LoadWorldStates()
 
     if (!result)
     {
-        barGoLink bar(1);
-        bar.step();
+        
+        
         sLog.outString();
         sLog.outString(">> Loaded 0 world states.");
         return;
     }
 
-    barGoLink bar(result->GetRowCount());
+    
     uint32 counter = 0;
 
     do
     {
         Field *fields = result->Fetch();
         m_worldstates[fields[0].GetUInt32()] = fields[1].GetUInt64();
-        bar.step();
+        
         ++counter;
     } while (result->NextRow());
 

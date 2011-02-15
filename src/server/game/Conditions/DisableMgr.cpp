@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "ProgressBar.h"
+
 #include "SpellMgr.h"
 #include "ObjectMgr.h"
 #include "DisableMgr.h"
@@ -52,20 +52,20 @@ void DisableMgr::LoadDisables()
 
     if (!result)
     {
-        barGoLink bar(1);
-        bar.step();
+        
+        
 
         sLog.outString();
         sLog.outString(">> Loaded %u disables", total_count);
         return;
     }
 
-    barGoLink bar(result->GetRowCount());
+    
 
     Field* fields;
     do
     {
-        bar.step();
+        
         fields = result->Fetch();
         DisableType type = DisableType(fields[0].GetUInt32());
         if (type >= MAX_DISABLE_TYPES)
@@ -171,18 +171,14 @@ void DisableMgr::CheckQuestDisables()
     uint32 count = m_DisableMap[DISABLE_TYPE_QUEST].size();
     if (!count)
     {
-        barGoLink bar(1);
-        bar.step();
         sLog.outString();
         sLog.outString(">> Done.");
         return;
     }
 
-    barGoLink bar(count);
     // check only quests, rest already done at startup
     for (DisableTypeMap::iterator itr = m_DisableMap[DISABLE_TYPE_QUEST].begin(); itr != m_DisableMap[DISABLE_TYPE_QUEST].end();)
     {
-        bar.step();
         const uint32 entry = itr->first;
         if (!sObjectMgr.GetQuestTemplate(entry))
         {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CactusPatcher.Properties
+namespace SkyFirePatcher.Properties
 {
 
 
