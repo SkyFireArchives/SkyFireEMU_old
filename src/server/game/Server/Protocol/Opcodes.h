@@ -245,7 +245,7 @@ enum Opcodes
     CMSG_FORCE_MOVE_UNROOT_ACK                       = 0x07FA8, // 
     MSG_MOVE_ROOT                                    = 0x072E0, // 
     MSG_MOVE_UNROOT                                  = 0x0ABA8, // 
-    MSG_MOVE_HEARTBEAT                               = 0x02088, // 
+    MSG_MOVE_HEARTBEAT                               = 0x022EC, // 4.0.6a 13623
     SMSG_MOVE_KNOCK_BACK                             = 0x10036, //
     CMSG_MOVE_KNOCK_BACK_ACK                         = 0x0F580, // 
     MSG_MOVE_KNOCK_BACK                              = 0x02555, //
@@ -329,7 +329,7 @@ enum Opcodes
     CMSG_INSTANCE_LOCK_WARNING_RESPONSE              = 0x0E476, //
     CMSG_UNUSED2                                     = 0x10058, //
     CMSG_ATTACKSWING                                 = 0x074A8, // 4.0.6a 13623
-    CMSG_ATTACKSTOP                                  = 0x01E7C, //
+    CMSG_ATTACKSTOP                                  = 0x062C4, // 4.0.6a 13623
     SMSG_ATTACKSTART                                 = 0x0B68C, // 
     SMSG_ATTACKSTOP                                  = 0x035E0, // 
     SMSG_ATTACKSWING_NOTINRANGE                      = 0x036C4, // 
