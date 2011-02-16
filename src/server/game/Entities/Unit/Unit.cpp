@@ -16508,8 +16508,8 @@ void Unit::BuildMovementPacket(ByteBuffer *data) const
 		*data << uint32(GetTransTime());
 		*data << uint8 (GetTransSeat());
 
-		if(m_movementInfo.flags2 & 0x400)
-			*data << uint32(0); //4.0.1
+		if(m_movementInfo.flags2 & MOVEMENTFLAG2_INTERPOLATED_MOVEMENT)             // & 0x400, 4.0.3
+            *data << uint32(m_movementInfo.t_time2);
 	}
 
 	// 0x02200000

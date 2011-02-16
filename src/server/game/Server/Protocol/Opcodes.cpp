@@ -1213,7 +1213,7 @@ void InitOpcodeTable()
     OPCODE( CMSG_FORCE_UNK1_SPEED_CHANGE_ACK,             STATUS_NEVER,    &WorldSession::Handle_NULL                     );
     OPCODE( SMSG_FORCE_UNK2_SPEED_CHANGE,                 STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_FORCE_UNK2_SPEED_CHANGE_ACK,             STATUS_NEVER,    &WorldSession::Handle_NULL                     );
-    OPCODE( MSG_MOVE_UNKNOWN_1234,                        STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
+    OPCODE( SMSG_MOVE_LEVITATING,                         STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_SPLINE_MOVE_UNKNOWN_1235,                STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_SPLINE_MOVE_UNKNOWN_1236,                STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_EQUIPMENT_SET_USE,                       STATUS_LOGGEDIN, &WorldSession::HandleEquipmentSetUse           );

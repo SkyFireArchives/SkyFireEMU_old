@@ -307,24 +307,26 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
 
             uint32 flags3 = SPLINEFLAG_GLIDE;
 
-            *data << uint32(flags3);                        // splines flag?
+            *data << uint32(flags3);                         // splines flag?
 
-            if (flags3 & 0x20000)                            // may be orientation
+            if (flags3 & 0x20000)
             {
-                *data << (float)0;
+                *data << float(player->GetOrientation());
             }
             else
             {
-                if (flags3 & 0x8000)                         // probably x,y,z coords there
-                {
-                    *data << (float)0;
-                    *data << (float)0;
-                    *data << (float)0;
-                }
-
                 if (flags3 & 0x10000)                        // probably guid there
                 {
                     *data << uint64(0);
+                }
+                else
+                {
+                    if (flags3 & 0x8000)
+                    {
+                        *data << float(player->GetPositionX());
+                        *data << float(player->GetPositionY());
+                        *data << float(player->GetPositionZ());
+                    }
                 }
             }
 
