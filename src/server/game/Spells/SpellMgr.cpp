@@ -3669,6 +3669,10 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (i)
         {
+        case 49838: // Stop Time
+            spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
+            count++;
+            break;
         // Bind
         case 3286:
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;

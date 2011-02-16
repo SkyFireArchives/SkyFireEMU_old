@@ -2435,6 +2435,8 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                     break;
             }
 
+			CallScriptAfterUnitTargetSelectHandlers(unitList, SpellEffIndex(i));
+			
             for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end(); ++itr)
                 AddUnitTarget(*itr, i);
         }
@@ -2875,6 +2877,9 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                     }
                 }
             }
+
+			CallScriptAfterUnitTargetSelectHandlers(unitList, SpellEffIndex(i));
+
             for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end(); ++itr)
                 AddUnitTarget(*itr, i);
         }
@@ -7357,6 +7362,20 @@ void Spell::CallScriptAfterHitHandlers()
         {
             (*hookItr).Call(*scritr);
         }
+        (*scritr)->_FinishScriptCall();
+    }
+}
+
+void Spell::CallScriptAfterUnitTargetSelectHandlers(std::list<Unit*>& unitTargets, SpellEffIndex effIndex)
+{
+    for(std::list<SpellScript *>::iterator scritr = m_loadedScripts.begin(); scritr != m_loadedScripts.end() ; ++scritr)
+    {
+        (*scritr)->_PrepareScriptCall(SPELL_SCRIPT_HOOK_UNIT_TARGET_SELECT);
+        std::list<SpellScript::UnitTargetHandler>::iterator hookItrEnd = (*scritr)->OnUnitTargetSelect.end(), hookItr = (*scritr)->OnUnitTargetSelect.begin();
+        for(; hookItr != hookItrEnd ; ++hookItr)
+            if ((*hookItr).IsEffectAffected(m_spellInfo, effIndex))
+            (*hookItr).Call(*scritr, unitTargets);
+
         (*scritr)->_FinishScriptCall();
     }
 }

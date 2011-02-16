@@ -182,15 +182,41 @@ void SpellScript::HitHandler::Call(SpellScript * spellScript)
     (spellScript->*pHitHandlerScript)();
 }
 
+SpellScript::UnitTargetHandler::UnitTargetHandler(SpellUnitTargetFnType _pUnitTargetHandlerScript, uint8 _effIndex, uint16 _targetType)
+    : _SpellScript::EffectHook(_effIndex), targetType(_targetType)
+{
+    pUnitTargetHandlerScript = _pUnitTargetHandlerScript;
+}
+
+std::string SpellScript::UnitTargetHandler::ToString()
+{
+    std::ostringstream oss;
+    oss << "Index: " << EffIndexToString() << " Target: " << targetType;
+    return oss.str();
+}
+
+bool SpellScript::UnitTargetHandler::CheckEffect(SpellEntry const * spellEntry, uint8 effIndex)
+{
+    if (!targetType)
+        return false;
+    return (effIndex == SPELL_EFFECT_ANY) || (spellEntry->EffectImplicitTargetA[effIndex] == targetType || spellEntry->EffectImplicitTargetB[effIndex] == targetType);
+}
+
+void SpellScript::UnitTargetHandler::Call(SpellScript * spellScript, std::list<Unit*>& unitTargets)
+{
+    (spellScript->*pUnitTargetHandlerScript)(unitTargets);
+}
+
 bool SpellScript::_Validate(SpellEntry const * entry)
 {
     for (std::list<EffectHandler>::iterator itr = OnEffect.begin(); itr != OnEffect.end();  ++itr)
-    {
         if (!(*itr).GetAffectedEffectsMask(entry))
-        {
-            sLog.outError("TSCR: Spell `%u` Effect `%s` of script`%s` did not match dbc effect data - bound handler won't be executed", entry->Id, (*itr).ToString().c_str(), m_scriptName->c_str());
-        }
-    }
+            sLog.outError("TSCR: Spell `%u` Effect `%s` of script `%s` did not match dbc effect data - bound handler won't be executed", entry->Id, (*itr).ToString().c_str(), m_scriptName->c_str());
+
+    for (std::list<UnitTargetHandler>::iterator itr = OnUnitTargetSelect.begin(); itr != OnUnitTargetSelect.end();  ++itr)
+        if (!(*itr).GetAffectedEffectsMask(entry))
+            sLog.outError("TSCR: Spell `%u` Effect `%s` of script `%s` did not match dbc effect data - bound handler won't be executed", entry->Id, (*itr).ToString().c_str(), m_scriptName->c_str());
+
     return _SpellScript::_Validate(entry);
 }
 

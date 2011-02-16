@@ -244,16 +244,14 @@ void WorldSession::HandleGroupAcceptOpcode(WorldPacket & recv_data)
 void WorldSession::HandleGroupDeclineOpcode(WorldPacket & /*recv_data*/)
 {
     Group  *group  = GetPlayer()->GetGroupInvite();
-    if (!group) return;
+    if (!group)
+		return;
 
 	// Remember leader if online (group pointer will be invalid if group gets disbanded)
     Player *leader = sObjectMgr.GetPlayer(group->GetLeaderGUID());    
 
 	// uninvite, group can be deleted
     GetPlayer()->UninviteFromGroup();
-
-    if (!leader || !leader->GetSession())
-        return;
 
     // report
     std::string name = std::string(GetPlayer()->GetName());

@@ -33,98 +33,99 @@ enum DruidSpells
 // 54846 Glyph of Starfire
 class spell_dru_glyph_of_starfire : public SpellScriptLoader
 {
-public:
-    spell_dru_glyph_of_starfire() : SpellScriptLoader("spell_dru_glyph_of_starfire") { }
+    public:
+        spell_dru_glyph_of_starfire() : SpellScriptLoader("spell_dru_glyph_of_starfire") { }
 
-    class spell_dru_glyph_of_starfire_SpellScript : public SpellScript
-    {
-        PrepareSpellScript(spell_dru_glyph_of_starfire_SpellScript)
-        bool Validate(SpellEntry const * /*spellEntry*/)
+		class spell_dru_glyph_of_starfire_SpellScript : public SpellScript
         {
-            if (!sSpellStore.LookupEntry(DRUID_INCREASED_MOONFIRE_DURATION))
-                return false;
-            if (!sSpellStore.LookupEntry(DRUID_NATURES_SPLENDOR))
-                return false;
-            return true;
-        }
+            PrepareSpellScript(spell_dru_glyph_of_starfire_SpellScript);
 
-        void HandleScriptEffect(SpellEffIndex /*effIndex*/)
-        {
-            Unit* caster = GetCaster();
-            if (Unit* unitTarget = GetHitUnit())
-                if (AuraEffect const * aurEff = unitTarget->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE,SPELLFAMILY_DRUID, 0x00000002, 0, 0, caster->GetGUID()))
-                {
-                    Aura* aura = aurEff->GetBase();
+            bool Validate(SpellEntry const * /*spellEntry*/)
+            {
+                if (!sSpellStore.LookupEntry(DRUID_INCREASED_MOONFIRE_DURATION))
+                    return false;
+                if (!sSpellStore.LookupEntry(DRUID_NATURES_SPLENDOR))
+                    return false;
+                return true;
+            }
 
-                    uint32 countMin = aura->GetMaxDuration();
-                    uint32 countMax = 18000;
-                    if (caster->HasAura(DRUID_INCREASED_MOONFIRE_DURATION))
-                        countMax += 3000;
-                    if (caster->HasAura(DRUID_NATURES_SPLENDOR))
-                        countMax += 3000;
-
-                    if (countMin < countMax)
+            void HandleScriptEffect(SpellEffIndex /*effIndex*/)
+            {
+                Unit* caster = GetCaster();
+                if (Unit* unitTarget = GetHitUnit())
+                    if (AuraEffect const * aurEff = unitTarget->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE,SPELLFAMILY_DRUID, 0x00000002, 0, 0, caster->GetGUID()))
                     {
-                        aura->SetDuration(uint32(aura->GetDuration() + 3000));
-                        aura->SetMaxDuration(countMin + 3000);
+                        Aura* aura = aurEff->GetBase();
+
+                        uint32 countMin = aura->GetMaxDuration();
+                        uint32 countMax = 18000;
+                        if (caster->HasAura(DRUID_INCREASED_MOONFIRE_DURATION))
+                            countMax += 3000;
+                        if (caster->HasAura(DRUID_NATURES_SPLENDOR))
+                            countMax += 3000;
+
+                        if (countMin < countMax)
+                        {
+                            aura->SetDuration(uint32(aura->GetDuration() + 3000));
+                            aura->SetMaxDuration(countMin + 3000);
+                        }
                     }
-                }
-        }
+            }
 
-        void Register()
+            void Register()
+            {
+                OnEffect += SpellEffectFn(spell_dru_glyph_of_starfire_SpellScript::HandleScriptEffect, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
         {
-            OnEffect += SpellEffectFn(spell_dru_glyph_of_starfire_SpellScript::HandleScriptEffect, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+            return new spell_dru_glyph_of_starfire_SpellScript();
         }
-    };
-
-    SpellScript* GetSpellScript() const
-    {
-        return new spell_dru_glyph_of_starfire_SpellScript();
-    }
 };
 
 // 69366 - Moonkin Form passive
 class spell_dru_moonkin_form_passive : public SpellScriptLoader
 {
-public:
-    spell_dru_moonkin_form_passive() : SpellScriptLoader("spell_dru_moonkin_form_passive") { }
+    public:
+        spell_dru_moonkin_form_passive() : SpellScriptLoader("spell_dru_moonkin_form_passive") { }
 
-    class spell_dru_moonkin_form_passive_AuraScript : public AuraScript
-    {
-        PrepareAuraScript(spell_dru_moonkin_form_passive_AuraScript);
+        class spell_dru_moonkin_form_passive_AuraScript : public AuraScript
+        {
+            PrepareAuraScript(spell_dru_moonkin_form_passive_AuraScript);
 
         uint32 absorbPct;
 
-        bool Load()
-        {
-            absorbPct = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), EFFECT_0, GetCaster());
-            return true;
-        }
+            bool Load()
+            {
+                absorbPct = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), EFFECT_0, GetCaster());
+                return true;
+            }
 
-        void CalculateAmount(AuraEffect const * /*aurEff*/, int32 & amount, bool & canBeRecalculated)
-        {
-            // Set absorbtion amount to unlimited
-            amount = -1;
-        }
+            void CalculateAmount(AuraEffect const * /*aurEff*/, int32 & amount, bool & /*canBeRecalculated*/)
+            {
+                // Set absorbtion amount to unlimited
+                amount = -1;
+            }
 
-        void Absorb(AuraEffect * /*aurEff*/, DamageInfo & dmgInfo, uint32 & absorbAmount)
-        {
-            // reduces all damage taken while Stunned in Cat Form
-            if (GetTarget()->GetUInt32Value(UNIT_FIELD_FLAGS) & (UNIT_FLAG_STUNNED))
-                absorbAmount = CalculatePctN(dmgInfo.GetDamage(), absorbPct);
-        }
+            void Absorb(AuraEffect * /*aurEff*/, DamageInfo & dmgInfo, uint32 & absorbAmount)
+            {
+                // reduces all damage taken while Stunned in Cat Form
+                if (GetTarget()->GetUInt32Value(UNIT_FIELD_FLAGS) & (UNIT_FLAG_STUNNED))
+                    absorbAmount = CalculatePctN(dmgInfo.GetDamage(), absorbPct);
+            }
 
-        void Register()
-        {
-             DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_moonkin_form_passive_AuraScript::CalculateAmount, EFFECT_1, SPELL_AURA_SCHOOL_ABSORB);
-             OnEffectAbsorb += AuraEffectAbsorbFn(spell_dru_moonkin_form_passive_AuraScript::Absorb, EFFECT_1);
-        }
-    };
+            void Register()
+            {
+                 DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_moonkin_form_passive_AuraScript::CalculateAmount, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
+                 OnEffectAbsorb += AuraEffectAbsorbFn(spell_dru_moonkin_form_passive_AuraScript::Absorb, EFFECT_0);
+            }
+        };
 
-    AuraScript *GetAuraScript() const
-    {
-        return new spell_dru_moonkin_form_passive_AuraScript();
-    }
+        AuraScript *GetAuraScript() const
+        {
+			return new spell_dru_moonkin_form_passive_AuraScript();
+        }
 };
 
 // 62606 - Savage Defense
@@ -139,35 +140,71 @@ public:
 
         uint32 absorbPct;
 
-        bool Load()
-        {
-            absorbPct = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), EFFECT_0, GetCaster());
-            return true;
-        }
+            bool Load()
+            {
+                absorbPct = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), EFFECT_0, GetCaster());
+                return true;
+            }
 
-        void CalculateAmount(AuraEffect const * /*aurEff*/, int32 & amount, bool & canBeRecalculated)
-        {
-            // Set absorbtion amount to unlimited
-            amount = -1;
-        }
+            void CalculateAmount(AuraEffect const * /*aurEff*/, int32 & amount, bool & /*canBeRecalculated*/)
+            {
+                // Set absorbtion amount to unlimited
+                amount = -1;
+            }
 
-        void Absorb(AuraEffect * aurEff, DamageInfo & dmgInfo, uint32 & absorbAmount)
-        {
-            absorbAmount = uint32(CalculatePctN(GetTarget()->GetTotalAttackPowerValue(BASE_ATTACK), absorbPct));
-            aurEff->SetAmount(0);
-        }
+            void Absorb(AuraEffect * aurEff, DamageInfo & /*dmgInfo*/, uint32 & absorbAmount)
+            {
+                absorbAmount = uint32(CalculatePctN(GetTarget()->GetTotalAttackPowerValue(BASE_ATTACK), absorbPct));
+                aurEff->SetAmount(0);
+            }
 
-        void Register()
-        {
-             DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_savage_defense_AuraScript::CalculateAmount, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
-             OnEffectAbsorb += AuraEffectAbsorbFn(spell_dru_savage_defense_AuraScript::Absorb, EFFECT_0);
-        }
-    };
+            void Register()
+            {
+                 DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dru_savage_defense_AuraScript::CalculateAmount, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
+                 OnEffectAbsorb += AuraEffectAbsorbFn(spell_dru_savage_defense_AuraScript::Absorb, EFFECT_0);
+            }
+        };
 
-    AuraScript *GetAuraScript() const
-    {
-        return new spell_dru_savage_defense_AuraScript();
-    }
+        AuraScript *GetAuraScript() const
+		{
+			return new spell_dru_savage_defense_AuraScript();
+		}
+};
+
+class spell_dru_t10_restoration_4p_bonus : public SpellScriptLoader
+{
+    public:
+        spell_dru_t10_restoration_4p_bonus() : SpellScriptLoader("spell_dru_t10_restoration_4p_bonus") { }
+
+        class spell_dru_t10_restoration_4p_bonus_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_dru_t10_restoration_4p_bonus_SpellScript);
+
+            void FilterTargets(std::list<Unit*>& unitList)
+            {
+                unitList.remove(GetTargetUnit());
+                std::list<Unit*> tempTargets;
+                std::list<Unit*>::iterator end = unitList.end(), itr = unitList.begin();
+                for (; itr != end; ++itr)
+                    if (GetCaster()->IsInRaidWith(*itr))
+                        tempTargets.push_back(*itr);
+
+                itr = tempTargets.begin();
+                std::advance(itr, urand(0, tempTargets.size()-1));
+                unitList.clear();
+                unitList.push_back(*itr);
+            }
+
+            void Register()
+            {
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_dru_t10_restoration_4p_bonus_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_AREA_ALLY_DST);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_dru_t10_restoration_4p_bonus_SpellScript();
+		}
 };
 
 void AddSC_druid_spell_scripts()
