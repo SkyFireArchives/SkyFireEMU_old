@@ -1,5 +1,5 @@
-vmapExtractor3.exe
+vmap3Extractor.exe
 md vmaps
-vmap_assembler.exe buildings vmaps
+vmap3assembler.exe buildings vmaps
 
 pause
