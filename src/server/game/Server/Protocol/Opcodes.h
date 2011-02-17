@@ -194,7 +194,7 @@ enum Opcodes
     MSG_MOVE_START_STRAFE_LEFT                       = 0x060E8, // 4.0.6a 13623
     MSG_MOVE_START_STRAFE_RIGHT                      = 0x07DA4, // 4.0.6a 13623
     MSG_MOVE_STOP_STRAFE                             = 0x0F9A8, // 4.0.6a 13623
-    MSG_MOVE_JUMP                                    = 0x0BDC0, // 4.0.6a 13623
+    MSG_MOVE_JUMP                                    = 0x065AC, // 4.0.6a 13623
     MSG_MOVE_START_TURN_LEFT                         = 0x07880, // 4.0.6a 13623
     MSG_MOVE_START_TURN_RIGHT                        = 0x0FCA8, // 4.0.6a 13623
     MSG_MOVE_STOP_TURN                               = 0x0E2E8, // 4.0.6a 13623
