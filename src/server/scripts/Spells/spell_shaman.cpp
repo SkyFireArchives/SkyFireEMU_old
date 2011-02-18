@@ -27,7 +27,6 @@
 enum ShamanSpells
 {
     SHAMAN_SPELL_GLYPH_OF_MANA_TIDE     = 55441,
-    SHAMAN_SPELL_MANA_TIDE_TOTEM        = 39609,
     SHAMAN_SPELL_FIRE_NOVA_R1           = 1535,
     SHAMAN_SPELL_FIRE_NOVA_TRIGGERED_R1 = 8349,
     
@@ -130,55 +129,6 @@ public:
     }
 };
 
-// 39610 Mana Tide Totem
-class spell_sha_mana_tide_totem : public SpellScriptLoader
-{
-public:
-    spell_sha_mana_tide_totem() : SpellScriptLoader("spell_sha_mana_tide_totem") { }
-
-    class spell_sha_mana_tide_totem_SpellScript : public SpellScript
-    {
-        PrepareSpellScript(spell_sha_mana_tide_totem_SpellScript)
-        bool Validate(SpellEntry const * /*spellEntry*/)
-        {
-            if (!sSpellStore.LookupEntry(SHAMAN_SPELL_GLYPH_OF_MANA_TIDE))
-                return false;
-            if (!sSpellStore.LookupEntry(SHAMAN_SPELL_MANA_TIDE_TOTEM))
-                return false;
-            return true;
-        }
-
-        void HandleDummy(SpellEffIndex /*effIndex*/)
-        {
-            Unit* caster = GetCaster();
-            if (Unit* unitTarget = GetHitUnit())
-            {
-                if (unitTarget->getPowerType() == POWER_MANA)
-                {
-                    int32 effValue = GetEffectValue();
-                    // Glyph of Mana Tide
-                    if (Unit *owner = caster->GetOwner())
-                        if (AuraEffect *dummy = owner->GetAuraEffect(SHAMAN_SPELL_GLYPH_OF_MANA_TIDE, 0))
-                            effValue += dummy->GetAmount();
-                    // Regenerate 6% of Total Mana Every 3 secs
-                    int32 effBasePoints0 = unitTarget->GetMaxPower(POWER_MANA) * effValue / 100;
-                    caster->CastCustomSpell(unitTarget, SHAMAN_SPELL_MANA_TIDE_TOTEM, &effBasePoints0, NULL, NULL, true, NULL, NULL, GetOriginalCaster()->GetGUID());
-                }
-            }
-        }
-
-        void Register()
-        {
-            OnEffect += SpellEffectFn(spell_sha_mana_tide_totem_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
-        }
-    };
-
-    SpellScript* GetSpellScript() const
-    {
-        return new spell_sha_mana_tide_totem_SpellScript();
-    }
-};
-
 // 6474 - Earthbind Totem - Fix Talent:Earthen Power 
 class spell_sha_earthbind_totem : public SpellScriptLoader
 {
@@ -223,6 +173,5 @@ void AddSC_shaman_spell_scripts()
 {
     new spell_sha_astral_shift();
     new spell_sha_fire_nova();
-    new spell_sha_mana_tide_totem();
     new spell_sha_earthbind_totem();
 }

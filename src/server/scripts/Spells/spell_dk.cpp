@@ -268,75 +268,6 @@ public:
     }
 };
 
-// 52284 - Will of the Necropolis
-class spell_dk_will_of_the_necropolis : public SpellScriptLoader
-{
-public:
-    spell_dk_will_of_the_necropolis() : SpellScriptLoader("spell_dk_will_of_the_necropolis") { }
-
-    class spell_dk_will_of_the_necropolis_AuraScript : public AuraScript
-    {
-        PrepareAuraScript(spell_dk_will_of_the_necropolis_AuraScript);
-
-        enum Spells
-        {
-            DK_SPELL_WILL_OF_THE_NECROPOLIS_TALENT_R1 = 49189,
-            DK_SPELL_WILL_OF_THE_NECROPOLIS_AURA_R1   = 52284,
-        };
-        bool Validate(SpellEntry const *spellEntry)
-        {
-            // can't use other spell than will of the necropolis due to spell_ranks dependency
-            if (sSpellMgr.GetFirstSpellInChain(DK_SPELL_WILL_OF_THE_NECROPOLIS_AURA_R1) != sSpellMgr.GetFirstSpellInChain(spellEntry->Id))
-                return false;
-
-            uint8 rank = sSpellMgr.GetSpellRank(spellEntry->Id);
-            if (!sSpellMgr.GetSpellWithRank(DK_SPELL_WILL_OF_THE_NECROPOLIS_TALENT_R1, rank, true))
-                return false;
-
-            return true;
-        }
-
-        uint32 absorbPct;
-
-        bool Load()
-        {
-            absorbPct = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), EFFECT_0, GetCaster());
-            return true;
-        }
-
-        void CalculateAmount(AuraEffect const * /*aurEff*/, int32 & amount, bool & canBeRecalculated)
-        {
-            // Set absorbtion amount to unlimited
-            amount = -1;
-        }
-
-        void Absorb(AuraEffect * /*aurEff*/, DamageInfo & dmgInfo, uint32 & absorbAmount)
-        {
-            // min pct of hp is stored in effect 0 of talent spell
-            uint32 rank = sSpellMgr.GetSpellRank(GetSpellProto()->Id);
-            SpellEntry const * talentProto = sSpellStore.LookupEntry(sSpellMgr.GetSpellWithRank(DK_SPELL_WILL_OF_THE_NECROPOLIS_TALENT_R1, rank));
-
-            int32 remainingHp = int32(GetTarget()->GetHealth() - dmgInfo.GetDamage());
-            int32 minHp = int32(GetTarget()->CountPctFromMaxHealth(SpellMgr::CalculateSpellEffectAmount(talentProto, EFFECT_0, GetCaster())));
-            
-            // Damage that would take you below [effect0] health or taken while you are at [effect0]
-            if (remainingHp < minHp)
-                absorbAmount = CalculatePctN(dmgInfo.GetDamage(), absorbPct);
-        }
-
-        void Register()
-        {
-             DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_dk_will_of_the_necropolis_AuraScript::CalculateAmount, EFFECT_0, SPELL_AURA_SCHOOL_ABSORB);
-             OnEffectAbsorb += AuraEffectAbsorbFn(spell_dk_will_of_the_necropolis_AuraScript::Absorb, EFFECT_0);
-        }
-    };
-
-    AuraScript *GetAuraScript() const
-    {
-        return new spell_dk_will_of_the_necropolis_AuraScript();
-    }
-};
-
 void AddSC_deathknight_spell_scripts()
 {
     new spell_dk_anti_magic_shell_raid();
@@ -344,5 +275,4 @@ void AddSC_deathknight_spell_scripts()
     new spell_dk_anti_magic_zone();
     new spell_dk_runic_power_feed();
     new spell_dk_scourge_strike();
-    new spell_dk_will_of_the_necropolis();
 }

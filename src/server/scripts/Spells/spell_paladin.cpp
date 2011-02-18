@@ -27,8 +27,7 @@
 enum PaladinSpells
 {
     PALADIN_SPELL_DIVINE_PLEA                    = 54428,
-    PALADIN_SPELL_BLESSING_OF_SANCTUARY_BUFF     = 84627,
-
+    
     PALADIN_SPELL_HOLY_SHOCK_R1                  = 20473,
     PALADIN_SPELL_HOLY_SHOCK_R1_DAMAGE           = 25912,
     PALADIN_SPELL_HOLY_SHOCK_R1_HEALING          = 25914,
@@ -36,7 +35,7 @@ enum PaladinSpells
     SPELL_BLESSING_OF_LOWER_CITY_DRUID           = 37878,
     SPELL_BLESSING_OF_LOWER_CITY_PALADIN         = 37879,
     SPELL_BLESSING_OF_LOWER_CITY_PRIEST          = 37880,
-    SPELL_BLESSING_OF_LOWER_CITY_SHAMAN          = 37881,
+    SPELL_BLESSING_OF_LOWER_CITY_SHAMAN          = 37881
 };
 
 // 31850 - Ardent Defender
@@ -167,49 +166,6 @@ public:
     }
 };
 
-// 20911 Blessing of Sanctuary
-// 25899 Greater Blessing of Sanctuary
-class spell_pal_blessing_of_sanctuary : public SpellScriptLoader
-{
-public:
-    spell_pal_blessing_of_sanctuary() : SpellScriptLoader("spell_pal_blessing_of_sanctuary") { }
-
-    class spell_pal_blessing_of_sanctuary_AuraScript : public AuraScript
-    {
-        PrepareAuraScript(spell_pal_blessing_of_sanctuary_AuraScript)
-        bool Validate(SpellEntry const* /*entry*/)
-        {
-            if (!sSpellStore.LookupEntry(PALADIN_SPELL_BLESSING_OF_SANCTUARY_BUFF))
-                return false;
-            return true;
-        }
-
-        void HandleEffectApply(AuraEffect const * /*aurEff*/, AuraEffectHandleModes /*mode*/)
-        {
-            Unit* pTarget = GetTarget();
-            if (Unit* pCaster = GetCaster())
-                pCaster->CastSpell(pTarget, PALADIN_SPELL_BLESSING_OF_SANCTUARY_BUFF, true);
-        }
-
-        void HandleEffectRemove(AuraEffect const * /*aurEff*/, AuraEffectHandleModes /*mode*/)
-        {
-            Unit* pTarget = GetTarget();
-            pTarget->RemoveAura(PALADIN_SPELL_BLESSING_OF_SANCTUARY_BUFF, GetCasterGUID());
-        }
-
-        void Register()
-        {
-            OnEffectApply += AuraEffectApplyFn(spell_pal_blessing_of_sanctuary_AuraScript::HandleEffectApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
-            OnEffectRemove += AuraEffectRemoveFn(spell_pal_blessing_of_sanctuary_AuraScript::HandleEffectRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
-        }
-    };
-
-    AuraScript *GetAuraScript() const
-    {
-        return new spell_pal_blessing_of_sanctuary_AuraScript();
-    }
-};
-
 class spell_pal_holy_shock : public SpellScriptLoader
 {
 public:
@@ -268,6 +224,5 @@ void AddSC_paladin_spell_scripts()
 {
     new spell_pal_ardent_defender();
     new spell_pal_blessing_of_faith();
-    new spell_pal_blessing_of_sanctuary();
     new spell_pal_holy_shock();
 }

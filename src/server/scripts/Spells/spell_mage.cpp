@@ -38,39 +38,6 @@ enum MageSpells
     SPELL_MAGE_GLYPH_OF_BLAST_WAVE               = 62126
 };
 
-class spell_mage_blast_wave : public SpellScriptLoader
-{
-    public:
-        spell_mage_blast_wave() : SpellScriptLoader("spell_mage_blast_wave") { }
-
-        class spell_mage_blast_wave_SpellScript : public SpellScript
-        {
-            PrepareSpellScript(spell_mage_blast_wave_SpellScript)
-            bool Validate(SpellEntry const * /*spellEntry*/)
-            {
-                if (!sSpellStore.LookupEntry(SPELL_MAGE_GLYPH_OF_BLAST_WAVE))
-                    return false;
-                return true;
-            }
-
-            void HandleKnockBack(SpellEffIndex effIndex)
-            {
-                if (GetCaster()->HasAura(SPELL_MAGE_GLYPH_OF_BLAST_WAVE))
-                    PreventHitDefaultEffect(effIndex);
-            }
-
-            void Register()
-            {
-                OnEffect += SpellEffectFn(spell_mage_blast_wave_SpellScript::HandleKnockBack, EFFECT_2, SPELL_EFFECT_KNOCK_BACK);
-            }
-        };
-
-        SpellScript * GetSpellScript() const
-        {
-            return new spell_mage_blast_wave_SpellScript();
-        }
-};
-
 class spell_mage_cold_snap : public SpellScriptLoader
 {
     public:
@@ -163,50 +130,6 @@ const uint32 spell_mage_polymorph_cast_visual::spell_mage_polymorph_cast_visual_
     SPELL_MAGE_DRAGONHAWK_FORM,
     SPELL_MAGE_WORGEN_FORM,
     SPELL_MAGE_SHEEP_FORM
-};
-
-class spell_mage_summon_water_elemental : public SpellScriptLoader
-{
-    public:
-        spell_mage_summon_water_elemental() : SpellScriptLoader("spell_mage_summon_water_elemental") { }
-
-        class spell_mage_summon_water_elemental_SpellScript : public SpellScript
-        {
-            PrepareSpellScript(spell_mage_summon_water_elemental_SpellScript)
-            bool Validate(SpellEntry const * /*spellEntry*/)
-            {
-                if (!sSpellStore.LookupEntry(SPELL_MAGE_GLYPH_OF_ETERNAL_WATER))
-                    return false;
-                if (!sSpellStore.LookupEntry(SPELL_MAGE_SUMMON_WATER_ELEMENTAL_TEMPORARY))
-                    return false;
-                if (!sSpellStore.LookupEntry(SPELL_MAGE_SUMMON_WATER_ELEMENTAL_PERMANENT))
-                    return false;
-                return true;
-            }
-
-            void HandleDummy(SpellEffIndex /*effIndex*/)
-            {
-                if (Unit *unitTarget = GetHitUnit())
-                {
-                    // Glyph of Eternal Water
-                    if (unitTarget->HasAura(SPELL_MAGE_GLYPH_OF_ETERNAL_WATER))
-                        unitTarget->CastSpell(unitTarget, SPELL_MAGE_SUMMON_WATER_ELEMENTAL_PERMANENT, true);
-                    else
-                        unitTarget->CastSpell(unitTarget, SPELL_MAGE_SUMMON_WATER_ELEMENTAL_TEMPORARY, true);
-                }
-            }
-
-            void Register()
-            {
-                // add dummy effect spell handler to Summon Water Elemental
-                OnEffect += SpellEffectFn(spell_mage_summon_water_elemental_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
-            }
-        };
-
-        SpellScript * GetSpellScript() const
-        {
-            return new spell_mage_summon_water_elemental_SpellScript();
-        }
 };
 
 // Frost Warding
@@ -351,11 +274,9 @@ public:
 
 void AddSC_mage_spell_scripts()
 {
-    new spell_mage_blast_wave;
     new spell_mage_cold_snap;
     new spell_mage_frost_warding_trigger();
     new spell_mage_incanters_absorbtion_absorb();
     new spell_mage_incanters_absorbtion_manashield();
     new spell_mage_polymorph_cast_visual;
-    new spell_mage_summon_water_elemental;
 }
