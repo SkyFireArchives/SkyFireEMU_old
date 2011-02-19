@@ -459,12 +459,15 @@ void WorldSession::HandleQuestgiverCompleteQuest(WorldPacket& recv_data)
 {
     uint32 quest;
     uint64 guid;
+	uint8 unk;
+
     recv_data >> guid >> quest;
+	recv_data >> unk;
 
     if (!_player->isAlive())
         return;
 
-    sLog.outDebug("WORLD: Received CMSG_QUESTGIVER_COMPLETE_QUEST npc = %u, quest = %u",uint32(GUID_LOPART(guid)),quest);
+    sLog.outDebug("WORLD: Received CMSG_QUESTGIVER_COMPLETE_QUEST npc = %u, quest = %u, unk = %u",uint32(GUID_LOPART(guid)), quest, unk);
 
     Quest const *pQuest = sObjectMgr.GetQuestTemplate(quest);
     if (pQuest)
