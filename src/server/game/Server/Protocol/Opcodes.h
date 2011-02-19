@@ -71,7 +71,7 @@ enum Opcodes
     CMSG_LOGOUT_REQUEST                              = 0x0A7A8, // 4.0.6a 13623
     SMSG_LOGOUT_RESPONSE                             = 0x0F788, // 4.0.6a 13623
     SMSG_LOGOUT_COMPLETE                             = 0x0A0A4, // 4.0.6a 13623
-    CMSG_LOGOUT_CANCEL                               = 0x00054, // 
+    CMSG_LOGOUT_CANCEL                               = 0x039EB, // 4.0.6a 13623
     SMSG_LOGOUT_CANCEL_ACK                           = 0x0EE88, // 4.0.6a 13623
     CMSG_NAME_QUERY                                  = 0x07AAC, // 4.0.6a 13623
     SMSG_NAME_QUERY_RESPONSE                         = 0x07BC8, // 4.0.6a 13623
@@ -160,7 +160,7 @@ enum Opcodes
     CMSG_JOIN_CHANNEL                                = 0x00002, // 4.0.6a 13623
     CMSG_LEAVE_CHANNEL                               = 0x0000B, // 4.0.6a 13623
     SMSG_CHANNEL_NOTIFY                              = 0x07CAC, // 
-    CMSG_CHANNEL_LIST                                = 0x01A88, //
+    CMSG_CHANNEL_LIST                                = 0x07FE0, // 4.0.6a 13623
     SMSG_CHANNEL_LIST                                = 0x069E0, // 
     CMSG_CHANNEL_PASSWORD                            = 0x0080A, // 4.0.6a 13623
     CMSG_CHANNEL_SET_OWNER                           = 0x00800, // 4.0.6a 13623
@@ -176,7 +176,7 @@ enum Opcodes
     CMSG_CHANNEL_UNBAN                               = 0x00048, // 4.0.6a 13623
     CMSG_CHANNEL_ANNOUNCEMENTS                       = 0x0004B, // 4.0.6a 13623
     CMSG_CHANNEL_MODERATE                            = 0x10018, //
-    SMSG_UPDATE_OBJECT                               = 0x03780, // 
+    SMSG_UPDATE_OBJECT                               = 0x03780, // 4.0.6a 13623
     SMSG_DESTROY_OBJECT                              = 0x02AA0, // 
     CMSG_USE_ITEM                                    = 0x04E57, //
     CMSG_OPEN_ITEM                                   = 0x0A2A8, // 4.0.6a 13623
@@ -379,7 +379,7 @@ enum Opcodes
     CMSG_MOUNTSPECIAL_ANIM                           = 0x0755D, //
     SMSG_MOUNTSPECIAL_ANIM                           = 0x02388, // 4.0.6a 13623
     SMSG_PET_TAME_FAILURE                            = 0x0FDA8, // 4.0.6a 13623
-    CMSG_PET_SET_ACTION                              = 0x0977F, //
+    CMSG_PET_SET_ACTION                              = 0x03C8C, // 4.0.6a 13623
     CMSG_PET_ACTION                                  = 0x0AFC0, // 4.0.6a 13623
     CMSG_PET_ABANDON                                 = 0x03576, //
     CMSG_PET_RENAME                                  = 0x07D57, //
@@ -472,7 +472,7 @@ enum Opcodes
     SMSG_QUERY_TIME_RESPONSE                         = 0x0F1AC, // 4.0.6a 13623
     SMSG_LOG_XPGAIN                                  = 0x0B880, // 4.0.6a 13623
     SMSG_AURACASTLOG                                 = 0x10080, //
-    CMSG_RECLAIM_CORPSE                              = 0x04D77, //
+    CMSG_RECLAIM_CORPSE                              = 0x069E8, // 4.0.6a 13623
     CMSG_WRAP_ITEM                                   = 0x06E54, //
     SMSG_LEVELUP_INFO                                = 0x0B9C4, // 4.0.6a 13623
     MSG_MINIMAP_PING                                 = 0x0C475, //
@@ -502,7 +502,7 @@ enum Opcodes
     CMSG_AUTH_SESSION                                = 0x00E0E, // 4.0.6a 13623
     SMSG_AUTH_RESPONSE                               = 0x0B28C, // 4.0.6a 13623
     MSG_GM_SHOWLABEL                                 = 0x1008D, //
-    CMSG_PET_CAST_SPELL                              = 0x0C674, //
+    CMSG_PET_CAST_SPELL                              = 0x0B6A4, // 4.0.6a 13623
     MSG_SAVE_GUILD_EMBLEM                            = 0x031AC, // 4.0.6a 13623
     MSG_TABARDVENDOR_ACTIVATE                        = 0x02C80, // 4.0.6a 13623
     SMSG_PLAY_SPELL_VISUAL                           = 0x0FF8C, // 4.0.6a 13623
@@ -513,7 +513,7 @@ enum Opcodes
     SMSG_EXPLORATION_EXPERIENCE                      = 0x0A9C4, // 
     CMSG_GM_SET_SECURITY_GROUP                       = 0x1008E, //
     CMSG_GM_NUKE                                     = 0x1008F, //
-    MSG_RANDOM_ROLL                                  = 0x0E455, //
+    MSG_RANDOM_ROLL                                  = 0x0B7A4, // 4.0.6a 13623
     SMSG_ENVIRONMENTALDAMAGELOG                      = 0x0E1C8, // 4.0.6a 13623
     CMSG_PLAYER_DIFFICULTY_CHANGE                    = 0x07E5D, //
     SMSG_RWHOIS                                      = 0x071C8, // 4.0.6a 13623
@@ -544,7 +544,7 @@ enum Opcodes
     CMSG_GMTICKET_DELETETICKET                       = 0x0FBE4, // 4.0.6a 13623
     SMSG_GMTICKET_DELETETICKET                       = 0x01656, //
     SMSG_CHAT_WRONG_FACTION                          = 0x0C55F, //
-    CMSG_GMTICKET_SYSTEMSTATUS                       = 0x0F75E, //
+    CMSG_GMTICKET_SYSTEMSTATUS                       = 0x0ACE0, // 4.0.6a 13623
     SMSG_GMTICKET_SYSTEMSTATUS                       = 0x0467C, //
     CMSG_SPIRIT_HEALER_ACTIVATE                      = 0x0F3AC, // 4.0.6a 13623
     SMSG_QUEST_FORCE_REMOVED                         = 0x034E8, // 4.0.6a 13623
@@ -553,7 +553,7 @@ enum Opcodes
     SMSG_SPIRIT_HEALER_CONFIRM                       = 0x07C57, //
     CMSG_CHARACTER_POINT_CHEAT                       = 0x100A0, //
     SMSG_GOSSIP_POI                                  = 0x0B9AC, // 4.0.6a 13623
-    CMSG_CHAT_IGNORED                                = 0x0C456, //
+    CMSG_CHAT_IGNORED                                = 0x0A78C, // 4.0.6a 13623
     CMSG_GUILD_RANK                                  = 0x100A2, //
     SMSG_GUILD_RANK                                  = 0x02840, //
     CMSG_GUILD_ADD_RANK                              = 0x100A4, //
@@ -614,7 +614,7 @@ enum Opcodes
     CMSG_SET_AMMO                                    = 0x100BF, //
     SMSG_CORPSE_RECLAIM_DELAY                        = 0x100C0, //
     CMSG_SET_ACTIVE_MOVER                            = 0x06CA0, // 4.0.6a 13623
-    CMSG_PET_CANCEL_AURA                             = 0x00754, //
+    CMSG_PET_CANCEL_AURA                             = 0x0F6C0, // 4.0.6a 13623
     CMSG_PLAYER_AI_CHEAT                             = 0x100C2, //
     CMSG_CANCEL_AUTO_REPEAT_SPELL                    = 0x075CC, // 4.0.6a 13623
     MSG_GM_ACCOUNT_ONLINE                            = 0x100C3, //
@@ -630,7 +630,7 @@ enum Opcodes
     SMSG_SPELLDISPELLOG                              = 0x03C56, //
     SMSG_DAMAGE_CALC_LOG                             = 0x0FD84, // 4.0.6a 13623
     CMSG_ENABLE_DAMAGE_LOG                           = 0x100CB, //
-    CMSG_GROUP_CHANGE_SUB_GROUP                      = 0x0E576, //
+    CMSG_GROUP_CHANGE_SUB_GROUP                      = 0x03A80, // 4.0.6a 13623
     CMSG_REQUEST_PARTY_MEMBER_STATS                  = 0x0E77E, //
     CMSG_GROUP_SWAP_SUB_GROUP                        = 0x0677F, //
     CMSG_RESET_FACTION_CHEAT                         = 0x100CD, //
@@ -647,7 +647,7 @@ enum Opcodes
     SMSG_PVP_CREDIT                                  = 0x08E57, //
     SMSG_AUCTION_REMOVED_NOTIFICATION                = 0x00E5E, //
     CMSG_GROUP_RAID_CONVERT                          = 0x0628C, // 4.0.6a 13623
-    CMSG_GROUP_ASSISTANT_LEADER                      = 0x08556, //
+    CMSG_GROUP_ASSISTANT_LEADER                      = 0x03F84, // 4.0.6a 13623
     CMSG_BUYBACK_ITEM                                = 0x0A4CA, // 4.0.6a 13623
     SMSG_SERVER_MESSAGE                              = 0x078C0, // 4.0.6a 13623
     CMSG_SET_SAVED_INSTANCE_EXTEND                   = 0x0FD54, //
@@ -789,7 +789,7 @@ enum Opcodes
     SMSG_SPLINE_MOVE_ROOT                            = 0x01E55, // 4.0.6a 13623
     CMSG_SET_EXPLORATION_ALL                         = 0x10120, //
     SMSG_INVALIDATE_PLAYER                           = 0x0A884, // 4.0.6a 13623
-    CMSG_RESET_INSTANCES                             = 0x0FE56, //
+    CMSG_RESET_INSTANCES                             = 0x0AAA0, // 4.0.6a 13623
     SMSG_INSTANCE_RESET                              = 0x030E8, // 4.0.6a 13623
     SMSG_INSTANCE_RESET_FAILED                       = 0x03BA0, // 4.0.6a 13623
     SMSG_UPDATE_LAST_INSTANCE                        = 0x033E8, // 4.0.6a 13623
@@ -853,7 +853,7 @@ enum Opcodes
     SMSG_ARENA_TEAM_STATS                            = 0x09F5F, //
     CMSG_LFG_JOIN                                    = 0x063C0, // 4.0.6a 13623
     CMSG_LFG_LEAVE                                   = 0x03688, // 4.0.6a 13623
-    CMSG_SEARCH_LFG_JOIN                             = 0x0CD5E, //
+    CMSG_SEARCH_LFG_JOIN                             = 0x061CC, // 4.0.6a 13623
     CMSG_SEARCH_LFG_LEAVE                            = 0x0847D, //
     SMSG_UPDATE_LFG_LIST                             = 0x0768C, // 4.0.6a 13623
     SMSG_LFG_PROPOSAL_UPDATE                         = 0x032AC, // 4.0.6a 13623
@@ -971,7 +971,7 @@ enum Opcodes
     CMSG_TARGET_SCRIPT_CAST                          = 0x10184, //
     CMSG_CHANNEL_DISPLAY_LIST                        = 0x10185, //
     CMSG_SET_ACTIVE_VOICE_CHANNEL                    = 0x0C577, //
-    CMSG_GET_CHANNEL_MEMBER_COUNT                    = 0x03A90, //
+    CMSG_GET_CHANNEL_MEMBER_COUNT                    = 0x00009, // 4.0.6a 13623
     SMSG_CHANNEL_MEMBER_COUNT                        = 0x02CEC, // 4.0.6a 13623
     CMSG_CHANNEL_VOICE_ON                            = 0x05A98, //
     CMSG_CHANNEL_VOICE_OFF                           = 0x07A88, //
@@ -1064,7 +1064,7 @@ enum Opcodes
     CMSG_CALENDAR_UPDATE_EVENT                       = 0x101B8, //
     CMSG_CALENDAR_REMOVE_EVENT                       = 0x04C5F, //
     CMSG_CALENDAR_COPY_EVENT                         = 0x101BA, //
-    CMSG_CALENDAR_EVENT_INVITE                       = 0x101BB, //
+    CMSG_CALENDAR_EVENT_INVITE                       = 0x0F6C4, // 4.0.6a 13623
     CMSG_CALENDAR_EVENT_RSVP                         = 0x0757F, //
     CMSG_CALENDAR_EVENT_REMOVE_INVITE                = 0x101BD, //
     CMSG_CALENDAR_EVENT_STATUS                       = 0x101BE, //
@@ -1243,7 +1243,7 @@ enum Opcodes
     CMSG_READY_FOR_ACCOUNT_DATA_TIMES                = 0x07DA8, // 4.0.6a 13623
     CMSG_QUERY_QUESTS_COMPLETED                      = 0x0FE5E, //
     SMSG_QUERY_QUESTS_COMPLETED_RESPONSE             = 0x1023D, //
-    CMSG_GM_REPORT_LAG                               = 0x08E5D, //
+    CMSG_GM_REPORT_LAG                               = 0x03FA0, // 4.0.6a 13623
     SMSG_CORPSE_NOT_IN_INSTANCE                      = 0x10242, //
     CMSG_SET_ALLOW_LOW_LEVEL_RAID1                   = 0x0777D, //
     CMSG_SET_ALLOW_LOW_LEVEL_RAID2                   = 0x0375C, //
