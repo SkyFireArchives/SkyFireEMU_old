@@ -2069,9 +2069,21 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
 
                 data.Initialize(SMSG_NEW_WORLD, (20));
                 if (m_transport)
-                    data << m_movementInfo.t_pos.PositionXYZStream() << (uint32)mapid << (float)m_movementInfo.t_pos.m_orientation;
+                {
+                    data << uint32(mapid);
+                    data << float(m_movementInfo.t_pos.GetOrientation());
+                    data << float(m_movementInfo.t_pos.GetPositionX());
+                    data << float(m_movementInfo.t_pos.GetPositionY());
+                    data << float(m_movementInfo.t_pos.GetPositionZ());
+                }
                 else
-                    data << (float)x << (float)y << (float)z << (uint32)mapid << (float)orientation;
+                {
+                    data << uint32(mapid);
+                    data << float(orientation);
+                    data << float(x);
+                    data << float(y);
+                    data << float(z);
+                }
                 
                 GetSession()->SendPacket(&data);
                 SendSavedInstances();
