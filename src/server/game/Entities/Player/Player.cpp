@@ -516,6 +516,7 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
 
     m_logintime = time(NULL);
     m_Last_tick = m_logintime;
+    m_Save_Time = m_logintime + 360;
     m_WeaponProficiency = 0;
     m_ArmorProficiency = 0;
     m_canParry = false;
@@ -1339,7 +1340,13 @@ void Player::Update(uint32 p_time)
     if (now > m_Last_tick)
         UpdateItemDuration(uint32(now - m_Last_tick));
 
-    // check every second	
+	if (now > m_Save_Time) 
+		{ 
+			SaveToDB(); 
+			m_Save_Time = now + 360; 
+		} 
+
+// check every second	
     if (now > m_Last_tick + 1)
         UpdateSoulboundTradeItems();
 

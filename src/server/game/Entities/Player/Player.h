@@ -1087,6 +1087,7 @@ class Player : public Unit, public GridObject<Player>
         // Played Time Stuff
         time_t m_logintime;
         time_t m_Last_tick;
+		time_t m_Save_Time;
         uint32 m_Played_time[MAX_PLAYED_TIME_INDEX];
         uint32 GetTotalPlayedTime() { return m_Played_time[PLAYED_TIME_TOTAL]; }
         uint32 GetLevelPlayedTime() { return m_Played_time[PLAYED_TIME_LEVEL]; }
