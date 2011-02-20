@@ -1724,7 +1724,7 @@ void WorldSession::SendSetPhaseShift(uint32 PhaseShift)
     SendPacket(&data);
 }
 
-void WorldSession::HandleHearthAndResurrect(WorldPacket& /*recv_data*/)
+void WorldSession::HandleHearthAndResurrect(WorldPacket& recv_data)
 {
     if (_player->isInFlight())
         return;

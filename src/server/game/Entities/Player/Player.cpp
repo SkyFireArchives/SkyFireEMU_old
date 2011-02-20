@@ -9445,6 +9445,11 @@ void Player::SetBindPoint(uint64 guid)
     //WorldPacket data(SMSG_BINDER_CONFIRM, 8);
     //data << uint64(guid);
     //GetSession()->SendPacket(&data);
+	float x = this->GetPositionX();
+	float y = this->GetPositionY();
+	float z = this->GetPositionZ();
+	uint32 spellid = 26;
+	this->CastSpell(x,y,z,spellid,true);
 }
 
 void Player::SendTalentWipeConfirm(uint64 guid)
