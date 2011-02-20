@@ -592,7 +592,7 @@ enum Opcodes
     SMSG_RESURRECT_FAILED                            = 0x0D557, //
     CMSG_TOGGLE_PVP                                  = 0x06480, // 4.0.6a 13623
     SMSG_ZONE_UNDER_ATTACK                           = 0x0BD80, // 4.0.6a 13623
-    MSG_AUCTION_HELLO                                = 0x00BA0, // 4.0.6a 13623
+    MSG_AUCTION_HELLO                                = 0x0B3A0, // 4.0.6a 13623
     CMSG_AUCTION_SELL_ITEM                           = 0x0EE8C, // 4.0.6a 13623
     CMSG_AUCTION_REMOVE_ITEM                         = 0x09F5D, //
     CMSG_AUCTION_LIST_ITEMS                          = 0x0E48C, // 4.0.6a 13623

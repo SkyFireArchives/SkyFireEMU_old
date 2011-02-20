@@ -119,8 +119,8 @@ void WorldSession::SendAuctionOwnerNotification(AuctionEntry* auction)
 void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
 {
     uint64 auctioneer, item;
-    uint32 etime, bid, buyout, count;
-	uint32 unk1, unk2;
+    uint64 bid, buyout;
+	uint32 etime, count;
     recv_data >> auctioneer;
     recv_data.read_skip<uint32>();                          // const 1?
     recv_data >> item;
@@ -128,7 +128,6 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
     recv_data >> bid;
     recv_data >> buyout;
     recv_data >> etime;
-	recv_data >> unk1 >>  unk2;                             // 4.0.6a
 
     Player *pl = GetPlayer();
 
