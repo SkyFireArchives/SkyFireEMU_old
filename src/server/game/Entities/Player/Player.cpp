@@ -9442,9 +9442,9 @@ uint32 Player::GetXPRestBonus(uint32 xp)
 
 void Player::SetBindPoint(uint64 guid)
 {
-    WorldPacket data(SMSG_BINDER_CONFIRM, 8);
-    data << uint64(guid);
-    GetSession()->SendPacket(&data);
+    //WorldPacket data(SMSG_BINDER_CONFIRM, 8);
+    //data << uint64(guid);
+    //GetSession()->SendPacket(&data);
 }
 
 void Player::SendTalentWipeConfirm(uint64 guid)
