@@ -343,8 +343,8 @@ bool fillArchiveNameVector(std::vector<std::string>& pArchiveNames)
     }
 
     // open expansion and common files
-	pArchiveNames.push_back(input_path + string("World.MPQ")); 
-	pArchiveNames.push_back(input_path + string("Art.MPQ")); 
+	pArchiveNames.push_back(input_path + string("world.MPQ")); 
+	pArchiveNames.push_back(input_path + string("art.MPQ")); 
 	pArchiveNames.push_back(input_path + string("expansion1.MPQ")); 
 	pArchiveNames.push_back(input_path + string("expansion2.MPQ")); 
 	pArchiveNames.push_back(input_path + string("expansion3.MPQ")); 
