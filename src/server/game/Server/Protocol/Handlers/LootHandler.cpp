@@ -214,6 +214,7 @@ void WorldSession::HandleLootReleaseOpcode(WorldPacket & recv_data)
     // cheaters can modify lguid to prevent correct apply loot release code and re-loot
     // use internal stored guid
     recv_data.read_skip<uint64>();                          // guid;
+	recv_data.read_skip<uint8>();
 
     if (uint64 lguid = GetPlayer()->GetLootGUID())
         DoLootRelease(lguid);
