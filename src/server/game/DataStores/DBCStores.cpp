@@ -111,7 +111,6 @@ DBCStorage <gtSpellScaling> sGtSpellScalingStore(GtSpellScalingfmt);
 
 DBCStorage <HolidaysEntry>                sHolidaysStore(Holidaysfmt);
 
-//DBCStorage <ItemEntry>                    sItemStore(Itemfmt);
 DBCStorage <ItemArmorQualityEntry>        sItemArmorQualityStore(ItemArmorQualityfmt);
 DBCStorage <ItemArmorShieldEntry>         sItemArmorShieldStore(ItemArmorShieldfmt);
 DBCStorage <ItemArmorTotalEntry>          sItemArmorTotalStore(ItemArmorTotalfmt);
@@ -962,7 +961,6 @@ float GetGtSpellScalingValue(int8 class_, uint8 level)
  DBCStorage <SpellEntry>         const* GetSpellStore()          { return &sSpellStore;          }
  DBCStorage <SpellRangeEntry>    const* GetSpellRangeStore()     { return &sSpellRangeStore;     }
  DBCStorage <FactionEntry>       const* GetFactionStore()        { return &sFactionStore;        }
- //DBCStorage <ItemEntry>          const* GetItemDisplayStore()    { return &sItemStore;           }
  DBCStorage <CreatureDisplayInfoEntry> const* GetCreatureDisplayStore() { return &sCreatureDisplayInfoStore; }
  DBCStorage <EmotesEntry>        const* GetEmotesStore()         { return &sEmotesStore;         }
  DBCStorage <EmotesTextEntry>    const* GetEmotesTextStore()     { return &sEmotesTextStore;     }

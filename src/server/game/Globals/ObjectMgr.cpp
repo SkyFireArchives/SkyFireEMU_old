@@ -51,6 +51,8 @@
 #include "ScriptMgr.h"
 #include "SpellScript.h"
 #include "PoolMgr.h"
+#include "DB2Structure.h"
+#include "DB2Stores.h"
 
 ScriptMapMap sQuestEndScripts;
 ScriptMapMap sQuestStartScripts;
@@ -1043,30 +1045,31 @@ void ObjectMgr::LoadEquipmentTemplates()
             if (!eqInfo->equipentry[j])
                continue;
 
-            //ItemEntry const *dbcitem = sItemStore.LookupEntry(eqInfo->equipentry[j]);
+            ItemEntry const *db2item = sItemStore.LookupEntry(eqInfo->equipentry[j]);
 
-            //if (!dbcitem)
-            //{
-            //    sLog.outErrorDb("Unknown item (entry=%u) in creature_equip_template.equipentry%u for entry = %u, forced to 0.", eqInfo->equipentry[j], j+1, i);
-            //    const_cast<EquipmentInfo*>(eqInfo)->equipentry[j] = 0;
-            //    continue;
-            //}
+            if (!db2item)
+            {
+                sLog.outErrorDb("Unknown item (entry=%u) in creature_equip_template.equipentry%u for entry = %u, forced to 0.", eqInfo->equipentry[j], j+1, i);
+                const_cast<EquipmentInfo*>(eqInfo)->equipentry[j] = 0;
+                continue;
+            }
 
-            //if (dbcitem->InventoryType != INVTYPE_WEAPON &&
-            //        dbcitem->InventoryType != INVTYPE_SHIELD &&
-            //        dbcitem->InventoryType != INVTYPE_RANGED &&
-            //        dbcitem->InventoryType != INVTYPE_2HWEAPON &&
-            //        dbcitem->InventoryType != INVTYPE_WEAPONMAINHAND &&
-            //        dbcitem->InventoryType != INVTYPE_WEAPONOFFHAND &&
-            //        dbcitem->InventoryType != INVTYPE_HOLDABLE &&
-            //        dbcitem->InventoryType != INVTYPE_THROWN &&
-            //        dbcitem->InventoryType != INVTYPE_RANGEDRIGHT)
-            //{
-            //    sLog.outErrorDb("Item (entry=%u) in creature_equip_template.equipentry%u for entry = %u is not equipable in a hand, forced to 0.", eqInfo->equipentry[j], j+1, i);
-            //    const_cast<EquipmentInfo*>(eqInfo)->equipentry[j] = 0;
-            //}
+            if (db2item->InventoryType != INVTYPE_WEAPON &&
+                    db2item->InventoryType != INVTYPE_SHIELD &&
+                    db2item->InventoryType != INVTYPE_RANGED &&
+                    db2item->InventoryType != INVTYPE_2HWEAPON &&
+                    db2item->InventoryType != INVTYPE_WEAPONMAINHAND &&
+                    db2item->InventoryType != INVTYPE_WEAPONOFFHAND &&
+                    db2item->InventoryType != INVTYPE_HOLDABLE &&
+                    db2item->InventoryType != INVTYPE_THROWN &&
+                    db2item->InventoryType != INVTYPE_RANGEDRIGHT)
+            {
+                sLog.outErrorDb("Item (entry=%u) in creature_equip_template.equipentry%u for entry = %u is not equipable in a hand, forced to 0.", eqInfo->equipentry[j], j+1, i);
+                const_cast<EquipmentInfo*>(eqInfo)->equipentry[j] = 0;
+            }
         }
     }
+
     sLog.outString(">> Loaded %u equipment template", sEquipmentStorage.RecordCount);
     sLog.outString();
 }
@@ -2050,8 +2053,55 @@ void ObjectMgr::LoadItemPrototypes()
     for (uint32 i = 1; i < sItemStorage.MaxEntry; ++i)
     {
         ItemPrototype const* proto = sItemStorage.LookupEntry<ItemPrototype >(i);
+        ItemEntry const* db2item = sItemStore.LookupEntry(i);
+
         if (!proto)
             continue;
+
+        if (db2item)
+        {
+            if (proto->Class != db2item->Class)
+            {
+                sLog.outErrorDb("Item (Entry: %u) does not have a correct class %u, must be %u .", i, proto->Class, db2item->Class);
+            }
+
+            if (proto->SubClass != db2item->SubClass)
+            {
+                sLog.outErrorDb("Item (Entry: %u) not correct (Class: %u, Sub: %u) pair, must be (Class: %u, Sub: %u) (still using DB value).",i,proto->Class,proto->SubClass,db2item->Class,db2item->SubClass);
+                // It safe let use Subclass from DB
+            }
+
+            if (proto->Unk0 != db2item->Unk0)
+            {
+                sLog.outErrorDb("Item (Entry: %u) does not have a correct Unk0 (%i) , must be %i (still using DB value).",i,proto->Unk0,db2item->Unk0);
+                // It is safe to use Unk0 from DB
+            }
+
+            if (proto->Material != db2item->Material)
+            {
+                sLog.outErrorDb("Item (Entry: %u) does not have a correct material (%i), must be %i (still using DB value).",i,proto->Material,db2item->Material);
+                // It is safe to use Material from DB
+            }
+
+            if (proto->InventoryType != db2item->InventoryType)
+            {
+                sLog.outErrorDb("Item (Entry: %u) does not have a correct inventory type (%u), must be %u (still using DB value).",i,proto->InventoryType,db2item->InventoryType);
+                // It is safe to use InventoryType from DB
+            }
+
+            if (proto->DisplayInfoID != db2item->DisplayId)
+            {
+                sLog.outErrorDb("Item (Entry: %u) does not have a correct display id (%u), must be %u (using it).", i, proto->DisplayInfoID, db2item->DisplayId);
+                const_cast<ItemPrototype*>(proto)->DisplayInfoID = db2item->DisplayId;
+            }
+            if (proto->Sheath != db2item->Sheath)
+            {
+                sLog.outErrorDb("Item (Entry: %u) does not have a correct sheathid (%u), must be %u  (using it).",i,proto->Sheath,db2item->Sheath);
+                const_cast<ItemPrototype*>(proto)->Sheath = db2item->Sheath;
+            }
+        }
+        else
+            sLog.outErrorDb("Item (Entry: %u) does not exist in item.db2! (not correct id?).",i);
 
         if (proto->Class >= MAX_ITEM_CLASS)
         {
