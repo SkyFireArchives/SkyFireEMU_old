@@ -61,7 +61,6 @@ void WorldSession::HandlePetAction(WorldPacket & recv_data)
     uint64 guid1;
     uint32 data;
     uint64 guid2;
-    float x,y,z;
     recv_data >> guid1;                                     // pet guid
     recv_data >> data;
     recv_data >> guid2;                                     // tag guid
