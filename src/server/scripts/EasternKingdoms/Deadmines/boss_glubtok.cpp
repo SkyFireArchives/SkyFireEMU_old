@@ -52,7 +52,7 @@ public:
 
 	struct boss_glubtokAI : public ScriptedAI
     {
-        bboss_glubtokAI(Creature* pCreature) : ScriptedAI(pCreature)
+        boss_glubtokAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             pInstance = pCreature->GetInstanceScript();
         }
