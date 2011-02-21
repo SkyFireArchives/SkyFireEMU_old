@@ -44,7 +44,7 @@ class boss_glubtok : public CreatureScript
 {
 public:
     boss_glubtok() : CreatureScript("boss_glubtok") { }
-	
+
 	CreatureAI* GetAI(Creature* pCreature) const
     {
         return new boss_glubtokAI (pCreature);
@@ -56,7 +56,19 @@ public:
         {
             pInstance = pCreature->GetInstanceScript();
         }
-		// TODO: MAKE THE CORRECT SCRIPT :)
+
+		InstanceScript* pInstance;
+
+        uint32 uiTrashTimer;
+        uint32 uiSlamTimer;
+        uint32 uiNimbleReflexesTimer;
+
+        uint8 uiHealth;
+
+        uint32 uiPhase;
+        uint32 uiTimer;
+        // TODO: MAKE THE CORRECT SCRIPT :)
+    };
 };
 
 void AddSC_boss_glubtok()
