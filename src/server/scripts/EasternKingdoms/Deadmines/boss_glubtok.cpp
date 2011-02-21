@@ -59,7 +59,7 @@ public:
 		// TODO: MAKE THE CORRECT SCRIPT :)
 };
 
-void AddSC_boss_mr_smite()
+void AddSC_boss_glubtok()
 {
-    new boss_mr_smite();
+    new boss_glubtok();
 }
