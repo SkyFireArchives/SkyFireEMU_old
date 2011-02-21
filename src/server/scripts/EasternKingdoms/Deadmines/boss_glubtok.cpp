@@ -57,3 +57,9 @@ public:
             pInstance = pCreature->GetInstanceScript();
         }
 		// TODO: MAKE THE CORRECT SCRIPT :)
+};
+
+void AddSC_boss_mr_smite()
+{
+    new boss_mr_smite();
+}
