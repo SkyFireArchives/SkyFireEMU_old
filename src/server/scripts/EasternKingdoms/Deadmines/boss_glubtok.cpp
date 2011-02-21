@@ -1,0 +1,59 @@
+/*
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ *
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
+ *
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/* TODO: 
+ScriptData
+SDName: 
+SD%Complete:
+SDComment: 
+EndScriptData */
+
+#include "ScriptPCH.h"
+#include "deadmines.h"
+
+enum eSpels
+{
+    SPELL_ARCANE_POWER      = 88009,
+    SPELL_FIST_OF_FLAME     = 87859,
+    SPELL_FIST_OF_FROST     = 87861,
+    SPELL_FIRE_BLOSSOM      = 88129,
+    SPELL_FIRE_BLOSSOM_H    = 91286,
+    SPELL_FROST_BLOSSOM     = 88169,
+    SPELL_FROST_BLOSSOM_H   = 91287
+};
+
+class boss_glubtok : public CreatureScript
+{
+public:
+    boss_glubtok() : CreatureScript("boss_glubtok") { }
+	
+	CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_glubtokAI (pCreature);
+    }
+
+	struct boss_glubtokAI : public ScriptedAI
+    {
+        bboss_glubtokAI(Creature* pCreature) : ScriptedAI(pCreature)
+        {
+            pInstance = pCreature->GetInstanceScript();
+        }
+		// TODO: MAKE THE CORRECT SCRIPT :)
