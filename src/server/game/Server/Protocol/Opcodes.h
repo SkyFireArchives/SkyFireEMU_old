@@ -130,7 +130,7 @@ enum Opcodes
     CMSG_GUILD_INFO                                  = 0x06884, // 4.0.6a 13623
     SMSG_GUILD_INFO                                  = 0x020A8, // 4.0.6a 13623
     CMSG_GUILD_ROSTER                                = 0x0B2A4, // 4.0.6a 13623
-    SMSG_GUILD_ROSTER                                = 0x038B0, //
+    SMSG_GUILD_ROSTER                                = 0x04D5C, // 4.0.6a 13623
     CMSG_GUILD_PROMOTE                               = 0x02109, // 4.0.6a 13623
     CMSG_GUILD_DEMOTE                                = 0x01902, //
     CMSG_GUILD_LEAVE                                 = 0x03329, // 4.0.6a 13623
@@ -902,7 +902,7 @@ enum Opcodes
     CMSG_REALM_SPLIT                                 = 0x060AC, // 4.0.6a 13623
     CMSG_MOVE_CHNG_TRANSPORT                         = 0x10158, //
     MSG_PARTY_ASSIGNMENT                             = 0x028AC, // 4.0.6a 13623
-    SMSG_OFFER_PETITION_ERROR                        = 0x0BF7E, //
+    SMSG_OFFER_PETITION_ERROR                        = 0x07DC0, //
     SMSG_TIME_SYNC_REQ                               = 0x0AA80, // 4.0.6a 13623
     CMSG_TIME_SYNC_RESP                              = 0x0A8AC, // 4.0.6a 13623
     CMSG_SEND_LOCAL_EVENT                            = 0x1015A, //
@@ -991,13 +991,13 @@ enum Opcodes
     SMSG_REPORT_PVP_AFK_RESULT                       = 0x078E8, // 4.0.6a 13623
     CMSG_GUILD_BANKER_ACTIVATE                       = 0x0FFC4, // 4.0.6a 13623
     CMSG_GUILD_BANK_QUERY_TAB                        = 0x0BBE8, // 4.0.6a 13623
-    SMSG_GUILD_BANK_LIST                             = 0x0BC76, //
+    SMSG_GUILD_BANK_LIST                             = 0x0A6A8, // 4.0.6a 13623
     CMSG_GUILD_BANK_SWAP_ITEMS                       = 0x0A8C4, // 4.0.6a 13623
     CMSG_GUILD_BANK_BUY_TAB                          = 0x10190, //
     CMSG_GUILD_BANK_UPDATE_TAB                       = 0x10191, //
     CMSG_GUILD_BANK_DEPOSIT_MONEY                    = 0x0157C, //
     CMSG_GUILD_BANK_WITHDRAW_MONEY                   = 0x10193, //
-    MSG_GUILD_BANK_LOG_QUERY                         = 0x0675C, //
+    MSG_GUILD_BANK_LOG_QUERY                         = 0x0F584, // 4.0.6a 13623
     CMSG_SET_CHANNEL_WATCH                           = 0x07FE0, // 4.0.6a 13623
     SMSG_USERLIST_ADD                                = 0x0F8CC, // 4.0.6a 13623
     SMSG_USERLIST_REMOVE                             = 0x0EF80, // 4.0.6a 13623
@@ -1025,7 +1025,7 @@ enum Opcodes
     CMSG_KEEP_ALIVE                                  = 0x02CE0, // 4.0.6a 13623
     SMSG_RAID_READY_CHECK_ERROR                      = 0x0547E, //
     CMSG_OPT_OUT_OF_LOOT                             = 0x0057F, //
-    MSG_QUERY_GUILD_BANK_TEXT                        = 0x02776, //
+    MSG_QUERY_GUILD_BANK_TEXT                        = 0x0A2C4, // 4.0.6a 13623
     CMSG_SET_GUILD_BANK_TEXT                         = 0x101A0, //
     CMSG_SET_GRANTABLE_LEVELS                        = 0x101A1, //
     CMSG_GRANT_LEVEL                                 = 0x0B980, // 4.0.6a 13623
