@@ -722,7 +722,7 @@ void AchievementMgr::CheckAllAchievementCriteria()
 }
 
 static const uint32 achievIdByArenaSlot[MAX_ARENA_SLOT] = { 1057, 1107, 1108 };
-static const uint32 achievIdForDangeon[][4] =
+static const uint32 achievIdForDungeon[][4] =
 {
     // ach_cr_id,is_dungeon,is_raid,is_heroic_dungeon
     { 321,       true,      true,   true  },
@@ -973,26 +973,26 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, ui
 
                 // search case
                 bool found = false;
-                for (int j = 0; achievIdForDangeon[j][0]; ++j)
+                for (int j = 0; achievIdForDungeon[j][0]; ++j)
                 {
-                    if (achievIdForDangeon[j][0] == achievement->ID)
+                    if (achievIdForDungeon[j][0] == achievement->ID)
                     {
                         if (map->IsRaid())
                         {
                             // if raid accepted (ignore difficulty)
-                            if (!achievIdForDangeon[j][2])
+                            if (!achievIdForDungeon[j][2])
                                 break;                      // for
                         }
                         else if (GetPlayer()->GetDungeonDifficulty() == DUNGEON_DIFFICULTY_NORMAL)
                         {
                             // dungeon in normal mode accepted
-                            if (!achievIdForDangeon[j][1])
+                            if (!achievIdForDungeon[j][1])
                                 break;                      // for
                         }
                         else
                         {
                             // dungeon in heroic mode accepted
-                            if (!achievIdForDangeon[j][3])
+                            if (!achievIdForDungeon[j][3])
                                 break;                      // for
                         }
 
@@ -1133,7 +1133,7 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, ui
                 break;
             case ACHIEVEMENT_CRITERIA_TYPE_LOOT_TYPE:
             {
-                // miscvalue1=loot_type (note: 0 = LOOT_CORSPE and then it ignored)
+                // miscvalue1=loot_type (note: 0 = LOOT_CORPSE and then it ignored)
                 // miscvalue2=count of item loot
                 if (!miscvalue1 || !miscvalue2)
                     continue;
