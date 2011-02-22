@@ -177,8 +177,8 @@ enum Opcodes
     CMSG_CHANNEL_ANNOUNCEMENTS                       = 0x0004B, // 4.0.6a 13623
     CMSG_CHANNEL_MODERATE                            = 0x10018, //
     SMSG_UPDATE_OBJECT                               = 0x03780, // 4.0.6a 13623
-    SMSG_DESTROY_OBJECT                              = 0x02AA0, // 
-    CMSG_USE_ITEM                                    = 0x04E57, //
+    SMSG_DESTROY_OBJECT                              = 0x02AA0, // 4.0.6a 13623
+    CMSG_USE_ITEM                                    = 0x07080, // 4.0.6a 13623
     CMSG_OPEN_ITEM                                   = 0x0A2A8, // 4.0.6a 13623
     CMSG_READ_ITEM                                   = 0x0F3C0, // 4.0.6a 13623
     SMSG_READ_ITEM_OK                                = 0x0A988, // 4.0.6a 13623
@@ -186,7 +186,7 @@ enum Opcodes
     SMSG_ITEM_COOLDOWN                               = 0x06CC8, // 4.0.6a 13623
     CMSG_GAMEOBJ_USE                                 = 0x029EC, // 4.0.6a 13623
     CMSG_DESTROY_ITEMS                               = 0x1001C, //
-    SMSG_GAMEOBJECT_CUSTOM_ANIM                      = 0x02E8C, // 
+    SMSG_GAMEOBJECT_CUSTOM_ANIM                      = 0x02E8C, // 4.0.6a 13623 
     CMSG_AREATRIGGER                                 = 0x0ADA8, // 4.0.6a 13623
     MSG_MOVE_START_FORWARD                           = 0x0EBAC, // 4.0.6a 13623
     MSG_MOVE_START_BACKWARD                          = 0x072E4, // 4.0.6a 13623
