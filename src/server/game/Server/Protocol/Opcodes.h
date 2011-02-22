@@ -205,8 +205,8 @@ enum Opcodes
     MSG_MOVE_SET_WALK_MODE                           = 0x03FAC, // 4.0.6a 13623
     MSG_MOVE_TOGGLE_LOGGING                          = 0x1001D, //
     MSG_MOVE_TELEPORT                                = 0x024E4, // 4.0.6a 13623
-    MSG_MOVE_TELEPORT_CHEAT                          = 0x0E7EC, // 
-    MSG_MOVE_TELEPORT_ACK                            = 0x06DAC, // 
+    MSG_MOVE_TELEPORT_CHEAT                          = 0x0E7EC, // 4.0.6a 13623
+    MSG_MOVE_TELEPORT_ACK                            = 0x06DAC, // 4.0.6a 13623
     MSG_MOVE_TOGGLE_FALL_LOGGING                     = 0x1001F, //
     MSG_MOVE_FALL_LAND                               = 0x0AFAC, // 4.0.6a 13623
     MSG_MOVE_START_SWIM                              = 0x026C0, // 4.0.6a 13623
