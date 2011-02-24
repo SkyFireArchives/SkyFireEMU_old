@@ -331,7 +331,7 @@ enum Opcodes
     CMSG_ATTACKSWING                                 = 0x074A8, // 4.0.6a 13623
     CMSG_ATTACKSTOP                                  = 0x062C4, // 4.0.6a 13623
     SMSG_ATTACKSTART                                 = 0x0B68C, // 4.0.6a 13623
-    SMSG_ATTACKSTOP                                  = 0x062C4, // 4.0.6a 13623
+    SMSG_ATTACKSTOP                                  = 0x06DCC, // 4.0.6a 13623
     SMSG_ATTACKSWING_NOTINRANGE                      = 0x036C4, // 4.0.6a 13623
     SMSG_ATTACKSWING_BADFACING                       = 0x067A8, // 4.0.6a 13623
     SMSG_INSTANCE_LOCK_WARNING_QUERY                 = 0x0B574, //
