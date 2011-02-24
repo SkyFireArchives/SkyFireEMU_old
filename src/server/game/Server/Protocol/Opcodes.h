@@ -730,7 +730,7 @@ enum Opcodes
     MSG_PVP_LOG_DATA                                 = 0x100FA, //
     CMSG_LEAVE_BATTLEFIELD                           = 0x07757, //
     CMSG_AREA_SPIRIT_HEALER_QUERY                    = 0x0A6C0, // 4.0.6a 13623
-    CMSG_AREA_SPIRIT_HEALER_QUEUE                    = 0x0E0C8, // 4.0.6a 13623
+    CMSG_AREA_SPIRIT_HEALER_QUEUE                    = 0x0F388, // 4.0.6a 13623
     SMSG_AREA_SPIRIT_HEALER_TIME                     = 0x0A457, //
     CMSG_GM_UNTEACH                                  = 0x100FD, //
     SMSG_WARDEN_DATA                                 = 0x0F8A0, // 4.0.6a 13623
