@@ -241,7 +241,7 @@ enum Opcodes
     CMSG_FORCE_SWIM_SPEED_CHANGE_ACK                 = 0x0B1A0, // 4.0.6a 13623
     SMSG_FORCE_MOVE_ROOT                             = 0x02F88, // 4.0.6a 13623
     CMSG_FORCE_MOVE_ROOT_ACK                         = 0x07184, // 4.0.6a 13623
-    SMSG_FORCE_MOVE_UNROOT                           = 0x0647C, //
+    SMSG_FORCE_MOVE_UNROOT                           = 0x0F1E4, // 4.0.6a 13623
     CMSG_FORCE_MOVE_UNROOT_ACK                       = 0x07FA8, // 4.0.6a 13623
     MSG_MOVE_ROOT                                    = 0x0ABA8, // 4.0.6a 13623
     MSG_MOVE_UNROOT                                  = 0x02088, // 4.0.6a 13623
@@ -280,7 +280,7 @@ enum Opcodes
     CMSG_SPLIT_ITEM                                  = 0x0FDAC, // 4.0.6a 13623
     CMSG_AUTOEQUIP_ITEM_SLOT                         = 0x0E8A8, // 4.0.6a 13623
     OBSOLETE_DROP_ITEM                               = 0x10049, //
-    CMSG_DESTROYITEM                                 = 0x0B8AB, // 4.0.6a 13623
+    CMSG_DESTROYITEM                                 = 0x0B8A8, // 4.0.6a 13623
     SMSG_INVENTORY_CHANGE_FAILURE                    = 0x0AFCC, // 4.0.6a 13623
     SMSG_OPEN_CONTAINER                              = 0x01C5F, //
     CMSG_INSPECT                                     = 0x078A8, // 4.0.6a 13623
@@ -540,7 +540,7 @@ enum Opcodes
     CMSG_UNLEARN_TALENTS                             = 0x10098, //
     SMSG_GAMEOBJECT_SPAWN_ANIM_OBSOLETE              = 0x10099, //
     SMSG_GAMEOBJECT_DESPAWN_ANIM                     = 0x0BFA8, // 4.0.6a 13623
-    MSG_CORPSE_QUERY                                 = 0x0F388, // 4.0.6a 13623
+    MSG_CORPSE_QUERY                                 = 0x0E0C8, // 4.0.6a 13623
     CMSG_GMTICKET_DELETETICKET                       = 0x0FBE4, // 4.0.6a 13623
     SMSG_GMTICKET_DELETETICKET                       = 0x01656, //
     SMSG_CHAT_WRONG_FACTION                          = 0x0C55F, //
@@ -612,7 +612,7 @@ enum Opcodes
     SMSG_SET_FLAT_SPELL_MODIFIER                     = 0x02BC8, // 4.0.6a 13623
     SMSG_SET_PCT_SPELL_MODIFIER                      = 0x0A7E8, // 4.0.6a 13623
     CMSG_SET_AMMO                                    = 0x100BF, //
-    SMSG_CORPSE_RECLAIM_DELAY                        = 0x100C0, //
+    SMSG_CORPSE_RECLAIM_DELAY                        = 0x031C4, // 4.0.6a 13623
     CMSG_SET_ACTIVE_MOVER                            = 0x06CA0, // 4.0.6a 13623
     CMSG_PET_CANCEL_AURA                             = 0x0F6C0, // 4.0.6a 13623
     CMSG_PLAYER_AI_CHEAT                             = 0x100C2, //
@@ -660,8 +660,8 @@ enum Opcodes
     SMSG_MEETINGSTONE_MEMBER_ADDED                   = 0x0F77C, // 4.0.6a 13623
     CMSG_GMTICKETSYSTEM_TOGGLE                       = 0x100D7, //
     CMSG_CANCEL_GROWTH_AURA                          = 0x100D8, //
-    SMSG_CANCEL_AUTO_REPEAT                          = 0x0ECC4, // 
-    SMSG_STANDSTATE_UPDATE                           = 0x0CD55, //
+    SMSG_CANCEL_AUTO_REPEAT                          = 0x03DE0, // 4.0.6a 13623
+    SMSG_STANDSTATE_UPDATE                           = 0x0E6A8, // 4.0.6a 13623
     SMSG_LOOT_ALL_PASSED                             = 0x06AC4, // 4.0.6a 13623
     SMSG_LOOT_ROLL_WON                               = 0x06280, // 4.0.6a 13623
     CMSG_LOOT_ROLL                                   = 0x0BDA8, // 4.0.6a 13623
@@ -730,7 +730,7 @@ enum Opcodes
     MSG_PVP_LOG_DATA                                 = 0x100FA, //
     CMSG_LEAVE_BATTLEFIELD                           = 0x07757, //
     CMSG_AREA_SPIRIT_HEALER_QUERY                    = 0x0A6C0, // 4.0.6a 13623
-    CMSG_AREA_SPIRIT_HEALER_QUEUE                    = 0x0F388, // 4.0.6a 13623
+    CMSG_AREA_SPIRIT_HEALER_QUEUE                    = 0x0E0C8, // 4.0.6a 13623
     SMSG_AREA_SPIRIT_HEALER_TIME                     = 0x0A457, //
     CMSG_GM_UNTEACH                                  = 0x100FD, //
     SMSG_WARDEN_DATA                                 = 0x0F8A0, // 4.0.6a 13623
@@ -879,9 +879,9 @@ enum Opcodes
     CMSG_CANCEL_MOUNT_AURA                           = 0x0CE5E, //
     SMSG_ARENA_ERROR                                 = 0x02FEC, // 4.0.6a 13623
     MSG_INSPECT_ARENA_TEAMS                          = 0x00E93, //
-    SMSG_DEATH_RELEASE_LOC                           = 0x1014A, //
+    SMSG_DEATH_RELEASE_LOC                           = 0x033C8, // 4.0.6a 13623
     CMSG_CANCEL_TEMP_ENCHANTMENT                     = 0x0E484, // 4.0.6a 13623
-    SMSG_FORCED_DEATH_UPDATE                         = 0x1014C, //
+    SMSG_FORCED_DEATH_UPDATE                         = 0x0FFE8, // 4.0.6a 13623
     CMSG_CHEAT_SET_HONOR_CURRENCY                    = 0x1014D, //
     CMSG_CHEAT_SET_ARENA_CURRENCY                    = 0x1014E, //
     MSG_MOVE_SET_FLIGHT_SPEED_CHEAT                  = 0x1014F, //
@@ -932,7 +932,7 @@ enum Opcodes
     SMSG_SPELL_CHANCE_PROC_LOG                       = 0x1016E, //
     CMSG_MOVE_SET_RUN_SPEED                          = 0x1016F, //
     SMSG_DISMOUNT                                    = 0x03CC4, // 4.0.6a 13623
-    MSG_MOVE_UPDATE_CAN_FLY                          = 0x025e0, // 4.0.6a 13623
+    MSG_MOVE_UPDATE_CAN_FLY                          = 0x025E0, // 4.0.6a 13623
     MSG_RAID_READY_CHECK_CONFIRM                     = 0x0A2AC, // 4.0.6a 13623
     CMSG_VOICE_SESSION_ENABLE                        = 0x0FEA4, // 4.0.6a 13623
     SMSG_VOICE_SESSION_ENABLE                        = 0x10170, //
