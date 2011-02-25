@@ -184,7 +184,7 @@ enum Opcodes
     SMSG_READ_ITEM_OK                                = 0x0A988, // 4.0.6a 13623
     SMSG_READ_ITEM_FAILED                            = 0x0A4EC, // 4.0.6a 13623
     SMSG_ITEM_COOLDOWN                               = 0x06CC8, // 4.0.6a 13623
-    CMSG_GAMEOBJ_USE                                 = 0x029EC, // 4.0.6a 13623
+    CMSG_GAMEOBJ_USE                                 = 0x029E4, // 4.0.6a 13623
     CMSG_DESTROY_ITEMS                               = 0x1001C, //
     SMSG_GAMEOBJECT_CUSTOM_ANIM                      = 0x02E8C, // 4.0.6a 13623 
     CMSG_AREATRIGGER                                 = 0x0ADA8, // 4.0.6a 13623
