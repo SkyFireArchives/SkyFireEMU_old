@@ -241,7 +241,7 @@ enum Opcodes
     CMSG_FORCE_SWIM_SPEED_CHANGE_ACK                 = 0x0B1A0, // 4.0.6a 13623
     SMSG_FORCE_MOVE_ROOT                             = 0x02F88, // 4.0.6a 13623
     CMSG_FORCE_MOVE_ROOT_ACK                         = 0x07184, // 4.0.6a 13623
-    SMSG_FORCE_MOVE_UNROOT                           = 0x0F1E4, // 4.0.6a 13623
+    SMSG_FORCE_MOVE_UNROOT                           = 0x030A0, // 4.0.6a 13623
     CMSG_FORCE_MOVE_UNROOT_ACK                       = 0x07FA8, // 4.0.6a 13623
     MSG_MOVE_ROOT                                    = 0x0ABA8, // 4.0.6a 13623
     MSG_MOVE_UNROOT                                  = 0x02088, // 4.0.6a 13623
@@ -353,7 +353,7 @@ enum Opcodes
     SMSG_BINDZONEREPLY                               = 0x0ACAC, // 4.0.6a 13623
     SMSG_PLAYERBOUND                                 = 0x06BCC, // 4.0.6a 13623
     SMSG_CLIENT_CONTROL_UPDATE                       = 0x03C84, // 4.0.6a 13623
-    CMSG_REPOP_REQUEST                               = 0x0A9E8, // 4.0.6a 13623
+    CMSG_REPOP_REQUEST                               = 0x0A9E4, // 4.0.6a 13623
     SMSG_RESURRECT_REQUEST                           = 0x022A4, // 4.0.6a 13623
     CMSG_RESURRECT_RESPONSE                          = 0x0EA84, // 4.0.6a 13623
     CMSG_LOOT                                        = 0x0FCEC, // 4.0.6a 13623
@@ -479,9 +479,9 @@ enum Opcodes
     SMSG_RESISTLOG                                   = 0x10084, //
     SMSG_ENCHANTMENTLOG                              = 0x0F5AC, // 4.0.6a 13623
     CMSG_SET_SKILL_CHEAT                             = 0x10085, //
-    SMSG_START_MIRROR_TIMER                          = 0x0A68C, // 4.0.6a 13623
+    SMSG_START_MIRROR_TIMER                          = 0x0BDA8, // 4.0.6a 13623
     SMSG_PAUSE_MIRROR_TIMER                          = 0x021EC, // 4.0.6a 13623
-    SMSG_STOP_MIRROR_TIMER                           = 0x0B4A8, // 4.0.6a 13623
+    SMSG_STOP_MIRROR_TIMER                           = 0x0A68C, // 4.0.6a 13623
     CMSG_PING                                        = 0x0064E, // 4.0.6a 13623
     SMSG_PONG                                        = 0x0B000, //
     SMSG_CLEAR_COOLDOWN                              = 0x036CC, // 4.0.6a 13623
