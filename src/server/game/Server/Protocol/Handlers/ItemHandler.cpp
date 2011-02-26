@@ -772,7 +772,10 @@ void WorldSession::SendListInventory(uint64 vendorguid)
     uint8 numitems = vItems->GetItemCount();
     uint8 count = 0;
 
-    WorldPacket data(SMSG_LIST_INVENTORY, (8+1+numitems*8*4));
+	// Hack Fix	
+	WorldPacket data(SMSG_MULTIPLE_PACKETS, (8+1+numitems*9*4+1*numitems+2));
+	data << uint16(SMSG_LIST_INVENTORY);
+	//WorldPacket data(SMSG_LIST_INVENTORY, (8+1+numitems*8*4));
     data << uint64(vendorguid);
 
     size_t count_pos = data.wpos();

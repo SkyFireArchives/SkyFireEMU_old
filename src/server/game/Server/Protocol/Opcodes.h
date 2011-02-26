@@ -354,7 +354,7 @@ enum Opcodes
     SMSG_PLAYERBOUND                                 = 0x06BCC, // 4.0.6a 13623
     SMSG_CLIENT_CONTROL_UPDATE                       = 0x03C84, // 4.0.6a 13623
     CMSG_REPOP_REQUEST                               = 0x0A9E4, // 4.0.6a 13623
-    SMSG_RESURRECT_REQUEST                           = 0x022A4, // 4.0.6a 13623
+    SMSG_RESURRECT_REQUEST                           = 0x0F3A3, // 4.0.6a 13623
     CMSG_RESURRECT_RESPONSE                          = 0x0EA84, // 4.0.6a 13623
     CMSG_LOOT                                        = 0x0FCEC, // 4.0.6a 13623
     CMSG_LOOT_MONEY                                  = 0x079E0, // 4.0.6a 13623
@@ -431,16 +431,16 @@ enum Opcodes
     CMSG_TAXICLEARALLNODES                           = 0x1006C, //
     CMSG_TAXIENABLEALLNODES                          = 0x1006D, //
     CMSG_TAXISHOWNODES                               = 0x1006E, //
-    SMSG_SHOWTAXINODES                               = 0x0D654, //
+    SMSG_SHOWTAXINODES                               = 0x0D654, // 4.0.6a 13623
     CMSG_TAXINODE_STATUS_QUERY                       = 0x0A1EC, // 4.0.6a 13623
     SMSG_TAXINODE_STATUS                             = 0x06F76, //
-    CMSG_TAXIQUERYAVAILABLENODES                     = 0x0BE8E, // 4.0.6a 13623
+    CMSG_TAXIQUERYAVAILABLENODES                     = 0x0B8E8, // 4.0.6a 13623
     CMSG_ACTIVATETAXI                                = 0x039A4, // 4.0.6a 13623
     SMSG_ACTIVATETAXIREPLY                           = 0x06F7C, //
     SMSG_NEW_TAXI_PATH                               = 0x0AE5E, //
     CMSG_TRAINER_LIST                                = 0x0E5AC, // 4.0.6a 13623
-    SMSG_TRAINER_LIST                                = 0x06DEC, // 4.0.6a 13623
-    CMSG_TRAINER_BUY_SPELL                           = 0x09754, //
+    SMSG_TRAINER_LIST                                = 0x0BBE0, // 4.0.6a 13623
+    CMSG_TRAINER_BUY_SPELL                           = 0x0FDC8, //
     SMSG_TRAINER_BUY_SUCCEEDED                       = 0x10072, //
     SMSG_TRAINER_BUY_FAILED                          = 0x0257E, //
     CMSG_BINDER_ACTIVATE                             = 0x0A48C, // 4.0.6a 13623
@@ -550,7 +550,7 @@ enum Opcodes
     SMSG_QUEST_FORCE_REMOVED                         = 0x034E8, // 4.0.6a 13623
     CMSG_SKILL_BUY_STEP                              = 0x1009E, //
     CMSG_SKILL_BUY_RANK                              = 0x1009F, //
-    SMSG_SPIRIT_HEALER_CONFIRM                       = 0x07C57, //
+    SMSG_SPIRIT_HEALER_CONFIRM                       = 0x0B9C0, // 4.0.6a 13623
     CMSG_CHARACTER_POINT_CHEAT                       = 0x100A0, //
     SMSG_GOSSIP_POI                                  = 0x0B9AC, // 4.0.6a 13623
     CMSG_CHAT_IGNORED                                = 0x0A78C, // 4.0.6a 13623
@@ -622,7 +622,7 @@ enum Opcodes
     SMSG_STABLE_RESULT                               = 0x0EACC, // 4.0.6a 13623
     CMSG_STABLE_REVIVE_PET                           = 0x100C7, //
     CMSG_STABLE_CHANGE_SLOT                          = 0x00237, //
-    MSG_QUEST_PUSH_RESULT                            = 0x0B657, //
+    MSG_QUEST_PUSH_RESULT                            = 0x022A4, // 4.0.6a 13623
     SMSG_PLAY_MUSIC                                  = 0x09C7F, //
     SMSG_PLAY_OBJECT_SOUND                           = 0x07DA0, // 4.0.6a 13623
     CMSG_REQUEST_PET_INFO                            = 0x0EAE4, // 4.0.6a 13623
