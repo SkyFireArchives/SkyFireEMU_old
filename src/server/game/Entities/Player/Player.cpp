@@ -8803,7 +8803,9 @@ void Player::SendNotifyLootMoneyRemoved()
 
 void Player::SendNotifyLootItemRemoved(uint8 lootSlot)
 {
-    WorldPacket data(SMSG_LOOT_REMOVED, 1);
+    WorldPacket data(SMSG_MULTIPLE_PACKETS, 1+2);
+	//WorldPacket data(SMSG_LOOT_REMOVED, 1);
+	data << uint16(SMSG_LOOT_REMOVED);
     data << uint8(lootSlot);
     GetSession()->SendPacket(&data);
 }
