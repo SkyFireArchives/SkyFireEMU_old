@@ -286,7 +286,7 @@ enum Opcodes
     CMSG_INSPECT                                     = 0x078A8, // 4.0.6a 13623
     SMSG_INSPECT                                     = 0x07AC8, // 
     CMSG_INITIATE_TRADE                              = 0x00411, // 4.0.6a 13623
-    CMSG_BEGIN_TRADE                                 = 0x1004B, //
+    CMSG_BEGIN_TRADE                                 = 0x00413, // 4.0.6a 13623
     CMSG_BUSY_TRADE                                  = 0x1004C, //
     CMSG_IGNORE_TRADE                                = 0x1004D, //
     CMSG_ACCEPT_TRADE                                = 0x1004E, //
@@ -446,8 +446,8 @@ enum Opcodes
     CMSG_BINDER_ACTIVATE                             = 0x0A48C, // 4.0.6a 13623
     SMSG_PLAYERBINDERROR                             = 0x0765C, //
     CMSG_BANKER_ACTIVATE                             = 0x0E7E0, // 4.0.6a 13623
-    SMSG_SHOW_BANK                                   = 0x10074, //
-    CMSG_BUY_BANK_SLOT                               = 0x06C5F, //
+    SMSG_SHOW_BANK                                   = 0x027A4, // 4.0.6a 13623
+    CMSG_BUY_BANK_SLOT                               = 0x02BA0, // 4.0.6a 13623
     SMSG_BUY_BANK_SLOT_RESULT                        = 0x10076, //
     CMSG_PETITION_SHOWLIST                           = 0x0FCC4, // 4.0.6a 13623
     SMSG_PETITION_SHOWLIST                           = 0x05E5C, //
@@ -995,7 +995,7 @@ enum Opcodes
     CMSG_GUILD_BANK_SWAP_ITEMS                       = 0x0A8C4, // 4.0.6a 13623
     CMSG_GUILD_BANK_BUY_TAB                          = 0x10190, //
     CMSG_GUILD_BANK_UPDATE_TAB                       = 0x10191, //
-    CMSG_GUILD_BANK_DEPOSIT_MONEY                    = 0x0157C, //
+    CMSG_GUILD_BANK_DEPOSIT_MONEY                    = 0x06FE8, // 4.0.6a 13623
     CMSG_GUILD_BANK_WITHDRAW_MONEY                   = 0x10193, //
     MSG_GUILD_BANK_LOG_QUERY                         = 0x0F584, // 4.0.6a 13623
     CMSG_SET_CHANNEL_WATCH                           = 0x07FE0, // 4.0.6a 13623
