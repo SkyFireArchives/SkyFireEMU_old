@@ -827,7 +827,7 @@ enum Opcodes
     CMSG_MOVE_FLIGHT_ACK                             = 0x0A3C8, // 4.0.6a 13623
     MSG_MOVE_START_SWIM_CHEAT                        = 0x02755, //
     MSG_MOVE_STOP_SWIM_CHEAT                         = 0x03D54, //
-    SMSG_MOVE_SET_CAN_FLY                            = 0x025E0, // 4.0.6a 13623
+    SMSG_MOVE_SET_CAN_FLY                            = 0x00C5F, //
     SMSG_MOVE_UNSET_CAN_FLY                          = 0x0DC57, //
     CMSG_MOVE_SET_CAN_FLY_ACK                        = 0x0FCAC, // 4.0.6a 13623
     CMSG_MOVE_SET_FLY                                = 0x0E0E0, // 4.0.6a 13623
