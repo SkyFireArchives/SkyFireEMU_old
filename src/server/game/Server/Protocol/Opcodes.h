@@ -738,7 +738,7 @@ enum Opcodes
     SMSG_GROUP_JOINED_BATTLEGROUND                   = 0x100FE, //
     MSG_BATTLEGROUND_PLAYER_POSITIONS                = 0x100FF, //
     CMSG_PET_STOP_ATTACK                             = 0x10100, //
-    SMSG_BINDER_CONFIRM                              = 0x0BFC4, // 4.0.6a 13623
+    SMSG_BINDER_CONFIRM                              = 0x033C4, // 4.0.6a 13623
     SMSG_BATTLEGROUND_PLAYER_JOINED                  = 0x10101, //
     SMSG_BATTLEGROUND_PLAYER_LEFT                    = 0x10102, //
     CMSG_BATTLEMASTER_JOIN                           = 0x00137, //
@@ -1188,7 +1188,7 @@ enum Opcodes
     SMSG_CLIENTCACHE_VERSION                         = 0x02EC4, // 4.0.6a 13623
     SMSG_ITEM_REFUND_INFO_RESPONSE                   = 0x0095E, // 
     CMSG_ITEM_REFUND_INFO                            = 0x0ED74, //
-    CMSG_ITEM_REFUND                                 = 0x00F55, //
+    CMSG_ITEM_REFUND                                 = 0x0A4C4, // 4.0.6a 13623
     SMSG_ITEM_REFUND_RESULT                          = 0x0441E, // 
     CMSG_CORPSE_MAP_POSITION_QUERY                   = 0x023CC, // 4.0.6a 13623
     SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE          = 0x1020A, //
