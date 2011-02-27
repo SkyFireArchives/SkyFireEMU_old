@@ -648,7 +648,7 @@ enum Opcodes
     SMSG_AUCTION_REMOVED_NOTIFICATION                = 0x00E5E, //
     CMSG_GROUP_RAID_CONVERT                          = 0x0628C, // 4.0.6a 13623
     CMSG_GROUP_ASSISTANT_LEADER                      = 0x03F84, // 4.0.6a 13623
-    CMSG_BUYBACK_ITEM                                = 0x0A4CA, // 4.0.6a 13623
+    CMSG_BUYBACK_ITEM                                = 0x0A4C4, // 4.0.6a 13623
     SMSG_SERVER_MESSAGE                              = 0x078C0, // 4.0.6a 13623
     CMSG_SET_SAVED_INSTANCE_EXTEND                   = 0x02588, // 4.0.6a 13623
     SMSG_LFG_OFFER_CONTINUE                          = 0x063EC, // 4.0.6a 13623
@@ -1188,7 +1188,7 @@ enum Opcodes
     SMSG_CLIENTCACHE_VERSION                         = 0x02EC4, // 4.0.6a 13623
     SMSG_ITEM_REFUND_INFO_RESPONSE                   = 0x0095E, // 
     CMSG_ITEM_REFUND_INFO                            = 0x0ED74, //
-    CMSG_ITEM_REFUND                                 = 0x0A4C4, // 4.0.6a 13623
+    CMSG_ITEM_REFUND                                 = 0x062E8, // 4.0.6a 13623
     SMSG_ITEM_REFUND_RESULT                          = 0x0441E, // 
     CMSG_CORPSE_MAP_POSITION_QUERY                   = 0x023CC, // 4.0.6a 13623
     SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE          = 0x1020A, //
