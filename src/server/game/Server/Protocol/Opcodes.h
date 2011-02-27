@@ -565,7 +565,7 @@ enum Opcodes
     CMSG_CLEAR_EXPLORATION                           = 0x100A9, //
     CMSG_SEND_MAIL                                   = 0x02DEC, // 4.0.6a 13623
     SMSG_SEND_MAIL_RESULT                            = 0x0E5C0, // 4.0.6a 13623
-    CMSG_GET_MAIL_LIST                               = 0x023A0, // 4.0.6a 13623
+    CMSG_GET_MAIL_LIST                               = 0x0B284, // 4.0.6a 13623
     SMSG_MAIL_LIST_RESULT                            = 0x0F1C8, // 4.0.6a 13623
     CMSG_BATTLEFIELD_LIST                            = 0x00093, // 4.0.6a 13623
     SMSG_BATTLEFIELD_LIST                            = 0x03858, //
@@ -578,10 +578,10 @@ enum Opcodes
     SMSG_ITEM_TEXT_QUERY_RESPONSE                    = 0x077C8, // 4.0.6a 13623
     CMSG_MAIL_TAKE_MONEY                             = 0x0E8EC, // 4.0.6a 13623
     CMSG_MAIL_TAKE_ITEM                              = 0x062A8, // 4.0.6a 13623
-    CMSG_MAIL_MARK_AS_READ                           = 0x100B2, //
-    CMSG_MAIL_RETURN_TO_SENDER                       = 0x0FAE4, // 4.0.6a 13623
+    CMSG_MAIL_MARK_AS_READ                           = 0x0E8C0, // 4.0.6a 13623
+    CMSG_MAIL_RETURN_TO_SENDER                       = 0x065A4, // 4.0.6a 13623
     CMSG_MAIL_DELETE                                 = 0x07DE4, // 4.0.6a 13623
-    CMSG_MAIL_CREATE_TEXT_ITEM                       = 0x0555D, //
+    CMSG_MAIL_CREATE_TEXT_ITEM                       = 0x0FAE4, // 4.0.6a 13623
     SMSG_SPELLLOGMISS                                = 0x0B4A4, // 4.0.6a 13623
     SMSG_SPELLLOGEXECUTE                             = 0x0B6E8, // 4.0.6a 13623
     SMSG_DEBUGAURAPROC                               = 0x100B6, //
@@ -827,7 +827,7 @@ enum Opcodes
     CMSG_MOVE_FLIGHT_ACK                             = 0x0A3C8, // 4.0.6a 13623
     MSG_MOVE_START_SWIM_CHEAT                        = 0x02755, //
     MSG_MOVE_STOP_SWIM_CHEAT                         = 0x03D54, //
-    SMSG_MOVE_SET_CAN_FLY                            = 0x00C5F, //
+    SMSG_MOVE_SET_CAN_FLY                            = 0x03084, // 4.0.6a 13623
     SMSG_MOVE_UNSET_CAN_FLY                          = 0x0DC57, //
     CMSG_MOVE_SET_CAN_FLY_ACK                        = 0x0FCAC, // 4.0.6a 13623
     CMSG_MOVE_SET_FLY                                = 0x0E0E0, // 4.0.6a 13623
