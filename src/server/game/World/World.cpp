@@ -972,7 +972,7 @@ void World::LoadConfigSettings(bool reload)
             sLog.outError("Expansion option can't be changed at worldserver.conf reload, using current value (%u).",m_int_configs[CONFIG_EXPANSION]);
     }
     else
-        m_int_configs[CONFIG_EXPANSION] = sConfig.GetIntDefault("Expansion",1);
+        m_int_configs[CONFIG_EXPANSION] = sConfig.GetIntDefault("Expansion",3);
 
     m_int_configs[CONFIG_CHATFLOOD_MESSAGE_COUNT] = sConfig.GetIntDefault("ChatFlood.MessageCount",10);
     m_int_configs[CONFIG_CHATFLOOD_MESSAGE_DELAY] = sConfig.GetIntDefault("ChatFlood.MessageDelay",1);
