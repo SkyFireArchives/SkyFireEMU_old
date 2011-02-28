@@ -121,19 +121,6 @@ enum SpellNotifyPushType
     PUSH_CHAIN,
 };
 
-enum SpellLogType
-{
-    SPELL_LOG_NON_MELEE_DAMAGE          = 0x9D7D,
-    SPELL_LOG_EXECUTE                   = 0x2476,
-    SPELL_LOG_ENERGIZE                  = 0x3C56,
-    SPELL_LOG_HEAL                      = 0x8C5D,
-    SPELL_LOG_MISS                      = 0x855E,
-    SPELL_LOG_PERIODIC_AURA             = 0xF557,
-    SPELL_LOG_REMOVE_1                  = 0xED7E,       // currently unused
-    SPELL_LOG_REMOVE_2                  = 0x9F74,       // currently unused
-    SPELL_LOG_REMOVE_3                  = 0xD557,       // currently unused
-};
-
 bool IsQuestTameSpell(uint32 spellId);
 
 namespace Trinity
