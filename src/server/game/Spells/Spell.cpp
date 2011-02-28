@@ -3907,8 +3907,8 @@ void Spell::SendSpellStart()
     //sLog.outDebug("Sending SMSG_SPELL_START id=%u", m_spellInfo->Id);
 
     uint32 castFlags = CAST_FLAG_UNKNOWN_2;
-    if (m_spellInfo->Attributes & SPELL_ATTR_REQ_AMMO)
-        castFlags |= CAST_FLAG_AMMO;
+    //if (m_spellInfo->Attributes & SPELL_ATTR_REQ_AMMO)
+    //    castFlags |= CAST_FLAG_AMMO;
     if ((m_caster->GetTypeId() == TYPEID_PLAYER ||
         (m_caster->GetTypeId() == TYPEID_UNIT && m_caster->ToCreature()->isPet()))
          && m_spellInfo->powerType != POWER_HEALTH)
@@ -3924,7 +3924,7 @@ void Spell::SendSpellStart()
         data.append(m_caster->GetPackGUID());
 
     data.append(m_caster->GetPackGUID());
-    data << uint8(m_cast_count);                            // pending spell cast?
+    data << uint16(m_cast_count);                            // pending spell cast?
     data << uint32(m_spellInfo->Id);                        // spellId
     data << uint32(castFlags);                              // cast flags
     data << uint32(m_timer);                                // delay?
