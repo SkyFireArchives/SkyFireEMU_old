@@ -396,7 +396,7 @@ enum Opcodes
     CMSG_QUESTGIVER_STATUS_QUERY                     = 0x0FDEC, // 4.0.6a 13623
     SMSG_QUESTGIVER_STATUS                           = 0x07988, // 4.0.6a 13623
     CMSG_QUESTGIVER_HELLO                            = 0x036AC, // 4.0.6a 13623
-    SMSG_QUESTGIVER_QUEST_LIST                       = 0x0BBEC, // 4.0.6a 13623
+    SMSG_QUESTGIVER_QUEST_LIST                       = 0x02B88, // 4.0.6a 13623
     CMSG_QUESTGIVER_QUERY_QUEST                      = 0x02CC0, // 4.0.6a 13623
     CMSG_QUESTGIVER_QUEST_AUTOLAUNCH                 = 0x10064, //
     SMSG_QUESTGIVER_QUEST_DETAILS                    = 0x068A0, // 4.0.6a 13623
@@ -412,7 +412,7 @@ enum Opcodes
     SMSG_QUESTGIVER_QUEST_FAILED                     = 0x0A084, // 4.0.6a 13623
     CMSG_QUESTLOG_SWAP_QUEST                         = 0x10068, //
     CMSG_QUESTLOG_REMOVE_QUEST                       = 0x0EDA8, // 4.0.6a 13623
-    SMSG_QUESTLOG_FULL                               = 0x061EC, // 4.0.6a 13623
+    SMSG_QUESTLOG_FULL                               = 0x0618C, // 4.0.6a 13623
     SMSG_QUESTUPDATE_FAILED                          = 0x0DC5D, //
     SMSG_QUESTUPDATE_FAILEDTIMER                     = 0x03F5D, //
     SMSG_QUESTUPDATE_COMPLETE                        = 0x04575, //
@@ -565,7 +565,7 @@ enum Opcodes
     CMSG_CLEAR_EXPLORATION                           = 0x100A9, //
     CMSG_SEND_MAIL                                   = 0x02DEC, // 4.0.6a 13623
     SMSG_SEND_MAIL_RESULT                            = 0x0E5C0, // 4.0.6a 13623
-    CMSG_GET_MAIL_LIST                               = 0x023A0, // 4.0.6a 13623
+    CMSG_GET_MAIL_LIST                               = 0x0B284, // 4.0.6a 13623
     SMSG_MAIL_LIST_RESULT                            = 0x0F1C8, // 4.0.6a 13623
     CMSG_BATTLEFIELD_LIST                            = 0x00093, // 4.0.6a 13623
     SMSG_BATTLEFIELD_LIST                            = 0x03858, //
@@ -578,10 +578,10 @@ enum Opcodes
     SMSG_ITEM_TEXT_QUERY_RESPONSE                    = 0x077C8, // 4.0.6a 13623
     CMSG_MAIL_TAKE_MONEY                             = 0x0E8EC, // 4.0.6a 13623
     CMSG_MAIL_TAKE_ITEM                              = 0x062A8, // 4.0.6a 13623
-    CMSG_MAIL_MARK_AS_READ                           = 0x100B2, //
-    CMSG_MAIL_RETURN_TO_SENDER                       = 0x0FAE4, // 4.0.6a 13623
+    CMSG_MAIL_MARK_AS_READ                           = 0x0E8C0, // 4.0.6a 13623
+    CMSG_MAIL_RETURN_TO_SENDER                       = 0x065A4, // 4.0.6a 13623
     CMSG_MAIL_DELETE                                 = 0x07DE4, // 4.0.6a 13623
-    CMSG_MAIL_CREATE_TEXT_ITEM                       = 0x0555D, //
+    CMSG_MAIL_CREATE_TEXT_ITEM                       = 0x0FAE4, // 4.0.6a 13623
     SMSG_SPELLLOGMISS                                = 0x0B4A4, // 4.0.6a 13623
     SMSG_SPELLLOGEXECUTE                             = 0x0B6E8, // 4.0.6a 13623
     SMSG_DEBUGAURAPROC                               = 0x100B6, //
@@ -648,7 +648,7 @@ enum Opcodes
     SMSG_AUCTION_REMOVED_NOTIFICATION                = 0x00E5E, //
     CMSG_GROUP_RAID_CONVERT                          = 0x0628C, // 4.0.6a 13623
     CMSG_GROUP_ASSISTANT_LEADER                      = 0x03F84, // 4.0.6a 13623
-    CMSG_BUYBACK_ITEM                                = 0x0A4CA, // 4.0.6a 13623
+    CMSG_BUYBACK_ITEM                                = 0x0A4C4, // 4.0.6a 13623
     SMSG_SERVER_MESSAGE                              = 0x078C0, // 4.0.6a 13623
     CMSG_SET_SAVED_INSTANCE_EXTEND                   = 0x02588, // 4.0.6a 13623
     SMSG_LFG_OFFER_CONTINUE                          = 0x063EC, // 4.0.6a 13623
@@ -738,7 +738,7 @@ enum Opcodes
     SMSG_GROUP_JOINED_BATTLEGROUND                   = 0x100FE, //
     MSG_BATTLEGROUND_PLAYER_POSITIONS                = 0x100FF, //
     CMSG_PET_STOP_ATTACK                             = 0x10100, //
-    SMSG_BINDER_CONFIRM                              = 0x0BFC4, // 4.0.6a 13623
+    SMSG_BINDER_CONFIRM                              = 0x033C4, // 4.0.6a 13623
     SMSG_BATTLEGROUND_PLAYER_JOINED                  = 0x10101, //
     SMSG_BATTLEGROUND_PLAYER_LEFT                    = 0x10102, //
     CMSG_BATTLEMASTER_JOIN                           = 0x00137, //
@@ -827,7 +827,7 @@ enum Opcodes
     CMSG_MOVE_FLIGHT_ACK                             = 0x0A3C8, // 4.0.6a 13623
     MSG_MOVE_START_SWIM_CHEAT                        = 0x02755, //
     MSG_MOVE_STOP_SWIM_CHEAT                         = 0x03D54, //
-    SMSG_MOVE_SET_CAN_FLY                            = 0x00C5F, //
+    SMSG_MOVE_SET_CAN_FLY                            = 0x03084, // 4.0.6a 13623
     SMSG_MOVE_UNSET_CAN_FLY                          = 0x0DC57, //
     CMSG_MOVE_SET_CAN_FLY_ACK                        = 0x0FCAC, // 4.0.6a 13623
     CMSG_MOVE_SET_FLY                                = 0x0E0E0, // 4.0.6a 13623
@@ -1188,7 +1188,7 @@ enum Opcodes
     SMSG_CLIENTCACHE_VERSION                         = 0x02EC4, // 4.0.6a 13623
     SMSG_ITEM_REFUND_INFO_RESPONSE                   = 0x0095E, // 
     CMSG_ITEM_REFUND_INFO                            = 0x0ED74, //
-    CMSG_ITEM_REFUND                                 = 0x00F55, //
+    CMSG_ITEM_REFUND                                 = 0x062E8, // 4.0.6a 13623
     SMSG_ITEM_REFUND_RESULT                          = 0x0441E, // 
     CMSG_CORPSE_MAP_POSITION_QUERY                   = 0x023CC, // 4.0.6a 13623
     SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE          = 0x1020A, //
