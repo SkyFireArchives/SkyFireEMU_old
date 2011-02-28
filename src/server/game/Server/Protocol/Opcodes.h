@@ -1171,7 +1171,7 @@ enum Opcodes
     SMSG_PET_LEARNED_SPELL                           = 0x0B3C4, // 4.0.6a 13623 
     SMSG_PET_REMOVED_SPELL                           = 0x0F28C, // 4.0.6a 13623
     CMSG_CHANGE_SEATS_ON_CONTROLLED_VEHICLE          = 0x0E988, // 4.0.6a 13623
-    CMSG_HEARTH_AND_RESURRECT                        = 0x07080, //
+    CMSG_HEARTH_AND_RESURRECT                        = 0x10009, //
     SMSG_ON_CANCEL_EXPECTED_RIDE_VEHICLE_AURA        = 0x03380, // 4.0.6a 13623
     SMSG_CRITERIA_DELETED                            = 0x101F4, //
     SMSG_ACHIEVEMENT_DELETED                         = 0x101F5, //
