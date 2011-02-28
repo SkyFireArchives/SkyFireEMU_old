@@ -396,7 +396,7 @@ enum Opcodes
     CMSG_QUESTGIVER_STATUS_QUERY                     = 0x0FDEC, // 4.0.6a 13623
     SMSG_QUESTGIVER_STATUS                           = 0x07988, // 4.0.6a 13623
     CMSG_QUESTGIVER_HELLO                            = 0x036AC, // 4.0.6a 13623
-    SMSG_QUESTGIVER_QUEST_LIST                       = 0x0BBEC, // 4.0.6a 13623
+    SMSG_QUESTGIVER_QUEST_LIST                       = 0x02B88, // 4.0.6a 13623
     CMSG_QUESTGIVER_QUERY_QUEST                      = 0x02CC0, // 4.0.6a 13623
     CMSG_QUESTGIVER_QUEST_AUTOLAUNCH                 = 0x10064, //
     SMSG_QUESTGIVER_QUEST_DETAILS                    = 0x068A0, // 4.0.6a 13623
@@ -412,7 +412,7 @@ enum Opcodes
     SMSG_QUESTGIVER_QUEST_FAILED                     = 0x0A084, // 4.0.6a 13623
     CMSG_QUESTLOG_SWAP_QUEST                         = 0x10068, //
     CMSG_QUESTLOG_REMOVE_QUEST                       = 0x0EDA8, // 4.0.6a 13623
-    SMSG_QUESTLOG_FULL                               = 0x061EC, // 4.0.6a 13623
+    SMSG_QUESTLOG_FULL                               = 0x0618C, // 4.0.6a 13623
     SMSG_QUESTUPDATE_FAILED                          = 0x0DC5D, //
     SMSG_QUESTUPDATE_FAILEDTIMER                     = 0x03F5D, //
     SMSG_QUESTUPDATE_COMPLETE                        = 0x04575, //
