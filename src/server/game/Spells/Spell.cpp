@@ -3934,8 +3934,8 @@ void Spell::SendSpellStart()
     if (castFlags & CAST_FLAG_POWER_LEFT_SELF)
         data << uint32(m_caster->GetPower((Powers)m_spellInfo->powerType));
 
-    //if (castFlags & CAST_FLAG_AMMO)
-    //    WriteAmmoToPacket(&data);
+    if (castFlags & CAST_FLAG_AMMO)
+        WriteAmmoToPacket(&data);
 
     if (castFlags & CAST_FLAG_UNKNOWN_31)
     {
