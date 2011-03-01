@@ -3934,13 +3934,13 @@ void Spell::SendSpellStart()
     if (castFlags & CAST_FLAG_POWER_LEFT_SELF)
         data << uint32(m_caster->GetPower((Powers)m_spellInfo->powerType));
 
-    if (castFlags & CAST_FLAG_AMMO)
-        WriteAmmoToPacket(&data);
+    //if (castFlags & CAST_FLAG_AMMO)
+    //    WriteAmmoToPacket(&data);
 
-    if (castFlags & CAST_FLAG_UNKNOWN_23)
+    if (castFlags & CAST_FLAG_UNKNOWN_31)
     {
         data << uint32(0);
-        data << uint32(0);
+        data << uint8(0);
     }
 
     m_caster->SendMessageToSet(&data, true);
