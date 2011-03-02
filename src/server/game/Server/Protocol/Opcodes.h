@@ -229,8 +229,8 @@ enum Opcodes
     MSG_MOVE_SET_PITCH                               = 0x0EBA0, // 4.0.6a 13623
     MSG_MOVE_WORLDPORT_ACK                           = 0x02FC0, // 4.0.6a 13623
     SMSG_MONSTER_MOVE                                = 0x0F1A4, // 4.0.6a 13623
-    SMSG_MOVE_WATER_WALK                             = 0x1002A, //
-    SMSG_MOVE_LAND_WALK                              = 0x1002B, //
+    SMSG_MOVE_WATER_WALK                             = 0x02E84, // 4.0.6a 13623
+    SMSG_MOVE_LAND_WALK                              = 0x02084, // 4.0.6a 13623
     MSG_MOVE_SET_RAW_POSITION_ACK                    = 0x026C8, // 4.0.6a 13623
     CMSG_MOVE_SET_RAW_POSITION                       = 0x0F0C8, // 4.0.6a 13623
     SMSG_FORCE_RUN_SPEED_CHANGE                      = 0x0F1CC, // 4.0.6a 13623
@@ -769,8 +769,8 @@ enum Opcodes
     SMSG_SPLINE_MOVE_NORMAL_FALL                     = 0x1010D, //
     SMSG_SPLINE_MOVE_SET_HOVER                       = 0x1010E, //
     SMSG_SPLINE_MOVE_UNSET_HOVER                     = 0x1010F, //
-    SMSG_SPLINE_MOVE_WATER_WALK                      = 0x10110, //
-    SMSG_SPLINE_MOVE_LAND_WALK                       = 0x10111, //
+    SMSG_SPLINE_MOVE_WATER_WALK                      = 0x061C0, // 4.0.6a 13623
+    SMSG_SPLINE_MOVE_LAND_WALK                       = 0x0A7C8, // 4.0.6a 13623
     SMSG_SPLINE_MOVE_START_SWIM                      = 0x10112, //
     SMSG_SPLINE_MOVE_STOP_SWIM                       = 0x10113, //
     SMSG_SPLINE_MOVE_SET_RUN_MODE                    = 0x10114, //
@@ -808,7 +808,7 @@ enum Opcodes
     SMSG_CHAT_PLAYER_AMBIGUOUS                       = 0x03674, //
     MSG_DELAY_GHOST_TELEPORT                         = 0x10127, //
     SMSG_SPELLINSTAKILLLOG                           = 0x061C8, // 4.0.6a 13623
-    SMSG_SPELL_UPDATE_CHAIN_TARGETS                  = 0x06084, // 4.0.6a 13623
+    SMSG_SPELL_UPDATE_CHAIN_TARGETS                  = 0x036A4, // 4.0.6a 13623
     CMSG_CHAT_FILTERED                               = 0x00D5D, //
     SMSG_EXPECTED_SPAM_RECORDS                       = 0x06084, // 4.0.6a 13623
     SMSG_SPELLSTEALLOG                               = 0x09F74, //
@@ -1171,7 +1171,7 @@ enum Opcodes
     SMSG_PET_LEARNED_SPELL                           = 0x0B3C4, // 4.0.6a 13623 
     SMSG_PET_REMOVED_SPELL                           = 0x0F28C, // 4.0.6a 13623
     CMSG_CHANGE_SEATS_ON_CONTROLLED_VEHICLE          = 0x0E988, // 4.0.6a 13623
-    CMSG_HEARTH_AND_RESURRECT                        = 0x07080, //
+    CMSG_HEARTH_AND_RESURRECT                        = 0x10009, //
     SMSG_ON_CANCEL_EXPECTED_RIDE_VEHICLE_AURA        = 0x03380, // 4.0.6a 13623
     SMSG_CRITERIA_DELETED                            = 0x101F4, //
     SMSG_ACHIEVEMENT_DELETED                         = 0x101F5, //
