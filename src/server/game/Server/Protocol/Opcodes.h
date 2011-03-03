@@ -169,7 +169,7 @@ enum Opcodes
     CMSG_CHANNEL_UNMODERATOR                         = 0x00809, // 4.0.6a 13623
     CMSG_CHANNEL_MUTE                                = 0x00023, // 4.0.6a 13623
     CMSG_CHANNEL_UNMUTE                              = 0x00841, // 4.0.6a 13623
-    CMSG_CHANNEL_INVITE                              = 0x00021, // 4.0.6a 13623
+    CMSG_CHANNEL_INVITE                              = 0x00020, // 4.0.6a 13623
     CMSG_CHANNEL_KICK                                = 0x00068, // 4.0.6a 13623
     CMSG_CHANNEL_ROSTER_INFO                         = 0x00069, // 4.0.6a 13623
     CMSG_CHANNEL_BAN                                 = 0x0000A, // 4.0.6a 13623
