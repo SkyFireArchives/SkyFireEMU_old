@@ -694,7 +694,7 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
 
 void AchievementMgr::SendCriteriaUpdate(AchievementCriteriaEntry const* entry, CriteriaProgress const* progress, uint32 timeElapsed, bool timedCompleted)
 {
-    WorldPacket data(SMSG_CRITERIA_UPDATE, 8+4+8);
+    /*WorldPacket data(SMSG_CRITERIA_UPDATE, 8+4+8);
     data << uint32(entry->ID);
 
     // the counter is packed like a packed Guid
@@ -708,7 +708,7 @@ void AchievementMgr::SendCriteriaUpdate(AchievementCriteriaEntry const* entry, C
     data << uint32(secsToTimeBitFields(progress->date));
     data << uint32(timeElapsed);    // time elapsed in seconds
     data << uint32(0);              // unk
-    GetPlayer()->SendDirectMessage(&data);
+    GetPlayer()->SendDirectMessage(&data);*/
 }
 
 /**
@@ -2053,9 +2053,9 @@ void AchievementMgr::CompletedAchievement(AchievementEntry const* achievement, b
 
 void AchievementMgr::SendAllAchievementData()
 {
-    WorldPacket data(SMSG_ALL_ACHIEVEMENT_DATA, m_completedAchievements.size() * 8 + 4 + m_criteriaProgress.size() * 38 + 4);
-    BuildAllDataPacket(&data);
-    GetPlayer()->GetSession()->SendPacket(&data);
+    //WorldPacket data(SMSG_ALL_ACHIEVEMENT_DATA, m_completedAchievements.size() * 8 + 4 + m_criteriaProgress.size() * 38 + 4);
+    //BuildAllDataPacket(&data);
+    //GetPlayer()->GetSession()->SendPacket(&data);
 }
 
 void AchievementMgr::SendRespondInspectAchievements(Player* player)
