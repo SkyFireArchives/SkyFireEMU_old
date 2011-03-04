@@ -509,6 +509,29 @@ public:
     }
 };
 
+/*#####
+# item_tiki_torch
+#####*/
+
+class item_tiki_torch : public ItemScript
+{
+public:
+    item_tiki_torch() : ItemScript("item_tiki_torch") { }
+
+    bool OnUse(Player *pPlayer, Item *pItem, SpellCastTargets const & /*targets*/)
+    {
+        if (player->GetQuestStatus(26357) == QUEST_STATUS_INCOMPLETE)
+
+        if (pPlayer->FindNearestCreature(42704,15))
+            {
+                pPlayer->CastSpell(pPlayer, 79513, true, NULL); 
+                pPlayer->KilledMonsterCredit(42704, 0);
+                return true;
+            }
+        return false;   
+    }
+};
+
 void AddSC_item_scripts()
 {
     new item_only_for_flight;
@@ -525,4 +548,5 @@ void AddSC_item_scripts()
     new item_dehta_trap_smasher;
     new item_trident_of_nazjan;
     new item_captured_frog();
+    new item_tiki_torch();
 }
