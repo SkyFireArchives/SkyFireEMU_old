@@ -231,7 +231,7 @@ enum Opcodes
     SMSG_MONSTER_MOVE                                = 0x0F1A4, // 4.0.6a 13623
     SMSG_MOVE_WATER_WALK                             = 0x02E84, // 4.0.6a 13623
     SMSG_MOVE_LAND_WALK                              = 0x02084, // 4.0.6a 13623
-    MSG_MOVE_SET_RAW_POSITION_ACK                    = 0x026C8, // 4.0.6a 13623
+    MSG_MOVE_SET_RAW_POSITION_ACK                    = 0x0F4A0, // 4.0.6a 13623
     CMSG_MOVE_SET_RAW_POSITION                       = 0x0F0C8, // 4.0.6a 13623
     SMSG_FORCE_RUN_SPEED_CHANGE                      = 0x0F1CC, // 4.0.6a 13623
     CMSG_FORCE_RUN_SPEED_CHANGE_ACK                  = 0x026C8, // 4.0.6a 13623
@@ -373,8 +373,8 @@ enum Opcodes
     SMSG_DUEL_WINNER                                 = 0x079E4, // 4.0.6a 13623
     CMSG_DUEL_ACCEPTED                               = 0x0A688, // 4.0.6a 13623
     CMSG_DUEL_CANCELLED                              = 0x06F8C, // 4.0.6a 13623
-    SMSG_MOUNTRESULT                                 = 0x06E7C, //
-    SMSG_DISMOUNTRESULT                              = 0x0D77D, //
+    SMSG_MOUNTRESULT                                 = 0x02AEC, // 4.0.6a 13623 not sure
+    SMSG_DISMOUNTRESULT                              = 0x0F9C0, // 4.0.6a 13623 not sure
     SMSG_PUREMOUNT_CANCELLED_OBSOLETE                = 0x0054E, // 4.0.6a 13623
     CMSG_MOUNTSPECIAL_ANIM                           = 0x0755D, //
     SMSG_MOUNTSPECIAL_ANIM                           = 0x02388, // 4.0.6a 13623
@@ -431,7 +431,7 @@ enum Opcodes
     CMSG_TAXICLEARALLNODES                           = 0x1006C, //
     CMSG_TAXIENABLEALLNODES                          = 0x1006D, //
     CMSG_TAXISHOWNODES                               = 0x1006E, //
-    SMSG_SHOWTAXINODES                               = 0x02B84, // 4.0.6a 13623
+    SMSG_SHOWTAXINODES                               = 0x07484, // 4.0.6a 13623
     CMSG_TAXINODE_STATUS_QUERY                       = 0x0A1EC, // 4.0.6a 13623
     SMSG_TAXINODE_STATUS                             = 0x06F76, //
     CMSG_TAXIQUERYAVAILABLENODES                     = 0x0B8E8, // 4.0.6a 13623
@@ -823,7 +823,7 @@ enum Opcodes
     MSG_GM_RESETINSTANCELIMIT                        = 0x1012F, //
     SMSG_MOTD                                        = 0x0077C, //
     SMSG_MOVE_SET_FLIGHT                             = 0x0C57F, //
-    SMSG_MOVE_UNSET_FLIGHT                           = 0x10131, //
+    SMSG_MOVE_UNSET_FLIGHT                           = 0x0BDA0, // 4.0.6a 13623   Not sure.
     CMSG_MOVE_FLIGHT_ACK                             = 0x0A3C8, // 4.0.6a 13623
     MSG_MOVE_START_SWIM_CHEAT                        = 0x02755, //
     MSG_MOVE_STOP_SWIM_CHEAT                         = 0x03D54, //
@@ -876,7 +876,7 @@ enum Opcodes
     SMSG_LFG_PARTY_INFO                              = 0x060A0, // 4.0.6a 13623
     SMSG_TITLE_EARNED                                = 0x06C8C, // 4.0.6a 13623
     CMSG_SET_TITLE                                   = 0x0EC8C, // 4.0.6a 13623
-    CMSG_CANCEL_MOUNT_AURA                           = 0x0CE5E, //
+    CMSG_CANCEL_MOUNT_AURA                           = 0x0E5CC, // 4.0.6a 13623  not sure
     SMSG_ARENA_ERROR                                 = 0x02FEC, // 4.0.6a 13623
     MSG_INSPECT_ARENA_TEAMS                          = 0x00E93, //
     SMSG_DEATH_RELEASE_LOC                           = 0x033C8, // 4.0.6a 13623
