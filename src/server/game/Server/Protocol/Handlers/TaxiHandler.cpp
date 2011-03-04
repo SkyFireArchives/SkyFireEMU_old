@@ -61,8 +61,11 @@ void WorldSession::SendTaxiStatus(uint64 guid)
 
     sLog.outDebug("WORLD: current location %u ",curloc);
 
+	//WorldPacket data(SMSG_MULTIPLE_PACKETS, (9 + 50 + 2));           // we guess size
+	//data << uint16(SMSG_LOOT_RESPONSE);
+
     WorldPacket data(SMSG_TAXINODE_STATUS, 9);
-    data << guid;
+	data << guid;
     data << uint8(GetPlayer()->m_taxi.IsTaximaskNodeKnown(curloc) ? 1 : 0);
     SendPacket(&data);
     sLog.outDebug("WORLD: Sent SMSG_TAXINODE_STATUS");
@@ -108,7 +111,8 @@ void WorldSession::SendTaxiMenu(Creature* unit)
 
     sLog.outDebug("WORLD: CMSG_TAXINODE_STATUS_QUERY %u ",curloc);
 
-    WorldPacket data(SMSG_SHOWTAXINODES, (4 + 8 + 4 + 8 * 4));
+    WorldPacket data(SMSG_MULTIPLE_PACKETS, (4 + 8 + 4 + 8 * 4 + 2));
+	data << uint16(SMSG_SHOWTAXINODES);
     data << uint32(1);
     data << uint64(unit->GetGUID());
     data << uint32(curloc);

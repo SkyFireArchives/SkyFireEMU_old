@@ -431,7 +431,7 @@ enum Opcodes
     CMSG_TAXICLEARALLNODES                           = 0x1006C, //
     CMSG_TAXIENABLEALLNODES                          = 0x1006D, //
     CMSG_TAXISHOWNODES                               = 0x1006E, //
-    SMSG_SHOWTAXINODES                               = 0x0D654, // 4.0.6a 13623
+    SMSG_SHOWTAXINODES                               = 0x02B84, // 4.0.6a 13623
     CMSG_TAXINODE_STATUS_QUERY                       = 0x0A1EC, // 4.0.6a 13623
     SMSG_TAXINODE_STATUS                             = 0x06F76, //
     CMSG_TAXIQUERYAVAILABLENODES                     = 0x0B8E8, // 4.0.6a 13623
