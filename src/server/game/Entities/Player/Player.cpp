@@ -21480,7 +21480,7 @@ void Player::SendInitialPacketsBeforeAddToMap()
 
     SendInitialActionButtons();
     m_reputationMgr.SendInitialReputations();
-    m_achievementMgr.SendAllAchievementData();
+    m_achievementMgr.SendAllAchievementData();  //marker1
 
     SendEquipmentSetList();
 

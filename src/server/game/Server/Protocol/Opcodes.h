@@ -1122,7 +1122,7 @@ enum Opcodes
     SMSG_ACHIEVEMENT_EARNED                          = 0x0F5E4, // 4.0.6a 13623
     SMSG_DYNAMIC_DROP_ROLL_RESULT                    = 0x101D7, //
     SMSG_CRITERIA_UPDATE                             = 0x0AFC8, // 4.0.6a 13623 
-    CMSG_QUERY_INSPECT_ACHIEVEMENTS                  = 0x0310D, //
+    CMSG_QUERY_INSPECT_ACHIEVEMENTS                  = 0x10069, //
     SMSG_RESPOND_INSPECT_ACHIEVEMENTS                = 0x101DA, //
     CMSG_DISMISS_CONTROLLED_VEHICLE                  = 0x0E3C0, // 4.0.6a 13623
     CMSG_COMPLETE_ACHIEVEMENT_CHEAT                  = 0x101DC, //
