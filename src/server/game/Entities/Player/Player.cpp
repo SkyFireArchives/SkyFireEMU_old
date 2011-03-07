@@ -13680,10 +13680,6 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
                             m_spellPenetrationItemMod += apply ? int32(enchant_amount) : -int32(enchant_amount);
                             sLog.outDebug("+ %u SPELL_PENETRATION", enchant_amount);
                             break;
-                        case ITEM_MOD_BLOCK_VALUE:
-                            HandleBaseModValue(SHIELD_BLOCK_VALUE, FLAT_MOD, float(enchant_amount), apply);
-                            sLog.outDebug("+ %u BLOCK_VALUE", enchant_amount);
-                            break;
                         case ITEM_MOD_SPELL_HEALING_DONE:   // deprecated
                         case ITEM_MOD_SPELL_DAMAGE_DONE:    // deprecated
                         default:

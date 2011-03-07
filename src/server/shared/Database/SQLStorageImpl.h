@@ -159,7 +159,8 @@ void SQLStorageLoaderBase<T>::Load(SQLStorage &store)
     if(store.iNumFields != result->GetFieldCount())
     {
         store.RecordCount = 0;
-        sLog.outError("Error in %s table, probably sql file format was updated (there should be %d fields in sql).\n", store.table, store.iNumFields);
+		sLog.outError("Error in %s table, probably sql file format was updated (there should be %d fields instead of %d in sql).\n",
+            store.table, store.iNumFields, result->GetFieldCount());
         exit(1);                                            // Stop server at loading broken or non-compatible table.
     }
 
