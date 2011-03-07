@@ -494,15 +494,6 @@ void WorldSession::HandleSetActiveMoverOpcode(WorldPacket &recv_data)
                 data << uint32(0);
                 SendPacket(&data);
             }
- 		    if(guid != GetPlayer()->GetGUID() && mover->GetCharmerGUID() != GetPlayer()->GetGUID())
-		    {
-			    std::stringstream msg;
-			    msg << "Player (" << GetPlayer()->GetName() << ") is trying to hack please review!";
-			    sWorld.SendGMText(LANG_GM_BROADCAST, msg.str().c_str());
-			    GetPlayer()->SetMover(GetPlayer());
-		    }
-		    else
-			    GetPlayer()->SetMover(mover);
         }
         else
         {
