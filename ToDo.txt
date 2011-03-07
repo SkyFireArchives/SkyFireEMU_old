@@ -1,9 +1,11 @@
-ToDo List
+ToDo List.
+Lots more to add.
 
--- Fix channels
+-- Fix channels -------- Fixed in 4.0.6a
 -- Fix Guild System
 -- Fix Battle Grounds
 -- Fix Flight masters
 -- Fix Auction House
--- Fix Bank System
--- Fix Profesions
+-- Fix Bank System ----- Fixed in 4.0.6a
+-- Fix Profesions ------ Fixed in 4.0.6a
+-- Buy more beer ------- Fixed ;)
