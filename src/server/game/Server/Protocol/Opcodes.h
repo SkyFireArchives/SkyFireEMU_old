@@ -567,11 +567,12 @@ enum Opcodes
     SMSG_SEND_MAIL_RESULT                            = 0x0E5C0, // 4.0.6a 13623
     CMSG_GET_MAIL_LIST                               = 0x0B284, // 4.0.6a 13623
     SMSG_MAIL_LIST_RESULT                            = 0x0F1C8, // 4.0.6a 13623
-    CMSG_BATTLEFIELD_LIST                            = 0x00093, // 4.0.6a 13623
-    SMSG_BATTLEFIELD_LIST                            = 0x03858, //
+    CMSG_BATTLEFIELD_LIST                            = 0x00508, // 4.0.6a 13623
+    SMSG_BATTLEFIELD_LIST                            = 0x0490C, // 4.0.6a 13623
     CMSG_BATTLEFIELD_JOIN                            = 0x00C91, // 4.0.6a 13623
-    SMSG_BATTLEFIELD_WIN_OBSOLETE                    = 0x100AB, //
-    SMSG_BATTLEFIELD_LOSE_OBSOLETE                   = 0x100AC, //
+    SMSG_BATTLEGROUND_PLAYER_JOINED                  = 0x10101, //
+    SMSG_BATTLEGROUND_PLAYER_LEFT                    = 0x10102, //
+    CMSG_BATTLEMASTER_JOIN_RATED                     = 0x10104, //
     CMSG_TAXICLEARNODE                               = 0x100AD, //
     CMSG_TAXIENABLENODE                              = 0x100AE, //
     CMSG_ITEM_TEXT_QUERY                             = 0x0F280, // 4.0.6a 13623 
@@ -739,10 +740,6 @@ enum Opcodes
     MSG_BATTLEGROUND_PLAYER_POSITIONS                = 0x100FF, //
     CMSG_PET_STOP_ATTACK                             = 0x10100, //
     SMSG_BINDER_CONFIRM                              = 0x033C4, // 4.0.6a 13623
-    SMSG_BATTLEGROUND_PLAYER_JOINED                  = 0x10101, //
-    SMSG_BATTLEGROUND_PLAYER_LEFT                    = 0x10102, //
-    CMSG_BATTLEMASTER_JOIN                           = 0x00137, //
-    CMSG_BATTLEMASTER_JOIN_RATED                     = 0x10104, //
     SMSG_ADDON_INFO                                  = 0x0EA80, // 
     CMSG_PET_UNLEARN                                 = 0x10105, //
     SMSG_PET_UNLEARN_CONFIRM                         = 0x10106, //
