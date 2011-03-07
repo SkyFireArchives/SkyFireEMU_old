@@ -402,8 +402,8 @@ enum Opcodes
     SMSG_QUESTGIVER_QUEST_DETAILS                    = 0x068A0, // 4.0.6a 13623
     CMSG_QUESTGIVER_ACCEPT_QUEST                     = 0x020C4, // 4.0.6a 13623
     CMSG_QUESTGIVER_COMPLETE_QUEST                   = 0x0B5AC, // 4.0.6a 13623
-    SMSG_QUESTGIVER_REQUEST_ITEMS                    = 0x023A8, // 4.0.6a 13623
-    CMSG_QUESTGIVER_REQUEST_REWARD                   = 0x00E7D, // 4.0.6a 13623
+    SMSG_QUESTGIVER_REQUEST_ITEMS                    = 0x06EE0, // 4.0.6a 13623
+    CMSG_QUESTGIVER_REQUEST_REWARD                   = 0x023A8, // 4.0.6a 13623
     SMSG_QUESTGIVER_OFFER_REWARD                     = 0x03FCC, // 4.0.6a 13623
     CMSG_QUESTGIVER_CHOOSE_REWARD                    = 0x06AC0, // 4.0.6a 13623
     SMSG_QUESTGIVER_QUEST_INVALID                    = 0x10065, //
