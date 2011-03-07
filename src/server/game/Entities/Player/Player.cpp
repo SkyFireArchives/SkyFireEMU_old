@@ -8782,9 +8782,8 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
     // need know merged fishing/corpse loot type for achievements
     loot->loot_type = loot_type;
 	
-    // Hack Fix
-	//WorldPacket data(SMSG_LOOT_RESPONSE, (9+50));           // we guess size
-	WorldPacket data(SMSG_MULTIPLE_PACKETS, (9+50+2));           // we guess size
+    
+	WorldPacket data(SMSG_MULTIPLE_PACKETS, (9 + 50 + 2));           // we guess size
 
 	data << uint16(SMSG_LOOT_RESPONSE);
     data << uint64(guid);
@@ -21481,7 +21480,7 @@ void Player::SendInitialPacketsBeforeAddToMap()
 
     SendInitialActionButtons();
     m_reputationMgr.SendInitialReputations();
-    m_achievementMgr.SendAllAchievementData();
+    m_achievementMgr.SendAllAchievementData();  //marker1
 
     SendEquipmentSetList();
 

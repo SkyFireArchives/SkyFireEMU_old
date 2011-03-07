@@ -761,7 +761,7 @@ void WorldSession::SendListInventory(uint64 vendorguid)
     VendorItemData const* vItems = pCreature->GetVendorItems();
     if (!vItems)
     {
-        WorldPacket data(SMSG_LIST_INVENTORY, (8+1+1));
+        WorldPacket data(SMSG_LIST_INVENTORY, (8 + 1 + 1));
         data << uint64(vendorguid);
         data << uint8(0);                                   // count==0, next will be error code
         data << uint8(0);                                   // "Vendor has no inventory"
@@ -772,11 +772,9 @@ void WorldSession::SendListInventory(uint64 vendorguid)
     uint8 numitems = vItems->GetItemCount();
     uint8 count = 0;
 
-	// Hack Fix	
 	WorldPacket data(SMSG_MULTIPLE_PACKETS, (8+1+numitems*9*4+1*numitems+2));
 	data << uint16(SMSG_LIST_INVENTORY);
-	//WorldPacket data(SMSG_LIST_INVENTORY, (8+1+numitems*8*4));
-    data << uint64(vendorguid);
+	data << uint64(vendorguid);
 
     size_t count_pos = data.wpos();
     data << uint8(count);
