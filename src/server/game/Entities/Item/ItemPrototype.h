@@ -593,6 +593,7 @@ struct _Socket
     uint32 Content;
 };
 
+#define MAX_ITEM_PROTO_DAMAGES 2
 #define MAX_ITEM_PROTO_SOCKETS 3
 #define MAX_ITEM_PROTO_SPELLS  5
 #define MAX_ITEM_PROTO_STATS  10
@@ -644,7 +645,8 @@ struct ItemPrototype
     uint32 Sheath;
     int32  RandomProperty;                                  // id from ItemRandomProperties.dbc
     int32  RandomSuffix;                                    // id from ItemRandomSuffix.dbc
-    uint32 ItemSet;                                         // id from ItemSet.dbc
+    uint32 Block;
+	uint32 ItemSet;                                         // id from ItemSet.dbc
     uint32 MaxDurability;
     uint32 Area;                                            // id from AreaTable.dbc
     uint32 Map;                                             // id from Map.dbc

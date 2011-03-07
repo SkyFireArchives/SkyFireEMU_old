@@ -5805,7 +5805,7 @@ void Player::SetRegularAttackTime()
     for (uint8 i = 0; i < MAX_ATTACK; ++i)
     {
         Item *tmpitem = GetWeaponForAttack(WeaponAttackType(i), true);
-        if (tmpitem && !tmpitem->IsBroken())
+        if (tmpitem && !tmpitem->IsBroken() && tmpitem->GetProto()->Block)
         {
             ItemPrototype const *proto = tmpitem->GetProto();
             if (proto->Delay)
@@ -13679,6 +13679,10 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
                             ApplyModInt32Value(PLAYER_FIELD_MOD_TARGET_RESISTANCE, enchant_amount, apply);
                             m_spellPenetrationItemMod += apply ? int32(enchant_amount) : -int32(enchant_amount);
                             sLog.outDebug("+ %u SPELL_PENETRATION", enchant_amount);
+                            break;
+                        case ITEM_MOD_BLOCK_VALUE:
+                            HandleBaseModValue(SHIELD_BLOCK_VALUE, FLAT_MOD, float(enchant_amount), apply);
+                            sLog.outDebug("+ %u BLOCK_VALUE", enchant_amount);
                             break;
                         case ITEM_MOD_SPELL_HEALING_DONE:   // deprecated
                         case ITEM_MOD_SPELL_DAMAGE_DONE:    // deprecated
