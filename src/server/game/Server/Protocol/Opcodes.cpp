@@ -719,7 +719,10 @@ void InitOpcodeTable()
     OPCODE( CMSG_MOVE_NOT_ACTIVE_MOVER,                   STATUS_LOGGEDIN, &WorldSession::HandleMoveNotActiveMover        );
     OPCODE( SMSG_PLAY_SOUND,                              STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_BATTLEFIELD_STATUS,                      STATUS_LOGGEDIN, &WorldSession::HandleBattlefieldStatusOpcode   );
-    OPCODE( SMSG_BATTLEFIELD_STATUS,                      STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
+    OPCODE( SMSG_BATTLEFIELD_STATUS1,                     STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
+    OPCODE( SMSG_BATTLEFIELD_STATUS2,                     STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
+    OPCODE( SMSG_BATTLEFIELD_STATUS3,                     STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
+    OPCODE( SMSG_BATTLEFIELD_STATUS4,                     STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_BATTLEFIELD_PORT,                        STATUS_LOGGEDIN, &WorldSession::HandleBattleFieldPortOpcode     );
     OPCODE( MSG_INSPECT_HONOR_STATS,                      STATUS_LOGGEDIN, &WorldSession::HandleInspectHonorStatsOpcode   );
     OPCODE( CMSG_BATTLEMASTER_HELLO,                      STATUS_LOGGEDIN, &WorldSession::HandleBattlemasterHelloOpcode   );

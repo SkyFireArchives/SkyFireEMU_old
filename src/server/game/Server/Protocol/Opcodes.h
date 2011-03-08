@@ -716,7 +716,10 @@ enum Opcodes
     CMSG_MOVE_NOT_ACTIVE_MOVER                       = 0x0B9A8, // 4.0.6a 13623
     SMSG_PLAY_SOUND                                  = 0x02EA8, // 4.0.6a 13623
     CMSG_BATTLEFIELD_STATUS                          = 0x100ED, //
-    SMSG_BATTLEFIELD_STATUS                          = 0x0454C, // 4.0.6a 13623
+    SMSG_BATTLEFIELD_STATUS1                         = 0x0454C, // 4.0.6a 13623
+    SMSG_BATTLEFIELD_STATUS2                         = 0x0051E, // 4.0.6a 13623
+    SMSG_BATTLEFIELD_STATUS3                         = 0x0081C, // 4.0.6a 13623
+    SMSG_BATTLEFIELD_STATUS4                         = 0x04C4C, // 4.0.6a 13623
     CMSG_BATTLEFIELD_PORT                            = 0x100EF, //
     MSG_INSPECT_HONOR_STATS                          = 0x100F0, //
     CMSG_BATTLEMASTER_HELLO                          = 0x06D57, //
