@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "ObjectMgr.h"
 #include "World.h"
@@ -185,12 +186,14 @@ void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battlegro
     if (!bg)
     {
         StatusID = 0;
-        data->Initialize(SMSG_BATTLEFIELD_STATUS, 4);
+        data->Initialize(SMSG_BATTLEFIELD_STATUS1, 4);
         *data << uint32(QueueSlot);                         // queue id (0...1)
         return;
     }
     
-    data->Initialize(SMSG_BATTLEFIELD_STATUS, (4+8+1+1+4+1+4+4+4));
+    // todo handle SMSG_BATTLEFIELD_STATUS2-4 here with new structure
+    /*
+    data->Initialize(SMSG_BATTLEFIELD_STATUS2, (4+8+1+1+4+1+4+4+4));
     *data << uint32(QueueSlot);                             // queue id (0...1) - player can be in 2 queues in time
     // The following segment is read as uint64 in client but can be appended as their original type.
     *data << uint8(arenatype);
@@ -229,6 +232,7 @@ void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battlegro
             sLog.outError("Unknown BG status!");
             break;
     }
+    */
 }
 
 void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
@@ -883,27 +887,26 @@ void BattlegroundMgr::BuildBattlegroundListPacket(WorldPacket *data, const uint6
 
     uint32 win_kills = plr->GetRandomWinner() ? BG_REWARD_WINNER_HONOR_LAST : BG_REWARD_WINNER_HONOR_FIRST;
     uint32 win_arena = plr->GetRandomWinner() ? BG_REWARD_WINNER_ARENA_LAST : BG_REWARD_WINNER_ARENA_FIRST;
-    uint32 loos_kills = plr->GetRandomWinner() ? BG_REWARD_LOOSER_HONOR_LAST : BG_REWARD_LOOSER_HONOR_FIRST;
+    uint32 lose_kills = plr->GetRandomWinner() ? BG_REWARD_LOOSER_HONOR_LAST : BG_REWARD_LOOSER_HONOR_FIRST;
 
     win_kills = Trinity::Honor::hk_honor_at_level(plr->getLevel(), win_kills);
-    loos_kills = Trinity::Honor::hk_honor_at_level(plr->getLevel(), loos_kills);
+    lose_kills = Trinity::Honor::hk_honor_at_level(plr->getLevel(), lose_kills);
 
     data->Initialize(SMSG_BATTLEFIELD_LIST);
-    *data << uint8(0x2);                                    // unk
-    *data << uint8(0x31);                                   // unk
-    *data << uint32(0);                                     // unk
-    uint32 count = 0;
-    size_t count_pos = data->wpos();
-    *data << uint32(count);                                 // count
-    
-    *data << uint32(win_kills);                             // 3.3.3 winHonor
-    *data << uint32(bgTypeId);                              // bgtypeid
-    *data << uint32(win_arena);                             // 3.3.3 winArena
-    *data << uint32(loos_kills);                            // 3.3.3 lossHonor
-    *data << uint8(0x2D);                                   // unk
-    *data << uint32(loos_kills);                            // 3.3.3 lossHonor
-    *data << uint32(win_kills);                             // 3.3.3 winHonor
-    *data << uint64(guid);                                  // battlemaster guid
+
+    *data << uint8(0x2);        // unk flags 1 << 7, 1 << 6, 1 << 5
+    *data << uint8(0x31);       // unk
+    *data << uint32(win_kills); // Call to arms win honor bonus
+    *data << uint64(guid);      // battlemaster guid?
+    *data << uint32(win_kills); // random BG win honor bonus
+    *data << uint8(0x2D);       // unk
+    *data << uint32(lose_kills);// Call to arms lose honor bonus
+    *data << uint32(win_arena); // Call to arms win conquest bonus
+    *data << uint32(win_arena); // random BG win conquest bonus
+    *data << uint32(0);         // unk
+
+    *data << uint32(0);         // count of uints appended to the end
+    *data << uint32(lose_kills);// random BG lose honor bonus
 }
 
 void BattlegroundMgr::SendToBattleground(Player *pl, uint32 instanceId, BattlegroundTypeId bgTypeId)
