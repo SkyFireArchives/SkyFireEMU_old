@@ -294,6 +294,9 @@ MACRO(ADD_NATIVE_PRECOMPILED_HEADER _targetName _input)
     SET(newProperties "${oldProps} /Yu\"${_name}.h\"")
 	IF( NOT "${ARGN}" STREQUAL "0")
 	SET(newProperties "${newProperties}  /FI\"${_name}.h\"")
+	ELSE( NOT "${ARGN}" STREQUAL "0")
+	# enable edit and continue if PCH is handled properly
+	SET(newProperties "${newProperties}  /ZI")
 	ENDIF( NOT "${ARGN}" STREQUAL "0")
     SET_TARGET_PROPERTIES(${_targetName} PROPERTIES COMPILE_FLAGS "${newProperties}")
 
