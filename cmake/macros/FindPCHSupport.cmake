@@ -119,7 +119,7 @@ ENDMACRO(_PCH_GET_COMPILE_COMMAND )
 
 
 
-MACRO(_PCH_GET_TARGET_COMPILE_FLAGS _cflags  _header_name _pch_path _dowarn )
+MACRO(_PCH_GET_TARGET_COMPILE_FLAGS _cflags  _header_name _pch_path _dowarn _include)
 
   FILE(TO_NATIVE_PATH ${_pch_path} _native_pch_path)
 
@@ -130,11 +130,13 @@ MACRO(_PCH_GET_TARGET_COMPILE_FLAGS _cflags  _header_name _pch_path _dowarn )
     # if you want warnings for invalid header files (which is very inconvenient
     # if you have different versions of the headers for different build types
     # you may set _pch_dowarn
-    IF (_dowarn)
-      SET(${_cflags} "${PCH_ADDITIONAL_COMPILER_FLAGS} -include ${CMAKE_CURRENT_BINARY_DIR}/${_header_name} -Winvalid-pch " )
-    ELSE (_dowarn)
-      SET(${_cflags} "${PCH_ADDITIONAL_COMPILER_FLAGS} -include ${CMAKE_CURRENT_BINARY_DIR}/${_header_name} " )
-    ENDIF (_dowarn)
+	IF (_include)
+		IF (_dowarn)
+		  SET(${_cflags} "${PCH_ADDITIONAL_COMPILER_FLAGS} -include ${CMAKE_CURRENT_BINARY_DIR}/${_header_name} -Winvalid-pch " )
+		ELSE (_dowarn)
+		  SET(${_cflags} "${PCH_ADDITIONAL_COMPILER_FLAGS} -include ${CMAKE_CURRENT_BINARY_DIR}/${_header_name} " )
+		ENDIF (_dowarn)
+	ENDIF (_include)
   ELSE(CMAKE_COMPILER_IS_GNUCXX)
 
     set(${_cflags} "/Fp${_native_pch_path} /Yu${_header_name}" )
@@ -150,7 +152,7 @@ MACRO(GET_PRECOMPILED_HEADER_OUTPUT _targetName _input _output)
 ENDMACRO(GET_PRECOMPILED_HEADER_OUTPUT _targetName _input)
 
 
-MACRO(ADD_PRECOMPILED_HEADER_TO_TARGET _targetName _input _pch_output_to_use )
+MACRO(ADD_PRECOMPILED_HEADER_TO_TARGET _targetName _input _pch_output_to_use _dowarn _include )
 
   # to do: test whether compiler flags match between target  _targetName
   # and _pch_output_to_use
@@ -194,6 +196,12 @@ MACRO(ADD_PRECOMPILED_HEADER _targetName _input)
   ELSE( "${ARGN}" STREQUAL "0")
     SET(_dowarn 1)
   ENDIF("${ARGN}" STREQUAL "0")
+  
+  IF(${ARGV} GREATER 3)
+    SET(_include 0)
+  ELSE(${ARGV} GREATER 3)
+    SET(_include 1)
+  ENDIF(${ARGV} GREATER 3)
 
   GET_FILENAME_COMPONENT(_name ${_input} NAME)
   GET_FILENAME_COMPONENT(_path ${_input} PATH)
@@ -235,7 +243,7 @@ MACRO(ADD_PRECOMPILED_HEADER _targetName _input)
     DEPENDS ${_input}   ${CMAKE_CURRENT_BINARY_DIR}/${_name} ${_targetName}_pch_dephelp
   )
 
-  ADD_PRECOMPILED_HEADER_TO_TARGET(${_targetName} ${_input}  ${_output} ${_dowarn})
+  ADD_PRECOMPILED_HEADER_TO_TARGET(${_targetName} ${_input}  ${_output} ${_dowarn} ${_include})
 ENDMACRO(ADD_PRECOMPILED_HEADER)
 
 # Generates the use of precompiled in a target,
@@ -265,11 +273,11 @@ ENDMACRO(GET_NATIVE_PRECOMPILED_HEADER)
 
 MACRO(ADD_NATIVE_PRECOMPILED_HEADER _targetName _input)
 
-    IF( "${ARGN}" STREQUAL "0")
-    SET(_dowarn 0)
-    ELSE( "${ARGN}" STREQUAL "0")
-    SET(_dowarn 1)
-    ENDIF("${ARGN}" STREQUAL "0")
+    #IF( "${ARGN}" STREQUAL "0")
+    #SET(_dowarn 0)
+    #ELSE( "${ARGN}" STREQUAL "0")
+    #SET(_dowarn 1)
+    #ENDIF("${ARGN}" STREQUAL "0")
 
     if(CMAKE_GENERATOR MATCHES Visual*)
     # Auto include the precompile (useful for moc processing, since the use of
@@ -280,12 +288,17 @@ MACRO(ADD_NATIVE_PRECOMPILED_HEADER _targetName _input)
     if (${oldProps} MATCHES NOTFOUND)
         SET(oldProps "")
     endif(${oldProps} MATCHES NOTFOUND)
+	
+	GET_FILENAME_COMPONENT(_name ${_input} NAME)
 
-    SET(newProperties "${oldProps} /Yu\"${_input}.h\" /FI\"${_input}.h\"")
+    SET(newProperties "${oldProps} /Yu\"${_name}.h\"")
+	IF( NOT "${ARGN}" STREQUAL "0")
+	SET(newProperties "${newProperties}  /FI\"${_name}.h\"")
+	ENDIF( NOT "${ARGN}" STREQUAL "0")
     SET_TARGET_PROPERTIES(${_targetName} PROPERTIES COMPILE_FLAGS "${newProperties}")
 
     #also inlude ${oldProps} to have the same compile options
-    SET_SOURCE_FILES_PROPERTIES(${_input}.cpp PROPERTIES COMPILE_FLAGS "${oldProps} /Yc\"${_input}.h\"")
+    SET_SOURCE_FILES_PROPERTIES(${_input}.cpp PROPERTIES COMPILE_FLAGS "${oldProps} /Yc\"${_name}.h\"")
 
     else(CMAKE_GENERATOR MATCHES Visual*)
 

@@ -47,6 +47,7 @@ endif()
 
 if( USE_COREPCH )
   message("* Build core w/PCH       : Yes (default)")
+  add_definitions(-DTRINITY_COREPCH)
 else()
   message("* Build core w/PCH       : No")
 endif()

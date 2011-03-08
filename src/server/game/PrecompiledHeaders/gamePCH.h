@@ -23,6 +23,7 @@
 //add here most rarely modified headers to speed up debug build compilation
 #ifndef _GAMEPCH_H
 #define _GAMEPCH_H
+#ifdef TRINITY_COREPCH
 #include "WorldSocket.h"        // must be first to make ACE happy with ACE includes in it
 
 #include "Common.h"
@@ -36,4 +37,5 @@
 #include "SharedDefines.h"
 #include "ObjectMgr.h"
 
+#endif /* TRINITY_COREPCH */
 #endif  /* _GAMEPCH_H */
