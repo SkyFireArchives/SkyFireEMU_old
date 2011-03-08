@@ -22,6 +22,7 @@
 
 #include "gamePCH.h"
 #include "Common.h"
+#include "SharedDefines.h"
 #include "DBCStructure.h"
 #include "DBCStores.h"
 
