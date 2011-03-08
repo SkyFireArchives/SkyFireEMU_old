@@ -190,6 +190,27 @@ void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battlegro
         *data << uint32(QueueSlot);                         // queue id (0...1)
         return;
     }
+
+    if(StatusID == STATUS_WAIT_JOIN)
+    {
+        data->Initialize(SMSG_BATTLEFIELD_STATUS3, (4+8+1+1+4+1+4+4+4));
+    
+        *data << uint8(0);//CDataStore__GetInt8(&v4);
+        //*((_BYTE *)v3 + 25) = v4 >> 7;
+        *data << uint8(bg->isRated());//CDataStore__GetInt8((char *)v3 + 40);
+        *data << uint32(bg->GetClientInstanceID());//CDataStore__GetInt32((char *)v3 + 28);
+        //*data << uint64(0);//CDataStore__GetInt64((char *)v3 + 48);
+        *data << uint8(arenatype);
+        *data << uint8(bg->isArena() ? 0xC : 0x2);
+        *data << uint32(bg->GetTypeID());
+        *data << uint16(0x1F90);
+
+        *data << uint32(Time1);//CDataStore__GetInt32((char *)v3 + 36);
+        *data << uint8(0);//CDataStore__GetInt8((char *)v3 + 32);
+        *data << uint32(StatusID);//CDataStore__GetInt32((char *)v3 + 20);
+        *data << uint32(QueueSlot);//CDataStore__GetInt32((char *)v3 + 16);
+        *data << uint8(0);//CDataStore__GetInt8((char *)v3 + 24);
+    }
     
     // todo handle SMSG_BATTLEFIELD_STATUS2-4 here with new structure
     /*
