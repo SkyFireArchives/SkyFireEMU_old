@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding = "Windows-1252"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="gsoap"
 	ProjectGUID="{185E8B40-A2A4-497E-9617-40F17A286722}"
-	Keyword="Win32Proj">
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="0"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
@@ -16,54 +21,83 @@
 			IntermediateDirectory="gsoap.dir\Debug"
 			ConfigurationType="4"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
-				BasicRuntimeChecks="3"
-				CompileAs="2"
-				DebugInformationFormat="3"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				InlineFunctionExpansion="0"
-				Optimization="0"
-				RuntimeLibrary="3"
-				RuntimeTypeInfo="TRUE"
-				WarningLevel="0"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
-				AssemblerListingLocation="Debug"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\dep\gsoap\Debug/gsoap.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="0"
+				InlineFunctionExpansion="0"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
+				ExceptionHandling="1"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				AssemblerListingLocation="Debug"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\dep\gsoap\Debug/gsoap.pdb"
+				WarningLevel="0"
+				DebugInformationFormat="3"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="C:\svn\SkyFireEMU\dep\gsoap\Debug\gsoap.lib"/>
+				OutputFile="C:\svn\SkyFireEMU\dep\gsoap\Debug\gsoap.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -71,52 +105,81 @@
 			IntermediateDirectory="gsoap.dir\Release"
 			ConfigurationType="4"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
-				CompileAs="2"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				InlineFunctionExpansion="2"
-				Optimization="2"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="TRUE"
-				WarningLevel="0"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
-				AssemblerListingLocation="Release"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\dep\gsoap\Release/gsoap.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="2"
+				InlineFunctionExpansion="2"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
+				ExceptionHandling="1"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				AssemblerListingLocation="Release"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\dep\gsoap\Release/gsoap.pdb"
+				WarningLevel="0"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="C:\svn\SkyFireEMU\dep\gsoap\Release\gsoap.lib"/>
+				OutputFile="C:\svn\SkyFireEMU\dep\gsoap\Release\gsoap.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="MinSizeRel|Win32"
@@ -124,52 +187,81 @@
 			IntermediateDirectory="gsoap.dir\MinSizeRel"
 			ConfigurationType="4"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
-				CompileAs="2"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				InlineFunctionExpansion="1"
-				Optimization="1"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="TRUE"
-				WarningLevel="0"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
-				AssemblerListingLocation="MinSizeRel"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\dep\gsoap\MinSizeRel/gsoap.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="1"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
+				ExceptionHandling="1"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				AssemblerListingLocation="MinSizeRel"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\dep\gsoap\MinSizeRel/gsoap.pdb"
+				WarningLevel="0"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="C:\svn\SkyFireEMU\dep\gsoap\MinSizeRel\gsoap.lib"/>
+				OutputFile="C:\svn\SkyFireEMU\dep\gsoap\MinSizeRel\gsoap.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="RelWithDebInfo|Win32"
@@ -177,119 +269,117 @@
 			IntermediateDirectory="gsoap.dir\RelWithDebInfo"
 			ConfigurationType="4"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
-				CompileAs="2"
-				DebugInformationFormat="3"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				InlineFunctionExpansion="1"
-				Optimization="2"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="TRUE"
-				WarningLevel="0"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
-				AssemblerListingLocation="RelWithDebInfo"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\dep\gsoap\RelWithDebInfo/gsoap.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
+				ExceptionHandling="1"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				AssemblerListingLocation="RelWithDebInfo"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\dep\gsoap\RelWithDebInfo/gsoap.pdb"
+				WarningLevel="0"
+				DebugInformationFormat="3"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\dep\gsoap;"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="C:\svn\SkyFireEMU\dep\gsoap\RelWithDebInfo\gsoap.lib"/>
+				OutputFile="C:\svn\SkyFireEMU\dep\gsoap\RelWithDebInfo\gsoap.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
-			<File
-				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\CMakeLists.txt">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/dep/gsoap/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\dep\gsoap\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\dep\gsoap\CMakeLists.txt;C:\svn\SkyFireEMU\dep\gsoap\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\dep\gsoap\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/dep/gsoap/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\dep\gsoap\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\dep\gsoap\CMakeLists.txt;C:\svn\SkyFireEMU\dep\gsoap\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\dep\gsoap\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="MinSizeRel|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/dep/gsoap/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\dep\gsoap\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\dep\gsoap\CMakeLists.txt;C:\svn\SkyFireEMU\dep\gsoap\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\dep\gsoap\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="RelWithDebInfo|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/dep/gsoap/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\dep\gsoap\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\dep\gsoap\CMakeLists.txt;C:\svn\SkyFireEMU\dep\gsoap\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\dep\gsoap\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-			</File>
 		<Filter
 			Name="Source Files"
-			Filter="">
+			>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\soapC.cpp">
+				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\soapC.cpp"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\soapServer.cpp">
+				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\soapServer.cpp"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\stdsoap2.cpp">
+				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\stdsoap2.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="">
+			>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\soapH.h">
+				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\soapH.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\soapStub.h">
+				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\soapStub.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\stdsoap2.h">
+				RelativePath="C:\svn\SkyFireEMU\dep\gsoap\stdsoap2.h"
+				>
 			</File>
 		</Filter>
 	</Files>

@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding = "Windows-1252"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="authserver"
 	ProjectGUID="{6248D526-17AC-4F9C-BD9F-6C28151AD3FE}"
-	Keyword="Win32Proj">
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="0"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
@@ -16,56 +21,68 @@
 			IntermediateDirectory="authserver.dir\Debug"
 			ConfigurationType="1"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				BasicRuntimeChecks="3"
-				CompileAs="2"
-				DebugInformationFormat="3"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-				InlineFunctionExpansion="0"
-				Optimization="0"
-				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-				RuntimeLibrary="3"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
-				WarningLevel="3"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
-				AssemblerListingLocation="Debug"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\Debug/authserver.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="0"
+				InlineFunctionExpansion="0"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
+				ExceptionHandling="1"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
+				AssemblerListingLocation="Debug"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\Debug/authserver.pdb"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/authserver/Debug&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
-			<Tool
-				Name="VCPostBuildEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/authserver/authserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/authserver/Debug&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
@@ -75,10 +92,33 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 				Version="0.0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=""
+				GenerateDebugInformation="true"
 				ProgramDatabaseFile="C:\svn\SkyFireEMU\bin\Debug/authserver.pdb"
-				GenerateDebugInformation="TRUE"
 				SubSystem="1"
-				ImportLibrary="C:\svn\SkyFireEMU\src\server\authserver\Debug\authserver.lib"/>
+				ImportLibrary="C:\svn\SkyFireEMU\src\server\authserver\Debug\authserver.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/authserver/authserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -86,54 +126,66 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 			IntermediateDirectory="authserver.dir\Release"
 			ConfigurationType="1"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				CompileAs="2"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-				InlineFunctionExpansion="2"
-				Optimization="2"
-				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
-				WarningLevel="3"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
-				AssemblerListingLocation="Release"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\Release/authserver.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="2"
+				InlineFunctionExpansion="2"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
+				ExceptionHandling="1"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
+				AssemblerListingLocation="Release"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\Release/authserver.pdb"
+				WarningLevel="3"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/authserver/Release&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
-			<Tool
-				Name="VCPostBuildEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/authserver/authserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/authserver/Release&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
@@ -145,7 +197,30 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 				AdditionalLibraryDirectories=""
 				ProgramDatabaseFile="C:\svn\SkyFireEMU\bin\Release/authserver.pdb"
 				SubSystem="1"
-				ImportLibrary="C:\svn\SkyFireEMU\src\server\authserver\Release\authserver.lib"/>
+				ImportLibrary="C:\svn\SkyFireEMU\src\server\authserver\Release\authserver.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/authserver/authserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 		</Configuration>
 		<Configuration
 			Name="MinSizeRel|Win32"
@@ -153,54 +228,66 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 			IntermediateDirectory="authserver.dir\MinSizeRel"
 			ConfigurationType="1"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				CompileAs="2"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-				InlineFunctionExpansion="1"
-				Optimization="1"
-				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
-				WarningLevel="3"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
-				AssemblerListingLocation="MinSizeRel"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\MinSizeRel/authserver.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="1"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
+				ExceptionHandling="1"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
+				AssemblerListingLocation="MinSizeRel"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\MinSizeRel/authserver.pdb"
+				WarningLevel="3"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/authserver/MinSizeRel&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
-			<Tool
-				Name="VCPostBuildEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/authserver/authserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/authserver/MinSizeRel&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
@@ -212,7 +299,30 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 				AdditionalLibraryDirectories=""
 				ProgramDatabaseFile="C:\svn\SkyFireEMU\bin\MinSizeRel/authserver.pdb"
 				SubSystem="1"
-				ImportLibrary="C:\svn\SkyFireEMU\src\server\authserver\MinSizeRel\authserver.lib"/>
+				ImportLibrary="C:\svn\SkyFireEMU\src\server\authserver\MinSizeRel\authserver.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/authserver/authserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 		</Configuration>
 		<Configuration
 			Name="RelWithDebInfo|Win32"
@@ -220,55 +330,67 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 			IntermediateDirectory="authserver.dir\RelWithDebInfo"
 			ConfigurationType="1"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				CompileAs="2"
-				DebugInformationFormat="3"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-				InlineFunctionExpansion="1"
-				Optimization="2"
-				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
-				WarningLevel="3"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
-				AssemblerListingLocation="RelWithDebInfo"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\RelWithDebInfo/authserver.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
+				ExceptionHandling="1"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
+				AssemblerListingLocation="RelWithDebInfo"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\RelWithDebInfo/authserver.pdb"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\authserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\authserver\Authentication;C:\svn\SkyFireEMU\src\server\authserver\Realms;C:\svn\SkyFireEMU\src\server\authserver\Server;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/authserver/RelWithDebInfo&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
-			<Tool
-				Name="VCPostBuildEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/authserver/authserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/authserver/RelWithDebInfo&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
@@ -278,138 +400,144 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 				Version="0.0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=""
+				GenerateDebugInformation="true"
 				ProgramDatabaseFile="C:\svn\SkyFireEMU\bin\RelWithDebInfo/authserver.pdb"
-				GenerateDebugInformation="TRUE"
 				SubSystem="1"
-				ImportLibrary="C:\svn\SkyFireEMU\src\server\authserver\RelWithDebInfo\authserver.lib"/>
+				ImportLibrary="C:\svn\SkyFireEMU\src\server\authserver\RelWithDebInfo\authserver.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/authserver/authserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
-			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\CMakeLists.txt">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/server/authserver/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\server\authserver\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\server\authserver\CMakeLists.txt;C:\svn\SkyFireEMU\src\server\authserver\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\server\authserver\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/server/authserver/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\server\authserver\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\server\authserver\CMakeLists.txt;C:\svn\SkyFireEMU\src\server\authserver\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\server\authserver\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="MinSizeRel|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/server/authserver/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\server\authserver\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\server\authserver\CMakeLists.txt;C:\svn\SkyFireEMU\src\server\authserver\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\server\authserver\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="RelWithDebInfo|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/server/authserver/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\server\authserver\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\server\authserver\CMakeLists.txt;C:\svn\SkyFireEMU\src\server\authserver\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\server\authserver\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-			</File>
 		<Filter
 			Name="Source Files"
-			Filter="">
+			>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\PrecompiledHeaders\authPCH.cpp">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Authentication\AuthCodes.cpp"
+				>
+			</File>
+			<File
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\PrecompiledHeaders\authPCH.cpp"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
-					Name="VCCLCompilerTool"
-					PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-					UsePrecompiledHeader="1"
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="MinSizeRel|Win32">
+					Name="Release|Win32"
+					>
 					<Tool
-					Name="VCCLCompilerTool"
-					PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-					UsePrecompiledHeader="1"
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="RelWithDebInfo|Win32">
+					Name="MinSizeRel|Win32"
+					>
 					<Tool
-					Name="VCCLCompilerTool"
-					PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-					UsePrecompiledHeader="1"
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="RelWithDebInfo|Win32"
+					>
 					<Tool
-					Name="VCCLCompilerTool"
-					PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
-					UsePrecompiledHeader="1"
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/authserver/PrecompiledHeaders/authPCH.h"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Authentication\AuthCodes.cpp">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\authserver.rc"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Realms\RealmList.cpp">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Server\AuthSocket.cpp"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Server\AuthSocket.cpp">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Main.cpp"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Server\RealmSocket.cpp">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Realms\RealmList.cpp"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Main.cpp">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Server\RealmSocket.cpp"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\shared\Debugging\WheatyExceptionReport.cpp">
-			</File>
-			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\authserver.rc">
+				RelativePath="C:\svn\SkyFireEMU\src\server\shared\Debugging\WheatyExceptionReport.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="">
+			>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\PrecompiledHeaders\authPCH.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Authentication\AuthCodes.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Authentication\AuthCodes.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\PrecompiledHeaders\authPCH.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Realms\RealmList.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Server\AuthSocket.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Server\AuthSocket.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Server\RealmAcceptor.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Server\RealmAcceptor.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Realms\RealmList.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Server\RealmSocket.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\Server\RealmSocket.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\resource.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\authserver\resource.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\shared\Debugging\WheatyExceptionReport.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\shared\Debugging\WheatyExceptionReport.h"
+				>
 			</File>
 		</Filter>
 	</Files>

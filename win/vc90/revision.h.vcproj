@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding = "Windows-1252"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="revision.h"
 	ProjectGUID="{669C256F-2918-4013-9B36-C615AEFAA5C9}"
-	Keyword="Win32Proj">
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="0"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
@@ -16,40 +21,31 @@
 			IntermediateDirectory="revision.h.dir\Debug"
 			ConfigurationType="10"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=""
-				ExceptionHandling="0"
-				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
-				AssemblerListingLocation="Debug"
-				ObjectFile="$(IntDir)\"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -57,40 +53,31 @@
 			IntermediateDirectory="revision.h.dir\Release"
 			ConfigurationType="10"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=""
-				ExceptionHandling="0"
-				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
-				AssemblerListingLocation="Release"
-				ObjectFile="$(IntDir)\"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="MinSizeRel|Win32"
@@ -98,40 +85,31 @@
 			IntermediateDirectory="revision.h.dir\MinSizeRel"
 			ConfigurationType="10"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=""
-				ExceptionHandling="0"
-				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
-				AssemblerListingLocation="MinSizeRel"
-				ObjectFile="$(IntDir)\"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="RelWithDebInfo|Win32"
@@ -139,130 +117,42 @@
 			IntermediateDirectory="revision.h.dir\RelWithDebInfo"
 			ConfigurationType="10"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=""
-				ExceptionHandling="0"
-				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
-				AssemblerListingLocation="RelWithDebInfo"
-				ObjectFile="$(IntDir)\"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
-			<File
-				RelativePath="C:\svn\SkyFireEMU\src\genrev\CMakeLists.txt">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/genrev/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\genrev\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\genrev\CMakeLists.txt;C:\svn\SkyFireEMU\src\genrev\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/genrev/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\genrev\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\genrev\CMakeLists.txt;C:\svn\SkyFireEMU\src\genrev\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="MinSizeRel|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/genrev/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\genrev\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\genrev\CMakeLists.txt;C:\svn\SkyFireEMU\src\genrev\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="RelWithDebInfo|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/genrev/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\genrev\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\genrev\CMakeLists.txt;C:\svn\SkyFireEMU\src\genrev\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-			</File>
 		<Filter
 			Name="Header Files"
-			Filter="">
+			>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\revision.h">
-			</File>
-		</Filter>
-		<Filter
-			Name="CMake Rules"
-			Filter="">
-			<File
-				RelativePath="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\revision.h.rule">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description=""
-					CommandLine="cd C:\svn\SkyFireEMU&#x0D;&#x0A;C:&#x0D;&#x0A;&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -DBUILDDIR=C:/svn/SkyFireEMU -P C:/svn/SkyFireEMU/cmake/genrev.cmake&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\revision.h.rule"
-					Outputs="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\revision.h"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description=""
-					CommandLine="cd C:\svn\SkyFireEMU&#x0D;&#x0A;C:&#x0D;&#x0A;&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -DBUILDDIR=C:/svn/SkyFireEMU -P C:/svn/SkyFireEMU/cmake/genrev.cmake&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\revision.h.rule"
-					Outputs="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\revision.h"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="MinSizeRel|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description=""
-					CommandLine="cd C:\svn\SkyFireEMU&#x0D;&#x0A;C:&#x0D;&#x0A;&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -DBUILDDIR=C:/svn/SkyFireEMU -P C:/svn/SkyFireEMU/cmake/genrev.cmake&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\revision.h.rule"
-					Outputs="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\revision.h"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="RelWithDebInfo|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description=""
-					CommandLine="cd C:\svn\SkyFireEMU&#x0D;&#x0A;C:&#x0D;&#x0A;&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -DBUILDDIR=C:/svn/SkyFireEMU -P C:/svn/SkyFireEMU/cmake/genrev.cmake&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\revision.h.rule"
-					Outputs="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\revision.h"/>
-				</FileConfiguration>
+				RelativePath="C:\svn\SkyFireEMU\src\genrev\CMakeFiles\revision.h"
+				>
 			</File>
 		</Filter>
 	</Files>

@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding = "Windows-1252"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="worldserver"
 	ProjectGUID="{16649BF3-1C88-40CD-8F2F-20F58E133865}"
-	Keyword="Win32Proj">
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="0"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
@@ -16,56 +21,68 @@
 			IntermediateDirectory="worldserver.dir\Debug"
 			ConfigurationType="1"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				BasicRuntimeChecks="3"
-				CompileAs="2"
-				DebugInformationFormat="3"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-				InlineFunctionExpansion="0"
-				Optimization="0"
-				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-				RuntimeLibrary="3"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
-				WarningLevel="3"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
-				AssemblerListingLocation="Debug"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\Debug/worldserver.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="0"
+				InlineFunctionExpansion="0"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
+				ExceptionHandling="1"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
+				AssemblerListingLocation="Debug"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\Debug/worldserver.pdb"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Debug\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/worldserver/Debug&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
-			<Tool
-				Name="VCPostBuildEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/worldserver/worldserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/worldserver/Debug&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
@@ -75,10 +92,33 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 				Version="0.0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=""
+				GenerateDebugInformation="true"
 				ProgramDatabaseFile="C:\svn\SkyFireEMU\bin\Debug/worldserver.pdb"
-				GenerateDebugInformation="TRUE"
 				SubSystem="1"
-				ImportLibrary="C:\svn\SkyFireEMU\src\server\worldserver\Debug\worldserver.lib"/>
+				ImportLibrary="C:\svn\SkyFireEMU\src\server\worldserver\Debug\worldserver.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/worldserver/worldserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -86,54 +126,66 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 			IntermediateDirectory="worldserver.dir\Release"
 			ConfigurationType="1"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				CompileAs="2"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-				InlineFunctionExpansion="2"
-				Optimization="2"
-				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
-				WarningLevel="3"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
-				AssemblerListingLocation="Release"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\Release/worldserver.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="2"
+				InlineFunctionExpansion="2"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
+				ExceptionHandling="1"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
+				AssemblerListingLocation="Release"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\Release/worldserver.pdb"
+				WarningLevel="3"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;Release\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/worldserver/Release&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
-			<Tool
-				Name="VCPostBuildEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/worldserver/worldserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/worldserver/Release&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
@@ -145,7 +197,30 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 				AdditionalLibraryDirectories=""
 				ProgramDatabaseFile="C:\svn\SkyFireEMU\bin\Release/worldserver.pdb"
 				SubSystem="1"
-				ImportLibrary="C:\svn\SkyFireEMU\src\server\worldserver\Release\worldserver.lib"/>
+				ImportLibrary="C:\svn\SkyFireEMU\src\server\worldserver\Release\worldserver.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/worldserver/worldserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 		</Configuration>
 		<Configuration
 			Name="MinSizeRel|Win32"
@@ -153,54 +228,66 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 			IntermediateDirectory="worldserver.dir\MinSizeRel"
 			ConfigurationType="1"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				CompileAs="2"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-				InlineFunctionExpansion="1"
-				Optimization="1"
-				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
-				WarningLevel="3"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
-				AssemblerListingLocation="MinSizeRel"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\MinSizeRel/worldserver.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="1"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
+				ExceptionHandling="1"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
+				AssemblerListingLocation="MinSizeRel"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\MinSizeRel/worldserver.pdb"
+				WarningLevel="3"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/worldserver/MinSizeRel&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
-			<Tool
-				Name="VCPostBuildEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/worldserver/worldserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/worldserver/MinSizeRel&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
@@ -212,7 +299,30 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 				AdditionalLibraryDirectories=""
 				ProgramDatabaseFile="C:\svn\SkyFireEMU\bin\MinSizeRel/worldserver.pdb"
 				SubSystem="1"
-				ImportLibrary="C:\svn\SkyFireEMU\src\server\worldserver\MinSizeRel\worldserver.lib"/>
+				ImportLibrary="C:\svn\SkyFireEMU\src\server\worldserver\MinSizeRel\worldserver.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/worldserver/worldserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 		</Configuration>
 		<Configuration
 			Name="RelWithDebInfo|Win32"
@@ -220,55 +330,67 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 			IntermediateDirectory="worldserver.dir\RelWithDebInfo"
 			ConfigurationType="1"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /MP"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				CompileAs="2"
-				DebugInformationFormat="3"
-				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
-				ExceptionHandling="1"
-				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-				InlineFunctionExpansion="1"
-				Optimization="2"
-				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="2"
-				WarningLevel="3"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
-				AssemblerListingLocation="RelWithDebInfo"
-				ObjectFile="$(IntDir)\"
-				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\RelWithDebInfo/worldserver.pdb"
-/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
-				MkTypLibCompatible="FALSE"
+				MkTypLibCompatible="false"
 				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
+				GenerateStublessProxies="true"
 				TypeLibraryName="$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"/>
+				ProxyFileName="$(InputName)_p.c"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions=" /Zm1000 /MP"
+				Optimization="2"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
+				ExceptionHandling="1"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
+				AssemblerListingLocation="RelWithDebInfo"
+				ObjectFile="$(IntDir)\"
+				ProgramDataBaseFileName="C:\svn\SkyFireEMU\bin\RelWithDebInfo/worldserver.pdb"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+				CompileAs="2"
+				DisableSpecificWarnings="4996;4355;4244;4985;4267;4619"
+				ForcedIncludeFiles="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\&quot;$(ConfigurationName)\&quot;;_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
+				AdditionalIncludeDirectories="C:\svn\SkyFireEMU\src\server\worldserver;C:\svn\SkyFireEMU;C:\svn\SkyFireEMU\dep\gsoap;C:\svn\SkyFireEMU\dep\sockets\include;C:\svn\SkyFireEMU\dep\SFMT;C:\svn\SkyFireEMU\dep\mersennetwister;C:\svn\SkyFireEMU\src\server\collision;C:\svn\SkyFireEMU\src\server\collision\Management;C:\svn\SkyFireEMU\src\server\shared;C:\svn\SkyFireEMU\src\server\shared\Configuration;C:\svn\SkyFireEMU\src\server\shared\Cryptography;C:\svn\SkyFireEMU\src\server\shared\Cryptography\Authentication;C:\svn\SkyFireEMU\src\server\shared\Database;C:\svn\SkyFireEMU\src\server\shared\DataStores;C:\svn\SkyFireEMU\src\server\shared\Debugging;C:\svn\SkyFireEMU\src\server\shared\Dynamic\CountedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic\LinkedReference;C:\svn\SkyFireEMU\src\server\shared\Dynamic;C:\svn\SkyFireEMU\src\server\shared\Logging;C:\svn\SkyFireEMU\src\server\shared\Packets;C:\svn\SkyFireEMU\src\server\shared\Policies;C:\svn\SkyFireEMU\src\server\shared\Threading;C:\svn\SkyFireEMU\src\server\shared\Utilities;C:\svn\SkyFireEMU\src\server\game;C:\svn\SkyFireEMU\src\server\game\Accounts;C:\svn\SkyFireEMU\src\server\game\Achievements;C:\svn\SkyFireEMU\src\server\game\Addons;C:\svn\SkyFireEMU\src\server\game\AI;C:\svn\SkyFireEMU\src\server\game\AI\CoreAI;C:\svn\SkyFireEMU\src\server\game\AI\EventAI;C:\svn\SkyFireEMU\src\server\game\AI\ScriptedAI;C:\svn\SkyFireEMU\src\server\game\AuctionHouse;C:\svn\SkyFireEMU\src\server\game\AuctionHouse\AuctionHouseBot;C:\svn\SkyFireEMU\src\server\game\Battlegrounds;C:\svn\SkyFireEMU\src\server\game\Battlegrounds\Zones;C:\svn\SkyFireEMU\src\server\game\Calendar;C:\svn\SkyFireEMU\src\server\game\Chat;C:\svn\SkyFireEMU\src\server\game\Chat\Channels;C:\svn\SkyFireEMU\src\server\game\Chat\Commands;C:\svn\SkyFireEMU\src\server\game\Combat;C:\svn\SkyFireEMU\src\server\game\Conditions;C:\svn\SkyFireEMU\src\server\game\DataStores;C:\svn\SkyFireEMU\src\server\game\DungeonFinding;C:\svn\SkyFireEMU\src\server\game\Entities;C:\svn\SkyFireEMU\src\server\game\Entities\Creature;C:\svn\SkyFireEMU\src\server\game\Entities\Corpse;C:\svn\SkyFireEMU\src\server\game\Entities\DynamicObject;C:\svn\SkyFireEMU\src\server\game\Entities\GameObject;C:\svn\SkyFireEMU\src\server\game\Entities\Item;C:\svn\SkyFireEMU\src\server\game\Entities\Item\Container;C:\svn\SkyFireEMU\src\server\game\Entities\Object;C:\svn\SkyFireEMU\src\server\game\Entities\Object\Updates;C:\svn\SkyFireEMU\src\server\game\Entities\Pet;C:\svn\SkyFireEMU\src\server\game\Entities\Player;C:\svn\SkyFireEMU\src\server\game\Entities\Totem;C:\svn\SkyFireEMU\src\server\game\Entities\Unit;C:\svn\SkyFireEMU\src\server\game\Entities\Vehicle;C:\svn\SkyFireEMU\src\server\game\Entities\Transport;C:\svn\SkyFireEMU\src\server\game\Events;C:\svn\SkyFireEMU\src\server\game\Globals;C:\svn\SkyFireEMU\src\server\game\Grids\Cells;C:\svn\SkyFireEMU\src\server\game\Grids\Notifiers;C:\svn\SkyFireEMU\src\server\game\Grids;C:\svn\SkyFireEMU\src\server\game\Groups;C:\svn\SkyFireEMU\src\server\game\Guilds;C:\svn\SkyFireEMU\src\server\game\Instances;C:\svn\SkyFireEMU\src\server\game\Loot;C:\svn\SkyFireEMU\src\server\game\Mails;C:\svn\SkyFireEMU\src\server\game\Maps;C:\svn\SkyFireEMU\src\server\game\Miscellaneous;C:\svn\SkyFireEMU\src\server\game\Movement;C:\svn\SkyFireEMU\src\server\game\Movement\MovementGenerators;C:\svn\SkyFireEMU\src\server\game\Movement\Waypoints;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP;C:\svn\SkyFireEMU\src\server\game\OutdoorPvP\Zones;C:\svn\SkyFireEMU\src\server\game\Pools;C:\svn\SkyFireEMU\src\server\game\PrecompiledHeaders;C:\svn\SkyFireEMU\src\server\game\Quests;C:\svn\SkyFireEMU\src\server\game\Reputation;C:\svn\SkyFireEMU\src\server\game\Scripting;C:\svn\SkyFireEMU\src\server\game\Server\Protocol;C:\svn\SkyFireEMU\src\server\game\Server\Protocol\Handlers;C:\svn\SkyFireEMU\src\server\game\Server;C:\svn\SkyFireEMU\src\server\game\Skills;C:\svn\SkyFireEMU\src\server\game\Spells;C:\svn\SkyFireEMU\src\server\game\Spells\Auras;C:\svn\SkyFireEMU\src\server\game\Tools;C:\svn\SkyFireEMU\src\server\game\Weather;C:\svn\SkyFireEMU\src\server\game\World;C:\svn\SkyFireEMU\src\server\worldserver\CommandLine;C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess;C:\svn\SkyFireEMU\src\server\worldserver\TCSoap;C:\svn\SkyFireEMU\src\server\worldserver\WorldThread;C:\svn\SkyFireEMU\dep\acelite;C:\svn\SkyFireEMU\dep\mysqllite\include;C:\OpenSSL-Win32\include;"
+			/>
 			<Tool
 				Name="VCPreLinkEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/worldserver/RelWithDebInfo&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
-			<Tool
-				Name="VCPostBuildEventTool"
-CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/worldserver/worldserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError"/>
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E make_directory C:/svn/SkyFireEMU/src/server/worldserver/RelWithDebInfo&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
@@ -278,144 +400,152 @@ CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy 
 				Version="0.0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories=""
+				GenerateDebugInformation="true"
 				ProgramDatabaseFile="C:\svn\SkyFireEMU\bin\RelWithDebInfo/worldserver.pdb"
-				GenerateDebugInformation="TRUE"
 				SubSystem="1"
-				ImportLibrary="C:\svn\SkyFireEMU\src\server\worldserver\RelWithDebInfo\worldserver.lib"/>
+				ImportLibrary="C:\svn\SkyFireEMU\src\server\worldserver\RelWithDebInfo\worldserver.lib"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -E copy C:/svn/SkyFireEMU/src/server/worldserver/worldserver.conf.dist C:/svn/SkyFireEMU/bin/$(ConfigurationName)/&#x0D;&#x0A;if errorlevel 1 goto VCReportError&#x0D;&#x0A;"
+			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
-			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\CMakeLists.txt">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/server/worldserver/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\server\worldserver\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\server\worldserver\CMakeLists.txt;C:\svn\SkyFireEMU\src\server\worldserver\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\server\worldserver\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/server/worldserver/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\server\worldserver\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\server\worldserver\CMakeLists.txt;C:\svn\SkyFireEMU\src\server\worldserver\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\server\worldserver\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="MinSizeRel|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/server/worldserver/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\server\worldserver\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\server\worldserver\CMakeLists.txt;C:\svn\SkyFireEMU\src\server\worldserver\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\server\worldserver\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="RelWithDebInfo|Win32">
-					<Tool
-					Name="VCCustomBuildTool"
-					Description="Building Custom Rule C:/svn/SkyFireEMU/src/server/worldserver/CMakeLists.txt"
-					CommandLine="&quot;C:\Program Files (x86)\CMake 2.8\bin\cmake.exe&quot; -HC:/svn/SkyFireEMU -BC:/svn/SkyFireEMU --check-stamp-file C:\svn\SkyFireEMU\src\server\worldserver\CMakeFiles\generate.stamp&#x0D;&#x0A;if errorlevel 1 goto VCReportError"
-					AdditionalDependencies="C:\svn\SkyFireEMU\src\server\worldserver\CMakeLists.txt;C:\svn\SkyFireEMU\src\server\worldserver\CMakeLists.txt;"
-					Outputs="C:\svn\SkyFireEMU\src\server\worldserver\CMakeFiles\generate.stamp"/>
-				</FileConfiguration>
-			</File>
 		<Filter
 			Name="Source Files"
-			Filter="">
+			>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\PrecompiledHeaders\worldPCH.cpp">
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\CommandLine\CliRunnable.cpp"
+				>
+			</File>
+			<File
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\Main.cpp"
+				>
+			</File>
+			<File
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\Master.cpp"
+				>
+			</File>
+			<File
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess\RASocket.cpp"
+				>
+			</File>
+			<File
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\TCSoap\TCSoap.cpp"
+				>
+			</File>
+			<File
+				RelativePath="C:\svn\SkyFireEMU\src\server\shared\Debugging\WheatyExceptionReport.cpp"
+				>
+			</File>
+			<File
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\PrecompiledHeaders\worldPCH.cpp"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
-					Name="VCCLCompilerTool"
-					PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-					UsePrecompiledHeader="1"
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="MinSizeRel|Win32">
+					Name="Release|Win32"
+					>
 					<Tool
-					Name="VCCLCompilerTool"
-					PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-					UsePrecompiledHeader="1"
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="RelWithDebInfo|Win32">
+					Name="MinSizeRel|Win32"
+					>
 					<Tool
-					Name="VCCLCompilerTool"
-					PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-					UsePrecompiledHeader="1"
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="RelWithDebInfo|Win32"
+					>
 					<Tool
-					Name="VCCLCompilerTool"
-					PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
-					UsePrecompiledHeader="1"
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="C:/svn/SkyFireEMU/src/server/worldserver/PrecompiledHeaders/worldPCH.h"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\CommandLine\CliRunnable.cpp">
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\WorldThread\WorldRunnable.cpp"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess\RASocket.cpp">
-			</File>
-			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\TCSoap\TCSoap.cpp">
-			</File>
-			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\WorldThread\WorldRunnable.cpp">
-			</File>
-			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\Main.cpp">
-			</File>
-			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\Master.cpp">
-			</File>
-			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\shared\Debugging\WheatyExceptionReport.cpp">
-			</File>
-			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\worldserver.rc">
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\worldserver.rc"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="">
+			>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\PrecompiledHeaders\worldPCH.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\CommandLine\CliRunnable.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\CommandLine\CliRunnable.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\Master.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess\RASocket.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess\RASocket.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess\SocketDefines.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\resource.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\TCSoap\TCSoap.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\RemoteAccess\SocketDefines.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\WorldThread\WorldRunnable.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\TCSoap\TCSoap.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\Master.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\shared\Debugging\WheatyExceptionReport.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\resource.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\PrecompiledHeaders\worldPCH.h"
+				>
 			</File>
 			<File
-				RelativePath="C:\svn\SkyFireEMU\src\server\shared\Debugging\WheatyExceptionReport.h">
+				RelativePath="C:\svn\SkyFireEMU\src\server\worldserver\WorldThread\WorldRunnable.h"
+				>
 			</File>
 		</Filter>
 	</Files>
