@@ -884,13 +884,13 @@ void BattlegroundMgr::BuildBattlegroundListPacket(WorldPacket *data, const uint6
 
     uint32 win_kills = plr->GetRandomWinner() ? BG_REWARD_WINNER_HONOR_LAST : BG_REWARD_WINNER_HONOR_FIRST;
     uint32 win_arena = plr->GetRandomWinner() ? BG_REWARD_WINNER_ARENA_LAST : BG_REWARD_WINNER_ARENA_FIRST;
-    uint32 loos_kills = plr->GetRandomWinner() ? BG_REWARD_LOOSER_HONOR_LAST : BG_REWARD_LOOSER_HONOR_FIRST;
+    uint32 lose_kills = plr->GetRandomWinner() ? BG_REWARD_LOOSER_HONOR_LAST : BG_REWARD_LOOSER_HONOR_FIRST;
 
     win_kills = Trinity::Honor::hk_honor_at_level(plr->getLevel(), win_kills);
-    loos_kills = Trinity::Honor::hk_honor_at_level(plr->getLevel(), loos_kills);
+    lose_kills = Trinity::Honor::hk_honor_at_level(plr->getLevel(), lose_kills);
 
     data->Initialize(SMSG_BATTLEFIELD_LIST);
-    *data << uint8(0x2);                                    // unk
+    /**data << uint8(0x2);                                    // unk
     *data << uint8(0x31);                                   // unk
     *data << uint32(0);                                     // unk
     uint32 count = 0;
@@ -905,6 +905,20 @@ void BattlegroundMgr::BuildBattlegroundListPacket(WorldPacket *data, const uint6
     *data << uint32(loos_kills);                            // 3.3.3 lossHonor
     *data << uint32(win_kills);                             // 3.3.3 winHonor
     *data << uint64(guid);                                  // battlemaster guid
+    */
+    *data << uint8(0x2);    // unk flags 1 << 7, 1 << 6, 1 << 5
+    *data << uint8(0x31);    // unk
+    *data << uint32(win_kills);     // Call to arms win honor bonus
+    *data << uint64(guid);  // battlemaster guid?
+    *data << uint32(win_kills);    // random BG win honor bonus
+    *data << uint8(0x2D);    // unk
+    *data << uint32(lose_kills);    // Call to arms lose honor bonus
+    *data << uint32(win_arena);    // Call to arms win conquest bonus
+    *data << uint32(win_arena);    // random BG win conquest bonus
+    *data << uint32(0);    // unk
+
+    *data << uint32(0);     // count of uints appended to the end
+    *data << uint32(lose_kills);    // random BG lose honor bonus
 }
 
 void BattlegroundMgr::SendToBattleground(Player *pl, uint32 instanceId, BattlegroundTypeId bgTypeId)
