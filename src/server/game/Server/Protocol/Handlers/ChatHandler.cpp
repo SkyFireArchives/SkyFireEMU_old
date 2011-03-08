@@ -20,7 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "gamePCH.h"
 #include "Common.h"
 #include "ObjectAccessor.h"
 #include "ObjectMgr.h"
@@ -71,7 +70,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
     uint32 type = 0;
     uint32 lang;
 
-    // Les types sont maintenant gerï¿½s par opcode, un opcode par type
+    // Les types sont maintenant gerés par opcode, un opcode par type
     // Changement en place depuis la 4.0.1 13164
     switch(recv_data.GetOpcode())
     {
