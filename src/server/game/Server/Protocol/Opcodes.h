@@ -732,7 +732,7 @@ enum Opcodes
     SMSG_FORCE_TURN_RATE_CHANGE                      = 0x0375E, //
     CMSG_FORCE_TURN_RATE_CHANGE_ACK                  = 0x0E384, // 4.0.6a 13623
     MSG_PVP_LOG_DATA                                 = 0x100FA, //
-    CMSG_LEAVE_BATTLEFIELD                           = 0x07757, //
+    CMSG_LEAVE_BATTLEFIELD                           = 0x07DC4, // 4.0.6a 13623
     CMSG_AREA_SPIRIT_HEALER_QUERY                    = 0x0A6C0, // 4.0.6a 13623
     CMSG_AREA_SPIRIT_HEALER_QUEUE                    = 0x0F388, // 4.0.6a 13623
     SMSG_AREA_SPIRIT_HEALER_TIME                     = 0x0A457, //
