@@ -47,7 +47,7 @@ SpellEntry::SpellEntry(SpellEntry_n const* spell)
     SpellIconID = spell->SpellIconID;
     activeIconID = spell->activeIconID;
     SpellName = spell->SpellName;
-    Rank = spell->Rank;
+    SpellShapeshiftId = spell->SpellShapeshiftId;
     SchoolMask = spell->SchoolMask;
     runeCostID = spell->runeCostID;
     SpellDifficultyId = spell->SpellDifficultyId;
