@@ -731,7 +731,7 @@ enum Opcodes
     CMSG_FORCE_SWIM_BACK_SPEED_CHANGE_ACK            = 0x0E8C4, // 4.0.6a 13623
     SMSG_FORCE_TURN_RATE_CHANGE                      = 0x0375E, //
     CMSG_FORCE_TURN_RATE_CHANGE_ACK                  = 0x0E384, // 4.0.6a 13623
-    MSG_PVP_LOG_DATA                                 = 0x100FA, //
+    MSG_PVP_LOG_DATA                                 = 0x100FA, // The opcode is 0x00C0E. Nulled out until the packet struct is fixed.
     CMSG_LEAVE_BATTLEFIELD                           = 0x07DC4, // 4.0.6a 13623
     CMSG_AREA_SPIRIT_HEALER_QUERY                    = 0x0A6C0, // 4.0.6a 13623
     CMSG_AREA_SPIRIT_HEALER_QUEUE                    = 0x0F388, // 4.0.6a 13623
