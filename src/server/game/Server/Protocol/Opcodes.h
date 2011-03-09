@@ -720,7 +720,7 @@ enum Opcodes
     SMSG_BATTLEFIELD_STATUS2                         = 0x0051E, // 4.0.6a 13623
     SMSG_BATTLEFIELD_STATUS3                         = 0x0081C, // 4.0.6a 13623
     SMSG_BATTLEFIELD_STATUS4                         = 0x04C4C, // 4.0.6a 13623
-    CMSG_BATTLEFIELD_PORT                            = 0x100EF, //
+    CMSG_BATTLEFIELD_PORT                            = 0x00E11, // 4.0.6a 13623
     MSG_INSPECT_HONOR_STATS                          = 0x100F0, //
     CMSG_BATTLEMASTER_HELLO                          = 0x06D57, //
     CMSG_MOVE_START_SWIM_CHEAT                       = 0x026C0, // 4.0.6a 13623
@@ -732,7 +732,7 @@ enum Opcodes
     SMSG_FORCE_TURN_RATE_CHANGE                      = 0x0375E, //
     CMSG_FORCE_TURN_RATE_CHANGE_ACK                  = 0x0E384, // 4.0.6a 13623
     MSG_PVP_LOG_DATA                                 = 0x100FA, //
-    CMSG_LEAVE_BATTLEFIELD                           = 0x07757, //
+    CMSG_LEAVE_BATTLEFIELD                           = 0x07DC4, // 4.0.6a 13623
     CMSG_AREA_SPIRIT_HEALER_QUERY                    = 0x0A6C0, // 4.0.6a 13623
     CMSG_AREA_SPIRIT_HEALER_QUEUE                    = 0x0F388, // 4.0.6a 13623
     SMSG_AREA_SPIRIT_HEALER_TIME                     = 0x0A457, //

@@ -328,13 +328,12 @@ void WorldSession::HandleBattleFieldPortOpcode(WorldPacket &recv_data)
 {
     sLog.outDebug("WORLD: Recvd CMSG_BATTLEFIELD_PORT Message");
 
-    uint8 type;                                             // arenatype if arena
-    uint8 unk2;                                             // unk, can be 0x0 (may be if was invited?) and 0x1
+    uint8 action;                                           // enter battle 128, leave queue 0
+    // then goes uint64 that we sent to client in SMSG_BATTLEFIELD_STATUS3
     uint32 bgTypeId_;                                       // type id from dbc
-    uint16 unk;                                             // 0x1F90 constant?
-    uint8 action;                                           // enter battle 0x1, leave queue 0x0
+    uint32 type;                                             // arenatype if arena
 
-    recv_data >> type >> unk2 >> bgTypeId_ >> unk >> action;
+    recv_data >> action >> bgTypeId_ >> type;
 
     if (!sBattlemasterListStore.LookupEntry(bgTypeId_))
     {
@@ -349,7 +348,7 @@ void WorldSession::HandleBattleFieldPortOpcode(WorldPacket &recv_data)
 
     //get GroupQueueInfo from BattlegroundQueue
     BattlegroundTypeId bgTypeId = BattlegroundTypeId(bgTypeId_);
-    BattlegroundQueueTypeId bgQueueTypeId = BattlegroundMgr::BGQueueTypeId(bgTypeId, type);
+    BattlegroundQueueTypeId bgQueueTypeId = BattlegroundMgr::BGQueueTypeId(bgTypeId, (uint8)type);
     BattlegroundQueue& bgQueue = sBattlegroundMgr.m_BattlegroundQueues[bgQueueTypeId];
     //we must use temporary variable, because GroupQueueInfo pointer can be deleted in BattlegroundQueue::RemovePlayer() function
     GroupQueueInfo ginfo;
@@ -404,7 +403,7 @@ void WorldSession::HandleBattleFieldPortOpcode(WorldPacket &recv_data)
     }
     uint32 queueSlot = _player->GetBattlegroundQueueIndex(bgQueueTypeId);
     WorldPacket data;
-    switch(action)
+    switch(action >> 7)
     {
         case 1:                                         // port to battleground
             if (!_player->IsInvitedForBattlegroundQueueType(bgQueueTypeId))
@@ -476,6 +475,7 @@ void WorldSession::HandleLeaveBattlefieldOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Recvd CMSG_LEAVE_BATTLEFIELD Message");
 
+    // uint64
     recv_data.read_skip<uint8>();                           // unk1
     recv_data.read_skip<uint8>();                           // unk2
     recv_data.read_skip<uint32>();                          // BattlegroundTypeId

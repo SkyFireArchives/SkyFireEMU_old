@@ -189,8 +189,59 @@ void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battlegro
         *data << uint32(QueueSlot);                         // queue id (0...1)
         return;
     }
+
+    if(StatusID == STATUS_WAIT_QUEUE)
+    {
+        data->Initialize(SMSG_BATTLEFIELD_STATUS4, (1+4+1+1+1+4+1+4+1+4+1+8+1));
     
-    // todo handle SMSG_BATTLEFIELD_STATUS2-4 here with new structure
+        *data << uint8(0); // unk
+        *data << uint32(0); // unk
+        *data << uint8(0); // unk
+        *data << uint8(0); // unk
+        *data << uint8(0); // unk
+        *data << uint32(0); // unk
+        *data << uint8(0); // unk
+        *data << uint32(0); // unk
+        *data << uint8(0); // unk
+        *data << uint32(0); // unk
+        *data << uint8(0); // unk
+        *data << uint64(0); // unk
+        *data << uint8(0); // unk
+    }
+    else if(StatusID == STATUS_WAIT_JOIN)
+    {
+        data->Initialize(SMSG_BATTLEFIELD_STATUS3, (1+1+4+8+4+8+4+4+1));
+    
+        *data << uint8(bg->isRated() ? 128 : 0);   // 128 = is rated, 0 = skirmish
+        *data << uint8(0); // unk
+        *data << uint32(bg->GetClientInstanceID()); // bg instanceid
+        // uint64 that gets sent back to us in CMSG_BATTLEFIELD_PORT. split into subfields for convenience
+        *data << uint32(bg->GetTypeID());
+        *data << uint32(arenatype);
+
+        *data << uint32(QueueSlot); // queue slot
+        *data << uint8(arenatype);  // arena type
+        *data << uint32(Time1); // time to join left
+        *data << uint32(bg->GetMapId()); // map id
+        *data << uint8(0); // unk
+    }
+    else if(StatusID == STATUS_IN_PROGRESS)
+    {
+        data->Initialize(SMSG_BATTLEFIELD_STATUS2, (1+4+4+4+8+4+1+1+4+8));
+
+        *data << uint8(bg->isRated() ? 128 : 0);    // 128 = rated, 64 = unk flag, 0 = skirmish
+        *data << uint32(0); // unk
+        *data << uint32(QueueSlot); // queue slot
+        *data << uint32(bg->GetMapId()); // map id
+        *data << uint64(0); // unk
+        *data << uint32(0); // unk
+        *data << uint8(arenatype);   // arena type
+        *data << uint8(0); // unk
+        *data << uint32(0); // unk
+        *data << uint8(0); // unk
+    }
+    
+    // Pre Cata structure:
     /*
     data->Initialize(SMSG_BATTLEFIELD_STATUS2, (4+8+1+1+4+1+4+4+4));
     *data << uint32(QueueSlot);                             // queue id (0...1) - player can be in 2 queues in time
@@ -888,8 +939,8 @@ void BattlegroundMgr::BuildBattlegroundListPacket(WorldPacket *data, const uint6
     uint32 win_arena = plr->GetRandomWinner() ? BG_REWARD_WINNER_ARENA_LAST : BG_REWARD_WINNER_ARENA_FIRST;
     uint32 lose_kills = plr->GetRandomWinner() ? BG_REWARD_LOOSER_HONOR_LAST : BG_REWARD_LOOSER_HONOR_FIRST;
 
-    win_kills = Trinity::Honor::hk_honor_at_level(plr->getLevel(), win_kills);
-    lose_kills = Trinity::Honor::hk_honor_at_level(plr->getLevel(), lose_kills);
+    win_kills = Trinity::Honor::hk_honor_at_level(plr->getLevel(), (float)win_kills);
+    lose_kills = Trinity::Honor::hk_honor_at_level(plr->getLevel(), (float)lose_kills);
 
     data->Initialize(SMSG_BATTLEFIELD_LIST);
 
