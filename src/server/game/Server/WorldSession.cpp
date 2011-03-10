@@ -194,8 +194,8 @@ bool WorldSession::Update(uint32 diff)
                         packet->GetOpcode());
         #endif*/
 
-		sLog.outDebug("SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode()>OPCODE_NOT_FOUND?"nf":LookupOpcodeName(packet->GetOpcode()));
-		if (packet->GetOpcode() >= NUM_MSG_TYPES)
+        sLog.outString("SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode()>OPCODE_NOT_FOUND?"nf":LookupOpcodeName(packet->GetOpcode()));
+        if (packet->GetOpcode() >= NUM_MSG_TYPES)
         {
             sLog.outError("SESSION: received non-existed opcode %s (0x%.4X)",
                 LookupOpcodeName(packet->GetOpcode()),
@@ -731,12 +731,10 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
         data >> mi->t_seat;
 
         if (mi->flags2 & MOVEMENTFLAG2_INTERPOLATED_MOVEMENT)
-        {
             data >> mi->t_time2;
-        }
 
-        if(mi->pos.m_positionX != mi->t_pos.m_positionX)
-            if(GetPlayer()->GetTransport())
+        if (mi->pos.m_positionX != mi->t_pos.m_positionX)
+            if (GetPlayer()->GetTransport())
                 GetPlayer()->GetTransport()->UpdatePosition(mi);
     }
 
@@ -747,8 +745,8 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
 
     if (mi->flags2 & MOVEMENTFLAG2_INTERPOLATED_TURNING)    // 4.0.6
     {
-	 data << mi->fallTime;
-	 data << mi->j_zspeed;
+	 data >> mi->fallTime;
+	 data >> mi->j_zspeed;
 
         if (mi->flags & MOVEMENTFLAG_JUMPING)
         {
@@ -756,8 +754,8 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
            data >> mi->j_cosAngle;
            data >> mi->j_xyspeed;
         }
-
     }
+
 
     if (mi->flags & MOVEMENTFLAG_SPLINE_ELEVATION)
     {
@@ -781,6 +779,9 @@ void WorldSession::WriteMovementInfo(WorldPacket *data, MovementInfo *mi)
        *data << mi->t_pos.PositionXYZOStream();
        *data << mi->t_time;
        *data << mi->t_seat;
+
+        if (mi->flags2 & MOVEMENTFLAG2_INTERPOLATED_MOVEMENT)
+            *data >> mi->t_time2;
     }
 
     if ((mi->HasMovementFlag(MovementFlags(MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING))) || (mi->flags2 & MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING))
@@ -795,9 +796,9 @@ void WorldSession::WriteMovementInfo(WorldPacket *data, MovementInfo *mi)
 
         if (mi->flags & MOVEMENTFLAG_JUMPING)
         {
-           *data >> mi->j_sinAngle;
-           *data >> mi->j_cosAngle;
-           *data >> mi->j_xyspeed;
+           *data << mi->j_sinAngle;
+           *data << mi->j_cosAngle;
+           *data << mi->j_xyspeed;
         }
     }
 
