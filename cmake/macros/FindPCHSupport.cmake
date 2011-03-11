@@ -295,8 +295,8 @@ MACRO(ADD_NATIVE_PRECOMPILED_HEADER _targetName _input)
 	IF( NOT "${ARGN}" STREQUAL "0")
 	SET(newProperties "${newProperties}  /FI\"${_name}.h\"")
 	ELSE( NOT "${ARGN}" STREQUAL "0")
-	# enable edit and continue if PCH is handled properly
-	SET(newProperties "${newProperties}  /ZI")
+	# enable edit and continue if PCH is handled properly and we are building in debug
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
 	ENDIF( NOT "${ARGN}" STREQUAL "0")
     SET_TARGET_PROPERTIES(${_targetName} PROPERTIES COMPILE_FLAGS "${newProperties}")
 
