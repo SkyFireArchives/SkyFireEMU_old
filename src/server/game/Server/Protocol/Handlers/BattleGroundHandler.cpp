@@ -233,7 +233,7 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket & recv_data)
 void WorldSession::HandleBattlegroundPlayerPositionsOpcode(WorldPacket & /*recv_data*/)
 {
                                                             // empty opcode
-    sLog.outDebug("WORLD: Recvd MSG_BATTLEGROUND_PLAYER_POSITIONS Message");
+    sLog.outDebug("WORLD: Recvd CMSG_BATTLEGROUND_PLAYER_POSITIONS Message");
 
     Battleground *bg = _player->GetBattleground();
     if (!bg)                                                 // can't be received if player not in battleground
@@ -254,7 +254,7 @@ void WorldSession::HandleBattlegroundPlayerPositionsOpcode(WorldPacket & /*recv_
                 if (horde_plr)
                     ++count2;
 
-                WorldPacket data(MSG_BATTLEGROUND_PLAYER_POSITIONS, (4+4+16*count1+16*count2));
+                WorldPacket data(SMSG_BATTLEGROUND_PLAYER_POSITIONS, (4+4+16*count1+16*count2));
                 data << count1;                                     // alliance flag holders count - obsolete, now always 0
                 /*for (uint8 i = 0; i < count1; ++i)
                 {
@@ -286,7 +286,7 @@ void WorldSession::HandleBattlegroundPlayerPositionsOpcode(WorldPacket & /*recv_
         case BATTLEGROUND_AV:
             {
                 //for other BG types - send default
-                WorldPacket data(MSG_BATTLEGROUND_PLAYER_POSITIONS, (4+4));
+                WorldPacket data(SMSG_BATTLEGROUND_PLAYER_POSITIONS, (4+4));
                 data << uint32(0);
                 data << uint32(0);
                 SendPacket(&data);

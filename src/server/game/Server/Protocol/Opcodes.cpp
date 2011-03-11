@@ -744,7 +744,8 @@ void InitOpcodeTable()
     OPCODE( SMSG_WARDEN_DATA,                             STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_WARDEN_DATA,                             STATUS_LOGGEDIN, &WorldSession::HandleWardenDataOpcode          );
     OPCODE( SMSG_GROUP_JOINED_BATTLEGROUND,               STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
-    OPCODE( MSG_BATTLEGROUND_PLAYER_POSITIONS,            STATUS_LOGGEDIN, &WorldSession::HandleBattlegroundPlayerPositionsOpcode);
+    OPCODE( CMSG_BATTLEGROUND_PLAYER_POSITIONS,           STATUS_LOGGEDIN, &WorldSession::HandleBattlegroundPlayerPositionsOpcode);
+    OPCODE( SMSG_BATTLEGROUND_PLAYER_POSITIONS,           STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_PET_STOP_ATTACK,                         STATUS_LOGGEDIN, &WorldSession::HandlePetStopAttack             );
     OPCODE( SMSG_BINDER_CONFIRM,                          STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_BATTLEGROUND_PLAYER_JOINED,              STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
