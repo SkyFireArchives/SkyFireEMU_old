@@ -1272,6 +1272,25 @@ struct MapDifficultyEntry
     //DBCString difficultyString;                           // 6
 };
 
+struct MountCapabilityEntry
+{
+    uint32  id;                                             // 0 index
+    uint32  flag;                                           // 1 some flag
+    uint32  reqSkillLevel;                                  // 2 skill level of riding required
+    //uint32 unk;                                           // 3 unk
+    //uint32 empty;                                         // 4 empty
+    uint32  reqSpell;                                       // 5 spell that has to be known to you
+    uint32  spell;                                          // 6 spell to cast to apply mount speed effects
+    uint32  map;                                            // 7 map where this is applicable
+};
+
+#define MAX_MOUNT_TYPE_COLUMN 17
+struct MountTypeEntry
+{
+    uint32  id;                                             // 0 index
+    uint32  capabilities[MAX_MOUNT_TYPE_COLUMN];            // 1-17 capability ids from MountCapability.dbc
+    //uint32  empty[7];                                     // 18-24 empty. maybe continues capabilities
+};
 
 struct MovieEntry
 {
