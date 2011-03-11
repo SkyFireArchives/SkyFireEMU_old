@@ -119,7 +119,7 @@ enum Opcodes
     CMSG_GROUP_DISBAND                               = 0x0BE88, // 4.0.6a 13623
     SMSG_GROUP_DESTROYED                             = 0x022CC, // 4.0.6a 13623
     SMSG_GROUP_LIST                                  = 0x06D8C, // 4.0.6a 13623
-    SMSG_PARTY_MEMBER_STATS                          = 0x07654, // 4.0.6a 13623
+    SMSG_PARTY_MEMBER_STATS                          = 0x029AC, // 4.0.6a 13623
     SMSG_PARTY_COMMAND_RESULT                        = 0x026E0, // 4.0.6a 13623
     CMSG_GUILD_CREATE                                = 0x1000C, //
     CMSG_GUILD_INVITE                                = 0x02DA8, // 4.0.6a 13623
@@ -570,6 +570,8 @@ enum Opcodes
     CMSG_BATTLEFIELD_LIST                            = 0x00508, // 4.0.6a 13623
     SMSG_BATTLEFIELD_LIST                            = 0x0490C, // 4.0.6a 13623
     CMSG_BATTLEFIELD_JOIN                            = 0x00C91, // 4.0.6a 13623
+    CMSG_REQUEST_RATED_BG_INFO                       = 0x08501, // 4.0.6a 13623
+    CMSG_REQUEST_PVP_OPTIONS_ENABLED                 = 0x00188, // 4.0.6a 13623
     SMSG_BATTLEGROUND_PLAYER_JOINED                  = 0x10101, //
     SMSG_BATTLEGROUND_PLAYER_LEFT                    = 0x10102, //
     CMSG_BATTLEMASTER_JOIN_RATED                     = 0x10104, //
@@ -721,7 +723,8 @@ enum Opcodes
     SMSG_BATTLEFIELD_STATUS3                         = 0x0081C, // 4.0.6a 13623
     SMSG_BATTLEFIELD_STATUS4                         = 0x04C4C, // 4.0.6a 13623
     CMSG_BATTLEFIELD_PORT                            = 0x00E11, // 4.0.6a 13623
-    MSG_INSPECT_HONOR_STATS                          = 0x100F0, //
+    CMSG_INSPECT_HONOR_STATS                         = 0x00E93, // 4.0.6a 13623
+    SMSG_INSPECT_HONOR_STATS                         = 0x0005E, // 4.0.6a 13623
     CMSG_BATTLEMASTER_HELLO                          = 0x06D57, //
     CMSG_MOVE_START_SWIM_CHEAT                       = 0x026C0, // 4.0.6a 13623
     CMSG_MOVE_STOP_SWIM_CHEAT                        = 0x06988, // 4.0.6a 13623
@@ -741,7 +744,8 @@ enum Opcodes
     SMSG_WARDEN_DATA                                 = 0x0F8A0, // 4.0.6a 13623
     CMSG_WARDEN_DATA                                 = 0x02F84, // 4.0.6a 13623
     SMSG_GROUP_JOINED_BATTLEGROUND                   = 0x100FE, //
-    MSG_BATTLEGROUND_PLAYER_POSITIONS                = 0x00293, // 4.0.6a 13623
+    CMSG_BATTLEGROUND_PLAYER_POSITIONS               = 0x00293, // 4.0.6a 13623
+    SMSG_BATTLEGROUND_PLAYER_POSITIONS               = 0x0045C, // 4.0.6a 13623
     CMSG_PET_STOP_ATTACK                             = 0x10100, //
     SMSG_BINDER_CONFIRM                              = 0x033C4, // 4.0.6a 13623
     SMSG_ADDON_INFO                                  = 0x0EA80, // 4.0.6a 13623 
@@ -879,7 +883,7 @@ enum Opcodes
     CMSG_SET_TITLE                                   = 0x0EC8C, // 4.0.6a 13623
     CMSG_CANCEL_MOUNT_AURA                           = 0x064CC, // 4.0.6a 13623  not sure
     SMSG_ARENA_ERROR                                 = 0x02FEC, // 4.0.6a 13623
-    MSG_INSPECT_ARENA_TEAMS                          = 0x00E93, //
+    MSG_INSPECT_ARENA_TEAMS                          = 0x0FDA4, // 4.0.6a 13623
     SMSG_DEATH_RELEASE_LOC                           = 0x033C8, // 4.0.6a 13623
     CMSG_CANCEL_TEMP_ENCHANTMENT                     = 0x0E484, // 4.0.6a 13623
     SMSG_FORCED_DEATH_UPDATE                         = 0x0FFE8, // 4.0.6a 13623

@@ -1146,7 +1146,6 @@ void Group::SendUpdate()
             data << uint8(m_lootThreshold);                 // loot threshold
             data << uint8(m_dungeonDifficulty);             // Dungeon Difficulty
             data << uint8(m_raidDifficulty);                // Raid Difficulty
-            data << uint8(0);                               // 3.3
         }
 
         player->GetSession()->SendPacket(&data);
@@ -1211,8 +1210,6 @@ void Group::OfflineReadyCheck()
 
 bool Group::_addMember(const uint64 &guid, const char* name)
 {
-	return false;
-
     // get first not-full group
     uint8 groupid = 0;
     if (m_subGroupsCounts)
@@ -1236,8 +1233,6 @@ bool Group::_addMember(const uint64 &guid, const char* name)
 
 bool Group::_addMember(const uint64 &guid, const char* name, uint8 group)
 {
-	return false;
-
     if (IsFull())
         return false;
 
@@ -1834,6 +1829,8 @@ InstanceGroupBind* Group::GetBoundInstance(MapEntry const* mapEntry)
 {
     if (!mapEntry)
         return NULL;
+
+    return NULL;
 /*
     Difficulty difficulty = GetDifficulty(mapEntry->IsRaid()); // - Not work? cause crash when incorrect difficulty.
 

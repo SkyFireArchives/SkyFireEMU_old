@@ -743,7 +743,11 @@ void WorldSession::BuildPartyMemberStatsChangedPacket(Player *player, WorldPacke
     if (mask & GROUP_UPDATE_FLAG_AURAS)
     {
         const uint64& auramask = player->GetAuraUpdateMaskForRaid();
+        *data << uint8(0); // if true client clears auras that are not covered by auramask
+        // TODO: looks like now client requires all active auras to be in the beginning of the auramask
+        // e.g. if you have holes in the aura mask the values after are ignored.
         *data << uint64(auramask);
+        *data << uint32(64);  // how many bits client reads from auramask
         for (uint32 i = 0; i < MAX_AURAS; ++i)
         {
             if (auramask & (uint64(1) << i))
@@ -820,20 +824,14 @@ void WorldSession::BuildPartyMemberStatsChangedPacket(Player *player, WorldPacke
             *data << (uint16) 0;
     }
 
-    if (mask & GROUP_UPDATE_FLAG_VEHICLE_SEAT)
-    {
-        if (player->GetVehicle()){
-            Vehicle* vv=player->GetVehicle();
-            *data << (uint32) vv->GetVehicleInfo()->m_seatID[player->m_movementInfo.t_seat];
-        }
-    }
-
     if (mask & GROUP_UPDATE_FLAG_PET_AURAS)
     {
         if (pet)
         {
+            *data << uint8(0); // if true client clears auras that are not covered by auramask
             const uint64& auramask = pet->GetAuraUpdateMaskForRaid();
             *data << uint64(auramask);
+            *data << uint32(64);  // how many bits client reads from auramask
             for (uint32 i = 0; i < MAX_AURAS; ++i)
             {
                 if (auramask & (uint64(1) << i))
@@ -845,7 +843,22 @@ void WorldSession::BuildPartyMemberStatsChangedPacket(Player *player, WorldPacke
             }
         }
         else
-            *data << (uint64) 0;
+            *data << uint8(1) << (uint64) 0 << uint32(0);
+    }
+
+    if (mask & GROUP_UPDATE_FLAG_VEHICLE_SEAT)
+    {
+        if (player->GetVehicle()){
+            Vehicle* vv=player->GetVehicle();
+            *data << (uint32) vv->GetVehicleInfo()->m_seatID[player->m_movementInfo.t_seat];
+        }
+    }
+
+    if (mask & GROUP_UPDATE_FLAG_UNK)   // 4.0.6 unk
+    {
+        *data << (uint32) 0;
+        *data << (uint32) 0;
+        // string
     }
 }
 
@@ -892,8 +905,12 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
     data << (uint16) player->GetPositionY();                // GROUP_UPDATE_FLAG_POSITION
 
     uint64 auramask = 0;
+    data << uint8(0); // if true client clears auras that are not covered by auramask
+    // TODO: looks like now client requires all active auras to be in the beginning of the auramask
+    // e.g. if you have holes in the aura mask the values after are ignored.
     size_t maskPos = data.wpos();
     data << (uint64) auramask;                              // placeholder
+    data << uint32(64);  // how many bits client reads from auramask
     for (uint8 i = 0; i < MAX_AURAS; ++i)
     {
         if (AuraApplication * aurApp = player->GetVisibleAura(i))
@@ -918,8 +935,12 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
         data << (uint16) pet->GetMaxPower(petpowertype);    // GROUP_UPDATE_FLAG_PET_MAX_POWER
 
         uint64 petauramask = 0;
+        data << uint8(0); // if true client clears auras that are not covered by auramask
+        // TODO: looks like now client requires all active auras to be in the beginning of the auramask
+        // e.g. if you have holes in the aura mask the values after are ignored.
         size_t petMaskPos = data.wpos();
         data << (uint64) petauramask;                       // placeholder
+        data << uint32(64);  // how many bits client reads from auramask
         for (uint8 i = 0; i < MAX_AURAS; ++i)
         {
             if (AuraApplication * auraApp = pet->GetVisibleAura(i))

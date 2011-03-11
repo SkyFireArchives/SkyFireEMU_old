@@ -332,6 +332,9 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
          *data << uint8(bg->GetWinner());                    // who win
     }
 
+    int flagCounter = 0;
+    
+    uint8 updateFlags;
     Battleground::BattlegroundScoreMap::const_iterator itr2 = bg->GetPlayerScoresBegin();
     for (Battleground::BattlegroundScoreMap::const_iterator itr = itr2; itr != bg->GetPlayerScoresEnd();)
     {
@@ -345,7 +348,30 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
         uint32 team = bg->GetPlayerTeam(itr2->first);
         if (!team && plr)
             team = plr->GetBGTeam();
-        *data << uint8(128 + 64 + 16 + (team == ALLIANCE ? 32 : 0)); // update flags + team
+
+        if(flagCounter % 2 == 0)
+        {
+            // set all flags except team
+            updateFlags = 255 - 32 - 2;
+            if(team == ALLIANCE)
+            {
+                updateFlags |= 32;
+            }
+        }
+        else
+        {
+            if(team == ALLIANCE)
+            {
+                updateFlags |= 2;
+            }
+            *data << uint8(updateFlags);
+        }
+        flagCounter++;	
+    }
+    if(flagCounter > 0 && flagCounter % 2 != 0)
+    {
+        // uneven number of players so need to send last field
+        *data << uint8(updateFlags);
     }
 
     itr2 = bg->GetPlayerScoresBegin();
