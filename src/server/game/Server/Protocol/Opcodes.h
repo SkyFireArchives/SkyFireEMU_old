@@ -153,9 +153,9 @@ enum Opcodes
     CMSG_MESSAGECHAT_PARTY_LEADER                    = 0x0080B, // 4.0.6a 13623
     CMSG_MESSAGECHAT_RAID                            = 0x00803, // 4.0.6a 13623
     CMSG_MESSAGECHAT_RAID_LEADER                     = 0x00863, // 4.0.6a 13623
-    CMSG_MESSAGECHAT_BATTLEGROUND                    = 0x01A10, //
-    CMSG_MESSAGECHAT_BATTLEGROUND_LEADER             = 0x07A80, //
-    CMSG_MESSAGECHAT_RAID_WARNING                    = 0x04A88, //
+    CMSG_MESSAGECHAT_BATTLEGROUND                    = 0x00063, // 4.0.6a 13623
+    CMSG_MESSAGECHAT_BATTLEGROUND_LEADER             = 0x00860, // 4.0.6a 13623
+    CMSG_MESSAGECHAT_RAID_WARNING                    = 0x00061, // 4.0.6a 13623
     SMSG_MESSAGECHAT                                 = 0x061E4, // 4.0.6a 13623
     CMSG_JOIN_CHANNEL                                = 0x00002, // 4.0.6a 13623
     CMSG_LEAVE_CHANNEL                               = 0x0000B, // 4.0.6a 13623
