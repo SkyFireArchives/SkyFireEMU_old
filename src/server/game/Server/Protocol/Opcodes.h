@@ -119,7 +119,7 @@ enum Opcodes
     CMSG_GROUP_DISBAND                               = 0x0BE88, // 4.0.6a 13623
     SMSG_GROUP_DESTROYED                             = 0x022CC, // 4.0.6a 13623
     SMSG_GROUP_LIST                                  = 0x06D8C, // 4.0.6a 13623
-    SMSG_PARTY_MEMBER_STATS                          = 0x07654, // 4.0.6a 13623
+    SMSG_PARTY_MEMBER_STATS                          = 0x029AC, // 4.0.6a 13623
     SMSG_PARTY_COMMAND_RESULT                        = 0x026E0, // 4.0.6a 13623
     CMSG_GUILD_CREATE                                = 0x1000C, //
     CMSG_GUILD_INVITE                                = 0x02DA8, // 4.0.6a 13623
