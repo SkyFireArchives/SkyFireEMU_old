@@ -1187,7 +1187,7 @@ enum Opcodes
     CMSG_QUERY_VEHICLE_STATUS                        = 0x101FA, //
     SMSG_BATTLEGROUND_INFO_THROTTLED                 = 0x075C4, // 4.0.6a 13623
     SMSG_PLAYER_VEHICLE_DATA                         = 0x0A5A4, // 4.0.6a 13623
-    CMSG_PLAYER_VEHICLE_ENTER                        = 0x101FD, //
+    CMSG_PLAYER_VEHICLE_ENTER                        = 0x0F9A4, // 4.0.6a 13623
     CMSG_EJECT_PASSENGER                             = 0x0F688, // 4.0.6a 13623
     SMSG_PET_GUIDS                                   = 0x0E4E8, // 4.0.6a 13623
     SMSG_CLIENTCACHE_VERSION                         = 0x02EC4, // 4.0.6a 13623
