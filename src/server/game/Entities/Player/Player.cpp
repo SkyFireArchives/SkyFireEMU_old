@@ -9661,25 +9661,13 @@ uint8 Player::FindEquipSlot(ItemPrototype const* proto, uint32 slot, bool swap) 
         {
             switch(proto->SubClass)
             {
-                case ITEM_SUBCLASS_ARMOR_LIBRAM:
-                    if (pClass == CLASS_PALADIN)
-                        slots[0] = EQUIPMENT_SLOT_RANGED;
-                    break;
-                case ITEM_SUBCLASS_ARMOR_IDOL:
-                    if (pClass == CLASS_DRUID)
-                        slots[0] = EQUIPMENT_SLOT_RANGED;
-                    break;
-                case ITEM_SUBCLASS_ARMOR_TOTEM:
-                    if (pClass == CLASS_SHAMAN)
-                        slots[0] = EQUIPMENT_SLOT_RANGED;
-                    break;
                 case ITEM_SUBCLASS_ARMOR_MISC:
                     if (pClass == CLASS_WARLOCK)
                         slots[0] = EQUIPMENT_SLOT_RANGED;
                     break;
-                case ITEM_SUBCLASS_ARMOR_SIGIL:
-                    if (pClass == CLASS_DEATH_KNIGHT)
-                        slots[0] = EQUIPMENT_SLOT_RANGED;
+                case ITEM_SUBCLASS_ARMOR_L_I_T_S:
+                    if (pClass == CLASS_PALADIN || pClass == CLASS_DRUID || pClass == CLASS_SHAMAN || pClass == CLASS_DEATH_KNIGHT)
+                         slots[0] = EQUIPMENT_SLOT_RANGED;
                     break;
             }
             break;
