@@ -751,7 +751,7 @@ enum Opcodes
     SMSG_ADDON_INFO                                  = 0x0EA80, // 4.0.6a 13623 
     CMSG_PET_UNLEARN                                 = 0x10105, //
     SMSG_PET_UNLEARN_CONFIRM                         = 0x10106, //
-    SMSG_PARTY_MEMBER_STATS_FULL                     = 0x029Ac, // 4.0.6a 13623
+    SMSG_PARTY_MEMBER_STATS_FULL                     = 0x0BA8C, // 4.0.6a 13623
     CMSG_PET_SPELL_AUTOCAST                          = 0x10107, //
     SMSG_WEATHER                                     = 0x0777F, //
     SMSG_PLAY_TIME_WARNING                           = 0x032EC, // 4.0.6a 13623
