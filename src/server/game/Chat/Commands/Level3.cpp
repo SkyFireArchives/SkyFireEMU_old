@@ -1395,7 +1395,7 @@ bool ChatHandler::HandleSetSkillCommand(const char *args)
 
     if (!target->GetSkillValue(skill))
     {
-        PSendSysMessage(LANG_SET_SKILL_ERROR, tNameLink.c_str(), skill, sl->name[GetSessionDbcLocale()]);
+        //PSendSysMessage(LANG_SET_SKILL_ERROR, tNameLink.c_str(), skill, sl->name[GetSessionDbcLocale()]);
         SetSentErrorMessage(true);
         return false;
     }
@@ -6210,11 +6210,13 @@ bool ChatHandler::HandleGMFlyCommand(const char *args)
     if (!target)
         target = m_session->GetPlayer();
 
-    WorldPacket data(12);
+    WorldPacket data(SMSG_MULTIPLE_PACKETS, 14);
     if (strncmp(args, "on", 3) == 0)
-        data.SetOpcode(SMSG_MOVE_SET_CAN_FLY);
+        //data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
+        data << uint16(SMSG_MOVE_SET_CAN_FLY);
     else if (strncmp(args, "off", 4) == 0)
-        data.SetOpcode(SMSG_MOVE_UNSET_CAN_FLY);
+        //data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12);
+        data << uint16(SMSG_MOVE_UNSET_CAN_FLY);
     else
     {
         SendSysMessage(LANG_USE_BOL);
