@@ -832,8 +832,8 @@ enum Opcodes
     CMSG_MOVE_FLIGHT_ACK                             = 0x0A3C8, // 4.0.6a 13623
     MSG_MOVE_START_SWIM_CHEAT                        = 0x02755, //
     MSG_MOVE_STOP_SWIM_CHEAT                         = 0x03D54, //
-    SMSG_MOVE_SET_CAN_FLY                            = 0x03084, // 4.0.6a 13623
-    SMSG_MOVE_UNSET_CAN_FLY                          = 0x0DC57, //
+    SMSG_MOVE_SET_CAN_FLY                            = 0x0BDA0, // 4.0.6a 13623
+    SMSG_MOVE_UNSET_CAN_FLY                          = 0x03084, // 4.0.6a 13623
     CMSG_MOVE_SET_CAN_FLY_ACK                        = 0x0FCAC, // 4.0.6a 13623
     CMSG_MOVE_SET_FLY                                = 0x0E0E0, // 4.0.6a 13623
     CMSG_SOCKET_GEMS                                 = 0x076C4, // 4.0.6a 13623
@@ -893,7 +893,7 @@ enum Opcodes
     MSG_MOVE_SET_FLIGHT_SPEED                        = 0x0B088, // 4.0.6a 13623
     MSG_MOVE_SET_FLIGHT_BACK_SPEED_CHEAT             = 0x10150, //
     MSG_MOVE_SET_FLIGHT_BACK_SPEED                   = 0x0B484, // 4.0.6a 13623
-    SMSG_FORCE_FLIGHT_SPEED_CHANGE                   = 0x03F7D, //
+    SMSG_FORCE_FLIGHT_SPEED_CHANGE                   = 0x0E5CC, // 4.0.6a 13623
     CMSG_FORCE_FLIGHT_SPEED_CHANGE_ACK               = 0x0A98C, // 4.0.6a 13623
     SMSG_FORCE_FLIGHT_BACK_SPEED_CHANGE              = 0x10153, //
     CMSG_FORCE_FLIGHT_BACK_SPEED_CHANGE_ACK          = 0x0FBC8, // 4.0.6a 13623
