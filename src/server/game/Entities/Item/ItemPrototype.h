@@ -385,13 +385,15 @@ enum ItemSubclassArmor
     ITEM_SUBCLASS_ARMOR_PLATE                   = 4,
     ITEM_SUBCLASS_ARMOR_BUCKLER                 = 5,
     ITEM_SUBCLASS_ARMOR_SHIELD                  = 6,
-    ITEM_SUBCLASS_ARMOR_LIBRAM                  = 7,
-    ITEM_SUBCLASS_ARMOR_IDOL                    = 8,
-    ITEM_SUBCLASS_ARMOR_TOTEM                   = 9,
-    ITEM_SUBCLASS_ARMOR_SIGIL                   = 10
+    //ITEM_SUBCLASS_ARMOR_LIBRAM                = 7, deprecated
+    //ITEM_SUBCLASS_ARMOR_IDOL                  = 8, deprecated
+    //ITEM_SUBCLASS_ARMOR_TOTEM                 = 9, deprecated
+    //ITEM_SUBCLASS_ARMOR_SIGIL                 = 10 deprecated
+    ITEM_SUBCLASS_ARMOR_L_I_T_S                 = 11
 };
+ 
+#define MAX_ITEM_SUBCLASS_ARMOR                   12
 
-#define MAX_ITEM_SUBCLASS_ARMOR                   11
 
 enum ItemSubclassReagent
 {
@@ -478,10 +480,12 @@ enum ItemSubclassQuiver
 enum ItemSubclassQuest
 {
     ITEM_SUBCLASS_QUEST                         = 0,
-    ITEM_SUBCLASS_QUEST_2                       = 1
+    ITEM_SUBCLASS_QUEST_2                       = 1,
+    ITEM_SUBCLASS_QUEST_3                       = 3,
+    ITEM_SUBCLASS_QUEST_8                       = 8
 };
 
-#define MAX_ITEM_SUBCLASS_QUEST                   2
+#define MAX_ITEM_SUBCLASS_QUEST                   9
 
 enum ItemSubclassKey
 {
