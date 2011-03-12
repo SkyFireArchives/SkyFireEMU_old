@@ -430,8 +430,8 @@ enum Opcodes
     SMSG_BUY_FAILED                                  = 0x0C6E8, // 4.0.6a 13623
     CMSG_TAXICLEARALLNODES                           = 0x1006C, //
     CMSG_TAXIENABLEALLNODES                          = 0x1006D, //
-    CMSG_TAXISHOWNODES                               = 0x1006E, //
-    SMSG_SHOWTAXINODES                               = 0x07484, // 4.0.6a 13623
+    CMSG_TAXISHOWNODES                               = 0x0B8E8, // 4.0.6a 13623
+    SMSG_SHOWTAXINODES                               = 0x02B84, // 4.0.6a 13623
     CMSG_TAXINODE_STATUS_QUERY                       = 0x0A1EC, // 4.0.6a 13623
     SMSG_TAXINODE_STATUS                             = 0x06F76, //
     CMSG_TAXIQUERYAVAILABLENODES                     = 0x0B8E8, // 4.0.6a 13623
@@ -862,7 +862,7 @@ enum Opcodes
     CMSG_SEARCH_LFG_LEAVE                            = 0x0847D, //
     SMSG_UPDATE_LFG_LIST                             = 0x0768C, // 4.0.6a 13623
     SMSG_LFG_PROPOSAL_UPDATE                         = 0x032AC, // 4.0.6a 13623
-    CMSG_LFG_PROPOSAL_RESULT                         = 0x0FD56, // 
+    CMSG_LFG_PROPOSAL_RESULT                         = 0x0A7A4, // 4.0.6a 13623
     SMSG_LFG_ROLE_CHECK_UPDATE                       = 0x0F2A8, // 4.0.6a 13623
     SMSG_LFG_JOIN_RESULT                             = 0x0338C, // 4.0.6a 13623
     SMSG_LFG_QUEUE_STATUS                            = 0x0B388, // 4.0.6a 13623
@@ -870,13 +870,13 @@ enum Opcodes
     SMSG_LFG_UPDATE_PLAYER                           = 0x0E284, // 4.0.6a 13623
     SMSG_LFG_UPDATE_PARTY                            = 0x02CE8, // 4.0.6a 13623
     SMSG_LFG_UPDATE_LIST                             = 0x03880, // 4.0.6a 13623
-    CMSG_LFG_SET_ROLES                               = 0x0F65F, //
+    CMSG_LFG_SET_ROLES                               = 0x0E8CC, // 4.0.6a 13623
     CMSG_LFG_SET_NEEDS                               = 0x10145, //
     CMSG_LFG_SET_BOOT_VOTE                           = 0x0D65D, //
     SMSG_LFG_BOOT_PROPOSAL_UPDATE                    = 0x079AC, // 
     CMSG_LFD_PLAYER_LOCK_INFO_REQUEST                = 0x0E5E8, // 
     SMSG_LFG_PLAYER_INFO                             = 0x0E088, // 
-    CMSG_LFG_TELEPORT                                = 0x0045F, //
+    CMSG_LFG_TELEPORT                                = 0x0FA88, // 4.0.6a 13623
     CMSG_LFD_PARTY_LOCK_INFO_REQUEST                 = 0x00574, //
     SMSG_LFG_PARTY_INFO                              = 0x060A0, // 4.0.6a 13623
     SMSG_TITLE_EARNED                                = 0x06C8C, // 4.0.6a 13623
@@ -1029,7 +1029,7 @@ enum Opcodes
     SMSG_IGNORE_DIMINISHING_RETURNS_CHEAT            = 0x0747E, //
     CMSG_KEEP_ALIVE                                  = 0x02CE0, // 4.0.6a 13623
     SMSG_RAID_READY_CHECK_ERROR                      = 0x0547E, //
-    CMSG_OPT_OUT_OF_LOOT                             = 0x0057F, //
+    CMSG_OPT_OUT_OF_LOOT                             = 0x075A4, // 4.0.6a 13623
     MSG_QUERY_GUILD_BANK_TEXT                        = 0x0A2C4, // 4.0.6a 13623
     CMSG_SET_GUILD_BANK_TEXT                         = 0x101A0, //
     CMSG_SET_GRANTABLE_LEVELS                        = 0x101A1, //
