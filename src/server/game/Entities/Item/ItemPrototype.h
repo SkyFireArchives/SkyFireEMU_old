@@ -370,8 +370,8 @@ enum ItemSubclassGem
     ITEM_SUBCLASS_GEM_META                      = 6,
     ITEM_SUBCLASS_GEM_SIMPLE                    = 7,
     ITEM_SUBCLASS_GEM_PRISMATIC                 = 8,
-    ITEM_SUBCLASS_HYDRAULIC                     = 9,
-    ITEM_SUBCLASS_COGWHEEL                      = 10,
+    ITEM_SUBCLASS_GEM_HYDRAULIC                 = 9,
+    ITEM_SUBCLASS_GEM_COGWHEEL                  = 10
 };
 
 #define MAX_ITEM_SUBCLASS_GEM                     11
@@ -385,11 +385,11 @@ enum ItemSubclassArmor
     ITEM_SUBCLASS_ARMOR_PLATE                   = 4,
     ITEM_SUBCLASS_ARMOR_BUCKLER                 = 5,
     ITEM_SUBCLASS_ARMOR_SHIELD                  = 6,
-    //ITEM_SUBCLASS_ARMOR_LIBRAM                = 7, deprecated
-    //ITEM_SUBCLASS_ARMOR_IDOL                  = 8, deprecated
-    //ITEM_SUBCLASS_ARMOR_TOTEM                 = 9, deprecated
-    //ITEM_SUBCLASS_ARMOR_SIGIL                 = 10 deprecated
-    ITEM_SUBCLASS_ARMOR_L_I_T_S                 = 11
+    ITEM_SUBCLASS_ARMOR_LIBRAM                  = 7,
+    ITEM_SUBCLASS_ARMOR_IDOL                    = 8,
+    ITEM_SUBCLASS_ARMOR_TOTEM                   = 9,
+    ITEM_SUBCLASS_ARMOR_SIGIL                   = 10,
+    ITEM_SUBCLASS_ARMOR_RELIC                   = 11
 };
  
 #define MAX_ITEM_SUBCLASS_ARMOR                   12
