@@ -58,30 +58,19 @@ void WorldSession::HandleDismissCritter(WorldPacket &recv_data)
 
 void WorldSession::HandlePetAction(WorldPacket & recv_data)
 {
-    uint64 guid1;
-    uint32 data;
-    uint64 guid2;
-    recv_data >> guid1;                                     // pet guid
-    recv_data >> data;
-    recv_data >> guid2;                                     // tag guid
-    recv_data >> guid2;                                     // tag guid
+	uint64 guid1;
+	uint32 data;
+	uint64 guid2;
+	recv_data >> guid1;                                     //pet guid
+	recv_data >> data;
+	recv_data >> guid2;                                     //tag guid
 
-    Unit* pet= ObjectAccessor::GetUnit(*_player, guid1);
-
-    float pos_x = pet->GetPositionX();
-    float pos_y = pet->GetPositionY();
-    float pos_z = pet->GetPositionZ();
-
-    recv_data >> pos_x;                                     // 4.0.3, x
-    recv_data >> pos_y;                                     // 4.0.3, y
-    recv_data >> pos_z;                                     // 4.0.3, z
-    
-    uint32 spellid = UNIT_ACTION_BUTTON_ACTION(data);
-    uint8 flag = UNIT_ACTION_BUTTON_TYPE(data);             //delete = 0x07 CastSpell = C1
+	uint32 spellid = UNIT_ACTION_BUTTON_ACTION(data);
+	uint8 flag = UNIT_ACTION_BUTTON_TYPE(data);             //delete = 0x07 CastSpell = C1
 
     // used also for charmed creature
-    sLog.outDetail("HandlePetAction: Pet %u - flag: %u, spellid: %u, target: %u, x: %f, y: %f, z: %f.", uint32(GUID_LOPART(guid1)), uint32(flag), spellid, uint32(GUID_LOPART(guid2)),
-                    float(pos_x), float(pos_y), float(pos_z));
+	Unit* pet= ObjectAccessor::GetUnit(*_player, guid1);
+    sLog.outDetail("HandlePetAction: Pet %u - flag: %u, spellid: %u, target: %u.", uint32(GUID_LOPART(guid1)), uint32(flag), spellid, uint32(GUID_LOPART(guid2)));
     
 	if (!pet)
     {

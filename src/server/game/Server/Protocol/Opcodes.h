@@ -381,8 +381,8 @@ enum Opcodes
     SMSG_PET_TAME_FAILURE                            = 0x0FDA8, // 4.0.6a 13623
     CMSG_PET_SET_ACTION                              = 0x03C8C, // 4.0.6a 13623
     CMSG_PET_ACTION                                  = 0x0AFC0, // 4.0.6a 13623
-    CMSG_PET_ABANDON                                 = 0x03576, //
-    CMSG_PET_RENAME                                  = 0x07D57, //
+    CMSG_PET_ABANDON                                 = 0x0A480, // 4.0.6a 13623
+    CMSG_PET_RENAME                                  = 0x038E8, // 4.0.6a 13623
     SMSG_PET_NAME_INVALID                            = 0x01457, //
     SMSG_PET_SPELLS                                  = 0x0B780, // 4.0.6a 13623
     SMSG_PET_MODE                                    = 0x079C0, // 4.0.6a 13623
