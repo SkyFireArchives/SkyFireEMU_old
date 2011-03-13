@@ -3419,7 +3419,7 @@ void SpellMgr::LoadSpellRequired()
     sLog.outString(">> Loaded %u spell required records", rows);
 }
 
-void SpellMgr::LoadSpellRanks()
+/*void SpellMgr::LoadSpellRanks()
 {
     mSpellChains.clear();                                   // need for reload case
 
@@ -3532,7 +3532,7 @@ void SpellMgr::LoadSpellRanks()
     sLog.outString();
     sLog.outString(">> Loaded %u spell rank records", rows);
 }
-
+*/
 // set data in core for now
 void SpellMgr::LoadSpellCustomAttr()
 {

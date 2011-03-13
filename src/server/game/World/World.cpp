@@ -1329,8 +1329,8 @@ void World::SetInitialWorldSettings()
     sLog.outString("Loading Game Object Templates...");     // must be after LoadPageTexts
     sObjectMgr.LoadGameobjectInfo();
 
-    sLog.outString("Loading Spell Rank Data...");
-    sSpellMgr.LoadSpellRanks();
+    //sLog.outString("Loading Spell Rank Data...");
+    //sSpellMgr.LoadSpellRanks();
 
     sLog.outString("Loading Spell Required Data...");
     sSpellMgr.LoadSpellRequired();
