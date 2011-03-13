@@ -145,158 +145,146 @@ static uint32 copseReclaimDelay[MAX_DEATH_COUNT] = { 30, 60, 120 };
 
 PlayerTaxi::PlayerTaxi()
 {
-    // Taxi nodes
-    memset(m_taximask, 0, sizeof(m_taximask));
+	// Taxi nodes
+	memset(m_taximask, 0, sizeof(m_taximask));
 }
 
 void PlayerTaxi::InitTaxiNodesForLevel(uint32 race, uint32 chrClass, uint8 level)
 {
-    // class specific initial known nodes
-    switch (chrClass)
-    {
-        case CLASS_DEATH_KNIGHT:
-        {
-            for (uint8 i = 0; i < TaxiMaskSize; ++i)
-                m_taximask[i] |= sOldContinentsNodesMask[i];
-            break;
-        }
-    }
+	// class specific initial known nodes
+	switch(chrClass)
+	{
+	case CLASS_DEATH_KNIGHT:
+		{
+			for (uint8 i = 0; i < TaxiMaskSize; ++i)
+				m_taximask[i] |= sOldContinentsNodesMask[i];
+			break;
+		}
+	}
 
-    // race specific initial known nodes: capital and taxi hub masks
-    switch (race)
-    {
-        case RACE_HUMAN:
-            SetTaximaskNode(2);
-            break;
-        case RACE_ORC:
-            SetTaximaskNode(23);
-            break;
-        case RACE_DWARF:
-            SetTaximaskNode(6);
-            break;
-        case RACE_NIGHTELF:
-            SetTaximaskNode(26);
-            SetTaximaskNode(27);
-            break;
-        case RACE_UNDEAD_PLAYER:
-            SetTaximaskNode(11);
-            break;
-        case RACE_TAUREN:
-            SetTaximaskNode(22);
-            break;
-        case RACE_GNOME:
-            SetTaximaskNode(6);
-            break;
-        case RACE_TROLL:
-            SetTaximaskNode(23);
-            break;
-        case RACE_BLOODELF:
-            SetTaximaskNode(82);
-            break;
-        case RACE_DRAENEI:
-            SetTaximaskNode(94);
-            break;
-    }
+	// race specific initial known nodes: capital and taxi hub masks
+	switch(race)
+	{
+	case RACE_HUMAN:    SetTaximaskNode(2);  break;     // Human
+	case RACE_ORC:      SetTaximaskNode(23); break;     // Orc
+	case RACE_DWARF:    SetTaximaskNode(6);  break;     // Dwarf
+	case RACE_NIGHTELF: SetTaximaskNode(26);
+		SetTaximaskNode(27); break;     // Night Elf
+	case RACE_UNDEAD_PLAYER: SetTaximaskNode(11); break;// Undead
+	case RACE_TAUREN:   SetTaximaskNode(22); break;     // Tauren
+	case RACE_GNOME:    SetTaximaskNode(6);  break;     // Gnome
+	case RACE_TROLL:    SetTaximaskNode(23); break;     // Troll
+	case RACE_BLOODELF: SetTaximaskNode(82); break;     // Blood Elf
+	case RACE_DRAENEI:  SetTaximaskNode(94); break;     // Draenei
+	}
 
-    // new continent starting masks (It will be accessible only at new map)
-    switch (Player::TeamForRace(race))
-    {
-        case ALLIANCE:
-            SetTaximaskNode(100);
-            break;
-        case HORDE:
-            SetTaximaskNode(99);
-            break;
-    }
-
-    // level dependent taxi hubs
-    if (level >= 68)
-        SetTaximaskNode(213);                               // Shattered Sun Staging Area
+	// new continent starting masks (It will be accessible only at new map)
+	switch(Player::TeamForRace(race))
+	{
+	case ALLIANCE: SetTaximaskNode(100); break;
+	case HORDE:    SetTaximaskNode(99);  break;
+	}
+	// level dependent taxi hubs
+	if (level >= 68)
+		SetTaximaskNode(213);                               //Shattered Sun Staging Area
 }
 
 void PlayerTaxi::LoadTaxiMask(const char* data)
 {
-    Tokens tokens(data, ' ');
+	Tokens tokens(data, ' ');
 
-    uint8 index;
-    Tokens::iterator iter;
-    for (iter = tokens.begin(), index = 0; (index < TaxiMaskSize) && (iter != tokens.end()); ++iter, ++index)
-    {
-        // load and set bits only for existed taxi nodes
-        m_taximask[index] = sTaxiNodesMask[index] & uint32(atol(*iter));
-    }
+	uint8 index;
+	Tokens::iterator iter;
+	for (iter = tokens.begin(), index = 0;
+		(index < TaxiMaskSize) && (iter != tokens.end()); ++iter, ++index)
+	{
+		// load and set bits only for existed taxi nodes
+		m_taximask[index] = sTaxiNodesMask[index] & uint32(atol(*iter));
+	}
 }
 
 void PlayerTaxi::AppendTaximaskTo(ByteBuffer& data, bool all)
 {
-    if (all)
-    {
-        for (uint8 i=0; i<TaxiMaskSize; i++)
-            data << uint32(sTaxiNodesMask[i]);              // all existed nodes
-    }
-    else
-    {
-        for (uint8 i=0; i<TaxiMaskSize; i++)
-            data << uint32(m_taximask[i]);                  // known nodes
-    }
+	if (all)
+	{
+		for (uint8 i=0; i<TaxiMaskSize; i++)
+			data << uint32(sTaxiNodesMask[i]);              // all existed nodes
+	}
+	else
+	{
+		for (uint8 i=0; i<TaxiMaskSize; i++)
+			data << uint32(m_taximask[i]);                  // known nodes
+	}
 }
 
 bool PlayerTaxi::LoadTaxiDestinationsFromString(const std::string& values, uint32 team)
 {
-    ClearTaxiDestinations();
+	ClearTaxiDestinations();
 
-    Tokens tokens(values,' ');
+	Tokens tokens(values,' ');
 
-    for (Tokens::iterator iter = tokens.begin(); iter != tokens.end(); ++iter)
-    {
-        uint32 node = uint32(atol(*iter));
-        AddTaxiDestination(node);
-    }
+	for (Tokens::iterator iter = tokens.begin(); iter != tokens.end(); ++iter)
+	{
+		uint32 node = uint32(atol(*iter));
+		AddTaxiDestination(node);
+	}
 
-    if (m_TaxiDestinations.empty())
-        return true;
+	if (m_TaxiDestinations.empty())
+		return true;
 
-    // Check integrity
-    if (m_TaxiDestinations.size() < 2)
-        return false;
+	// Check integrity
+	if (m_TaxiDestinations.size() < 2)
+		return false;
 
-    for (size_t i = 1; i < m_TaxiDestinations.size(); ++i)
-    {
-        uint32 cost;
-        uint32 path;
-        sObjectMgr.GetTaxiPath(m_TaxiDestinations[i-1],m_TaxiDestinations[i],path,cost);
-        if (!path)
-            return false;
-    }
+	for (size_t i = 1; i < m_TaxiDestinations.size(); ++i)
+	{
+		uint32 cost;
+		uint32 path;
+		sObjectMgr.GetTaxiPath(m_TaxiDestinations[i-1],m_TaxiDestinations[i],path,cost);
+		if (!path)
+			return false;
+	}
 
-    // can't load taxi path without mount set (quest taxi path?)
-    if (!sObjectMgr.GetTaxiMountDisplayId(GetTaxiSource(),team,true))
-        return false;
+	// can't load taxi path without mount set (quest taxi path?)
+	if (!sObjectMgr.GetTaxiMountDisplayId(GetTaxiSource(),team,true))
+		return false;
 
-    return true;
+	return true;
+}
+
+std::string PlayerTaxi::SaveTaxiDestinationsToString()
+{
+	if (m_TaxiDestinations.empty())
+		return "";
+
+	std::ostringstream ss;
+
+	for (size_t i=0; i < m_TaxiDestinations.size(); ++i)
+		ss << m_TaxiDestinations[i] << " ";
+
+	return ss.str();
 }
 
 uint32 PlayerTaxi::GetCurrentTaxiPath() const
 {
-    if (m_TaxiDestinations.size() < 2)
-        return 0;
+	if (m_TaxiDestinations.size() < 2)
+		return 0;
 
-    uint32 path;
-    uint32 cost;
+	uint32 path;
+	uint32 cost;
 
-    sObjectMgr.GetTaxiPath(m_TaxiDestinations[0],m_TaxiDestinations[1],path,cost);
+	sObjectMgr.GetTaxiPath(m_TaxiDestinations[0],m_TaxiDestinations[1],path,cost);
 
-    return path;
+	return path;
 }
 
 std::ostringstream& operator<< (std::ostringstream& ss, PlayerTaxi const& taxi)
 {
-    ss << "'";
-    for (uint8 i = 0; i < TaxiMaskSize; ++i)
-        ss << taxi.m_taximask[i] << " ";
-    ss << "'";
-
-    return ss;
+	ss << "'";
+	for (uint8 i = 0; i < TaxiMaskSize; ++i)
+		ss << taxi.m_taximask[i] << " ";
+	ss << "'";
+	return ss;
 }
 
 //== TradeData =================================================
@@ -18224,7 +18212,7 @@ void Player::SaveToDB()
 
     ss << (uint64)m_deathExpireTime << ", '";
 
-    ss << "" << "', ";
+    ss << m_taxi.SaveTaxiDestinationsToString() << "', ";
 
     ss << GetArenaPoints() << ", ";
 
