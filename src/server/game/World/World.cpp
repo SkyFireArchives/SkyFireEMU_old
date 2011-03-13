@@ -272,14 +272,14 @@ World::AddSession_ (WorldSession* s)
         return;
     }
 
-    WorldPacket packet(SMSG_AUTH_RESPONSE, 1 + 4 + 1 + 4 + 2 + 1);
-    packet << uint8 (AUTH_OK);
-    packet << uint32 (0);                                   // BillingTimeRemaining
-    packet << uint8 (0);                                    // BillingPlanFlags
-    packet << uint32 (0);                                   // BillingTimeRested
-    packet << uint8 (s->Expansion());                       // 0 - normal, 1 - TBC, 2 - WOTLK, must be set in database manually for each account
-    packet << uint8 (2);                                    // In my only dump, same as extension.
-    s->SendPacket (&packet);
+    WorldPacket packet(SMSG_AUTH_RESPONSE, 1 + 4 + 1 + 4 + 1 + 1);
+    packet << uint8(AUTH_OK);
+    packet << uint32(0);                                   // BillingTimeRemaining
+    packet << uint8(0);                                    // BillingPlanFlags
+    packet << uint32(0);                                   // BillingTimeRested
+    packet << uint8(s->Expansion());                       // payed expansion
+    packet << uint8(s->Expansion());                       // server expansion
+    s->SendPacket(&packet);
 
     s->SendAddonsInfo();
 
