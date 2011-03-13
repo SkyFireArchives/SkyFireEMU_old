@@ -781,7 +781,7 @@ void WorldSession::WriteMovementInfo(WorldPacket *data, MovementInfo *mi)
        *data << mi->t_seat;
 
         if (mi->flags2 & MOVEMENTFLAG2_INTERPOLATED_MOVEMENT)
-            *data >> mi->t_time2;
+            *data << mi->t_time2;
     }
 
     if ((mi->HasMovementFlag(MovementFlags(MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING))) || (mi->flags2 & MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING))
