@@ -145,146 +145,146 @@ static uint32 copseReclaimDelay[MAX_DEATH_COUNT] = { 30, 60, 120 };
 
 PlayerTaxi::PlayerTaxi()
 {
-	// Taxi nodes
-	memset(m_taximask, 0, sizeof(m_taximask));
+    // Taxi nodes
+    memset(m_taximask, 0, sizeof(m_taximask));
 }
 
 void PlayerTaxi::InitTaxiNodesForLevel(uint32 race, uint32 chrClass, uint8 level)
 {
-	// class specific initial known nodes
-	switch(chrClass)
-	{
-	case CLASS_DEATH_KNIGHT:
-		{
-			for (uint8 i = 0; i < TaxiMaskSize; ++i)
-				m_taximask[i] |= sOldContinentsNodesMask[i];
-			break;
-		}
-	}
+    // class specific initial known nodes
+    switch(chrClass)
+    {
+    case CLASS_DEATH_KNIGHT:
+        {
+            for (uint8 i = 0; i < TaxiMaskSize; ++i)
+                m_taximask[i] |= sOldContinentsNodesMask[i];
+            break;
+        }
+    }
 
-	// race specific initial known nodes: capital and taxi hub masks
-	switch(race)
-	{
-	case RACE_HUMAN:    SetTaximaskNode(2);  break;     // Human
-	case RACE_ORC:      SetTaximaskNode(23); break;     // Orc
-	case RACE_DWARF:    SetTaximaskNode(6);  break;     // Dwarf
-	case RACE_NIGHTELF: SetTaximaskNode(26);
-		SetTaximaskNode(27); break;     // Night Elf
-	case RACE_UNDEAD_PLAYER: SetTaximaskNode(11); break;// Undead
-	case RACE_TAUREN:   SetTaximaskNode(22); break;     // Tauren
-	case RACE_GNOME:    SetTaximaskNode(6);  break;     // Gnome
-	case RACE_TROLL:    SetTaximaskNode(23); break;     // Troll
-	case RACE_BLOODELF: SetTaximaskNode(82); break;     // Blood Elf
-	case RACE_DRAENEI:  SetTaximaskNode(94); break;     // Draenei
-	}
+    // race specific initial known nodes: capital and taxi hub masks
+    switch(race)
+    {
+    case RACE_HUMAN:    SetTaximaskNode(2);  break;     // Human
+    case RACE_ORC:      SetTaximaskNode(23); break;     // Orc
+    case RACE_DWARF:    SetTaximaskNode(6);  break;     // Dwarf
+    case RACE_NIGHTELF: SetTaximaskNode(26);
+        SetTaximaskNode(27); break;     // Night Elf
+    case RACE_UNDEAD_PLAYER: SetTaximaskNode(11); break;// Undead
+    case RACE_TAUREN:   SetTaximaskNode(22); break;     // Tauren
+    case RACE_GNOME:    SetTaximaskNode(6);  break;     // Gnome
+    case RACE_TROLL:    SetTaximaskNode(23); break;     // Troll
+    case RACE_BLOODELF: SetTaximaskNode(82); break;     // Blood Elf
+    case RACE_DRAENEI:  SetTaximaskNode(94); break;     // Draenei
+    }
 
-	// new continent starting masks (It will be accessible only at new map)
-	switch(Player::TeamForRace(race))
-	{
-	case ALLIANCE: SetTaximaskNode(100); break;
-	case HORDE:    SetTaximaskNode(99);  break;
-	}
-	// level dependent taxi hubs
-	if (level >= 68)
-		SetTaximaskNode(213);                               //Shattered Sun Staging Area
+    // new continent starting masks (It will be accessible only at new map)
+    switch(Player::TeamForRace(race))
+    {
+    case ALLIANCE: SetTaximaskNode(100); break;
+    case HORDE:    SetTaximaskNode(99);  break;
+    }
+    // level dependent taxi hubs
+    if (level >= 68)
+        SetTaximaskNode(213);                               //Shattered Sun Staging Area
 }
 
 void PlayerTaxi::LoadTaxiMask(const char* data)
 {
-	Tokens tokens(data, ' ');
+    Tokens tokens(data, ' ');
 
-	uint8 index;
-	Tokens::iterator iter;
-	for (iter = tokens.begin(), index = 0;
-		(index < TaxiMaskSize) && (iter != tokens.end()); ++iter, ++index)
-	{
-		// load and set bits only for existed taxi nodes
-		m_taximask[index] = sTaxiNodesMask[index] & uint32(atol(*iter));
-	}
+    uint8 index;
+    Tokens::iterator iter;
+    for (iter = tokens.begin(), index = 0;
+        (index < TaxiMaskSize) && (iter != tokens.end()); ++iter, ++index)
+    {
+        // load and set bits only for existed taxi nodes
+        m_taximask[index] = sTaxiNodesMask[index] & uint32(atol(*iter));
+    }
 }
 
 void PlayerTaxi::AppendTaximaskTo(ByteBuffer& data, bool all)
 {
-	if (all)
-	{
-		for (uint8 i=0; i<TaxiMaskSize; i++)
-			data << uint32(sTaxiNodesMask[i]);              // all existed nodes
-	}
-	else
-	{
-		for (uint8 i=0; i<TaxiMaskSize; i++)
-			data << uint32(m_taximask[i]);                  // known nodes
-	}
+    if (all)
+    {
+        for (uint8 i=0; i<TaxiMaskSize; i++)
+            data << uint32(sTaxiNodesMask[i]);              // all existed nodes
+    }
+    else
+    {
+        for (uint8 i=0; i<TaxiMaskSize; i++)
+            data << uint32(m_taximask[i]);                  // known nodes
+    }
 }
 
 bool PlayerTaxi::LoadTaxiDestinationsFromString(const std::string& values, uint32 team)
 {
-	ClearTaxiDestinations();
+    ClearTaxiDestinations();
 
-	Tokens tokens(values,' ');
+    Tokens tokens(values,' ');
 
-	for (Tokens::iterator iter = tokens.begin(); iter != tokens.end(); ++iter)
-	{
-		uint32 node = uint32(atol(*iter));
-		AddTaxiDestination(node);
-	}
+    for (Tokens::iterator iter = tokens.begin(); iter != tokens.end(); ++iter)
+    {
+        uint32 node = uint32(atol(*iter));
+        AddTaxiDestination(node);
+    }
 
-	if (m_TaxiDestinations.empty())
-		return true;
+    if (m_TaxiDestinations.empty())
+        return true;
 
-	// Check integrity
-	if (m_TaxiDestinations.size() < 2)
-		return false;
+    // Check integrity
+    if (m_TaxiDestinations.size() < 2)
+        return false;
 
-	for (size_t i = 1; i < m_TaxiDestinations.size(); ++i)
-	{
-		uint32 cost;
-		uint32 path;
-		sObjectMgr.GetTaxiPath(m_TaxiDestinations[i-1],m_TaxiDestinations[i],path,cost);
-		if (!path)
-			return false;
-	}
+    for (size_t i = 1; i < m_TaxiDestinations.size(); ++i)
+    {
+        uint32 cost;
+        uint32 path;
+        sObjectMgr.GetTaxiPath(m_TaxiDestinations[i-1],m_TaxiDestinations[i],path,cost);
+        if (!path)
+            return false;
+    }
 
-	// can't load taxi path without mount set (quest taxi path?)
-	if (!sObjectMgr.GetTaxiMountDisplayId(GetTaxiSource(),team,true))
-		return false;
+    // can't load taxi path without mount set (quest taxi path?)
+    if (!sObjectMgr.GetTaxiMountDisplayId(GetTaxiSource(),team,true))
+        return false;
 
-	return true;
+    return true;
 }
 
 std::string PlayerTaxi::SaveTaxiDestinationsToString()
 {
-	if (m_TaxiDestinations.empty())
-		return "";
+    if (m_TaxiDestinations.empty())
+        return "";
 
-	std::ostringstream ss;
+    std::ostringstream ss;
 
-	for (size_t i=0; i < m_TaxiDestinations.size(); ++i)
-		ss << m_TaxiDestinations[i] << " ";
+    for (size_t i=0; i < m_TaxiDestinations.size(); ++i)
+        ss << m_TaxiDestinations[i] << " ";
 
-	return ss.str();
+    return ss.str();
 }
 
 uint32 PlayerTaxi::GetCurrentTaxiPath() const
 {
-	if (m_TaxiDestinations.size() < 2)
-		return 0;
+    if (m_TaxiDestinations.size() < 2)
+        return 0;
 
-	uint32 path;
-	uint32 cost;
+    uint32 path;
+    uint32 cost;
 
-	sObjectMgr.GetTaxiPath(m_TaxiDestinations[0],m_TaxiDestinations[1],path,cost);
+    sObjectMgr.GetTaxiPath(m_TaxiDestinations[0],m_TaxiDestinations[1],path,cost);
 
-	return path;
+    return path;
 }
 
 std::ostringstream& operator<< (std::ostringstream& ss, PlayerTaxi const& taxi)
 {
-	ss << "'";
-	for (uint8 i = 0; i < TaxiMaskSize; ++i)
-		ss << taxi.m_taximask[i] << " ";
-	ss << "'";
-	return ss;
+    ss << "'";
+    for (uint8 i = 0; i < TaxiMaskSize; ++i)
+        ss << taxi.m_taximask[i] << " ";
+    ss << "'";
+    return ss;
 }
 
 //== TradeData =================================================
@@ -1328,11 +1328,11 @@ void Player::Update(uint32 p_time)
     if (now > m_Last_tick)
         UpdateItemDuration(uint32(now - m_Last_tick));
 
-	if (now > m_Save_Time) 
-		{ 
-			SaveToDB(); 
-			m_Save_Time = now + 360; 
-		} 
+    if (now > m_Save_Time) 
+        { 
+            SaveToDB(); 
+            m_Save_Time = now + 360; 
+        } 
 
 // check every second	
     if (now > m_Last_tick + 1)
@@ -6583,7 +6583,7 @@ void Player::SendMovieStart(uint32 MovieId)
 
 bool Player::isInWorgenForm()
 {
- 	return GetUInt32Value(UNIT_FIELD_FLAGS_2) & IN_WORGEN_FORM ? true : false;
+    return GetUInt32Value(UNIT_FIELD_FLAGS_2) & IN_WORGEN_FORM ? true : false;
 }
 
 void Player::setInHumanForm()
@@ -6591,16 +6591,16 @@ void Player::setInHumanForm()
     if(isInCombat())
         return;
     
- 	uint32 newFlag = GetUInt32Value(UNIT_FIELD_FLAGS_2) & ~IN_WORGEN_FORM;
- 	SetUInt32Value(UNIT_FIELD_FLAGS_2, newFlag);
+    uint32 newFlag = GetUInt32Value(UNIT_FIELD_FLAGS_2) & ~IN_WORGEN_FORM;
+    SetUInt32Value(UNIT_FIELD_FLAGS_2, newFlag);
     m_ExtraFlags &= ~PLAYER_EXTRA_WORGEN_FORM;
 }
 
 void Player::setInWorgenForm(uint32 form)
 {
- 	if(isInWorgenForm())
+    if(isInWorgenForm())
         return;
- 	SetFlag(UNIT_FIELD_FLAGS_2, form);
+    SetFlag(UNIT_FIELD_FLAGS_2, form);
     m_ExtraFlags |= PLAYER_EXTRA_WORGEN_FORM;
 }
 
@@ -8758,22 +8758,22 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
     switch (loot_type)
     {
         case LOOT_INSIGNIA:
-			loot_type = LOOT_SKINNING;
-			break;
+            loot_type = LOOT_SKINNING;
+            break;
         case LOOT_FISHINGHOLE:
-			loot_type = LOOT_FISHING;
-			break;
+            loot_type = LOOT_FISHING;
+            break;
         default:
-			break;
+            break;
     }
 
     // need know merged fishing/corpse loot type for achievements
     loot->loot_type = loot_type;
-	
     
-	WorldPacket data(SMSG_MULTIPLE_PACKETS, (9 + 50 + 2));           // we guess size
+    
+    WorldPacket data(SMSG_MULTIPLE_PACKETS, (9 + 50 + 2));           // we guess size
 
-	data << uint16(SMSG_LOOT_RESPONSE);
+    data << uint16(SMSG_LOOT_RESPONSE);
     data << uint64(guid);
     data << uint8(loot_type);
     data << LootView(*loot, this, permission);
@@ -8797,8 +8797,8 @@ void Player::SendNotifyLootMoneyRemoved()
 void Player::SendNotifyLootItemRemoved(uint8 lootSlot)
 {
     WorldPacket data(SMSG_MULTIPLE_PACKETS, 1+2);
-	//WorldPacket data(SMSG_LOOT_REMOVED, 1);
-	data << uint16(SMSG_LOOT_REMOVED);
+    //WorldPacket data(SMSG_LOOT_REMOVED, 1);
+    data << uint16(SMSG_LOOT_REMOVED);
     data << uint8(lootSlot);
     GetSession()->SendPacket(&data);
 }
@@ -9450,11 +9450,11 @@ void Player::SetBindPoint(uint64 guid)
     WorldPacket data(SMSG_BINDER_CONFIRM, 8);
     data << uint64(guid);
     GetSession()->SendPacket(&data);
-	//float x = this->GetPositionX();
-	//float y = this->GetPositionY();
-	//float z = this->GetPositionZ();
-	//uint32 spellid = 26;
-	//this->CastSpell(x,y,z,spellid,true);
+    //float x = this->GetPositionX();
+    //float y = this->GetPositionY();
+    //float z = this->GetPositionZ();
+    //uint32 spellid = 26;
+    //this->CastSpell(x,y,z,spellid,true);
 }
 
 void Player::SendTalentWipeConfirm(uint64 guid)
@@ -14075,7 +14075,7 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
             GetSession()->SendTrainerList(guid);
             break;
         case GOSSIP_OPTION_LEARNDUALSPEC:
-			if (GetSpecsCount() == 1 && getLevel() >= sWorld.getIntConfig(CONFIG_MIN_DUALSPEC_LEVEL))
+            if (GetSpecsCount() == 1 && getLevel() >= sWorld.getIntConfig(CONFIG_MIN_DUALSPEC_LEVEL))
             {
                 if (!HasEnoughMoney(100000))
                 {
