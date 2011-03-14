@@ -1120,8 +1120,8 @@ struct ItemDamageEntry
 struct ItemExtendedCostEntry
 {
 	uint32      ID;                                         // 0 extended-cost entry id
-	uint32      reqhonorpoints;                             // 1 required honor points
-	uint32      reqarenapoints;                             // 2 required arena points
+	//uint32      reqhonorpoints;                             // 1 required honor points
+	//uint32      reqarenapoints;                             // 2 required arena points
 	uint32      RequiredArenaSlot;                          // 4 arena slot restrictions (min slot value)
 	uint32      RequiredItem[MAX_EXTENDED_COST_ITEMS];      // 5-8 required item id
 	uint32      RequiredItemCount[MAX_EXTENDED_COST_ITEMS]; // 9-13 required count of 1st item
