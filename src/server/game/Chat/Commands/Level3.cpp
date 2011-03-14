@@ -4125,28 +4125,6 @@ bool ChatHandler::HandleDamageCommand(const char * args)
     return true;
 }
 
-bool ChatHandler::HandleModifyArenaCommand(const char * args)
-{
-    if (!*args)
-        return false;
-
-    Player *target = getSelectedPlayer();
-    if (!target)
-    {
-        SendSysMessage(LANG_PLAYER_NOT_FOUND);
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    int32 amount = (uint32)atoi(args);
-
-    target->ModifyArenaPoints(amount);
-
-    PSendSysMessage(LANG_COMMAND_MODIFY_ARENA, GetNameLink(target).c_str(), target->GetArenaPoints());
-
-    return true;
-}
-
 bool ChatHandler::HandleReviveCommand(const char *args)
 {
     Player* target;
@@ -4972,12 +4950,9 @@ bool ChatHandler::HandleResetHonorCommand (const char * args)
     if (!extractPlayerTarget((char*)args,&target))
         return false;
 
-    target->SetUInt32Value(PLAYER_FIELD_KILLS, 0);
-    //target->SetUInt32Value(PLAYER_FIELD_LIFETIME_HONORABLE_KILLS, 0);
-    target->SetHonorPoints(0);
-    //target->SetUInt32Value(PLAYER_FIELD_TODAY_CONTRIBUTION, 0);
-    //target->SetUInt32Value(PLAYER_FIELD_YESTERDAY_CONTRIBUTION, 0);
-    //target->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EARN_HONORABLE_KILL);
+    target->SetCurrency(CURRENCY_TYPE_HONOR_POINTS, 0);
+	target->SetUInt32Value(PLAYER_FIELD_KILLS, 0);
+    target->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EARN_HONORABLE_KILL);
 
     return true;
 }

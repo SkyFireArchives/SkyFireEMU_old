@@ -789,20 +789,20 @@ struct CreatureTypeEntry
     DBCString Name;                                         // 2        name
 };*/
 
-/*struct CurrencyTypesEntry
+struct CurrencyTypesEntry
 {
-    //uint32    ID;                                         // 0        not used
+    uint32    ID;                                           // 0        not used
     //uint32    Category;                                   // 1        may be category
     //DBCString name;                                       // 2
     //DBCString iconName;                                   // 3
-    //uint32                                                // 4
-    //uint32                                                // 5
-    //uint32                                                // 6
-    //uint32                                                // 7
-    //uint32                                                // 8
-    //uint32                                                // 9
+    //uint32 unk4;                                          // 4        all 0
+    //uint32 unk5;                                          // 5        archaeology-related (?)
+    //uint32 unk6;                                          // 6        archaeology-related (?)
+    uint32 TotalCap;                                        // 7
+    uint32 WeekCap;                                         // 8
+    //int32 unk9;                                           // 9
     //DBCString description;                                // 10
-};*/
+};
 
 struct DurabilityCostsEntry
 {
@@ -1114,20 +1114,24 @@ struct ItemDamageEntry
 
 #define MAX_ITEM_EXTENDED_COST_REQUIREMENTS 5
 
+#define MAX_EXTENDED_COST_ITEMS         5
+#define MAX_EXTENDED_COST_CURRENCIES    5
+
 struct ItemExtendedCostEntry
 {
-    uint32      ID;                                         // 0 extended-cost entry id
-    uint32      reqhonorpoints;                             // 1 required honor points
-    uint32      reqarenapoints;                             // 2 required arena points
-    uint32      reqarenaslot;                               // 4 arena slot restrictions (min slot value)
-    uint32      reqitem[5];                                 // 5-8 required item id
-    uint32      reqitemcount[5];                            // 9-13 required count of 1st item
-    uint32      reqpersonalarenarating;                     // 14 required personal arena rating};
-    //uint32                                                // 15
-    //uint32    someId[5];                                  // 16-20, may be currency id's
-    //uint32    someCount[5];                               // 21-25
-    //uint32    something[5];                               // 26-30
+	uint32      ID;                                         // 0 extended-cost entry id
+	uint32      reqhonorpoints;                             // 1 required honor points
+	uint32      reqarenapoints;                             // 2 required arena points
+	uint32      RequiredArenaSlot;                          // 4 arena slot restrictions (min slot value)
+	uint32      RequiredItem[MAX_EXTENDED_COST_ITEMS];      // 5-8 required item id
+	uint32      RequiredItemCount[MAX_EXTENDED_COST_ITEMS]; // 9-13 required count of 1st item
+	uint32      RequiredPersonalArenaRating;                // 14 required personal arena rating
+	//uint32                                                // 15
+	uint32      RequiredCurrency[MAX_EXTENDED_COST_CURRENCIES];      // 16-20
+	uint32      RequiredCurrencyCount[MAX_EXTENDED_COST_CURRENCIES]; // 21-25
+	//uint32    something[5];                               // 26-30
 };
+
 
 struct ItemLimitCategoryEntry
 {
