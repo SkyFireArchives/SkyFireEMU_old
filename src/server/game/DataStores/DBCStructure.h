@@ -2133,7 +2133,7 @@ struct TalentTabEntry
     //DBCString internalname;                               // 6
     //DBCString description;                                // 7
     //uint32 rolesMask;                                     // 8 4.0.0
-    //uint32 spellIds[2];                                   // 9-10 passive mastery bonus spells?
+    uint32 masterySpells[2];                                // 9-10 passive mastery bonus spells
 };
 
 struct TalentTreePrimarySpellsEntry
