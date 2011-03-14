@@ -5975,8 +5975,10 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             break;
                         case 58600: // Restricted Flight Area
                             if (aurApp->GetRemoveMode() == AURA_REMOVE_BY_EXPIRE)
-								target->CastSpell(target, 61286, true);
+                            {
+                                target->CastSpell(target, 61286, true);
                                 target->CastSpell(target, 58601, true);
+                            }
                             break;
                     }
                     break;
