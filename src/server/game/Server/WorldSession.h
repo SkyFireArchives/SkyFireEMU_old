@@ -337,7 +337,7 @@ class WorldSession
         void HandleCharCreateOpcode(WorldPacket& recvPacket);
         void HandlePlayerLoginOpcode(WorldPacket& recvPacket);
 
-		void HandleUnk8508Opcode(WorldPacket& recvPacket);
+		void HandleWorldLoginOpcode(WorldPacket& recvPacket);
 
         void HandleCharEnum(QueryResult result);
         void HandlePlayerLogin(LoginQueryHolder * holder);

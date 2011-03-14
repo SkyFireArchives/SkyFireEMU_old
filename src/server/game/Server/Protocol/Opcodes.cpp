@@ -60,7 +60,7 @@ void InitOpcodeTable()
     OPCODE( SMSG_CHAR_CREATE,                             STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_CHAR_ENUM,                               STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_CHAR_DELETE,                             STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
-	OPCODE( CMSG_UNKNOWN_34056,                           STATUS_AUTHED,   &WorldSession::HandleUnk8508Opcode             );
+	OPCODE( CMSG_WORLD_LOGIN,                             STATUS_AUTHED,   &WorldSession::HandleWorldLoginOpcode          );
     OPCODE( CMSG_PLAYER_LOGIN,                            STATUS_AUTHED,   &WorldSession::HandlePlayerLoginOpcode         );
     OPCODE( SMSG_NEW_WORLD,                               STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_TRANSFER_PENDING,                        STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
