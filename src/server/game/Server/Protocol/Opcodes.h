@@ -1184,7 +1184,7 @@ enum Opcodes
     SMSG_SERVER_INFO_RESPONSE                        = 0x101F7, //
     CMSG_CHECK_LOGIN_CRITERIA                        = 0x101F8, //
     SMSG_SERVER_BUCK_DATA_START                      = 0x101F9, //
-    CMSG_QUERY_VEHICLE_STATUS                        = 0x101FA, //
+    CMSG_QUERY_VEHICLE_STATUS                        = 0x069A0, // 4.0.6a 13623
     SMSG_BATTLEGROUND_INFO_THROTTLED                 = 0x075C4, // 4.0.6a 13623
     SMSG_PLAYER_VEHICLE_DATA                         = 0x0A5A4, // 4.0.6a 13623
     CMSG_PLAYER_VEHICLE_ENTER                        = 0x0F9A4, // 4.0.6a 13623
@@ -1283,6 +1283,7 @@ enum Opcodes
     CMSG_SET_PRIMARY_TALENT_TREE                     = 0x0FEA8, // 4.0.6a 13623
     CMSG_GROUP_SET_ROLES                             = 0x08509, // 4.0.6a 13623
     CMSG_WORLD_LOGIN                                 = 0x08508, // 4.0.6a 13623
+    CMSG_RETURN_TO_GRAVEYARD                         = 0x00593, // 4.0.6a 13623
     NUM_MSG_TYPES                                    = 0x102B7  // last unknown opcode + 1.
 };
 
