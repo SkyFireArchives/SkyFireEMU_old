@@ -34,6 +34,14 @@ enum WarlockSpells
     WARLOCK_DEMONIC_EMPOWERMENT_IMP         = 54444,
     WARLOCK_IMPROVED_HEALTHSTONE_R1         = 18692,
     WARLOCK_IMPROVED_HEALTHSTONE_R2         = 18693,
+    WARLOCK_FELHUNTER_SHADOWBITE_R1         = 54049,
+    WARLOCK_FELHUNTER_SHADOWBITE_R2         = 54050,
+    WARLOCK_FELHUNTER_SHADOWBITE_R3         = 54051,
+    WARLOCK_FELHUNTER_SHADOWBITE_R4         = 54052,
+    WARLOCK_FELHUNTER_SHADOWBITE_R5         = 54053,
+    WARLOCK_IMPROVED_FELHUNTER_R1           = 54037,
+    WARLOCK_IMPROVED_FELHUNTER_R2           = 54038,
+    WARLOCK_IMPROVED_FELHUNTER_EFFECT       = 54425,
 };
 
 // 47193 Demonic Empowerment
@@ -144,22 +152,25 @@ public:
     class spell_warl_create_healthstone_SpellScript : public SpellScript
     {
         PrepareSpellScript(spell_warl_create_healthstone_SpellScript)
-        static uint32 const iTypes[8][3];
 
-        bool Validate(SpellEntry const * /*spellEntry*/)
+        //deprecated. removed in cataclysm
+        /*static uint32 const iTypes[8][3];
+
+        bool Validate(SpellEntry const * /*spellEntry*//*)
         {
             if (!sSpellStore.LookupEntry(WARLOCK_IMPROVED_HEALTHSTONE_R1))
                 return false;
             if (!sSpellStore.LookupEntry(WARLOCK_IMPROVED_HEALTHSTONE_R2))
                 return false;
             return true;
-        }
+        }*/
 
         void HandleScriptEffect(SpellEffIndex effIndex)
         {
             if (Unit* unitTarget = GetHitUnit())
             {
-                uint32 rank = 0;
+                //spell ranking deprecated in cataclysm
+                /*uint32 rank = 0;
                 // Improved Healthstone
                 if (AuraEffect const * aurEff = unitTarget->GetDummyAuraEffect(SPELLFAMILY_WARLOCK, 284, 0))
                 {
@@ -173,8 +184,8 @@ public:
                     }
                 }
                 uint8 spellRank = sSpellMgr.GetSpellRank(GetSpellInfo()->Id);
-                if (spellRank > 0 && spellRank <= 8)
-                    CreateItem(effIndex, iTypes[spellRank - 1][rank]);
+                if (spellRank > 0 && spellRank <= 8)*/
+                    CreateItem(effIndex, 5512);
             }
         }
 
@@ -190,7 +201,8 @@ public:
     }
 };
 
-uint32 const spell_warl_create_healthstone::spell_warl_create_healthstone_SpellScript::iTypes[8][3] = {
+//deprecated in cataclysm--improved healthstone talent removed.
+/*uint32 const spell_warl_create_healthstone::spell_warl_create_healthstone_SpellScript::iTypes[8][3] = {
     { 5512, 19004, 19005},              // Minor Healthstone
     { 5511, 19006, 19007},              // Lesser Healthstone
     { 5509, 19008, 19009},              // Healthstone
@@ -199,12 +211,117 @@ uint32 const spell_warl_create_healthstone::spell_warl_create_healthstone_SpellS
     {22103, 22104, 22105},              // Master Healthstone
     {36889, 36890, 36891},              // Demonic Healthstone
     {36892, 36893, 36894}               // Fel Healthstone
+};*/
+
+
+//27285 Seed of Corruption
+class spell_warl_seed_of_corruption : public SpellScriptLoader
+{
+    public:
+        spell_warl_seed_of_corruption() : SpellScriptLoader("spell_warl_seed_of_corruption") { }
+
+        class spell_warl_seed_of_corruption_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_warl_seed_of_corruption_SpellScript);
+
+            void FilterTargets(std::list<Unit*>& unitList)
+            {
+                unitList.remove(GetTargetUnit());
+            }
+
+            void Register()
+            {
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_warl_seed_of_corruption_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_AREA_ENEMY_DST);
+            }
+        };
+
+        SpellScript *GetSpellScript() const
+        {
+            return new spell_warl_seed_of_corruption_SpellScript();
+        }
 };
 
+// 54049 Shadow Bite
+class spell_warl_shadow_bite : public SpellScriptLoader
+{
+public:
+    spell_warl_shadow_bite() : SpellScriptLoader("spell_warl_shadow_bite") { }
+
+    class spell_warl_shadow_bite_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_warl_shadow_bite_SpellScript)
+        bool Validate(SpellEntry const * /*spellEntry*/)
+        {
+            if (!sSpellStore.LookupEntry(WARLOCK_FELHUNTER_SHADOWBITE_R1))
+                return false;
+            if (!sSpellStore.LookupEntry(WARLOCK_FELHUNTER_SHADOWBITE_R2))
+                return false;
+            if (!sSpellStore.LookupEntry(WARLOCK_FELHUNTER_SHADOWBITE_R3))
+                return false;
+            if (!sSpellStore.LookupEntry(WARLOCK_FELHUNTER_SHADOWBITE_R4))
+                return false;
+            if (!sSpellStore.LookupEntry(WARLOCK_FELHUNTER_SHADOWBITE_R5))
+                return false;
+            if (!sSpellStore.LookupEntry(WARLOCK_IMPROVED_FELHUNTER_R1))
+                return false;
+            if (!sSpellStore.LookupEntry(WARLOCK_IMPROVED_FELHUNTER_R2))
+                return false;
+            if (!sSpellStore.LookupEntry(WARLOCK_IMPROVED_FELHUNTER_EFFECT))
+                return false;
+            return true;
+        }
+
+        void HandleScriptEffect(SpellEffIndex /*effIndex*/)
+        {
+            //Unit *caster = GetCaster();
+            // Get DoTs on target by owner (15% increase by dot)
+            // need to get this here from SpellEffects.cpp ?
+            // damage *= float(100.f + 15.f * caster->getVictim()->GetDoTsByCaster(caster->GetOwnerGUID())) / 100.f;
+        }
+
+        // For Improved Felhunter
+        void HandleAfterHitEffect()
+        {
+            Unit *caster = GetCaster();
+            if(!caster) { return; };
+
+            // break if our caster is not a pet
+            if(!(caster->GetTypeId() == TYPEID_UNIT && caster->ToCreature()->isPet())) { return; };
+
+            // break if pet has no owner and/or owner is not a player
+            Unit *owner = caster->GetOwner();
+            if(!(owner && (owner->GetTypeId() == TYPEID_PLAYER))) { return; };
+            
+            int32 amount;
+            // rank 1 - 4%
+            if(owner->HasAura(WARLOCK_IMPROVED_FELHUNTER_R1)) { amount = 5; };
+
+            // rank 2 - 8%
+            if(owner->HasAura(WARLOCK_IMPROVED_FELHUNTER_R2)) { amount = 9; };
+            
+            // Finally return the Mana to our Caster
+            if(AuraEffect * aurEff = owner->GetAuraEffect(SPELL_AURA_ADD_FLAT_MODIFIER, SPELLFAMILY_WARLOCK, 214, 0))
+                caster->CastCustomSpell(caster,WARLOCK_IMPROVED_FELHUNTER_EFFECT,&amount,NULL,NULL,true,NULL,aurEff,caster->GetGUID());
+        }
+
+        void Register()
+        {
+// OnEffect += SpellEffectFn(spell_warl_shadow_bite_SpellScript::HandleScriptEffect, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+            AfterHit += SpellHitFn(spell_warl_shadow_bite_SpellScript::HandleAfterHitEffect);
+        }
+    };
+
+    SpellScript* GetSpellScript() const
+    {
+        return new spell_warl_shadow_bite_SpellScript();
+    }
+};
 
 void AddSC_warlock_spell_scripts()
 {
     new spell_warl_demonic_empowerment();
     new spell_warl_everlasting_affliction();
     new spell_warl_create_healthstone();
+    new spell_warl_seed_of_corruption();
+    new spell_warl_shadow_bite();
 }
