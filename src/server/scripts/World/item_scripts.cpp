@@ -520,7 +520,7 @@ public:
 
     bool OnUse(Player *pPlayer, Item *pItem, SpellCastTargets const & /*targets*/)
     {
-        if (player->GetQuestStatus(26357) == QUEST_STATUS_INCOMPLETE)
+        if (pPlayer->GetQuestStatus(26357) == QUEST_STATUS_INCOMPLETE)
 
         if (pPlayer->FindNearestCreature(42704,15))
             {
