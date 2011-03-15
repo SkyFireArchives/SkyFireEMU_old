@@ -68,9 +68,18 @@ void WorldSession::HandlePetAction(WorldPacket & recv_data)
 	uint32 spellid = UNIT_ACTION_BUTTON_ACTION(data);
 	uint8 flag = UNIT_ACTION_BUTTON_TYPE(data);             //delete = 0x07 CastSpell = C1
 
-    // used also for charmed creature
 	Unit* pet= ObjectAccessor::GetUnit(*_player, guid1);
-    sLog.outDetail("HandlePetAction: Pet %u - flag: %u, spellid: %u, target: %u.", uint32(GUID_LOPART(guid1)), uint32(flag), spellid, uint32(GUID_LOPART(guid2)));
+
+	float pos_x = pet->GetPositionX();
+	float pos_y = pet->GetPositionY();
+	float pos_z = pet->GetPositionZ();
+
+	recv_data >> pos_x;                                     // 4.0.3, x
+	recv_data >> pos_y;                                     // 4.0.3, y
+	recv_data >> pos_z;                                     // 4.0.3, z
+
+    // used also for charmed creature
+	sLog.outDetail("HandlePetAction: Pet %u - flag: %u, spellid: %u, target: %u.", uint32(GUID_LOPART(guid1)), uint32(flag), spellid, uint32(GUID_LOPART(guid2)));
     
 	if (!pet)
     {
