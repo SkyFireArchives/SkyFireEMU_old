@@ -237,7 +237,7 @@ enum Opcodes
     CMSG_FORCE_RUN_SPEED_CHANGE_ACK                  = 0x026C8, // 4.0.6a 13623
     SMSG_FORCE_RUN_BACK_SPEED_CHANGE                 = 0x1002E, //
     CMSG_FORCE_RUN_BACK_SPEED_CHANGE_ACK             = 0x078E4, // 4.0.6a 13623
-    SMSG_FORCE_SWIM_SPEED_CHANGE                     = 0x0ED75, //
+    SMSG_FORCE_SWIM_SPEED_CHANGE                     = 0x0F5A0, // 4.0.6a 13623
     CMSG_FORCE_SWIM_SPEED_CHANGE_ACK                 = 0x0B1A0, // 4.0.6a 13623
     SMSG_FORCE_MOVE_ROOT                             = 0x02F88, // 4.0.6a 13623
     CMSG_FORCE_MOVE_ROOT_ACK                         = 0x07184, // 4.0.6a 13623
@@ -675,7 +675,7 @@ enum Opcodes
     SMSG_SET_FORCED_REACTIONS                        = 0x100DB, //
     SMSG_SPELL_FAILED_OTHER                          = 0x0E7A4, // 4.0.6a 13623
     SMSG_GAMEOBJECT_RESET_STATE                      = 0x022E0, // 4.0.6a 13623
-    CMSG_REPAIR_ITEM                                 = 0x02674, //
+    CMSG_REPAIR_ITEM                                 = 0x039E4, // 4.0.6a 13623
     SMSG_CHAT_PLAYER_NOT_FOUND                       = 0x03654, //
     MSG_TALENT_WIPE_CONFIRM                          = 0x0BFC4, // 4.0.6a 13623
     SMSG_SUMMON_REQUEST                              = 0x03AE4, // 4.0.6a 13623
