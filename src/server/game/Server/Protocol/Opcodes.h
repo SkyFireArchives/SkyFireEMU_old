@@ -355,7 +355,7 @@ enum Opcodes
     SMSG_CLIENT_CONTROL_UPDATE                       = 0x03C84, // 4.0.6a 13623
     CMSG_REPOP_REQUEST                               = 0x0A9E4, // 4.0.6a 13623
     SMSG_RESURRECT_REQUEST                           = 0x0F3A0, // 4.0.6a 13623
-    CMSG_RESURRECT_RESPONSE                          = 0x0EA84, // 4.0.6a 13623
+    CMSG_RESURRECT_RESPONSE                          = 0x07CC8, // 4.0.6a 13623
     CMSG_LOOT                                        = 0x0FCEC, // 4.0.6a 13623
     CMSG_LOOT_MONEY                                  = 0x079E0, // 4.0.6a 13623
     CMSG_LOOT_RELEASE                                = 0x03CE8, // 4.0.6a 13623
