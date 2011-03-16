@@ -26,6 +26,11 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "deadmines.h"
 
+enum Factions
+{
+    FACTION_HOSTILE_FOR_ALL                       = 16
+};
+
 enum Sounds
 {
     SOUND_CANNONFIRE                                     = 1400,
@@ -82,6 +87,95 @@ class instance_deadmines : public InstanceMapScript
                 uiSmiteChestGUID = 0;
             }
 
+            void OnCreatureCreate(Creature *pCreature, bool /*bAdd*/)
+            {
+            Map::PlayerList const &players = instance->GetPlayers();
+            uint32 TeamInInstance = 0;
+
+            if (!players.isEmpty())
+            {
+                if (Player* pPlayer = players.begin()->getSource())
+                    TeamInInstance = pPlayer->GetTeam();
+            }
+            switch (pCreature->GetEntry())
+            {
+                // Alliance, you will be supported by Alliance npcs. Horde = Invisible.
+                case 46889: // Kagtha
+                {
+                    if (ServerAllowsTwoSideGroups())
+                        pCreature->setFaction(FACTION_HOSTILE_FOR_ALL);
+                    if (TeamInInstance == ALLIANCE)
+                        pCreature->UpdateEntry(42308, ALLIANCE); // Lieutenant Horatio Laine
+                    break;
+                }
+                case 46902: // Miss Mayhem
+                {
+                    if (ServerAllowsTwoSideGroups())
+                        pCreature->setFaction(FACTION_HOSTILE_FOR_ALL);
+                    if (TeamInInstance == ALLIANCE)
+                        pCreature->UpdateEntry(491, ALLIANCE); // Quartermaster Lewis <Quartermaster> 
+                    break;
+                }
+                case 46890: // Shattered Hand Assassin
+                {
+                    if (ServerAllowsTwoSideGroups())
+                        pCreature->setFaction(FACTION_HOSTILE_FOR_ALL);
+                    if (TeamInInstance == ALLIANCE)
+                        pCreature->UpdateEntry(1, ALLIANCE); // GM WAYPOINT
+                    break;
+                }                
+                case 46903: // Mayhem Reaper Prototype
+                {
+                    if (ServerAllowsTwoSideGroups())
+                        pCreature->setFaction(FACTION_HOSTILE_FOR_ALL);
+                    if (TeamInInstance == ALLIANCE)
+                        pCreature->UpdateEntry(1, ALLIANCE); // GM WAYPOINT
+                    break;
+                }
+                case 24935: // Vend-O-Tron D-Luxe
+                {
+                    if (ServerAllowsTwoSideGroups())
+                        pCreature->setFaction(FACTION_HOSTILE_FOR_ALL);
+                    if (TeamInInstance == ALLIANCE)
+                        pCreature->UpdateEntry(1, ALLIANCE); // GM WAYPOINT
+                    break;
+                }
+                case 46906: // Slinky Sharpshiv
+                {
+                    if (ServerAllowsTwoSideGroups())
+                        pCreature->setFaction(FACTION_HOSTILE_FOR_ALL);
+                    if (TeamInInstance == ALLIANCE)
+                        pCreature->UpdateEntry(1, ALLIANCE); // GM WAYPOINT
+                    break;
+                }
+                // Horde, you will be supported by Horde npcs. Alliance = Invisible.
+                case 46613: // Crime Scene Alarm-O-Bot
+                {
+                    if (ServerAllowsTwoSideGroups())
+                        pCreature->setFaction(FACTION_HOSTILE_FOR_ALL);
+                    if (TeamInInstance == HORDE)
+                        pCreature->UpdateEntry(1, HORDE); // GM WAYPOINT
+                    break;
+                }
+                case 50595: // Stormwind Defender
+                {
+                    if (ServerAllowsTwoSideGroups())
+                        pCreature->setFaction(FACTION_HOSTILE_FOR_ALL);
+                    if (TeamInInstance == HORDE)
+                        pCreature->UpdateEntry(1, HORDE); // GM WAYPOINT
+                   break;
+               }
+               case 46614: // Stormwind Investigator
+               {
+                    if (ServerAllowsTwoSideGroups())
+                        pCreature->setFaction(FACTION_HOSTILE_FOR_ALL);
+                    if (TeamInInstance == HORDE)
+                        pCreature->UpdateEntry(1, HORDE); // GM WAYPOINT
+                   break;
+               }
+            }
+        
+			}                                                
             virtual void Update(uint32 diff)
             {
                 if (!IronCladDoorGUID || !DefiasCannonGUID || !DoorLeverGUID)

@@ -60,7 +60,7 @@ void InitOpcodeTable()
     OPCODE( SMSG_CHAR_CREATE,                             STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_CHAR_ENUM,                               STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_CHAR_DELETE,                             STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
-	OPCODE( CMSG_UNKNOWN_34056,                           STATUS_AUTHED,   &WorldSession::HandleUnk8508Opcode             );
+	OPCODE( CMSG_WORLD_LOGIN,                             STATUS_AUTHED,   &WorldSession::HandleWorldLoginOpcode          );
     OPCODE( CMSG_PLAYER_LOGIN,                            STATUS_AUTHED,   &WorldSession::HandlePlayerLoginOpcode         );
     OPCODE( SMSG_NEW_WORLD,                               STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_TRANSFER_PENDING,                        STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
@@ -1275,4 +1275,5 @@ void InitOpcodeTable()
     OPCODE( CMSG_SET_PRIMARY_TALENT_TREE,                 STATUS_NEVER,    &WorldSession::Handle_NULL                     );
     OPCODE( CMSG_GROUP_SET_ROLES,                         STATUS_LOGGEDIN, &WorldSession::HandleGroupSetRoles             );
     OPCODE( SMSG_UNKNOWN_1310,                            STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
+    OPCODE( CMSG_RETURN_TO_GRAVEYARD,                     STATUS_LOGGEDIN, &WorldSession::HandleMoveToGraveyard           );
 };

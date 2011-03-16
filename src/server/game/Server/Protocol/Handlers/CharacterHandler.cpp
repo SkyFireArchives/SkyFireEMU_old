@@ -685,9 +685,9 @@ void WorldSession::HandleCharDeleteOpcode(WorldPacket & recv_data)
     SendPacket(&data);
 }
 
-void WorldSession::HandleUnk8508Opcode(WorldPacket& recv_data)
+void WorldSession::HandleWorldLoginOpcode(WorldPacket& recv_data)
 {
-    sLog.outStaticDebug("WORLD: Recvd 0x8508");
+    sLog.outDebug("WORLD: Recvd World Login Message");
     uint32 unk;
     uint8 unk1;
     recv_data >> unk >> unk1;

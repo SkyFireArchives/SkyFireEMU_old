@@ -404,71 +404,10 @@ public:
 
 };
 
-enum ePantherCage
-{
-    ENRAGED_PANTHER = 10992
-};
-
-class go_panther_cage : public GameObjectScript
-{
-public:
-    go_panther_cage() : GameObjectScript("go_panther_cage") { }
-
-    bool OnGossipHello(Player* pPlayer, GameObject* pGo)
-    {
-
-        if (pPlayer->GetQuestStatus(5151) == QUEST_STATUS_INCOMPLETE)
-        {
-            if (Creature* panther = pGo->FindNearestCreature(ENRAGED_PANTHER, 5, true))
-            {
-                panther->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
-                panther->SetReactState(REACT_AGGRESSIVE);
-                panther->AI()->AttackStart(pPlayer);
-            }
-        }
-
-        return true ;
-    }
-};
-
-class npc_enraged_panther : public CreatureScript
-{
-public:
-    npc_enraged_panther() : CreatureScript("npc_enraged_panther") { }
-
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new npc_enraged_pantherAI(pCreature);
-    }
-
-    struct npc_enraged_pantherAI : public ScriptedAI
-    {
-        npc_enraged_pantherAI(Creature *c) : ScriptedAI(c) {}
-
-        void Reset()
-        {
-            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-            me->SetReactState(REACT_PASSIVE);
-        }
-
-        void UpdateAI(const uint32 /*diff*/)
-        {
-            if (!UpdateVictim())
-                return;
-
-            DoMeleeAttackIfReady();
-        }
-    };
-
-};
-
-
 void AddSC_thousand_needles()
 {
     new npc_kanati();
     new npc_lakota_windsong();
     new npc_paoka_swiftmountain();
     new npc_plucky();
-    new npc_enraged_panther();
-    new go_panther_cage();
 }

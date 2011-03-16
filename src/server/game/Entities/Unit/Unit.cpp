@@ -5589,7 +5589,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                         SpellEntry const* SpellCDs_entry = sSpellStore.LookupEntry(itr->first);
                         // Frost Nova
                         if (SpellCDs_entry && SpellCDs_entry->SpellFamilyName == SPELLFAMILY_MAGE
-                           && SpellCDs_entry->SpellFamilyFlags[0] & 0x00000040)
+                           && SpellCDs_entry->SpellFamilyFlags[0] && 0x00000040)
                             this->ToPlayer()->RemoveSpellCooldown(SpellCDs_entry->Id, true);
                     }
                     break;
@@ -9501,7 +9501,7 @@ void Unit::SetMinion(Minion *minion, bool apply, PetSlot slot)
             // Send infinity cooldown - client does that automatically but after relog cooldown needs to be set again
             SpellEntry const *spellInfo = sSpellStore.LookupEntry(minion->GetUInt32Value(UNIT_CREATED_BY_SPELL));
             if (spellInfo && (spellInfo->Attributes & SPELL_ATTR_DISABLED_WHILE_ACTIVE))
-                this->ToPlayer()->AddSpellAndCategoryCooldowns(spellInfo, 0, NULL ,true);
+                this->ToPlayer()->AddSpellAndCategoryCooldowns(spellInfo, 0, NULL, true);
         }
     }
     else

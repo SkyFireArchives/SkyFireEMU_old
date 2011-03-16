@@ -201,6 +201,7 @@ class WorldSession
 
         void LogoutPlayer(bool Save);
         void KickPlayer();
+        void HandleMoveToGraveyard(WorldPacket &recv_data);
 
         void QueuePacket(WorldPacket* new_packet);
         bool Update(uint32 diff);
@@ -337,7 +338,7 @@ class WorldSession
         void HandleCharCreateOpcode(WorldPacket& recvPacket);
         void HandlePlayerLoginOpcode(WorldPacket& recvPacket);
 
-		void HandleUnk8508Opcode(WorldPacket& recvPacket);
+		void HandleWorldLoginOpcode(WorldPacket& recvPacket);
 
         void HandleCharEnum(QueryResult result);
         void HandlePlayerLogin(LoginQueryHolder * holder);
