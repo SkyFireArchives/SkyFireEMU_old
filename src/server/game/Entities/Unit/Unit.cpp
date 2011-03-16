@@ -1028,9 +1028,9 @@ void Unit::CalculateSpellDamageTaken(SpellNonMeleeDamage *damageInfo, int32 dama
                 }
 
                 if (attackType != RANGED_ATTACK)
-                    ApplyResilience(pVictim, &damage, crit, CR_CRIT_TAKEN_MELEE);
+                    ApplyResilience(pVictim, &damage, CR_CRIT_TAKEN_MELEE);
                 else
-                    ApplyResilience(pVictim, &damage, crit, CR_CRIT_TAKEN_RANGED);
+                    ApplyResilience(pVictim, &damage, CR_CRIT_TAKEN_RANGED);
             }
             break;
         // Magical Attacks
@@ -1044,7 +1044,7 @@ void Unit::CalculateSpellDamageTaken(SpellNonMeleeDamage *damageInfo, int32 dama
                     damage = SpellCriticalDamageBonus(spellInfo, damage, pVictim);
                 }
 
-                ApplyResilience(pVictim, &damage, crit, CR_CRIT_TAKEN_SPELL);
+                ApplyResilience(pVictim, &damage, CR_CRIT_TAKEN_SPELL);
             }
             break;
     }
@@ -1278,9 +1278,9 @@ void Unit::CalculateMeleeDamage(Unit *pVictim, uint32 damage, CalcDamageInfo *da
 
     int32 resilienceReduction = damageInfo->damage;
     if (attackType != RANGED_ATTACK)
-        ApplyResilience(pVictim, &resilienceReduction, (damageInfo->hitOutCome == MELEE_HIT_CRIT), CR_CRIT_TAKEN_MELEE);
+        ApplyResilience(pVictim, &resilienceReduction, CR_CRIT_TAKEN_MELEE);
     else
-        ApplyResilience(pVictim, &resilienceReduction, (damageInfo->hitOutCome == MELEE_HIT_CRIT), CR_CRIT_TAKEN_RANGED);
+        ApplyResilience(pVictim, &resilienceReduction, CR_CRIT_TAKEN_RANGED);
     resilienceReduction = damageInfo->damage - resilienceReduction;
     damageInfo->damage      -= resilienceReduction;
     damageInfo->cleanDamage += resilienceReduction;
@@ -10658,6 +10658,7 @@ uint32 Unit::SpellCriticalDamageBonus(SpellEntry const *spellProto, uint32 damag
 {
     // Calculate critical bonus
     int32 crit_bonus;
+    Player* modOwner = GetSpellModOwner();
     switch(spellProto->DmgClass)
     {
         case SPELL_DAMAGE_CLASS_MELEE:                      // for melee based spells is 100%
@@ -10666,12 +10667,17 @@ uint32 Unit::SpellCriticalDamageBonus(SpellEntry const *spellProto, uint32 damag
             crit_bonus = damage;
             break;
         default:
-            crit_bonus = damage / 2;                        // for spells is 50%
+            if(modOwner && (modOwner->getClass() == CLASS_MAGE || modOwner->getClass() == CLASS_WARLOCK))
+            {
+                crit_bonus = damage; // 100% bonus for Mages and Warlocks in Cataclysm
+            } else {
+                crit_bonus = damage / 2;                        // for spells is 50%
+            }
             break;
     }
 
     // adds additional damage to crit_bonus (from talents)
-    if (Player* modOwner = GetSpellModOwner())
+    if (modOwner)
         modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_CRIT_DAMAGE_BONUS, crit_bonus);
 
     if (pVictim)
@@ -15833,7 +15839,7 @@ void Unit::SetAuraStack(uint32 spellId, Unit *target, uint32 stack)
         aura->SetStackAmount(stack);
 }
 
-void Unit::ApplyResilience(const Unit *pVictim, int32 *damage, bool isCrit, CombatRating type) const
+void Unit::ApplyResilience(const Unit *pVictim, int32 *damage, CombatRating type) const
 {
     if (IsVehicle() || pVictim->IsVehicle())
         return;
@@ -15870,24 +15876,18 @@ void Unit::ApplyResilience(const Unit *pVictim, int32 *damage, bool isCrit, Comb
         case CR_CRIT_TAKEN_MELEE:
             if (source && damage)
             {
-                if (isCrit)
-                    *damage -= target->ToPlayer()->GetMeleeCritDamageReduction(*damage);
                 *damage -= target->ToPlayer()->GetMeleeDamageReduction(*damage);
             }
             break;
         case CR_CRIT_TAKEN_RANGED:
             if (source && damage)
             {
-                if (isCrit)
-                    *damage -= target->ToPlayer()->GetRangedCritDamageReduction(*damage);
                 *damage -= target->ToPlayer()->GetRangedDamageReduction(*damage);
             }
             break;
         case CR_CRIT_TAKEN_SPELL:
             if (source && damage)
             {
-                if (isCrit)
-                    *damage -= target->ToPlayer()->GetSpellCritDamageReduction(*damage);
                 *damage -= target->ToPlayer()->GetSpellDamageReduction(*damage);
             }
             break;
