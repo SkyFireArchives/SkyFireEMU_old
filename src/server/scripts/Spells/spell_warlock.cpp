@@ -32,16 +32,9 @@ enum WarlockSpells
     WARLOCK_DEMONIC_EMPOWERMENT_FELGUARD    = 54508,
     WARLOCK_DEMONIC_EMPOWERMENT_FELHUNTER   = 54509,
     WARLOCK_DEMONIC_EMPOWERMENT_IMP         = 54444,
-    WARLOCK_IMPROVED_HEALTHSTONE_R1         = 18692,
-    WARLOCK_IMPROVED_HEALTHSTONE_R2         = 18693,
+    //WARLOCK_IMPROVED_HEALTHSTONE_R1         = 18692,
+    //WARLOCK_IMPROVED_HEALTHSTONE_R2         = 18693,
     WARLOCK_FELHUNTER_SHADOWBITE_R1         = 54049,
-    WARLOCK_FELHUNTER_SHADOWBITE_R2         = 54050,
-    WARLOCK_FELHUNTER_SHADOWBITE_R3         = 54051,
-    WARLOCK_FELHUNTER_SHADOWBITE_R4         = 54052,
-    WARLOCK_FELHUNTER_SHADOWBITE_R5         = 54053,
-    WARLOCK_IMPROVED_FELHUNTER_R1           = 54037,
-    WARLOCK_IMPROVED_FELHUNTER_R2           = 54038,
-    WARLOCK_IMPROVED_FELHUNTER_EFFECT       = 54425,
 };
 
 // 47193 Demonic Empowerment
@@ -143,7 +136,7 @@ public:
     }
 };
 
-// 6201 Create Healthstone (and ranks)
+// 6201 Create Healthstone
 class spell_warl_create_healthstone : public SpellScriptLoader
 {
 public:
@@ -254,20 +247,6 @@ public:
         {
             if (!sSpellStore.LookupEntry(WARLOCK_FELHUNTER_SHADOWBITE_R1))
                 return false;
-            if (!sSpellStore.LookupEntry(WARLOCK_FELHUNTER_SHADOWBITE_R2))
-                return false;
-            if (!sSpellStore.LookupEntry(WARLOCK_FELHUNTER_SHADOWBITE_R3))
-                return false;
-            if (!sSpellStore.LookupEntry(WARLOCK_FELHUNTER_SHADOWBITE_R4))
-                return false;
-            if (!sSpellStore.LookupEntry(WARLOCK_FELHUNTER_SHADOWBITE_R5))
-                return false;
-            if (!sSpellStore.LookupEntry(WARLOCK_IMPROVED_FELHUNTER_R1))
-                return false;
-            if (!sSpellStore.LookupEntry(WARLOCK_IMPROVED_FELHUNTER_R2))
-                return false;
-            if (!sSpellStore.LookupEntry(WARLOCK_IMPROVED_FELHUNTER_EFFECT))
-                return false;
             return true;
         }
 
@@ -276,9 +255,10 @@ public:
             //Unit *caster = GetCaster();
             // Get DoTs on target by owner (15% increase by dot)
             // need to get this here from SpellEffects.cpp ?
-            // damage *= float(100.f + 15.f * caster->getVictim()->GetDoTsByCaster(caster->GetOwnerGUID())) / 100.f;
+            //damage *= float(100.f + 15.f * caster->getVictim()->GetDoTsByCaster(caster->GetOwnerGUID())) / 100.f;
         }
 
+        // Improved Felhunter parts commented--deprecated. removed in cataclysm
         // For Improved Felhunter
         void HandleAfterHitEffect()
         {
@@ -292,21 +272,22 @@ public:
             Unit *owner = caster->GetOwner();
             if(!(owner && (owner->GetTypeId() == TYPEID_PLAYER))) { return; };
             
-            int32 amount;
-            // rank 1 - 4%
-            if(owner->HasAura(WARLOCK_IMPROVED_FELHUNTER_R1)) { amount = 5; };
 
-            // rank 2 - 8%
-            if(owner->HasAura(WARLOCK_IMPROVED_FELHUNTER_R2)) { amount = 9; };
+            /*int32 amount;
+            // rank 1 - 4%
+            if(owner->HasAura(WARLOCK_IMPROVED_FELHUNTER_R1)) { amount = 5; };*/
+
+            /*// rank 2 - 8%
+            if(owner->HasAura(WARLOCK_IMPROVED_FELHUNTER_R2)) { amount = 9; };*/
             
             // Finally return the Mana to our Caster
-            if(AuraEffect * aurEff = owner->GetAuraEffect(SPELL_AURA_ADD_FLAT_MODIFIER, SPELLFAMILY_WARLOCK, 214, 0))
-                caster->CastCustomSpell(caster,WARLOCK_IMPROVED_FELHUNTER_EFFECT,&amount,NULL,NULL,true,NULL,aurEff,caster->GetGUID());
+            /*if(AuraEffect * aurEff = owner->GetAuraEffect(SPELL_AURA_ADD_FLAT_MODIFIER, SPELLFAMILY_WARLOCK, 214, 0))
+                caster->CastCustomSpell(caster,WARLOCK_IMPROVED_FELHUNTER_EFFECT,&amount,NULL,NULL,true,NULL,aurEff,caster->GetGUID());*/
         }
 
         void Register()
         {
-// OnEffect += SpellEffectFn(spell_warl_shadow_bite_SpellScript::HandleScriptEffect, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+            //OnEffect += SpellEffectFn(spell_warl_shadow_bite_SpellScript::HandleScriptEffect, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
             AfterHit += SpellHitFn(spell_warl_shadow_bite_SpellScript::HandleAfterHitEffect);
         }
     };
