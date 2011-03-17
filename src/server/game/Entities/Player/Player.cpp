@@ -16810,8 +16810,8 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
         sLog.outError("Player %s(GUID: %u) has SpecCount = %u and ActiveSpec = %u.", GetName(), GetGUIDLow(), m_specsCount, m_activeSpec);
     }
 
-    _LoadTalents(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADTALENTS));
     _LoadTalentBranchSpecs(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS));
+    _LoadTalents(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADTALENTS));
     _LoadSpells(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADSPELLS));
 
     _LoadGlyphs(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADGLYPHS));
@@ -24628,7 +24628,7 @@ void Player::ActivateSpec(uint8 spec)
         if (!talentInfo || talentInfo->TalentTabID != GetTalentBranchSpec(spec))
             continue;
         
-        learnSpell(talentInfo->SpellID, true);
+        learnSpell(talentInfo->SpellID, false);
     }
     
     // set glyphs
