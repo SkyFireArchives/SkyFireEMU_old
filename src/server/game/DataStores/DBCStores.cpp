@@ -612,6 +612,7 @@ void LoadDBCStores(const std::string& dataPath)
                     if (sInfo->Effect[j] == SPELL_EFFECT_SEND_TAXI)
                         spellPaths.insert(sInfo->EffectMiscValue[j]);
         
+        ASSERT(((sTaxiNodesStore.GetNumRows()-1)/32) < TaxiMaskSize && "TaxiMaskSize needs to be increased");
         memset(sTaxiNodesMask,0,sizeof(sTaxiNodesMask));
         memset(sOldContinentsNodesMask,0,sizeof(sOldContinentsNodesMask));
         memset(sHordeTaxiNodesMask,0,sizeof(sHordeTaxiNodesMask));
