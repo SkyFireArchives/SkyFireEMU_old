@@ -6100,6 +6100,8 @@ SpellCastResult Spell::CheckItems()
                     return SPELL_FAILED_ITEM_NOT_READY;         //0x54
             }
         }
+/*
+        //deprecated. in cataclysm totem items arent required to cast totem spells
 
         // check totem-item requirements (items presence in inventory)
         uint32 totems = 2;
@@ -6135,6 +6137,7 @@ SpellCastResult Spell::CheckItems()
         }
         if (TotemCategory != 0)
             return SPELL_FAILED_TOTEM_CATEGORY;                 //0x7B
+        */
     }
 
     // special checks for spell effects
