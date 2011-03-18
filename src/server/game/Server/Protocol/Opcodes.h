@@ -129,7 +129,7 @@ enum Opcodes
     SMSG_GUILD_DECLINE                               = 0x07DEC, // 4.0.6a 13623
     CMSG_GUILD_INFO                                  = 0x06884, // 4.0.6a 13623
     SMSG_GUILD_INFO                                  = 0x020A8, // 4.0.6a 13623
-    CMSG_GUILD_ROSTER                                = 0x0B2A4, // 4.0.6a 13623
+    CMSG_GUILD_ROSTER                                = 0x04D5C, // 4.0.6a 13623
     SMSG_GUILD_ROSTER                                = 0x04D5C, // 4.0.6a 13623
     CMSG_GUILD_PROMOTE                               = 0x02109, // 4.0.6a 13623
     CMSG_GUILD_DEMOTE                                = 0x01902, //
@@ -1157,7 +1157,7 @@ enum Opcodes
     SMSG_CONVERT_RUNE                                = 0x101E8, //
     SMSG_RESYNC_RUNES                                = 0x101E9, //
     SMSG_ADD_RUNE_POWER                              = 0x101EA, //
-    CMSG_START_QUEST                                 = 0x101EB, //
+    CMSG_START_QUEST                                 = 0x00613, // 4.0.6a 13623
     CMSG_REMOVE_GLYPH                                = 0x101EC, //
     CMSG_DUMP_OBJECTS                                = 0x101ED, //
     SMSG_DUMP_OBJECTS_DATA                           = 0x101EE, //
