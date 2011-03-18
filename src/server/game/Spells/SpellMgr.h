@@ -1509,6 +1509,7 @@ class SpellMgr
         void LoadPetLevelupSpellMap();
         void LoadPetDefaultSpells();
         void LoadSpellAreas();
+		void LoadSpellFixes();
         void LoadSpellGroupStackRules();
 
     private:
