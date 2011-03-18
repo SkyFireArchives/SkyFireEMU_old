@@ -1252,7 +1252,7 @@ void GameObject::Use(Unit* user)
             if (player->GetGUID() != GetOwnerGUID())
                 return;
 
-            switch(getLootState())
+            switch (getLootState())
             {
                 case GO_READY:                              // ready for loot
                 {
