@@ -1497,6 +1497,9 @@ void World::SetInitialWorldSettings()
     sLog.outString("Loading linked spells...");
     sSpellMgr.LoadSpellLinked();
 
+	sLog.outString("Loading Custom Spell Parameters");
+	sSpellMgr.LoadSpellFixes();
+
     sLog.outString("Loading Player Create Data...");
     sObjectMgr.LoadPlayerInfo();
 
