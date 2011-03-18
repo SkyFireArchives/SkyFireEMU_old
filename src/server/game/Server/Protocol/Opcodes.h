@@ -249,10 +249,12 @@ enum Opcodes
     SMSG_MOVE_KNOCK_BACK                             = 0x0B0E8, // 4.0.6a 13623
     CMSG_MOVE_KNOCK_BACK_ACK                         = 0x0F580, // 4.0.6a 13623
     MSG_MOVE_KNOCK_BACK                              = 0x0B0E8, // 4.0.6a 13623
-    SMSG_MOVE_FEATHER_FALL                           = 0x10038, //
-    SMSG_MOVE_NORMAL_FALL                            = 0x10039, //
-    SMSG_MOVE_SET_HOVER                              = 0x08D5C, //
-    SMSG_MOVE_UNSET_HOVER                            = 0x07754, //
+    SMSG_MOVE_FEATHER_FALL                           = 0x06088, // 4.0.6a 13623
+    SMSG_MOVE_NORMAL_FALL                            = 0x06CE0, // 4.0.6a 13623
+    SMSG_MOVE_SET_HOVER                              = 0x06AE0, // 4.0.6a 13623
+    SMSG_MOVE_UNSET_HOVER                            = 0x03FE0, // 4.0.6a 13623
+    SMSG_MOVE_SET_WALK_IN_AIR                        = 0x0A980, // 4.0.6a 13623
+    SMSG_MOVE_UNSET_WALK_IN_AIR                      = 0x07784, // 4.0.6a 13623
     CMSG_MOVE_HOVER_ACK                              = 0x0F4CC, // 4.0.6a 13623
     MSG_MOVE_HOVER                                   = 0x02FCC, // 4.0.6a 13623
     CMSG_TRIGGER_CINEMATIC_CHEAT                     = 0x1003D, //
