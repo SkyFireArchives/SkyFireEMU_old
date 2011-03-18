@@ -61,9 +61,9 @@ enum Opcodes
     SMSG_CHARACTER_LOGIN_FAILED                      = 0x07ACC, // 4.0.6a 13623
     SMSG_LOGIN_SETTIMESPEED                          = 0x039AC, // 4.0.6a 13623
     SMSG_GAMETIME_UPDATE                             = 0x0F1EC, // 4.0.6a 13623
-    CMSG_GAMETIME_SET                                = 0x10003, //
+    CMSG_GAMETIME_SET                                = 0x020C4, // 4.0.6a 13623
     SMSG_GAMETIME_SET                                = 0x07888, // 4.0.6a 13623
-    CMSG_GAMESPEED_SET                               = 0x10004, //
+    CMSG_GAMESPEED_SET                               = 0x02084, // 4.0.6a 13623
     SMSG_GAMESPEED_SET                               = 0x03EC0, // 4.0.6a 13623
     CMSG_SERVERTIME                                  = 0x10005, //
     SMSG_SERVERTIME                                  = 0x023A4, // 4.0.6a 13623
@@ -130,8 +130,8 @@ enum Opcodes
     CMSG_GUILD_INFO                                  = 0x06884, // 4.0.6a 13623
     SMSG_GUILD_INFO                                  = 0x020A8, // 4.0.6a 13623
     CMSG_GUILD_ROSTER                                = 0x0B2A4, // 4.0.6a 13623
-    SMSG_GUILD_ROSTER                                = 0x04D5C, // 4.0.6a 13623
-    CMSG_GUILD_PROMOTE                               = 0x02109, // 4.0.6a 13623
+    SMSG_GUILD_ROSTER                                = 0x03CC0, // 4.0.6a 13623
+    CMSG_GUILD_PROMOTE                               = 0x0330D, // 4.0.6a 13623
     CMSG_GUILD_DEMOTE                                = 0x01902, //
     CMSG_GUILD_LEAVE                                 = 0x03329, // 4.0.6a 13623
     CMSG_GUILD_REMOVE                                = 0x0312D, // 4.0.6a 13623
@@ -185,8 +185,8 @@ enum Opcodes
     SMSG_READ_ITEM_FAILED                            = 0x0A4EC, // 4.0.6a 13623
     SMSG_ITEM_COOLDOWN                               = 0x06CC8, // 4.0.6a 13623
     CMSG_GAMEOBJ_USE                                 = 0x029E4, // 4.0.6a 13623
-    CMSG_DESTROY_ITEMS                               = 0x1001C, //
-    SMSG_GAMEOBJECT_CUSTOM_ANIM                      = 0x02E8C, // 4.0.6a 13623 
+    CMSG_DESTROY_ITEMS                               = 0x0B8A8, // 4.0.6a 13623 
+    SMSG_GAMEOBJECT_CUSTOM_ANIM                      = 0x036A0, // 4.0.6a 13623 
     CMSG_AREATRIGGER                                 = 0x0ADA8, // 4.0.6a 13623
     MSG_MOVE_START_FORWARD                           = 0x0EBAC, // 4.0.6a 13623
     MSG_MOVE_START_BACKWARD                          = 0x072E4, // 4.0.6a 13623
