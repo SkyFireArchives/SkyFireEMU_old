@@ -264,8 +264,11 @@ public:
             if (aurEff->GetAmount() > 0)
                 return;
 
-            uint32 spellId = SPELL_SNIPER_TRAINING_BUFF_R1 + GetId() - SPELL_SNIPER_TRAINING_R1;
             Unit * pTarget = GetTarget();
+            if (!pTarget->ToPlayer()->isInCombat())
+                return;
+
+            uint32 spellId = SPELL_SNIPER_TRAINING_BUFF_R1 + GetId() - SPELL_SNIPER_TRAINING_R1;
             if (!pTarget->HasAura(spellId))
             {
                 SpellEntry const * triggeredSpellInfo = sSpellStore.LookupEntry(spellId);
