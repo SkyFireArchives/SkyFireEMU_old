@@ -522,7 +522,7 @@ enum Opcodes
     SMSG_LFG_PLAYER_REWARD                           = 0x02C88, // 4.0.6a 13623
     SMSG_LFG_TELEPORT_DENIED                         = 0x0EAA0, // 4.0.6a 13623
     CMSG_UNLEARN_SPELL                               = 0x10090, //
-    CMSG_UNLEARN_SKILL                               = 0x0175F, //
+    CMSG_UNLEARN_SKILL                               = 0x063C8, // 4.0.6a 13623
     SMSG_REMOVED_SPELL                               = 0x07CA0, // 4.0.6a 13623
     CMSG_DECHARGE                                    = 0x10092, //
     CMSG_GMTICKET_CREATE                             = 0x06380, // 4.0.6a 13623
