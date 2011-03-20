@@ -1028,10 +1028,7 @@ void Unit::CalculateSpellDamageTaken(SpellNonMeleeDamage *damageInfo, int32 dama
                     damage -= damageInfo->blocked;
                 }
 
-                if (attackType != RANGED_ATTACK)
-                    ApplyResilience(pVictim, &damage, CR_CRIT_TAKEN_MELEE);
-                else
-                    ApplyResilience(pVictim, &damage, CR_CRIT_TAKEN_RANGED);
+                ApplyResilience(pVictim, &damage);
             }
             break;
         // Magical Attacks
@@ -1045,7 +1042,7 @@ void Unit::CalculateSpellDamageTaken(SpellNonMeleeDamage *damageInfo, int32 dama
                     damage = SpellCriticalDamageBonus(spellInfo, damage, pVictim);
                 }
 
-                ApplyResilience(pVictim, &damage, CR_CRIT_TAKEN_SPELL);
+                ApplyResilience(pVictim, &damage);
             }
             break;
     }
@@ -1278,10 +1275,7 @@ void Unit::CalculateMeleeDamage(Unit *pVictim, uint32 damage, CalcDamageInfo *da
     }
 
     int32 resilienceReduction = damageInfo->damage;
-    if (attackType != RANGED_ATTACK)
-        ApplyResilience(pVictim, &resilienceReduction, CR_CRIT_TAKEN_MELEE);
-    else
-        ApplyResilience(pVictim, &resilienceReduction, CR_CRIT_TAKEN_RANGED);
+    ApplyResilience(pVictim, &resilienceReduction);
     resilienceReduction = damageInfo->damage - resilienceReduction;
     damageInfo->damage      -= resilienceReduction;
     damageInfo->cleanDamage += resilienceReduction;
@@ -8496,7 +8490,7 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
         // Bloodthirst (($m/100)% of max health)
         case 23880:
         {
-            basepoints0 = int32(CountPctFromMaxHealth(triggerAmount));
+            basepoints0 = int32(CountPctFromMaxHealth(triggerAmount) / 1000);
             break;
         }
         // Shamanistic Rage triggered spell
@@ -10276,12 +10270,13 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
             case 2109:
                 if ((*i)->GetMiscValue() & SPELL_SCHOOL_MASK_NORMAL)
                 {
-                    if (pVictim->GetTypeId() != TYPEID_PLAYER)
+                    // needs rework 4.0.6
+                    /*if (pVictim->GetTypeId() != TYPEID_PLAYER)
                         continue;
                     float mod = pVictim->ToPlayer()->GetRatingBonusValue(CR_CRIT_TAKEN_MELEE)*(-8.0f);
                     if (mod < (*i)->GetAmount())
                         mod = (float)(*i)->GetAmount();
-                    sumNegativeMod += int32(mod);
+                    sumNegativeMod += int32(mod);*/
                 }
                 break;
             // Ebon Plague
@@ -11419,12 +11414,13 @@ void Unit::MeleeDamageBonus(Unit *pVictim, uint32 *pdamage, WeaponAttackType att
             case 2109:
                 if ((*i)->GetMiscValue() & SPELL_SCHOOL_MASK_NORMAL)
                 {
-                    if (pVictim->GetTypeId() != TYPEID_PLAYER)
+                    // needs rework 4.0.6
+                    /*if (pVictim->GetTypeId() != TYPEID_PLAYER)
                         continue;
                     float mod = pVictim->ToPlayer()->GetRatingBonusValue(CR_CRIT_TAKEN_MELEE)*(-8.0f);
                     if (mod < (*i)->GetAmount())
                         mod = (float)(*i)->GetAmount();
-                    TakenTotalMod *= (mod+100.0f)/100.0f;
+                    TakenTotalMod *= (mod+100.0f)/100.0f;*/
                 }
                 break;
             // Blessing of Sanctuary
@@ -15854,7 +15850,7 @@ void Unit::SetAuraStack(uint32 spellId, Unit *target, uint32 stack)
         aura->SetStackAmount(stack);
 }
 
-void Unit::ApplyResilience(const Unit *pVictim, int32 *damage, CombatRating type) const
+void Unit::ApplyResilience(const Unit *pVictim, int32 *damage) const
 {
     if (IsVehicle() || pVictim->IsVehicle())
         return;
@@ -15886,28 +15882,9 @@ void Unit::ApplyResilience(const Unit *pVictim, int32 *damage, CombatRating type
     if (!target)
         return;
 
-    switch (type)
+    if (source && damage)
     {
-        case CR_CRIT_TAKEN_MELEE:
-            if (source && damage)
-            {
-                *damage -= target->ToPlayer()->GetMeleeDamageReduction(*damage);
-            }
-            break;
-        case CR_CRIT_TAKEN_RANGED:
-            if (source && damage)
-            {
-                *damage -= target->ToPlayer()->GetRangedDamageReduction(*damage);
-            }
-            break;
-        case CR_CRIT_TAKEN_SPELL:
-            if (source && damage)
-            {
-                *damage -= target->ToPlayer()->GetSpellDamageReduction(*damage);
-            }
-            break;
-        default:
-            break;
+        *damage -= target->ToPlayer()->GetPlayerDamageReduction(*damage);
     }
 }
 

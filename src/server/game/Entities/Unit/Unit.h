@@ -525,8 +525,8 @@ enum CombatRating
     CR_HIT_TAKEN_MELEE          = 11,
     CR_HIT_TAKEN_RANGED         = 12,
     CR_HIT_TAKEN_SPELL          = 13,
-    CR_CRIT_TAKEN_MELEE         = 14,                     // COMBAT_RATING_RESILIENCE_CRIT_TAKEN
-    CR_CRIT_TAKEN_RANGED        = 15,                     // COMBAT_RATING_RESILIENCE_PLAYER_DAMAGE_TAKEN
+    CR_RESILIENCE_CRIT_TAKEN    = 14,
+    CR_RESILIENCE_PLAYER_DAMAGE_TAKEN = 15,
     CR_CRIT_TAKEN_SPELL         = 16,
     CR_HASTE_MELEE              = 17,
     CR_HASTE_RANGED             = 18,
@@ -1376,11 +1376,9 @@ class Unit : public WorldObject
         void DealSpellDamage(SpellNonMeleeDamage *damageInfo, bool durabilityLoss);
 
         // player or player's pet resilience (-1%), cap 100%
-        uint32 GetMeleeDamageReduction(uint32 damage) const { return GetCombatRatingDamageReduction(CR_CRIT_TAKEN_MELEE, 2.0f, 100.0f, damage); }
-        uint32 GetRangedDamageReduction(uint32 damage) const { return GetCombatRatingDamageReduction(CR_CRIT_TAKEN_RANGED, 2.0f, 100.0f, damage); }
-        uint32 GetSpellDamageReduction(uint32 damage) const { return GetCombatRatingDamageReduction(CR_CRIT_TAKEN_SPELL, 2.0f, 100.0f, damage); }
+        uint32 GetPlayerDamageReduction(uint32 damage) const { return GetCombatRatingDamageReduction(CR_RESILIENCE_PLAYER_DAMAGE_TAKEN, 1.0f, 100.0f, damage); }
 
-        void ApplyResilience(const Unit * pVictim, int32 * damage, CombatRating type) const;
+        void ApplyResilience(const Unit * pVictim, int32 * damage) const;
 
         float MeleeSpellMissChance(const Unit *pVictim, WeaponAttackType attType, int32 skillDiff, uint32 spellId) const;
         SpellMissInfo MeleeSpellHitResult(Unit *pVictim, SpellEntry const *spell);

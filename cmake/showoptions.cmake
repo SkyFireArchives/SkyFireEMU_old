@@ -28,7 +28,7 @@ if( SCRIPTS )
   add_definitions(-DSCRIPTS)
 else()
   message("* Build with scripts     : No")
-  set(USE_SCRIPTPCH 0)
+  #set(USE_SCRIPTPCH 0)
 endif()
 
 if( TOOLS )
