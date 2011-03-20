@@ -28,7 +28,7 @@ void WorldSession::HandleJoinChannel(WorldPacket& recvPacket)
 {
     sLog.outDebug("Opcode %u", recvPacket.GetOpcode());
 
-    uint32 channel_id, unk; // unk 4.0.1
+    uint32 channel_id;
     uint8 unknown1, unknown2;
     std::string channelname, pass;
 
