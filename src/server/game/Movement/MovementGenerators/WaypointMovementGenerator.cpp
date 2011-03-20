@@ -21,6 +21,7 @@
  */
 
 //Basic headers
+#include "gamePCH.h"
 #include "WaypointMovementGenerator.h"
 #include "DestinationHolderImp.h"
 //Extended headers

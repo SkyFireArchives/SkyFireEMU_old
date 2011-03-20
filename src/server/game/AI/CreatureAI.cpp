@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "CreatureAI.h"
 #include "CreatureAIImpl.h"
 #include "Creature.h"
