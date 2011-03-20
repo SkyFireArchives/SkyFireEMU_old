@@ -1042,12 +1042,11 @@ void WorldSession::HandleSetAmmoOpcode(WorldPacket & recv_data)
 
 void WorldSession::SendEnchantmentLog(uint64 Target, uint64 Caster,uint32 ItemID,uint32 SpellID)
 {
-    WorldPacket data(SMSG_ENCHANTMENTLOG, (8+8+4+4+1));     // last check 2.0.10
+    WorldPacket data(SMSG_ENCHANTMENTLOG, (8+8+4+4+1));     // last check 4.0.6a
     data << uint64(Target);
     data << uint64(Caster);
     data << uint32(ItemID);
     data << uint32(SpellID);
-    data << uint8(0);
     SendPacket(&data);
 }
 
