@@ -357,7 +357,7 @@ enum Opcodes
     SMSG_CLIENT_CONTROL_UPDATE                       = 0x03C84, // 4.0.6a 13623
     CMSG_REPOP_REQUEST                               = 0x0A9E4, // 4.0.6a 13623
     SMSG_RESURRECT_REQUEST                           = 0x0F3A0, // 4.0.6a 13623
-    CMSG_RESURRECT_RESPONSE                          = 0x07CC8, // 4.0.6a 13623
+    CMSG_RESURRECT_RESPONSE                          = 0x0BBE8, // 4.0.6a 13623
     CMSG_LOOT                                        = 0x0FCEC, // 4.0.6a 13623
     CMSG_LOOT_MONEY                                  = 0x079E0, // 4.0.6a 13623
     CMSG_LOOT_RELEASE                                = 0x03CE8, // 4.0.6a 13623
@@ -997,7 +997,7 @@ enum Opcodes
     CMSG_REPORT_PVP_AFK                              = 0x0E3AC, // 4.0.6a 13623
     SMSG_REPORT_PVP_AFK_RESULT                       = 0x078E8, // 4.0.6a 13623
     CMSG_GUILD_BANKER_ACTIVATE                       = 0x0FFC4, // 4.0.6a 13623
-    CMSG_GUILD_BANK_QUERY_TAB                        = 0x0BBE8, // 4.0.6a 13623
+    CMSG_GUILD_BANK_QUERY_TAB                        = 0x10000, //
     SMSG_GUILD_BANK_LIST                             = 0x0A6A8, // 4.0.6a 13623
     CMSG_GUILD_BANK_SWAP_ITEMS                       = 0x0A8C4, // 4.0.6a 13623
     CMSG_GUILD_BANK_BUY_TAB                          = 0x10190, //
