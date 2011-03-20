@@ -49,13 +49,12 @@ void WorldSession::HandleJoinChannel(WorldPacket& recvPacket)
     }
 
     recvPacket >> unknown1 >> unknown2;
-    recvPacket >> channelname;
-    recvPacket >> unk;
+    recvPacket >> pass;
+    recvPacket >> channelname;    
 
     if (channelname.empty())
         return;
 
-    recvPacket >> pass;
     if (ChannelMgr* cMgr = channelMgr(_player->GetTeam()))
     {
         cMgr->team = _player->GetTeam();
