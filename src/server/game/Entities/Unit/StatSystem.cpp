@@ -353,7 +353,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
             {
                 ShapeshiftForm form = GetShapeshiftForm();
                 // Check if Predatory Strikes is skilled
-                float mLevelMult = 0.0;
+                float mLevelMult = 0.0f;
                 float mFeralMult = 0.0f;
                 short applied = 0;
 
@@ -363,7 +363,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                     case FORM_BEAR:
                     case FORM_DIREBEAR:
                     case FORM_MOONKIN:
-                    {
+                    {    
                         Unit::AuraEffectList const& mDummy = GetAuraEffectsByType(SPELL_AURA_DUMMY);
                         for (Unit::AuraEffectList::const_iterator itr = mDummy.begin(); itr != mDummy.end(); ++itr)
                         {
@@ -372,6 +372,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                             {
                                 mLevelMult = (*itr)->GetAmount() / 100.0f;
                                 if( applied ) break;
+                                applied = 1;
                             }
                             // Predatory Strikes (effect 1)
                             if ((*itr)->GetEffIndex() == 1 && (*itr)->GetSpellProto()->SpellIconID == 1563)
@@ -382,9 +383,9 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                             }
                             break;
                         } 
-                    }
+                    }    
                     default: break;
-                }
+                }   
 
                 switch (form)
                 {
