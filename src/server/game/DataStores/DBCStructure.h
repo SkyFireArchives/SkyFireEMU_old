@@ -499,7 +499,7 @@ struct AchievementCriteriaEntry
     {
         uint32  additionalRequirement_type;
         uint32  additionalRequirement_value;
-    } additionalRequrements[MAX_CRITERIA_REQUIREMENTS];
+    } additionalRequirements[MAX_CRITERIA_REQUIREMENTS];
     
     DBCString  name;                                            // 9
     uint32  completionFlag;                                 // 10
@@ -2137,7 +2137,7 @@ struct TalentTabEntry
     //DBCString internalname;                               // 6
     //DBCString description;                                // 7
     //uint32 rolesMask;                                     // 8 4.0.0
-    //uint32 spellIds[2];                                   // 9-10 passive mastery bonus spells?
+    uint32 masterySpells[2];                                // 9-10 passive mastery bonus spells
 };
 
 struct TalentTreePrimarySpellsEntry
@@ -2406,7 +2406,7 @@ struct TaxiPathNodePtr
 typedef Path<TaxiPathNodePtr,TaxiPathNodeEntry const> TaxiPathNodeList;
 typedef std::vector<TaxiPathNodeList> TaxiPathNodesByPath;
 
-#define TaxiMaskSize 14
+#define TaxiMaskSize 22
 typedef uint32 TaxiMask[TaxiMaskSize];
 #endif
 

@@ -612,6 +612,7 @@ void LoadDBCStores(const std::string& dataPath)
                     if (sInfo->Effect[j] == SPELL_EFFECT_SEND_TAXI)
                         spellPaths.insert(sInfo->EffectMiscValue[j]);
         
+        ASSERT(((sTaxiNodesStore.GetNumRows()-1)/32) < TaxiMaskSize && "TaxiMaskSize needs to be increased");
         memset(sTaxiNodesMask,0,sizeof(sTaxiNodesMask));
         memset(sOldContinentsNodesMask,0,sizeof(sOldContinentsNodesMask));
         memset(sHordeTaxiNodesMask,0,sizeof(sHordeTaxiNodesMask));
@@ -953,13 +954,13 @@ uint32 const* GetTalentTabPages(uint8 cls)
 
 float GetGtSpellScalingValue(int8 class_, uint8 level)
 {
-    if(class_ < 0)
-        class_ = MAX_CLASSES - class_ + 1; //there are negative values in SpellScaling.dbc.
+    if(class_ == -1)
+        class_ = MAX_CLASSES; // General distribution
     if(class_ == 0)
-        class_ = MAX_CLASSES; //use general scaling.
+        return -1.0f; // shouldn't scale
     
     //They really wants that players reach level 100... in the 5th expansion.
-    const gtSpellScaling * spellscaling = sGtSpellScalingStore.LookupEntry( (class_-1)*100 + level );
+    const gtSpellScaling * spellscaling = sGtSpellScalingStore.LookupEntry( (class_-1)*100 + level - 1 );
     if(spellscaling)
         return spellscaling->coef;
     else

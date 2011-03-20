@@ -1184,6 +1184,7 @@ enum Targets
     TARGET_UNIT_AREA_ENTRY_DST         = 8,
     TARGET_DST_HOME                    = 9,  // uses in teleport to innkeeper spells
     TARGET_UNIT_TARGET_DEST_CASTER     = 11, // teleport target to caster
+    TARGET_UNIT_CASTER_UNKNOWN         = 14, // only used in 1 effect of Shamanism (62099)
     TARGET_UNIT_AREA_ENEMY_SRC         = 15,
     TARGET_UNIT_AREA_ENEMY_DST         = 16,
     TARGET_DST_DB                      = 17, // uses in teleport spells and some other

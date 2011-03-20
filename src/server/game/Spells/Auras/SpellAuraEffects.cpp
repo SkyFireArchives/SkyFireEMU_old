@@ -812,7 +812,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                 
                 uint32 spellId = 0;
                 uint32 plrskill = plr->GetSkillValue(SKILL_RIDING);
-                uint32 map = plr->GetMapId();
+                uint32 map = GetVirtualMapForMapAndZone(plr->GetMapId(), plr->GetZoneId());
                 uint32 maxSkill = 0;
                 for(int i = 0; i < MAX_MOUNT_TYPE_COLUMN; i++)
                 {
@@ -1450,7 +1450,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
                 damage = caster->SpellCriticalDamageBonus(m_spellProto, damage, target);
 
             int32 dmg = damage;
-            caster->ApplyResilience(target, &dmg, crit, CR_CRIT_TAKEN_SPELL);
+            caster->ApplyResilience(target, &dmg, CR_CRIT_TAKEN_SPELL);
             damage = dmg;
 
             caster->CalcAbsorbResist(target, GetSpellSchoolMask(GetSpellProto()), DOT, damage, &absorb, &resist, m_spellProto);
@@ -1528,7 +1528,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             }
 
             int32 dmg = damage;
-            caster->ApplyResilience(target, &dmg, crit, CR_CRIT_TAKEN_SPELL);
+            caster->ApplyResilience(target, &dmg, CR_CRIT_TAKEN_SPELL);
             damage = dmg;
 
             caster->CalcAbsorbResist(target, GetSpellSchoolMask(GetSpellProto()), DOT, damage, &absorb, &resist, m_spellProto);
@@ -1757,10 +1757,6 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
 
             int32 drain_amount = target->GetPower(power) > damage ? damage : target->GetPower(power);
 
-            // resilience reduce mana draining effect at spell crit damage reduction (added in 2.4)
-            if (power == POWER_MANA)
-                drain_amount -= target->GetSpellCritDamageReduction(drain_amount);
-
             target->ModifyPower(power, -drain_amount);
 
             float gain_multiplier = 0.0f;
@@ -1920,10 +1916,6 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
 
             if (!target->isAlive() || target->getPowerType() != powerType)
                 return;
-
-            // resilience reduce mana draining effect at spell crit damage reduction (added in 2.4)
-            if (powerType == POWER_MANA)
-                damage -= target->GetSpellCritDamageReduction(damage);
 
             uint32 gain = uint32(-target->ModifyPower(powerType, -damage));
 
@@ -5975,7 +5967,10 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             break;
                         case 58600: // Restricted Flight Area
                             if (aurApp->GetRemoveMode() == AURA_REMOVE_BY_EXPIRE)
+                            {
+                                target->CastSpell(target, 61286, true);
                                 target->CastSpell(target, 58601, true);
+                            }
                             break;
                     }
                     break;

@@ -185,6 +185,7 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
         }
         sWorldLog.outLog("\n");
     }
+    //sLog.outString("S: %s (0x%.4X)", LookupOpcodeName (pct.GetOpcode()), pct.GetOpcode());
 
     if(pct.GetOpcode() > OPCODE_NOT_FOUND)
     {

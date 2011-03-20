@@ -110,6 +110,7 @@ SpellMgr::SpellMgr()
         {
             case TARGET_UNIT_CASTER:
             case TARGET_UNIT_CASTER_FISHING:
+            case TARGET_UNIT_CASTER_UNKNOWN:
             case TARGET_UNIT_MASTER:
             case TARGET_UNIT_PET:
             case TARGET_UNIT_PARTY_CASTER:

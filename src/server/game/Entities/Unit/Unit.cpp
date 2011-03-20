@@ -1028,9 +1028,9 @@ void Unit::CalculateSpellDamageTaken(SpellNonMeleeDamage *damageInfo, int32 dama
                 }
 
                 if (attackType != RANGED_ATTACK)
-                    ApplyResilience(pVictim, &damage, crit, CR_CRIT_TAKEN_MELEE);
+                    ApplyResilience(pVictim, &damage, CR_CRIT_TAKEN_MELEE);
                 else
-                    ApplyResilience(pVictim, &damage, crit, CR_CRIT_TAKEN_RANGED);
+                    ApplyResilience(pVictim, &damage, CR_CRIT_TAKEN_RANGED);
             }
             break;
         // Magical Attacks
@@ -1044,7 +1044,7 @@ void Unit::CalculateSpellDamageTaken(SpellNonMeleeDamage *damageInfo, int32 dama
                     damage = SpellCriticalDamageBonus(spellInfo, damage, pVictim);
                 }
 
-                ApplyResilience(pVictim, &damage, crit, CR_CRIT_TAKEN_SPELL);
+                ApplyResilience(pVictim, &damage, CR_CRIT_TAKEN_SPELL);
             }
             break;
     }
@@ -1278,9 +1278,9 @@ void Unit::CalculateMeleeDamage(Unit *pVictim, uint32 damage, CalcDamageInfo *da
 
     int32 resilienceReduction = damageInfo->damage;
     if (attackType != RANGED_ATTACK)
-        ApplyResilience(pVictim, &resilienceReduction, (damageInfo->hitOutCome == MELEE_HIT_CRIT), CR_CRIT_TAKEN_MELEE);
+        ApplyResilience(pVictim, &resilienceReduction, CR_CRIT_TAKEN_MELEE);
     else
-        ApplyResilience(pVictim, &resilienceReduction, (damageInfo->hitOutCome == MELEE_HIT_CRIT), CR_CRIT_TAKEN_RANGED);
+        ApplyResilience(pVictim, &resilienceReduction, CR_CRIT_TAKEN_RANGED);
     resilienceReduction = damageInfo->damage - resilienceReduction;
     damageInfo->damage      -= resilienceReduction;
     damageInfo->cleanDamage += resilienceReduction;
@@ -3017,6 +3017,20 @@ void Unit::InterruptNonMeleeSpells(bool withDelayed, uint32 spell_id, bool withI
     // channeled spells are interrupted if they are not finished, even if they are delayed
     if (m_currentSpells[CURRENT_CHANNELED_SPELL] && (!spell_id || m_currentSpells[CURRENT_CHANNELED_SPELL]->m_spellInfo->Id == spell_id))
         InterruptSpell(CURRENT_CHANNELED_SPELL,true,true);
+}
+
+bool Unit::CanCastWhileWalking(const SpellEntry * const sp)
+{
+    AuraEffectList alist = GetAuraEffectsByType(SPELL_AURA_WALK_AND_CAST);
+    for (AuraEffectList::const_iterator i = alist.begin(); i != alist.end(); ++i)
+    {
+        // check that spell mask matches
+        if(!((*i)->GetSpellProto()->EffectSpellClassMask[(*i)->GetEffIndex()] & 
+            sp->SpellFamilyFlags))
+            continue;
+        return true;
+    }
+    return false;
 }
 
 Spell* Unit::FindCurrentSpellBySpellId(uint32 spell_id) const
@@ -5589,7 +5603,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                         SpellEntry const* SpellCDs_entry = sSpellStore.LookupEntry(itr->first);
                         // Frost Nova
                         if (SpellCDs_entry && SpellCDs_entry->SpellFamilyName == SPELLFAMILY_MAGE
-                           && SpellCDs_entry->SpellFamilyFlags[0] & 0x00000040)
+                           && SpellCDs_entry->SpellFamilyFlags[0] && 0x00000040)
                             this->ToPlayer()->RemoveSpellCooldown(SpellCDs_entry->Id, true);
                     }
                     break;
@@ -9501,7 +9515,7 @@ void Unit::SetMinion(Minion *minion, bool apply, PetSlot slot)
             // Send infinity cooldown - client does that automatically but after relog cooldown needs to be set again
             SpellEntry const *spellInfo = sSpellStore.LookupEntry(minion->GetUInt32Value(UNIT_CREATED_BY_SPELL));
             if (spellInfo && (spellInfo->Attributes & SPELL_ATTR_DISABLED_WHILE_ACTIVE))
-                this->ToPlayer()->AddSpellAndCategoryCooldowns(spellInfo, 0, NULL ,true);
+                this->ToPlayer()->AddSpellAndCategoryCooldowns(spellInfo, 0, NULL, true);
         }
     }
     else
@@ -10598,7 +10612,8 @@ bool Unit::isSpellCrit(Unit *pVictim, SpellEntry const *spellProto, SpellSchoolM
                         if (spellProto->SpellFamilyFlags[1] & 0x00001000)
                         {
                             if (pVictim->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_SHAMAN, 0x10000000, 0,0, GetGUID()))
-                                return true;
+                                if (pVictim->GetTotalAuraModifier(SPELL_AURA_MOD_ATTACKER_SPELL_AND_WEAPON_CRIT_CHANCE) > -100)
+                                    return true;     
                             break;
                         }
                     break;
@@ -10658,6 +10673,7 @@ uint32 Unit::SpellCriticalDamageBonus(SpellEntry const *spellProto, uint32 damag
 {
     // Calculate critical bonus
     int32 crit_bonus;
+    Player* modOwner = GetSpellModOwner();
     switch(spellProto->DmgClass)
     {
         case SPELL_DAMAGE_CLASS_MELEE:                      // for melee based spells is 100%
@@ -10666,12 +10682,17 @@ uint32 Unit::SpellCriticalDamageBonus(SpellEntry const *spellProto, uint32 damag
             crit_bonus = damage;
             break;
         default:
-            crit_bonus = damage / 2;                        // for spells is 50%
+            if(modOwner && (modOwner->getClass() == CLASS_MAGE || modOwner->getClass() == CLASS_WARLOCK))
+            {
+                crit_bonus = damage; // 100% bonus for Mages and Warlocks in Cataclysm
+            } else {
+                crit_bonus = damage / 2;                        // for spells is 50%
+            }
             break;
     }
 
     // adds additional damage to crit_bonus (from talents)
-    if (Player* modOwner = GetSpellModOwner())
+    if (modOwner)
         modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_CRIT_DAMAGE_BONUS, crit_bonus);
 
     if (pVictim)
@@ -14340,14 +14361,10 @@ Unit* Unit::SelectNearbyTarget(float dist) const
         targets.remove(getVictim());
 
     // remove not LoS targets
-    for (std::list<Unit *>::iterator tIter = targets.begin(); tIter != targets.end();)
+    for (std::list<Unit*>::iterator tIter = targets.begin(); tIter != targets.end();)
     {
-        if (!IsWithinLOSInMap(*tIter))
-        {
-            std::list<Unit *>::iterator tIter2 = tIter;
-            ++tIter;
-            targets.erase(tIter2);
-        }
+        if (!IsWithinLOSInMap(*tIter) || (*tIter)->isTotem() || (*tIter)->isSpiritService() || (*tIter)->GetCreatureType() == CREATURE_TYPE_CRITTER)
+            targets.erase(tIter++);
         else
             ++tIter;
     }
@@ -14357,11 +14374,8 @@ Unit* Unit::SelectNearbyTarget(float dist) const
         return NULL;
 
     // select random
-    uint32 rIdx = urand(0,targets.size()-1);
-    std::list<Unit *>::const_iterator tcIter = targets.begin();
-    for (uint32 i = 0; i < rIdx; ++i)
-        ++tcIter;
-
+    std::list<Unit*>::const_iterator tcIter = targets.begin();    
+    std::advance(tcIter, urand(0, targets.size()-1));
     return *tcIter;
 }
 
@@ -15215,10 +15229,8 @@ void Unit::SetStunned(bool apply)
         else
             SetStandState(UNIT_STAND_STATE_STAND);
 
-        WorldPacket data(SMSG_FORCE_MOVE_ROOT, 8);
-        data.append(GetPackGUID());
-        data << uint32(0);
-        SendMessageToSet(&data,true);
+        if(Player * plr = ToPlayer())
+            plr->SetMovement(MOVE_ROOT);
     }
     else
     {
@@ -15232,10 +15244,8 @@ void Unit::SetStunned(bool apply)
 
         if (!hasUnitState(UNIT_STAT_ROOT))         // prevent allow move if have also root effect
         {
-            WorldPacket data(SMSG_FORCE_MOVE_UNROOT, 8+4);
-            data.append(GetPackGUID());
-            data << uint32(0);
-            SendMessageToSet(&data,true);
+            if(Player * plr = ToPlayer())
+                plr->SetMovement(MOVE_UNROOT);
 
 //            RemoveUnitMovementFlag(MOVEMENTFLAG_ROOT);
         }
@@ -15254,7 +15264,9 @@ void Unit::SetRooted(bool apply)
         WorldPacket data(SMSG_FORCE_MOVE_ROOT, 10);
         data.append(GetPackGUID());
         data << m_rootTimes;
-        SendMessageToSet(&data,true);
+        //SendMessageToSet(&data,true);
+        if(Player * plr = ToPlayer())
+            plr->GetSession()->SendPacket(&data);
 
         if (GetTypeId() != TYPEID_PLAYER)
             ToCreature()->StopMoving();
@@ -15268,7 +15280,9 @@ void Unit::SetRooted(bool apply)
             WorldPacket data(SMSG_FORCE_MOVE_UNROOT, 10);
             data.append(GetPackGUID());
             data << m_rootTimes;
-            SendMessageToSet(&data,true);
+            //SendMessageToSet(&data,true);
+            if(Player * plr = ToPlayer())
+                plr->GetSession()->SendPacket(&data);
 
 //            RemoveUnitMovementFlag(MOVEMENTFLAG_ROOT);
         }
@@ -15833,7 +15847,7 @@ void Unit::SetAuraStack(uint32 spellId, Unit *target, uint32 stack)
         aura->SetStackAmount(stack);
 }
 
-void Unit::ApplyResilience(const Unit *pVictim, int32 *damage, bool isCrit, CombatRating type) const
+void Unit::ApplyResilience(const Unit *pVictim, int32 *damage, CombatRating type) const
 {
     if (IsVehicle() || pVictim->IsVehicle())
         return;
@@ -15870,24 +15884,18 @@ void Unit::ApplyResilience(const Unit *pVictim, int32 *damage, bool isCrit, Comb
         case CR_CRIT_TAKEN_MELEE:
             if (source && damage)
             {
-                if (isCrit)
-                    *damage -= target->ToPlayer()->GetMeleeCritDamageReduction(*damage);
                 *damage -= target->ToPlayer()->GetMeleeDamageReduction(*damage);
             }
             break;
         case CR_CRIT_TAKEN_RANGED:
             if (source && damage)
             {
-                if (isCrit)
-                    *damage -= target->ToPlayer()->GetRangedCritDamageReduction(*damage);
                 *damage -= target->ToPlayer()->GetRangedDamageReduction(*damage);
             }
             break;
         case CR_CRIT_TAKEN_SPELL:
             if (source && damage)
             {
-                if (isCrit)
-                    *damage -= target->ToPlayer()->GetSpellCritDamageReduction(*damage);
                 *damage -= target->ToPlayer()->GetSpellDamageReduction(*damage);
             }
             break;

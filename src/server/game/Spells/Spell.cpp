@@ -3050,7 +3050,8 @@ void Spell::prepare(SpellCastTargets const* targets, AuraEffect const * triggere
     // (even if they are interrupted on moving, spells with almost immediate effect get to have their effect processed before movement interrupter kicks in)
     if ((IsChanneledSpell(m_spellInfo) || m_casttime)
         && m_caster->GetTypeId() == TYPEID_PLAYER && m_caster->isMoving()
-        && m_spellInfo->InterruptFlags & SPELL_INTERRUPT_FLAG_MOVEMENT)
+        && m_spellInfo->InterruptFlags & SPELL_INTERRUPT_FLAG_MOVEMENT
+        && !m_caster->CanCastWhileWalking(m_spellInfo))
     {
         SendCastResult(SPELL_FAILED_MOVING);
         finish(false);
@@ -3648,7 +3649,8 @@ void Spell::update(uint32 difftime)
         (m_spellInfo->Effect[0] != SPELL_EFFECT_STUCK || !m_caster->HasUnitMovementFlag(MOVEMENTFLAG_FALLING)))
     {
         // don't cancel for melee, autorepeat, triggered and instant spells
-        if (!IsNextMeleeSwingSpell() && !IsAutoRepeat() && !m_IsTriggeredSpell)
+        if (!IsNextMeleeSwingSpell() && !IsAutoRepeat() && !m_IsTriggeredSpell &&
+                !m_caster->CanCastWhileWalking(m_spellInfo))
             cancel();
     }
 
@@ -4850,7 +4852,8 @@ SpellCastResult Spell::CheckCast(bool strict)
     {
         // skip stuck spell to allow use it in falling case and apply spell limitations at movement
         if ((!m_caster->HasUnitMovementFlag(MOVEMENTFLAG_FALLING) || m_spellInfo->Effect[0] != SPELL_EFFECT_STUCK) &&
-            (IsAutoRepeat() || (m_spellInfo->AuraInterruptFlags & AURA_INTERRUPT_FLAG_NOT_SEATED) != 0))
+            (IsAutoRepeat() || (m_spellInfo->AuraInterruptFlags & AURA_INTERRUPT_FLAG_NOT_SEATED) != 0) && 
+                !m_caster->CanCastWhileWalking(m_spellInfo))
             return SPELL_FAILED_MOVING;
     }
 
@@ -6100,6 +6103,8 @@ SpellCastResult Spell::CheckItems()
                     return SPELL_FAILED_ITEM_NOT_READY;         //0x54
             }
         }
+/*
+        //deprecated. in cataclysm totem items arent required to cast totem spells
 
         // check totem-item requirements (items presence in inventory)
         uint32 totems = 2;
@@ -6135,6 +6140,7 @@ SpellCastResult Spell::CheckItems()
         }
         if (TotemCategory != 0)
             return SPELL_FAILED_TOTEM_CATEGORY;                 //0x7B
+        */
     }
 
     // special checks for spell effects

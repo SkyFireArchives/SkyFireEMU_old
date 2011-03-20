@@ -644,9 +644,9 @@ class GameObject : public WorldObject, public GridObject<GameObject>
                 ASSERT(false);
             }
             m_spawnedByDefault = false;                     // all object with owner is despawned after delay
-            //SetUInt64Value(OBJECT_FIELD_CREATED_BY, owner);
+            SetUInt64Value(OBJECT_FIELD_CREATED_BY, owner);
         }
-        uint64 GetOwnerGUID() const { return 0/*GetUInt64Value(OBJECT_FIELD_CREATED_BY);*/; }
+        uint64 GetOwnerGUID() const { return GetUInt64Value(OBJECT_FIELD_CREATED_BY); }
         Unit* GetOwner() const;
 
         void SetSpellId(uint32 id)
