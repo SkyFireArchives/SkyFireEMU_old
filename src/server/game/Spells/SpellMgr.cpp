@@ -270,6 +270,72 @@ SpellMgr& SpellMgr::Instance()
     return spellMgr;
 }
 
+SpellScaling::SpellScaling(uint8 playerLevel_, const SpellEntry * spellEntry_)
+{
+    playerLevel = playerLevel_;
+    spellEntry = spellEntry_;
+    for(int i = 0; i < 3; i++)
+    {
+        avg[i] = 0.f;
+        min[i] = 0.f;
+        max[i] = 0.f;
+        pts[i] = 0.f;
+    }
+    cast = 0;
+    canScale = false;
+
+    if(!spellEntry->SpellScalingId)
+        return;
+
+    if(!spellEntry->SpellScaling_class)
+        return;
+
+    float base_coef = spellEntry->base_coef;
+    uint8 base_level = spellEntry->base_level_coef;
+
+    int32 ct_min = spellEntry->ct_min;
+    int32 ct_max = spellEntry->ct_max;
+    uint8 ct_level = spellEntry->ct_max_level;
+
+    int8 class_ = spellEntry->SpellScaling_class;
+
+    float gtCoef = GetGtSpellScalingValue(class_, playerLevel_);
+
+    if(gtCoef == -1.0f)
+        return;
+
+    gtCoef *= ( std::min(playerLevel,base_level) + ( base_coef * std::max(0,playerLevel-base_level) ) )/playerLevel;
+
+    //cast time
+    cast = 0;
+    if(ct_max>0 && playerLevel_>1)
+        cast = ct_min+(((playerLevel-1)*(ct_max-ct_min))/(ct_level-1));
+    else
+        cast = ct_min;
+
+    if(cast > ct_max)
+        cast = ct_max;
+
+    //effects
+    for(uint8 effIndex = 0; effIndex < 3; effIndex++)
+    {
+        float mult = spellEntry->coefMultiplier[effIndex];
+        float randommult = spellEntry->coefRandomMultiplier[effIndex];
+        float othermult = spellEntry->coefOther[effIndex];
+
+        avg[effIndex] = mult*gtCoef;
+        if(ct_max > 0)
+            avg[effIndex] *= float(cast)/float(ct_max);
+
+        min[effIndex]=roundf(avg[effIndex])-std::floor(avg[effIndex]*randommult/2);
+        max[effIndex]=roundf(avg[effIndex])+std::floor(avg[effIndex]*randommult/2);
+        pts[effIndex]=roundf(othermult*gtCoef);
+        avg[effIndex]=std::max((float)ceil(mult),roundf(avg[effIndex]));
+    }
+
+    canScale = true;
+}
+
 bool SpellMgr::IsSrcTargetSpell(SpellEntry const *spellInfo) const
 {
     for (uint8 i = 0; i< MAX_SPELL_EFFECTS; ++i)
