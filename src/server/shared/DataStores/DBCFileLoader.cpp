@@ -34,7 +34,7 @@ DBCFileLoader::DBCFileLoader()
     fieldsOffset = NULL;
 }
 
-bool DBCFileLoader::Load(const char *filename, const char *fmt)
+bool DBCFileLoader::Load(const char* filename, const char* fmt)
 {
     uint32 header;
     if (data)
@@ -43,7 +43,7 @@ bool DBCFileLoader::Load(const char *filename, const char *fmt)
         data = NULL;
     }
 
-    FILE * f = fopen(filename,"rb");
+    FILE* f = fopen(filename,"rb");
     if (!f)
         return false;
 
@@ -130,7 +130,7 @@ DBCFileLoader::~DBCFileLoader()
 
 DBCFileLoader::Record DBCFileLoader::getRecord(size_t id)
 {
-    assert(data);
+    ASSERT(data);
     return Record(*this, data + id*recordSize);
 }
 
@@ -168,7 +168,7 @@ uint32 DBCFileLoader::GetFormatRecordSize(const char * format,int32* index_pos)
     return recordsize;
 }
 
-char* DBCFileLoader::AutoProduceData(const char* format, uint32& records, char**& indexTable, uint32 sqlRecordCount, uint32 sqlHighestIndex, char *& sqlDataTable)
+char* DBCFileLoader::AutoProduceData(const char* format, uint32& records, char**& indexTable, uint32 sqlRecordCount, uint32 sqlHighestIndex, char*& sqlDataTable)
 {
     /*
     format STRING, NA, FLOAT,NA,INT <=>
@@ -181,8 +181,8 @@ char* DBCFileLoader::AutoProduceData(const char* format, uint32& records, char**
     this func will generate  entry[rows] data;
     */
 
-    typedef char * ptr;
-    if (strlen(format)!=fieldCount)
+    typedef char* ptr;
+    if (strlen(format) != fieldCount)
         return NULL;
 
     //get struct size and index pos
