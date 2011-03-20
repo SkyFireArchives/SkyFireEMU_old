@@ -354,6 +354,9 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                 ShapeshiftForm form = GetShapeshiftForm();
                 // Check if Predatory Strikes is skilled
                 float mLevelMult = 0.0;
+                float mFeralMult = 0.0f;
+                short applied = 0;
+
                 switch (form)
                 {
                     case FORM_CAT:
@@ -368,10 +371,17 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                             if ((*itr)->GetEffIndex() == 0 && (*itr)->GetSpellProto()->SpellIconID == 1563)
                             {
                                 mLevelMult = (*itr)->GetAmount() / 100.0f;
-                                break;
+                                if( applied ) break;
                             }
-                        }
-                        break;
+                            // Predatory Strikes (effect 1)
+                            if ((*itr)->GetEffIndex() == 1 && (*itr)->GetSpellProto()->SpellIconID == 1563)
+                            {
+                                mFeralMult = (*itr)->GetAmount() / 100.0f;
+                                if( applied ) break;
+                                applied = 1;
+                            }
+                            break;
+                        } 
                     }
                     default: break;
                 }
