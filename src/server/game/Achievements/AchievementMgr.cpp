@@ -635,8 +635,8 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
     if (GetPlayer()->GetSession()->PlayerLoading())
         return;
 
-    // Don't send for achievements with ACHIEVEMENT_FLAG_TRACKING
-    if (achievement->flags & ACHIEVEMENT_FLAG_TRACKING)
+    // Don't send for achievements with ACHIEVEMENT_FLAG_HIDDEN
+    if (achievement->flags & ACHIEVEMENT_FLAG_HIDDEN)
         return;
 
     #ifdef TRINITY_DEBUG
