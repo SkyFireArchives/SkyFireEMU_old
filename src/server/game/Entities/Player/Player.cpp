@@ -23001,17 +23001,21 @@ uint32 Player::GetBarberShopCost(uint8 newhairstyle, uint8 newhaircolor, uint8 n
 
 void Player::InitGlyphsForLevel()
 {
+    uint8 slot = 0;
     for (uint32 i = 0; i < sGlyphSlotStore.GetNumRows(); ++i)
         if (GlyphSlotEntry const * gs = sGlyphSlotStore.LookupEntry(i))
-            if (gs->Order)
-                SetGlyphSlot(gs->Order - 1, gs->Id);
+            if (gs)
+                SetGlyphSlot(slot++, gs->Id);
 
     uint8 level = getLevel();
     uint32 value = 0;
 
     if (level >= 25)
-        value |= 0x43;
-    //mssing flag for level >= 50 and level >= 75
+        value |= 1 | 2 | 64;
+    if(level >= 50)
+        value |= 4 | 8 | 128;
+    if (level >= 75)
+        value |= 16 | 32 | 256;
 
     SetUInt32Value(PLAYER_GLYPHS_ENABLED, value);
 }
