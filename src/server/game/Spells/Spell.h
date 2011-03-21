@@ -121,6 +121,18 @@ enum SpellNotifyPushType
     PUSH_CHAIN,
 };
 
+enum SpellLogType
+{
+    SPELL_LOG_NON_MELEE_DAMAGE          = 29868,
+    SPELL_LOG_EXECUTE                   = 46824,
+    SPELL_LOG_ENERGIZE                  = 61676,
+    SPELL_LOG_HEAL                      = 28292,
+    SPELL_LOG_MISS                      = 48548,
+    SPELL_LOG_PERIODIC_AURA             = 13192,
+    SPELL_LOG_REMOVE_1                  = 0xED7E,       // currently unused (not updated even)
+    SPELL_LOG_REMOVE_2                  = 0x9F74,       // currently unused (n/u)
+    SPELL_LOG_REMOVE_3                  = 0xD557,       // currently unused (n/u)
+};
 bool IsQuestTameSpell(uint32 spellId);
 
 namespace Trinity
@@ -693,7 +705,7 @@ class Spell
         void CallScriptBeforeHitHandlers();
         void CallScriptOnHitHandlers();
         void CallScriptAfterHitHandlers();
-		void CallScriptAfterUnitTargetSelectHandlers(std::list<Unit*>& unitTargets, SpellEffIndex effIndex);
+        void CallScriptAfterUnitTargetSelectHandlers(std::list<Unit*>& unitTargets, SpellEffIndex effIndex);
         std::list<SpellScript *> m_loadedScripts;
 
         // effect helpers

@@ -705,10 +705,10 @@ void WorldSession::HandleBuyItemOpcode(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Received CMSG_BUY_ITEM");
     uint64 vendorguid;
-	uint8 unk;
+    uint8 unk;
     uint32 item, slot, count;
     uint64 unk1;
-	uint8 unk2;
+    uint8 unk2;
 
     recv_data >> vendorguid;
     recv_data >> unk;                                       // 4.0.6
@@ -762,7 +762,7 @@ void WorldSession::SendListInventory(uint64 vendorguid)
     VendorItemData const* vItems = pCreature->GetVendorItems();
     if (!vItems)
     {
-        WorldPacket data(SMSG_LIST_INVENTORY, (8 + 1 + 1));
+        WorldPacket data(SMSG_LIST_INVENTORY, (8+1+1+2), true);
         data << uint64(vendorguid);
         data << uint8(0);                                   // count==0, next will be error code
         data << uint8(0);                                   // "Vendor has no inventory"
@@ -773,9 +773,8 @@ void WorldSession::SendListInventory(uint64 vendorguid)
     uint8 numitems = vItems->GetItemCount();
     uint8 count = 0;
 
-	WorldPacket data(SMSG_MULTIPLE_PACKETS, (8+1+numitems*9*4+1*numitems+2));
-	data << uint16(SMSG_LIST_INVENTORY);
-	data << uint64(vendorguid);
+    WorldPacket data(SMSG_LIST_INVENTORY, (8+1+numitems*9*4+1*numitems+2), true);
+    data << uint64(vendorguid);
 
     size_t count_pos = data.wpos();
     data << uint8(count);

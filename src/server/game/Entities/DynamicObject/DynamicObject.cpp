@@ -62,13 +62,13 @@ void DynamicObject::AddToWorld()
     {
         sObjectAccessor.AddObject(this);
         WorldObject::AddToWorld();
-		BindToCaster();
+        BindToCaster();
     }
 }
 
 void DynamicObject::RemoveFromWorld()
 {
-	///- Remove the dynamicObject from the accessor and from all lists of objects in world
+    ///- Remove the dynamicObject from the accessor and from all lists of objects in world
     if (IsInWorld())
     {
         if (m_isViewpoint)
@@ -130,7 +130,7 @@ void DynamicObject::Update(uint32 p_time)
         if (!m_aura->IsRemoved())
             m_aura->UpdateOwner(p_time, this);
 
-		// m_aura may be set to null in Unit::UpdateOwner call
+        // m_aura may be set to null in Unit::UpdateOwner call
         if (m_aura && (m_aura->IsRemoved() || m_aura->IsExpired()))
             expired = true;
     }

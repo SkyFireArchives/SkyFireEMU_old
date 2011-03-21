@@ -182,117 +182,112 @@ void BattlegroundMgr::Update(uint32 diff)
 
 void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battleground *bg, uint8 QueueSlot, uint8 StatusID, uint32 Time1, uint32 Time2, uint8 arenatype, uint8 uiFrame)
 {
-    // we can be in 2 queues in same time...
-    if (!bg)
-    {
-        StatusID = 0;
-        data->Initialize(SMSG_BATTLEFIELD_STATUS1, 4);
-        *data << uint32(QueueSlot);                         // queue id (0...1)
-        return;
-    }
+    if(!bg)
+        StatusID = STATUS_NONE;
 
-    if(StatusID == STATUS_WAIT_QUEUE)
-    {
-        data->Initialize(SMSG_BATTLEFIELD_STATUS4, (1+4+1+1+1+4+1+4+1+4+1+8+1));
-    
-        *data << uint8(0); // unk
-        *data << uint32(0); // unk
-        *data << uint8(0); // unk
-        *data << uint8(0); // unk
-        *data << uint8(0); // unk
-        *data << uint32(0); // unk
-        *data << uint8(0); // unk
-        *data << uint32(0); // unk
-        *data << uint8(0); // unk
-        *data << uint32(0); // unk
-        *data << uint8(0); // unk
-        *data << uint64(0); // unk
-        *data << uint8(0); // unk
-    }
-    else if(StatusID == STATUS_WAIT_JOIN)
-    {
-        data->Initialize(SMSG_BATTLEFIELD_STATUS3, (1+1+4+8+4+8+4+4+1));
-    
-        *data << uint8(bg->isRated() ? 128 : 0);   // 128 = is rated, 0 = skirmish
-        *data << uint8(0); // unk
-        *data << uint32(bg->GetClientInstanceID()); // bg instanceid
-        // uint64 that gets sent back to us in CMSG_BATTLEFIELD_PORT. split into subfields for convenience
-        *data << uint32(bg->GetTypeID());
-        *data << uint32(arenatype);
-
-        *data << uint32(QueueSlot); // queue slot
-        *data << uint8(arenatype);  // arena type
-        *data << uint32(Time1); // time to join left
-        *data << uint32(bg->GetMapId()); // map id
-        *data << uint8(0); // unk
-    }
-    else if(StatusID == STATUS_IN_PROGRESS)
-    {
-        data->Initialize(SMSG_BATTLEFIELD_STATUS2, (1+4+4+4+8+4+1+1+4+8));
-
-        *data << uint8(bg->isRated() ? 128 : 0);    // 128 = rated, 64 = unk flag, 0 = skirmish
-        *data << uint32(0); // unk
-        *data << uint32(QueueSlot); // queue slot
-        *data << uint32(bg->GetMapId()); // map id
-        *data << uint64(0); // unk
-        *data << uint32(0); // unk
-        *data << uint8(arenatype);   // arena type
-        *data << uint8(0); // unk
-        *data << uint32(bg->GetClientInstanceID()); // unk
-        *data << uint8(0); // unk
-    }
-    
-    // Pre Cata structure:
-    /*
-    data->Initialize(SMSG_BATTLEFIELD_STATUS2, (4+8+1+1+4+1+4+4+4));
-    *data << uint32(QueueSlot);                             // queue id (0...1) - player can be in 2 queues in time
-    // The following segment is read as uint64 in client but can be appended as their original type.
-    *data << uint8(arenatype);
-    sLog.outDebug("BattlegroundMgr::BuildBattlegroundStatusPacket: arenatype = %u for bg instanceID %u, TypeID %u.", arenatype, bg->GetClientInstanceID(), bg->GetTypeID());
-    *data << uint8(bg->isArena() ? 0xC : 0x2);
-    *data << uint32(bg->GetTypeID());
-    *data << uint16(0x1F90);
-    // End of uint64 segment, decomposed this way for simplicity
-    *data << uint8(0);                                      // 3.3.0, some level, only saw 80...
-    *data << uint8(0);                                      // 3.3.0, some level, only saw 80...
-    *data << uint32(bg->GetClientInstanceID());
-    // alliance/horde for BG and skirmish/rated for Arenas
-    // following displays the minimap-icon 0 = faction icon 1 = arenaicon
-    *data << uint8(bg->isRated());                          // 1 for rated match, 0 for bg or non rated match
-
-    *data << uint32(StatusID);                              // status
     switch(StatusID)
     {
-        case STATUS_WAIT_QUEUE:                             // status_in_queue
-            *data << uint32(Time1);                         // average wait time, milliseconds
-            *data << uint32(Time2);                         // time in queue, updated every minute!, milliseconds
-            break;
-        case STATUS_WAIT_JOIN:                              // status_invite
-            *data << uint32(bg->GetMapId());                // map id
-            *data << uint64(0);                             // 3.3.5, unknown
-            *data << uint32(Time1);                         // time to remove from queue, milliseconds
-            break;
-        case STATUS_IN_PROGRESS:                            // status_in_progress
-            *data << uint32(bg->GetMapId());                // map id
-            *data << uint64(0);                             // 3.3.5, unknown
-            *data << uint32(Time1);                         // time to bg auto leave, 0 at bg start, 120000 after bg end, milliseconds
-            *data << uint32(Time2);                         // time from bg start, milliseconds
-            *data << uint8(uiFrame);
-            break;
-        default:
-            sLog.outError("Unknown BG status!");
-            break;
+    case STATUS_NONE:
+        {
+            // STATUS1 resets clients' BG Info
+            data->Initialize(SMSG_BATTLEFIELD_STATUS1, 4);
+            *data << uint32(QueueSlot);                         // queue id (0...1)
+        }break;
+    case STATUS_WAIT_QUEUE:
+        {
+            // The client will set STATUS_WAIT_QUEUE at BGInfo once it receives this packet
+            data->Initialize(SMSG_JOINED_BATTLEGROUND_QUEUE, (1+1+4+4+4+1+8+1+4));
+            *data << uint8(0x20); // packed flag, seems to be always 0x20 for non-rated non-arena bgs
+            *data << uint8(bg->GetMaxLevel()); // max level
+            *data << uint32(Time1); // avg wait time
+            *data << uint32(QueueSlot); // queueSlot
+            *data << uint32(bg->GetClientInstanceID()); // instanceid
+            *data << uint8(bg->GetMinLevel()); // lowest level (seems to be set to 0 even though its not 0 sometimes O.O)
+            
+            // packed uint64 (seems to be BG GUID)
+            *data << uint32(bg->GetTypeID()); // BGTypeID
+            *data << uint32(arenatype); // On retail 0x101F is sent here, but we need this value to be returned in PORT opcode
+            // end
+
+            *data << uint8(0); // teamsize, 0 if not arena
+            *data << uint32(Time2); // time in queue
+        }break;
+    case STATUS_WAIT_JOIN:
+        {
+            // The client will set STATUS_WAIT_JOIN at BGInfo once it receives this packet
+            data->Initialize(SMSG_BATTLEFIELD_STATUS3, (1+1+4+8+4+1+4+4+1));
+            *data << uint8(bg->isRated() ? 128 : 0); // isarena?
+            *data << uint8(bg->GetMinLevel());
+            *data << uint32(bg->GetClientInstanceID()); // instance id
+
+            *data << uint32(bg->GetTypeID()); // BGTypeID
+            *data << uint32(arenatype);
+
+            *data << uint32(QueueSlot); // queueslot
+            *data << uint8(arenatype); // teamsize (0 if not arena)
+            *data << uint32(Time1); // port expiration time
+
+            if(bg->GetTypeID() != BATTLEGROUND_RB)
+                *data << uint32(bg->GetMapId()); // mapid
+            else *data << uint32(0);
+
+            *data << uint8(bg->GetMaxLevel()); // highestLevel
+        }break;
+    case STATUS_IN_PROGRESS:
+        {
+            data->Initialize(SMSG_BATTLEFIELD_STATUS2, 100);
+            *data << uint8(bg->isRated() ? 128 : 0);
+            *data << uint32(Time1); // 
+            *data << uint32(QueueSlot); // queueslot 
+            *data << uint32(bg->GetMapId()); // MapID
+            
+            // This is bg guid
+            *data << uint32(bg->GetTypeID()); // BGTypeID
+            *data << uint16(0);
+            *data << uint8(0x10); // High guid
+            *data << uint8(0x1F); // High guid
+            // end
+
+            *data << uint32(Time2); // ?
+            *data << uint8(arenatype); // teamsize (0 if not arena)
+            *data << uint8(bg->GetMaxLevel());
+            *data << uint32(bg->GetClientInstanceID()); // instanceid
+            *data << uint8(bg->GetMinLevel());        
+        }break;
+    case STATUS_WAIT_LEAVE:
+        {
+            // Not used...
+            data->Initialize(SMSG_BATTLEFIELD_STATUS4, (1+4+1+1+1+4+1+4+1+4+1+8+1));
+            *data << uint8(0); // flag
+            *data << uint32(Time1); // 
+            *data << uint8(bg->GetMinLevel()); // lowestLevel
+            *data << uint8(0);
+            *data << uint8(0);
+            *data << uint32(QueueSlot); // queueSlot
+            *data << uint8(bg->GetMaxLevel()); // highestLevel
+            *data << uint32(Time2); //
+            *data << uint8(0); // teamsize (0 if not arena)
+            *data << uint32(bg->GetClientInstanceID()); // instanceid
+            *data << uint8(0); 
+            
+            // This is bg guid
+            *data << uint32(bg->GetTypeID()); // BGTypeID
+            *data << uint16(0);
+            *data << uint8(0x10); // High guid
+            *data << uint8(0x1F); // High guid
+            // end
+
+            *data << uint8(0);
+        }break;
     }
-    */
 }
 
 void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
 {
     uint8 type = (bg->isArena() ? 128 + 64 : 0);
     if(bg->GetStatus() == STATUS_WAIT_LEAVE)
-    {
         type |= 32;
-    }
+
     // last check on 4.0.6
     data->Initialize(MSG_PVP_LOG_DATA, (1+1+4+40*bg->GetPlayerScoresSize()));
     *data << uint8(type);                                   // flags
@@ -333,8 +328,7 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
          *data << uint8(bg->GetWinner());                    // who win
     }
 
-    int flagCounter = 0;
-    
+    uint32 flagCounter = 0;
     uint8 updateFlags;
     Battleground::BattlegroundScoreMap::const_iterator itr2 = bg->GetPlayerScoresBegin();
     for (Battleground::BattlegroundScoreMap::const_iterator itr = itr2; itr != bg->GetPlayerScoresEnd();)
@@ -367,7 +361,8 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
             }
             *data << uint8(updateFlags);
         }
-        flagCounter++;	
+
+        flagCounter++;
     }
     if(flagCounter > 0 && flagCounter % 2 != 0)
     {
@@ -499,9 +494,10 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
 void BattlegroundMgr::BuildGroupJoinedBattlegroundPacket(WorldPacket *data, GroupJoinBattlegroundResult result)
 {
     data->Initialize(SMSG_GROUP_JOINED_BATTLEGROUND, 4);
-    *data << int32(result);
-    if (result == ERR_BATTLEGROUND_JOIN_TIMED_OUT || result == ERR_BATTLEGROUND_JOIN_FAILED)
-        *data << uint64(0);                                 // player guid
+    *data << uint32(-1); // QueueSlot
+    *data << uint32(abs(result)); // The values in our enum are negative, while client expects positive ones now (since 4.0.6)
+    *data << uint64(0);                                 // player guid
+    *data << uint64(0);                                    // unk, could be bg guid, but it wasnt checked
 }
 
 void BattlegroundMgr::BuildUpdateWorldStatePacket(WorldPacket *data, uint32 field, uint32 value)

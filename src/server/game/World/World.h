@@ -738,6 +738,8 @@ class World
 
         void UpdateAreaDependentAuras();
 
+        uint32 debugOpcode;
+
         void ProcessStartEvent();
         void ProcessStopEvent();
         bool GetEventKill() const { return isEventKillStart; }

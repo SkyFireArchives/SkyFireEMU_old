@@ -64,7 +64,6 @@ SpellEntry::SpellEntry(SpellEntry_n const* spell)
     SpellLevelsId = spell->SpellLevelsId;
     SpellPowerId = spell->SpellPowerId;
     SpellReagentsId = spell->SpellReagentsId;
-    SpellShapeshiftId = spell->SpellShapeshiftId;
     SpellTargetRestrictionsId = spell->SpellTargetRestrictionsId;
     SpellTotemsId = spell->SpellTotemsId;
     

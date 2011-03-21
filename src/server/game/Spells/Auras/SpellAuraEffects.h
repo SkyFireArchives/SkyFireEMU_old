@@ -34,7 +34,7 @@ typedef void(AuraEffect::*pAuraEffectHandler)(AuraApplication const * aurApp, ui
 
 class AuraEffect
 {
-	friend void Aura::_InitEffects(uint8 effMask, Unit * caster, int32 *baseAmount);
+    friend void Aura::_InitEffects(uint8 effMask, Unit * caster, int32 *baseAmount);
     friend Aura::~Aura();
     private:
         ~AuraEffect();

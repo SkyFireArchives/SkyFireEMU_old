@@ -1844,6 +1844,7 @@ InstanceGroupBind* Group::GetBoundInstance(MapEntry const* mapEntry)
     else
         return NULL;
 */
+    return NULL;
 }
 
 

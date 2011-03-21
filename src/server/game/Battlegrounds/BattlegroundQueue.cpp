@@ -803,7 +803,7 @@ void BattlegroundQueue::Update(BattlegroundTypeId bgTypeId, BattlegroundBracketI
     {
         if (sBattlegroundMgr.isArenaTesting())
         {
-            MaxPlayersPerTeam = 1;
+            MaxPlayersPerTeam = arenaType;
             MinPlayersPerTeam = 1;
         }
         else

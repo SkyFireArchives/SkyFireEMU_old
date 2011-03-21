@@ -88,6 +88,13 @@ enum BuyBankSlotResult
     ERR_BANKSLOT_OK                 = 3
 };
 
+enum TrainerBuySpellResult
+{
+    ERR_TRAINER_UNAVAILABLE = 0,
+    ERR_TRAINER_NOT_ENOUGH_MONEY = 1,
+    ERR_TRAINER_OK = 2,
+};
+
 enum PlayerSpellState
 {
     PLAYERSPELL_UNCHANGED = 0,
@@ -1086,7 +1093,7 @@ class Player : public Unit, public GridObject<Player>
         // Played Time Stuff
         time_t m_logintime;
         time_t m_Last_tick;
-		time_t m_Save_Time;
+        time_t m_Save_Time;
         uint32 m_Played_time[MAX_PLAYED_TIME_INDEX];
         uint32 GetTotalPlayedTime() { return m_Played_time[PLAYED_TIME_TOTAL]; }
         uint32 GetLevelPlayedTime() { return m_Played_time[PLAYED_TIME_LEVEL]; }
@@ -1468,7 +1475,7 @@ class Player : public Unit, public GridObject<Player>
         bool HasEnoughMoney(int32 amount) const
         {
             if (amount > 0)
-                return (GetMoney() >= (uint32) amount);
+                return (GetMoney() >= uint32(amount));
             return true;
         }
 
@@ -1592,7 +1599,11 @@ class Player : public Unit, public GridObject<Player>
         void ActivateSpec(uint8 spec);
 
         void InitGlyphsForLevel();
-        void SetGlyphSlot(uint8 slot, uint32 slottype) { SetUInt32Value(PLAYER_FIELD_GLYPH_SLOTS_1 + slot, slottype); }
+        void SetGlyphSlot(uint8 slot, uint32 slottype)
+        { 
+            ASSERT(slot < MAX_GLYPH_SLOT_INDEX); // prevent updatefields corruption
+            SetUInt32Value(PLAYER_FIELD_GLYPH_SLOTS_1 + slot, slottype);
+        }
         uint32 GetGlyphSlot(uint8 slot) { return GetUInt32Value(PLAYER_FIELD_GLYPH_SLOTS_1 + slot); }
         void SetGlyph(uint8 slot, uint32 glyph)
         {
@@ -2026,12 +2037,15 @@ class Player : public Unit, public GridObject<Player>
         void ApplyEquipSpell(SpellEntry const* spellInfo, Item* item, bool apply, bool form_change = false);
         void UpdateEquipSpellsAtFormChange();
         void CastItemCombatSpell(Unit *target, WeaponAttackType attType, uint32 procVictim, uint32 procEx);
-        void CastItemUseSpell(Item *item,SpellCastTargets const& targets,uint8 cast_count, uint32 glyphIndex);
+        void CastItemUseSpell(Item *item,SpellCastTargets const& targets,uint8 cast_count);
         void CastItemCombatSpell(Unit *target, WeaponAttackType attType, uint32 procVictim, uint32 procEx, Item *item, ItemPrototype const * proto);
 
         void SendEquipmentSetList();
         void SetEquipmentSet(uint32 index, EquipmentSet eqset);
         void DeleteEquipmentSet(uint64 setGuid);
+
+        void SetEmoteState(uint32 anim_id);
+        uint32 GetEmoteState() { return m_emote; }
 
         void SendInitWorldStates(uint32 zone, uint32 area);
         void SendUpdateWorldState(uint32 Field, uint32 Value);
@@ -2577,6 +2591,8 @@ class Player : public Unit, public GridObject<Player>
         uint8 m_specsCount;
         uint32 m_branchSpec[MAX_TALENT_SPECS];
         uint32 m_freeTalentPoints;
+
+        uint32 m_emote;
 
         uint32 m_Glyphs[MAX_TALENT_SPECS][MAX_GLYPH_SLOT_INDEX];
 

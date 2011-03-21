@@ -1046,6 +1046,12 @@ void GameObject::Use(Unit* user)
     uint32 spellId = 0;
     bool triggered = false;
 
+    if (Player* plr = user->ToPlayer())
+    {
+        if(plr->GetEmoteState())
+            plr->SetEmoteState(0);
+    }
+
     switch(GetGoType())
     {
         case GAMEOBJECT_TYPE_DOOR:                          //0

@@ -80,6 +80,14 @@ void WorldSession::HandleRepopRequestOpcode(WorldPacket & recv_data)
     GetPlayer()->RepopAtGraveyard();
 }
 
+void WorldSession::HandleSpiritHealerTeleport(WorldPacket & recv_data)
+{
+    if (GetPlayer()->isAlive() || !GetPlayer()->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_GHOST))
+        return;
+
+    GetPlayer()->RepopAtGraveyard();
+}
+
 void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: CMSG_GOSSIP_SELECT_OPTION");
@@ -1732,9 +1740,9 @@ void WorldSession::HandleHearthAndResurrect(WorldPacket& /*recv_data*/)
     if (_player->isInFlight())
         return;
 
-    AreaTableEntry const *atEntry = sAreaStore.LookupEntry(_player->GetAreaId());
-    if (!atEntry || !(atEntry->flags & AREA_FLAG_OUTDOOR_PVP2))
-        return;
+    //AreaTableEntry const *atEntry = sAreaStore.LookupEntry(_player->GetAreaId());
+    //if (!atEntry || !(atEntry->flags & AREA_FLAG_OUTDOOR_PVP2))
+    //    return;
 
     _player->BuildPlayerRepop();
     _player->ResurrectPlayer(100);
