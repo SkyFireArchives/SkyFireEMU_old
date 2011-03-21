@@ -15996,7 +15996,9 @@ void Unit::KnockbackFrom(float x, float y, float speedXY, float speedZ)
         float vcos, vsin;
         GetSinCos(x, y, vsin, vcos);
 
-        WorldPacket data(SMSG_MOVE_KNOCK_BACK, (8+4+4+4+4+4));
+        WorldPacket data(SMSG_MULTIPLE_PACKETS, (2+8+4+4+4+4+4));
+        //WorldPacket data(/*SMSG_MOVE_KNOCK_BACK*/, (8+4+4+4+4+4));
+        data << uint16(SMSG_MOVE_KNOCK_BACK);
         data.append(GetPackGUID());
         data << uint32(0);                                      // Sequence
         data << float(vcos);                                    // x direction
@@ -16321,7 +16323,9 @@ void Unit::JumpTo(float speedXY, float speedZ, bool forward)
         float vcos = cos(angle+GetOrientation());
         float vsin = sin(angle+GetOrientation());
 
-        WorldPacket data(SMSG_MOVE_KNOCK_BACK, (8+4+4+4+4+4));
+        WorldPacket data(SMSG_MULTIPLE_PACKETS, (2+8+4+4+4+4+4));
+        //WorldPacket data(SMSG_MOVE_KNOCK_BACK, (8+4+4+4+4+4));
+        data << uint16(SMSG_MOVE_KNOCK_BACK);
         data.append(GetPackGUID());
         data << uint32(0);                                      // Sequence
         data << float(vcos);                                    // x direction
