@@ -1234,8 +1234,8 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             break;
         }
         case SPELLFAMILY_HUNTER:
+            // steady shot focus effect (it has its own skill for this)
             if (m_spellInfo->SpellFamilyFlags[1] & 0x1)
-                // steady shot focus effect (it has its own skill for this)
                 m_caster->CastSpell(m_caster,77443,true);
             break;
         case SPELLFAMILY_WARRIOR:
@@ -4049,35 +4049,53 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
             if (m_spellInfo->SpellFamilyFlags[1] & 0x800000)
             {
                 // "You attempt to finish the wounded target off, firing a long range attack dealing % weapon damage plus RAP*0.30+543."
-                spell_bonus += int32((0.3f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK))+543);
+                spell_bonus += int32((0.3f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
                 break;
             }
             // Steady Shot - bonus damage from Ranged Attack Power
+            //UPDATED FOR CATACLYSM:
             if (m_spellInfo->SpellFamilyFlags[1] & 0x1)
             {
-                // UPDATED FOR CATACLYSM:
                 // "A steady shot that causes % weapon damage plus RAP*0.021+280. Generates 9 Focus."
                 // focus effect done in dummy
-                spell_bonus += int32((0.021f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK))+280);
+                spell_bonus += int32((0.021f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
                 break;
             }
             //Arcane Shot - bonus damage from Ranged Attack Power as Arcane damage
             //UPDATED FOR CATACLYSM:
             if (m_spellInfo->SpellFamilyFlags[0] & 0x000800)
             {
-                // UPDATED FOR CATACLYSM:
                 // "An instant shot that causes % weapon damage plus (RAP * 0.0483)+289 as Arcane damage."
                 // Arcane shot is not filtered through weapon_total_pct because it is not registered as SPELL_SCHOOL_MASK_NORMAL
-                spell_bonus += int32((0.0483f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK))+289);
+                spell_bonus += int32((0.0483f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
                 break;
             }
             //Aimed Shot - bonus damage from Ranged Attack Power
             //UPDATED FOR CATACLYSM:
             if (m_spellInfo->SpellFamilyFlags[0] & 0x020000)
             {
-                // UPDATED FOR CATACLYSM:
                 // "A powerful aimed shot that deals % ranged weapon damage plus (RAP * 0.724)+776."
-                spell_bonus += int32((0.724f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK))+776);
+                spell_bonus += int32((0.724f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
+                break;
+            }
+            break;
+            //Cobra Shot - bonus damage from Ranged Attack Power
+            //UPDATED FOR CATACLYSM:
+            //TODO: Add time addition on enemy for serpent sting in scripts function
+            if (m_spellInfo->SpellFamilyFlags[2] & 0x020000)
+            {
+                // "Deals weapon damage plus (276 + (RAP * 0.017)) in the form of Nature damage and increases the duration of your Serpent Sting on the target by 6 sec. Generates 9 Focus."
+                spell_bonus += int32((0.017f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
+                break;
+            }
+            break;
+            //Chimera Shot - bonus damage from Ranged Attack Power
+            //UPDATED FOR CATACLYSM:
+            //TODO: Add time refresh on enemy for serpent sting in scripts function
+            if (m_spellInfo->SpellFamilyFlags[2] & 0x1)
+            {
+                // An instant shot that causes ranged weapon damage plus RAP*0.732+1620, refreshing the duration of  your Serpent Sting and healing you for 5% of your total health."
+                spell_bonus += int32((0.732f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
                 break;
             }
             break;
@@ -5359,6 +5377,18 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                     m_caster->CastSpell(unitTarget, spellId3, true);
                 return;
             }
+        }
+        case SPELLFAMILY_HUNTER:
+        {
+            // cobra shot focus effect (it has its own skill for this)
+            // TODO: add serpent sting time increase by 6 seconds if already active on enemy
+            if (m_spellInfo->SpellFamilyFlags[2] & 0x0400000)
+                m_caster->CastSpell(m_caster,91954,true); 
+            // chimera shot health effect
+            //TODO: add serpent sting refresh effect on enemy if already active on enemy
+            if (m_spellInfo->SpellFamilyFlags[2] & 0x1)
+                m_caster->CastSpell(m_caster,53353,true); 
+            return;
         }
         case SPELLFAMILY_POTION:
         {
