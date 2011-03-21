@@ -246,7 +246,7 @@ enum Opcodes
     MSG_MOVE_ROOT                                    = 0x0ABA8, // 4.0.6a 13623
     MSG_MOVE_UNROOT                                  = 0x02088, // 4.0.6a 13623
     MSG_MOVE_HEARTBEAT                               = 0x022EC, // 4.0.6a 13623
-    SMSG_MOVE_KNOCK_BACK                             = 0x0B0E8, // 4.0.6a 13623
+    SMSG_MOVE_KNOCK_BACK                             = 0x0B180, // 4.0.6a 13623
     CMSG_MOVE_KNOCK_BACK_ACK                         = 0x0F580, // 4.0.6a 13623
     MSG_MOVE_KNOCK_BACK                              = 0x0B0E8, // 4.0.6a 13623
     SMSG_MOVE_FEATHER_FALL                           = 0x06088, // 4.0.6a 13623
