@@ -41,11 +41,11 @@ class WorldPacket : public ByteBuffer
 			// Another solution to get them handled would be to patch the client even heavier than we already do.
 			// In this case, I choose to spread hacks in our code, rather than in Blizzard's
 			// - Dvlpr
-			if (hack)
-			{
-				m_opcode = SMSG_MULTIPLE_PACKETS;
-				*this << uint16(opcode);
-			}
+            if (hack)
+            {
+                m_opcode = SMSG_MULTIPLE_PACKETS;
+                *this << uint16(opcode);
+            }
 		}
                                                             // copy constructor
         WorldPacket(const WorldPacket &packet)              : ByteBuffer(packet), m_opcode(packet.m_opcode)
@@ -57,11 +57,11 @@ class WorldPacket : public ByteBuffer
             clear();
             _storage.reserve(newres);
 
-			if (hack)
-			{
-				m_opcode = SMSG_MULTIPLE_PACKETS;
-				*this << uint16(opcode);
-			}
+            if (hack)
+            {
+                m_opcode = SMSG_MULTIPLE_PACKETS;
+                *this << uint16(opcode);
+            }
             else m_opcode = opcode;
         }
 
