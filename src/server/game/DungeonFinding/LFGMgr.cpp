@@ -1820,11 +1820,11 @@ void LFGMgr::RewardDungeonDoneFor(const uint32 dungeonId, Player* player)
 
     uint64 guid = player->GetGUID();
     uint64 gguid = player->GetGroup()->GetGUID();
-    uint32 gDungeonId = GetDungeon(gguid); 	
+    uint32 gDungeonId = GetDungeon(gguid);     
     if (gDungeonId != dungeonId)
     {
-        sLog.outDebug("LFGMgr::RewardDungeonDoneFor: [" UI64FMTD "] Finished dungeon %u but group queued for %u. Ignoring", guid, dungeonId, gDungeonId);	
-        return;	
+        sLog.outDebug("LFGMgr::RewardDungeonDoneFor: [" UI64FMTD "] Finished dungeon %u but group queued for %u. Ignoring", guid, dungeonId, gDungeonId);    
+        return;    
     }
 
     if (GetState(guid) == LFG_STATE_FINISHED_DUNGEON)

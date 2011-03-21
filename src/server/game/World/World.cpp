@@ -111,6 +111,8 @@ World::World()
     m_NextWeeklyQuestReset = 0;
     m_scheduledScripts = 0;
 
+    debugOpcode = 0;
+
     m_defaultDbcLocale = LOCALE_enUS;
     m_availableDbcLocaleMask = 0;
 

@@ -248,32 +248,27 @@ void WorldSession::HandleBattlegroundPlayerPositionsOpcode(WorldPacket & /*recv_
 
                 Player *ali_plr = sObjectMgr.GetPlayer(((BattlegroundWS*)bg)->GetAllianceFlagPickerGUID());
                 if (ali_plr)
-                    ++count2;
+                    ++count1;
 
                 Player *horde_plr = sObjectMgr.GetPlayer(((BattlegroundWS*)bg)->GetHordeFlagPickerGUID());
                 if (horde_plr)
                     ++count2;
 
                 WorldPacket data(SMSG_BATTLEGROUND_PLAYER_POSITIONS, (4+4+16*count1+16*count2));
-                data << count1;                                     // alliance flag holders count - obsolete, now always 0
-                /*for (uint8 i = 0; i < count1; ++i)
-                {
-                    data << uint64(0);                              // guid
-                    data << (float)0;                               // x
-                    data << (float)0;                               // y
-                }*/
-                data << count2;                                     // horde flag holders count - obsolete, now count of next fields
+                data << count1;                                     // alliance flag holders count
+                data << count2;                                     // horde flag holders count
                 if (ali_plr)
                 {
-                    data << (uint64)ali_plr->GetGUID();
+
                     data << (float)ali_plr->GetPositionX();
                     data << (float)ali_plr->GetPositionY();
+                    data << (uint64)ali_plr->GetGUID();
                 }
                 if (horde_plr)
                 {
-                    data << (uint64)horde_plr->GetGUID();
                     data << (float)horde_plr->GetPositionX();
                     data << (float)horde_plr->GetPositionY();
+                    data << (uint64)horde_plr->GetGUID();
                 }
 
                 SendPacket(&data);
@@ -602,23 +597,15 @@ void WorldSession::HandleBattlemasterJoinArena(WorldPacket & recv_data)
     sLog.outDebug("WORLD: CMSG_BATTLEMASTER_JOIN_ARENA");
     //recv_data.hexlike();
 
-    uint64 guid;                                            // arena Battlemaster guid
     uint8 arenaslot;                                        // 2v2, 3v3 or 5v5
-    uint8 asGroup;                                          // asGroup
-    uint8 isRated;                                          // isRated
     Group * grp = NULL;
 
-    recv_data >> guid >> arenaslot >> asGroup >> isRated;
+    bool isRated = true, asGroup = true;
+
+    recv_data >> arenaslot;
 
     // ignore if we already in BG or BG queue
     if (_player->InBattleground())
-        return;
-
-    Creature *unit = GetPlayer()->GetMap()->GetCreature(guid);
-    if (!unit)
-        return;
-
-    if (!unit->isBattleMaster())                             // it's not battle master
         return;
 
     uint8 arenatype = 0;

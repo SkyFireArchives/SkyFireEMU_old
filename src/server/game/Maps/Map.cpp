@@ -706,7 +706,7 @@ void Map::Remove(Player *player, bool remove)
             NGridType *grid = getNGrid(cell.GridX(), cell.GridY());
             ASSERT(grid != NULL);
 
-            player->UpdateObjectVisibility(true);
+            UpdateObjectVisibility(player, cell, p);
             RemoveFromGrid(player,grid,cell);
         }
     }
@@ -737,7 +737,7 @@ Map::Remove(T *obj, bool remove)
             NGridType *grid = getNGrid(cell.GridX(), cell.GridY());
             ASSERT(grid != NULL);
 
-            obj->UpdateObjectVisibility(true);
+            UpdateObjectVisibility(obj, cell, p);
             RemoveFromGrid(obj,grid,cell);
         }
     }

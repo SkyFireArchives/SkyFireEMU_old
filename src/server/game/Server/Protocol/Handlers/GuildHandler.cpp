@@ -32,6 +32,16 @@
 #include "GossipDef.h"
 #include "SocialMgr.h"
 
+// Cataclysm TODO:
+// Proper update of internal events:
+// Promote, Demote, Add or Remove member
+// Tabard/Emblem update (so that player doesn't have to relog to see changes)
+// Guild Rank Management (adding, deleting ranks, editing ranks' permissions)
+// Professions in guild roster, its dynamic updates
+// GuildBankRightsAndSlots
+//
+// Guild Advancement system is currently disabled. Make its disable state configurable and fix it
+
 // Helper for getting guild object of session's player.
 // If guild does not exist, sends error (if necessary).
 inline Guild* _GetPlayerGuild(WorldSession* session, bool sendError = false)
@@ -44,14 +54,15 @@ inline Guild* _GetPlayerGuild(WorldSession* session, bool sendError = false)
     return NULL;
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildQueryOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_QUERY");
 
     uint64 guildId;
-	uint64 unk; //4.0.6a
+    uint64 unk; //4.0.6a
     recvPacket >> guildId;
-	recvPacket >> unk;
+    recvPacket >> unk;
     // Use received guild id to access guild method (not player's guild id)
     uint32 lowGuildId = GUID_LOPART(guildId);
     if (Guild *pGuild = sObjectMgr.GetGuildById(lowGuildId))
@@ -60,6 +71,7 @@ void WorldSession::HandleGuildQueryOpcode(WorldPacket& recvPacket)
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_PLAYER_NOT_IN_GUILD);
 }
 
+// Cata status: Not used.
 void WorldSession::HandleGuildCreateOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_CREATE");
@@ -77,6 +89,9 @@ void WorldSession::HandleGuildCreateOpcode(WorldPacket& recvPacket)
     }
 }
 
+// Cata Status: Done
+// Functional, but there are many unknown values in the SMSG_GUILD_INVITE
+// However, until guild leveling system finds some use in emulating, those aren't needed
 void WorldSession::HandleGuildInviteOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_INVITE");
@@ -89,21 +104,25 @@ void WorldSession::HandleGuildInviteOpcode(WorldPacket& recvPacket)
             pGuild->HandleInviteMember(this, invitedName);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildRemoveOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_REMOVE");
 
-    std::string playerName;
-    recvPacket >> playerName;
+    uint64 guid;
+    recvPacket >> guid; // target
+    recvPacket.read_skip<uint64>();
 
-    if (normalizePlayerName(playerName))
-        if (Guild* pGuild = _GetPlayerGuild(this, true))
-            pGuild->HandleRemoveMember(this, playerName);
+    if (Guild* pGuild = _GetPlayerGuild(this, true))
+        pGuild->HandleRemoveMember(this, guid);
 }
 
-void WorldSession::HandleGuildAcceptOpcode(WorldPacket& /*recvPacket*/)
-{
+// Cata Status: Done
+void WorldSession::HandleGuildAcceptOpcode(WorldPacket& recvPacket)
+{   
     sLog.outDebug("WORLD: Received CMSG_GUILD_ACCEPT");
+    recvPacket.read_skip<uint64>();
+
     // Player cannot be in guild
     if (!GetPlayer()->GetGuildId())
         // Guild where player was invited must exist
@@ -111,14 +130,17 @@ void WorldSession::HandleGuildAcceptOpcode(WorldPacket& /*recvPacket*/)
             pGuild->HandleAcceptMember(this);
 }
 
-void WorldSession::HandleGuildDeclineOpcode(WorldPacket& /*recvPacket*/)
+// Cata Status: Done
+void WorldSession::HandleGuildDeclineOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_DECLINE");
+    recvPacket.read_skip<uint64>();
 
     GetPlayer()->SetGuildIdInvited(0);
     GetPlayer()->SetInGuild(0);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildInfoOpcode(WorldPacket& /*recvPacket*/)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_INFO");
@@ -127,6 +149,7 @@ void WorldSession::HandleGuildInfoOpcode(WorldPacket& /*recvPacket*/)
         pGuild->SendInfo(this);
 }
 
+// CATA Status: Done
 void WorldSession::HandleGuildRosterOpcode(WorldPacket& /*recvPacket*/)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_ROSTER");
@@ -135,30 +158,35 @@ void WorldSession::HandleGuildRosterOpcode(WorldPacket& /*recvPacket*/)
         pGuild->HandleRoster(this);
 }
 
+// Cata Status: Done
+// TODO!!! The update is improper. Shouldn't re-send the roster - it causes visual sprinkles
 void WorldSession::HandleGuildPromoteOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_PROMOTE");
 
-    std::string playerName;
-    recvPacket >> playerName;
+    uint64 guid;
+    recvPacket >> guid; // target guid
+    recvPacket.read_skip<uint64>(); // command issuer's guid?
 
-    if (normalizePlayerName(playerName))
-        if (Guild* pGuild = _GetPlayerGuild(this, true))
-            pGuild->HandleUpdateMemberRank(this, playerName, false);
+    if (Guild* pGuild = _GetPlayerGuild(this, true))
+        pGuild->HandleUpdateMemberRank(this, guid, false);
 }
 
+// Cata Status: Done
+// TODO!!! The update is improper. Shouldn't re-send the roster - it causes visual sprinkles
 void WorldSession::HandleGuildDemoteOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_DEMOTE");
 
-    std::string playerName;
-    recvPacket >> playerName;
-
-    if (normalizePlayerName(playerName))
-        if (Guild* pGuild = _GetPlayerGuild(this, true))
-            pGuild->HandleUpdateMemberRank(this, playerName, true);
+    uint64 guid;
+    recvPacket >> guid; // target guid
+    recvPacket.read_skip<uint64>(); // command issuer's guid?
+       
+    if (Guild* pGuild = _GetPlayerGuild(this, true))
+        pGuild->HandleUpdateMemberRank(this, guid, true);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildLeaveOpcode(WorldPacket& /*recvPacket*/)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_LEAVE");
@@ -167,6 +195,7 @@ void WorldSession::HandleGuildLeaveOpcode(WorldPacket& /*recvPacket*/)
         pGuild->HandleLeaveMember(this);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildDisbandOpcode(WorldPacket& /*recvPacket*/)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_DISBAND");
@@ -175,11 +204,14 @@ void WorldSession::HandleGuildDisbandOpcode(WorldPacket& /*recvPacket*/)
         pGuild->HandleDisband(this);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildLeaderOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_LEADER");
 
     std::string name;
+    recvPacket.read_skip<uint64>(); // guild GUID
+    recvPacket.read_skip<uint64>(); // user's guid?
     recvPacket >> name;
 
     if (normalizePlayerName(name))
@@ -187,46 +219,52 @@ void WorldSession::HandleGuildLeaderOpcode(WorldPacket& recvPacket)
             pGuild->HandleSetLeader(this, name);
 }
 
+// Cata Status: Done
+void WorldSession::HandleGuildChangeInfoTextOpcode(WorldPacket& recvPacket)
+{
+    sLog.outDebug("WORLD: Received CMSG_GUILD_INFO_TEXT");
+
+    recvPacket.read_skip<uint64>(); // issuer's guid
+    recvPacket.read_skip<uint64>(); // guild's guid
+    std::string info;
+    recvPacket >> info;
+
+    if (Guild* pGuild = _GetPlayerGuild(this, true))
+        pGuild->HandleSetInfo(this, info);
+}
+
+// Cata Status: Done
 void WorldSession::HandleGuildMOTDOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_MOTD");
 
-    std::string motd;               // Empty by default
-    if (!recvPacket.empty())
-        recvPacket >> motd;
+    recvPacket.read_skip<uint64>();
+    recvPacket.read_skip<uint64>();
+
+    std::string motd;
+    recvPacket >> motd;
 
     if (Guild* pGuild = _GetPlayerGuild(this, true))
         pGuild->HandleSetMOTD(this, motd);
 }
 
-void WorldSession::HandleGuildSetPublicNoteOpcode(WorldPacket& recvPacket)
+// Cata Status: Done
+void WorldSession::HandleGuildSetNoteOpcode(WorldPacket& recvPacket)
 {
-    sLog.outDebug("WORLD: Received CMSG_GUILD_SET_PUBLIC_NOTE");
+    sLog.outDebug("WORLD: Received CMSG_GUILD_SET_NOTE");
 
-    std::string playerName;
-    recvPacket >> playerName;
+    uint8 ispublic;
+    uint64 guid;
+    recvPacket >> ispublic;
+    recvPacket >> guid; // target guid
+    recvPacket.read_skip<uint64>(); // issuer's guid (?)
+    recvPacket.read_skip<uint64>(); // guild guid (not using it)
 
-    std::string publicNote;
-    recvPacket >> publicNote;
+    std::string Note;
+    recvPacket >> Note;
 
-    if (normalizePlayerName(playerName))
-        if (Guild* pGuild = _GetPlayerGuild(this, true))
-            pGuild->HandleSetMemberNote(this, playerName, publicNote, false);
-}
-
-void WorldSession::HandleGuildSetOfficerNoteOpcode(WorldPacket& recvPacket)
-{
-    sLog.outDebug("WORLD: Received CMSG_GUILD_SET_OFFICER_NOTE");
-
-    std::string playerName;
-    recvPacket >> playerName;
-
-    std::string officerNote;
-    recvPacket >> officerNote;
-
-    if (normalizePlayerName(playerName))
-        if (Guild* pGuild = _GetPlayerGuild(this, true))
-            pGuild->HandleSetMemberNote(this, playerName, officerNote, true);
+    if (Guild* pGuild = _GetPlayerGuild(this, true))
+        pGuild->HandleSetMemberNote(this, guid, Note, !ispublic);
 }
 
 void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
@@ -262,9 +300,8 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
     for(uint32 i = 0; i < GUILD_BANK_MAX_TABS; i++)
         recvPacket >> BankRights[i];
 
-    uint32 stackPerDay[GUILD_BANK_MAX_TABS];
-    for(uint32 i = 0; i < GUILD_BANK_MAX_TABS; i++)
-        recvPacket >> stackPerDay[i];
+    uint32 new_rights;
+    recvPacket >> new_rights;
 
     uint32 new_rankId;
     recvPacket >> new_rankId;
@@ -272,27 +309,29 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
     uint32 old_rankId;
     recvPacket >> old_rankId;
 
-    uint64 playerGuid;
-    recvPacket >> playerGuid;
-
-    uint32 new_rights;
-    recvPacket >> new_rights;
-
-    uint32 old_rights;
-    recvPacket >> old_rights;
+    uint32 BankStacks[GUILD_BANK_MAX_TABS];
+    for(uint32 i = 0; i < GUILD_BANK_MAX_TABS; i++)
+        recvPacket >> BankStacks[i];
 
     uint64 guildId;
     recvPacket >> guildId;
 
+
+    uint32 old_rights;
+    recvPacket >> old_rights;
+
     uint32 money;
     recvPacket >> money;
+    
+    uint64 playerGuid;
+    recvPacket >> playerGuid;
 
     std::string rankName;
     recvPacket >> rankName;
 
     sLog.outDebug("WORLD: Received CMSG_GUILD_RANK");
 
-	if (GetPlayer()->GetGUID() != playerGuid)
+    if (GetPlayer()->GetGUID() != playerGuid)
     {
         printf("CMSG_GUILD_RANK: The playerGUID in the packet does not match the current player!\n");
         recvPacket.rpos(recvPacket.wpos());
@@ -327,39 +366,35 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
 
     }
     if (old_rankId != new_rankId && old_rankId != GR_GUILDMASTER && new_rankId != GR_GUILDMASTER)
-    pGuild->SwitchRank(old_rankId, new_rankId);
+        pGuild->SwitchRank(old_rankId, new_rankId);
 }
 
+// Cata Status: Done
+// TODO: The structure is completely ignored atm
 void WorldSession::HandleGuildAddRankOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_ADD_RANK");
 
-    std::string rankName;
-    recvPacket >> rankName;
+    //std::string rankName;
+    //recvPacket >> rankName;
 
     if (Guild* pGuild = _GetPlayerGuild(this, true))
-        pGuild->HandleAddNewRank(this, rankName);
+        pGuild->HandleAddNewRank(this, "New Rank");
 }
 
-void WorldSession::HandleGuildDelRankOpcode(WorldPacket& /*recvPacket*/)
+// Cata Status: Done
+void WorldSession::HandleGuildDelRankOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received CMSG_GUILD_DEL_RANK");
+    uint32 rankid;
+    recvPacket >> rankid;
 
     if (Guild* pGuild = _GetPlayerGuild(this, true))
-        pGuild->HandleRemoveLowestRank(this);
+        pGuild->HandleRemoveRank(this, rankid);
 }
 
-void WorldSession::HandleGuildChangeInfoTextOpcode(WorldPacket& recvPacket)
-{
-    sLog.outDebug("WORLD: Received CMSG_GUILD_INFO_TEXT");
-
-    std::string info;
-    recvPacket >> info;
-
-    if (Guild* pGuild = _GetPlayerGuild(this, true))
-        pGuild->HandleSetInfo(this, info);
-}
-
+// Cata Status: Done
+// TODO!!! Doesn't update tabard, guild tab until relog
 void WorldSession::HandleSaveGuildEmblemOpcode(WorldPacket& recvPacket)
 {
     sLog.outDebug("WORLD: Received MSG_SAVE_GUILD_EMBLEM");
@@ -390,6 +425,7 @@ void WorldSession::HandleSaveGuildEmblemOpcode(WorldPacket& recvPacket)
     }
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildEventLogQueryOpcode(WorldPacket& /* recvPacket */)
 {
     sLog.outDebug("WORLD: Received (MSG_GUILD_EVENT_LOG_QUERY)");
@@ -398,6 +434,7 @@ void WorldSession::HandleGuildEventLogQueryOpcode(WorldPacket& /* recvPacket */)
         pGuild->SendEventLog(this);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildBankMoneyWithdrawn(WorldPacket & /* recv_data */)
 {
     sLog.outDebug("WORLD: Received (MSG_GUILD_BANK_MONEY_WITHDRAWN)");
@@ -406,6 +443,7 @@ void WorldSession::HandleGuildBankMoneyWithdrawn(WorldPacket & /* recv_data */)
         pGuild->SendMoneyInfo(this);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildPermissions(WorldPacket& /* recv_data */)
 {
     sLog.outDebug("WORLD: Received (MSG_GUILD_PERMISSIONS)");
@@ -415,6 +453,7 @@ void WorldSession::HandleGuildPermissions(WorldPacket& /* recv_data */)
 }
 
 // Called when clicking on Guild bank gameobject
+// Cata Status: Done
 void WorldSession::HandleGuildBankerActivate(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANKER_ACTIVATE)");
@@ -435,6 +474,7 @@ void WorldSession::HandleGuildBankerActivate(WorldPacket & recv_data)
 }
 
 // Called when opening pGuild bank tab only (first one)
+// Cata Status: Done
 void WorldSession::HandleGuildBankQueryTab(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_QUERY_TAB)");
@@ -453,6 +493,7 @@ void WorldSession::HandleGuildBankQueryTab(WorldPacket & recv_data)
             pGuild->SendBankTabData(this, tabId);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildBankDepositMoney(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_DEPOSIT_MONEY)");
@@ -460,15 +501,16 @@ void WorldSession::HandleGuildBankDepositMoney(WorldPacket & recv_data)
     uint64 GoGuid;
     recv_data >> GoGuid;
 
-    uint32 money;
+    uint64 money;
     recv_data >> money;
 
     if (GetPlayer()->GetGameObjectIfCanInteractWith(GoGuid, GAMEOBJECT_TYPE_GUILD_BANK))
-        if (money && GetPlayer()->HasEnoughMoney(money))
+        if (money && GetPlayer()->HasEnoughMoney(uint32(money)))
             if (Guild* pGuild = _GetPlayerGuild(this))
                 pGuild->HandleMemberDepositMoney(this, money);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildBankWithdrawMoney(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_WITHDRAW_MONEY)");
@@ -476,7 +518,7 @@ void WorldSession::HandleGuildBankWithdrawMoney(WorldPacket & recv_data)
     uint64 GoGuid;
     recv_data >> GoGuid;
 
-    uint32 money;
+    uint64 money;
     recv_data >> money;
 
     if (money)
@@ -485,6 +527,7 @@ void WorldSession::HandleGuildBankWithdrawMoney(WorldPacket & recv_data)
                 pGuild->HandleMemberWithdrawMoney(this, money);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildBankSwapItems(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_SWAP_ITEMS)");
@@ -566,6 +609,7 @@ void WorldSession::HandleGuildBankSwapItems(WorldPacket & recv_data)
     }
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildBankBuyTab(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_BUY_TAB)");
@@ -581,6 +625,7 @@ void WorldSession::HandleGuildBankBuyTab(WorldPacket & recv_data)
             pGuild->HandleBuyBankTab(this, tabId);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildBankUpdateTab(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_UPDATE_TAB)");
@@ -603,6 +648,7 @@ void WorldSession::HandleGuildBankUpdateTab(WorldPacket & recv_data)
                 pGuild->HandleSetBankTabInfo(this, tabId, name, icon);
 }
 
+// Cata Status: Done
 void WorldSession::HandleGuildBankLogQuery(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Received (MSG_GUILD_BANK_LOG_QUERY)");
@@ -614,6 +660,7 @@ void WorldSession::HandleGuildBankLogQuery(WorldPacket & recv_data)
         pGuild->SendBankLog(this, tabId);
 }
 
+// Cata Status: Done
 void WorldSession::HandleQueryGuildBankTabText(WorldPacket &recv_data)
 {
     sLog.outDebug("WORLD: Received MSG_QUERY_GUILD_BANK_TEXT");
@@ -625,6 +672,7 @@ void WorldSession::HandleQueryGuildBankTabText(WorldPacket &recv_data)
         pGuild->SendBankTabText(this, tabId);
 }
 
+// Cata Status: Done
 void WorldSession::HandleSetGuildBankTabText(WorldPacket &recv_data)
 {
     sLog.outDebug("WORLD: Received CMSG_SET_GUILD_BANK_TEXT");

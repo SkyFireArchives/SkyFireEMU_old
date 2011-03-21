@@ -945,7 +945,7 @@ struct GlyphSlotEntry
 {
     uint32  Id;
     uint32  TypeFlags;
-    uint32  Order;
+    uint32  LearningOrder;
 };
 
 // All Gt* DBC store data for 100 levels, some by 100 per class/race
@@ -1737,7 +1737,6 @@ struct SpellEntry_n //Structure of the true Spell.dbc
     uint32 SpellLevelsId;                                   // 40       SpellLevels.dbc
     uint32 SpellPowerId;                                    // 41       SpellPower.dbc
     uint32 SpellReagentsId;                                 // 42       SpellReagents.dbc
-    //uint32 unk1;                                          // 43    
     uint32 SpellTargetRestrictionsId;                       // 44       SpellTargetRestrictions.dbc
     uint32 SpellTotemsId;                                   // 45       SpellTotems.dbc
     //uint32 unk2;                                          // 46
@@ -1787,7 +1786,6 @@ struct SpellEntry
     uint32 SpellLevelsId;                                   // 40       SpellLevels.dbc
     uint32 SpellPowerId;                                    // 41       SpellPower.dbc
     uint32 SpellReagentsId;                                 // 42       SpellReagents.dbc
-    //uint32 unk1;                                          // 43
     uint32 SpellTargetRestrictionsId;                       // 44       SpellTargetRestrictions.dbc
     uint32 SpellTotemsId;                                   // 45       SpellTotems.dbc
     //uint32 unk2;                                          // 46
@@ -2045,7 +2043,7 @@ struct SpellShapeshiftFormEntry
     //uint32 unk4;                                          // 10 unused always 0
     uint32 stanceSpell[MAX_SHAPESHIFT_SPELLS];              // 11-18 spells which appear in the bar after shapeshifting
     //uint32 unk5;                                          // 19 unk, only defined for flight form.
-	//uint32 unk6;                                          // 20
+    //uint32 unk6;                                          // 20
 };
 
 struct SpellDurationEntry
@@ -2141,7 +2139,6 @@ struct TalentTreePrimarySpellsEntry
     uint32 Id;                                              // 0
     uint32 TalentTabID;                                     // 1
     uint32 SpellID;                                         // 2
-    //uint32 unk1                                           // 3
 };
 
 struct TaxiNodesEntry

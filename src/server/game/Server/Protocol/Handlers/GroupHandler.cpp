@@ -57,7 +57,7 @@ void WorldSession::SendPartyResult(PartyOperation operation, const std::string& 
     data << member;
     data << uint32(res);
     data << uint32(val);                                    // LFD cooldown related (used with ERR_PARTY_LFG_BOOT_COOLDOWN_S and ERR_PARTY_LFG_BOOT_NOT_ELIGIBLE_S)
-	data << uint64(0);                                      // GUID?
+    data << uint64(0);                                      // GUID?
 
     SendPacket(&data);
 }
@@ -246,12 +246,12 @@ void WorldSession::HandleGroupDeclineOpcode(WorldPacket & /*recv_data*/)
 {
     Group  *group  = GetPlayer()->GetGroupInvite();
     if (!group)
-		return;
+        return;
 
-	// Remember leader if online (group pointer will be invalid if group gets disbanded)
+    // Remember leader if online (group pointer will be invalid if group gets disbanded)
     Player *leader = sObjectMgr.GetPlayer(group->GetLeaderGUID());    
 
-	// uninvite, group can be deleted
+    // uninvite, group can be deleted
     GetPlayer()->UninviteFromGroup();
 
     // report
@@ -831,6 +831,7 @@ void WorldSession::BuildPartyMemberStatsChangedPacket(Player *player, WorldPacke
         {
             *data << uint8(0); // if true client clears auras that are not covered by auramask
             const uint64& auramask = pet->GetAuraUpdateMaskForRaid();
+            *data << uint8(0);
             *data << uint64(auramask);
             *data << uint32(64);  // how many bits client reads from auramask
             for (uint32 i = 0; i < MAX_AURAS; ++i)
@@ -956,7 +957,9 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
     else
     {
         data << (uint8)  0;                                 // GROUP_UPDATE_FLAG_PET_NAME
+        data << (uint8) 0;                                    // GROUP_UPDATE_FLAG_PET_AURAS
         data << (uint64) 0;                                 // GROUP_UPDATE_FLAG_PET_AURAS
+        data << (uint32) 0;
     }
 
     SendPacket(&data);

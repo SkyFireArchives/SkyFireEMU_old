@@ -1042,8 +1042,8 @@ enum SpellCastResult
     SPELL_FAILED_ONLY_NOT_SWIMMING,
     SPELL_FAILED_BY_NOT_MOVING,
     SPELL_FAILED_IN_COMBAT_RES_LIMIT_REACHED,
-	SPELL_FAILED_NOT_IN_ARENA,
-	SPELL_FAILED_TARGET_NOT_GROUND,
+    SPELL_FAILED_NOT_IN_ARENA,
+    SPELL_FAILED_TARGET_NOT_GROUND,
     SPELL_FAILED_UNKNOWN,                             // actually doesn't exist in client
 
     SPELL_CAST_OK = 255 // custom value, don't must be send to client
@@ -1260,7 +1260,7 @@ enum Targets
     TARGET_DEST_DEST_FRONT_RIGHT       = 85,
     TARGET_DEST_DEST_RANDOM            = 86,
     TARGET_DEST_DEST                   = 87,
-    TARGET_DEST_DYNOBJ_NONE            = 88,
+    TARGET_DEST_DYNOBJ_ALL_UNITS        = 88,
     TARGET_DEST_TRAJ                   = 89,
     TARGET_UNIT_TARGET_PUPPET          = 90,
     TARGET_DEST_DEST_RANDOM_DIR_DIST   = 91,

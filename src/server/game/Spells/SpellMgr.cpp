@@ -201,7 +201,7 @@ SpellMgr::SpellMgr()
                 break;
             case TARGET_DEST_DYNOBJ_ENEMY:
             case TARGET_DEST_DYNOBJ_ALLY:
-            case TARGET_DEST_DYNOBJ_NONE:
+            case TARGET_DEST_DYNOBJ_ALL_UNITS:
             case TARGET_DEST_DEST:
             case TARGET_DEST_TRAJ:
             case TARGET_DEST_DEST_FRONT_LEFT:
@@ -869,7 +869,7 @@ bool SpellMgr::_isPositiveEffect(uint32 spellId, uint32 effIndex, bool deep) con
             // Amplify Magic, Dampen Magic
             if (spellproto->SpellFamilyFlags[0] == 0x00002000)
                 return true;
-            // Ignite	
+            // Ignite    
             if (spellproto->SpellIconID == 45)
                 return true;
             break;
@@ -1195,9 +1195,9 @@ SpellCastResult GetErrorAtShapeshiftedCast (SpellEntry const *spellInfo, uint32 
     }
     else
     {
-        // needs shapeshift
+       /* // needs shapeshift
         if (!(spellInfo->AttributesEx2 & SPELL_ATTR_EX2_NOT_NEED_SHAPESHIFT) && spellInfo->Stances != 0)
-            return SPELL_FAILED_ONLY_SHAPESHIFT;
+            return SPELL_FAILED_ONLY_SHAPESHIFT;*/
     }
 
     // Check if stance disables cast of not-stance spells
@@ -2414,7 +2414,7 @@ void SpellMgr::LoadPetDefaultSpells()
     uint32 countCreature = 0;
     uint32 countData = 0;
 
-	for (uint32 i = 0; i < sCreatureStorage.MaxEntry; ++i)
+    for (uint32 i = 0; i < sCreatureStorage.MaxEntry; ++i)
     {
         CreatureInfo const* cInfo = sCreatureStorage.LookupEntry<CreatureInfo>(i);
         if (!cInfo)
@@ -4209,7 +4209,7 @@ void SpellMgr::LoadEnchantCustomAttr()
     uint32 size = sSpellItemEnchantmentStore.GetNumRows();
     mEnchantCustomAttr.resize(size);
 
-	uint32 count = 0;
+    uint32 count = 0;
 
     for (uint32 i = 0; i < size; ++i)
        mEnchantCustomAttr[i] = 0;

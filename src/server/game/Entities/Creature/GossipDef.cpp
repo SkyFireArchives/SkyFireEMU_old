@@ -414,9 +414,9 @@ void PlayerMenu::SendQuestGiverQuestList(QEmote eEmote, const std::string& Title
 
 void PlayerMenu::SendQuestGiverStatus(uint32 questStatus, uint64 npcGUID)
 {
-    WorldPacket data(SMSG_QUESTGIVER_STATUS, 12);
+    WorldPacket data(SMSG_QUESTGIVER_STATUS, 11, true);
     data << uint64(npcGUID);
-    data << uint32(questStatus);
+    data << questStatus;
 
     pSession->SendPacket(&data);
     sLog.outDebug("WORLD: Sent SMSG_QUESTGIVER_STATUS NPC Guid=%u, status=%u", GUID_LOPART(npcGUID), questStatus);

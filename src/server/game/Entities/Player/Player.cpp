@@ -405,6 +405,8 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
     m_speakTime = 0;
     m_speakCount = 0;
 
+    m_emote = 0;
+
     m_objectType |= TYPEMASK_PLAYER;
     m_objectTypeId = TYPEID_PLAYER;
 
@@ -1335,7 +1337,7 @@ void Player::Update(uint32 p_time)
             m_Save_Time = now + 360; 
         } 
 
-// check every second	
+// check every second    
     if (now > m_Last_tick + 1)
         UpdateSoulboundTradeItems();
 
@@ -1795,6 +1797,8 @@ bool Player::ToggleAFK()
     // afk player not allowed in battleground
     if (state && InBattleground())
         LeaveBattleground();
+    if(Guild *pGuild = sObjectMgr.GetGuildById(GetGuildId()))
+        pGuild->OnPlayerStatusChange(this, GUILD_MEMBER_FLAG_AFK, state);
 
     return state;
 }
@@ -1803,7 +1807,11 @@ bool Player::ToggleDND()
 {
     ToggleFlag(PLAYER_FLAGS, PLAYER_FLAGS_DND);
 
-    return HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_DND);
+    bool state = HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_DND);
+
+    if(Guild *pGuild = sObjectMgr.GetGuildById(GetGuildId()))
+        pGuild->OnPlayerStatusChange(this, GUILD_MEMBER_FLAG_DND, state);
+    return state;
 }
 
 uint8 Player::chatTag() const
@@ -2792,6 +2800,9 @@ void Player::GiveLevel(uint8 level)
 {
     if (level == getLevel())
         return;
+
+    if(Guild* pGuild = sObjectMgr.GetGuildById(this->GetGuildId()))
+        pGuild->UpdateMemberData(this, GUILD_MEMBER_DATA_LEVEL, level);
 
     sScriptMgr.OnPlayerLevelChanged(this, level);
 
@@ -7203,6 +7214,9 @@ void Player::UpdateZone(uint32 newZone, uint32 newArea)
 {
     if (m_zoneUpdateId != newZone)
     {
+        if (Guild* pGuild = sObjectMgr.GetGuildById(GetGuildId()))
+            pGuild->UpdateMemberData(this, GUILD_MEMBER_DATA_ZONEID, newZone);
+
         sOutdoorPvPMgr.HandlePlayerLeaveZone(this, m_zoneUpdateId);
         sOutdoorPvPMgr.HandlePlayerEnterZone(this, newZone);
         SendInitWorldStates(newZone, newArea);              // only if really enters to new zone, not just area change, works strange...
@@ -7360,7 +7374,7 @@ void Player::DuelComplete(DuelCompleteType type)
 
     sLog.outDebug("Duel Complete %s %s", GetName(), duel->opponent->GetName());
 
-    WorldPacket data(SMSG_DUEL_COMPLETE, (1));
+    WorldPacket data(SMSG_DUEL_COMPLETE, (1), true);
     data << (uint8)((type != DUEL_INTERUPTED) ? 1 : 0);
     GetSession()->SendPacket(&data);
 
@@ -7369,7 +7383,7 @@ void Player::DuelComplete(DuelCompleteType type)
 
     if (type != DUEL_INTERUPTED)
     {
-        data.Initialize(SMSG_DUEL_WINNER, (1+20));          // we guess size
+        data.Initialize(SMSG_DUEL_WINNER, (1+20), true);          // we guess size
         data << uint8(type == DUEL_WON ? 0 : 1);            // 0 = just won; 1 = fled
         data << duel->opponent->GetName();
         data << GetName();
@@ -8164,7 +8178,7 @@ void Player::CastItemCombatSpell(Unit *target, WeaponAttackType attType, uint32 
     }
 }
 
-void Player::CastItemUseSpell(Item *item,SpellCastTargets const& targets,uint8 cast_count, uint32 glyphIndex)
+void Player::CastItemUseSpell(Item *item,SpellCastTargets const& targets,uint8 cast_count)
 {
     ItemPrototype const* proto = item->GetProto();
     // special learning case
@@ -8215,7 +8229,6 @@ void Player::CastItemUseSpell(Item *item,SpellCastTargets const& targets,uint8 c
         Spell *spell = new Spell(this, spellInfo, (count > 0));
         spell->m_CastItem = item;
         spell->m_cast_count = cast_count;                   // set count of casts
-        spell->m_glyphIndex = glyphIndex;                   // glyph index
         spell->prepare(&targets);
 
         ++count;
@@ -8243,7 +8256,6 @@ void Player::CastItemUseSpell(Item *item,SpellCastTargets const& targets,uint8 c
             Spell *spell = new Spell(this, spellInfo, (count > 0));
             spell->m_CastItem = item;
             spell->m_cast_count = cast_count;               // set count of casts
-            spell->m_glyphIndex = glyphIndex;               // glyph index
             spell->prepare(&targets);
 
             ++count;
@@ -8768,10 +8780,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
     // need know merged fishing/corpse loot type for achievements
     loot->loot_type = loot_type;
     
-    
-    WorldPacket data(SMSG_MULTIPLE_PACKETS, (9 + 50 + 2));           // we guess size
-
-    data << uint16(SMSG_LOOT_RESPONSE);
+    WorldPacket data(SMSG_LOOT_RESPONSE, (9+50+2), true);
     data << uint64(guid);
     data << uint8(loot_type);
     data << LootView(*loot, this, permission);
@@ -8794,9 +8803,7 @@ void Player::SendNotifyLootMoneyRemoved()
 
 void Player::SendNotifyLootItemRemoved(uint8 lootSlot)
 {
-    WorldPacket data(SMSG_MULTIPLE_PACKETS, 1+2);
-    //WorldPacket data(SMSG_LOOT_REMOVED, 1);
-    data << uint16(SMSG_LOOT_REMOVED);
+    WorldPacket data(SMSG_LOOT_REMOVED, 3, true);
     data << uint8(lootSlot);
     GetSession()->SendPacket(&data);
 }
@@ -9448,11 +9455,6 @@ void Player::SetBindPoint(uint64 guid)
     WorldPacket data(SMSG_BINDER_CONFIRM, 8);
     data << uint64(guid);
     GetSession()->SendPacket(&data);
-    //float x = this->GetPositionX();
-    //float y = this->GetPositionY();
-    //float z = this->GetPositionZ();
-    //uint32 spellid = 26;
-    //this->CastSpell(x,y,z,spellid,true);
 }
 
 void Player::SendTalentWipeConfirm(uint64 guid)
@@ -9651,7 +9653,7 @@ uint8 Player::FindEquipSlot(ItemPrototype const* proto, uint32 slot, bool swap) 
                     if (pClass == CLASS_WARLOCK)
                         slots[0] = EQUIPMENT_SLOT_RANGED;
                     break;
-				case ITEM_SUBCLASS_ARMOR_RELIC:
+                case ITEM_SUBCLASS_ARMOR_RELIC:
                     if (pClass == CLASS_PALADIN || pClass == CLASS_DRUID || pClass == CLASS_SHAMAN || pClass == CLASS_DEATH_KNIGHT)
                          slots[0] = EQUIPMENT_SLOT_RANGED;
                     break;
@@ -13111,7 +13113,7 @@ void Player::SendEquipError(uint8 msg, Item* pItem, Item *pItem2, uint32 itemid)
 void Player::SendBuyError(uint8 msg, Creature* pCreature, uint32 item, uint32 param)
 {
     sLog.outDebug("WORLD: Sent SMSG_BUY_FAILED");
-    WorldPacket data(SMSG_BUY_FAILED, (8+4+4+1));
+    WorldPacket data(SMSG_BUY_FAILED, (8+4+4+1+2), true);
     data << uint64(pCreature ? pCreature->GetGUID() : 0);
     data << uint32(item);
     if (param > 0)
@@ -15940,22 +15942,26 @@ void Player::SendQuestReward(Quest const *pQuest, uint32 XP, Object * questGiver
     sGameEventMgr.HandleQuestComplete(questid);
     WorldPacket data(SMSG_QUESTGIVER_QUEST_COMPLETE, (4+4+4+4+4));
     data << uint8(0x80); // unk 4.0.1 flags
+    data << uint32(pQuest->GetRewSkillLineId());
     data << uint32(questid);
 
     if (getLevel() < sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
     {
+        data << uint32(pQuest->GetRewOrReqMoney());            
+        data << uint32(pQuest->GetBonusTalents());              // bonus talents
+        data << uint32(pQuest->GetRewSkillPoints());
         data << uint32(XP);
-        data << uint32(pQuest->GetRewOrReqMoney());
     }
     else
-    {
-        data << uint32(0);
+    { 
         data << uint32(pQuest->GetRewOrReqMoney() + int32(pQuest->GetRewMoneyMaxLevel() * sWorld.getRate(RATE_DROP_MONEY)));
+        data << uint32(pQuest->GetRewSkillPoints());              // bonus talents
+        data << uint32(0);
+        
+        data << uint32(0);
     }
 
-    data << 10 * Trinity::Honor::hk_honor_at_level(getLevel(), pQuest->GetRewHonorMultiplier());
-    data << uint32(pQuest->GetBonusTalents());              // bonus talents
-    data << uint32(pQuest->GetRewArenaPoints());
+
     GetSession()->SendPacket(&data);
 
     if (pQuest->GetQuestCompleteScript() != 0)
@@ -16381,6 +16387,11 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
     SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, DEFAULT_WORLD_OBJECT_SIZE);
     SetFloatValue(UNIT_FIELD_COMBATREACH, 1.5f);
     SetFloatValue(UNIT_FIELD_HOVERHEIGHT, 1.0f);
+
+    SetUInt32Value(PLAYER_GUILDRANK, 0);
+    SetUInt32Value(PLAYER_GUILD_TIMESTAMP, 0);
+    SetUInt32Value(PLAYER_GUILDDELETE_DATE, 0);
+    SetUInt32Value(PLAYER_GUILDLEVEL, 1);
 
     uint32 money = fields[8].GetUInt32();
     if (money > MAX_MONEY_AMOUNT)
@@ -21287,10 +21298,10 @@ void Player::ModifyMoney(int32 d)
     sScriptMgr.OnPlayerMoneyChanged(this, d);
 
     if (d < 0)
-        SetMoney (GetMoney() > uint32(-d) ? GetMoney() + d : 0);
+        SetMoney (GetMoney() > uint64(-d) ? GetMoney() + d : 0);
     else
     {
-        uint32 newAmount = 0;
+        uint64 newAmount = 0;
         if (GetMoney() < uint32(MAX_MONEY_AMOUNT - d))
             newAmount = GetMoney() + d;
         else
@@ -21506,7 +21517,8 @@ void Player::SendInitialPacketsAfterAddToMap()
         WorldPacket data2(SMSG_FORCE_MOVE_ROOT, 10);
         data2.append(GetPackGUID());
         data2 << (uint32)2;
-        SendMessageToSet(&data2,true);
+        //SendMessageToSet(&data2,true);
+        m_session->SendPacket(&data2);
     }
 
     SendAurasForTarget(this);
@@ -22996,24 +23008,33 @@ uint32 Player::GetBarberShopCost(uint8 newhairstyle, uint8 newhaircolor, uint8 n
 }
 
 void Player::InitGlyphsForLevel()
-{
-    uint8 slot = 0;
+{   
+    uint8 level = getLevel();
+    if (level < 25)
+        return;
+
+    uint32 glyphMask = 0;
+    uint8 order = level / 25 - 1;
+    uint32 counter = 0;
+
     for (uint32 i = 0; i < sGlyphSlotStore.GetNumRows(); ++i)
         if (GlyphSlotEntry const * gs = sGlyphSlotStore.LookupEntry(i))
-            if (gs)
-                SetGlyphSlot(slot++, gs->Id);
+        {
+            if (gs->LearningOrder <= order)
+                glyphMask |= (1 << uint8(counter)); // Set the appropriate bit
 
-    uint8 level = getLevel();
-    uint32 value = 0;
+            SetGlyphSlot(counter++, gs->Id);
+        }
 
-    if (level >= 25)
-        value |= 1 | 2 | 64;
-    if(level >= 50)
-        value |= 4 | 8 | 128;
-    if (level >= 75)
-        value |= 16 | 32 | 256;
+    SetUInt32Value(PLAYER_GLYPHS_ENABLED, glyphMask);
 
-    SetUInt32Value(PLAYER_GLYPHS_ENABLED, value);
+    // This enables glyph removal and reagent checking.
+    // If the player doesn't know either of these, BlizzardUI will Lua error him to death :P
+    // TODO: Move this to DB
+    if (level >= 81 && !HasSpell(90647))
+        learnSpell(90647, false);
+    else if (!HasSpell(89964))
+        learnSpell(89964, false);
 }
 
 bool Player::isTotalImmune()
@@ -23666,7 +23687,7 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank, bool one)
     if (!talentTabInfo)
         return;
     
-    //TODO: CHANGER DE CODE! IL EST DEGUEULASSE!
+
     if(one && talentTabInfo->TalentTabID != GetTalentBranchSpec(m_activeSpec))
     {
         uint32 pointInBranchSpec = 0;
@@ -24335,6 +24356,13 @@ void Player::DeleteEquipmentSet(uint64 setGuid)
     }
 }
 
+void Player::SetEmoteState(uint32 anim_id)
+{
+    HandleEmoteCommand(anim_id); // Fall back
+    
+    m_emote = anim_id;
+}
+
 void Player::RemoveAtLoginFlag(AtLoginFlags f, bool in_db_also /*= false*/)
 {
     m_atLoginFlags &= ~f;
@@ -24656,8 +24684,8 @@ void Player::ActivateSpec(uint8 spec)
             _LoadActions(result);
     }
 
-    ResummonPetTemporaryUnSummonedIfAny(); 	
-    if (Pet* pPet = GetPet()) 	
+    ResummonPetTemporaryUnSummonedIfAny();     
+    if (Pet* pPet = GetPet())     
         pPet->InitTalentForLevel();  // not processed with aura removal because pet was not active
 
     SendActionButtons(1);
