@@ -104,7 +104,7 @@ int main(int argc, char * arg[])
     }
     
     if(extractMap)
-        ExtractMapsFromMpq(FirstLocale);
+        ExtractMapsFromMpq(build);
 	
     return 0;
 }
