@@ -332,7 +332,6 @@ SpellScaling::SpellScaling(uint8 playerLevel_, const SpellEntry * spellEntry_)
         pts[effIndex]=roundf(othermult*gtCoef);
         avg[effIndex]=std::max((float)ceil(mult),roundf(avg[effIndex]));
     }
-
     canScale = true;
 }
 
@@ -1941,7 +1940,7 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
     if (caster)
     {
         SpellScaling values(caster->getLevel(), spellEntry);
-        if (values.canScale)
+        if (values.canScale && (int32)values.min[effIndex] != 0)
         {
             basePoints = (int32)values.min[effIndex];
             maxPoints = values.max[effIndex];
