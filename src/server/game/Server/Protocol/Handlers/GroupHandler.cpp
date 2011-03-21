@@ -831,7 +831,6 @@ void WorldSession::BuildPartyMemberStatsChangedPacket(Player *player, WorldPacke
         {
             *data << uint8(0); // if true client clears auras that are not covered by auramask
             const uint64& auramask = pet->GetAuraUpdateMaskForRaid();
-            *data << uint8(0);
             *data << uint64(auramask);
             *data << uint32(64);  // how many bits client reads from auramask
             for (uint32 i = 0; i < MAX_AURAS; ++i)
