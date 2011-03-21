@@ -4082,7 +4082,7 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
             //Cobra Shot - bonus damage from Ranged Attack Power
             //UPDATED FOR CATACLYSM:
             //TODO: Add time addition on enemy for serpent sting in scripts function
-            if (m_spellInfo->SpellFamilyFlags[2] & 0x020000)
+            if (m_spellInfo->SpellFamilyFlags[2] & 0x400000)
             {
                 // "Deals weapon damage plus (276 + (RAP * 0.017)) in the form of Nature damage and increases the duration of your Serpent Sting on the target by 6 sec. Generates 9 Focus."
                 spell_bonus += int32((0.017f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
@@ -5382,7 +5382,7 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
         {
             // cobra shot focus effect (it has its own skill for this)
             // TODO: add serpent sting time increase by 6 seconds if already active on enemy
-            if (m_spellInfo->SpellFamilyFlags[2] & 0x0400000)
+            if (m_spellInfo->SpellFamilyFlags[2] & 0x400000)
                 m_caster->CastSpell(m_caster,91954,true); 
             // chimera shot health effect
             //TODO: add serpent sting refresh effect on enemy if already active on enemy
