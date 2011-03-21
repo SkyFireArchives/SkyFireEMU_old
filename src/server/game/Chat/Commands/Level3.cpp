@@ -4578,12 +4578,19 @@ bool ChatHandler::HandleHoverCommand(const char *args)
     return true;
 }
 
+// This one is mega hacky.
+// But I need it for now, sowwie :<
+// -Dvlpr
 bool ChatHandler::HandleDebugOpcodeCommand(const char* args)
 {
     uint32 opcode = atoi(args);
-    sWorld.debugOpcode = opcode;
+    if (opcode != 0)
+        PSendSysMessage("Set debugOpcode to %u for debugging. WARNING, NO PACKETS APART FROM IT WILL BE SENT UNTIL YOU DISABLE THIS OPTION !!!", sWorld.debugOpcode);
+	
+	sWorld.debugOpcode = opcode;
 
-    PSendSysMessage("Set debugOpcode to %u for debugging. WARNING, NO PACKETS APART FROM %u WILL BE SENT UNTIL YOU DISABLE THIS OPTION !!!", sWorld.debugOpcode);
+	if (opcode == 0)
+		PSendSysMessage("debugOpcode state was reset. The server will function normally now.");
     return true;
 }
 
