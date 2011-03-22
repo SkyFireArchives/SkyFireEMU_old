@@ -464,7 +464,7 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket &recv_data)
             return;
     }
 
-    /*if (!_player->GetTransport() && fabs(_player->GetSpeed(move_type) - newspeed) > 0.01f)
+    if (!_player->GetTransport() && fabs(_player->GetSpeed(move_type) - newspeed) > 0.01f)
     {
         if (_player->GetSpeed(move_type) > newspeed)         // must be greater - just correct
         {
@@ -478,7 +478,7 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket &recv_data)
                 _player->GetName(),_player->GetSession()->GetAccountId(),_player->GetSpeed(move_type), newspeed);
             _player->GetSession()->KickPlayer();
         }
-    }*/
+    }
 }
 
 void WorldSession::HandleSetActiveMoverOpcode(WorldPacket &recv_data)

@@ -2458,7 +2458,7 @@ void Spell::DoCreateItem(uint32 /*i*/, uint32 itemtype)
 
 void Spell::EffectCreateItem(SpellEffIndex effIndex)
 {
-	if (m_spellInfo->EffectItemType[effIndex] == 6948 && unitTarget->ToPlayer()->GetItemByEntry(6948)) //dont create a new hearthstone on homebind if player already has
+    if (m_spellInfo->EffectItemType[effIndex] == 6948 && unitTarget->ToPlayer()->GetItemByEntry(6948)) //dont create a new hearthstone on homebind if player already has
         return;
     DoCreateItem(effIndex,m_spellInfo->EffectItemType[effIndex]);
     ExecuteLogEffectCreateItem(effIndex, m_spellInfo->EffectItemType[effIndex]);
