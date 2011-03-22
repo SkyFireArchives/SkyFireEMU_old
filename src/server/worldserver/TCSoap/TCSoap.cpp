@@ -51,8 +51,8 @@ void TCSoapRunnable::run()
 
     while(!World::IsStopped())
     {
-        if (soap_accept(&soap) < 0)
-            if (!soap_valid_socket(soap_accept(&soap)))
+        if (!soap_valid_socket(soap_accept(&soap)))
+            continue;   // ran into an accept timeout
 
         sLog.outDebug("TCSoap: accepted connection from IP=%d.%d.%d.%d", (int)(soap.ip>>24)&0xFF, (int)(soap.ip>>16)&0xFF, (int)(soap.ip>>8)&0xFF, (int)soap.ip&0xFF);
         struct soap* thread_soap = soap_copy(&soap);// make a safe copy
@@ -147,7 +147,6 @@ int ns1__executeCommand(soap* soap, char* command, char** result)
     else
         return soap_sender_fault(soap, printBuffer, printBuffer);
 }
-
 
 void SOAPCommand::commandFinished(void* soapconnection, bool success)
 {
