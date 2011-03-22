@@ -121,48 +121,74 @@ public:
 class RARunnable : public ACE_Based::Runnable
 {
 public:
-    RARunnable () {}
+	uint32 numLoops, loopCounter;
 
-    void run ()
-    {
-        SocketHandler h;
+	RARunnable ()
+	{
+		uint32 socketSelecttime = sWorld.getIntConfig (CONFIG_SOCKET_SELECTTIME);
+		numLoops = (sConfig.GetIntDefault ("MaxPingTime", 30) * (MINUTE * 1000000 / socketSelecttime));
+		loopCounter = 0;
+	}
 
-        // Launch the RA listener socket
-        ListenSocket<RASocket> RAListenSocket (h);
-        bool usera = sConfig.GetBoolDefault ("Ra.Enable", false);
+	void checkping ()
+	{
+		// ping if need
+		if ((++loopCounter) == numLoops)
+		{
+			loopCounter = 0;
+			sLog.outDetail ("Ping MySQL to keep connection alive");
+			WorldDatabase.Query ("SELECT 1 FROM command LIMIT 1");
+			LoginDatabase.Query ("SELECT 1 FROM realmlist LIMIT 1");
+			CharacterDatabase.Query ("SELECT 1 FROM bugreport LIMIT 1");
+		}
+	}
 
-        if (usera)
-        {
-            port_t raport = sConfig.GetIntDefault ("Ra.Port", 3443);
-            std::string stringip = sConfig.GetStringDefault ("Ra.IP", "0.0.0.0");
-            ipaddr_t raip;
-            if (!Utility::u2ip (stringip, raip))
-                sLog.outError ("Trinity RA can not bind to ip %s", stringip.c_str ());
-            else if (RAListenSocket.Bind (raip, raport))
-                sLog.outError ("Trinity RA can not bind to port %d on %s", raport, stringip.c_str ());
-            else
-            {
-                h.Add (&RAListenSocket);
+	void run ()
+	{
+		SocketHandler h;
 
-                sLog.outString ("Starting Remote access listner on port %d on %s", raport, stringip.c_str ());
-            }
-        }
+		// Launch the RA listener socket
+		ListenSocket<RASocket> RAListenSocket (h);
+		bool usera = sConfig.GetBoolDefault ("Ra.Enable", false);
 
-        // Socket Selet time is in microseconds , not miliseconds!!
-        uint32 socketSelecttime = sWorld.getIntConfig(CONFIG_SOCKET_SELECTTIME);
+		if (usera)
+		{
+			port_t raport = sConfig.GetIntDefault ("Ra.Port", 3443);
+			std::string stringip = sConfig.GetStringDefault ("Ra.IP", "0.0.0.0");
+			ipaddr_t raip;
+			if (!Utility::u2ip (stringip, raip))
+				sLog.outError ("Trinity RA can not bind to ip %s", stringip.c_str ());
+			else if (RAListenSocket.Bind (raip, raport))
+				sLog.outError ("Trinity RA can not bind to port %d on %s", raport, stringip.c_str ());
+			else
+			{
+				h.Add (&RAListenSocket);
 
-        // if use ra spend time waiting for io, if not use ra ,just sleep
-        if (usera)
-        {
-            while (!World::IsStopped())
-                h.Select (0, socketSelecttime);
-        }
-        else
-        {
-            while (!World::IsStopped())
-                ACE_Based::Thread::Sleep(static_cast<unsigned long> (socketSelecttime / 1000));
-        }
-    }
+				sLog.outString ("Starting Remote access listner on port %d on %s", raport, stringip.c_str ());
+			}
+		}
+
+		// Socket Selet time is in microseconds , not miliseconds!!
+		uint32 socketSelecttime = sWorld.getIntConfig (CONFIG_SOCKET_SELECTTIME);
+
+		// if use ra spend time waiting for io, if not use ra ,just sleep
+		if (usera)
+		{
+			while (!World::IsStopped())
+			{
+				h.Select (0, socketSelecttime);
+				checkping ();
+			}
+		}
+		else
+		{
+			while (!World::IsStopped())
+			{
+				ACE_Based::Thread::Sleep(static_cast<unsigned long> (socketSelecttime / 1000));
+				checkping ();
+			}
+		}
+	}
 };
 
 Master::Master()
