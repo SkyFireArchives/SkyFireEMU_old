@@ -39,11 +39,16 @@
     }
 
 /// RASocket constructor
-RASocket::RASocket(ISocketHandler &h): TcpSocket(h), szLogin(""), iInputLength(0),
-bSecure(sConfig.GetBoolDefault("RA.Secure", true)), iMinLevel(sConfig.GetIntDefault("RA.MinLevel", 3)),
-stage(NONE)
+RASocket::RASocket(ISocketHandler &h): TcpSocket(h)
 {
-    *buff = '\0';
+
+    ///- Get the config parameters
+    bSecure = sConfig.GetBoolDefault( "RA.Secure", true );
+    iMinLevel = sConfig.GetIntDefault( "RA.MinLevel", 3 );
+
+    ///- Initialize buffer and data
+    iInputLength=0;
+    stage=NONE;
 }
 
 /// RASocket destructor
@@ -68,7 +73,7 @@ void RASocket::OnRead()
     TcpSocket::OnRead();
 
     unsigned int sz=ibuf.GetLength();
-    if (iInputLength+sz>=RA_BUFF_SIZE)
+    if(iInputLength+sz>=RA_BUFF_SIZE)
     {
         sLog.outRemote("Input buffer overflow, possible DOS attack.\n");
         SetCloseAndDelete();
@@ -79,9 +84,9 @@ void RASocket::OnRead()
     ibuf.Read(inp,sz);
 
     /// \todo Can somebody explain this 'Linux bugfix'?
-    if (stage==NONE)
-        if (sz>4)                                            //linux remote telnet
-            if (memcmp(inp ,"USER ",5))
+    if(stage==NONE)
+        if(sz>4)                                            //linux remote telnet
+            if(memcmp(inp ,"USER ",5))
             {
                 delete [] inp;return;
                 printf("lin bugfix");
@@ -91,7 +96,7 @@ void RASocket::OnRead()
     bool gotenter=false;
     unsigned int y=0;
     for (; y<sz; y++)
-        if (inp[y]=='\r'||inp[y]=='\n')
+        if(inp[y]=='\r'||inp[y]=='\n')
     {
         gotenter=true;
         break;
@@ -101,7 +106,7 @@ void RASocket::OnRead()
     memcpy(&buff[iInputLength],inp,y);
     iInputLength+=y;
     delete [] inp;
-    if (gotenter)
+    if(gotenter)
     {
 
         buff[iInputLength]=0;
@@ -110,7 +115,7 @@ void RASocket::OnRead()
         {
             /// <ul> <li> If the input is 'USER <username>'
             case NONE:
-                if (!memcmp(buff,"USER ",5))                 //got "USER" cmd
+                if(!memcmp(buff,"USER ",5))                 //got "USER" cmd
                 {
                     szLogin=&buff[5];
 
@@ -126,11 +131,11 @@ void RASocket::OnRead()
                     QueryResult result = LoginDatabase.PQuery("SELECT a.id, aa.gmlevel, aa.RealmID FROM account a LEFT JOIN account_access aa ON (a.id = aa.id) WHERE a.username = '%s'",login.c_str ());
 
                     ///- If the user is not found, deny access
-                    if (!result)
+                    if(!result)
                     {
                         Sendf("-No such user.\r\n");
                         sLog.outRemote("User %s does not exist.\n",szLogin.c_str());
-                        if (bSecure)SetCloseAndDelete();
+                        if(bSecure)SetCloseAndDelete();
                     }
                     else
                     {
@@ -139,18 +144,18 @@ void RASocket::OnRead()
                         //szPass=fields[0].GetString();
 
                         ///- if gmlevel is too low, deny access
-                        if (fields[1].GetUInt32() < iMinLevel)
+                        if(fields[1].GetUInt32()<iMinLevel || fields[1].GetUInt32() == NULL)
                         {
                             Sendf("-Not enough privileges.\r\n");
                             sLog.outRemote("User %s has no privilege.\n",szLogin.c_str());
-                            if (bSecure)SetCloseAndDelete();
+                            if(bSecure)SetCloseAndDelete();
                         }
-                        else if (fields[2].GetInt32() != -1)
+                        else if(fields[2].GetInt32() != -1)
                         {
                             ///- if RealmID isn't -1, deny access
                             Sendf("-Not enough privileges.\r\n");
                             sLog.outRemote("User %s has to be assigned on all realms (with RealmID = '-1').\n",szLogin.c_str());
-                            if (bSecure)SetCloseAndDelete();
+                            if(bSecure)SetCloseAndDelete();
                         }
                         else
                         {
@@ -161,7 +166,7 @@ void RASocket::OnRead()
                 break;
                 ///<li> If the input is 'PASS <password>' (and the user already gave his username)
             case LG:
-                if (!memcmp(buff,"PASS ",5))                 //got "PASS" cmd
+                if(!memcmp(buff,"PASS ",5))                 //got "PASS" cmd
                 {                                           //login+pass ok
                     ///- If password is correct, increment the number of active administrators
                     std::string login = szLogin;
@@ -176,36 +181,36 @@ void RASocket::OnRead()
                         "SELECT 1 FROM account WHERE username = '%s' AND sha_pass_hash=SHA1(CONCAT('%s',':','%s'))",
                         login.c_str(), login.c_str(), pw.c_str());
 
-                    if (check)
+                    if(check)
                     {
                         GetSocket();
                         stage=OK;
 
                         Sendf("+Logged in.\r\n");
                         sLog.outRemote("User %s has logged in.\n",szLogin.c_str());
-                        Sendf("C>");
+                        Sendf("SF>");
                     }
                     else
                     {
                         ///- Else deny access
                         Sendf("-Wrong pass.\r\n");
                         sLog.outRemote("User %s has failed to log in.\n",szLogin.c_str());
-                        if (bSecure)SetCloseAndDelete();
+                        if(bSecure)SetCloseAndDelete();
                     }
                 }
                 break;
                 ///<li> If user is logged, parse and execute the command
             case OK:
-                if (*buff != '\0')
+                if(strlen(buff))
                 {
                     sLog.outRemote("Got '%s' cmd.\n",buff);
                        SetDeleteByHandler(false);
                     CliCommandHolder* cmd = new CliCommandHolder(this, buff, &RASocket::zprint, &RASocket::commandFinished);
                     sWorld.QueueCliCommand(cmd);
-                    ++pendingCommands;
+                    ++pendingCommands; 
                 }
                 else
-                    Sendf("C>");
+                    Sendf("SF>");
                 break;
                 ///</ul>
         };
@@ -216,19 +221,19 @@ void RASocket::OnRead()
 /// Output function
 void RASocket::zprint(void* callbackArg, const char * szText )
 {
-    if ( !szText )
+    if( !szText )
         return;
 
     unsigned int sz=strlen(szText);
        send(((RASocket*)callbackArg)->GetSocket(), szText, sz, 0);
 }
 
-void RASocket::commandFinished(void* callbackArg, bool /*success*/)
+void RASocket::commandFinished(void* callbackArg, bool success)
 {
     RASocket* raSocket = (RASocket*)callbackArg;
     raSocket->Sendf("SkyFire>");
     uint64 remainingCommands = --raSocket->pendingCommands;
-
-    if (remainingCommands == 0)
+ 
+    if(remainingCommands == 0)
         raSocket->SetDeleteByHandler(true);
  }
