@@ -1256,53 +1256,16 @@ void Guild::OnPlayerStatusChange(Player* plr, uint32 flag, bool state)
 // HANDLE CLIENT COMMANDS
 void Guild::HandleRoster(WorldSession *session /*= NULL*/)
 {
-    /*{
-        WorldPacket data(SMSG_GUILD_MAX_DAILY_XP, 8);
-        data << uint64(67800000);
-        session->SendPacket(&data);
-    }
-    {
-        WorldPacket data(SMSG_GUILD_REWARDS_LIST, 8);
-        data << uint32(0x4D6DE1BD) ;
-        data << uint32(0);
-        session->SendPacket(&data);
-    }
-    {
-        WorldPacket data(0x440E, 8*5); // unk !
-        data << uint64(0x37);
-        data << uint64(0xFCD3CE);
-        data << uint64(0x37);
-        data << uint64(0x29D2);
-        data << uint64(0x29D2);
-        session->SendPacket(&data);
-    }
-    {
-        WorldPacket data(SMSG_GUILD_NEWS_UPDATE, 4);
-        data << uint32(0);
-
-        session->SendPacket(&data);
-    }
-    {
-        WorldPacket data(SMSG_GUILD_TRADESKILL_UPDATE, 4);
-        data << uint32(0);
-
-        session->SendPacket(&data);
-    }
-    {
-        WorldPacket data(24972, 4);
-        data << uint32(0x4D721C49);
-
-        session->SendPacket(&data);
-    }*/
     // Guess size
     WorldPacket data(SMSG_GUILD_ROSTER, (4 + m_motd.length() + 1 + m_info.length() + 1 + 2 + 4 + 2 + _GetRanksSize() * 100));
     data << m_motd;
     data << uint32(m_members.size());
 
-    // This is some weird shit blizzard reads for every 8th member.
+    // Packed uint8 - each bit resembles some flag.
+    // Currently unknown and not needed.
     uint32 totalBytesToSend = uint32(uint32(m_members.size()) / uint32(8)) + 1;
     for(uint32 i = 0; i < totalBytesToSend; ++i)
-        data << uint8(0); //unk
+        data << uint8(0);
 
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
         data << itr->second->GetPublicNote();
@@ -1322,23 +1285,22 @@ void Guild::HandleRoster(WorldSession *session /*= NULL*/)
 
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     { 
-        // Achievement Points
+        // Achievement Points (temporarily disabled)
         //data << uint32(itr->second->GetAchievementPoints());
-        data << uint32(100);
+        data << uint32(0);
     }
 
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
         data << itr->second->GetOfficerNote();
 
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
-        //data << uint64(itr->second->GetGUID()); // unk uint64
-        data << uint64(0);
+        data << uint64(0); // unk
 
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
         data << uint8(0); // unk
 
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
-        data << uint64(itr->second->GetGUID()); // unk uint64 (2)
+        data << uint64(itr->second->GetGUID()); // guid
 
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
         data << uint8(itr->second->GetClass()); // class id
@@ -1352,20 +1314,15 @@ void Guild::HandleRoster(WorldSession *session /*= NULL*/)
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
         data << uint32(itr->second->GetRankId()); // rank id
 
-    int i = 0;
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
-    {
-        if(++i == 1)
-            data << uint32(0x0220);
-        else data << uint32(0); // unk
-    }
+        data << uint32(0); // unk2
 
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
         data << uint8(itr->second->GetLevel()); // level (cached on level-up)
 
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     {
-        // two primary professions
+        // two primary professions (todo)
         for(int i = 0; i < 2; ++i)
         {
             data << uint32(0); // profession title
@@ -1380,7 +1337,7 @@ void Guild::HandleRoster(WorldSession *session /*= NULL*/)
     for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     {
         if(itr->second->IsOnline())
-            data << float(0); // unk
+            data << float(0);
         else data << float(float(::time(NULL) - itr->second->GetLogoutTime()) / DAY);
     }
 
@@ -2020,8 +1977,6 @@ void Guild::SendBankTabText(WorldSession *session, uint8 tabId) const
 
 void Guild::SendPermissions(WorldSession *session) const
 {
-    printf("Received SendPermissions\n");
-
     const uint64& guid = session->GetPlayer()->GetGUID();
     uint8 rankId = session->GetPlayer()->GetRank();
 

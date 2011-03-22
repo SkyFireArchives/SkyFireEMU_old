@@ -1740,9 +1740,9 @@ void WorldSession::HandleHearthAndResurrect(WorldPacket& /*recv_data*/)
     if (_player->isInFlight())
         return;
 
-    //AreaTableEntry const *atEntry = sAreaStore.LookupEntry(_player->GetAreaId());
-    //if (!atEntry || !(atEntry->flags & AREA_FLAG_OUTDOOR_PVP2))
-    //    return;
+    AreaTableEntry const *atEntry = sAreaStore.LookupEntry(_player->GetAreaId());
+    if (!atEntry || !(atEntry->flags & AREA_FLAG_OUTDOOR_PVP2))
+        return;
 
     _player->BuildPlayerRepop();
     _player->ResurrectPlayer(100);

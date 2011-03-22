@@ -92,9 +92,7 @@ enum GuildRankRights
     GR_RIGHT_WITHDRAW_REPAIR    = 0x00040000,                   // withdraw for repair
     GR_RIGHT_WITHDRAW_GOLD      = 0x00080000,                   // withdraw gold
     GR_RIGHT_CREATE_GUILD_EVENT = 0x00100000,                   // wotlk
-    //GR_RIGHT_ALL                = 0x001DF1FF
     GR_RIGHT_ALL                = 0x001FFFBF,
-    //GR_RIGHT_ALL                = 0xFFFFFFFF,
 };
 
 enum GuildCommandType
