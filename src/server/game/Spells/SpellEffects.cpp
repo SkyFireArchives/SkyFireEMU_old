@@ -5729,7 +5729,6 @@ void Spell::EffectApplyGlyph(SpellEffIndex effIndex)
                 }
             }
 
-            player->CastSpell(m_caster, gp->SpellId, true);
             player->SetGlyph(m_glyphIndex, glyph);
             player->SendTalentsInfoData(false);
             player->learnSpell(gp->SpellId, true);
