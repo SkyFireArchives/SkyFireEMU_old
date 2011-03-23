@@ -449,7 +449,7 @@ enum Opcodes
     CMSG_TRAINER_LIST                                = 0x0E5AC, // 4.0.6a 13623
     SMSG_TRAINER_LIST                                = 0x0BBE0, // 4.0.6a 13623
     CMSG_TRAINER_BUY_SPELL                           = 0x0FDC8, // 4.0.6a 13623
-    SMSG_TRAINER_BUY_RESULT                             = 0x06DEC, // 4.0.6a 13623
+    SMSG_TRAINER_BUY_RESULT                          = 0x06DEC, // 4.0.6a 13623
     CMSG_BINDER_ACTIVATE                             = 0x0A48C, // 4.0.6a 13623
     SMSG_PLAYERBINDERROR                             = 0x0765C, //
     CMSG_BANKER_ACTIVATE                             = 0x0E7E0, // 4.0.6a 13623

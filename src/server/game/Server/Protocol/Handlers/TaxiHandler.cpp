@@ -113,7 +113,7 @@ void WorldSession::SendTaxiMenu(Creature* unit)
     data << uint32(1);
     data << uint64(unit->GetGUID());
     data << uint32(curloc);
-    data << uint8(0);
+    data << uint8((sTaxiNodesStore.GetNumRows() >> 6) + 1); // This is 11 as of 4.0.6 13623 (count of following uint64's)
     GetPlayer()->m_taxi.AppendTaximaskTo(data,GetPlayer()->isTaxiCheater());
     SendPacket(&data);
 

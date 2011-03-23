@@ -206,6 +206,7 @@ void PlayerTaxi::LoadTaxiMask(const char* data)
 
 void PlayerTaxi::AppendTaximaskTo(ByteBuffer& data, bool all)
 {
+    // These uint32's are read as uint64 at client side
     if (all)
     {
         for (uint8 i=0; i<TaxiMaskSize; i++)
