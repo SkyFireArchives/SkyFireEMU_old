@@ -696,7 +696,7 @@ enum Opcodes
     CMSG_RUN_SCRIPT                                  = 0x100DF, //
     SMSG_SCRIPT_MESSAGE                              = 0x100E0, //
     SMSG_DUEL_COUNTDOWN                              = 0x0E8E0, // 4.0.6a 13623 
-    SMSG_AREA_TRIGGER_MESSAGE                        = 0x0CC5F, //
+    SMSG_AREA_TRIGGER_MESSAGE                        = 0x0EAE0, // 4.0.6a 13623
     CMSG_SHOWING_HELM                                = 0x0B7C0, // 4.0.6a 13623 
     CMSG_SHOWING_CLOAK                               = 0x07AA4, // 4.0.6a 13623
     SMSG_LFG_ROLE_CHOSEN                             = 0x0A9AC, // 4.0.6a 13623

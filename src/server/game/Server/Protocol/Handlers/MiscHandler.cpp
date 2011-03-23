@@ -80,14 +80,6 @@ void WorldSession::HandleRepopRequestOpcode(WorldPacket & recv_data)
     GetPlayer()->RepopAtGraveyard();
 }
 
-void WorldSession::HandleSpiritHealerTeleport(WorldPacket & recv_data)
-{
-    if (GetPlayer()->isAlive() || !GetPlayer()->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_GHOST))
-        return;
-
-    GetPlayer()->RepopAtGraveyard();
-}
-
 void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: CMSG_GOSSIP_SELECT_OPTION");

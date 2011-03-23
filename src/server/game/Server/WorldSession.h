@@ -482,8 +482,6 @@ class WorldSession
         void HandleGroupAssistantLeaderOpcode(WorldPacket & recv_data);
         void HandlePartyAssignmentOpcode(WorldPacket & recv_data);
 
-        void HandleSpiritHealerTeleport(WorldPacket & recv_data);
-
         void HandlePetitionBuyOpcode(WorldPacket& recv_data);
         void HandlePetitionShowSignOpcode(WorldPacket& recv_data);
         void HandlePetitionQueryOpcode(WorldPacket& recv_data);
