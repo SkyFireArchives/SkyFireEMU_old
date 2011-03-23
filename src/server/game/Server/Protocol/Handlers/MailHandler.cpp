@@ -501,11 +501,11 @@ void WorldSession::HandleMailTakeItem(WorldPacket & recv_data)
 
 void WorldSession::HandleMailTakeMoney(WorldPacket & recv_data)
 {
-    uint64 mailbox, unk;
+    uint64 mailbox;
     uint32 mailId;
     recv_data >> mailbox;
     recv_data >> mailId;
-    recv_data >> unk;                                         //4.0.6a
+    recv_data.read_skip<uint64>();                          //4.0.6a
 
     if (!GetPlayer()->GetGameObjectIfCanInteractWith(mailbox, GAMEOBJECT_TYPE_MAILBOX))
         return;
@@ -554,7 +554,7 @@ void WorldSession::HandleGetMailList(WorldPacket & recv_data)
     uint32 mailsCount = 0;                                 // real send to client mails amount
     uint32 realCount  = 0;                                 // real mails amount
 
-    WorldPacket data(SMSG_MAIL_LIST_RESULT, 200, true);
+    WorldPacket data(SMSG_MAIL_LIST_RESULT, (200));
     data << uint32(0);                                      // real mail's count
     data << uint8(0);                                       // mail's count
     time_t cur_time = time(NULL);
