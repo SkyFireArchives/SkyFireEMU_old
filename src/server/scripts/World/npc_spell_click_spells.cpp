@@ -17,9 +17,9 @@
  */
 
 #include "ScriptPCH.h"
-#include "ScriptMgr.h"
 #include "SpellMgr.h"
-#include "World.h"
+#include "Player.h"
+#include "Creature.h"
 
 /*########
 # npc_deffiant_troll
@@ -27,8 +27,7 @@
 
 enum NSCSDeffiantTroll
 {
-    QUEST_GOOD_HELP_IS_HARD_TO_FIND    = 14069
-    DEFFIANT_KILL_CREDIT               = 34830
+    DEFFIANT_KILL_CREDIT               = 34830,
     SPELL_LIGHTNING_VISUAL             = 56328
 };
 
@@ -39,19 +38,14 @@ public:
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature)
     {
-            if (pPlayer->GetQuestStatus(GOOD_HELP_IS_HARD_TO_FIND) == QUEST_STATUS_INCOMPLETE)
+            if (pPlayer->GetQuestStatus(14069) == QUEST_STATUS_INCOMPLETE)
             {
-                pCreature->CastSpell(pPlayer, 56328, true);
+                pCreature->CastSpell(pPlayer, 45870, true);
                 pPlayer->KilledMonsterCredit(DEFFIANT_KILL_CREDIT, 0);
-                pTarget->ForcedDespawn();
+                pCreature->ForcedDespawn(1500);
+                return true;
             }
-    return;
+
+    return false;
     }
 };
-
-
-
-void AddSC_npc_spell_click_spells()
-{
-    new npc_deffiant_troll;
-}
