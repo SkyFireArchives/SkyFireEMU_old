@@ -49,3 +49,8 @@ public:
     return false;
     }
 };
+
+void AddSC_npc_spell_click_spells()
+{
+    new npc_deffiant_troll;
+}
