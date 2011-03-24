@@ -819,7 +819,7 @@ enum Opcodes
     SMSG_UPDATE_INSTANCE_OWNERSHIP                   = 0x03B8C, // 4.0.6a 13623
     CMSG_IGNORE_KNOCKBACK_CHEAT                      = 0x10126, //
     SMSG_CHAT_PLAYER_AMBIGUOUS                       = 0x03674, //
-    MSG_DELAY_GHOST_TELEPORT                         = 0x03729, // 4.0.6a 13623
+    MSG_DELAY_GHOST_TELEPORT                         = 0x10127, //
     SMSG_SPELLINSTAKILLLOG                           = 0x061C8, // 4.0.6a 13623
     SMSG_SPELL_UPDATE_CHAIN_TARGETS                  = 0x036A4, // 4.0.6a 13623
     CMSG_CHAT_FILTERED                               = 0x00D5D, //
