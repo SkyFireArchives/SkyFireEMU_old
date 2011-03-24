@@ -1246,11 +1246,11 @@ enum Opcodes
     SMSG_GMRESPONSE_DB_ERROR                         = 0x09576, //
     SMSG_GMRESPONSE_RECEIVED                         = 0x00F57, //
     CMSG_GMRESPONSE_RESOLVE                          = 0x0455E, //
-    SMSG_GMRESPONSE_STATUS_UPDATE                    = 0x0057C, //
+    SMSG_GMRESPONSE_STATUS_UPDATE                    = 0x00101, // 4.0.6a 13623
     CMSG_WORLD_STATE_UI_TIMER_UPDATE                 = 0x03FA8, // 4.0.6a 13623
-    SMSG_WORLD_STATE_UI_TIMER_UPDATE                 = 0x05557, //
+    SMSG_WORLD_STATE_UI_TIMER_UPDATE                 = 0x00589, // 4.0.6a 13623
     CMSG_CHAR_RACE_CHANGE                            = 0x06EA4, // 4.0.6a 13623
-    SMSG_TALENTS_INVOLUNTARILY_RESET                 = 0x04E54, //
+    SMSG_TALENTS_INVOLUNTARILY_RESET                 = 0x02A84, // 4.0.6a 13623
     SMSG_UNKNOWN_1276                                = 0x1023A, //
     SMSG_LOOT_SLOT_CHANGED                           = 0x031EC, // 4.0.6a 13623
     CMSG_READY_FOR_ACCOUNT_DATA_TIMES                = 0x07DA8, // 4.0.6a 13623
