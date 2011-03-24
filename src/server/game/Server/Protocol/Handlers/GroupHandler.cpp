@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "DatabaseEnv.h"
 #include "Opcodes.h"
@@ -56,7 +57,7 @@ void WorldSession::SendPartyResult(PartyOperation operation, const std::string& 
     data << member;
     data << uint32(res);
     data << uint32(val);                                    // LFD cooldown related (used with ERR_PARTY_LFG_BOOT_COOLDOWN_S and ERR_PARTY_LFG_BOOT_NOT_ELIGIBLE_S)
-	data << uint64(0);                                      // GUID?
+    data << uint64(0);                                      // GUID?
 
     SendPacket(&data);
 }
@@ -245,12 +246,12 @@ void WorldSession::HandleGroupDeclineOpcode(WorldPacket & /*recv_data*/)
 {
     Group  *group  = GetPlayer()->GetGroupInvite();
     if (!group)
-		return;
+        return;
 
-	// Remember leader if online (group pointer will be invalid if group gets disbanded)
+    // Remember leader if online (group pointer will be invalid if group gets disbanded)
     Player *leader = sObjectMgr.GetPlayer(group->GetLeaderGUID());    
 
-	// uninvite, group can be deleted
+    // uninvite, group can be deleted
     GetPlayer()->UninviteFromGroup();
 
     // report
@@ -955,7 +956,9 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
     else
     {
         data << (uint8)  0;                                 // GROUP_UPDATE_FLAG_PET_NAME
+        data << (uint8) 0;                                    // GROUP_UPDATE_FLAG_PET_AURAS
         data << (uint64) 0;                                 // GROUP_UPDATE_FLAG_PET_AURAS
+        data << (uint32) 0;
     }
 
     SendPacket(&data);

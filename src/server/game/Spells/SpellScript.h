@@ -124,7 +124,7 @@ enum SpellScriptHookType
     SPELL_SCRIPT_HOOK_BEFORE_HIT,
     SPELL_SCRIPT_HOOK_HIT,
     SPELL_SCRIPT_HOOK_AFTER_HIT,
-	SPELL_SCRIPT_HOOK_UNIT_TARGET_SELECT,
+    SPELL_SCRIPT_HOOK_UNIT_TARGET_SELECT,
 };
 #define HOOK_SPELL_HIT_START SPELL_SCRIPT_HOOK_EFFECT
 #define HOOK_SPELL_HIT_END SPELL_SCRIPT_HOOK_AFTER_HIT + 1
@@ -140,7 +140,7 @@ class SpellScript : public _SpellScript
         #define SPELLSCRIPT_FUNCTION_TYPE_DEFINES(CLASSNAME) \
             typedef void(CLASSNAME::*SpellEffectFnType)(SpellEffIndex); \
             typedef void(CLASSNAME::*SpellHitFnType)(); \
-			typedef void(CLASSNAME::*SpellUnitTargetFnType)(std::list<Unit*>&); \
+            typedef void(CLASSNAME::*SpellUnitTargetFnType)(std::list<Unit*>&); \
 
         SPELLSCRIPT_FUNCTION_TYPE_DEFINES(SpellScript)
 
@@ -179,7 +179,7 @@ class SpellScript : public _SpellScript
         #define SPELLSCRIPT_FUNCTION_CAST_DEFINES(CLASSNAME) \
         class EffectHandlerFunction : public SpellScript::EffectHandler { public: EffectHandlerFunction(SpellEffectFnType _pEffectHandlerScript,uint8 _effIndex, uint16 _effName) : SpellScript::EffectHandler((SpellScript::SpellEffectFnType)_pEffectHandlerScript, _effIndex, _effName) {} }; \
         class HitHandlerFunction : public SpellScript::HitHandler { public: HitHandlerFunction(SpellHitFnType _pHitHandlerScript) : SpellScript::HitHandler((SpellScript::SpellHitFnType)_pHitHandlerScript) {} }; \
-		class UnitTargetHandlerFunction : public SpellScript::UnitTargetHandler { public: UnitTargetHandlerFunction(SpellUnitTargetFnType _pUnitTargetHandlerScript, uint8 _effIndex, uint16 _targetType) : SpellScript::UnitTargetHandler((SpellScript::SpellUnitTargetFnType)_pUnitTargetHandlerScript, _effIndex, _targetType) {} }; \
+        class UnitTargetHandlerFunction : public SpellScript::UnitTargetHandler { public: UnitTargetHandlerFunction(SpellUnitTargetFnType _pUnitTargetHandlerScript, uint8 _effIndex, uint16 _targetType) : SpellScript::UnitTargetHandler((SpellScript::SpellUnitTargetFnType)_pUnitTargetHandlerScript, _effIndex, _targetType) {} }; \
 
         #define PrepareSpellScript(CLASSNAME) SPELLSCRIPT_FUNCTION_TYPE_DEFINES(CLASSNAME) SPELLSCRIPT_FUNCTION_CAST_DEFINES(CLASSNAME)
     public:
@@ -220,7 +220,7 @@ class SpellScript : public _SpellScript
         HookList<UnitTargetHandler> OnUnitTargetSelect;
         #define SpellUnitTargetFn(F, I, N) UnitTargetHandlerFunction(&F, I, N)
 
-		// hooks are executed in following order, at specified event of spell:
+        // hooks are executed in following order, at specified event of spell:
         // 1. OnUnitTargetSelect - executed just before adding selected targets to final target list
         // 2. BeforeHit - executed just before spell hits a target
         // 3. OnEffect - executed just before specified effect handler call
@@ -437,7 +437,7 @@ class AuraScript : public _SpellScript
         //
         // executed when periodic aura effect is applied with specified mode to target
         // example: OnEffectApply += AuraEffectApplyFn(class::function, EffectIndexSpecifier, EffectAuraNameSpecifier, AuraEffectHandleModes);
-		// where function is: void function (AuraEffect const * aurEff);
+        // where function is: void function (AuraEffect const * aurEff);
         HookList<EffectApplyHandler> OnEffectApply;
         #define AuraEffectApplyFn(F, I, N, M) EffectApplyHandlerFunction(&F, I, N, M)
 

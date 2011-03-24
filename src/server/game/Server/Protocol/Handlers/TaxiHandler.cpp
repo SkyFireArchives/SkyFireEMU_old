@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "DatabaseEnv.h"
 #include "WorldPacket.h"
@@ -108,12 +109,13 @@ void WorldSession::SendTaxiMenu(Creature* unit)
 
 	sLog.outDebug("WORLD: CMSG_TAXINODE_STATUS_QUERY %u ",curloc);
 
-	WorldPacket data(SMSG_SHOWTAXINODES, (4+8+4+8*4));
-	data << uint32(1);
-	data << uint64(unit->GetGUID());
-	data << uint32(curloc);
-	GetPlayer()->m_taxi.AppendTaximaskTo(data,GetPlayer()->isTaxiCheater());
-	SendPacket(&data);
+    WorldPacket data(SMSG_SHOWTAXINODES, (4 + 8 + 4 + 8 * 4), true);
+    data << uint32(1);
+    data << uint64(unit->GetGUID());
+    data << uint32(curloc);
+    data << uint8((sTaxiNodesStore.GetNumRows() >> 6) + 1); // This is 11 as of 4.0.6 13623 (count of following uint64's)
+    GetPlayer()->m_taxi.AppendTaximaskTo(data,GetPlayer()->isTaxiCheater());
+    SendPacket(&data);
 
 	sLog.outDebug("WORLD: Sent SMSG_SHOWTAXINODES");
 

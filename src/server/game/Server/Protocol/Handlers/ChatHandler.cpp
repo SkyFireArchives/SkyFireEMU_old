@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "ObjectAccessor.h"
 #include "ObjectMgr.h"
@@ -70,7 +71,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
     uint32 type = 0;
     uint32 lang;
 
-    // Les types sont maintenant gerés par opcode, un opcode par type
+    // Les types sont maintenant gerï¿½s par opcode, un opcode par type
     // Changement en place depuis la 4.0.1 13164
     switch(recv_data.GetOpcode())
     {
@@ -123,7 +124,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             type = CHAT_MSG_RAID_WARNING;
             break;
         default:
-            sLog.outDetail("HandleMessagechatOpcode : Opcode chat de type inconnu (%u)", recv_data.GetOpcode());
+            sLog.outDetail("HandleMessagechatOpcode : Unknown chat opcode (%u)", recv_data.GetOpcode());
             recv_data.hexlike();
             return;
     }
@@ -131,7 +132,6 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
     // no language for AFK and DND messages
     if(type == CHAT_MSG_AFK)
     {
-        
         std::string msg;
         recv_data >> msg;
 
@@ -343,6 +343,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
             if (msg.empty())
                 break;
+
+            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
+                return;
 
             if (!normalizePlayerName(to))
             {
@@ -571,6 +574,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             if (msg.empty())
                 break;
 
+            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
+                return;
+
             //battleground raid is always in Player->GetGroup(), never in GetOriginalGroup()
             Group *group = GetPlayer()->GetGroup();
             if (!group || !group->isBGGroup())
@@ -593,6 +599,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
             if (msg.empty())
                 break;
+
+            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
+                return;
 
             // battleground raid is always in Player->GetGroup(), never in GetOriginalGroup()
             Group *group = GetPlayer()->GetGroup();
@@ -621,6 +630,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
                 return;
 
+            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
+                return;
+
             if (_player->getLevel() < sWorld.getIntConfig(CONFIG_CHAT_CHANNEL_LEVEL_REQ))
             {
                 SendNotification(GetTrinityString(LANG_CHANNEL_REQ), sWorld.getIntConfig(CONFIG_CHAT_CHANNEL_LEVEL_REQ));
@@ -641,7 +653,6 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
                 }
             }
         } break;
-
         default:
             sLog.outError("CHAT: unknown message type %u, lang: %u", type, lang);
             break;
@@ -729,8 +740,8 @@ void WorldSession::HandleTextEmoteOpcode(WorldPacket & recv_data)
             // Only allow text-emotes for "dead" entities (feign death included)
             if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
                 break;
-             GetPlayer()->HandleEmoteCommand(emote_anim);
-             break;
+            GetPlayer()->SetEmoteState(emote_anim);
+            break;
     }
 
     Unit* unit = ObjectAccessor::GetUnit(*_player, guid);

@@ -121,7 +121,7 @@ enum WorldBoolConfigs
     CONFIG_SKILL_MILLING,
     CONFIG_SAVE_RESPAWN_TIME_IMMEDIATELY,
     CONFIG_WEATHER,
-    CONFIG_ALWAYS_MAX_SKILL_FOR_LEVEL,
+    CONFIG_USE_OLD_SKILL_SYSTEM,
     CONFIG_QUEST_IGNORE_RAID,
     CONFIG_DETECT_POS_COLLISION,
     CONFIG_RESTRICTED_LFG_CHANNEL,
@@ -737,6 +737,8 @@ class World
         void LoadAutobroadcasts();
 
         void UpdateAreaDependentAuras();
+
+        uint32 debugOpcode;
 
         void ProcessStartEvent();
         void ProcessStopEvent();

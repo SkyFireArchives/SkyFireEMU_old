@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "DBCStores.h"
 #include "WorldPacket.h"
@@ -69,19 +70,16 @@ void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
     if (pUser->m_mover != pUser)
         return;
 
+    if(pUser->GetEmoteState())
+        pUser->SetEmoteState(0);
+
     uint8 bagIndex, slot, castFlags;
     uint8 castCount;                                       // next cast if exists (single or not)
     uint64 itemGUID;
-    uint32 glyphIndex;                                      // something to do with glyphs?
+    uint32 unk;                                     
     uint32 spellId;                                         // casted spell id
 
-    recvPacket >> bagIndex >> slot >> castCount >> spellId >> itemGUID >> glyphIndex >> castFlags;
-
-    if (glyphIndex >= MAX_GLYPH_SLOT_INDEX)
-    {
-        pUser->SendEquipError(EQUIP_ERR_ITEM_NOT_FOUND, NULL, NULL);
-        return;
-    }
+    recvPacket >> bagIndex >> slot >> castCount >> spellId >> itemGUID >> unk >> castFlags;
 
     Item *pItem = pUser->GetUseableItemByPos(bagIndex, slot);
     if (!pItem)
@@ -96,7 +94,7 @@ void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
         return;
     }
 
-    sLog.outDetail("WORLD: CMSG_USE_ITEM packet, bagIndex: %u, slot: %u, castCount: %u, spellId: %u, Item: %u, glyphIndex: %u, data length = %i", bagIndex, slot, castCount, spellId, pItem->GetEntry(), glyphIndex, (uint32)recvPacket.size());
+    sLog.outDetail("WORLD: CMSG_USE_ITEM packet, bagIndex: %u, slot: %u, castCount: %u, spellId: %u, Item: %u, data length = %i", bagIndex, slot, castCount, spellId, pItem->GetEntry(), (uint32)recvPacket.size());
 
     ItemPrototype const *proto = pItem->GetProto();
     if (!proto)
@@ -184,7 +182,7 @@ void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
     if (!sScriptMgr.OnItemUse(pUser,pItem,targets))
     {
         // no script or script not process request by self
-        pUser->CastItemUseSpell(pItem,targets,castCount,glyphIndex);
+        pUser->CastItemUseSpell(pItem,targets,castCount);
     }
 }
 
@@ -321,17 +319,19 @@ void WorldSession::HandleGameobjectReportUse(WorldPacket& recvPacket)
     if (!go->IsWithinDistInMap(_player,INTERACTION_DISTANCE))
         return;
 
+    //if (go->GetGOInfo()->type == GAMEOBJECT_TYPE_MAILBOX)
+
+
     _player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_USE_GAMEOBJECT, go->GetEntry());
 }
 
 void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
 {
-    // TODO: what is this unk?
-    uint32 spellId, unk;
+    uint32 spellId, glyphIndex;
     uint8  castCount, castFlags;
-    recvPacket >> castCount >> spellId >> unk >> castFlags;
+    recvPacket >> castCount >> spellId >> glyphIndex >> castFlags;
 
-    sLog.outDebug("WORLD: got cast spell packet, castCount: %u, spellId: %u, unk: %u, castFlags: %u, data length = %u", castCount, spellId, unk, castFlags, (uint32)recvPacket.size());
+    sLog.outDebug("WORLD: got cast spell packet, castCount: %u, spellId: %u, glyphIndex: %u, castFlags: %u, data length = %u", castCount, spellId, glyphIndex, castFlags, (uint32)recvPacket.size());
 
     // ignore for remote control state (for player case)
     Unit* mover = _player->m_mover;
@@ -352,6 +352,9 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
 
     if (mover->GetTypeId() == TYPEID_PLAYER)
     {
+        if(mover->ToPlayer()->GetEmoteState())
+            mover->ToPlayer()->SetEmoteState(0);
+
         // not have spell in spellbook or spell passive and not casted by client
         if ((!mover->ToPlayer()->HasActiveSpell (spellId) || IsPassiveSpell(spellId)) && !IsRaidMarker(spellId))
         {
@@ -404,6 +407,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
 
     Spell *spell = new Spell(mover, spellInfo, false);
     spell->m_cast_count = castCount;                       // set count of casts
+    spell->m_glyphIndex = glyphIndex;
     spell->prepare(&targets);
 }
 

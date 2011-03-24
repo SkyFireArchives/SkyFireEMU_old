@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "ObjectMgr.h"                                      // for normalizePlayerName
 #include "ChannelMgr.h"
 
@@ -27,7 +28,7 @@ void WorldSession::HandleJoinChannel(WorldPacket& recvPacket)
 {
     sLog.outDebug("Opcode %u", recvPacket.GetOpcode());
 
-    uint32 channel_id, unk; // unk 4.0.1
+    uint32 channel_id;
     uint8 unknown1, unknown2;
     std::string channelname, pass;
 
@@ -48,13 +49,12 @@ void WorldSession::HandleJoinChannel(WorldPacket& recvPacket)
     }
 
     recvPacket >> unknown1 >> unknown2;
-    recvPacket >> channelname;
-    recvPacket >> unk;
+    recvPacket >> pass;
+    recvPacket >> channelname;    
 
     if (channelname.empty())
         return;
 
-    recvPacket >> pass;
     if (ChannelMgr* cMgr = channelMgr(_player->GetTeam()))
     {
         cMgr->team = _player->GetTeam();

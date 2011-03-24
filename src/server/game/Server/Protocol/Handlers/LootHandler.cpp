@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "WorldPacket.h"
 #include "Log.h"
@@ -214,7 +215,7 @@ void WorldSession::HandleLootReleaseOpcode(WorldPacket & recv_data)
     // cheaters can modify lguid to prevent correct apply loot release code and re-loot
     // use internal stored guid
     recv_data.read_skip<uint64>();                          // guid;
-	
+
     if (uint64 lguid = GetPlayer()->GetLootGUID())
         DoLootRelease(lguid);
 }

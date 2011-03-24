@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "DatabaseEnv.h"
 #include "WorldPacket.h"
@@ -503,6 +504,7 @@ m_caster(Caster), m_spellValue(new SpellValue(m_spellInfo))
     m_preCastSpell = 0;
     m_triggeredByAuraSpell  = NULL;
     m_spellAura = NULL;
+    m_magnetingAura = NULL;
 
     //Auto Shot & Shoot (wand)
     m_autoRepeat = IsAutoRepeatRangedSpell(m_spellInfo);
@@ -1334,6 +1336,14 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
         }
     }
 
+    // Drop charge of magnet auras on hit
+    if (m_magnetingAura)
+    {
+        if (!m_magnetingAura->IsRemoved() && m_magnetingAura->GetCharges()>0)
+            m_magnetingAura->DropCharge();
+        m_magnetingAura = NULL;
+    }
+	
     if (m_caster && !m_caster->IsFriendlyTo(unit) && !IsPositiveSpell(m_spellInfo->Id))
     {
         m_caster->CombatStart(unit, !(m_spellInfo->AttributesEx3 & SPELL_ATTR_EX3_NO_INITIAL_AGGRO));
@@ -1807,9 +1817,9 @@ void Spell::SearchChainTarget(std::list<Unit*> &TagUnitMap, float max_range, uin
 
             if (cur->GetDistance(*next) > CHAIN_SPELL_JUMP_RADIUS)      // Don't search beyond the max jump radius
                 break;
-	
+    
             // Check if (*next) is a valid chain target. If not, don't add to TagUnitMap, and repeat loop.
-            // If you want to add any conditions to exclude a target from TagUnitMap, add condition in this while() loop.	
+            // If you want to add any conditions to exclude a target from TagUnitMap, add condition in this while() loop.    
             while ((m_spellInfo->DmgClass == SPELL_DAMAGE_CLASS_MELEE  
                 && !m_caster->isInFrontInMap(*next, max_range))
                 || !m_caster->canSeeOrDetect(*next, false)
@@ -2009,6 +2019,7 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
             switch(cur)
             {
                 case TARGET_UNIT_CASTER:
+                case TARGET_UNIT_CASTER_UNKNOWN:
                     AddUnitTarget(m_caster, i);
                     break;
                 case TARGET_UNIT_CASTER_FISHING:
@@ -2266,7 +2277,7 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
             {
                 case TARGET_DEST_DYNOBJ_ENEMY:
                 case TARGET_DEST_DYNOBJ_ALLY:
-                case TARGET_DEST_DYNOBJ_NONE:
+                case TARGET_DEST_DYNOBJ_ALL_UNITS:
                 case TARGET_DEST_DEST:
                     return;
                 case TARGET_DEST_TRAJ:
@@ -2437,8 +2448,8 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                     break;
             }
 
-			CallScriptAfterUnitTargetSelectHandlers(unitList, SpellEffIndex(i));
-			
+            CallScriptAfterUnitTargetSelectHandlers(unitList, SpellEffIndex(i));
+            
             for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end(); ++itr)
                 AddUnitTarget(*itr, i);
         }
@@ -2460,6 +2471,12 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
             case TARGET_UNIT_CONE_ENEMY:
             case TARGET_UNIT_CONE_ENEMY_UNKNOWN:
             case TARGET_UNIT_AREA_PATH:
+                if (m_spellInfo->Id==2643) // Multi-Shot Radius fix
+                {
+                    radius = 8;
+                    targetType = SPELL_TARGETS_ENEMY;
+                    break;
+                }
                 radius = GetSpellRadius(m_spellInfo, i, false);
                 targetType = SPELL_TARGETS_ENEMY;
                 break;
@@ -2880,7 +2897,7 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                 }
             }
 
-			CallScriptAfterUnitTargetSelectHandlers(unitList, SpellEffIndex(i));
+            CallScriptAfterUnitTargetSelectHandlers(unitList, SpellEffIndex(i));
 
             for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end(); ++itr)
                 AddUnitTarget(*itr, i);
@@ -4923,9 +4940,14 @@ SpellCastResult Spell::CheckCast(bool strict)
                         return SPELL_FAILED_TARGET_NO_WEAPONS;
                 }
             }
-
-            if (!m_IsTriggeredSpell && VMAP::VMapFactory::checkSpellForLoS(m_spellInfo->Id) && !m_caster->IsWithinLOSInMap(target))
-                return SPELL_FAILED_LINE_OF_SIGHT;
+            
+            if (!m_IsTriggeredSpell)
+            {
+                if (VMAP::VMapFactory::checkSpellForLoS(m_spellInfo->Id) && !m_caster->IsWithinLOSInMap(target))
+                    return SPELL_FAILED_LINE_OF_SIGHT;
+                if (m_caster->IsVisionObscured(target))
+                    return SPELL_FAILED_VISION_OBSCURED; // smoke bomb, camouflage...
+            }
 
         }
         else if (m_caster == target)

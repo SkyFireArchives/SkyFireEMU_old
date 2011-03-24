@@ -33,7 +33,7 @@ class DynamicObject : public WorldObject, public GridObject<DynamicObject>
 {
     public:
         explicit DynamicObject();
-		~DynamicObject();
+        ~DynamicObject();
 
         void AddToWorld();
         void RemoveFromWorld();

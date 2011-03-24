@@ -169,7 +169,6 @@ const char SpellRadiusfmt[]="nfxf";
 const char SpellRangefmt[]="nffffixx";
 const char SpellRuneCostfmt[]="niiii";
 const char SpellShapeshiftFormfmt[]="nxxiixiiixxiiiiiiiixx";
-//const char StableSlotPricesfmt[] = "ni"; // removed
 const char SummonPropertiesfmt[] = "niiiii";
 const char TalentEntryfmt[]="niiiiiiiiixxixxxxxx";
 const char TalentTabEntryfmt[]="nxxiiixxxii";

@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Map.h"
 #include "GridStates.h"
 #include "ScriptMgr.h"
@@ -705,7 +706,7 @@ void Map::Remove(Player *player, bool remove)
             NGridType *grid = getNGrid(cell.GridX(), cell.GridY());
             ASSERT(grid != NULL);
 
-            player->UpdateObjectVisibility(true);
+            UpdateObjectVisibility(player, cell, p);
             RemoveFromGrid(player,grid,cell);
         }
     }
@@ -736,7 +737,7 @@ Map::Remove(T *obj, bool remove)
             NGridType *grid = getNGrid(cell.GridX(), cell.GridY());
             ASSERT(grid != NULL);
 
-            obj->UpdateObjectVisibility(true);
+            UpdateObjectVisibility(obj, cell, p);
             RemoveFromGrid(obj,grid,cell);
         }
     }

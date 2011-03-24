@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
@@ -364,7 +365,12 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
     mover->SetPosition(movementInfo.pos);
 
     if (plMover)                                            // nothing is charmed, or player charmed
-    {
+    {    
+        if (plMover->GetEmoteState() != 0 && opcode == MSG_MOVE_START_FORWARD && opcode != MSG_MOVE_SET_FACING &&
+            opcode != MSG_MOVE_START_TURN_LEFT && opcode != MSG_MOVE_START_TURN_RIGHT &&
+            opcode != MSG_MOVE_STOP_TURN)
+            plMover->SetEmoteState(0);
+
         plMover->UpdateFallInformationIfNeed(movementInfo, opcode);
 
         if (movementInfo.pos.GetPositionZ() < -500.0f)
@@ -482,6 +488,17 @@ void WorldSession::HandleSetActiveMoverOpcode(WorldPacket &recv_data)
     uint64 guid;
     recv_data >> guid;
 
+    // do not re-set the active mover if it didn't change
+    if (guid == _player->m_mover->GetGUID())
+        return;
+    // Anti-cheat check
+    if (guid != _player->GetCharmGUID() && guid != _player->GetGUID())
+    {
+        sLog.outError("Player %s is trying to change mover to an invalid value!", _player->GetName());
+		GetPlayer()->SetMover(GetPlayer());
+        return;
+    }
+
     if (GetPlayer()->IsInWorld())
     {
         if (Unit *mover = ObjectAccessor::GetUnit(*GetPlayer(), guid))
@@ -489,9 +506,7 @@ void WorldSession::HandleSetActiveMoverOpcode(WorldPacket &recv_data)
             GetPlayer()->SetMover(mover);
             if (mover != GetPlayer() && mover->canFly())
             {
-                WorldPacket data(SMSG_MULTIPLE_PACKETS, 14);
-                //data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
-                data << uint16(SMSG_MOVE_SET_CAN_FLY);
+                WorldPacket data(SMSG_MOVE_SET_CAN_FLY, 12, true);
                 data.append(mover->GetPackGUID());
                 data << uint32(0);
                 SendPacket(&data);

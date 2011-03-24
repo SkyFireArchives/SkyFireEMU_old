@@ -279,7 +279,9 @@ class AchievementMgr
         bool IsCompletedCriteria(AchievementCriteriaEntry const* criteria, AchievementEntry const* achievement);
         bool IsCompletedAchievement(AchievementEntry const* entry);
         //void CompleteAchievementsWithRefs(AchievementEntry const* entry);
-        void BuildAllDataPacket(WorldPacket *data);
+
+        void Compress(WorldPacket& data, uint32 newOpcode);
+        void Compress(void* dst, uint32 *dst_size, void* src, int src_size);
 
         Player* m_player;
         CriteriaProgressMap m_criteriaProgress;

@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "DatabaseEnv.h"
 #include "Opcodes.h"
@@ -66,10 +67,8 @@ void WorldSession::HandleLearnPreviewTalents(WorldPacket& recvPacket)
         if(_player->m_usedTalentCount == 0 || _player->GetTalentBranchSpec(_player->m_activeSpec) == 0)
         {
             if(_player->m_usedTalentCount != 0)
-            {
                 _player->resetTalents();
-                printf("Mastering error: le player possède déja des talents!\n");
-            }
+
             _player->SetTalentBranchSpec(specID, _player->m_activeSpec);
             for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
             {
@@ -94,7 +93,7 @@ void WorldSession::HandleLearnPreviewTalents(WorldPacket& recvPacket)
         _player->LearnTalent(talentId, talentRank, false);
     }
     
-    //Todo : changer ce code! IL EST DEGUEULASSE!
+
     bool inOtherBranch = false;
     uint32 pointInBranchSpec = 0;
     for(PlayerTalentMap::iterator itr = _player->m_talents[_player->m_activeSpec]->begin(); itr != _player->m_talents[_player->m_activeSpec]->end(); itr++)

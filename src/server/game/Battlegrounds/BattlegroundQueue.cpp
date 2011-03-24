@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "BattlegroundQueue.h"
 #include "ArenaTeam.h"
 #include "BattlegroundMgr.h"
@@ -802,7 +803,7 @@ void BattlegroundQueue::Update(BattlegroundTypeId bgTypeId, BattlegroundBracketI
     {
         if (sBattlegroundMgr.isArenaTesting())
         {
-            MaxPlayersPerTeam = 1;
+            MaxPlayersPerTeam = arenaType;
             MinPlayersPerTeam = 1;
         }
         else

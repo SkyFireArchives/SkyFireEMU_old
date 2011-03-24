@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "DBCEnums.h"
 #include "ObjectMgr.h"
@@ -43,6 +44,7 @@
 #include "Map.h"
 #include "InstanceScript.h"
 #include "LFGMgr.h"
+#include "zlib.h"
 
 namespace Trinity
 {
@@ -464,7 +466,6 @@ void AchievementMgr::DeleteFromDB(uint32 lowguid)
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     trans->PAppend("DELETE FROM character_achievement WHERE guid = %u",lowguid);
     trans->PAppend("DELETE FROM character_achievement_progress WHERE guid = %u",lowguid);
-    trans->PAppend("UPDATE guild_member SET achievementPoints = 0 WHERE guid = %u",lowguid);
     CharacterDatabase.CommitTransaction(trans);
 }
 
@@ -572,14 +573,6 @@ void AchievementMgr::SaveToDB(SQLTransaction& trans)
                 trans->Append(ssins.str().c_str());
         }
     }
-    
-    //sortir pour la guilde.
-    if(achievementPoints)
-    {
-        std::ostringstream ssguild;
-        ssguild << "UPDATE guild_member SET achievementPoints=" << achievementPoints << " WHERE guid = " << GetPlayer()->GetGUIDLow();
-        trans->Append(ssguild.str().c_str());
-    }
 }
 
 void AchievementMgr::LoadFromDB(PreparedQueryResult achievementResult, PreparedQueryResult criteriaResult)
@@ -642,8 +635,8 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
     if (GetPlayer()->GetSession()->PlayerLoading())
         return;
 
-    // Don't send for achievements with ACHIEVEMENT_FLAG_TRACKING
-    if (achievement->flags & ACHIEVEMENT_FLAG_TRACKING)
+    // Don't send for achievements with ACHIEVEMENT_FLAG_HIDDEN
+    if (achievement->flags & ACHIEVEMENT_FLAG_HIDDEN)
         return;
 
     #ifdef TRINITY_DEBUG
@@ -656,6 +649,8 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
         Trinity::AchievementChatBuilder say_builder(*GetPlayer(), CHAT_MSG_GUILD_ACHIEVEMENT, LANG_ACHIEVEMENT_EARNED,achievement->ID);
         Trinity::LocalizedPacketDo<Trinity::AchievementChatBuilder> say_do(say_builder);
         guild->BroadcastWorker(say_do,GetPlayer());
+
+        guild->UpdateMemberData(GetPlayer(), GUILD_MEMBER_DATA_ACHIEVEMENT_POINTS, GetAchievementPoints());
     }
 
     if (achievement->flags & (ACHIEVEMENT_FLAG_REALM_FIRST_KILL|ACHIEVEMENT_FLAG_REALM_FIRST_REACH))
@@ -1987,13 +1982,14 @@ void AchievementMgr::CompletedAchievement(AchievementEntry const* achievement, b
     if (achievement->flags & ACHIEVEMENT_FLAG_COUNTER || HasAchieved(achievement))
         return;
 
-    SendAchievementEarned(achievement);
     CompletedAchievementData& ca =  m_completedAchievements[achievement->ID];
     ca.date = time(NULL);
     ca.changed = true;
     
     if (AchievementEntry const* pAchievement = sAchievementStore.LookupEntry(achievement->ID))
         achievementPoints += pAchievement->points;
+
+    SendAchievementEarned(achievement);
 
     // don't insert for ACHIEVEMENT_FLAG_REALM_FIRST_KILL since otherwise only the first group member would reach that achievement
     // TODO: where do set this instead?
@@ -2129,37 +2125,6 @@ void AchievementMgr::SendRespondInspectAchievements(Player* player)
         data << uint32(secsToTimeBitFields(iter->second.date));
 
     player->GetSession()->SendPacket(&data);
-}
-
-/**
- * used by SMSG_RESPOND_INSPECT_ACHIEVEMENT and SMSG_ALL_ACHIEVEMENT_DATA
- */
-void AchievementMgr::BuildAllDataPacket(WorldPacket *data)
-{
-    for (CriteriaProgressMap::const_iterator iter = m_criteriaProgress.begin(); iter != m_criteriaProgress.end(); ++iter)
-        *data << uint32(iter->first);
-
-    for (CompletedAchievementMap::const_iterator iter = m_completedAchievements.begin(); iter != m_completedAchievements.end(); ++iter)
-    
-        *data << uint64(m_completedAchievements.size());
-
-    for (CriteriaProgressMap::const_iterator iter = m_criteriaProgress.begin(); iter != m_criteriaProgress.end(); ++iter)
-        *data << uint32(secsToTimeBitFields(iter->second.date));
-    
-    for (CompletedAchievementMap::const_iterator iter = m_completedAchievements.begin(); iter != m_completedAchievements.end(); ++iter)
-        *data << uint32(iter->first);
-
-    for (CriteriaProgressMap::const_iterator iter = m_criteriaProgress.begin(); iter != m_criteriaProgress.end(); ++iter)
-        *data << uint64(m_criteriaProgress.size());
-
-    for (CompletedAchievementMap::const_iterator iter = m_completedAchievements.begin(); iter != m_completedAchievements.end(); ++iter)
-        *data << uint32(secsToTimeBitFields(iter->second.date));
-
-	for (CriteriaProgressMap::const_iterator iter = m_criteriaProgress.begin(); iter != m_criteriaProgress.end(); ++iter)
-        *data << int32(-1);
-
-    for (CompletedAchievementMap::const_iterator iter = m_completedAchievements.begin(); iter != m_completedAchievements.end(); ++iter)
-        *data << int32(-1);
 }
 
 bool AchievementMgr::HasAchieved(AchievementEntry const* achievement) const
@@ -2561,4 +2526,75 @@ void AchievementGlobalMgr::LoadRewardLocales()
 
     sLog.outString();
     sLog.outString(">> Loaded %lu achievement reward locale strings", (unsigned long)m_achievementRewardLocales.size());
+}
+
+void AchievementMgr::Compress(WorldPacket &packet, uint32 newOpcode)
+{
+    uint32 pSize = packet.wpos();
+    uint32 destsize = compressBound(pSize);
+    packet.resize(destsize + sizeof(uint32));
+    packet.put<uint32>(0, pSize);
+
+    Compress(const_cast<uint8*>(packet.contents()) + sizeof(uint32), &destsize, (void*)packet.contents(), pSize);
+    if (destsize == 0)
+        return;
+
+    packet.resize(destsize + sizeof(uint32));
+    packet.SetOpcode(newOpcode);
+}
+
+void AchievementMgr::Compress(void* dst, uint32 *dst_size, void* src, int src_size)
+{
+    z_stream c_stream;
+
+    c_stream.zalloc = (alloc_func)0;
+    c_stream.zfree = (free_func)0;
+    c_stream.opaque = (voidpf)0;
+
+    // default Z_BEST_SPEED (1)
+    int z_res = deflateInit(&c_stream, sWorld.getIntConfig(CONFIG_COMPRESSION));
+    if (z_res != Z_OK)
+    {
+        sLog.outError("Can't compress update packet (zlib: deflateInit) Error code: %i (%s)",z_res,zError(z_res));
+        *dst_size = 0;
+        return;
+    }
+
+    c_stream.next_out = (Bytef*)dst;
+    c_stream.avail_out = *dst_size;
+    c_stream.next_in = (Bytef*)src;
+    c_stream.avail_in = (uInt)src_size;
+
+    z_res = deflate(&c_stream, Z_NO_FLUSH);
+    if (z_res != Z_OK)
+    {
+        sLog.outError("Can't compress update packet (zlib: deflate) Error code: %i (%s)",z_res,zError(z_res));
+        *dst_size = 0;
+        return;
+    }
+
+    if (c_stream.avail_in != 0)
+    {
+        sLog.outError("Can't compress update packet (zlib: deflate not greedy)");
+        *dst_size = 0;
+        return;
+    }
+
+    z_res = deflate(&c_stream, Z_FINISH);
+    if (z_res != Z_STREAM_END)
+    {
+        sLog.outError("Can't compress update packet (zlib: deflate should report Z_STREAM_END instead %i (%s)",z_res,zError(z_res));
+        *dst_size = 0;
+        return;
+    }
+
+    z_res = deflateEnd(&c_stream);
+    if (z_res != Z_OK)
+    {
+        sLog.outError("Can't compress update packet (zlib: deflateEnd) Error code: %i (%s)",z_res,zError(z_res));
+        *dst_size = 0;
+        return;
+    }
+
+    *dst_size = c_stream.total_out;
 }

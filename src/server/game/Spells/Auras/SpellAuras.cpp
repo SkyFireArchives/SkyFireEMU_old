@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "WorldPacket.h"
 #include "Opcodes.h"
@@ -215,6 +216,9 @@ void AuraApplication::ClientUpdate(bool remove)
         data << uint32(aura->GetMaxDuration());
         data << uint32(aura->GetDuration());
     }
+
+    if (flags & AFLAG_UNK2)
+        sLog.outError("Unhandled flag in AuraApplication::ClientUpdate. Will result in the aura being handled incorrectly on client side.");
 
     m_target->SendMessageToSet(&data, true);
 }
@@ -1064,6 +1068,15 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                     // in official maybe there is only one icon?
                     if (target->HasAura(58039)) // Glyph of Blurred Speed
                         target->CastSpell(target, 61922, true); // Sprint (waterwalk)
+
+                // Deadly Momentum
+                if (GetId() == 84590)
+                {
+                    if (Aura* snd = target->GetAura(5171))
+                        snd->RefreshDuration();
+                    if (Aura* rec = target->GetAura(73651))
+                        rec->RefreshDuration();
+                }
                 break;
             case SPELLFAMILY_DEATHKNIGHT:
                 if (!caster)
@@ -1360,6 +1373,13 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                 // Remove Vanish on stealth remove
                 if (GetId() == 1784)
                     target->RemoveAurasWithFamily(SPELLFAMILY_ROGUE, 0x0000800, 0, 0, target->GetGUID());
+                else if (GetId() == 6770) // On-sap removal - blackjack talent
+                {    
+                    if (caster->HasAura(79125)) // rank 2
+                        caster->CastSpell(target, 79126, true);
+                    else if (caster->HasAura(79123)) // rank 1
+                        caster->CastSpell(target, 79124, true);
+                }
                 break;
             case SPELLFAMILY_PALADIN:
                 // Remove the immunity shield marker on Forbearance removal if AW marker is not present
@@ -1413,7 +1433,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
             if (GetSpellProto()->SpellFamilyFlags[0] & 0x00400000)
             {
                 // Master of subtlety
-                if (AuraEffect const * aurEff = target->GetAuraEffectOfRankedSpell(31221, 0))
+                if (AuraEffect const * aurEff = target->GetAuraEffect(31223, 0))
                 {
                     if (!apply)
                         target->CastSpell(target,31666,true);
@@ -1976,7 +1996,7 @@ DynObjAura::DynObjAura(SpellEntry const* spellproto, uint8 effMask, WorldObject 
     ASSERT(GetDynobjOwner());
     ASSERT(GetDynobjOwner()->IsInWorld());
     ASSERT(GetDynobjOwner()->GetMap() == caster->GetMap());
-	_InitEffects(effMask, caster, baseAmount);
+    _InitEffects(effMask, caster, baseAmount);
     GetDynobjOwner()->SetAura(this);
 }
 
@@ -2002,6 +2022,12 @@ void DynObjAura::FillTargetMap(std::map<Unit *, uint8> & targets, Unit * /*caste
         {
             Trinity::AnyFriendlyUnitInObjectRangeCheck u_check(GetDynobjOwner(), dynObjOwnerCaster, radius);
             Trinity::UnitListSearcher<Trinity::AnyFriendlyUnitInObjectRangeCheck> searcher(GetDynobjOwner(), targetList, u_check);
+            GetDynobjOwner()->VisitNearbyObject(radius, searcher);
+        }
+        else if (GetSpellProto()->EffectImplicitTargetB[effIndex] == TARGET_DEST_DYNOBJ_ALL_UNITS)
+        {
+            Trinity::AnyUnitInObjectRangeCheck u_check(GetDynobjOwner(), radius);
+            Trinity::UnitListSearcher<Trinity::AnyUnitInObjectRangeCheck> searcher(GetDynobjOwner(), targetList, u_check);
             GetDynobjOwner()->VisitNearbyObject(radius, searcher);
         }
         else

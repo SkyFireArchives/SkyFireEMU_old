@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "DatabaseEnv.h"
 #include "WorldPacket.h"
@@ -3211,112 +3212,112 @@ bool ChatHandler::HandleLookupSkillCommand(const char *args)
 
 bool ChatHandler::HandleLookupSpellCommand(const char *args)
 {
-	if (!*args)
-		return false;
+    if (!*args)
+        return false;
 
-	// can be NULL at console call
-	Player* target = getSelectedPlayer();
+    // can be NULL at console call
+    Player* target = getSelectedPlayer();
 
-	std::string namepart = args;
-	std::wstring wnamepart;
+    std::string namepart = args;
+    std::wstring wnamepart;
 
-	if (!Utf8toWStr(namepart,wnamepart))
-		return false;
+    if (!Utf8toWStr(namepart,wnamepart))
+        return false;
 
-	// converting string that we try to find to lower case
-	wstrToLower(wnamepart);
+    // converting string that we try to find to lower case
+    wstrToLower(wnamepart);
 
-	bool found = false;
-	uint32 count = 0;
-	uint32 maxResults = sWorld.getIntConfig(CONFIG_MAX_RESULTS_LOOKUP_COMMANDS);
+    bool found = false;
+    uint32 count = 0;
+    uint32 maxResults = sWorld.getIntConfig(CONFIG_MAX_RESULTS_LOOKUP_COMMANDS);
 
-	// Search in Spell.dbc
-	for (uint32 id = 0; id < sSpellStore.GetNumRows(); id++)
-	{
-		SpellEntry const *spellInfo = sSpellStore.LookupEntry(id);
-		if (spellInfo)
-		{
-			int loc = GetSessionDbcLocale();
-			std::string name = spellInfo->SpellName;
-			if (name.empty())
-				continue;
+    // Search in Spell.dbc
+    for (uint32 id = 0; id < sSpellStore.GetNumRows(); id++)
+    {
+        SpellEntry const *spellInfo = sSpellStore.LookupEntry(id);
+        if (spellInfo)
+        {
+            int loc = GetSessionDbcLocale();
+            std::string name = spellInfo->SpellName;
+            if (name.empty())
+                continue;
 
-			if (!Utf8FitTo(name, wnamepart))
-			{
-				loc = 0;
-				for (; loc < TOTAL_LOCALES; ++loc)
-				{
-					if (loc == GetSessionDbcLocale())
-						continue;
+            if (!Utf8FitTo(name, wnamepart))
+            {
+                loc = 0;
+                for (; loc < TOTAL_LOCALES; ++loc)
+                {
+                    if (loc == GetSessionDbcLocale())
+                        continue;
 
-					name = spellInfo->SpellName[loc];
-					if (name.empty())
-						continue;
+                    name = spellInfo->SpellName[loc];
+                    if (name.empty())
+                        continue;
 
-					if (Utf8FitTo(name, wnamepart))
-						break;
-				}
-			}
+                    if (Utf8FitTo(name, wnamepart))
+                        break;
+                }
+            }
 
-			if (loc < TOTAL_LOCALES)
-			{
-				if (maxResults && count++ == maxResults)
-				{
-					PSendSysMessage(LANG_COMMAND_LOOKUP_MAX_RESULTS, maxResults);
-					return true;
-				}
+            if (loc < TOTAL_LOCALES)
+            {
+                if (maxResults && count++ == maxResults)
+                {
+                    PSendSysMessage(LANG_COMMAND_LOOKUP_MAX_RESULTS, maxResults);
+                    return true;
+                }
 
-				bool known = target && target->HasSpell(id);
-				SpellEffectEntry const* spellEffect = spellInfo->GetSpellEffect(EFFECT_0);
-				bool learn = (spellEffect && spellEffect->Effect == SPELL_EFFECT_LEARN_SPELL);
+                bool known = target && target->HasSpell(id);
+                SpellEffectEntry const* spellEffect = spellInfo->GetSpellEffect(EFFECT_0);
+                bool learn = (spellEffect && spellEffect->Effect == SPELL_EFFECT_LEARN_SPELL);
 
-				uint32 talentCost = GetTalentSpellCost(id);
+                uint32 talentCost = GetTalentSpellCost(id);
 
-				bool talent = (talentCost > 0);
-				bool passive = IsPassiveSpell(id);
-				bool active = target && target->HasAura(id);
+                bool talent = (talentCost > 0);
+                bool passive = IsPassiveSpell(id);
+                bool active = target && target->HasAura(id);
 
-				// unit32 used to prevent interpreting uint8 as char at output
-				// find rank of learned spell for learning spell, or talent rank
-				uint32 rank = talentCost ? talentCost : sSpellMgr.GetSpellRank(learn ? (spellEffect ? spellEffect->EffectTriggerSpell : 0) : id);
+                // unit32 used to prevent interpreting uint8 as char at output
+                // find rank of learned spell for learning spell, or talent rank
+                uint32 rank = talentCost ? talentCost : sSpellMgr.GetSpellRank(learn ? (spellEffect ? spellEffect->EffectTriggerSpell : 0) : id);
 
-				// send spell in "id - [name, rank N] [talent] [passive] [learn] [known]" format
-				std::ostringstream ss;
-				if (m_session)
-					ss << id << " - |cffffffff|Hspell:" << id << "|h[" << name;
-				else
-					ss << id << " - " << name;
+                // send spell in "id - [name, rank N] [talent] [passive] [learn] [known]" format
+                std::ostringstream ss;
+                if (m_session)
+                    ss << id << " - |cffffffff|Hspell:" << id << "|h[" << name;
+                else
+                    ss << id << " - " << name;
 
-				// include rank in link name
-				if (rank)
-					ss << GetTrinityString(LANG_SPELL_RANK) << rank;
+                // include rank in link name
+                if (rank)
+                    ss << GetTrinityString(LANG_SPELL_RANK) << rank;
 
-				if (m_session)
-					ss << " " << localeNames[loc] << "]|h|r";
-				else
-					ss << " " << localeNames[loc];
+                if (m_session)
+                    ss << " " << localeNames[loc] << "]|h|r";
+                else
+                    ss << " " << localeNames[loc];
 
-				if (talent)
-					ss << GetTrinityString(LANG_TALENT);
-				if (passive)
-					ss << GetTrinityString(LANG_PASSIVE);
-				if (learn)
-					ss << GetTrinityString(LANG_LEARN);
-				if (known)
-					ss << GetTrinityString(LANG_KNOWN);
-				if (active)
-					ss << GetTrinityString(LANG_ACTIVE);
+                if (talent)
+                    ss << GetTrinityString(LANG_TALENT);
+                if (passive)
+                    ss << GetTrinityString(LANG_PASSIVE);
+                if (learn)
+                    ss << GetTrinityString(LANG_LEARN);
+                if (known)
+                    ss << GetTrinityString(LANG_KNOWN);
+                if (active)
+                    ss << GetTrinityString(LANG_ACTIVE);
 
-				SendSysMessage(ss.str().c_str());
+                SendSysMessage(ss.str().c_str());
 
-				if (!found)
-					found = true;
-			}
-		}
-	}
-	if (!found)
-		SendSysMessage(LANG_COMMAND_NOSPELLFOUND);
-	return true;
+                if (!found)
+                    found = true;
+            }
+        }
+    }
+    if (!found)
+        SendSysMessage(LANG_COMMAND_NOSPELLFOUND);
+    return true;
 }
 
 bool ChatHandler::HandleLookupQuestCommand(const char *args)
@@ -4552,6 +4553,22 @@ bool ChatHandler::HandleHoverCommand(const char *args)
     else
         SendSysMessage(LANG_HOVER_DISABLED);
 
+    return true;
+}
+
+// This one is mega hacky.
+// But I need it for now, sowwie :<
+// -Dvlpr
+bool ChatHandler::HandleDebugOpcodeCommand(const char* args)
+{
+    uint32 opcode = atoi(args);
+    if (opcode != 0)
+        PSendSysMessage("Set debugOpcode to %u for debugging. WARNING, NO PACKETS APART FROM IT WILL BE SENT UNTIL YOU DISABLE THIS OPTION !!!", sWorld.debugOpcode);
+	
+	sWorld.debugOpcode = opcode;
+
+	if (opcode == 0)
+		PSendSysMessage("debugOpcode state was reset. The server will function normally now.");
     return true;
 }
 

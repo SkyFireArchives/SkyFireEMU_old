@@ -21,6 +21,7 @@
  */
 
 
+#include "gamePCH.h"
 #include "SpellMgr.h"
 #include "ObjectMgr.h"
 #include "DisableMgr.h"

@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Unit.h"
 #include "Player.h"
 #include "Pet.h"
@@ -352,14 +353,17 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
             {
                 ShapeshiftForm form = GetShapeshiftForm();
                 // Check if Predatory Strikes is skilled
-                float mLevelMult = 0.0;
+                float mLevelMult = 0.0f;
+                float mFeralMult = 0.0f;
+                short applied = 0;
+
                 switch (form)
                 {
                     case FORM_CAT:
                     case FORM_BEAR:
                     case FORM_DIREBEAR:
                     case FORM_MOONKIN:
-                    {
+                    {    
                         Unit::AuraEffectList const& mDummy = GetAuraEffectsByType(SPELL_AURA_DUMMY);
                         for (Unit::AuraEffectList::const_iterator itr = mDummy.begin(); itr != mDummy.end(); ++itr)
                         {
@@ -367,13 +371,21 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
                             if ((*itr)->GetEffIndex() == 0 && (*itr)->GetSpellProto()->SpellIconID == 1563)
                             {
                                 mLevelMult = (*itr)->GetAmount() / 100.0f;
-                                break;
+                                if( applied ) break;
+                                applied = 1;
                             }
-                        }
-                        break;
-                    }
+                            // Predatory Strikes (effect 1)
+                            if ((*itr)->GetEffIndex() == 1 && (*itr)->GetSpellProto()->SpellIconID == 1563)
+                            {
+                                mFeralMult = (*itr)->GetAmount() / 100.0f;
+                                if( applied ) break;
+                                applied = 1;
+                            }
+                            break;
+                        } 
+                    }    
                     default: break;
-                }
+                }   
 
                 switch (form)
                 {
@@ -788,7 +800,6 @@ void Player::UpdateManaRegen()
 
     SetStatFloatValue(UNIT_FIELD_POWER_REGEN_INTERRUPTED_FLAT_MODIFIER, 
         baseCombatRegen + power_regen * modManaRegenInterrupt / 100.0f);
-
     SetStatFloatValue(UNIT_FIELD_POWER_REGEN_FLAT_MODIFIER,  baseCombatRegen + power_regen);
 }
 

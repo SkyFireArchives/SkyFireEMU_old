@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "Opcodes.h"
 #include "WorldPacket.h"
@@ -1843,6 +1844,7 @@ InstanceGroupBind* Group::GetBoundInstance(MapEntry const* mapEntry)
     else
         return NULL;
 */
+    return NULL;
 }
 
 

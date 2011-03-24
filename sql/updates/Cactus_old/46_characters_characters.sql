@@ -1,1 +1,0 @@
-ALTER TABLE `characters` ADD COLUMN `power10` int(10) UNSIGNED NOT NULL AFTER `power9`;

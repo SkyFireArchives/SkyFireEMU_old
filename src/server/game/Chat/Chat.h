@@ -166,6 +166,7 @@ class ChatHandler
         bool HandleDebugSetAuraStateCommand(const char * args);
         bool HandleDebugSetItemValueCommand(const char * args);
         bool HandleDebugItemExpireCommand(const char * args);
+        bool HandleDebugOpcodeCommand(const char * args);
         bool HandleDebugSetVehicleId(const char * args);
         bool HandleDebugEnterVehicle(const char * args);
         bool HandleDebugSetValueCommand(const char* args);
@@ -306,7 +307,7 @@ class ChatHandler
         bool HandleModifyPhaseCommand(const char* args);
         bool HandleModifyGenderCommand(const char* args);
 
-		bool HandleOpcodeTestCommand(const char* args);
+        bool HandleOpcodeTestCommand(const char* args);
 
         //-----------------------Npc Commands-----------------------
         bool HandleNpcAddCommand(const char* args);

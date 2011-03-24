@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "SpellMgr.h"
 #include "ObjectMgr.h"
 #include "SpellAuras.h"
@@ -200,7 +201,7 @@ SpellMgr::SpellMgr()
                 break;
             case TARGET_DEST_DYNOBJ_ENEMY:
             case TARGET_DEST_DYNOBJ_ALLY:
-            case TARGET_DEST_DYNOBJ_NONE:
+            case TARGET_DEST_DYNOBJ_ALL_UNITS:
             case TARGET_DEST_DEST:
             case TARGET_DEST_TRAJ:
             case TARGET_DEST_DEST_FRONT_LEFT:
@@ -267,6 +268,71 @@ SpellMgr& SpellMgr::Instance()
 {
     static SpellMgr spellMgr;
     return spellMgr;
+}
+
+SpellScaling::SpellScaling(uint8 playerLevel_, const SpellEntry * spellEntry_)
+{
+    playerLevel = playerLevel_;
+    spellEntry = spellEntry_;
+    for(int i = 0; i < 3; i++)
+    {
+        avg[i] = 0.f;
+        min[i] = 0.f;
+        max[i] = 0.f;
+        pts[i] = 0.f;
+    }
+    cast = 0;
+    canScale = false;
+
+    if(!spellEntry->SpellScalingId)
+        return;
+
+    if(!spellEntry->SpellScaling_class)
+        return;
+
+    float base_coef = spellEntry->base_coef;
+    uint8 base_level = spellEntry->base_level_coef;
+
+    int32 ct_min = spellEntry->ct_min;
+    int32 ct_max = spellEntry->ct_max;
+    uint8 ct_level = spellEntry->ct_max_level;
+
+    int8 class_ = spellEntry->SpellScaling_class;
+
+    float gtCoef = GetGtSpellScalingValue(class_, playerLevel_);
+
+    if(gtCoef == -1.0f)
+        return;
+
+    gtCoef *= ( std::min(playerLevel,base_level) + ( base_coef * std::max(0,playerLevel-base_level) ) )/playerLevel;
+
+    //cast time
+    cast = 0;
+    if(ct_max>0 && playerLevel_>1)
+        cast = ct_min+(((playerLevel-1)*(ct_max-ct_min))/(ct_level-1));
+    else
+        cast = ct_min;
+
+    if(cast > ct_max)
+        cast = ct_max;
+
+    //effects
+    for(uint8 effIndex = 0; effIndex < 3; effIndex++)
+    {
+        float mult = spellEntry->coefMultiplier[effIndex];
+        float randommult = spellEntry->coefRandomMultiplier[effIndex];
+        float othermult = spellEntry->coefOther[effIndex];
+
+        avg[effIndex] = mult*gtCoef;
+        if(ct_max > 0)
+            avg[effIndex] *= float(cast)/float(ct_max);
+
+        min[effIndex]=roundf(avg[effIndex])-std::floor(avg[effIndex]*randommult/2);
+        max[effIndex]=roundf(avg[effIndex])+std::floor(avg[effIndex]*randommult/2);
+        pts[effIndex]=roundf(othermult*gtCoef);
+        avg[effIndex]=std::max((float)ceil(mult),roundf(avg[effIndex]));
+    }
+    canScale = true;
 }
 
 bool SpellMgr::IsSrcTargetSpell(SpellEntry const *spellInfo) const
@@ -803,7 +869,7 @@ bool SpellMgr::_isPositiveEffect(uint32 spellId, uint32 effIndex, bool deep) con
             // Amplify Magic, Dampen Magic
             if (spellproto->SpellFamilyFlags[0] == 0x00002000)
                 return true;
-            // Ignite	
+            // Ignite    
             if (spellproto->SpellIconID == 45)
                 return true;
             break;
@@ -1129,9 +1195,9 @@ SpellCastResult GetErrorAtShapeshiftedCast (SpellEntry const *spellInfo, uint32 
     }
     else
     {
-        // needs shapeshift
+       /* // needs shapeshift
         if (!(spellInfo->AttributesEx2 & SPELL_ATTR_EX2_NOT_NEED_SHAPESHIFT) && spellInfo->Stances != 0)
-            return SPELL_FAILED_ONLY_SHAPESHIFT;
+            return SPELL_FAILED_ONLY_SHAPESHIFT;*/
     }
 
     // Check if stance disables cast of not-stance spells
@@ -1874,7 +1940,7 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
     if (caster)
     {
         SpellScaling values(caster->getLevel(), spellEntry);
-        if (values.canScale)
+        if (values.canScale && (int32)values.min[effIndex] != 0)
         {
             basePoints = (int32)values.min[effIndex];
             maxPoints = values.max[effIndex];
@@ -2348,7 +2414,7 @@ void SpellMgr::LoadPetDefaultSpells()
     uint32 countCreature = 0;
     uint32 countData = 0;
 
-	for (uint32 i = 0; i < sCreatureStorage.MaxEntry; ++i)
+    for (uint32 i = 0; i < sCreatureStorage.MaxEntry; ++i)
     {
         CreatureInfo const* cInfo = sCreatureStorage.LookupEntry<CreatureInfo>(i);
         if (!cInfo)
@@ -3670,6 +3736,10 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (i)
         {
+        case 2643: // Multi-Shot no-target Effect 0 fix.
+            spellInfo->EffectImplicitTargetA[0] = TARGET_DST_TARGET_ENEMY;
+            count++;
+            break;
         case 49838: // Stop Time
             spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
             count++;
@@ -4143,7 +4213,7 @@ void SpellMgr::LoadEnchantCustomAttr()
     uint32 size = sSpellItemEnchantmentStore.GetNumRows();
     mEnchantCustomAttr.resize(size);
 
-	uint32 count = 0;
+    uint32 count = 0;
 
     for (uint32 i = 0; i < size; ++i)
        mEnchantCustomAttr[i] = 0;

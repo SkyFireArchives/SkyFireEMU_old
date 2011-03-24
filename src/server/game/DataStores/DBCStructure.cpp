@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "SharedDefines.h"
 #include "DBCStructure.h"
@@ -63,7 +64,6 @@ SpellEntry::SpellEntry(SpellEntry_n const* spell)
     SpellLevelsId = spell->SpellLevelsId;
     SpellPowerId = spell->SpellPowerId;
     SpellReagentsId = spell->SpellReagentsId;
-    SpellShapeshiftId = spell->SpellShapeshiftId;
     SpellTargetRestrictionsId = spell->SpellTargetRestrictionsId;
     SpellTotemsId = spell->SpellTotemsId;
     

@@ -58,12 +58,12 @@ file(GLOB_RECURSE sources_World World/*.cpp World/*.h)
 if( USE_COREPCH AND MSVC )
   set(game_STAT_SRCS
     PrecompiledHeaders/gamePCH.cpp
-    PrecompiledHeaders/gamePCH.h
   )
 endif()
 
 set(game_STAT_SRCS
   ${game_STAT_SRCS}
+  PrecompiledHeaders/gamePCH.h
   ${sources_Accounts}
   ${sources_Achievements}
   ${sources_Addons}
@@ -206,6 +206,6 @@ if( USE_COREPCH )
   if(CMAKE_COMPILER_IS_GNUCXX)
     add_precompiled_header(game ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders/gamePCH.h)
   elseif(MSVC)
-    add_native_precompiled_header(game ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders/gamePCH)
+    add_native_precompiled_header(game ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders/gamePCH 0)
   endif()
 endif()

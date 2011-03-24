@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "ObjectGridLoader.h"
 #include "ObjectAccessor.h"
 #include "ObjectMgr.h"
@@ -286,8 +287,8 @@ ObjectGridStoper::Visit(CreatureMapType &m)
     // stop any fights at grid de-activation and remove dynobjects created at cast by creatures
     for (CreatureMapType::iterator iter=m.begin(); iter != m.end(); ++iter)
     {
-		iter->getSource()->RemoveAllDynObjects();
-		if (iter->getSource()->isInCombat())
+        iter->getSource()->RemoveAllDynObjects();
+        if (iter->getSource()->isInCombat())
         {
             iter->getSource()->CombatStop();
             iter->getSource()->DeleteThreatList();

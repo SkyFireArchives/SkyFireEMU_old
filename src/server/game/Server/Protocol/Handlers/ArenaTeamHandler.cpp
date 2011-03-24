@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Player.h"
 #include "World.h"
 #include "WorldPacket.h"
@@ -30,6 +31,31 @@
 #include "Log.h"
 #include "ObjectMgr.h"
 #include "SocialMgr.h"
+
+void WorldSession::HandleArenaTeamCreate(WorldPacket & recv_data)
+{
+    sLog.outDebug("CMSG_ARENA_TEAM_CREATE");
+
+    uint32 type, icon, iconcolor, border, bordercolor, background;
+    std::string name;
+
+    recv_data >> background >> icon >> iconcolor >> border >> bordercolor;
+    recv_data >> type;
+    recv_data >> name;
+
+    ArenaTeam* at = new ArenaTeam;
+    if (!at->Create(_player->GetGUID(), type, name))
+    {
+        sLog.outError("ArenaTeamHandler: arena team create failed.");
+        delete at;
+        return;
+    }
+
+    at->SetEmblem(background, icon, iconcolor, border, bordercolor);
+
+    // register team and add captain
+    sObjectMgr.AddArenaTeam(at);
+}
 
 void WorldSession::HandleInspectArenaTeamsOpcode(WorldPacket & recv_data)
 {
@@ -333,7 +359,7 @@ void WorldSession::HandleArenaTeamLeaderOpcode(WorldPacket & recv_data)
 
 void WorldSession::SendArenaTeamCommandResult(uint32 team_action, const std::string& team, const std::string& player, uint32 error_id)
 {
-    WorldPacket data(SMSG_ARENA_TEAM_COMMAND_RESULT, 4+team.length()+1+player.length()+1+4);
+    WorldPacket data(SMSG_ARENA_TEAM_COMMAND_RESULT, 4+team.length()+1+player.length()+1+4, true);
     data << uint32(team_action);
     data << team;
     data << player;

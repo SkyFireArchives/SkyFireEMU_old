@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "ObjectMgr.h"
 #include "Player.h"
 #include "World.h"
@@ -120,7 +121,7 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
 {
     uint64 auctioneer, item;
     uint64 bid, buyout;
-	uint32 etime, count;
+    uint32 etime, count;
     recv_data >> auctioneer;
     recv_data.read_skip<uint32>();                          // const 1?
     recv_data >> item;
@@ -263,7 +264,7 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
 {
     uint64 auctioneer;
     uint32 auctionId;
-    uint32 price;
+    uint64 price;
     recv_data >> auctioneer;
     recv_data >> auctionId >> price;
 
@@ -314,7 +315,7 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
         return;
     }
 
-    if (!pl->HasEnoughMoney(price))
+    if (!pl->HasEnoughMoney(uint32(price)))
     {
         //you don't have enought money!, client tests!
         //SendAuctionCommandResult(auction->auctionId, AUCTION_PLACE_BID, ???);
