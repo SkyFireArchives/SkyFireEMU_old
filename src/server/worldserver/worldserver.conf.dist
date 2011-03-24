@@ -828,9 +828,8 @@ ChatLogTimestamp = 0
 #        Default: 0 (false)
 #                 1 (true)
 #
-#    AlwaysMaxSkillForLevel
-#        Players will automatically gain max level dependent (weapon/defense)
-#         skill when logging in, leveling up etc.
+#    OldSkillSystem
+#        Players will have to gain on-level skills manually. (weapon, defense)
 #        Default: 0 (false)
 #                 1 (true)
 #
