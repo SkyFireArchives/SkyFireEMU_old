@@ -490,7 +490,7 @@ enum Opcodes
     SMSG_PAUSE_MIRROR_TIMER                          = 0x021EC, // 4.0.6a 13623
     SMSG_STOP_MIRROR_TIMER                           = 0x0A68C, // 4.0.6a 13623
     CMSG_PING                                        = 0x0064E, // 4.0.6a 13623
-    SMSG_PONG                                        = 0x0B000, //
+    SMSG_PONG                                        = 0x0A01B, // 4.0.6a 13623
     SMSG_CLEAR_COOLDOWN                              = 0x036CC, // 4.0.6a 13623
     SMSG_GAMEOBJECT_PAGETEXT                         = 0x0E5C8, // 4.0.6a 13623
     CMSG_SETSHEATHED                                 = 0x0AAE4, // 4.0.6a 13623
