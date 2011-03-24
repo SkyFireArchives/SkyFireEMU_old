@@ -3736,6 +3736,10 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (i)
         {
+        case 2643: // Multi-Shot no-target Effect 0 fix.
+            spellInfo->EffectImplicitTargetA[0] = TARGET_DST_TARGET_ENEMY;
+            count++;
+            break;
         case 49838: // Stop Time
             spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
             count++;

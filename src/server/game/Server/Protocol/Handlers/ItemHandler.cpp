@@ -770,7 +770,7 @@ void WorldSession::SendListInventory(uint64 vendorguid)
         return;
     }
 
-    uint8 numitems = vItems->GetItemCount();
+    uint32 numitems = vItems->GetItemCount();
     uint8 count = 0;
 
     WorldPacket data(SMSG_LIST_INVENTORY, (8+1+numitems*9*4+1*numitems+2), true);
@@ -781,7 +781,7 @@ void WorldSession::SendListInventory(uint64 vendorguid)
 
     float discountMod = _player->GetReputationPriceDiscount(pCreature);
 
-    for (uint8 vendorslot = 0; vendorslot < numitems; ++vendorslot )
+    for (uint32 vendorslot = 0; vendorslot < numitems; ++vendorslot )
     {
         if (VendorItem const* crItem = vItems->GetItem(vendorslot))
         {
@@ -794,6 +794,8 @@ void WorldSession::SendListInventory(uint64 vendorguid)
                 if (!_player->isGameMaster() && ((pProto->Flags2 & ITEM_FLAGS_EXTRA_HORDE_ONLY && _player->GetTeam() == ALLIANCE) || (pProto->Flags2 == ITEM_FLAGS_EXTRA_ALLIANCE_ONLY && _player->GetTeam() == HORDE)))
                     continue;
                 ++count;
+                if(count == 150)
+                    break; // client can only display 15 pages
 
                 // reputation discount
                 int32 price = crItem->IsGoldRequired(pProto) ? uint32(floor(pProto->BuyPrice * discountMod)) : 0;
