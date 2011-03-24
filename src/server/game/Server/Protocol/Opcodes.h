@@ -500,7 +500,7 @@ enum Opcodes
     SMSG_QUEST_POI_QUERY_RESPONSE                    = 0x06AEC, // 4.0.6a 13623
     CMSG_GHOST                                       = 0x10088, //
     CMSG_GM_INVIS                                    = 0x10089, //
-    SMSG_INVALID_PROMOTION_CODE                      = 0x1008A, //
+    SMSG_INVALID_PROMOTION_CODE                      = 0x069AC, // 4.0.6a 13623
     MSG_GM_BIND_OTHER                                = 0x1008B, //
     MSG_GM_SUMMON                                    = 0x1008C, //
     SMSG_ITEM_TIME_UPDATE                            = 0x066A4, // 4.0.6a 13623
@@ -761,7 +761,7 @@ enum Opcodes
     SMSG_PET_UNLEARN_CONFIRM                         = 0x10106, //
     SMSG_PARTY_MEMBER_STATS_FULL                     = 0x0BA8C, // 4.0.6a 13623
     CMSG_PET_SPELL_AUTOCAST                          = 0x10107, //
-    SMSG_WEATHER                                     = 0x0777F, //
+    SMSG_WEATHER                                     = 0x079A0, // 4.0.6a 13623
     SMSG_PLAY_TIME_WARNING                           = 0x032EC, // 4.0.6a 13623
     SMSG_MINIGAME_SETUP                              = 0x01C74, //
     SMSG_MINIGAME_STATE                              = 0x04C7F, //
@@ -1257,7 +1257,7 @@ enum Opcodes
     CMSG_QUERY_QUESTS_COMPLETED                      = 0x0FE84, // 4.0.6a 13623
     SMSG_QUERY_QUESTS_COMPLETED_RESPONSE             = 0x0F1E8, // 4.0.6a 13623
     CMSG_GM_REPORT_LAG                               = 0x03FA0, // 4.0.6a 13623
-    SMSG_CORPSE_NOT_IN_INSTANCE                      = 0x035C8, // 4.0.6a 13623
+    SMSG_CORPSE_NOT_IN_INSTANCE                      = 0x031E4, // 4.0.6a 13623
     CMSG_SET_ALLOW_LOW_LEVEL_RAID1                   = 0x035EC, // 4.0.6a 13623
     CMSG_SET_ALLOW_LOW_LEVEL_RAID2                   = 0x029C4, // 4.0.6a 13623
     SMSG_CAMERA_SHAKE                                = 0x034A4, // 4.0.6a 13623
