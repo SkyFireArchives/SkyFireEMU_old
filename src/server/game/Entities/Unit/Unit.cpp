@@ -6844,14 +6844,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     uint32 spellId;
                     switch (castItem->GetEnchantmentId(EnchantmentSlot(TEMP_ENCHANTMENT_SLOT)))
                     {
-                        case 283: spellId =  8232; break;   // 1 Rank
-                        case 284: spellId =  8235; break;   // 2 Rank
-                        case 525: spellId = 10486; break;   // 3 Rank
-                        case 1669:spellId = 16362; break;   // 4 Rank
-                        case 2636:spellId = 25505; break;   // 5 Rank
-                        case 3785:spellId = 58801; break;   // 6 Rank
-                        case 3786:spellId = 58803; break;   // 7 Rank
-                        case 3787:spellId = 58804; break;   // 8 Rank
+                        case 283: spellId =  8232; break;
                         default:
                         {
                             sLog.outError("Unit::HandleDummyAuraProc: non handled item enchantment (rank?) %u for spell id: %u (Windfury)",
@@ -6877,8 +6870,8 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     if (cooldown)
                         ToPlayer()->AddSpellCooldown(dummySpell->Id,0,time(NULL) + cooldown);
 
-                    // Attack Twice
-                    for (uint32 i = 0; i<2; ++i)
+                    // triggering three extra attacks
+                    for (uint32 i = 0; i < 3; ++i)
                         CastCustomSpell(pVictim,triggered_spell_id,&basepoints0,NULL,NULL,true,castItem,triggeredByAura);
 
                     return true;

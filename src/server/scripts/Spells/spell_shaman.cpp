@@ -27,14 +27,16 @@
 enum ShamanSpells
 {
     SHAMAN_SPELL_GLYPH_OF_MANA_TIDE     = 55441,
-    SHAMAN_SPELL_FIRE_NOVA_R1           = 1535,
-    SHAMAN_SPELL_FIRE_NOVA_TRIGGERED_R1 = 8349,
+    SHAMAN_SPELL_FIRE_NOVA           = 1535,
+    SHAMAN_SPELL_FIRE_NOVA_TRIGGERED = 8349,
 
     SHAMAN_SPELL_UNLEASH_ELEMENTS       = 73680,
     
     //For Earthen Power
     SHAMAN_TOTEM_SPELL_EARTHBIND_TOTEM  = 6474, //Spell casted by totem
     SHAMAN_TOTEM_SPELL_EARTHEN_POWER    = 59566,//Spell witch remove snare effect
+    SHAMAN_TOTEM_SPELL_EARTHS_GRASP     = 51485,
+    SHAMAN_TOTEM_SPELL_EARTHGRAB        = 64695
 };
 
 // 51474 - Astral shift
@@ -92,13 +94,10 @@ public:
         PrepareSpellScript(spell_sha_fire_nova_SpellScript)
         bool Validate(SpellEntry const * spellEntry)
         {
-            if (!sSpellStore.LookupEntry(SHAMAN_SPELL_FIRE_NOVA_R1))
-                return false;
-            if (sSpellMgr.GetFirstSpellInChain(SHAMAN_SPELL_FIRE_NOVA_R1) != sSpellMgr.GetFirstSpellInChain(spellEntry->Id))
+            if (!sSpellStore.LookupEntry(SHAMAN_SPELL_FIRE_NOVA))
                 return false;
 
-            uint8 rank = sSpellMgr.GetSpellRank(spellEntry->Id);
-            if (!sSpellMgr.GetSpellWithRank(SHAMAN_SPELL_FIRE_NOVA_TRIGGERED_R1, rank, true))
+            if (!sSpellStore.LookupEntry(SHAMAN_SPELL_FIRE_NOVA_TRIGGERED))
                 return false;
             return true;
         }
@@ -107,14 +106,12 @@ public:
         {
             if (Unit* caster = GetCaster())
             {
-                uint8 rank = sSpellMgr.GetSpellRank(GetSpellInfo()->Id);
-                uint32 spellId = sSpellMgr.GetSpellWithRank(SHAMAN_SPELL_FIRE_NOVA_TRIGGERED_R1, rank);
                 // fire slot
-                if (spellId && caster->m_SummonSlot[1])
+                if (caster->m_SummonSlot[1])
                 {
                     Creature* totem = caster->GetMap()->GetCreature(caster->m_SummonSlot[1]);
                     if (totem && totem->isTotem())
-                        totem->CastSpell(totem, spellId, true);
+                        totem->CastSpell(totem, SHAMAN_SPELL_FIRE_NOVA_TRIGGERED, true);
                 }
             }
         }
@@ -147,6 +144,10 @@ public:
                 return false;
             if (!sSpellStore.LookupEntry(SHAMAN_TOTEM_SPELL_EARTHEN_POWER))
                 return false;
+            if (!sSpellStore.LookupEntry(SHAMAN_TOTEM_SPELL_EARTHS_GRASP))
+                return false;
+            if (!sSpellStore.LookupEntry(SHAMAN_TOTEM_SPELL_EARTHGRAB))
+                return false;
             return true;
         }
 
@@ -159,9 +160,19 @@ public:
                         target->CastSpell(target, SHAMAN_TOTEM_SPELL_EARTHEN_POWER, true, NULL, aurEff);
         }
 
+        void HandleEffectApply(AuraEffect const * aurEff, AuraEffectHandleModes /*mode*/)
+        {
+            Unit* target = GetTarget();
+            if (Unit *caster = aurEff->GetBase()->GetCaster())
+                if (AuraEffect* aur = caster->GetDummyAuraEffect(SPELLFAMILY_SHAMAN, 20, 1))
+                    if (roll_chance_i(aur->GetBaseAmount()))
+                        target->CastSpell(target, SHAMAN_TOTEM_SPELL_EARTHGRAB, true, NULL, aurEff);
+        }
+
         void Register()
         {
              OnEffectPeriodic += AuraEffectPeriodicFn(spell_sha_earthbind_totem_AuraScript::HandleEffectPeriodic, EFFECT_0, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
+             OnEffectApply += AuraEffectApplyFn(spell_sha_earthbind_totem_AuraScript::HandleEffectApply, EFFECT_0, SPELL_AURA_PERIODIC_TRIGGER_SPELL, AURA_EFFECT_HANDLE_REAL);
         }
     };
 
