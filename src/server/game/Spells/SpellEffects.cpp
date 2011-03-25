@@ -481,6 +481,11 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                     damage = uint32(damage * m_caster->GetTotalAttackPowerValue(BASE_ATTACK) / 100);
                     m_caster->ModifyAuraState(AURA_STATE_WARRIOR_VICTORY_RUSH, false);
                 }
+                // Heroic Strike
+                else if (m_spellInfo->Id == 78)
+                {
+                    damage = uint32(8 + m_caster->GetTotalAttackPowerValue(BASE_ATTACK)* 60 / 100);
+                }
                 // Shockwave
                 else if (m_spellInfo->Id == 46968)
                 {
