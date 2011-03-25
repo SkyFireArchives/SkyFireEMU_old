@@ -3740,6 +3740,16 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_DST_TARGET_ENEMY;
             count++;
             break;
+        case 82661: //Aspect of the Fox
+            spellInfo->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+            count++;
+            break;
+        case 87934: //Serpent Spread
+        case 87935:
+            spellInfo->Effect[0] = SPELL_EFFECT_APPLY_AURA;
+            spellInfo->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
+            count++;
+            break;
         case 49838: // Stop Time
             spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
             count++;

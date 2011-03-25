@@ -8036,25 +8036,37 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
             }
             case SPELLFAMILY_HUNTER:
             {
-                if (auraSpellInfo->SpellIconID == 3247)     // Piercing Shots
+                if (auraSpellInfo->SpellIconID == 3247)     // Piercing Shots 1,2,3
                 {
-                    switch (auraSpellInfo->Id)
-                    {
-                        case 53234:  // Rank 1
-                        case 53237:  // Rank 2
-                        case 53238:  // Rank 3
-                            trigger_spell_id = 63468;
-                            break;
-                        default:
-                            sLog.outError("Unit::HandleProcTriggerSpell: Spell %u miss posibly Piercing Shots",auraSpellInfo->Id);
-                            return false;
-                    }
+                    trigger_spell_id = 63468;
                     SpellEntry const *TriggerPS = sSpellStore.LookupEntry(trigger_spell_id);
                     if (!TriggerPS)
                         return false;
-
-                    basepoints0 = int32(damage * triggerAmount / 100 / (GetSpellMaxDuration(TriggerPS) / TriggerPS->EffectAmplitude[0]));
+                    basepoints0 = int32((damage * (auraSpellInfo->EffectBasePoints[0] / 100)) / (GetSpellMaxDuration(TriggerPS) / 1000));
                     basepoints0 += pVictim->GetRemainingDotDamage(GetGUID(), trigger_spell_id);
+                    break;
+                }
+                if (auraSpellInfo->SpellIconID == 2225)     // Serpent Spread 1,2
+                {
+                    if ( !(auraSpellInfo->procFlags == 0x1140) )
+                        return false;
+
+                    switch (auraSpellInfo->Id)
+                    {
+                        case 87934:     trigger_spell_id = 88453; break;
+                        case 87935:     trigger_spell_id = 88466; break;
+                        default:
+                            return false;
+                    }
+                    break;
+                }
+                if (auraSpellInfo->Id == 82661)       // Aspect of the Fox: Focus bonus
+                {
+                    if ( !((auraSpellInfo->procFlags & PROC_FLAG_TAKEN_MELEE_AUTO_ATTACK) || (auraSpellInfo->procFlags & PROC_FLAG_TAKEN_SPELL_MELEE_DMG_CLASS)) )
+                        return false;
+                    target = this;
+                    basepoints0 = auraSpellInfo->EffectBasePoints[0];
+                    trigger_spell_id = 82716;
                     break;
                 }
                 break;
