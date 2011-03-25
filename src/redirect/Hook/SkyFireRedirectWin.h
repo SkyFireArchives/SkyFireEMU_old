@@ -1,3 +1,0 @@
-// SkyFireRedirectWin.h
-
-#pragma once

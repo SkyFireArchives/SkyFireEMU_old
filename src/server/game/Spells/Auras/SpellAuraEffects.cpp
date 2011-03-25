@@ -374,7 +374,7 @@ pAuraEffectHandler AuraEffectHandler[TOTAL_AURAS]=
     &AuraEffect::HandleNoImmediateEffect,                         //314 SPELL_AURA_PREVENT_RESSURECTION todo
     &AuraEffect::HandleNoImmediateEffect,                         //315 SPELL_AURA_UNDERWATER_WALKING todo
     &AuraEffect::HandleNoImmediateEffect,                         //316 SPELL_AURA_PERIODIC_HASTE implemented in AuraEffect::CalculatePeriodic
-    &AuraEffect::HandleNULL,                                      //317
+    &AuraEffect::HandleAuraModSpellPowerPercent,                  //317 SPELL_AURA_MOD_SPELL_POWER_PCT
     &AuraEffect::HandleNULL,                                      //318
     &AuraEffect::HandleModMeleeSpeedPct,                          //319 This is actually mod haste (?)
     &AuraEffect::HandleNULL,                                      //320
@@ -4845,6 +4845,20 @@ void AuraEffect::HandleModSpellDamagePercentFromAttackPower(AuraApplication cons
 }
 
 void AuraEffect::HandleModSpellHealingPercentFromAttackPower(AuraApplication const *aurApp, uint8 mode, bool /*apply*/) const
+{
+    if (!(mode & (AURA_EFFECT_HANDLE_CHANGE_AMOUNT_MASK | AURA_EFFECT_HANDLE_STAT)))
+        return;
+
+    Unit *target = aurApp->GetTarget();
+
+    if (target->GetTypeId() != TYPEID_PLAYER)
+        return;
+
+    // Recalculate bonus
+    target->ToPlayer()->UpdateSpellDamageAndHealingBonus();
+}
+
+void AuraEffect::HandleAuraModSpellPowerPercent(AuraApplication const * aurApp, uint8 mode, bool apply) const
 {
     if (!(mode & (AURA_EFFECT_HANDLE_CHANGE_AMOUNT_MASK | AURA_EFFECT_HANDLE_STAT)))
         return;

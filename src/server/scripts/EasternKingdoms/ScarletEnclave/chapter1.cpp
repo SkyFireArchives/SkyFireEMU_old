@@ -805,7 +805,7 @@ public:
         void FindMinions(Unit *owner)
         {
             std::list<Creature*> MinionList;
-            owner->GetAllMinionsByEntry(MinionList,GHOULS);
+            //owner->GetAllMinionsByEntry(MinionList,GHOULS);
 
             if (!MinionList.empty())
             {
