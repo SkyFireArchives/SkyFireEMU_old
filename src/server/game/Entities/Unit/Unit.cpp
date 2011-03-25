@@ -8552,6 +8552,19 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                 return false;
             break;
         }
+        // Rolling Thunder
+        case 88765:
+        {
+            if (Aura * lightningShield = GetAura(324))
+            {
+                uint8 lsCharges = lightningShield->GetCharges();
+                if(lsCharges < 9)
+                {
+                    lightningShield->SetCharges(lsCharges + 1);
+                }
+            }
+            break;
+        }
         // Astral Shift
         case 52179:
         {
@@ -9608,17 +9621,17 @@ void Unit::SetMinion(Minion *minion, bool apply, PetSlot slot)
     }
 }
 
-void Unit::GetAllMinionsByEntry(std::list<Creature*>& Minions, uint32 entry)
-{
-    for (Unit::ControlList::iterator itr = m_Controlled.begin(); itr != m_Controlled.end();)
-    {
-        Unit *unit = *itr;
-        ++itr;
-        if (unit->GetEntry() == entry && unit->GetTypeId() == TYPEID_UNIT
-            && unit->ToCreature()->isSummon()) // minion, actually
-            Minions.push_back(unit->ToCreature());
-    }
-}
+//void Unit::GetAllMinionsByEntry(std::list<Creature*>& Minions, uint32 entry)
+//{
+//    for (Unit::ControlList::iterator itr = m_Controlled.begin(); itr != m_Controlled.end();)
+//    {
+//        Unit *unit = *itr;
+//        ++itr;
+//        if (unit->GetEntry() == entry && unit->GetTypeId() == TYPEID_UNIT
+//            && unit->ToCreature()->isSummon()) // minion, actually
+//            Minions.push_back(unit->ToCreature());
+//    }
+//}
 
 void Unit::RemoveAllMinionsByEntry(uint32 entry)
 {
@@ -10479,7 +10492,10 @@ int32 Unit::SpellBaseDamageBonus(SpellSchoolMask schoolMask)
         for (AuraEffectList::const_iterator i =mDamageDonebyAP.begin(); i != mDamageDonebyAP.end(); ++i)
             if ((*i)->GetMiscValue() & schoolMask)
                 DoneAdvertisedBenefit += int32(GetTotalAttackPowerValue(BASE_ATTACK) * (*i)->GetAmount() / 100.0f);
-
+        // TODO this should modify PLAYER_FIELD_MOD_SPELL_POWER_PCT instead of all the separate power fields
+        int32 spModPct = GetMaxPositiveAuraModifier(SPELL_AURA_MOD_SPELL_POWER_PCT);
+        // should it apply to non players as well?
+        DoneAdvertisedBenefit += DoneAdvertisedBenefit * spModPct / 100;
     }
     return DoneAdvertisedBenefit > 0 ? DoneAdvertisedBenefit : 0;
 }
@@ -11054,6 +11070,11 @@ int32 Unit::SpellBaseHealingBonus(SpellSchoolMask schoolMask)
         for (AuraEffectList::const_iterator i = mHealingDonebyAP.begin(); i != mHealingDonebyAP.end(); ++i)
             if ((*i)->GetMiscValue() & schoolMask)
                 AdvertisedBenefit += int32(GetTotalAttackPowerValue(BASE_ATTACK) * (*i)->GetAmount() / 100.0f);
+
+        // TODO this should modify PLAYER_FIELD_MOD_SPELL_POWER_PCT instead of all the separate power fields
+        int32 spModPct = GetMaxPositiveAuraModifier(SPELL_AURA_MOD_SPELL_POWER_PCT);
+        // should it apply to non players as well?
+        AdvertisedBenefit += AdvertisedBenefit * spModPct / 100;
     }
     return AdvertisedBenefit;
 }
