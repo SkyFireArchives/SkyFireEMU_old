@@ -436,6 +436,7 @@ void Unit::SendMonsterMoveTransport(Unit *vehicleOwner)
     data << GetTransOffsetO();
     data << uint32(SPLINEFLAG_TRANSPORT);
     data << uint32(0);// move time
+    data << uint32(1);
     data << uint32(0);//GetTransOffsetX();
     data << uint32(0);//GetTransOffsetY();
     data << uint32(0);//GetTransOffsetZ();
