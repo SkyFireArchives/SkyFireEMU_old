@@ -16917,7 +16917,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
         sLog.outError("Player %s(GUID: %u) has SpecCount = %u and ActiveSpec = %u.", GetName(), GetGUIDLow(), m_specsCount, m_activeSpec);
     }
 
-	_LoadCurrency(holder->GetResult(PLAYER_LOGIN_QUERY_LOAD_CURRENCY));
+	_LoadCurrency(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOAD_CURRENCY));
 	_LoadTalents(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADTALENTS));
     _LoadTalentBranchSpecs(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS));
     _LoadSpells(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADSPELLS));
@@ -17778,7 +17778,7 @@ void Player::_LoadWeeklyQuestStatus(PreparedQueryResult result)
     m_WeeklyQuestChanged = false;
 }
 
-void Player::_LoadCurrency(QueryResult result)
+void Player::_LoadCurrency(PreparedQueryResult result)
 {
 	//         0         1      2
 	// "SELECT currency, count, thisweek FROM character_currency WHERE guid = '%u'"
@@ -17789,14 +17789,14 @@ void Player::_LoadCurrency(QueryResult result)
 		{
 			Field *fields = result->Fetch();
 
-			uint32 currency_id = fields[0].GetUInt32();
+			uint32 currency_id = fields[0].GetUInt16();
 			uint32 totalCount = fields[1].GetUInt32();
 			uint32 weekCount = fields[2].GetUInt32();
 
 			const CurrencyTypesEntry* entry = sCurrencyTypesStore.LookupEntry(currency_id);
 			if (!entry)
 			{
-				sLog.outError("Player::_LoadCurrency: %s has not existing currency %u, removing.", currency_id);
+				sLog.outError("Player::_LoadCurrency: %s has not existing currency %u, removing.", GetName(), currency_id);
 				CharacterDatabase.PExecute("DELETE FROM character_currency WHERE currency = '%u'", currency_id);
 				continue;
 			}
