@@ -1571,7 +1571,7 @@ class Unit : public WorldObject
         Player* GetCharmerOrOwnerPlayerOrPlayerItself() const;
 
         void SetMinion(Minion *minion, bool apply, PetSlot slot);
-        //void GetAllMinionsByEntry(std::list<Creature*>& Minions, uint32 entry);
+        void GetAllMinionsByEntry(std::list<Unit*>& Minions, uint32 entry);
         void RemoveAllMinionsByEntry(uint32 entry);
         void SetCharm(Unit* target, bool apply);
         Unit* GetNextRandomRaidMemberOrPet(float radius);
