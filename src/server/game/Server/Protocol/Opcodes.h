@@ -1023,7 +1023,7 @@ enum Opcodes
     SMSG_GOGOGO_OBSOLETE                             = 0x10195, //
     SMSG_ECHO_PARTY_SQUELCH                          = 0x02AC4, // 4.0.6a 13623 
     CMSG_SET_TITLE_SUFFIX                            = 0x10196, //
-    CMSG_SPELLCLICK                                  = 0x10197, //
+    CMSG_SPELLCLICK                                  = 0x0F9A4, // 4.0.6a 13623 
     SMSG_LOOT_LIST                                   = 0x0F684, // 4.0.6a 13623
     CMSG_GM_CHARACTER_RESTORE                        = 0x10198, //
     CMSG_GM_CHARACTER_SAVE                           = 0x10199, //
@@ -1198,7 +1198,7 @@ enum Opcodes
     CMSG_QUERY_VEHICLE_STATUS                        = 0x069A0, // 4.0.6a 13623
     SMSG_BATTLEGROUND_INFO_THROTTLED                 = 0x075C4, // 4.0.6a 13623
     SMSG_PLAYER_VEHICLE_DATA                         = 0x0A5A4, // 4.0.6a 13623
-    CMSG_PLAYER_VEHICLE_ENTER                        = 0x0F9A4, // 4.0.6a 13623
+    CMSG_PLAYER_VEHICLE_ENTER                        = 0x0AEC8, // 4.0.6a 13623
     CMSG_EJECT_PASSENGER                             = 0x0F688, // 4.0.6a 13623
     SMSG_PET_GUIDS                                   = 0x0E4E8, // 4.0.6a 13623
     SMSG_CLIENTCACHE_VERSION                         = 0x02EC4, // 4.0.6a 13623
