@@ -432,13 +432,14 @@ void Unit::SendMonsterMoveTransport(Unit *vehicleOwner)
     data << GetPositionY() - vehicleOwner->GetPositionY();
     data << GetPositionZ() - vehicleOwner->GetPositionZ();
     data << uint32(getMSTime());
-    data << uint8(4);
+    data << uint8(4); // type
     data << GetTransOffsetO();
-    data << uint32(SPLINEFLAG_TRANSPORT);
-    data << uint32(0);// move time
-    data << uint32(0);//GetTransOffsetX();
-    data << uint32(0);//GetTransOffsetY();
-    data << uint32(0);//GetTransOffsetZ();
+    data << uint32(SPLINEFLAG_TRANSPORT); // flag
+    data << uint32(0);
+    data << uint32(1);
+    data << float(0);//GetTransOffsetX();
+    data << float(0);//GetTransOffsetY();
+    data << float(0);//GetTransOffsetZ();
     SendMessageToSet(&data, true);
 }
 

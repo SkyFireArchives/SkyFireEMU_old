@@ -384,7 +384,7 @@ enum Opcodes
     SMSG_MOUNTRESULT                                 = 0x02AEC, // 4.0.6a 13623 not sure
     SMSG_DISMOUNTRESULT                              = 0x0F9C0, // 4.0.6a 13623 not sure
     SMSG_PUREMOUNT_CANCELLED_OBSOLETE                = 0x0054E, // 4.0.6a 13623
-    CMSG_MOUNTSPECIAL_ANIM                           = 0x02888, // 4.0.6a 13623
+    CMSG_MOUNTSPECIAL_ANIM                           = 0x02EE4, // 4.0.6a 13623
     SMSG_MOUNTSPECIAL_ANIM                           = 0x02388, // 4.0.6a 13623
     SMSG_PET_TAME_FAILURE                            = 0x0FDA8, // 4.0.6a 13623
     CMSG_PET_SET_ACTION                              = 0x03C8C, // 4.0.6a 13623
@@ -509,7 +509,8 @@ enum Opcodes
     CMSG_AUTH_SESSION                                = 0x00E0E, // 4.0.6a 13623
     SMSG_AUTH_RESPONSE                               = 0x0B28C, // 4.0.6a 13623
     MSG_GM_SHOWLABEL                                 = 0x1008D, //
-    CMSG_PET_CAST_SPELL                              = 0x0B6A4, // 4.0.6a 13623
+   // CMSG_PET_CAST_SPELL                              = 0x0B6A4, // 4.0.6a 13623
+    CMSG_PET_CAST_SPELL                              = 0x02888, // 4.0.6a 13623
     MSG_SAVE_GUILD_EMBLEM                            = 0x031AC, // 4.0.6a 13623
     MSG_TABARDVENDOR_ACTIVATE                        = 0x02C80, // 4.0.6a 13623
     SMSG_PLAY_SPELL_VISUAL                           = 0x0FF8C, // 4.0.6a 13623
@@ -1146,7 +1147,7 @@ enum Opcodes
     CMSG_CHAR_CUSTOMIZE                              = 0x06484, // 4.0.6a 13623
     SMSG_CHAR_CUSTOMIZE                              = 0x02da4, // 4.0.6a 13623
     SMSG_PET_RENAMEABLE                              = 0x0B6C8, // 4.0.6a 13623
-    CMSG_REQUEST_VEHICLE_EXIT                        = 0x0208C, // 4.0.6a 13623
+    CMSG_REQUEST_VEHICLE_EXIT                        = 0x0B3CC, // 4.0.6a 13623
     CMSG_REQUEST_VEHICLE_PREV_SEAT                   = 0x02DE4, // 4.0.6a 13623
     CMSG_REQUEST_VEHICLE_NEXT_SEAT                   = 0x064E4, // 4.0.6a 13623
     CMSG_REQUEST_VEHICLE_SWITCH_SEAT                 = 0x0A8CC, // 4.0.6a 13623
