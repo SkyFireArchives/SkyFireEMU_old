@@ -67,11 +67,6 @@ include(cmake/genrev.cmake)
 # print out the results before continuing
 include(cmake/showoptions.cmake)
 
-if( WIN32 )
-    message("You can build the SkyFirePatcher (permanent patcher) yourself. Visual Studio Project is located in src/redirect/Patcher/")
-    message("")
-endif()
-
 # add dependencies
 add_subdirectory(dep)
 

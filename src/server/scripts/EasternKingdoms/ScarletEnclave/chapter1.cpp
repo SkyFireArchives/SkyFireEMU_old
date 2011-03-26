@@ -804,12 +804,12 @@ public:
 
         void FindMinions(Unit *owner)
         {
-            std::list<Creature*> MinionList;
+            std::list<Unit*> MinionList;
             owner->GetAllMinionsByEntry(MinionList,GHOULS);
 
             if (!MinionList.empty())
             {
-                for (std::list<Creature*>::const_iterator itr = MinionList.begin(); itr != MinionList.end(); ++itr)
+                for (std::list<Unit*>::const_iterator itr = MinionList.begin(); itr != MinionList.end(); ++itr)
                 {
                     if (CAST_CRE(*itr)->GetOwner()->GetGUID() == me->GetOwner()->GetGUID())
                     {

@@ -936,18 +936,6 @@ void BattlegroundMgr::DistributeArenaPoints()
         if (ArenaTeam * at = team_itr->second)
             at->UpdateArenaPointsHelper(PlayerPoints);
 
-    //cycle that gives points to all players
-    for (std::map<uint32, uint32>::iterator plr_itr = PlayerPoints.begin(); plr_itr != PlayerPoints.end(); ++plr_itr)
-    {
-        //update to database
-        CharacterDatabase.PExecute("UPDATE characters SET arenaPoints = arenaPoints + '%u' WHERE guid = '%u'", plr_itr->second, plr_itr->first);
-
-        //add points to player if online
-        Player* pl = sObjectMgr.GetPlayer(plr_itr->first);
-        if (pl)
-            pl->ModifyArenaPoints(plr_itr->second);
-    }
-
     PlayerPoints.clear();
 
     sWorld.SendWorldText(LANG_DIST_ARENA_POINTS_ONLINE_END);

@@ -302,9 +302,8 @@ class ChatHandler
         bool HandleModifyFactionCommand(const char* args);
         bool HandleModifySpellCommand(const char* args);
         bool HandleModifyTalentCommand (const char* args);
-        bool HandleModifyHonorCommand (const char* args);
+        bool HandleModifyCurrencyCommand (const char* args);
         bool HandleModifyRepCommand(const char* args);
-        bool HandleModifyArenaCommand(const char* args);
         bool HandleModifyPhaseCommand(const char* args);
         bool HandleModifyGenderCommand(const char* args);
 

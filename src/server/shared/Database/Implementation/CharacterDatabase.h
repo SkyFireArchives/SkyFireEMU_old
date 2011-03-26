@@ -209,7 +209,10 @@ enum CharacterDatabaseStatements
     CHAR_DEL_AURA,
     CHAR_ADD_AURA,
 
+	CHAR_LOAD_PLAYER_CURRENCY,
+
     MAX_CHARACTERDATABASE_STATEMENTS,
+
 };
 
 #endif

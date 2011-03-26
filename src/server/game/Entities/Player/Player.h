@@ -118,6 +118,23 @@ struct PlayerTalent
     uint8 spec             : 8;
 };
 
+enum PlayerCurrencyState
+{
+    PLAYERCURRENCY_UNCHANGED = 0,
+    PLAYERCURRENCY_CHANGED   = 1,
+    PLAYERCURRENCY_NEW       = 2,
+    PLAYERCURRENCY_REMOVED   = 3
+};
+
+struct PlayerCurrency
+{
+    PlayerCurrencyState state;
+    uint32 totalCount;
+    uint32 weekCount;
+};
+
+#define PLAYER_CURRENCY_PRECISION   100
+
 // Spell modifier (used for modify other spells)
 struct SpellModifier
 {
@@ -133,6 +150,7 @@ struct SpellModifier
 
 typedef UNORDERED_MAP<uint32, PlayerTalent*> PlayerTalentMap;
 typedef UNORDERED_MAP<uint32, PlayerSpell*> PlayerSpellMap;
+typedef UNORDERED_MAP<uint32, PlayerCurrency> PlayerCurrenciesMap;
 typedef std::list<SpellModifier*> SpellModList;
 
 struct SpellCooldown
@@ -800,7 +818,8 @@ enum PlayerLoginQueryIndex
     PLAYER_LOGIN_QUERY_LOADBANNED               = 29,
     PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS    = 30,
     PLAYER_LOGIN_QUERY_LOADPETSLOT              = 31,
-    MAX_PLAYER_LOGIN_QUERY                      = 32
+	PLAYER_LOGIN_QUERY_LOAD_CURRENCY            = 35,
+	MAX_PLAYER_LOGIN_QUERY                      = 36
 };
 
 enum PlayerDelayedOperations
@@ -1215,6 +1234,12 @@ class Player : public Unit, public GridObject<Player>
 
         void AddRefundReference(uint32 it);
         void DeleteRefundReference(uint32 it);
+
+		void SendCurrencies() const;
+		uint32 GetCurrency(uint32 id) const;
+		bool HasCurrency(uint32 id, uint32 count) const;
+		void SetCurrency(uint32 id, uint32 count);
+		void ModifyCurrency(uint32 id, int32 count);
 
         void ApplyEquipCooldown(Item * pItem);
         void SetAmmo(uint32 item);
@@ -1966,25 +1991,9 @@ class Player : public Unit, public GridObject<Player>
         /*********************************************************/
         void UpdateHonorFields();
         bool RewardHonor(Unit *pVictim, uint32 groupsize, int32 honor = -1, bool pvptoken = false);
-        uint32 GetHonorPoints() { return m_honorPoints; }
-        uint32 GetArenaPoints() { return m_arenaPoints; }
-        void ModifyHonorPoints(int32 value);
-        void ModifyArenaPoints(int32 value);
         uint32 GetMaxPersonalArenaRatingRequirement(uint32 minarenaslot);
-        void SetHonorPoints(uint32 value)
-        {
-            m_honorPoints = value;
-            if (value)
-                AddKnownCurrency(ITEM_HONOR_POINTS_ID); // Arena Points
-        }
-        void SetArenaPoints(uint32 value)
-        {
-            m_arenaPoints = value;
-            if (value)
-                AddKnownCurrency(ITEM_ARENA_POINTS_ID); // Arena Points
-        }
-
-        //End of PvP System
+        
+		//End of PvP System
 
         inline SpellCooldowns GetSpellCooldowns() const { return m_spellCooldowns; }
 
@@ -2510,6 +2519,7 @@ class Player : public Unit, public GridObject<Player>
         void _LoadGlyphs(PreparedQueryResult result);
         void _LoadTalents(PreparedQueryResult result);
         void _LoadTalentBranchSpecs(PreparedQueryResult result);
+		void _LoadCurrency(PreparedQueryResult result);
 
         /*********************************************************/
         /***                   SAVE SYSTEM                     ***/
@@ -2529,6 +2539,7 @@ class Player : public Unit, public GridObject<Player>
         void _SaveGlyphs(SQLTransaction& trans);
         void _SaveTalents(SQLTransaction& trans);
         void _SaveTalentBranchSpecs(SQLTransaction& trans);
+		void _SaveCurrency();
         void _SaveStats(SQLTransaction& trans);
 
         void _SetCreateBits(UpdateMask *updateMask, Player *target) const;
@@ -2547,8 +2558,6 @@ class Player : public Unit, public GridObject<Player>
         /***                  HONOR SYSTEM                     ***/
         /*********************************************************/
         time_t m_lastHonorUpdateTime;
-        uint32 m_honorPoints;
-        uint32 m_arenaPoints;
         
         void outDebugValues() const;
         uint64 m_lootGuid;
@@ -2565,6 +2574,8 @@ class Player : public Unit, public GridObject<Player>
 
         Item* m_items[PLAYER_SLOTS_COUNT];
         uint32 m_currentBuybackSlot;
+		PlayerCurrenciesMap m_currencies;
+		uint32 _GetCurrencyWeekCap(const CurrencyTypesEntry* currency) const;
 
         std::vector<Item*> m_itemUpdateQueue;
         bool m_itemUpdateQueueBlocked;
@@ -2707,9 +2718,6 @@ class Player : public Unit, public GridObject<Player>
         std::set<uint32> m_refundableItems;
         void SendRefundInfo(Item* item);
         void RefundItem(Item* item);
-
-        // know currencies are not removed at any point (0 displayed)
-        void AddKnownCurrency(uint32 itemId);
 
         int32 CalculateReputationGain(uint32 creatureOrQuestLevel, int32 rep, int32 faction, bool for_quest, bool noQuestBonus = false);
         void AdjustQuestReqItemCount(Quest const* pQuest, QuestStatusData& questStatusData);

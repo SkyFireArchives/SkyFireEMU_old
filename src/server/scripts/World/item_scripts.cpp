@@ -258,7 +258,7 @@ public:
 
     bool OnUse(Player* pPlayer, Item* /*pItem*/, SpellCastTargets const& /*targets*/)
     {
-        std::list<Creature*> MinionList;
+        std::list<Unit*> MinionList;
         pPlayer->GetAllMinionsByEntry(MinionList,GHOULS);
 
         if (pPlayer->GetQuestStatus(12698) == QUEST_STATUS_INCOMPLETE)

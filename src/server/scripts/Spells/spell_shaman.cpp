@@ -29,6 +29,11 @@ enum ShamanSpells
     SHAMAN_SPELL_GLYPH_OF_MANA_TIDE     = 55441,
     SHAMAN_SPELL_FIRE_NOVA           = 1535,
     SHAMAN_SPELL_FIRE_NOVA_TRIGGERED = 8349,
+    SHAMAN_SPELL_EARTH_SHOCK            = 8042,
+    SHAMAN_SPELL_FULMINATION            = 88766,
+    SHAMAN_SPELL_FULMINATION_TRIGGERED  = 88767,
+    SHAMAN_SPELL_FULMINATION_INFO       = 95774,
+    SHAMAN_SPELL_LIGHTNING_SHIELD_PROC  = 26364,
 
     SHAMAN_SPELL_UNLEASH_ELEMENTS       = 73680,
     
@@ -36,7 +41,11 @@ enum ShamanSpells
     SHAMAN_TOTEM_SPELL_EARTHBIND_TOTEM  = 6474, //Spell casted by totem
     SHAMAN_TOTEM_SPELL_EARTHEN_POWER    = 59566,//Spell witch remove snare effect
     SHAMAN_TOTEM_SPELL_EARTHS_GRASP     = 51485,
-    SHAMAN_TOTEM_SPELL_EARTHGRAB        = 64695
+    SHAMAN_TOTEM_SPELL_EARTHGRAB        = 64695,
+
+    SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH    = 77746,
+    SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH_AURA = 77747,
+
 };
 
 // 51474 - Astral shift
@@ -257,10 +266,118 @@ public:
     }
 };
 
+// 77746 - Totemic Wrath
+class spell_sha_totemic_wrath : public SpellScriptLoader
+{
+public:
+    spell_sha_totemic_wrath() : SpellScriptLoader("spell_sha_totemic_wrath") { }
+
+    class spell_sha_totemic_wrath_AuraScript : public AuraScript
+    {
+        PrepareAuraScript(spell_sha_totemic_wrath_AuraScript); 
+
+        bool Validate(SpellEntry const * /*spellEntry*/)
+        {
+            if (!sSpellStore.LookupEntry(SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH)) 
+                return false;
+            if (!sSpellStore.LookupEntry(SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH_AURA))
+                return false;
+            return true;
+        }
+
+        void HandleEffectApply(AuraEffect const * aurEff, AuraEffectHandleModes /*mode*/)
+        {
+            Unit* target = GetTarget();
+            if(target->ToPlayer())
+                return; // just apply as dummy
+
+            // applied by a totem - cast the real aura if owner has the talent
+            if (Unit *caster = aurEff->GetBase()->GetCaster())
+                if (caster->GetAuraEffect(SPELL_AURA_DUMMY, SPELLFAMILY_GENERIC, 2019, 0))
+                    target->CastSpell(target, SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH_AURA, true, NULL, aurEff);
+        }
+
+        void Register()
+        {
+            OnEffectApply += AuraEffectApplyFn(spell_sha_totemic_wrath_AuraScript::HandleEffectApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+        }
+    };
+
+    AuraScript *GetAuraScript() const
+    {
+        return new spell_sha_totemic_wrath_AuraScript();
+    }
+};
+
+// 88766 Fulmination handled in 8042 Earth Shock
+class spell_sha_fulmination : public SpellScriptLoader
+{
+public:
+    spell_sha_fulmination() : SpellScriptLoader("spell_sha_fulmination") { }
+
+    class spell_sha_fulminationSpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_sha_fulminationSpellScript)
+
+        bool Validate(SpellEntry const * /*spellEntry*/)
+        {
+            if (!sSpellStore.LookupEntry(SHAMAN_SPELL_FULMINATION))
+                return false;
+            if (!sSpellStore.LookupEntry(SHAMAN_SPELL_FULMINATION_TRIGGERED))
+                return false;
+            if (!sSpellStore.LookupEntry(SHAMAN_SPELL_FULMINATION_INFO))
+                return false;
+            return true;
+        }
+
+        void HandleFulmination(SpellEffIndex /*effIndex*/)
+        {
+            // make caster cast a spell on a unit target of effect
+            Unit *target = GetHitUnit();
+            Unit *caster = GetCaster();
+            if(!target || !caster)
+                return;
+            
+            AuraEffect *fulminationAura = caster->GetDummyAuraEffect(SPELLFAMILY_SHAMAN, 2010, 0);
+            if (!fulminationAura)
+                return;
+
+            Aura * lightningShield = caster->GetAura(324);
+            if(!lightningShield)
+                return;
+            uint8 lsCharges = lightningShield->GetCharges();
+            if(lsCharges <= 3)
+                return;
+            uint8 usedCharges = lsCharges - 3;
+
+            SpellEntry const* spellInfo = sSpellStore.LookupEntry(SHAMAN_SPELL_LIGHTNING_SHIELD_PROC);
+            int32 basePoints = caster->CalculateSpellDamage(target, spellInfo, 0);
+            uint32 damage = usedCharges * caster->SpellDamageBonus(target, spellInfo, basePoints, SPELL_DIRECT_DAMAGE);
+
+            caster->CastCustomSpell(SHAMAN_SPELL_FULMINATION_TRIGGERED, SPELLVALUE_BASE_POINT0, damage, target, true, NULL, fulminationAura);
+            lightningShield->SetCharges(lsCharges - usedCharges);
+        }
+
+        // register functions used in spell script - names of these functions do not matter
+        void Register()
+        {
+            OnEffect += SpellEffectFn(spell_sha_fulminationSpellScript::HandleFulmination, EFFECT_FIRST_FOUND, SPELL_EFFECT_ANY);
+        }
+    };
+
+    // function which creates SpellScript
+    SpellScript *GetSpellScript() const
+    {
+        return new spell_sha_fulminationSpellScript();
+    }
+};
+
 void AddSC_shaman_spell_scripts()
 {
     new spell_sha_astral_shift();
     new spell_sha_fire_nova();
     new spell_sha_earthbind_totem();
     new spell_sha_unleash_elements();
+    new spell_sha_totemic_wrath();
+    new spell_sha_fulmination();
 }
