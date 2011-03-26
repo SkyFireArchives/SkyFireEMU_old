@@ -469,8 +469,8 @@ enum Opcodes
     SMSG_TURN_IN_PETITION_RESULTS                    = 0x035AC, // 4.0.6a 13623
     CMSG_PETITION_QUERY                              = 0x0B1AC, // 4.0.6a 13623
     SMSG_PETITION_QUERY_RESPONSE                     = 0x0FB80, // 4.0.6a 13623
-    SMSG_FISH_NOT_HOOKED                             = 0x10087, //
-    SMSG_FISH_ESCAPED                                = 0x10088, //
+    SMSG_FISH_NOT_HOOKED                             = 0x039EC, // 4.0.6a 13623
+    SMSG_FISH_ESCAPED                                = 0x0F080, // 4.0.6a 13623
     CMSG_BUG                                         = 0x034AC, // 4.0.6a 13623
     SMSG_NOTIFICATION                                = 0x0BC88, // 4.0.6a 13623
     CMSG_PLAYED_TIME                                 = 0x0F480, // 4.0.6a 13623
