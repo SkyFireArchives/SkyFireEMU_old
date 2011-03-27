@@ -4627,17 +4627,40 @@ void AuraEffect::HandleAuraModResistanceExclusive(AuraApplication const *aurApp,
         return;
 
     Unit *target = aurApp->GetTarget();
-
     for (int8 x = SPELL_SCHOOL_NORMAL; x < MAX_SPELL_SCHOOL; x++)
     {
         if (GetMiscValue() & int32(1 << x))
         {
             int32 amount = target->GetMaxPositiveAuraModifierByMiscMask(SPELL_AURA_MOD_RESISTANCE_EXCLUSIVE, 1<<x, this);
-            if (amount < GetAmount())
+            int32 modAmount = target->getLevel();
+            switch( GetId() )
             {
-                target->HandleStatModifier(UnitMods(UNIT_MOD_RESISTANCE_START + x), BASE_VALUE, float(GetAmount() - amount), apply);
+                // Some other resists may have the same formula. If so they have not been found and should be added here.
+                case 20043: // Aspect of the Wild
+                    if ( modAmount <= 70 )
+                    {
+                        modAmount *= 1;
+                        break;
+                    }
+                    if ( modAmount > 70 && modAmount < 81 )
+                    {
+                        modAmount += (modAmount-70)*5;
+                        break;
+                    }
+                    if ( modAmount > 80 && modAmount <= 85 )
+                    {
+                        modAmount += ((modAmount-70)*5 + (modAmount-80)*7);
+                        break;
+                    }
+                default:
+                    modAmount = GetAmount();
+                    break;
+            }
+            if (amount < modAmount )
+            {
+                target->HandleStatModifier(UnitMods(UNIT_MOD_RESISTANCE_START + x), BASE_VALUE, float(modAmount - amount), apply);
                 if (target->GetTypeId() == TYPEID_PLAYER)
-                    target->ApplyResistanceBuffModsMod(SpellSchools(x), aurApp->IsPositive(), float(GetAmount() - amount), apply);
+                    target->ApplyResistanceBuffModsMod(SpellSchools(x), aurApp->IsPositive(), float(modAmount - amount), apply);
             }
         }
     }
