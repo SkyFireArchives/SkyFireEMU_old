@@ -10948,7 +10948,7 @@ void Player::ModifyCurrency(uint32 id, int32 count)
 	}
 
 	// if we change total, we must change week
-	ASSERT(((newTotalCount-oldTotalCount) != 0) == ((newWeekCount-oldWeekCount) != 0));
+	//ASSERT(((newTotalCount-oldTotalCount) != 0) == ((newWeekCount-oldWeekCount) != 0));
 
 	if (newTotalCount != oldTotalCount)
 	{
