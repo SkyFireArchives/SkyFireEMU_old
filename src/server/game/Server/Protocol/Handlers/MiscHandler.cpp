@@ -1730,7 +1730,7 @@ void WorldSession::SendSetPhaseShift(uint32 PhaseShift, uint32 MapID)
     if (MapID)
     {
         data << uint32(2); // Count of bytes - Array4 - TerrainSwap
-        data << uint32(MapID);
+        data << uint16(MapID);
         // Note that more than one map merges are supported.
     }
     else data << uint32(0);
