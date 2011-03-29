@@ -842,7 +842,7 @@ private:
     uint32 m_block;
 public:
     explicit DamageInfo(Unit * _attacker, Unit * _victim, uint32 _damage, SpellEntry const * _spellInfo, SpellSchoolMask _schoolMask, DamageEffectType _damageType)
-        : m_attacker(_attacker), m_victim(_victim), m_damage(_damage), m_spellInfo(_spellInfo), m_schoolMask(_schoolMask), m_damageType(_damageType)
+        : m_attacker(_attacker), m_victim(_victim), m_damageType(_damageType), m_spellInfo(_spellInfo), m_schoolMask(_schoolMask), m_damage(_damage)
     {
         m_absorb = 0;
         m_resist = 0;

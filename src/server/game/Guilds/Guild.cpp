@@ -1357,10 +1357,10 @@ void Guild::HandleRoster(WorldSession *session /*= NULL*/)
         data7 << m_ranks[i].m_name;
         data7 << uint32(m_ranks[i].m_rights);
 
-        for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
+        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
         //    data7 << uint32(m_ranks[i].m_bankMoneyPerDay);
             data7 << uint32(0xFFFFFFFF);
-        for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
+        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
             //data7 << uint32(m_ranks[i].m_rights);
             data7 << uint32(0xFFFFFFFF);
 
@@ -1395,14 +1395,14 @@ void Guild::HandleQuery(WorldSession *session)
             data << uint8(0);                                       // Empty string
     }
 
-    for(int i = 0; i < GUILD_RANKS_MAX_COUNT; ++i)
+    for(uint8 i = 0; i < GUILD_RANKS_MAX_COUNT; ++i)
     {
         if (i < _GetRanksSize())
             data << uint32(i);
         else
             data << uint32(0);
     }
-    for(int i = 0; i < GUILD_RANKS_MAX_COUNT; ++i)
+    for(uint8 i = 0; i < GUILD_RANKS_MAX_COUNT; ++i)
     {
         if (i < _GetRanksSize())
             data << uint32(i);
@@ -2005,10 +2005,10 @@ void Guild::SendPermissions(WorldSession *session) const
         data7 << m_ranks[i].m_name;
         data7 << uint32(m_ranks[i].m_rights);
 
-        for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
+        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
             data7 << uint32(m_ranks[i].m_bankMoneyPerDay);
             //data7 << uint32(0xFFFFFFFF);
-        for(int j = 0; j < GUILD_BANK_MAX_TABS; j++)
+        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
             data7 << uint32(m_ranks[i].m_rights);
             //data7 << uint32(0xFFFFFFFF);
 

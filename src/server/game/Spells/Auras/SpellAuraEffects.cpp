@@ -820,7 +820,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                     const MountCapabilityEntry *cap = sMountCapabilityStore.LookupEntry(type->capabilities[i]);
                     if(!cap)
                         continue;
-                    if(cap->map != -1 && cap->map != map)
+                    if(cap->map != ((uint32)-1) && cap->map != map)
                         continue;
                     if(cap->reqSkillLevel > plrskill || cap->reqSkillLevel <= maxSkill)
                         continue;

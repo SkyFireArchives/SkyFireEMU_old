@@ -2515,7 +2515,7 @@ public:
     bool OnGossipHello(Player* pPlayer, Creature* pCreature)
     {
         uint32 uiGossipText = 0;
-        char* charGossipItem = "";
+        std::string charGossipItem;
 
         switch(pCreature->GetEntry())
         {
