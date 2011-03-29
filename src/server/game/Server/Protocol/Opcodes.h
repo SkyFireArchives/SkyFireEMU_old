@@ -1151,6 +1151,7 @@ enum Opcodes
     SMSG_CHAR_CUSTOMIZE                              = 0x02da4, // 4.0.6a 13623
     SMSG_PET_RENAMEABLE                              = 0x0B6C8, // 4.0.6a 13623
     CMSG_REQUEST_VEHICLE_EXIT                        = 0x0B3CC, // 4.0.6a 13623
+    CMSG_REQUEST_PLAYER_VEHICLE_EXIT                 = 0x0208C, // 4.0.6a 13623
     CMSG_REQUEST_VEHICLE_PREV_SEAT                   = 0x02DE4, // 4.0.6a 13623
     CMSG_REQUEST_VEHICLE_NEXT_SEAT                   = 0x064E4, // 4.0.6a 13623
     CMSG_REQUEST_VEHICLE_SWITCH_SEAT                 = 0x0A8CC, // 4.0.6a 13623
@@ -1246,7 +1247,7 @@ enum Opcodes
     CMSG_BATTLEFIELD_MGR_EXIT_REQUEST                = 0x08580, // 4.0.6a 13623
     SMSG_BATTLEFIELD_MGR_STATE_CHANGE                = 0x0352D, // 4.0.6a 13623
     MSG_SET_RAID_DIFFICULTY                          = 0x0B5E8, // 4.0.6a 13623
-    SMSG_TOGGLE_XP_GAIN                              = 0x02655, //
+    SMSG_TOGGLE_XP_GAIN                              = 0x07980, // 4.0.6a 13623
     SMSG_GMRESPONSE_DB_ERROR                         = 0x09576, //
     SMSG_GMRESPONSE_RECEIVED                         = 0x00F57, //
     CMSG_GMRESPONSE_RESOLVE                          = 0x0455E, //
