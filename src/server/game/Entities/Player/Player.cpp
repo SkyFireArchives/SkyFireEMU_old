@@ -10993,14 +10993,14 @@ uint32 Player::_GetCurrencyWeekCap(const CurrencyTypesEntry* currency) const
 		}
 	case CURRENCY_TYPE_HONOR_POINTS:
 		{
-			uint32 honorcap = sWorld.getIntConfig(CONFIG_MAX_HONOR_POINTS);
+			uint32 honorcap = sWorld.getIntConfig(CONFIG_MAX_HONOR_POINTS) * PLAYER_CURRENCY_PRECISION;
 			if (honorcap > 0)
 				cap = honorcap;
 			break;
 		}
 	case CURRENCY_TYPE_JUSTICE_POINTS:
 		{
-			uint32 justicecap = sWorld.getIntConfig(CONFIG_MAX_JUSTICE_POINTS);
+			uint32 justicecap = sWorld.getIntConfig(CONFIG_MAX_JUSTICE_POINTS) * PLAYER_CURRENCY_PRECISION;
 			if (justicecap > 0)
 				cap = justicecap;
 			break;
@@ -18434,6 +18434,7 @@ void Player::SaveToDB()
     _SaveEquipmentSets(trans);
     GetSession()->SaveTutorialsData(trans);                 // changed only while character in game
     _SaveGlyphs(trans);
+    _SaveCurrency();
 
     // check if stats should only be saved on logout
     // save stats can be out of transaction
