@@ -93,7 +93,7 @@ class boss_rotface : public CreatureScript
 
             void InitializeAI()
             {
-                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
+                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCSCRIPTNAME))
                     me->IsAIEnabled = false;
                 else if (!me->isDead())
                     Reset();

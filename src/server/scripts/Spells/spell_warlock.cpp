@@ -149,7 +149,7 @@ public:
         //deprecated. removed in cataclysm
         /*static uint32 const iTypes[8][3];
 
-        bool Validate(SpellEntry const * /*spellEntry*//*)
+        bool Validate(SpellEntry const spellEntry)
         {
             if (!sSpellStore.LookupEntry(WARLOCK_IMPROVED_HEALTHSTONE_R1))
                 return false;
@@ -160,7 +160,7 @@ public:
 
         void HandleScriptEffect(SpellEffIndex effIndex)
         {
-            if (Unit* unitTarget = GetHitUnit())
+            if (GetHitUnit())
             {
                 //spell ranking deprecated in cataclysm
                 /*uint32 rank = 0;

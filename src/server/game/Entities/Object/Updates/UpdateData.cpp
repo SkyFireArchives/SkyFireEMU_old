@@ -30,7 +30,7 @@
 #include "World.h"
 #include "zlib.h"
 
-UpdateData::UpdateData() : m_blockCount(0), m_map(0)
+UpdateData::UpdateData() : m_map(0), m_blockCount(0)
 {
 }
 

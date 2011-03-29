@@ -842,7 +842,7 @@ private:
     uint32 m_block;
 public:
     explicit DamageInfo(Unit * _attacker, Unit * _victim, uint32 _damage, SpellEntry const * _spellInfo, SpellSchoolMask _schoolMask, DamageEffectType _damageType)
-        : m_attacker(_attacker), m_victim(_victim), m_damage(_damage), m_spellInfo(_spellInfo), m_schoolMask(_schoolMask), m_damageType(_damageType)
+        : m_attacker(_attacker), m_victim(_victim), m_damageType(_damageType), m_spellInfo(_spellInfo), m_schoolMask(_schoolMask), m_damage(_damage)
     {
         m_absorb = 0;
         m_resist = 0;
@@ -1945,6 +1945,7 @@ class Unit : public WorldObject
 
         void SetHover(bool on);
         bool isHover() const { return HasAuraType(SPELL_AURA_HOVER); }
+        bool isCamouflaged() const { return HasAuraType(SPELL_AURA_MOD_CAMOUFLAGE); }
 
         int32 ApplyEffectModifiers(SpellEntry const* spellProto, uint8 effect_index, int32 value) const;
         int32 CalculateSpellDamage(Unit const* target, SpellEntry const* spellProto, uint8 effect_index, int32 const* basePoints = NULL) const;

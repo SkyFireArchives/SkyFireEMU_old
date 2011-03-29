@@ -855,7 +855,7 @@ void WorldSession::BuildPartyMemberStatsChangedPacket(Player *player, WorldPacke
         }
     }
 
-    if (mask & GROUP_UPDATE_FLAG_UNK)   // 4.0.6 unk
+    if (mask & GROUP_UPDATE_FLAG_PHASE)   // 4.0.6 unk
     {
         *data << (uint32) 0;
         *data << (uint32) 0;

@@ -43,7 +43,7 @@ static const DoorData doorData[] =
 class instance_icecrown_citadel : public InstanceMapScript
 {
     public:
-        instance_icecrown_citadel() : InstanceMapScript(ICCScriptName, 631) { }
+        instance_icecrown_citadel() : InstanceMapScript(ICCSCRIPTNAME, 631) { }
 
         struct instance_icecrown_citadel_InstanceMapScript : public InstanceScript
         {

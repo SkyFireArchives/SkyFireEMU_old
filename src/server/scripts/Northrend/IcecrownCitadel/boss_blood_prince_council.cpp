@@ -187,7 +187,7 @@ class boss_blood_council_controller : public CreatureScript
 
             void InitializeAI()
             {
-                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
+                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCSCRIPTNAME))
                     me->IsAIEnabled = false;
                 else if (!me->isDead())
                     Reset();
@@ -361,7 +361,7 @@ class boss_prince_keleseth_icc : public CreatureScript
                     if (data->curhealth)
                         spawnHealth = data->curhealth;
 
-                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
+                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCSCRIPTNAME))
                     me->IsAIEnabled = false;
                 else if (!me->isDead())
                     JustRespawned();
@@ -537,7 +537,7 @@ class boss_prince_taldaram_icc : public CreatureScript
                     if (data->curhealth)
                         spawnHealth = data->curhealth;
 
-                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
+                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCSCRIPTNAME))
                     me->IsAIEnabled = false;
                 else if (!me->isDead())
                     JustRespawned();
@@ -727,7 +727,7 @@ class boss_prince_valanar_icc : public CreatureScript
                     if (data->curhealth)
                         spawnHealth = data->curhealth;
 
-                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
+                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCSCRIPTNAME))
                     me->IsAIEnabled = false;
                 else if (!me->isDead())
                     JustRespawned();
@@ -932,7 +932,7 @@ class npc_blood_queen_lana_thel : public CreatureScript
 
             void InitializeAI()
             {
-                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
+                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCSCRIPTNAME))
                     me->IsAIEnabled = false;
                 else if (!me->isDead())
                     Reset();

@@ -342,9 +342,9 @@ private:
         uint32 m_zoneId;
         uint8  m_level;
         uint8  m_class;
+		uint8 m_flags;
         uint64 m_logoutTime;
         uint32 m_accountId;
-        uint8 m_flags;
         // Fields from guild_member table
         uint8  m_rankId;
         std::string m_publicNote;

@@ -390,7 +390,7 @@ pAuraEffectHandler AuraEffectHandler[TOTAL_AURAS]=
     &AuraEffect::HandleNULL,                                      //330
     &AuraEffect::HandleNULL,                                      //331
     &AuraEffect::HandleNULL,                                      //332
-    &AuraEffect::HandleNULL,                                      //333
+    &AuraEffect::HandleModTrapLauncher,                           //333 SPELL_AURA_MOD_TRAP_LAUNCHER
     &AuraEffect::HandleNULL,                                      //334
     &AuraEffect::HandleNULL,                                      //335
     &AuraEffect::HandleNULL,                                      //336
@@ -410,7 +410,7 @@ pAuraEffectHandler AuraEffectHandler[TOTAL_AURAS]=
     &AuraEffect::HandleNULL,                                      //350
     &AuraEffect::HandleNULL,                                      //351
     &AuraEffect::HandleNULL,                                      //352
-    &AuraEffect::HandleNULL,                                      //353
+    &AuraEffect::HandleModCamouflage,                             //353 SPELL_AURA_CAMOUFLAGE
 };
 
 AuraEffect::AuraEffect(Aura *base, uint8 effIndex, int32 *baseAmount, Unit *caster) :
@@ -820,7 +820,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                     const MountCapabilityEntry *cap = sMountCapabilityStore.LookupEntry(type->capabilities[i]);
                     if(!cap)
                         continue;
-                    if(cap->map != -1 && cap->map != map)
+                    if(cap->map != ((uint32)-1) && cap->map != map)
                         continue;
                     if(cap->reqSkillLevel > plrskill || cap->reqSkillLevel <= maxSkill)
                         continue;
@@ -2876,6 +2876,30 @@ void AuraEffect::HandleInvisibility(AuraApplication const *aurApp, uint8 mode, b
     }
 }
 
+//TODO: Finish this aura
+void AuraEffect::HandleModTrapLauncher(AuraApplication const *aurApp, uint8 mode, bool apply) const
+{
+}
+
+//TODO: Finish this aura
+void AuraEffect::HandleModCamouflage(AuraApplication const *aurApp, uint8 mode, bool apply) const
+{
+    if (!(mode & AURA_EFFECT_HANDLE_SEND_FOR_CLIENT_MASK))
+        return;
+
+    Unit *target = aurApp->GetTarget();
+
+    if (apply)
+    {
+        target->CastSpell(target,80326,true);
+    }
+    else if (!(target->isCamouflaged()))
+    {
+        target->RemoveAura(80326);
+        target->RemoveAura(80325);
+    }
+}
+
 void AuraEffect::HandleModStealth(AuraApplication const *aurApp, uint8 mode, bool apply) const
 {
     if (!(mode & AURA_EFFECT_HANDLE_SEND_FOR_CLIENT_MASK))
@@ -2908,7 +2932,6 @@ void AuraEffect::HandleModStealth(AuraApplication const *aurApp, uint8 mode, boo
         target->RemoveStandFlags(UNIT_STAND_FLAGS_CREEP);
         if (target->GetTypeId() == TYPEID_PLAYER)
             target->RemoveByteFlag(PLAYER_FIELD_BYTES2, 3, PLAYER_FIELD_BYTE2_STEALTH);
-
         if (target->GetVisibility() != VISIBILITY_OFF)
             target->SetVisibility(VISIBILITY_ON);
     }
@@ -4627,17 +4650,40 @@ void AuraEffect::HandleAuraModResistanceExclusive(AuraApplication const *aurApp,
         return;
 
     Unit *target = aurApp->GetTarget();
-
     for (int8 x = SPELL_SCHOOL_NORMAL; x < MAX_SPELL_SCHOOL; x++)
     {
         if (GetMiscValue() & int32(1 << x))
         {
             int32 amount = target->GetMaxPositiveAuraModifierByMiscMask(SPELL_AURA_MOD_RESISTANCE_EXCLUSIVE, 1<<x, this);
-            if (amount < GetAmount())
+            int32 modAmount = target->getLevel();
+            switch( GetId() )
             {
-                target->HandleStatModifier(UnitMods(UNIT_MOD_RESISTANCE_START + x), BASE_VALUE, float(GetAmount() - amount), apply);
+                // Some other resists may have the same formula. If so they have not been found and should be added here.
+                case 20043: // Aspect of the Wild
+                    if ( modAmount <= 70 )
+                    {
+                        modAmount *= 1;
+                        break;
+                    }
+                    if ( modAmount > 70 && modAmount < 81 )
+                    {
+                        modAmount += (modAmount-70)*5;
+                        break;
+                    }
+                    if ( modAmount > 80 && modAmount <= 85 )
+                    {
+                        modAmount += ((modAmount-70)*5 + (modAmount-80)*7);
+                        break;
+                    }
+                default:
+                    modAmount = GetAmount();
+                    break;
+            }
+            if (amount < modAmount )
+            {
+                target->HandleStatModifier(UnitMods(UNIT_MOD_RESISTANCE_START + x), BASE_VALUE, float(modAmount - amount), apply);
                 if (target->GetTypeId() == TYPEID_PLAYER)
-                    target->ApplyResistanceBuffModsMod(SpellSchools(x), aurApp->IsPositive(), float(GetAmount() - amount), apply);
+                    target->ApplyResistanceBuffModsMod(SpellSchools(x), aurApp->IsPositive(), float(modAmount - amount), apply);
             }
         }
     }
