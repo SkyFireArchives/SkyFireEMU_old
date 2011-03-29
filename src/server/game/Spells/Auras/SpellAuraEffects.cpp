@@ -2989,6 +2989,8 @@ void AuraEffect::HandleAuraGhost(AuraApplication const *aurApp, uint8 mode, bool
 
 void AuraEffect::HandlePhase(AuraApplication const *aurApp, uint8 mode, bool apply) const
 {
+    // MiscValue is PhaseMask
+    // MiscValueB is PhaseID (from Phase.dbc)
     if (!(mode & AURA_EFFECT_HANDLE_REAL))
         return;
 
@@ -3018,9 +3020,9 @@ void AuraEffect::HandlePhase(AuraApplication const *aurApp, uint8 mode, bool app
         }
 
         if (apply)
-            target->ToPlayer()->GetSession()->SendSetPhaseShift(GetMiscValue());
+            target->ToPlayer()->GetSession()->SendSetPhaseShift(GetMiscValueB());
         else
-            target->ToPlayer()->GetSession()->SendSetPhaseShift(PHASEMASK_NORMAL);
+            target->ToPlayer()->GetSession()->SendSetPhaseShift(0);
     }
     else if (apply)
         target->SetPhaseMask(GetMiscValue(), false);

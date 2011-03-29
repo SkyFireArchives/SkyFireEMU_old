@@ -140,11 +140,12 @@ enum Opcodes
     CMSG_GUILD_MOTD                                  = 0x0272D, // 4.0.6a 13623
     SMSG_GUILD_EVENT                                 = 0x0B7C4, // 4.0.6a 13623
     SMSG_GUILD_UPDATE_ROSTER                         = 0x0085E, // 4.0.6a 13623, unimplemented
-    SMSG_GUILD_RANKS_UPDATE                             = 0x0004C, // 4.0.6a 13623, unimplemented
-    SMSG_GUILD_REWARDS_LIST                             = 0x00C4C, // 4.0.6a 13623, unimplemented
+    SMSG_GUILD_RANKS_UPDATE                          = 0x0004C, // 4.0.6a 13623, unimplemented
+    SMSG_GUILD_REWARDS_LIST                          = 0x00C4C, // 4.0.6a 13623, unimplemented
     SMSG_GUILD_TRADESKILL_UPDATE                     = 0x0454E, // 4.0.6a 13623, unimplemented
-    SMSG_GUILD_MAX_DAILY_XP                             = 0x0441C, // 4.0.6a 13623, unimplemented
-    SMSG_GUILD_NEWS_UPDATE                             = 0x0485E, // 4.0.6a 13623, unimplemented
+    SMSG_GUILD_MAX_DAILY_XP_UPDATE                   = 0x0441C, // 4.0.6a 13623, unimplemented
+    SMSG_GUILD_NEWS_UPDATE                           = 0x0485E, // 4.0.6a 13623, unimplemented
+    SMSG_GUILD_XP_UPDATE                             = 0x0440E, // 4.0.6a 13623, unimplemented
     SMSG_GUILD_COMMAND_RESULT                        = 0x023C0, // 4.0.6a 13623
     CMSG_MESSAGECHAT_SAY                             = 0x0002A, // 4.0.6a 13623
     CMSG_MESSAGECHAT_YELL                            = 0x00802, // 4.0.6a 13623
@@ -1157,7 +1158,7 @@ enum Opcodes
     CMSG_REQUEST_VEHICLE_SWITCH_SEAT                 = 0x0A8CC, // 4.0.6a 13623
     CMSG_PET_LEARN_TALENT                            = 0x0A7A0, // 4.0.6a 13623
     CMSG_PET_UNLEARN_TALENTS                         = 0x08F5D, //
-    SMSG_SET_PHASE_SHIFT                             = 0x022ED, // 4.0.6a 13623
+    SMSG_SET_PHASE_SHIFT                             = 0x0044C, // 4.0.6a 13623
     SMSG_ALL_ACHIEVEMENT_DATA                        = 0x0400E, // 4.0.6a 13623
     CMSG_FORCE_SAY_CHEAT                             = 0x101E7, //
     SMSG_HEALTH_UPDATE                               = 0x02AA8, // 4.0.6a 13623
