@@ -19629,7 +19629,8 @@ bool Player::IsAffectedBySpellmod(SpellEntry const *spellInfo, SpellModifier *mo
 void Player::AddSpellMod(SpellModifier* mod, bool apply)
 {
     sLog.outDebug("Player::AddSpellMod %d", mod->spellId);
-    uint32 Opcode = (mod->type == SPELLMOD_FLAT) ? SMSG_SET_FLAT_SPELL_MODIFIER : SMSG_SET_PCT_SPELL_MODIFIER;
+    bool isFlat = mod->type == SPELLMOD_FLAT;
+    uint32 Opcode = (isFlat) ? SMSG_SET_FLAT_SPELL_MODIFIER : SMSG_SET_PCT_SPELL_MODIFIER;
     
     WorldPacket data(Opcode);
     data << uint32(1); //number of spell mod to add
@@ -19655,7 +19656,10 @@ void Player::AddSpellMod(SpellModifier* mod, bool apply)
             }
             val += apply ? mod->value : -(mod->value);
             data << uint8(eff);
-            data << int32(val);
+            if(isFlat)
+                data << int32(val);
+            else
+                data << float(val);
             count2++;
         }
     }
