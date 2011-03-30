@@ -41,9 +41,9 @@ class npc_four_car_garage : public CreatureScript
                         case NPC_DEMOLISHER:
                             spellId = 68365;
                             break;
-                        case NPC_GLAIVE_THROWER:
-                            spellId = 68363;
-                            break;
+                        //case NPC_GLAIVE_THROWER:
+                        //    spellId = 68363;
+                        //    break;
                         case NPC_SIEGE_ENGINE_H:
                         case NPC_SIEGE_ENGINE_A:
                             spellId = 68364;
