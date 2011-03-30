@@ -16831,7 +16831,6 @@ uint32 Unit::GetRemainingDotDamage(uint64 caster, uint32 spellId, uint8 effectIn
 
 bool Unit::IsVisionObscured(Unit* pVictim)
 {
-    //bool isfriendly = IsFriendlyTo(pVictim);
     Aura* victimAura = NULL;
     Aura* myAura = NULL;
     Unit* victimCaster = NULL;

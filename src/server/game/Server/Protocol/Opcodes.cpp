@@ -1142,6 +1142,7 @@ void InitOpcodeTable()
     OPCODE( SMSG_CHAR_CUSTOMIZE,                          STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_PET_RENAMEABLE,                          STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_REQUEST_VEHICLE_EXIT,                    STATUS_LOGGEDIN, &WorldSession::HandleRequestVehicleExit        );
+    OPCODE( CMSG_REQUEST_PLAYER_VEHICLE_EXIT,             STATUS_LOGGEDIN, &WorldSession::HandleRequestVehicleExit        );
     OPCODE( CMSG_REQUEST_VEHICLE_PREV_SEAT,               STATUS_LOGGEDIN, &WorldSession::HandleChangeSeatsOnControlledVehicle);
     OPCODE( CMSG_REQUEST_VEHICLE_NEXT_SEAT,               STATUS_LOGGEDIN, &WorldSession::HandleChangeSeatsOnControlledVehicle);
     OPCODE( CMSG_REQUEST_VEHICLE_SWITCH_SEAT,             STATUS_LOGGEDIN, &WorldSession::HandleChangeSeatsOnControlledVehicle);
