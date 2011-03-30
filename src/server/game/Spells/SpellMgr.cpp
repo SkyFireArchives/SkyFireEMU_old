@@ -4163,6 +4163,9 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_DONE_BONUS;
             count++;
             break;
+        case 44614: // Frostfire Bolt
+            spellInfo->StackAmount = 0; //TODO: remove when stacking of Decrease Run Speed % aura is fixed
+            break;
         default:
             break;
         }
