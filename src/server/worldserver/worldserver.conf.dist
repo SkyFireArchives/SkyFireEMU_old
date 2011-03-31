@@ -965,6 +965,17 @@ ChatLogTimestamp = 0
 #        The maximum number of results a .lookup command can return
 #        Default: 0 - unlimited
 #
+#    GuildAdvancement.Enabled
+#        Enables the cataclysm guild leveling system. 
+#        It's currently far from being complete. 
+#        Use on your own risk!
+#        Default: 0 - disabled
+#        
+#    GuildAdvancement.MaxLevel
+#        Max level a guild can reach. 
+#        Only has effect if Guild Advancement is enabled/
+#        Default: 25
+#
 ###############################################################################
 
 GameType = 0
@@ -1028,6 +1039,8 @@ BeepAtStart = 1
 Motd = "Welcome to a SkyFire server."
 Server.LoginInfo = 0
 Command.LookupMaxResults = 0
+GuildAdvancement.Enabled = 0
+GuildAdvancement.MaxLevel = 25
 
 ###############################################################################
 # PLAYER INTERACTION

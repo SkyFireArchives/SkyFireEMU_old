@@ -170,6 +170,7 @@ const char SpellRangefmt[]="nffffixx";
 const char SpellRuneCostfmt[]="niiii";
 const char SpellShapeshiftFormfmt[]="nxxiixiiixxiiiiiiiixx";
 const char SummonPropertiesfmt[] = "niiiii";
+const char GuildPerksfmt[] = "nii";
 const char TalentEntryfmt[]="niiiiiiiiixxixxxxxx";
 const char TalentTabEntryfmt[]="nxxiiixxxii";
 const char TalentTreePrimarySpellsfmt[]="niix";

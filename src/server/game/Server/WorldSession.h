@@ -506,6 +506,9 @@ class WorldSession
         void HandleGuildDisbandOpcode(WorldPacket& recvPacket);
         void HandleGuildLeaderOpcode(WorldPacket& recvPacket);
         void HandleGuildMOTDOpcode(WorldPacket& recvPacket);
+        void HandleGuildExperienceOpcode(WorldPacket& recvPacket);
+        void HandleGuildMaxExperienceOpcode(WorldPacket& recvPacket);
+        void HandleGuildRewardsOpcode(WorldPacket& recvPacket);
         void HandleGuildSetNoteOpcode(WorldPacket& recvPacket);
         void HandleGuildRankOpcode(WorldPacket& recvPacket);
         void HandleGuildAddRankOpcode(WorldPacket& recvPacket);

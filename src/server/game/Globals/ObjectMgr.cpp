@@ -305,6 +305,9 @@ ObjectMgr::~ObjectMgr()
     for (ArenaTeamMap::iterator itr = mArenaTeamMap.begin(); itr != mArenaTeamMap.end(); ++itr)
         delete itr->second;
 
+    for (GuildRewardsVector::iterator itr = mGuildRewards.begin(); itr != mGuildRewards.end(); ++itr)
+        delete (*itr);
+
     for (CacheVendorItemMap::iterator itr = m_mCacheVendorItemMap.begin(); itr != m_mCacheVendorItemMap.end(); ++itr)
         itr->second.Clear();
 
@@ -323,6 +326,9 @@ Group * ObjectMgr::GetGroupByGUID(uint32 guid) const
 // Guild collection
 Guild* ObjectMgr::GetGuildById(uint32 guildId) const
 {
+    if (guildId == 0)
+        return NULL;
+
     // Make sure given index exists in collection
     if (guildId < uint32(mGuildMap.size()))
         return mGuildMap[guildId];
@@ -3374,6 +3380,57 @@ void ObjectMgr::LoadPlayerInfo()
         sLog.outString(">> Loaded %u xp for level definitions", count);
     }
 
+    sLog.outString("Loading Guild XP Data...");
+    {
+        mGuildXPperLevel.resize(sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL));
+        for (uint8 level = 0; level < sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL); ++level)
+            mGuildXPperLevel[level] = 0;
+
+        //                                                 0    1
+        QueryResult result  = WorldDatabase.Query("SELECT lvl, xp_for_next_level FROM guild_xp_for_level");
+
+        uint32 count = 0;
+
+        if (!result)
+        {
+            sLog.outString();
+            sLog.outString(">> Loaded %u xp for guild level definitions", count);
+            sLog.outErrorDb("Error loading `guild_xp_for_level` table or empty table.");
+            //exit(1);
+        }
+        else
+        {
+            do
+            {
+                Field* fields = result->Fetch();
+
+                uint32 level = fields[0].GetUInt32();
+                uint32 xp    = fields[1].GetUInt32();
+
+                if (level >= sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
+                {
+                    if (level > STRONG_MAX_LEVEL)        // hardcoded level maximum
+                        sLog.outErrorDb("Wrong (> %u) level %u in `guild_xp_for_level` table, ignoring.", STRONG_MAX_LEVEL, level);
+                    else
+                    {
+                        sLog.outDetail("Unused (> MaxPlayerLevel in worldserver.conf) level %u in `guild_xp_for_levels` table, ignoring.", level);
+                        ++count;                                // make result loading percent "expected" correct in case disabled detail mode for example.
+                    }
+                    continue;
+                }
+
+                //PlayerXPperLevel
+                mGuildXPperLevel[level] = xp;
+                
+                ++count;
+            }
+            while (result->NextRow());
+
+            sLog.outString();
+            sLog.outString(">> Loaded %u xp for guild level definitions", count);
+        }
+    }
+
     // fill level gaps
     for (uint8 level = 1; level < sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
     {
@@ -3381,6 +3438,14 @@ void ObjectMgr::LoadPlayerInfo()
         {
             sLog.outErrorDb("Level %i does not have XP for level data. Using data of level [%i] + 100.",level+1, level);
             mPlayerXPperLevel[level] = mPlayerXPperLevel[level-1]+100;
+        }
+    }
+    for (uint8 level = 1; level < sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL); ++level)
+    {
+        if (mGuildXPperLevel[level] == 0)
+        {
+            sLog.outErrorDb("GUILD Level %i does not have XP for level data. Using data of level [%i] + 100.",level+1, level);
+            mGuildXPperLevel[level] = mGuildXPperLevel[level-1]+100;
         }
     }
 }
@@ -3729,6 +3794,35 @@ void ObjectMgr::LoadGuilds()
 
     sLog.outString();
     sLog.outString(">> Successfully loaded %u guilds", totalGuilds);
+}
+
+void ObjectMgr::LoadGuildRewards()
+{
+    QueryResult result = WorldDatabase.Query("SELECT item_entry,price,achievement,standing FROM guild_rewards");
+
+    if (!result)
+    {
+        sLog.outString();
+        sLog.outString(">> Loaded 0 guild reward definitions");
+    }
+
+    uint32 count = 0;
+    do
+    {
+        Field *fields = result->Fetch();
+
+        GuildRewardsEntry* ptr = new GuildRewardsEntry;
+        ptr->item = fields[0].GetUInt32();
+        ptr->price = fields[1].GetUInt32();
+        ptr->achievement = fields[2].GetUInt32();
+        ptr->standing = fields[3].GetUInt32();
+        mGuildRewards.push_back(ptr); 
+
+        ++count;
+    }while (result->NextRow());
+
+    sLog.outString();
+    sLog.outString(">> Loaded %u guild reward definitions.");
 }
 
 void ObjectMgr::LoadArenaTeams()
@@ -6836,6 +6930,13 @@ uint32 ObjectMgr::GetXPForLevel(uint8 level)
 {
     if (level < mPlayerXPperLevel.size())
         return mPlayerXPperLevel[level];
+    return 0;
+}
+
+uint32 ObjectMgr::GetXPForGuildLevel(uint8 level)
+{
+    if (level < mGuildXPperLevel.size())
+        return mGuildXPperLevel[level];
     return 0;
 }
 

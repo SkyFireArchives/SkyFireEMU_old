@@ -862,6 +862,14 @@ void World::LoadConfigSettings(bool reload)
     m_bool_configs[CONFIG_ALL_TAXI_PATHS] = sConfig.GetBoolDefault("AllFlightPaths", false);
     m_bool_configs[CONFIG_INSTANT_TAXI] = sConfig.GetBoolDefault("InstantFlightPaths", false);
 
+    m_bool_configs[CONFIG_GUILD_ADVANCEMENT_ENABLED] = sConfig.GetBoolDefault("GuildAdvancement.Enabled", false);// Not yet complete
+    m_int_configs[CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL] = sConfig.GetIntDefault("GuildAdvancement.MaxLevel", 25);
+    if (m_int_configs[CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL] == 0 || m_int_configs[CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL] > 255)
+    {
+        sLog.outError("GuildAdvancement.MaxLevel must be in range 1-255. Setting to default 25");
+        m_int_configs[CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL] = 25;
+    }
+
     m_bool_configs[CONFIG_INSTANCE_IGNORE_LEVEL] = sConfig.GetBoolDefault("Instance.IgnoreLevel", false);
     m_bool_configs[CONFIG_INSTANCE_IGNORE_RAID]  = sConfig.GetBoolDefault("Instance.IgnoreRaid", false);
 
@@ -1556,6 +1564,9 @@ void World::SetInitialWorldSettings()
 
     sLog.outString("***** GUILDS *****");
     sObjectMgr.LoadGuilds();
+
+    sLog.outString("Loading Guild Rewards...");
+    sObjectMgr.LoadGuildRewards();
 
     sLog.outString("Loading ArenaTeams...");
     sObjectMgr.LoadArenaTeams();

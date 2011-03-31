@@ -719,6 +719,14 @@ public:
     // Bank tabs
     void SetBankTabText(uint8 tabId, const std::string& text);
 
+    // Guild advancement
+    uint8 GetLevel() { return m_level; }
+    uint64 GetCurrentXP() { return m_xp; }
+    uint64 GetNextLevelXP() { return m_nextLevelXP; }
+
+    void GainXP(uint64 xp);
+    void LevelUp();
+
 protected:
     uint32 m_id;
     std::string m_name;
@@ -727,6 +735,10 @@ protected:
     std::string m_info;
     time_t m_createdDate;
 
+    uint8 m_level;
+    uint64 m_xp;
+    uint64 m_nextLevelXP;
+
     EmblemInfo m_emblemInfo;
     uint32 m_accountsNumber;
     uint64 m_bankMoney;
@@ -734,6 +746,8 @@ protected:
     Ranks m_ranks;
     Members m_members;
     BankTabs m_bankTabs;
+
+    uint32 m_lastXPSave;
 
     // These are actually ordered lists. The first element is the oldest entry.
     LogHolder* m_eventLog;
@@ -775,6 +789,8 @@ private:
         stmt->setUInt32(0, lowguid);
         CharacterDatabase.Execute(stmt);
     }
+
+    void SaveXP();
 
     // Creates log holders (either when loading or when creating guild)
     void _CreateLogHolders();

@@ -820,7 +820,20 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
     if (pCurrChar->GetGuildId() != 0)
     {
         if (Guild* pGuild = sObjectMgr.GetGuildById(pCurrChar->GetGuildId()))
+        {
             pGuild->SendLoginInfo(this);
+            pCurrChar->SetUInt32Value(PLAYER_GUILDLEVEL, uint32(pGuild->GetLevel()));
+            
+            if(sWorld.getBoolConfig(CONFIG_GUILD_ADVANCEMENT_ENABLED))
+            {
+                pCurrChar->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_GLEVEL_ENABLED);
+
+                /// Learn perks to him
+                for(int i = 0; i < pGuild->GetLevel()-1; ++i)
+                    if(const GuildPerksEntry* perk = sGuildPerksStore.LookupEntry(i))
+                        pCurrChar->learnSpell(perk->SpellId, true);
+            }
+        }
         else
         {
             // remove wrong guild data

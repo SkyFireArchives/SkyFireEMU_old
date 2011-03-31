@@ -1078,7 +1078,7 @@ uint8 Guild::BankMoveItemData::_CanStore(Item* pItem, bool swap)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Guild
-Guild::Guild() : m_id(0), m_leaderGuid(0), m_createdDate(0), m_accountsNumber(0), m_bankMoney(0), m_eventLog(NULL)
+Guild::Guild() : m_id(0), m_leaderGuid(0), m_createdDate(0), m_accountsNumber(0), m_bankMoney(0), m_eventLog(NULL), m_lastXPSave(0)
 {
     memset(&m_bankEventLog, 0, (GUILD_BANK_MAX_TABS + 1) * sizeof(LogHolder*));
 }
@@ -1116,6 +1116,9 @@ bool Guild::Create(Player* pLeader, const std::string& name)
     m_motd = "No message set.";
     m_bankMoney = 0;
     m_createdDate = ::time(NULL);
+    m_level = 1;
+    m_xp = 0;
+    m_nextLevelXP = sObjectMgr.GetXPForGuildLevel(m_level);
     _CreateLogHolders();
 
     sLog.outDebug("GUILD: creating guild [%s] for leader %s (%u)", 
@@ -1142,6 +1145,8 @@ bool Guild::Create(Player* pLeader, const std::string& name)
     stmt->setUInt32(++index, m_emblemInfo.GetBorderColor());
     stmt->setUInt32(++index, m_emblemInfo.GetBackgroundColor());
     stmt->setUInt64(++index, m_bankMoney);
+    stmt->setUInt64(++index, m_xp);
+    stmt->setUInt32(++index, m_level);
     trans->Append(stmt);
 
     CharacterDatabase.CommitTransaction(trans);
@@ -2069,6 +2074,13 @@ bool Guild::LoadFromDB(Field* fields)
     for (uint8 i = 0; i < purchasedTabs; ++i)
         m_bankTabs[i] = new BankTab(m_id, i);
 
+    m_xp = fields[13].GetUInt64();
+    m_level = fields[14].GetUInt32();
+    if (m_level == 0)
+        m_level = 1;
+
+    m_nextLevelXP = sObjectMgr.GetXPForGuildLevel(m_level);
+
     _CreateLogHolders();
     return true;
 }
@@ -2309,6 +2321,11 @@ bool Guild::AddMember(const uint64& guid, uint8 rankId)
     {
         pMember->AddFlag(GUILD_MEMBER_FLAG_ONLINE);
         pMember->SetStats(player);
+
+        // Learn our perks to him
+        for(int i = 0; i < m_level-1; ++i)
+            if(const GuildPerksEntry* perk = sGuildPerksStore.LookupEntry(i))
+                player->learnSpell(perk->SpellId, true);
     }
     else
     {
@@ -2411,6 +2428,12 @@ void Guild::DeleteMember(const uint64& guid, bool isDisbanding, bool isKicked)
     {
         player->SetInGuild(0);
         player->SetRank(0);
+
+        // Delete guild perks
+        // remove all spells that related to this skill
+        for (uint32 i = 0; i < sGuildPerksStore.GetNumRows(); ++i)
+            if (GuildPerksEntry const *pAbility = sGuildPerksStore.LookupEntry(i))
+                    player->removeSpell(pAbility->SpellId);
     }
 
     _DeleteMemberFromDB(lowguid);
@@ -2977,4 +3000,81 @@ void Guild::_BroadcastEvent(GuildEvents guildEvent, const uint64& guid, const ch
     BroadcastPacket(&data);
 
     sLog.outDebug("WORLD: Sent SMSG_GUILD_EVENT");
+}
+
+
+// Guild Advancement
+void Guild::GainXP(uint64 xp)
+{
+    if (!xp)
+        return;
+    if (!sWorld.getBoolConfig(CONFIG_GUILD_ADVANCEMENT_ENABLED))
+        return;
+    if (GetLevel() >= sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
+        return;
+
+    uint64 new_xp = m_xp + xp;
+    uint64 nextLvlXP = GetNextLevelXP();
+    uint8 level = GetLevel();
+    while (new_xp >= nextLvlXP && level < sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
+    {
+        new_xp -= nextLvlXP;
+
+        if (level < sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
+        {
+            LevelUp();
+            ++level;
+            nextLvlXP = GetNextLevelXP();
+        }
+    }
+
+    m_xp = new_xp;
+    SaveXP();
+}
+
+void Guild::LevelUp()
+{
+    if (!sWorld.getBoolConfig(CONFIG_GUILD_ADVANCEMENT_ENABLED))
+        return;
+
+    uint8 level = m_level + 1;
+    m_level = level;
+    m_nextLevelXP = sObjectMgr.GetXPForGuildLevel(level);
+
+    WorldPacket data(SMSG_GUILD_XP_UPDATE, 8*5);
+	data << uint64(0x37); // max daily xp
+    data << uint64(GetNextLevelXP()); // next level XP
+	data << uint64(0x37); // weekly xp
+	data << uint64(GetCurrentXP()); // Curr exp
+	data << uint64(0); // Today exp (not supported yet)
+
+    // Find perk to gain
+    uint32 spellId = 0;
+    if(const GuildPerksEntry* perk = sGuildPerksStore.LookupEntry(level-1))
+        spellId = perk->SpellId;
+
+    // Notify players of level change
+    for (Members::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
+        if (Player *player = itr->second->FindPlayer())
+        {
+            player->SetUInt32Value(PLAYER_GUILDLEVEL, level);
+            player->GetSession()->SendPacket(&data);
+
+            if (spellId)
+                player->learnSpell(spellId, true);
+        }
+}
+
+void Guild::SaveXP()
+{
+    if (getMSTime() - m_lastXPSave >= 60000) // 1 minute. Hardcoded value for now
+    {
+        m_lastXPSave = getMSTime();
+
+        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_GUILD_SAVE_XP);
+        stmt->setUInt64(0, m_xp);
+        stmt->setUInt32(1, uint32(m_level));
+        stmt->setUInt32(2, m_id);
+        CharacterDatabase.Execute(stmt);
+    }
 }

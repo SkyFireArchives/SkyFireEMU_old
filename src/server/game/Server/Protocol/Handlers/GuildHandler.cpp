@@ -248,6 +248,67 @@ void WorldSession::HandleGuildMOTDOpcode(WorldPacket& recvPacket)
         pGuild->HandleSetMOTD(this, motd);
 }
 
+
+void WorldSession::HandleGuildExperienceOpcode(WorldPacket& recvPacket)
+{
+    recvPacket.read_skip<uint64>();
+
+    if (Guild* pGuild = sObjectMgr.GetGuildById(_player->GetGuildId()))
+    {
+        WorldPacket data(SMSG_GUILD_XP_UPDATE, 8*5);
+	    data << uint64(0x37); // max daily xp
+	    data << uint64(pGuild->GetNextLevelXP()); // next level XP
+	    data << uint64(0x37); // weekly xp
+	    data << uint64(pGuild->GetCurrentXP()); // Curr exp
+	    data << uint64(0); // Today exp (unsupported)
+        SendPacket(&data);
+    }
+}
+
+void WorldSession::HandleGuildMaxExperienceOpcode(WorldPacket& recvPacket)
+{
+    recvPacket.read_skip<uint64>();
+
+    WorldPacket data(SMSG_GUILD_MAX_DAILY_XP, 8);
+    data << uint64(67800000); // Constant value for now
+    SendPacket(&data);
+}
+
+void WorldSession::HandleGuildRewardsOpcode(WorldPacket& recvPacket)
+{
+    if (!_player->GetGuildId() || !sWorld.getBoolConfig(CONFIG_GUILD_ADVANCEMENT_ENABLED))
+        return;
+
+    recvPacket.read_skip<uint64>();
+
+    ObjectMgr::GuildRewardsVector const& vec = sObjectMgr.GetGuildRewards();
+    if (vec.empty())
+        return;
+
+    WorldPacket data(SMSG_GUILD_REWARDS_LIST, 8);
+    data << uint32(_player->GetGuildId()) ;
+    data << uint32(vec.size()); // counter
+
+    for(uint32 i = 0; i < vec.size(); ++i)
+        data << uint32(0); // unk (only found 0 in retail logs)
+
+    for(uint32 i = 0; i < vec.size(); ++i)
+        data << uint32(0); // unk
+
+    for(uint32 i = 0; i < vec.size(); ++i)
+        data << uint64(vec[i]->price); // money price
+
+    for(uint32 i = 0; i < vec.size(); ++i)
+        data << uint32(vec[i]->achievement); // Achievement requirement
+
+    for(uint32 i = 0; i < vec.size(); ++i)
+        data << uint32(vec[i]->standing); // // Reputation level (REP_HONORED, REP_FRIENDLY, etc)
+        
+    for(uint32 i = 0; i < vec.size(); ++i)
+        data << uint32(vec[i]->item); // item entry
+	SendPacket(&data);
+}
+
 // Cata Status: Done
 void WorldSession::HandleGuildSetNoteOpcode(WorldPacket& recvPacket)
 {

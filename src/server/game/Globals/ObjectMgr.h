@@ -495,6 +495,14 @@ typedef std::multimap<uint32,GossipMenuItems> GossipMenuItemsMap;
 typedef std::pair<GossipMenuItemsMap::const_iterator, GossipMenuItemsMap::const_iterator> GossipMenuItemsMapBounds;
 typedef std::pair<GossipMenuItemsMap::iterator, GossipMenuItemsMap::iterator> GossipMenuItemsMapBoundsNonConst;
 
+struct GuildRewardsEntry
+{
+    uint32 item;
+    uint32 price;
+    uint32 achievement;
+    uint32 standing;
+};
+
 struct QuestPOIPoint
 {
     int32 x;
@@ -599,6 +607,8 @@ class ObjectMgr
 
         typedef std::map<uint32, uint32> CharacterConversionMap;
 
+        typedef std::vector<GuildRewardsEntry*> GuildRewardsVector;
+
         Player* GetPlayer(const char* name) const { return sObjectAccessor.FindPlayerByName(name);}
         Player* GetPlayer(uint64 guid) const { return ObjectAccessor::FindPlayer(guid); }
         Player* GetPlayerByLowGUID(uint32 lowguid) const;
@@ -694,6 +704,8 @@ class ObjectMgr
             return itr != mQuestTemplates.end() ? itr->second : NULL;
         }
         QuestMap const& GetQuestTemplates() const { return mQuestTemplates; }
+
+        GuildRewardsVector const& GetGuildRewards() { return mGuildRewards; }
 
         uint32 GetQuestForAreaTrigger(uint32 Trigger_ID) const
         {
@@ -801,6 +813,7 @@ class ObjectMgr
         }
 
         void LoadGuilds();
+        void LoadGuildRewards();
         void LoadArenaTeams();
         void LoadGroups();
         void LoadQuests();
@@ -935,6 +948,7 @@ class ObjectMgr
         std::string GeneratePetName(uint32 entry);
         uint32 GetBaseXP(uint8 level);
         uint32 GetXPForLevel(uint8 level);
+        uint32 GetXPForGuildLevel(uint8 level);
 
         int32 GetFishingBaseSkillLevel(uint32 entry) const
         {
@@ -1236,6 +1250,7 @@ class ObjectMgr
         GroupSet            mGroupSet;
         GuildMap            mGuildMap;
         ArenaTeamMap        mArenaTeamMap;
+        GuildRewardsVector  mGuildRewards;
 
         QuestAreaTriggerMap mQuestAreaTriggerMap;
         TavernAreaTriggerSet mTavernAreaTriggerSet;
@@ -1307,6 +1322,9 @@ class ObjectMgr
 
         typedef std::vector<uint32> PlayerXPperLevel;       // [level]
         PlayerXPperLevel mPlayerXPperLevel;
+
+        typedef std::vector<uint64> GuildXPperLevel; // [level]
+        GuildXPperLevel mGuildXPperLevel;
 
         typedef std::map<uint32,uint32> BaseXPMap;          // [area level][base xp]
         BaseXPMap mBaseXPTable;
