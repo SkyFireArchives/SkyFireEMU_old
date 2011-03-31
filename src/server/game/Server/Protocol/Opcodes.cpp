@@ -146,7 +146,6 @@ void InitOpcodeTable()
     OPCODE( CMSG_GUILD_DISBAND,                           STATUS_LOGGEDIN, &WorldSession::HandleGuildDisbandOpcode        );
     OPCODE( CMSG_GUILD_LEADER,                            STATUS_LOGGEDIN, &WorldSession::HandleGuildLeaderOpcode         );
     OPCODE( CMSG_GUILD_MOTD,                              STATUS_LOGGEDIN, &WorldSession::HandleGuildMOTDOpcode           );
-    OPCODE( CMSG_GUILD_MOTD,                              STATUS_LOGGEDIN, &WorldSession::HandleGuildMOTDOpcode           );
     OPCODE( CMSG_QUERY_GUILD_REWARDS,                     STATUS_LOGGEDIN, &WorldSession::HandleGuildRewardsOpcode        );
     OPCODE( CMSG_QUERY_GUILD_XP,                          STATUS_LOGGEDIN, &WorldSession::HandleGuildExperienceOpcode     );
     OPCODE( CMSG_QUERY_GUILD_MAX_XP,                      STATUS_LOGGEDIN, &WorldSession::HandleGuildMaxExperienceOpcode  );
