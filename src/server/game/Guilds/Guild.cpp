@@ -3042,11 +3042,11 @@ void Guild::LevelUp()
     m_nextLevelXP = sObjectMgr.GetXPForGuildLevel(level);
 
     WorldPacket data(SMSG_GUILD_XP_UPDATE, 8*5);
-	data << uint64(0x37); // max daily xp
+    data << uint64(0x37); // max daily xp
     data << uint64(GetNextLevelXP()); // next level XP
-	data << uint64(0x37); // weekly xp
-	data << uint64(GetCurrentXP()); // Curr exp
-	data << uint64(0); // Today exp (not supported yet)
+    data << uint64(0x37); // weekly xp
+    data << uint64(GetCurrentXP()); // Curr exp
+    data << uint64(0); // Today exp (not supported yet)
 
     // Find perk to gain
     uint32 spellId = 0;

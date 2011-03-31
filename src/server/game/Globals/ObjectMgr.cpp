@@ -3413,7 +3413,7 @@ void ObjectMgr::LoadPlayerInfo()
                         sLog.outErrorDb("Wrong (> %u) level %u in `guild_xp_for_level` table, ignoring.", STRONG_MAX_LEVEL, level);
                     else
                     {
-                        sLog.outDetail("Unused (> MaxPlayerLevel in worldserver.conf) level %u in `guild_xp_for_levels` table, ignoring.", level);
+                        sLog.outDetail("Unused (> MaxLevel in worldserver.conf) level %u in `guild_xp_for_levels` table, ignoring.", level);
                         ++count;                                // make result loading percent "expected" correct in case disabled detail mode for example.
                     }
                     continue;

@@ -781,7 +781,8 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
 int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
 {
     uint8 digest[20];
-    uint16 clientBuild, id, security;
+    uint16 clientBuild, security;
+    uint32 id;
     uint32 m_addonSize;
     //uint32 m_addonLenCompressed;
     //uint8* m_addonCompressed;
