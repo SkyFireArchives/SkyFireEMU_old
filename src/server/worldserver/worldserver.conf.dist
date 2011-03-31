@@ -783,18 +783,18 @@ ChatLogTimestamp = 0
 #
 #    MaxHonorPoints
 #        Max honor points that player can have.
-#        Default: 75000
+#        Default: 4000
 #
 #    StartHonorPoints
 #        Amount of honor that new players will start with
 #        Default: 0
 #
-#    MaxArenaPoints
-#        Max arena points that player can have.
-#        Default: 10000
+#    MaxJusticePoints
+#        Max justice points that player can have.
+#        Default: 4000
 #
-#    StartArenaPoints
-#        Amount of arena points that new players will start with
+#    StartJusticePoints
+#        Amount of fustice points that new players will start with
 #        Default: 0
 #
 #    RecruitAFriend.MaxLevel
@@ -1003,10 +1003,10 @@ MinDualSpecLevel = 30
 StartPlayerLevel = 1
 StartHeroicPlayerLevel = 55
 StartPlayerMoney = 0
-MaxHonorPoints = 75000
+MaxHonorPoints = 4000
 StartHonorPoints = 0
-MaxArenaPoints = 10000
-StartArenaPoints = 0
+MaxJusticePoints = 4000
+StartJusticePoints = 0
 RecruitAFriend.MaxLevel = 60
 RecruitAFriend.MaxDifference = 3
 InstantLogout = 1

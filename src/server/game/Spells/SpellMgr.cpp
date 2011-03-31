@@ -550,12 +550,8 @@ AuraState GetSpellAuraState(SpellEntry const * spellInfo)
     if (IsSealSpell(spellInfo))
         return AURA_STATE_JUDGEMENT;
 
-    // Conflagrate aura state on Immolate and Shadowflame
-    if (spellInfo->SpellFamilyName == SPELLFAMILY_WARLOCK &&
-        // Immolate
-        ((spellInfo->SpellFamilyFlags[0] & 4) ||
-        // Shadowflame
-        (spellInfo->SpellFamilyFlags[2] & 2)))
+    // Conflagrate aura state on Immolate
+    if (spellInfo->SpellFamilyName == SPELLFAMILY_WARLOCK && (spellInfo->SpellFamilyFlags[0] & 4))
         return AURA_STATE_CONFLAGRATE;
 
     // Faerie Fire (druid versions)
@@ -4166,6 +4162,9 @@ void SpellMgr::LoadSpellCustomAttr()
         case 72787: // Empowered Flare
             spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_DONE_BONUS;
             count++;
+            break;
+        case 44614: // Frostfire Bolt
+            spellInfo->StackAmount = 0; //TODO: remove when stacking of Decrease Run Speed % aura is fixed
             break;
         default:
             break;
