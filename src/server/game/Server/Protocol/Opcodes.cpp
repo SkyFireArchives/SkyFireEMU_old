@@ -87,8 +87,7 @@ void InitOpcodeTable()
     OPCODE( SMSG_PET_NAME_QUERY_RESPONSE,                 STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_GUILD_QUERY,                             STATUS_AUTHED,   &WorldSession::HandleGuildQueryOpcode          );
     OPCODE( SMSG_GUILD_QUERY_RESPONSE,                    STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
-    OPCODE( CMSG_ITEM_QUERY_SINGLE,                       STATUS_LOGGEDIN, &WorldSession::HandleItemQuerySingleOpcode     );
-    OPCODE( CMSG_ITEM_QUERY_MULTIPLE,                     STATUS_NEVER,    &WorldSession::Handle_NULL                     );
+    OPCODE( CMSG_COMMENTATOR_START_WARGAME,               STATUS_NEVER,    &WorldSession::Handle_NULL                     );
     OPCODE( SMSG_ITEM_QUERY_SINGLE_RESPONSE,              STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_ITEM_QUERY_MULTIPLE_RESPONSE,            STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_PAGE_TEXT_QUERY,                         STATUS_LOGGEDIN, &WorldSession::HandlePageTextQueryOpcode       );

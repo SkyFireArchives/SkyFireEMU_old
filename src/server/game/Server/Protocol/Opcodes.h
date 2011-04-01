@@ -79,8 +79,7 @@ enum Opcodes
     SMSG_PET_NAME_QUERY_RESPONSE                     = 0x068AC, // 4.0.6a 13623
     CMSG_GUILD_QUERY                                 = 0x0AFC4, // 4.0.6a 13623
     SMSG_GUILD_QUERY_RESPONSE                        = 0x03F80, // 4.0.6a 13623
-    CMSG_ITEM_QUERY_SINGLE                           = 0x08588, // 4.0.6a 13623
-    CMSG_ITEM_QUERY_MULTIPLE                         = 0x0048A, // 4.0.6a 13623
+    CMSG_COMMENTATOR_START_WARGAME                   = 0x08588, // 4.0.6a 13623
     SMSG_ITEM_QUERY_SINGLE_RESPONSE                  = 0x00C4E, // 4.0.6a 13623
     SMSG_ITEM_QUERY_MULTIPLE_RESPONSE                = 0x10009, //
     CMSG_PAGE_TEXT_QUERY                             = 0x0AC8C, // 4.0.6a 13623
