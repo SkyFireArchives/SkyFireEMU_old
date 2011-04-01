@@ -2069,6 +2069,19 @@ void Spell::EffectApplyAura(SpellEffIndex effIndex)
 {
     if (!m_spellAura || !unitTarget)
         return;
+
+    //For some funky reason, some spells have to be cast as a spell on the enemy even if they're supposed to apply an aura.
+    switch (m_spellInfo->SpellFamilyName)
+    {
+        case SPELLFAMILY_ROGUE:
+        {
+            if (m_spellInfo->SpellFamilyFlags[0] == 0x8)    //Gouge
+            {
+                m_caster->CastSpell(unitTarget,1776,true);
+                return;
+            }
+        }
+    }
     ASSERT(unitTarget == m_spellAura->GetOwner());
     m_spellAura->_ApplyEffectForTargets(effIndex);
 }
