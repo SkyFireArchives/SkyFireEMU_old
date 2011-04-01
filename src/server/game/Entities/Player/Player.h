@@ -1137,6 +1137,9 @@ class Player : public Unit, public GridObject<Player>
         RestType GetRestType() const { return rest_type; }
         void SetRestType(RestType n_r_type) { rest_type = n_r_type; }
 
+        uint32 GetHonorableKills() { return GetUInt32Value(PLAYER_FIELD_LIFETIME_HONORBALE_KILLS); }
+        void BroadcastMessage(const char* str, ...);
+
         uint32 GetInnPosMapId() const { return inn_pos_mapid; }
         float GetInnPosX() const { return inn_pos_x; }
         float GetInnPosY() const { return inn_pos_y; }

@@ -25121,3 +25121,16 @@ void Player::SetInGuild(uint32 GuildId)
         SetUInt32Value(OBJECT_FIELD_TYPE, GetUInt32Value(OBJECT_FIELD_TYPE) & ~TYPEMASK_IN_GUILD);
     }
 }
+
+void Player::BroadcastMessage(const char* Format, ...)
+{
+	va_list l;
+	va_start(l, Format);
+	char Message[1024];
+	vsnprintf(Message, 1024, Format, l);
+	va_end(l);
+
+	WorldPacket data;
+    ChatHandler::FillMessageData(&data, NULL, CHAT_MSG_SYSTEM, LANG_UNIVERSAL, NULL, 0, Message, NULL);
+	GetSession()->SendPacket(&data);
+}
