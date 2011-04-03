@@ -3387,7 +3387,7 @@ bool ChatHandler::HandleHonorAddCommand(const char* args)
         return false;
 
     uint32 amount = (uint32)atoi(args);
-    target->RewardHonor(NULL, 1, amount);
+    target->RewardHonor(NULL, 1, (amount * 100)/2.4);
     return true;
 }
 

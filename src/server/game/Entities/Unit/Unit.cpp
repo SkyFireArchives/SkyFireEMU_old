@@ -10120,17 +10120,6 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                     DoneTotalMod *= ((*i)->GetAmount()+100.0f)/100.0f;
                 break;
             }
-            // Marked for Death
-            case 7598:
-            case 7599:
-            case 7600:
-            case 7601:
-            case 7602:
-            {
-                if (pVictim->GetAuraEffect(SPELL_AURA_MOD_STALKED, SPELLFAMILY_HUNTER, 0x400, 0, 0))
-                    DoneTotalMod *= ((*i)->GetAmount() + 100.0f) / 100.0f;
-                break;
-            }
         }
     }
 
@@ -11377,17 +11366,6 @@ void Unit::MeleeDamageBonus(Unit *pVictim, uint32 *pdamage, WeaponAttackType att
                 if (pVictim->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_DEATHKNIGHT, 0,0x02000000,0))
                     if (SpellChainNode const *chain = sSpellMgr.GetSpellChainNode((*i)->GetId()))
                         DoneTotalMod *= (chain->rank * 2.0f + 100.0f)/100.0f;
-                break;
-            }
-            // Marked for Death
-            case 7598:
-            case 7599:
-            case 7600:
-            case 7601:
-            case 7602:
-            {
-                if (pVictim->GetAuraEffect(SPELL_AURA_MOD_STALKED, SPELLFAMILY_HUNTER, 0x400, 0, 0))
-                    DoneTotalMod *= ((*i)->GetAmount() + 100.0f) / 100.0f;
                 break;
             }
         }

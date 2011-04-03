@@ -4055,58 +4055,64 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
         }
         case SPELLFAMILY_HUNTER:
         {
-            // Kill Shot - bonus damage from Ranged Attack Power
-            // UPDATED FOR CATACLYSM:
-            if (m_spellInfo->SpellFamilyFlags[1] & 0x800000)
+            float shotMod = 0;
+            switch(m_spellInfo->Id)
             {
-                // "You attempt to finish the wounded target off, firing a long range attack dealing % weapon damage plus RAP*0.30+543."
-                spell_bonus += int32((0.3f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
-                break;
+                case 53351: // Kill Shot
+                {
+                    // "You attempt to finish the wounded target off, firing a long range attack dealing % weapon damage plus RAP*0.30+543."
+                    shotMod = 0.3f;
+                    break;
+                }
+                case 56641: // Steady Shot
+                {
+                    // "A steady shot that causes % weapon damage plus RAP*0.021+280. Generates 9 Focus."
+                    // focus effect done in dummy
+                    shotMod = 0.021f;
+                    break;
+                }
+                case 19434: // Aimed Shot
+                {
+                    // "A powerful aimed shot that deals % ranged weapon damage plus (RAP * 0.724)+776."
+                    shotMod = 0.724f;
+                    break;
+                }
+                case 77767: // Cobra Shot
+                {
+                    // "Deals weapon damage plus (276 + (RAP * 0.017)) in the form of Nature damage and increases the duration of your Serpent Sting on the target by 6 sec. Generates 9 Focus."
+                    shotMod = 0.017f;
+                    break;
+                }
+                case 3044: // Arcane Shot
+                case 63741: // Chimera Shot
+                {
+                    // "An instant shot that causes % weapon damage plus (RAP * 0.0483)+289 as Arcane damage."
+                    if (m_spellInfo->SpellFamilyFlags[0] & 0x800)
+                        shotMod = 0.0483f;
+
+                    // "An instant shot that causes ranged weapon damage plus RAP*0.732+1620, refreshing the duration of  your Serpent Sting and healing you for 5% of your total health."
+                    if (m_spellInfo->SpellFamilyFlags[2] & 0x1)
+                        shotMod = 0.732f;
+
+                    // Marked for Death 1,2
+                    if(m_caster->HasAuraEffect(53241,0,0))
+                        if(roll_chance_i(sSpellStore.LookupEntry(53241)->EffectBasePoints[0]))
+                        {
+                            m_caster->CastSpell(m_caster->ToPlayer()->GetSelectedUnit(),88691,true);
+                            break;
+                        }
+                    if(m_caster->HasAuraEffect(53243,0,0))
+                        if(roll_chance_i(sSpellStore.LookupEntry(53243)->EffectBasePoints[0]))
+                        {
+                            m_caster->CastSpell(m_caster->ToPlayer()->GetSelectedUnit(),88691,true);
+                            break;
+                        }
+                    break;
+                }
+                default:
+                    break;
             }
-            // Steady Shot - bonus damage from Ranged Attack Power
-            //UPDATED FOR CATACLYSM:
-            if (m_spellInfo->SpellFamilyFlags[1] & 0x1)
-            {
-                // "A steady shot that causes % weapon damage plus RAP*0.021+280. Generates 9 Focus."
-                // focus effect done in dummy
-                spell_bonus += int32((0.021f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
-                break;
-            }
-            //Arcane Shot - bonus damage from Ranged Attack Power as Arcane damage
-            //UPDATED FOR CATACLYSM:
-            if (m_spellInfo->SpellFamilyFlags[0] & 0x800)
-            {
-                // "An instant shot that causes % weapon damage plus (RAP * 0.0483)+289 as Arcane damage."
-                // Arcane shot is not filtered through weapon_total_pct because it is not registered as SPELL_SCHOOL_MASK_NORMAL
-                spell_bonus += int32((0.0483f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
-                break;
-            }
-            //Aimed Shot - bonus damage from Ranged Attack Power
-            //UPDATED FOR CATACLYSM:
-            if (m_spellInfo->SpellFamilyFlags[0] & 0x20000)
-            {
-                // "A powerful aimed shot that deals % ranged weapon damage plus (RAP * 0.724)+776."
-                spell_bonus += int32((0.724f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
-                break;
-            }
-            break;
-            //Cobra Shot - bonus damage from Ranged Attack Power
-            //UPDATED FOR CATACLYSM:
-            if (m_spellInfo->SpellFamilyFlags[2] & 0x400000)
-            {
-                // "Deals weapon damage plus (276 + (RAP * 0.017)) in the form of Nature damage and increases the duration of your Serpent Sting on the target by 6 sec. Generates 9 Focus."
-                spell_bonus += int32((0.017f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
-                break;
-            }
-            break;
-            //Chimera Shot - bonus damage from Ranged Attack Power
-            //UPDATED FOR CATACLYSM:
-            if (m_spellInfo->SpellFamilyFlags[2] & 0x1)
-            {
-                // An instant shot that causes ranged weapon damage plus RAP*0.732+1620, refreshing the duration of  your Serpent Sting and healing you for 5% of your total health."
-                spell_bonus += int32((0.732f*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
-                break;
-            }
+            spell_bonus += int32((shotMod*m_caster->GetTotalAttackPowerValue(RANGED_ATTACK)));
             break;
         }
         case SPELLFAMILY_DEATHKNIGHT:
