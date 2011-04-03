@@ -4162,6 +4162,9 @@ void SpellMgr::LoadSpellCustomAttr()
         case 44614: // Frostfire Bolt
             spellInfo->StackAmount = 0; //TODO: remove when stacking of Decrease Run Speed % aura is fixed
             break;
+        case 74434: // Soulburn
+            spellInfo->procCharges = 1;
+            break;
         default:
             break;
         }
