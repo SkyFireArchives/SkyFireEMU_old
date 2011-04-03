@@ -32,7 +32,6 @@
 #include "Database/DatabaseEnv.h"
 #include "Configuration/Config.h"
 
-
 #include "Log.h"
 #include "Master.h"
 
@@ -77,8 +76,6 @@ void usage(const char *prog)
 /// Launch the Trinity server
 extern int main(int argc, char **argv)
 {
-    ACE::init();
-
     ///- Command line parsing to get the configuration file name
     char const* cfg_file = _TRINITY_CORE_CONFIG;
     int c=1;
@@ -149,14 +146,12 @@ extern int main(int argc, char **argv)
 
     ///- and run the 'Master'
     /// \todo Why do we need this 'Master'? Can't all of this be in the Main as for Realmd?
-    int ret = sMaster.Run();
+    int ret = sMaster->Run();
 
     // at sMaster return function exist with codes
     // 0 - normal shutdown
     // 1 - shutdown at error
     // 2 - restart command used, this code can be used by restarter for restart Trinityd
-
-    ACE::fini();
 
     return ret;
 }

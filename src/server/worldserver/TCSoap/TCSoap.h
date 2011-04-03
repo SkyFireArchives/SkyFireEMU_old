@@ -77,7 +77,6 @@ class SOAPWorkingThread : public ACE_Task<ACE_MT_SYNCH>
         void process_message(ACE_Message_Block *mb);
 };
 
-
 class SOAPCommand
 {
     public:
