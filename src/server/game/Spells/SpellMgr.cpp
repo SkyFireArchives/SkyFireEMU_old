@@ -3746,6 +3746,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
             count++;
             break;
+        case 88691: //Marked for Death Tracking
+            spellInfo->EffectApplyAuraName[0] = SPELL_AURA_MOD_STALKED;
+            count++;
+            break;
         case 49838: // Stop Time
             spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
             count++;
@@ -4097,14 +4101,6 @@ void SpellMgr::LoadSpellCustomAttr()
             break;
         case 33206: // Pain Suppression
             spellInfo->AttributesEx5 &= ~SPELL_ATTR_EX5_USABLE_WHILE_STUNNED;
-            count++;
-            break;
-        case 53241: // Marked for Death (Rank 1)
-        case 53243: // Marked for Death (Rank 2)
-        case 53244: // Marked for Death (Rank 3)
-        case 53245: // Marked for Death (Rank 4)
-        case 53246: // Marked for Death (Rank 5)
-            spellInfo->EffectSpellClassMask[0] = flag96(423937, 276955137, 2049);
             count++;
             break;
         // this is here until targetAuraSpell and alike support SpellDifficulty.dbc
