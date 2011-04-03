@@ -406,6 +406,9 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
     m_speakTime = 0;
     m_speakCount = 0;
 
+    m_petSlotUsed = 0;
+    m_currentPetSlot = -1;
+
     m_emote = 0;
 
     m_objectType |= TYPEMASK_PLAYER;
