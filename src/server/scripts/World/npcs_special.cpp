@@ -2003,7 +2003,8 @@ public:
 enum eTrainingDummy
 {
     NPC_ADVANCED_TARGET_DUMMY                  = 2674,
-    NPC_TARGET_DUMMY                           = 2673
+    NPC_TARGET_DUMMY                           = 2673,
+	NPC_CATACLYSM_TARGET_DUMMY                 = 44548
 };
 
 class npc_training_dummy : public CreatureScript
@@ -2042,9 +2043,15 @@ public:
         void DamageTaken(Unit * /*done_by*/, uint32 &damage)
         {
             uiResetTimer = 5000;
-            damage = 0;
+            if (uiEntry != NPC_CATACLYSM_TARGET_DUMMY)
+                damage = 0;
         }
 
+        void JustDied(Unit * /*killer*/)
+        {
+            if (uiEntry == NPC_CATACLYSM_TARGET_DUMMY)
+                me->Respawn();
+        }
         void EnterCombat(Unit * /*who*/)
         {
             if (uiEntry != NPC_ADVANCED_TARGET_DUMMY && uiEntry != NPC_TARGET_DUMMY)
@@ -2059,24 +2066,27 @@ public:
             if (!me->hasUnitState(UNIT_STAT_STUNNED))
                 me->SetControlled(true,UNIT_STAT_STUNNED);//disable rotate
 
-            if (uiEntry != NPC_ADVANCED_TARGET_DUMMY && uiEntry != NPC_TARGET_DUMMY)
-            {
-                if (uiResetTimer <= uiDiff)
+            if (uiEntry != NPC_CATACLYSM_TARGET_DUMMY)
+            {            
+			    if (uiEntry != NPC_ADVANCED_TARGET_DUMMY && uiEntry != NPC_TARGET_DUMMY)
                 {
-                    EnterEvadeMode();
-                    uiResetTimer = 5000;
+                    if (uiResetTimer <= uiDiff)
+                    {
+                        EnterEvadeMode();
+                        uiResetTimer = 5000;
+                    }
+                    else
+                        uiResetTimer -= uiDiff;
+                    return;
                 }
                 else
-                    uiResetTimer -= uiDiff;
-                return;
-            }
-            else
-            {
-                if (uiDespawnTimer <= uiDiff)
-                    me->ForcedDespawn();
-                else
-                    uiDespawnTimer -= uiDiff;
-            }
+                {
+                    if (uiDespawnTimer <= uiDiff)
+                        me->ForcedDespawn();
+                    else
+                        uiDespawnTimer -= uiDiff;
+                }
+			}
         }
         void MoveInLineOfSight(Unit * /*who*/){return;}
     };
