@@ -1823,13 +1823,13 @@ bool ChatHandler::HandleModifyMoneyCommand(const char* args)
     if (HasLowerSecurity(chr, 0))
         return false;
 
-    int32 addmoney = atoi((char*)args);
+    int64 addmoney = atoi((char*)args);
 
-    uint32 moneyuser = chr->GetMoney();
+    uint64 moneyuser = chr->GetMoney();
 
     if (addmoney < 0)
     {
-        int32 newmoney = int32(moneyuser) + addmoney;
+        int64 newmoney = int64(moneyuser) + addmoney;
 
         sLog.outDetail(GetTrinityString(LANG_CURRENT_MONEY), moneyuser, addmoney, newmoney);
         if (newmoney <= 0)
@@ -1845,9 +1845,9 @@ bool ChatHandler::HandleModifyMoneyCommand(const char* args)
             if (newmoney > MAX_MONEY_AMOUNT)
                 newmoney = MAX_MONEY_AMOUNT;
 
-            PSendSysMessage(LANG_YOU_TAKE_MONEY, abs(addmoney), GetNameLink(chr).c_str());
+            PSendSysMessage(LANG_YOU_TAKE_MONEY, addmoney, GetNameLink(chr).c_str());
             if (needReportToTarget(chr))
-                ChatHandler(chr).PSendSysMessage(LANG_YOURS_MONEY_TAKEN, GetNameLink().c_str(), abs(addmoney));
+                ChatHandler(chr).PSendSysMessage(LANG_YOURS_MONEY_TAKEN, GetNameLink().c_str(), addmoney);
             chr->SetMoney(newmoney);
         }
     }

@@ -1,8 +1,4 @@
-# Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
-#
-# Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
-#
-# Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+# Copyright (C) 2008-2010 Trinity <http://www.trinitycore.org/>
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -77,6 +73,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/src/server/game/AI/CoreAI
   ${CMAKE_SOURCE_DIR}/src/server/game/AI/EventAI
   ${CMAKE_SOURCE_DIR}/src/server/game/AI/ScriptedAI
+  ${CMAKE_SOURCE_DIR}/src/server/game/AI/SmartScripts
   ${CMAKE_SOURCE_DIR}/src/server/game/AuctionHouse
   ${CMAKE_SOURCE_DIR}/src/server/game/AuctionHouse/AuctionHouseBot
   ${CMAKE_SOURCE_DIR}/src/server/game/Battlegrounds
@@ -120,7 +117,6 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/src/server/game/Movement/MovementGenerators
   ${CMAKE_SOURCE_DIR}/src/server/game/Movement/Waypoints
   ${CMAKE_SOURCE_DIR}/src/server/game/OutdoorPvP
-  ${CMAKE_SOURCE_DIR}/src/server/game/OutdoorPvP/Zones
   ${CMAKE_SOURCE_DIR}/src/server/game/Pools
   ${CMAKE_SOURCE_DIR}/src/server/game/PrecompiledHeaders
   ${CMAKE_SOURCE_DIR}/src/server/game/Quests
@@ -135,6 +131,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/src/server/game/Tools
   ${CMAKE_SOURCE_DIR}/src/server/game/Weather
   ${CMAKE_SOURCE_DIR}/src/server/game/World
+  ${CMAKE_SOURCE_DIR}/src/server/authserver/Server
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/CommandLine
   ${CMAKE_CURRENT_SOURCE_DIR}/RemoteAccess
@@ -165,11 +162,10 @@ target_link_libraries(worldserver
   game
   shared
   scripts
-  trinitysockets
   collision
   g3dlib
   gsoap
-  ${JEMALLOC_LIB}
+  ${JEMALLOC_LIBRARY}
   ${READLINE_LIBRARY}
   ${TERMCAP_LIBRARY}
   ${ACE_LIBRARY}
@@ -203,3 +199,4 @@ if( USE_COREPCH )
     add_native_precompiled_header(worldserver ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders/worldPCH)
   endif()
 endif()
+

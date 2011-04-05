@@ -282,6 +282,13 @@ void Player::UpdateMaxHealth()
 
 void Player::UpdateMaxPower(Powers power)
 {
+    if(power > POWER_RUNIC_POWER)
+    {
+        // these powers don't currently have any modifiers
+        SetMaxPower(power, GetCreatePowers(power));
+        return;
+    }
+
     UnitMods unitMod = UnitMods(UNIT_MOD_POWER_START + power);
 
     float bonusPower = (power == POWER_MANA && GetCreatePowers(power) > 0) ? GetManaBonusFromIntellect() : 0;

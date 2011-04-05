@@ -915,6 +915,8 @@ CREATE TABLE `guild` (
   `motd` varchar(255) NOT NULL DEFAULT '',
   `createdate` bigint(20) NOT NULL DEFAULT '0',
   `BankMoney` bigint(20) NOT NULL DEFAULT '0',
+  `xp` bigint(20) unsigned NOT NULL,
+  `level` int(10) unsigned NOT NULL,
   PRIMARY KEY (`guildid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Guild System';
 
@@ -1237,8 +1239,7 @@ CREATE TABLE `petition` (
   `ownerguid` int(10) unsigned NOT NULL,
   `petitionguid` int(10) unsigned DEFAULT '0',
   `name` varchar(255) NOT NULL DEFAULT '',
-  `type` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ownerguid`,`type`),
+  PRIMARY KEY (`ownerguid`),
   UNIQUE KEY `index_ownerguid_petitionguid` (`ownerguid`,`petitionguid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Guild System';
 

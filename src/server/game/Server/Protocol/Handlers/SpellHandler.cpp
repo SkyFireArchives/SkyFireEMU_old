@@ -525,6 +525,7 @@ void WorldSession::HandleTotemDestroyed(WorldPacket& recvPacket)
     uint8 slotId;
 
     recvPacket >> slotId;
+    // uint64 totem's GUID. we don't need it
 
     ++slotId;
     if (slotId >= MAX_TOTEM_SLOT)

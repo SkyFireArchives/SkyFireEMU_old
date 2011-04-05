@@ -435,7 +435,7 @@ class Map : public GridRefManager<NGridType>
 
         void UpdateIteratorBack(Player *player);
 
-        TempSummon *SummonCreature(uint32 entry, const Position &pos, SummonPropertiesEntry const *properties = NULL, uint32 duration = 0, Unit *summoner = NULL, uint32 vehId = 0);
+        TempSummon *SummonCreature(uint32 entry, const Position &pos, SummonPropertiesEntry const *properties = NULL, uint32 duration = 0, Unit *summoner = NULL, uint32 vehId = 0, uint32 lowGUID = 0);
         Creature* GetCreature(uint64 guid);
         GameObject* GetGameObject(uint64 guid);
         DynamicObject* GetDynamicObject(uint64 guid);
