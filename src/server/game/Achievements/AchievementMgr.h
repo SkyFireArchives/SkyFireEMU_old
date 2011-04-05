@@ -256,8 +256,8 @@ class AchievementMgr
         static void DeleteFromDB(uint32 lowguid);
         void LoadFromDB(PreparedQueryResult achievementResult, PreparedQueryResult criteriaResult);
         void SaveToDB(SQLTransaction& trans);
-        void ResetAchievementCriteria(AchievementCriteriaTypes type, uint32 miscvalue1 = 0, uint32 miscvalue2 = 0, bool evenIfCriteriaComplete = false);
-        void UpdateAchievementCriteria(AchievementCriteriaTypes type, uint32 miscvalue1 = 0, uint32 miscvalue2 = 0, Unit *unit = NULL, uint32 time = 0);
+		void ResetAchievementCriteria(AchievementCriteriaTypes type, uint64 miscvalue1 = 0, uint64 miscvalue2 = 0, bool evenIfCriteriaComplete = false);
+        void UpdateAchievementCriteria(AchievementCriteriaTypes type, uint64 miscvalue1 = 0, uint64 miscvalue2 = 0, Unit *unit = NULL, uint32 time = 0);
         void CompletedAchievement(AchievementEntry const* entry, bool ignoreGMAllowAchievementConfig = false);
         void CheckAllAchievementCriteria();
         void SendAllAchievementData();

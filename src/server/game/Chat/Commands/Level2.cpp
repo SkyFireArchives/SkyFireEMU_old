@@ -2124,7 +2124,7 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
         return false;
 
     uint32 accId = 0;
-    uint32 money = 0;
+    uint64 money = 0;
     uint32 total_player_time = 0;
     uint8 level = 0;
     uint32 latency = 0;
@@ -2161,7 +2161,7 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
         Field *fields = result->Fetch();
         total_player_time = fields[0].GetUInt32();
         level = fields[1].GetUInt32();
-        money = fields[2].GetUInt32();
+        money = fields[2].GetUInt64();
         accId = fields[3].GetUInt32();
         race = fields[4].GetUInt8();
         Class = fields[5].GetUInt8();
@@ -2207,29 +2207,75 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
     std::string race_s, Class_s;
     switch(race)
     {
-        case RACE_HUMAN:            race_s = "Human";       break;
-        case RACE_ORC:              race_s = "Orc";         break;
-        case RACE_DWARF:            race_s = "Dwarf";       break;
-        case RACE_NIGHTELF:         race_s = "Night Elf";   break;
-        case RACE_UNDEAD_PLAYER:    race_s = "Undead";      break;
-        case RACE_TAUREN:           race_s = "Tauren";      break;
-        case RACE_GNOME:            race_s = "Gnome";       break;
-        case RACE_TROLL:            race_s = "Troll";       break;
-        case RACE_BLOODELF:         race_s = "Blood Elf";   break;
-        case RACE_DRAENEI:          race_s = "Draenei";     break;
+        case RACE_HUMAN:
+			race_s = "Human"; 
+			break;
+        case RACE_ORC:
+			race_s = "Orc";    
+			break;
+        case RACE_DWARF:
+			race_s = "Dwarf";     
+			break;
+        case RACE_NIGHTELF:
+			race_s = "Night Elf"; 
+			break;
+        case RACE_UNDEAD_PLAYER:
+			race_s = "Undead";     
+			break;
+        case RACE_TAUREN:   
+			race_s = "Tauren";      
+			break;
+        case RACE_GNOME:    
+			race_s = "Gnome";      
+			break;
+        case RACE_TROLL:   
+			race_s = "Troll";    
+			break;
+        case RACE_BLOODELF:  
+			race_s = "Blood Elf";  
+			break;
+        case RACE_DRAENEI: 
+			race_s = "Draenei";   
+			break;
+        case RACE_WORGEN: 
+			race_s = "Worgen";    
+			break;
+        case RACE_GOBLIN: 
+			race_s = "Goblin";     
+			break;
     }
     switch(Class)
     {
-        case CLASS_WARRIOR:         Class_s = "Warrior";        break;
-        case CLASS_PALADIN:         Class_s = "Paladin";        break;
-        case CLASS_HUNTER:          Class_s = "Hunter";         break;
-        case CLASS_ROGUE:           Class_s = "Rogue";          break;
-        case CLASS_PRIEST:          Class_s = "Priest";         break;
-        case CLASS_DEATH_KNIGHT:    Class_s = "Death Knight";   break;
-        case CLASS_SHAMAN:          Class_s = "Shaman";         break;
-        case CLASS_MAGE:            Class_s = "Mage";           break;
-        case CLASS_WARLOCK:         Class_s = "Warlock";        break;
-        case CLASS_DRUID:           Class_s = "Druid";          break;
+        case CLASS_WARRIOR:  
+			Class_s = "Warrior";     
+			break;
+        case CLASS_PALADIN:  
+			Class_s = "Paladin";     
+			break;
+        case CLASS_HUNTER:  
+			Class_s = "Hunter";     
+			break;
+        case CLASS_ROGUE:    
+			Class_s = "Rogue";     
+			break;
+        case CLASS_PRIEST:     
+			Class_s = "Priest";    
+			break;
+        case CLASS_DEATH_KNIGHT: 
+			Class_s = "Death Knight"; 
+			break;
+        case CLASS_SHAMAN:     
+			Class_s = "Shaman";     
+			break;
+        case CLASS_MAGE:      
+			Class_s = "Mage";      
+			break;
+        case CLASS_WARLOCK:     
+			Class_s = "Warlock";   
+			break;
+        case CLASS_DRUID:  
+			Class_s = "Druid";    
+			break;
     }
 
     std::string timeStr = secsToTimeString(total_player_time,true,true);
