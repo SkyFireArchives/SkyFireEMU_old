@@ -229,10 +229,15 @@ public:
                     continue;
 
                 uint32 unleashSpell = 0;
+                Unit *target = GetTargetUnit();
+                bool hostileTarget = plr->IsHostileTo(target);
+                bool hostileSpell = true;
+                
                 switch (weapons[i]->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
                 {
                     case 3345: // Earthliving Weapon
                         unleashSpell = 73685; //Unleash Life
+                        hostileSpell = false;
                         break;
                     case 5: // Flametongue Weapon
                         unleashSpell = 73683; // Unleash Flame
@@ -247,9 +252,14 @@ public:
                         unleashSpell = 73681; // Unleash Wind
                         break;
                 }
+                if(hostileSpell && !hostileTarget)
+                    return; // don't allow to attack non-hostile targets. TODO: check this before cast
+
+                if(!hostileSpell && hostileTarget)
+                    target = plr;   // heal ourselves instead of the enemy
                 if(unleashSpell)
                 {
-                    plr->CastSpell(GetTargetUnit(), unleashSpell, false);
+                    plr->CastSpell(target, unleashSpell, true);
                 }
             }
         }
