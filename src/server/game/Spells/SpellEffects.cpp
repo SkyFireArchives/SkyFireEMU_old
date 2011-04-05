@@ -3024,7 +3024,24 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                     break;
                 case SUMMON_TYPE_TOTEM:
                 {
-                    summon = m_caster->GetMap()->SummonCreature(entry, pos, properties, duration, m_originalCaster);
+                    // we need to know the totem's GUID before it is actually created
+                    uint32 lowGUID = sObjectMgr.GenerateLowGuid(HIGHGUID_UNIT);
+                    if (m_originalCaster->GetTypeId() == TYPEID_PLAYER
+                        && properties->Slot >= SUMMON_SLOT_TOTEM
+                        && properties->Slot < MAX_TOTEM_SLOT)
+                    {
+                        // This packet has to be received by the client before the actual unit creation
+                        WorldPacket data(SMSG_TOTEM_CREATED, 1+8+4+4);
+
+                        data << uint8(properties->Slot-1);
+                        // guessing GUID that will be assigned to the totem
+                        data << uint64(MAKE_NEW_GUID(lowGUID, entry, HIGHGUID_UNIT));
+                        data << uint32(duration);
+                        data << uint32(m_spellInfo->Id);
+                        m_originalCaster->ToPlayer()->SendDirectMessage(&data);
+                    }
+
+                    summon = m_caster->GetMap()->SummonCreature(entry, pos, properties, duration, m_originalCaster, 0, lowGUID);
                     if (!summon || !summon->isTotem())
                         return;
 
@@ -3046,12 +3063,7 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                         summon->SetDisplayId(displayId);
 
                         //summon->SendUpdateToPlayerm_originalCaster->ToPlayer();
-                        WorldPacket data(SMSG_TOTEM_CREATED, 1+8+4+4);
-                        data << uint8(properties->Slot-1);
-                        data << uint64(m_originalCaster->GetGUID());
-                        data << uint32(duration);
-                        data << uint32(m_spellInfo->Id);
-                        m_originalCaster->ToPlayer()->SendDirectMessage(&data);
+                       
                     }
                     break;
                 }
