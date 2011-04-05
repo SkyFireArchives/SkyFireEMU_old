@@ -833,6 +833,35 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
             }  
             break;
         }
+        case SPELL_AURA_MOD_RESISTANCE_EXCLUSIVE:
+        {
+            int32 resist = caster->getLevel();
+            if ( resist <= 70 )
+            {
+            }
+            else if ( resist > 70 && resist < 81 )
+            {
+                resist += (resist-70)*5;
+            }
+            else if ( resist > 80 && resist <= 85 )
+            {
+                resist += ((resist-70)*5 + (resist-80)*7);
+            }
+            switch( GetId() )
+            {
+                case 20043: // Aspect of the Wild
+                case 8185: // Elemental Resistance
+                case 19891: // Resistance Aura
+                case 79106: // Shadow Protection
+                    amount = resist;
+                    break;
+                case 79060: // Mark of the Wild
+                case 79062: // Blessing of Kings
+                    amount = resist / 2;
+                    break;
+            }
+            break;
+        }
         default:
             break;
     }
@@ -4652,35 +4681,15 @@ void AuraEffect::HandleAuraModResistanceExclusive(AuraApplication const *aurApp,
         return;
 
     Unit *target = aurApp->GetTarget();
+
+    uint32 modAmount = GetAmount();
+
     for (int8 x = SPELL_SCHOOL_NORMAL; x < MAX_SPELL_SCHOOL; x++)
     {
         if (GetMiscValue() & int32(1 << x))
         {
             int32 amount = target->GetMaxPositiveAuraModifierByMiscMask(SPELL_AURA_MOD_RESISTANCE_EXCLUSIVE, 1<<x, this);
-            int32 modAmount = target->getLevel();
-            switch( GetId() )
-            {
-                // Some other resists may have the same formula. If so they have not been found and should be added here.
-                case 20043: // Aspect of the Wild
-                    if ( modAmount <= 70 )
-                    {
-                        modAmount *= 1;
-                        break;
-                    }
-                    if ( modAmount > 70 && modAmount < 81 )
-                    {
-                        modAmount += (modAmount-70)*5;
-                        break;
-                    }
-                    if ( modAmount > 80 && modAmount <= 85 )
-                    {
-                        modAmount += ((modAmount-70)*5 + (modAmount-80)*7);
-                        break;
-                    }
-                default:
-                    modAmount = GetAmount();
-                    break;
-            }
+            
             if (amount < modAmount )
             {
                 target->HandleStatModifier(UnitMods(UNIT_MOD_RESISTANCE_START + x), BASE_VALUE, float(modAmount - amount), apply);
