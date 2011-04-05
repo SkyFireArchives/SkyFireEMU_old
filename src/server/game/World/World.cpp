@@ -429,13 +429,10 @@ void World::LoadConfigSettings(bool reload)
 
     ///- Read the player limit and the Message of the day from the config file
     SetPlayerAmountLimit(sConfig.GetIntDefault("PlayerLimit", 100));
-    SetMotd(sConfig.GetStringDefault("Motd", "Welcome to a Trinity Core Server."));
+    SetMotd(sConfig.GetStringDefault("Motd", "Welcome to a SkyFire server."));
 
     ///- Get string for new logins (newly created characters)
     SetNewCharString(sConfig.GetStringDefault("PlayerStart.String", ""));
-
-    ///- Send server info on login?
-    m_int_configs[CONFIG_ENABLE_SINFO_LOGIN] = sConfig.GetIntDefault("Server.LoginInfo", 0);
 
     ///- Read all rates from the config file
     rate_values[RATE_HEALTH]      = sConfig.GetFloatDefault("Rate.Health", 1);
