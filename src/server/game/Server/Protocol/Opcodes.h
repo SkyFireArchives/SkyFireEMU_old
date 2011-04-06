@@ -849,7 +849,7 @@ enum Opcodes
     CMSG_MOVE_SET_CAN_FLY_ACK                        = 0x0FCAC, // 4.0.6a 13623
     CMSG_MOVE_SET_FLY                                = 0x0E0E0, // 4.0.6a 13623
     CMSG_SOCKET_GEMS                                 = 0x076C4, // 4.0.6a 13623
-    CMSG_ARENA_TEAM_CREATE                           = 0x1000D,
+    CMSG_ARENA_TEAM_CREATE                           = 0x00509, // 4.0.6a 13623
     SMSG_ARENA_TEAM_COMMAND_RESULT                   = 0x0040C, // 4.0.6a 13623 
     CMSG_ARENA_TEAM_QUERY                            = 0x0B9C8, // 4.0.6a 13623
     SMSG_ARENA_TEAM_QUERY_RESPONSE                   = 0x03DE8, // 4.0.6a 13623
@@ -1271,7 +1271,7 @@ enum Opcodes
     SMSG_CAMERA_SHAKE                                = 0x034A4, // 4.0.6a 13623
     SMSG_UPDATE_ITEM_ENCHANTMENTS                    = 0x020E8, // 4.0.6a 13623
     SMSG_REDIRECT_CLIENT                             = 0x0201B, // 4.0.6a 13623
-    CMSG_REDIRECTION_FAILED                          = 0x00509,
+    CMSG_REDIRECTION_FAILED                          = 0x1000F,
     SMSG_UNKNOWN_1295                                = 0x1000B,
     CMSG_UNKNOWN_1296                                = 0x1000C,
     SMSG_FORCE_SEND_QUEUED_PACKETS                   = 0x06EC8, // 4.0.6a 13623
