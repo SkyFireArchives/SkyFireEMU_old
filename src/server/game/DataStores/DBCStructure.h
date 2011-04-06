@@ -558,6 +558,7 @@ struct AreaPOIEntry
     uint32 icon[11];        //1-11
     float x;                //12
     float y;                //13
+	float z;                //14
     uint32 mapId;           //14
     //uint32 val1;          //15
     uint32 zoneId;          //16
