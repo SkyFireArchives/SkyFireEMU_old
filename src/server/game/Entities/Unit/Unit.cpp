@@ -16072,6 +16072,46 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form)
                         return 892;
                 }
             }
+			else if (getRace() == RACE_TROLL)
+            {
+                uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
+                switch (hairColor)
+                {
+                    case 7: // Violet
+                    case 8:
+                        return 33665;
+                    case 3: // Light Blue
+                        return 33666;
+                    case 0: // Green
+                    case 1: // Light Green
+                    case 2: // Dark Green
+                        return 33667;
+                    case 4: // White
+                        return 33669;
+                    default: // original - Dark Blue
+                        return 33668;
+                }
+            }
+			else if (getRace() == RACE_WORGEN)
+            {
+                uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
+                switch (hairColor)
+                {
+                    case 7: // Violet
+                    case 8:
+                        return 33660;
+                    case 3: // Light Blue
+                        return 33661;
+                    case 0: // Green
+                    case 1: // Light Green
+                    case 2: // Dark Green
+                        return 33662;
+                    case 4: // White
+                        return 33663;
+                    default: // original - Dark Blue
+                        return 33664;
+                }
+            }
             // Based on Skin color
             else if (getRace() == RACE_TAUREN)
             {
@@ -16149,6 +16189,44 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form)
                         return 29417;
                     default: // original - Violet
                         return 2281;
+                }
+            }
+			else if (getRace() == RACE_TROLL)
+            {
+                uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
+                switch (hairColor)
+                {
+                    case 0: // Green
+                    case 1: // Light Green
+                    case 2: // Dark Green
+                        return 33659;
+                    case 6: // Dark Blue
+                        return 33655;
+                    case 4: // White
+                        return 33658;
+                    case 3: // Light Blue
+                        return 33657;
+                    default: // original - Violet
+                        return 33656;
+                }
+            }
+			else if (getRace() == RACE_WORGEN)
+            {
+                uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
+                switch (hairColor)
+                {
+                    case 0: // Green
+                    case 1: // Light Green
+                    case 2: // Dark Green
+                        return 33650;
+                    case 6: // Dark Blue
+                        return 33651;
+                    case 4: // White
+                        return 33654;
+                    case 3: // Light Blue
+                        return 33652;
+                    default: // original - Violet
+                        return 33653;
                 }
             }
             // Based on Skin color
