@@ -881,6 +881,24 @@ void OutdoorPvPWG::OnGameObjectCreate(GameObject *go)
             }
         }
     }
+   switch(go->GetGOInfo()->displayId)
+   {
+       case 8244: // Defender's Portal - Vehicle Teleporter
+       case 7967: // Titan relic
+       case 8165: // Wintergrasp Keep Door
+       case 7877: // Wintergrasp Fortress Wall
+       case 7878: // Wintergrasp Keep Tower
+       case 7906: // Wintergrasp Fortress Gate
+       case 7909: // Wintergrasp Wall
+       case 7900: // Flamewatch Tower - Shadowsight Tower - Winter's Edge Tower
+       case 8208: // Goblin Workshop
+       case 8257: // Big Horde Flag
+       case 8256: // Big Alliance Flag
+       case 5652: // Small Horde Flag
+       case 5651: // Small Alliance Flag
+           m_gobjects.insert(go);
+           break;
+   }
 }
 
 void OutdoorPvPWG::OnGameObjectRemove(GameObject *go)
@@ -1151,6 +1169,182 @@ bool OutdoorPvPWG::UpdateGameObjectInfo(GameObject *go) const
         case 7967: // Titan relic
             go->SetUInt32Value(GAMEOBJECT_FACTION, WintergraspFaction[getAttackerTeam()]);
             return true;
+        case 8257: // Big Horde Flag
+           if (getDefenderTeam() == TEAM_ALLIANCE)
+           {
+               if (go->GetAreaId() == 4575 || go->GetAreaId() == 4539 || go->GetAreaId() == 4538) // Wintergrasp Fortress - The Broken Temple - The Sunken Ring
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 8256)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 8256);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+               else
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 8257)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 8257);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+           }
+           else
+           {
+               if (go->GetAreaId() == 4575 || go->GetAreaId() == 4539 || go->GetAreaId() == 4538) // Wintergrasp Fortress - The Broken Temple - The Sunken Ring
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 8257)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 8257);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+               else
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 8256)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 8256);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+           }
+           return true;
+        case 8256: // Big Alliance Flag
+           if (getDefenderTeam() == TEAM_ALLIANCE)
+           {
+               if (go->GetAreaId() == 4575 || go->GetAreaId() == 4539 || go->GetAreaId() == 4538) // Wintergrasp Fortress - The Broken Temple - The Sunken Ring
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 8257)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 8257);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+               else
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 8256)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 8256);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+           }
+           else
+           {
+               if (go->GetAreaId() == 4575 || go->GetAreaId() == 4539 || go->GetAreaId() == 4538) // Wintergrasp Fortress - The Broken Temple - The Sunken Ring
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 8256)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 8256);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+               else
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 8257)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 8257);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+           }
+           return true;
+        case 5652: // Small Horde Flag
+           if (getDefenderTeam() == TEAM_ALLIANCE)
+           {
+               if (go->GetAreaId() == 4575 || go->GetAreaId() == 4539 || go->GetAreaId() == 4538) // Wintergrasp Fortress - The Broken Temple - The Sunken Ring
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 5651)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 5651);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+               else
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 5652)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 5652);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+           }
+           else
+           {
+               if (go->GetAreaId() == 4575 || go->GetAreaId() == 4539 || go->GetAreaId() == 4538) // Wintergrasp Fortress - The Broken Temple - The Sunken Ring
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 5652)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 5652);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+               else
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 5651)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 5651);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+           }
+           return true;
+        case 5651: // Small Alliance Flag
+           if (getDefenderTeam() == TEAM_ALLIANCE)
+           {
+               if (go->GetAreaId() == 4575 || go->GetAreaId() == 4539 || go->GetAreaId() == 4538) // Wintergrasp Fortress - The Broken Temple - The Sunken Ring
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 5652)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 5652);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+               else
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 5651)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 5651);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+           }
+           else
+           {
+               if (go->GetAreaId() == 4575 || go->GetAreaId() == 4539 || go->GetAreaId() == 4538) // Wintergrasp Fortress - The Broken Temple - The Sunken Ring
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 5651)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 5651);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+               else
+               {
+                   if (go->GetUInt32Value(GAMEOBJECT_DISPLAYID) != 5652)
+                   {
+                       go->SetUInt32Value(GAMEOBJECT_DISPLAYID, 5652);
+                       go->SummonGameObject(go->GetEntry(), go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), go->GetOrientation(), 0, 0, 0, 0, 0);
+                       go->RemoveFromWorld();
+                   }
+               }
+           }
+           return true;
         case 8165: // Wintergrasp Keep Door
         case 7877: // Wintergrasp Fortress Wall
         case 7878: // Wintergrasp Keep Tower
@@ -1158,8 +1352,8 @@ bool OutdoorPvPWG::UpdateGameObjectInfo(GameObject *go) const
         case 7909: // Wintergrasp Wall
             go->SetUInt32Value(GAMEOBJECT_FACTION, defFaction);
             return false;
-        case 8256://Alliance Banner
-        case 5651://Alliance Banner
+//        case 8256://Alliance Banner
+//        case 5651://Alliance Banner
              if (getDefenderTeam() == TEAM_ALLIANCE)
              {
                  if (go->GetAreaId()==4575 || go->GetAreaId()==4539 || go->GetAreaId()==4538)
@@ -1171,8 +1365,8 @@ bool OutdoorPvPWG::UpdateGameObjectInfo(GameObject *go) const
                  else go->SetPhaseMask(1, true);
              }
              return true;
-        case 8257://Horde Banner
-        case 5652://Horde Banner
+       // case 8257://Horde Banner
+        //case 5652://Horde Banner
              if (getDefenderTeam() == TEAM_ALLIANCE)
              {
                  if (go->GetAreaId()==4575 || go->GetAreaId()==4539 || go->GetAreaId()==4538)
@@ -1375,9 +1569,9 @@ void OutdoorPvPWG::UpdateTenacityStack()
     if (allianceNum && hordeNum)
     {
         if (allianceNum < hordeNum)
-            newStack = int32((float(hordeNum) / float(allianceNum) - 1)*4); // positive, should cast on alliance
+            newStack = int32((float(((hordeNum) - (allianceNum))/9.5))); // positive, should cast on alliance
         else if (allianceNum > hordeNum)
-            newStack = int32((1 - float(allianceNum) / float(hordeNum))*4); // negative, should cast on horde
+            newStack = int32((float(((allianceNum) - (hordeNum))/9.5))); // negative, should cast on horde
     }
 
     if (newStack == m_tenacityStack)
@@ -2128,6 +2322,8 @@ void OPvPCapturePointWG::ChangeTeam(TeamId oldTeam)
         }
     } else if (m_engineer)
         m_engineer->SetVisibility(VISIBILITY_OFF);
+
+	sLog.outDebug("Wintergrasp workshop now belongs to %u.", (uint32)m_buildingState->GetTeam());
 }
 
 class OutdoorPvP_wintergrasp : public OutdoorPvPScript

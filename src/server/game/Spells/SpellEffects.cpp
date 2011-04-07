@@ -4436,7 +4436,7 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                 case 58622:
                    {
                   if(OutdoorPvPWG *pvpWG = (OutdoorPvPWG*)sOutdoorPvPMgr.GetOutdoorPvPToZoneId(4197))
-                        if(pvpWG->isWarTime() || pvpWG->m_timer<300000)
+                        if(unitTarget->getLevel() > 74)
                         {
                         if ((pvpWG->getDefenderTeam()==TEAM_ALLIANCE) && (unitTarget->ToPlayer()->GetTeam() == ALLIANCE))
                         unitTarget->CastSpell(unitTarget, SPELL_TELEPORT_FORTRESS, true);
