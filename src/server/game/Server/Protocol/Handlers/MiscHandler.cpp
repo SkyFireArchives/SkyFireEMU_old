@@ -1718,6 +1718,9 @@ void WorldSession::HandleReadyForAccountDataTimes(WorldPacket& /*recv_data*/)
 
 void WorldSession::SendSetPhaseShift(uint32 PhaseShift, uint32 MapID)
 {
+    if (!_player)
+        return;
+
     WorldPacket data(SMSG_SET_PHASE_SHIFT, 4);
     data << uint64(_player->GetGUID());
     data << uint32(0); // Count of bytes - Array1 - Unused
