@@ -835,32 +835,35 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
         }
         case SPELL_AURA_MOD_RESISTANCE_EXCLUSIVE:
         {
-            int32 resist = caster->getLevel();
-            if ( resist <= 70 )
+            if (caster)
             {
+                int32 resist = caster->getLevel();
+                if ( resist <= 70 )
+                {
+                }
+                else if ( resist > 70 && resist < 81 )
+                {
+                    resist += (resist-70)*5;
+                }
+                else if ( resist > 80 && resist <= 85 )
+                {
+                    resist += ((resist-70)*5 + (resist-80)*7);
+                }
+                switch( GetId() )
+                {
+                    case 20043: // Aspect of the Wild
+                    case 8185: // Elemental Resistance
+                    case 19891: // Resistance Aura
+                    case 79106: // Shadow Protection
+                        amount = resist;
+                        break;
+                    case 79060: // Mark of the Wild
+                    case 79062: // Blessing of Kings
+                        amount = resist / 2;
+                        break;
+                }
+                break;
             }
-            else if ( resist > 70 && resist < 81 )
-            {
-                resist += (resist-70)*5;
-            }
-            else if ( resist > 80 && resist <= 85 )
-            {
-                resist += ((resist-70)*5 + (resist-80)*7);
-            }
-            switch( GetId() )
-            {
-                case 20043: // Aspect of the Wild
-                case 8185: // Elemental Resistance
-                case 19891: // Resistance Aura
-                case 79106: // Shadow Protection
-                    amount = resist;
-                    break;
-                case 79060: // Mark of the Wild
-                case 79062: // Blessing of Kings
-                    amount = resist / 2;
-                    break;
-            }
-            break;
         }
         default:
             break;
