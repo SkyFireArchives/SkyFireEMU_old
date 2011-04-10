@@ -116,14 +116,14 @@ void CreatureTextMgr::SendChat(Creature* source, uint8 textGroup, uint64 whisper
     CreatureTextMap::const_iterator sList = mTextMap.find(source->GetEntry());
     if (sList == mTextMap.end())
     {
-        sLog.outErrorDb("CreatureTextMgr: Could not find Text for Creature(%s) Entry %u in 'creature_text' table. Ignoring.",source->GetName(), source->GetEntry());
+        sLog.outDebug("CreatureTextMgr::TextExist: Could not find Text for Creature (entry %u) in 'creature_text' table.", sourceEntry);
         return;
     }
     CreatureTextHolder TextHolder = (*sList).second;
     CreatureTextHolder::const_iterator itr = TextHolder.find(textGroup);
     if (itr == TextHolder.end())
     {
-        sLog.outErrorDb("CreatureTextMgr: Could not find TextGroup %u for Creature(%s) GuidLow %u Entry %u. Ignoring.",uint32(textGroup), source->GetName(), source->GetGUIDLow(), source->GetEntry());
+        sLog.outDebug("CreatureTextMgr::TextExist: Could not find TextGroup %u for Creature (entry %u).",uint32(textGroup), sourceEntry);
         return;
     }
     CreatureTextGroup TextGroup = (*itr).second;//has all texts in the group

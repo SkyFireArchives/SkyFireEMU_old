@@ -65,6 +65,7 @@
 #include "Formulas.h"
 #include "Vehicle.h"
 #include "ScriptMgr.h"
+#include "GameObjectAI.h"
 
 pEffect SpellEffects[TOTAL_SPELL_EFFECTS]=
 {
@@ -2691,6 +2692,8 @@ void Spell::SendLoot(uint64 guid, LootType loottype)
 
         if (sScriptMgr.OnGossipHello(player, gameObjTarget))
             return;
+
+        gameObjTarget->AI()->GossipHello(player);
 
         switch (gameObjTarget->GetGoType())
         {

@@ -53,6 +53,7 @@
 #include "MapManager.h"
 #include "InstanceScript.h"
 #include "LFGMgr.h"
+#include "GameObjectAI.h"
 
 void WorldSession::HandleRepopRequestOpcode(WorldPacket & recv_data)
 {
@@ -149,7 +150,10 @@ void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket & recv_data)
             unit->AI()->sGossipSelectCode(_player, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId), code.c_str());
         }
         else
+        {
             sScriptMgr.OnGossipSelectCode(_player, go, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId), code.c_str());
+            go->AI()->GossipSelectCode(_player, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId), code.c_str());
+        }
     }
     else
     {
@@ -161,7 +165,10 @@ void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket & recv_data)
             unit->AI()->sGossipSelect(_player, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId));
         }
         else
+        {
             sScriptMgr.OnGossipSelect(_player, go, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId));
+            go->AI()->GossipSelect(_player, _player->PlayerTalkClass->GossipOptionSender(gossipListId), _player->PlayerTalkClass->GossipOptionAction(gossipListId));
+        }
     }
 }
 
