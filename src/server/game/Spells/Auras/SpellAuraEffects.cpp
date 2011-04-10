@@ -4690,7 +4690,7 @@ void AuraEffect::HandleAuraModResistanceExclusive(AuraApplication const *aurApp,
 
     Unit *target = aurApp->GetTarget();
 
-    uint32 modAmount = GetAmount();
+    int32 modAmount = GetAmount();
 
     for (int8 x = SPELL_SCHOOL_NORMAL; x < MAX_SPELL_SCHOOL; x++)
     {
