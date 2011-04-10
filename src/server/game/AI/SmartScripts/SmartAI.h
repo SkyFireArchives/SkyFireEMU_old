@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -65,6 +65,7 @@ class SmartAI : public CreatureAI
         void SetCombatMove(bool on);
         void SetFollow(Unit* target, float dist = 0.0f, float angle = 0.0f, uint32 credit = 0, uint32 end = 0, uint32 creditType = 0);
 
+        void SetScript9(SmartScriptHolder &e, uint32 entry, Unit* invoker);
         SmartScript* GetScript() { return &mScript; }
         bool IsEscortInvokerInRange();
 
@@ -105,7 +106,7 @@ class SmartAI : public CreatureAI
         void SpellHitTarget(Unit* target, const SpellEntry* pSpell);
 
         // Called at any Damage from any attacker (before damage apply)
-        void DamageTaken(Unit* done_by, uint32& damage, DamageEffectType damagetype);
+        void DamageTaken(Unit* done_by, uint32& damage);
 
         // Called when the creature receives heal
         void HealReceived(Unit* done_by, uint32& addhealth);
@@ -123,7 +124,7 @@ class SmartAI : public CreatureAI
         void IsSummonedBy(Unit* summoner);
 
         // Called at any Damage to any victim (before damage apply)
-        void DamageDealt(Unit * done_to, uint32 & damage);
+        void DamageDealt(Unit * done_to, uint32 & damage, DamageEffectType /*damagetype*/);
 
         // Called when a summoned creature dissapears (UnSommoned)
         void SummonedCreatureDespawn(Creature* unit);
@@ -181,6 +182,7 @@ class SmartAI : public CreatureAI
         //void sQuestSelect(Player* player, Quest const* quest);
         //void sQuestComplete(Player* player, Quest const* quest);
         void sQuestReward(Player* player, Quest const* quest, uint32 opt);
+        bool sOnDummyEffect(Unit* caster, uint32 spellId, SpellEffIndex effIndex);
 
         uint32 mEscortQuestID;
 
@@ -229,7 +231,7 @@ class SmartAI : public CreatureAI
 class SmartGameObjectAI : public GameObjectAI
 {
 public:
-    SmartGameObjectAI(GameObject *g) : go(g), GameObjectAI(g) {}
+    SmartGameObjectAI(GameObject *g) : GameObjectAI(g), go(g) {}
     ~SmartGameObjectAI() {}
 
     void UpdateAI(const uint32 diff);
@@ -246,6 +248,7 @@ public:
     uint32 GetDialogStatus(Player* /*player*/);
     void Destroyed(Player* player, uint32 eventId);
     void SetData(uint32 id, uint32 value);
+    void SetScript9(SmartScriptHolder &e, uint32 entry, Unit* invoker);
 
 protected:
     GameObject * const go;
