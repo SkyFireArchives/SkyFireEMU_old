@@ -33,6 +33,7 @@
 #include "CreatureAIRegistry.h"
 #include "WaypointMovementGenerator.h"
 #include "CreatureAIFactory.h"
+#include "SmartAI.h"
 
 //#include "CreatureAIImpl.h"
 namespace AIRegistry
@@ -54,6 +55,7 @@ namespace AIRegistry
         (new CreatureAIFactory<CreatureEventAI>("EventAI"))->RegisterSelf();
         (new CreatureAIFactory<AOEAI>("AOEAI"))->RegisterSelf();
         (new CreatureAIFactory<VehicleAI>("VehicleAI"))->RegisterSelf();
+        (new CreatureAIFactory<SmartAI>("SmartAI"))->RegisterSelf();
 
         (new GameObjectAIFactory<GameObjectAI>("GameObjectAI"))->RegisterSelf();
 
