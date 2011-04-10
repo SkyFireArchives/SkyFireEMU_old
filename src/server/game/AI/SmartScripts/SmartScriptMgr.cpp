@@ -1,4 +1,4 @@
-/*
+obj/*
  * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -86,7 +86,7 @@ void SmartWaypointMgr::LoadFromDB()
     }
     while (result->NextRow());
 
-    sLog.outString(">> Loaded %u SmartAI waypoint paths (total %u waypoints) in %u ms", count, total, GetMSTimeDiffToNow(oldMSTime));
+    sLog.outString(">> Loaded %u SmartAI waypoint paths (total %u waypoints) in %u ms", count, total);
     sLog.outString();
 }
 
@@ -161,7 +161,7 @@ void SmartAIMgr::LoadSmartAIFromDB()
             }
         }else
         {
-            if (!sObjectMgr->GetCreatureData(uint32(abs(temp.entryOrGuid))))
+            if (!sObjectMgr.GetCreatureData(uint32(abs(temp.entryOrGuid))))
             {
                 sLog.outErrorDb("SmartAIMgr::LoadSmartAIFromDB: Creature guid (%u) does not exist, skipped loading.", uint32(abs(temp.entryOrGuid)));
                 continue;
@@ -218,7 +218,7 @@ void SmartAIMgr::LoadSmartAIFromDB()
     }
     while (result->NextRow());
 
-    sLog.outString(">> Loaded %u SmartAI scripts in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    sLog.outString(">> Loaded %u SmartAI scripts in %u ms", count);
     sLog.outString();
 }
 
@@ -562,7 +562,7 @@ bool SmartAIMgr::IsEventValid(SmartScriptHolder &e)
             break;
         case SMART_ACTION_CALL_AREAEXPLOREDOREVENTHAPPENS:
         case SMART_ACTION_CALL_GROUPEVENTHAPPENS:
-            if (Quest const* qid = sObjectMgr->GetQuestTemplate(e.action.quest.quest))
+            if (Quest const* qid = sObjectMgr.GetQuestTemplate(e.action.quest.quest))
             {
                 if (!qid->HasFlag(QUEST_TRINITY_FLAGS_EXPLORATION_OR_EVENT))
                 {
@@ -785,7 +785,7 @@ bool SmartAIMgr::IsTextValid(SmartScriptHolder e, uint32 id)
         entry = uint32(e.entryOrGuid);
     else {
         entry = uint32(abs(e.entryOrGuid));
-        CreatureData const* data = sObjectMgr->GetCreatureData(entry);
+        CreatureData const* data = sObjectMgr.GetCreatureData(entry);
         if (!data)
         {
             sLog.outErrorDb("SmartAIMgr: Entry %d SourceType %u Event %u Action %u using non-existent Creature guid %d, skipped.", e.entryOrGuid, e.GetScriptType(), e.event_id, e.GetActionType(), entry);
@@ -794,7 +794,7 @@ bool SmartAIMgr::IsTextValid(SmartScriptHolder e, uint32 id)
         else
             entry = data->id;
     }
-    if (!entry || !sCreatureTextMgr->TextExist(entry, uint8(id)))
+    if (!entry || !sCreatureTextMgr.TextExist(entry, uint8(id)))
         error = true;
     if (error)
     {
