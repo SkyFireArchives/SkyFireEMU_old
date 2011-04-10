@@ -804,6 +804,29 @@ struct CurrencyTypesEntry
     //DBCString description;                                // 10
 };
 
+struct DestructibleModelDataEntry
+{
+    uint32  Id;
+    //uint32  DamagedUnk1;
+    //uint32  DamagedUnk2;
+    uint32  DamagedDisplayId;
+    //uint32  DamagedUnk3;
+    //uint32  DestroyedUnk1;
+    //uint32  DestroyedUnk2;
+    uint32  DestroyedDisplayId;
+    //uint32  DestroyedUnk3;
+    //uint32  RebuildingUnk1;
+    //uint32  RebuildingUnk2;
+    uint32  RebuildingDisplayId;
+    //uint32  RebuildingUnk3;
+    //uint32  SmokeUnk1;
+    //uint32  SmokeUnk2;
+    uint32  SmokeDisplayId;
+    //uint32  SmokeUnk3;
+    //uint32  Unk4;
+    //uint32  Unk5;
+};
+
 struct DurabilityCostsEntry
 {
     uint32    Itemlvl;                                      // 0
