@@ -154,7 +154,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
             mTextTimer = e.action.talk.duration;
             mTextGUID = IsPlayer(GetLastInvoker()) ? GetLastInvoker()->GetGUID() : NULL;//invoker, used for $vars in texts
             mUseTextTimer = true;
-            sCreatureTextMgr->SendChat(talker, uint8(e.action.talk.textGroupID), mTextGUID);
+            sCreatureTextMgr.SendChat(talker, uint8(e.action.talk.textGroupID), mTextGUID);
             sLog.outDebug("SmartScript::ProcessAction: SMART_ACTION_TALK: talker: %s (GuidLow: %u), textGuid: %u",
                 talker->GetName(), talker->GetGUIDLow(), mTextGUID);
             break;
@@ -167,11 +167,11 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                 for (ObjectList::const_iterator itr = targets->begin(); itr != targets->end(); ++itr)
                 {
                     if (IsCreature((*itr)))
-                        sCreatureTextMgr->SendChat((*itr)->ToCreature(), uint8(e.action.talk.textGroupID), IsPlayer(GetLastInvoker())? GetLastInvoker()->GetGUID() : NULL);
+                        sCreatureTextMgr.SendChat((*itr)->ToCreature(), uint8(e.action.talk.textGroupID), IsPlayer(GetLastInvoker())? GetLastInvoker()->GetGUID() : NULL);
                     else if (IsPlayer((*itr)))
                     {
                         Unit* templastInvoker = GetLastInvoker();
-                        sCreatureTextMgr->SendChat(me, uint8(e.action.talk.textGroupID), IsPlayer(templastInvoker) ? templastInvoker->GetGUID() : NULL, CHAT_TYPE_END, LANG_ADDON, TEXT_RANGE_NORMAL, NULL, TEAM_OTHER, false, (*itr)->ToPlayer());
+                        sCreatureTextMgr.SendChat(me, uint8(e.action.talk.textGroupID), IsPlayer(templastInvoker) ? templastInvoker->GetGUID() : NULL, CHAT_TYPE_END, LANG_ADDON, TEXT_RANGE_NORMAL, NULL, TEAM_OTHER, false, (*itr)->ToPlayer());
                     }
                     sLog.outDebug("SmartScript::ProcessAction:: SMART_ACTION_SIMPLE_TALK: talker: %s (GuidLow: %u), textGroupId: %u",
                         (*itr)->GetName(), (*itr)->GetGUIDLow(), uint8(e.action.talk.textGroupID));
@@ -207,7 +207,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                 {
                     if (IsCreature((*itr)))
                     {
-                        sCreatureTextMgr->SendSound((*itr)->ToCreature(), e.action.sound.sound, CHAT_TYPE_SAY, 0, TextRange(e.action.sound.range), Team(NULL), false);
+                        sCreatureTextMgr.SendSound((*itr)->ToCreature(), e.action.sound.sound, CHAT_TYPE_SAY, 0, TextRange(e.action.sound.range), Team(NULL), false);
                        sLog.outDebug("SmartScript::ProcessAction:: SMART_ACTION_SOUND: source: %s (GuidLow: %u), sound: %u, range: %u",
                             (*itr)->GetName(), (*itr)->GetGUIDLow(), e.action.sound.sound, e.action.sound.range);
                     }
@@ -268,7 +268,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     {
                         if (CreatureInfo const* ci = ObjectMgr::GetCreatureTemplate(e.action.morphOrMount.creature))
                         {
-                            uint32 display_id = sObjectMgr->ChooseDisplayId(0, ci);
+                            uint32 display_id = sObjectMgr.ChooseDisplayId(0, ci);
                             (*itr)->ToCreature()->SetDisplayId(display_id);
                             sLog.outDebug("SmartScript::ProcessAction:: SMART_ACTION_MORPH_TO_ENTRY_OR_MODEL: Creature entry %u, GuidLow %u set displayid to %u",
                                 (*itr)->GetEntry(), (*itr)->GetGUIDLow(), display_id);
@@ -319,7 +319,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
             for (ObjectList::const_iterator itr = targets->begin(); itr != targets->end(); ++itr)
             {
                 if (IsPlayer((*itr)))
-                    if (const Quest* q = sObjectMgr->GetQuestTemplate(e.action.quest.quest))
+                    if (const Quest* q = sObjectMgr.GetQuestTemplate(e.action.quest.quest))
                     {
                         (*itr)->ToPlayer()->AddQuest(q, NULL);
                         sLog.outDebug("SmartScript::ProcessAction:: SMART_ACTION_ADD_QUEST: Player guidLow %u add quest %u",
@@ -942,7 +942,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     {
                         if (CreatureInfo const* cInfo = ObjectMgr::GetCreatureTemplate(e.action.morphOrMount.creature))
                         {
-                            uint32 display_id = sObjectMgr->ChooseDisplayId(0, cInfo);
+                            uint32 display_id = sObjectMgr.ChooseDisplayId(0, cInfo);
                             (*itr)->ToUnit()->Mount(display_id);
                         }
                     }
@@ -995,7 +995,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
         case SMART_ACTION_SET_VISIBILITY:
         {
             if (me)
-                me->SetVisible(e.action.visibility.state ? true : false);
+                me->SetVisibility(e.action.visibility.state ? VISIBILITY_ON : VISIBILITY_OFF);
             break;
         }
         case SMART_ACTION_SET_ACTIVE:
@@ -1316,7 +1316,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                     uint32 slot[3];
                     if (e.action.equip.entry)
                     {
-                        EquipmentInfo const* einfo = sObjectMgr->GetEquipmentInfo(e.action.equip.entry);
+                        EquipmentInfo const* einfo = sObjectMgr.GetEquipmentInfo(e.action.equip.entry);
                         if (!einfo)
                         {
                             sLog.outErrorDb("SmartScript: SMART_ACTION_EQUIP uses non-existent equipment info entry %u", e.action.equip.entry);
@@ -1755,7 +1755,7 @@ void SmartScript::InstallTemplate(SmartScriptHolder e)
                 //phase 1: despawn after time on movepoint reached
                 AddEvent(SMART_EVENT_MOVEMENTINFORM, 0, POINT_MOTION_TYPE, SMART_RANDOM_POINT, 0, 0, SMART_ACTION_FORCE_DESPAWN, e.action.installTtemplate.param2, 0, 0, 0, 0, 0, SMART_TARGET_NONE, 0, 0, 0, 1);
 
-                if (sCreatureTextMgr->TextExist(me->GetEntry(), (uint8)e.action.installTtemplate.param5))
+                if (sCreatureTextMgr.TextExist(me->GetEntry(), (uint8)e.action.installTtemplate.param5))
                     AddEvent(SMART_EVENT_MOVEMENTINFORM, 0, POINT_MOTION_TYPE, SMART_RANDOM_POINT, 0, 0, SMART_ACTION_TALK, e.action.installTtemplate.param5, 0, 0, 0, 0, 0, SMART_TARGET_NONE, 0, 0, 0, 1);
                 break;
             }

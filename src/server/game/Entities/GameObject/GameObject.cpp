@@ -1641,11 +1641,11 @@ void GameObject::CastSpell(Unit* target, uint32 spellId)
     //trigger->RemoveCorpse();
 }
 
-void GameObject::SendCustomAnim()
+void GameObject::SendCustomAnim(uint32 anim)
 {
     WorldPacket data(SMSG_GAMEOBJECT_CUSTOM_ANIM,8+4);
     data << GetGUID();
-    data << uint32(GetGoAnimProgress());
+    data << uint32(anim);
     SendMessageToSet(&data, true);
 }
 
