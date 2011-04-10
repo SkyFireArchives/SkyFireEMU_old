@@ -297,7 +297,7 @@ void GameObject::Update(uint32 diff)
                             udata.BuildPacket(&packet);
                             caster->ToPlayer()->GetSession()->SendPacket(&packet);
 
-                            SendCustomAnim();
+                            SendCustomAnim(GetGoAnimProgress());
                         }
 
                         m_lootState = GO_READY;                 // can be successfully open with some chance
@@ -1216,7 +1216,7 @@ void GameObject::Use(Unit* user)
 
             // this appear to be ok, however others exist in addition to this that should have custom (ex: 190510, 188692, 187389)
             if (time_to_restore && info->goober.customAnim)
-                SendCustomAnim();
+                SendCustomAnim(GetGoAnimProgress());
             else
                 SetGoState(GO_STATE_ACTIVE);
 
