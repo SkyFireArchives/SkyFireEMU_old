@@ -1359,6 +1359,6 @@ class SmartAIMgr
         bool IsTextValid(SmartScriptHolder e, uint32 id);
 };
 
-#define sSmartScriptMgr ACE_Singleton<SmartAIMgr, ACE_Null_Mutex>::instance()
-#define sSmartWaypointMgr ACE_Singleton<SmartWaypointMgr, ACE_Null_Mutex>::instance()
+#define sSmartScriptMgr (*ACE_Singleton<SmartAIMgr, ACE_Null_Mutex>::instance())
+#define sSmartWaypointMgr (*ACE_Singleton<SmartWaypointMgr, ACE_Null_Mutex>::instance())
 #endif
