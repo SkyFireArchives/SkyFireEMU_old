@@ -1268,7 +1268,7 @@ enum Opcodes
     SMSG_CORPSE_NOT_IN_INSTANCE                      = 0x031E4, // 4.0.6a 13623
     CMSG_SET_ALLOW_LOW_LEVEL_RAID1                   = 0x035EC, // 4.0.6a 13623
     CMSG_SET_ALLOW_LOW_LEVEL_RAID2                   = 0x029C4, // 4.0.6a 13623
-    SMSG_CAMERA_SHAKE                                = 0x034A4, // 4.0.6a 13623
+    SMSG_CAMERA_SHAKE                                = 0x1000F,
     SMSG_UPDATE_ITEM_ENCHANTMENTS                    = 0x020E8, // 4.0.6a 13623
     SMSG_REDIRECT_CLIENT                             = 0x0201B, // 4.0.6a 13623
     CMSG_REDIRECTION_FAILED                          = 0x1000F,
