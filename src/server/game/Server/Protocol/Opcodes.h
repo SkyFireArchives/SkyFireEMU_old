@@ -853,7 +853,7 @@ enum Opcodes
     SMSG_ARENA_TEAM_COMMAND_RESULT                   = 0x0040C, // 4.0.6a 13623 
     CMSG_ARENA_TEAM_QUERY                            = 0x0B9C8, // 4.0.6a 13623
     SMSG_ARENA_TEAM_QUERY_RESPONSE                   = 0x03DE8, // 4.0.6a 13623
-    CMSG_ARENA_TEAM_ROSTER                           = 0x1000E,
+    CMSG_ARENA_TEAM_ROSTER                           = 0x06BAC, // 4.0.6a 13623
     SMSG_ARENA_TEAM_ROSTER                           = 0x0EC80, // 4.0.6a 13623
     CMSG_ARENA_TEAM_INVITE                           = 0x0E9CC, // 4.0.6a 13623
     SMSG_ARENA_TEAM_INVITE                           = 0x063A0, // 4.0.6a 13623
