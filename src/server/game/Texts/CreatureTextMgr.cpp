@@ -319,23 +319,23 @@ void CreatureTextMgr::SendChatPacket(WorldPacket *data, WorldObject* source, Cha
     if (!source)
         return;
 
-    float dist = sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY);
+    float dist = sWorld.getFloatConfig(CONFIG_LISTEN_RANGE_SAY);
 
     switch (msgtype)
     {
         case CHAT_TYPE_YELL:
-            dist = sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_YELL);
+            dist = sWorld.getFloatConfig(CONFIG_LISTEN_RANGE_YELL);
             break;
         case CHAT_TYPE_BOSS_EMOTE:
         case CHAT_TYPE_TEXT_EMOTE:
-            dist = sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_TEXTEMOTE);
+            dist = sWorld.getFloatConfig(CONFIG_LISTEN_RANGE_TEXTEMOTE);
             break;
         case CHAT_TYPE_WHISPER:
         case CHAT_TYPE_BOSS_WHISPER:
             {
                 if (range == TEXT_RANGE_NORMAL)//ignores team and gmOnly
                 {
-                    Player *player = sObjectMgr->GetPlayer(whisperGuid);
+                    Player *player = sObjectMgr.GetPlayer(whisperGuid);
                     if (!player || !player->GetSession())
                         return;
                     player->GetSession()->SendPacket(data);
@@ -390,7 +390,7 @@ void CreatureTextMgr::SendChatPacket(WorldPacket *data, WorldObject* source, Cha
             return;
         case TEXT_RANGE_WORLD:
             {
-                const SessionMap smap = sWorld->GetAllSessions();
+                const SessionMap smap = sWorld.GetAllSessions();
                 for (SessionMap::const_iterator iter = smap.begin(); iter != smap.end(); ++iter)
                 {
                     if (Player* plr = (*iter).second->GetPlayer())
