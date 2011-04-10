@@ -2662,21 +2662,21 @@ void SmartScript::GetScript()
     SmartAIEventList e;
     if (me)
     {
-        e = sSmartScriptMgr->GetScript(-((int32)me->GetDBTableGUIDLow()), mScriptType);
+        e = sSmartScriptMgr.GetScript(-((int32)me->GetDBTableGUIDLow()), mScriptType);
         if (e.empty())
-            e = sSmartScriptMgr->GetScript((int32)me->GetEntry(), mScriptType);
+            e = sSmartScriptMgr.GetScript((int32)me->GetEntry(), mScriptType);
         FillScript(e, me, NULL);
     }
     else if (go)
     {
-        e = sSmartScriptMgr->GetScript(-((int32)go->GetDBTableGUIDLow()), mScriptType);
+        e = sSmartScriptMgr.GetScript(-((int32)go->GetDBTableGUIDLow()), mScriptType);
         if (e.empty())
-            e = sSmartScriptMgr->GetScript((int32)go->GetEntry(), mScriptType);
+            e = sSmartScriptMgr.GetScript((int32)go->GetEntry(), mScriptType);
         FillScript(e, go, NULL);
     }
     else if (trigger)
     {
-        e = sSmartScriptMgr->GetScript((int32)trigger->id, mScriptType);
+        e = sSmartScriptMgr.GetScript((int32)trigger->id, mScriptType);
         FillScript(e, NULL, trigger);
     }
 }
@@ -2834,7 +2834,7 @@ void SmartScript::DoFindFriendlyMissingBuff(std::list<Creature*>& _list, float r
 void SmartScript::SetScript9(SmartScriptHolder& e, uint32 entry)
 {
     mTimedActionList.clear();
-    mTimedActionList = sSmartScriptMgr->GetScript(entry, SMART_SCRIPT_TYPE_TIMED_ACTIONLIST);
+    mTimedActionList = sSmartScriptMgr.GetScript(entry, SMART_SCRIPT_TYPE_TIMED_ACTIONLIST);
     if (mTimedActionList.empty())
         return;
     for (SmartAIEventList::iterator i = mTimedActionList.begin(); i != mTimedActionList.end(); ++i)
