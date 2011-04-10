@@ -1265,7 +1265,7 @@ class SmartAIMgr
         }
         inline bool IsQuestValid(SmartScriptHolder e, uint32 entry)
         {
-            if (!sObjectMgr->GetQuestTemplate(entry))
+            if (!sObjectMgr.GetQuestTemplate(entry))
             {
                 sLog.outErrorDb("SmartAIMgr: Entry %d SourceType %u Event %u Action %u uses non-existent Quest entry %u, skipped.", e.entryOrGuid, e.GetScriptType(), e.event_id, e.GetActionType(), entry);
                 return false;

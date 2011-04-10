@@ -124,7 +124,7 @@ class SmartScript
                 smart = false;
 
             if (!smart)
-                sLog->outErrorDb("SmartScript: Action target Creature(entry: %u) is not using SmartAI, action skipped to prevent crash.", c?c->GetEntry():(me?me->GetEntry():0));
+                sLog.outErrorDb("SmartScript: Action target Creature(entry: %u) is not using SmartAI, action skipped to prevent crash.", c?c->GetEntry():(me?me->GetEntry():0));
             return smart;
         }
 
@@ -138,7 +138,7 @@ class SmartScript
                 smart = false;
             if (!smart)
 
-                sLog->outErrorDb("SmartScript: Action target GameObject(entry: %u) is not using SmartGameObjectAI, action skipped to prevent crash.", g?g->GetEntry():(go?go->GetEntry():0));
+                sLog.outErrorDb("SmartScript: Action target GameObject(entry: %u) is not using SmartGameObjectAI, action skipped to prevent crash.", g?g->GetEntry():(go?go->GetEntry():0));
             return smart;
         }
 
