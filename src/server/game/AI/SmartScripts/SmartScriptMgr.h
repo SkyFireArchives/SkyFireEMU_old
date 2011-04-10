@@ -25,7 +25,7 @@
 #include "ConditionMgr.h"
 #include "CreatureTextMgr.h"
 #include "Spell.h"
-#include "DB2Store.h"
+#include "DB2Stores.h"
 
 //#include "SmartScript.h"
 //#include "SmartAI.h"
