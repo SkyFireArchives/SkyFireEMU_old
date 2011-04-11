@@ -1079,6 +1079,8 @@ void Battleground::AddPlayer(Player* plr)
     plr->GetSession()->SendPacket(&status);
 
     plr->RemoveAurasByType(SPELL_AURA_MOUNTED);
+    if(plr->getClass() == CLASS_DRUID)
+        plr->RemoveAurasByType(SPELL_AURA_MOD_SHAPESHIFT);
 
     // add arena specific auras
     if (isArena())
