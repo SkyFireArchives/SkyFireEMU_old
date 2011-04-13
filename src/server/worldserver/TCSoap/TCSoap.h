@@ -34,6 +34,7 @@
 
 #include <ace/Semaphore.h>
 #include <ace/Task.h>
+#include <ace/Mutex.h>
 
 class TCSoapRunnable: public ACE_Based::Runnable
 {
@@ -81,7 +82,7 @@ class SOAPCommand
 {
     public:
         SOAPCommand():
-            pendingCommands(0, USYNC_THREAD, "pendingCommands")
+            pendingCommands(0, USYNC_THREAD, "pendingCommands"), pendingCommandsMutex(USYNC_THREAD, "pendingCommandsMutex")
         {
         }
 
@@ -95,6 +96,7 @@ class SOAPCommand
         }
 
         ACE_Semaphore pendingCommands;
+        ACE_Mutex pendingCommandsMutex;
 
         void setCommandSuccess(bool val)
         {
