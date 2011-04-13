@@ -33,6 +33,11 @@ void TCSoapRunnable::run()
     pool.activate (THR_NEW_LWP | THR_JOINABLE, POOL_SIZE);
 
     struct soap soap;
+
+    bool soapBound = false;
+    for (uint16 iteration = 1; iteration <= 30 && !soapBound; ++iteration)
+    {
+
     soap_init(&soap);
     soap_set_imode(&soap, SOAP_C_UTFSTRING);
     soap_set_omode(&soap, SOAP_C_UTFSTRING);
@@ -43,8 +48,21 @@ void TCSoapRunnable::run()
     soap.send_timeout = 5;
     if (soap_bind(&soap, m_host.c_str(), m_port, 100) < 0)
     {
-        sLog.outError("TCSoap: couldn't bind to %s:%d", m_host.c_str(), m_port);
-        exit(-1);
+        sLog.outError("TCSoap: couldn't bind to %s:%d (attempt %d)", m_host.c_str(), m_port, iteration);
+        //exit(-1);
+        ACE_Based::Thread::Sleep(5000);
+    }
+    else
+    {
+        soapBound = true;
+    }
+
+    }
+
+    if (!soapBound)
+    {
+        sLog.outError("TCSoap: exiting process");
+        exit(1);
     }
 
     sLog.outString("TCSoap: bound to http://%s:%d", m_host.c_str(), m_port);
@@ -136,6 +154,9 @@ int ns1__executeCommand(soap* soap, char* command, char** result)
         sLog.outError("TCSoap: Error while acquiring lock, acc = %i, errno = %u", acc, errno);
     }
 
+    connection.pendingCommandsMutex.acquire();
+    connection.pendingCommandsMutex.release();
+
     // alright, command finished
 
     char* printBuffer = soap_strdup(soap, connection.m_printBuffer.c_str());
@@ -152,7 +173,9 @@ void SOAPCommand::commandFinished(void* soapconnection, bool success)
 {
     SOAPCommand* con = (SOAPCommand*)soapconnection;
     con->setCommandSuccess(success);
+    con->pendingCommandsMutex.acquire();
     con->pendingCommands.release();
+    con->pendingCommandsMutex.release();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
