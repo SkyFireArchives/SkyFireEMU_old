@@ -5562,6 +5562,11 @@ void Spell::EffectAddComboPoints(SpellEffIndex /*effIndex*/)
         if (GetSpellInfo()->Id == 73981 && plr->GetComboPoints() > 0 && plr->GetComboTarget())
             plr->AddComboPoints(unitTarget, plr->GetComboPoints(), this);
     }
+    {
+        // Rogue: Sinister Strike Enabler
+        if (plr->getLevel()>=3)
+            plr->learnSpell(79327, false);
+    }
 }
 
 void Spell::EffectDuel(SpellEffIndex effIndex)
