@@ -36,6 +36,9 @@
 #include <ace/Task.h>
 #include <ace/Mutex.h>
 
+#include <semaphore.h>
+
+
 class TCSoapRunnable: public ACE_Based::Runnable
 {
     public:
@@ -81,13 +84,18 @@ class SOAPWorkingThread : public ACE_Task<ACE_MT_SYNCH>
 class SOAPCommand
 {
     public:
-        SOAPCommand():
-            pendingCommands(0, USYNC_THREAD, "pendingCommands"), pendingCommandsMutex(USYNC_THREAD, "pendingCommandsMutex")
+        SOAPCommand()//:
+            //pendingCommands(0, USYNC_THREAD, "pendingCommands"), pendingCommandsMutex(USYNC_THREAD, "pendingCommandsMutex")
         {
+            if (sem_init(&pendingCommandsSemaphore, 0, 0) == -1)
+            {
+                sLog.outError("TCSoap: Error while initializing semaphore, errno = %u", errno);
+            }
         }
 
         ~SOAPCommand()
         {
+            sem_destroy(&pendingCommandsSemaphore);
         }
 
         void appendToPrintBuffer(const char* msg)
@@ -95,8 +103,9 @@ class SOAPCommand
             m_printBuffer += msg;
         }
 
-        ACE_Semaphore pendingCommands;
-        ACE_Mutex pendingCommandsMutex;
+        //ACE_Semaphore pendingCommands;
+        //ACE_Mutex pendingCommandsMutex;
+        sem_t pendingCommandsSemaphore;
 
         void setCommandSuccess(bool val)
         {

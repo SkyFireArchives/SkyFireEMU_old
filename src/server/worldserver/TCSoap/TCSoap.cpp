@@ -147,7 +147,7 @@ int ns1__executeCommand(soap* soap, char* command, char** result)
     }
 
     // wait for callback to complete command
-
+/*
     int acc = connection.pendingCommands.acquire();
     if(acc)
     {
@@ -156,6 +156,8 @@ int ns1__executeCommand(soap* soap, char* command, char** result)
 
     connection.pendingCommandsMutex.acquire();
     connection.pendingCommandsMutex.release();
+*/
+    sem_wait(&connection.pendingCommandsSemaphore);
 
     // alright, command finished
 
@@ -173,9 +175,12 @@ void SOAPCommand::commandFinished(void* soapconnection, bool success)
 {
     SOAPCommand* con = (SOAPCommand*)soapconnection;
     con->setCommandSuccess(success);
+/*
     con->pendingCommandsMutex.acquire();
     con->pendingCommands.release();
     con->pendingCommandsMutex.release();
+*/
+    sem_post(&con->pendingCommandsSemaphore);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
