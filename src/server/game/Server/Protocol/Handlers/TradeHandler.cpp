@@ -38,7 +38,7 @@ void WorldSession::SendTradeStatus(TradeStatus status)
 {
     WorldPacket data;
 
-    switch(status)
+    /*switch(status)
     {
         case TRADE_STATUS_BEGIN_TRADE:
             data.Initialize(SMSG_TRADE_STATUS, 4+8);
@@ -67,7 +67,18 @@ void WorldSession::SendTradeStatus(TradeStatus status)
             data.Initialize(SMSG_TRADE_STATUS, 4);
             data << uint32(status);
             break;
-    }
+    }*/
+
+    data.Initialize(SMSG_TRADE_STATUS, 1+8+4+4+4+1+4+4+4);
+    data << uint8(0);
+    data << uint64(0);
+    data << uint32(0);  // trade ID?
+    data << uint32(status);
+    data << uint32(0);
+    data << uint8(0);
+    data << uint32(0);
+    data << uint32(0);
+    data << uint32(0);
 
     SendPacket(&data);
 }
@@ -89,16 +100,52 @@ void WorldSession::SendUpdateTrade(bool trader_data /*= true*/)
     TradeData* view_trade = trader_data ? _player->GetTradeData()->GetTraderData() : _player->GetTradeData();
 
     WorldPacket data(SMSG_TRADE_STATUS_EXTENDED, 1+4+4+4+4+4+7*(1+4+4+4+4+8+4+4+4+4+8+4+4+4+4+4+4));
-    data << uint8(trader_data);                             // 1 means traders data, 0 means own
+    
+    data << uint32(0);
+    data << uint32(0);
+    data << uint8(1);
+    data << uint32(0);
+    data << uint32(0);
+    data << uint32(0);  // trade ID? has to match what we sent in TRADE_STATUS for TRADE_STATUS_OPEN_WINDOW
+    data << uint32(TRADE_SLOT_COUNT); // slot count
+    data << uint64(view_trade->GetMoney()); // trade money
+    data << uint32(0);
+    // old structure. meaning of new structure fields has to be researched
+    /*data << uint8(trader_data);                             // 1 means traders data, 0 means own
     data << uint32(0);                                      // added in 2.4.0, this value must be equal to value from TRADE_STATUS_OPEN_WINDOW status packet (different value for different players to block multiple trades?)
     data << uint32(TRADE_SLOT_COUNT);                       // trade slots count/number?, = next field in most cases
     data << uint32(TRADE_SLOT_COUNT);                       // trade slots count/number?, = prev field in most cases
     data << uint32(view_trade->GetMoney());                 // trader gold
-    data << uint32(view_trade->GetSpell());                 // spell casted on lowest slot item
+    data << uint32(view_trade->GetSpell());                 // spell casted on lowest slot item*/
 
     for (uint8 i = 0; i < TRADE_SLOT_COUNT; ++i)
     {
-        data << uint8(i);                                  // trade slot number, if not specified, then end of packet
+        uint32 id = 0;
+        if (Item* item = view_trade->GetItem(TradeSlots(i)))
+        {
+            id = item->GetProto()->ItemId;
+        }
+        data << uint32(0);
+        data << uint64(0);
+        data << uint32(0);
+        data << uint32(id);
+        data << uint32(0);
+        data << uint32(0);
+        data << uint32(0);
+        data << uint8(0);
+        data << uint64(0);
+        data << uint32(0);
+        data << uint8(i);   // trade slot number
+        data << uint32(0);
+        data << uint32(0);
+        data << uint32(0);
+        data << uint32(0);
+        data << uint32(0);
+        data << uint32(0);
+        data << uint32(0);
+
+        // old structure
+        /*data << uint8(i);                                  // trade slot number, if not specified, then end of packet
 
         if (Item* item = view_trade->GetItem(TradeSlots(i)))
         {
@@ -127,7 +174,7 @@ void WorldSession::SendUpdateTrade(bool trader_data /*= true*/)
         {
             for (uint8 j = 0; j < 18; ++j)
                 data << uint32(0);
-        }
+        }*/
     }
     SendPacket(&data);
 }
@@ -653,14 +700,22 @@ void WorldSession::HandleInitiateTradeOpcode(WorldPacket& recvPacket)
     _player->m_trade = new TradeData(_player, pOther);
     pOther->m_trade = new TradeData(pOther, _player);
 
-    WorldPacket data(SMSG_TRADE_STATUS, 12);
-    data << uint32(TRADE_STATUS_BEGIN_TRADE);
+    WorldPacket data(SMSG_TRADE_STATUS, 1+8+4+4+4+1+4+4+4);
+    data << uint8(0);
     data << uint64(_player->GetGUID());
+    data << uint32(0);
+    data << uint32(TRADE_STATUS_BEGIN_TRADE);
+    data << uint32(0);
+    data << uint8(0);
+    data << uint32(0);
+    data << uint32(0);
+    data << uint32(0);
     pOther->GetSession()->SendPacket(&data);
 }
 
 void WorldSession::HandleSetTradeGoldOpcode(WorldPacket& recvPacket)
 {
+    // it should actually be uint64 as of 4.0.6
     uint32 gold;
     recvPacket >> gold;
 
@@ -679,9 +734,9 @@ void WorldSession::HandleSetTradeItemOpcode(WorldPacket& recvPacket)
     uint8 bag;
     uint8 slot;
 
-    recvPacket >> tradeSlot;
-    recvPacket >> bag;
     recvPacket >> slot;
+    recvPacket >> bag;
+    recvPacket >> tradeSlot;
 
     TradeData* my_trade = _player->GetTradeData();
     if (!my_trade)

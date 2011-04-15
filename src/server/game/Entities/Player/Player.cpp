@@ -351,7 +351,9 @@ void TradeData::SetSpell(uint32 spell_id, Item* castItem /*= NULL*/)
     GetTraderData()->SetAccepted(false);
 
     Update(true);                                           // send spell info to item owner
-    Update(false);                                          // send spell info to caster self
+    // commented out for now cause update can only be sent to the trader.
+    // TODO: re-enable when proper packet/structure found
+    //Update(false);                                          // send spell info to caster self
 }
 
 void TradeData::SetMoney(uint32 money)
