@@ -61,7 +61,7 @@ void InitOpcodeTable()
     OPCODE( SMSG_CHAR_CREATE,                             STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_CHAR_ENUM,                               STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_CHAR_DELETE,                             STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
-	OPCODE( CMSG_WORLD_LOGIN,                             STATUS_AUTHED,   &WorldSession::HandleWorldLoginOpcode          );
+    OPCODE( CMSG_WORLD_LOGIN,                             STATUS_AUTHED,   &WorldSession::HandleWorldLoginOpcode          );
     OPCODE( CMSG_PLAYER_LOGIN,                            STATUS_AUTHED,   &WorldSession::HandlePlayerLoginOpcode         );
     OPCODE( SMSG_NEW_WORLD,                               STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_TRANSFER_PENDING,                        STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
@@ -1211,7 +1211,7 @@ void InitOpcodeTable()
     OPCODE( SMSG_CALENDAR_ACTION_PENDING,                 STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_EQUIPMENT_SET_LIST,                      STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_EQUIPMENT_SET_SAVE,                      STATUS_LOGGEDIN, &WorldSession::HandleEquipmentSetSave          );
-    OPCODE( CMSG_UPDATE_PROJECTILE_POSITION,              STATUS_UNHANDLED, &WorldSession::Handle_NULL                    );
+    OPCODE( CMSG_UPDATE_PROJECTILE_POSITION,              STATUS_LOGGEDIN, &WorldSession::HandleUpdateProjectilePosition  );
     OPCODE( SMSG_SET_PROJECTILE_POSITION,                 STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_TALENTS_INFO,                            STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_LEARN_PREVIEW_TALENTS,                   STATUS_LOGGEDIN, &WorldSession::HandleLearnPreviewTalents       );
