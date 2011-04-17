@@ -2517,6 +2517,7 @@ inline SkillType SkillByLockType(LockType locktype)
         case LOCKTYPE_MINING:      return SKILL_MINING;
         case LOCKTYPE_FISHING:     return SKILL_FISHING;
         case LOCKTYPE_INSCRIPTION: return SKILL_INSCRIPTION;
+        case LOCKTYPE_ARCHAEOLOGY: return SKILL_ARCHAEOLOGY;
         default: break;
     }
     return SKILL_NONE;
@@ -2537,6 +2538,7 @@ inline uint32 SkillByQuestSort(int32 QuestSort)
         case QUEST_SORT_FIRST_AID:      return SKILL_FIRST_AID;
         case QUEST_SORT_JEWELCRAFTING:  return SKILL_JEWELCRAFTING;
         case QUEST_SORT_INSCRIPTION:    return SKILL_INSCRIPTION;
+        case QUEST_SORT_ARCHAEOLOGY:    return SKILL_ARCHAEOLOGY;
     }
     return 0;
 }
