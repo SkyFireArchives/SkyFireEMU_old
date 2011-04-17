@@ -298,12 +298,12 @@ void WorldSession::HandleGossipHelloOpcode(WorldPacket & recv_data)
         if (bg)
         {
             bg->AddPlayerToResurrectQueue(unit->GetGUID(), _player->GetGUID());
-            sBattlegroundMgr.SendAreaSpiritHealerQueryOpcode(_player, bg, unit->GetGUID());
+            sBattlegroundMgr->SendAreaSpiritHealerQueryOpcode(_player, bg, unit->GetGUID());
             return;
         }
     }
 
-    if (!sScriptMgr.OnGossipHello(_player, unit))
+    if (!sScriptMgr->OnGossipHello(_player, unit))
     {
 //        _player->TalkedToCreature(unit->GetEntry(), unit->GetGUID());
         _player->PrepareGossipMenu(unit, unit->GetCreatureInfo()->GossipMenuId, true);
@@ -385,7 +385,7 @@ void WorldSession::SendSpiritResurrect()
     WorldSafeLocsEntry const *corpseGrave = NULL;
     Corpse *corpse = _player->GetCorpse();
     if (corpse)
-        corpseGrave = sObjectMgr.GetClosestGraveYard(
+        corpseGrave = sObjectMgr->GetClosestGraveYard(
             corpse->GetPositionX(), corpse->GetPositionY(), corpse->GetPositionZ(), corpse->GetMapId(), _player->GetTeam());
 
     // now can spawn bones
@@ -394,7 +394,7 @@ void WorldSession::SendSpiritResurrect()
     // teleport to nearest from corpse graveyard, if different from nearest to player ghost
     if (corpseGrave)
     {
-        WorldSafeLocsEntry const *ghostGrave = sObjectMgr.GetClosestGraveYard(
+        WorldSafeLocsEntry const *ghostGrave = sObjectMgr->GetClosestGraveYard(
             _player->GetPositionX(), _player->GetPositionY(), _player->GetPositionZ(), _player->GetMapId(), _player->GetTeam());
 
         if (corpseGrave != ghostGrave)
@@ -600,7 +600,7 @@ void WorldSession::HandleStableChangeSlotCallback(QueryResult result, uint8 new_
         return;
     }
 
-    CreatureInfo const* creatureInfo = sObjectMgr.GetCreatureTemplate(creature_id);
+    CreatureInfo const* creatureInfo = sObjectMgr->GetCreatureTemplate(creature_id);
     if (!creatureInfo || !creatureInfo->isTameable(_player->CanTameExoticPets()))
     {
         // if problem in exotic pet

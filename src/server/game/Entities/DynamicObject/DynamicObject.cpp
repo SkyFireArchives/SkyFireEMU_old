@@ -60,7 +60,7 @@ void DynamicObject::AddToWorld()
     ///- Register the dynamicObject for guid lookup and for caster
     if (!IsInWorld())
     {
-        sObjectAccessor.AddObject(this);
+        sObjectAccessor->AddObject(this);
         WorldObject::AddToWorld();
         BindToCaster();
     }
@@ -83,7 +83,7 @@ void DynamicObject::RemoveFromWorld()
 
         UnbindFromCaster();
         WorldObject::RemoveFromWorld();
-        sObjectAccessor.RemoveObject(this);
+        sObjectAccessor->RemoveObject(this);
     }
 }
 
@@ -145,7 +145,7 @@ void DynamicObject::Update(uint32 p_time)
     if (expired)
         Remove();
     else
-        sScriptMgr.OnDynamicObjectUpdate(this, p_time);
+        sScriptMgr->OnDynamicObjectUpdate(this, p_time);
 }
 
 void DynamicObject::Remove()

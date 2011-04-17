@@ -68,7 +68,7 @@ bool BattlegroundSA::ResetObjs()
 
     for (int i = BG_SA_BOAT_ONE; i <= BG_SA_BOAT_TWO; i++)
         for (BattlegroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
-            if (Player *plr = sObjectMgr.GetPlayer(itr->first))
+            if (Player *plr = sObjectMgr->GetPlayer(itr->first))
                 SendTransportsRemove(plr);
 
     uint32 atF = BG_SA_Factions[Attackers];
@@ -251,7 +251,7 @@ bool BattlegroundSA::ResetObjs()
 
     for (int i = BG_SA_BOAT_ONE; i <= BG_SA_BOAT_TWO; i++)
         for (BattlegroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
-            if (Player *plr = sObjectMgr.GetPlayer(itr->first))
+            if (Player *plr = sObjectMgr->GetPlayer(itr->first))
                 SendTransportInit(plr);
 
     TeleportPlayers();
@@ -270,7 +270,7 @@ void BattlegroundSA::StartShips()
     {
         for (BattlegroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end();itr++)
         {
-            if (Player* p = sObjectMgr.GetPlayer(itr->first))
+            if (Player* p = sObjectMgr->GetPlayer(itr->first))
             {
                 UpdateData data;
                 WorldPacket pkt;
@@ -499,7 +499,7 @@ void BattlegroundSA::TeleportPlayers()
 {
     for (BattlegroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
     {
-        if (Player *plr = sObjectMgr.GetPlayer(itr->first))
+        if (Player *plr = sObjectMgr->GetPlayer(itr->first))
         {
             // should remove spirit of redemption
             if (plr->HasAuraType(SPELL_AURA_SPIRIT_OF_REDEMPTION))
@@ -810,7 +810,7 @@ void BattlegroundSA::EventPlayerUsedGO(Player* Source, GameObject* object)
                 //Achievement Storm the Beach (1310)
                 for (BattlegroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
                 {
-                    if (Player *plr = sObjectMgr.GetPlayer(itr->first))
+                    if (Player *plr = sObjectMgr->GetPlayer(itr->first))
                         if (plr->GetTeamId() == Attackers)
                             plr->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, 65246);
                 }
@@ -834,7 +834,7 @@ void BattlegroundSA::EventPlayerUsedGO(Player* Source, GameObject* object)
                 //Achievement Storm the Beach (1310)
                 for (BattlegroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
                 {
-                    if (Player *plr = sObjectMgr.GetPlayer(itr->first))
+                    if (Player *plr = sObjectMgr->GetPlayer(itr->first))
                         if (plr->GetTeamId() == Attackers && RoundScores[1].winner == Attackers)
                             plr->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, 65246);
                 }

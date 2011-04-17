@@ -37,13 +37,13 @@
 
 #define DEFAULT_GRID_EXPIRY     300
 #define MAX_GRID_LOAD_TIME      50
-#define MAX_CREATURE_ATTACK_RADIUS  (45.0f * sWorld.getRate(RATE_CREATURE_AGGRO))
+#define MAX_CREATURE_ATTACK_RADIUS  (45.0f * sWorld->getRate(RATE_CREATURE_AGGRO))
 
 GridState* si_GridStates[MAX_GRID_STATE];
 
 Map::~Map()
 {
-    sScriptMgr.OnDestroyMap(this);
+    sScriptMgr->OnDestroyMap(this);
 
     UnloadAll();
 
@@ -57,14 +57,14 @@ Map::~Map()
     }
 
     if (!m_scriptSchedule.empty())
-        sWorld.DecreaseScheduledScriptCount(m_scriptSchedule.size());
+        sWorld->DecreaseScheduledScriptCount(m_scriptSchedule.size());
 }
 
 bool Map::ExistMap(uint32 mapid,int gx,int gy)
 {
-    int len = sWorld.GetDataPath().length()+strlen("maps/%03u%02u%02u.map")+1;
+    int len = sWorld->GetDataPath().length()+strlen("maps/%03u%02u%02u.map")+1;
     char* tmp = new char[len];
-    snprintf(tmp, len, (char *)(sWorld.GetDataPath()+"maps/%03u%02u%02u.map").c_str(),mapid,gx,gy);
+    snprintf(tmp, len, (char *)(sWorld->GetDataPath()+"maps/%03u%02u%02u.map").c_str(),mapid,gx,gy);
 
     bool ret = false;
     FILE *pf=fopen(tmp,"rb");
@@ -93,11 +93,11 @@ bool Map::ExistVMap(uint32 mapid,int gx,int gy)
     {
         if (vmgr->isMapLoadingEnabled())
         {
-            bool exists = vmgr->existsMap((sWorld.GetDataPath()+ "vmaps").c_str(),  mapid, gx,gy);
+            bool exists = vmgr->existsMap((sWorld->GetDataPath()+ "vmaps").c_str(),  mapid, gx,gy);
             if (!exists)
             {
                 std::string name = vmgr->getDirFileName(mapid,gx,gy);
-                sLog.outError("VMap file '%s' is missing or points to wrong version of vmap file. Redo vmaps with latest version of vmap_assembler.exe.", (sWorld.GetDataPath()+"vmaps/"+name).c_str());
+                sLog.outError("VMap file '%s' is missing or points to wrong version of vmap file. Redo vmaps with latest version of vmap_assembler.exe.", (sWorld->GetDataPath()+"vmaps/"+name).c_str());
                 return false;
             }
         }
@@ -109,7 +109,7 @@ bool Map::ExistVMap(uint32 mapid,int gx,int gy)
 void Map::LoadVMap(int gx,int gy)
 {
                                                             // x and y are swapped !!
-    int vmapLoadResult = VMAP::VMapFactory::createOrGetVMapManager()->loadMap((sWorld.GetDataPath()+ "vmaps").c_str(),  GetId(), gx,gy);
+    int vmapLoadResult = VMAP::VMapFactory::createOrGetVMapManager()->loadMap((sWorld->GetDataPath()+ "vmaps").c_str(),  GetId(), gx,gy);
     switch(vmapLoadResult)
     {
         case VMAP::VMAP_LOAD_RESULT_OK:
@@ -147,7 +147,7 @@ void Map::LoadMap(int gx,int gy, bool reload)
     if (GridMaps[gx][gy])
     {
         sLog.outDetail("Unloading previously loaded map %u before reloading.",GetId());
-        sScriptMgr.OnUnloadGridMap(this, GridMaps[gx][gy], gx, gy);
+        sScriptMgr->OnUnloadGridMap(this, GridMaps[gx][gy], gx, gy);
 
         delete (GridMaps[gx][gy]);
         GridMaps[gx][gy]=NULL;
@@ -155,9 +155,9 @@ void Map::LoadMap(int gx,int gy, bool reload)
 
     // map file name
     char *tmp=NULL;
-    int len = sWorld.GetDataPath().length()+strlen("maps/%03u%02u%02u.map")+1;
+    int len = sWorld->GetDataPath().length()+strlen("maps/%03u%02u%02u.map")+1;
     tmp = new char[len];
-    snprintf(tmp, len, (char *)(sWorld.GetDataPath()+"maps/%03u%02u%02u.map").c_str(),GetId(),gx,gy);
+    snprintf(tmp, len, (char *)(sWorld->GetDataPath()+"maps/%03u%02u%02u.map").c_str(),GetId(),gx,gy);
     sLog.outDetail("Loading map %s",tmp);
     // loading data
     GridMaps[gx][gy] = new GridMap();
@@ -167,7 +167,7 @@ void Map::LoadMap(int gx,int gy, bool reload)
     }
     delete [] tmp;
 
-    sScriptMgr.OnLoadGridMap(this, GridMaps[gx][gy], gx, gy);
+    sScriptMgr->OnLoadGridMap(this, GridMaps[gx][gy], gx, gy);
 }
 
 void Map::LoadMapAndVMap(int gx,int gy)
@@ -213,7 +213,7 @@ m_activeNonPlayersIter(m_activeNonPlayers.end()), i_gridExpiry(expiry), i_script
     //lets initialize visibility distance for map
     Map::InitVisibilityDistance();
 
-    sScriptMgr.OnCreateMap(this);
+    sScriptMgr->OnCreateMap(this);
 }
 
 void Map::InitVisibilityDistance()
@@ -309,7 +309,7 @@ void Map::DeleteFromWorld(T* obj)
 template<>
 void Map::DeleteFromWorld(Player* pl)
 {
-    sObjectAccessor.RemoveObject(pl);
+    sObjectAccessor->RemoveObject(pl);
     delete pl;
 }
 
@@ -323,7 +323,7 @@ Map::EnsureGridCreated(const GridPair &p)
         {
             sLog.outDebug("Creating grid[%u,%u] for map %u instance %u", p.x_coord, p.y_coord, GetId(), i_InstanceId);
 
-            setNGrid(new NGridType(p.x_coord*MAX_NUMBER_OF_GRIDS + p.y_coord, p.x_coord, p.y_coord, i_gridExpiry, sWorld.getBoolConfig(CONFIG_GRID_UNLOAD)),
+            setNGrid(new NGridType(p.x_coord*MAX_NUMBER_OF_GRIDS + p.y_coord, p.x_coord, p.y_coord, i_gridExpiry, sWorld->getBoolConfig(CONFIG_GRID_UNLOAD)),
                 p.x_coord, p.y_coord);
 
             // build a linkage between this map and NGridType
@@ -381,7 +381,7 @@ bool Map::EnsureGridLoaded(const Cell &cell)
         loader.LoadN();
 
         // Add resurrectable corpses to world object list in grid
-        sObjectAccessor.AddCorpsesToGrid(GridPair(cell.GridX(),cell.GridY()),(*grid)(cell.CellX(), cell.CellY()), this);
+        sObjectAccessor->AddCorpsesToGrid(GridPair(cell.GridX(),cell.GridY()),(*grid)(cell.CellX(), cell.CellY()), this);
         return true;
     }
 
@@ -422,7 +422,7 @@ bool Map::Add(Player *player)
     player->m_clientGUIDs.clear();
     player->UpdateObjectVisibility(true);
 
-    sScriptMgr.OnPlayerEnterMap(this, player);
+    sScriptMgr->OnPlayerEnterMap(this, player);
     return true;
 }
 
@@ -595,7 +595,7 @@ void Map::Update(const uint32 &t_diff)
     if (!m_mapRefManager.isEmpty() || !m_activeNonPlayers.empty())
         ProcessRelocationNotifies(t_diff);
 
-    sScriptMgr.OnMapUpdate(this, t_diff);
+    sScriptMgr->OnMapUpdate(this, t_diff);
 }
 
 struct ResetNotifier
@@ -714,7 +714,7 @@ void Map::Remove(Player *player, bool remove)
     if (remove)
         DeleteFromWorld(player);
 
-    sScriptMgr.OnPlayerLeaveMap(this, player);
+    sScriptMgr->OnPlayerLeaveMap(this, player);
 }
 
 template<class T>
@@ -747,7 +747,7 @@ Map::Remove(T *obj, bool remove)
     if (remove)
     {
         // if option set then object already saved at this moment
-        if (!sWorld.getBoolConfig(CONFIG_SAVE_RESPAWN_TIME_IMMEDIATELY))
+        if (!sWorld->getBoolConfig(CONFIG_SAVE_RESPAWN_TIME_IMMEDIATELY))
             obj->SaveRespawnTime();
         DeleteFromWorld(obj);
     }
@@ -1940,7 +1940,7 @@ void Map::SendInitSelf(Player * player)
 void Map::SendInitTransports(Player * player)
 {
     // Hack to send out transports
-    MapManager::TransportMap& tmap = sMapMgr.m_TransportsByMap;
+    MapManager::TransportMap& tmap = sMapMgr->m_TransportsByMap;
 
     // no transports at map
     if (tmap.find(player->GetMapId()) == tmap.end())
@@ -1968,7 +1968,7 @@ void Map::SendInitTransports(Player * player)
 void Map::SendRemoveTransports(Player * player)
 {
     // Hack to send out transports
-    MapManager::TransportMap& tmap = sMapMgr.m_TransportsByMap;
+    MapManager::TransportMap& tmap = sMapMgr->m_TransportsByMap;
 
     // no transports at map
     if (tmap.find(player->GetMapId()) == tmap.end())
@@ -2071,7 +2071,7 @@ void Map::RemoveAllObjectsInRemoveList()
         {
             case TYPEID_CORPSE:
             {
-                Corpse* corpse = sObjectAccessor.GetCorpse(*obj, obj->GetGUID());
+                Corpse* corpse = sObjectAccessor->GetCorpse(*obj, obj->GetGUID());
                 if (!corpse)
                     sLog.outError("Tried to delete corpse/bones %u that is not in map.", obj->GetGUIDLow());
                 else
@@ -2220,7 +2220,7 @@ InstanceMap::InstanceMap(uint32 id, time_t expiry, uint32 InstanceId, uint8 Spaw
 
     // the timer is started by default, and stopped when the first player joins
     // this make sure it gets unloaded if for some reason no player joins
-    m_unloadTimer = std::max(sWorld.getIntConfig(CONFIG_INSTANCE_UNLOAD_DELAY), (uint32)MIN_UNLOAD_DELAY);
+    m_unloadTimer = std::max(sWorld->getIntConfig(CONFIG_INSTANCE_UNLOAD_DELAY), (uint32)MIN_UNLOAD_DELAY);
 }
 
 InstanceMap::~InstanceMap()
@@ -2317,11 +2317,11 @@ bool InstanceMap::Add(Player *player)
         if (IsDungeon())
         {
             // get or create an instance save for the map
-            InstanceSave *mapSave = sInstanceSaveMgr.GetInstanceSave(GetInstanceId());
+            InstanceSave *mapSave = sInstanceSaveMgr->GetInstanceSave(GetInstanceId());
             if (!mapSave)
             {
                 sLog.outDetail("InstanceMap::Add: creating instance save for map %d spawnmode %d with instance id %d", GetId(), GetSpawnMode(), GetInstanceId());
-                mapSave = sInstanceSaveMgr.AddInstanceSave(GetId(), GetInstanceId(), Difficulty(GetSpawnMode()), 0, true);
+                mapSave = sInstanceSaveMgr->AddInstanceSave(GetId(), GetInstanceId(), Difficulty(GetSpawnMode()), 0, true);
             }
 
             // check for existing instance binds
@@ -2424,7 +2424,7 @@ void InstanceMap::Remove(Player *player, bool remove)
     sLog.outDetail("MAP: Removing player '%s' from instance '%u' of map '%s' before relocating to another map", player->GetName(), GetInstanceId(), GetMapName());
     //if last player set unload timer
     if (!m_unloadTimer && m_mapRefManager.getSize() == 1)
-        m_unloadTimer = m_unloadWhenEmpty ? MIN_UNLOAD_DELAY : std::max(sWorld.getIntConfig(CONFIG_INSTANCE_UNLOAD_DELAY), (uint32)MIN_UNLOAD_DELAY);
+        m_unloadTimer = m_unloadWhenEmpty ? MIN_UNLOAD_DELAY : std::max(sWorld->getIntConfig(CONFIG_INSTANCE_UNLOAD_DELAY), (uint32)MIN_UNLOAD_DELAY);
     Map::Remove(player, remove);
     // for normal instances schedule the reset after all players have left
     SetResetSchedule(true);
@@ -2435,11 +2435,11 @@ void InstanceMap::CreateInstanceData(bool load)
     if (i_data != NULL)
         return;
 
-    InstanceTemplate const* mInstance = sObjectMgr.GetInstanceTemplate(GetId());
+    InstanceTemplate const* mInstance = sObjectMgr->GetInstanceTemplate(GetId());
     if (mInstance)
     {
         i_script_id = mInstance->script_id;
-        i_data = sScriptMgr.CreateInstanceData(this);
+        i_data = sScriptMgr->CreateInstanceData(this);
     }
 
     if (!i_data)
@@ -2457,7 +2457,7 @@ void InstanceMap::CreateInstanceData(bool load)
             std::string data = fields[0].GetString();
             if (data != "")
             {
-                sLog.outDebug("Loading instance data for `%s` with id %u", sObjectMgr.GetScriptName(i_script_id), i_InstanceId);
+                sLog.outDebug("Loading instance data for `%s` with id %u", sObjectMgr->GetScriptName(i_script_id), i_InstanceId);
                 i_data->Load(data.c_str());
             }
         }
@@ -2508,7 +2508,7 @@ void InstanceMap::PermBindAllPlayers(Player *player)
     if (!IsDungeon())
         return;
 
-    InstanceSave *save = sInstanceSaveMgr.GetInstanceSave(GetInstanceId());
+    InstanceSave *save = sInstanceSaveMgr->GetInstanceSave(GetInstanceId());
     if (!save)
     {
         sLog.outError("Cannot bind players, no instance save available for map!");
@@ -2542,7 +2542,7 @@ void InstanceMap::UnloadAll()
     ASSERT(!HavePlayers());
 
     if (m_resetAfterUnload == true)
-        sObjectMgr.DeleteRespawnTimeForInstance(GetInstanceId());
+        sObjectMgr->DeleteRespawnTimeForInstance(GetInstanceId());
 
     Map::UnloadAll();
 }
@@ -2560,9 +2560,9 @@ void InstanceMap::SetResetSchedule(bool on)
     // it is assumed that the reset time will rarely (if ever) change while the reset is scheduled
     if (IsDungeon() && !HavePlayers() && !IsRaidOrHeroicDungeon())
     {
-        InstanceSave *save = sInstanceSaveMgr.GetInstanceSave(GetInstanceId());
+        InstanceSave *save = sInstanceSaveMgr->GetInstanceSave(GetInstanceId());
         if (!save) sLog.outError("InstanceMap::SetResetSchedule: cannot turn schedule %s, no save available for instance %d of %d", on ? "on" : "off", GetInstanceId(), GetId());
-        else sInstanceSaveMgr.ScheduleReset(on, save->GetResetTime(), InstanceSaveManager::InstResetEvent(0, GetId(), Difficulty(GetSpawnMode()), GetInstanceId()));
+        else sInstanceSaveMgr->ScheduleReset(on, save->GetResetTime(), InstanceSaveManager::InstResetEvent(0, GetId(), Difficulty(GetSpawnMode()), GetInstanceId()));
     }
 }
 

@@ -762,7 +762,7 @@ public:
 };
 
 // Placed here due to ScriptRegistry::AddScript dependency.
-#define sScriptMgr (*ACE_Singleton<ScriptMgr, ACE_Null_Mutex>::instance())
+#define sScriptMgr ACE_Singleton<ScriptMgr, ACE_Null_Mutex>::instance()
 
 // Manages registration, loading, and execution of scripts.
 class ScriptMgr
@@ -1037,7 +1037,7 @@ class ScriptMgr
                             if (!existing)
                             {
                                 ScriptPointerList[id] = script;
-                                sScriptMgr.IncrementScriptCount();
+                                sScriptMgr->IncrementScriptCount();
                             }
                             else
                             {
@@ -1060,7 +1060,7 @@ class ScriptMgr
                     {
                         // We're dealing with a code-only script; just add it.
                         ScriptPointerList[_scriptIdCounter++] = script;
-                        sScriptMgr.IncrementScriptCount();
+                        sScriptMgr->IncrementScriptCount();
                     }
                 }
 

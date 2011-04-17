@@ -348,7 +348,7 @@ bool Guild::BankTab::LoadItemFromDB(Field* fields)
         return false;
     }
 
-    ItemPrototype const* proto = sObjectMgr.GetItemPrototype(itemEntry);
+    ItemPrototype const* proto = sObjectMgr->GetItemPrototype(itemEntry);
     if (!proto)
     {
         sLog.outError("Unknown item (GUID: %u, id: %u) in guild bank, skipped.", itemGuid, itemEntry);
@@ -792,7 +792,7 @@ void Guild::MoveItemData::LogAction(MoveItemData* pFrom) const
 {
     ASSERT(pFrom->GetItem());
 
-    sScriptMgr.OnGuildItemMove(m_pGuild, m_pPlayer, pFrom->GetItem(), 
+    sScriptMgr->OnGuildItemMove(m_pGuild, m_pPlayer, pFrom->GetItem(), 
         pFrom->IsBank(), pFrom->GetContainer(), pFrom->GetSlotId(),
         IsBank(), GetContainer(), GetSlotId());
 }
@@ -946,7 +946,7 @@ void Guild::BankMoveItemData::LogBankEvent(SQLTransaction& trans, MoveItemData* 
 void Guild::BankMoveItemData::LogAction(MoveItemData* pFrom) const
 {
     MoveItemData::LogAction(pFrom);
-    if (!pFrom->IsBank() && sWorld.getBoolConfig(CONFIG_GM_LOG_TRADE) && m_pPlayer->GetSession()->GetSecurity() > SEC_PLAYER)       // TODO: move to scripts
+    if (!pFrom->IsBank() && sWorld->getBoolConfig(CONFIG_GM_LOG_TRADE) && m_pPlayer->GetSession()->GetSecurity() > SEC_PLAYER)       // TODO: move to scripts
         sLog.outCommand(m_pPlayer->GetSession()->GetAccountId(),
             "GM %s (Account: %u) deposit item: %s (Entry: %d Count: %u) to guild bank (Guild ID: %u)",
             m_pPlayer->GetName(), m_pPlayer->GetSession()->GetAccountId(),
@@ -1102,14 +1102,14 @@ Guild::~Guild()
 bool Guild::Create(Player* pLeader, const std::string& name)
 {
     // Check if guild with such name already exists
-    if (sObjectMgr.GetGuildByName(name))
+    if (sObjectMgr->GetGuildByName(name))
         return false;
 
     WorldSession* pLeaderSession = pLeader->GetSession();
     if (!pLeaderSession)
         return false;
 
-    m_id = sObjectMgr.GenerateGuildId();
+    m_id = sObjectMgr->GenerateGuildId();
     m_leaderGuid = pLeader->GetGUID();
     m_name = name;
     m_info = "";
@@ -1118,7 +1118,7 @@ bool Guild::Create(Player* pLeader, const std::string& name)
     m_createdDate = ::time(NULL);
     m_level = 1;
     m_xp = 0;
-    m_nextLevelXP = sObjectMgr.GetXPForGuildLevel(m_level);
+    m_nextLevelXP = sObjectMgr->GetXPForGuildLevel(m_level);
     _CreateLogHolders();
 
     sLog.outDebug("GUILD: creating guild [%s] for leader %s (%u)", 
@@ -1156,7 +1156,7 @@ bool Guild::Create(Player* pLeader, const std::string& name)
     bool ret = AddMember(m_leaderGuid, GR_GUILDMASTER);
     if (ret)
         // Call scripts on successful create
-        sScriptMgr.OnGuildCreate(this, pLeader, name);
+        sScriptMgr->OnGuildCreate(this, pLeader, name);
 
     return ret;
 }
@@ -1165,7 +1165,7 @@ bool Guild::Create(Player* pLeader, const std::string& name)
 void Guild::Disband()
 {
     // Call scripts before guild data removed from database
-    sScriptMgr.OnGuildDisband(this);
+    sScriptMgr->OnGuildDisband(this);
 
     _BroadcastEvent(GE_DISBANDED, 0);
     // Remove all members
@@ -1209,7 +1209,7 @@ void Guild::Disband()
     trans->Append(stmt);
 
     CharacterDatabase.CommitTransaction(trans);
-    sObjectMgr.RemoveGuild(m_id);
+    sObjectMgr->RemoveGuild(m_id);
 }
 
 void Guild::UpdateMemberData(Player* plr, uint8 dataid, uint32 value)
@@ -1434,7 +1434,7 @@ void Guild::HandleSetMOTD(WorldSession* session, const std::string& motd)
     {
         m_motd = motd;
 
-        sScriptMgr.OnGuildMOTDChanged(this, motd);
+        sScriptMgr->OnGuildMOTDChanged(this, motd);
 
         PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SET_GUILD_MOTD);
         stmt->setString(0, motd);
@@ -1457,7 +1457,7 @@ void Guild::HandleSetInfo(WorldSession* session, const std::string& info)
     {
         m_info = info;
 
-        sScriptMgr.OnGuildInfoChanged(this, info);
+        sScriptMgr->OnGuildInfoChanged(this, info);
 
         PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SET_GUILD_INFO);
         stmt->setString(0, info);
@@ -1583,7 +1583,7 @@ void Guild::HandleBuyBankTab(WorldSession* session, uint8 tabId)
 
 void Guild::HandleInviteMember(WorldSession* session, const std::string& name)
 {
-    Player* pInvitee = sObjectAccessor.FindPlayerByName(name.c_str());
+    Player* pInvitee = sObjectAccessor->FindPlayerByName(name.c_str());
     if (!pInvitee)
     {
         SendCommandResult(session, GUILD_INVITE_S, ERR_GUILD_PLAYER_NOT_FOUND_S, name);
@@ -1594,7 +1594,7 @@ void Guild::HandleInviteMember(WorldSession* session, const std::string& name)
     // Do not show invitations from ignored players
     if (pInvitee->GetSocial()->HasIgnore(player->GetGUIDLow()))
         return;
-    if (!sWorld.getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GUILD) && pInvitee->GetTeam() != player->GetTeam())
+    if (!sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GUILD) && pInvitee->GetTeam() != player->GetTeam())
     {
         SendCommandResult(session, GUILD_INVITE_S, ERR_GUILD_NOT_ALLIED, name);
         return;
@@ -1644,8 +1644,8 @@ void Guild::HandleInviteMember(WorldSession* session, const std::string& name)
 void Guild::HandleAcceptMember(WorldSession* session)
 {
     Player* player = session->GetPlayer();
-    if (!sWorld.getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GUILD) && 
-        player->GetTeam() != sObjectMgr.GetPlayerTeamByGUID(GetLeaderGUID()))
+    if (!sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GUILD) && 
+        player->GetTeam() != sObjectMgr->GetPlayerTeamByGUID(GetLeaderGUID()))
         return;
 
     if (AddMember(player->GetGUID()))
@@ -1812,7 +1812,7 @@ void Guild::HandleMemberDepositMoney(WorldSession* session, uint32 amount)
     Player* player = session->GetPlayer();
 
     // Call script after validation and before money transfer.
-    sScriptMgr.OnGuildMemberDepositMoney(this, player, amount);
+    sScriptMgr->OnGuildMemberDepositMoney(this, player, amount);
 
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     // Add money to bank
@@ -1821,7 +1821,7 @@ void Guild::HandleMemberDepositMoney(WorldSession* session, uint32 amount)
     player->ModifyMoney(-int32(amount));
     player->SaveGoldToDB(trans);
     // Log GM action (TODO: move to scripts)
-    if (player->GetSession()->GetSecurity() > SEC_PLAYER && sWorld.getBoolConfig(CONFIG_GM_LOG_TRADE))
+    if (player->GetSession()->GetSecurity() > SEC_PLAYER && sWorld->getBoolConfig(CONFIG_GM_LOG_TRADE))
     {
         sLog.outCommand(player->GetSession()->GetAccountId(),
             "GM %s (Account: %u) deposit money (Amount: %u) to pGuild bank (Guild ID %u)",
@@ -1857,7 +1857,7 @@ bool Guild::HandleMemberWithdrawMoney(WorldSession* session, uint32 amount, bool
         return false;
 
     // Call script after validation and before money transfer.
-    sScriptMgr.OnGuildMemberWitdrawMoney(this, player, amount, repair);
+    sScriptMgr->OnGuildMemberWitdrawMoney(this, player, amount, repair);
 
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     // Update remaining money amount
@@ -2079,7 +2079,7 @@ bool Guild::LoadFromDB(Field* fields)
     if (m_level == 0)
         m_level = 1;
 
-    m_nextLevelXP = sObjectMgr.GetXPForGuildLevel(m_level);
+    m_nextLevelXP = sObjectMgr->GetXPForGuildLevel(m_level);
 
     _CreateLogHolders();
     return true;
@@ -2296,7 +2296,7 @@ void Guild::BroadcastPacket(WorldPacket *packet) const
 // Members handling
 bool Guild::AddMember(const uint64& guid, uint8 rankId)
 {
-    Player* player = sObjectMgr.GetPlayer(guid);
+    Player* player = sObjectMgr->GetPlayer(guid);
     // Player cannot be in guild
     if (player)
     {
@@ -2371,7 +2371,7 @@ bool Guild::AddMember(const uint64& guid, uint8 rankId)
     _UpdateAccountsNumber();
 
     // Call scripts if member was succesfully added (and stored to database)
-    sScriptMgr.OnGuildAddMember(this, player, rankId);
+    sScriptMgr->OnGuildAddMember(this, player, rankId);
 
     return true;
 }
@@ -2379,7 +2379,7 @@ bool Guild::AddMember(const uint64& guid, uint8 rankId)
 void Guild::DeleteMember(const uint64& guid, bool isDisbanding, bool isKicked)
 {
     uint32 lowguid = GUID_LOPART(guid);
-    Player *player = sObjectMgr.GetPlayer(guid);
+    Player *player = sObjectMgr->GetPlayer(guid);
 
     // Guild master can be deleted when loading guild and guid doesn't exist in characters table
     // or when he is removed from guild by gm command
@@ -2414,7 +2414,7 @@ void Guild::DeleteMember(const uint64& guid, bool isDisbanding, bool isKicked)
         }
     }
     // Call script on remove before member is acutally removed from guild (and database)
-    sScriptMgr.OnGuildRemoveMember(this, player, isDisbanding, isKicked);
+    sScriptMgr->OnGuildRemoveMember(this, player, isDisbanding, isKicked);
 
     if (Member* pMember = GetMember(guid))
         delete pMember;
@@ -2496,9 +2496,9 @@ void Guild::SetBankTabText(uint8 tabId, const std::string& text)
 // Private methods
 void Guild::_CreateLogHolders()
 {
-    m_eventLog = new LogHolder(m_id, sWorld.getIntConfig(CONFIG_GUILD_EVENT_LOG_COUNT));
+    m_eventLog = new LogHolder(m_id, sWorld->getIntConfig(CONFIG_GUILD_EVENT_LOG_COUNT));
     for (uint8 tabId = 0; tabId <= GUILD_BANK_MAX_TABS; ++tabId)
-        m_bankEventLog[tabId] = new LogHolder(m_id, sWorld.getIntConfig(CONFIG_GUILD_BANK_EVENT_LOG_COUNT));
+        m_bankEventLog[tabId] = new LogHolder(m_id, sWorld->getIntConfig(CONFIG_GUILD_BANK_EVENT_LOG_COUNT));
 }
 
 bool Guild::_CreateNewBankTab()
@@ -2538,11 +2538,11 @@ void Guild::_CreateDefaultGuildRanks(LocaleConstant loc)
     stmt->setUInt32(0, m_id);
     CharacterDatabase.Execute(stmt);
 
-    _CreateRank(sObjectMgr.GetTrinityString(LANG_GUILD_MASTER,   loc), GR_RIGHT_ALL);
-    _CreateRank(sObjectMgr.GetTrinityString(LANG_GUILD_OFFICER,  loc), GR_RIGHT_ALL);
-    _CreateRank(sObjectMgr.GetTrinityString(LANG_GUILD_VETERAN,  loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
-    _CreateRank(sObjectMgr.GetTrinityString(LANG_GUILD_MEMBER,   loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
-    _CreateRank(sObjectMgr.GetTrinityString(LANG_GUILD_INITIATE, loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
+    _CreateRank(sObjectMgr->GetTrinityString(LANG_GUILD_MASTER,   loc), GR_RIGHT_ALL);
+    _CreateRank(sObjectMgr->GetTrinityString(LANG_GUILD_OFFICER,  loc), GR_RIGHT_ALL);
+    _CreateRank(sObjectMgr->GetTrinityString(LANG_GUILD_VETERAN,  loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
+    _CreateRank(sObjectMgr->GetTrinityString(LANG_GUILD_MEMBER,   loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
+    _CreateRank(sObjectMgr->GetTrinityString(LANG_GUILD_INITIATE, loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
 }
 
 void Guild::_CreateRank(const std::string& name, uint32 rights)
@@ -2744,7 +2744,7 @@ inline void Guild::_LogEvent(GuildEventLogTypes eventType, uint32 playerGuid1, u
     m_eventLog->AddEvent(trans, new EventLogEntry(m_id, m_eventLog->GetNextGUID(), eventType, playerGuid1, playerGuid2, newRank));
     CharacterDatabase.CommitTransaction(trans);
 
-    sScriptMgr.OnGuildEvent(this, uint8(eventType), playerGuid1, playerGuid2, newRank);
+    sScriptMgr->OnGuildEvent(this, uint8(eventType), playerGuid1, playerGuid2, newRank);
 }
 
 // Add new bank event log record
@@ -2762,7 +2762,7 @@ void Guild::_LogBankEvent(SQLTransaction& trans, GuildBankEventLogTypes eventTyp
     LogHolder* pLog = m_bankEventLog[tabId];
     pLog->AddEvent(trans, new BankEventLogEntry(m_id, pLog->GetNextGUID(), eventType, dbTabId, lowguid, itemOrMoney, itemStackCount, destTabId));
 
-    sScriptMgr.OnGuildBankEvent(this, uint8(eventType), tabId, lowguid, itemOrMoney, itemStackCount, destTabId);
+    sScriptMgr->OnGuildBankEvent(this, uint8(eventType), tabId, lowguid, itemOrMoney, itemStackCount, destTabId);
 }
 
 inline Item* Guild::_GetItem(uint8 tabId, uint8 slotId) const
@@ -3008,19 +3008,19 @@ void Guild::GainXP(uint64 xp)
 {
     if (!xp)
         return;
-    if (!sWorld.getBoolConfig(CONFIG_GUILD_ADVANCEMENT_ENABLED))
+    if (!sWorld->getBoolConfig(CONFIG_GUILD_ADVANCEMENT_ENABLED))
         return;
-    if (GetLevel() >= sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
+    if (GetLevel() >= sWorld->getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
         return;
 
     uint64 new_xp = m_xp + xp;
     uint64 nextLvlXP = GetNextLevelXP();
     uint8 level = GetLevel();
-    while (new_xp >= nextLvlXP && level < sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
+    while (new_xp >= nextLvlXP && level < sWorld->getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
     {
         new_xp -= nextLvlXP;
 
-        if (level < sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
+        if (level < sWorld->getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
         {
             LevelUp();
             ++level;
@@ -3034,12 +3034,12 @@ void Guild::GainXP(uint64 xp)
 
 void Guild::LevelUp()
 {
-    if (!sWorld.getBoolConfig(CONFIG_GUILD_ADVANCEMENT_ENABLED))
+    if (!sWorld->getBoolConfig(CONFIG_GUILD_ADVANCEMENT_ENABLED))
         return;
 
     uint8 level = m_level + 1;
     m_level = level;
-    m_nextLevelXP = sObjectMgr.GetXPForGuildLevel(level);
+    m_nextLevelXP = sObjectMgr->GetXPForGuildLevel(level);
 
     WorldPacket data(SMSG_GUILD_XP_UPDATE, 8*5);
     data << uint64(0x37); // max daily xp

@@ -652,13 +652,13 @@ bool ChatHandler::HandleDebugGetItemStateCommand(const char* args)
 
 bool ChatHandler::HandleDebugBattlegroundCommand(const char * /*args*/)
 {
-    sBattlegroundMgr.ToggleTesting();
+    sBattlegroundMgr->ToggleTesting();
     return true;
 }
 
 bool ChatHandler::HandleDebugArenaCommand(const char * /*args*/)
 {
-    sBattlegroundMgr.ToggleArenaTesting();
+    sBattlegroundMgr->ToggleArenaTesting();
     return true;
 }
 
@@ -780,7 +780,7 @@ bool ChatHandler::HandleDebugSpawnVehicle(const char* args)
 
     uint32 id = (uint32)atoi(i);
 
-    CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(entry);
+    CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(entry);
 
     if (!ci)
         return false;
@@ -792,13 +792,13 @@ bool ChatHandler::HandleDebugSpawnVehicle(const char* args)
 
     Creature* v = NULL;
     if(ci->ScriptID)
-        v = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+        v = sScriptMgr->GetCreatureScriptedClass(ci->ScriptID);
     if(v == NULL)
         v = new Creature();
 
     Map *map = m_session->GetPlayer()->GetMap();
 
-    if (!v->Create(sObjectMgr.GenerateLowGuid(HIGHGUID_VEHICLE), map, m_session->GetPlayer()->GetPhaseMask(), entry, id, m_session->GetPlayer()->GetTeam(), x, y, z, o))
+    if (!v->Create(sObjectMgr->GenerateLowGuid(HIGHGUID_VEHICLE), map, m_session->GetPlayer()->GetPhaseMask(), entry, id, m_session->GetPlayer()->GetTeam(), x, y, z, o))
     {
         delete v;
         return false;
@@ -904,7 +904,7 @@ bool ChatHandler::HandleDebugItemExpireCommand(const char* args)
         return false;
 
     m_session->GetPlayer()->DestroyItem(i->GetBagSlot(), i->GetSlot(), true);
-    sScriptMgr.OnItemExpire(m_session->GetPlayer(), i->GetProto());
+    sScriptMgr->OnItemExpire(m_session->GetPlayer(), i->GetProto());
 
     return true;
 }

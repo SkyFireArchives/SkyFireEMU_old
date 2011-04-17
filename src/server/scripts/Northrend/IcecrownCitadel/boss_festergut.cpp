@@ -360,7 +360,7 @@ class spell_festergut_pungent_blight : public SpellScriptLoader
                     return;
 
                 // Get Inhaled Blight id for our difficulty
-                spellInfo = sSpellMgr.GetSpellForDifficultyFromSpell(spellInfo, GetCaster());
+                spellInfo = sSpellMgr->GetSpellForDifficultyFromSpell(spellInfo, GetCaster());
 
                 // ...and remove it
                 GetCaster()->RemoveAurasDueToSpell(spellInfo->Id);
@@ -398,7 +398,7 @@ class spell_festergut_gastric_bloat : public SpellScriptLoader
                     return;
 
                 // Get Gastric Explosion id for our difficulty
-                spellInfo = sSpellMgr.GetSpellForDifficultyFromSpell(spellInfo, GetCaster());
+                spellInfo = sSpellMgr->GetSpellForDifficultyFromSpell(spellInfo, GetCaster());
                 GetHitUnit()->RemoveAurasDueToSpell(GetSpellInfo()->Id);
                 GetHitUnit()->CastSpell(GetHitUnit(), spellInfo, true);
             }

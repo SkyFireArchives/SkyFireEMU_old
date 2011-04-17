@@ -164,12 +164,12 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
         return -1;
 
     // Dump outgoing packet.
-    if (sWorldLog.LogWorld())
+    if (sWorldLog->LogWorld())
     {
         std::string error = "";
         if(pct.GetOpcode() > OPCODE_NOT_FOUND)
             error = "NOT SEND\n";
-        sWorldLog.outTimestampLog ("SERVER:\nSOCKET: %u\nLENGTH: %u\nOPCODE: %s (0x%.4X)\n%sDATA:\n",
+        sWorldLog->outTimestampLog ("SERVER:\nSOCKET: %u\nLENGTH: %u\nOPCODE: %s (0x%.4X)\n%sDATA:\n",
                      (uint32) get_handle(),
                      pct.size(),
                      LookupOpcodeName (pct.GetOpcode()),
@@ -180,11 +180,11 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
         while (p < pct.size())
         {
             for (uint32 j = 0; j < 16 && p < pct.size(); j++)
-                sWorldLog.outLog("%.2X ", const_cast<WorldPacket&>(pct)[p++]);
+                sWorldLog->outLog("%.2X ", const_cast<WorldPacket&>(pct)[p++]);
 
-            sWorldLog.outLog("\n");
+            sWorldLog->outLog("\n");
         }
-        sWorldLog.outLog("\n");
+        sWorldLog->outLog("\n");
     }
     //sLog.outString("S: %s (0x%.4X)", LookupOpcodeName (pct.GetOpcode()), pct.GetOpcode());
 
@@ -195,7 +195,7 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
     }
     
     // Create a copy of the original packet; this is to avoid issues if a hook modifies it.
-    sScriptMgr.OnPacketSend(this, WorldPacket(pct));
+    sScriptMgr->OnPacketSend(this, WorldPacket(pct));
 
     ServerPktHeader header(pct.size()+2, pct.GetOpcode());
     m_Crypt.EncryptSend ((uint8*)header.header, header.getHeaderLength());
@@ -699,9 +699,9 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
         return -1;
 
     // Dump received packet.
-    if (sWorldLog.LogWorld())
+    if (sWorldLog->LogWorld())
     {
-        sWorldLog.outTimestampLog ("CLIENT:\nSOCKET: %u\nLENGTH: %u\nOPCODE: %s (0x%.4X)\nDATA:\n",
+        sWorldLog->outTimestampLog ("CLIENT:\nSOCKET: %u\nLENGTH: %u\nOPCODE: %s (0x%.4X)\nDATA:\n",
                      (uint32) get_handle(),
                      new_pct->size(),
                      LookupOpcodeName (new_pct->GetOpcode()),
@@ -711,11 +711,11 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
         while (p < new_pct->size())
         {
             for (uint32 j = 0; j < 16 && p < new_pct->size(); j++)
-                sWorldLog.outLog ("%.2X ", (*new_pct)[p++]);
+                sWorldLog->outLog ("%.2X ", (*new_pct)[p++]);
 
-            sWorldLog.outLog ("\n");
+            sWorldLog->outLog ("\n");
         }
-        sWorldLog.outLog ("\n");
+        sWorldLog->outLog ("\n");
     }
 
     try
@@ -731,11 +731,11 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
                     return -1;
                 }
 
-                sScriptMgr.OnPacketReceive(this, WorldPacket(*new_pct));
+                sScriptMgr->OnPacketReceive(this, WorldPacket(*new_pct));
                 return HandleAuthSession (*new_pct);
             case CMSG_KEEP_ALIVE:
                 sLog.outStaticDebug ("CMSG_KEEP_ALIVE ,size: " UI64FMTD, uint64(new_pct->size()));
-                sScriptMgr.OnPacketReceive(this, WorldPacket(*new_pct));
+                sScriptMgr->OnPacketReceive(this, WorldPacket(*new_pct));
                 return 0;
             default:
             {
@@ -825,7 +825,7 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
 
     recvPacket >> accountName;
    
-    if (sWorld.IsClosed())
+    if (sWorld->IsClosed())
     {
         packet.Initialize(SMSG_AUTH_RESPONSE, 1);
         packet << uint8(AUTH_REJECT);
@@ -876,10 +876,10 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     Field* fields = result->Fetch();
 
     uint8 expansion = fields[6].GetUInt8();
-    uint32 world_expansion = sWorld.getIntConfig(CONFIG_EXPANSION);
+    uint32 world_expansion = sWorld->getIntConfig(CONFIG_EXPANSION);
     if (expansion > world_expansion)
         expansion = world_expansion;
-    //expansion = ((sWorld.getIntConfig(CONFIG_EXPANSION) > fields[6].GetUInt8()) ? fields[6].GetUInt8() : sWorld.getIntConfig(CONFIG_EXPANSION));
+    //expansion = ((sWorld->getIntConfig(CONFIG_EXPANSION) > fields[6].GetUInt8()) ? fields[6].GetUInt8() : sWorld->getIntConfig(CONFIG_EXPANSION));
 
     N.SetHexStr ("894B645E89E1535BBDAD5B8B290650530801B18EBFBF5E8FAB3C82872A3E9BB7");
     g.SetDword (7);
@@ -963,7 +963,7 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     }
 
     // Check locked state for server
-    AccountTypes allowedAccountType = sWorld.GetPlayerSecurityLimit();
+    AccountTypes allowedAccountType = sWorld->GetPlayerSecurityLimit();
     sLog.outDebug("Allowed Level: %u Player Level %u", allowedAccountType, AccountTypes(security));
     if (allowedAccountType > SEC_PLAYER && AccountTypes(security) < allowedAccountType)
     {
@@ -1027,10 +1027,10 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     m_Session->ReadAddonsInfo(packetAddon);
     
     // Sleep this Network thread for
-    uint32 sleepTime = sWorld.getIntConfig(CONFIG_SESSION_ADD_DELAY);
+    uint32 sleepTime = sWorld->getIntConfig(CONFIG_SESSION_ADD_DELAY);
     ACE_OS::sleep (ACE_Time_Value (0, sleepTime));
 
-    sWorld.AddSession (m_Session);
+    sWorld->AddSession (m_Session);
 
     return 0;
 }
@@ -1057,7 +1057,7 @@ int WorldSocket::HandlePing (WorldPacket& recvPacket)
         {
             ++m_OverSpeedPings;
 
-            uint32 max_count = sWorld.getIntConfig (CONFIG_MAX_OVERSPEED_PINGS);
+            uint32 max_count = sWorld->getIntConfig (CONFIG_MAX_OVERSPEED_PINGS);
 
             if (max_count && m_OverSpeedPings > max_count)
             {

@@ -796,7 +796,7 @@ class spell_cultist_dark_martyrdom : public SpellScriptLoader
             PrepareSpellScript(spell_cultist_dark_martyrdom_SpellScript)
             bool Validate(SpellEntry const* /*spellEntry*/)
             {
-                if (uint32 scriptId = sObjectMgr.GetScriptId("boss_lady_deathwhisper"))
+                if (uint32 scriptId = sObjectMgr->GetScriptId("boss_lady_deathwhisper"))
                     if (CreatureInfo const* creInfo = ObjectMgr::GetCreatureTemplate(NPC_LADY_DEATHWHISPER))
                         if (creInfo->ScriptID == scriptId)
                             return true;

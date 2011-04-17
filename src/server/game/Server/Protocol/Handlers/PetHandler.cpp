@@ -205,7 +205,7 @@ void WorldSession::HandlePetActionHelper(Unit *pet, uint64 guid1, uint16 spellid
                             return;
 
                     // Not let attack through obstructions
-                    if (sWorld.getBoolConfig(CONFIG_PET_LOS))
+                    if (sWorld->getBoolConfig(CONFIG_PET_LOS))
                     {
                         if (!pet->IsWithinLOSInMap(TargetUnit))
                             return;
@@ -616,7 +616,7 @@ void WorldSession::HandlePetRename(WorldPacket & recv_data)
         return;
     }
 
-    if (sObjectMgr.IsReservedName(name))
+    if (sObjectMgr->IsReservedName(name))
     {
         SendPetNameInvalid(PET_NAME_RESERVED, name, NULL);
         return;

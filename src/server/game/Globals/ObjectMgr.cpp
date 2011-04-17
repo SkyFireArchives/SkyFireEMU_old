@@ -558,7 +558,7 @@ struct SQLCreatureLoader : public SQLStorageLoaderBase<SQLCreatureLoader>
     template<class D>
     void convert_from_str(uint32 /*field_pos*/, char *src, D &dst)
     {
-        dst = D(sObjectMgr.GetScriptId(src));
+        dst = D(sObjectMgr->GetScriptId(src));
     }
 };
 
@@ -1321,7 +1321,7 @@ void ObjectMgr::LoadCreatures()
                     spawnMasks[i] |= (1 << k);
 
     //TODO: remove this
-    //sGameEventMgr.mGameEventCreatureGuids.resize(52*2-1);
+    //sGameEventMgr->mGameEventCreatureGuids.resize(52*2-1);
 
     
 
@@ -1450,14 +1450,14 @@ void ObjectMgr::LoadCreatures()
         /*if (entry == 30739 || entry == 30740)
         {
             gameEvent = 51;
-            uint32 guid2 = sObjectMgr.GenerateLowGuid(HIGHGUID_UNIT);
+            uint32 guid2 = sObjectMgr->GenerateLowGuid(HIGHGUID_UNIT);
             CreatureData& data2 = mCreatureDataMap[guid2];
             data2 = data;
 //            data2.id = (entry == 32307 ? 32308 : 32307);
             data2.id = (entry == 30739 ? 30740 : 30739);
             data2.displayid = 0;
-            sGameEventMgr.mGameEventCreatureGuids[51+51].push_back(guid);
-            sGameEventMgr.mGameEventCreatureGuids[51+50].push_back(guid2);
+            sGameEventMgr->mGameEventCreatureGuids[51+51].push_back(guid);
+            sGameEventMgr->mGameEventCreatureGuids[51+50].push_back(guid2);
         }*/
 
         if (gameEvent == 0 && PoolId == 0)                      // if not this is to be managed by GameEvent System or Pool system
@@ -1509,7 +1509,7 @@ uint32 ObjectMgr::AddGOData(uint32 entry, uint32 mapId, float x, float y, float 
     if (!goinfo)
         return 0;
 
-    Map* map = const_cast<Map*>(sMapMgr.CreateBaseMap(mapId));
+    Map* map = const_cast<Map*>(sMapMgr->CreateBaseMap(mapId));
     if (!map)
         return 0;
 
@@ -1570,18 +1570,18 @@ bool ObjectMgr::MoveCreData(uint32 guid, uint32 mapId, Position pos)
     AddCreatureToGrid(guid, &data);
 
     // Spawn if necessary (loaded grids only)
-    if (Map* map = const_cast<Map*>(sMapMgr.CreateBaseMap(mapId)))
+    if (Map* map = const_cast<Map*>(sMapMgr->CreateBaseMap(mapId)))
     {
         // We use spawn coords to spawn
         if (!map->Instanceable() && map->IsLoaded(data.posX, data.posY))
         {
-            CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(data.id);
+            CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(data.id);
             if (!ci)
                 return 0;
             
             Creature* creature = NULL;
             if(ci->ScriptID)
-                creature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+                creature = sScriptMgr->GetCreatureScriptedClass(ci->ScriptID);
             if(creature == NULL)
                 creature = new Creature();
             
@@ -1604,7 +1604,7 @@ uint32 ObjectMgr::AddCreData(uint32 entry, uint32 /*team*/, uint32 mapId, float 
         return 0;
 
     uint32 level = cInfo->minlevel == cInfo->maxlevel ? cInfo->minlevel : urand(cInfo->minlevel, cInfo->maxlevel); // Only used for extracting creature base stats
-    CreatureBaseStats const* stats = sObjectMgr.GetCreatureBaseStats(level, cInfo->unit_class);
+    CreatureBaseStats const* stats = sObjectMgr->GetCreatureBaseStats(level, cInfo->unit_class);
 
     uint32 guid = GenerateLowGuid(HIGHGUID_UNIT);
     CreatureData& data = NewOrExistCreatureData(guid);
@@ -1634,18 +1634,18 @@ uint32 ObjectMgr::AddCreData(uint32 entry, uint32 /*team*/, uint32 mapId, float 
     AddCreatureToGrid(guid, &data);
 
     // Spawn if necessary (loaded grids only)
-    if (Map* map = const_cast<Map*>(sMapMgr.CreateBaseMap(mapId)))
+    if (Map* map = const_cast<Map*>(sMapMgr->CreateBaseMap(mapId)))
     {
         // We use spawn coords to spawn
         if (!map->Instanceable() && !map->IsRemovalGrid(x, y))
         {
-            CreatureInfo const *ci = sObjectMgr.GetCreatureTemplate(entry);
+            CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(entry);
             if (!ci)
                 return 0;
             
             Creature* creature = NULL;
             if(ci->ScriptID)
-                creature = sScriptMgr.GetCreatureScriptedClass(ci->ScriptID);
+                creature = sScriptMgr->GetCreatureScriptedClass(ci->ScriptID);
             if(creature == NULL)
                 creature = new Creature();
             
@@ -2045,7 +2045,7 @@ struct SQLItemLoader : public SQLStorageLoaderBase<SQLItemLoader>
     template<class D>
     void convert_from_str(uint32 /*field_pos*/, char *src, D &dst)
     {
-        dst = D(sObjectMgr.GetScriptId(src));
+        dst = D(sObjectMgr->GetScriptId(src));
     }
 };
 
@@ -2282,7 +2282,7 @@ void ObjectMgr::LoadItemPrototypes()
             else if (proto->Spells[1].SpellId != -1)
             {
                 SpellEntry const* spellInfo = sSpellStore.LookupEntry(proto->Spells[1].SpellId);
-                if (!spellInfo && !sDisableMgr.IsDisabledFor(DISABLE_TYPE_SPELL, proto->Spells[1].SpellId, NULL))
+                if (!spellInfo && !sDisableMgr->IsDisabledFor(DISABLE_TYPE_SPELL, proto->Spells[1].SpellId, NULL))
                 {
                     sLog.outErrorDb("Item (Entry: %u) has wrong (not existing) spell in spellid_%d (%d)",i,1+1,proto->Spells[1].SpellId);
                     const_cast<ItemPrototype*>(proto)->Spells[0].SpellId = 0;
@@ -2330,7 +2330,7 @@ void ObjectMgr::LoadItemPrototypes()
                 if (proto->Spells[j].SpellId && proto->Spells[j].SpellId != -1)
                 {
                     SpellEntry const* spellInfo = sSpellStore.LookupEntry(proto->Spells[j].SpellId);
-                    if (!spellInfo && !sDisableMgr.IsDisabledFor(DISABLE_TYPE_SPELL, proto->Spells[j].SpellId, NULL))
+                    if (!spellInfo && !sDisableMgr->IsDisabledFor(DISABLE_TYPE_SPELL, proto->Spells[j].SpellId, NULL))
                     {
                         sLog.outErrorDb("Item (Entry: %u) has wrong (not existing) spell in spellid_%d (%d)",i,j+1,proto->Spells[j].SpellId);
                         const_cast<ItemPrototype*>(proto)->Spells[j].SpellId = 0;
@@ -2714,7 +2714,7 @@ void ObjectMgr::LoadPetLevelInfo()
             }
 
             uint32 current_level = fields[1].GetUInt32();
-            if (current_level > sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+            if (current_level > sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
             {
                 if (current_level > STRONG_MAX_LEVEL)        // hardcoded level maximum
                     sLog.outErrorDb("Wrong (> %u) level %u in `pet_levelstats` table, ignoring.",STRONG_MAX_LEVEL,current_level);
@@ -2734,7 +2734,7 @@ void ObjectMgr::LoadPetLevelInfo()
             PetLevelInfo*& pInfoMapEntry = petInfo[creature_id];
 
             if (pInfoMapEntry == NULL)
-                pInfoMapEntry =  new PetLevelInfo[sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL)];
+                pInfoMapEntry =  new PetLevelInfo[sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL)];
 
             // data for level 1 stored in [0] array element, ...
             PetLevelInfo* pLevelInfo = &pInfoMapEntry[current_level-1];
@@ -2770,7 +2770,7 @@ void ObjectMgr::LoadPetLevelInfo()
         }
 
         // fill level gaps
-        for (uint8 level = 1; level < sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
+        for (uint8 level = 1; level < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
         {
             if (pInfo[level].health == 0)
             {
@@ -2783,8 +2783,8 @@ void ObjectMgr::LoadPetLevelInfo()
 
 PetLevelInfo const* ObjectMgr::GetPetLevelInfo(uint32 creature_id, uint8 level) const
 {
-    if (level > sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
-        level = sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
+    if (level > sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+        level = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
 
     PetLevelInfoMap::const_iterator itr = petInfo.find(creature_id);
     if (itr == petInfo.end())
@@ -3010,7 +3010,7 @@ void ObjectMgr::LoadPlayerInfo()
     {
 
         QueryResult result = QueryResult(NULL);
-        if (sWorld.getBoolConfig(CONFIG_START_ALL_SPELLS))
+        if (sWorld->getBoolConfig(CONFIG_START_ALL_SPELLS))
             result = WorldDatabase.Query("SELECT race, class, Spell, Active FROM playercreateinfo_spell_custom");
         else
             result = WorldDatabase.Query("SELECT race, class, Spell FROM playercreateinfo_spell");
@@ -3153,7 +3153,7 @@ void ObjectMgr::LoadPlayerInfo()
             }
 
             uint8 current_level = fields[1].GetUInt8();      // Can't be > than STRONG_MAX_LEVEL (hardcoded level maximum) due to var type
-            if (current_level > sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+            if (current_level > sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
             {
                 sLog.outDetail("Unused (> MaxPlayerLevel in worldserver.conf) level %u in `player_classlevelstats` table, ignoring.",current_level);
                 ++count;                                    // make result loading percent "expected" correct in case disabled detail mode for example.
@@ -3163,7 +3163,7 @@ void ObjectMgr::LoadPlayerInfo()
             PlayerClassInfo* pClassInfo = &playerClassInfo[current_class];
 
             if (!pClassInfo->levelInfo)
-                pClassInfo->levelInfo = new PlayerClassLevelInfo[sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL)];
+                pClassInfo->levelInfo = new PlayerClassLevelInfo[sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL)];
 
             PlayerClassLevelInfo* pClassLevelInfo = &pClassInfo->levelInfo[current_level-1];
 
@@ -3196,7 +3196,7 @@ void ObjectMgr::LoadPlayerInfo()
         }
 
         // fill level gaps
-        for (uint8 level = 1; level < sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
+        for (uint8 level = 1; level < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
         {
             if (pClassInfo->levelInfo[level].basehealth == 0)
             {
@@ -3245,7 +3245,7 @@ void ObjectMgr::LoadPlayerInfo()
             }
 
             uint32 current_level = fields[2].GetUInt32();
-            if (current_level > sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+            if (current_level > sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
             {
                 if (current_level > STRONG_MAX_LEVEL)        // hardcoded level maximum
                     sLog.outErrorDb("Wrong (> %u) level %u in `player_levelstats` table, ignoring.",STRONG_MAX_LEVEL,current_level);
@@ -3260,7 +3260,7 @@ void ObjectMgr::LoadPlayerInfo()
             PlayerInfo* pInfo = &playerInfo[current_race][current_class];
 
             if (!pInfo->levelInfo)
-                pInfo->levelInfo = new PlayerLevelInfo[sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL)];
+                pInfo->levelInfo = new PlayerLevelInfo[sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL)];
 
             PlayerLevelInfo* pLevelInfo = &pInfo->levelInfo[current_level-1];
 
@@ -3298,14 +3298,14 @@ void ObjectMgr::LoadPlayerInfo()
                 continue;
 
             // skip expansion races if not playing with expansion
-            if (sWorld.getIntConfig(CONFIG_EXPANSION) < 1 && (race == RACE_BLOODELF || race == RACE_DRAENEI))
+            if (sWorld->getIntConfig(CONFIG_EXPANSION) < 1 && (race == RACE_BLOODELF || race == RACE_DRAENEI))
                 continue;
 
             // skip expansion classes if not playing with expansion
-            if (sWorld.getIntConfig(CONFIG_EXPANSION) < 2 && class_ == CLASS_DEATH_KNIGHT)
+            if (sWorld->getIntConfig(CONFIG_EXPANSION) < 2 && class_ == CLASS_DEATH_KNIGHT)
                 continue;
 
-            if (sWorld.getIntConfig(CONFIG_EXPANSION) < 3 && (race == RACE_GOBLIN || race == RACE_WORGEN))
+            if (sWorld->getIntConfig(CONFIG_EXPANSION) < 3 && (race == RACE_GOBLIN || race == RACE_WORGEN))
                 continue;
             
             // fatal error if no level 1 data
@@ -3316,7 +3316,7 @@ void ObjectMgr::LoadPlayerInfo()
             }
 
             // fill level gaps
-            for (uint8 level = 1; level < sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
+            for (uint8 level = 1; level < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
             {
                 if (pInfo->levelInfo[level].stats[0] == 0)
                 {
@@ -3330,8 +3330,8 @@ void ObjectMgr::LoadPlayerInfo()
     // Loading xp per level data
     sLog.outString("Loading Player Create XP Data...");
     {
-        mPlayerXPperLevel.resize(sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL));
-        for (uint8 level = 0; level < sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
+        mPlayerXPperLevel.resize(sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL));
+        for (uint8 level = 0; level < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
             mPlayerXPperLevel[level] = 0;
 
         //                                                 0    1
@@ -3358,7 +3358,7 @@ void ObjectMgr::LoadPlayerInfo()
             uint32 current_level = fields[0].GetUInt32();
             uint32 current_xp    = fields[1].GetUInt32();
 
-            if (current_level >= sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+            if (current_level >= sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
             {
                 if (current_level > STRONG_MAX_LEVEL)        // hardcoded level maximum
                     sLog.outErrorDb("Wrong (> %u) level %u in `player_xp_for_level` table, ignoring.", STRONG_MAX_LEVEL,current_level);
@@ -3382,8 +3382,8 @@ void ObjectMgr::LoadPlayerInfo()
 
     sLog.outString("Loading Guild XP Data...");
     {
-        mGuildXPperLevel.resize(sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL));
-        for (uint8 level = 0; level < sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL); ++level)
+        mGuildXPperLevel.resize(sWorld->getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL));
+        for (uint8 level = 0; level < sWorld->getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL); ++level)
             mGuildXPperLevel[level] = 0;
 
         //                                                 0    1
@@ -3407,7 +3407,7 @@ void ObjectMgr::LoadPlayerInfo()
                 uint32 level = fields[0].GetUInt32();
                 uint32 xp    = fields[1].GetUInt32();
 
-                if (level >= sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
+                if (level >= sWorld->getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL))
                 {
                     if (level > STRONG_MAX_LEVEL)        // hardcoded level maximum
                         sLog.outErrorDb("Wrong (> %u) level %u in `guild_xp_for_level` table, ignoring.", STRONG_MAX_LEVEL, level);
@@ -3432,7 +3432,7 @@ void ObjectMgr::LoadPlayerInfo()
     }
 
     // fill level gaps
-    for (uint8 level = 1; level < sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
+    for (uint8 level = 1; level < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
     {
         if (mPlayerXPperLevel[level] == 0)
         {
@@ -3440,7 +3440,7 @@ void ObjectMgr::LoadPlayerInfo()
             mPlayerXPperLevel[level] = mPlayerXPperLevel[level-1]+100;
         }
     }
-    for (uint8 level = 1; level < sWorld.getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL); ++level)
+    for (uint8 level = 1; level < sWorld->getIntConfig(CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL); ++level)
     {
         if (mGuildXPperLevel[level] == 0)
         {
@@ -3457,8 +3457,8 @@ void ObjectMgr::GetPlayerClassLevelInfo(uint32 class_, uint8 level, PlayerClassL
 
     PlayerClassInfo const* pInfo = &playerClassInfo[class_];
 
-    if (level > sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
-        level = sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
+    if (level > sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+        level = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
 
     *info = pInfo->levelInfo[level-1];
 }
@@ -3472,7 +3472,7 @@ void ObjectMgr::GetPlayerLevelInfo(uint32 race, uint32 class_, uint8 level, Play
     if (pInfo->displayId_m == 0 || pInfo->displayId_f == 0)
         return;
 
-    if (level <= sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+    if (level <= sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
         *info = pInfo->levelInfo[level-1];
     else
         BuildPlayerLevelInfo(race,class_,level,info);
@@ -3481,10 +3481,10 @@ void ObjectMgr::GetPlayerLevelInfo(uint32 race, uint32 class_, uint8 level, Play
 void ObjectMgr::BuildPlayerLevelInfo(uint8 race, uint8 _class, uint8 level, PlayerLevelInfo* info) const
 {
     // base data (last known level)
-    *info = playerInfo[race][_class].levelInfo[sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL)-1];
+    *info = playerInfo[race][_class].levelInfo[sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL)-1];
 
     // if conversion from uint32 to uint8 causes unexpected behaviour, change lvl to uint32
-    for (uint8 lvl = sWorld.getIntConfig(CONFIG_MAX_PLAYER_LEVEL)-1; lvl < level; ++lvl)
+    for (uint8 lvl = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL)-1; lvl < level; ++lvl)
     {
         switch(_class)
         {
@@ -3785,11 +3785,11 @@ void ObjectMgr::LoadGuilds()
     // Delete unused LogGuid records in guild_eventlog and guild_bank_eventlog table.
     // You can comment these lines if you don't plan to change CONFIG_GUILD_EVENT_LOG_COUNT and CONFIG_GUILD_BANK_EVENT_LOG_COUNT
     stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_OLD_GUILD_EVENT_LOGS);
-    stmt->setUInt32(0, sWorld.getIntConfig(CONFIG_GUILD_EVENT_LOG_COUNT));
+    stmt->setUInt32(0, sWorld->getIntConfig(CONFIG_GUILD_EVENT_LOG_COUNT));
     CharacterDatabase.Execute(stmt);
 
     stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_OLD_GUILD_BANK_EVENT_LOGS);
-    stmt->setUInt32(0, sWorld.getIntConfig(CONFIG_GUILD_BANK_EVENT_LOG_COUNT));
+    stmt->setUInt32(0, sWorld->getIntConfig(CONFIG_GUILD_BANK_EVENT_LOG_COUNT));
     CharacterDatabase.Execute(stmt);
 
     sLog.outString();
@@ -3989,7 +3989,7 @@ void ObjectMgr::LoadGroups()
             diff = 0;                                   // default for both difficaly types
         }
 
-        InstanceSave *save = sInstanceSaveMgr.AddInstanceSave(mapEntry->MapID, fields[2].GetUInt32(), Difficulty(diff), time_t(fields[5].GetUInt64()), fields[6].GetBool(), true);
+        InstanceSave *save = sInstanceSaveMgr->AddInstanceSave(mapEntry->MapID, fields[2].GetUInt32(), Difficulty(diff), time_t(fields[5].GetUInt64()), fields[6].GetBool(), true);
         group->BindToInstance(save, fields[3].GetBool(), true);
         ++count;
     }while (result->NextRow());
@@ -4081,7 +4081,7 @@ void ObjectMgr::LoadQuests()
     for (QuestMap::iterator iter = mQuestTemplates.begin(); iter != mQuestTemplates.end(); ++iter)
     {
         // skip post-loading checks for disabled quests
-        if (sDisableMgr.IsDisabledFor(DISABLE_TYPE_QUEST, iter->first, NULL))
+        if (sDisableMgr->IsDisabledFor(DISABLE_TYPE_QUEST, iter->first, NULL))
             continue;
 
         Quest * qinfo = iter->second;
@@ -4202,10 +4202,10 @@ void ObjectMgr::LoadQuests()
 
         if (qinfo->RequiredSkillValue)
         {
-            if (qinfo->RequiredSkillValue > sWorld.GetConfigMaxSkillValue())
+            if (qinfo->RequiredSkillValue > sWorld->GetConfigMaxSkillValue())
             {
                 sLog.outErrorDb("Quest %u has `RequiredSkillValue` = %u but max possible skill is %u, quest can't be done.",
-                    qinfo->GetQuestId(), qinfo->RequiredSkillValue, sWorld.GetConfigMaxSkillValue());
+                    qinfo->GetQuestId(), qinfo->RequiredSkillValue, sWorld->GetConfigMaxSkillValue());
                 // no changes, quest can't be done for this requirement
             }
 
@@ -4779,7 +4779,7 @@ void ObjectMgr::LoadScripts(ScriptsType type)
     if (tableName.empty())
         return;
 
-    if (sWorld.IsScriptScheduled())                          // function don't must be called in time scripts use.
+    if (sWorld->IsScriptScheduled())                          // function don't must be called in time scripts use.
         return;
 
     sLog.outString("%s :", tableName.c_str());
@@ -5279,7 +5279,7 @@ void ObjectMgr::LoadSpellScriptNames()
 
         if (allRanks)
         {
-            if (sSpellMgr.GetFirstSpellInChain(spellId) != uint32(spellId))
+            if (sSpellMgr->GetFirstSpellInChain(spellId) != uint32(spellId))
             {
                 sLog.outErrorDb("Scriptname:`%s` spell (spell_id:%d) is not first rank of spell.",scriptName,fields[0].GetInt32());
                 continue;
@@ -5287,7 +5287,7 @@ void ObjectMgr::LoadSpellScriptNames()
             while(spellId)
             {
                 mSpellScripts.insert(SpellScriptsMap::value_type(spellId, GetScriptId(scriptName)));
-                spellId = sSpellMgr.GetNextSpellInChain(spellId);
+                spellId = sSpellMgr->GetNextSpellInChain(spellId);
             }
         }
         else
@@ -5312,7 +5312,7 @@ void ObjectMgr::ValidateSpellScripts()
     {
         SpellEntry const * spellEntry = sSpellStore.LookupEntry(itr->first);
         std::vector<std::pair<SpellScriptLoader *, SpellScriptsMap::iterator> > SpellScriptLoaders;
-        sScriptMgr.CreateSpellScriptLoaders(itr->first, SpellScriptLoaders);
+        sScriptMgr->CreateSpellScriptLoaders(itr->first, SpellScriptLoaders);
         itr = mSpellScripts.upper_bound(itr->first);
 
         for (std::vector<std::pair<SpellScriptLoader *, SpellScriptsMap::iterator> >::iterator sitr = SpellScriptLoaders.begin(); sitr != SpellScriptLoaders.end(); ++sitr)
@@ -5438,7 +5438,7 @@ struct SQLInstanceLoader : public SQLStorageLoaderBase<SQLInstanceLoader>
     template<class D>
     void convert_from_str(uint32 /*field_pos*/, char *src, D &dst)
     {
-        dst = D(sObjectMgr.GetScriptId(src));
+        dst = D(sObjectMgr->GetScriptId(src));
     }
 };
 
@@ -5952,7 +5952,7 @@ uint32 ObjectMgr::GetTaxiMountDisplayId(uint32 id, uint32 team, bool allowed_alt
         }
     }
 
-    CreatureModelInfo const *minfo = sObjectMgr.GetCreatureModelRandomGender(mount_id);
+    CreatureModelInfo const *minfo = sObjectMgr->GetCreatureModelRandomGender(mount_id);
     if (minfo)
         mount_id = minfo->modelid;
 
@@ -6027,7 +6027,7 @@ void ObjectMgr::LoadGraveyardZones()
 WorldSafeLocsEntry const *ObjectMgr::GetClosestGraveYard(float x, float y, float z, uint32 MapId, uint32 team)
 {
     // search for zone associated closest graveyard
-    uint32 zoneId = sMapMgr.GetZoneId(MapId,x,y,z);
+    uint32 zoneId = sMapMgr->GetZoneId(MapId,x,y,z);
 
     // Simulate std. algorithm:
     //   found some graveyard associated to (ghost_zone,ghost_map)
@@ -6403,7 +6403,7 @@ AreaTrigger const* ObjectMgr::GetGoBackTrigger(uint32 Map) const
 
     if (mapEntry->IsDungeon())
     {
-        const InstanceTemplate *iTemplate = sObjectMgr.GetInstanceTemplate(Map);
+        const InstanceTemplate *iTemplate = sObjectMgr->GetInstanceTemplate(Map);
 
         if (!iTemplate)
             return NULL;
@@ -6675,7 +6675,7 @@ struct SQLGameObjectLoader : public SQLStorageLoaderBase<SQLGameObjectLoader>
     template<class D>
     void convert_from_str(uint32 /*field_pos*/, char *src, D &dst)
     {
-        dst = D(sObjectMgr.GetScriptId(src));
+        dst = D(sObjectMgr->GetScriptId(src));
     }
 };
 
@@ -7050,7 +7050,7 @@ void ObjectMgr::LoadCorpses()
             continue;
         }
 
-        sObjectAccessor.AddCorpse(corpse);
+        sObjectAccessor->AddCorpse(corpse);
 
         ++count;
     }
@@ -7717,7 +7717,7 @@ void ObjectMgr::LoadQuestRelationsHelper(QuestRelations& map, std::string table,
 
     
 
-    PooledQuestRelation* poolRelationMap = go ? &sPoolMgr.mQuestGORelation : &sPoolMgr.mQuestCreatureRelation;
+    PooledQuestRelation* poolRelationMap = go ? &sPoolMgr->mQuestGORelation : &sPoolMgr->mQuestCreatureRelation;
     if (starter)
         poolRelationMap->clear();
 
@@ -7869,7 +7869,7 @@ enum LanguageType
 
 static LanguageType GetRealmLanguageType(bool create)
 {
-    switch(sWorld.getIntConfig(CONFIG_REALM_ZONE))
+    switch(sWorld->getIntConfig(CONFIG_REALM_ZONE))
     {
         case REALM_ZONE_UNKNOWN:                            // any language
         case REALM_ZONE_DEVELOPMENT:
@@ -7940,11 +7940,11 @@ uint8 ObjectMgr::CheckPlayerName(const std::string& name, bool create)
     if (wname.size() > MAX_PLAYER_NAME)
         return CHAR_NAME_TOO_LONG;
 
-    uint32 minName = sWorld.getIntConfig(CONFIG_MIN_PLAYER_NAME);
+    uint32 minName = sWorld->getIntConfig(CONFIG_MIN_PLAYER_NAME);
     if (wname.size() < minName)
         return CHAR_NAME_TOO_SHORT;
 
-    uint32 strictMask = sWorld.getIntConfig(CONFIG_STRICT_PLAYER_NAMES);
+    uint32 strictMask = sWorld->getIntConfig(CONFIG_STRICT_PLAYER_NAMES);
     if (!isValidString(wname,strictMask,false,create))
         return CHAR_NAME_MIXED_LANGUAGES;
 
@@ -7960,11 +7960,11 @@ bool ObjectMgr::IsValidCharterName(const std::string& name)
     if (wname.size() > MAX_CHARTER_NAME)
         return false;
 
-    uint32 minName = sWorld.getIntConfig(CONFIG_MIN_CHARTER_NAME);
+    uint32 minName = sWorld->getIntConfig(CONFIG_MIN_CHARTER_NAME);
     if (wname.size() < minName)
         return false;
 
-    uint32 strictMask = sWorld.getIntConfig(CONFIG_STRICT_CHARTER_NAMES);
+    uint32 strictMask = sWorld->getIntConfig(CONFIG_STRICT_CHARTER_NAMES);
 
     return isValidString(wname,strictMask,true);
 }
@@ -7978,11 +7978,11 @@ PetNameInvalidReason ObjectMgr::CheckPetName(const std::string& name)
     if (wname.size() > MAX_PET_NAME)
         return PET_NAME_TOO_LONG;
 
-    uint32 minName = sWorld.getIntConfig(CONFIG_MIN_PET_NAME);
+    uint32 minName = sWorld->getIntConfig(CONFIG_MIN_PET_NAME);
     if (wname.size() < minName)
         return PET_NAME_TOO_SHORT;
 
-    uint32 strictMask = sWorld.getIntConfig(CONFIG_STRICT_PET_NAMES);
+    uint32 strictMask = sWorld->getIntConfig(CONFIG_STRICT_PET_NAMES);
     if (!isValidString(wname,strictMask,false))
         return PET_NAME_MIXED_LANGUAGES;
 
@@ -9098,7 +9098,7 @@ void ObjectMgr::LoadDbScriptStrings()
 // Functions for scripting access
 uint32 GetAreaTriggerScriptId(uint32 trigger_id)
 {
-    return sObjectMgr.GetAreaTriggerScriptId(trigger_id);
+    return sObjectMgr->GetAreaTriggerScriptId(trigger_id);
 }
 
 bool LoadTrinityStrings(char const* table, int32 start_value, int32 end_value)
@@ -9111,27 +9111,27 @@ bool LoadTrinityStrings(char const* table, int32 start_value, int32 end_value)
         return false;
     }
 
-    return sObjectMgr.LoadTrinityStrings(table, start_value, end_value);
+    return sObjectMgr->LoadTrinityStrings(table, start_value, end_value);
 }
 
 uint32  GetScriptId(const char *name)
 {
-    return sObjectMgr.GetScriptId(name);
+    return sObjectMgr->GetScriptId(name);
 }
 
 ObjectMgr::ScriptNameMap & GetScriptNames()
 {
-    return sObjectMgr.GetScriptNames();
+    return sObjectMgr->GetScriptNames();
 }
 
 GameObjectInfo const *GetGameObjectInfo(uint32 id)
 {
-    return sObjectMgr.GetGameObjectInfo(id);
+    return sObjectMgr->GetGameObjectInfo(id);
 }
 
 CreatureInfo const *GetCreatureInfo(uint32 id)
 {
-    return sObjectMgr.GetCreatureTemplate(id);
+    return sObjectMgr->GetCreatureTemplate(id);
 }
 
 CreatureInfo const* GetCreatureTemplateStore(uint32 entry)
@@ -9141,7 +9141,7 @@ CreatureInfo const* GetCreatureTemplateStore(uint32 entry)
 
 Quest const* GetQuestTemplateStore(uint32 entry)
 {
-    return sObjectMgr.GetQuestTemplate(entry);
+    return sObjectMgr->GetQuestTemplate(entry);
 }
 
 CreatureBaseStats const* ObjectMgr::GetCreatureBaseStats(uint8 level, uint8 unitClass)

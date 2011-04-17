@@ -44,7 +44,7 @@ class CreatureGroupManager
         void LoadCreatureFormations();
 };
 
-#define formation_mgr (*ACE_Singleton<CreatureGroupManager, ACE_Null_Mutex>::instance())
+#define formation_mgr ACE_Singleton<CreatureGroupManager, ACE_Null_Mutex>::instance()
 
 typedef UNORDERED_MAP<uint32/*memberDBGUID*/, FormationInfo*>   CreatureGroupInfoType;
 

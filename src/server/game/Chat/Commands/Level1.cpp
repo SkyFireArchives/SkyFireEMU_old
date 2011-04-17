@@ -284,7 +284,7 @@ bool ChatHandler::HandleNpcWhisperCommand(const char* args)
     uint64 receiver_guid= atol(receiver_str);
 
     // check online security
-    if (HasLowerSecurity(sObjectMgr.GetPlayer(receiver_guid), 0))
+    if (HasLowerSecurity(sObjectMgr->GetPlayer(receiver_guid), 0))
         return false;
 
     pCreature->MonsterWhisper(text,receiver_guid);
@@ -299,7 +299,7 @@ bool ChatHandler::HandleNameAnnounceCommand(const char* args)
     if (!*args)
         return false;
 
-    sWorld.SendWorldText(LANG_ANNOUNCE_COLOR, m_session->GetPlayer()->GetName(), args);
+    sWorld->SendWorldText(LANG_ANNOUNCE_COLOR, m_session->GetPlayer()->GetName(), args);
     return true;
 }
 
@@ -309,7 +309,7 @@ bool ChatHandler::HandleGMNameAnnounceCommand(const char* args)
     if (!*args)
         return false;
 
-    sWorld.SendGMText(LANG_GM_ANNOUNCE_COLOR, m_session->GetPlayer()->GetName(), args);
+    sWorld->SendGMText(LANG_GM_ANNOUNCE_COLOR, m_session->GetPlayer()->GetName(), args);
     return true;
 }
 
@@ -321,7 +321,7 @@ bool ChatHandler::HandleAnnounceCommand(const char* args)
 
     char buff[2048];
     sprintf(buff, GetTrinityString(LANG_SYSTEMMESSAGE), args);
-    sWorld.SendServerMessage(SERVER_MSG_STRING, buff);
+    sWorld->SendServerMessage(SERVER_MSG_STRING, buff);
     return true;
 }
 
@@ -331,7 +331,7 @@ bool ChatHandler::HandleGMAnnounceCommand(const char* args)
     if (!*args)
         return false;
 
-    sWorld.SendGMText(LANG_GM_BROADCAST,args);
+    sWorld->SendGMText(LANG_GM_BROADCAST,args);
     return true;
 }
 
@@ -346,7 +346,7 @@ bool ChatHandler::HandleNotifyCommand(const char* args)
 
     WorldPacket data(SMSG_NOTIFICATION, (str.size()+1));
     data << str;
-    sWorld.SendGlobalMessage(&data);
+    sWorld->SendGlobalMessage(&data);
 
     return true;
 }
@@ -362,7 +362,7 @@ bool ChatHandler::HandleGMNotifyCommand(const char* args)
 
     WorldPacket data(SMSG_NOTIFICATION, (str.size()+1));
     data << str;
-    sWorld.SendGlobalGMMessage(&data);
+    sWorld->SendGlobalGMMessage(&data);
 
     return true;
 }
@@ -764,7 +764,7 @@ bool ChatHandler::HandleAppearCommand(const char* args)
                 // if no bind exists, create a solo bind
                 InstanceGroupBind *gBind = group ? group->GetBoundInstance(target) : NULL;                // if no bind exists, create a solo bind
                 if (!gBind)
-                    if (InstanceSave *save = sInstanceSaveMgr.GetInstanceSave(target->GetInstanceId()))
+                    if (InstanceSave *save = sInstanceSaveMgr->GetInstanceSave(target->GetInstanceId()))
                         _player->BindToInstance(save, !save->CanReset());
             }
 
@@ -2019,7 +2019,7 @@ bool ChatHandler::HandleLookupAreaCommand(const char* args)
 
     bool found = false;
     uint32 count = 0;
-    uint32 maxResults = sWorld.getIntConfig(CONFIG_MAX_RESULTS_LOOKUP_COMMANDS);
+    uint32 maxResults = sWorld->getIntConfig(CONFIG_MAX_RESULTS_LOOKUP_COMMANDS);
 
     // converting string that we try to find to lower case
     wstrToLower (wnamepart);
@@ -2086,10 +2086,10 @@ bool ChatHandler::HandleLookupTeleCommand(const char * args)
 
     std::ostringstream reply;
     uint32 count = 0;
-    uint32 maxResults = sWorld.getIntConfig(CONFIG_MAX_RESULTS_LOOKUP_COMMANDS);
+    uint32 maxResults = sWorld->getIntConfig(CONFIG_MAX_RESULTS_LOOKUP_COMMANDS);
     bool limitReached = false;
 
-    GameTeleMap const & teleMap = sObjectMgr.GetGameTeleMap();
+    GameTeleMap const & teleMap = sObjectMgr->GetGameTeleMap();
     for (GameTeleMap::const_iterator itr = teleMap.begin(); itr != teleMap.end(); ++itr)
     {
         GameTele const* tele = &itr->second;
@@ -2154,7 +2154,7 @@ bool ChatHandler::HandleWhispersCommand(const char* args)
 //Save all players in the world
 bool ChatHandler::HandleSaveAllCommand(const char* /*args*/)
 {
-    sObjectAccessor.SaveAllPlayers();
+    sObjectAccessor->SaveAllPlayers();
     SendSysMessage(LANG_PLAYERS_SAVED);
     return true;
 }
@@ -2236,7 +2236,7 @@ bool ChatHandler::HandleTeleNameCommand(const char * args)
         return false;
     }
 
-    Player *chr = sObjectMgr.GetPlayer(name.c_str());*/
+    Player *chr = sObjectMgr->GetPlayer(name.c_str());*/
 
     if (target)
     {
@@ -2279,7 +2279,7 @@ bool ChatHandler::HandleTeleNameCommand(const char * args)
 
         PSendSysMessage(LANG_TELEPORTING_TO, nameLink.c_str(), GetTrinityString(LANG_OFFLINE), tele->name.c_str());
         Player::SavePositionInDB(tele->mapId,tele->position_x,tele->position_y,tele->position_z,tele->orientation,
-            sMapMgr.GetZoneId(tele->mapId,tele->position_x,tele->position_y,tele->position_z),target_guid);
+            sMapMgr->GetZoneId(tele->mapId,tele->position_x,tele->position_y,tele->position_z),target_guid);
     }
 
     return true;
@@ -2546,7 +2546,7 @@ bool ChatHandler::HandleGoXYCommand(const char* args)
     else
         _player->SaveRecallPosition();
 
-    Map const *map = sMapMgr.CreateBaseMap(mapid);
+    Map const *map = sMapMgr->CreateBaseMap(mapid);
     float z = std::max(map->GetHeight(x, y, MAX_HEIGHT), map->GetWaterLevel(x, y));
 
     _player->TeleportTo(mapid, x, y, z, _player->GetOrientation());
@@ -2639,7 +2639,7 @@ bool ChatHandler::HandleGoZoneXYCommand(const char* args)
     // update to parent zone if exist (client map show only zones without parents)
     AreaTableEntry const* zoneEntry = areaEntry->zone ? GetAreaEntryByAreaID(areaEntry->zone) : areaEntry;
 
-    Map const *map = sMapMgr.CreateBaseMap(zoneEntry->mapid);
+    Map const *map = sMapMgr->CreateBaseMap(zoneEntry->mapid);
 
     if (map->Instanceable())
     {
@@ -2714,7 +2714,7 @@ bool ChatHandler::HandleGoGridCommand(const char* args)
     else
         _player->SaveRecallPosition();
 
-    Map const *map = sMapMgr.CreateBaseMap(mapid);
+    Map const *map = sMapMgr->CreateBaseMap(mapid);
     float z = std::max(map->GetHeight(x, y, MAX_HEIGHT), map->GetWaterLevel(x, y));
     _player->TeleportTo(mapid, x, y, z, _player->GetOrientation());
 

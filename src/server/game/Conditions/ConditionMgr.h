@@ -195,6 +195,6 @@ class ConditionMgr
         std::list<Condition*> m_AllocatedMemory; // some garbage collection :)
 };
 
-#define sConditionMgr (*ACE_Singleton<ConditionMgr, ACE_Null_Mutex>::instance())
+#define sConditionMgr ACE_Singleton<ConditionMgr, ACE_Null_Mutex>::instance()
 
 #endif

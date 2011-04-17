@@ -1480,5 +1480,5 @@ class SpellMgr
         SpellDifficultySearcherMap mSpellDifficultySearcherMap;
 };
 
-#define sSpellMgr SpellMgr::Instance()
+#define sSpellMgr ACE_Singleton<SpellMgr, ACE_Null_Mutex>::instance()
 #endif

@@ -260,10 +260,10 @@ void ReputationMgr::Initialize()
 
 bool ReputationMgr::SetReputation(FactionEntry const* factionEntry, int32 standing, bool incremental)
 {
-    sScriptMgr.OnPlayerReputationChange(m_player, factionEntry->ID, standing, incremental);
+    sScriptMgr->OnPlayerReputationChange(m_player, factionEntry->ID, standing, incremental);
     bool res = false;
     // if spillover definition exists in DB, override DBC
-    if (const RepSpilloverTemplate *repTemplate = sObjectMgr.GetRepSpilloverTemplate(factionEntry->ID))
+    if (const RepSpilloverTemplate *repTemplate = sObjectMgr->GetRepSpilloverTemplate(factionEntry->ID))
     {
         for (uint32 i = 0; i < MAX_SPILLOVER_FACTIONS; ++i)
         {
@@ -338,7 +338,7 @@ bool ReputationMgr::SetOneFactionReputation(FactionEntry const* factionEntry, in
         if (incremental)
         {
             // int32 *= float cause one point loss?
-            standing = int32(floor((float)standing * sWorld.getRate(RATE_REPUTATION_GAIN) + 0.5));
+            standing = int32(floor((float)standing * sWorld->getRate(RATE_REPUTATION_GAIN) + 0.5));
             standing += itr->second.Standing + BaseRep;
         }
 

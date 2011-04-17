@@ -149,7 +149,7 @@ int RASocket::process_command(const std::string& command)
     }
 
     CliCommandHolder* cmd = new CliCommandHolder(this, command.c_str(), &RASocket::zprint, &RASocket::commandFinished);
-    sWorld.QueueCliCommand(cmd);
+    sWorld->QueueCliCommand(cmd);
 
     // wait for result
     ACE_Message_Block* mb;
@@ -217,7 +217,7 @@ int RASocket::check_password(const std::string& user, const std::string& pass)
     AccountMgr::normalizeString(safe_pass);
     LoginDatabase.escape_string(safe_pass);
 
-    std::string hash = sAccountMgr.CalculateShaPassHash(safe_user, safe_pass);
+    std::string hash = sAccountMgr->CalculateShaPassHash(safe_user, safe_pass);
 
     QueryResult check = LoginDatabase.PQuery(
             "SELECT 1 FROM account WHERE username = '%s' AND sha_pass_hash = '%s'",
@@ -273,7 +273,7 @@ int RASocket::svc(void)
     }
 
     // send motd
-    if (send(std::string(sWorld.GetMotd()) + "\r\n") == -1)
+    if (send(std::string(sWorld->GetMotd()) + "\r\n") == -1)
         return -1;
 
     for(;;)

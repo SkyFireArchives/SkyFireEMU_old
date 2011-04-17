@@ -67,7 +67,7 @@ public:
             {
                 if (targetCreature->isPet())
                 {
-                    CreatureInfo const * ci = sObjectMgr.GetCreatureTemplate(targetCreature->GetEntry());
+                    CreatureInfo const * ci = sObjectMgr->GetCreatureTemplate(targetCreature->GetEntry());
                     switch (ci->family)
                     {
                     case CREATURE_FAMILY_SUCCUBUS:
@@ -176,7 +176,7 @@ public:
                             break;
                     }
                 }
-                uint8 spellRank = sSpellMgr.GetSpellRank(GetSpellInfo()->Id);
+                uint8 spellRank = sSpellMgr->GetSpellRank(GetSpellInfo()->Id);
                 if (spellRank > 0 && spellRank <= 8)*/
                     CreateItem(effIndex, 5512);
             }

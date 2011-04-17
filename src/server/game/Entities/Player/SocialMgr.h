@@ -160,6 +160,6 @@ class SocialMgr
         SocialMap m_socialMap;
 };
 
-#define sSocialMgr (*ACE_Singleton<SocialMgr, ACE_Null_Mutex>::instance())
+#define sSocialMgr ACE_Singleton<SocialMgr, ACE_Null_Mutex>::instance()
 #endif
 

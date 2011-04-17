@@ -161,7 +161,7 @@ Map* MapInstanced::CreateInstance(const uint32 mapId, Player * player)
         {
             // if no instanceId via group members or instance saves is found
             // the instance will be created for the first time
-            NewInstanceId = sMapMgr.GenerateInstanceId();
+            NewInstanceId = sMapMgr->GenerateInstanceId();
 
             Difficulty diff = player->GetGroup() ? player->GetGroup()->GetDifficulty(IsRaid()) : player->GetDifficulty(IsRaid());
             map = CreateInstance(NewInstanceId, NULL, diff);
@@ -183,7 +183,7 @@ InstanceMap* MapInstanced::CreateInstance(uint32 InstanceId, InstanceSave *save,
         sLog.outError("CreateInstance: no entry for map %d", GetId());
         ASSERT(false);
     }
-    const InstanceTemplate * iTemplate = sObjectMgr.GetInstanceTemplate(GetId());
+    const InstanceTemplate * iTemplate = sObjectMgr->GetInstanceTemplate(GetId());
     if (!iTemplate)
     {
         sLog.outError("CreateInstance: no instance template for map %d", GetId());
@@ -242,7 +242,7 @@ bool MapInstanced::DestroyInstance(InstancedMaps::iterator &itr)
 
     itr->second->UnloadAll();
     // should only unload VMaps if this is the last instance and grid unloading is enabled
-    if (m_InstancedMaps.size() <= 1 && sWorld.getBoolConfig(CONFIG_GRID_UNLOAD))
+    if (m_InstancedMaps.size() <= 1 && sWorld->getBoolConfig(CONFIG_GRID_UNLOAD))
     {
         VMAP::VMapFactory::createOrGetVMapManager()->unloadMap(itr->second->GetId());
         // in that case, unload grids of the base map, too

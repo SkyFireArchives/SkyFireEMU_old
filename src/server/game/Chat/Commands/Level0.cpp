@@ -96,14 +96,14 @@ bool ChatHandler::HandleStartCommand(const char* /*args*/)
 
 bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
 {
-    uint32 PlayersNum = sWorld.GetPlayerCount();
-    uint32 MaxPlayersNum = sWorld.GetMaxPlayerCount();
-    uint32 activeClientsNum = sWorld.GetActiveSessionCount();
-    uint32 queuedClientsNum = sWorld.GetQueuedSessionCount();
-    uint32 maxActiveClientsNum = sWorld.GetMaxActiveSessionCount();
-    uint32 maxQueuedClientsNum = sWorld.GetMaxQueuedSessionCount();
-    std::string uptime = secsToTimeString(sWorld.GetUptime());
-    //uint32 updateTime = sWorld.GetUpdateTime();
+    uint32 PlayersNum = sWorld->GetPlayerCount();
+    uint32 MaxPlayersNum = sWorld->GetMaxPlayerCount();
+    uint32 activeClientsNum = sWorld->GetActiveSessionCount();
+    uint32 queuedClientsNum = sWorld->GetQueuedSessionCount();
+    uint32 maxActiveClientsNum = sWorld->GetMaxActiveSessionCount();
+    uint32 maxQueuedClientsNum = sWorld->GetMaxQueuedSessionCount();
+    std::string uptime = secsToTimeString(sWorld->GetUptime());
+    //uint32 updateTime = sWorld->GetUpdateTime();
 
     PSendSysMessage(_FULLVERSION);
     PSendSysMessage(LANG_CONNECTED_PLAYERS, PlayersNum, MaxPlayersNum);
@@ -149,7 +149,7 @@ bool ChatHandler::HandleSaveCommand(const char* /*args*/)
     }
 
     // save if the player has last been saved over 20 seconds ago
-    uint32 save_interval = sWorld.getIntConfig(CONFIG_INTERVAL_SAVE);
+    uint32 save_interval = sWorld->getIntConfig(CONFIG_INTERVAL_SAVE);
     if (save_interval == 0 || (save_interval > 20*IN_MILLISECONDS && player->GetSaveTimer() <= save_interval - 20*IN_MILLISECONDS))
         player->SaveToDB();
 
@@ -161,11 +161,11 @@ bool ChatHandler::HandleGMListIngameCommand(const char* /*args*/)
     bool first = true;
 
     ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, *HashMapHolder<Player>::GetLock(), true);
-    HashMapHolder<Player>::MapType &m = sObjectAccessor.GetPlayers();
+    HashMapHolder<Player>::MapType &m = sObjectAccessor->GetPlayers();
     for (HashMapHolder<Player>::MapType::const_iterator itr = m.begin(); itr != m.end(); ++itr)
     {
         AccountTypes itr_sec = itr->second->GetSession()->GetSecurity();
-        if ((itr->second->isGameMaster() || (itr_sec > SEC_PLAYER && itr_sec <= AccountTypes(sWorld.getIntConfig(CONFIG_GM_LEVEL_IN_GM_LIST)))) &&
+        if ((itr->second->isGameMaster() || (itr_sec > SEC_PLAYER && itr_sec <= AccountTypes(sWorld->getIntConfig(CONFIG_GM_LEVEL_IN_GM_LIST)))) &&
             (!m_session || itr->second->IsVisibleGloballyFor(m_session->GetPlayer())))
         {
             if (first)
@@ -208,7 +208,7 @@ bool ChatHandler::HandleAccountPasswordCommand(const char* args)
     std::string password_new = new_pass;
     std::string password_new_c = new_pass_c;
 
-    if (!sAccountMgr.CheckPassword(m_session->GetAccountId(), password_old))
+    if (!sAccountMgr->CheckPassword(m_session->GetAccountId(), password_old))
     {
         SendSysMessage(LANG_COMMAND_WRONGOLDPASSWORD);
         SetSentErrorMessage(true);
@@ -222,7 +222,7 @@ bool ChatHandler::HandleAccountPasswordCommand(const char* args)
         return false;
     }
 
-    AccountOpResult result = sAccountMgr.ChangePassword(m_session->GetAccountId(), password_new);
+    AccountOpResult result = sAccountMgr->ChangePassword(m_session->GetAccountId(), password_new);
     switch(result)
     {
         case AOR_OK:
@@ -255,7 +255,7 @@ bool ChatHandler::HandleAccountAddonCommand(const char* args)
     uint32 account_id = m_session->GetAccountId();
 
     int expansion = atoi(szExp);                                    //get int anyway (0 if error)
-    if (expansion < 0 || uint8(expansion) > sWorld.getIntConfig(CONFIG_EXPANSION))
+    if (expansion < 0 || uint8(expansion) > sWorld->getIntConfig(CONFIG_EXPANSION))
     {
         SendSysMessage(LANG_IMPROPER_VALUE);
         SetSentErrorMessage(true);
@@ -300,7 +300,7 @@ bool ChatHandler::HandleAccountLockCommand(const char* args)
 /// Display the 'Message of the day' for the realm
 bool ChatHandler::HandleServerMotdCommand(const char* /*args*/)
 {
-    PSendSysMessage(LANG_MOTD_CURRENT, sWorld.GetMotd());
+    PSendSysMessage(LANG_MOTD_CURRENT, sWorld->GetMotd());
     return true;
 }
 

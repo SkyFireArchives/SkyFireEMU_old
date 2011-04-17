@@ -76,7 +76,7 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
         return;
     }
 
-    const StringTextData* pData = sScriptSystemMgr.GetTextData(iTextEntry);
+    const StringTextData* pData = sScriptSystemMgr->GetTextData(iTextEntry);
 
     if (!pData)
     {
@@ -198,10 +198,10 @@ void ScriptMgr::Initialize()
 
 void ScriptMgr::LoadDatabase()
 {
-    sScriptSystemMgr.LoadVersion();
-    sScriptSystemMgr.LoadScriptTexts();
-    sScriptSystemMgr.LoadScriptTextsCustom();
-    sScriptSystemMgr.LoadScriptWaypoints();
+    sScriptSystemMgr->LoadVersion();
+    sScriptSystemMgr->LoadScriptTexts();
+    sScriptSystemMgr->LoadScriptTextsCustom();
+    sScriptSystemMgr->LoadScriptWaypoints();
 }
 
 struct TSpellSummary
@@ -297,7 +297,7 @@ void ScriptMgr::FillSpellSummary()
 
 void ScriptMgr::CreateSpellScripts(uint32 spell_id, std::list<SpellScript *> & script_vector)
 {
-    SpellScriptsBounds bounds = sObjectMgr.GetSpellScriptsBounds(spell_id);
+    SpellScriptsBounds bounds = sObjectMgr->GetSpellScriptsBounds(spell_id);
 
     for (SpellScriptsMap::iterator itr = bounds.first; itr != bounds.second; ++itr)
     {
@@ -318,7 +318,7 @@ void ScriptMgr::CreateSpellScripts(uint32 spell_id, std::list<SpellScript *> & s
 
 void ScriptMgr::CreateAuraScripts(uint32 spell_id, std::list<AuraScript *> & script_vector)
 {
-    SpellScriptsBounds bounds = sObjectMgr.GetSpellScriptsBounds(spell_id);
+    SpellScriptsBounds bounds = sObjectMgr->GetSpellScriptsBounds(spell_id);
 
     for (SpellScriptsMap::iterator itr = bounds.first; itr != bounds.second; ++itr)
     {
@@ -339,7 +339,7 @@ void ScriptMgr::CreateAuraScripts(uint32 spell_id, std::list<AuraScript *> & scr
 
 void ScriptMgr::CreateSpellScriptLoaders(uint32 spell_id, std::vector<std::pair<SpellScriptLoader *, SpellScriptsMap::iterator> > & script_vector)
 {
-    SpellScriptsBounds bounds = sObjectMgr.GetSpellScriptsBounds(spell_id);
+    SpellScriptsBounds bounds = sObjectMgr->GetSpellScriptsBounds(spell_id);
     script_vector.reserve(std::distance(bounds.first, bounds.second));
 
     for (SpellScriptsMap::iterator itr = bounds.first; itr != bounds.second; ++itr)

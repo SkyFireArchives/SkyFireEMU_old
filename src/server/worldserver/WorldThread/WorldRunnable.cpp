@@ -50,7 +50,7 @@ void WorldRunnable::run()
 
     uint32 prevSleepTime = 0;                               // used for balanced full tick time length near WORLD_SLEEP_CONST
 
-    sScriptMgr.OnStartup();
+    sScriptMgr->OnStartup();
 
     ///- While we have not World::m_stopEvent, update the world
     while (!World::IsStopped())
@@ -60,7 +60,7 @@ void WorldRunnable::run()
 
         uint32 diff = getMSTimeDiff(realPrevTime,realCurrTime);
 
-        sWorld.Update( diff );
+        sWorld->Update( diff );
         realPrevTime = realCurrTime;
 
         // diff (D0) include time of previous sleep (d0) + tick time (t0)
@@ -84,17 +84,17 @@ void WorldRunnable::run()
         #endif
     }
 
-    sScriptMgr.OnShutdown();
+    sScriptMgr->OnShutdown();
 
-    sWorld.KickAll();                                       // save and kick all players
-    sWorld.UpdateSessions( 1 );                             // real players unload required UpdateSessions call
+    sWorld->KickAll();                                       // save and kick all players
+    sWorld->UpdateSessions( 1 );                             // real players unload required UpdateSessions call
 
     // unload battleground templates before different singletons destroyed
-    sBattlegroundMgr.DeleteAllBattlegrounds();
+    sBattlegroundMgr->DeleteAllBattlegrounds();
 
     sWorldSocketMgr->StopNetwork();
 
-    sMapMgr.UnloadAll();                     // unload all grids (including locked in memory)
-    //sObjectAccessor.UnloadAll();             // unload 'i_player2corpse' storage and remove from world
-    //sScriptMgr.Unload();
+    sMapMgr->UnloadAll();                     // unload all grids (including locked in memory)
+    //sObjectAccessor->UnloadAll();             // unload 'i_player2corpse' storage and remove from world
+    //sScriptMgr->Unload();
 }

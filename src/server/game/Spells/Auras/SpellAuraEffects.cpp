@@ -693,7 +693,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                 amount+=caster->ApplyEffectModifiers(m_spellProto, m_effIndex, int32(((mwb_min + mwb_max) / 2 + ap * mws / 14000) * 0.2f));
                 // "If used while your target is above 75% health, Rend does 35% more damage."
                 // as for 3.1.3 only ranks above 9 (wrong tooltip?)
-                if (sSpellMgr.GetSpellRank(m_spellProto->Id) >= 9)
+                if (sSpellMgr->GetSpellRank(m_spellProto->Id) >= 9)
                     if (GetBase()->GetUnitOwner()->HasAuraState(AURA_STATE_HEALTH_ABOVE_75_PERCENT, m_spellProto, caster))
                         amount += int32(amount * SpellMgr::CalculateSpellEffectAmount(m_spellProto, 2, caster) / 100.0f);
             }
@@ -1127,7 +1127,7 @@ void AuraEffect::ApplySpellMod(Unit *target, bool apply)
                 Aura *aura = iter->second->GetBase();
                 // only passive auras-active auras should have amount set on spellcast and not be affected
                 // if aura is casted by others, it will not be affected
-                if ((aura->IsPassive() || aura->GetSpellProto()->AttributesEx2 & SPELL_ATTR_EX2_ALWAYS_APPLY_MODIFIERS) && aura->GetCasterGUID() == guid && sSpellMgr.IsAffectedByMod(aura->GetSpellProto(), m_spellmod))
+                if ((aura->IsPassive() || aura->GetSpellProto()->AttributesEx2 & SPELL_ATTR_EX2_ALWAYS_APPLY_MODIFIERS) && aura->GetCasterGUID() == guid && sSpellMgr->IsAffectedByMod(aura->GetSpellProto(), m_spellmod))
                 {
                     if (GetMiscValue() == SPELLMOD_ALL_EFFECTS)
                     {
@@ -2552,7 +2552,7 @@ void AuraEffect::TriggerSpell(Unit *target, Unit *caster) const
     else
     {
         Creature* c = triggerTarget->ToCreature();
-        if (!c || (c && !sScriptMgr.OnDummyEffect(caster, GetId(), SpellEffIndex(GetEffIndex()), triggerTarget->ToCreature())) ||
+        if (!c || (c && !sScriptMgr->OnDummyEffect(caster, GetId(), SpellEffIndex(GetEffIndex()), triggerTarget->ToCreature())) ||
             (c && !c->AI()->sOnDummyEffect(caster, GetId(), SpellEffIndex(GetEffIndex()))))
             sLog.outError("AuraEffect::TriggerSpell: Spell %u has value 0 in EffectTriggered[%d] and is therefor not handled. Define as custom case?",GetId(),GetEffIndex());
     }
@@ -3390,7 +3390,7 @@ void AuraEffect::HandleAuraTransform(AuraApplication const *aurApp, uint8 mode, 
         }
         else
         {
-            CreatureInfo const * ci = sObjectMgr.GetCreatureTemplate(GetMiscValue());
+            CreatureInfo const * ci = sObjectMgr->GetCreatureTemplate(GetMiscValue());
             if (!ci)
             {
                 target->SetDisplayId(16358);              // pig pink ^_^
@@ -3464,14 +3464,14 @@ void AuraEffect::HandleAuraTransform(AuraApplication const *aurApp, uint8 mode, 
             if (!target->GetAuraEffectsByType(SPELL_AURA_MOUNTED).empty())
             {
                 uint32 cr_id = target->GetAuraEffectsByType(SPELL_AURA_MOUNTED).front()->GetMiscValue();
-                if (CreatureInfo const* ci = sObjectMgr.GetCreatureTemplate(cr_id))
+                if (CreatureInfo const* ci = sObjectMgr->GetCreatureTemplate(cr_id))
                 {
                     uint32 team = 0;
                     if (target->GetTypeId() == TYPEID_PLAYER)
                         team = target->ToPlayer()->GetTeam();
 
-                    uint32 display_id = sObjectMgr.ChooseDisplayId(team,ci);
-                    CreatureModelInfo const *minfo = sObjectMgr.GetCreatureModelRandomGender(display_id);
+                    uint32 display_id = sObjectMgr->ChooseDisplayId(team,ci);
+                    CreatureModelInfo const *minfo = sObjectMgr->GetCreatureModelRandomGender(display_id);
                     if (minfo)
                         display_id = minfo->modelid;
 
@@ -3904,7 +3904,7 @@ void AuraEffect::HandleAuraMounted(AuraApplication const *aurApp, uint8 mode, bo
                 creatureEntry = 15665;
         }
 
-        CreatureInfo const* ci = sObjectMgr.GetCreatureTemplate(creatureEntry);
+        CreatureInfo const* ci = sObjectMgr->GetCreatureTemplate(creatureEntry);
         if (!ci)
         {
             sLog.outErrorDb("AuraMounted: `creature_template`='%u' not found in database (only need it modelid)",GetMiscValue());
@@ -3915,8 +3915,8 @@ void AuraEffect::HandleAuraMounted(AuraApplication const *aurApp, uint8 mode, bo
         if (target->GetTypeId() == TYPEID_PLAYER)
             team = target->ToPlayer()->GetTeam();
 
-        uint32 display_id = sObjectMgr.ChooseDisplayId(team,ci);
-        CreatureModelInfo const *minfo = sObjectMgr.GetCreatureModelRandomGender(display_id);
+        uint32 display_id = sObjectMgr->ChooseDisplayId(team,ci);
+        CreatureModelInfo const *minfo = sObjectMgr->GetCreatureModelRandomGender(display_id);
         if (minfo)
             display_id = minfo->modelid;
 
@@ -4572,7 +4572,7 @@ void AuraEffect::HandleAuraModEffectImmunity(AuraApplication const *aurApp, uint
                     bg->EventPlayerDroppedFlag(target->ToPlayer());
             }
             else
-                sOutdoorPvPMgr.HandleDropFlag((Player*)target,GetSpellProto()->Id);
+                sOutdoorPvPMgr->HandleDropFlag((Player*)target,GetSpellProto()->Id);
         }
     }
     // stop handling the effect if it was removed by linked event
@@ -6267,14 +6267,14 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                         else
                             creatureEntry = target->GetAuraEffectsByType(SPELL_AURA_MOUNTED).front()->GetMiscValue();
 
-                        if (CreatureInfo const* creatureInfo = sObjectMgr.GetCreatureTemplate(creatureEntry))
+                        if (CreatureInfo const* creatureInfo = sObjectMgr->GetCreatureTemplate(creatureEntry))
                         {
                             uint32 team = 0;
                             if (target->GetTypeId() == TYPEID_PLAYER)
                                 team = target->ToPlayer()->GetTeam();
 
-                            uint32 display_id = sObjectMgr.ChooseDisplayId(team, creatureInfo);
-                            CreatureModelInfo const *minfo = sObjectMgr.GetCreatureModelRandomGender(display_id);
+                            uint32 display_id = sObjectMgr->ChooseDisplayId(team, creatureInfo);
+                            CreatureModelInfo const *minfo = sObjectMgr->GetCreatureModelRandomGender(display_id);
                             if (minfo)
                                 display_id = minfo->modelid;
 
@@ -6391,7 +6391,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
     if (mode & AURA_EFFECT_HANDLE_REAL)
     {
         // pet auras
-        if (PetAura const *petSpell = sSpellMgr.GetPetAura(GetId(), m_effIndex))
+        if (PetAura const *petSpell = sSpellMgr->GetPetAura(GetId(), m_effIndex))
         {
             if (apply)
                 target->AddPetAura(petSpell);
@@ -6523,7 +6523,7 @@ void AuraEffect::HandleAuraEmpathy(AuraApplication const *aurApp, uint8 mode, bo
             return;
     }
 
-    CreatureInfo const * ci = sObjectMgr.GetCreatureTemplate(target->GetEntry());
+    CreatureInfo const * ci = sObjectMgr->GetCreatureTemplate(target->GetEntry());
     if (ci && ci->type == CREATURE_TYPE_BEAST)
         target->ApplyModUInt32Value(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_SPECIALINFO, apply);
 }

@@ -855,7 +855,7 @@ bool ChatHandler::HasLowerSecurity(Player* target, uint64 guid, bool strong)
     if (target)
         target_session = target->GetSession();
     else if (guid)
-        target_account = sObjectMgr.GetPlayerAccountIdByGUID(guid);
+        target_account = sObjectMgr->GetPlayerAccountIdByGUID(guid);
 
     if (!target_session && !target_account)
     {
@@ -876,13 +876,13 @@ bool ChatHandler::HasLowerSecurityAccount(WorldSession* target, uint32 target_ac
         return false;
 
     // ignore only for non-players for non strong checks (when allow apply command at least to same sec level)
-    if (m_session->GetSecurity() > SEC_PLAYER && !strong && !sWorld.getBoolConfig(CONFIG_GM_LOWER_SECURITY))
+    if (m_session->GetSecurity() > SEC_PLAYER && !strong && !sWorld->getBoolConfig(CONFIG_GM_LOWER_SECURITY))
         return false;
 
     if (target)
         target_sec = target->GetSecurity();
     else if (target_account)
-        target_sec = sAccountMgr.GetSecurity(target_account);
+        target_sec = sAccountMgr->GetSecurity(target_account);
     else
         return true;                                        // caller must report error for (target == NULL && target_account == 0)
 
@@ -951,7 +951,7 @@ void ChatHandler::SendGlobalSysMessage(const char *str)
     while (char* line = LineFromMessage(pos))
     {
         FillSystemMessageData(&data, line);
-        sWorld.SendGlobalMessage(&data);
+        sWorld->SendGlobalMessage(&data);
     }
 
     free(buf);
@@ -969,7 +969,7 @@ void ChatHandler::SendGlobalGMSysMessage(const char *str)
     while (char* line = LineFromMessage(pos))
     {
         FillSystemMessageData(&data, line);
-        sWorld.SendGlobalGMMessage(&data);
+        sWorld->SendGlobalGMMessage(&data);
      }
     free(buf);
 }
@@ -1141,7 +1141,7 @@ int ChatHandler::ParseCommands(const char* text)
 
     std::string fullcmd = text;
 
-    if (m_session && m_session->GetSecurity() <= SEC_PLAYER && sWorld.getBoolConfig(CONFIG_ALLOW_PLAYER_COMMANDS) == 0)
+    if (m_session && m_session->GetSecurity() <= SEC_PLAYER && sWorld->getBoolConfig(CONFIG_ALLOW_PLAYER_COMMANDS) == 0)
        return 0;
 
     /// chat case (.command or !command format)
@@ -1166,7 +1166,7 @@ int ChatHandler::ParseCommands(const char* text)
 
     if (!ExecuteCommandInTable(getCommandTable(), text, fullcmd))
     {
-        std::vector<ChatCommand*> const& tables = sScriptMgr.GetChatCommands();
+        std::vector<ChatCommand*> const& tables = sScriptMgr->GetChatCommands();
         if (!ExecuteCommandInTables(tables, text, fullcmd))
         {
             if (m_session && m_session->GetSecurity() == SEC_PLAYER)
@@ -1202,7 +1202,7 @@ valid examples:
     const char* validSequenceIterator = validSequence;
 
     // more simple checks
-    if (sWorld.getIntConfig(CONFIG_CHAT_STRICT_LINK_CHECKING_SEVERITY) < 3)
+    if (sWorld->getIntConfig(CONFIG_CHAT_STRICT_LINK_CHECKING_SEVERITY) < 3)
     {
         const std::string validCommands = "cHhr|";
 
@@ -1221,7 +1221,7 @@ valid examples:
 
             ++message;
             // validate sequence
-            if (sWorld.getIntConfig(CONFIG_CHAT_STRICT_LINK_CHECKING_SEVERITY) == 2)
+            if (sWorld->getIntConfig(CONFIG_CHAT_STRICT_LINK_CHECKING_SEVERITY) == 2)
             {
                 if (commandChar == *validSequenceIterator)
                 {
@@ -1357,7 +1357,7 @@ valid examples:
                     // read item entry
                     reader.getline(buffer, 256, ':');
 
-                    linkedItem= sObjectMgr.GetItemPrototype(atoi(buffer));
+                    linkedItem= sObjectMgr->GetItemPrototype(atoi(buffer));
                     if (!linkedItem)
                     {
 #ifdef TRINITY_DEBUG
@@ -1436,7 +1436,7 @@ valid examples:
                         c = reader.peek();
                     }
 
-                    linkedQuest = sObjectMgr.GetQuestTemplate(questid);
+                    linkedQuest = sObjectMgr->GetQuestTemplate(questid);
 
                     if (!linkedQuest)
                     {
@@ -1607,7 +1607,7 @@ valid examples:
                         if (linkedSpell->Attributes & SPELL_ATTR_TRADESPELL)
                         {
                             // lookup skillid
-                            SkillLineAbilityMapBounds bounds = sSpellMgr.GetSkillLineAbilityMapBounds(linkedSpell->Id);
+                            SkillLineAbilityMapBounds bounds = sSpellMgr->GetSkillLineAbilityMapBounds(linkedSpell->Id);
                             if (bounds.first == bounds.second)
                             {
                                 return false;
@@ -1648,7 +1648,7 @@ valid examples:
                     {
                         if (linkedQuest->GetTitle() != buffer)
                         {
-                            QuestLocale const *ql = sObjectMgr.GetQuestLocale(linkedQuest->GetQuestId());
+                            QuestLocale const *ql = sObjectMgr->GetQuestLocale(linkedQuest->GetQuestId());
 
                             if (!ql)
                             {
@@ -1689,7 +1689,7 @@ valid examples:
 
                         if (expectedName != buffer)
                         {
-                            ItemLocale const *il = sObjectMgr.GetItemLocale(linkedItem->ItemId);
+                            ItemLocale const *il = sObjectMgr->GetItemLocale(linkedItem->ItemId);
 
                             bool foundName = false;
                             for (uint8 dbIndex = LOCALE_koKR; dbIndex < TOTAL_LOCALES; ++dbIndex)
@@ -1942,7 +1942,7 @@ Player * ChatHandler::getSelectedPlayer()
     if (guid == 0)
         return m_session->GetPlayer();
 
-    return sObjectMgr.GetPlayer(guid);
+    return sObjectMgr->GetPlayer(guid);
 }
 
 Unit* ChatHandler::getSelectedUnit()
@@ -2145,7 +2145,7 @@ GameObject* ChatHandler::GetObjectGlobalyWithGuidOrNearWithDbGuid(uint32 lowguid
 
     GameObject* obj = pl->GetMap()->GetGameObject(MAKE_NEW_GUID(lowguid, entry, HIGHGUID_GAMEOBJECT));
 
-    if (!obj && sObjectMgr.GetGOData(lowguid))                   // guid is DB guid of object
+    if (!obj && sObjectMgr->GetGOData(lowguid))                   // guid is DB guid of object
     {
         // search near player then
         CellPair p(Trinity::ComputeCellPair(pl->GetPositionX(), pl->GetPositionY()));
@@ -2245,9 +2245,9 @@ GameTele const* ChatHandler::extractGameTeleFromLink(char* text)
     // id case (explicit or from shift link)
     if (cId[0] >= '0' || cId[0] >= '9')
         if (uint32 id = atoi(cId))
-            return sObjectMgr.GetGameTele(id);
+            return sObjectMgr->GetGameTele(id);
 
-    return sObjectMgr.GetGameTele(cId);
+    return sObjectMgr->GetGameTele(cId);
 }
 
 enum GuidLinkType
@@ -2284,10 +2284,10 @@ uint64 ChatHandler::extractGuidFromLink(char* text)
             if (!normalizePlayerName(name))
                 return 0;
 
-            if (Player* player = sObjectMgr.GetPlayer(name.c_str()))
+            if (Player* player = sObjectMgr->GetPlayer(name.c_str()))
                 return player->GetGUID();
 
-            if (uint64 guid = sObjectMgr.GetPlayerGUIDByName(name))
+            if (uint64 guid = sObjectMgr->GetPlayerGUIDByName(name))
                 return guid;
 
             return 0;
@@ -2296,7 +2296,7 @@ uint64 ChatHandler::extractGuidFromLink(char* text)
         {
             uint32 lowguid = (uint32)atol(idS);
 
-            if (CreatureData const* data = sObjectMgr.GetCreatureData(lowguid))
+            if (CreatureData const* data = sObjectMgr->GetCreatureData(lowguid))
                 return MAKE_NEW_GUID(lowguid,data->id,HIGHGUID_UNIT);
             else
                 return 0;
@@ -2305,7 +2305,7 @@ uint64 ChatHandler::extractGuidFromLink(char* text)
         {
             uint32 lowguid = (uint32)atol(idS);
 
-            if (GameObjectData const* data = sObjectMgr.GetGOData(lowguid))
+            if (GameObjectData const* data = sObjectMgr->GetGOData(lowguid))
                 return MAKE_NEW_GUID(lowguid,data->id,HIGHGUID_GAMEOBJECT);
             else
                 return 0;
@@ -2342,14 +2342,14 @@ bool ChatHandler::extractPlayerTarget(char* args, Player** player, uint64* playe
             return false;
         }
 
-        Player* pl = sObjectMgr.GetPlayer(name.c_str());
+        Player* pl = sObjectMgr->GetPlayer(name.c_str());
 
         // if allowed player pointer
         if (player)
             *player = pl;
 
         // if need guid value from DB (in name case for check player existence)
-        uint64 guid = !pl && (player_guid || player_name) ? sObjectMgr.GetPlayerGUIDByName(name) : 0;
+        uint64 guid = !pl && (player_guid || player_name) ? sObjectMgr->GetPlayerGUIDByName(name) : 0;
 
         // if allowed player guid (if no then only online players allowed)
         if (player_guid)
@@ -2435,7 +2435,7 @@ int ChatHandler::GetSessionDbLocaleIndex() const
 
 const char *CliHandler::GetTrinityString(int32 entry) const
 {
-    return sObjectMgr.GetTrinityStringForDBCLocale(entry);
+    return sObjectMgr->GetTrinityStringForDBCLocale(entry);
 }
 
 bool CliHandler::isAvailable(ChatCommand const& cmd) const
@@ -2477,9 +2477,9 @@ bool ChatHandler::GetPlayerGroupAndGUIDByName(const char* cname, Player* &plr, G
                 return false;
             }
 
-            plr = sObjectMgr.GetPlayer(name.c_str());
+            plr = sObjectMgr->GetPlayer(name.c_str());
             if (offline)
-                guid = sObjectMgr.GetPlayerGUIDByName(name.c_str());
+                guid = sObjectMgr->GetPlayerGUIDByName(name.c_str());
         }
     }
 
@@ -2506,10 +2506,10 @@ bool ChatHandler::GetPlayerGroupAndGUIDByName(const char* cname, Player* &plr, G
 
 LocaleConstant CliHandler::GetSessionDbcLocale() const
 {
-    return sWorld.GetDefaultDbcLocale();
+    return sWorld->GetDefaultDbcLocale();
 }
 
 int CliHandler::GetSessionDbLocaleIndex() const
 {
-    return sObjectMgr.GetDBCLocaleIndex();
+    return sObjectMgr->GetDBCLocaleIndex();
 }

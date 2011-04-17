@@ -609,7 +609,7 @@ class ObjectMgr
 
         typedef std::vector<GuildRewardsEntry*> GuildRewardsVector;
 
-        Player* GetPlayer(const char* name) const { return sObjectAccessor.FindPlayerByName(name);}
+        Player* GetPlayer(const char* name) const { return sObjectAccessor->FindPlayerByName(name);}
         Player* GetPlayer(uint64 guid) const { return ObjectAccessor::FindPlayer(guid); }
         Player* GetPlayerByLowGUID(uint32 lowguid) const;
 
@@ -1367,7 +1367,7 @@ class ObjectMgr
 
 };
 
-#define sObjectMgr (*ACE_Singleton<ObjectMgr, ACE_Null_Mutex>::instance())
+#define sObjectMgr ACE_Singleton<ObjectMgr, ACE_Null_Mutex>::instance()
 
 // scripting access functions
  bool LoadTrinityStrings(char const* table,int32 start_value = MAX_CREATURE_AI_TEXT_STRING_ID, int32 end_value = std::numeric_limits<int32>::min());

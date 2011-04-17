@@ -67,6 +67,6 @@ class WeatherMgr
         WeatherZoneMap mWeatherZoneMap;
 };
 
-#define sWeatherMgr (*ACE_Singleton<WeatherMgr, ACE_Null_Mutex>::instance())
+#define sWeatherMgr ACE_Singleton<WeatherMgr, ACE_Null_Mutex>::instance()
 
 #endif

@@ -127,11 +127,11 @@ void MailDraft::deleteIncludedItems(SQLTransaction& trans, bool inDB /*= false*/
 
 void MailDraft::SendReturnToSender(uint32 sender_acc, uint32 sender_guid, uint32 receiver_guid)
 {
-    Player *receiver = sObjectMgr.GetPlayer(MAKE_NEW_GUID(receiver_guid, 0, HIGHGUID_PLAYER));
+    Player *receiver = sObjectMgr->GetPlayer(MAKE_NEW_GUID(receiver_guid, 0, HIGHGUID_PLAYER));
 
     uint32 rc_account = 0;
     if (!receiver)
-        rc_account = sObjectMgr.GetPlayerAccountIdByGUID(MAKE_NEW_GUID(receiver_guid, 0, HIGHGUID_PLAYER));
+        rc_account = sObjectMgr->GetPlayerAccountIdByGUID(MAKE_NEW_GUID(receiver_guid, 0, HIGHGUID_PLAYER));
 
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
 
@@ -163,7 +163,7 @@ void MailDraft::SendReturnToSender(uint32 sender_acc, uint32 sender_guid, uint32
     }
 
     // If theres is an item, there is a one hour delivery delay.
-    uint32 deliver_delay = needItemDelay ? sWorld.getIntConfig(CONFIG_MAIL_DELIVERY_DELAY) : 0;
+    uint32 deliver_delay = needItemDelay ? sWorld->getIntConfig(CONFIG_MAIL_DELIVERY_DELAY) : 0;
 
     // will delete item or place to receiver mail list
     SendMailTo(trans,MailReceiver(receiver,receiver_guid), MailSender(MAIL_NORMAL, sender_guid), MAIL_CHECK_MASK_RETURNED, deliver_delay);
@@ -177,7 +177,7 @@ void MailDraft::SendMailTo(SQLTransaction& trans, MailReceiver const& receiver, 
     if (pReceiver)
         prepareItems(pReceiver, trans);                            // generate mail template items
 
-    uint32 mailId = sObjectMgr.GenerateMailID();
+    uint32 mailId = sObjectMgr->GenerateMailID();
 
     time_t deliver_time = time(NULL) + deliver_delay;
 
@@ -186,7 +186,7 @@ void MailDraft::SendMailTo(SQLTransaction& trans, MailReceiver const& receiver, 
 
     // auction mail without any items and money
     if (sender.GetMailMessageType() == MAIL_AUCTION && m_items.empty() && !m_money)
-        expire_delay = sWorld.getIntConfig(CONFIG_MAIL_DELIVERY_DELAY);
+        expire_delay = sWorld->getIntConfig(CONFIG_MAIL_DELIVERY_DELAY);
     // mail from battlemaster (rewardmarks) should last only one day
     else if (sender.GetMailMessageType() == MAIL_CREATURE)
     {

@@ -43,8 +43,8 @@ extern GridState* si_GridStates[];                          // debugging code, s
 
 MapManager::MapManager()
 {
-    i_gridCleanUpDelay = sWorld.getIntConfig(CONFIG_INTERVAL_GRIDCLEAN);
-    i_timer.SetInterval(sWorld.getIntConfig(CONFIG_INTERVAL_MAPUPDATE));
+    i_gridCleanUpDelay = sWorld->getIntConfig(CONFIG_INTERVAL_GRIDCLEAN);
+    i_timer.SetInterval(sWorld->getIntConfig(CONFIG_INTERVAL_MAPUPDATE));
 }
 
 MapManager::~MapManager()
@@ -72,7 +72,7 @@ void MapManager::Initialize()
 
         i_GridStateErrorCount = 0;
     }
-    int num_threads(sWorld.getIntConfig(CONFIG_NUMTHREADS));
+    int num_threads(sWorld->getIntConfig(CONFIG_NUMTHREADS));
     // Start mtmaps if needed.
     if (num_threads > 0 && m_updater.activate(num_threads) == -1)
         abort();
@@ -167,7 +167,7 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
     if (!entry->IsDungeon())
         return true;
 
-    InstanceTemplate const* instance = sObjectMgr.GetInstanceTemplate(mapid);
+    InstanceTemplate const* instance = sObjectMgr->GetInstanceTemplate(mapid);
     if (!instance)
         return false;
 
@@ -196,7 +196,7 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
     if (entry->IsRaid())
     {
         // can only enter in a raid group
-        if ((!pGroup || !pGroup->isRaidGroup()) && !sWorld.getBoolConfig(CONFIG_INSTANCE_IGNORE_RAID))
+        if ((!pGroup || !pGroup->isRaidGroup()) && !sWorld->getBoolConfig(CONFIG_INSTANCE_IGNORE_RAID))
         {
             // probably there must be special opcode, because client has this string constant in GlobalStrings.lua
             // TODO: this is not a good place to send the message
@@ -217,7 +217,7 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
                 if (instance_map == mapid)
                     break;
 
-                InstanceTemplate const* instance = sObjectMgr.GetInstanceTemplate(instance_map);
+                InstanceTemplate const* instance = sObjectMgr->GetInstanceTemplate(instance_map);
                 instance_map = instance ? instance->parent : 0;
             }
             while (instance_map);
@@ -236,7 +236,7 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
     }
 
     //Other requirements
-    return player->Satisfy(sObjectMgr.GetAccessRequirement(mapid, targetDifficulty), mapid, true);
+    return player->Satisfy(sObjectMgr->GetAccessRequirement(mapid, targetDifficulty), mapid, true);
 }
 
 void MapManager::Update(uint32 diff)
@@ -259,7 +259,7 @@ void MapManager::Update(uint32 diff)
     for (iter = i_maps.begin(); iter != i_maps.end(); ++iter)
         iter->second->DelayedUpdate(uint32(i_timer.GetCurrent()));
 
-    sObjectAccessor.Update(uint32(i_timer.GetCurrent()));
+    sObjectAccessor->Update(uint32(i_timer.GetCurrent()));
     for (TransportSet::iterator iter = m_Transports.begin(); iter != m_Transports.end(); ++iter)
         (*iter)->Update(uint32(i_timer.GetCurrent()));
 
@@ -283,7 +283,7 @@ bool MapManager::ExistMapAndVMap(uint32 mapid, float x,float y)
 bool MapManager::IsValidMAP(uint32 mapid)
 {
     MapEntry const* mEntry = sMapStore.LookupEntry(mapid);
-    return mEntry && (!mEntry->IsDungeon() || sObjectMgr.GetInstanceTemplate(mapid));
+    return mEntry && (!mEntry->IsDungeon() || sObjectMgr->GetInstanceTemplate(mapid));
     // TODO: add check for battleground template
 }
 

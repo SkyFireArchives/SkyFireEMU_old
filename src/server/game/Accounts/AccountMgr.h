@@ -61,6 +61,6 @@ class AccountMgr
         static bool normalizeString(std::string& utf8str);
 };
 
-#define sAccountMgr (*ACE_Singleton<AccountMgr, ACE_Null_Mutex>::instance())
+#define sAccountMgr ACE_Singleton<AccountMgr, ACE_Null_Mutex>::instance()
 #endif
 

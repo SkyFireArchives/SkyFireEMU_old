@@ -95,7 +95,7 @@ void BattlegroundIC::DoAction(uint32 action, uint64 var)
 	if (action != ACTION_TELEPORT_PLAYER_TO_TRANSPORT)
 		return;
 
-	Player* plr = sObjectMgr.GetPlayer(var);
+	Player* plr = sObjectMgr->GetPlayer(var);
 
 	if (!plr || !gunshipAlliance || !gunshipHorde)
 		return;
@@ -413,7 +413,7 @@ bool BattlegroundIC::SetupBattleground()
 	//Send transport init packet to all player in map
 	for (BattlegroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end();itr++)
 	{
-		if (Player* player = sObjectMgr.GetPlayer(itr->first))
+		if (Player* player = sObjectMgr->GetPlayer(itr->first))
 			SendTransportInit(player);
 	}
 
@@ -485,7 +485,7 @@ void BattlegroundIC::RealocatePlayers(ICNodePointType nodeType)
 		WorldSafeLocsEntry const *ClosestGrave = NULL;
 		for (std::vector<uint64>::const_iterator itr = ghost_list.begin(); itr != ghost_list.end(); ++itr)
 		{
-			Player* plr = sObjectMgr.GetPlayer(*itr);
+			Player* plr = sObjectMgr->GetPlayer(*itr);
 			if (!plr)
 				continue;
 
@@ -906,7 +906,7 @@ Transport* BattlegroundIC::CreateTransport(uint32 goEntry,uint32 period)
 {
 	Transport* t = new Transport(period,0);
 
-	const GameObjectInfo* goinfo = sObjectMgr.GetGameObjectInfo(goEntry);
+	const GameObjectInfo* goinfo = sObjectMgr->GetGameObjectInfo(goEntry);
 
 	if (!goinfo)
 	{
@@ -933,7 +933,7 @@ Transport* BattlegroundIC::CreateTransport(uint32 goEntry,uint32 period)
 	float o = 1;
 
 	// creates the Gameobject
-	if (!t->Create(sObjectMgr.GenerateLowGuid(HIGHGUID_MO_TRANSPORT),goEntry, mapid, x, y, z, o, 100, 0))
+	if (!t->Create(sObjectMgr->GenerateLowGuid(HIGHGUID_MO_TRANSPORT),goEntry, mapid, x, y, z, o, 100, 0))
 	{
 		delete t;
 		return NULL;

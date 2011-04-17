@@ -47,7 +47,7 @@
 inline Guild* _GetPlayerGuild(WorldSession* session, bool sendError = false)
 {
     if (uint32 guildId = session->GetPlayer()->GetGuildId())    // If guild id = 0, player is not in guild
-        if (Guild* pGuild = sObjectMgr.GetGuildById(guildId))   // Find guild by id
+        if (Guild* pGuild = sObjectMgr->GetGuildById(guildId))   // Find guild by id
             return pGuild;
     if (sendError)
         Guild::SendCommandResult(session, GUILD_CREATE_S, ERR_GUILD_PLAYER_NOT_IN_GUILD);
@@ -65,7 +65,7 @@ void WorldSession::HandleGuildQueryOpcode(WorldPacket& recvPacket)
     recvPacket >> unk;
     // Use received guild id to access guild method (not player's guild id)
     uint32 lowGuildId = GUID_LOPART(guildId);
-    if (Guild *pGuild = sObjectMgr.GetGuildById(lowGuildId))
+    if (Guild *pGuild = sObjectMgr->GetGuildById(lowGuildId))
         pGuild->HandleQuery(this);
     else
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_PLAYER_NOT_IN_GUILD);
@@ -83,7 +83,7 @@ void WorldSession::HandleGuildCreateOpcode(WorldPacket& recvPacket)
     {
         Guild* pGuild = new Guild();
         if (pGuild->Create(GetPlayer(), name))
-            sObjectMgr.AddGuild(pGuild);
+            sObjectMgr->AddGuild(pGuild);
         else
             delete pGuild;
     }
@@ -126,7 +126,7 @@ void WorldSession::HandleGuildAcceptOpcode(WorldPacket& recvPacket)
     // Player cannot be in guild
     if (!GetPlayer()->GetGuildId())
         // Guild where player was invited must exist
-        if (Guild* pGuild = sObjectMgr.GetGuildById(GetPlayer()->GetGuildIdInvited()))
+        if (Guild* pGuild = sObjectMgr->GetGuildById(GetPlayer()->GetGuildIdInvited()))
             pGuild->HandleAcceptMember(this);
 }
 
@@ -253,7 +253,7 @@ void WorldSession::HandleGuildExperienceOpcode(WorldPacket& recvPacket)
 {
     recvPacket.read_skip<uint64>();
 
-    if (Guild* pGuild = sObjectMgr.GetGuildById(_player->GetGuildId()))
+    if (Guild* pGuild = sObjectMgr->GetGuildById(_player->GetGuildId()))
     {
         WorldPacket data(SMSG_GUILD_XP_UPDATE, 8*5);
 	    data << uint64(0x37); // max daily xp
@@ -276,12 +276,12 @@ void WorldSession::HandleGuildMaxExperienceOpcode(WorldPacket& recvPacket)
 
 void WorldSession::HandleGuildRewardsOpcode(WorldPacket& recvPacket)
 {
-    if (!_player->GetGuildId() || !sWorld.getBoolConfig(CONFIG_GUILD_ADVANCEMENT_ENABLED))
+    if (!_player->GetGuildId() || !sWorld->getBoolConfig(CONFIG_GUILD_ADVANCEMENT_ENABLED))
         return;
 
     recvPacket.read_skip<uint64>();
 
-    ObjectMgr::GuildRewardsVector const& vec = sObjectMgr.GetGuildRewards();
+    ObjectMgr::GuildRewardsVector const& vec = sObjectMgr->GetGuildRewards();
     if (vec.empty())
         return;
 

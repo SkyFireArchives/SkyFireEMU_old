@@ -101,18 +101,18 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
     uint32 charterid = GUILD_CHARTER;
     uint32 cost = GUILD_CHARTER_COST;
 
-    if (sObjectMgr.GetGuildByName(name))
+    if (sObjectMgr->GetGuildByName(name))
     {
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NAME_EXISTS_S, name);
         return;
     }
-    if (sObjectMgr.IsReservedName(name) || !ObjectMgr::IsValidCharterName(name))
+    if (sObjectMgr->IsReservedName(name) || !ObjectMgr::IsValidCharterName(name))
     {
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NAME_INVALID, name);
         return;
     }
 
-    ItemPrototype const *pProto = sObjectMgr.GetItemPrototype(charterid);
+    ItemPrototype const *pProto = sObjectMgr->GetItemPrototype(charterid);
     if (!pProto)
     {
         _player->SendBuyError(BUY_ERR_CANT_FIND_ITEM, NULL, charterid, 0);
@@ -296,12 +296,12 @@ void WorldSession::HandlePetitionRenameOpcode(WorldPacket & recv_data)
     if (!item)
         return;
 
-    if (sObjectMgr.GetGuildByName(newname))
+    if (sObjectMgr->GetGuildByName(newname))
     {
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NAME_EXISTS_S, newname);
         return;
     }
-    if (sObjectMgr.IsReservedName(newname) || !ObjectMgr::IsValidCharterName(newname))
+    if (sObjectMgr->IsReservedName(newname) || !ObjectMgr::IsValidCharterName(newname))
     {
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NAME_INVALID, newname);
         return;
@@ -350,7 +350,7 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket & recv_data)
         return;
 
     // do not let enemies sign guild charter
-    if (!sWorld.getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GUILD) && GetPlayer()->GetTeam() != sObjectMgr.GetPlayerTeamByGUID(ownerguid))
+    if (!sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GUILD) && GetPlayer()->GetTeam() != sObjectMgr->GetPlayerTeamByGUID(ownerguid))
     {
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NOT_ALLIED);
         return;
@@ -385,7 +385,7 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket & recv_data)
         SendPacket(&data);
 
         // update for owner if online
-        if (Player *owner = sObjectMgr.GetPlayer(ownerguid))
+        if (Player *owner = sObjectMgr->GetPlayer(ownerguid))
             owner->GetSession()->SendPacket(&data);
         return;
     }
@@ -403,7 +403,7 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket & recv_data)
     SendPacket(&data);
 
     // update for owner if online
-    if (Player *owner = sObjectMgr.GetPlayer(ownerguid))
+    if (Player *owner = sObjectMgr->GetPlayer(ownerguid))
         owner->GetSession()->SendPacket(&data);
 }
 
@@ -424,7 +424,7 @@ void WorldSession::HandlePetitionDeclineOpcode(WorldPacket & recv_data)
     Field *fields = result->Fetch();
     ownerguid = MAKE_NEW_GUID(fields[0].GetUInt32(), 0, HIGHGUID_PLAYER);
 
-    Player *owner = sObjectMgr.GetPlayer(ownerguid);
+    Player *owner = sObjectMgr->GetPlayer(ownerguid);
     if (owner)                                               // petition owner online
     {
         WorldPacket data(MSG_PETITION_DECLINE, 8);
@@ -450,7 +450,7 @@ void WorldSession::HandleOfferPetitionOpcode(WorldPacket & recv_data)
     if (!player)
         return;
 
-    if (!sWorld.getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GUILD) && GetPlayer()->GetTeam() != player->GetTeam())
+    if (!sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GUILD) && GetPlayer()->GetTeam() != player->GetTeam())
     {
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NOT_ALLIED);
         return;
@@ -540,7 +540,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
     else
         signs = 0;
 
-    if (signs < sWorld.getIntConfig(CONFIG_MIN_PETITION_SIGNS))
+    if (signs < sWorld->getIntConfig(CONFIG_MIN_PETITION_SIGNS))
     {
         data.Initialize(SMSG_TURN_IN_PETITION_RESULTS, 4);
         data << (uint32)PETITION_TURN_NEED_MORE_SIGNATURES; // need more signatures...
@@ -548,7 +548,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
         return;
     }
 
-    if (sObjectMgr.GetGuildByName(name))
+    if (sObjectMgr->GetGuildByName(name))
     {
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NAME_EXISTS_S, name);
         return;
@@ -570,7 +570,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
     }
 
     // register guild and add guildmaster
-    sObjectMgr.AddGuild(guild);
+    sObjectMgr->AddGuild(guild);
 
     // add members
     for (uint8 i = 0; i < signs; ++i)

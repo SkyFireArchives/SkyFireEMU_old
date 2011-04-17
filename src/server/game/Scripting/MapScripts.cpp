@@ -58,11 +58,11 @@ void Map::ScriptsStart(ScriptMapMap const& scripts, uint32 id, Object* source, O
         sa.ownerGUID  = ownerGUID;
 
         sa.script = &iter->second;
-        m_scriptSchedule.insert(std::pair<time_t, ScriptAction>(time_t(sWorld.GetGameTime() + iter->first), sa));
+        m_scriptSchedule.insert(std::pair<time_t, ScriptAction>(time_t(sWorld->GetGameTime() + iter->first), sa));
         if (iter->first == 0)
             immedScript = true;
 
-        sWorld.IncreaseScheduledScriptsCount();
+        sWorld->IncreaseScheduledScriptsCount();
     }
     ///- If one of the effects should be immediate, launch the script execution
     if (/*start &&*/ immedScript && !i_scriptLock)
@@ -88,9 +88,9 @@ void Map::ScriptCommandStart(ScriptInfo const& script, uint32 delay, Object* sou
     sa.ownerGUID  = ownerGUID;
 
     sa.script = &script;
-    m_scriptSchedule.insert(std::pair<time_t, ScriptAction>(time_t(sWorld.GetGameTime() + delay), sa));
+    m_scriptSchedule.insert(std::pair<time_t, ScriptAction>(time_t(sWorld->GetGameTime() + delay), sa));
 
-    sWorld.IncreaseScheduledScriptsCount();
+    sWorld->IncreaseScheduledScriptsCount();
 
     ///- If effects should be immediate, launch the script execution
     if (delay == 0 && !i_scriptLock)
@@ -296,7 +296,7 @@ void Map::ScriptsProcess()
     ///- Process overdue queued scripts
     std::multimap<time_t, ScriptAction>::iterator iter = m_scriptSchedule.begin();
     // ok as multimap is a *sorted* associative container
-    while (!m_scriptSchedule.empty() && (iter->first <= sWorld.GetGameTime()))
+    while (!m_scriptSchedule.empty() && (iter->first <= sWorld->GetGameTime()))
     {
         ScriptAction const& step = iter->second;
 
@@ -330,7 +330,7 @@ void Map::ScriptsProcess()
                     source = HashMapHolder<Corpse>::Find(step.sourceGUID);
                     break;
                 case HIGHGUID_MO_TRANSPORT:
-                    for (MapManager::TransportSet::iterator iter = sMapMgr.m_Transports.begin(); iter != sMapMgr.m_Transports.end(); ++iter)
+                    for (MapManager::TransportSet::iterator iter = sMapMgr->m_Transports.begin(); iter != sMapMgr->m_Transports.end(); ++iter)
                     {
                         if ((*iter)->GetGUID() == step.sourceGUID)
                         {
@@ -395,7 +395,7 @@ void Map::ScriptsProcess()
                     {
                         uint64 targetGUID = target ? target->GetGUID() : 0;
                         LocaleConstant loc_idx = pSource->GetSession()->GetSessionDbLocaleIndex();
-                        const std::string text(sObjectMgr.GetTrinityString(step.script->Talk.TextID, loc_idx));
+                        const std::string text(sObjectMgr->GetTrinityString(step.script->Talk.TextID, loc_idx));
 
                         switch (step.script->Talk.ChatType)
                         {
@@ -850,7 +850,7 @@ void Map::ScriptsProcess()
                 }
                 else //check hashmap holders
                 {
-                    if (CreatureData const* data = sObjectMgr.GetCreatureData(step.script->CallScript.CreatureEntry))
+                    if (CreatureData const* data = sObjectMgr->GetCreatureData(step.script->CallScript.CreatureEntry))
                         cTarget = ObjectAccessor::GetObjectInWorld<Creature>(data->mapid, data->posX, data->posY, MAKE_NEW_GUID(step.script->CallScript.CreatureEntry, data->id, HIGHGUID_UNIT), cTarget);
                 }
 
@@ -940,7 +940,7 @@ void Map::ScriptsProcess()
         }
 
         m_scriptSchedule.erase(iter);
-        sWorld.DecreaseScheduledScriptCount();
+        sWorld->DecreaseScheduledScriptCount();
 
         iter = m_scriptSchedule.begin();
     }

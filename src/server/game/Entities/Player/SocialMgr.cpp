@@ -132,7 +132,7 @@ void PlayerSocial::SendSocialList(Player* plr, uint32 mask)
 
     for (PlayerSocialMap::iterator itr = m_playerSocialMap.begin(); itr != m_playerSocialMap.end(); ++itr)
     {
-        sSocialMgr.GetFriendInfo(plr, itr->first, itr->second);
+        sSocialMgr->GetFriendInfo(plr, itr->first, itr->second);
 
         if (!(itr->second.Flags & mask))	
             continue;
@@ -200,8 +200,8 @@ void SocialMgr::GetFriendInfo(Player *player, uint32 friendGUID, FriendInfo &fri
 
     uint32 team = player->GetTeam();
     AccountTypes security = player->GetSession()->GetSecurity();
-    bool allowTwoSideWhoList = sWorld.getBoolConfig(CONFIG_ALLOW_TWO_SIDE_WHO_LIST);
-    AccountTypes gmLevelInWhoList = AccountTypes (sWorld.getIntConfig(CONFIG_GM_LEVEL_IN_WHO_LIST));
+    bool allowTwoSideWhoList = sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_WHO_LIST);
+    AccountTypes gmLevelInWhoList = AccountTypes (sWorld->getIntConfig(CONFIG_GM_LEVEL_IN_WHO_LIST));
 
     PlayerSocialMap::iterator itr = player->GetSocial()->m_playerSocialMap.find(friendGUID);
     if (itr != player->GetSocial()->m_playerSocialMap.end())
@@ -276,8 +276,8 @@ void SocialMgr::BroadcastToFriendListers(Player *player, WorldPacket *packet)
     uint32 team = player->GetTeam();
     AccountTypes security = player->GetSession()->GetSecurity();
     uint32 guid = player->GetGUIDLow();
-    AccountTypes gmLevelInWhoList = AccountTypes(sWorld.getIntConfig(CONFIG_GM_LEVEL_IN_WHO_LIST));
-    bool allowTwoSideWhoList = sWorld.getBoolConfig(CONFIG_ALLOW_TWO_SIDE_WHO_LIST);
+    AccountTypes gmLevelInWhoList = AccountTypes(sWorld->getIntConfig(CONFIG_GM_LEVEL_IN_WHO_LIST));
+    bool allowTwoSideWhoList = sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_WHO_LIST);
 
     for (SocialMap::const_iterator itr = m_socialMap.begin(); itr != m_socialMap.end(); ++itr)
     {

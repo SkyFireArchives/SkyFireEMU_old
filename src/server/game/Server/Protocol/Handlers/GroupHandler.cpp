@@ -78,7 +78,7 @@ void WorldSession::HandleGroupInviteOpcode(WorldPacket & recv_data)
         return;
     }
 
-    Player *player = sObjectMgr.GetPlayer(membername.c_str());
+    Player *player = sObjectMgr->GetPlayer(membername.c_str());
 
     // no player
     if (!player)
@@ -88,11 +88,11 @@ void WorldSession::HandleGroupInviteOpcode(WorldPacket & recv_data)
     }
 
     // restrict invite to GMs
-    if (!sWorld.getBoolConfig(CONFIG_ALLOW_GM_GROUP) && !GetPlayer()->isGameMaster() && player->isGameMaster())
+    if (!sWorld->getBoolConfig(CONFIG_ALLOW_GM_GROUP) && !GetPlayer()->isGameMaster() && player->isGameMaster())
         return;
 
     // can't group with
-    if (!sWorld.getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GROUP) && GetPlayer()->GetTeam() != player->GetTeam())
+    if (!sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GROUP) && GetPlayer()->GetTeam() != player->GetTeam())
     {
         SendPartyResult(PARTY_OP_INVITE, membername, ERR_PLAYER_WRONG_FACTION);
         return;
@@ -224,7 +224,7 @@ void WorldSession::HandleGroupAcceptOpcode(WorldPacket & recv_data)
         return;
     }
 
-    Player* leader = sObjectMgr.GetPlayer(group->GetLeaderGUID());
+    Player* leader = sObjectMgr->GetPlayer(group->GetLeaderGUID());
 
     // forming a new group, create it
     if (!group->IsCreated())
@@ -232,7 +232,7 @@ void WorldSession::HandleGroupAcceptOpcode(WorldPacket & recv_data)
         if (leader)
             group->RemoveInvite(leader);
         group->Create(group->GetLeaderGUID(), group->GetLeaderName());
-        sObjectMgr.AddGroup(group);
+        sObjectMgr->AddGroup(group);
     }
 
     // everything's fine, do it, PLAYER'S GROUP IS SET IN ADDMEMBER!!!
@@ -249,7 +249,7 @@ void WorldSession::HandleGroupDeclineOpcode(WorldPacket & /*recv_data*/)
         return;
 
     // Remember leader if online (group pointer will be invalid if group gets disbanded)
-    Player *leader = sObjectMgr.GetPlayer(group->GetLeaderGUID());    
+    Player *leader = sObjectMgr->GetPlayer(group->GetLeaderGUID());    
 
     // uninvite, group can be deleted
     GetPlayer()->UninviteFromGroup();
@@ -358,7 +358,7 @@ void WorldSession::HandleGroupSetLeaderOpcode(WorldPacket & recv_data)
     uint64 guid;
     recv_data >> guid;
 
-    Player *player = sObjectMgr.GetPlayer(guid);
+    Player *player = sObjectMgr->GetPlayer(guid);
 
     /** error handling **/
     if (!player || !group->IsLeader(GetPlayer()->GetGUID()) || player->GetGroup() != group)
@@ -575,7 +575,7 @@ void WorldSession::HandleGroupChangeSubGroupOpcode(WorldPacket & recv_data)
         return;
     /********************/
 
-    Player *movedPlayer = sObjectMgr.GetPlayer(name.c_str());
+    Player *movedPlayer = sObjectMgr->GetPlayer(name.c_str());
     if (movedPlayer)
     {
         //Do not allow leader to change group of player in combat
@@ -586,7 +586,7 @@ void WorldSession::HandleGroupChangeSubGroupOpcode(WorldPacket & recv_data)
         group->ChangeMembersGroup(movedPlayer, groupNr);
     }
     else
-        group->ChangeMembersGroup(sObjectMgr.GetPlayerGUIDByName(name.c_str()), groupNr);
+        group->ChangeMembersGroup(sObjectMgr->GetPlayerGUIDByName(name.c_str()), groupNr);
 }
 
 void WorldSession::HandleGroupAssistantLeaderOpcode(WorldPacket & recv_data)
@@ -1000,7 +1000,7 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
     recv_data >> roles;                                     // Player Group Roles
     recv_data >> guid;
     
-    Player * plr = sObjectMgr.GetPlayer(guid);
+    Player * plr = sObjectMgr->GetPlayer(guid);
     if(!plr)
     {
         sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Player not found", guid);
@@ -1024,5 +1024,5 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
     
     plr->SetRoles(roles);
     if (grp->isLFGGroup())
-        sLFGMgr.UpdateRoleCheck(gguid, guid, roles);
+        sLFGMgr->UpdateRoleCheck(gguid, guid, roles);
 }
