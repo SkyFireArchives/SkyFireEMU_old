@@ -4323,7 +4323,9 @@ void AuraEffect::HandleAuraControlVehicle(AuraApplication const *aurApp, uint8 m
         return;
 
     if (apply)
-        caster->EnterVehicle(target->GetVehicleKit(), m_amount - 1);
+	{
+        caster->EnterVehicle(target->GetVehicleKit(), m_amount - 1, true);
+	}
     else
     {
         if (GetId() == 53111) // Devour Humanoid

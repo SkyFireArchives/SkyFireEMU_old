@@ -16479,7 +16479,7 @@ bool Unit::CheckPlayerCondition(Player* pPlayer)
     }
 }
 
-void Unit::EnterVehicle(Vehicle *vehicle, int8 seatId)
+void Unit::EnterVehicle(Vehicle *vehicle, int8 seatId, bool byAura)
 {
     if (!isAlive() || GetVehicleKit() == vehicle)
         return;
@@ -16488,10 +16488,10 @@ void Unit::EnterVehicle(Vehicle *vehicle, int8 seatId)
     {
         if (m_vehicle == vehicle)
         {
-            if (seatId >= 0)
+            if (seatId >= 0 && seatId != GetTransSeat())
             {
                 sLog->outDebug("EnterVehicle: %u leave vehicle %u seat %d and enter %d.", GetEntry(), m_vehicle->GetBase()->GetEntry(), GetTransSeat(), seatId);
-                ChangeSeat(seatId);
+                ChangeSeat(seatId, byAura);
             }
             return;
         }
@@ -16520,7 +16520,7 @@ void Unit::EnterVehicle(Vehicle *vehicle, int8 seatId)
 
     ASSERT(!m_vehicle);
     m_vehicle = vehicle;
-    if (!m_vehicle->AddPassenger(this, seatId))
+    if (!m_vehicle->AddPassenger(this, seatId, byAura))
     {
         m_vehicle = NULL;
         return;
@@ -16538,14 +16538,14 @@ void Unit::EnterVehicle(Vehicle *vehicle, int8 seatId)
     }
 }
 
-void Unit::ChangeSeat(int8 seatId, bool next)
+void Unit::ChangeSeat(int8 seatId, bool next, bool byAura)
 {
     if (!m_vehicle)
         return;
 
     if (seatId < 0)
     {
-        seatId = m_vehicle->GetNextEmptySeat(GetTransSeat(), next);
+        seatId = m_vehicle->GetNextEmptySeat(GetTransSeat(), next, byAura);
         if (seatId < 0)
             return;
     }
@@ -16553,7 +16553,7 @@ void Unit::ChangeSeat(int8 seatId, bool next)
         return;
 
     m_vehicle->RemovePassenger(this);
-    if (!m_vehicle->AddPassenger(this, seatId))
+    if (!m_vehicle->AddPassenger(this, seatId, byAura))
         ASSERT(false);
 }
 
