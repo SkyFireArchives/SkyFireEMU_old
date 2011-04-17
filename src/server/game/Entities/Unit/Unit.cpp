@@ -16646,10 +16646,8 @@ void Unit::BuildMovementPacket(ByteBuffer *data) const
         else if (GetTransport())
             data->append(GetTransport()->GetPackGUID());
         else
-        {
-            sLog->outError("Unit %u does not have transport!", GetEntry());
             *data << (uint8)0;
-        }
+        
         *data << float (GetTransOffsetX());
         *data << float (GetTransOffsetY());
         *data << float (GetTransOffsetZ());
