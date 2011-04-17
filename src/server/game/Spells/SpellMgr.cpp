@@ -1436,7 +1436,6 @@ void SpellMgr::LoadSpellBonusess()
         return;
     }
 
-    
     do
     {
         Field *fields = result->Fetch();
@@ -1458,6 +1457,26 @@ void SpellMgr::LoadSpellBonusess()
         sbe.ap_dot_bonus   = fields[4].GetFloat();
 
         mSpellBonusMap[entry] = sbe;
+        // compare with DBC coefficient
+        float DBCcoef = 0;
+        for(uint32 i=0;i<3;i++)
+        {
+            if(spell->EffectBonusCoefficient[i] == sbe.direct_damage ||
+                sbe.direct_damage < 0)
+            {
+                break;
+            }
+
+            if(DBCcoef == 0)
+            {
+                DBCcoef = spell->EffectBonusCoefficient[i];
+            }
+        }
+        if(DBCcoef > 0)
+        {
+            sLog.outError("SPC: DB SP coef doesn't match DBC. ID: %d, DB: %f, DBC: %f, Name: %s", entry, sbe.direct_damage, DBCcoef, spell->SpellName);
+        }
+
         ++count;
     } while (result->NextRow());
 

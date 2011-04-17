@@ -340,7 +340,7 @@ public:
             return true;
         }
 
-        void HandleFulmination(SpellEffIndex /*effIndex*/)
+        void HandleFulmination(SpellEffIndex effIndex)
         {
             // make caster cast a spell on a unit target of effect
             Unit *target = GetHitUnit();
@@ -362,7 +362,7 @@ public:
 
             SpellEntry const* spellInfo = sSpellStore.LookupEntry(SHAMAN_SPELL_LIGHTNING_SHIELD_PROC);
             int32 basePoints = caster->CalculateSpellDamage(target, spellInfo, 0);
-            uint32 damage = usedCharges * caster->SpellDamageBonus(target, spellInfo, basePoints, SPELL_DIRECT_DAMAGE);
+            uint32 damage = usedCharges * caster->SpellDamageBonus(target, spellInfo, effIndex, basePoints, SPELL_DIRECT_DAMAGE);
 
             caster->CastCustomSpell(SHAMAN_SPELL_FULMINATION_TRIGGERED, SPELLVALUE_BASE_POINT0, damage, target, true, NULL, fulminationAura);
             lightningShield->SetCharges(lsCharges - usedCharges);
