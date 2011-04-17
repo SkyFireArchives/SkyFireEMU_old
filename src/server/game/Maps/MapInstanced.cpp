@@ -180,20 +180,20 @@ InstanceMap* MapInstanced::CreateInstance(uint32 InstanceId, InstanceSave *save,
     const MapEntry* entry = sMapStore.LookupEntry(GetId());
     if (!entry)
     {
-        sLog.outError("CreateInstance: no entry for map %d", GetId());
+        sLog->outError("CreateInstance: no entry for map %d", GetId());
         ASSERT(false);
     }
     const InstanceTemplate * iTemplate = sObjectMgr->GetInstanceTemplate(GetId());
     if (!iTemplate)
     {
-        sLog.outError("CreateInstance: no instance template for map %d", GetId());
+        sLog->outError("CreateInstance: no instance template for map %d", GetId());
         ASSERT(false);
     }
 
     // some instances only have one difficulty
     GetDownscaledMapDifficultyData(GetId(),difficulty);
 
-    sLog.outDebug("MapInstanced::CreateInstance: %s map instance %d for %d created with difficulty %s", save?"":"new ", InstanceId, GetId(), difficulty?"heroic":"normal");
+    sLog->outDebug("MapInstanced::CreateInstance: %s map instance %d for %d created with difficulty %s", save?"":"new ", InstanceId, GetId(), difficulty?"heroic":"normal");
 
     InstanceMap *map = new InstanceMap(GetId(), GetGridExpiry(), InstanceId, difficulty, this);
     ASSERT(map->IsDungeon());
@@ -210,7 +210,7 @@ BattlegroundMap* MapInstanced::CreateBattleground(uint32 InstanceId, Battlegroun
     // load/create a map
     ACE_GUARD_RETURN(ACE_Thread_Mutex, Guard, Lock, NULL);
 
-    sLog.outDebug("MapInstanced::CreateBattleground: map bg %d for %d created.", InstanceId, GetId());
+    sLog->outDebug("MapInstanced::CreateBattleground: map bg %d for %d created.", InstanceId, GetId());
 
     PvPDifficultyEntry const* bracketEntry = GetBattlegroundBracketByLevel(bg->GetMapId(),bg->GetMinLevel());
 

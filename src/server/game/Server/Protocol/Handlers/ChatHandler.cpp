@@ -55,7 +55,7 @@ bool WorldSession::processChatmessageFurtherAfterSecurityChecks(std::string& msg
         if (sWorld->getIntConfig(CONFIG_CHAT_STRICT_LINK_CHECKING_SEVERITY) && GetSecurity() < SEC_MODERATOR
                 && !ChatHandler(this).isValidChatMessage(msg.c_str()))
         {
-            sLog.outError("Player %s (GUID: %u) sent a chatmessage with an invalid link: %s", GetPlayer()->GetName(),
+            sLog->outError("Player %s (GUID: %u) sent a chatmessage with an invalid link: %s", GetPlayer()->GetName(),
                     GetPlayer()->GetGUIDLow(), msg.c_str());
             if (sWorld->getIntConfig(CONFIG_CHAT_STRICT_LINK_CHECKING_KICK))
                 KickPlayer();
@@ -124,7 +124,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             type = CHAT_MSG_RAID_WARNING;
             break;
         default:
-            sLog.outDetail("HandleMessagechatOpcode : Unknown chat opcode (%u)", recv_data.GetOpcode());
+            sLog->outDetail("HandleMessagechatOpcode : Unknown chat opcode (%u)", recv_data.GetOpcode());
             recv_data.hexlike();
             return;
     }
@@ -179,11 +179,11 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
     if (type >= MAX_CHAT_MSG_TYPE)
     {
-        sLog.outError("CHAT: Wrong message type received: %u", type);
+        sLog->outError("CHAT: Wrong message type received: %u", type);
         return;
     }
 
-    //sLog.outDebug("CHAT: packet received. type %u, lang %u", type, lang);
+    //sLog->outDebug("CHAT: packet received. type %u, lang %u", type, lang);
 
     // prevent talking at unknown language (cheating)
     LanguageDesc const* langDesc = GetLanguageDescByID(lang);
@@ -221,7 +221,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
             if (msg.empty())
             {
-                sLog.outDebug("Player %s send empty addon msg", GetPlayer()->GetName());
+                sLog->outDebug("Player %s send empty addon msg", GetPlayer()->GetName());
                 return;
             }
 
@@ -654,7 +654,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             }
         } break;
         default:
-            sLog.outError("CHAT: unknown message type %u, lang: %u", type, lang);
+            sLog->outError("CHAT: unknown message type %u, lang: %u", type, lang);
             break;
     }
 }
@@ -769,7 +769,7 @@ void WorldSession::HandleChatIgnoredOpcode(WorldPacket& recv_data)
 {
     uint64 iguid;
     uint8 unk;
-    //sLog.outDebug("WORLD: Received CMSG_CHAT_IGNORED");
+    //sLog->outDebug("WORLD: Received CMSG_CHAT_IGNORED");
 
     recv_data >> iguid;
     recv_data >> unk;                                       // probably related to spam reporting
@@ -785,7 +785,7 @@ void WorldSession::HandleChatIgnoredOpcode(WorldPacket& recv_data)
 
 void WorldSession::HandleChannelDeclineInvite(WorldPacket &recvPacket)
 {
-    sLog.outDebug("Opcode %u", recvPacket.GetOpcode());
+    sLog->outDebug("Opcode %u", recvPacket.GetOpcode());
 }
 
 void WorldSession::SendPlayerNotFoundNotice(std::string name)

@@ -123,13 +123,13 @@ bool OPvPCapturePoint::AddCreature(uint32 type, uint32 entry, uint32 team, uint3
 
 bool OPvPCapturePoint::SetCapturePointData(uint32 entry, uint32 map, float x, float y, float z, float o, float rotation0, float rotation1, float rotation2, float rotation3)
 {
-    sLog.outDebug("Creating capture point %u", entry);
+    sLog->outDebug("Creating capture point %u", entry);
 
     // check info existence
     GameObjectInfo const* goinfo = sObjectMgr->GetGameObjectInfo(entry);
     if (!goinfo || goinfo->type != GAMEOBJECT_TYPE_CAPTURE_POINT)
     {
-        sLog.outError("OutdoorPvP: GO %u is not capture point!", entry);
+        sLog->outError("OutdoorPvP: GO %u is not capture point!", entry);
         return false;
     }
 
@@ -150,7 +150,7 @@ bool OPvPCapturePoint::DelCreature(uint32 type)
 {
     if (!m_Creatures[type])
     {
-        sLog.outDebug("opvp creature type %u was already deleted",type);
+        sLog->outDebug("opvp creature type %u was already deleted",type);
         return false;
     }
 
@@ -161,7 +161,7 @@ bool OPvPCapturePoint::DelCreature(uint32 type)
         m_Creatures[type] = 0;
         return false;
     }
-    sLog.outDebug("deleting opvp creature type %u",type);
+    sLog->outDebug("deleting opvp creature type %u",type);
     uint32 guid = cr->GetDBTableGUIDLow();
     // Don't save respawn time
     cr->SetRespawnTime(0);
@@ -256,7 +256,7 @@ void OutdoorPvP::HandlePlayerLeaveZone(Player * plr, uint32 /*zone*/)
     if (!plr->GetSession()->PlayerLogout())
         SendRemoveWorldStates(plr);
     m_players[plr->GetTeamId()].erase(plr);
-    sLog.outDebug("Player %s left an outdoorpvp zone", plr->GetName());
+    sLog->outDebug("Player %s left an outdoorpvp zone", plr->GetName());
 }
 
 void OutdoorPvP::HandlePlayerResurrects(Player * /*plr*/, uint32 /*zone*/)
@@ -383,7 +383,7 @@ bool OPvPCapturePoint::Update(uint32 diff)
 
     if (m_OldState != m_State)
     {
-        //sLog.outError("%u->%u", m_OldState, m_State);
+        //sLog->outError("%u->%u", m_OldState, m_State);
         if (oldTeam != m_team)
             ChangeTeam(oldTeam);
         ChangeState();

@@ -184,7 +184,7 @@ void CasterAI::UpdateAI(const uint32 diff)
 ArchorAI::ArchorAI(Creature *c) : CreatureAI(c)
 {
     if (!me->m_spells[0])
-        sLog.outError("ArchorAI set for creature (entry = %u) with spell1=0. AI will do nothing", me->GetEntry());
+        sLog->outError("ArchorAI set for creature (entry = %u) with spell1=0. AI will do nothing", me->GetEntry());
 
     m_minRange = GetSpellMinRange(me->m_spells[0], false);
     if (!m_minRange)
@@ -231,7 +231,7 @@ void ArchorAI::UpdateAI(const uint32 /*diff*/)
 TurretAI::TurretAI(Creature *c) : CreatureAI(c)
 {
     if (!me->m_spells[0])
-        sLog.outError("TurretAI set for creature (entry = %u) with spell1=0. AI will do nothing", me->GetEntry());
+        sLog->outError("TurretAI set for creature (entry = %u) with spell1=0. AI will do nothing", me->GetEntry());
 
     m_minRange = GetSpellMinRange(me->m_spells[0], false);
     me->m_CombatDistance = GetSpellMaxRange(me->m_spells[0], false);
@@ -268,7 +268,7 @@ void TurretAI::UpdateAI(const uint32 /*diff*/)
 AOEAI::AOEAI(Creature *c) : CreatureAI(c)
 {
     if (!me->m_spells[0])
-        sLog.outError("AOEAI set for creature (entry = %u) with spell1=0. AI will do nothing", me->GetEntry());
+        sLog->outError("AOEAI set for creature (entry = %u) with spell1=0. AI will do nothing", me->GetEntry());
 
     me->SetVisibility(VISIBILITY_ON);//visible to see all spell anims
     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);//can't be targeted
@@ -345,7 +345,7 @@ void VehicleAI::LoadConditions()
     conditions = sConditionMgr->GetConditionsForNotGroupedEntry(CONDITION_SOURCE_TYPE_CREATURE_TEMPLATE_VEHICLE, me->GetEntry());
     if (!conditions.empty())
     {
-        sLog.outDebug("VehicleAI::LoadConditions: loaded %u conditions", uint32(conditions.size()));
+        sLog->outDebug("VehicleAI::LoadConditions: loaded %u conditions", uint32(conditions.size()));
     }
 }
 

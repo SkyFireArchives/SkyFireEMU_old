@@ -77,10 +77,10 @@ m_effectsToApply(effMask), m_removeMode(AURA_REMOVE_NONE), m_needClientUpdate(fa
             m_slot = slot;
             GetTarget()->SetVisibleAura(slot, this);
             SetNeedClientUpdate();
-            sLog.outDebug("Aura: %u Effect: %d put to unit visible auras slot: %u", GetBase()->GetId(), GetEffectMask(), slot);
+            sLog->outDebug("Aura: %u Effect: %d put to unit visible auras slot: %u", GetBase()->GetId(), GetEffectMask(), slot);
         }
         else
-            sLog.outDebug("Aura: %u Effect: %d could not find empty unit visible slot", GetBase()->GetId(), GetEffectMask());
+            sLog->outDebug("Aura: %u Effect: %d could not find empty unit visible slot", GetBase()->GetId(), GetEffectMask());
     }
 
     _InitFlags(caster, effMask);
@@ -159,7 +159,7 @@ void AuraApplication::_HandleEffect(uint8 effIndex, bool apply)
     ASSERT(aurEff);
     ASSERT(HasEffect(effIndex) == (!apply));
     ASSERT((1<<effIndex) & m_effectsToApply);
-    sLog.outDebug("AuraApplication::_HandleEffect: %u, apply: %u: amount: %u", aurEff->GetAuraType(), apply, aurEff->GetAmount());
+    sLog->outDebug("AuraApplication::_HandleEffect: %u, apply: %u: amount: %u", aurEff->GetAuraType(), apply, aurEff->GetAmount());
 
     if (apply)
     {
@@ -193,7 +193,7 @@ void AuraApplication::ClientUpdate(bool remove)
     {
         ASSERT(!m_target->GetVisibleAura(m_slot));
         data << uint32(0);
-        sLog.outDebug("Aura %u removed slot %u",GetBase()->GetId(), m_slot);
+        sLog->outDebug("Aura %u removed slot %u",GetBase()->GetId(), m_slot);
         m_target->SendMessageToSet(&data, true);
         return;
     }
@@ -218,7 +218,7 @@ void AuraApplication::ClientUpdate(bool remove)
     }
 
     if (flags & AFLAG_UNK2)
-        sLog.outError("Unhandled flag in AuraApplication::ClientUpdate. Will result in the aura being handled incorrectly on client side.");
+        sLog->outError("Unhandled flag in AuraApplication::ClientUpdate. Will result in the aura being handled incorrectly on client side.");
 
     m_target->SendMessageToSet(&data, true);
 }
@@ -444,7 +444,7 @@ void Aura::_UnapplyForTarget(Unit * target, Unit * caster, AuraApplication * aur
     // TODO: Figure out why this happens.
     if (itr == m_applications.end())
     {
-        sLog.outError("Aura::_UnapplyForTarget, target:%u, caster:%u, spell:%u was not found in owners application map!",
+        sLog->outError("Aura::_UnapplyForTarget, target:%u, caster:%u, spell:%u was not found in owners application map!",
         target->GetGUIDLow(), caster->GetGUIDLow(), auraApp->GetBase()->GetSpellProto()->Id);
     }
     else
@@ -992,7 +992,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                                 case 31571: spellId = 57529; break;
                                 case 31572: spellId = 57531; break;
                                 default:
-                                    sLog.outError("Aura::HandleAuraSpecificMods: Unknown rank of Arcane Potency (%d) found", aurEff->GetId());
+                                    sLog->outError("Aura::HandleAuraSpecificMods: Unknown rank of Arcane Potency (%d) found", aurEff->GetId());
                             }
                             if (spellId)
                                 caster->CastSpell(caster, spellId, true);
@@ -1115,7 +1115,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                             case 49631: spellId = 50509; break;
                             case 49032: spellId = 50508; break;
                             default:
-                                sLog.outError("Aura::HandleAuraSpecificMods: Unknown rank of Crypt Fever/Ebon Plague (%d) found", aurEff->GetId());
+                                sLog->outError("Aura::HandleAuraSpecificMods: Unknown rank of Crypt Fever/Ebon Plague (%d) found", aurEff->GetId());
                         }
                         caster->CastSpell(target, spellId, true, 0, GetEffect(0));
                     }
@@ -1258,7 +1258,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                             case 53759: spellId = 60947; break;
                             case 53754: spellId = 60946; break;
                             default:
-                                sLog.outError("Aura::HandleAuraSpecificMods: Unknown rank of Improved Fear (%d) found", aurEff->GetId());
+                                sLog->outError("Aura::HandleAuraSpecificMods: Unknown rank of Improved Fear (%d) found", aurEff->GetId());
                         }
                         if (spellId)
                             caster->CastSpell(target, spellId, true);
@@ -1679,7 +1679,7 @@ void Aura::_DeleteRemovedApplications()
 
 void Aura::LoadScripts()
 {
-    sLog.outDebug("Aura::LoadScripts");
+    sLog->outDebug("Aura::LoadScripts");
     sScriptMgr->CreateAuraScripts(m_spellProto->Id, m_loadedScripts);
     for(std::list<AuraScript *>::iterator itr = m_loadedScripts.begin(); itr != m_loadedScripts.end() ;)
     {

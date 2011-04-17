@@ -279,11 +279,11 @@ Corpse* ObjectAccessor::ConvertCorpseForPlayer(uint64 player_guid, bool /*insign
         //in fact this function is called from several places
         //even when player doesn't have a corpse, not an error
         // TODO: really, now...
-        //sLog.outError("Try remove corpse that not in map for GUID %ul", player_guid);
+        //sLog->outError("Try remove corpse that not in map for GUID %ul", player_guid);
         return NULL;
     }
 
-    sLog.outStaticDebug("Deleting Corpse and spawned bones.");
+    sLog->outStaticDebug("Deleting Corpse and spawned bones.");
 
     //Map* map = corpse->FindMap();
 

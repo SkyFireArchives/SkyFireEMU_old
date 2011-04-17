@@ -44,7 +44,7 @@ void WaypointStore::Load()
     QueryResult result = WorldDatabase.Query("SELECT COUNT(id) FROM waypoint_data");
     if (!result)
     {
-        sLog.outError("an error occured while loading the table `waypoint_data` (maybe it doesn't exist ?)");
+        sLog->outError("an error occured while loading the table `waypoint_data` (maybe it doesn't exist ?)");
         exit(1);                                            // Stop server at loading non exited table or not accessable table
     }
 
@@ -53,7 +53,7 @@ void WaypointStore::Load()
     result = WorldDatabase.Query("SELECT id,point,position_x,position_y,position_z,move_flag,delay,action,action_chance FROM waypoint_data ORDER BY id, point");
     if (!result)
     {
-        sLog.outErrorDb("The table `waypoint_data` is empty or corrupted");
+        sLog->outErrorDb("The table `waypoint_data` is empty or corrupted");
         return;
     }
 
@@ -101,8 +101,8 @@ void WaypointStore::Load()
 
     } while (result->NextRow()) ;
 
-    sLog.outString();
-    sLog.outString(">> Loaded %u waypoints", count);
+    sLog->outString();
+    sLog->outString(">> Loaded %u waypoints", count);
 }
 
 void WaypointStore::UpdatePath(uint32 id)

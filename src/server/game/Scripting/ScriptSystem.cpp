@@ -46,24 +46,24 @@ void SystemMgr::LoadVersion()
     {
         Field* pFields = Result->Fetch();
 
-        sLog.outString("TSCR: Database version is: %s", pFields[0].GetCString());
-        sLog.outString();
+        sLog->outString("TSCR: Database version is: %s", pFields[0].GetCString());
+        sLog->outString();
     }
     else
     {
-        sLog.outError("TSCR: Missing `version`.`script_version` information.");
-        sLog.outString();
+        sLog->outError("TSCR: Missing `version`.`script_version` information.");
+        sLog->outString();
     }
 }
 
 void SystemMgr::LoadScriptTexts()
 {
-    sLog.outString("TSCR: Loading Script Texts...");
+    sLog->outString("TSCR: Loading Script Texts...");
     LoadTrinityStrings("script_texts",TEXT_SOURCE_RANGE,1+(TEXT_SOURCE_RANGE*2));
 
     QueryResult Result = WorldDatabase.Query("SELECT entry, sound, type, language, emote FROM script_texts");
 
-    sLog.outString("TSCR: Loading Script Texts additional data...");
+    sLog->outString("TSCR: Loading Script Texts additional data...");
 
     if (Result)
     {
@@ -84,52 +84,52 @@ void SystemMgr::LoadScriptTexts()
 
             if (iId >= 0)
             {
-                sLog.outErrorDb("TSCR: Entry %i in table `script_texts` is not a negative value.", iId);
+                sLog->outErrorDb("TSCR: Entry %i in table `script_texts` is not a negative value.", iId);
                 continue;
             }
 
             if (iId > TEXT_SOURCE_RANGE || iId <= TEXT_SOURCE_RANGE*2)
             {
-                sLog.outErrorDb("TSCR: Entry %i in table `script_texts` is out of accepted entry range for table.", iId);
+                sLog->outErrorDb("TSCR: Entry %i in table `script_texts` is out of accepted entry range for table.", iId);
                 continue;
             }
 
             if (pTemp.uiSoundId)
             {
                 if (!GetSoundEntriesStore()->LookupEntry(pTemp.uiSoundId))
-                    sLog.outErrorDb("TSCR: Entry %i in table `script_texts` has soundId %u but sound does not exist.", iId, pTemp.uiSoundId);
+                    sLog->outErrorDb("TSCR: Entry %i in table `script_texts` has soundId %u but sound does not exist.", iId, pTemp.uiSoundId);
             }
 
             if (!GetLanguageDescByID(pTemp.uiLanguage))
-                sLog.outErrorDb("TSCR: Entry %i in table `script_texts` using Language %u but Language does not exist.", iId, pTemp.uiLanguage);
+                sLog->outErrorDb("TSCR: Entry %i in table `script_texts` using Language %u but Language does not exist.", iId, pTemp.uiLanguage);
 
             if (pTemp.uiType > CHAT_TYPE_ZONE_YELL)
-                sLog.outErrorDb("TSCR: Entry %i in table `script_texts` has Type %u but this Chat Type does not exist.", iId, pTemp.uiType);
+                sLog->outErrorDb("TSCR: Entry %i in table `script_texts` has Type %u but this Chat Type does not exist.", iId, pTemp.uiType);
 
             m_mTextDataMap[iId] = pTemp;
             ++uiCount;
         } while (Result->NextRow());
 
-        sLog.outString();
-        sLog.outString(">> Loaded %u additional Script Texts data.", uiCount);
+        sLog->outString();
+        sLog->outString(">> Loaded %u additional Script Texts data.", uiCount);
     }
     else
     {
         
         
-        sLog.outString();
-        sLog.outString(">> Loaded 0 additional Script Texts data. DB table `script_texts` is empty.");
+        sLog->outString();
+        sLog->outString(">> Loaded 0 additional Script Texts data. DB table `script_texts` is empty.");
     }
 }
 
 void SystemMgr::LoadScriptTextsCustom()
 {
-    sLog.outString("TSCR: Loading Custom Texts...");
+    sLog->outString("TSCR: Loading Custom Texts...");
     LoadTrinityStrings("custom_texts",TEXT_SOURCE_RANGE*2,1+(TEXT_SOURCE_RANGE*3));
 
     QueryResult Result = WorldDatabase.Query("SELECT entry, sound, type, language, emote FROM custom_texts");
 
-    sLog.outString("TSCR: Loading Custom Texts additional data...");
+    sLog->outString("TSCR: Loading Custom Texts additional data...");
 
     if (Result)
     {
@@ -150,41 +150,41 @@ void SystemMgr::LoadScriptTextsCustom()
 
             if (iId >= 0)
             {
-                sLog.outErrorDb("TSCR: Entry %i in table `custom_texts` is not a negative value.", iId);
+                sLog->outErrorDb("TSCR: Entry %i in table `custom_texts` is not a negative value.", iId);
                 continue;
             }
 
             if (iId > TEXT_SOURCE_RANGE*2 || iId <= TEXT_SOURCE_RANGE*3)
             {
-                sLog.outErrorDb("TSCR: Entry %i in table `custom_texts` is out of accepted entry range for table.", iId);
+                sLog->outErrorDb("TSCR: Entry %i in table `custom_texts` is out of accepted entry range for table.", iId);
                 continue;
             }
 
             if (pTemp.uiSoundId)
             {
                 if (!GetSoundEntriesStore()->LookupEntry(pTemp.uiSoundId))
-                    sLog.outErrorDb("TSCR: Entry %i in table `custom_texts` has soundId %u but sound does not exist.", iId, pTemp.uiSoundId);
+                    sLog->outErrorDb("TSCR: Entry %i in table `custom_texts` has soundId %u but sound does not exist.", iId, pTemp.uiSoundId);
             }
 
             if (!GetLanguageDescByID(pTemp.uiLanguage))
-                sLog.outErrorDb("TSCR: Entry %i in table `custom_texts` using Language %u but Language does not exist.", iId, pTemp.uiLanguage);
+                sLog->outErrorDb("TSCR: Entry %i in table `custom_texts` using Language %u but Language does not exist.", iId, pTemp.uiLanguage);
 
             if (pTemp.uiType > CHAT_TYPE_ZONE_YELL)
-                sLog.outErrorDb("TSCR: Entry %i in table `custom_texts` has Type %u but this Chat Type does not exist.", iId, pTemp.uiType);
+                sLog->outErrorDb("TSCR: Entry %i in table `custom_texts` has Type %u but this Chat Type does not exist.", iId, pTemp.uiType);
 
             m_mTextDataMap[iId] = pTemp;
             ++uiCount;
         } while (Result->NextRow());
 
-        sLog.outString();
-        sLog.outString(">> Loaded %u additional Custom Texts data.", uiCount);
+        sLog->outString();
+        sLog->outString(">> Loaded %u additional Custom Texts data.", uiCount);
     }
     else
     {
         
         
-        sLog.outString();
-        sLog.outString(">> Loaded 0 additional Custom Texts data. DB table `custom_texts` is empty.");
+        sLog->outString();
+        sLog->outString(">> Loaded 0 additional Custom Texts data. DB table `custom_texts` is empty.");
     }
 }
 
@@ -200,7 +200,7 @@ void SystemMgr::LoadScriptWaypoints()
     if (Result)
         uiCreatureCount = Result->GetRowCount();
 
-    sLog.outString("TSCR: Loading Script Waypoints for " UI64FMTD " creature(s)...", uiCreatureCount);
+    sLog->outString("TSCR: Loading Script Waypoints for " UI64FMTD " creature(s)...", uiCreatureCount);
 
     Result = WorldDatabase.Query("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY pointid");
 
@@ -227,25 +227,25 @@ void SystemMgr::LoadScriptWaypoints()
 
             if (!pCInfo)
             {
-                sLog.outErrorDb("TSCR: DB table script_waypoint has waypoint for non-existant creature entry %u", pTemp.uiCreatureEntry);
+                sLog->outErrorDb("TSCR: DB table script_waypoint has waypoint for non-existant creature entry %u", pTemp.uiCreatureEntry);
                 continue;
             }
 
             if (!pCInfo->ScriptID)
-                sLog.outErrorDb("TSCR: DB table script_waypoint has waypoint for creature entry %u, but creature does not have ScriptName defined and then useless.", pTemp.uiCreatureEntry);
+                sLog->outErrorDb("TSCR: DB table script_waypoint has waypoint for creature entry %u, but creature does not have ScriptName defined and then useless.", pTemp.uiCreatureEntry);
 
             m_mPointMoveMap[uiEntry].push_back(pTemp);
             ++uiNodeCount;
         } while (Result->NextRow());
 
-        sLog.outString();
-        sLog.outString(">> Loaded %u Script Waypoint nodes.", uiNodeCount);
+        sLog->outString();
+        sLog->outString(">> Loaded %u Script Waypoint nodes.", uiNodeCount);
     }
     else
     {
         
         
-        sLog.outString();
-        sLog.outString(">> Loaded 0 Script Waypoints. DB table `script_waypoint` is empty.");
+        sLog->outString();
+        sLog->outString(">> Loaded 0 Script Waypoints. DB table `script_waypoint` is empty.");
     }
 }

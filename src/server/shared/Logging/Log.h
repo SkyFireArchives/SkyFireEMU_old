@@ -125,7 +125,7 @@ class Log
         void SetSQLDriverQueryLogging(bool newStatus) { m_sqlDriverQueryLogging = newStatus; }
         void SetRealmID(uint32 id) { realm = id; }
 
-        uint32 getLogFilter() const { return m_logFilter; }
+        uint32 GetLogFilter() const { return m_logFilter; }
         bool IsOutDebug() const { return m_logLevel > 2 || (m_logFileLevel > 2 && logfile); }
         bool IsOutCharDump() const { return m_charLog_Dump; }
 
@@ -182,6 +182,6 @@ class Log
         std::string m_dumpsDir;
 };
 
-#define sLog (*ACE_Singleton<Log, ACE_Thread_Mutex>::instance())
+#define sLog ACE_Singleton<Log, ACE_Thread_Mutex>::instance()
 
 #endif

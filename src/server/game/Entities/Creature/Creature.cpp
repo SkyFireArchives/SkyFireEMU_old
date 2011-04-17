@@ -177,7 +177,7 @@ Creature::~Creature()
     i_AI = NULL;
 
     //if (m_uint32Values)
-    //    sLog.outError("Deconstruct Creature Entry = %u", GetEntry());
+    //    sLog->outError("Deconstruct Creature Entry = %u", GetEntry());
 }
 
 void Creature::AddToWorld()
@@ -264,7 +264,7 @@ bool Creature::InitEntry(uint32 Entry, uint32 /*team*/, const CreatureData *data
     CreatureInfo const *normalInfo = sObjectMgr->GetCreatureTemplate(Entry);
     if (!normalInfo)
     {
-        sLog.outErrorDb("Creature::InitEntry creature entry %u does not exist.", Entry);
+        sLog->outErrorDb("Creature::InitEntry creature entry %u does not exist.", Entry);
         return false;
     }
 
@@ -283,7 +283,7 @@ bool Creature::InitEntry(uint32 Entry, uint32 /*team*/, const CreatureData *data
                 if (!cinfo)
                 {
                     // maybe check such things already at startup
-                    sLog.outErrorDb("Creature::UpdateEntry creature difficulty %u entry %u does not exist.", diff + 1, actualEntry);
+                    sLog->outErrorDb("Creature::UpdateEntry creature difficulty %u entry %u does not exist.", diff + 1, actualEntry);
                     return false;
                 }
             }
@@ -302,7 +302,7 @@ bool Creature::InitEntry(uint32 Entry, uint32 /*team*/, const CreatureData *data
     // Cancel load if no model defined
     if (!(cinfo->GetFirstValidModelId()))
     {
-        sLog.outErrorDb("Creature (Entry: %u) has no model defined in table `creature_template`, can't load. ",Entry);
+        sLog->outErrorDb("Creature (Entry: %u) has no model defined in table `creature_template`, can't load. ",Entry);
         return false;
     }
 
@@ -310,7 +310,7 @@ bool Creature::InitEntry(uint32 Entry, uint32 /*team*/, const CreatureData *data
     CreatureModelInfo const *minfo = sObjectMgr->GetCreatureModelRandomGender(display_id);
     if (!minfo)                                             // Cancel load if no model defined
     {
-        sLog.outErrorDb("Creature (Entry: %u) has no model defined in table `creature_template`, can't load. ",Entry);
+        sLog->outErrorDb("Creature (Entry: %u) has no model defined in table `creature_template`, can't load. ",Entry);
         return false;
     }
 
@@ -453,11 +453,11 @@ void Creature::Update(uint32 diff)
     {
         case JUST_ALIVED:
             // Don't must be called, see Creature::setDeathState JUST_ALIVED -> ALIVE promoting.
-            sLog.outError("Creature (GUID: %u Entry: %u) in wrong state: JUST_ALIVED (4)",GetGUIDLow(),GetEntry());
+            sLog->outError("Creature (GUID: %u Entry: %u) in wrong state: JUST_ALIVED (4)",GetGUIDLow(),GetEntry());
             break;
         case JUST_DIED:
             // Don't must be called, see Creature::setDeathState JUST_DIED -> CORPSE promoting.
-            sLog.outError("Creature (GUID: %u Entry: %u) in wrong state: JUST_DEAD (1)",GetGUIDLow(),GetEntry());
+            sLog->outError("Creature (GUID: %u Entry: %u) in wrong state: JUST_DEAD (1)",GetGUIDLow(),GetEntry());
             break;
         case DEAD:
         {
@@ -504,7 +504,7 @@ void Creature::Update(uint32 diff)
             else if (m_corpseRemoveTime <= time(NULL))
             {
                 RemoveCorpse(false);
-                sLog.outStaticDebug("Removing corpse... %u ", GetUInt32Value(OBJECT_FIELD_ENTRY));
+                sLog->outStaticDebug("Removing corpse... %u ", GetUInt32Value(OBJECT_FIELD_ENTRY));
             }
             else
             {
@@ -521,7 +521,7 @@ void Creature::Update(uint32 diff)
                 if (m_corpseRemoveTime <= time(NULL))
                 {
                     RemoveCorpse(false);
-                    sLog.outStaticDebug("Removing alive corpse... %u ", GetUInt32Value(OBJECT_FIELD_ENTRY));
+                    sLog->outStaticDebug("Removing alive corpse... %u ", GetUInt32Value(OBJECT_FIELD_ENTRY));
                 }
             }
 
@@ -714,7 +714,7 @@ bool Creature::AIM_Initialize(CreatureAI* ai)
     // make sure nothing can change the AI during AI update
     if (m_AI_locked)
     {
-        sLog.outDebug("AIM_Initialize: failed to init, locked.");
+        sLog->outDebug("AIM_Initialize: failed to init, locked.");
         return false;
     }
 
@@ -754,7 +754,7 @@ bool Creature::Create(uint32 guidlow, Map *map, uint32 phaseMask, uint32 Entry, 
 
     if (!IsPositionValid())
     {
-        sLog.outError("Creature (guidlow %d, entry %d) not loaded. Suggested coordinates isn't valid (X: %f Y: %f)",guidlow,Entry,x,y);
+        sLog->outError("Creature (guidlow %d, entry %d) not loaded. Suggested coordinates isn't valid (X: %f Y: %f)",guidlow,Entry,x,y);
         return false;
     }
 
@@ -819,7 +819,7 @@ bool Creature::isCanTrainingOf(Player* pPlayer, bool msg) const
 
     if ((!trainer_spells || trainer_spells->spellList.empty()) && GetCreatureInfo()->trainer_type != TRAINER_TYPE_PETS)
     {
-        sLog.outErrorDb("Creature %u (Entry: %u) have UNIT_NPC_FLAG_TRAINER but have empty trainer spell list.",
+        sLog->outErrorDb("Creature %u (Entry: %u) have UNIT_NPC_FLAG_TRAINER but have empty trainer spell list.",
             GetGUIDLow(),GetEntry());
         return false;
     }
@@ -995,7 +995,7 @@ void Creature::SaveToDB()
     CreatureData const *data = sObjectMgr->GetCreatureData(m_DBTableGuid);
     if (!data)
     {
-        sLog.outError("Creature::SaveToDB failed, cannot get creature data!");
+        sLog->outError("Creature::SaveToDB failed, cannot get creature data!");
         return;
     }
 
@@ -1209,7 +1209,7 @@ bool Creature::CreateFromProto(uint32 guidlow, uint32 Entry, uint32 vehId, uint3
     CreatureInfo const *cinfo = sObjectMgr->GetCreatureTemplate(Entry);
     if (!cinfo)
     {
-        sLog.outErrorDb("Creature entry %u does not exist.", Entry);
+        sLog->outErrorDb("Creature entry %u does not exist.", Entry);
         return false;
     }
 
@@ -1235,7 +1235,7 @@ bool Creature::LoadFromDB(uint32 guid, Map *map)
 
     if (!data)
     {
-        sLog.outErrorDb("Creature (GUID: %u) not found in table `creature`, can't load. ",guid);
+        sLog->outErrorDb("Creature (GUID: %u) not found in table `creature`, can't load. ",guid);
         return false;
     }
 
@@ -1350,7 +1350,7 @@ void Creature::DeleteFromDB()
 {
     if (!m_DBTableGuid)
     {
-        sLog.outDebug("Trying to delete not saved creature!");
+        sLog->outDebug("Trying to delete not saved creature!");
         return;
     }
 
@@ -1583,7 +1583,7 @@ void Creature::Respawn(bool force)
         if (m_DBTableGuid)
             sObjectMgr->RemoveCreatureRespawnTime(m_DBTableGuid, GetInstanceId());
 
-        sLog.outStaticDebug("Respawning...");
+        sLog->outStaticDebug("Respawning...");
         m_respawnTime = 0;
         lootForPickPocketed = false;
         lootForBody         = false;
@@ -1689,7 +1689,7 @@ SpellEntry const *Creature::reachWithSpellAttack(Unit *pVictim)
         SpellEntry const *spellInfo = sSpellStore.LookupEntry(m_spells[i]);
         if (!spellInfo)
         {
-            sLog.outError("WORLD: unknown spell id %i", m_spells[i]);
+            sLog->outError("WORLD: unknown spell id %i", m_spells[i]);
             continue;
         }
 
@@ -1739,7 +1739,7 @@ SpellEntry const *Creature::reachWithSpellCure(Unit *pVictim)
         SpellEntry const *spellInfo = sSpellStore.LookupEntry(m_spells[i]);
         if (!spellInfo)
         {
-            sLog.outError("WORLD: unknown spell id %i", m_spells[i]);
+            sLog->outError("WORLD: unknown spell id %i", m_spells[i]);
             continue;
         }
 
@@ -1848,7 +1848,7 @@ Unit* Creature::SelectNearestTargetInAttackDistance(float dist) const
     Unit *target = NULL;
 
     if (dist > ATTACK_DISTANCE)
-        sLog.outError("Creature (GUID: %u Entry: %u) SelectNearestTargetInAttackDistance called with dist > ATTACK_DISTANCE. Extra distance ignored.",GetGUIDLow(),GetEntry());
+        sLog->outError("Creature (GUID: %u Entry: %u) SelectNearestTargetInAttackDistance called with dist > ATTACK_DISTANCE. Extra distance ignored.",GetGUIDLow(),GetEntry());
 
     {
         Trinity::NearestHostileUnitInAttackDistanceCheck u_check(this, dist);
@@ -1873,7 +1873,7 @@ void Creature::SendAIReaction(AiReaction reactionType)
 
     ((WorldObject*)this)->SendMessageToSet(&data, true);
 
-    sLog.outDebug("WORLD: Sent SMSG_AI_REACTION, type %u.", reactionType);
+    sLog->outDebug("WORLD: Sent SMSG_AI_REACTION, type %u.", reactionType);
 }
 
 void Creature::CallAssistance()
@@ -2104,7 +2104,7 @@ bool Creature::LoadCreaturesAddon(bool reload)
             SpellEntry const *AdditionalSpellInfo = sSpellStore.LookupEntry(cAura->spell_id);
             if (!AdditionalSpellInfo)
             {
-                sLog.outErrorDb("Creature (GUID: %u Entry: %u) has wrong spell %u defined in `auras` field.",GetGUIDLow(),GetEntry(),cAura->spell_id);
+                sLog->outErrorDb("Creature (GUID: %u Entry: %u) has wrong spell %u defined in `auras` field.",GetGUIDLow(),GetEntry(),cAura->spell_id);
                 continue;
             }
 
@@ -2112,13 +2112,13 @@ bool Creature::LoadCreaturesAddon(bool reload)
             if (HasAura(cAura->spell_id))
             {
                 if (!reload)
-                    sLog.outErrorDb("Creature (GUID: %u Entry: %u) has duplicate aura (spell %u) in `auras` field.",GetGUIDLow(),GetEntry(),cAura->spell_id);
+                    sLog->outErrorDb("Creature (GUID: %u Entry: %u) has duplicate aura (spell %u) in `auras` field.",GetGUIDLow(),GetEntry(),cAura->spell_id);
 
                 continue;
             }
 
             AddAura(AdditionalSpellInfo, cAura->effectMask, this);
-            sLog.outDebug("Spell: %u with AuraEffectMask %u added to creature (GUID: %u Entry: %u)", cAura->spell_id, cAura->effectMask,GetGUIDLow(),GetEntry());
+            sLog->outDebug("Spell: %u with AuraEffectMask %u added to creature (GUID: %u Entry: %u)", cAura->spell_id, cAura->effectMask,GetGUIDLow(),GetEntry());
         }
     }
     return true;
@@ -2138,7 +2138,7 @@ void Creature::SetInCombatWithZone()
 {
     if (!CanHaveThreatList())
     {
-        sLog.outError("Creature entry %u call SetInCombatWithZone but creature cannot have threat list.", GetEntry());
+        sLog->outError("Creature entry %u call SetInCombatWithZone but creature cannot have threat list.", GetEntry());
         return;
     }
 
@@ -2146,7 +2146,7 @@ void Creature::SetInCombatWithZone()
 
     if (!pMap->IsDungeon())
     {
-        sLog.outError("Creature entry %u call SetInCombatWithZone for map (id: %u) that isn't an instance.", GetEntry(), pMap->GetId());
+        sLog->outError("Creature entry %u call SetInCombatWithZone for map (id: %u) that isn't an instance.", GetEntry(), pMap->GetId());
         return;
     }
 

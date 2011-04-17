@@ -136,7 +136,7 @@ bool ChatHandler::HandleOpcodeTestCommand(const char* args)
         if (jump == 0)
             jump = 0xFF;
         
-        sLog.outString("Performing opcode jump!");
+        sLog->outString("Performing opcode jump!");
         for (uint32 i = 0; i < jump; i++)
         {
             if (strcmp(LookupOpcodeName(testopcode), "UNKNOWN") == 0)
@@ -546,11 +546,11 @@ bool ChatHandler::HandleGPSCommand(const char* args)
         cell.GridX(), cell.GridY(), cell.CellX(), cell.CellY(), obj->GetInstanceId(),
         zone_x, zone_y, ground_z, floor_z, have_map, have_vmap);
 
-    sLog.outDebug("Player %s GPS call for %s '%s' (%s: %u):",
+    sLog->outDebug("Player %s GPS call for %s '%s' (%s: %u):",
         m_session ? GetNameLink().c_str() : GetTrinityString(LANG_CONSOLE_COMMAND),
         (obj->GetTypeId() == TYPEID_PLAYER ? "player" : "creature"), obj->GetName(),
         (obj->GetTypeId() == TYPEID_PLAYER ? "GUID" : "Entry"), (obj->GetTypeId() == TYPEID_PLAYER ? obj->GetGUIDLow(): obj->GetEntry()));
-    sLog.outDebug(GetTrinityString(LANG_MAP_POSITION),
+    sLog->outDebug(GetTrinityString(LANG_MAP_POSITION),
         obj->GetMapId(), (mapEntry ? mapEntry->name : "<unknown>"),
         zone_id, (zoneEntry ? zoneEntry->area_name : "<unknown>"),
         area_id, (areaEntry ? areaEntry->area_name : "<unknown>"),
@@ -976,7 +976,7 @@ bool ChatHandler::HandleModifyEnergyCommand(const char* args)
     chr->SetMaxPower(POWER_ENERGY,energym);
     chr->SetPower(POWER_ENERGY, energy);
 
-    sLog.outDetail(GetTrinityString(LANG_CURRENT_ENERGY),chr->GetMaxPower(POWER_ENERGY));
+    sLog->outDetail(GetTrinityString(LANG_CURRENT_ENERGY),chr->GetMaxPower(POWER_ENERGY));
 
     return true;
 }
@@ -1831,7 +1831,7 @@ bool ChatHandler::HandleModifyMoneyCommand(const char* args)
     {
         int64 newmoney = int64(moneyuser) + addmoney;
 
-        sLog.outDetail(GetTrinityString(LANG_CURRENT_MONEY), moneyuser, addmoney, newmoney);
+        sLog->outDetail(GetTrinityString(LANG_CURRENT_MONEY), moneyuser, addmoney, newmoney);
         if (newmoney <= 0)
         {
             PSendSysMessage(LANG_YOU_TAKE_ALL_MONEY, GetNameLink(chr).c_str());
@@ -1863,7 +1863,7 @@ bool ChatHandler::HandleModifyMoneyCommand(const char* args)
             chr->ModifyMoney(addmoney);
     }
 
-    sLog.outDetail(GetTrinityString(LANG_NEW_MONEY), moneyuser, addmoney, chr->GetMoney());
+    sLog->outDetail(GetTrinityString(LANG_NEW_MONEY), moneyuser, addmoney, chr->GetMoney());
 
     return true;
 }

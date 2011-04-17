@@ -50,7 +50,7 @@ int32 ReputationMgr::GetReputation(uint32 faction_id) const
 
     if (!factionEntry)
     {
-        sLog.outError("ReputationMgr::GetReputation: Can't get reputation of %s for unknown faction (faction id) #%u.",m_player->GetName(), faction_id);
+        sLog->outError("ReputationMgr::GetReputation: Can't get reputation of %s for unknown faction (faction id) #%u.",m_player->GetName(), faction_id);
         return 0;
     }
 

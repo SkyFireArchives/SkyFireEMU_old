@@ -33,7 +33,7 @@ void CharacterDatabaseCleaner::CleanDatabase()
     if(!sWorld->getBoolConfig(CONFIG_CLEAN_CHARACTER_DB))
         return;
 
-    sLog.outString("Cleaning character database...");
+    sLog->outString("Cleaning character database...");
 
     // check flags which clean ups are necessary
     QueryResult result = CharacterDatabase.Query("SELECT value FROM worldstates WHERE entry=20004");
@@ -59,7 +59,7 @@ char* table, bool (*check)(uint32))
     QueryResult result = CharacterDatabase.PQuery("SELECT DISTINCT %s FROM %s", column, table);
     if(!result)
     {
-        sLog.outString( "Table %s is empty.", table );
+        sLog->outString( "Table %s is empty.", table );
         return;
     }
 

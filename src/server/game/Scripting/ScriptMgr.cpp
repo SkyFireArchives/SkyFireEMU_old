@@ -66,13 +66,13 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
 {
     if (!pSource)
     {
-        sLog.outError("TSCR: DoScriptText entry %i, invalid Source pointer.", iTextEntry);
+        sLog->outError("TSCR: DoScriptText entry %i, invalid Source pointer.", iTextEntry);
         return;
     }
 
     if (iTextEntry >= 0)
     {
-        sLog.outError("TSCR: DoScriptText with source entry %u (TypeId=%u, guid=%u) attempts to process text entry %i, but text entry must be negative.", pSource->GetEntry(), pSource->GetTypeId(), pSource->GetGUIDLow(), iTextEntry);
+        sLog->outError("TSCR: DoScriptText with source entry %u (TypeId=%u, guid=%u) attempts to process text entry %i, but text entry must be negative.", pSource->GetEntry(), pSource->GetTypeId(), pSource->GetGUIDLow(), iTextEntry);
         return;
     }
 
@@ -80,18 +80,18 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
 
     if (!pData)
     {
-        sLog.outError("TSCR: DoScriptText with source entry %u (TypeId=%u, guid=%u) could not find text entry %i.", pSource->GetEntry(), pSource->GetTypeId(), pSource->GetGUIDLow(), iTextEntry);
+        sLog->outError("TSCR: DoScriptText with source entry %u (TypeId=%u, guid=%u) could not find text entry %i.", pSource->GetEntry(), pSource->GetTypeId(), pSource->GetGUIDLow(), iTextEntry);
         return;
     }
 
-    sLog.outDebug("TSCR: DoScriptText: text entry=%i, Sound=%u, Type=%u, Language=%u, Emote=%u", iTextEntry, pData->uiSoundId, pData->uiType, pData->uiLanguage, pData->uiEmote);
+    sLog->outDebug("TSCR: DoScriptText: text entry=%i, Sound=%u, Type=%u, Language=%u, Emote=%u", iTextEntry, pData->uiSoundId, pData->uiType, pData->uiLanguage, pData->uiEmote);
 
     if (pData->uiSoundId)
     {
         if (GetSoundEntriesStore()->LookupEntry(pData->uiSoundId))
             pSource->SendPlaySound(pData->uiSoundId, false);
         else
-            sLog.outError("TSCR: DoScriptText entry %i tried to process invalid sound id %u.", iTextEntry, pData->uiSoundId);
+            sLog->outError("TSCR: DoScriptText entry %i tried to process invalid sound id %u.", iTextEntry, pData->uiSoundId);
     }
 
     if (pData->uiEmote)
@@ -99,7 +99,7 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
         if (pSource->GetTypeId() == TYPEID_UNIT || pSource->GetTypeId() == TYPEID_PLAYER)
             ((Unit*)pSource)->HandleEmoteCommand(pData->uiEmote);
         else
-            sLog.outError("TSCR: DoScriptText entry %i tried to process emote for invalid TypeId (%u).", iTextEntry, pSource->GetTypeId());
+            sLog->outError("TSCR: DoScriptText entry %i tried to process emote for invalid TypeId (%u).", iTextEntry, pSource->GetTypeId());
     }
 
     switch (pData->uiType)
@@ -121,7 +121,7 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
             if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
                 pSource->MonsterWhisper(iTextEntry, pTarget->GetGUID());
             else
-                sLog.outError("TSCR: DoScriptText entry %i cannot whisper without target unit (TYPEID_PLAYER).", iTextEntry);
+                sLog->outError("TSCR: DoScriptText entry %i cannot whisper without target unit (TYPEID_PLAYER).", iTextEntry);
 
             break;
         }
@@ -130,7 +130,7 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
             if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
                 pSource->MonsterWhisper(iTextEntry, pTarget->GetGUID(), true);
             else
-                sLog.outError("TSCR: DoScriptText entry %i cannot whisper without target unit (TYPEID_PLAYER).", iTextEntry);
+                sLog->outError("TSCR: DoScriptText entry %i cannot whisper without target unit (TYPEID_PLAYER).", iTextEntry);
 
             break;
         }
@@ -185,15 +185,15 @@ void ScriptMgr::Initialize()
 {
     LoadDatabase();
 
-    sLog.outString("Loading C++ scripts");
+    sLog->outString("Loading C++ scripts");
     
     
-    sLog.outString();
+    sLog->outString();
 
     FillSpellSummary();
     AddScripts();
 
-    sLog.outString(">> Loaded %u C++ scripts", GetScriptCount());
+    sLog->outString(">> Loaded %u C++ scripts", GetScriptCount());
 }
 
 void ScriptMgr::LoadDatabase()
@@ -1326,7 +1326,7 @@ WorldMapScript::WorldMapScript(const char* name, uint32 mapId)
     : ScriptObject(name), MapScript<Map>(mapId)
 {
     if (GetEntry() && !GetEntry()->IsContinent())
-        sLog.outError("WorldMapScript for map %u is invalid.", mapId);
+        sLog->outError("WorldMapScript for map %u is invalid.", mapId);
 
     ScriptMgr::ScriptRegistry<WorldMapScript>::AddScript(this);
 }
@@ -1335,7 +1335,7 @@ InstanceMapScript::InstanceMapScript(const char* name, uint32 mapId)
     : ScriptObject(name), MapScript<InstanceMap>(mapId)
 {
     if (GetEntry() && !GetEntry()->IsDungeon())
-        sLog.outError("InstanceMapScript for map %u is invalid.", mapId);
+        sLog->outError("InstanceMapScript for map %u is invalid.", mapId);
 
     ScriptMgr::ScriptRegistry<InstanceMapScript>::AddScript(this);
 }
@@ -1344,7 +1344,7 @@ BattlegroundMapScript::BattlegroundMapScript(const char* name, uint32 mapId)
     : ScriptObject(name), MapScript<BattlegroundMap>(mapId)
 {
     if (GetEntry() && !GetEntry()->IsBattleground())
-        sLog.outError("BattlegroundMapScript for map %u is invalid.", mapId);
+        sLog->outError("BattlegroundMapScript for map %u is invalid.", mapId);
 
     ScriptMgr::ScriptRegistry<BattlegroundMapScript>::AddScript(this);
 }

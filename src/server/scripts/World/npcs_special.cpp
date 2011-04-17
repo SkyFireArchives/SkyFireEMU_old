@@ -130,7 +130,7 @@ public:
             }
 
             if (!m_pSpawnAssoc)
-                sLog.outErrorDb("TCSR: Creature template entry %u has ScriptName npc_air_force_bots, but it's not handled by that script", pCreature->GetEntry());
+                sLog->outErrorDb("TCSR: Creature template entry %u has ScriptName npc_air_force_bots, but it's not handled by that script", pCreature->GetEntry());
             else
             {
                 CreatureInfo const* spawnedTemplate = GetCreatureTemplateStore(m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
@@ -138,7 +138,7 @@ public:
                 if (!spawnedTemplate)
                 {
                     m_pSpawnAssoc = NULL;
-                    sLog.outErrorDb("TCSR: Creature template entry %u does not exist in DB, which is required by npc_air_force_bots", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
+                    sLog->outErrorDb("TCSR: Creature template entry %u does not exist in DB, which is required by npc_air_force_bots", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
                     return;
                 }
             }
@@ -157,7 +157,7 @@ public:
                 m_uiSpawnedGUID = pSummoned->GetGUID();
             else
             {
-                sLog.outErrorDb("TCSR: npc_air_force_bots: wasn't able to spawn Creature %u", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
+                sLog->outErrorDb("TCSR: npc_air_force_bots: wasn't able to spawn Creature %u", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
                 m_pSpawnAssoc = NULL;
             }
 
@@ -831,7 +831,7 @@ void npc_doctor::npc_doctorAI::UpdateAI(const uint32 diff)
             case DOCTOR_ALLIANCE: patientEntry = AllianceSoldierId[rand()%3]; break;
             case DOCTOR_HORDE:    patientEntry = HordeSoldierId[rand()%3]; break;
             default:
-                sLog.outError("TSCR: Invalid entry for Triage doctor. Please check your database");
+                sLog->outError("TSCR: Invalid entry for Triage doctor. Please check your database");
                 return;
             }
 

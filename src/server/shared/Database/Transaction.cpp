@@ -88,7 +88,7 @@ bool TransactionTask::Execute()
                 ASSERT(stmt);
                 if (!m_conn->Execute(stmt))
                 {
-                    sLog.outSQLDriver("[Warning] Transaction aborted. %u queries not executed.", (uint32)queries.size());
+                    sLog->outSQLDriver("[Warning] Transaction aborted. %u queries not executed.", (uint32)queries.size());
                     m_conn->RollbackTransaction();
                     return false;
                 }
@@ -101,7 +101,7 @@ bool TransactionTask::Execute()
                 ASSERT(sql);
                 if (!m_conn->Execute(sql))
                 {
-                    sLog.outSQLDriver("[Warning] Transaction aborted. %u queries not executed.", (uint32)queries.size());
+                    sLog->outSQLDriver("[Warning] Transaction aborted. %u queries not executed.", (uint32)queries.size());
                     m_conn->RollbackTransaction();
                     return false;
                 }

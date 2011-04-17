@@ -41,7 +41,7 @@ void AddonMgr::LoadFromDB()
     QueryResult result = CharacterDatabase.Query("SELECT name, crc FROM addons");
     if (!result)
     {
-        sLog.outErrorDb("The table `addons` is empty");
+        sLog->outErrorDb("The table `addons` is empty");
         return;
     }
 
@@ -62,8 +62,8 @@ void AddonMgr::LoadFromDB()
         m_knownAddons.push_back(addon);
     } while (result->NextRow());
 
-    sLog.outString();
-    sLog.outString(">> Loaded %u known addons", count);
+    sLog->outString();
+    sLog->outString(">> Loaded %u known addons", count);
 }
 
 void AddonMgr::SaveAddon(AddonInfo const& addon)

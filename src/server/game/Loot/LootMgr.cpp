@@ -102,7 +102,7 @@ void LootStore::LoadLootTable()
     // Clearing store (for reloading case)
     Clear();
 
-    sLog.outString("%s :", GetName());
+    sLog->outString("%s :", GetName());
 
     //                                                        0      1     2                    3         4        5              6
     QueryResult result = WorldDatabase.PQuery("SELECT entry, item, ChanceOrQuestChance, lootmode, groupid, mincountOrRef, maxcount FROM %s",GetName());
@@ -128,7 +128,7 @@ void LootStore::LoadLootTable()
 
             if (maxcount > std::numeric_limits<uint8>::max())
             {
-                sLog.outErrorDb("Table '%s' entry %d item %d: maxcount value (%u) to large. must be less %u - skipped", GetName(), entry, item, maxcount,std::numeric_limits<uint8>::max());
+                sLog->outErrorDb("Table '%s' entry %d item %d: maxcount value (%u) to large. must be less %u - skipped", GetName(), entry, item, maxcount,std::numeric_limits<uint8>::max());
                 continue;                                   // error already printed to log/console.
             }
 
@@ -160,13 +160,13 @@ void LootStore::LoadLootTable()
 
         Verify();                                           // Checks validity of the loot store
 
-        sLog.outString();
-        sLog.outString(">> Loaded %u loot definitions (%lu templates)", count, (unsigned long)m_LootTemplates.size());
+        sLog->outString();
+        sLog->outString(">> Loaded %u loot definitions (%lu templates)", count, (unsigned long)m_LootTemplates.size());
     }
     else
     {
-        sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 loot definitions. DB table `%s` is empty.",GetName());
+        sLog->outString();
+        sLog->outErrorDb(">> Loaded 0 loot definitions. DB table `%s` is empty.",GetName());
     }
 }
 
@@ -237,12 +237,12 @@ void LootStore::ReportUnusedIds(LootIdSet const& ids_set) const
 {
     // all still listed ids isn't referenced
     for (LootIdSet::const_iterator itr = ids_set.begin(); itr != ids_set.end(); ++itr)
-        sLog.outErrorDb("Table '%s' entry %d isn't %s and not referenced from loot, and then useless.", GetName(), *itr,GetEntryName());
+        sLog->outErrorDb("Table '%s' entry %d isn't %s and not referenced from loot, and then useless.", GetName(), *itr,GetEntryName());
 }
 
 void LootStore::ReportNotExistedId(uint32 id) const
 {
-    sLog.outErrorDb("Table '%s' entry %d (%s) not exist but used as loot id in DB.", GetName(), id,GetEntryName());
+    sLog->outErrorDb("Table '%s' entry %d (%s) not exist but used as loot id in DB.", GetName(), id,GetEntryName());
 }
 
 //
@@ -271,13 +271,13 @@ bool LootStoreItem::IsValid(LootStore const& store, uint32 entry) const
 {
     if (group >= 1 << 7)                                     // it stored in 7 bit field
     {
-        sLog.outErrorDb("Table '%s' entry %d item %d: group (%u) must be less %u - skipped", store.GetName(), entry, itemid, group, 1 << 7);
+        sLog->outErrorDb("Table '%s' entry %d item %d: group (%u) must be less %u - skipped", store.GetName(), entry, itemid, group, 1 << 7);
         return false;
     }
 
     if (mincountOrRef == 0)
     {
-        sLog.outErrorDb("Table '%s' entry %d item %d: wrong mincountOrRef (%d) - skipped", store.GetName(), entry, itemid, mincountOrRef);
+        sLog->outErrorDb("Table '%s' entry %d item %d: wrong mincountOrRef (%d) - skipped", store.GetName(), entry, itemid, mincountOrRef);
         return false;
     }
 
@@ -286,26 +286,26 @@ bool LootStoreItem::IsValid(LootStore const& store, uint32 entry) const
         ItemPrototype const *proto = sObjectMgr->GetItemPrototype(itemid);
         if (!proto)
         {
-            sLog.outErrorDb("Table '%s' entry %d item %d: item entry not listed in `item_template` - skipped", store.GetName(), entry, itemid);
+            sLog->outErrorDb("Table '%s' entry %d item %d: item entry not listed in `item_template` - skipped", store.GetName(), entry, itemid);
             return false;
         }
 
         if (chance == 0 && group == 0)                      // Zero chance is allowed for grouped entries only
         {
-            sLog.outErrorDb("Table '%s' entry %d item %d: equal-chanced grouped entry, but group not defined - skipped", store.GetName(), entry, itemid);
+            sLog->outErrorDb("Table '%s' entry %d item %d: equal-chanced grouped entry, but group not defined - skipped", store.GetName(), entry, itemid);
             return false;
         }
 
         if (chance != 0 && chance < 0.000001f)             // loot with low chance
         {
-            sLog.outErrorDb("Table '%s' entry %d item %d: low chance (%f) - skipped",
+            sLog->outErrorDb("Table '%s' entry %d item %d: low chance (%f) - skipped",
                 store.GetName(), entry, itemid, chance);
             return false;
         }
 
         if (maxcount < mincountOrRef)                       // wrong max count
         {
-            sLog.outErrorDb("Table '%s' entry %d item %d: max count (%u) less that min count (%i) - skipped", store.GetName(), entry, itemid, int32(maxcount), mincountOrRef);
+            sLog->outErrorDb("Table '%s' entry %d item %d: max count (%u) less that min count (%i) - skipped", store.GetName(), entry, itemid, int32(maxcount), mincountOrRef);
             return false;
         }
 
@@ -313,10 +313,10 @@ bool LootStoreItem::IsValid(LootStore const& store, uint32 entry) const
     else                                                    // mincountOrRef < 0
     {
         if (needs_quest)
-            sLog.outErrorDb("Table '%s' entry %d item %d: quest chance will be treated as non-quest chance", store.GetName(), entry, itemid);
+            sLog->outErrorDb("Table '%s' entry %d item %d: quest chance will be treated as non-quest chance", store.GetName(), entry, itemid);
         else if (chance == 0)                              // no chance for the reference
         {
-            sLog.outErrorDb("Table '%s' entry %d item %d: zero chance is specified for a reference, skipped", store.GetName(), entry, itemid);
+            sLog->outErrorDb("Table '%s' entry %d item %d: zero chance is specified for a reference, skipped", store.GetName(), entry, itemid);
             return false;
         }
     }
@@ -430,7 +430,7 @@ bool Loot::FillLoot(uint32 lootId, LootStore const& store, Player* lootOwner, bo
     if (!tab)
     {
         if (!noEmptyError)
-            sLog.outErrorDb("Table '%s' loot id #%u used but it doesn't have records.", store.GetName(), lootId);
+            sLog->outErrorDb("Table '%s' loot id #%u used but it doesn't have records.", store.GetName(), lootId);
         return false;
     }
 
@@ -1156,12 +1156,12 @@ void LootTemplate::LootGroup::Verify(LootStore const& lootstore, uint32 id, uint
     float chance = RawTotalChance();
     if (chance > 101.0f)                                    // TODO: replace with 100% when DBs will be ready
     {
-        sLog.outErrorDb("Table '%s' entry %u group %d has total chance > 100%% (%f)", lootstore.GetName(), id, group_id, chance);
+        sLog->outErrorDb("Table '%s' entry %u group %d has total chance > 100%% (%f)", lootstore.GetName(), id, group_id, chance);
     }
 
     if (chance >= 100.0f && !EqualChanced.empty())
     {
-        sLog.outErrorDb("Table '%s' entry %u group %d has items with chance=0%% but group total chance >= 100%% (%f)", lootstore.GetName(), id, group_id, chance);
+        sLog->outErrorDb("Table '%s' entry %u group %d has items with chance=0%% but group total chance >= 100%% (%f)", lootstore.GetName(), id, group_id, chance);
     }
 }
 
@@ -1369,7 +1369,7 @@ bool LootTemplate::addConditionItem(Condition* cond)
 {
     if (!cond || !cond->isLoaded())//should never happen, checked at loading
     {
-        sLog.outError("LootTemplate::addConditionItem: condition is null");
+        sLog->outError("LootTemplate::addConditionItem: condition is null");
         return false;
     }
     if (!Entries.empty())

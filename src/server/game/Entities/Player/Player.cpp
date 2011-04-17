@@ -704,7 +704,7 @@ bool Player::Create(uint32 guidlow, const std::string& name, uint8 race, uint8 c
     PlayerInfo const* info = sObjectMgr->GetPlayerInfo(race, class_);
     if (!info)
     {
-        sLog.outError("Player have incorrect race/class pair. Can't be loaded.");
+        sLog->outError("Player have incorrect race/class pair. Can't be loaded.");
         return false;
     }
 
@@ -716,7 +716,7 @@ bool Player::Create(uint32 guidlow, const std::string& name, uint8 race, uint8 c
     ChrClassesEntry const* cEntry = sChrClassesStore.LookupEntry(class_);
     if (!cEntry)
     {
-        sLog.outError("Class %u not found in DBC (Wrong DBC files?)",class_);
+        sLog->outError("Class %u not found in DBC (Wrong DBC files?)",class_);
         return false;
     }
 
@@ -975,7 +975,7 @@ bool Player::Create(uint32 guidlow, const std::string& name, uint8 race, uint8 c
 
 bool Player::StoreNewItemInBestSlots(uint32 titem_id, uint32 titem_amount)
 {
-    sLog.outDebug("STORAGE: Creating initial item, itemId = %u, count = %u",titem_id, titem_amount);
+    sLog->outDebug("STORAGE: Creating initial item, itemId = %u, count = %u",titem_id, titem_amount);
 
     // attempt equip by one
     while (titem_amount > 0)
@@ -1004,7 +1004,7 @@ bool Player::StoreNewItemInBestSlots(uint32 titem_id, uint32 titem_amount)
     }
 
     // item can't be added
-    sLog.outError("STORAGE: Can't equip or store initial item %u for race %u class %u , error msg = %u",titem_id,getRace(),getClass(),msg);
+    sLog->outError("STORAGE: Can't equip or store initial item %u for race %u class %u , error msg = %u",titem_id,getRace(),getClass(),msg);
     return false;
 }
 
@@ -1065,7 +1065,7 @@ uint32 Player::EnvironmentalDamage(EnviromentalDamage type, uint32 damage)
     {
         if (type == DAMAGE_FALL)                               // DealDamage not apply item durability loss at self damage
         {
-            sLog.outStaticDebug("We are fall to death, loosing 10 percents durability");
+            sLog->outStaticDebug("We are fall to death, loosing 10 percents durability");
             DurabilityLossAll(0.10f,false);
             // durability lost message
             WorldPacket data2(SMSG_DURABILITY_DAMAGE_DEATH, 0);
@@ -1305,9 +1305,9 @@ void Player::Update(uint32 p_time)
     //ASSERT (!m_spellModTakingSpell);
     if ( m_spellModTakingSpell)
     {
-        //sLog.outCrash("Player has m_pad %u during update!", m_pad);
+        //sLog->outCrash("Player has m_pad %u during update!", m_pad);
         //if (m_spellModTakingSpell)
-        sLog.outCrash("Player has m_spellModTakingSpell %u during update!", m_spellModTakingSpell->m_spellInfo->Id);
+        sLog->outCrash("Player has m_spellModTakingSpell %u during update!", m_spellModTakingSpell->m_spellInfo->Id);
         m_spellModTakingSpell = NULL;
     }
 
@@ -1511,7 +1511,7 @@ void Player::Update(uint32 p_time)
         {
             // m_nextSave reseted in SaveToDB call
             SaveToDB();
-            sLog.outDetail("Player '%s' (GUID: %u) saved", GetName(), GetGUIDLow());
+            sLog->outDetail("Player '%s' (GUID: %u) saved", GetName(), GetGUIDLow());
         }
         else
             m_nextSave -= p_time;
@@ -1589,7 +1589,7 @@ void Player::setDeathState(DeathState s)
     {
         if (!cur)
         {
-            sLog.outError("setDeathState: attempt to kill a dead player %s(%d)", GetName(), GetGUIDLow());
+            sLog->outError("setDeathState: attempt to kill a dead player %s(%d)", GetName(), GetGUIDLow());
             return;
         }
 
@@ -1652,7 +1652,7 @@ bool Player::BuildEnumData(QueryResult result, WorldPacket * p_data)
     PlayerInfo const *info = sObjectMgr->GetPlayerInfo(pRace, pClass);
     if (!info)
     {
-        sLog.outError("Player %u has incorrect race/class pair. Don't build enum.", guid);
+        sLog->outError("Player %u has incorrect race/class pair. Don't build enum.", guid);
         return false;
     }
 
@@ -1871,7 +1871,7 @@ void Player::TeleportOutOfMap(Map *oldMap)
 
     if (GetMap() == oldMap)
     {
-        sLog.outCrash("Cannot teleport player out of map!");
+        sLog->outCrash("Cannot teleport player out of map!");
         ResetMap();
         ASSERT(false);
     }
@@ -1881,13 +1881,13 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
 {
     if (!MapManager::IsValidMapCoord(mapid, x, y, z, orientation))
     {
-        sLog.outError("TeleportTo: invalid map %d or absent instance template.", mapid);
+        sLog->outError("TeleportTo: invalid map %d or absent instance template.", mapid);
         return false;
     }
 
     if ((GetSession()->GetSecurity() < SEC_GAMEMASTER) && sDisableMgr->IsDisabledFor(DISABLE_TYPE_MAP, mapid, this))
     {
-        sLog.outError("Player %s tried to enter a forbidden map %u", GetName(), mapid);
+        sLog->outError("Player %s tried to enter a forbidden map %u", GetName(), mapid);
         SendTransferAborted(mapid, TRANSFER_ABORT_MAP_NOT_ALLOWED);
         return false;
     }
@@ -1905,7 +1905,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
     // client without expansion support
     if (GetSession()->Expansion() < mEntry->Expansion())
     {
-        sLog.outDebug("Player %s using client without required expansion tried teleport to non accessible map %u", GetName(), mapid);
+        sLog->outDebug("Player %s using client without required expansion tried teleport to non accessible map %u", GetName(), mapid);
 
         if (GetTransport())
         {
@@ -1922,7 +1922,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         return false;                                       // normal client can't teleport to this map...
     }
     else
-        sLog.outDebug("Player %s is being teleported to map %u", GetName(), mapid);
+        sLog->outDebug("Player %s is being teleported to map %u", GetName(), mapid);
 
     // reset movement flags at teleport, because player will continue move with these flags after teleport
     SetUnitMovementFlags(0);
@@ -2229,7 +2229,7 @@ void Player::RemoveFromWorld()
     {
         if (WorldObject *viewpoint = GetViewpoint())
         {
-            sLog.outCrash("Player %s has viewpoint %u %u when removed from world", GetName(), viewpoint->GetEntry(), viewpoint->GetTypeId());
+            sLog->outCrash("Player %s has viewpoint %u %u when removed from world", GetName(), viewpoint->GetEntry(), viewpoint->GetTypeId());
             SetViewpoint(viewpoint, false);
         }
     }
@@ -2549,7 +2549,7 @@ GameObject* Player::GetGameObjectIfCanInteractWith(uint64 guid, GameobjectTypes 
             if (go->IsWithinDistInMap(this, maxdist))
                 return go;
 
-            sLog.outDebug("IsGameObjectOfTypeInRange: GameObject '%s' [GUID: %u] is too far away from player %s [GUID: %u] to be used by him (distance=%f, maximal 10 is allowed)", go->GetGOInfo()->name,
+            sLog->outDebug("IsGameObjectOfTypeInRange: GameObject '%s' [GUID: %u] is too far away from player %s [GUID: %u] to be used by him (distance=%f, maximal 10 is allowed)", go->GetGOInfo()->name,
                 go->GetGUIDLow(), GetName(), GetGUIDLow(), go->GetDistance(this));
         }
     }
@@ -3150,7 +3150,7 @@ void Player::SendInitialSpells()
 
     GetSession()->SendPacket(&data);
 
-    sLog.outDetail("CHARACTER: Sent Initial Spells");
+    sLog->outDetail("CHARACTER: Sent Initial Spells");
 }
 
 void Player::RemoveMail(uint32 id)
@@ -3231,11 +3231,11 @@ bool Player::AddTalent(uint32 spell_id, uint8 spec, bool learning)
         // do character spell book cleanup (all characters)
         if (!IsInWorld() && !learning)                       // spell load case
         {
-            sLog.outError("Player::addSpell: Non-existed in SpellStore spell #%u request, deleting for all characters in `character_spell`.",spell_id);
+            sLog->outError("Player::addSpell: Non-existed in SpellStore spell #%u request, deleting for all characters in `character_spell`.",spell_id);
             CharacterDatabase.PExecute("DELETE FROM character_talent WHERE spell = '%u'",spell_id);
         }
         else
-            sLog.outError("Player::addSpell: Non-existed in SpellStore spell #%u request.",spell_id);
+            sLog->outError("Player::addSpell: Non-existed in SpellStore spell #%u request.",spell_id);
 
         return false;
     }
@@ -3245,11 +3245,11 @@ bool Player::AddTalent(uint32 spell_id, uint8 spec, bool learning)
         // do character spell book cleanup (all characters)
         if (!IsInWorld() && !learning)                       // spell load case
         {
-            sLog.outError("Player::addTalent: Broken spell #%u learning not allowed, deleting for all characters in `character_talent`.",spell_id);
+            sLog->outError("Player::addTalent: Broken spell #%u learning not allowed, deleting for all characters in `character_talent`.",spell_id);
             CharacterDatabase.PExecute("DELETE FROM character_talent WHERE spell = '%u'",spell_id);
         }
         else
-            sLog.outError("Player::addTalent: Broken spell #%u learning not allowed.",spell_id);
+            sLog->outError("Player::addTalent: Broken spell #%u learning not allowed.",spell_id);
 
         return false;
     }
@@ -3294,11 +3294,11 @@ bool Player::addSpell(uint32 spell_id, bool active, bool learning, bool dependen
         // do character spell book cleanup (all characters)
         if (!IsInWorld() && !learning)                       // spell load case
         {
-            sLog.outError("Player::addSpell: Non-existed in SpellStore spell #%u request, deleting for all characters in `character_spell`.",spell_id);
+            sLog->outError("Player::addSpell: Non-existed in SpellStore spell #%u request, deleting for all characters in `character_spell`.",spell_id);
             CharacterDatabase.PExecute("DELETE FROM character_spell WHERE spell = '%u'",spell_id);
         }
         else
-            sLog.outError("Player::addSpell: Non-existed in SpellStore spell #%u request.",spell_id);
+            sLog->outError("Player::addSpell: Non-existed in SpellStore spell #%u request.",spell_id);
 
         return false;
     }
@@ -3308,11 +3308,11 @@ bool Player::addSpell(uint32 spell_id, bool active, bool learning, bool dependen
         // do character spell book cleanup (all characters)
         if (!IsInWorld() && !learning)                       // spell load case
         {
-            sLog.outError("Player::addSpell: Broken spell #%u learning not allowed, deleting for all characters in `character_spell`.",spell_id);
+            sLog->outError("Player::addSpell: Broken spell #%u learning not allowed, deleting for all characters in `character_spell`.",spell_id);
             CharacterDatabase.PExecute("DELETE FROM character_spell WHERE spell = '%u'",spell_id);
         }
         else
-            sLog.outError("Player::addSpell: Broken spell #%u learning not allowed.",spell_id);
+            sLog->outError("Player::addSpell: Broken spell #%u learning not allowed.",spell_id);
 
         return false;
     }
@@ -4067,7 +4067,7 @@ void Player::_LoadSpellCooldowns(PreparedQueryResult result)
 
             if (!sSpellStore.LookupEntry(spell_id))
             {
-                sLog.outError("Player %u has unknown spell %u in `character_spell_cooldown`, skipping.", GetGUIDLow(), spell_id);
+                sLog->outError("Player %u has unknown spell %u in `character_spell_cooldown`, skipping.", GetGUIDLow(), spell_id);
                 continue;
             }
 
@@ -4077,7 +4077,7 @@ void Player::_LoadSpellCooldowns(PreparedQueryResult result)
 
             AddSpellCooldown(spell_id, item_id, db_time);
 
-            sLog.outDebug("Player (GUID: %u) spell %u, item %u cooldown loaded (%u secs).", GetGUIDLow(), spell_id, item_id, uint32(db_time-curTime));
+            sLog->outDebug("Player (GUID: %u) spell %u, item %u cooldown loaded (%u secs).", GetGUIDLow(), spell_id, item_id, uint32(db_time-curTime));
         }
         while (result->NextRow());
     }
@@ -4742,7 +4742,7 @@ void Player::DeleteFromDB(uint64 playerguid, uint32 accountId, bool updateRealmC
             CharacterDatabase.PExecute("UPDATE characters SET deleteInfos_Name=name, deleteInfos_Account=account, deleteDate='" UI64FMTD "', name='', account=0 WHERE guid=%u", uint64(time(NULL)), guid);
             break;
         default:
-            sLog.outError("Player::DeleteFromDB: Unsupported delete method: %u.", charDelete_method);
+            sLog->outError("Player::DeleteFromDB: Unsupported delete method: %u.", charDelete_method);
     }
 
     if (updateRealmChars)
@@ -4772,12 +4772,12 @@ void Player::DeleteOldCharacters()
  */
 void Player::DeleteOldCharacters(uint32 keepDays)
 {
-    sLog.outString("Player::DeleteOldChars: Deleting all characters which have been deleted %u days before...", keepDays);
+    sLog->outString("Player::DeleteOldChars: Deleting all characters which have been deleted %u days before...", keepDays);
 
     QueryResult resultChars = CharacterDatabase.PQuery("SELECT guid, deleteInfos_Account FROM characters WHERE deleteDate IS NOT NULL AND deleteDate < '" UI64FMTD "'", uint64(time(NULL) - time_t(keepDays * DAY)));
     if (resultChars)
     {
-         sLog.outString("Player::DeleteOldChars: Found " UI64FMTD " character(s) to delete",resultChars->GetRowCount());
+         sLog->outString("Player::DeleteOldChars: Found " UI64FMTD " character(s) to delete",resultChars->GetRowCount());
          do
          {
             Field *charFields = resultChars->Fetch();
@@ -4796,7 +4796,7 @@ void Player::SetMovement(PlayerMovementType pType)
         case MOVE_WATER_WALK: data.Initialize(SMSG_MOVE_WATER_WALK,   GetPackGUID().size()+4); break;
         case MOVE_LAND_WALK:  data.Initialize(SMSG_MOVE_LAND_WALK,    GetPackGUID().size()+4); break;
         default:
-            sLog.outError("Player::SetMovement: Unsupported move type (%d), data not sent to client.",pType);
+            sLog->outError("Player::SetMovement: Unsupported move type (%d), data not sent to client.",pType);
             return;
     }
     data.append(GetPackGUID());
@@ -4825,7 +4825,7 @@ void Player::BuildPlayerRepop()
     // the player cannot have a corpse already, only bones which are not returned by GetCorpse
     if (GetCorpse())
     {
-        sLog.outError("BuildPlayerRepop: player %s(%d) already has a corpse", GetName(), GetGUIDLow());
+        sLog->outError("BuildPlayerRepop: player %s(%d) already has a corpse", GetName(), GetGUIDLow());
         return;
     }
 
@@ -4834,7 +4834,7 @@ void Player::BuildPlayerRepop()
     Corpse *corpse = GetCorpse();
     if (!corpse)
     {
-        sLog.outError("Error creating corpse for Player %s [%u]", GetName(), GetGUIDLow());
+        sLog->outError("Error creating corpse for Player %s [%u]", GetName(), GetGUIDLow());
         return;
     }
     GetMap()->Add(corpse);
@@ -5219,7 +5219,7 @@ uint32 Player::DurabilityRepair(uint16 pos, bool cost, float discountMod, bool g
             DurabilityCostsEntry const *dcost = sDurabilityCostsStore.LookupEntry(ditemProto->ItemLevel);
             if (!dcost)
             {
-                sLog.outError("RepairDurability: Wrong item lvl %u", ditemProto->ItemLevel);
+                sLog->outError("RepairDurability: Wrong item lvl %u", ditemProto->ItemLevel);
                 return TotalCost;
             }
 
@@ -5227,7 +5227,7 @@ uint32 Player::DurabilityRepair(uint16 pos, bool cost, float discountMod, bool g
             DurabilityQualityEntry const *dQualitymodEntry = sDurabilityQualityStore.LookupEntry(dQualitymodEntryId);
             if (!dQualitymodEntry)
             {
-                sLog.outError("RepairDurability: Wrong dQualityModEntry %u", dQualitymodEntryId);
+                sLog->outError("RepairDurability: Wrong dQualityModEntry %u", dQualitymodEntryId);
                 return TotalCost;
             }
 
@@ -5243,7 +5243,7 @@ uint32 Player::DurabilityRepair(uint16 pos, bool cost, float discountMod, bool g
             {
                 if (GetGuildId() == 0)
                 {
-                    sLog.outStaticDebug("You are not member of a guild");
+                    sLog->outStaticDebug("You are not member of a guild");
                     return TotalCost;
                 }
 
@@ -5258,7 +5258,7 @@ uint32 Player::DurabilityRepair(uint16 pos, bool cost, float discountMod, bool g
             }
             else if (!HasEnoughMoney(costs))
             {
-                sLog.outStaticDebug("You do not have enough money");
+                sLog->outStaticDebug("You do not have enough money");
                 return TotalCost;
             }
             else
@@ -5354,7 +5354,7 @@ void Player::CleanupChannels()
             cMgr->LeftChannel(ch->GetName());               // deleted channel if empty
 
     }
-    sLog.outDebug("Player: channels cleaned up!");
+    sLog->outDebug("Player: channels cleaned up!");
 }
 
 void Player::UpdateLocalChannels(uint32 newZone)
@@ -5473,7 +5473,7 @@ void Player::HandleBaseModValue(BaseModGroup modGroup, BaseModType modType, floa
 {
     if (modGroup >= BASEMOD_END || modType >= MOD_END)
     {
-        sLog.outError("ERROR in HandleBaseModValue(): non existed BaseModGroup of wrong BaseModType!");
+        sLog->outError("ERROR in HandleBaseModValue(): non existed BaseModGroup of wrong BaseModType!");
         return;
     }
 
@@ -5510,7 +5510,7 @@ float Player::GetBaseModValue(BaseModGroup modGroup, BaseModType modType) const
 {
     if (modGroup >= BASEMOD_END || modType > MOD_END)
     {
-        sLog.outError("trial to access non existed BaseModGroup or wrong BaseModType!");
+        sLog->outError("trial to access non existed BaseModGroup or wrong BaseModType!");
         return 0.0f;
     }
 
@@ -5524,7 +5524,7 @@ float Player::GetTotalBaseModValue(BaseModGroup modGroup) const
 {
     if (modGroup >= BASEMOD_END)
     {
-        sLog.outError("wrong BaseModGroup in GetTotalBaseModValue()!");
+        sLog->outError("wrong BaseModGroup in GetTotalBaseModValue()!");
         return 0.0f;
     }
 
@@ -5870,7 +5870,7 @@ inline int SkillGainChance(uint32 SkillValue, uint32 GrayLevel, uint32 GreenLeve
 
 bool Player::UpdateCraftSkill(uint32 spellid)
 {
-    sLog.outDebug("UpdateCraftSkill spellid %d", spellid);
+    sLog->outDebug("UpdateCraftSkill spellid %d", spellid);
 
     SkillLineAbilityMapBounds bounds = sSpellMgr->GetSkillLineAbilityMapBounds(spellid);
 
@@ -5902,7 +5902,7 @@ bool Player::UpdateCraftSkill(uint32 spellid)
 
 bool Player::UpdateGatherSkill(uint32 SkillId, uint32 SkillValue, uint32 RedLevel, uint32 Multiplicator)
 {
-    sLog.outDebug("UpdateGatherSkill(SkillId %d SkillLevel %d RedLevel %d)", SkillId, SkillValue, RedLevel);
+    sLog->outDebug("UpdateGatherSkill(SkillId %d SkillLevel %d RedLevel %d)", SkillId, SkillValue, RedLevel);
 
     uint32 gathering_skill_gain = sWorld->getIntConfig(CONFIG_SKILL_GAIN_GATHERING);
 
@@ -5930,7 +5930,7 @@ bool Player::UpdateGatherSkill(uint32 SkillId, uint32 SkillValue, uint32 RedLeve
 
 bool Player::UpdateFishingSkill()
 {
-    sLog.outDebug("UpdateFishingSkill");
+    sLog->outDebug("UpdateFishingSkill");
 
     uint32 SkillValue = GetPureSkillValue(SKILL_FISHING);
 
@@ -5948,13 +5948,13 @@ static uint32 bonusSkillLevels[] = {75,150,225,300,375,450};
 
 bool Player::UpdateSkillPro(uint16 SkillId, int32 Chance, uint32 step)
 {
-    sLog.outDebug("UpdateSkillPro(SkillId %d, Chance %3.1f%%)", SkillId, Chance/10.0);
+    sLog->outDebug("UpdateSkillPro(SkillId %d, Chance %3.1f%%)", SkillId, Chance/10.0);
     if (!SkillId)
         return false;
 
     if (Chance <= 0)                                         // speedup in 0 chance case
     {
-        sLog.outDebug("Player::UpdateSkillPro Chance=%3.1f%% missed", Chance/10.0);
+        sLog->outDebug("Player::UpdateSkillPro Chance=%3.1f%% missed", Chance/10.0);
         return false;
     }
 
@@ -5992,11 +5992,11 @@ bool Player::UpdateSkillPro(uint16 SkillId, int32 Chance, uint32 step)
         }
         UpdateSkillEnchantments(SkillId, SkillValue, new_value);
         GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_REACH_SKILL_LEVEL,SkillId);
-        sLog.outDebug("Player::UpdateSkillPro Chance=%3.1f%% taken", Chance/10.0);
+        sLog->outDebug("Player::UpdateSkillPro Chance=%3.1f%% taken", Chance/10.0);
         return true;
     }
 
-    sLog.outDebug("Player::UpdateSkillPro Chance=%3.1f%% missed", Chance/10.0);
+    sLog->outDebug("Player::UpdateSkillPro Chance=%3.1f%% missed", Chance/10.0);
     return false;
 }
 
@@ -6230,7 +6230,7 @@ void Player::SetSkill(uint16 id, uint16 step, uint16 newVal, uint16 maxVal)
             SkillLineEntry const *pSkill = sSkillLineStore.LookupEntry(id);
             if (!pSkill)
             {
-                sLog.outError("Skill not found in SkillLineStore: skill #%u", id);
+                sLog->outError("Skill not found in SkillLineStore: skill #%u", id);
                 return;
             }
 
@@ -6390,7 +6390,7 @@ int16 Player::GetSkillTempBonusValue(uint32 skill) const
 
 void Player::SendActionButtons(uint32 state) const
 {
-    sLog.outDetail("Sending Action Buttons for '%u' spec '%u'", GetGUIDLow(), m_activeSpec);
+    sLog->outDetail("Sending Action Buttons for '%u' spec '%u'", GetGUIDLow(), m_activeSpec);
 
     WorldPacket data(SMSG_ACTION_BUTTONS, 1+(MAX_ACTION_BUTTONS*4));
     data << uint8(state);
@@ -6413,20 +6413,20 @@ void Player::SendActionButtons(uint32 state) const
     }
 
     GetSession()->SendPacket(&data);
-    sLog.outDetail("Action Buttons for '%u' spec '%u' Sent", GetGUIDLow(), m_activeSpec);
+    sLog->outDetail("Action Buttons for '%u' spec '%u' Sent", GetGUIDLow(), m_activeSpec);
 }
 
 bool Player::IsActionButtonDataValid(uint8 button, uint32 action, uint8 type)
 {
     if (button >= MAX_ACTION_BUTTONS)
     {
-        sLog.outError( "Action %u not added into button %u for player %s: button must be < %u", action, button, GetName(), MAX_ACTION_BUTTONS );
+        sLog->outError( "Action %u not added into button %u for player %s: button must be < %u", action, button, GetName(), MAX_ACTION_BUTTONS );
         return false;
     }
 
     if (action >= MAX_ACTION_BUTTON_ACTION_VALUE)
     {
-        sLog.outError( "Action %u not added into button %u for player %s: action must be < %u", action, button, GetName(), MAX_ACTION_BUTTON_ACTION_VALUE );
+        sLog->outError( "Action %u not added into button %u for player %s: action must be < %u", action, button, GetName(), MAX_ACTION_BUTTON_ACTION_VALUE );
         return false;
     }
 
@@ -6435,20 +6435,20 @@ bool Player::IsActionButtonDataValid(uint8 button, uint32 action, uint8 type)
         case ACTION_BUTTON_SPELL:
             if (!sSpellStore.LookupEntry(action))
             {
-                sLog.outError( "Spell action %u not added into button %u for player %s: spell not exist", action, button, GetName() );
+                sLog->outError( "Spell action %u not added into button %u for player %s: spell not exist", action, button, GetName() );
                 return false;
             }
 
             if (!HasSpell(action))
             {
-                sLog.outError( "Spell action %u not added into button %u for player %s: player don't known this spell", action, button, GetName() );
+                sLog->outError( "Spell action %u not added into button %u for player %s: player don't known this spell", action, button, GetName() );
                 return false;
             }
             break;
         case ACTION_BUTTON_ITEM:
             if (!sObjectMgr->GetItemPrototype(action))
             {
-                sLog.outError( "Item action %u not added into button %u for player %s: item not exist", action, button, GetName() );
+                sLog->outError( "Item action %u not added into button %u for player %s: item not exist", action, button, GetName() );
                 return false;
             }
             break;
@@ -6470,7 +6470,7 @@ ActionButton* Player::addActionButton(uint8 button, uint32 action, uint8 type)
     // set data and update to CHANGED if not NEW
     ab.SetActionAndType(action,ActionButtonType(type));
 
-    sLog.outDetail("Player '%u' Added Action '%u' (type %u) to Button '%u'", GetGUIDLow(), action, type, button);
+    sLog->outDetail("Player '%u' Added Action '%u' (type %u) to Button '%u'", GetGUIDLow(), action, type, button);
     return &ab;
 }
 
@@ -6485,7 +6485,7 @@ void Player::removeActionButton(uint8 button)
     else
         buttonItr->second.uState = ACTIONBUTTON_DELETED;    // saved, will deleted at next save
 
-    sLog.outDetail("Action Button '%u' Removed from Player '%u'", button, GetGUIDLow());
+    sLog->outDetail("Action Button '%u' Removed from Player '%u'", button, GetGUIDLow());
 }
 
 ActionButton const* Player::GetActionButton(uint8 button)
@@ -6656,7 +6656,7 @@ void Player::CheckAreaExploreAndOutdoor()
 
     if (offset >= PLAYER_EXPLORED_ZONES_SIZE)
     {
-        sLog.outError("Wrong area flag %u in map data for (X: %f Y: %f) point to field PLAYER_EXPLORED_ZONES_1 + %u ( %u must be < %u ).",areaFlag,GetPositionX(),GetPositionY(),offset,offset, PLAYER_EXPLORED_ZONES_SIZE);
+        sLog->outError("Wrong area flag %u in map data for (X: %f Y: %f) point to field PLAYER_EXPLORED_ZONES_1 + %u ( %u must be < %u ).",areaFlag,GetPositionX(),GetPositionY(),offset,offset, PLAYER_EXPLORED_ZONES_SIZE);
         return;
     }
 
@@ -6672,7 +6672,7 @@ void Player::CheckAreaExploreAndOutdoor()
         AreaTableEntry const *p = GetAreaEntryByAreaFlagAndMap(areaFlag,GetMapId());
         if (!p)
         {
-            sLog.outError("PLAYER: Player %u discovered unknown area (x: %f y: %f map: %u", GetGUIDLow(), GetPositionX(),GetPositionY(),GetMapId());
+            sLog->outError("PLAYER: Player %u discovered unknown area (x: %f y: %f map: %u", GetGUIDLow(), GetPositionX(),GetPositionY(),GetMapId());
         }
         else if (p->area_level > 0)
         {
@@ -6707,7 +6707,7 @@ void Player::CheckAreaExploreAndOutdoor()
                 GiveXP(XP, NULL);
                 SendExplorationExperience(area,XP);
             }
-            sLog.outDetail("PLAYER: Player %u discovered a new area: %u", GetGUIDLow(), area);
+            sLog->outDetail("PLAYER: Player %u discovered a new area: %u", GetGUIDLow(), area);
         }
     }
 }
@@ -6717,7 +6717,7 @@ uint32 Player::TeamForRace(uint8 race)
     ChrRacesEntry const* rEntry = sChrRacesStore.LookupEntry(race);
     if (!rEntry)
     {
-        sLog.outError("Race %u not found in DBC: wrong DBC files?",uint32(race));
+        sLog->outError("Race %u not found in DBC: wrong DBC files?",uint32(race));
         return ALLIANCE;
     }
 
@@ -6727,7 +6727,7 @@ uint32 Player::TeamForRace(uint8 race)
         case 1: return HORDE;
     }
 
-    sLog.outError("Race %u have wrong teamid %u in DBC: wrong DBC files?",uint32(race),rEntry->TeamID);
+    sLog->outError("Race %u have wrong teamid %u in DBC: wrong DBC files?",uint32(race),rEntry->TeamID);
     return ALLIANCE;
 }
 
@@ -6736,7 +6736,7 @@ uint32 Player::getFactionForRace(uint8 race)
     ChrRacesEntry const* rEntry = sChrRacesStore.LookupEntry(race);
     if (!rEntry)
     {
-        sLog.outError("Race %u not found in DBC: wrong DBC files?",uint32(race));
+        sLog->outError("Race %u not found in DBC: wrong DBC files?",uint32(race));
         return 0;
     }
 
@@ -7348,7 +7348,7 @@ void Player::DuelComplete(DuelCompleteType type)
     if (!duel)
         return;
 
-    sLog.outDebug("Duel Complete %s %s", GetName(), duel->opponent->GetName());
+    sLog->outDebug("Duel Complete %s %s", GetName(), duel->opponent->GetName());
 
     WorldPacket data(SMSG_DUEL_COMPLETE, (1), true);
     data << (uint8)((type != DUEL_INTERUPTED) ? 1 : 0);
@@ -7470,7 +7470,7 @@ void Player::_ApplyItemMods(Item *item, uint8 slot,bool apply)
     if (item->IsBroken())
         return;
 
-    sLog.outDetail("applying mods for item %u ",item->GetGUIDLow());
+    sLog->outDetail("applying mods for item %u ",item->GetGUIDLow());
 
     uint8 attacktype = Player::GetAttackBySlot(slot);
 
@@ -7488,7 +7488,7 @@ void Player::_ApplyItemMods(Item *item, uint8 slot,bool apply)
     ApplyItemEquipSpell(item,apply);
     ApplyEnchantment(item, apply);
 
-    sLog.outDebug("_ApplyItemMods complete.");
+    sLog->outDebug("_ApplyItemMods complete.");
 }
 
 void Player::_ApplyItemBonuses(ItemPrototype const *proto, uint8 slot, bool apply, bool only_level_scale /*= false*/)
@@ -7948,7 +7948,7 @@ void Player::ApplyEquipSpell(SpellEntry const* spellInfo, Item* item, bool apply
                     return;
         }
 
-        sLog.outStaticDebug("WORLD: cast %s Equip spellId - %i", (item ? "item" : "itemset"), spellInfo->Id);
+        sLog->outStaticDebug("WORLD: cast %s Equip spellId - %i", (item ? "item" : "itemset"), spellInfo->Id);
 
         CastSpell(this,spellInfo,true,item);
     }
@@ -8054,7 +8054,7 @@ void Player::CastItemCombatSpell(Unit *target, WeaponAttackType attType, uint32 
             SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellData.SpellId);
             if (!spellInfo)
             {
-                sLog.outError("WORLD: unknown Item spellid %i", spellData.SpellId);
+                sLog->outError("WORLD: unknown Item spellid %i", spellData.SpellId);
                 continue;
             }
 
@@ -8121,7 +8121,7 @@ void Player::CastItemCombatSpell(Unit *target, WeaponAttackType attType, uint32 
             SpellEntry const *spellInfo = sSpellStore.LookupEntry(pEnchant->spellid[s]);
             if (!spellInfo)
             {
-                sLog.outError("Player::CastItemCombatSpell Enchant %i, cast unknown spell %i", pEnchant->ID, pEnchant->spellid[s]);
+                sLog->outError("Player::CastItemCombatSpell Enchant %i, cast unknown spell %i", pEnchant->ID, pEnchant->spellid[s]);
                 continue;
             }
 
@@ -8165,7 +8165,7 @@ void Player::CastItemUseSpell(Item *item,SpellCastTargets const& targets,uint8 c
         SpellEntry const *spellInfo = sSpellStore.LookupEntry(learn_spell_id);
         if (!spellInfo)
         {
-            sLog.outError("Player::CastItemUseSpell: Item (Entry: %u) in have wrong spell id %u, ignoring ",proto->ItemId, learn_spell_id);
+            sLog->outError("Player::CastItemUseSpell: Item (Entry: %u) in have wrong spell id %u, ignoring ",proto->ItemId, learn_spell_id);
             SendEquipError(EQUIP_ERR_NONE,item,NULL);
             return;
         }
@@ -8197,7 +8197,7 @@ void Player::CastItemUseSpell(Item *item,SpellCastTargets const& targets,uint8 c
         SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellData.SpellId);
         if (!spellInfo)
         {
-            sLog.outError("Player::CastItemUseSpell: Item (Entry: %u) in have wrong spell id %u, ignoring",proto->ItemId, spellData.SpellId);
+            sLog->outError("Player::CastItemUseSpell: Item (Entry: %u) in have wrong spell id %u, ignoring",proto->ItemId, spellData.SpellId);
             continue;
         }
 
@@ -8224,7 +8224,7 @@ void Player::CastItemUseSpell(Item *item,SpellCastTargets const& targets,uint8 c
             SpellEntry const *spellInfo = sSpellStore.LookupEntry(pEnchant->spellid[s]);
             if (!spellInfo)
             {
-                sLog.outError("Player::CastItemUseSpell Enchant %i, cast unknown spell %i", pEnchant->ID, pEnchant->spellid[s]);
+                sLog->outError("Player::CastItemUseSpell Enchant %i, cast unknown spell %i", pEnchant->ID, pEnchant->spellid[s]);
                 continue;
             }
 
@@ -8240,7 +8240,7 @@ void Player::CastItemUseSpell(Item *item,SpellCastTargets const& targets,uint8 c
 
 void Player::_RemoveAllItemMods()
 {
-    sLog.outDebug("_RemoveAllItemMods start.");
+    sLog->outDebug("_RemoveAllItemMods start.");
 
     for (uint8 i = 0; i < INVENTORY_SLOT_BAG_END; ++i)
     {
@@ -8283,12 +8283,12 @@ void Player::_RemoveAllItemMods()
         }
     }
 
-    sLog.outDebug("_RemoveAllItemMods complete.");
+    sLog->outDebug("_RemoveAllItemMods complete.");
 }
 
 void Player::_ApplyAllItemMods()
 {
-    sLog.outDebug("_ApplyAllItemMods start.");
+    sLog->outDebug("_ApplyAllItemMods start.");
 
     for (uint8 i = 0; i < INVENTORY_SLOT_BAG_END; ++i)
     {
@@ -8332,7 +8332,7 @@ void Player::_ApplyAllItemMods()
         }
     }
 
-    sLog.outDebug("_ApplyAllItemMods complete.");
+    sLog->outDebug("_ApplyAllItemMods complete.");
 }
 
 void Player::_ApplyAllLevelScaleItemMods(bool apply)
@@ -8460,10 +8460,10 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
     Loot *loot = 0;
     PermissionTypes permission = ALL_PERMISSION;
 
-    sLog.outDebug("Player::SendLoot");
+    sLog->outDebug("Player::SendLoot");
     if (IS_GAMEOBJECT_GUID(guid))
     {
-        sLog.outDebug("       IS_GAMEOBJECT_GUID(guid)");
+        sLog->outDebug("       IS_GAMEOBJECT_GUID(guid)");
         GameObject *go = GetMap()->GetGameObject(guid);
 
         // not check distance for GO in case owned GO (fishing bobber case, for example)
@@ -8799,7 +8799,7 @@ void Player::SendInitWorldStates(uint32 zoneid, uint32 areaid)
     uint32 mapid = GetMapId();
     OutdoorPvP * pvp = sOutdoorPvPMgr->GetOutdoorPvPToZoneId(zoneid);
 
-    sLog.outDebug("Sending SMSG_INIT_WORLD_STATES to Map: %u, Zone: %u", mapid, zoneid);
+    sLog->outDebug("Sending SMSG_INIT_WORLD_STATES to Map: %u, Zone: %u", mapid, zoneid);
 
     // may be exist better way to do this...
     switch (zoneid)
@@ -9421,7 +9421,7 @@ uint32 Player::GetXPRestBonus(uint32 xp)
 
     SetRestBonus(GetRestBonus() - rested_bonus);
 
-    sLog.outDetail("Player gain %u xp (+ %u Rested Bonus). Rested points=%f",xp+rested_bonus,rested_bonus,GetRestBonus());
+    sLog->outDetail("Player gain %u xp (+ %u Rested Bonus). Rested points=%f",xp+rested_bonus,rested_bonus,GetRestBonus());
     return rested_bonus;
 }
 
@@ -9453,7 +9453,7 @@ void Player::ResetPetTalents()
     CharmInfo *charmInfo = pet->GetCharmInfo();
     if (!charmInfo)
     {
-        sLog.outError("Object (GUID: %u TypeId: %u) is considered pet-like but doesn't have a charminfo!", pet->GetGUIDLow(), pet->GetTypeId());
+        sLog->outError("Object (GUID: %u TypeId: %u) is considered pet-like but doesn't have a charminfo!", pet->GetGUIDLow(), pet->GetTypeId());
         return;
     }
     pet->resetTalents();
@@ -10446,7 +10446,7 @@ uint8 Player::_CanStoreItem_InInventorySlots(uint8 slot_begin, uint8 slot_end, I
 
 uint8 Player::_CanStoreItem(uint8 bag, uint8 slot, ItemPosCountVec &dest, uint32 entry, uint32 count, Item *pItem, bool swap, uint32* no_space_count) const
 {
-    sLog.outDebug("STORAGE: CanStoreItem bag = %u, slot = %u, item = %u, count = %u", bag, slot, entry, count);
+    sLog->outDebug("STORAGE: CanStoreItem bag = %u, slot = %u, item = %u, count = %u", bag, slot, entry, count);
 
     ItemPrototype const *pProto = sObjectMgr->GetItemPrototype(entry);
     if (!pProto)
@@ -11091,7 +11091,7 @@ uint8 Player::CanStoreItems(Item **pItems,int count) const
         // no item
         if (!pItem)  continue;
 
-        sLog.outDebug("STORAGE: CanStoreItems %i. item = %u, count = %u", k+1, pItem->GetEntry(), pItem->GetCount());
+        sLog->outDebug("STORAGE: CanStoreItems %i. item = %u, count = %u", k+1, pItem->GetEntry(), pItem->GetCount());
         ItemPrototype const *pProto = pItem->GetProto();
 
         // strange item
@@ -11301,7 +11301,7 @@ uint8 Player::CanEquipItem(uint8 slot, uint16 &dest, Item *pItem, bool swap, boo
     dest = 0;
     if (pItem)
     {
-        sLog.outDebug("STORAGE: CanEquipItem slot = %u, item = %u, count = %u", slot, pItem->GetEntry(), pItem->GetCount());
+        sLog->outDebug("STORAGE: CanEquipItem slot = %u, item = %u, count = %u", slot, pItem->GetEntry(), pItem->GetCount());
         ItemPrototype const *pProto = pItem->GetProto();
         if (pProto)
         {
@@ -11452,7 +11452,7 @@ uint8 Player::CanUnequipItem(uint16 pos, bool swap) const
     if (!pItem)
         return EQUIP_ERR_OK;
 
-    sLog.outDebug("STORAGE: CanUnequipItem slot = %u, item = %u, count = %u", pos, pItem->GetEntry(), pItem->GetCount());
+    sLog->outDebug("STORAGE: CanUnequipItem slot = %u, item = %u, count = %u", pos, pItem->GetEntry(), pItem->GetCount());
 
     ItemPrototype const *pProto = pItem->GetProto();
     if (!pProto)
@@ -11488,7 +11488,7 @@ uint8 Player::CanBankItem(uint8 bag, uint8 slot, ItemPosCountVec &dest, Item *pI
 
     uint32 count = pItem->GetCount();
 
-    sLog.outDebug("STORAGE: CanBankItem bag = %u, slot = %u, item = %u, count = %u", bag, slot, pItem->GetEntry(), pItem->GetCount());
+    sLog->outDebug("STORAGE: CanBankItem bag = %u, slot = %u, item = %u, count = %u", bag, slot, pItem->GetEntry(), pItem->GetCount());
     ItemPrototype const *pProto = pItem->GetProto();
     if (!pProto)
         return swap ? EQUIP_ERR_ITEMS_CANT_BE_SWAPPED : EQUIP_ERR_ITEM_NOT_FOUND;
@@ -11504,7 +11504,7 @@ uint8 Player::CanBankItem(uint8 bag, uint8 slot, ItemPosCountVec &dest, Item *pI
     uint8 pItemslot = pItem->GetSlot();
     if (pItemslot >= CURRENCYTOKEN_SLOT_START && pItemslot < CURRENCYTOKEN_SLOT_END)
     {
-        sLog.outError("Possible hacking attempt: Player %s [guid: %u] tried to move token [guid: %u, entry: %u] out of the currency bag!",
+        sLog->outError("Possible hacking attempt: Player %s [guid: %u] tried to move token [guid: %u, entry: %u] out of the currency bag!",
                 GetName(), GetGUIDLow(), pItem->GetGUIDLow(), pProto->ItemId);
         return EQUIP_ERR_ITEMS_CANT_BE_SWAPPED;
     }
@@ -11676,7 +11676,7 @@ uint8 Player::CanUseItem(Item *pItem, bool not_loading) const
 {
     if (pItem)
     {
-        sLog.outDebug("STORAGE: CanUseItem item = %u", pItem->GetEntry());
+        sLog->outDebug("STORAGE: CanUseItem item = %u", pItem->GetEntry());
 
         if (!isAlive() && not_loading)
             return EQUIP_ERR_YOU_ARE_DEAD;
@@ -11764,7 +11764,7 @@ uint8 Player::CanUseItem(ItemPrototype const *pProto) const
 
 uint8 Player::CanUseAmmo(uint32 item) const
 {
-    sLog.outDebug("STORAGE: CanUseAmmo item = %u", item);
+    sLog->outDebug("STORAGE: CanUseAmmo item = %u", item);
     if (!isAlive())
         return EQUIP_ERR_YOU_ARE_DEAD;
     //if (isStunned())
@@ -11903,7 +11903,7 @@ Item* Player::_StoreItem(uint16 pos, Item *pItem, uint32 count, bool clone, bool
     uint8 bag = pos >> 8;
     uint8 slot = pos & 255;
 
-    sLog.outDebug("STORAGE: StoreItem bag = %u, slot = %u, item = %u, count = %u, guid = %u", bag, slot, pItem->GetEntry(), count, pItem->GetGUIDLow());
+    sLog->outDebug("STORAGE: StoreItem bag = %u, slot = %u, item = %u, count = %u, guid = %u", bag, slot, pItem->GetEntry(), count, pItem->GetGUIDLow());
 
     Item *pItem2 = GetItemByPos(bag, slot);
 
@@ -12041,7 +12041,7 @@ Item* Player::EquipItem(uint16 pos, Item *pItem, bool update)
                 SpellEntry const* spellProto = sSpellStore.LookupEntry(cooldownSpell);
 
                 if (!spellProto)
-                    sLog.outError("Weapon switch cooldown spell %u couldn't be found in Spell.dbc", cooldownSpell);
+                    sLog->outError("Weapon switch cooldown spell %u couldn't be found in Spell.dbc", cooldownSpell);
                 else
                 {
                     m_weaponChangeTimer = spellProto->StartRecoveryTime;
@@ -12163,7 +12163,7 @@ void Player::VisualizeItem(uint8 slot, Item *pItem)
     if (pItem->GetProto()->Bonding == BIND_WHEN_EQUIPED || pItem->GetProto()->Bonding == BIND_WHEN_PICKED_UP || pItem->GetProto()->Bonding == BIND_QUEST_ITEM)
         pItem->SetBinding(true);
 
-    sLog.outDebug("STORAGE: EquipItem slot = %u, item = %u", slot, pItem->GetEntry());
+    sLog->outDebug("STORAGE: EquipItem slot = %u, item = %u", slot, pItem->GetEntry());
 
     m_items[slot] = pItem;
     SetUInt64Value(PLAYER_FIELD_INV_SLOT_HEAD + (slot * 2), pItem->GetGUID());
@@ -12188,7 +12188,7 @@ void Player::RemoveItem(uint8 bag, uint8 slot, bool update)
     Item *pItem = GetItemByPos(bag, slot);
     if (pItem)
     {
-        sLog.outDebug("STORAGE: RemoveItem bag = %u, slot = %u, item = %u", bag, slot, pItem->GetEntry());
+        sLog->outDebug("STORAGE: RemoveItem bag = %u, slot = %u, item = %u", bag, slot, pItem->GetEntry());
 
         RemoveEnchantmentDurations(pItem);
         RemoveItemDurations(pItem);
@@ -12309,7 +12309,7 @@ void Player::DestroyItem(uint8 bag, uint8 slot, bool update)
     Item *pItem = GetItemByPos(bag, slot);
     if (pItem)
     {
-        sLog.outDebug("STORAGE: DestroyItem bag = %u, slot = %u, item = %u", bag, slot, pItem->GetEntry());
+        sLog->outDebug("STORAGE: DestroyItem bag = %u, slot = %u, item = %u", bag, slot, pItem->GetEntry());
         // Also remove all contained items if the item is a bag. 
         // This if() prevents item saving crashes if the condition for a bag to be empty before being destroyed was bypassed somehow.
         if (pItem->IsBag() && !((Bag*)pItem)->IsEmpty())
@@ -12396,7 +12396,7 @@ void Player::DestroyItem(uint8 bag, uint8 slot, bool update)
 
 void Player::DestroyItemCount(uint32 item, uint32 count, bool update, bool unequip_check)
 {
-    sLog.outDebug("STORAGE: DestroyItemCount item = %u, count = %u", item, count);
+    sLog->outDebug("STORAGE: DestroyItemCount item = %u, count = %u", item, count);
     uint32 remcount = 0;
 
     // in inventory
@@ -12525,7 +12525,7 @@ void Player::DestroyItemCount(uint32 item, uint32 count, bool update, bool unequ
 
 void Player::DestroyZoneLimitedItem(bool update, uint32 new_zone)
 {
-    sLog.outDebug("STORAGE: DestroyZoneLimitedItem in map %u and area %u", GetMapId(), new_zone);
+    sLog->outDebug("STORAGE: DestroyZoneLimitedItem in map %u and area %u", GetMapId(), new_zone);
 
     // in inventory
     for (uint8 i = INVENTORY_SLOT_ITEM_START; i < INVENTORY_SLOT_ITEM_END; i++)
@@ -12557,7 +12557,7 @@ void Player::DestroyConjuredItems(bool update)
 {
     // used when entering arena
     // destroys all conjured items
-    sLog.outDebug("STORAGE: DestroyConjuredItems");
+    sLog->outDebug("STORAGE: DestroyConjuredItems");
 
     // in inventory
     for (uint8 i = INVENTORY_SLOT_ITEM_START; i < INVENTORY_SLOT_ITEM_END; i++)
@@ -12620,7 +12620,7 @@ void Player::DestroyItemCount(Item* pItem, uint32 &count, bool update)
     if (!pItem)
         return;
 
-    sLog.outDebug("STORAGE: DestroyItemCount item (GUID: %u, Entry: %u) count = %u", pItem->GetGUIDLow(),pItem->GetEntry(), count);
+    sLog->outDebug("STORAGE: DestroyItemCount item (GUID: %u, Entry: %u) count = %u", pItem->GetGUIDLow(),pItem->GetEntry(), count);
 
     if (pItem->GetCount() <= count)
     {
@@ -12675,7 +12675,7 @@ void Player::SplitItem(uint16 src, uint16 dst, uint32 count)
         return;
     }
 
-    sLog.outDebug("STORAGE: SplitItem bag = %u, slot = %u, item = %u, count = %u", dstbag, dstslot, pSrcItem->GetEntry(), count);
+    sLog->outDebug("STORAGE: SplitItem bag = %u, slot = %u, item = %u, count = %u", dstbag, dstslot, pSrcItem->GetEntry(), count);
     Item *pNewItem = pSrcItem->CloneItem(count, this);
     if (!pNewItem)
     {
@@ -12760,7 +12760,7 @@ void Player::SwapItem(uint16 src, uint16 dst)
     if (!pSrcItem)
         return;
 
-    sLog.outDebug("STORAGE: SwapItem bag = %u, slot = %u, item = %u", dstbag, dstslot, pSrcItem->GetEntry());
+    sLog->outDebug("STORAGE: SwapItem bag = %u, slot = %u, item = %u", dstbag, dstslot, pSrcItem->GetEntry());
 
     if (!isAlive())
     {
@@ -13130,7 +13130,7 @@ void Player::AddItemToBuyBackSlot(Item *pItem)
         }
 
         RemoveItemFromBuyBackSlot(slot, true);
-        sLog.outDebug("STORAGE: AddItemToBuyBackSlot item = %u, slot = %u", pItem->GetEntry(), slot);
+        sLog->outDebug("STORAGE: AddItemToBuyBackSlot item = %u, slot = %u", pItem->GetEntry(), slot);
 
         m_items[slot] = pItem;
         time_t base = time(NULL);
@@ -13152,7 +13152,7 @@ void Player::AddItemToBuyBackSlot(Item *pItem)
 
 Item* Player::GetItemFromBuyBackSlot(uint32 slot)
 {
-    sLog.outDebug("STORAGE: GetItemFromBuyBackSlot slot = %u", slot);
+    sLog->outDebug("STORAGE: GetItemFromBuyBackSlot slot = %u", slot);
     if (slot >= BUYBACK_SLOT_START && slot < BUYBACK_SLOT_END)
         return m_items[slot];
     return NULL;
@@ -13160,7 +13160,7 @@ Item* Player::GetItemFromBuyBackSlot(uint32 slot)
 
 void Player::RemoveItemFromBuyBackSlot(uint32 slot, bool del)
 {
-    sLog.outDebug("STORAGE: RemoveItemFromBuyBackSlot slot = %u", slot);
+    sLog->outDebug("STORAGE: RemoveItemFromBuyBackSlot slot = %u", slot);
     if (slot >= BUYBACK_SLOT_START && slot < BUYBACK_SLOT_END)
     {
         Item *pItem = m_items[slot];
@@ -13186,7 +13186,7 @@ void Player::RemoveItemFromBuyBackSlot(uint32 slot, bool del)
 
 void Player::SendEquipError(uint8 msg, Item* pItem, Item *pItem2, uint32 itemid)
 {
-    sLog.outDebug("WORLD: Sent SMSG_INVENTORY_CHANGE_FAILURE (%u)", msg);
+    sLog->outDebug("WORLD: Sent SMSG_INVENTORY_CHANGE_FAILURE (%u)", msg);
     WorldPacket data(SMSG_INVENTORY_CHANGE_FAILURE, (msg == EQUIP_ERR_CANT_EQUIP_LEVEL_I ? 22 : 18));
     data << uint8(msg);
 
@@ -13229,7 +13229,7 @@ void Player::SendEquipError(uint8 msg, Item* pItem, Item *pItem2, uint32 itemid)
 
 void Player::SendBuyError(uint8 msg, Creature* pCreature, uint32 item, uint32 param)
 {
-    sLog.outDebug("WORLD: Sent SMSG_BUY_FAILED");
+    sLog->outDebug("WORLD: Sent SMSG_BUY_FAILED");
     WorldPacket data(SMSG_BUY_FAILED, (8+4+4+1+2), true);
     data << uint64(pCreature ? pCreature->GetGUID() : 0);
     data << uint32(item);
@@ -13241,7 +13241,7 @@ void Player::SendBuyError(uint8 msg, Creature* pCreature, uint32 item, uint32 pa
 
 void Player::SendSellError(uint8 msg, Creature* pCreature, uint64 guid, uint32 param)
 {
-    sLog.outDebug("WORLD: Sent SMSG_SELL_ITEM");
+    sLog->outDebug("WORLD: Sent SMSG_SELL_ITEM");
     WorldPacket data(SMSG_SELL_ITEM,(8+8+(param?4:0)+1));  // last check 2.0.10
     data << uint64(pCreature ? pCreature->GetGUID() : 0);
     data << uint64(guid);
@@ -13315,7 +13315,7 @@ void Player::UpdateItemDuration(uint32 time, bool realtimeonly)
     if (m_itemDuration.empty())
         return;
 
-    sLog.outDebug("Player::UpdateItemDuration(%u,%u)", time, realtimeonly);
+    sLog->outDebug("Player::UpdateItemDuration(%u,%u)", time, realtimeonly);
 
     for (ItemDurationList::const_iterator itr = m_itemDuration.begin(); itr != m_itemDuration.end();)
     {
@@ -13584,81 +13584,81 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
                         }
                     }
 
-                    sLog.outDebug("Adding %u to stat nb %u",enchant_amount,enchant_spell_id);
+                    sLog->outDebug("Adding %u to stat nb %u",enchant_amount,enchant_spell_id);
                     switch (enchant_spell_id)
                     {
                         case ITEM_MOD_MANA:
-                            sLog.outDebug("+ %u MANA",enchant_amount);
+                            sLog->outDebug("+ %u MANA",enchant_amount);
                             HandleStatModifier(UNIT_MOD_MANA, BASE_VALUE, float(enchant_amount), apply);
                             break;
                         case ITEM_MOD_HEALTH:
-                            sLog.outDebug("+ %u HEALTH",enchant_amount);
+                            sLog->outDebug("+ %u HEALTH",enchant_amount);
                             HandleStatModifier(UNIT_MOD_HEALTH, BASE_VALUE, float(enchant_amount), apply);
                             break;
                         case ITEM_MOD_AGILITY:
-                            sLog.outDebug("+ %u AGILITY",enchant_amount);
+                            sLog->outDebug("+ %u AGILITY",enchant_amount);
                             HandleStatModifier(UNIT_MOD_STAT_AGILITY, TOTAL_VALUE, float(enchant_amount), apply);
                             ApplyStatBuffMod(STAT_AGILITY, (float)enchant_amount, apply);
                             break;
                         case ITEM_MOD_STRENGTH:
-                            sLog.outDebug("+ %u STRENGTH",enchant_amount);
+                            sLog->outDebug("+ %u STRENGTH",enchant_amount);
                             HandleStatModifier(UNIT_MOD_STAT_STRENGTH, TOTAL_VALUE, float(enchant_amount), apply);
                             ApplyStatBuffMod(STAT_STRENGTH, (float)enchant_amount, apply);
                             break;
                         case ITEM_MOD_INTELLECT:
-                            sLog.outDebug("+ %u INTELLECT",enchant_amount);
+                            sLog->outDebug("+ %u INTELLECT",enchant_amount);
                             HandleStatModifier(UNIT_MOD_STAT_INTELLECT, TOTAL_VALUE, float(enchant_amount), apply);
                             ApplyStatBuffMod(STAT_INTELLECT, (float)enchant_amount, apply);
                             break;
                         case ITEM_MOD_SPIRIT:
-                            sLog.outDebug("+ %u SPIRIT",enchant_amount);
+                            sLog->outDebug("+ %u SPIRIT",enchant_amount);
                             HandleStatModifier(UNIT_MOD_STAT_SPIRIT, TOTAL_VALUE, float(enchant_amount), apply);
                             ApplyStatBuffMod(STAT_SPIRIT, (float)enchant_amount, apply);
                             break;
                         case ITEM_MOD_STAMINA:
-                            sLog.outDebug("+ %u STAMINA",enchant_amount);
+                            sLog->outDebug("+ %u STAMINA",enchant_amount);
                             HandleStatModifier(UNIT_MOD_STAT_STAMINA, TOTAL_VALUE, float(enchant_amount), apply);
                             ApplyStatBuffMod(STAT_STAMINA, (float)enchant_amount, apply);
                             break;
                         case ITEM_MOD_DEFENSE_SKILL_RATING:
                             ApplyRatingMod(CR_DEFENSE_SKILL, enchant_amount, apply);
-                            sLog.outDebug("+ %u DEFENCE", enchant_amount);
+                            sLog->outDebug("+ %u DEFENCE", enchant_amount);
                             break;
                         case  ITEM_MOD_DODGE_RATING:
                             ApplyRatingMod(CR_DODGE, enchant_amount, apply);
-                            sLog.outDebug("+ %u DODGE", enchant_amount);
+                            sLog->outDebug("+ %u DODGE", enchant_amount);
                             break;
                         case ITEM_MOD_PARRY_RATING:
                             ApplyRatingMod(CR_PARRY, enchant_amount, apply);
-                            sLog.outDebug("+ %u PARRY", enchant_amount);
+                            sLog->outDebug("+ %u PARRY", enchant_amount);
                             break;
                         case ITEM_MOD_BLOCK_RATING:
                             ApplyRatingMod(CR_BLOCK, enchant_amount, apply);
-                            sLog.outDebug("+ %u SHIELD_BLOCK", enchant_amount);
+                            sLog->outDebug("+ %u SHIELD_BLOCK", enchant_amount);
                             break;
                         case ITEM_MOD_HIT_MELEE_RATING:
                             ApplyRatingMod(CR_HIT_MELEE, enchant_amount, apply);
-                            sLog.outDebug("+ %u MELEE_HIT", enchant_amount);
+                            sLog->outDebug("+ %u MELEE_HIT", enchant_amount);
                             break;
                         case ITEM_MOD_HIT_RANGED_RATING:
                             ApplyRatingMod(CR_HIT_RANGED, enchant_amount, apply);
-                            sLog.outDebug("+ %u RANGED_HIT", enchant_amount);
+                            sLog->outDebug("+ %u RANGED_HIT", enchant_amount);
                             break;
                         case ITEM_MOD_HIT_SPELL_RATING:
                             ApplyRatingMod(CR_HIT_SPELL, enchant_amount, apply);
-                            sLog.outDebug("+ %u SPELL_HIT", enchant_amount);
+                            sLog->outDebug("+ %u SPELL_HIT", enchant_amount);
                             break;
                         case ITEM_MOD_CRIT_MELEE_RATING:
                             ApplyRatingMod(CR_CRIT_MELEE, enchant_amount, apply);
-                            sLog.outDebug("+ %u MELEE_CRIT", enchant_amount);
+                            sLog->outDebug("+ %u MELEE_CRIT", enchant_amount);
                             break;
                         case ITEM_MOD_CRIT_RANGED_RATING:
                             ApplyRatingMod(CR_CRIT_RANGED, enchant_amount, apply);
-                            sLog.outDebug("+ %u RANGED_CRIT", enchant_amount);
+                            sLog->outDebug("+ %u RANGED_CRIT", enchant_amount);
                             break;
                         case ITEM_MOD_CRIT_SPELL_RATING:
                             ApplyRatingMod(CR_CRIT_SPELL, enchant_amount, apply);
-                            sLog.outDebug("+ %u SPELL_CRIT", enchant_amount);
+                            sLog->outDebug("+ %u SPELL_CRIT", enchant_amount);
                             break;
 //                        Values from ITEM_STAT_MELEE_HA_RATING to ITEM_MOD_HASTE_RANGED_RATING are never used
 //                        in Enchantments
@@ -13693,13 +13693,13 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
                             ApplyRatingMod(CR_HIT_MELEE, enchant_amount, apply);
                             ApplyRatingMod(CR_HIT_RANGED, enchant_amount, apply);
                             ApplyRatingMod(CR_HIT_SPELL, enchant_amount, apply);
-                            sLog.outDebug("+ %u HIT", enchant_amount);
+                            sLog->outDebug("+ %u HIT", enchant_amount);
                             break;
                         case ITEM_MOD_CRIT_RATING:
                             ApplyRatingMod(CR_CRIT_MELEE, enchant_amount, apply);
                             ApplyRatingMod(CR_CRIT_RANGED, enchant_amount, apply);
                             ApplyRatingMod(CR_CRIT_SPELL, enchant_amount, apply);
-                            sLog.outDebug("+ %u CRITICAL", enchant_amount);
+                            sLog->outDebug("+ %u CRITICAL", enchant_amount);
                             break;
 //                        Values ITEM_MOD_HIT_TAKEN_RATING and ITEM_MOD_CRIT_TAKEN_RATING are never used in Enchantment
 //                        case ITEM_MOD_HIT_TAKEN_RATING:
@@ -13714,17 +13714,17 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
 //                            break;
                         case ITEM_MOD_RESILIENCE_RATING:
                             ApplyRatingMod(CR_RESILIENCE_PLAYER_DAMAGE_TAKEN, enchant_amount, apply);
-                            sLog.outDebug("+ %u RESILIENCE", enchant_amount);
+                            sLog->outDebug("+ %u RESILIENCE", enchant_amount);
                             break;
                         case ITEM_MOD_HASTE_RATING:
                             ApplyRatingMod(CR_HASTE_MELEE, enchant_amount, apply);
                             ApplyRatingMod(CR_HASTE_RANGED, enchant_amount, apply);
                             ApplyRatingMod(CR_HASTE_SPELL, enchant_amount, apply);
-                            sLog.outDebug("+ %u HASTE", enchant_amount);
+                            sLog->outDebug("+ %u HASTE", enchant_amount);
                             break;
                         case ITEM_MOD_EXPERTISE_RATING:
                             ApplyRatingMod(CR_EXPERTISE, enchant_amount, apply);
-                            sLog.outDebug("+ %u EXPERTISE", enchant_amount);
+                            sLog->outDebug("+ %u EXPERTISE", enchant_amount);
                             break;
                         case ITEM_MOD_ATTACK_POWER:
                             if(float(enchant_amount) > 0.f)
@@ -13737,43 +13737,43 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
                                 HandleStatModifier(UNIT_MOD_ATTACK_POWER_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
                                 HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
                             }
-                            sLog.outDebug("+ %u ATTACK_POWER", enchant_amount);
+                            sLog->outDebug("+ %u ATTACK_POWER", enchant_amount);
                             break;
                         case ITEM_MOD_RANGED_ATTACK_POWER:
                             if(float(enchant_amount) > 0.f)
                                 HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(enchant_amount), apply);
                             else
                                 HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(enchant_amount), apply);
-                            sLog.outDebug("+ %u RANGED_ATTACK_POWER", enchant_amount);
+                            sLog->outDebug("+ %u RANGED_ATTACK_POWER", enchant_amount);
                             break;
 //                        case ITEM_MOD_FERAL_ATTACK_POWER:
 //                            ApplyFeralAPBonus(enchant_amount, apply);
-//                            sLog.outDebug("+ %u FERAL_ATTACK_POWER", enchant_amount);
+//                            sLog->outDebug("+ %u FERAL_ATTACK_POWER", enchant_amount);
 //                            break;
                         case ITEM_MOD_MANA_REGENERATION:
                             ApplyManaRegenBonus(enchant_amount, apply);
-                            sLog.outDebug("+ %u MANA_REGENERATION", enchant_amount);
+                            sLog->outDebug("+ %u MANA_REGENERATION", enchant_amount);
                             break;
                         case ITEM_MOD_ARMOR_PENETRATION_RATING:
                             ApplyRatingMod(CR_ARMOR_PENETRATION, enchant_amount, apply);
-                            sLog.outDebug("+ %u ARMOR PENETRATION", enchant_amount);
+                            sLog->outDebug("+ %u ARMOR PENETRATION", enchant_amount);
                             break;
                         case ITEM_MOD_SPELL_POWER:
                             ApplySpellPowerBonus(enchant_amount, apply);
-                            sLog.outDebug("+ %u SPELL_POWER", enchant_amount);
+                            sLog->outDebug("+ %u SPELL_POWER", enchant_amount);
                             break;
                         case ITEM_MOD_HEALTH_REGEN:
                             ApplyHealthRegenBonus(enchant_amount, apply);
-                            sLog.outDebug("+ %u HEALTH_REGENERATION", enchant_amount);
+                            sLog->outDebug("+ %u HEALTH_REGENERATION", enchant_amount);
                             break;
                         case ITEM_MOD_SPELL_PENETRATION:
                             ApplyModInt32Value(PLAYER_FIELD_MOD_TARGET_RESISTANCE, enchant_amount, apply);
                             m_spellPenetrationItemMod += apply ? int32(enchant_amount) : -int32(enchant_amount);
-                            sLog.outDebug("+ %u SPELL_PENETRATION", enchant_amount);
+                            sLog->outDebug("+ %u SPELL_PENETRATION", enchant_amount);
                             break;
                         case ITEM_MOD_BLOCK_VALUE:
                             HandleBaseModValue(SHIELD_BLOCK_VALUE, FLAT_MOD, float(enchant_amount), apply);
-                            sLog.outDebug("+ %u BLOCK_VALUE", enchant_amount);
+                            sLog->outDebug("+ %u BLOCK_VALUE", enchant_amount);
                             break;
                         case ITEM_MOD_SPELL_HEALING_DONE:   // deprecated
                         case ITEM_MOD_SPELL_DAMAGE_DONE:    // deprecated
@@ -13807,7 +13807,7 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
                     // nothing do..
                     break;
                 default:
-                    sLog.outError("Unknown item enchantment (id = %d) display type: %d", enchant_id, enchant_display_type);
+                    sLog->outError("Unknown item enchantment (id = %d) display type: %d", enchant_id, enchant_display_type);
                     break;
             }                                               /*switch(enchant_display_type)*/
         }                                                   /*for*/
@@ -13977,7 +13977,7 @@ void Player::PrepareGossipMenu(WorldObject *pSource, uint32 menuId, bool showQue
                     VendorItemData const* vItems = pCreature->GetVendorItems();
                     if (!vItems || vItems->Empty())
                     {
-                        sLog.outErrorDb("Creature %u (Entry: %u) have UNIT_NPC_FLAG_VENDOR but have empty trading item list.", pCreature->GetGUIDLow(), pCreature->GetEntry());
+                        sLog->outErrorDb("Creature %u (Entry: %u) have UNIT_NPC_FLAG_VENDOR but have empty trading item list.", pCreature->GetGUIDLow(), pCreature->GetEntry());
                         bCanTalk = false;
                     }
                     break;
@@ -14026,7 +14026,7 @@ void Player::PrepareGossipMenu(WorldObject *pSource, uint32 menuId, bool showQue
                         bCanTalk = false;
                     break;
                 default:
-                    sLog.outErrorDb("Creature entry %u have unknown gossip option %u for menu %u", pCreature->GetEntry(), itr->second.option_id, itr->second.menu_id);
+                    sLog->outErrorDb("Creature entry %u have unknown gossip option %u for menu %u", pCreature->GetEntry(), itr->second.option_id, itr->second.menu_id);
                     bCanTalk = false;
                     break;
             }
@@ -14127,7 +14127,7 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
     {
         if (gossipOptionId > GOSSIP_OPTION_QUESTGIVER)
         {
-            sLog.outError("Player guid %u request invalid gossip option for GameObject entry %u", GetGUIDLow(), pSource->GetEntry());
+            sLog->outError("Player guid %u request invalid gossip option for GameObject entry %u", GetGUIDLow(), pSource->GetEntry());
             return;
         }
     }
@@ -14237,7 +14237,7 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
         {
             if (pSource->GetTypeId() != TYPEID_UNIT || !pSource->ToCreature()->isBattleMaster())
             {
-                sLog.outError("a user (guid %u) requested battlegroundlist from a npc who is no battlemaster", GetGUIDLow());
+                sLog->outError("a user (guid %u) requested battlegroundlist from a npc who is no battlemaster", GetGUIDLow());
                 return;
             }
 
@@ -15100,7 +15100,7 @@ bool Player::SatisfyQuestLog(bool msg)
     {
         WorldPacket data(SMSG_QUESTLOG_FULL, 0);
         GetSession()->SendPacket(&data);
-        sLog.outDebug("WORLD: Sent SMSG_QUESTLOG_FULL");
+        sLog->outDebug("WORLD: Sent SMSG_QUESTLOG_FULL");
     }
     return false;
 }
@@ -15256,7 +15256,7 @@ bool Player::SatisfyQuestConditions(Quest const* qInfo, bool msg)
     {
         if (msg)
             SendCanTakeQuestResponse(INVALIDREASON_DONT_HAVE_REQ);
-        sLog.outDebug("Player::SatisfyQuestConditions: conditions not met for quest %u", qInfo->GetQuestId());
+        sLog->outDebug("Player::SatisfyQuestConditions: conditions not met for quest %u", qInfo->GetQuestId());
         return false;
     }
     return true;
@@ -16050,14 +16050,14 @@ void Player::SendQuestComplete(uint32 quest_id)
         WorldPacket data(SMSG_QUESTUPDATE_COMPLETE, 4);
         data << uint32(quest_id);
         GetSession()->SendPacket(&data);
-        sLog.outDebug("WORLD: Sent SMSG_QUESTUPDATE_COMPLETE quest = %u", quest_id);
+        sLog->outDebug("WORLD: Sent SMSG_QUESTUPDATE_COMPLETE quest = %u", quest_id);
     }
 }
 
 void Player::SendQuestReward(Quest const *pQuest, uint32 XP, Object * questGiver)
 {
     uint32 questid = pQuest->GetQuestId();
-    sLog.outDebug("WORLD: Sent SMSG_QUESTGIVER_QUEST_COMPLETE quest = %u", questid);
+    sLog->outDebug("WORLD: Sent SMSG_QUESTGIVER_QUEST_COMPLETE quest = %u", questid);
     sGameEventMgr->HandleQuestComplete(questid);
     WorldPacket data(SMSG_QUESTGIVER_QUEST_COMPLETE, (4+4+4+4+4));
     data << uint8(0x80); // unk 4.0.1 flags
@@ -16095,7 +16095,7 @@ void Player::SendQuestFailed(uint32 quest_id)
         data << uint32(quest_id);
         data << uint32(0);                                  // failed reason (4 for inventory is full)
         GetSession()->SendPacket(&data);
-        sLog.outDebug("WORLD: Sent SMSG_QUESTGIVER_QUEST_FAILED");
+        sLog->outDebug("WORLD: Sent SMSG_QUESTGIVER_QUEST_FAILED");
     }
 }
 
@@ -16106,7 +16106,7 @@ void Player::SendQuestTimerFailed(uint32 quest_id)
         WorldPacket data(SMSG_QUESTUPDATE_FAILEDTIMER, 4);
         data << uint32(quest_id);
         GetSession()->SendPacket(&data);
-        sLog.outDebug("WORLD: Sent SMSG_QUESTUPDATE_FAILEDTIMER");
+        sLog->outDebug("WORLD: Sent SMSG_QUESTUPDATE_FAILEDTIMER");
     }
 }
 
@@ -16115,7 +16115,7 @@ void Player::SendCanTakeQuestResponse(uint32 msg)
     WorldPacket data(SMSG_QUESTGIVER_QUEST_INVALID, 4);
     data << uint32(msg);
     GetSession()->SendPacket(&data);
-    sLog.outDebug("WORLD: Sent SMSG_QUESTGIVER_QUEST_INVALID");
+    sLog->outDebug("WORLD: Sent SMSG_QUESTGIVER_QUEST_INVALID");
 }
 
 void Player::SendQuestConfirmAccept(const Quest* pQuest, Player* pReceiver)
@@ -16135,7 +16135,7 @@ void Player::SendQuestConfirmAccept(const Quest* pQuest, Player* pReceiver)
         data << uint64(GetGUID());
         pReceiver->GetSession()->SendPacket(&data);
 
-        sLog.outDebug("WORLD: Sent SMSG_QUEST_CONFIRM_ACCEPT");
+        sLog->outDebug("WORLD: Sent SMSG_QUEST_CONFIRM_ACCEPT");
     }
 }
 
@@ -16147,14 +16147,14 @@ void Player::SendPushToPartyResponse(Player *pPlayer, uint32 msg)
         data << uint64(pPlayer->GetGUID());
         data << uint8(msg);                                 // valid values: 0-8
         GetSession()->SendPacket(&data);
-        sLog.outDebug("WORLD: Sent MSG_QUEST_PUSH_RESULT");
+        sLog->outDebug("WORLD: Sent MSG_QUEST_PUSH_RESULT");
     }
 }
 
 void Player::SendQuestUpdateAddItem(Quest const* /*pQuest*/, uint32 /*item_idx*/, uint16 /*count*/)
 {
     WorldPacket data(SMSG_QUESTUPDATE_ADD_ITEM, 0);
-    sLog.outDebug("WORLD: Sent SMSG_QUESTUPDATE_ADD_ITEM");
+    sLog->outDebug("WORLD: Sent SMSG_QUESTUPDATE_ADD_ITEM");
     //data << pQuest->ReqItemId[item_idx];
     //data << count;
     GetSession()->SendPacket(&data);
@@ -16170,7 +16170,7 @@ void Player::SendQuestUpdateAddCreatureOrGo(Quest const* pQuest, uint64 guid, ui
         entry = (-entry) | 0x80000000;
 
     WorldPacket data(SMSG_QUESTUPDATE_ADD_KILL, (4*4+8));
-    sLog.outDebug("WORLD: Sent SMSG_QUESTUPDATE_ADD_KILL");
+    sLog->outDebug("WORLD: Sent SMSG_QUESTUPDATE_ADD_KILL");
     data << uint32(pQuest->GetQuestId());
     data << uint32(entry);
     data << uint32(old_count + add_count);
@@ -16222,7 +16222,7 @@ void Player::_LoadArenaTeamInfo(PreparedQueryResult result)
         ArenaTeam* aTeam = sObjectMgr->GetArenaTeamById(arenateamid);
         if (!aTeam)
         {
-            sLog.outError("Player::_LoadArenaTeamInfo: couldn't load arenateam %u", arenateamid);
+            sLog->outError("Player::_LoadArenaTeamInfo: couldn't load arenateam %u", arenateamid);
             continue;
         }
 
@@ -16390,7 +16390,7 @@ Player* Player::LoadFromDB(uint32 guid, SQLQueryHolder * holder, WorldSession * 
     
     if (!result)
     {
-        sLog.outError("Player (GUID: %u) not found in table `characters`, can't load. ",guid);
+        sLog->outError("Player (GUID: %u) not found in table `characters`, can't load. ",guid);
         return false;
     }
     
@@ -16471,7 +16471,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
 
     if (holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADBANNED))
     {
-        sLog.outError("Player (GUID: %u) is banned, can't load.", guid);
+        sLog->outError("Player (GUID: %u) is banned, can't load.", guid);
         return false;
     }
 
@@ -16545,7 +16545,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
         m_items[slot] = NULL;
     }
 
-    sLog.outDebug("Load Basic value of player %s is: ", m_name.c_str());
+    sLog->outDebug("Load Basic value of player %s is: ", m_name.c_str());
     outDebugValues();
 
     //Need to call it to initialize m_team (m_team can be calculated from race)
@@ -16612,7 +16612,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
     MapEntry const * mapEntry = sMapStore.LookupEntry(mapId);
     if (!mapEntry || !IsPositionValid())
     {
-        sLog.outError("Player (guidlow %d) have invalid coordinates (MapId: %u X: %f Y: %f Z: %f O: %f). Teleport to default race/class locations.",guid,mapId,GetPositionX(),GetPositionY(),GetPositionZ(),GetOrientation());
+        sLog->outError("Player (guidlow %d) have invalid coordinates (MapId: %u X: %f Y: %f Z: %f O: %f). Teleport to default race/class locations.",guid,mapId,GetPositionX(),GetPositionY(),GetPositionZ(),GetOrientation());
         RelocateToHomebind();
     }
     // Player was saved in Arena or Bg
@@ -16650,7 +16650,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
 
             if (mapId == MAPID_INVALID) // Battleground Entry Point not found (???)
             {
-                sLog.outError("Player (guidlow %d) was in BG in database, but BG was not found, and entry point was invalid! Teleport to default race/class locations.",guid);
+                sLog->outError("Player (guidlow %d) was in BG in database, but BG was not found, and entry point was invalid! Teleport to default race/class locations.",guid);
                 RelocateToHomebind();
             }
             else
@@ -16672,7 +16672,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
             // transport size limited
             m_movementInfo.t_pos.m_positionX > 250 || m_movementInfo.t_pos.m_positionY > 250 || m_movementInfo.t_pos.m_positionZ > 250)
         {
-            sLog.outError("Player (guidlow %d) have invalid transport coordinates (X: %f Y: %f Z: %f O: %f). Teleport to bind location.",
+            sLog->outError("Player (guidlow %d) have invalid transport coordinates (X: %f Y: %f Z: %f O: %f). Teleport to bind location.",
                 guid,GetPositionX()+m_movementInfo.t_pos.m_positionX,GetPositionY()+m_movementInfo.t_pos.m_positionY,
                 GetPositionZ()+m_movementInfo.t_pos.m_positionZ,GetOrientation()+m_movementInfo.t_pos.m_orientation);
 
@@ -16692,7 +16692,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
             }
             if (!m_transport)
             {
-                sLog.outError("Player (guidlow %d) have problems with transport guid (%u). Teleport to bind location.",
+                sLog->outError("Player (guidlow %d) have problems with transport guid (%u). Teleport to bind location.",
                     guid,transGUID);
 
                 RelocateToHomebind();
@@ -16719,12 +16719,12 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
 
             if (!nodeEntry)                                      // don't know taxi start node, to homebind
             {
-                sLog.outError("Character %u have wrong data in taxi destination list, teleport to homebind.",GetGUIDLow());
+                sLog->outError("Character %u have wrong data in taxi destination list, teleport to homebind.",GetGUIDLow());
                 RelocateToHomebind();
             }
             else                                                // have start node, to it
             {
-                sLog.outError("Character %u have too short taxi destination list, teleport to original node.",GetGUIDLow());
+                sLog->outError("Character %u have too short taxi destination list, teleport to original node.",GetGUIDLow());
                 mapId = nodeEntry->map_id;
                 Relocate(nodeEntry->x, nodeEntry->y, nodeEntry->z,0.0f);
             }
@@ -16753,7 +16753,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
     {
         if (GetSession()->Expansion() < mapEntry->Expansion())
         {
-            sLog.outDebug("Player %s using client without required expansion tried login at non accessible map %u", GetName(), mapId);
+            sLog->outDebug("Player %s using client without required expansion tried login at non accessible map %u", GetName(), mapId);
             RelocateToHomebind();
         }
 
@@ -16774,13 +16774,13 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
         AreaTrigger const* at = sObjectMgr->GetGoBackTrigger(mapId);
         if (at)
         {
-            sLog.outError("Player (guidlow %d) is teleported to gobacktrigger (Map: %u X: %f Y: %f Z: %f O: %f).",guid,mapId,GetPositionX(),GetPositionY(),GetPositionZ(),GetOrientation());
+            sLog->outError("Player (guidlow %d) is teleported to gobacktrigger (Map: %u X: %f Y: %f Z: %f O: %f).",guid,mapId,GetPositionX(),GetPositionY(),GetPositionZ(),GetOrientation());
             Relocate(at->target_X, at->target_Y, at->target_Z, GetOrientation());
             mapId = at->target_mapId;
         }
         else
         {
-            sLog.outError("Player (guidlow %d) is teleported to home (Map: %u X: %f Y: %f Z: %f O: %f).",guid,mapId,GetPositionX(),GetPositionY(),GetPositionZ(),GetOrientation());
+            sLog->outError("Player (guidlow %d) is teleported to home (Map: %u X: %f Y: %f Z: %f O: %f).",guid,mapId,GetPositionX(),GetPositionY(),GetPositionZ(),GetOrientation());
             RelocateToHomebind();
         }
 
@@ -16790,11 +16790,11 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
             PlayerInfo const *info = sObjectMgr->GetPlayerInfo(getRace(), getClass());
             mapId = info->mapId;
             Relocate(info->positionX,info->positionY,info->positionZ,0.0f);
-            sLog.outError("Player (guidlow %d) have invalid coordinates (X: %f Y: %f Z: %f O: %f). Teleport to default race/class locations.",guid,GetPositionX(),GetPositionY(),GetPositionZ(),GetOrientation());
+            sLog->outError("Player (guidlow %d) have invalid coordinates (X: %f Y: %f Z: %f O: %f). Teleport to default race/class locations.",guid,GetPositionX(),GetPositionY(),GetPositionZ(),GetOrientation());
             map = sMapMgr->CreateMap(mapId, this, 0);
             if (!map)
             {
-                sLog.outError("Player (guidlow %d) has invalid default map coordinates (X: %f Y: %f Z: %f O: %f). or instance couldn't be created",guid,GetPositionX(),GetPositionY(),GetPositionZ(),GetOrientation());
+                sLog->outError("Player (guidlow %d) has invalid default map coordinates (X: %f Y: %f Z: %f O: %f). or instance couldn't be created",guid,GetPositionX(),GetPositionY(),GetPositionZ(),GetOrientation());
                 return false;
             }
         }
@@ -16808,7 +16808,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
             Relocate(at->target_X, at->target_Y, at->target_Z, at->target_Orientation);
         else
         {
-            sLog.outError("Player %s(GUID: %u) logged in to a reset instance (map: %u) and there is no area-trigger leading to this map. Thus he can't be ported back to the entrance. This _might_ be an exploit attempt.", GetName(), GetGUIDLow(), mapId);
+            sLog->outError("Player %s(GUID: %u) logged in to a reset instance (map: %u) and there is no area-trigger leading to this map. Thus he can't be ported back to the entrance. This _might_ be an exploit attempt.", GetName(), GetGUIDLow(), mapId);
             RelocateToHomebind();
         }
     }
@@ -16929,7 +16929,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
     if (m_specsCount > MAX_TALENT_SPECS || m_activeSpec > MAX_TALENT_SPEC || m_specsCount < MIN_TALENT_SPECS)
     {
         m_activeSpec = 0;
-        sLog.outError("Player %s(GUID: %u) has SpecCount = %u and ActiveSpec = %u.", GetName(), GetGUIDLow(), m_specsCount, m_activeSpec);
+        sLog->outError("Player %s(GUID: %u) has SpecCount = %u and ActiveSpec = %u.", GetName(), GetGUIDLow(), m_specsCount, m_activeSpec);
     }
 
 	_LoadCurrency(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOAD_CURRENCY));
@@ -17002,7 +17002,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
         SetPower(Powers(i),savedPower > GetMaxPower(Powers(i)) ? GetMaxPower(Powers(i)) : savedPower);
     }
 
-    sLog.outDebug("The value of player %s after load item and aura is: ", m_name.c_str());
+    sLog->outDebug("The value of player %s after load item and aura is: ", m_name.c_str());
     outDebugValues();
 
     // GM state
@@ -17139,7 +17139,7 @@ void Player::_LoadActions(PreparedQueryResult result)
                 ab->uState = ACTIONBUTTON_UNCHANGED;
             else
             {
-                sLog.outError("  ...at loading, and will deleted in DB also");
+                sLog->outError("  ...at loading, and will deleted in DB also");
 
                 // Will deleted in DB at next save (it can create data until save but marked as deleted)
                 m_actionButtons[button].uState = ACTIONBUTTON_DELETED;
@@ -17150,7 +17150,7 @@ void Player::_LoadActions(PreparedQueryResult result)
 
 void Player::_LoadAuras(PreparedQueryResult result, uint32 timediff)
 {
-    sLog.outDebug("Loading auras for player %u",GetGUIDLow());
+    sLog->outDebug("Loading auras for player %u",GetGUIDLow());
 
     //QueryResult *result = CharacterDatabase.PQuery("SELECT caster_guid,spell,effect_mask,recalculate_mask,stackcount,amount0,amount1,amount2,base_amount0,base_amount1,base_amount2,maxduration,remaintime,remaincharges FROM character_aura WHERE guid = '%u'",GetGUIDLow());
 
@@ -17179,7 +17179,7 @@ void Player::_LoadAuras(PreparedQueryResult result, uint32 timediff)
             SpellEntry const* spellproto = sSpellStore.LookupEntry(spellid);
             if (!spellproto)
             {
-                sLog.outError("Unknown aura (spellid %u), ignore.",spellid);
+                sLog->outError("Unknown aura (spellid %u), ignore.",spellid);
                 continue;
             }
 
@@ -17210,7 +17210,7 @@ void Player::_LoadAuras(PreparedQueryResult result, uint32 timediff)
                 }
                 aura->SetLoadedState(maxduration,remaintime,remaincharges,stackcount,recalculatemask,&damage[0]);
                 aura->ApplyForTargets();
-                sLog.outDetail("Added aura spellid %u, effectmask %u", spellproto->Id, effmask);
+                sLog->outDetail("Added aura spellid %u, effectmask %u", spellproto->Id, effmask);
             }
         }
         while (result->NextRow());
@@ -17236,13 +17236,13 @@ void Player::_LoadGlyphAuras()
                         continue;
                     }
                     else
-                        sLog.outError("Player %s has glyph with typeflags %u in slot with typeflags %u, removing.", m_name.c_str(), gp->TypeFlags, gs->TypeFlags);
+                        sLog->outError("Player %s has glyph with typeflags %u in slot with typeflags %u, removing.", m_name.c_str(), gp->TypeFlags, gs->TypeFlags);
                 }
                 else
-                    sLog.outError("Player %s has not existing glyph slot entry %u on index %u", m_name.c_str(), GetGlyphSlot(i), i);
+                    sLog->outError("Player %s has not existing glyph slot entry %u on index %u", m_name.c_str(), GetGlyphSlot(i), i);
             }
             else
-                sLog.outError("Player %s has not existing glyph entry %u on index %u", m_name.c_str(), glyph, i);
+                sLog->outError("Player %s has not existing glyph entry %u on index %u", m_name.c_str(), glyph, i);
 
             // On any error remove glyph
             SetGlyph(i, 0);
@@ -17301,7 +17301,7 @@ void Player::_LoadInventory(PreparedQueryResult result, uint32 timediff)
                 stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
                 stmt->setUInt32(0, item_guid);
                 trans->Append(stmt);
-                sLog.outError("Player::_LoadInventory: Player %s has an unknown item (id: #%u) in inventory, deleted.", GetName(),item_id);
+                sLog->outError("Player::_LoadInventory: Player %s has an unknown item (id: #%u) in inventory, deleted.", GetName(),item_id);
                 continue;
             }
 
@@ -17309,7 +17309,7 @@ void Player::_LoadInventory(PreparedQueryResult result, uint32 timediff)
 
             if (!item->LoadFromDB(item_guid, GetGUID(), fields, item_id))
             {
-                sLog.outError("Player::_LoadInventory: Player %s has broken item (id: #%u) in inventory, deleted.", GetName(),item_id);
+                sLog->outError("Player::_LoadInventory: Player %s has broken item (id: #%u) in inventory, deleted.", GetName(),item_id);
                 PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_INVENTORY_ITEM);
                 stmt->setUInt32(0, item_guid);
                 trans->Append(stmt);
@@ -17344,7 +17344,7 @@ void Player::_LoadInventory(PreparedQueryResult result, uint32 timediff)
             {
                 if (item->GetPlayedTime() > (2*HOUR))
                 {
-                    sLog.outDebug("Item::LoadFromDB, Item GUID: %u: refund time expired, deleting refund data and removing refundable flag.", item->GetGUIDLow());
+                    sLog->outDebug("Item::LoadFromDB, Item GUID: %u: refund time expired, deleting refund data and removing refundable flag.", item->GetGUIDLow());
                     trans->PAppend("DELETE FROM item_refund_instance WHERE item_guid = '%u'", item->GetGUIDLow());
                     item->RemoveFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_REFUNDABLE);
                 }
@@ -17356,7 +17356,7 @@ void Player::_LoadInventory(PreparedQueryResult result, uint32 timediff)
                     PreparedQueryResult result2 = CharacterDatabase.Query(stmt);
                     if (!result2)
                     {
-                        sLog.outDebug("Item::LoadFromDB, Item GUID: %u has field flags & ITEM_FLAGS_REFUNDABLE but has no data in item_refund_instance, removing flag.", item->GetGUIDLow());
+                        sLog->outDebug("Item::LoadFromDB, Item GUID: %u has field flags & ITEM_FLAGS_REFUNDABLE but has no data in item_refund_instance, removing flag.", item->GetGUIDLow());
                         item->RemoveFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_REFUNDABLE);
                     }
                     else
@@ -17376,7 +17376,7 @@ void Player::_LoadInventory(PreparedQueryResult result, uint32 timediff)
                 PreparedQueryResult result2 = CharacterDatabase.Query(stmt);
                 if (!result2)
                 {
-                    sLog.outDebug("Item::LoadFromDB, Item GUID: %u has flag ITEM_FLAG_BOP_TRADEABLE but has no data in item_soulbound_trade_data, removing flag.", item->GetGUIDLow());
+                    sLog->outDebug("Item::LoadFromDB, Item GUID: %u has flag ITEM_FLAG_BOP_TRADEABLE but has no data in item_soulbound_trade_data, removing flag.", item->GetGUIDLow());
                     item->RemoveFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_BOP_TRADEABLE);
                 }
                 else
@@ -17445,7 +17445,7 @@ void Player::_LoadInventory(PreparedQueryResult result, uint32 timediff)
                         itr->second->StoreItem(slot, item, true);
                     else
                     {
-                        sLog.outError("Player::_LoadInventory: Player %s has item (GUID: %u Entry: %u) can't be loaded to inventory (Bag GUID: %u Slot: %u) by reason %u.", GetName(),item_guid, item_id, bag_guid, slot, result);
+                        sLog->outError("Player::_LoadInventory: Player %s has item (GUID: %u Entry: %u) can't be loaded to inventory (Bag GUID: %u Slot: %u) by reason %u.", GetName(),item_guid, item_id, bag_guid, slot, result);
                         success = false;
                     }
                 }
@@ -17458,7 +17458,7 @@ void Player::_LoadInventory(PreparedQueryResult result, uint32 timediff)
                 item->SetState(ITEM_UNCHANGED, this);
             else
             {
-                sLog.outError("Player::_LoadInventory: Player %s has item (GUID: %u Entry: %u) can't be loaded to inventory (Bag GUID: %u Slot: %u) by some reason, will send by mail.", GetName(),item_guid, item_id, bag_guid, slot);
+                sLog->outError("Player::_LoadInventory: Player %s has item (GUID: %u Entry: %u) can't be loaded to inventory (Bag GUID: %u Slot: %u) by some reason, will send by mail.", GetName(),item_guid, item_id, bag_guid, slot);
                 PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_INVENTORY_ITEM);
                 stmt->setUInt32(0, item_guid);
                 trans->Append(stmt);
@@ -17516,7 +17516,7 @@ void Player::_LoadMailedItems(Mail *mail)
 
         if (!proto)
         {
-            sLog.outError("Player %u has unknown item_template (ProtoType) in mailed items(GUID: %u template: %u) in mail (%u), deleted.", GetGUIDLow(), item_guid_low, item_template,mail->messageID);
+            sLog->outError("Player %u has unknown item_template (ProtoType) in mailed items(GUID: %u template: %u) in mail (%u), deleted.", GetGUIDLow(), item_guid_low, item_template,mail->messageID);
             trans->PAppend("DELETE FROM mail_items WHERE item_guid = '%u'", item_guid_low);
             PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
             stmt->setUInt32(0, item_guid_low);
@@ -17528,7 +17528,7 @@ void Player::_LoadMailedItems(Mail *mail)
 
         if (!item->LoadFromDB(item_guid_low, MAKE_NEW_GUID(fields[13].GetUInt32(), 0, HIGHGUID_PLAYER), fields, item_template))
         {
-            sLog.outError("Player::_LoadMailedItems - Item in mail (%u) doesn't exist !!!! - item guid: %u, deleted from mail", mail->messageID, item_guid_low);
+            sLog->outError("Player::_LoadMailedItems - Item in mail (%u) doesn't exist !!!! - item guid: %u, deleted from mail", mail->messageID, item_guid_low);
             CharacterDatabase.PExecute("DELETE FROM mail_items WHERE item_guid = '%u'", item_guid_low);
             item->FSetState(ITEM_REMOVED);
             item->SaveToDB(trans);                               // it also deletes item object !
@@ -17583,7 +17583,7 @@ void Player::_LoadMail()
 
             if (m->mailTemplateId && !sMailTemplateStore.LookupEntry(m->mailTemplateId))
             {
-                sLog.outError("Player::_LoadMail - Mail (%u) have not existed MailTemplateId (%u), remove at load", m->messageID, m->mailTemplateId);
+                sLog->outError("Player::_LoadMail - Mail (%u) have not existed MailTemplateId (%u), remove at load", m->messageID, m->mailTemplateId);
                 m->mailTemplateId = 0;
             }
 
@@ -17639,7 +17639,7 @@ void Player::_LoadQuestStatus(PreparedQueryResult result)
                 else
                 {
                     questStatusData.m_status = QUEST_STATUS_NONE;
-                    sLog.outError("Player %s have invalid quest %d status (%u), replaced by QUEST_STATUS_NONE(0).",GetName(),quest_id,qstatus);
+                    sLog->outError("Player %s have invalid quest %d status (%u), replaced by QUEST_STATUS_NONE(0).",GetName(),quest_id,qstatus);
                 }
 
                 questStatusData.m_rewarded = (fields[2].GetUInt8() > 0);
@@ -17708,7 +17708,7 @@ void Player::_LoadQuestStatus(PreparedQueryResult result)
                         m_questRewardTalentCount += pQuest->GetBonusTalents();
                 }
 
-                sLog.outDebug("Quest status is {%u} for quest {%u} for player (GUID: %u)", questStatusData.m_status, quest_id, GetGUIDLow());
+                sLog->outDebug("Quest status is {%u} for quest {%u} for player (GUID: %u)", questStatusData.m_status, quest_id, GetGUIDLow());
             }
         }
         while (result->NextRow());
@@ -17747,7 +17747,7 @@ void Player::_LoadDailyQuestStatus(PreparedQueryResult result)
 
             if (quest_daily_idx >= PLAYER_MAX_DAILY_QUESTS)  // max amount with exist data in query
             {
-                sLog.outError("Player (GUID: %u) have more 25 daily quest records in `charcter_queststatus_daily`",GetGUIDLow());
+                sLog->outError("Player (GUID: %u) have more 25 daily quest records in `charcter_queststatus_daily`",GetGUIDLow());
                 break;
             }
 
@@ -17763,7 +17763,7 @@ void Player::_LoadDailyQuestStatus(PreparedQueryResult result)
             SetUInt32Value(PLAYER_FIELD_DAILY_QUESTS_1+quest_daily_idx, quest_id);
             ++quest_daily_idx;
 
-            sLog.outDebug("Daily quest (%u) cooldown for player (GUID: %u)", quest_id, GetGUIDLow());
+            sLog->outDebug("Daily quest (%u) cooldown for player (GUID: %u)", quest_id, GetGUIDLow());
         }
         while (result->NextRow());
     }
@@ -17785,7 +17785,7 @@ void Player::_LoadWeeklyQuestStatus(PreparedQueryResult result)
                 continue;
 
             m_weeklyquests.insert(quest_id);
-            sLog.outDebug("Weekly quest {%u} cooldown for player (GUID: %u)", quest_id, GetGUIDLow());
+            sLog->outDebug("Weekly quest {%u} cooldown for player (GUID: %u)", quest_id, GetGUIDLow());
         }
         while (result->NextRow());
     }
@@ -17811,7 +17811,7 @@ void Player::_LoadCurrency(PreparedQueryResult result)
 			const CurrencyTypesEntry* entry = sCurrencyTypesStore.LookupEntry(currency_id);
 			if (!entry)
 			{
-				sLog.outError("Player::_LoadCurrency: %s has not existing currency %u, removing.", GetName(), currency_id);
+				sLog->outError("Player::_LoadCurrency: %s has not existing currency %u, removing.", GetName(), currency_id);
 				CharacterDatabase.PExecute("DELETE FROM character_currency WHERE currency = '%u'", currency_id);
 				continue;
 			}
@@ -17888,14 +17888,14 @@ void Player::_LoadBoundInstances(PreparedQueryResult result)
             MapEntry const* mapEntry = sMapStore.LookupEntry(mapId);
             if (!mapEntry || !mapEntry->IsDungeon())
             {
-                sLog.outError("_LoadBoundInstances: player %s(%d) has bind to not existed or not dungeon map %d", GetName(), GetGUIDLow(), mapId);
+                sLog->outError("_LoadBoundInstances: player %s(%d) has bind to not existed or not dungeon map %d", GetName(), GetGUIDLow(), mapId);
                 CharacterDatabase.PExecute("DELETE FROM character_instance WHERE guid = '%d' AND instance = '%d'", GetGUIDLow(), instanceId);
                 continue;
             }
 
             if (difficulty >= MAX_DIFFICULTY)
             {
-                sLog.outError("_LoadBoundInstances: player %s(%d) has bind to not existed difficulty %d instance for map %u", GetName(), GetGUIDLow(), difficulty, mapId);
+                sLog->outError("_LoadBoundInstances: player %s(%d) has bind to not existed difficulty %d instance for map %u", GetName(), GetGUIDLow(), difficulty, mapId);
                 CharacterDatabase.PExecute("DELETE FROM character_instance WHERE guid = '%d' AND instance = '%d'", GetGUIDLow(), instanceId);
                 continue;
             }
@@ -17903,14 +17903,14 @@ void Player::_LoadBoundInstances(PreparedQueryResult result)
             MapDifficulty const* mapDiff = GetMapDifficultyData(mapId,Difficulty(difficulty));
             if (!mapDiff)
             {
-                sLog.outError("_LoadBoundInstances: player %s(%d) has bind to not existed difficulty %d instance for map %u", GetName(), GetGUIDLow(), difficulty, mapId);
+                sLog->outError("_LoadBoundInstances: player %s(%d) has bind to not existed difficulty %d instance for map %u", GetName(), GetGUIDLow(), difficulty, mapId);
                 CharacterDatabase.PExecute("DELETE FROM character_instance WHERE guid = '%d' AND instance = '%d'", GetGUIDLow(), instanceId);
                 continue;
             }
 
             if (!perm && group)
             {
-                sLog.outError("_LoadBoundInstances: player %s(%d) is in group %d but has a non-permanent character bind to map %d,%d,%d", GetName(), GetGUIDLow(), GUID_LOPART(group->GetGUID()), mapId, instanceId, difficulty);
+                sLog->outError("_LoadBoundInstances: player %s(%d) is in group %d but has a non-permanent character bind to map %d,%d,%d", GetName(), GetGUIDLow(), GUID_LOPART(group->GetGUID()), mapId, instanceId, difficulty);
                 CharacterDatabase.PExecute("DELETE FROM character_instance WHERE guid = '%d' AND instance = '%d'", GetGUIDLow(), instanceId);
                 continue;
             }
@@ -17994,7 +17994,7 @@ InstancePlayerBind* Player::BindToInstance(InstanceSave *save, bool permanent, b
         bind.save = save;
         bind.perm = permanent;
         if (!load)
-            sLog.outDebug("Player::BindToInstance: %s(%d) is now bound to map %d, instance %d, difficulty %d", GetName(), GetGUIDLow(), save->GetMapId(), save->GetInstanceId(), save->GetDifficulty());
+            sLog->outDebug("Player::BindToInstance: %s(%d) is now bound to map %d, instance %d, difficulty %d", GetName(), GetGUIDLow(), save->GetMapId(), save->GetInstanceId(), save->GetDifficulty());
         sScriptMgr->OnPlayerBindToInstance(this, save->GetDifficulty(), save->GetMapId(), permanent);
         return &bind;
     }
@@ -18219,7 +18219,7 @@ bool Player::_LoadHomeBind(PreparedQueryResult result)
     PlayerInfo const *info = sObjectMgr->GetPlayerInfo(getRace(), getClass());
     if (!info)
     {
-        sLog.outError("Player have incorrect race/class pair. Can't be loaded.");
+        sLog->outError("Player have incorrect race/class pair. Can't be loaded.");
         return false;
     }
 
@@ -18257,7 +18257,7 @@ bool Player::_LoadHomeBind(PreparedQueryResult result)
             GetGUIDLow(), m_homebindMapId, m_homebindAreaId, m_homebindX, m_homebindY, m_homebindZ);
     }
 
-    sLog.outStaticDebug("Setting player home position - mapid: %u, areaid: %u, X: %f, Y: %f, Z: %f",
+    sLog->outStaticDebug("Setting player home position - mapid: %u, areaid: %u, X: %f, Y: %f, Z: %f",
         m_homebindMapId, m_homebindAreaId, m_homebindX, m_homebindY, m_homebindZ);
 
     return true;
@@ -18282,7 +18282,7 @@ void Player::SaveToDB()
     // first save/honor gain after midnight will also update the player's honor fields
     UpdateHonorFields();
 
-    sLog.outDebug("The value of player %s at save: ", m_name.c_str());
+    sLog->outDebug("The value of player %s at save: ", m_name.c_str());
     outDebugValues();
 
     std::string sql_name = m_name;
@@ -18591,7 +18591,7 @@ void Player::_SaveInventory(SQLTransaction& trans)
         }
         else
         {
-            sLog.outError("Can't find item guid %u but is in refundable storage for player %u ! Removing.", *itr, GetGUIDLow());
+            sLog->outError("Can't find item guid %u but is in refundable storage for player %u ! Removing.", *itr, GetGUIDLow());
             m_refundableItems.erase(itr);
         }
     }
@@ -18622,7 +18622,7 @@ void Player::_SaveInventory(SQLTransaction& trans)
                 uint32 bagTestGUID = 0;
                 if (Item* test2 = GetItemByPos(INVENTORY_SLOT_BAG_0, item->GetBagSlot()))
                     bagTestGUID = test2->GetGUIDLow();
-                sLog.outError("Player(GUID: %u Name: %s)::_SaveInventory - the bag(%u) and slot(%u) values for the item with guid %u (state %d) are incorrect, the player doesn't have an item at that position!", lowGuid, GetName(), item->GetBagSlot(), item->GetSlot(), item->GetGUIDLow(), (int32)item->GetState());
+                sLog->outError("Player(GUID: %u Name: %s)::_SaveInventory - the bag(%u) and slot(%u) values for the item with guid %u (state %d) are incorrect, the player doesn't have an item at that position!", lowGuid, GetName(), item->GetBagSlot(), item->GetSlot(), item->GetGUIDLow(), (int32)item->GetState());
                 // according to the test that was just performed nothing should be in this slot, delete
                 trans->PAppend("DELETE FROM character_inventory WHERE bag=%u AND slot=%u AND guid=%u", bagTestGUID, item->GetSlot(), lowGuid);
                 // also THIS item should be somewhere else, cheat attempt
@@ -18633,7 +18633,7 @@ void Player::_SaveInventory(SQLTransaction& trans)
             }
             else if (test != item)
             {
-                sLog.outError("Player(GUID: %u Name: %s)::_SaveInventory - the bag(%u) and slot(%u) values for the item with guid %u are incorrect, the item with guid %u is there instead!", lowGuid, GetName(), item->GetBagSlot(), item->GetSlot(), item->GetGUIDLow(), test->GetGUIDLow());
+                sLog->outError("Player(GUID: %u Name: %s)::_SaveInventory - the bag(%u) and slot(%u) values for the item with guid %u are incorrect, the item with guid %u is there instead!", lowGuid, GetName(), item->GetBagSlot(), item->GetSlot(), item->GetGUIDLow(), test->GetGUIDLow());
                 // save all changes to the item...
                 if (item->GetState() != ITEM_NEW) // only for existing items, no dupes
                     item->SaveToDB(trans);
@@ -18911,18 +18911,18 @@ void Player::_SaveStats(SQLTransaction& trans)
 
 void Player::outDebugValues() const
 {
-    if (!sLog.IsOutDebug())                                  // optimize disabled debug output
+    if (!sLog->IsOutDebug())                                  // optimize disabled debug output
         return;
 
-    sLog.outDebug("HP is: \t\t\t%u\t\tMP is: \t\t\t%u",GetMaxHealth(), GetMaxPower(POWER_MANA));
-    sLog.outDebug("AGILITY is: \t\t%f\t\tSTRENGTH is: \t\t%f",GetStat(STAT_AGILITY), GetStat(STAT_STRENGTH));
-    sLog.outDebug("INTELLECT is: \t\t%f\t\tSPIRIT is: \t\t%f",GetStat(STAT_INTELLECT), GetStat(STAT_SPIRIT));
-    sLog.outDebug("STAMINA is: \t\t%f",GetStat(STAT_STAMINA));
-    sLog.outDebug("Armor is: \t\t%u\t\tBlock is: \t\t%f",GetArmor(), GetFloatValue(PLAYER_BLOCK_PERCENTAGE));
-    sLog.outDebug("MIN_DAMAGE is: \t\t%f\tMAX_DAMAGE is: \t\t%f",GetFloatValue(UNIT_FIELD_MINDAMAGE), GetFloatValue(UNIT_FIELD_MAXDAMAGE));
-    sLog.outDebug("MIN_OFFHAND_DAMAGE is: \t%f\tMAX_OFFHAND_DAMAGE is: \t%f",GetFloatValue(UNIT_FIELD_MINOFFHANDDAMAGE), GetFloatValue(UNIT_FIELD_MAXOFFHANDDAMAGE));
-    sLog.outDebug("MIN_RANGED_DAMAGE is: \t%f\tMAX_RANGED_DAMAGE is: \t%f",GetFloatValue(UNIT_FIELD_MINRANGEDDAMAGE), GetFloatValue(UNIT_FIELD_MAXRANGEDDAMAGE));
-    sLog.outDebug("ATTACK_TIME is: \t%u\t\tRANGE_ATTACK_TIME is: \t%u",GetAttackTime(BASE_ATTACK), GetAttackTime(RANGED_ATTACK));
+    sLog->outDebug("HP is: \t\t\t%u\t\tMP is: \t\t\t%u",GetMaxHealth(), GetMaxPower(POWER_MANA));
+    sLog->outDebug("AGILITY is: \t\t%f\t\tSTRENGTH is: \t\t%f",GetStat(STAT_AGILITY), GetStat(STAT_STRENGTH));
+    sLog->outDebug("INTELLECT is: \t\t%f\t\tSPIRIT is: \t\t%f",GetStat(STAT_INTELLECT), GetStat(STAT_SPIRIT));
+    sLog->outDebug("STAMINA is: \t\t%f",GetStat(STAT_STAMINA));
+    sLog->outDebug("Armor is: \t\t%u\t\tBlock is: \t\t%f",GetArmor(), GetFloatValue(PLAYER_BLOCK_PERCENTAGE));
+    sLog->outDebug("MIN_DAMAGE is: \t\t%f\tMAX_DAMAGE is: \t\t%f",GetFloatValue(UNIT_FIELD_MINDAMAGE), GetFloatValue(UNIT_FIELD_MAXDAMAGE));
+    sLog->outDebug("MIN_OFFHAND_DAMAGE is: \t%f\tMAX_OFFHAND_DAMAGE is: \t%f",GetFloatValue(UNIT_FIELD_MINOFFHANDDAMAGE), GetFloatValue(UNIT_FIELD_MAXOFFHANDDAMAGE));
+    sLog->outDebug("MIN_RANGED_DAMAGE is: \t%f\tMAX_RANGED_DAMAGE is: \t%f",GetFloatValue(UNIT_FIELD_MINRANGEDDAMAGE), GetFloatValue(UNIT_FIELD_MAXRANGEDDAMAGE));
+    sLog->outDebug("ATTACK_TIME is: \t%u\t\tRANGE_ATTACK_TIME is: \t%u",GetAttackTime(BASE_ATTACK), GetAttackTime(RANGED_ATTACK));
 }
 
 /*********************************************************/
@@ -18981,7 +18981,7 @@ void Player::SavePositionInDB(uint32 mapid, float x,float y,float z,float o,uint
         << "',position_z='"<<z<<"',orientation='"<<o<<"',map='"<<mapid
         << "',zone='"<<zone<<"',trans_x='0',trans_y='0',trans_z='0',"
         << "transguid='0',taxi_path='' WHERE guid='"<< GUID_LOPART(guid) <<"'";
-    sLog.outDebug("%s", ss.str().c_str());
+    sLog->outDebug("%s", ss.str().c_str());
     CharacterDatabase.Execute(ss.str().c_str());
 }
 
@@ -19211,7 +19211,7 @@ Pet* Player::GetPet() const
             return pet;
 
         //there may be a guardian in slot
-        //sLog.outError("Player::GetPet: Pet %u not exist.",GUID_LOPART(pet_guid));
+        //sLog->outError("Player::GetPet: Pet %u not exist.",GUID_LOPART(pet_guid));
         //const_cast<Player*>(this)->SetPetGUID(0);
     }
 
@@ -19225,7 +19225,7 @@ void Player::RemovePet(Pet* pet, PetSlot mode, bool returnreagent)
 
     if (pet)
     {
-        sLog.outDebug("RemovePet %u, %u, %u", pet->GetEntry(), mode, returnreagent);
+        sLog->outDebug("RemovePet %u, %u, %u", pet->GetEntry(), mode, returnreagent);
 
         if (pet->m_removed)
             return;
@@ -19319,10 +19319,10 @@ void Player::StopCastingCharm()
 
     if (GetCharmGUID())
     {
-        sLog.outCrash("Player %s (GUID: " UI64FMTD " is not able to uncharm unit (GUID: " UI64FMTD " Entry: %u, Type: %u)", GetName(), GetGUID(), GetCharmGUID(), charm->GetEntry(), charm->GetTypeId());
+        sLog->outCrash("Player %s (GUID: " UI64FMTD " is not able to uncharm unit (GUID: " UI64FMTD " Entry: %u, Type: %u)", GetName(), GetGUID(), GetCharmGUID(), charm->GetEntry(), charm->GetTypeId());
         if (charm->GetCharmerGUID())
         {
-            sLog.outCrash("Charmed unit has charmer guid " UI64FMTD, charm->GetCharmerGUID());
+            sLog->outCrash("Charmed unit has charmer guid " UI64FMTD, charm->GetCharmerGUID());
             ASSERT(false);
         }
         else
@@ -19421,7 +19421,7 @@ void Player::PetSpellInitialize()
     if (!pet)
         return;
 
-    sLog.outDebug("Pet Spells Groups");
+    sLog->outDebug("Pet Spells Groups");
 
     CharmInfo *charmInfo = pet->GetCharmInfo();
 
@@ -19495,7 +19495,7 @@ void Player::PossessSpellInitialize()
 
     if (!charmInfo)
     {
-        sLog.outError("Player::PossessSpellInitialize(): charm ("UI64FMTD") has no charminfo!", charm->GetGUID());
+        sLog->outError("Player::PossessSpellInitialize(): charm ("UI64FMTD") has no charminfo!", charm->GetGUID());
         return;
     }
 
@@ -19542,7 +19542,7 @@ void Player::VehicleSpellInitialize()
         ConditionList conditions = sConditionMgr->GetConditionsForVehicleSpell(veh->ToCreature()->GetEntry(), spellId);
         if (!sConditionMgr->IsPlayerMeetToConditions(this, conditions))
         {
-            sLog.outDebug("VehicleSpellInitialize: conditions not met for Vehicle entry %u spell %u", veh->ToCreature()->GetEntry(), spellId);
+            sLog->outDebug("VehicleSpellInitialize: conditions not met for Vehicle entry %u spell %u", veh->ToCreature()->GetEntry(), spellId);
             continue;
         }
         if (IsPassiveSpell(spellId))
@@ -19571,7 +19571,7 @@ void Player::CharmSpellInitialize()
     CharmInfo *charmInfo = charm->GetCharmInfo();
     if (!charmInfo)
     {
-        sLog.outError("Player::CharmSpellInitialize(): the player's charm ("UI64FMTD") has no charminfo!", charm->GetGUID());
+        sLog->outError("Player::CharmSpellInitialize(): the player's charm ("UI64FMTD") has no charminfo!", charm->GetGUID());
         return;
     }
 
@@ -19641,7 +19641,7 @@ bool Player::IsAffectedBySpellmod(SpellEntry const *spellInfo, SpellModifier *mo
 
 void Player::AddSpellMod(SpellModifier* mod, bool apply)
 {
-    sLog.outDebug("Player::AddSpellMod %d", mod->spellId);
+    sLog->outDebug("Player::AddSpellMod %d", mod->spellId);
     bool isFlat = mod->type == SPELLMOD_FLAT;
     uint32 Opcode = (isFlat) ? SMSG_SET_FLAT_SPELL_MODIFIER : SMSG_SET_PCT_SPELL_MODIFIER;
     
@@ -19936,8 +19936,8 @@ void Player::HandleStealthedUnitsDetection()
                 m_clientGUIDs.insert((*i)->GetGUID());
 
                 #ifdef TRINITY_DEBUG
-                if ((sLog.getLogFilter() & LOG_FILTER_VISIBILITY_CHANGES) == 0)
-                    sLog.outDebug("Object %u (Type: %u) is detected in stealth by player %u. Distance = %f",(*i)->GetGUIDLow(),(*i)->GetTypeId(),GetGUIDLow(),GetDistance(*i));
+                if ((sLog->GetLogFilter() & LOG_FILTER_VISIBILITY_CHANGES) == 0)
+                    sLog->outDebug("Object %u (Type: %u) is detected in stealth by player %u. Distance = %f",(*i)->GetGUIDLow(),(*i)->GetTypeId(),GetGUIDLow(),GetDistance(*i));
                 #endif
 
                 // target aura duration for caster show only if target exist at caster client
@@ -20154,7 +20154,7 @@ bool Player::ActivateTaxiPathTo(std::vector<uint32> const& nodes, Creature* npc 
         WorldPacket data(SMSG_ACTIVATETAXIREPLY, 4);
         data << uint32(ERR_TAXIOK);
         GetSession()->SendPacket(&data);
-        sLog.outDebug("WORLD: Sent SMSG_ACTIVATETAXIREPLY");
+        sLog->outDebug("WORLD: Sent SMSG_ACTIVATETAXIREPLY");
         GetSession()->SendDoFlight(mount_display_id, sourcepath);
     }
     return true;
@@ -20189,7 +20189,7 @@ void Player::ContinueTaxiFlight()
     if (!sourceNode)
         return;
 
-    sLog.outDebug("WORLD: Restart character %u taxi flight", GetGUIDLow());
+    sLog->outDebug("WORLD: Restart character %u taxi flight", GetGUIDLow());
 
     uint32 mountDisplayId = sObjectMgr->GetTaxiMountDisplayId(sourceNode, GetTeam(),true);
     uint32 path = m_taxi.GetCurrentTaxiPath();
@@ -20324,7 +20324,7 @@ void Player::InitDisplayIds()
     PlayerInfo const *info = sObjectMgr->GetPlayerInfo(getRace(), getClass());
     if (!info)
     {
-        sLog.outError("Player %u has incorrect race/class pair. Can't init display ids.", GetGUIDLow());
+        sLog->outError("Player %u has incorrect race/class pair. Can't init display ids.", GetGUIDLow());
         return;
     }
 
@@ -20340,7 +20340,7 @@ void Player::InitDisplayIds()
             SetNativeDisplayId(info->displayId_m);
             break;
         default:
-            sLog.outError("Invalid gender %u for player",gender);
+            sLog->outError("Invalid gender %u for player",gender);
             return;
     }
 }
@@ -20430,7 +20430,7 @@ bool Player::BuyItemFromVendorSlot(uint64 vendorguid, uint32 vendorslot, uint32 
     Creature *pCreature = GetNPCIfCanInteractWith(vendorguid,UNIT_NPC_FLAG_VENDOR);
     if (!pCreature)
     {
-        sLog.outDebug("WORLD: BuyItemFromVendor - Unit (GUID: %u) not found or you can't interact with him.", uint32(GUID_LOPART(vendorguid)));
+        sLog->outDebug("WORLD: BuyItemFromVendor - Unit (GUID: %u) not found or you can't interact with him.", uint32(GUID_LOPART(vendorguid)));
         SendBuyError(BUY_ERR_DISTANCE_TOO_FAR, NULL, item, 0);
         return false;
     }
@@ -20480,7 +20480,7 @@ bool Player::BuyItemFromVendorSlot(uint64 vendorguid, uint32 vendorslot, uint32 
         ItemExtendedCostEntry const* iece = sItemExtendedCostStore.LookupEntry(crItem->ExtendedCost);
         if (!iece)
         {
-            sLog.outError("Item %u have wrong ExtendedCost field value %u", pProto->ItemId, crItem->ExtendedCost);
+            sLog->outError("Item %u have wrong ExtendedCost field value %u", pProto->ItemId, crItem->ExtendedCost);
             return false;
         }
 
@@ -20604,7 +20604,7 @@ void Player::UpdateHomebindTime(uint32 time)
         data << uint32(m_HomebindTimer);
         data << uint32(1);
         GetSession()->SendPacket(&data);
-        sLog.outDebug("PLAYER: Player '%s' (GUID: %u) will be teleported to homebind in 60 seconds", GetName(),GetGUIDLow());
+        sLog->outDebug("PLAYER: Player '%s' (GUID: %u) will be teleported to homebind in 60 seconds", GetName(),GetGUIDLow());
     }
 }
 
@@ -20876,7 +20876,7 @@ bool Player::EnchantmentFitsRequirements(uint32 enchantmentcondition, int8 slot)
         }
     }
 
-    sLog.outDebug("Checking Condition %u, there are %u Meta Gems, %u Red Gems, %u Yellow Gems and %u Blue Gems, Activate:%s", enchantmentcondition, curcount[0], curcount[1], curcount[2], curcount[3], activate ? "yes" : "no");
+    sLog->outDebug("Checking Condition %u, there are %u Meta Gems, %u Red Gems, %u Yellow Gems and %u Blue Gems, Activate:%s", enchantmentcondition, curcount[0], curcount[1], curcount[2], curcount[3], activate ? "yes" : "no");
 
     return activate;
 }
@@ -20992,7 +20992,7 @@ void Player::SetBattlegroundEntryPoint()
                 return;
             }
             else
-                sLog.outError("SetBattlegroundEntryPoint: Dungeon map %u has no linked graveyard, setting home location as entry point.", GetMapId());
+                sLog->outError("SetBattlegroundEntryPoint: Dungeon map %u has no linked graveyard, setting home location as entry point.", GetMapId());
         }
         // If new entry point is not BG or arena set it
         else if (!GetMap()->IsBattlegroundOrArena())
@@ -21327,8 +21327,8 @@ void Player::UpdateVisibilityOf(WorldObject* target)
             m_clientGUIDs.erase(target->GetGUID());
 
             #ifdef TRINITY_DEBUG
-            if ((sLog.getLogFilter() & LOG_FILTER_VISIBILITY_CHANGES) == 0)
-                sLog.outDebug("Object %u (Type: %u) out of range for player %u. Distance = %f",target->GetGUIDLow(),target->GetTypeId(),GetGUIDLow(),GetDistance(target));
+            if ((sLog->GetLogFilter() & LOG_FILTER_VISIBILITY_CHANGES) == 0)
+                sLog->outDebug("Object %u (Type: %u) out of range for player %u. Distance = %f",target->GetGUIDLow(),target->GetTypeId(),GetGUIDLow(),GetDistance(target));
             #endif
         }
     }
@@ -21343,8 +21343,8 @@ void Player::UpdateVisibilityOf(WorldObject* target)
             m_clientGUIDs.insert(target->GetGUID());
 
             #ifdef TRINITY_DEBUG
-            if ((sLog.getLogFilter() & LOG_FILTER_VISIBILITY_CHANGES) == 0)
-                sLog.outDebug("Object %u (Type: %u) is visible now for player %u. Distance = %f",target->GetGUIDLow(),target->GetTypeId(),GetGUIDLow(),GetDistance(target));
+            if ((sLog->GetLogFilter() & LOG_FILTER_VISIBILITY_CHANGES) == 0)
+                sLog->outDebug("Object %u (Type: %u) is visible now for player %u. Distance = %f",target->GetGUIDLow(),target->GetTypeId(),GetGUIDLow(),GetDistance(target));
             #endif
 
             // target aura duration for caster show only if target exist at caster client
@@ -21403,8 +21403,8 @@ void Player::UpdateVisibilityOf(T* target, UpdateData& data, std::set<Unit*>& vi
             m_clientGUIDs.erase(target->GetGUID());
 
             #ifdef TRINITY_DEBUG
-            if ((sLog.getLogFilter() & LOG_FILTER_VISIBILITY_CHANGES) == 0)
-                sLog.outDebug("Object %u (Type: %u, Entry: %u) is out of range for player %u. Distance = %f",target->GetGUIDLow(),target->GetTypeId(),target->GetEntry(),GetGUIDLow(),GetDistance(target));
+            if ((sLog->GetLogFilter() & LOG_FILTER_VISIBILITY_CHANGES) == 0)
+                sLog->outDebug("Object %u (Type: %u, Entry: %u) is out of range for player %u. Distance = %f",target->GetGUIDLow(),target->GetTypeId(),target->GetEntry(),GetGUIDLow(),GetDistance(target));
             #endif
         }
     }
@@ -21419,8 +21419,8 @@ void Player::UpdateVisibilityOf(T* target, UpdateData& data, std::set<Unit*>& vi
             UpdateVisibilityOf_helper(m_clientGUIDs,target,visibleNow);
 
             #ifdef TRINITY_DEBUG
-            if ((sLog.getLogFilter() & LOG_FILTER_VISIBILITY_CHANGES) == 0)
-                sLog.outDebug("Object %u (Type: %u, Entry: %u) is visible now for player %u. Distance = %f",target->GetGUIDLow(),target->GetTypeId(),target->GetEntry(),GetGUIDLow(),GetDistance(target));
+            if ((sLog->GetLogFilter() & LOG_FILTER_VISIBILITY_CHANGES) == 0)
+                sLog->outDebug("Object %u (Type: %u, Entry: %u) is visible now for player %u. Distance = %f",target->GetGUIDLow(),target->GetTypeId(),target->GetEntry(),GetGUIDLow(),GetDistance(target));
             #endif
         }
     }
@@ -21850,7 +21850,7 @@ void Player::learnDefaultSpells()
     for (PlayerCreateInfoSpells::const_iterator itr = info->spell.begin(); itr != info->spell.end(); ++itr)
     {
         uint32 tspell = *itr;
-        sLog.outDebug("PLAYER (Class: %u Race: %u): Adding initial spell, id = %u",uint32(getClass()),uint32(getRace()), tspell);
+        sLog->outDebug("PLAYER (Class: %u Race: %u): Adding initial spell, id = %u",uint32(getClass()),uint32(getRace()), tspell);
         if (!IsInWorld())                                    // will send in INITIAL_SPELLS in list anyway at map add
             addSpell(tspell,true,true,true,false);
         else                                                // but send in normal spell in game learn case
@@ -22361,7 +22361,7 @@ bool Player::HasItemFitToSpellReqirements(SpellEntry const* spellInfo, Item cons
             break;
         }
         default:
-            sLog.outError("HasItemFitToSpellReqirements: Not handled spell requirement for item class %u",spellInfo->EquippedItemClass);
+            sLog->outError("HasItemFitToSpellReqirements: Not handled spell requirement for item class %u",spellInfo->EquippedItemClass);
             break;
     }
 
@@ -22439,7 +22439,7 @@ uint32 Player::GetResurrectionSpellId()
                 case 27239: spell_id = 27240; break;        // rank 6
                 case 47883: spell_id = 47882; break;        // rank 7
                 default:
-                    sLog.outError("Unhandled spell %u: S.Resurrection",(*itr)->GetId());
+                    sLog->outError("Unhandled spell %u: S.Resurrection",(*itr)->GetId());
                     continue;
             }
 
@@ -23072,11 +23072,11 @@ void Player::SetViewpoint(WorldObject* target, bool apply)
 {
     if (apply)
     {
-        sLog.outDebug("Player::CreateViewpoint: Player %s create seer %u (TypeId: %u).", GetName(), target->GetEntry(), target->GetTypeId());
+        sLog->outDebug("Player::CreateViewpoint: Player %s create seer %u (TypeId: %u).", GetName(), target->GetEntry(), target->GetTypeId());
 
         if (!AddUInt64Value(PLAYER_FARSIGHT, target->GetGUID()))
         {
-            sLog.outCrash("Player::CreateViewpoint: Player %s cannot add new viewpoint!", GetName());
+            sLog->outCrash("Player::CreateViewpoint: Player %s cannot add new viewpoint!", GetName());
             return;
         }
 
@@ -23088,11 +23088,11 @@ void Player::SetViewpoint(WorldObject* target, bool apply)
     }
     else
     {
-        sLog.outDebug("Player::CreateViewpoint: Player %s remove seer", GetName());
+        sLog->outDebug("Player::CreateViewpoint: Player %s remove seer", GetName());
 
         if (!RemoveUInt64Value(PLAYER_FARSIGHT, target->GetGUID()))
         {
-            sLog.outCrash("Player::CreateViewpoint: Player %s cannot remove current viewpoint!", GetName());
+            sLog->outCrash("Player::CreateViewpoint: Player %s cannot remove current viewpoint!", GetName());
             return;
         }
 
@@ -23613,7 +23613,7 @@ void Player::_LoadSkills(PreparedQueryResult result)
             SkillLineEntry const *pSkill = sSkillLineStore.LookupEntry(skill);
             if (!pSkill)
             {
-                sLog.outError("Character %u has skill %u that does not exist.", GetGUIDLow(), skill);
+                sLog->outError("Character %u has skill %u that does not exist.", GetGUIDLow(), skill);
                 continue;
             }
 
@@ -23631,7 +23631,7 @@ void Player::_LoadSkills(PreparedQueryResult result)
             }
             if (value == 0)
             {
-                sLog.outError("Character %u has skill %u with value 0. Will be deleted.", GetGUIDLow(), skill);
+                sLog->outError("Character %u has skill %u with value 0. Will be deleted.", GetGUIDLow(), skill);
                 CharacterDatabase.PExecute("DELETE FROM character_skills WHERE guid = '%u' AND skill = '%u' ", GetGUIDLow(), skill);
                 continue;
             }
@@ -23653,7 +23653,7 @@ void Player::_LoadSkills(PreparedQueryResult result)
 
             if (count >= PLAYER_MAX_SKILLS)                      // client limit
             {
-                sLog.outError("Character %u has more than %u skills.", GetGUIDLow(), PLAYER_MAX_SKILLS);
+                sLog->outError("Character %u has more than %u skills.", GetGUIDLow(), PLAYER_MAX_SKILLS);
                 break;
             }
         }
@@ -23782,7 +23782,7 @@ void Player::HandleFall(MovementInfo const& movementInfo)
 {
     // calculate total z distance of the fall
     float z_diff = m_lastFallZ - movementInfo.pos.GetPositionZ();
-    //sLog.outDebug("zDiff = %f", z_diff);
+    //sLog->outDebug("zDiff = %f", z_diff);
 
     //Players with low fall distance, Feather Fall or physical immunity (charges used) are ignored
     // 14.57 can be calculated by resolving damageperc formula below to 0
@@ -23821,7 +23821,7 @@ void Player::HandleFall(MovementInfo const& movementInfo)
             }
 
             //Z given by moveinfo, LastZ, FallTime, WaterZ, MapZ, Damage, Safefall reduction
-            sLog.outStaticDebug("FALLDAMAGE z=%f sz=%f pZ=%f FallTime=%d mZ=%f damage=%d SF=%d" , movementInfo.pos.GetPositionZ(), height, GetPositionZ(), movementInfo.fallTime, height, damage, safe_fall);
+            sLog->outStaticDebug("FALLDAMAGE z=%f sz=%f pZ=%f FallTime=%d mZ=%f damage=%d SF=%d" , movementInfo.pos.GetPositionZ(), height, GetPositionZ(), movementInfo.fallTime, height, damage, safe_fall);
         }
     }
     RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_LANDING); // No fly zone - Parachute
@@ -23977,7 +23977,7 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank, bool one)
     uint32 spellid = talentInfo->RankID[talentRank];
     if (spellid == 0)
     {
-        sLog.outError("Talent.dbc have for talent: %u Rank: %u spell id = 0", talentId, talentRank);
+        sLog->outError("Talent.dbc have for talent: %u Rank: %u spell id = 0", talentId, talentRank);
         return;
     }
 
@@ -23989,7 +23989,7 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank, bool one)
     learnSpell(spellid, false);
     AddTalent(spellid, m_activeSpec, true);
 
-    sLog.outDetail("TalentID: %u Rank: %u Spell: %u Spec: %u\n", talentId, talentRank, spellid, m_activeSpec);
+    sLog->outDetail("TalentID: %u Rank: %u Spell: %u Spec: %u\n", talentId, talentRank, spellid, m_activeSpec);
 
     // update free talent points
     SetFreeTalentPoints(CurTalentPoints - (talentRank - curtalent_maxrank + 1));
@@ -24114,7 +24114,7 @@ void Player::LearnPetTalent(uint64 petGuid, uint32 talentId, uint32 talentRank)
     uint32 spellid = talentInfo->RankID[talentRank];
     if (spellid == 0)
     {
-        sLog.outError("Talent.dbc have for talent: %u Rank: %u spell id = 0", talentId, talentRank);
+        sLog->outError("Talent.dbc have for talent: %u Rank: %u spell id = 0", talentId, talentRank);
         return;
     }
 
@@ -24124,7 +24124,7 @@ void Player::LearnPetTalent(uint64 petGuid, uint32 talentId, uint32 talentRank)
 
     // learn! (other talent ranks will unlearned at learning)
     pet->learnSpell(spellid);
-    sLog.outDetail("PetTalentID: %u Rank: %u Spell: %u\n", talentId, talentRank, spellid);
+    sLog->outDetail("PetTalentID: %u Rank: %u Spell: %u\n", talentId, talentRank, spellid);
 
     // update free talent points
     pet->SetFreeTalentPoints(CurTalentPoints - (talentRank - curtalent_maxrank + 1));
@@ -24420,7 +24420,7 @@ void Player::SetEquipmentSet(uint32 index, EquipmentSet eqset)
 
         if (!found)                                          // something wrong...
         {
-            sLog.outError("Player %s tried to save equipment set "UI64FMTD" (index %u), but that equipment set not found!", GetName(), eqset.Guid, index);
+            sLog->outError("Player %s tried to save equipment set "UI64FMTD" (index %u), but that equipment set not found!", GetName(), eqset.Guid, index);
             return;
         }
     }
@@ -24921,13 +24921,13 @@ void Player::SendRefundInfo(Item *item)
 
     if (!item->HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_REFUNDABLE))
     {
-        sLog.outDebug("Item refund: item not refundable!");
+        sLog->outDebug("Item refund: item not refundable!");
         return;
     }
 
     if (GetGUIDLow() != item->GetRefundRecipient()) // Formerly refundable item got traded
     {
-        sLog.outDebug("Item refund: item was traded!");
+        sLog->outDebug("Item refund: item was traded!");
         item->SetNotRefundable(this);
         return;
     }
@@ -24935,7 +24935,7 @@ void Player::SendRefundInfo(Item *item)
     ItemExtendedCostEntry const* iece = sItemExtendedCostStore.LookupEntry(item->GetPaidExtendedCost());
     if (!iece)
     {
-        sLog.outDebug("Item refund: cannot find extendedcost data.");
+        sLog->outDebug("Item refund: cannot find extendedcost data.");
         return;
     }
 
@@ -24981,7 +24981,7 @@ void Player::RefundItem(Item *item)
 {
     if (!item->HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_REFUNDABLE))
     {
-        sLog.outDebug("Item refund: item not refundable!");
+        sLog->outDebug("Item refund: item not refundable!");
         return;
     }
 
@@ -24997,7 +24997,7 @@ void Player::RefundItem(Item *item)
 
     if (GetGUIDLow() != item->GetRefundRecipient()) // Formerly refundable item got traded
     {
-        sLog.outDebug("Item refund: item was traded!");
+        sLog->outDebug("Item refund: item was traded!");
         item->SetNotRefundable(this);
         return;
     }
@@ -25005,7 +25005,7 @@ void Player::RefundItem(Item *item)
     ItemExtendedCostEntry const* iece = sItemExtendedCostStore.LookupEntry(item->GetPaidExtendedCost());
     if (!iece)
     {
-        sLog.outDebug("Item refund: cannot find extendedcost data.");
+        sLog->outDebug("Item refund: cannot find extendedcost data.");
         return;
     }
 

@@ -92,8 +92,8 @@ void WeatherMgr::LoadWeatherData()
 
         
 
-        sLog.outString();
-        sLog.outErrorDb(">> Loaded 0 weather definitions. DB table `game_weather` is empty.");
+        sLog->outString();
+        sLog->outErrorDb(">> Loaded 0 weather definitions. DB table `game_weather` is empty.");
         return;
     }
 
@@ -117,19 +117,19 @@ void WeatherMgr::LoadWeatherData()
             if (wzc.data[season].rainChance > 100)
             {
                 wzc.data[season].rainChance = 25;
-                sLog.outErrorDb("Weather for zone %u season %u has wrong rain chance > 100%%",zone_id,season);
+                sLog->outErrorDb("Weather for zone %u season %u has wrong rain chance > 100%%",zone_id,season);
             }
 
             if (wzc.data[season].snowChance > 100)
             {
                 wzc.data[season].snowChance = 25;
-                sLog.outErrorDb("Weather for zone %u season %u has wrong snow chance > 100%%",zone_id,season);
+                sLog->outErrorDb("Weather for zone %u season %u has wrong snow chance > 100%%",zone_id,season);
             }
 
             if (wzc.data[season].stormChance > 100)
             {
                 wzc.data[season].stormChance = 25;
-                sLog.outErrorDb("Weather for zone %u season %u has wrong storm chance > 100%%",zone_id,season);
+                sLog->outErrorDb("Weather for zone %u season %u has wrong storm chance > 100%%",zone_id,season);
             }
         }
 
@@ -139,8 +139,8 @@ void WeatherMgr::LoadWeatherData()
     }
     while (result->NextRow());
 
-    sLog.outString();
-    sLog.outString(">> Loaded %u weather definitions", count);
+    sLog->outString();
+    sLog->outString(">> Loaded %u weather definitions", count);
 }
 
 void WeatherMgr::Update(uint32 diff)

@@ -96,7 +96,7 @@ bool ChatHandler::HandleDebugSendPoiCommand(const char* args)
     uint32 icon = atol(icon_text);
     uint32 flags = atol(flags_text);
 
-    sLog.outDetail("Command : POI, NPC = %u, icon = %u flags = %u", target->GetGUIDLow(), icon,flags);
+    sLog->outDetail("Command : POI, NPC = %u, icon = %u flags = %u", target->GetGUIDLow(), icon,flags);
     pPlayer->PlayerTalkClass->SendPointOfInterest(target->GetPositionX(), target->GetPositionY(), Poi_Icon(icon), flags, 30, "Test POI");
     return true;
 }
@@ -248,12 +248,12 @@ bool ChatHandler::HandleDebugSendOpcodeCommand(const char* /*args*/)
         }
         else
         {
-            sLog.outDebug("Sending opcode: unknown type '%s'", type.c_str());
+            sLog->outDebug("Sending opcode: unknown type '%s'", type.c_str());
             break;
         }
     }
     ifs.close();
-    sLog.outDebug("Sending opcode %u", data.GetOpcode());
+    sLog->outDebug("Sending opcode %u", data.GetOpcode());
     data.hexlike();
     player->GetSession()->SendPacket(&data);
     PSendSysMessage(LANG_COMMAND_OPCODESENT, data.GetOpcode(), unit->GetName());
@@ -986,14 +986,14 @@ bool ChatHandler::HandleDebugSetValueCommand(const char* args)
     if (isint32)
     {
         iValue = (uint32)atoi(py);
-        sLog.outDebug(GetTrinityString(LANG_SET_UINT), GUID_LOPART(guid), Opcode, iValue);
+        sLog->outDebug(GetTrinityString(LANG_SET_UINT), GUID_LOPART(guid), Opcode, iValue);
         target->SetUInt32Value(Opcode , iValue);
         PSendSysMessage(LANG_SET_UINT_FIELD, GUID_LOPART(guid), Opcode,iValue);
     }
     else
     {
         fValue = (float)atof(py);
-        sLog.outDebug(GetTrinityString(LANG_SET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
+        sLog->outDebug(GetTrinityString(LANG_SET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
         target->SetFloatValue(Opcode , fValue);
         PSendSysMessage(LANG_SET_FLOAT_FIELD, GUID_LOPART(guid), Opcode,fValue);
     }
@@ -1037,13 +1037,13 @@ bool ChatHandler::HandleDebugGetValueCommand(const char* args)
     if (isint32)
     {
         iValue = target->GetUInt32Value(Opcode);
-        sLog.outDebug(GetTrinityString(LANG_GET_UINT), GUID_LOPART(guid), Opcode, iValue);
+        sLog->outDebug(GetTrinityString(LANG_GET_UINT), GUID_LOPART(guid), Opcode, iValue);
         PSendSysMessage(LANG_GET_UINT_FIELD, GUID_LOPART(guid), Opcode,    iValue);
     }
     else
     {
         fValue = target->GetFloatValue(Opcode);
-        sLog.outDebug(GetTrinityString(LANG_GET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
+        sLog->outDebug(GetTrinityString(LANG_GET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
         PSendSysMessage(LANG_GET_FLOAT_FIELD, GUID_LOPART(guid), Opcode, fValue);
     }
 
@@ -1070,7 +1070,7 @@ bool ChatHandler::HandleDebugMod32ValueCommand(const char* args)
         return false;
     }
 
-    sLog.outDebug(GetTrinityString(LANG_CHANGE_32BIT), Opcode, Value);
+    sLog->outDebug(GetTrinityString(LANG_CHANGE_32BIT), Opcode, Value);
 
     int CurrentValue = (int)m_session->GetPlayer()->GetUInt32Value(Opcode);
 

@@ -131,7 +131,7 @@ void LoadHelper(CellGuidSet const& guid_set, CellPair &cell, GridRefManager<T> &
     {
         T* obj = new T;
         uint32 guid = *i_guid;
-        //sLog.outString("DEBUG: LoadHelper from table: %s for (guid: %u) Loading",table,guid);
+        //sLog->outString("DEBUG: LoadHelper from table: %s for (guid: %u) Loading",table,guid);
         if (!obj->LoadFromDB(guid, map))
         {
             delete obj;
@@ -237,7 +237,7 @@ void ObjectGridLoader::LoadN(void)
             loader.Load(i_grid(x, y), *this);
         }
     }
-    sLog.outDebug("%u GameObjects, %u Creatures, and %u Corpses/Bones loaded for grid %u on map %u", i_gameObjects, i_creatures, i_corpses,i_grid.GetGridId(), i_map->GetId());
+    sLog->outDebug("%u GameObjects, %u Creatures, and %u Corpses/Bones loaded for grid %u on map %u", i_gameObjects, i_creatures, i_corpses,i_grid.GetGridId(), i_map->GetId());
 }
 
 void ObjectGridUnloader::MoveToRespawnN()

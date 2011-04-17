@@ -134,7 +134,7 @@ void Vehicle::InstallAllAccessories(uint32 entry)
 
 void Vehicle::Uninstall()
 {
-    sLog.outDebug("Vehicle::Uninstall %u", me->GetEntry());
+    sLog->outDebug("Vehicle::Uninstall %u", me->GetEntry());
     for (SeatMap::iterator itr = m_Seats.begin(); itr != m_Seats.end(); ++itr)
         if (Unit *passenger = itr->second.passenger)
             if (passenger->HasUnitTypeMask(UNIT_MASK_ACCESSORY))
@@ -148,7 +148,7 @@ void Vehicle::Uninstall()
 
 void Vehicle::Die()
 {
-    sLog.outDebug("Vehicle::Die %u", me->GetEntry());
+    sLog->outDebug("Vehicle::Die %u", me->GetEntry());
     for (SeatMap::iterator itr = m_Seats.begin(); itr != m_Seats.end(); ++itr)
         if (Unit *passenger = itr->second.passenger)
             if (passenger->HasUnitTypeMask(UNIT_MASK_ACCESSORY))
@@ -162,7 +162,7 @@ void Vehicle::Die()
 
 void Vehicle::Reset()
 {
-    sLog.outDebug("Vehicle::Reset");
+    sLog->outDebug("Vehicle::Reset");
     if (me->GetTypeId() == TYPEID_PLAYER)
     {
         if (m_usableSeatNum)
@@ -181,18 +181,18 @@ void Vehicle::Reset()
 
 void Vehicle::RemoveAllPassengers()
 {
-    sLog.outDebug("Vehicle::RemoveAllPassengers");
+    sLog->outDebug("Vehicle::RemoveAllPassengers");
     for (SeatMap::iterator itr = m_Seats.begin(); itr != m_Seats.end(); ++itr)
         if (Unit *passenger = itr->second.passenger)
         {
             if (passenger->IsVehicle())
                 passenger->GetVehicleKit()->RemoveAllPassengers();
             if (passenger->GetVehicle() != this)
-                sLog.outCrash("Vehicle %u has invalid passenger %u.", me->GetEntry(), passenger->GetEntry());
+                sLog->outCrash("Vehicle %u has invalid passenger %u.", me->GetEntry(), passenger->GetEntry());
             passenger->ExitVehicle();
             if (itr->second.passenger)
             {
-                sLog.outCrash("Vehicle %u cannot remove passenger %u. %u is still on vehicle.", me->GetEntry(), passenger->GetEntry(), itr->second.passenger->GetEntry());
+                sLog->outCrash("Vehicle %u cannot remove passenger %u. %u is still on vehicle.", me->GetEntry(), passenger->GetEntry(), itr->second.passenger->GetEntry());
                 itr->second.passenger = NULL;
             }
 
@@ -299,7 +299,7 @@ bool Vehicle::AddPassenger(Unit *unit, int8 seatId)
         ASSERT(!seat->second.passenger);
     }
 
-    sLog.outDebug("Unit %s enter vehicle entry %u id %u dbguid %u seat %d", unit->GetName(), me->GetEntry(), m_vehicleInfo->m_ID, me->GetGUIDLow(), (int32)seat->first);
+    sLog->outDebug("Unit %s enter vehicle entry %u id %u dbguid %u seat %d", unit->GetName(), me->GetEntry(), m_vehicleInfo->m_ID, me->GetGUIDLow(), (int32)seat->first);
 
     seat->second.passenger = unit;
     if (seat->second.seatInfo->IsUsable())
@@ -380,7 +380,7 @@ void Vehicle::RemovePassenger(Unit *unit)
 
     ASSERT(seat != m_Seats.end());
 
-    sLog.outDebug("Unit %s exit vehicle entry %u id %u dbguid %u seat %d", unit->GetName(), me->GetEntry(), m_vehicleInfo->m_ID, me->GetGUIDLow(), (int32)seat->first);
+    sLog->outDebug("Unit %s exit vehicle entry %u id %u dbguid %u seat %d", unit->GetName(), me->GetEntry(), m_vehicleInfo->m_ID, me->GetGUIDLow(), (int32)seat->first);
 
     seat->second.passenger = NULL;
     if (seat->second.seatInfo->IsUsable())
@@ -442,7 +442,7 @@ void Vehicle::RelocatePassengers(float x, float y, float z, float ang)
 
 void Vehicle::Dismiss()
 {
-    sLog.outDebug("Vehicle::Dismiss %u", me->GetEntry());
+    sLog->outDebug("Vehicle::Dismiss %u", me->GetEntry());
     Uninstall();
     me->SendObjectDeSpawnAnim(me->GetGUID());
     me->CombatStop();

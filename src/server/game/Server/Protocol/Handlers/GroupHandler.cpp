@@ -207,7 +207,7 @@ void WorldSession::HandleGroupAcceptOpcode(WorldPacket & recv_data)
 
     if (group->GetLeaderGUID() == GetPlayer()->GetGUID())
     {
-        sLog.outError("HandleGroupAcceptOpcode: player %s(%d) tried to accept an invite to his own group", GetPlayer()->GetName(), GetPlayer()->GetGUIDLow());
+        sLog->outError("HandleGroupAcceptOpcode: player %s(%d) tried to accept an invite to his own group", GetPlayer()->GetName(), GetPlayer()->GetGUIDLow());
         return;
     }
 
@@ -271,7 +271,7 @@ void WorldSession::HandleGroupUninviteGuidOpcode(WorldPacket & recv_data)
     //can't uninvite yourself
     if (guid == GetPlayer()->GetGUID())
     {
-        sLog.outError("WorldSession::HandleGroupUninviteGuidOpcode: leader %s(%d) tried to uninvite himself from the group.", GetPlayer()->GetName(), GetPlayer()->GetGUIDLow());
+        sLog->outError("WorldSession::HandleGroupUninviteGuidOpcode: leader %s(%d) tried to uninvite himself from the group.", GetPlayer()->GetName(), GetPlayer()->GetGUIDLow());
         return;
     }
 
@@ -319,7 +319,7 @@ void WorldSession::HandleGroupUninviteOpcode(WorldPacket & recv_data)
     // can't uninvite yourself
     if (GetPlayer()->GetName() == membername)
     {
-        sLog.outError("WorldSession::HandleGroupUninviteOpcode: leader %s(%d) tried to uninvite himself from the group.", GetPlayer()->GetName(), GetPlayer()->GetGUIDLow());
+        sLog->outError("WorldSession::HandleGroupUninviteOpcode: leader %s(%d) tried to uninvite himself from the group.", GetPlayer()->GetName(), GetPlayer()->GetGUIDLow());
         return;
     }
 
@@ -425,7 +425,7 @@ void WorldSession::HandleLootRoll(WorldPacket &recv_data)
     recv_data >> NumberOfPlayers;
     recv_data >> rollType;                                    //0: pass, 1: need, 2: greed
 
-    //sLog.outDebug("WORLD RECIEVE CMSG_LOOT_ROLL, From:%u, Numberofplayers:%u, Choise:%u", (uint32)Guid, NumberOfPlayers, Choise);
+    //sLog->outDebug("WORLD RECIEVE CMSG_LOOT_ROLL, From:%u, Numberofplayers:%u, Choise:%u", (uint32)Guid, NumberOfPlayers, Choise);
 
     Group* group = GetPlayer()->GetGroup();
     if (!group)
@@ -454,7 +454,7 @@ void WorldSession::HandleMinimapPingOpcode(WorldPacket& recv_data)
     recv_data >> x;
     recv_data >> y;
 
-    //sLog.outDebug("Received opcode MSG_MINIMAP_PING X: %f, Y: %f", x, y);
+    //sLog->outDebug("Received opcode MSG_MINIMAP_PING X: %f, Y: %f", x, y);
 
     /** error handling **/
     /********************/
@@ -481,7 +481,7 @@ void WorldSession::HandleRandomRollOpcode(WorldPacket& recv_data)
     // everything's fine, do it
     roll = urand(minimum, maximum);
 
-    //sLog.outDebug("ROLL: MIN: %u, MAX: %u, ROLL: %u", minimum, maximum, roll);
+    //sLog->outDebug("ROLL: MIN: %u, MAX: %u, ROLL: %u", minimum, maximum, roll);
 
     WorldPacket data(MSG_RANDOM_ROLL, 4+4+4+8);
     data << uint32(minimum);
@@ -611,7 +611,7 @@ void WorldSession::HandleGroupAssistantLeaderOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandlePartyAssignmentOpcode(WorldPacket & recv_data)
 {
-    sLog.outDebug("MSG_PARTY_ASSIGNMENT");
+    sLog->outDebug("MSG_PARTY_ASSIGNMENT");
 
     Group *group = GetPlayer()->GetGroup();
     if (!group)
@@ -866,7 +866,7 @@ void WorldSession::BuildPartyMemberStatsChangedPacket(Player *player, WorldPacke
 /*this procedure handles clients CMSG_REQUEST_PARTY_MEMBER_STATS request*/
 void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
 {
-    sLog.outDebug("WORLD: Received CMSG_REQUEST_PARTY_MEMBER_STATS");
+    sLog->outDebug("WORLD: Received CMSG_REQUEST_PARTY_MEMBER_STATS");
     uint64 Guid;
     recv_data >> Guid;
 
@@ -972,12 +972,12 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
 
 /*void WorldSession::HandleGroupCancelOpcode(WorldPacket & recv_data)
 {
-    sLog.outDebug("WORLD: got CMSG_GROUP_CANCEL.");
+    sLog->outDebug("WORLD: got CMSG_GROUP_CANCEL.");
 }*/
 
 void WorldSession::HandleOptOutOfLootOpcode(WorldPacket & recv_data)
 {
-    sLog.outDebug("WORLD: Received CMSG_OPT_OUT_OF_LOOT");
+    sLog->outDebug("WORLD: Received CMSG_OPT_OUT_OF_LOOT");
 
     uint32 passOnLoot;
     recv_data >> passOnLoot; // 1 always pass, 0 do not pass
@@ -986,7 +986,7 @@ void WorldSession::HandleOptOutOfLootOpcode(WorldPacket & recv_data)
     if (!GetPlayer())                                        // needed because STATUS_AUTHED
     {
         if (passOnLoot != 0)
-            sLog.outError("CMSG_OPT_OUT_OF_LOOT value<>0 for not-loaded character!");
+            sLog->outError("CMSG_OPT_OUT_OF_LOOT value<>0 for not-loaded character!");
         return;
     }
 
@@ -1003,7 +1003,7 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
     Player * plr = sObjectMgr->GetPlayer(guid);
     if(!plr)
     {
-        sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Player not found", guid);
+        sLog->outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Player not found", guid);
         return;
     }
     
@@ -1011,16 +1011,16 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
     uint64 gguid = grp->GetGUID();
     if (!grp)
     {
-        sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Not in group", plr->GetGUID());
+        sLog->outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Not in group", plr->GetGUID());
         return;
     }
     else if(grp != GetPlayer()->GetGroup())
     {
-        sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "]  and [" UI64FMTD "] Not in group same group", plr->GetGUID(), GetPlayer()->GetGUID());
+        sLog->outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "]  and [" UI64FMTD "] Not in group same group", plr->GetGUID(), GetPlayer()->GetGUID());
         return;
     }
     else
-        sLog.outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Roles: %u", plr->GetGUID(), roles);
+        sLog->outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Roles: %u", plr->GetGUID(), roles);
     
     plr->SetRoles(roles);
     if (grp->isLFGGroup())
