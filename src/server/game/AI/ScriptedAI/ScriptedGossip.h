@@ -87,6 +87,7 @@
 #define GOSSIP_TEXT_MINING              "Mining"
 #define GOSSIP_TEXT_FISHING             "Fishing"
 #define GOSSIP_TEXT_SKINNING            "Skinning"
+#define GOSSIP_TEXT_ARCHAEOLOGY         "Archaeology"
 
 enum eTradeskill
 {
@@ -106,6 +107,7 @@ enum eTradeskill
     TRADESKILL_SKINNING                 = 13,
     TRADESKILL_JEWLCRAFTING             = 14,
     TRADESKILL_INSCRIPTION              = 15,
+    TRADESKILL_ARCHAEOLOGY              = 16,
 
     TRADESKILL_LEVEL_NONE               = 0,
     TRADESKILL_LEVEL_APPRENTICE         = 1,
