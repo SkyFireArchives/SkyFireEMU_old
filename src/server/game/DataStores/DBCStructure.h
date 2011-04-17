@@ -1606,7 +1606,7 @@ struct SpellEffectEntry
     uint32    EffectApplyAuraName;                          // 3        m_effectAura
     uint32    EffectAmplitude;                              // 4        m_effectAuraPeriod
     int32     EffectBasePoints;                             // 5        m_effectBasePoints (don't must be used in spell/auras explicitly, must be used cached Spell::m_currentBasePoints)
-    float     unk_multiplier;                               // 6        3.2.0 used in spell scaling formulas?
+    float     EffectBonusCoefficient;                       // 6        m_effectBonusCoefficient
     float     EffectDamageMultiplier;                       // 7        m_effectChainAmplitude
     uint32    EffectChainTarget;                            // 8        m_effectChainTargets
     int32     EffectDieSides;                               // 9        m_effectDieSides
@@ -1861,7 +1861,7 @@ struct SpellEntry
         uint32    EffectApplyAuraName[3];
         uint32    EffectAmplitude[3];
         int32     EffectBasePoints[3];
-        float     unk_multiplier[3];
+        float     EffectBonusCoefficient[3];
         float     EffectDamageMultiplier[3];
         uint32    EffectChainTarget[3];
         int32     EffectDieSides[3];

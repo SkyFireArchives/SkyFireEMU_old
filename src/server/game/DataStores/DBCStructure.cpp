@@ -118,7 +118,7 @@ void SpellEntry::LoadSpellAddons()
         EffectApplyAuraName[i] = SpellEffect ? SpellEffect->EffectApplyAuraName : 0;
         EffectAmplitude[i] = SpellEffect ? SpellEffect->EffectAmplitude : 0;
         EffectBasePoints[i] = SpellEffect ? SpellEffect->EffectBasePoints : 0;
-        unk_multiplier[i] = SpellEffect ? SpellEffect->unk_multiplier : 0;
+        EffectBonusCoefficient[i] = SpellEffect ? SpellEffect->EffectBonusCoefficient : 0;
         EffectDamageMultiplier[i] = SpellEffect ? SpellEffect->EffectDamageMultiplier : 0;
         EffectChainTarget[i] = SpellEffect ? SpellEffect->EffectChainTarget : 0;
         EffectDieSides[i] = SpellEffect ? SpellEffect->EffectDieSides : 0;
