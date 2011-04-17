@@ -1474,7 +1474,7 @@ void SpellMgr::LoadSpellBonusess()
         }
         if(DBCcoef > 0)
         {
-            sLog.outError("SPC: DB SP coef doesn't match DBC. ID: %d, DB: %f, DBC: %f, Name: %s", entry, sbe.direct_damage, DBCcoef, spell->SpellName);
+            sLog->outError("SPC: DB SP coef doesn't match DBC. ID: %d, DB: %f, DBC: %f, Name: %s", entry, sbe.direct_damage, DBCcoef, spell->SpellName);
         }
 
         ++count;
