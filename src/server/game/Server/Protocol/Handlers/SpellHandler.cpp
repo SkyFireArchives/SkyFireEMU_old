@@ -359,7 +359,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
             mover->ToPlayer()->SetEmoteState(0);
 
         // not have spell in spellbook or spell passive and not casted by client
-        if ((!mover->ToPlayer()->HasActiveSpell (spellId) || IsPassiveSpell(spellId)) && !IsRaidMarker(spellId))
+        if (!mover->ToPlayer()->HasActiveSpell (spellId) || IsPassiveSpell(spellId))
         {
             //cheater? kick? ban?
             recvPacket.rfinish(); // prevent spam at ignore packet
@@ -369,7 +369,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
     else
     {
         // not have spell in spellbook or spell passive and not casted by client
-        if (((mover->GetTypeId() == TYPEID_UNIT && !mover->ToCreature()->HasSpell(spellId)) || IsPassiveSpell(spellId)) && !IsRaidMarker(spellId))
+        if ((mover->GetTypeId() == TYPEID_UNIT && !mover->ToCreature()->HasSpell(spellId)) || IsPassiveSpell(spellId))
         {
             //cheater? kick? ban?
             recvPacket.rfinish(); // prevent spam at ignore packet
@@ -434,8 +434,8 @@ void WorldSession::HandleCancelAuraOpcode(WorldPacket& recvPacket)
     if (!spellInfo)
         return;
 
-    // not allow remove non positive spells and spells with attr SPELL_ATTR_CANT_CANCEL
-    if (!IsPositiveSpell(spellId) || (spellInfo->Attributes & SPELL_ATTR_CANT_CANCEL))
+    // not allow remove non positive spells and spells with attr SPELL_ATTR0_CANT_CANCEL
+    if (!IsPositiveSpell(spellId) || (spellInfo->Attributes & SPELL_ATTR0_CANT_CANCEL))
         return;
 
     // don't allow cancelling passive auras (some of them are visible)
