@@ -29,6 +29,15 @@
 #include "ObjectMgr.h"
 #include "WorldPacket.h"
 
+// Need to check this data before we but in database these achievements may be outdated for 4.0.6 . 
+//DELETE FROM `disables` WHERE `sourceType` = 4 AND `entry` in (7625,6446,7628);
+//DELETE FROM `achievement_criteria_data` WHERE `criteria_id` in(6446,7625) AND `type`=11;
+//INSERT INTO `achievement_criteria_data` (`criteria_id`, `type`, `value1`, `value2`, `ScriptName`) VALUES 
+//(6446,11,0,0,'achievement_bg_sa_drop_it'),
+//(7625,11,0,0,'achievement_bg_sa_artillery_veteran'),
+//(7628,11,0,0,'achievement_bg_sa_artillery_expert'),
+//(7628,3,607,0,'');
+
 BattlegroundSA::BattlegroundSA()
 {
     m_StartMessageIds[BG_STARTING_EVENT_FIRST]  = LANG_BG_SA_START_TWO_MINUTES;
@@ -494,6 +503,16 @@ void BattlegroundSA::UpdatePlayerScore(Player* Source, uint32 type, uint32 value
     else
         Battleground::UpdatePlayerScore(Source,type,value, doAddHonor);
 }
+// Future use
+//uint32 BattlegroundSA::GetPlayerDemolisherScore(Player* source)
+//
+//{
+//    BattlegroundScoreMap::iterator itr = m_PlayerScores.find(source->GetGUID());
+//    if (itr == m_PlayerScores.end())                         // player not found...
+//        return 0;
+//    else
+//        return ((BattlegroundSAScore*)itr->second)->demolishers_destroyed;
+//}
 
 void BattlegroundSA::TeleportPlayers()
 {
@@ -566,7 +585,7 @@ void BattlegroundSA::HandleKillUnit(Creature* unit, Player* killer)
     if (!unit)
         return;
 
-    if (unit->GetEntry() == 28781)  //Demolisher
+    if (unit->GetEntry() == NPC_DEMOLISHER_SA)
         UpdatePlayerScore(killer, SCORE_DESTROYED_DEMOLISHER, 1);
 }
 

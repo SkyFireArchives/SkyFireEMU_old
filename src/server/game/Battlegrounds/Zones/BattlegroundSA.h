@@ -38,67 +38,68 @@ class BattlegroundSAScore : public BattlegroundScore
 #define BG_SA_DEMOLISHER_AMOUNT 4
 
 enum BG_SA_Status
-  {
+{
     BG_SA_NOTSTARTED = 0,
     BG_SA_WARMUP,
     BG_SA_ROUND_ONE,
     BG_SA_SECOND_WARMUP,
     BG_SA_ROUND_TWO,
     BG_SA_BONUS_ROUND
-  };
+};
 
 enum BG_SA_GateState
-  {
+{
     BG_SA_GATE_OK = 1,
     BG_SA_GATE_DAMAGED = 2,
     BG_SA_GATE_DESTROYED = 3
-  };
+};
 
 enum BG_SA_Timers
-  {
-    BG_SA_BOAT_START  =  60000,
-    BG_SA_WARMUPLENGTH = 120000,
-    BG_SA_ROUNDLENGTH = 600000
-  };
+{
+    BG_SA_BOAT_START  =  60*IN_MILLISECONDS,
+    BG_SA_WARMUPLENGTH = 120*IN_MILLISECONDS,
+    BG_SA_ROUNDLENGTH = 600*IN_MILLISECONDS
+};
 
 enum BG_SA_WorldStates
-  {
+{
     BG_SA_TIMER_MINS = 3559,
     BG_SA_TIMER_SEC_TENS = 3560,
     BG_SA_TIMER_SEC_DECS = 3561,
     BG_SA_ALLY_ATTACKS  = 4352,
     BG_SA_HORDE_ATTACKS = 4353,
-
     BG_SA_PURPLE_GATEWS = 3614,
     BG_SA_RED_GATEWS = 3617,
     BG_SA_BLUE_GATEWS = 3620,
     BG_SA_GREEN_GATEWS = 3623,
     BG_SA_YELLOW_GATEWS = 3638,
     BG_SA_ANCIENT_GATEWS = 3849,
-
     BG_SA_LEFT_GY_ALLIANCE = 3635,
     BG_SA_RIGHT_GY_ALLIANCE = 3636,
     BG_SA_CENTER_GY_ALLIANCE = 3637,
-
     BG_SA_RIGHT_ATT_TOKEN_ALL = 3627,
     BG_SA_LEFT_ATT_TOKEN_ALL = 3626,
-
     BG_SA_LEFT_ATT_TOKEN_HRD = 3629,
     BG_SA_RIGHT_ATT_TOKEN_HRD = 3628,
-
     BG_SA_HORDE_DEFENCE_TOKEN = 3631,
     BG_SA_ALLIANCE_DEFENCE_TOKEN = 3630,
-
     BG_SA_RIGHT_GY_HORDE = 3632,
     BG_SA_LEFT_GY_HORDE = 3633,
     BG_SA_CENTER_GY_HORDE = 3634,
-
     BG_SA_BONUS_TIMER = 0xdf3,
     BG_SA_ENABLE_TIMER = 3564,
-  };
+};
+
+enum npc
+{
+    NPC_ANTI_PERSONNAL_CANNON       = 27894,
+    NPC_DEMOLISHER_SA               = 28781,
+    NPC_RIGGER_SPARKLIGHT           = 29260,
+    NPC_GORGRIL_RIGSPARK            = 29262,
+};
 
 enum BG_SA_NPCs
-  {
+{
     BG_SA_GUN_1 = 0,
     BG_SA_GUN_2,
     BG_SA_GUN_3,
@@ -121,7 +122,7 @@ enum BG_SA_NPCs
     BG_SA_NPC_SPARKLIGHT,
     BG_SA_NPC_RIGSPARK,
     BG_SA_MAXNPC
-  };
+};
 
 enum BG_SA_Boat
 {
@@ -132,32 +133,32 @@ enum BG_SA_Boat
 };
 
 const uint32 BG_SA_NpcEntries[BG_SA_MAXNPC] =
-  {
-    27894,
-    27894,
-    27894,
-    27894,
-    27894,
-    27894,
-    27894,
-    27894,
-    27894,
-    27894,
+{
+    NPC_ANTI_PERSONNAL_CANNON,
+    NPC_ANTI_PERSONNAL_CANNON,
+    NPC_ANTI_PERSONNAL_CANNON,
+    NPC_ANTI_PERSONNAL_CANNON,
+    NPC_ANTI_PERSONNAL_CANNON,
+    NPC_ANTI_PERSONNAL_CANNON,
+    NPC_ANTI_PERSONNAL_CANNON,
+    NPC_ANTI_PERSONNAL_CANNON,
+    NPC_ANTI_PERSONNAL_CANNON,
+    NPC_ANTI_PERSONNAL_CANNON,
     //4 beach demolishers
-    28781,
-    28781,
-    28781,
-    28781,
+    NPC_DEMOLISHER_SA,
+    NPC_DEMOLISHER_SA,
+    NPC_DEMOLISHER_SA,
+    NPC_DEMOLISHER_SA,
     //Triggers
     23472,
     23472,
     23472,
     23472,
     23472,
-    //Fizzle Sparklight, or whatever his name was
-    29260,
-    29262
-  };
+    //Used Demolisher Salesman
+    NPC_RIGGER_SPARKLIGHT,
+    NPC_GORGRIL_RIGSPARK
+};
 
 const float BG_SA_NpcSpawnlocs[BG_SA_MAXNPC + BG_SA_DEMOLISHER_AMOUNT][4] =
 {
@@ -490,6 +491,8 @@ class BattlegroundSA : public Battleground
 
         /* Scorekeeping */
         /// Update score board
+		//uint32 GetPlayerDemolisherScore(Player* /*source*/);  // Future use
+
         void UpdatePlayerScore(Player *Source, uint32 type, uint32 value, bool doAddHonor = true);
 
     private:
@@ -546,7 +549,7 @@ class BattlegroundSA : public Battleground
 
         /// Id of attacker team
         TeamId Attackers;
-        /// Totale elapsed time of current round
+        /// Total elapsed time of current round
         uint32 TotalTime;
         /// Max time of round
         uint32 EndRoundTimer;
@@ -554,9 +557,9 @@ class BattlegroundSA : public Battleground
         bool ShipsStarted;
         /// Status of each gate (Destroy/Damage/Intact)
         BG_SA_GateState GateStatus[6];
-        /// Statu of battle (Start or not, and what round)
+        /// Status of battle (Start or not, and what round)
         BG_SA_Status Status;
-        /// Team witch conntrol each graveyard
+        /// Team witch control each graveyard
         TeamId GraveyardStatus[BG_SA_MAX_GY];
         /// Score of each round
         BG_SA_RoundScore RoundScores[2];
