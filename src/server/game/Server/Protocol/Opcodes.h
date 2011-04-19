@@ -512,7 +512,6 @@ enum Opcodes
     CMSG_AUTH_SESSION                                = 0x00E0E, // 4.0.6a 13623
     SMSG_AUTH_RESPONSE                               = 0x0B28C, // 4.0.6a 13623
     MSG_GM_SHOWLABEL                                 = 0x1008D, //
-    CMSG_PET_CAST_SPELL                              = 0x02888, // 4.0.6a 13623 - SkyFireEMU: 0x0B6A4
     CMSG_PET_CAST_SPELL                              = 0x02888, // 4.0.6a 13623
     MSG_SAVE_GUILD_EMBLEM                            = 0x031AC, // 4.0.6a 13623
     MSG_TABARDVENDOR_ACTIVATE                        = 0x02C80, // 4.0.6a 13623
