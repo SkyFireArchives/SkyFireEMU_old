@@ -1010,6 +1010,13 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         else
                             target->AddAura(74396, target);
                     }
+                    case 83301: // Improved Cone of Cold r1 freeze
+                        if(!caster->HasAura(11190)) // r1 talent
+                            target->RemoveAura(83301);
+                    case 83302: // Improved Cone of Cold r2 freeze
+                        if(!caster->HasAura(12489)) // r2 talent
+                            target->RemoveAura(83302);
+
                     default:
                         break;
                 }
@@ -1076,6 +1083,26 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         snd->RefreshDuration();
                     if (Aura* rec = target->GetAura(73651))
                         rec->RefreshDuration();
+                }
+                break;
+            case SPELLFAMILY_PALADIN: // Speed of Light (talent)
+                if(GetId() == 82327)
+                {
+                    if(target->HasAura(85495)) // r1
+                    {
+                        target->CastSpell(target, 85497, true);
+                        target->SetSpeed(MOVE_RUN, 1.2f, true);
+                    }
+                    if(target->HasAura(85498)) // r2
+                    {
+                        target->CastSpell(target, 85497, true);
+                        target->SetSpeed(MOVE_RUN, 1.4f, true);
+                    }
+                    if(target->HasAura(85499)) // r3
+                    {
+                        target->CastSpell(target, 85497, true);
+                        target->SetSpeed(MOVE_RUN, 1.6f, true);
+                    }
                 }
                 break;
             case SPELLFAMILY_DEATHKNIGHT:
