@@ -4780,16 +4780,48 @@ void Player::DeleteOldCharacters(uint32 keepDays)
 
 void Player::SetMovement(PlayerMovementType pType)
 {
+        //sLog.outError("void Player::SetMovement(PlayerMovementType pType)");
     WorldPacket data;
+
     switch(pType)
     {
-        case MOVE_ROOT:       data.Initialize(SMSG_FORCE_MOVE_ROOT,   GetPackGUID().size()+4); break;
-        case MOVE_UNROOT:     data.Initialize(SMSG_FORCE_MOVE_UNROOT, GetPackGUID().size()+4); break;
-        case MOVE_WATER_WALK: data.Initialize(SMSG_MOVE_WATER_WALK,   GetPackGUID().size()+4); break;
-        case MOVE_LAND_WALK:  data.Initialize(SMSG_MOVE_LAND_WALK,    GetPackGUID().size()+4); break;
+        case MOVE_ROOT:
+                        {
+                                //sLog.outError("MOVE ROOT");
+                                 data.Initialize(SMSG_FORCE_MOVE_ROOT,   GetPackGUID().size()+4); break;
+                                
+                                break;
+                        }
+        case MOVE_UNROOT: 
+                        {
+                                //sLog.outError("MOVE UNROOT");
+                                 data.Initialize(SMSG_FORCE_MOVE_UNROOT, GetPackGUID().size()+4); break;
+                                
+                                break;
+                        }
+        case MOVE_WATER_WALK:
+                        {
+                                //sLog.outError("MOVE WATER WALK");
+                                 WorldPacket movewaterwalk(SMSG_MULTIPLE_PACKETS, 14);
+                 movewaterwalk << uint16(SMSG_MOVE_WATER_WALK);
+                 movewaterwalk.append(GetPackGUID());
+                 movewaterwalk << uint32(0);                                      // unknown
+                 SendMessageToSet(&movewaterwalk, true);
+                                
+                                break;
+                        }
+        case MOVE_LAND_WALK:
+                        {
+                                // sLog.outError("MOVE LAND WALK");
+                                 data.Initialize(SMSG_MOVE_LAND_WALK,    GetPackGUID().size()+4); break;
+                                
+                                break;
+                        }
         default:
-            sLog->outError("Player::SetMovement: Unsupported move type (%d), data not sent to client.",pType);
+                        {
+            sLog.outError("Player::SetMovement: Unsupported move type (%d), data not sent to client.",pType);
             return;
+                        }
     }
     data.append(GetPackGUID());
     data << uint32(0);
