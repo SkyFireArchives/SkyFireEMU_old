@@ -356,7 +356,7 @@ enum Opcodes
     SMSG_SPELLBREAKLOG                               = 0x0BDAC, // 4.0.6a 13623
     SMSG_SPELLHEALLOG                                = 0x06E84, // 4.0.6a 13623
     SMSG_SPELLENERGIZELOG                            = 0x0F0EC, // 4.0.6a 13623
-    SMSG_BREAK_TARGET                                = 0x1005B, //
+    SMSG_BREAK_TARGET                                = 0x02488, // 4.0.6a 13623
     CMSG_SAVE_PLAYER                                 = 0x1005C, //
     CMSG_SETDEATHBINDPOINT                           = 0x0A94E, //
     SMSG_BINDPOINTUPDATE                             = 0x0A9A0, // 4.0.6a 13623
@@ -477,7 +477,7 @@ enum Opcodes
     CMSG_BUG                                         = 0x034AC, // 4.0.6a 13623
     SMSG_NOTIFICATION                                = 0x0BC88, // 4.0.6a 13623
     CMSG_PLAYED_TIME                                 = 0x0F480, // 4.0.6a 13623
-    SMSG_PLAYED_TIME                                 = 0x0E4C8, // 
+    SMSG_PLAYED_TIME                                 = 0x0E4C8, // 4.0.6a 13623
     CMSG_QUERY_TIME                                  = 0x0B1C0, // 4.0.6a 13623
     SMSG_QUERY_TIME_RESPONSE                         = 0x0F1AC, // 4.0.6a 13623
     SMSG_LOG_XPGAIN                                  = 0x0B880, // 4.0.6a 13623
@@ -541,7 +541,7 @@ enum Opcodes
     CMSG_REQUEST_ACCOUNT_DATA                        = 0x0EEAC, // 4.0.6a 13623
     CMSG_UPDATE_ACCOUNT_DATA                         = 0x072A4, // 4.0.6a 13623
     SMSG_UPDATE_ACCOUNT_DATA                         = 0x0F7A0, // 4.0.6a 13623
-    SMSG_CLEAR_FAR_SIGHT_IMMEDIATE                   = 0x0BE7D, //
+    SMSG_CLEAR_FAR_SIGHT_IMMEDIATE                   = 0x0BEE4, // 4.0.6a 13623
     SMSG_PLAYER_DIFFICULTY_CHANGE                    = 0x02A80, // 4.0.6a 13623
     CMSG_GM_TEACH                                    = 0x10095, //
     CMSG_GM_CREATE_ITEM_TARGET                       = 0x10096, //
@@ -634,7 +634,7 @@ enum Opcodes
     CMSG_STABLE_REVIVE_PET                           = 0x100C7, //
     CMSG_STABLE_CHANGE_SLOT                          = 0x00237, //
     MSG_QUEST_PUSH_RESULT                            = 0x022A4, // 4.0.6a 13623
-    SMSG_PLAY_MUSIC                                  = 0x09C7F, //
+    SMSG_PLAY_MUSIC                                  = 0x0AE54, // 4.0.6a 13623
     SMSG_PLAY_OBJECT_SOUND                           = 0x07DA0, // 4.0.6a 13623
     CMSG_REQUEST_PET_INFO                            = 0x0EAE4, // 4.0.6a 13623
     CMSG_FAR_SIGHT                                   = 0x0B2EC, // 4.0.6a 13623
@@ -946,7 +946,7 @@ enum Opcodes
     SMSG_CLEAR_EXTRA_AURA_INFO_OBSOLETE              = 0x1016B, //
     MSG_MOVE_START_DESCEND                           = 0x07880, // 4.0.6a 13623
     CMSG_IGNORE_REQUIREMENTS_CHEAT                   = 0x1016D, //
-    SMSG_IGNORE_REQUIREMENTS_CHEAT                   = 0x07C55, //
+    SMSG_IGNORE_REQUIREMENTS_CHEAT                   = 0x07C84, // 4.0.6a 13623
     SMSG_SPELL_CHANCE_PROC_LOG                       = 0x1016E, //
     CMSG_MOVE_SET_RUN_SPEED                          = 0x1016F, //
     SMSG_DISMOUNT                                    = 0x03CC4, // 4.0.6a 13623
@@ -981,10 +981,10 @@ enum Opcodes
     SMSG_FEATURE_SYSTEM_STATUS                       = 0x03DAC, // 4.0.6a 13623
     CMSG_GM_SHOW_COMPLAINTS                          = 0x10181, //
     CMSG_GM_UNSQUELCH                                = 0x10182, //
-    CMSG_CHANNEL_SILENCE_VOICE                       = 0x07A18, //
-    CMSG_CHANNEL_SILENCE_ALL                         = 0x01A90, //
-    CMSG_CHANNEL_UNSILENCE_VOICE                     = 0x06A80, //
-    CMSG_CHANNEL_UNSILENCE_ALL                       = 0x03A80, //
+    CMSG_CHANNEL_SILENCE_VOICE                       = 0x00801, // 4.0.6a 13623
+    CMSG_CHANNEL_SILENCE_ALL                         = 0x00021, // 4.0.6a 13623
+    CMSG_CHANNEL_UNSILENCE_VOICE                     = 0x0002B, // 4.0.6a 13623
+    CMSG_CHANNEL_UNSILENCE_ALL                       = 0x00840, // 4.0.6a 13623
     CMSG_TARGET_CAST                                 = 0x10183, //
     CMSG_TARGET_SCRIPT_CAST                          = 0x10184, //
     CMSG_CHANNEL_DISPLAY_LIST                        = 0x10185, //
@@ -1070,7 +1070,7 @@ enum Opcodes
     SMSG_REFER_A_FRIEND_FAILURE                      = 0x07FE0, // 4.0.6a 13623
     SMSG_SPLINE_MOVE_SET_FLYING                      = 0x05D54, //
     SMSG_SPLINE_MOVE_UNSET_FLYING                    = 0x07688, // 4.0.6a 13623
-    SMSG_SUMMON_CANCEL                               = 0x0645E, //
+    SMSG_SUMMON_CANCEL                               = 0x070A8, // 4.0.6a 13623
     CMSG_CHANGE_PERSONAL_ARENA_RATING                = 0x101B2, //
     CMSG_ALTER_APPEARANCE                            = 0x034A4, // 4.0.6a 13623
     SMSG_ENABLE_BARBER_SHOP                          = 0x037E8, // 4.0.6a 13623
