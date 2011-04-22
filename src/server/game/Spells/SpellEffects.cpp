@@ -1242,9 +1242,12 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                 int32 chargeBasePoints0 = damage;
                 m_caster->CastCustomSpell(m_caster, 34846, &chargeBasePoints0, NULL, NULL, true);
 
-                //Juggernaut crit bonus
+                //Juggernaut crit bonus & Cooldown
                 if (m_caster->HasAura(64976))
+                {
                     m_caster->CastSpell(m_caster, 65156, true);
+                    m_caster->CastSpell(m_caster, 96216, true);
+                }
                 return;
             }
             //Slam
@@ -1293,6 +1296,14 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                 case 23881:
                 {
                     m_caster->CastCustomSpell(unitTarget, 23885, &damage, NULL, NULL, true, NULL);
+                    return;
+                }
+                // Intercept
+                case 20252:
+                {
+                    //Juggernaut CD part
+                    if (m_caster->HasAura(64976))
+                        m_caster->CastSpell(m_caster, 96215, true);
                     return;
                 }
             }

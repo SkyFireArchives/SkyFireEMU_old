@@ -307,12 +307,6 @@ namespace Trinity
                     if (spellProtoB->Category == 56)
                         return false;
 
-                // Sacred Shield
-                if (spellProtoA->Id == 58597)
-                    return true;
-                if (spellProtoB->Id == 58597)
-                    return false;
-
                 // Fel Blossom
                 if (spellProtoA->Id == 28527)
                     return true;
