@@ -320,7 +320,7 @@ void WorldSession::HandleWhoOpcode(WorldPacket & recv_data)
 
         std::string aname;
         if (AreaTableEntry const* areaEntry = GetAreaEntryByAreaID(itr->second->GetZoneId()))
-            aname = areaEntry->area_name[GetSessionDbcLocale()];
+            aname = areaEntry->area_name;
 
         bool s_show = true;
         for (uint32 i = 0; i < str_count; ++i)
@@ -1231,7 +1231,7 @@ void WorldSession::HandleInspectOpcode(WorldPacket& recv_data)
     if (!plr)                                                // wrong player
         return;
 
-    uint32 talent_points = 0x47;
+    uint32 talent_points = 0x29;
     uint32 guid_size = plr->GetPackGUID().wpos();
     WorldPacket data(SMSG_INSPECT_TALENT, guid_size+4+talent_points);
     data.append(plr->GetPackGUID());

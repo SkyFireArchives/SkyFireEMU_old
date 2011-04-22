@@ -692,6 +692,63 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             pVictim->ToPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_TOTAL_DAMAGE_RECEIVED, damage);
 
+        // Blood Craze
+        if (pVictim->GetTypeId() == TYPEID_PLAYER)
+        {
+            if (pVictim->HasAura(16487)) // Rank 1
+                if (roll_chance_f(10.0f))
+                    pVictim->CastSpell(pVictim, 16488, true);
+
+            if (pVictim->HasAura(16489)) // Rank 2
+                if (roll_chance_f(10.0f))
+                    pVictim->CastSpell(pVictim, 16490, true);
+
+            if (pVictim->HasAura(16492)) // Rank 3
+                if (roll_chance_f(10.0f))
+                    pVictim->CastSpell(pVictim, 16491, true);
+        }
+
+        // Brain Freeze
+        if (GetTypeId() == TYPEID_PLAYER)
+        {
+            if (damagetype == SPELL_DIRECT_DAMAGE )
+            {
+                if(GetSpellSchoolMask(spellProto) == SPELL_SCHOOL_MASK_FROST)
+                {       
+                    if (this->ToPlayer()->HasAura(44546))
+                        if (roll_chance_f(5.0f))
+                            this->CastSpell(this, 57761, true);
+
+                    if (this->ToPlayer()->HasAura(44548))
+                        if (roll_chance_f(10.0f))
+                            this->CastSpell(this, 57761, true);
+
+                    if (this->ToPlayer()->HasAura(44549))
+                        if (roll_chance_f(15.0f))
+                            this->CastSpell(this, 57761, true);
+                }
+            }
+        }
+
+        // Maelstrom Weapon
+        if (GetTypeId() == TYPEID_PLAYER)
+        {
+            if (damagetype == DIRECT_DAMAGE )
+            {
+                if (this->ToPlayer()->HasAura(51528))
+                    if (roll_chance_f(10.0f))
+                        this->CastSpell(this, 53817, true);
+
+                if (this->ToPlayer()->HasAura(51529))
+                    if (roll_chance_f(20.0f))
+                        this->CastSpell(this, 53817, true);
+
+                if (this->ToPlayer()->HasAura(51530))
+                    if (roll_chance_f(30.0f))
+                        this->CastSpell(this, 53817, true);
+            }
+        }
+
         pVictim->ModifyHealth(- (int32)damage);
 
         if (damagetype == DIRECT_DAMAGE || damagetype == SPELL_DIRECT_DAMAGE)
@@ -6099,10 +6156,8 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     if (triggeredByAura->GetCasterGUID() != GetGUID())
                         break;
                     int32 basepoints1 = triggerAmount * 2;
-                    // Improved Leader of the Pack
-                    // Check cooldown of heal spell cooldown
-                    if (GetTypeId() == TYPEID_PLAYER && !ToPlayer()->HasSpellCooldown(34299))
-                        CastCustomSpell(this,60889,&basepoints1,0,0,true,0,triggeredByAura);
+                    // Mana Part
+                    CastCustomSpell(this,68285,&basepoints1,0,0,true,0,triggeredByAura);
                     break;
                 }
                 // Healing Touch (Dreamwalker Raiment set)
@@ -6456,29 +6511,6 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                 basepoints0 = triggerAmount;
                 CastCustomSpell(target,triggered_spell_id,&basepoints0,&basepoints0,NULL,true,castItem,triggeredByAura);
                 return true;
-            }
-            // Sacred Shield
-            if (dummySpell->SpellFamilyFlags[1] & 0x80000)
-            {
-                if (procFlag & PROC_FLAG_TAKEN_SPELL_MAGIC_DMG_CLASS_POS)
-                {
-                    if ((procSpell->SpellFamilyName == SPELLFAMILY_PALADIN) && (procSpell->SpellFamilyFlags[0] & 0x40000000))
-                    {
-                        basepoints0 = damage / 12;
-
-                        if (basepoints0)
-                            CastCustomSpell(this, 66922, &basepoints0, NULL, NULL, true, 0, triggeredByAura, pVictim->GetGUID());
-
-                        return true;
-                    }
-                    else
-                        return false;
-                }
-                else if (damage > 0)
-                    triggered_spell_id = 58597;
-
-                target = this;
-                break;
             }
             // Righteous Vengeance
             if (dummySpell->SpellIconID == 3025)
@@ -7689,27 +7721,8 @@ bool Unit::HandleAuraProc(Unit * pVictim, uint32 damage, Aura * triggeredByAura,
             break;
         case SPELLFAMILY_PALADIN:
         {
-            // Infusion of Light
-            if (dummySpell->SpellIconID == 3021)
-            {
-                // Flash of Light HoT on Flash of Light when Sacred Shield active
-                if (procSpell->SpellFamilyFlags[0] & 0x40000000 && procSpell->SpellIconID == 242)
-                {
-                    *handled = true;
-                    if (pVictim->HasAura(53601))
-                    {
-                        int32 bp0 = (damage/12) * SpellMgr::CalculateSpellEffectAmount(dummySpell, 2)/100;
-                        CastCustomSpell(pVictim, 66922, &bp0, NULL, NULL, true);
-                        return true;
-                    }
-                }
-                // but should not proc on non-critical Holy Shocks
-                else if ((procSpell->SpellFamilyFlags[0] & 0x200000 || procSpell->SpellFamilyFlags[1] & 0x10000) && !(procEx & PROC_EX_CRITICAL_HIT))
-                    *handled = true;
-                break;
-            }
             // Judgements of the Just
-            else if (dummySpell->SpellIconID == 3015)
+            if (dummySpell->SpellIconID == 3015)
             {
                 *handled = true;
                 if (procSpell->Category == SPELLCATEGORY_JUDGEMENT)
@@ -8331,7 +8344,21 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                 return false;
             break;
         }
-
+        // Sacred Shield
+        case 85285:
+            {
+                if (!HealthBelowPct(30))
+                    return false;
+                break;
+            }
+        // Improved Hamstring
+        case 12289:
+        case 12668:
+            {
+                if (!pVictim->HasAura(1715))
+                    return false;
+                break;
+            }
         // Cheat Death
         case 28845:
         {
@@ -9929,7 +9956,7 @@ void Unit::UnsummonAllTotems()
 void Unit::SendHealSpellLog(Unit *pVictim, uint32 SpellID, uint32 Damage, uint32 OverHeal, uint32 Absorb, bool critical)
 {
     // we guess size
-	WorldPacket data(SMSG_SPELLHEALLOG, 8+8+4+4+4+4+1+1);
+    WorldPacket data(SMSG_SPELLHEALLOG, 8+8+4+4+4+4+1+1);
     data.append(pVictim->GetPackGUID());
     data.append(GetPackGUID());
     data << uint32(SpellID);
@@ -9954,7 +9981,7 @@ int32 Unit::HealBySpell(Unit * pVictim, SpellEntry const * spellInfo, uint32 add
 
 void Unit::SendEnergizeSpellLog(Unit *pVictim, uint32 SpellID, uint32 Damage, Powers powertype)
 {
-	WorldPacket data(SMSG_SPELLENERGIZELOG, 8+8+4+4+4+1);
+    WorldPacket data(SMSG_SPELLENERGIZELOG, 8+8+4+4+4+1);
     data.append(pVictim->GetPackGUID());
     data.append(GetPackGUID());
     data << uint32(SpellID);
@@ -10212,7 +10239,7 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
             // Drain Soul - increased damage for targets under 25 % HP
             if (spellProto->SpellFamilyFlags[0] & 0x00004000)
                 if (HasAura(200000))
-                    DoneTotalMod *= 4;
+                    DoneTotalMod *= 2;
         break;
         case SPELLFAMILY_HUNTER:
             // Steady Shot
@@ -10624,17 +10651,8 @@ bool Unit::isSpellCrit(Unit *pVictim, SpellEntry const *spellProto, SpellSchoolM
                             crit_chance = 0.0f;
                         break;
                     case SPELLFAMILY_PALADIN:
-                        // Flash of light
-                        if (spellProto->SpellFamilyFlags[0] & 0x40000000)
-                        {
-                            // Sacred Shield
-                            AuraEffect const* aura = pVictim->GetAuraEffect(58597,1);
-                            if (aura && aura->GetCasterGUID() == GetGUID())
-                                crit_chance+=aura->GetAmount();
-                            break;
-                        }
                         // Exorcism
-                        else if (spellProto->Category == 19)
+                        if (spellProto->Category == 19)
                         {
                             if (pVictim->GetCreatureTypeMask() & CREATURE_TYPEMASK_DEMON_OR_UNDEAD)
                                 return true;
@@ -16108,7 +16126,7 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form)
                         return 892;
                 }
             }
-			else if (getRace() == RACE_TROLL)
+            else if (getRace() == RACE_TROLL)
             {
                 uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
                 switch (hairColor)
@@ -16128,7 +16146,7 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form)
                         return 33668;
                 }
             }
-			else if (getRace() == RACE_WORGEN)
+            else if (getRace() == RACE_WORGEN)
             {
                 uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
                 switch (hairColor)
@@ -16227,7 +16245,7 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form)
                         return 2281;
                 }
             }
-			else if (getRace() == RACE_TROLL)
+            else if (getRace() == RACE_TROLL)
             {
                 uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
                 switch (hairColor)
@@ -16246,7 +16264,7 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form)
                         return 33656;
                 }
             }
-			else if (getRace() == RACE_WORGEN)
+            else if (getRace() == RACE_WORGEN)
             {
                 uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
                 switch (hairColor)

@@ -1413,7 +1413,7 @@ bool ChatHandler::HandleSetSkillCommand(const char *args)
 
     if (!target->GetSkillValue(skill))
     {
-        //PSendSysMessage(LANG_SET_SKILL_ERROR, tNameLink.c_str(), skill, sl->name[GetSessionDbcLocale()]);
+        PSendSysMessage(LANG_SET_SKILL_ERROR, tNameLink.c_str(), skill, sl->name);
         SetSentErrorMessage(true);
         return false;
     }

@@ -212,8 +212,6 @@ void Creature::RemoveFromWorld()
 void Creature::DisappearAndDie()
 {
     DestroyForNearbyPlayers();
-    //SetVisibility(VISIBILITY_OFF);
-    //ObjectAccessor::UpdateObjectVisibility(this);
     if (isAlive())
         setDeathState(JUST_DIED);
     RemoveCorpse(false);
