@@ -692,6 +692,63 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             pVictim->ToPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_TOTAL_DAMAGE_RECEIVED, damage);
 
+		// Blood Craze
+		if (pVictim->GetTypeId() == TYPEID_PLAYER)
+		{
+			if (pVictim->HasAura(16487)) // Rank 1
+				if (roll_chance_f(10.0f))
+					pVictim->CastSpell(pVictim, 16488, true);
+
+			if (pVictim->HasAura(16489)) // Rank 2
+				if (roll_chance_f(10.0f))
+					pVictim->CastSpell(pVictim, 16490, true);
+
+			if (pVictim->HasAura(16492)) // Rank 3
+				if (roll_chance_f(10.0f))
+					pVictim->CastSpell(pVictim, 16491, true);
+		}
+
+		// Brain Freeze
+		if (GetTypeId() == TYPEID_PLAYER)
+		{
+			if (damagetype == SPELL_DIRECT_DAMAGE )
+			{
+				if(GetSpellSchoolMask(spellProto) == SPELL_SCHOOL_MASK_FROST)
+				{       
+					if (this->ToPlayer()->HasAura(44546))
+						if (roll_chance_f(5.0f))
+							this->CastSpell(this, 57761, true);
+
+					if (this->ToPlayer()->HasAura(44548))
+						if (roll_chance_f(10.0f))
+							this->CastSpell(this, 57761, true);
+
+					if (this->ToPlayer()->HasAura(44549))
+						if (roll_chance_f(15.0f))
+							this->CastSpell(this, 57761, true);
+				}
+			}
+		}
+
+		// Maelstrom Weapon
+		if (GetTypeId() == TYPEID_PLAYER)
+		{
+			if (damagetype == DIRECT_DAMAGE )
+			{
+				if (this->ToPlayer()->HasAura(51528))
+					if (roll_chance_f(10.0f))
+						this->CastSpell(this, 53817, true);
+
+				if (this->ToPlayer()->HasAura(51529))
+					if (roll_chance_f(20.0f))
+						this->CastSpell(this, 53817, true);
+
+				if (this->ToPlayer()->HasAura(51530))
+					if (roll_chance_f(30.0f))
+						this->CastSpell(this, 53817, true);
+			}
+		}
+
         pVictim->ModifyHealth(- (int32)damage);
 
         if (damagetype == DIRECT_DAMAGE || damagetype == SPELL_DIRECT_DAMAGE)
