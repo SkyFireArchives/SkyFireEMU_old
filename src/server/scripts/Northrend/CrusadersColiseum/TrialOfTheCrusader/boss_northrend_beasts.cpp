@@ -24,7 +24,6 @@ EndScriptData */
 
 // Known bugs:
 // Gormok - Not implemented as a vehicle
-//        - Snobold Firebomb
 //        - Snobolled (creature at back)
 // Snakes - miss the 1-hitkill from emerging
 //        - visual changes between mobile and stationary models seems not to work sometimes
@@ -904,6 +903,39 @@ public:
 
 };
 
+// 66313 Snobold Fire Bomb
+enum FireBombNPC
+{
+    NPC_FIRE_BOMB = 34854,
+};
+
+class spell_gen_fire_bomb : public SpellScriptLoader
+{
+public:
+    spell_gen_fire_bomb() : SpellScriptLoader("spell_gen_fire_bomb") { }
+
+    class spell_gen_fire_bomb_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_gen_fire_bomb_SpellScript)
+
+        void HandleAfterHit()
+        {
+            Unit* caster = GetCaster();
+            if (WorldLocation * pos = GetTargetDest())
+                caster->SummonCreature(NPC_FIRE_BOMB, pos->GetPositionX(), pos->GetPositionY(), pos->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 60000);
+        }
+
+        void Register()
+        {
+            AfterHit += SpellHitFn(spell_gen_fire_bomb_SpellScript::HandleAfterHit);
+        }
+    };
+
+    SpellScript* GetSpellScript() const
+    {
+        return new spell_gen_fire_bomb_SpellScript();
+    }
+};
 
 void AddSC_boss_northrend_beasts()
 {
@@ -913,4 +945,5 @@ void AddSC_boss_northrend_beasts()
     new boss_dreadscale();
     new mob_slime_pool();
     new boss_icehowl();
+    new spell_gen_fire_bomb();
 }
