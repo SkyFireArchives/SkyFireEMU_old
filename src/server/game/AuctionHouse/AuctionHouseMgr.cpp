@@ -165,7 +165,7 @@ void AuctionHouseMgr::SendAuctionWonMail(AuctionEntry *auction, SQLTransaction& 
 
         MailDraft(msgAuctionWonSubject.str(), msgAuctionWonBody.str())
             .AddItem(pItem)
-            .SendMailTo(trans, MailReceiver(bidder,auction->bidder), auction, MAIL_CHECK_MASK_COPIED);
+            .SendMailTo(trans, MailReceiver(bidder, auction->bidder), auction, MAIL_CHECK_MASK_COPIED);
     }
 }
 
@@ -220,7 +220,7 @@ void AuctionHouseMgr::SendAuctionSuccessfulMail(AuctionEntry * auction, SQLTrans
 
         sLog->outDebug("AuctionSuccessful body string : %s", auctionSuccessfulBody.str().c_str());
 
-        uint32 profit = auction->bid + auction->deposit - auctionCut;
+        uint64 profit = auction->bid + auction->deposit - auctionCut;
 
         //FIXME: what do if owner offline
         if (owner)
@@ -262,8 +262,25 @@ void AuctionHouseMgr::SendAuctionExpiredMail(AuctionEntry * auction, SQLTransact
     }
 }
 
+void AuctionHouseMgr::SendAuctionRemovedMail(AuctionEntry * auction, SQLTransaction& trans)
+{
+    uint64 owner_guid = MAKE_NEW_GUID(auction->owner, 0, HIGHGUID_PLAYER);
+    Player *owner = sObjectMgr->GetPlayer(owner_guid);
+    
+    if (owner)
+    {
+        std::ostringstream subject;
+        subject << auction->item_template << ":0:" << AUCTION_CANCELED << ":0:0";
+
+        if (owner)
+            owner->GetSession()->SendAuctionRemovedNotification(auction);
+
+        MailDraft(subject.str(), "").SendMailTo(trans, MailReceiver(owner, auction->owner), auction, MAIL_CHECK_MASK_COPIED, 0);
+    }
+}
+
 //this function sends mail to old bidder
-void AuctionHouseMgr::SendAuctionOutbiddedMail(AuctionEntry *auction, uint32 newPrice, Player* newBidder, SQLTransaction& trans)
+void AuctionHouseMgr::SendAuctionOutbiddedMail(AuctionEntry *auction, uint64 newPrice, Player* newBidder, SQLTransaction& trans)
 {
     uint64 oldBidder_guid = MAKE_NEW_GUID(auction->bidder,0, HIGHGUID_PLAYER);
     Player *oldBidder = sObjectMgr->GetPlayer(oldBidder_guid);
@@ -693,13 +710,13 @@ bool AuctionEntry::BuildAuctionInfo(WorldPacket & data) const
     data << uint32(pItem->GetSpellCharges());               //item->charge FFFFFFF
     data << uint32(0);                                      //Unknown
     data << uint64(owner);                                  //Auction->owner
-    data << uint32(startbid);                               //Auction->startbid (not sure if useful)
-    data << uint32(bid ? GetAuctionOutBid() : 0);
+    data << uint64(startbid);                               //Auction->startbid (not sure if useful)
+    data << uint64(bid ? GetAuctionOutBid() : 0);
     //minimal outbid
-    data << uint32(buyout);                                 //auction->buyout
-    data << uint32((expire_time-time(NULL))*IN_MILLISECONDS);//time left
-    data << uint64(bidder) ;                                //auction->bidder current
-    data << uint32(bid);                                    //current bid
+    data << uint64(buyout);                                 //auction->buyout
+    data << uint32((expire_time-time(NULL)) * IN_MILLISECONDS);//time left
+    data << uint64(bidder);                                 //auction->bidder current
+    data << uint64(bid);                                    //current bid
     return true;
 }
 
@@ -713,9 +730,9 @@ uint32 AuctionEntry::GetAuctionCut() const
 }
 
 /// the sum of outbid is (1% from current bid)*5, if bid is very small, it is 1c
-uint32 AuctionEntry::GetAuctionOutBid() const
+uint64 AuctionEntry::GetAuctionOutBid() const
 {
-    uint32 outbid = (uint32)((double)bid / 100.0f) * 5;
+    uint64 outbid = (uint32)((double)bid / 100.0f) * 5;
     if (!outbid)
         outbid = 1;
     return outbid;
