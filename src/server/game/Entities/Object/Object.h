@@ -588,6 +588,16 @@ class WorldObject : public Object, public WorldLocation
 
         void _Create(uint32 guidlow, HighGuid guidhigh, uint32 phaseMask);
 
+        virtual void RemoveFromWorld()
+        {
+            if (!IsInWorld())
+                return;
+
+            DestroyForNearbyPlayers();
+
+            Object::RemoveFromWorld();
+        }
+
         void GetNearPoint2D(float &x, float &y, float distance, float absAngle) const;
         void GetNearPoint(WorldObject const* searcher, float &x, float &y, float &z, float searcher_size, float distance2d,float absAngle) const;
         void GetClosePoint(float &x, float &y, float &z, float size, float distance2d = 0, float angle = 0) const
