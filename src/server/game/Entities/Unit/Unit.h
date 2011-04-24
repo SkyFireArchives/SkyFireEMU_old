@@ -551,12 +551,6 @@ enum DamageEffectType
     SELF_DAMAGE             = 5
 };
 
-enum UnitVisibility
-{
-    VISIBILITY_OFF                = 0,
-    VISIBILITY_ON                 = 1
-};
-
 // Value masks for UNIT_FIELD_FLAGS
 enum UnitFlags
 {
@@ -1052,9 +1046,6 @@ struct CharmInfo
         void SetCommandState(CommandStates st) { m_CommandState = st; }
         CommandStates GetCommandState() const { return m_CommandState; }
         bool HasCommandState(CommandStates state) const { return (m_CommandState == state); }
-        //void SetReactState(ReactStates st) { m_reactState = st; }
-        //ReactStates GetReactState() { return m_reactState; }
-        //bool HasReactState(ReactStates state) { return (m_reactState == state); }
 
         void InitPossessCreateSpells();
         void InitCharmCreateSpells();
@@ -1094,7 +1085,6 @@ struct CharmInfo
         UnitActionBarEntry PetActionBar[MAX_UNIT_ACTION_BAR_INDEX];
         CharmSpellEntry m_charmspells[4];
         CommandStates   m_CommandState;
-        //ReactStates     m_reactState;
         uint32          m_petnumber;
         bool            m_barInit;
 
@@ -1824,8 +1814,8 @@ class Unit : public WorldObject
         void SetFacingToObject(WorldObject* pObject);
 
         // Visibility system
-        UnitVisibility GetVisibility() const { return (m_serverSideVisibility.GetValue(SERVERSIDE_VISIBILITY_GM) > SEC_PLAYER) ? VISIBILITY_OFF : VISIBILITY_ON; }
-        void SetVisibility(UnitVisibility x);
+        bool IsVisible() const { return (m_serverSideVisibility.GetValue(SERVERSIDE_VISIBILITY_GM) > SEC_PLAYER) ? false : true; }
+        void SetVisible(bool x);
 
         // common function for visibility checks for player/creatures with detection code
         bool isValid() const { return WorldObject::isValid(); }
@@ -2167,8 +2157,6 @@ class Unit : public WorldObject
         uint32 m_lastManaUse;                               // msecs
 
         Spell* m_currentSpells[CURRENT_MAX_SPELL];
-
-        UnitVisibility m_Visibility;
 
         Diminishing m_Diminishing;
         // Manage all Units threatening us

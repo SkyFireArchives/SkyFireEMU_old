@@ -21080,7 +21080,7 @@ bool Player::IsVisibleGloballyFor(Player* u) const
         return true;
 
     // Visible units, always are visible for all players
-    if (GetVisibility() == VISIBILITY_ON)
+    if (IsVisible())
         return true;
 
     // GMs are visible for higher gms (or players are visible for gms)
@@ -21088,7 +21088,7 @@ bool Player::IsVisibleGloballyFor(Player* u) const
         return GetSession()->GetSecurity() <= u->GetSession()->GetSecurity();
 
     // non faction visibility non-breakable for non-GMs
-    if (GetVisibility() == VISIBILITY_OFF)
+    if (!IsVisible())
         return false;
 
     // non-gm stealth/invisibility not hide from global player lists

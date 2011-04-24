@@ -521,7 +521,7 @@ class mob_ember_of_alar : public CreatureScript
                 if (toDie)
                 {
                     me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-                    //me->SetVisibility(VISIBILITY_OFF);
+                    //me->SetVisible(false);
                 }
 
                 DoMeleeAttackIfReady();

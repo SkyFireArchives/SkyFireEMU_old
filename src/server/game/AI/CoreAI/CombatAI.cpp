@@ -270,7 +270,7 @@ AOEAI::AOEAI(Creature *c) : CreatureAI(c)
     if (!me->m_spells[0])
         sLog->outError("AOEAI set for creature (entry = %u) with spell1=0. AI will do nothing", me->GetEntry());
 
-    me->SetVisibility(VISIBILITY_ON);//visible to see all spell anims
+    me->SetVisible(true);//visible to see all spell anims
     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);//can't be targeted
     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_1);//can't be damaged
     me->SetDisplayId(11686);//invisible model,around a size of a player
@@ -313,7 +313,7 @@ void VehicleAI::UpdateAI(const uint32 diff)
         if (m_DismissTimer < diff)
         {
             m_DoDismiss = false;
-            me->SetVisibility(VISIBILITY_OFF);
+            me->SetVisible(false);
             me->ForcedDespawn();
         }else m_DismissTimer -= diff;
     }
@@ -321,7 +321,7 @@ void VehicleAI::UpdateAI(const uint32 diff)
 
 void VehicleAI::Reset()
 {
-    me->SetVisibility(VISIBILITY_ON);
+    me->SetVisible(true);
 
     m_vehicle->Reset();
 }

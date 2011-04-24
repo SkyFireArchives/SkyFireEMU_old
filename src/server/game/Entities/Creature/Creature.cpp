@@ -817,7 +817,7 @@ bool Creature::Create(uint32 guidlow, Map *map, uint32 phaseMask, uint32 Entry, 
     }
 
     if (Entry == VISUAL_WAYPOINT)
-        SetVisibility(VISIBILITY_OFF);
+        SetVisible(false);
 
     return bResult;
 }
