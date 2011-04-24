@@ -21412,7 +21412,7 @@ void Player::SetGroup(Group *group, int8 subgroup)
         m_group.setSubGroup((uint8)subgroup);
     }
 
-    UpdateObjectVisibility();
+    UpdateObjectVisibility(false);
 }
 
 void Player::SendInitialPacketsBeforeAddToMap()
