@@ -23,6 +23,7 @@ build/
 *.idb
 *.vcproj
 *.user
+*.bat
 cmake_install.cmake
 /SkyFire.sln
 /CMakeCache.txt
