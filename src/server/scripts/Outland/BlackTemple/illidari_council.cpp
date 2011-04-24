@@ -803,7 +803,7 @@ public:
             AppearEnvenomTimer = 150000;
 
             HasVanished = false;
-            me->SetVisibility(VISIBILITY_ON);
+            me->SetVisible(true);
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         }
 
@@ -843,7 +843,7 @@ public:
                         VanishTimer = 30000;
                         AppearEnvenomTimer= 28000;
                         HasVanished = true;
-                        me->SetVisibility(VISIBILITY_OFF);
+                        me->SetVisible(false);
                         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                         DoResetThreat();
                                                                 // Chase a unit. Check before DoMeleeAttackIfReady prevents from attacking
@@ -873,7 +873,7 @@ public:
                 {
                     me->GetMotionMaster()->Clear();
                     me->GetMotionMaster()->MoveChase(me->getVictim());
-                    me->SetVisibility(VISIBILITY_ON);
+                    me->SetVisible(true);
                     AppearEnvenomTimer = 6000;
                 } else AppearEnvenomTimer -= diff;
             }

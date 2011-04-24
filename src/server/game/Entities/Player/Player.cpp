@@ -21080,7 +21080,7 @@ bool Player::IsVisibleGloballyFor(Player* u) const
         return true;
 
     // Visible units, always are visible for all players
-    if (GetVisibility() == VISIBILITY_ON)
+    if (IsVisible())
         return true;
 
     // GMs are visible for higher gms (or players are visible for gms)
@@ -21088,7 +21088,7 @@ bool Player::IsVisibleGloballyFor(Player* u) const
         return GetSession()->GetSecurity() <= u->GetSession()->GetSecurity();
 
     // non faction visibility non-breakable for non-GMs
-    if (GetVisibility() == VISIBILITY_OFF)
+    if (!IsVisible())
         return false;
 
     // non-gm stealth/invisibility not hide from global player lists
@@ -21259,17 +21259,15 @@ void Player::UpdateObjectVisibility(bool forced)
     else
     {
         Unit::UpdateObjectVisibility(true);
-        // updates visibility of all objects around point of view for current player
-        Trinity::VisibleNotifier notifier(*this);
-        m_seer->VisitNearbyObject(GetVisibilityRange(), notifier);
-        notifier.SendToSelf();   // send gathered data
+        UpdateVisibilityForPlayer();
     }
 }
 
 void Player::UpdateVisibilityForPlayer()
 {
+    // updates visibility of all objects around point of view for current player
     Trinity::VisibleNotifier notifier(*this);
-    m_seer->VisitNearbyObject(GetMap()->GetVisibilityRange(), notifier);
+    m_seer->VisitNearbyObject(GetSightRange(), notifier);
     notifier.SendToSelf();   // send gathered data
 }
 
@@ -21468,7 +21466,9 @@ void Player::SendInitialPacketsBeforeAddToMap()
 }
 
 void Player::SendInitialPacketsAfterAddToMap()
-{    
+{
+    UpdateVisibilityForPlayer();
+
     // update zone
     uint32 newzone, newarea;
     GetZoneAndAreaId(newzone,newarea);

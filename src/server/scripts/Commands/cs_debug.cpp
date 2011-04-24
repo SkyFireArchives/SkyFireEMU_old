@@ -22,6 +22,8 @@ Comment: All debug related commands
 Category: commandscripts
 EndScriptData */
 
+#include "ScriptPCH.h"
+#include <fstream>
 #include "ScriptMgr.h"
 #include "ObjectMgr.h"
 #include "BattlegroundMgr.h"
