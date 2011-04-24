@@ -18,18 +18,18 @@
 #include "ScriptPCH.h"
 
 /*######
-##Quest 5441: Lazy Peons
+##Quest 25134: Lazy Peons
 ##npc_lazy_peon
 ######*/
 
 enum LazyPeonYells
 {
-    SAY_SPELL_HIT                                 = -1000600   //Ow! OK, I''ll get back to work, $N!'
+    SAY_SPELL_HIT                                 = -1001900   //Ow! OK, I''ll get back to work, $N!'
 };
 
 enum LazyPeon
 {
-    QUEST_LAZY_PEONS                              = 5441,
+    QUEST_LAZY_PEONS                              = 25134,
     GO_LUMBERPILE                                 = 175784,
     SPELL_BUFF_SLEEP                              = 17743,
     SPELL_AWAKEN_PEON                             = 19938

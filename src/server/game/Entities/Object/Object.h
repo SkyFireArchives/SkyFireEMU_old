@@ -519,6 +519,11 @@ struct MovementInfo
     uint32 GetMovementFlags() { return flags; }
     void AddMovementFlag(uint32 flag) { flags |= flag; }
     bool HasMovementFlag(uint32 flag) const { return flags & flag; }
+
+    uint16 GetExtraMovementFlags() { return flags2; }
+    void AddExtraMovementFlag(uint16 flag) { flags2 |= flag; }
+    bool HasExtraMovementFlag(uint16 flag) const { return flags2 & flag; }
+
     void OutDebug();
 };
 

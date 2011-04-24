@@ -77,9 +77,9 @@ void WorldSession::SendAuctionHello(uint64 guid, Creature* unit)
 }
 
 //call this method when player bids, creates, or deletes auction
-void WorldSession::SendAuctionCommandResult(uint32 auctionId, uint32 Action, uint32 ErrorCode, uint32 bidError)
+void WorldSession::SendAuctionCommandResult(uint32 auctionId, uint32 Action, uint32 ErrorCode, uint64 bidError)
 {
-    WorldPacket data(SMSG_AUCTION_COMMAND_RESULT, 16);
+    WorldPacket data(SMSG_AUCTION_COMMAND_RESULT, 20);
     data << auctionId;
     data << Action;
     data << ErrorCode;
@@ -105,14 +105,23 @@ void WorldSession::SendAuctionBidderNotification(uint32 location, uint32 auction
 //this void causes on client to display: "Your auction sold"
 void WorldSession::SendAuctionOwnerNotification(AuctionEntry* auction)
 {
-    WorldPacket data(SMSG_AUCTION_OWNER_NOTIFICATION, (7*4));
+    WorldPacket data(SMSG_AUCTION_OWNER_NOTIFICATION, ((2 * 4) + (2 * 8) + (3 * 4)));
     data << auction->Id;
     data << auction->bid;
-    data << (uint32) 0;                                     //unk
-    data << (uint32) 0;                                     //unk
-    data << (uint32) 0;                                     //unk
+    data << uint32(0);                                     // unk
+    data << uint64(0);                                     // unk
     data << auction->item_template;
-    data << (uint32) 0;                                     //unk
+    data << uint32(0);                                     // Something with item names
+    data << float(0);                                      // unk
+    SendPacket(&data);
+}
+
+void WorldSession::SendAuctionRemovedNotification(AuctionEntry* auction)
+{
+    WorldPacket data(SMSG_AUCTION_REMOVED_NOTIFICATION, 12);
+    data << auction->Id;
+    data << auction->item_template;
+    data << uint32(0);                // Something with item names
     SendPacket(&data);
 }
 
@@ -122,13 +131,14 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
     uint64 auctioneer, item;
     uint64 bid, buyout;
     uint32 etime, count;
-    recv_data >> auctioneer;
-    recv_data.read_skip<uint32>();                          // const 1?
-    recv_data >> item;
+    uint32 unk = 1;
+    recv_data >> auctioneer;                                // uint64
+    recv_data >> unk;                                       // 1
+    recv_data >> item;                                      // uint64
     recv_data >> count;                                     // 3.2.2, number of items being auctioned
-    recv_data >> bid;
-    recv_data >> buyout;
-    recv_data >> etime;
+    recv_data >> bid;                                       // uint64, 4.0.6
+    recv_data >> buyout;                                    // uint64, 4.0.6
+    recv_data >> etime;                                     // uint32
 
     Player *pl = GetPlayer();
 
@@ -266,7 +276,8 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
     uint32 auctionId;
     uint64 price;
     recv_data >> auctioneer;
-    recv_data >> auctionId >> price;
+    recv_data >> auctionId;
+    recv_data >> price;
 
     if (!auctionId || !price)
         return;                                             //check for cheaters
@@ -627,7 +638,7 @@ void WorldSession::HandleAuctionListPendingSales(WorldPacket & recv_data)
     {
         data << "";                                         // string
         data << "";                                         // string
-        data << uint32(0);
+        data << uint64(0);
         data << uint32(0);
         data << float(0);
     }*/
