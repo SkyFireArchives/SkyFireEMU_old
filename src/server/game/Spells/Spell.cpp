@@ -1147,6 +1147,9 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
     if (unit->isAlive() != target->alive)
         return;
 
+    if (getState() == SPELL_STATE_DELAYED && !IsPositiveSpell(m_spellInfo->Id) && (getMSTime() - target->timeDelay) <= unit->m_lastSanctuaryTime)
+        return;                                             // No missinfo in that case
+
     // Get original caster (if exist) and calculate damage/healing from him data
     Unit *caster = m_originalCaster ? m_originalCaster : m_caster;
 
@@ -1422,18 +1425,6 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask, bool 
 
         if (!m_caster->IsFriendlyTo(unit))
         {
-            // reset damage to 0 if target has Invisibility and isn't visible for caster
-            // I do not think this is a correct way to fix it. Sanctuary effect should make all delayed spells invalid
-            // for delayed spells ignore not visible explicit target
-            if (m_spellInfo->speed > 0.0f && unit == m_targets.getUnitTarget()
-                && (unit->m_invisibilityMask || m_caster->m_invisibilityMask)
-                && !m_caster->canSeeOrDetect(unit, true))
-            {
-                // that was causing CombatLog errors
-                // return SPELL_MISS_EVADE;
-                return SPELL_MISS_MISS; // miss = do not send anything here
-            }
-
             unit->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_HITBYSPELL);
             //TODO: This is a hack. But we do not know what types of stealth should be interrupted by CC
             if ((m_customAttr & SPELL_ATTR0_CU_AURA_CC) && unit->IsControlledByPlayer())
@@ -1822,7 +1813,7 @@ void Spell::SearchChainTarget(std::list<Unit*> &TagUnitMap, float max_range, uin
             // If you want to add any conditions to exclude a target from TagUnitMap, add condition in this while() loop.    
             while ((m_spellInfo->DmgClass == SPELL_DAMAGE_CLASS_MELEE  
                 && !m_caster->isInFrontInMap(*next, max_range))
-                || !m_caster->canSeeOrDetect(*next, false)
+                || !m_caster->canSeeOrDetect(*next)
                 || !cur->IsWithinLOSInMap(*next)
                 || ((GetSpellInfo()->AttributesEx6 & SPELL_ATTR6_IGNORE_CROWD_CONTROL_TARGETS) && !(*next)->CanFreeMove()))
             {
@@ -3176,9 +3167,7 @@ void Spell::cast(bool skipCheck)
     {
         // three check: prepare, cast (m_casttime > 0), hit (delayed)
         if (m_casttime && target->isAlive()
-            && (target->m_invisibilityMask || m_caster->m_invisibilityMask
-            || target->GetVisibility() == VISIBILITY_GROUP_STEALTH)
-            && !target->IsFriendlyTo(m_caster) && !m_caster->canSeeOrDetect(target, true))
+            && !target->IsFriendlyTo(m_caster) && !m_caster->canSeeOrDetect(target))
         {
             SendCastResult(SPELL_FAILED_BAD_TARGETS);
             SendInterrupted(0);
@@ -3486,7 +3475,10 @@ uint64 Spell::handle_delayed(uint64 t_offset)
         if (ihit->processed == false)
         {
             if (single_missile || ihit->timeDelay <= t_offset)
+            {
+                ihit->timeDelay = t_offset;
                 DoAllEffectOnTarget(&(*ihit));
+            }
             else if (next_time == 0 || ihit->timeDelay < next_time)
                 next_time = ihit->timeDelay;
         }
@@ -4907,8 +4899,7 @@ SpellCastResult Spell::CheckCast(bool strict)
             if (target->hasUnitState(UNIT_STAT_UNATTACKABLE))
                 return SPELL_FAILED_BAD_TARGETS;
 
-            if (!m_IsTriggeredSpell && (target->HasAuraType(SPELL_AURA_MOD_STEALTH)
-                || target->m_invisibilityMask) && !m_caster->canSeeOrDetect(target, true))
+            if (!m_IsTriggeredSpell && !m_caster->canSeeOrDetect(target))
                 return SPELL_FAILED_BAD_TARGETS;
 
             if (m_caster->GetTypeId() == TYPEID_PLAYER)
@@ -6082,7 +6073,7 @@ SpellCastResult Spell::CheckItems()
 
         TypeContainerVisitor<Trinity::GameObjectSearcher<Trinity::GameObjectFocusCheck>, GridTypeMapContainer > object_checker(checker);
         Map& map = *m_caster->GetMap();
-        cell.Visit(p, object_checker, map, *m_caster, map.GetVisibilityDistance());
+        cell.Visit(p, object_checker, map, *m_caster, m_caster->GetVisibilityRange());
 
         if (!ok)
             return SPELL_FAILED_REQUIRES_SPELL_FOCUS;
