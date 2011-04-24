@@ -53,8 +53,8 @@
 #define NUM_DATABASES 3
 
 char remotes[NUM_REMOTES][MAX_REMOTE] = {
-    "git@github.com:mangos/mangos.git",
-    "git://github.com/mangos/mangos.git"        // used for fetch if present
+    "git@github.com:SkyFire/SkyFireEMU.git",
+    "git://github.com/SkyFire/SkyFireEMU.git"        // used for fetch if present
 };
 
 char remote_branch[MAX_REMOTE] = "master";
@@ -65,8 +65,8 @@ char new_index_file[MAX_PATH] = ".git/git_id_index";
 
 char databases[NUM_DATABASES][MAX_DB] = {
     "characters",
-    "mangos",
-    "realmd"
+    "worldserver",
+    "authserver"
 };
 
 char db_version_table[NUM_DATABASES][MAX_DB] = {
@@ -77,8 +77,8 @@ char db_version_table[NUM_DATABASES][MAX_DB] = {
 
 char db_sql_file[NUM_DATABASES][MAX_PATH] = {
     "sql/characters.sql",
-    "sql/mangos.sql",
-    "sql/realmd.sql"
+    "sql/worldserver.sql",
+    "sql/authserver.sql"
 };
 
 char db_sql_rev_field[NUM_DATABASES][MAX_PATH] = {
