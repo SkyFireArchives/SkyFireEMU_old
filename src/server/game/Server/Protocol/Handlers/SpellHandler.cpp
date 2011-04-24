@@ -322,8 +322,7 @@ void WorldSession::HandleGameobjectReportUse(WorldPacket& recvPacket)
     if (!go->IsWithinDistInMap(_player,INTERACTION_DISTANCE))
         return;
 
-    //if (go->GetGOInfo()->type == GAMEOBJECT_TYPE_MAILBOX)
-
+    go->AI()->GossipHello(_player);
 
     _player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_USE_GAMEOBJECT, go->GetEntry());
 }
