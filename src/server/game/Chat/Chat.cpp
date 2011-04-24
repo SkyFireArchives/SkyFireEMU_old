@@ -95,27 +95,6 @@ static size_t appendCommandTable(ChatCommand* target, const ChatCommand* source)
 
 ChatCommand * ChatHandler::getCommandTable()
 {
-    static ChatCommand accountSetCommandTable[] =
-    {
-        { "addon",          SEC_ADMINISTRATOR,  true,  OldHandler<&ChatHandler::HandleAccountSetAddonCommand>,     "", NULL },
-        { "gmlevel",        SEC_CONSOLE,        true,  OldHandler<&ChatHandler::HandleAccountSetGmLevelCommand>,   "", NULL },
-        { "password",       SEC_CONSOLE,        true,  OldHandler<&ChatHandler::HandleAccountSetPasswordCommand>,  "", NULL },
-        { NULL,             0,                  false, NULL,                                           "", NULL }
-    };
-
-    static ChatCommand accountCommandTable[] =
-    {
-        { "addon",          SEC_MODERATOR,         false, OldHandler<&ChatHandler::HandleAccountAddonCommand>,        "", NULL },
-        { "create",         SEC_CONSOLE,        true,  OldHandler<&ChatHandler::HandleAccountCreateCommand>,       "", NULL },
-        { "delete",         SEC_CONSOLE,        true,  OldHandler<&ChatHandler::HandleAccountDeleteCommand>,       "", NULL },
-        { "onlinelist",     SEC_CONSOLE,        true,  OldHandler<&ChatHandler::HandleAccountOnlineListCommand>,   "", NULL },
-        { "lock",           SEC_PLAYER,         false, OldHandler<&ChatHandler::HandleAccountLockCommand>,         "", NULL },
-        { "set",            SEC_ADMINISTRATOR,  true,  NULL,                                           "", accountSetCommandTable },
-        { "password",       SEC_PLAYER,         false, OldHandler<&ChatHandler::HandleAccountPasswordCommand>,     "", NULL },
-        { "",               SEC_PLAYER,         false, OldHandler<&ChatHandler::HandleAccountCommand>,             "", NULL },
-        { NULL,             0,                  false, NULL,                                           "", NULL }
-    };
-
     static ChatCommand banCommandTable[] =
     {
         { "account",        SEC_ADMINISTRATOR,  true,  OldHandler<&ChatHandler::HandleBanAccountCommand>,          "", NULL },
@@ -184,59 +163,6 @@ ChatCommand * ChatHandler::getCommandTable()
     {
         { "set",      SEC_ADMINISTRATOR,     true,  NULL,  "", channelSetCommandTable },
         { NULL,       0,                     false, NULL,  "", NULL                   }
-    };
-
-    static ChatCommand debugPlayCommandTable[] =
-    {
-        { "cinematic",      SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleDebugPlayCinematicCommand>,       "", NULL },
-        { "movie",          SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleDebugPlayMovieCommand>,           "", NULL },
-        { "sound",          SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleDebugPlaySoundCommand>,           "", NULL },
-        { NULL,             0,                  false, NULL,                                                "", NULL }
-    };
-
-    static ChatCommand debugSendCommandTable[] =
-    {
-        { "buyerror",       SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendBuyErrorCommand>,        "", NULL },
-        { "channelnotify",  SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendChannelNotifyCommand>,   "", NULL },
-        { "chatmmessage",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendChatMsgCommand>,         "", NULL },
-        { "equiperror",     SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendEquipErrorCommand>,      "", NULL },
-        { "largepacket",    SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendLargePacketCommand>,     "", NULL },
-        { "opcode",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendOpcodeCommand>,          "", NULL },
-        { "poi",            SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendPoiCommand>,             "", NULL },
-        { "qpartymsg",      SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendQuestPartyMsgCommand>,   "", NULL },
-        { "qinvalidmsg",    SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendQuestInvalidMsgCommand>, "", NULL },
-        { "sellerror",      SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendSellErrorCommand>,       "", NULL },
-        { "setphaseshift",  SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendSetPhaseShiftCommand>,   "", NULL },
-        { "spellfail",      SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSendSpellFailCommand>,       "", NULL },
-        { NULL,             0,                  false, NULL,                                                "", NULL }
-    };
-
-    static ChatCommand debugCommandTable[] =
-    {
-        { "setbit",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSet32Bit>,                   "", NULL },
-        { "threat",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugThreatList>,                 "", NULL },
-        { "hostil",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugHostileRefList>,              "", NULL },
-        { "anim",           SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleDebugAnimCommand>,                "", NULL },
-        { "arena",          SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugArenaCommand>,               "", NULL },
-        { "bg",             SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugBattlegroundCommand>,        "", NULL },
-        { "getitemstate",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugGetItemStateCommand>,        "", NULL },
-        { "lootrecipient",  SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleDebugGetLootRecipientCommand>,    "", NULL },
-        { "getvalue",       SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugGetValueCommand>,            "", NULL },
-        { "getitemvalue",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugGetItemValueCommand>,        "", NULL },
-        { "Mod32Value",     SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugMod32ValueCommand>,          "", NULL },
-        { "play",           SEC_MODERATOR,      false, NULL,                                                "", debugPlayCommandTable },
-        { "send",           SEC_ADMINISTRATOR,  false, NULL,                                                "", debugSendCommandTable },
-        { "setaurastate",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSetAuraStateCommand>,        "", NULL },
-        { "setitemvalue",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSetItemValueCommand>,        "", NULL },
-        { "setvalue",       SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSetValueCommand>,            "", NULL },
-        { "spawnvehicle",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSpawnVehicle>,               "", NULL },
-        { "setvid",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSetVehicleId>,               "", NULL },
-        { "entervehicle",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugEnterVehicle>,               "", NULL },
-        { "uws",            SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugUpdateWorldStateCommand>,    "", NULL },
-        { "update",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugUpdateCommand>,              "", NULL },
-        { "itemexpire",     SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugItemExpireCommand>,          "", NULL },
-        { "opcode",            SEC_ADMINISTRATOR, false, OldHandler<&ChatHandler::HandleDebugOpcodeCommand>, "", NULL },
-        { NULL,             0,                  false, NULL,                                                "", NULL }
     };
 
     static ChatCommand eventCommandTable[] =
@@ -733,14 +659,12 @@ ChatCommand * ChatHandler::getCommandTable()
 
     static ChatCommand commandTable[] =
     {
-        { "account",        SEC_PLAYER,         true,  NULL,                                           "", accountCommandTable  },
         { "achievement",    SEC_ADMINISTRATOR,  false, NULL,                                           "", achievementCommandTable},
         { "gm",             SEC_MODERATOR,      true,  NULL,                                           "", gmCommandTable       },
         { "npc",            SEC_MODERATOR,      false, NULL,                                           "", npcCommandTable      },
         { "go",             SEC_MODERATOR,      false, NULL,                                           "", goCommandTable       },
         { "learn",          SEC_MODERATOR,      false, NULL,                                           "", learnCommandTable    },
         { "modify",         SEC_MODERATOR,      false, NULL,                                           "", modifyCommandTable   },
-        { "debug",          SEC_MODERATOR,      true,  NULL,                                           "", debugCommandTable    },
         { "tele",           SEC_MODERATOR,      true,  NULL,                                           "", teleCommandTable     },
         { "character",      SEC_GAMEMASTER,     true,  NULL,                                           "", characterCommandTable},
         { "event",          SEC_GAMEMASTER,     false, NULL,                                           "", eventCommandTable    },
@@ -1085,6 +1009,24 @@ bool ChatHandler::ExecuteCommandInTable(ChatCommand *table, const char* text, co
 
         // must be available and have handler
         if (!table[i].Handler || !isAvailable(table[i]))
+            continue;
+
+        bool match = false;
+
+        if (strlen(table[i].Name) > strlen(cmd.c_str()))
+        {
+            for (uint32 j = 0; table[j].Name != NULL; ++j)
+            {
+                if (strcmp(table[j].Name,cmd.c_str()) != 0)
+                    continue;
+                else
+                {
+                    match = true;
+                    break;
+                }
+            }
+        }
+        if (match)
             continue;
 
         SetSentErrorMessage(false);
