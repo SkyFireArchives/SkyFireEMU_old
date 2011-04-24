@@ -26,6 +26,7 @@
 void AddScripts();
 void AddExampleScripts();
 void AddSpellScripts();
+void AddCommandScripts();
 void AddWorldScripts();
 void AddEasternKingdomsScripts();
 void AddKalimdorScripts();
