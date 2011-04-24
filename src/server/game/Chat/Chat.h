@@ -50,6 +50,7 @@ class ChatCommand
 class ChatHandler
 {
     public:
+        WorldSession * GetSession() { return m_session; }
         explicit ChatHandler(WorldSession* session) : m_session(session) {}
         explicit ChatHandler(Player* player) : m_session(player->GetSession()) {}
          ~ChatHandler() {}
@@ -123,6 +124,7 @@ class ChatHandler
 
         GameObject* GetNearbyGameObject();
         GameObject* GetObjectGlobalyWithGuidOrNearWithDbGuid(uint32 lowguid,uint32 entry);
+        void SetSentErrorMessage(bool val){ sentErrorMessage = val;};
 
     protected:
         explicit ChatHandler() : m_session(NULL) {}      // for CLI subclass
@@ -670,7 +672,6 @@ class ChatHandler
         void HandleCharacterDeletedListHelper(DeletedInfoList const& foundList);
         void HandleCharacterDeletedRestoreHelper(DeletedInfo const& delInfo);
 
-        void SetSentErrorMessage(bool val){ sentErrorMessage = val;};
     private:
         WorldSession * m_session;                           // != NULL for chat command call and NULL for CLI command
 

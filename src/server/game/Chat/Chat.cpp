@@ -1087,6 +1087,24 @@ bool ChatHandler::ExecuteCommandInTable(ChatCommand *table, const char* text, co
         if (!table[i].Handler || !isAvailable(table[i]))
             continue;
 
+        bool match = false;
+
+        if (strlen(table[i].Name) > strlen(cmd.c_str()))
+        {
+            for (uint32 j = 0; table[j].Name != NULL; ++j)
+            {
+                if (strcmp(table[j].Name,cmd.c_str()) != 0)
+                    continue;
+                else
+                {
+                    match = true;
+                    break;
+                }
+            }
+        }
+        if (match)
+            continue;
+
         SetSentErrorMessage(false);
         // table[i].Name == "" is special case: send original command to handler
         if ((table[i].Handler)(this, strlen(table[i].Name) != 0 ? text : oldtext))
