@@ -73,6 +73,26 @@ bool OldHandler(ChatHandler* chatHandler, const char* args)
     return (chatHandler->*F)(args);
 }
 
+// get number of commands in table
+static size_t getCommandTableSize(const ChatCommand* commands)
+{
+    if (!commands)
+        return 0;
+    size_t count = 0;
+    while (commands[count].Name != NULL)
+        count++;
+    return count;
+}
+
+// append source command table to target, return number of appended commands
+static size_t appendCommandTable(ChatCommand* target, const ChatCommand* source)
+{
+    const size_t count = getCommandTableSize(source);
+    if (count)
+        memcpy(target, source, count * sizeof(ChatCommand));
+    return count;
+}
+
 ChatCommand * ChatHandler::getCommandTable()
 {
     static ChatCommand accountSetCommandTable[] =
@@ -156,7 +176,7 @@ ChatCommand * ChatHandler::getCommandTable()
 
     static ChatCommand channelSetCommandTable[] =
     {
-        { "public",      SEC_ADMINISTRATOR,     true,  OldHandler<&ChatHandler::HandleChannelSetPublic,  "", NULL },
+        { "public",      SEC_ADMINISTRATOR,     true,  OldHandler<&ChatHandler::HandleChannelSetPublic>,  "", NULL },
         { NULL,          0,                     false, NULL,                                  "", NULL }
     };
 
@@ -193,9 +213,9 @@ ChatCommand * ChatHandler::getCommandTable()
 
     static ChatCommand debugCommandTable[] =
     {
-        { "setbit",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSet32Bit,                   "", NULL },
-        { "threat",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugThreatList,                 "", NULL },
-        { "hostil",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugHostileRefList,              "", NULL },
+        { "setbit",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSet32Bit>,                   "", NULL },
+        { "threat",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugThreatList>,                 "", NULL },
+        { "hostil",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugHostileRefList>,              "", NULL },
         { "anim",           SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleDebugAnimCommand>,                "", NULL },
         { "arena",          SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugArenaCommand>,               "", NULL },
         { "bg",             SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugBattlegroundCommand>,        "", NULL },
@@ -209,9 +229,9 @@ ChatCommand * ChatHandler::getCommandTable()
         { "setaurastate",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSetAuraStateCommand>,        "", NULL },
         { "setitemvalue",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSetItemValueCommand>,        "", NULL },
         { "setvalue",       SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSetValueCommand>,            "", NULL },
-        { "spawnvehicle",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSpawnVehicle,               "", NULL },
-        { "setvid",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSetVehicleId,               "", NULL },
-        { "entervehicle",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugEnterVehicle,               "", NULL },
+        { "spawnvehicle",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSpawnVehicle>,               "", NULL },
+        { "setvid",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugSetVehicleId>,               "", NULL },
+        { "entervehicle",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugEnterVehicle>,               "", NULL },
         { "uws",            SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugUpdateWorldStateCommand>,    "", NULL },
         { "update",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugUpdateCommand>,              "", NULL },
         { "itemexpire",     SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleDebugItemExpireCommand>,          "", NULL },
@@ -448,9 +468,9 @@ ChatCommand * ChatHandler::getCommandTable()
 
     static ChatCommand questCommandTable[] =
     {
-        { "add",            SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleQuestAdd,                   "", NULL },
-        { "complete",       SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleQuestComplete,              "", NULL },
-        { "remove",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleQuestRemove,                "", NULL },
+        { "add",            SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleQuestAdd>,                   "", NULL },
+        { "complete",       SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleQuestComplete>,              "", NULL },
+        { "remove",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleQuestRemove>,                "", NULL },
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
 
@@ -479,8 +499,8 @@ ChatCommand * ChatHandler::getCommandTable()
         { "areatrigger_teleport",        SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadAreaTriggerTeleportCommand>,     "", NULL },
         { "autobroadcast",               SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadAutobroadcastCommand>,           "", NULL },
         { "command",                     SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadCommandCommand>,                 "", NULL },
-        { "conditions",                  SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadConditions,                     "", NULL },
-        { "creature_text",               SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadCreatureText,                   "", NULL },
+        { "conditions",                  SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadConditions>,                     "", NULL },
+        { "creature_text",               SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadCreatureText>,                   "", NULL },
         { "creature_ai_scripts",         SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadEventAIScriptsCommand>,          "", NULL },
         { "creature_ai_summons",         SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadEventAISummonsCommand>,          "", NULL },
         { "creature_ai_texts",           SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadEventAITextsCommand>,            "", NULL },
@@ -539,7 +559,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "reserved_name",               SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadReservedNameCommand>,            "", NULL },
         { "reputation_reward_rate",      SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadReputationRewardRateCommand>,    "", NULL },
         { "reputation_spillover_template",SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadReputationRewardRateCommand>,    "", NULL },
-        { "smart_scripts",               SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadSmartScripts,                        "", NULL },
+        { "smart_scripts",               SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadSmartScripts>,                        "", NULL },
         { "skill_discovery_template",    SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadSkillDiscoveryTemplateCommand>,  "", NULL },
         { "skill_extra_item_template",   SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadSkillExtraItemTemplateCommand>,  "", NULL },
         { "skill_fishing_base_level",    SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadSkillFishingBaseLevelCommand>,   "", NULL },
@@ -698,7 +718,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "assign",         SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleGMTicketAssignToCommand>,         "", NULL },
         { "unassign",       SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleGMTicketUnAssignCommand>,         "", NULL },
         { "comment",        SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleGMTicketCommentCommand>,          "", NULL },
-        { "togglesystem",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleToggleGMTicketSystem,            "", NULL },
+        { "togglesystem",   SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleToggleGMTicketSystem>,            "", NULL },
         { "escalate",       SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleGMTicketEscalateCommand>,         "", NULL },
         { "response",       SEC_MODERATOR,      false, NULL,                                                "", ticketResponseCommandTable },
         { "complete",       SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleGMTicketCompleteCommand>,         "", NULL },
@@ -742,7 +762,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "channel",        SEC_ADMINISTRATOR,  true, NULL,                                            "", channelCommandTable  },
 
         { "pet",            SEC_GAMEMASTER,     false, NULL,                                           "", petCommandTable },
-        { "loadpath",       SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleReloadAllPaths,             "", NULL },
+        { "loadpath",       SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleReloadAllPaths>,             "", NULL },
         { "ticket",         SEC_MODERATOR,      false,  NULL,                                          "", ticketCommandTable },
         { "opcode",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleOpcodeTestCommand>,          "", NULL },
 
@@ -790,7 +810,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "additem",        SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleAddItemCommand>,             "", NULL },
         { "additemset",     SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleAddItemSetCommand>,          "", NULL },
         { "bank",           SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleBankCommand>,                "", NULL },
-        { "wchange",        SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleChangeWeather,              "", NULL },
+        { "wchange",        SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleChangeWeather>,              "", NULL },
         { "maxskill",       SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleMaxSkillCommand>,            "", NULL },
         { "setskill",       SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleSetSkillCommand>,            "", NULL },
         { "whispers",       SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleWhispersCommand>,            "", NULL },
@@ -822,9 +842,31 @@ ChatCommand * ChatHandler::getCommandTable()
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
 
+    // cache for commands, needed because some commands are loaded dynamically through ScriptMgr
+    // cache is never freed and will show as a memory leak in diagnostic tools
+    // can't use vector as vector storage is implementation-dependent, eg, there can be alignment gaps between elements
+    static ChatCommand* commandTableCache = 0;
+
     if (load_command_table)
     {
         load_command_table = false;
+
+        {
+            // count total number of top-level commands
+            size_t total = getCommandTableSize(commandTable);
+            std::vector<ChatCommand*> const& dynamic = sScriptMgr->GetChatCommands();
+            for (std::vector<ChatCommand*>::const_iterator it = dynamic.begin(); it != dynamic.end(); ++it)
+                total += getCommandTableSize(*it);
+            total += 1; // ending zero
+
+            // cache top-level commands
+            commandTableCache = (ChatCommand*)malloc(sizeof(ChatCommand) * total);
+            memset(commandTableCache, 0, sizeof(ChatCommand) * total);
+            ACE_ASSERT(commandTableCache);
+            size_t added = appendCommandTable(commandTableCache, commandTable);
+            for (std::vector<ChatCommand*>::const_iterator it = dynamic.begin(); it != dynamic.end(); ++it)
+                added += appendCommandTable(commandTableCache + added, *it);
+        }
 
         QueryResult result = WorldDatabase.Query("SELECT name,security,help FROM command");
         if (result)
@@ -834,13 +876,13 @@ ChatCommand * ChatHandler::getCommandTable()
                 Field *fields = result->Fetch();
                 std::string name = fields[0].GetString();
 
-                SetDataForCommandInTable(commandTable, name.c_str(), fields[1].GetUInt16(), fields[2].GetString(), name);
+                SetDataForCommandInTable(commandTableCache, name.c_str(), fields[1].GetUInt16(), fields[2].GetString(), name);
 
             } while (result->NextRow());
         }
     }
 
-    return commandTable;
+    return commandTableCache;
 }
 
 const char *ChatHandler::GetTrinityString(int32 entry) const
@@ -1007,15 +1049,6 @@ void ChatHandler::PSendSysMessage(const char *format, ...)
     SendSysMessage(str);
 }
 
-bool ChatHandler::ExecuteCommandInTables(std::vector<ChatCommand*> const& tables, const char* text, const std::string& fullcmd)
-{
-    for (std::vector<ChatCommand*>::const_iterator it = tables.begin(); it != tables.end(); ++it)
-        if (ExecuteCommandInTable((*it), text, fullcmd))
-            return true;
-
-    return false;
-}
-
 bool ChatHandler::ExecuteCommandInTable(ChatCommand *table, const char* text, const std::string& fullcmd)
 {
     char const* oldtext = text;
@@ -1173,14 +1206,10 @@ int ChatHandler::ParseCommands(const char* text)
 
     if (!ExecuteCommandInTable(getCommandTable(), text, fullcmd))
     {
-        std::vector<ChatCommand*> const& tables = sScriptMgr->GetChatCommands();
-        if (!ExecuteCommandInTables(tables, text, fullcmd))
-        {
-            if (m_session && m_session->GetSecurity() == SEC_PLAYER)
-                return 0;
-
-            SendSysMessage(LANG_NO_CMD);
-        }
+        if (m_session && m_session->GetSecurity() == SEC_PLAYER)
+            return 0;
+        
+        SendSysMessage(LANG_NO_CMD);
     }
     return 1;
 }
