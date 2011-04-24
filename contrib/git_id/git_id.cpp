@@ -58,8 +58,6 @@ char remotes[NUM_REMOTES][MAX_REMOTE] = {
 };
 
 char remote_branch[MAX_REMOTE] = "master";
-char rev_nr_file[MAX_PATH] = "src/shared/revision_nr.h";
-char rev_sql_file[MAX_PATH] = "src/shared/revision_sql.h";
 char sql_update_dir[MAX_PATH] = "sql/updates";
 char new_index_file[MAX_PATH] = ".git/git_id_index";
 
@@ -69,22 +67,10 @@ char databases[NUM_DATABASES][MAX_DB] = {
     "authserver"
 };
 
-char db_version_table[NUM_DATABASES][MAX_DB] = {
-    "character_db_version",
-    "db_version",
-    "realmd_db_version",
-};
-
 char db_sql_file[NUM_DATABASES][MAX_PATH] = {
     "sql/characters_database.sql",
     "sql/world_database.sql",
     "sql/auth_database.sql"
-};
-
-char db_sql_rev_field[NUM_DATABASES][MAX_PATH] = {
-    "REVISION_DB_CHARACTERS",
-    "REVISION_DB_MANGOS",
-    "REVISION_DB_REALMD"
 };
 
 bool allow_replace = false;
@@ -264,27 +250,6 @@ bool find_rev()
     return rev > 0;
 }
 
-std::string generateNrHeader(char const* rev_str)
-{
-    std::ostringstream newData;
-    newData << "#ifndef __REVISION_NR_H__" << std::endl;
-    newData << "#define __REVISION_NR_H__"  << std::endl;
-    newData << " #define REVISION_NR \"" << rev_str << "\"" << std::endl;
-    newData << "#endif // __REVISION_NR_H__" << std::endl;
-    return newData.str();
-}
-
-std::string generateSqlHeader()
-{
-    std::ostringstream newData;
-    newData << "#ifndef __REVISION_SQL_H__" << std::endl;
-    newData << "#define __REVISION_SQL_H__"  << std::endl;
-    for(int i = 0; i < NUM_DATABASES; ++i)
-        newData << " #define " << db_sql_rev_field[i] << " \"required_" << last_sql_update[i] << "\"" << std::endl;
-    newData << "#endif // __REVISION_SQL_H__" << std::endl;
-    return newData.str();
-}
-
 void system_switch_index(const char *cmd)
 {
     // do the command for the original index and then for the new index
@@ -296,55 +261,6 @@ void system_switch_index(const char *cmd)
     if(putenv(new_index_cmd) != 0) return;
     system(cmd);
     if(putenv(old_index_cmd) != 0) return;
-}
-
-bool write_rev_nr()
-{
-    printf("+ writing revision_nr.h\n");
-    char rev_str[256];
-    sprintf(rev_str, "%d", rev);
-    std::string header = generateNrHeader(rev_str);
-
-    char prefixed_file[MAX_PATH];
-    snprintf(prefixed_file, MAX_PATH, "%s%s", path_prefix, rev_nr_file);
-
-    if(FILE* OutputFile = fopen(prefixed_file, "wb"))
-    {
-        fprintf(OutputFile,"%s", header.c_str());
-        fclose(OutputFile);
-
-        // add the file to both indices, to be committed later
-        snprintf(cmd, MAX_CMD, "git add %s", prefixed_file);
-        system_switch_index(cmd);
-
-        return true;
-    }
-
-    return false;
-}
-
-bool write_rev_sql()
-{
-    if(new_sql_updates.empty()) return true;
-    printf("+ writing revision_sql.h\n");
-    std::string header = generateSqlHeader();
-
-    char prefixed_file[MAX_PATH];
-    snprintf(prefixed_file, MAX_PATH, "%s%s", path_prefix, rev_sql_file);
-
-    if(FILE* OutputFile = fopen(prefixed_file, "wb"))
-    {
-        fprintf(OutputFile,"%s", header.c_str());
-        fclose(OutputFile);
-
-        // add the file to both indices, to be committed later
-        snprintf(cmd, MAX_CMD, "git add %s", prefixed_file);
-        system_switch_index(cmd);
-
-        return true;
-    }
-
-    return false;
 }
 
 bool find_head_msg()
@@ -539,11 +455,6 @@ bool convert_sql_updates()
 
         std::ostringstream out_buff;
 
-        // add the update requirements
-        out_buff << "ALTER TABLE " << db_version_table[info.db_idx]
-                 << " CHANGE COLUMN required_" << last_sql_update[info.db_idx]
-                 << " required_" << new_name << " bit;\n\n";
-
         // skip the first one or two lines from the input
         // if it already contains update requirements
         if(fgets(buffer, MAX_BUF, fin))
@@ -710,14 +621,6 @@ bool change_sql_database()
         if(!fin) return false;
         FILE *fout = fopen( old_file, "w" );
         if(!fout) return false;
-
-        snprintf(dummy, MAX_CMD, "CREATE TABLE `%s` (\n", db_version_table[i]);
-        while(fgets(buffer, MAX_BUF, fin))
-        {
-            fputs(buffer, fout);
-            if(strncmp(buffer, dummy, MAX_BUF) == 0)
-                break;
-        }
 
         while(1)
         {
@@ -906,14 +809,12 @@ int main(int argc, char *argv[])
     if(do_sql)
         DO( find_sql_updates()          );
     DO( prepare_new_index()             );
-    DO( write_rev_nr()                  );
     if(do_sql)
     {
         DO( convert_sql_updates()       );
         if (generate_makefile)
             DO( generate_sql_makefile() );
         DO( change_sql_database()       );
-        DO( write_rev_sql()             );
     }
     DO( amend_commit()                  );
     DO( cleanup_new_index()             );
