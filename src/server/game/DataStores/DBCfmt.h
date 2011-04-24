@@ -71,7 +71,6 @@ const char GtRegenHPPerSptfmt[]="xf";
 const char GtRegenMPPerSptfmt[]="xf";
 const char GtSpellScalingfmt[]="nf";
 const char Holidaysfmt[]="nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-//const char Itemfmt[]="niiiiiii";
 const char ItemArmorQualityfmt[]="nfffffffi";
 const char ItemArmorShieldfmt[]="nifffffff";
 const char ItemArmorTotalfmt[]="niffff";
