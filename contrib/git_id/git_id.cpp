@@ -76,9 +76,9 @@ char db_version_table[NUM_DATABASES][MAX_DB] = {
 };
 
 char db_sql_file[NUM_DATABASES][MAX_PATH] = {
-    "sql/characters.sql",
-    "sql/worldserver.sql",
-    "sql/authserver.sql"
+    "sql/characters_database.sql",
+    "sql/world_database.sql",
+    "sql/auth_database.sql"
 };
 
 char db_sql_rev_field[NUM_DATABASES][MAX_PATH] = {
