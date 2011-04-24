@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -115,7 +115,6 @@ enum eEnums
 
     SPELL_FLAME_TSUNAMI_DMG_AURA                = 57491,    // periodic damage, npc has this aura
     SPELL_FLAME_TSUNAMI_BUFF                    = 60430,
-
 
     NPC_FLAME_TSUNAMI                           = 30616,    // for the flame waves
     NPC_LAVA_BLAZE                              = 30643,    // adds spawning from flame strike
@@ -284,7 +283,6 @@ public:
             if (me->HasAura(SPELL_TWILIGHT_REVENGE))
                 me->RemoveAurasDueToSpell(SPELL_TWILIGHT_REVENGE);
 
-            me->ResetLootMode();
             me->SetHomePosition(3246.57f, 551.263f, 58.6164f, 4.66003f);
 
             achievProgress = 0;
@@ -658,7 +656,7 @@ public:
             // Lavas Strike
             if (m_uiLavaStrikeTimer <= uiDiff)
             {
-                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                 {
                     CastLavaStrikeOnTarget(pTarget);
 
@@ -697,10 +695,6 @@ public:
             else
                 m_uiVesperonTimer -= uiDiff;
 
-            // Don't attack current target if he's not visible for us.
-            if(me->getVictim() && me->getVictim()->HasAura(57874, 0))
-                me->getThreatManager().modifyThreatPercent(me->getVictim(), -100);
-
             DoMeleeAttackIfReady();
 
             EnterEvadeIfOutOfCombatArea(uiDiff);
@@ -708,7 +702,6 @@ public:
     };
 
 };
-
 
 enum TeneText
 {
@@ -1056,7 +1049,7 @@ public:
             // shadow fissure
             if (m_uiShadowFissureTimer <= uiDiff)
             {
-                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(pTarget, RAID_MODE(SPELL_SHADOW_FISSURE, SPELL_SHADOW_FISSURE));
 
                 m_uiShadowFissureTimer = urand(15000,20000);
@@ -1083,16 +1076,11 @@ public:
             else
                 m_uiShadowBreathTimer -= uiDiff;
 
-            // Don't attack current target if he's not visible for us.
-            if(me->getVictim() && me->getVictim()->HasAura(57874, 0))
-                me->getThreatManager().modifyThreatPercent(me->getVictim(), -100);
-
             DoMeleeAttackIfReady();
         }
     };
 
 };
-
 
 /*######
 ## Mob Shadron
@@ -1157,7 +1145,7 @@ public:
             // shadow fissure
             if (m_uiShadowFissureTimer <= uiDiff)
             {
-                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(pTarget, RAID_MODE(SPELL_SHADOW_FISSURE, SPELL_SHADOW_FISSURE_H));
 
                 m_uiShadowFissureTimer = urand(15000,20000);
@@ -1193,16 +1181,11 @@ public:
             else
                 m_uiShadowBreathTimer -= uiDiff;
 
-            // Don't attack current target if he's not visible for us.
-            if (me->getVictim()->HasAura(57874, 0))
-                me->getThreatManager().modifyThreatPercent(me->getVictim(), -100);
-
             DoMeleeAttackIfReady();
         }
     };
 
 };
-
 
 /*######
 ## Mob Vesperon
@@ -1261,7 +1244,7 @@ public:
             // shadow fissure
             if (m_uiShadowFissureTimer <= uiDiff)
             {
-                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(pTarget, RAID_MODE(SPELL_SHADOW_FISSURE, SPELL_SHADOW_FISSURE_H));
 
                 m_uiShadowFissureTimer = urand(15000,20000);
@@ -1294,16 +1277,11 @@ public:
             else
                 m_uiShadowBreathTimer -= uiDiff;
 
-            // Don't attack current target if he's not visible for us.
-            if(me->getVictim() && me->getVictim()->HasAura(57874, 0))
-                me->getThreatManager().modifyThreatPercent(me->getVictim(), -100);
-
             DoMeleeAttackIfReady();
         }
     };
 
 };
-
 
 /*######
 ## Mob Acolyte of Shadron
@@ -1349,7 +1327,7 @@ public:
                         pTarget->AddAura(SPELL_GIFT_OF_TWILIGTH_SHA, pTarget);
                 }
             }
-            
+
             me->AddAura(SPELL_TWILIGHT_SHIFT_ENTER,me);
         }
 
@@ -1414,7 +1392,6 @@ public:
     };
 
 };
-
 
 /*######
 ## Mob Acolyte of Vesperon
@@ -1511,7 +1488,6 @@ public:
 
 };
 
-
 /*######
 ## Mob Twilight Eggs
 ######*/
@@ -1572,18 +1548,17 @@ public:
                 if(Tenebron)
                     (CAST_AI(mob_tenebron::mob_tenebronAI,Tenebron->AI()))->m_bHasPortalOpen = false;
                 SpawnWhelps();
+				m_uiHatchEggTimer = urand(40000,50000);
             }
             else
                 m_uiHatchEggTimer -= uiDiff;
         }
-
 
         void AttackStart(Unit* /*pWho*/) {}
         void MoveInLineOfSight(Unit* /*pWho*/) {}
     };
 
 };
-
 
 /*######
 ## Mob Flame Tsunami
@@ -1685,9 +1660,6 @@ public:
 
 };
 
-
-
-
 /*######
 ## Mob Twilight Whelps
 ######*/
@@ -1738,7 +1710,6 @@ public:
     };
 
 };
-
 
 void AddSC_boss_sartharion()
 {
