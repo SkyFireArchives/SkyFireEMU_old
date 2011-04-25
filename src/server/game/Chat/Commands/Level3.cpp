@@ -65,6 +65,7 @@
 #include "LFGMgr.h"
 #include "CreatureTextMgr.h"
 #include "SmartAI.h"
+#include "Group.h"
 
 //reload commands
 bool ChatHandler::HandleReloadAllCommand(const char*)

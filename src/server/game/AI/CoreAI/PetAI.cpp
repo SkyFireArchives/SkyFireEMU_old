@@ -32,6 +32,7 @@
 #include "Creature.h"
 #include "World.h"
 #include "Util.h"
+#include "Group.h"
 
 int PetAI::Permissible(const Creature *creature)
 {

@@ -51,6 +51,7 @@
 #include "CreatureGroups.h"
 #include "Vehicle.h"
 #include "SpellAuraEffects.h"
+#include "Group.h"
 // apply implementation of the singletons
 
 

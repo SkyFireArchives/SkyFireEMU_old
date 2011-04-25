@@ -38,6 +38,7 @@
 #include "Object.h"
 #include "Opcodes.h"
 #include "DisableMgr.h"
+#include "Group.h"
 
 void WorldSession::HandleBattlemasterHelloOpcode(WorldPacket & recv_data)
 {
