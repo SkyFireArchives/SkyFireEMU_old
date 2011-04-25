@@ -2704,7 +2704,95 @@ public:
     }
 };
 
+/*######
+## npc_flame_orb
+######*/
 
+enum eFlameOrb
+{
+    SPELL_FLAME_ORB_DAMAGE          = 86719,
+    FLAME_ORB_DISTANCE              = 120
+};
+
+class npc_flame_orb : public CreatureScript
+{
+public:
+    npc_flame_orb() : CreatureScript("npc_flame_orb") {}
+
+    struct npc_flame_orbAI : public ScriptedAI
+    {
+        npc_flame_orbAI(Creature *c) : ScriptedAI(c) 
+        {
+            x = me->GetPositionX();
+            y = me->GetPositionY();
+            z = me->GetOwner()->GetPositionZ()+2;
+            o = me->GetOrientation();
+            me->NearTeleportTo(x, y, z, o, true);
+            angle = me->GetOwner()->GetAngle(me);
+            newx = me->GetPositionX() + FLAME_ORB_DISTANCE/2 * cos(angle);
+            newy = me->GetPositionY() + FLAME_ORB_DISTANCE/2 * sin(angle);
+            CombatCheck = false;
+        }
+        
+        float x,y,z,o,newx,newy,angle;
+        bool CombatCheck;
+        uint32 uiDespawnTimer;
+        uint32 uiDespawnCheckTimer;
+        uint32 uiDamageTimer;
+
+        void EnterCombat(Unit* /*target*/)
+        {
+            me->GetMotionMaster()->MoveCharge(newx, newy, z, 1.14286f); // Normal speed
+            uiDespawnTimer = 15*IN_MILLISECONDS;
+            CombatCheck = true;
+        }
+        
+        void Reset()
+        {
+            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE|UNIT_FLAG_NON_ATTACKABLE);
+            me->AddUnitMovementFlag(MOVEMENTFLAG_FLYING);
+            me->SetReactState(REACT_PASSIVE);
+            if (CombatCheck == true)
+                uiDespawnTimer = 15*IN_MILLISECONDS;
+            else
+                uiDespawnTimer = 4*IN_MILLISECONDS;
+            uiDamageTimer = 1*IN_MILLISECONDS;
+            me->GetMotionMaster()->MovePoint(0, newx, newy, z);
+        }
+
+        void UpdateAI(const uint32 diff)
+        {
+            if (!me->isInCombat() && CombatCheck == false)
+            {
+                me->SetSpeed(MOVE_RUN, 2, true);
+                me->SetSpeed(MOVE_FLIGHT, 2, true);
+            }
+
+            if (uiDespawnTimer <= diff)
+            {
+                me->SetVisibility(VISIBILITY_OFF);
+                me->DisappearAndDie();
+            }
+            else
+                uiDespawnTimer -= diff;
+
+            if (uiDamageTimer <= diff)
+            {
+                if (Unit* target = me->SelectNearestTarget(20))
+                    DoCast(target, SPELL_FLAME_ORB_DAMAGE);
+
+                uiDamageTimer = 1*IN_MILLISECONDS;
+            }
+            else
+                uiDamageTimer -= diff;
+        }
+    };
+
+    CreatureAI *GetAI(Creature *creature) const
+    {
+        return new npc_flame_orbAI(creature);
+    }
+};
 
 void AddSC_npcs_special()
 {
@@ -2737,5 +2825,6 @@ void AddSC_npcs_special()
     new npc_tabard_vendor;
     new npc_experience;
     new npc_ring_of_frost;
+    new npc_flame_orb;
 }
 
