@@ -1987,8 +1987,8 @@ bool ChatHandler::HandleKickPlayerCommand(const char *args)
     if (HasLowerSecurity(target, 0))
         return false;
 
-    if (sWorld.getBoolConfig(CONFIG_SHOW_KICK_IN_WORLD))
-        sWorld.SendWorldText(LANG_COMMAND_KICKMESSAGE, playerName.c_str());
+    if (sWorld->getBoolConfig(CONFIG_SHOW_KICK_IN_WORLD))
+        sWorld->SendWorldText(LANG_COMMAND_KICKMESSAGE, playerName.c_str());
     else
         PSendSysMessage(LANG_COMMAND_KICKMESSAGE, playerName.c_str());
 
