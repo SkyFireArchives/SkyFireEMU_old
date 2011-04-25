@@ -2770,7 +2770,7 @@ public:
 
             if (uiDespawnTimer <= diff)
             {
-                // me->SetVisibility(VISIBILITY_OFF);
+                me->SetVisible(false);
                 me->DisappearAndDie();
             }
             else
