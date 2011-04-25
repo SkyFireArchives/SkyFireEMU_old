@@ -1825,7 +1825,7 @@ void Creature::SendAIReaction(AiReaction reactionType)
 
 void Creature::CallAssistance()
 {
-    if (!m_AlreadyCallAssistance && getVictim() && !isPet() && !isCharmed())
+    if (!m_AlreadyCallAssistance && getVictim() && !isCharmed())
     {
         SetNoCallAssistance(true);
 
