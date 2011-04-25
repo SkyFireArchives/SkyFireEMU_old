@@ -26,6 +26,7 @@
 
 #include "ArenaTeam.h"
 #include "World.h"
+#include "Group.h"
 
 void ArenaTeamMember::ModifyPersonalRating(Player* plr, int32 mod, uint32 slot)
 {

@@ -389,6 +389,13 @@ class DatabaseWorkerPool
             return new PreparedStatement(index);
         }
 
+        //void DirectExecute(PreparedStatement* stmt)
+        //{
+        //    T* t = GetFreeConnection();
+        //    t->Execute(stmt);
+        //    t->Unlock();
+        //}
+
         //! Apply escape string'ing for current collation. (utf8)
         void escape_string(std::string& str)
         {

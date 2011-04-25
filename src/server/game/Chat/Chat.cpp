@@ -582,6 +582,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "restart",        SEC_ADMINISTRATOR,  true,  NULL,                                           "", serverRestartCommandTable },
         { "shutdown",       SEC_ADMINISTRATOR,  true,  NULL,                                           "", serverShutdownCommandTable },
         { "set",            SEC_ADMINISTRATOR,  true,  NULL,                                           "", serverSetCommandTable },
+        { "togglequerylog", SEC_CONSOLE,        true,  OldHandler<&ChatHandler::HandleServerToggleQueryLogging>, "", NULL },
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
 

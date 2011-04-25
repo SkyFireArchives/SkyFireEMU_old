@@ -17,6 +17,7 @@
 
 #include "ScriptPCH.h"
 #include "icecrown_citadel.h"
+#include "Group.h"
 
 enum eScriptTexts
 {

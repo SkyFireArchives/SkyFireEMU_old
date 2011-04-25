@@ -21,7 +21,6 @@
  */
 
 #include "gamePCH.h"
-#include "Player.h"
 #include "Group.h"
 #include "GroupReference.h"
 

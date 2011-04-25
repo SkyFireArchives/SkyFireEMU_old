@@ -38,6 +38,7 @@
 #include "ObjectMgr.h"
 #include "Language.h"
 #include "WorldPacket.h"
+#include "Group.h"
 
 extern GridState* si_GridStates[];                          // debugging code, should be deleted some day
 
