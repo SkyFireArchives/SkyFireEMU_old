@@ -2587,12 +2587,14 @@ void Player::SetGameMaster(bool on)
     else
     {
         // restore phase
+        uint32 newPhase = 0;
         AuraEffectList const& phases = GetAuraEffectsByType(SPELL_AURA_PHASE);
         if (!phases.empty())
-            SetPhaseMask(phases.front()->GetMiscValue(), false);
-        else
-            SetPhaseMask(PHASEMASK_NORMAL, false);
+            for (AuraEffectList::const_iterator itr = phases.begin(); itr != phases.end(); ++itr)
+                newPhase |= (*itr)->GetMiscValue();
 
+        if (!newPhase)
+            newPhase = PHASEMASK_NORMAL;
 
         m_ExtraFlags &= ~ PLAYER_EXTRA_GM_ON;
         setFactionForRace(getRace());
