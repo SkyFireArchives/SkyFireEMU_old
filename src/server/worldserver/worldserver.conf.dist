@@ -1301,6 +1301,21 @@ ListenRange.Yell = 300
 #        Allowed the players to use commands
 #        Default: 1 (allow)
 #
+#    PreserveCustomChannels
+#        Description: Store custom chat channel settings like password, automatic ownership handout
+#                     or ban list in the database. Needs to be enabled to save custom 
+#                     world/trade/etc. channels that have automatic ownership handout disabled.
+#                     (.channel set ownership $channel off)
+#        Default:     0 - (Disabled, Blizzlike, Channel settings are lost if last person left)
+#                     1 - (Enabled)
+#
+#    PreserveCustomChannelDuration
+#        Description: Time (in days) that needs to pass before the customs chat channels get
+#                     cleaned up from the database. Only channels with ownership handout enabled
+#                     (default behavior) will be cleaned.
+#        Default:     14 - (Enabled, Clean channels that haven't been used for 14 days)
+#                     0  - (Disabled, Infinite channel storage)
+#
 ###############################################################################
 
 ChatFakeMessagePreventing = 0
@@ -1315,6 +1330,8 @@ ChatLevelReq.Channel = 1
 ChatLevelReq.Whisper = 1
 ChatLevelReq.Say = 1
 AllowPlayerCommands = 1
+PreserveCustomChannels = 1
+PreserveCustomChannelDuration = 14
 
 ###############################################################################
 # GAME MASTER SETTINGS

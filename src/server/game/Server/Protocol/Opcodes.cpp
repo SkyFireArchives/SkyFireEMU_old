@@ -187,7 +187,7 @@ void InitOpcodeTable()
     OPCODE( CMSG_CHANNEL_BAN,                             STATUS_LOGGEDIN, &WorldSession::HandleChannelBan                );
     OPCODE( CMSG_CHANNEL_UNBAN,                           STATUS_LOGGEDIN, &WorldSession::HandleChannelUnban              );
     OPCODE( CMSG_CHANNEL_ANNOUNCEMENTS,                   STATUS_LOGGEDIN, &WorldSession::HandleChannelAnnouncements      );
-    OPCODE( CMSG_CHANNEL_MODERATE,                        STATUS_LOGGEDIN, &WorldSession::HandleChannelModerate           );
+    OPCODE( CMSG_CHANNEL_MODERATE,                        STATUS_NEVER,    &WorldSession::Handle_NULL                     );
     OPCODE( SMSG_UPDATE_OBJECT,                           STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_DESTROY_OBJECT,                          STATUS_NEVER,    &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_USE_ITEM,                                STATUS_LOGGEDIN, &WorldSession::HandleUseItemOpcode             );
