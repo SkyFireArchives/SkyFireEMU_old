@@ -29,6 +29,8 @@ void AddSC_example_creature();
 void AddSC_example_escort();
 void AddSC_example_gossip_codebox();
 void AddSC_example_misc();
+//player scripts
+void AddSC_player_mage_scripts();
 void AddSC_example_commandscript();
 
 // spells
@@ -570,6 +572,7 @@ void AddSC_chat_log();
 void AddScripts()
 {
     AddExampleScripts();
+    AddPlayerScripts();
     AddSpellScripts();
     AddSC_SmartSCripts();
     AddCommandScripts();
@@ -592,6 +595,11 @@ void AddExampleScripts()
     AddSC_example_gossip_codebox();
     AddSC_example_misc();
     AddSC_example_commandscript();
+}
+
+void AddPlayerScripts()
+{
+    AddSC_player_mage_scripts();
 }
 
 void AddSpellScripts()

@@ -3201,7 +3201,10 @@ void Spell::cast(bool skipCheck)
     // now that we've done the basic check, now run the scripts
     // should be done before the spell is actually executed
     if (Player *playerCaster = m_caster->ToPlayer())
+    {
         sScriptMgr->OnPlayerSpellCast(playerCaster, this, skipCheck);
+        sScriptMgr->OnPlayerSpellCastWithProto(playerCaster, this->GetSpellInfo());
+    }
 
     SetExecutedCurrently(true);
 
