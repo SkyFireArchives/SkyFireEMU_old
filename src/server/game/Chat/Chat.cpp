@@ -155,14 +155,14 @@ ChatCommand * ChatHandler::getCommandTable()
 
     static ChatCommand channelSetCommandTable[] =
     {
-        { "public",      SEC_ADMINISTRATOR,     true,  OldHandler<&ChatHandler::HandleChannelSetPublic>,  "", NULL },
-        { NULL,          0,                     false, NULL,                                  "", NULL }
+        { "ownership",      SEC_ADMINISTRATOR,  false,  OldHandler<&ChatHandler::HandleChannelSetOwnership>, "", NULL },
+        { NULL,             0,                  false, NULL,                                  "", NULL }
     };
 
     static ChatCommand channelCommandTable[] =
     {
-        { "set",      SEC_ADMINISTRATOR,     true,  NULL,  "", channelSetCommandTable },
-        { NULL,       0,                     false, NULL,  "", NULL                   }
+        { "set",            SEC_ADMINISTRATOR,  true,  NULL,  "", channelSetCommandTable },
+        { NULL,             0,                  false, NULL,  "", NULL                   }
     };
 
     static ChatCommand eventCommandTable[] =

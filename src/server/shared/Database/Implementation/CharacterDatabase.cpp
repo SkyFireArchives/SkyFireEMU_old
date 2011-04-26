@@ -244,6 +244,13 @@ bool CharacterDatabaseConnection::Open()
     PrepareStatement(CHAR_CLEAN_GUILD_BANK_RIGHTS, "DELETE FROM guild_bank_right WHERE guildId NOT IN (SELECT guildid FROM guild)", true);
     PrepareStatement(CHAR_CLEAN_GUILD_BANK_ITEMS, "DELETE FROM guild_bank_item WHERE guildId NOT IN (SELECT guildid FROM guild)", true);
 
+    // Chat channel handling
+    PrepareStatement(CHAR_LOAD_CHANNEL, "SELECT m_announce, m_ownership, m_password, BannedList FROM channels WHERE m_name = ? AND m_team = ?");
+    PrepareStatement(CHAR_ADD_CHANNEL, "INSERT INTO channels (m_name, m_team, last_used) VALUES (? , ?, UNIX_TIMESTAMP())");
+    PrepareStatement(CHAR_SET_CHANNEL, "UPDATE channels SET m_announce = ?, m_ownership = ?, m_password = ?, BannedList = ?, last_used = UNIX_TIMESTAMP() WHERE m_name = ? AND m_team = ?");
+    PrepareStatement(CHAR_SET_CHANNEL_USAGE, "UPDATE channels SET last_used = UNIX_TIMESTAMP() WHERE m_name = ? AND m_team = ?");
+    PrepareStatement(CHAR_CLEAN_CHANNEL, "DELETE FROM channels WHERE m_ownership = 1 AND (last_used + ?) < UNIX_TIMESTAMP()");
+
     // Equipmentsets
     PrepareStatement(CHAR_SET_EQUIP_SET, "UPDATE character_equipmentsets SET name=?, iconname=?, item0=?, item1=?, item2=?, item3=?, item4=?, item5=?, item6=?, item7=?, item8=?, item9=?, item10=?, item11=?, item12=?, item13=?, item14=?, item15=?, item16=?, item17=?, item18=? WHERE guid=? AND setguid=? AND setindex=?", true);
     PrepareStatement(CHAR_ADD_EQUIP_SET, "INSERT INTO character_equipmentsets (guid,setguid,setindex,name,iconname,item0,item1,item2,item3,item4,item5,item6,item7,item8,item9,item10,item11,item12,item13,item14,item15,item16,item17,item18) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", true);
