@@ -41,7 +41,6 @@ endif()
 add_subdirectory(g3dlite)
 
 if(SERVERS)
-  add_subdirectory(sockets)
   add_subdirectory(gsoap)
 endif()
 
