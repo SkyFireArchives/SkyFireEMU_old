@@ -291,32 +291,65 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         return;
     }
 
-    switch(type)
+    std::string to, channel, msg;
+    bool ignoreChecks = false;
+    switch (type)
+    {
+        case CHAT_MSG_SAY:
+        case CHAT_MSG_EMOTE:
+        case CHAT_MSG_YELL:
+        case CHAT_MSG_PARTY:
+        case CHAT_MSG_PARTY_LEADER:
+        case CHAT_MSG_GUILD:
+        case CHAT_MSG_OFFICER:
+        case CHAT_MSG_RAID:
+        case CHAT_MSG_RAID_LEADER:
+        case CHAT_MSG_RAID_WARNING:
+        case CHAT_MSG_BATTLEGROUND:
+        case CHAT_MSG_BATTLEGROUND_LEADER:
+            recv_data >> msg;
+            break;
+        case CHAT_MSG_WHISPER:
+            recv_data >> to;
+            recv_data >> msg;
+            break;
+        case CHAT_MSG_CHANNEL:
+            recv_data >> channel;
+            recv_data >> msg;
+            break;
+        case CHAT_MSG_AFK:
+        case CHAT_MSG_DND:
+            recv_data >> msg;
+            ignoreChecks = true;
+            break;
+    }
+
+    if (!ignoreChecks)
+    {
+        if (msg.empty())
+            return;
+
+        if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
+            return;
+
+        if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
+            return;
+
+        if (msg.empty())
+            return;
+    }
+
+    switch (type)
     {
         case CHAT_MSG_SAY:
         case CHAT_MSG_EMOTE:
         case CHAT_MSG_YELL:
         {
-            std::string msg;
-            recv_data >> msg;
-
-            if (msg.empty())
-                return;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                return;
-
             if (_player->getLevel() < sWorld->getIntConfig(CONFIG_CHAT_SAY_LEVEL_REQ))
             {
                 SendNotification(GetTrinityString(LANG_SAY_REQ), sWorld->getIntConfig(CONFIG_CHAT_SAY_LEVEL_REQ));
                 return;
             }
-
-            if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
-                return;
-
-            if (msg.empty())
-                return;
 
             if (type == CHAT_MSG_SAY)
                 GetPlayer()->Say(msg, lang);
@@ -325,27 +358,13 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             else if (type == CHAT_MSG_YELL)
                 GetPlayer()->Yell(msg, lang);
         } break;
-
         case CHAT_MSG_WHISPER:
         {
-            std::string to, msg;
-            recv_data >> msg;
-            recv_data >> to;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                break;
-
             if (_player->getLevel() < sWorld->getIntConfig(CONFIG_CHAT_WHISPER_LEVEL_REQ))
             {
                 SendNotification(GetTrinityString(LANG_WHISPER_REQ), sWorld->getIntConfig(CONFIG_CHAT_WHISPER_LEVEL_REQ));
                 return;
             }
-
-            if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
-                return;
-
-            if (msg.empty())
-                break;
 
             if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
                 return;
@@ -384,25 +403,9 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
             GetPlayer()->Whisper(msg, lang, player->GetGUID());
         } break;
-
         case CHAT_MSG_PARTY:
         case CHAT_MSG_PARTY_LEADER:
         {
-            std::string msg;
-            recv_data >> msg;
-
-            if (msg.empty())
-                break;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                break;
-
-            if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
-                return;
-
-            if (msg.empty())
-                break;
-
             // if player is in battleground, he cannot say to battleground members by /p
             Group *group = GetPlayer()->GetOriginalGroup();
             if (!group)
@@ -421,24 +424,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             ChatHandler::FillMessageData(&data, this, type, lang, NULL, 0, msg.c_str(), NULL);
             group->BroadcastPacket(&data, false, group->GetMemberGroup(GetPlayer()->GetGUID()));
         } break;
-
         case CHAT_MSG_GUILD:
         {
-            std::string msg;
-            recv_data >> msg;
-
-            if (msg.empty())
-                break;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                break;
-
-            if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
-                return;
-
-            if (msg.empty())
-                break;
-
             if (GetPlayer()->GetGuildId())
             {
                 if (Guild *guild = sObjectMgr->GetGuildById(GetPlayer()->GetGuildId()))
@@ -453,21 +440,6 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         }
         case CHAT_MSG_OFFICER:
         {
-            std::string msg;
-            recv_data >> msg;
-
-            if (msg.empty())
-                break;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                break;
-
-            if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
-                return;
-
-            if (msg.empty())
-                break;
-
             if (GetPlayer()->GetGuildId())
             {
                 if (Guild *guild = sObjectMgr->GetGuildById(GetPlayer()->GetGuildId()))
@@ -481,21 +453,6 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         }
         case CHAT_MSG_RAID:
         {
-            std::string msg;
-            recv_data >> msg;
-
-            if (msg.empty())
-                break;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                break;
-
-            if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
-                return;
-
-            if (msg.empty())
-                break;
-
             // if player is in battleground, he cannot say to battleground members by /ra
             Group *group = GetPlayer()->GetOriginalGroup();
             if (!group)
@@ -513,21 +470,6 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         } break;
         case CHAT_MSG_RAID_LEADER:
         {
-            std::string msg;
-            recv_data >> msg;
-
-            if (msg.empty())
-                break;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                break;
-
-            if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
-                return;
-
-            if (msg.empty())
-                break;
-
             // if player is in battleground, he cannot say to battleground members by /ra
             Group *group = GetPlayer()->GetOriginalGroup();
             if (!group)
@@ -545,18 +487,6 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         } break;
         case CHAT_MSG_RAID_WARNING:
         {
-            std::string msg;
-            recv_data >> msg;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                break;
-
-            if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
-                return;
-
-            if (msg.empty())
-                break;
-
             Group *group = GetPlayer()->GetGroup();
             if (!group || !group->isRaidGroup() || !(group->IsLeader(GetPlayer()->GetGUID()) || group->IsAssistant(GetPlayer()->GetGUID())) || group->isBGGroup())
                 return;
@@ -568,21 +498,8 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             ChatHandler::FillMessageData(&data, this, CHAT_MSG_RAID_WARNING, lang, "", 0, msg.c_str(), NULL);
             group->BroadcastPacket(&data, false);
         } break;
-
         case CHAT_MSG_BATTLEGROUND:
         {
-            std::string msg;
-            recv_data >> msg;
-
-            if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
-                return;
-
-            if (msg.empty())
-                break;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                return;
-
             //battleground raid is always in Player->GetGroup(), never in GetOriginalGroup()
             Group *group = GetPlayer()->GetGroup();
             if (!group || !group->isBGGroup())
@@ -597,18 +514,6 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
         case CHAT_MSG_BATTLEGROUND_LEADER:
         {
-            std::string msg;
-            recv_data >> msg;
-
-            if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
-                return;
-
-            if (msg.empty())
-                break;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                return;
-
             // battleground raid is always in Player->GetGroup(), never in GetOriginalGroup()
             Group *group = GetPlayer()->GetGroup();
             if (!group || !group->isBGGroup() || !group->IsLeader(GetPlayer()->GetGUID()))
@@ -620,33 +525,13 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             ChatHandler::FillMessageData(&data, this, CHAT_MSG_BATTLEGROUND_LEADER, lang, "", 0, msg.c_str(), NULL);
             group->BroadcastPacket(&data, false);
         } break;
-
         case CHAT_MSG_CHANNEL:
         {
-            std::string channel, msg;
-            recv_data >> msg;
-            recv_data >> channel;
-
-            if (msg.empty())
-                break;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                break;
-
-            if (!processChatmessageFurtherAfterSecurityChecks(msg, lang))
-                return;
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                return;
-
             if (_player->getLevel() < sWorld->getIntConfig(CONFIG_CHAT_CHANNEL_LEVEL_REQ))
             {
                 SendNotification(GetTrinityString(LANG_CHANNEL_REQ), sWorld->getIntConfig(CONFIG_CHAT_CHANNEL_LEVEL_REQ));
                 return;
             }
-
-            if (msg.empty())
-                break;
 
             if (ChannelMgr* cMgr = channelMgr(_player->GetTeam()))
             {
