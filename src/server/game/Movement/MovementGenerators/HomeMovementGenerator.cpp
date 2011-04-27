@@ -39,6 +39,12 @@ HomeMovementGenerator<Creature>::Initialize(Creature & owner)
 }
 
 void
+HomeMovementGenerator<Creature>::Finalize(Creature & owner)
+{
+    owner.ClearUnitState(UNIT_STAT_EVADE);
+}
+
+void
 HomeMovementGenerator<Creature>::Reset(Creature &)
 {
 }
