@@ -815,7 +815,7 @@ void BattlegroundMgr::CreateInitialBattlegrounds()
 
         BattlegroundTypeId bgTypeID = BattlegroundTypeId(bgTypeID_);
 
-        IsArena = (bl->type == TYPE_ARENA);
+        IsArena = (bl->MapType == TYPE_ARENA);
         MinPlayersPerTeam = fields[1].GetUInt32();
         MaxPlayersPerTeam = fields[2].GetUInt32();
         MinLvl = fields[3].GetUInt32();
