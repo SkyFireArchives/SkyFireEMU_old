@@ -310,12 +310,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             recv_data >> msg;
             break;
         case CHAT_MSG_WHISPER:
-            recv_data >> to;
             recv_data >> msg;
+            recv_data >> to;
             break;
         case CHAT_MSG_CHANNEL:
-            recv_data >> channel;
             recv_data >> msg;
+            recv_data >> channel;
             break;
         case CHAT_MSG_AFK:
         case CHAT_MSG_DND:

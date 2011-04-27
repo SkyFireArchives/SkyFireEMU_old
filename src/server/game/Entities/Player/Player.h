@@ -32,7 +32,6 @@
 #include "GroupReference.h"
 #include "ItemPrototype.h"
 #include "Item.h"
-#include "LFG.h"
 #include "MapReference.h"
 #include "NPCHandler.h"
 #include "Pet.h"
