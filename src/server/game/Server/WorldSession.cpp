@@ -47,6 +47,47 @@
 #include "ScriptMgr.h"
 #include "Transport.h"
 
+bool MapSessionFilter::Process(WorldPacket * packet)
+{
+    OpcodeHandler const& opHandle = opcodeTable[packet->GetOpcode()];
+    //let's check if our opcode can be really processed in Map::Update()
+    if(opHandle.packetProcessing == PROCESS_INPLACE)
+        return true;
+
+    //we do not process thread-unsafe packets
+    if(opHandle.packetProcessing == PROCESS_THREADUNSAFE)
+        return false;
+
+    Player * plr = m_pSession->GetPlayer();
+    if(!plr)
+        return false;
+
+    //in Map::Update() we do not process packets where player is not in world!
+    return plr->IsInWorld();
+}
+
+//we should process ALL packets when player is not in world/logged in
+//OR packet handler is not thread-safe!
+bool WorldSessionFilter::Process(WorldPacket* packet)
+{
+    OpcodeHandler const& opHandle = opcodeTable[packet->GetOpcode()];
+    //check if packet handler is supposed to be safe
+    if(opHandle.packetProcessing == PROCESS_INPLACE)
+        return true;
+
+    //thread-unsafe packets should be processed in World::UpdateSessions()
+    if(opHandle.packetProcessing == PROCESS_THREADUNSAFE)
+        return true;
+
+    //no player attached? -> our client! ^^
+    Player * plr = m_pSession->GetPlayer();
+    if(!plr)
+        return true;
+
+    //lets process all packets for non-in-the-world player
+    return (plr->IsInWorld() == false);
+}
+
 /// WorldSession constructor
 WorldSession::WorldSession(uint32 id, WorldSocket *sock, AccountTypes sec, uint8 expansion, time_t mute_time, LocaleConstant locale, uint32 recruiter):
 m_muteTime(mute_time), m_timeOutTime(0), _player(NULL), m_Socket(sock),
@@ -176,7 +217,7 @@ void WorldSession::LogUnprocessedTail(WorldPacket *packet)
 }
 
 /// Update the WorldSession (triggered by World update)
-bool WorldSession::Update(uint32 diff)
+bool WorldSession::Update(uint32 diff, PacketFilter& updater)
 {
     /// Update Timeout timer.
     UpdateTimeOutTime(diff);
@@ -187,9 +228,9 @@ bool WorldSession::Update(uint32 diff)
         m_Socket->CloseSocket();
 
     ///- Retrieve packets from the receive queue and call the appropriate handlers
-    /// not proccess packets if socket already closed
+    /// not process packets if socket already closed
     WorldPacket* packet;
-    while (m_Socket && !m_Socket->IsClosed() && _recvQueue.next(packet))
+    while (m_Socket && !m_Socket->IsClosed() && _recvQueue.next(packet, updater))
     {
         /*#if 1
         sLog->outError("MOEP: %s (0x%.4X)",
@@ -310,21 +351,25 @@ bool WorldSession::Update(uint32 diff)
 
     ProcessQueryCallbacks();
 
-    time_t currTime = time(NULL);
-    ///- If necessary, log the player out
-    if (ShouldLogOut(currTime) && !m_playerLoading)
-        LogoutPlayer(true);
-
-    ///- Cleanup socket pointer if need
-    if (m_Socket && m_Socket->IsClosed())
+    //check if we are safe to proceed with logout
+    //logout procedure should happen only in World::UpdateSessions() method!!!
+    if (updater.ProcessLogout())
     {
-        m_Socket->RemoveReference();
-        m_Socket = NULL;
+        time_t currTime = time(NULL);
+        ///- If necessary, log the player out
+        if (ShouldLogOut(currTime) && !m_playerLoading)
+            LogoutPlayer(true);
+
+        ///- Cleanup socket pointer if need
+        if (m_Socket && m_Socket->IsClosed())
+        {
+            m_Socket->RemoveReference();
+            m_Socket = NULL;
+        }
+
+        if (!m_Socket)
+            return false;                                       //Will remove this session from the world session map
     }
-
-    if (!m_Socket)
-        return false;                                       //Will remove this session from the world session map
-
     return true;
 }
 
