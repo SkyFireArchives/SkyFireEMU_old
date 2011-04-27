@@ -847,7 +847,7 @@ void World::LoadConfigSettings(bool reload)
     {
         sLog->outError("StartConquestPoints (%i) must be in range 0..MaxConquestPoints(%u). Set to %u.",
             m_int_configs[CONFIG_START_CONQUEST_POINTS],m_int_configs[CONFIG_MAX_CONQUEST_POINTS],m_int_configs[CONFIG_MAX_CONQUEST_POINTS]);
-        m_int_configs[CONFIG_START_CONQUEST_POINTS] = m_int_configs[CONFIG_MAX_CONQUESTR_POINTS];
+        m_int_configs[CONFIG_START_CONQUEST_POINTS] = m_int_configs[CONFIG_MAX_CONQUEST_POINTS];
     }
 
     m_int_configs[CONFIG_MAX_JUSTICE_POINTS] = sConfig->GetIntDefault("MaxJusticePoints", 4000);
