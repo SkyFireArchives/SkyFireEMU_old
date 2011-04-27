@@ -95,7 +95,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
         return;
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     uint32 charterid = GUILD_CHARTER;
@@ -614,7 +614,7 @@ void WorldSession::SendPetitionShowList(uint64 guid)
     }
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     WorldPacket data(SMSG_PETITION_SHOWLIST, 8+1+4*6);

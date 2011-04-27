@@ -96,7 +96,7 @@ void WaypointMovementGenerator<Creature>::InitTraveller(Creature &unit, const Wa
     if (unit.canFly())
         unit.SetByteFlag(UNIT_FIELD_BYTES_1, 3, 0x02);
 
-    unit.addUnitState(UNIT_STAT_ROAMING);
+    unit.AddUnitState(UNIT_STAT_ROAMING);
 }
 
 template<>
@@ -149,7 +149,7 @@ WaypointMovementGenerator<Creature>::Update(Creature &unit, const uint32 &diff)
 
     // Waypoint movement can be switched on/off
     // This is quite handy for escort quests and other stuff
-    if (unit.hasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED | UNIT_STAT_DISTRACTED))
+    if (unit.HasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED | UNIT_STAT_DISTRACTED))
         return true;
 
     // Clear the generator if the path doesn't exist
@@ -211,7 +211,7 @@ WaypointMovementGenerator<Creature>::Update(Creature &unit, const uint32 &diff)
             i_destinationHolder.ResetTravelTime();
             MovementInform(unit);
             unit.UpdateWaypointID(i_currentNode);
-            unit.clearUnitState(UNIT_STAT_ROAMING);
+            unit.ClearUnitState(UNIT_STAT_ROAMING);
             unit.Relocate(node->x, node->y, node->z);
         }
     }
@@ -254,7 +254,7 @@ uint32 FlightPathMovementGenerator::GetPathAtMapEnd() const
 void FlightPathMovementGenerator::Initialize(Player &player)
 {
     player.getHostileRefManager().setOnlineOfflineState(false);
-    player.addUnitState(UNIT_STAT_IN_FLIGHT);
+    player.AddUnitState(UNIT_STAT_IN_FLIGHT);
     player.SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE | UNIT_FLAG_TAXI_FLIGHT);
     Traveller<Player> traveller(player);
     // do not send movement, it was sent already
@@ -266,7 +266,7 @@ void FlightPathMovementGenerator::Initialize(Player &player)
 
 void FlightPathMovementGenerator::Finalize(Player & player)
 {
-    player.clearUnitState(UNIT_STAT_IN_FLIGHT);
+    player.ClearUnitState(UNIT_STAT_IN_FLIGHT);
 
     float x = 0;
     float y = 0;
