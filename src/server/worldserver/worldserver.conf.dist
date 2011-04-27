@@ -781,25 +781,25 @@ ChatLogTimestamp = 0
 #         (100 copper = 1 silver)
 #        Default: 0
 #
-#    MaxHonorPoints
-#        Max honor points that player can have.
-#        Default: 4000
-#
-#    StartHonorPoints
-#        Amount of honor that new players will start with
-#        Default: 0
-#
 #    MaxConquestPoints
-#        Max conquest points that player can have.
-#        Default: 4000
+#        Max conquest points that player can have, multiplied by 100.
+#        Default: 400000
 #
 #    StartConquestPoints
 #        Amount of conquest that new players will start with
 #        Default: 0
 #
+#    MaxHonorPoints
+#        Max honor points that player can have, multiplied by 100.
+#        Default: 400000
+#
+#    StartHonorPoints
+#        Amount of honor that new players will start with
+#        Default: 0
+#
 #    MaxJusticePoints
-#        Max justice points that player can have.
-#        Default: 4000
+#        Max justice points that player can have, multiplied by 100.
+#        Default: 400000
 #
 #    StartJusticePoints
 #        Amount of justice points that new players will start with
@@ -1016,11 +1016,11 @@ MinDualSpecLevel = 30
 StartPlayerLevel = 1
 StartHeroicPlayerLevel = 55
 StartPlayerMoney = 0
-MaxHonorPoints = 4000
-StartHonorPoints = 0
-MaxConquestPoints = 4000
+MaxConquestPoints = 400000
 StartConquestPoints = 0
-MaxJusticePoints = 4000
+MaxHonorPoints = 400000
+StartHonorPoints = 0
+MaxJusticePoints = 400000
 StartJusticePoints = 0
 RecruitAFriend.MaxLevel = 60
 RecruitAFriend.MaxDifference = 3
