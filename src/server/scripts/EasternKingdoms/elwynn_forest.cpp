@@ -172,8 +172,8 @@ public:
 
         void EnterCombat(Unit * who)
         {
-            if (!me->hasUnitState(UNIT_STAT_ROOT))
-                me->addUnitState(UNIT_STAT_ROOT);
+            if (!me->HasUnitState(UNIT_STAT_ROOT))
+                me->AddUnitState(UNIT_STAT_ROOT);
         }
 
         void SetData(uint32 type, uint32 data)
@@ -311,8 +311,8 @@ public:
             
             if (uiCombatTimer <= diff)
             {
-                if (me->hasUnitState(UNIT_STAT_ROOT))
-                    me->clearUnitState(UNIT_STAT_ROOT);
+                if (me->HasUnitState(UNIT_STAT_ROOT))
+                    me->ClearUnitState(UNIT_STAT_ROOT);
 
                 uiCombatTimer = 500;
             }else uiCombatTimer -= diff;
@@ -345,13 +345,13 @@ public:
         void Reset()
         {
             if (!me->HasAura(SPELL_FORTITUDE))
-                if (!me->hasUnitState(UNIT_STAT_CASTING))
+                if (!me->HasUnitState(UNIT_STAT_CASTING))
                     DoCast(me, SPELL_FORTITUDE);
         }
 
         void UpdateAI(const uint32 diff)
         {
-            if (me->hasUnitState(UNIT_STAT_CASTING) && me->isMoving())
+            if (me->HasUnitState(UNIT_STAT_CASTING) && me->isMoving())
                 me->StopMoving();
 
             if (!UpdateVictim())

@@ -32,7 +32,6 @@
 #include "GroupReference.h"
 #include "ItemPrototype.h"
 #include "Item.h"
-#include "LFG.h"
 #include "MapReference.h"
 #include "NPCHandler.h"
 #include "Pet.h"
@@ -1747,7 +1746,7 @@ class Player : public Unit, public GridObject<Player>
         void SetContestedPvPTimer(uint32 newTime) {m_contestedPvPTimer = newTime;}
         void ResetContestedPvP()
         {
-            clearUnitState(UNIT_STAT_ATTACK_PLAYER);
+            ClearUnitState(UNIT_STAT_ATTACK_PLAYER);
             RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_CONTESTED_PVP);
             m_contestedPvPTimer = 0;
         }

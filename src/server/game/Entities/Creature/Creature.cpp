@@ -1520,7 +1520,7 @@ void Creature::setDeathState(DeathState s)
         if (GetCreatureInfo()->InhabitType & INHABIT_WATER)
             AddUnitMovementFlag(MOVEMENTFLAG_SWIMMING);
         SetUInt32Value(UNIT_NPC_FLAGS, cinfo->npcflag);
-        clearUnitState(UNIT_STAT_ALL_STATE);
+        ClearUnitState(UNIT_STAT_ALL_STATE);
         SetMeleeDamageSchool(SpellSchools(cinfo->dmgschool));
         LoadCreaturesAddon(true);
         Motion_Initialize();
@@ -1583,7 +1583,7 @@ void Creature::Respawn(bool force)
         {
             setDeathState(JUST_DIED);
             i_motionMaster.Clear();
-            clearUnitState(UNIT_STAT_ALL_STATE);
+            ClearUnitState(UNIT_STAT_ALL_STATE);
             LoadCreaturesAddon(true);
         }
         else
@@ -1933,7 +1933,7 @@ bool Creature::_IsTargetAcceptable(const Unit *target) const
     // if the target cannot be attacked, the target is not acceptable
     if (IsFriendlyTo(target)
         || !target->isAttackableByAOE()
-        || target->hasUnitState(UNIT_STAT_DIED)
+        || target->HasUnitState(UNIT_STAT_DIED)
         || (m_vehicle && (IsOnVehicle(target) || m_vehicle->GetBase()->IsOnVehicle(target))))
         return false;
 
@@ -2238,12 +2238,12 @@ void Creature::AllLootRemovedFromCorpse()
     }
 }
 
-uint8 Creature::getLevelForTarget(Unit const* target) const
+uint8 Creature::getLevelForTarget(WorldObject const* target) const
 {
-    if (!isWorldBoss())
+    if (!isWorldBoss() || !target->ToUnit())
         return Unit::getLevelForTarget(target);
 
-    uint16 level = target->getLevel() + sWorld->getIntConfig(CONFIG_WORLD_BOSS_LEVEL_DIFF);
+    uint16 level = target->ToUnit()->getLevel() + sWorld->getIntConfig(CONFIG_WORLD_BOSS_LEVEL_DIFF);
     if (level < 1)
         return 1;
     if (level > 255)

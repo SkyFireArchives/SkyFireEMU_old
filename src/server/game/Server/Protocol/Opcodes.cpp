@@ -1198,7 +1198,7 @@ void InitOpcodeTable()
     OPCODE( SMSG_BATTLEGROUND_INFO_THROTTLED,             STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_PLAYER_VEHICLE_DATA,                     STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_PLAYER_VEHICLE_ENTER,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleEnterPlayerVehicle        );
-    OPCODE( CMSG_EJECT_PASSENGER,                         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleEjectPasenger             );
+    OPCODE( CMSG_EJECT_PASSENGER,                         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleEjectPassenger             );
     OPCODE( SMSG_PET_GUIDS,                               STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_CLIENTCACHE_VERSION,                     STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_ITEM_REFUND_INFO_RESPONSE,               STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );

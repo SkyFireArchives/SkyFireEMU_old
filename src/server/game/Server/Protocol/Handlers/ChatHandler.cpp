@@ -310,12 +310,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             recv_data >> msg;
             break;
         case CHAT_MSG_WHISPER:
-            recv_data >> to;
             recv_data >> msg;
+            recv_data >> to;
             break;
         case CHAT_MSG_CHANNEL:
-            recv_data >> channel;
             recv_data >> msg;
+            recv_data >> channel;
             break;
         case CHAT_MSG_AFK:
         case CHAT_MSG_DND:
@@ -365,9 +365,6 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
                 SendNotification(GetTrinityString(LANG_WHISPER_REQ), sWorld->getIntConfig(CONFIG_CHAT_WHISPER_LEVEL_REQ));
                 return;
             }
-
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                return;
 
             if (!normalizePlayerName(to))
             {
@@ -552,7 +549,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandleEmoteOpcode(WorldPacket & recv_data)
 {
-    if (!GetPlayer()->isAlive() || GetPlayer()->hasUnitState(UNIT_STAT_DIED)) 
+    if (!GetPlayer()->isAlive() || GetPlayer()->HasUnitState(UNIT_STAT_DIED)) 
         return;
 
     uint32 emote;
@@ -629,7 +626,7 @@ void WorldSession::HandleTextEmoteOpcode(WorldPacket & recv_data)
             break;
         default:
             // Only allow text-emotes for "dead" entities (feign death included)
-            if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+            if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
                 break;
             GetPlayer()->SetEmoteState(emote_anim);
             break;

@@ -1177,7 +1177,7 @@ void AuraEffect::Update(uint32 diff, Unit *caster)
             std::list<AuraApplication*> effectApplications;
             GetApplicationList(effectApplications);
             // tick on targets of effects
-            if (!caster || !caster->hasUnitState(UNIT_STAT_ISOLATED))
+            if (!caster || !caster->HasUnitState(UNIT_STAT_ISOLATED))
             {
                 for (std::list<AuraApplication*>::iterator apptItr = effectApplications.begin(); apptItr != effectApplications.end(); ++apptItr)
                     PeriodicTick(*apptItr, caster);
@@ -1365,7 +1365,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             if (!target->isAlive())
                 return;
 
-            if (target->hasUnitState(UNIT_STAT_ISOLATED))
+            if (target->HasUnitState(UNIT_STAT_ISOLATED))
             {
                 SendTickImmune(target, caster);
                 return;
@@ -1526,7 +1526,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             if (!target->isAlive())
                 return;
 
-            if (target->hasUnitState(UNIT_STAT_ISOLATED))
+            if (target->HasUnitState(UNIT_STAT_ISOLATED))
             {
                 SendTickImmune(target, caster);
                 return;
@@ -1608,7 +1608,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             if (!target->isAlive())
                 return;
 
-            if (target->hasUnitState(UNIT_STAT_ISOLATED))
+            if (target->HasUnitState(UNIT_STAT_ISOLATED))
             {
                 SendTickImmune(target, caster);
                 return;
@@ -1640,7 +1640,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             if (!target->isAlive())
                 return;
 
-            if (target->hasUnitState(UNIT_STAT_ISOLATED))
+            if (target->HasUnitState(UNIT_STAT_ISOLATED))
             {
                 SendTickImmune(target, caster);
                 return;
@@ -1747,7 +1747,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             if (!target->isAlive())
                 return;
 
-            if (target->hasUnitState(UNIT_STAT_ISOLATED))
+            if (target->HasUnitState(UNIT_STAT_ISOLATED))
             {
                 SendTickImmune(target, caster);
                 return;
@@ -1856,7 +1856,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             if (!target->isAlive())
                 return;
 
-            if (target->hasUnitState(UNIT_STAT_ISOLATED))
+            if (target->HasUnitState(UNIT_STAT_ISOLATED))
             {
                 SendTickImmune(target, caster);
                 return;
@@ -1896,7 +1896,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             if (!target->isAlive())
                 return;
 
-            if (target->hasUnitState(UNIT_STAT_ISOLATED))
+            if (target->HasUnitState(UNIT_STAT_ISOLATED))
             {
                 SendTickImmune(target, caster);
                 return;
@@ -1932,7 +1932,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             if (!target->isAlive())
                 return;
 
-            if (target->hasUnitState(UNIT_STAT_ISOLATED))
+            if (target->HasUnitState(UNIT_STAT_ISOLATED))
             {
                 SendTickImmune(target, caster);
                 return;
@@ -3601,7 +3601,7 @@ void AuraEffect::HandleFeignDeath(AuraApplication const *aurApp, uint8 mode, boo
         target->VisitNearbyObject(target->GetMap()->GetVisibilityRange(), searcher);
         for (UnitList::iterator iter = targets.begin(); iter != targets.end(); ++iter)
         {
-            if (!(*iter)->hasUnitState(UNIT_STAT_CASTING))
+            if (!(*iter)->HasUnitState(UNIT_STAT_CASTING))
                 continue;
 
             for (uint32 i = CURRENT_FIRST_NON_MELEE_SPELL; i < CURRENT_MAX_SPELL; i++)
@@ -3627,14 +3627,14 @@ void AuraEffect::HandleFeignDeath(AuraApplication const *aurApp, uint8 mode, boo
                                                             // blizz like 2.0.x
         target->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_DEAD);
 
-        target->addUnitState(UNIT_STAT_DIED);
+        target->AddUnitState(UNIT_STAT_DIED);
     }
     else
     {
         target->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_29);
         target->RemoveFlag(UNIT_FIELD_FLAGS_2, UNIT_FLAG2_FEIGN_DEATH);
         target->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_DEAD);
-        target->clearUnitState(UNIT_STAT_DIED);
+        target->ClearUnitState(UNIT_STAT_DIED);
     }
 }
 
@@ -4703,7 +4703,7 @@ void AuraEffect::HandleAuraModSchoolImmunity(AuraApplication const *aurApp, uint
     if (GetSpellProto()->Mechanic == MECHANIC_BANISH)
     {
         if (apply)
-            target->addUnitState(UNIT_STAT_ISOLATED);
+            target->AddUnitState(UNIT_STAT_ISOLATED);
         else
         {
             bool banishFound = false;
@@ -4715,7 +4715,7 @@ void AuraEffect::HandleAuraModSchoolImmunity(AuraApplication const *aurApp, uint
                     break;
                 }
             if (!banishFound)
-                target->clearUnitState(UNIT_STAT_ISOLATED);
+                target->ClearUnitState(UNIT_STAT_ISOLATED);
         }
     }
 }

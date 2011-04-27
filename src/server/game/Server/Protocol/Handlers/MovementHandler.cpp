@@ -642,7 +642,7 @@ void WorldSession::HandleEnterPlayerVehicle(WorldPacket &data)
     }
 }
 
-void WorldSession::HandleEjectPasenger(WorldPacket &data)
+void WorldSession::HandleEjectPassenger(WorldPacket &data)
 {
     if (_player->GetVehicleKit())
     {
