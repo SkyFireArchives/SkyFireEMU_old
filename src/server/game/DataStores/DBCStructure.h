@@ -1398,7 +1398,7 @@ struct ScalingStatValuesEntry
     //uint32 trash[24];                                     // 22-45
     //uint32 unk2;                                          // 46 unk, probably also Armor for level (flag 0x80000?)
     
-    uint32  getssdMultiplier(uint32 mask) const
+    uint32 getssdMultiplier(uint32 mask) const
     {
         if (mask & 0x4001F)
         {
@@ -1412,7 +1412,7 @@ struct ScalingStatValuesEntry
         return 0;
     }
 
-    uint32  getArmorMod(uint32 mask) const
+    uint32 getArmorMod(uint32 mask) const
     {
         if (mask & 0x00F001E0)
         {
