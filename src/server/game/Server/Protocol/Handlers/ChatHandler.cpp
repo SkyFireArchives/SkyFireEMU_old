@@ -366,9 +366,6 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
                 return;
             }
 
-            if (ChatHandler(this).ParseCommands(msg.c_str()) > 0)
-                return;
-
             if (!normalizePlayerName(to))
             {
                 SendPlayerNotFoundNotice(to);
