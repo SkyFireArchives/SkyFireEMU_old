@@ -780,8 +780,9 @@ bool Player::Create(uint32 guidlow, const std::string& name, uint8 race, uint8 c
     InitRunes();
 
     SetUInt32Value(PLAYER_FIELD_COINAGE, sWorld->getIntConfig(CONFIG_START_PLAYER_MONEY));
-	SetCurrency(CURRENCY_TYPE_HONOR_POINTS, sWorld->getIntConfig(CONFIG_START_HONOR_POINTS));
-	SetCurrency(CURRENCY_TYPE_JUSTICE_POINTS, sWorld->getIntConfig(CONFIG_START_JUSTICE_POINTS));
+    SetCurrency(CURRENCY_TYPE_HONOR_POINTS, sWorld->getIntConfig(CONFIG_START_HONOR_POINTS));
+    SetCurrency(CURRENCY_TYPE_CONQUEST_POINTS, sWorld->getIntConfig(CONFIG_START_CONQUEST_POINTS));
+    SetCurrency(CURRENCY_TYPE_JUSTICE_POINTS, sWorld->getIntConfig(CONFIG_START_JUSTICE_POINTS));
 
     // start with every map explored
     if (sWorld->getBoolConfig(CONFIG_START_ALL_EXPLORED))
@@ -10988,8 +10989,9 @@ uint32 Player::_GetCurrencyWeekCap(const CurrencyTypesEntry* currency) const
 	{
 	case CURRENCY_TYPE_CONQUEST_POINTS:
 		{
-			// TODO: implement
-			cap = 0;
+			int32 conquestcap = sWorld->getIntConfig(CONFIG_MAX_CONQUEST_POINTS) * PLAYER_CURRENCY_PRECISION;
+			if (conquestcap > 0)
+                cap = conquestcap;
 			break;
 		}
 	case CURRENCY_TYPE_HONOR_POINTS:
