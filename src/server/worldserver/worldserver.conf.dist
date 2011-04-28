@@ -138,10 +138,6 @@ EAIErrorLevel = 2
 #        Default: 1 (unload grids)
 #                 0 (do not unload grids)
 #
-#    SocketSelectTime
-#        Socket select time (in milliseconds)
-#        Default: 10000 (10 secs)
-#
 #    SocketTimeOutTime
 #        Time in milliseconds afer which a connection sitting idle on the character
 #        selection screen is disconnected.
@@ -264,7 +260,6 @@ PlayerLimit = 100
 SaveRespawnTimeImmediately = 1
 MaxOverspeedPings = 2
 GridUnload = 1
-SocketSelectTime = 10000
 SocketTimeOutTime = 900000
 SessionAddDelay = 10000
 GridCleanUpDelay = 300000
