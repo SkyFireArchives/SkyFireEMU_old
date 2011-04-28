@@ -264,12 +264,6 @@ SpellMgr::~SpellMgr()
 {
 }
 
-SpellMgr& SpellMgr::Instance()
-{
-    static SpellMgr spellMgr;
-    return spellMgr;
-}
-
 SpellScaling::SpellScaling(uint8 playerLevel_, const SpellEntry * spellEntry_)
 {
     playerLevel = playerLevel_;
