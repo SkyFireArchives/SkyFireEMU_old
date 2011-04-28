@@ -1201,7 +1201,7 @@ void GameEventMgr::GameEventSpawn(int16 event_id)
             // We use spawn coords to spawn
             if (!map->Instanceable() && map->IsLoaded(data->posX, data->posY))
             {
-                CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(data->id);
+                CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(data->id);
                 if (!ci)
                     continue;
                 
@@ -1373,7 +1373,7 @@ void GameEventMgr::ChangeEquipOrModel(int16 event_id, bool activate)
             CreatureData const* data2 = sObjectMgr->GetCreatureData(itr->first);
             if (data2 && activate)
             {
-                CreatureInfo const *cinfo = sObjectMgr->GetCreatureTemplate(data2->id);
+                CreatureInfo const *cinfo = ObjectMgr::GetCreatureTemplate(data2->id);
                 uint32 display_id = sObjectMgr->ChooseDisplayId(0,cinfo,data2);
                 CreatureModelInfo const *minfo = sObjectMgr->GetCreatureModelRandomGender(display_id);
                 if (minfo)

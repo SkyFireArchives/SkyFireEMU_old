@@ -160,7 +160,7 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket & recv_data)
     uint64 guid;
     recv_data >> guid;
 
-    CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(entry);
+    CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(entry);
     if (ci)
     {
 
@@ -224,7 +224,7 @@ void WorldSession::HandleGameObjectQueryOpcode(WorldPacket & recv_data)
     uint64 guid;
     recv_data >> guid;
 
-    const GameObjectInfo *info = sObjectMgr->GetGameObjectInfo(entryID);
+    const GameObjectInfo *info = ObjectMgr::GetGameObjectInfo(entryID);
     if (info)
     {
         std::string Name;

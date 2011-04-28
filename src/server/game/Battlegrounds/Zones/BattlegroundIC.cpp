@@ -906,7 +906,7 @@ Transport* BattlegroundIC::CreateTransport(uint32 goEntry,uint32 period)
 {
 	Transport* t = new Transport(period,0);
 
-	const GameObjectInfo* goinfo = sObjectMgr->GetGameObjectInfo(goEntry);
+	const GameObjectInfo* goinfo = ObjectMgr::GetGameObjectInfo(goEntry);
 
 	if (!goinfo)
 	{
