@@ -551,7 +551,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                 else if (m_spellInfo->SpellFamilyFlags[1] & 0x400000)
                 {
                     if (m_caster->GetTypeId() == TYPEID_UNIT && m_caster->ToCreature()->isPet())
-                   {
+                    {
                         // Get DoTs on target by owner (5% increase by dot)
                         damage += int32(CalculatePctN(unitTarget->GetDoTsByCaster(m_caster->GetOwnerGUID()), 5));
 
