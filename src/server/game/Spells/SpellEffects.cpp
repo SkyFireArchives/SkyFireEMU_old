@@ -1224,6 +1224,16 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     unitTarget->Kill(unitTarget);
                     return;
                 }
+                case 79751:                                 // Destroy Mechano-Tank
+                {
+                    if(m_caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+                    if(unitTarget->GetEntry() != 42224)
+                        return;
+
+                    m_caster->Kill(unitTarget, false);
+                    m_caster->ToPlayer()->KilledMonsterCredit(unitTarget->GetEntry(), unitTarget->GetGUID());
+                }
                 case 93072:                                 // Get Our Boys Back
                 {
                     if(Creature* Injured = m_caster->FindNearestCreature(50047, 3.0f, true))
