@@ -35,6 +35,8 @@
 // -------------------
 void CreatureEventAIMgr::LoadCreatureEventAI_Texts()
 {
+    uint32 oldMSTime = getMSTime();
+
     // Drop Existing Text Map, only done once and we are ready to add data from multiple sources.
     m_CreatureEventAI_TextMap.clear();
 
