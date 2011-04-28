@@ -1224,6 +1224,15 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     unitTarget->Kill(unitTarget);
                     return;
                 }
+                case 93072:                                 // Get Our Boys Back
+                {
+                    if(Creature* Injured = m_caster->FindNearestCreature(50047, 3.0f, true))
+                    {
+                        Injured->SetCreatorGUID(m_caster->GetGUID());
+                        Injured->CastSpell(Injured, 93097, true);
+                        return;
+                    }
+                }
             }
 
             break;
