@@ -696,7 +696,8 @@ public:
 
 void AddSC_elwynn_forest()
 {
-    new npc_henze_faulk();
+    new npc_injured_soldier();
+	new npc_henze_faulk();
     new npc_stormwind_infantry();
     new npc_brother_paxton();
     new npc_blackrock_battle_worg();
