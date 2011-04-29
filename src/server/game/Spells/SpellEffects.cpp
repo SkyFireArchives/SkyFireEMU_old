@@ -1268,6 +1268,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             if (m_spellInfo->SpellFamilyFlags[2] & 0x20)
                 m_caster->CastSpell(m_caster,51755,true);
             break;
+		
         case SPELLFAMILY_PRIEST:
         {
             switch (m_spellInfo->Id)
