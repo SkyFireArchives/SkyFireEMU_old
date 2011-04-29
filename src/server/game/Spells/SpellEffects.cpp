@@ -1269,34 +1269,6 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                 m_caster->CastSpell(m_caster,51755,true);
             break;
 		
-        case SPELLFAMILY_MAGE:
-        {
-           switch (m_spellInfo->Id)
-           {
-               case 1459: // Arcane Brilliance
-               {
-                   if (m_caster->GetTypeId() == TYPEID_PLAYER)
-                   {
-                       std::list<Unit*> PartyMembers;
-                       m_caster->GetPartyMembers(PartyMembers);
-                       bool Continue = false;
-                       uint32 player = 0;
-                       for (std::list<Unit*>::iterator itr = PartyMembers.begin(); itr != PartyMembers.end(); ++itr) // If caster is in party with a player
-                       {
-                           ++player;
-                           if (Continue == false && player > 1)
-                               Continue = true;
-                       }
-                       if (Continue == true)
-                           m_caster->CastSpell(unitTarget, 79058, true); // Arcane Brilliance (For all)
-                       else
-                           m_caster->CastSpell(unitTarget, 79057, true); // Arcane Brilliance (Only for target)
-                   }
-                   break;
-               }
-           }
-           break;
-        }
         case SPELLFAMILY_PRIEST:
         {
             switch (m_spellInfo->Id)
