@@ -3828,6 +3828,11 @@ void SpellMgr::LoadSpellCustomAttr()
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_EXCLUDE_SELF;
             count++;
             break;
+		case 64844: // Divine Hymn 
+        case 64904: // Hymn of Hope
+            spellInfo->AttributesEx &= ~SPELL_ATTR1_NEGATIVE;
+            ++count;
+            break;
         case 44978: case 45001: case 45002:     // Wild Magic
         case 45004: case 45006: case 45010:     // Wild Magic
         case 31347: // Doom
