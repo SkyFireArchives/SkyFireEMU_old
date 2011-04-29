@@ -10946,6 +10946,8 @@ uint32 Unit::SpellHealingBonus(Unit *pVictim, SpellEntry const *spellProto, uint
                 scripted = true;
                 break;
         }
+		if (spellProto->Effect[i] == SPELL_EFFECT_HEALTH_LEECH)
+            scripted = true;
     }
 
     // Check for table values
