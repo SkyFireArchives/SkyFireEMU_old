@@ -183,17 +183,17 @@ ScriptMgr::~ScriptMgr()
 
 void ScriptMgr::Initialize()
 {
+    uint32 oldMSTime = getMSTime();
+
     LoadDatabase();
 
     sLog->outString("Loading C++ scripts");
-    
-    
-    sLog->outString();
 
     FillSpellSummary();
     AddScripts();
 
-    sLog->outString(">> Loaded %u C++ scripts", GetScriptCount());
+    sLog->outString(">> Loaded %u C++ scripts in %u ms", GetScriptCount(), GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString();
 }
 
 void ScriptMgr::LoadDatabase()

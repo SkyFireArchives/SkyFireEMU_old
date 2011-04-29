@@ -1268,6 +1268,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             if (m_spellInfo->SpellFamilyFlags[2] & 0x20)
                 m_caster->CastSpell(m_caster,51755,true);
             break;
+		
         case SPELLFAMILY_PRIEST:
             switch (m_spellInfo->Id)
             {
@@ -5320,7 +5321,7 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                             if (Creature *oldContainer = dynamic_cast<Creature*>(seat->GetPassenger(1)))
                                 oldContainer->DisappearAndDie();
                             // TODO: a hack, range = 11, should after some time cast, otherwise too far
-                            unitTarget->CastSpell(seat->GetBase(), 62496, true);
+                            m_caster->CastSpell(seat->GetBase(), 62496, true);
                             unitTarget->EnterVehicle(seat, 1);
                         }
                     }

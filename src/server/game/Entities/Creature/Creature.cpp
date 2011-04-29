@@ -460,22 +460,25 @@ void Creature::Update(uint32 diff)
             break;
         case DEAD:
         {
-            if (m_respawnTime <= time(NULL))
+            time_t now = time(NULL);
+            if (m_respawnTime <= now)
             {
-                if (!GetLinkedCreatureRespawnTime()) // Can respawn
+                bool allowed = IsAIEnabled ? AI()->CanRespawn() : true;     // First check if there are any scripts that object to us respawning
+                if (!allowed)                                               // Will be rechecked on next Update call
+                    break;
+
+                uint64 dbtableHighGuid = MAKE_NEW_GUID(m_DBTableGuid, GetEntry(), HIGHGUID_UNIT);
+                time_t linkedRespawntime = sObjectMgr->GetLinkedRespawnTime(dbtableHighGuid, GetMap()->GetInstanceId());
+                if (!linkedRespawntime)             // Can respawn
                     Respawn();
                 else // the master is dead
                 {
-                    if (uint32 targetGuid = sObjectMgr->GetLinkedRespawnGuid(m_DBTableGuid))
-                    {
-                        if (targetGuid == m_DBTableGuid) // if linking self, never respawn (check delayed to next day)
-                            SetRespawnTime(DAY);
-                        else
-                            m_respawnTime = (time(NULL)>GetLinkedCreatureRespawnTime()? time(NULL):GetLinkedCreatureRespawnTime())+urand(5,MINUTE); // else copy time from master and add a little
-                        SaveRespawnTime(); // also save to DB immediately
-                    }
+                    uint64 targetGuid = sObjectMgr->GetLinkedRespawnGuid(GetGUID());
+                    if (targetGuid == GetGUID()) // if linking self, never respawn (check delayed to next day)
+                        SetRespawnTime(DAY);
                     else
-                        Respawn();
+                        m_respawnTime = (now > linkedRespawntime ? now : linkedRespawntime)+urand(5,MINUTE); // else copy time from master and add a little
+                    SaveRespawnTime(); // also save to DB immediately
                 }
             }
             break;
@@ -2363,40 +2366,6 @@ const char* Creature::GetNameForLocaleIdx(LocaleConstant loc_idx) const
     }
 
     return GetName();
-}
-
-const CreatureData* Creature::GetLinkedRespawnCreatureData() const
-{
-    if (!m_DBTableGuid) // only hard-spawned creatures from DB can have a linked master
-        return NULL;
-
-    if (uint32 targetGuid = sObjectMgr->GetLinkedRespawnGuid(m_DBTableGuid))
-        return sObjectMgr->GetCreatureData(targetGuid);
-
-    return NULL;
-}
-
-// returns master's remaining respawn time if any
-time_t Creature::GetLinkedCreatureRespawnTime() const
-{
-    if (!m_DBTableGuid) // only hard-spawned creatures from DB can have a linked master
-        return 0;
-
-    if (uint32 targetGuid = sObjectMgr->GetLinkedRespawnGuid(m_DBTableGuid))
-    {
-        Map* targetMap = NULL;
-        if (const CreatureData* data = sObjectMgr->GetCreatureData(targetGuid))
-        {
-            if (data->mapid == GetMapId())   // look up on the same map
-                targetMap = GetMap();
-            else                            // it shouldn't be instanceable map here
-                targetMap = sMapMgr->FindMap(data->mapid);
-        }
-        if (targetMap)
-            return sObjectMgr->GetCreatureRespawnTime(targetGuid,targetMap->GetInstanceId());
-    }
-
-    return 0;
 }
 
 void Creature::FarTeleportTo(Map* map, float X, float Y, float Z, float O)

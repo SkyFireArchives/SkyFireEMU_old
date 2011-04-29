@@ -91,7 +91,7 @@ void SmartWaypointMgr::LoadFromDB()
     }
     while (result->NextRow());
 
-    sLog->outString(">> Loaded %u SmartAI waypoint paths (total %u waypoints) in %u ms", count, total);
+    sLog->outString(">> Loaded %u SmartAI waypoint paths (total %u waypoints) in %u ms", count, total, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 
@@ -223,7 +223,7 @@ void SmartAIMgr::LoadSmartAIFromDB()
     }
     while (result->NextRow());
 
-    sLog->outString(">> Loaded %u SmartAI scripts in %u ms", count);
+    sLog->outString(">> Loaded %u SmartAI scripts in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 

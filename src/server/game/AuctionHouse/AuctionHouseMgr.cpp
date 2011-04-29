@@ -329,26 +329,23 @@ void AuctionHouseMgr::SendAuctionCancelledToBidderMail(AuctionEntry* auction, SQ
 
 void AuctionHouseMgr::LoadAuctionItems()
 {
+    uint32 oldMSTime = getMSTime();
+
     // data needs to be at first place for Item::LoadFromDB
     PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_AUCTION_ITEMS);
     PreparedQueryResult result = CharacterDatabase.Query(stmt);
 
     if (!result)
     {
-        
-        
+        sLog->outString(">> Loaded 0 auction items. DB table `auctionhouse` or `item_instance` is empty!");
         sLog->outString();
-        sLog->outString(">> Loaded 0 auction items");
         return;
     }
 
-    
-
     uint32 count = 0;
+
     do
     {
-        
-    
         Field* fields = result->Fetch();
 
         uint32 item_guid        = fields[11].GetUInt32();
@@ -373,36 +370,33 @@ void AuctionHouseMgr::LoadAuctionItems()
     }
     while (result->NextRow());
 
+    sLog->outString(">> Loaded %u auction items in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u auction items", count);
 }
 
 void AuctionHouseMgr::LoadAuctions()
 {
+    uint32 oldMSTime = getMSTime();
+
     PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_AUCTIONS);
     PreparedQueryResult result = CharacterDatabase.Query(stmt);
+
     if (!result)
     {
-        
-        
-        sLog->outString();
         sLog->outString(">> Loaded 0 auctions. DB table `auctionhouse` is empty.");
+        sLog->outString();
         return;
     }
 
-    
+    uint32 count = 0;
 
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
 
-    uint32 count = 0;
-    AuctionEntry *aItem;
     do
     {
         Field* fields = result->Fetch();
 
-        
-
-        aItem = new AuctionEntry();
+        AuctionEntry *aItem = new AuctionEntry();
         if (!aItem->LoadFromDB(fields))
         {
             aItem->DeleteFromDB(trans);
@@ -412,12 +406,13 @@ void AuctionHouseMgr::LoadAuctions()
 
         GetAuctionsMap(aItem->factionTemplateId)->AddAuction(aItem);
         count++;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
     CharacterDatabase.CommitTransaction(trans);
 
+    sLog->outString(">> Loaded %u auctions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u auctions", count);
 }
 
 void AuctionHouseMgr::AddAItem(Item* it)
