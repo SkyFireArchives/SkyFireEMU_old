@@ -1790,7 +1790,7 @@ void LoadLootTemplates_Spell()
         sLog->outString(">> Loaded %u spell loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     else
         sLog->outErrorDb(">> Loaded 0 spell loot templates. DB table `spell_loot_template` is empty");
-    sLog.outString();
+    sLog->outString();
 }
 
 void LoadLootTemplates_Reference()

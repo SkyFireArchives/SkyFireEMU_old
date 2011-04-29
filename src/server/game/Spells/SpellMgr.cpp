@@ -4112,7 +4112,6 @@ void SpellMgr::LoadSpellLinked()
     uint32 oldMSTime = getMSTime();
 
     mSpellLinkedMap.clear();    // need for reload case
-    uint32 count = 0;
 
     //                                                0              1             2
     QueryResult result = WorldDatabase.Query("SELECT spell_trigger, spell_effect, type FROM spell_linked_spell");

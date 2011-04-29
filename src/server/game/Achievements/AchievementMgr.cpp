@@ -2177,7 +2177,7 @@ void AchievementGlobalMgr::LoadAchievementReferenceList()
 
     if (sAchievementStore.GetNumRows() == 0)
     {
-        sLog.outString(">> Loaded 0 achievement references.");
+        sLog->outString(">> Loaded 0 achievement references.");
         sLog->outString();
         return;
     }
@@ -2346,7 +2346,7 @@ void AchievementGlobalMgr::LoadCompletedAchievements()
 
     if (!result)
     {
-        sLog.outString(">> Loaded 0 completed achievements. DB table `character_achievement` is empty.");        
+        sLog->outString(">> Loaded 0 completed achievements. DB table `character_achievement` is empty.");        
         sLog->outString();
         return;
     }
@@ -2368,7 +2368,7 @@ void AchievementGlobalMgr::LoadCompletedAchievements()
     }
     while (result->NextRow());
 
-    sLog.outString(">> Loaded %lu completed achievements in %u ms",(unsigned long)m_allCompletedAchievements.size(), GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString(">> Loaded %lu completed achievements in %u ms",(unsigned long)m_allCompletedAchievements.size(), GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 
