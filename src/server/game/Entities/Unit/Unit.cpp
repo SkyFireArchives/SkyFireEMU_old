@@ -11281,7 +11281,7 @@ bool Unit::IsImmunedToSpell(SpellEntry const* spellInfo)
     {
         // State/effect immunities applied by aura expect full spell immunity
         // Ignore effects with mechanic, they are supposed to be checked separately
-        if (!spellInfo->EffectMechanic[i])
+        if (!spellInfo->EffectMechanic[i] && spellInfo->Effect[i] != SPELL_EFFECT_KNOCK_BACK)
             if (IsImmunedToSpellEffect(spellInfo, i))
                 return true;
     }
