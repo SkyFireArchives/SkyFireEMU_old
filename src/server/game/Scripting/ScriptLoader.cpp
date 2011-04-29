@@ -204,8 +204,6 @@ void AddSC_boss_eredar_twins();
 void AddSC_boss_muru();
 void AddSC_boss_kiljaeden();
 void AddSC_sunwell_plateau();
-void AddSC_the_stonecore();					 //Cata:TheStonecore
-void AddSC_instance_the_stonecore();
 void AddSC_boss_archaedas();                 //Uldaman
 void AddSC_boss_ironaya();
 void AddSC_uldaman();
@@ -554,6 +552,11 @@ void AddSC_shattrath_city();
 void AddSC_terokkar_forest();
 void AddSC_zangarmarsh();
 
+// Cataclysm Scripts
+
+void AddSC_the_stonecore();					 //Cata:TheStonecore
+void AddSC_instance_the_stonecore();
+
 // battlegrounds
 
 // outdoor pvp
@@ -777,9 +780,7 @@ void AddEasternKingdomsScripts()
     AddSC_boss_muru();
     AddSC_boss_kiljaeden();
     AddSC_sunwell_plateau();
-    AddSC_instance_the_stonecore();			//Cata: The Stonecore
-	AddSC_the_stonecore;
-	AddSC_boss_archaedas();                 //Uldaman
+    AddSC_boss_archaedas();                 //Uldaman
     AddSC_boss_ironaya();
     AddSC_uldaman();
     AddSC_instance_uldaman();
@@ -1138,6 +1139,11 @@ void AddNorthrendScripts()
     AddSC_zuldrak();
     AddSC_crystalsong_forest();
     AddSC_isle_of_conquest();
+
+    // Cataclysm Scripts
+	AddSC_instance_the_stonecore();			//Cata: The Stonecore
+	AddSC_the_stonecore();
+
 #endif
 }
 
