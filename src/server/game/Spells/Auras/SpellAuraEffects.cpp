@@ -6176,9 +6176,16 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                     }
                     break;
                 case SPELLFAMILY_HUNTER:
-                    // Misdirection
-                    if (GetId() == 34477)
-                        target->SetReducedThreatPercent(0, 0);
+                    switch (GetId())
+                    {
+                        case 35079: // Misdirection
+                            target->SetReducedThreatPercent(0, 0);
+                            break;
+                        case 34477: // Misdirection
+                            if (aurApp->GetRemoveMode() != AURA_REMOVE_BY_DEFAULT)
+                                target->SetReducedThreatPercent(0, 0);
+                            break;
+                    }
                     break;
                 case SPELLFAMILY_DEATHKNIGHT:
                     // Summon Gargoyle (will start feeding gargoyle)
