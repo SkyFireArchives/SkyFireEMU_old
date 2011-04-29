@@ -3978,6 +3978,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->Stances = 1 << (FORM_TREE - 1);
             count++;
             break;
+		case 8145: // Tremor Totem (instant pulse)
+        case 6474: // Earthbind Totem (instant pulse)
+            spellInfo->AttributesEx5 |= SPELL_ATTR5_START_PERIODIC_AT_APPLY;
+            count++;
+            break;
         case 30421:     // Nether Portal - Perseverence
             spellInfo->EffectBasePoints[2] += 30000;
             count++;
