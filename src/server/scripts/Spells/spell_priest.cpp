@@ -256,6 +256,53 @@ public:
     }
 };
 
+// Power Word:Barrier
+class spell_pri_power_word_barrier : public SpellScriptLoader
+{
+public: 
+	spell_pri_power_word_barrier(): SpellScriptLoader("spell_priest_power_word_barrier") { }
+
+	class spell_pri_power_word_barrier_AuraScript : public AuraScript
+	{
+		PrepareAuraScript(spell_pri_power_word_barrier_AuraScript);
+
+		enum Spells
+		{
+			SPELL_PRI_POWER_WORD_BARRIER = 62618;
+		};
+
+		uint32 absorbPct;
+
+		bool Load()
+		{
+			absorbPct = SpellMgr::CalculateSpellEffectAmmount(GetSpellProto(), EFFECT_0, GetCaster());
+			return true;
+		}
+
+		bool Validate(SpellEntry const *)
+		{
+			return sSpellStore.LookupEntry(SPELL_PRI_POWER_WORD_BARRIER);
+		}
+
+		void Absorb(AuraEffect *, DamageInfo & dmgInfo, uint32 & absorbAmount)
+		{
+			absorbAmount = CalculatePctN(dmgInfo.GetDamage(), absorbPct);
+		}
+
+		void Register()
+        {
+             
+            OnEffectAbsorb += AuraEffectAbsorbFn(spell_pri_power_word_barrier_AuraScript::Absorb, EFFECT_0);
+        }
+    };
+
+    AuraScript *GetAuraScript() const
+    {
+        return new spell_pri_power_word_barrier_AuraScript();
+    }
+};
+
+
 void AddSC_priest_spell_scripts()
 {
     new spell_pri_guardian_spirit();
@@ -263,4 +310,5 @@ void AddSC_priest_spell_scripts()
     new spell_pri_pain_and_suffering_proc;
     new spell_pri_penance;
     new spell_pri_reflective_shield_trigger();
+    new spell_pri_power_word_barrier();
 }
