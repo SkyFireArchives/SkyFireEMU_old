@@ -4936,7 +4936,7 @@ bool Unit::HandleModPowerRegenAuraProc(Unit *pVictim, uint32 damage, AuraEffect*
         CastSpell(target,triggered_spell_id,true,castItem,triggeredByAura);
 
     if (cooldown && target->GetTypeId() == TYPEID_PLAYER)
-                target->ToPlayer()->AddSpellCooldown(trigger_spell_id,0,time(NULL) + cooldown);
+        target->ToPlayer()->AddSpellCooldown(triggered_spell_id,0,time(NULL) + cooldown);
 
     return true;
 }
@@ -10964,8 +10964,6 @@ uint32 Unit::SpellHealingBonus(Unit *pVictim, SpellEntry const *spellProto, uint
                 scripted = true;
                 break;
         }
-		if (spellProto->Effect[i] == SPELL_EFFECT_HEALTH_LEECH)
-            scripted = true;
     }
 
     // Check for table values
