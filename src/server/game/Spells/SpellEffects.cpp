@@ -1850,6 +1850,18 @@ void Spell::EffectTriggerSpell(SpellEffIndex effIndex)
                 pet->CastSpell(pet, 28305, true);
             return;
         }
+		// Blood Tap
+		if (m_spellInfo->Id == 45529 && count > 0)
+		{
+			for (uint32 j = 0; j < MAX_RUNES && count > 0; ++j)
+			{
+				if (plr->GetRuneCooldown(j) && plr->GetCurrentRune(j) == RUNE_BLOOD)
+				{
+					plr->SetRuneCooldown(j, 0);
+					--count;
+				}
+			}
+		}
         // Empower Rune Weapon
         case 53258:
             return; // skip, hack-added in spell effect
@@ -6973,6 +6985,7 @@ void Spell::EffectActivateRune(SpellEffIndex effIndex)
                 plr->SetRuneCooldown(i, 0);
         }
     }
+	plr->ResyncRunes(MAX_RUNES);
 }
 
 void Spell::EffectCreateTamedPet(SpellEffIndex effIndex)
