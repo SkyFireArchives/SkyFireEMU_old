@@ -143,7 +143,7 @@ public:
                 switch(eventId)
                 {
                     case EVENT_QUAKE:
-						DoCast(me->getVictim(), SPELL_QUAKE);
+                        DoCast(me->getVictim(), SPELL_QUAKE);
                         events.RescheduleEvent(EVENT_QUAKE, 7000);
                         return;
                 }
@@ -214,7 +214,7 @@ public:
 
 void AddSC_the_stonecore()
 {
-	new mob_crystalspawn_giant();
+    new mob_crystalspawn_giant();
     new mob_impp();
 
 }

@@ -34,10 +34,10 @@ public:
     {
         instance_the_stonecore_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {};
 
-		uint64 uiCorborus;
-		uint64 uiSlabhide;
-		uint64 uiOzruk;
-		uint64 uiHighPriestessAzil;
+        uint64 uiCorborus;
+        uint64 uiSlabhide;
+        uint64 uiOzruk;
+        uint64 uiHighPriestessAzil;
         uint32 uiTeamInInstance;
         uint32 uiEncounter[MAX_ENCOUNTER];
 
@@ -74,18 +74,18 @@ public:
 
             switch(pCreature->GetEntry())
             {
-				case BOSS_CORBORUS:
-					uiCorborus = pCreature->GetGUID();
-					break;
-				case BOSS_SLABHIDE:
-					uiSlabhide = pCreature->GetGUID();
-					break;
-				case BOSS_OZRUK:
-					uiOzruk = pCreature->GetGUID();
-					break;
-				case BOSS_HIGH_PRIESTESS_AZIL:
-					uiHighPriestessAzil = pCreature->GetGUID();
-					break;
+                case BOSS_CORBORUS:
+                    uiCorborus = pCreature->GetGUID();
+                    break;
+                case BOSS_SLABHIDE:
+                    uiSlabhide = pCreature->GetGUID();
+                    break;
+                case BOSS_OZRUK:
+                    uiOzruk = pCreature->GetGUID();
+                    break;
+                case BOSS_HIGH_PRIESTESS_AZIL:
+                    uiHighPriestessAzil = pCreature->GetGUID();
+                    break;
             }
         }
 
@@ -93,10 +93,10 @@ public:
         {
             switch(identifier)
             {
-				case DATA_CORBORUS:					return uiCorborus;
-				case DATA_SLABHIDE:					return uiSlabhide;
-				case DATA_OZRUK:					return uiOzruk;
-				case DATA_HIGH_PRIESTESS_AZIL:		return uiHighPriestessAzil;
+                case DATA_CORBORUS:					return uiCorborus;
+                case DATA_SLABHIDE:					return uiSlabhide;
+                case DATA_OZRUK:					return uiOzruk;
+                case DATA_HIGH_PRIESTESS_AZIL:		return uiHighPriestessAzil;
             }
 
             return 0;
@@ -106,16 +106,16 @@ public:
         {
             switch(type)
             {
-				case DATA_CORBORUS_EVENT:
+                case DATA_CORBORUS_EVENT:
                     uiEncounter[0] = data;
                     break;
-				case DATA_SLABHIDE_EVENT:
+                case DATA_SLABHIDE_EVENT:
                     uiEncounter[1] = data;
                     break;
-				case DATA_OZRUK_EVENT:
+                case DATA_OZRUK_EVENT:
                     uiEncounter[2] = data;
                     break;
-				case DATA_HIGH_PRIESTESS_AZIL_EVENT:
+                case DATA_HIGH_PRIESTESS_AZIL_EVENT:
                     uiEncounter[3] = data;
                     break;
             }
@@ -128,10 +128,10 @@ public:
         {
             switch(type)
             {
-				case DATA_CORBORUS_EVENT:				return uiEncounter[0];
-				case DATA_SLABHIDE_EVENT:				return uiEncounter[1];
-				case DATA_OZRUK_EVENT:					return uiEncounter[2];
-				case DATA_HIGH_PRIESTESS_AZIL_EVENT:	return uiEncounter[3];
+                case DATA_CORBORUS_EVENT:				return uiEncounter[0];
+                case DATA_SLABHIDE_EVENT:				return uiEncounter[1];
+                case DATA_OZRUK_EVENT:					return uiEncounter[2];
+                case DATA_HIGH_PRIESTESS_AZIL_EVENT:	return uiEncounter[3];
             }
 
             return 0;
