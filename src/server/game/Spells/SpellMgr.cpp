@@ -3992,6 +3992,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectBasePoints[2] += 30000;
             count++;
             break;
+		case 61607: // Mark of Blood
+            spellInfo->AttributesEx |= SPELL_ATTR1_NO_THREAT;
+            ++count;
+            break;
         // some dummy spell only has dest, should push caster in this case
         case 62324: // Throw Passenger
             spellInfo->Targets |= TARGET_FLAG_UNIT_CASTER;
