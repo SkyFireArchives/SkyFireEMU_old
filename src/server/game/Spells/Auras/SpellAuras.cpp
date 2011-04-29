@@ -2000,8 +2000,8 @@ void UnitAura::FillTargetMap(std::map<Unit *, uint8> & targets, Unit * caster)
                     case SPELL_EFFECT_APPLY_AREA_AURA_RAID:
                         targetList.push_back(GetUnitOwner());
                         GetUnitOwner()->GetRaidMember(targetList, radius);
-			   if (GetSpellProto()->SpellIconID == 691)
-				GetUnitOwner()->GetRaidMember(targetList, GetSpellRadiusForFriend(sSpellRadiusStore.LookupEntry(GetSpellProto()->EffectRadiusIndex[1])));
+						if (GetSpellProto()->SpellIconID == 691)
+							GetUnitOwner()->GetRaidMember(targetList, GetSpellRadiusForFriend(sSpellRadiusStore.LookupEntry(GetSpellProto()->EffectRadiusIndex[1])));
                         break;
                     case SPELL_EFFECT_APPLY_AREA_AURA_FRIEND:
                     {
