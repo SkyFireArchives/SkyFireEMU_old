@@ -75,26 +75,19 @@ void CreatureGroupManager::RemoveCreatureFromGroup(CreatureGroup *group, Creatur
 
 void CreatureGroupManager::LoadCreatureFormations()
 {
-    //Clear existing map
-    for (CreatureGroupInfoType::iterator itr = CreatureGroupMap.begin(); itr != CreatureGroupMap.end(); ++itr)
-       delete itr->second;
+    uint32 oldMSTime = getMSTime();
+
+    for (CreatureGroupInfoType::iterator itr = CreatureGroupMap.begin(); itr != CreatureGroupMap.end(); ++itr) // for reload case 
+        delete itr->second;
     CreatureGroupMap.clear();
 
-    //Check Integrity of the table
-    QueryResult result = WorldDatabase.Query("SELECT MAX(leaderGUID) FROM creature_formations");
-
-    if (!result)
-    {
-        sLog->outErrorDb(" ...an error occured while loading the table creature_formations (maybe it doesn't exist ?)\n");
-        return;
-    }
-
     //Get group data
-    result = WorldDatabase.Query("SELECT leaderGUID, memberGUID, dist, angle, groupAI FROM creature_formations ORDER BY leaderGUID");
+    QueryResult result = WorldDatabase.Query("SELECT leaderGUID, memberGUID, dist, angle, groupAI FROM creature_formations ORDER BY leaderGUID");
 
     if (!result)
     {
-        sLog->outErrorDb("The table creature_formations is empty or corrupted");
+        sLog->outErrorDb(">>  Loaded 0 creatures in formations. DB table `creature_formations` is empty!");
+        sLog->outString();
         return;
     }
 
@@ -110,14 +103,16 @@ void CreatureGroupManager::LoadCreatureFormations()
 
             guidSet.insert(guid);
 
-        } while (guidResult->NextRow());
+        }
+        while (guidResult->NextRow());
     }
 
+    uint32 count = 0;
     uint64 total_records = result->GetRowCount();
     Field *fields;
 
     FormationInfo *group_member;
-    //Loading data...
+
     do
     {
         fields = result->Fetch();
@@ -158,11 +153,11 @@ void CreatureGroupManager::LoadCreatureFormations()
         }
 
         CreatureGroupMap[memberGUID] = group_member;
+        ++count;
     }
     while (result->NextRow()) ;
 
-    sLog->outString();
-    sLog->outString(">> Loaded " UI64FMTD " creatures in formations", total_records);
+    sLog->outString(">> Loaded %u creatures in formations in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 

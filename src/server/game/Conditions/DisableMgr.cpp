@@ -40,6 +40,8 @@ DisableMgr::~DisableMgr()
 
 void DisableMgr::LoadDisables()
 {
+    uint32 oldMSTime = getMSTime();
+
     // reload case
     for (DisableMap::iterator itr = m_DisableMap.begin(); itr != m_DisableMap.end(); ++itr)
         itr->second.clear();
@@ -52,8 +54,8 @@ void DisableMgr::LoadDisables()
 
     if (!result)
     {
+        sLog->outString(">> Loaded 0 disables. DB table `disables` is empty!");
         sLog->outString();
-        sLog->outString(">> Loaded %u disables", total_count);
         return;
     }
 
@@ -177,20 +179,22 @@ void DisableMgr::LoadDisables()
 
         m_DisableMap[type].insert(DisableTypeMap::value_type(entry, data));
         ++total_count;
-   }
+    }
     while (result->NextRow());
 
+    sLog->outString(">> Loaded %u disables in %u ms", total_count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u disables.", total_count);
 }
 
 void DisableMgr::CheckQuestDisables()
 {
+    uint32 oldMSTime = getMSTime();
+
     uint32 count = m_DisableMap[DISABLE_TYPE_QUEST].size();
     if (!count)
     {
+        sLog->outString(">> Checked 0 quest disables.");
         sLog->outString();
-        sLog->outString(">> Done.");
         return;
     }
 
@@ -209,8 +213,8 @@ void DisableMgr::CheckQuestDisables()
         ++itr;
     }
 
+    sLog->outString(">> Checked %u quest disables in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Done.");
 }
 
 bool DisableMgr::IsDisabledFor(DisableType type, uint32 entry, Unit const* pUnit)

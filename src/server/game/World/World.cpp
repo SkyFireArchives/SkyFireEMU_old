@@ -1210,6 +1210,9 @@ void World::LoadConfigSettings(bool reload)
 /// Initialize the World
 void World::SetInitialWorldSettings()
 {
+    ///- Server startup begin
+    uint32 startupBegin = getMSTime();
+
     ///- Initialize the random number generator
     srand((unsigned int)time(NULL));
 
@@ -1280,6 +1283,7 @@ void World::SetInitialWorldSettings()
     sInstanceSaveMgr->CleanupAndPackInstances();                // must be called before `creature_respawn`/`gameobject_respawn` tables
 
     sLog->outString("Loading Localization strings...");
+    uint32 oldMSTime = getMSTime();
     sObjectMgr->LoadCreatureLocales();
     sObjectMgr->LoadGameObjectLocales();
     sObjectMgr->LoadItemLocales();
@@ -1290,7 +1294,7 @@ void World::SetInitialWorldSettings()
     sObjectMgr->LoadGossipMenuItemsLocales();
     sObjectMgr->LoadPointOfInterestLocales();
     sObjectMgr->SetDBCLocaleIndex(GetDefaultDbcLocale());        // Get once for all the locale index of DBC language (console/broadcasts)
-    sLog->outString(">>> Localization strings loaded");
+    sLog->outString(">> Localization strings loaded in %u ms", GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 
     sLog->outString("Loading Page Texts...");
@@ -1298,9 +1302,6 @@ void World::SetInitialWorldSettings()
 
     sLog->outString("Loading Game Object Templates...");     // must be after LoadPageTexts
     sObjectMgr->LoadGameobjectInfo();
-
-    //sLog->outString("Loading Spell Rank Data...");
-    //sSpellMgr->LoadSpellRanks();
 
     sLog->outString("Loading Spell Required Data...");
     sSpellMgr->LoadSpellRequired();
@@ -1374,13 +1375,10 @@ void World::SetInitialWorldSettings()
     sLog->outString("Loading Creature Data...");
     sObjectMgr->LoadCreatures();
 
-    sLog->outString("Loading Creature Linked Respawn...");
-    sObjectMgr->LoadCreatureLinkedRespawn();                     // must be after LoadCreatures()
-
     sLog->outString("Loading pet levelup spells...");
     sSpellMgr->LoadPetLevelupSpellMap();
 
-    sLog->outString("Loading pet default spell additional to levelup spells...");
+    sLog->outString("Loading pet default spells additional to levelup spells...");
     sSpellMgr->LoadPetDefaultSpells();
 
     sLog->outString("Loading Creature Template Addon Data...");
@@ -1391,6 +1389,9 @@ void World::SetInitialWorldSettings()
 
     sLog->outString("Loading Creature Respawn Data...");         // must be after PackInstances()
     sObjectMgr->LoadCreatureRespawnTimes();
+
+    sLog->outString("Loading Creature Linked Respawn...");
+    sObjectMgr->LoadLinkedRespawn();                     // must be after LoadCreatures(), LoadGameObjects()
 
     sLog->outString("Loading Gameobject Data...");
     sObjectMgr->LoadGameobjects();
@@ -1521,7 +1522,6 @@ void World::SetInitialWorldSettings()
     sLog->outString("Loading Auctions...");
     sAuctionMgr->LoadAuctions();
 
-    sLog->outString("***** GUILDS *****");
     sObjectMgr->LoadGuilds();
 
     sLog->outString("Loading Guild Rewards...");
@@ -1600,16 +1600,12 @@ void World::SetInitialWorldSettings()
     LoadAutobroadcasts();
 
     ///- Load and initialize scripts
-    sLog->outString("Loading Scripts...");
-    sLog->outString();
     sObjectMgr->LoadQuestStartScripts();                         // must be after load Creature/Gameobject(Template/Data) and QuestTemplate
     sObjectMgr->LoadQuestEndScripts();                           // must be after load Creature/Gameobject(Template/Data) and QuestTemplate
     sObjectMgr->LoadSpellScripts();                              // must be after load Creature/Gameobject(Template/Data)
     sObjectMgr->LoadGameObjectScripts();                         // must be after load Creature/Gameobject(Template/Data)
     sObjectMgr->LoadEventScripts();                              // must be after load Creature/Gameobject(Template/Data)
     sObjectMgr->LoadWaypointScripts();
-    sLog->outString(">>> Scripts loaded");
-    sLog->outString();
 
     sLog->outString("Loading Scripts text locales...");      // must be after Load*Scripts calls
     sObjectMgr->LoadDbScriptStrings();
@@ -1744,7 +1740,10 @@ void World::SetInitialWorldSettings()
     else
         sLog->SetLogDB(false);
 
-    sLog->outString("WORLD: World initialized");
+    uint32 startupDuration = GetMSTimeDiffToNow(startupBegin);
+    sLog->outString();
+    sLog->outString("WORLD: World initialized in %u minuntes %u seconds", (startupDuration / 60000), ((startupDuration % 60000) / 1000) );
+    sLog->outString();
 }
 
 void World::DetectDBCLang()
@@ -1819,38 +1818,34 @@ void World::RecordTimeDiff(const char *text, ...)
 
 void World::LoadAutobroadcasts()
 {
+    uint32 oldMSTime = getMSTime();
+
     m_Autobroadcasts.clear();
 
     QueryResult result = WorldDatabase.Query("SELECT text FROM autobroadcast");
 
     if (!result)
     {
-        
-        
-
+        sLog->outString(">> Loaded 0 autobroadcasts definitions. DB table `autobroadcast` is empty!");
         sLog->outString();
-        sLog->outString(">> Loaded 0 autobroadcasts definitions");
         return;
     }
-
-    
 
     uint32 count = 0;
 
     do
     {
-        
-
         Field *fields = result->Fetch();
         std::string message = fields[0].GetString();
 
         m_Autobroadcasts.push_back(message);
 
-        count++;
-    } while (result->NextRow());
+        ++count;
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u autobroadcasts definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u autobroadcasts definitions", count);
 }
 
 /// Update the World !
@@ -2787,30 +2782,30 @@ void World::UpdateAreaDependentAuras()
 
 void World::LoadWorldStates()
 {
+    uint32 oldMSTime = getMSTime();
+
     QueryResult result = CharacterDatabase.Query("SELECT entry, value FROM worldstates");
 
     if (!result)
     {
-        
-        
+        sLog->outString(">> Loaded 0 world states. DB table `worldstates` is empty!");
         sLog->outString();
-        sLog->outString(">> Loaded 0 world states.");
         return;
     }
 
-    
-    uint32 counter = 0;
+    uint32 count = 0;
 
     do
     {
         Field *fields = result->Fetch();
         m_worldstates[fields[0].GetUInt32()] = fields[1].GetUInt64();
         
-        ++counter;
-    } while (result->NextRow());
+        ++count;
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u world states in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u world states.", counter);
 }
 
 // Setting a worldstate will save it to DB

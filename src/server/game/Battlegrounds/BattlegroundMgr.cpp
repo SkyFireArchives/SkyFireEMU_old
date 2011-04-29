@@ -779,6 +779,8 @@ uint32 BattlegroundMgr::CreateBattleground(BattlegroundTypeId bgTypeId, bool IsA
 
 void BattlegroundMgr::CreateInitialBattlegrounds()
 {
+    uint32 oldMSTime = getMSTime();
+
     float AStartLoc[4];
     float HStartLoc[4];
     uint32 MaxPlayersPerTeam, MinPlayersPerTeam, MinLvl, MaxLvl, start1, start2;
@@ -787,17 +789,19 @@ void BattlegroundMgr::CreateInitialBattlegrounds()
     WorldSafeLocsEntry const *start;
     bool IsArena;
     uint32 scriptId = 0;
-    uint32 count = 0;
 
     //                                                       0   1                 2                 3      4      5                6              7             8           9      10
     QueryResult result = WorldDatabase.Query("SELECT id, MinPlayersPerTeam,MaxPlayersPerTeam,MinLvl,MaxLvl,AllianceStartLoc,AllianceStartO,HordeStartLoc,HordeStartO,Weight,ScriptName FROM battleground_template");
 
     if (!result)
     {
-        sLog->outString();
         sLog->outErrorDb(">> Loaded 0 battlegrounds. DB table `battleground_template` is empty.");
+        sLog->outString();
         return;
     }
+
+    uint32 count = 0;
+
     do
     {
         Field *fields = result->Fetch();
@@ -893,10 +897,11 @@ void BattlegroundMgr::CreateInitialBattlegrounds()
         else if (bgTypeID != BATTLEGROUND_RB)
             m_BGSelectionWeights[bgTypeID] = selectionWeight;
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u battlegrounds in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u battlegrounds", count);
 }
 
 void BattlegroundMgr::InitAutomaticArenaPointDistribution()

@@ -106,7 +106,7 @@ void CreatureTextMgr::LoadCreatureTexts()
         ++textCount;
     } while (result->NextRow());
 
-    sLog->outString(">> Loaded %u creature texts for %u creatures in %u ms", textCount, creatureCount);
+    sLog->outString(">> Loaded %u creature texts for %u creatures in %u ms", textCount, creatureCount, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 

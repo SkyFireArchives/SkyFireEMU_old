@@ -21,10 +21,6 @@
  */
 
 #include "gamePCH.h"
-/** \file
-    \ingroup world
-*/
-
 #include "WeatherMgr.h"
 #include "Log.h"
 
@@ -81,6 +77,8 @@ Weather* WeatherMgr::AddWeather(uint32 zone_id)
 
 void WeatherMgr::LoadWeatherData()
 {
+    uint32 oldMSTime = getMSTime();
+
     uint32 count = 0;
 
     //                                                0     1                   2                   3                    4                   5                   6                    7                 8                 9                  10                  11                  12                                13
@@ -88,22 +86,15 @@ void WeatherMgr::LoadWeatherData()
 
     if (!result)
     {
-        
-
-        
-
-        sLog->outString();
         sLog->outErrorDb(">> Loaded 0 weather definitions. DB table `game_weather` is empty.");
+        sLog->outString();
         return;
     }
-
-    
 
     do
     {
         Field *fields = result->Fetch();
         
-
         uint32 zone_id = fields[0].GetUInt32();
 
         WeatherData& wzc = mWeatherZoneMap[zone_id];
@@ -139,8 +130,8 @@ void WeatherMgr::LoadWeatherData()
     }
     while (result->NextRow());
 
+    sLog->outString(">> Loaded %u weather definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u weather definitions", count);
 }
 
 void WeatherMgr::Update(uint32 diff)
