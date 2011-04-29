@@ -81,27 +81,24 @@ LFGMgr::~LFGMgr()
 /// Load achievement <-> encounter associations
 void LFGMgr::LoadDungeonEncounters()
 {
+    uint32 oldMSTime = getMSTime();
+
     m_EncountersByAchievement.clear();
 
-    uint32 count = 0;
     QueryResult result = WorldDatabase.Query("SELECT achievementId, dungeonId FROM lfg_dungeon_encounters");
 
     if (!result)
     {
-        
-        
-
         sLog->outString();
         sLog->outErrorDb(">> Loaded 0 dungeon encounter lfg associations. DB table `lfg_dungeon_encounters` is empty!");
         return;
     }
 
-    
+    uint32 count = 0;
 
     Field* fields = NULL;
     do
     {
-        
         fields = result->Fetch();
         uint32 achievementId = fields[0].GetUInt32();
         uint32 dungeonId = fields[1].GetUInt32();
@@ -128,40 +125,37 @@ void LFGMgr::LoadDungeonEncounters()
 
         m_EncountersByAchievement[achievementId] = dungeonId;
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u dungeon encounter lfg associations in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u dungeon encounter lfg associations.", count);
 }
-
 
 /// Load rewards for completing dungeons
 void LFGMgr::LoadRewards()
 {
+    uint32 oldMSTime = getMSTime();
+
     for (LfgRewardMap::iterator itr = m_RewardMap.begin(); itr != m_RewardMap.end(); ++itr)
         delete itr->second;
     m_RewardMap.clear();
 
-    uint32 count = 0;
     // ORDER BY is very important for GetRandomDungeonReward!
     QueryResult result = WorldDatabase.Query("SELECT dungeonId, maxLevel, firstQuestId, firstMoneyVar, firstXPVar, otherQuestId, otherMoneyVar, otherXPVar FROM lfg_dungeon_rewards ORDER BY dungeonId, maxLevel ASC");
 
     if (!result)
     {
-        
-        
-
-        sLog->outString();
         sLog->outErrorDb(">> Loaded 0 lfg dungeon rewards. DB table `lfg_dungeon_rewards` is empty!");
+        sLog->outString();
         return;
     }
 
-    
+    uint32 count = 0;    
 
     Field* fields = NULL;
     do
     {
-        
         fields = result->Fetch();
         uint32 dungeonId = fields[0].GetUInt32();
         uint32 maxLevel = fields[1].GetUInt8();
@@ -198,10 +192,11 @@ void LFGMgr::LoadRewards()
 
         m_RewardMap.insert(LfgRewardMap::value_type(dungeonId, new LfgReward(maxLevel, firstQuestId, firstMoneyVar, firstXPVar, otherQuestId, otherMoneyVar, otherXPVar)));
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u lfg dungeon rewards in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u lfg dungeon rewards.", count);
 }
 
 void LFGMgr::Update(uint32 diff)

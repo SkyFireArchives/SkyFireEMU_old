@@ -86,6 +86,8 @@ inline void LoadDB2(uint32& availableDb2Locales, StoreProblemList1& errlist, DB2
 
 void LoadDB2Stores(const std::string& dataPath)
 {
+    uint32 oldMSTime = getMSTime();
+
     std::string db2Path = dataPath + "dbc/";
     
     StoreProblemList1 bad_db2_files;
@@ -112,11 +114,11 @@ void LoadDB2Stores(const std::string& dataPath)
     // Check loaded DBC files proper version
     if (!sItemStore.LookupEntry(68815))                     // last client known item added in 4.0.6a
     {
-        sLog->outString(" ");
+        sLog->outString();
         sLog->outError("Please extract correct db2 files from client 4.0.6a 13623.");
         exit(1);
     }
 
-    sLog->outString(">> Initialized %d data stores.", DB2FileCount);
+    sLog->outString(">> Initialized %d Db2 data stores in %u ms", DB2FileCount, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
