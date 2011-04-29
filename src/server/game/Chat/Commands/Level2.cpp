@@ -481,7 +481,7 @@ bool ChatHandler::HandleGameObjectTargetCommand(const char* args)
         return false;
     }
 
-    GameObjectInfo const* goI = sObjectMgr->GetGameObjectInfo(id);
+    GameObjectInfo const* goI = ObjectMgr::GetGameObjectInfo(id);
 
     if (!goI)
     {
@@ -688,7 +688,7 @@ bool ChatHandler::HandleGameObjectAddCommand(const char* args)
 
     char* spawntimeSecs = strtok(NULL, " ");
 
-    const GameObjectInfo *gInfo = sObjectMgr->GetGameObjectInfo(id);
+    const GameObjectInfo *gInfo = ObjectMgr::GetGameObjectInfo(id);
 
     if (!gInfo)
     {
@@ -813,7 +813,7 @@ bool ChatHandler::HandleGameObjectNearCommand(const char* args)
             float z = fields[4].GetFloat();
             int mapid = fields[5].GetUInt16();
 
-            GameObjectInfo const * gInfo = sObjectMgr->GetGameObjectInfo(entry);
+            GameObjectInfo const * gInfo = ObjectMgr::GetGameObjectInfo(entry);
 
             if (!gInfo)
                 continue;
@@ -976,7 +976,7 @@ bool ChatHandler::HandleNpcAddCommand(const char* args)
         return true;
     }
 
-    CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(id);
+    CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(id);
     if (!ci)
         return false;
     
@@ -1045,7 +1045,7 @@ bool ChatHandler::HandleNpcAddVendorItemCommand(const char* args)
 
     sObjectMgr->AddVendorItem(vendor_entry,itemId,maxcount,incrtime,extendedcost);
 
-    ItemPrototype const* pProto = sObjectMgr->GetItemPrototype(itemId);
+    ItemPrototype const* pProto = ObjectMgr::GetItemPrototype(itemId);
 
     PSendSysMessage(LANG_ITEM_ADDED_TO_LIST,itemId,pProto->Name1,maxcount,incrtime,extendedcost);
     return true;
@@ -1081,7 +1081,7 @@ bool ChatHandler::HandleNpcDelVendorItemCommand(const char* args)
         return false;
     }
 
-    ItemPrototype const* pProto = sObjectMgr->GetItemPrototype(itemId);
+    ItemPrototype const* pProto = ObjectMgr::GetItemPrototype(itemId);
 
     PSendSysMessage(LANG_ITEM_DELETED_FROM_LIST,itemId,pProto->Name1);
     return true;
@@ -2033,7 +2033,7 @@ bool ChatHandler::HandleGOInfoCommand(const char* args)
     else
         entry = atoi((char*)args);
 
-    GameObjectInfo const* goinfo = sObjectMgr->GetGameObjectInfo(entry);
+    GameObjectInfo const* goinfo = ObjectMgr::GetGameObjectInfo(entry);
 
     if (!goinfo)
         return false;
@@ -2777,7 +2777,7 @@ bool ChatHandler::HandleWpModifyCommand(const char* args)
                 wpCreature->DeleteFromDB();
                 wpCreature->AddObjectToRemoveList();
                 // re-create
-                CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(VISUAL_WAYPOINT);
+                CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(VISUAL_WAYPOINT);
                 if (!ci)
                     return false;
                 
@@ -2991,7 +2991,7 @@ bool ChatHandler::HandleWpShowCommand(const char* args)
             Map *map = chr->GetMap();
             float o = chr->GetOrientation();
 
-            CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(id);
+            CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(id);
             if (!ci)
                 return false;
             
@@ -3052,7 +3052,7 @@ bool ChatHandler::HandleWpShowCommand(const char* args)
         float o = chr->GetOrientation();
         Map *map = chr->GetMap();
 
-        CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(id);
+        CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(id);
         if (!ci)
             return false;
         
@@ -3109,7 +3109,7 @@ bool ChatHandler::HandleWpShowCommand(const char* args)
         float o = chr->GetOrientation();
         Map *map = chr->GetMap();
 
-        CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(id);
+        CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(id);
         if (!ci)
             return false;
         
@@ -3955,7 +3955,7 @@ bool ChatHandler::HandleCreatePetCommand(const char* /*args*/)
         return false;
     }
 
-    CreatureInfo const* cInfo = sObjectMgr->GetCreatureTemplate(creatureTarget->GetEntry());
+    CreatureInfo const* cInfo = ObjectMgr::GetCreatureTemplate(creatureTarget->GetEntry());
     // Creatures with family 0 crashes the server
     if (cInfo->family == 0)
     {

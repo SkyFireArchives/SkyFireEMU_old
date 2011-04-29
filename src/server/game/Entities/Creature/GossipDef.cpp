@@ -470,7 +470,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
         data << uint32(pQuest->RewChoiceItemCount[i]);
     for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
     {
-        IProto = sObjectMgr->GetItemPrototype(pQuest->RewChoiceItemId[i]);
+        IProto = ObjectMgr::GetItemPrototype(pQuest->RewChoiceItemId[i]);
         if (IProto)
             data << uint32(IProto->DisplayInfoID);
         else
@@ -485,7 +485,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
         data << uint32(pQuest->RewItemCount[i]);
     for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
     {
-        IProto = sObjectMgr->GetItemPrototype(pQuest->RewItemId[i]);
+        IProto = ObjectMgr::GetItemPrototype(pQuest->RewItemId[i]);
 
         if (IProto)
             data << uint32(IProto->DisplayInfoID);
@@ -764,7 +764,7 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
         data << uint32(pQuest->RewChoiceItemCount[i]);
     for (uint32 i=0; i < QUEST_REWARD_CHOICES_COUNT; ++i)
     {
-        IProto = sObjectMgr->GetItemPrototype(pQuest->RewChoiceItemId[i]);
+        IProto = ObjectMgr::GetItemPrototype(pQuest->RewChoiceItemId[i]);
         if (IProto)
             data << uint32(IProto->DisplayInfoID);
         else
@@ -779,7 +779,7 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
         data << uint32(pQuest->RewItemCount[i]);
     for (uint32 i=0; i < QUEST_REWARDS_COUNT; ++i)
     {
-        IProto = sObjectMgr->GetItemPrototype(pQuest->RewItemId[i]);
+        IProto = ObjectMgr::GetItemPrototype(pQuest->RewItemId[i]);
 
         if (IProto)
             data << uint32(IProto->DisplayInfoID);
@@ -878,7 +878,7 @@ void PlayerMenu::SendQuestGiverRequestItems(Quest const *pQuest, uint64 npcGUID,
         if (!pQuest->ReqItemId[i])
             continue;
 
-        pItem = sObjectMgr->GetItemPrototype(pQuest->ReqItemId[i]);
+        pItem = ObjectMgr::GetItemPrototype(pQuest->ReqItemId[i]);
 
         data << uint32(pQuest->ReqItemId[i]);
         data << uint32(pQuest->ReqItemCount[i]);

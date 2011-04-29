@@ -64,7 +64,7 @@ void MapManager::LoadTransports()
 
         Transport *t = new Transport(period, scriptId);
 
-        const GameObjectInfo *goinfo = sObjectMgr->GetGameObjectInfo(entry);
+        const GameObjectInfo *goinfo = ObjectMgr::GetGameObjectInfo(entry);
 
         if (!goinfo)
         {
@@ -215,7 +215,7 @@ bool Transport::Create(uint32 guidlow, uint32 entry, uint32 mapid, float x, floa
 
     Object::_Create(guidlow, 0, HIGHGUID_MO_TRANSPORT);
 
-    GameObjectInfo const* goinfo = sObjectMgr->GetGameObjectInfo(entry);
+    GameObjectInfo const* goinfo = ObjectMgr::GetGameObjectInfo(entry);
 
     if (!goinfo)
     {
@@ -657,7 +657,7 @@ uint32 Transport::AddNPCPassenger(uint32 tguid, uint32 entry, float x, float y, 
 {
     Map* map = GetMap();
     
-    CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(entry);
+    CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(entry);
     if (!ci)
         return 0;
     

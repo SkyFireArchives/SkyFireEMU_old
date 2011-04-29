@@ -600,7 +600,7 @@ void WorldSession::HandleStableChangeSlotCallback(QueryResult result, uint8 new_
         return;
     }
 
-    CreatureInfo const* creatureInfo = sObjectMgr->GetCreatureTemplate(creature_id);
+    CreatureInfo const* creatureInfo = ObjectMgr::GetCreatureTemplate(creature_id);
     if (!creatureInfo || !creatureInfo->isTameable(_player->CanTameExoticPets()))
     {
         // if problem in exotic pet

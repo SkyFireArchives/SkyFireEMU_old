@@ -941,8 +941,7 @@ bool IsPartOfSkillLine(uint32 skillId, uint32 spellId);
 
 class SpellMgr
 {
-    // Constructors
-    public:
+        friend class ACE_Singleton<SpellMgr, ACE_Null_Mutex>;
         SpellMgr();
         ~SpellMgr();
 
@@ -1414,7 +1413,6 @@ class SpellMgr
 
     // Modifiers
     public:
-        static SpellMgr& Instance();
 
         // Loading data at server startup
         //void LoadSpellRanks();

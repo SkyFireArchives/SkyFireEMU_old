@@ -1224,6 +1224,30 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     unitTarget->Kill(unitTarget);
                     return;
                 }
+                case 69228:                                 // Throw Torch
+                {
+                    uint32 KillCredit = 0;
+                    switch(unitTarget->GetEntry())
+                    {
+                        case 36727: KillCredit = unitTarget->GetEntry(); break;
+                        case 37155: KillCredit = unitTarget->GetEntry(); break;
+                        case 37156: KillCredit = unitTarget->GetEntry(); break;
+                        default: break;
+                    }
+                    unitTarget->CastSpell(unitTarget, 42345, true);
+                    unitTarget->CastSpell(unitTarget, 42726, true);
+                    m_caster->ToPlayer()->KilledMonsterCredit(KillCredit, NULL);
+                }
+                case 79751:                                 // Destroy Mechano-Tank
+                {
+                    if(m_caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+                    if(unitTarget->GetEntry() != 42224)
+                        return;
+
+                    m_caster->Kill(unitTarget, false);
+                    m_caster->ToPlayer()->KilledMonsterCredit(unitTarget->GetEntry(), unitTarget->GetGUID());
+                }
                 case 93072:                                 // Get Our Boys Back
                 {
                     if(Creature* Injured = m_caster->FindNearestCreature(50047, 3.0f, true))
@@ -2448,7 +2472,7 @@ void Spell::DoCreateItem(uint32 /*i*/, uint32 itemtype)
     Player* player = (Player*)unitTarget;
 
     uint32 newitemid = itemtype;
-    ItemPrototype const *pProto = sObjectMgr->GetItemPrototype(newitemid);
+    ItemPrototype const *pProto = ObjectMgr::GetItemPrototype(newitemid);
     if (!pProto)
     {
         player->SendEquipError(EQUIP_ERR_ITEM_NOT_FOUND, NULL, NULL);
@@ -6556,7 +6580,7 @@ void Spell::EffectTransmitted(SpellEffIndex effIndex)
 {
     uint32 name_id = m_spellInfo->EffectMiscValue[effIndex];
 
-    GameObjectInfo const* goinfo = sObjectMgr->GetGameObjectInfo(name_id);
+    GameObjectInfo const* goinfo = ObjectMgr::GetGameObjectInfo(name_id);
 
     if (!goinfo)
     {
@@ -7296,7 +7320,7 @@ void Spell::EffectRechargeManaGem(SpellEffIndex /*effIndex*/)
 
     uint32 item_id = m_spellInfo->EffectItemType[0];
 
-    ItemPrototype const *pProto = sObjectMgr->GetItemPrototype(item_id);
+    ItemPrototype const *pProto = ObjectMgr::GetItemPrototype(item_id);
     if (!pProto)
     {
         player->SendEquipError(EQUIP_ERR_ITEM_NOT_FOUND, NULL, NULL);

@@ -293,6 +293,10 @@ class AchievementMgr
 
 class AchievementGlobalMgr
 {
+        friend class ACE_Singleton<AchievementGlobalMgr, ACE_Null_Mutex>;
+        AchievementGlobalMgr() {}
+        ~AchievementGlobalMgr() {}
+
     public:
         AchievementCriteriaEntryList const& GetAchievementCriteriaByType(AchievementCriteriaTypes type);
         AchievementCriteriaEntryList const& GetTimedAchievementCriteriaByType(AchievementCriteriaTimedTypes type);
