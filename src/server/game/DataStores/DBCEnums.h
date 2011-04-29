@@ -71,6 +71,12 @@ enum AchievementFlags
     ACHIEVEMENT_FLAG_BAR               = 0x00000080,        // Show as progress bar (value / max vale) depend from other flag (by def use last criteria value)
     ACHIEVEMENT_FLAG_REALM_FIRST_REACH = 0x00000100,        //
     ACHIEVEMENT_FLAG_REALM_FIRST_KILL  = 0x00000200,        //
+    ACHIEVEMENT_FLAG_UNK0              = 0x00000400,        //
+    ACHIEVEMENT_FLAG_UNK1              = 0x00000800,        //
+    ACHIEVEMENT_FLAG_UNK2              = 0x00001000,        // 4.0.x
+    ACHIEVEMENT_FLAG_UNK3              = 0x00002000,        // 4.0.x
+    ACHIEVEMENT_FLAG_GUILD_ACHIEVEMENT = 0x00004000,        //
+    ACHIEVEMENT_FLAG_UNK4              = 0x00008000,        // Guild related
 };
 
 #define MAX_CRITERIA_REQUIREMENTS 2
