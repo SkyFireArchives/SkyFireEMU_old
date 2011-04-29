@@ -7935,6 +7935,16 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                         if (GetStat(STAT_SPIRIT)   > stat) { trigger_spell_id = 60235;                               }
                         break;
                     }
+					case 64568:             // Blood Reserve
+                    {
+                        if (GetHealth() - damage < GetMaxHealth() * 0.35)
+                        {
+                            basepoints0 = triggerAmount;
+                            trigger_spell_id = 64569;
+                            RemoveAura(64568);
+                        }
+                        break;
+                    }
                     case 67702:             // Death's Choice, Item - Coliseum 25 Normal Melee Trinket
                     {
                         float stat = 0.0f;
