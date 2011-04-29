@@ -1997,6 +1997,17 @@ void Spell::EffectTeleportUnits(SpellEffIndex /*effIndex*/)
     uint8 uiMaxSafeLevel = 0;
     switch (m_spellInfo->Id)
     {
+		case 36563:		// Shadowstep
+            if (Player * plr = unitTarget->ToPlayer())
+            {
+                if (Unit * target = plr->GetSelectedUnit())
+                {
+                    Position pos;
+                    target->GetFirstCollisionPosition(pos, 2, M_PI);
+                    m_targets.setDst(pos.GetPositionX(),pos.GetPositionY(),pos.GetPositionZ(),target->GetOrientation());
+                }
+            }
+            break;
         case 48129:  // Scroll of Recall
             uiMaxSafeLevel = 40;
         case 60320:  // Scroll of Recall II
