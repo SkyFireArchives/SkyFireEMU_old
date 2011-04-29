@@ -4935,8 +4935,8 @@ bool Unit::HandleModPowerRegenAuraProc(Unit *pVictim, uint32 damage, AuraEffect*
     else
         CastSpell(target,triggered_spell_id,true,castItem,triggeredByAura);
 
-    if (cooldown && GetTypeId() == TYPEID_PLAYER)
-        this->ToPlayer()->AddSpellCooldown(triggered_spell_id,0,time(NULL) + cooldown);
+    if (cooldown && target->GetTypeId() == TYPEID_PLAYER)
+                target->ToPlayer()->AddSpellCooldown(trigger_spell_id,0,time(NULL) + cooldown);
 
     return true;
 }
