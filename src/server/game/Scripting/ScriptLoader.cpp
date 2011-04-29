@@ -1141,8 +1141,8 @@ void AddNorthrendScripts()
     AddSC_isle_of_conquest();
 
     // Cataclysm Scripts
-	AddSC_instance_the_stonecore();			//Cata: The Stonecore
-	AddSC_the_stonecore();
+    AddSC_instance_the_stonecore();			//Cata: The Stonecore
+    AddSC_the_stonecore();
 
 #endif
 }
