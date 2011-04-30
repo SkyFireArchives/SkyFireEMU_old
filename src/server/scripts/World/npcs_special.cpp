@@ -2615,6 +2615,15 @@ public:
     }
 };
 
+enum eSpringRabbit
+{
+    NPC_SPRING_RABBIT = 32791,
+    NPC_SPRING_RABBIT_BABBY = 32793,
+    SPELL_SPRING_RABBIT_IN_LOVE = 61728,
+    SPELL_SPRING_RABBIT_JUMP = 61724,
+    SPELL_SPRING_RABBIT_FLING = 61875,
+};
+
 class npc_spring_rabbit : public CreatureScript
 {
 public:
