@@ -491,10 +491,21 @@ void MotionMaster::Mutate(MovementGenerator *m, MovementSlot slot)
     if (MovementGenerator *curr = Impl[slot])
     {
         Impl[slot] = NULL; // in case a new one is generated in this slot during directdelete
-        if (i_top == slot && (m_cleanFlag & MMCF_UPDATE))
+        bool wasTop = (i_top == slot);
+        if (wasTop)
+        {
+            --i_top;
+        }
+
+        if (wasTop && (m_cleanFlag & MMCF_UPDATE))
             DelayedDelete(curr);
         else
             DirectDelete(curr);
+
+        if (wasTop)
+        {
+            ++i_top;
+        }
     }
     else if (i_top < slot)
     {
