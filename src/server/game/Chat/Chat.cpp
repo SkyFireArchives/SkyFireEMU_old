@@ -335,47 +335,6 @@ ChatCommand * ChatHandler::getCommandTable()
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
 
-    static ChatCommand npcCommandTable[] =
-    {
-        { "add",            SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcAddCommand>,              "", NULL },
-        { "additem",        SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcAddVendorItemCommand>,    "", NULL },
-        { "addmove",        SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcAddMoveCommand>,          "", NULL },
-        { "allowmove",      SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleNpcAllowMovementCommand>,    "", NULL },
-        { "changeentry",    SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleNpcChangeEntryCommand>,      "", NULL },
-        { "changelevel",    SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcChangeLevelCommand>,      "", NULL },
-        { "delete",         SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcDeleteCommand>,           "", NULL },
-        { "delitem",        SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcDelVendorItemCommand>,    "", NULL },
-        { "factionid",      SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcFactionIdCommand>,        "", NULL },
-        { "flag",           SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcFlagCommand>,             "", NULL },
-        { "follow",         SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcFollowCommand>,           "", NULL },
-        { "info",           SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleNpcInfoCommand>,             "", NULL },
-        { "move",           SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcMoveCommand>,             "", NULL },
-        { "playemote",      SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleNpcPlayEmoteCommand>,        "", NULL },
-        { "setmodel",       SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcSetModelCommand>,         "", NULL },
-        { "setmovetype",    SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcSetMoveTypeCommand>,      "", NULL },
-        { "setphase",       SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcSetPhaseCommand>,         "", NULL },
-        { "spawndist",      SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcSpawnDistCommand>,        "", NULL },
-        { "spawntime",      SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcSpawnTimeCommand>,        "", NULL },
-        { "say",            SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleNpcSayCommand>,              "", NULL },
-        { "textemote",      SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleNpcTextEmoteCommand>,        "", NULL },
-        { "unfollow",       SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcUnFollowCommand>,         "", NULL },
-        { "whisper",        SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleNpcWhisperCommand>,          "", NULL },
-        { "yell",           SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleNpcYellCommand>,             "", NULL },
-        { "tempadd",        SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleTempAddSpwCommand>,          "", NULL },
-        { "tame",           SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcTameCommand>,             "", NULL },
-        { "setdeathstate",  SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcSetDeathStateCommand>,    "", NULL },
-        { "addformation",   SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleNpcAddFormationCommand>,     "", NULL },
-        { "setlink",        SEC_GAMEMASTER,      false, OldHandler<&ChatHandler::HandleNpcSetLinkCommand>,          "", NULL },
-
-        //{ TODO: fix or remove this commands
-        { "addweapon",      SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleNpcAddWeaponCommand>,        "", NULL },
-        { "name",           SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcNameCommand>,             "", NULL },
-        { "subname",        SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleNpcSubNameCommand>,          "", NULL },
-        //}
-
-        { NULL,             0,                  false, NULL,                                           "", NULL }
-    };
-
     static ChatCommand petCommandTable[] =
     {
         { "create",         SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleCreatePetCommand>,           "", NULL },
@@ -662,7 +621,6 @@ ChatCommand * ChatHandler::getCommandTable()
     {
         { "achievement",    SEC_ADMINISTRATOR,  false, NULL,                                           "", achievementCommandTable},
         { "gm",             SEC_MODERATOR,      true,  NULL,                                           "", gmCommandTable       },
-        { "npc",            SEC_MODERATOR,      false, NULL,                                           "", npcCommandTable      },
         { "go",             SEC_MODERATOR,      false, NULL,                                           "", goCommandTable       },
         { "learn",          SEC_MODERATOR,      false, NULL,                                           "", learnCommandTable    },
         { "modify",         SEC_MODERATOR,      false, NULL,                                           "", modifyCommandTable   },
@@ -772,9 +730,9 @@ ChatCommand * ChatHandler::getCommandTable()
     // can't use vector as vector storage is implementation-dependent, eg, there can be alignment gaps between elements
     static ChatCommand* commandTableCache = 0;
 
-    if (load_command_table)
+    if (LoadCommandTable())
     {
-        load_command_table = false;
+        SetLoadCommandTable(false);
 
         {
             // count total number of top-level commands
@@ -992,6 +950,26 @@ bool ChatHandler::ExecuteCommandInTable(ChatCommand *table, const char* text, co
         if (!hasStringAbbr(table[i].Name, cmd.c_str()))
             continue;
 
+        bool match = false;
+        if (strlen(table[i].Name) > strlen(cmd.c_str()))
+        {
+            for (uint32 j = 0; table[j].Name != NULL; ++j)
+            {
+                if (!hasStringAbbr(table[j].Name, cmd.c_str()))
+                    continue;
+
+                if (strcmp(table[j].Name,cmd.c_str()) != 0)
+                    continue;
+                else
+                {
+                    match = true;
+                    break;
+                }
+            }
+        }
+        if (match)
+            continue;
+
         // select subcommand from child commands list
         if (table[i].ChildCommands != NULL)
         {
@@ -1012,24 +990,6 @@ bool ChatHandler::ExecuteCommandInTable(ChatCommand *table, const char* text, co
         if (!table[i].Handler || !isAvailable(table[i]))
             continue;
 
-        bool match = false;
-
-        if (strlen(table[i].Name) > strlen(cmd.c_str()))
-        {
-            for (uint32 j = 0; table[j].Name != NULL; ++j)
-            {
-                if (strcmp(table[j].Name,cmd.c_str()) != 0)
-                    continue;
-                else
-                {
-                    match = true;
-                    break;
-                }
-            }
-        }
-        if (match)
-            continue;
-
         SetSentErrorMessage(false);
         // table[i].Name == "" is special case: send original command to handler
         if ((table[i].Handler)(this, strlen(table[i].Name) != 0 ? text : oldtext))
@@ -1048,7 +1008,7 @@ bool ChatHandler::ExecuteCommandInTable(ChatCommand *table, const char* text, co
             }
         }
         // some commands have custom error messages. Don't send the default one in these cases.
-        else if (!sentErrorMessage)
+        else if (!HasSentErrorMessage())
         {
             if (!table[i].Help.empty())
                 SendSysMessage(table[i].Help.c_str());

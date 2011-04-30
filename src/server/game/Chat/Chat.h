@@ -83,7 +83,6 @@ class ChatHandler
         static ChatCommand* getCommandTable();
 
         bool isValidChatMessage(const char* msg);
-        bool HasSentErrorMessage() { return sentErrorMessage;}
         void SendGlobalSysMessage(const char *str);
 
         bool hasStringAbbr(const char* name, const char* part);
@@ -124,7 +123,10 @@ class ChatHandler
 
         GameObject* GetNearbyGameObject();
         GameObject* GetObjectGlobalyWithGuidOrNearWithDbGuid(uint32 lowguid,uint32 entry);
+        bool HasSentErrorMessage() { return sentErrorMessage;}
         void SetSentErrorMessage(bool val){ sentErrorMessage = val;};
+        static bool LoadCommandTable() { return load_command_table;}
+        static void SetLoadCommandTable(bool val){ load_command_table = val;};
 
     protected:
         explicit ChatHandler() : m_session(NULL) {}      // for CLI subclass
@@ -283,42 +285,6 @@ class ChatHandler
         bool HandleModifyGenderCommand(const char* args);
 
         bool HandleOpcodeTestCommand(const char* args);
-
-        //-----------------------Npc Commands-----------------------
-        bool HandleNpcAddCommand(const char* args);
-        bool HandleNpcAddMoveCommand(const char* args);
-        bool HandleNpcAddVendorItemCommand(const char* args);
-        bool HandleNpcAllowMovementCommand(const char* args);
-        bool HandleNpcChangeEntryCommand(const char *args);
-        bool HandleNpcChangeLevelCommand(const char* args);
-        bool HandleNpcDeleteCommand(const char* args);
-        bool HandleNpcDelVendorItemCommand(const char* args);
-        bool HandleNpcFactionIdCommand(const char* args);
-        bool HandleNpcFlagCommand(const char* args);
-        bool HandleNpcFollowCommand(const char* args);
-        bool HandleNpcInfoCommand(const char* args);
-        bool HandleNpcMoveCommand(const char* args);
-        bool HandleNpcPlayEmoteCommand(const char* args);
-        bool HandleNpcSayCommand(const char* args);
-        bool HandleNpcSetDeathStateCommand(const char* args);
-        bool HandleNpcSetModelCommand(const char* args);
-        bool HandleNpcSetMoveTypeCommand(const char* args);
-        bool HandleNpcSetPhaseCommand(const char* args);
-        bool HandleNpcSpawnDistCommand(const char* args);
-        bool HandleNpcSpawnTimeCommand(const char* args);
-        bool HandleNpcTameCommand(const char* args);
-        bool HandleNpcTextEmoteCommand(const char* args);
-        bool HandleNpcUnFollowCommand(const char* args);
-        bool HandleNpcWhisperCommand(const char* args);
-        bool HandleNpcYellCommand(const char* args);
-        bool HandleNpcAddFormationCommand(const char* args);
-        bool HandleNpcSetLinkCommand(const char* args);
-
-        //TODO: NpcCommands that needs to be fixed :
-        bool HandleNpcAddWeaponCommand(const char* args);
-        bool HandleNpcNameCommand(const char* args);
-        bool HandleNpcSubNameCommand(const char* args);
-        //----------------------------------------------------------
 
         bool HandlePDumpLoadCommand(const char *args);
         bool HandlePDumpWriteCommand(const char *args);
