@@ -1393,8 +1393,8 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     case 27222:
                     case 57946: spFactor = 0.5f; break;
                 }
-                int32 damage = int32(SpellMgr::CalculateSpellEffectAmount(m_spellInfo, 0) + (6.3875 * m_spellInfo->baseLevel));
-                int32 mana = int32(damage + (m_caster->ToPlayer()->GetUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS+SPELL_SCHOOL_SHADOW) * spFactor));
+                int32 damage = int32(unitTarget->GetMaxHealth()*0.15);
+                int32 mana = int32(damage*1.2);
 
                 if (unitTarget && (int32(unitTarget->GetHealth()) > damage))
                 {
