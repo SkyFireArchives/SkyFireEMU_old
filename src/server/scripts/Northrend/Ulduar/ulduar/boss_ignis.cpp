@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -144,7 +144,7 @@ public:
                 vehicle->RemoveAllPassengers();
         }
 
-        void EnterCombat(Unit *who)
+        void EnterCombat(Unit* /*who*/)
         {
             _EnterCombat();
             DoScriptText(SAY_AGGRO, me);
@@ -160,7 +160,7 @@ public:
             Shattered = false;
         }
 
-        void JustDied(Unit *victim)
+        void JustDied(Unit* /*victim*/)
         {
             _JustDied();
             DoScriptText(SAY_DEATH, me);
@@ -181,14 +181,6 @@ public:
         {
             if (!UpdateVictim())
                 return;
-
-            if(me->GetPositionY() < 150 || me->GetPositionX() < 450 || me->getVictim()->GetTypeId() == !TYPEID_PLAYER)
-            {
-                me->RemoveAllAuras();
-                me->DeleteThreatList();
-                me->CombatStop(false);
-                me->GetMotionMaster()->MoveTargetedHome();
-            }
 
             events.Update(diff);
 
@@ -267,7 +259,7 @@ public:
             DoMeleeAttackIfReady();
         }
 
-        void KilledUnit(Unit* Victim)
+        void KilledUnit(Unit* /*victim*/)
         {
             if (!(rand()%5))
                 DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
@@ -329,7 +321,7 @@ public:
             Brittled = false;
         }
 
-        void DamageTaken(Unit *attacker, uint32 &damage)
+        void DamageTaken(Unit* /*attacker*/, uint32& damage)
         {
             if (me->HasAura(SPELL_BRITTLE) && damage >= 5000)
             {
@@ -338,11 +330,11 @@ public:
                     if (pIgnis->AI())
                         pIgnis->AI()->DoAction(ACTION_REMOVE_BUFF);
 
-                me->ForcedDespawn(1000);
+                me->DespawnOrUnsummon(1000);
             }
         }
 
-        void UpdateAI(const uint32 uiDiff)
+        void UpdateAI(const uint32 /*uiDiff*/)
         {
             if (!UpdateVictim())
                 return;
@@ -474,6 +466,7 @@ class spell_ignis_slag_pot : public SpellScriptLoader
             return new spell_ignis_slag_pot_AuraScript();
         }
 };
+
 
 void AddSC_boss_ignis()
 {

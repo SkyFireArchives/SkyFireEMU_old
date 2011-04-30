@@ -3106,7 +3106,6 @@ void AuraEffect::HandlePhase(AuraApplication const *aurApp, uint8 mode, bool app
         for (Unit::AuraEffectList::const_iterator itr = phases.begin(); itr != phases.end(); ++itr)
             newPhase |= (*itr)->GetMiscValue();
 
-
     // phase auras normally not expected at BG but anyway better check
     if (Player* player = target->ToPlayer())
     {
@@ -3119,7 +3118,7 @@ void AuraEffect::HandlePhase(AuraApplication const *aurApp, uint8 mode, bool app
                 bg->EventPlayerDroppedFlag(player);
 
         // stop handling the effect if it was removed by linked event
-        if (aurApp->GetRemoveMode())
+        if (apply && aurApp->GetRemoveMode())
             return;
 
         // GM-mode have mask 0xFFFFFFFF

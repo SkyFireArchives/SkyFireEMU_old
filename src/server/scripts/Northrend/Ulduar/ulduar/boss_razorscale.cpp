@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -392,9 +392,9 @@ public:
             uint8 random = urand(1,4);
             for (uint8 i = 0; i < random; ++i)
             {
-                float x = irand(540.0f, 640.0f);    // Safe range is between 500 and 650
-                float y = irand(-230.0f, -195.0f);  // Safe range is between -235 and -145
-                float z = 391.5f;                   // Ground level
+                float x = float(irand(540, 640));       // Safe range is between 500 and 650
+                float y = float(irand(-230, -195));     // Safe range is between -235 and -145
+                float z = 391.5f;                       // Ground level
                 me->SummonCreature(MOLE_MACHINE_TRIGGER, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 10000);
             }
         }
@@ -587,7 +587,9 @@ public:
 
         void Reset()
         {
-            if (MoleMachine = me->SummonGameObject(GOB_MOLE_MACHINE,me->GetPositionX(),me->GetPositionY(),me->GetPositionZ(),urand(0,6),0,0,0,0,300))
+            MoleMachine = me->SummonGameObject(GOB_MOLE_MACHINE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(),
+                float(urand(0, 6)), 0, 0, 0, 0, 300);
+            if (MoleMachine)
                 MoleMachine->SetGoState(GO_STATE_ACTIVE);
             SummonTimer = 6000;
         }

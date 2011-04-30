@@ -20,9 +20,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-/// \addtogroup realmd Realm Daemon
-/// @{
-/// \file
+#include <ace/Dev_Poll_Reactor.h>
+#include <ace/TP_Reactor.h>
+#include <ace/ACE.h>
+#include <ace/Sig_Handler.h>
+#include <openssl/opensslv.h>
+#include <openssl/crypto.h>
 
 #include "Common.h"
 #include "Database/DatabaseEnv.h"
@@ -34,14 +37,6 @@
 #include "SignalHandler.h"
 #include "RealmList.h"
 #include "RealmAcceptor.h"
-
-#include <ace/Dev_Poll_Reactor.h>
-#include <ace/TP_Reactor.h>
-#include <ace/ACE.h>
-#include <ace/Sig_Handler.h>
-
-#include <openssl/opensslv.h>
-#include <openssl/crypto.h>
 
 #ifndef _TRINITY_REALM_CONFIG
 # define _TRINITY_REALM_CONFIG  "authserver.conf"
@@ -284,7 +279,7 @@ extern int main(int argc, char **argv)
 #endif
 
     // maximum counter for next ping
-    uint32 numLoops = (sConfig->GetIntDefault("MaxPingTime", 30) * (MINUTE * 10));
+    uint32 numLoops = (sConfig->GetIntDefault("MaxPingTime", 30) * (MINUTE * 1000000 / 100000));
     uint32 loopCounter = 0;
 
     // possibly enable db logging; avoid massive startup spam by doing it here.
