@@ -2615,6 +2615,77 @@ public:
     }
 };
 
+enum eSpringRabbit
+{
+    NPC_SPRING_RABBIT = 32791,
+    NPC_SPRING_RABBIT_BABBY = 32793,
+    SPELL_SPRING_RABBIT_IN_LOVE = 61728,
+    SPELL_SPRING_RABBIT_JUMP = 61724,
+    SPELL_SPRING_RABBIT_FLING = 61875,
+};
+
+class npc_spring_rabbit : public CreatureScript
+{
+public:
+    npc_spring_rabbit() : CreatureScript("npc_spring_rabbit") { }
+
+    struct npc_spring_rabbitAI : public ScriptedAI
+    {
+        npc_spring_rabbitAI(Creature *c) : ScriptedAI(c) {Reset();}
+        bool m_bIsLove;
+        uint32 uiCheckTimer;
+
+        void Reset()
+        {
+            uiCheckTimer = 5000;
+            m_bIsLove = false;
+
+            if (Unit* own = me->GetOwner())
+                me->GetMotionMaster()->MoveFollow(own,0,0);
+        }
+
+        void UpdateAI(const uint32 diff)
+        {
+            if (uiCheckTimer <= diff)
+            {
+                if (!m_bIsLove)
+                {
+                    if (Creature* rabbit = me->FindNearestCreature(NPC_SPRING_RABBIT, 7, true))
+                    {
+                        if (rabbit->GetGUID() == me->GetGUID())
+                            return;
+
+                        if (!rabbit->HasAura(SPELL_SPRING_RABBIT_IN_LOVE))
+                        {
+                            me->CastSpell(me, SPELL_SPRING_RABBIT_IN_LOVE, true);
+                            rabbit->CastSpell(rabbit, SPELL_SPRING_RABBIT_IN_LOVE, true);
+
+                            if (Unit* owner = me->GetOwner())
+                                owner->CastSpell(owner, SPELL_SPRING_RABBIT_FLING, true);
+
+                            if (Unit* owner = rabbit->GetOwner())
+                                owner->CastSpell(owner, SPELL_SPRING_RABBIT_FLING, true);
+
+                            m_bIsLove = true;
+                        }
+                    }
+                }
+  
+                DoCast(me, SPELL_SPRING_RABBIT_JUMP);
+
+                uiCheckTimer = urand(5000, 8000);
+            }
+            else
+                uiCheckTimer -= diff;
+        }
+    };
+
+    CreatureAI *GetAI(Creature *creature) const
+    {
+        return new npc_spring_rabbitAI(creature);
+    }
+};
+
 class npc_ring_of_frost : public CreatureScript
 {
 public:
@@ -2704,74 +2775,93 @@ public:
     }
 };
 
-enum eSpringRabbit
+/*######
+## npc_flame_orb
+######*/
+
+enum eFlameOrb
 {
-    NPC_SPRING_RABBIT = 32791,
-    NPC_SPRING_RABBIT_BABBY = 32793,
-    SPELL_SPRING_RABBIT_IN_LOVE = 61728,
-    SPELL_SPRING_RABBIT_JUMP = 61724,
-    SPELL_SPRING_RABBIT_FLING = 61875,
+    SPELL_FLAME_ORB_DAMAGE          = 86719,
+    FLAME_ORB_DISTANCE              = 120
 };
 
-class npc_spring_rabbit : public CreatureScript
+class npc_flame_orb : public CreatureScript
 {
 public:
-    npc_spring_rabbit() : CreatureScript("npc_spring_rabbit") { }
+    npc_flame_orb() : CreatureScript("npc_flame_orb") {}
 
-    struct npc_spring_rabbitAI : public ScriptedAI
+    struct npc_flame_orbAI : public ScriptedAI
     {
-        npc_spring_rabbitAI(Creature *c) : ScriptedAI(c) {Reset();}
-        bool m_bIsLove;
-        uint32 uiCheckTimer;
+        npc_flame_orbAI(Creature *c) : ScriptedAI(c) 
+        {
+            x = me->GetPositionX();
+            y = me->GetPositionY();
+            z = me->GetOwner()->GetPositionZ()+2;
+            o = me->GetOrientation();
+            me->NearTeleportTo(x, y, z, o, true);
+            angle = me->GetOwner()->GetAngle(me);
+            newx = me->GetPositionX() + FLAME_ORB_DISTANCE/2 * cos(angle);
+            newy = me->GetPositionY() + FLAME_ORB_DISTANCE/2 * sin(angle);
+            CombatCheck = false;
+        }
+        
+        float x,y,z,o,newx,newy,angle;
+        bool CombatCheck;
+        uint32 uiDespawnTimer;
+        uint32 uiDespawnCheckTimer;
+        uint32 uiDamageTimer;
 
+        void EnterCombat(Unit* /*target*/)
+        {
+            me->GetMotionMaster()->MoveCharge(newx, newy, z, 1.14286f); // Normal speed
+            uiDespawnTimer = 15*IN_MILLISECONDS;
+            CombatCheck = true;
+        }
+        
         void Reset()
         {
-            uiCheckTimer = 5000;
-            m_bIsLove = false;
-
-            if (Unit* own = me->GetOwner())
-                me->GetMotionMaster()->MoveFollow(own,0,0);
+            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE|UNIT_FLAG_NON_ATTACKABLE);
+            me->AddUnitMovementFlag(MOVEMENTFLAG_FLYING);
+            me->SetReactState(REACT_PASSIVE);
+            if (CombatCheck == true)
+                uiDespawnTimer = 15*IN_MILLISECONDS;
+            else
+                uiDespawnTimer = 4*IN_MILLISECONDS;
+            uiDamageTimer = 1*IN_MILLISECONDS;
+            me->GetMotionMaster()->MovePoint(0, newx, newy, z);
         }
 
         void UpdateAI(const uint32 diff)
         {
-            if (uiCheckTimer <= diff)
+            if (!me->isInCombat() && CombatCheck == false)
             {
-                if (!m_bIsLove)
-                {
-                    if (Creature* rabbit = me->FindNearestCreature(NPC_SPRING_RABBIT, 7, true))
-                    {
-                        if (rabbit->GetGUID() == me->GetGUID())
-                            return;
+                me->SetSpeed(MOVE_RUN, 2, true);
+                me->SetSpeed(MOVE_FLIGHT, 2, true);
+            }
 
-                        if (!rabbit->HasAura(SPELL_SPRING_RABBIT_IN_LOVE))
-                        {
-                            me->CastSpell(me, SPELL_SPRING_RABBIT_IN_LOVE, true);
-                            rabbit->CastSpell(rabbit, SPELL_SPRING_RABBIT_IN_LOVE, true);
-
-                            if (Unit* owner = me->GetOwner())
-                                owner->CastSpell(owner, SPELL_SPRING_RABBIT_FLING, true);
-
-                            if (Unit* owner = rabbit->GetOwner())
-                                owner->CastSpell(owner, SPELL_SPRING_RABBIT_FLING, true);
-
-                            m_bIsLove = true;
-                        }
-                    }
-                }
-  
-                DoCast(me, SPELL_SPRING_RABBIT_JUMP);
-
-                uiCheckTimer = urand(5000, 8000);
+            if (uiDespawnTimer <= diff)
+            {
+                me->SetVisible(false);
+                me->DisappearAndDie();
             }
             else
-                uiCheckTimer -= diff;
+                uiDespawnTimer -= diff;
+
+            if (uiDamageTimer <= diff)
+            {
+                if (Unit* target = me->SelectNearestTarget(20))
+                    DoCast(target, SPELL_FLAME_ORB_DAMAGE);
+
+                uiDamageTimer = 1*IN_MILLISECONDS;
+            }
+            else
+                uiDamageTimer -= diff;
         }
     };
 
     CreatureAI *GetAI(Creature *creature) const
     {
-        return new npc_spring_rabbitAI(creature);
+        return new npc_flame_orbAI(creature);
     }
 };
 
@@ -2805,7 +2895,8 @@ void AddSC_npcs_special()
     new npc_locksmith;
     new npc_tabard_vendor;
     new npc_experience;
+    new npc_spring_rabbit;
     new npc_ring_of_frost;
-	new npc_spring_rabbit;
+    new npc_flame_orb;
 }
 

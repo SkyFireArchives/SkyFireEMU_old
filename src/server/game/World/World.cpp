@@ -802,7 +802,28 @@ void World::LoadConfigSettings(bool reload)
         m_int_configs[CONFIG_START_PLAYER_MONEY] = MAX_MONEY_AMOUNT;
     }
 
-    m_int_configs[CONFIG_MAX_HONOR_POINTS] = sConfig->GetIntDefault("MaxHonorPoints", 4000);
+    m_int_configs[CONFIG_MAX_CONQUEST_POINTS] = sConfig->GetIntDefault("MaxConquestPoints", 400000);
+    if (int32(m_int_configs[CONFIG_MAX_CONQUEST_POINTS]) < 0)
+    {
+        sLog->outError("MaxConquestPoints (%i) can't be negative. Set to 0.",m_int_configs[CONFIG_MAX_CONQUEST_POINTS]);
+        m_int_configs[CONFIG_MAX_CONQUEST_POINTS] = 0;
+    }
+
+    m_int_configs[CONFIG_START_CONQUEST_POINTS] = sConfig->GetIntDefault("StartConquestPoints", 0);
+    if (int32(m_int_configs[CONFIG_START_CONQUEST_POINTS]) < 0)
+    {
+        sLog->outError("StartConquestPoints (%i) must be in range 0..MaxConquestPoints(%u). Set to %u.",
+            m_int_configs[CONFIG_START_CONQUEST_POINTS],m_int_configs[CONFIG_MAX_CONQUEST_POINTS],0);
+        m_int_configs[CONFIG_START_CONQUEST_POINTS] = 0;
+    }
+    else if (m_int_configs[CONFIG_START_CONQUEST_POINTS] > m_int_configs[CONFIG_MAX_CONQUEST_POINTS])
+    {
+        sLog->outError("StartConquestPoints (%i) must be in range 0..MaxConquestPoints(%u). Set to %u.",
+            m_int_configs[CONFIG_START_CONQUEST_POINTS],m_int_configs[CONFIG_MAX_CONQUEST_POINTS],m_int_configs[CONFIG_MAX_CONQUEST_POINTS]);
+        m_int_configs[CONFIG_START_CONQUEST_POINTS] = m_int_configs[CONFIG_MAX_CONQUEST_POINTS];
+    }
+
+    m_int_configs[CONFIG_MAX_HONOR_POINTS] = sConfig->GetIntDefault("MaxHonorPoints", 400000);
     if (int32(m_int_configs[CONFIG_MAX_HONOR_POINTS]) < 0)
     {
         sLog->outError("MaxHonorPoints (%i) can't be negative. Set to 0.",m_int_configs[CONFIG_MAX_HONOR_POINTS]);
@@ -823,7 +844,7 @@ void World::LoadConfigSettings(bool reload)
         m_int_configs[CONFIG_START_HONOR_POINTS] = m_int_configs[CONFIG_MAX_HONOR_POINTS];
     }
 
-    m_int_configs[CONFIG_MAX_JUSTICE_POINTS] = sConfig->GetIntDefault("MaxJusticePoints", 4000);
+    m_int_configs[CONFIG_MAX_JUSTICE_POINTS] = sConfig->GetIntDefault("MaxJusticePoints", 400000);
     if (int32(m_int_configs[CONFIG_MAX_JUSTICE_POINTS]) < 0)
     {
         sLog->outError("MaxJusticePoints (%i) can't be negative. Set to 0.",m_int_configs[CONFIG_MAX_JUSTICE_POINTS]);

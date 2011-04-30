@@ -25,6 +25,7 @@
 
 void AddScripts();
 void AddExampleScripts();
+void AddPlayerScripts();
 void AddSpellScripts();
 void AddCommandScripts();
 void AddWorldScripts();

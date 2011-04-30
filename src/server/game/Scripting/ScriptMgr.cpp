@@ -1210,6 +1210,16 @@ void ScriptMgr::OnPlayerBindToInstance(Player* player, Difficulty difficulty, ui
     FOREACH_SCRIPT(PlayerScript)->OnBindToInstance(player, difficulty, mapid, permanent);
 }
 
+void ScriptMgr::OnPlayerDamageDealt(Player* player, Unit* victim, uint32& damage, DamageEffectType damageType, SpellEntry const *spellProto)
+{
+    FOREACH_SCRIPT(PlayerScript)->OnDamageDealt(player, victim, damage, damageType, spellProto);
+}
+
+void ScriptMgr::OnPlayerSpellCastWithProto(Player *player, SpellEntry const *spellProto)
+{
+    FOREACH_SCRIPT(PlayerScript)->OnSpellCastWithProto(player, spellProto);
+}
+
 // Guild
 void ScriptMgr::OnGuildAddMember(Guild *guild, Player *player, uint8& plRank)
 {

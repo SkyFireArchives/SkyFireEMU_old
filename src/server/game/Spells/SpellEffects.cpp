@@ -1268,9 +1268,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             if (m_spellInfo->SpellFamilyFlags[2] & 0x20)
                 m_caster->CastSpell(m_caster,51755,true);
             break;
-		
         case SPELLFAMILY_PRIEST:
-        {
             switch (m_spellInfo->Id)
             {
                 case 73325: // Leap of faith
@@ -1279,8 +1277,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     break;
                 }
             }
-        }
-        break;
+            break;
         case SPELLFAMILY_MAGE:
         {
             switch (m_spellInfo->Id)
@@ -1304,6 +1301,30 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                         else
                             m_caster->CastSpell(unitTarget, 79057, true); // Arcane Brilliance (Only for caster)
                     }
+                    break;
+                }
+                case 42955: // Conjure Refreshment
+                {
+                    if (m_caster->getLevel() > 33 && m_caster->getLevel() < 44)
+                        m_caster->CastSpell(m_caster, 92739, true);
+                    if (m_caster->getLevel() > 43 && m_caster->getLevel() < 54)
+                        m_caster->CastSpell(m_caster, 92799, true);
+                    if (m_caster->getLevel() > 53 && m_caster->getLevel() < 65)
+                        m_caster->CastSpell(m_caster, 92802, true);
+                    if (m_caster->getLevel() > 64 && m_caster->getLevel() < 74)
+                        m_caster->CastSpell(m_caster, 92805, true);
+                    if (m_caster->getLevel() > 73 && m_caster->getLevel() < 80)
+                        m_caster->CastSpell(m_caster, 74625, true);
+                    if (m_caster->getLevel() > 79 && m_caster->getLevel() < 85)
+                        m_caster->CastSpell(m_caster, 92822, true);
+                    if (m_caster->getLevel() == 85)
+                        m_caster->CastSpell(m_caster, 92727, true);
+                    break;
+                }
+                case 82731: // Flame Orb
+                {
+                    if (m_caster->GetTypeId() == TYPEID_PLAYER)
+                        m_caster->CastSpell(m_caster, 84765, true); // Summon Flame Orb
                     break;
                 }
             }
