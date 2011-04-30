@@ -3185,33 +3185,33 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const *aurApp, uint8 mo
 
     modelid = target->GetModelForForm(form);
 
-    // remove polymorph before changing display id to keep new display id
-    switch (form)
-    {
-        case FORM_CAT:
-        case FORM_TREE:
-        case FORM_TRAVEL:
-        case FORM_AQUA:
-        case FORM_BEAR:
-        case FORM_DIREBEAR:
-        case FORM_FLIGHT_EPIC:
-        case FORM_FLIGHT:
-        case FORM_MOONKIN:
-        {
-            // remove movement affects
-            target->RemoveMovementImpairingAuras();
-
-            // and polymorphic affects
-            if (target->IsPolymorphed())
-                target->RemoveAurasDueToSpell(target->getTransForm());
-            break;
-        }
-        default:
-           break;
-    }
-
     if (apply)
     {
+        // remove polymorph before changing display id to keep new display id
+        switch (form)
+        {
+            case FORM_CAT:
+            case FORM_TREE:
+            case FORM_TRAVEL:
+            case FORM_AQUA:
+            case FORM_BEAR:
+            case FORM_DIREBEAR:
+            case FORM_FLIGHT_EPIC:
+            case FORM_FLIGHT:
+            case FORM_MOONKIN:
+            {
+                // remove movement affects
+                target->RemoveMovementImpairingAuras();
+
+                // and polymorphic affects
+                if (target->IsPolymorphed())
+                    target->RemoveAurasDueToSpell(target->getTransForm());
+                break;
+            }
+            default:
+               break;
+        }
+
         // remove other shapeshift before applying a new one
         target->RemoveAurasByType(SPELL_AURA_MOD_SHAPESHIFT, 0, GetBase());
 
@@ -3274,18 +3274,19 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const *aurApp, uint8 mo
     }
     else
     {
-        if (modelid > 0)
-            target->SetDisplayId(target->GetNativeDisplayId());
-        target->SetByteValue(UNIT_FIELD_BYTES_2, 3, FORM_NONE);
-        if (target->getClass() == CLASS_DRUID)
+        // reset model id if no other auras present
+        // may happen when aura is applied on linked event on aura removal
+        if (!target->HasAuraType(SPELL_AURA_MOD_SHAPESHIFT))
         {
-            target->setPowerType(POWER_MANA);
-            // Remove movement impairing effects also when shifting out
-            target->RemoveMovementImpairingAuras();
+            target->SetShapeshiftForm(FORM_NONE);
+            if (target->getClass() == CLASS_DRUID)
+                target->setPowerType(POWER_MANA);
         }
-        target->SetShapeshiftForm(FORM_NONE);
 
-        switch(form)
+        if (modelid > 0)
+            target->RestoreDisplayId();
+
+        switch (form)
         {
             // Nordrassil Harness - bonus
             case FORM_BEAR:
@@ -3385,102 +3386,102 @@ void AuraEffect::HandleAuraTransform(AuraApplication const *aurApp, uint8 mode, 
 
     if (apply)
     {
-        // special case (spell specific functionality)
-        if (GetMiscValue() == 0)
+        // update active transform spell only when transform or shapeshift not set or not overwriting negative by positive case
+        if (!target->GetModelForForm(target->GetShapeshiftForm()) || !IsPositiveSpell(GetId()))
         {
-            // player applied only
-            if (target->GetTypeId() != TYPEID_PLAYER)
-                return;
-
-            switch (GetId())
+            // special case (spell specific functionality)
+            if (GetMiscValue() == 0)
             {
-                // Orb of Deception
-                case 16739:
+                switch (GetId())
                 {
-                    uint32 orb_model = target->GetNativeDisplayId();
-                    switch(orb_model)
+                    // Orb of Deception
+                    case 16739:
                     {
-                        // Troll Female
-                        case 1479: target->SetDisplayId(10134); break;
-                        // Troll Male
-                        case 1478: target->SetDisplayId(10135); break;
-                        // Tauren Male
-                        case 59:   target->SetDisplayId(10136); break;
-                        // Human Male
-                        case 49:   target->SetDisplayId(10137); break;
-                        // Human Female
-                        case 50:   target->SetDisplayId(10138); break;
-                        // Orc Male
-                        case 51:   target->SetDisplayId(10139); break;
-                        // Orc Female
-                        case 52:   target->SetDisplayId(10140); break;
-                        // Dwarf Male
-                        case 53:   target->SetDisplayId(10141); break;
-                        // Dwarf Female
-                        case 54:   target->SetDisplayId(10142); break;
-                        // NightElf Male
-                        case 55:   target->SetDisplayId(10143); break;
-                        // NightElf Female
-                        case 56:   target->SetDisplayId(10144); break;
-                        // Undead Female
-                        case 58:   target->SetDisplayId(10145); break;
-                        // Undead Male
-                        case 57:   target->SetDisplayId(10146); break;
-                        // Tauren Female
-                        case 60:   target->SetDisplayId(10147); break;
-                        // Gnome Male
-                        case 1563: target->SetDisplayId(10148); break;
-                        // Gnome Female
-                        case 1564: target->SetDisplayId(10149); break;
-                        // BloodElf Female
-                        case 15475: target->SetDisplayId(17830); break;
-                        // BloodElf Male
-                        case 15476: target->SetDisplayId(17829); break;
-                        // Dranei Female
-                        case 16126: target->SetDisplayId(17828); break;
-                        // Dranei Male
-                        case 16125: target->SetDisplayId(17827); break;
-                        default: break;
+                        uint32 orb_model = target->GetNativeDisplayId();
+                        switch (orb_model)
+                        {
+                            // Troll Female
+                            case 1479: target->SetDisplayId(10134); break;
+                            // Troll Male
+                            case 1478: target->SetDisplayId(10135); break;
+                            // Tauren Male
+                            case 59:   target->SetDisplayId(10136); break;
+                            // Human Male
+                            case 49:   target->SetDisplayId(10137); break;
+                            // Human Female
+                            case 50:   target->SetDisplayId(10138); break;
+                            // Orc Male
+                            case 51:   target->SetDisplayId(10139); break;
+                            // Orc Female
+                            case 52:   target->SetDisplayId(10140); break;
+                            // Dwarf Male
+                            case 53:   target->SetDisplayId(10141); break;
+                            // Dwarf Female
+                            case 54:   target->SetDisplayId(10142); break;
+                            // NightElf Male
+                            case 55:   target->SetDisplayId(10143); break;
+                            // NightElf Female
+                            case 56:   target->SetDisplayId(10144); break;
+                            // Undead Female
+                            case 58:   target->SetDisplayId(10145); break;
+                            // Undead Male
+                            case 57:   target->SetDisplayId(10146); break;
+                            // Tauren Female
+                            case 60:   target->SetDisplayId(10147); break;
+                            // Gnome Male
+                            case 1563: target->SetDisplayId(10148); break;
+                            // Gnome Female
+                            case 1564: target->SetDisplayId(10149); break;
+                            // BloodElf Female
+                            case 15475: target->SetDisplayId(17830); break;
+                            // BloodElf Male
+                            case 15476: target->SetDisplayId(17829); break;
+                            // Dranei Female
+                            case 16126: target->SetDisplayId(17828); break;
+                            // Dranei Male
+                            case 16125: target->SetDisplayId(17827); break;
+                            default: break;
+                        }
+                        break;
                     }
-                    break;
+                    // Murloc costume
+                    case 42365: target->SetDisplayId(21723); break;
+                    // Pygmy Oil
+                    case 53806: target->SetDisplayId(22512); break;
+                    default: break;
                 }
-                // Murloc costume
-                case 42365: target->SetDisplayId(21723); break;
-                // Pygmy Oil
-                case 53806: target->SetDisplayId(22512); break;
-                default: break;
-            }
-        }
-        else
-        {
-            CreatureInfo const * ci = ObjectMgr::GetCreatureTemplate(GetMiscValue());
-            if (!ci)
-            {
-                target->SetDisplayId(16358);              // pig pink ^_^
-                sLog->outError("Auras: unknown creature id = %d (only need its modelid) Form Spell Aura Transform in Spell ID = %d", GetMiscValue(), GetId());
             }
             else
             {
-                uint32 model_id = 0;
+                CreatureInfo const * ci = ObjectMgr::GetCreatureTemplate(GetMiscValue());
+                if (!ci)
+                {
+                    target->SetDisplayId(16358);              // pig pink ^_^
+                    sLog->outError("Auras: unknown creature id = %d (only need its modelid) From Spell Aura Transform in Spell ID = %d", GetMiscValue(), GetId());
+                }
+                else
+                {
+                    uint32 model_id = 0;
 
-                if (uint32 modelid = ci->GetRandomValidModelId())
-                    model_id = modelid;                     // Will use the default model here
+                    if (uint32 modelid = ci->GetRandomValidModelId())
+                        model_id = modelid;                     // Will use the default model here
 
-                // Polymorph (sheep)
-                if (GetSpellProto()->SpellFamilyName == SPELLFAMILY_MAGE && GetSpellProto()->SpellIconID == 82 && GetSpellProto()->SpellVisual[0] == 12978)
-                    if (Unit *caster = GetCaster())
-                        if (caster->HasAura(52648))         // Glyph of the Penguin
-                            model_id = 26452;
+                    // Polymorph (sheep)
+                    if (GetSpellProto()->SpellFamilyName == SPELLFAMILY_MAGE && GetSpellProto()->SpellIconID == 82 && GetSpellProto()->SpellVisual[0] == 12978)
+                        if (Unit *caster = GetCaster())
+                            if (caster->HasAura(52648))         // Glyph of the Penguin
+                                model_id = 26452;
 
-                target->SetDisplayId(model_id);
+                    target->SetDisplayId(model_id);
 
-                // Dragonmaw Illusion (set mount model also)
-                if (GetId() == 42016 && target->GetMountID() && !target->GetAuraEffectsByType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED).empty())
-                    target->SetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID, 16314);
+                    // Dragonmaw Illusion (set mount model also)
+                    if (GetId() == 42016 && target->GetMountID() && !target->GetAuraEffectsByType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED).empty())
+                        target->SetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID, 16314);
+                }
             }
         }
 
-        // update active transform spell only not set or not overwriting negative by positive case
+        // update active transform spell only when transform or shapeshift not set or not overwriting negative by positive case
         if (!target->getTransForm() || !IsPositiveSpell(GetId()) || IsPositiveSpell(target->getTransForm()))
             target->setTransForm(GetId());
 
@@ -3500,26 +3501,10 @@ void AuraEffect::HandleAuraTransform(AuraApplication const *aurApp, uint8 mode, 
     else
     {
         // HandleEffect(this, AURA_EFFECT_HANDLE_SEND_FOR_CLIENT, true) will reapply it if need
-        target->setTransForm(0);
-        target->SetDisplayId(target->GetNativeDisplayId());
+        if (target->getTransForm() == GetId())
+            target->setTransForm(0);
 
-        // re-aplly some from still active with preference negative cases
-        Unit::AuraEffectList const& otherTransforms = target->GetAuraEffectsByType(SPELL_AURA_TRANSFORM);
-        if (!otherTransforms.empty())
-        {
-            // look for other transform auras
-            AuraEffect *handledAura = *otherTransforms.begin();
-            for (Unit::AuraEffectList::const_iterator i = otherTransforms.begin(); i != otherTransforms.end(); ++i)
-            {
-                // negative auras are preferred
-                if (!IsPositiveSpell((*i)->GetSpellProto()->Id))
-                {
-                    handledAura = *i;
-                    break;
-                }
-            }
-            handledAura->HandleEffect(target, AURA_EFFECT_HANDLE_SEND_FOR_CLIENT, true);
-        }
+        target->RestoreDisplayId();
 
         // Dragonmaw Illusion (restore mount model)
         if (GetId() == 42016 && target->GetMountID() == 16314)
@@ -6024,6 +6009,15 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             caster->CastCustomSpell(28836, SPELLVALUE_BASE_POINT0, damage, target);
                     }
                     break;
+                case 63322: // Saronite Vapors
+                {
+                    int32 mana = int32(GetAmount() * pow(2.0f, GetBase()->GetStackAmount())); // mana restore - bp * 2^stackamount 
+                    int32 damage = mana * 2; // damage
+
+                    caster->CastCustomSpell(target, 63337, &mana, NULL, NULL, true);
+                    caster->CastCustomSpell(target, 63338, &damage, NULL, NULL, true);
+                    break;
+                }
                 case 71563:
                     if (Aura* newAura = target->AddAura(71564, target))
                         newAura->SetStackAmount(newAura->GetSpellProto()->StackAmount);

@@ -47,19 +47,19 @@
 #include "ScriptMgr.h"
 #include "Transport.h"
 
-bool MapSessionFilter::Process(WorldPacket * packet)
+bool MapSessionFilter::Process(WorldPacket *packet)
 {
     OpcodeHandler const& opHandle = opcodeTable[packet->GetOpcode()];
     //let's check if our opcode can be really processed in Map::Update()
-    if(opHandle.packetProcessing == PROCESS_INPLACE)
+    if (opHandle.packetProcessing == PROCESS_INPLACE)
         return true;
 
     //we do not process thread-unsafe packets
-    if(opHandle.packetProcessing == PROCESS_THREADUNSAFE)
+    if (opHandle.packetProcessing == PROCESS_THREADUNSAFE)
         return false;
 
-    Player * plr = m_pSession->GetPlayer();
-    if(!plr)
+    Player* plr = m_pSession->GetPlayer();
+    if (!plr)
         return false;
 
     //in Map::Update() we do not process packets where player is not in world!
@@ -68,20 +68,20 @@ bool MapSessionFilter::Process(WorldPacket * packet)
 
 //we should process ALL packets when player is not in world/logged in
 //OR packet handler is not thread-safe!
-bool WorldSessionFilter::Process(WorldPacket* packet)
+bool WorldSessionFilter::Process(WorldPacket *packet)
 {
     OpcodeHandler const& opHandle = opcodeTable[packet->GetOpcode()];
     //check if packet handler is supposed to be safe
-    if(opHandle.packetProcessing == PROCESS_INPLACE)
+    if (opHandle.packetProcessing == PROCESS_INPLACE)
         return true;
 
     //thread-unsafe packets should be processed in World::UpdateSessions()
-    if(opHandle.packetProcessing == PROCESS_THREADUNSAFE)
+    if (opHandle.packetProcessing == PROCESS_THREADUNSAFE)
         return true;
 
     //no player attached? -> our client! ^^
-    Player * plr = m_pSession->GetPlayer();
-    if(!plr)
+    Player* plr = m_pSession->GetPlayer();
+    if (!plr)
         return true;
 
     //lets process all packets for non-in-the-world player

@@ -1704,8 +1704,16 @@ void Spell::EffectForceCast(SpellEffIndex effIndex)
                 break;
         }
     }
-    Unit * caster = GetTriggeredSpellCaster(spellInfo, m_caster, unitTarget);
 
+    switch (triggered_spell_id)
+    {
+        case 62056: case 63985:         // Stone Grip Forcecast (10m, 25m)
+            unitTarget->CastSpell(unitTarget, spellInfo, true);     // Don't send m_originalCasterGUID param here or underlying
+            return;                                                 // AureEffect::HandleAuraControlVehicle will fail on caster == target
+    }
+
+    Unit * caster = GetTriggeredSpellCaster(spellInfo, m_caster, unitTarget);
+ 
     caster->CastSpell(unitTarget, spellInfo, true, NULL, NULL, m_originalCasterGUID);
 }
 
@@ -1725,6 +1733,7 @@ void Spell::EffectForceCastWithValue(SpellEffIndex effIndex)
         return;
     }
     int32 bp = damage;
+
     Unit * caster = GetTriggeredSpellCaster(spellInfo, m_caster, unitTarget);
 
     caster->CastCustomSpell(unitTarget, spellInfo->Id, &bp, &bp, &bp, true, NULL, NULL, m_originalCasterGUID);
@@ -6357,9 +6366,8 @@ void Spell::EffectQuestClear(SpellEffIndex effIndex)
     if (!pQuest)
         return;
 
-    QuestStatusMap::iterator qs_itr = pPlayer->getQuestStatusMap().find(quest_id);
     // Player has never done this quest
-    if (qs_itr == pPlayer->getQuestStatusMap().end())
+    if (pPlayer->GetQuestStatus(quest_id) == QUEST_STATUS_NONE)
         return;
 
     // remove all quest entries for 'entry' from quest log
@@ -6375,12 +6383,8 @@ void Spell::EffectQuestClear(SpellEffIndex effIndex)
         }
     }
 
-    // set quest status to not started (will be updated in DB at next save)
-    pPlayer->SetQuestStatus(quest_id, QUEST_STATUS_NONE);
-
-    // reset rewarded for restart repeatable quest
-    QuestStatusData &data = qs_itr->second;
-    data.m_rewarded = false;
+    pPlayer->RemoveActiveQuest(quest_id);
+    pPlayer->RemoveRewardedQuest(quest_id);
 }
 
 void Spell::EffectSendTaxi(SpellEffIndex effIndex)

@@ -41,14 +41,14 @@ void WorldSession::HandleDismissCritter(WorldPacket &recv_data)
     uint64 guid;
     recv_data >> guid;
 
-    sLog->outDebug("WORLD: Received CMSG_DISMISS_CRITTER for GUID " UI64FMTD "", guid);
+    sLog->outDebug("WORLD: Received CMSG_DISMISS_CRITTER for GUID " UI64FMTD, guid);
 
     Unit* pet = ObjectAccessor::GetCreatureOrPetOrVehicle(*_player, guid);
 
     if (!pet)
     {
-        sLog->outError("Vanitypet (GUID: %u) does not exist - player '%s' (GUID: %u / ACCOUNT: %u) attempted to dismiss it",
-                uint32(GUID_LOPART(guid)), GetPlayer()->GetName(), GetPlayer()->GetGUIDLow(), GetAccountId());
+        sLog->outDebug("Vanitypet (guid: %u) does not exist - player '%s' (guid: %u / account: %u) attempted to dismiss it (possibly lagged out)",
+            uint32(GUID_LOPART(guid)), GetPlayer()->GetName(), GetPlayer()->GetGUIDLow(), GetAccountId());
         return;
     }
 
