@@ -4935,8 +4935,8 @@ bool Unit::HandleModPowerRegenAuraProc(Unit *pVictim, uint32 damage, AuraEffect*
     else
         CastSpell(target,triggered_spell_id,true,castItem,triggeredByAura);
 
-    if (cooldown && GetTypeId() == TYPEID_PLAYER)
-        this->ToPlayer()->AddSpellCooldown(triggered_spell_id,0,time(NULL) + cooldown);
+    if (cooldown && target->GetTypeId() == TYPEID_PLAYER)
+        target->ToPlayer()->AddSpellCooldown(triggered_spell_id,0,time(NULL) + cooldown);
 
     return true;
 }
@@ -6002,7 +6002,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                 // Vampiric Embrace
                 case 15286:
                 {
-                    if (!pVictim || !pVictim->isAlive())
+                    if (!pVictim || !pVictim->isAlive() || procSpell->SpellFamilyFlags[1] & 0x80000)
                         return false;
 
                     // heal amount
@@ -6485,9 +6485,16 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                 break;
             }
             // Glyph of Mend Pet
-            if(dummySpell->Id == 57870)
+            if (dummySpell->Id == 57870)
             {
                 pVictim->CastSpell(pVictim, 57894, true, NULL, NULL, GetGUID());
+                return true;
+            }
+			// Misdirection
+            if (dummySpell->Id == 34477)
+            {
+                RemoveAura(dummySpell->Id, GetGUID(), 0, AURA_REMOVE_BY_DEFAULT);
+                CastSpell(this, 35079, true);
                 return true;
             }
             break;
@@ -7935,6 +7942,16 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                         if (GetStat(STAT_SPIRIT)   > stat) { trigger_spell_id = 60235;                               }
                         break;
                     }
+					case 64568:             // Blood Reserve
+                    {
+                        if (GetHealth() - damage < GetMaxHealth() * 0.35)
+                        {
+                            basepoints0 = triggerAmount;
+                            trigger_spell_id = 64569;
+                            RemoveAura(64568);
+                        }
+                        break;
+                    }
                     case 67702:             // Death's Choice, Item - Coliseum 25 Normal Melee Trinket
                     {
                         float stat = 0.0f;
@@ -8394,6 +8411,13 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                     return false;
                 break;
             }
+		// Brambles
+        case 50419:
+        {
+            if (!roll_chance_i(triggerAmount))
+                return false;
+            break;
+        }
         // Cheat Death
         case 28845:
         {
@@ -10618,9 +10642,17 @@ bool Unit::isSpellCrit(Unit *pVictim, SpellEntry const *spellProto, SpellSchoolM
     float crit_chance = 0.0f;
     switch(spellProto->DmgClass)
     {
-        case SPELL_DAMAGE_CLASS_NONE:  // Exception for Earth Shield and Lifebloom Final Bloom
-            if (spellProto->Id != 379 && spellProto->Id != 33778) // We need more spells to find a general way (if there is any)
-                return false;
+        case SPELL_DAMAGE_CLASS_NONE:
+            // We need more spells to find a general way (if there is any)
+            switch (spellProto->Id)
+            {
+                case 379:   // Earth Shield
+                case 33778: // Lifebloom Final Bloom
+                case 64844: // Divine Hymn
+                    break;
+                default:
+                    return false;
+            }
         case SPELL_DAMAGE_CLASS_MAGIC:
         {
             if (schoolMask & SPELL_SCHOOL_MASK_NORMAL)
@@ -11256,7 +11288,7 @@ bool Unit::IsImmunedToSpell(SpellEntry const* spellInfo)
     {
         // State/effect immunities applied by aura expect full spell immunity
         // Ignore effects with mechanic, they are supposed to be checked separately
-        if (!spellInfo->EffectMechanic[i])
+        if (!spellInfo->EffectMechanic[i] && spellInfo->Effect[i] != SPELL_EFFECT_KNOCK_BACK)
             if (IsImmunedToSpellEffect(spellInfo, i))
                 return true;
     }

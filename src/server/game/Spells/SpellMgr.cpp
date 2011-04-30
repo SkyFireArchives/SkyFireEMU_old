@@ -3679,6 +3679,11 @@ void SpellMgr::LoadSpellCustomAttr()
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_EXCLUDE_SELF;
             count++;
             break;
+		case 64844: // Divine Hymn 
+        case 64904: // Hymn of Hope
+            spellInfo->AttributesEx &= ~SPELL_ATTR1_NEGATIVE;
+            ++count;
+            break;
         case 44978: case 45001: case 45002:     // Wild Magic
         case 45004: case 45006: case 45010:     // Wild Magic
         case 31347: // Doom
@@ -3829,9 +3834,18 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->Stances = 1 << (FORM_TREE - 1);
             count++;
             break;
+		case 8145: // Tremor Totem (instant pulse)
+        case 6474: // Earthbind Totem (instant pulse)
+            spellInfo->AttributesEx5 |= SPELL_ATTR5_START_PERIODIC_AT_APPLY;
+            count++;
+            break;
         case 30421:     // Nether Portal - Perseverence
             spellInfo->EffectBasePoints[2] += 30000;
             count++;
+            break;
+		case 61607: // Mark of Blood
+            spellInfo->AttributesEx |= SPELL_ATTR1_NO_THREAT;
+            ++count;
             break;
         // some dummy spell only has dest, should push caster in this case
         case 62324: // Throw Passenger
