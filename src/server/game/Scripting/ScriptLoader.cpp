@@ -53,7 +53,7 @@ void AddSC_SmartSCripts();
 
 //Commands
 void AddSC_account_commandscript();
-//void AddSC_achievement_commandscript();
+void AddSC_achievement_commandscript();
 //void AddSC_gm_commandscript();
 void AddSC_npc_commandscript();
 //void AddSC_go_commandscript();
@@ -628,7 +628,7 @@ void AddSpellScripts()
 void AddCommandScripts()
 {
     AddSC_account_commandscript();
-    //AddSC_achievement_commandscript();
+    AddSC_achievement_commandscript();
     //AddSC_gm_commandscript();
     AddSC_npc_commandscript();
     //AddSC_go_commandscript();

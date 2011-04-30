@@ -611,15 +611,8 @@ ChatCommand * ChatHandler::getCommandTable()
         { NULL,             0,                  false, NULL,                                                "", NULL }
     };
 
-    static ChatCommand achievementCommandTable[] =
-    {
-        { "add",            SEC_ADMINISTRATOR,  false,  OldHandler<&ChatHandler::HandleAchievementAddCommand>,      "", NULL},
-        { NULL,             0,                  false, NULL,                                            "", NULL }
-    };
-
     static ChatCommand commandTable[] =
     {
-        { "achievement",    SEC_ADMINISTRATOR,  false, NULL,                                           "", achievementCommandTable},
         { "gm",             SEC_MODERATOR,      true,  NULL,                                           "", gmCommandTable       },
         { "go",             SEC_MODERATOR,      false, NULL,                                           "", goCommandTable       },
         { "learn",          SEC_MODERATOR,      false, NULL,                                           "", learnCommandTable    },
