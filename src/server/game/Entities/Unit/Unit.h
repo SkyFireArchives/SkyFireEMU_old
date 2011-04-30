@@ -823,10 +823,10 @@ class DamageInfo
 private:
     Unit * const m_attacker;
     Unit * const m_victim;
-    DamageEffectType const m_damageType;
+    uint32 m_damage;
     SpellEntry const * const m_spellInfo;
     SpellSchoolMask const m_schoolMask;
-    uint32 m_damage;
+    DamageEffectType const m_damageType;
     uint32 m_absorb;
     uint32 m_resist;
     uint32 m_block;
@@ -863,9 +863,9 @@ public:
     }
     Unit * GetAttacker() const { return m_attacker; };
     Unit * GetVictim() const { return m_victim; };
-    DamageEffectType const GetDamageType() const { return m_damageType; };
+    DamageEffectType GetDamageType() const { return m_damageType; };
     SpellEntry const * GetSpellInfo() const { return m_spellInfo; };
-    SpellSchoolMask const GetSchoolMask() const { return m_schoolMask; };
+    SpellSchoolMask GetSchoolMask() const { return m_schoolMask; };
     uint32 GetDamage() const { return m_damage; };
     uint32 GetAbsorb() const { return m_absorb; };
     uint32 GetResist() const { return m_resist; };
@@ -1856,6 +1856,7 @@ class Unit : public WorldObject
         uint32 GetDisplayId() { return GetUInt32Value(UNIT_FIELD_DISPLAYID); }
         void SetDisplayId(uint32 modelId);
         uint32 GetNativeDisplayId() { return GetUInt32Value(UNIT_FIELD_NATIVEDISPLAYID); }
+        void RestoreDisplayId();
         void SetNativeDisplayId(uint32 modelId) { SetUInt32Value(UNIT_FIELD_NATIVEDISPLAYID, modelId); }
         void setTransForm(uint32 spellid) { m_transform = spellid;}
         uint32 getTransForm() const { return m_transform;}
