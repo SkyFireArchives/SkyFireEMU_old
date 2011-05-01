@@ -308,6 +308,7 @@ void AddSC_wailing_caverns();                //Wailing caverns
 void AddSC_instance_wailing_caverns();
 void AddSC_zulfarrak();                     //Zul'Farrak generic
 void AddSC_instance_zulfarrak();            //Zul'Farrak instance script
+void AddSC_npc_pusillin();                  //Dire Maul Pusillin
 
 void AddSC_ashenvale();
 void AddSC_azshara();
@@ -894,6 +895,7 @@ void AddKalimdorScripts()
     AddSC_instance_wailing_caverns();
     AddSC_zulfarrak();                      //Zul'Farrak generic
     AddSC_instance_zulfarrak();             //Zul'Farrak instance script
+	AddSC_npc_pusillin();                   //Dire maul npc Pusillin
 
     AddSC_ashenvale();
     AddSC_azshara();
