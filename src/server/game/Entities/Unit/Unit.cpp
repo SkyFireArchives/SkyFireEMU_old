@@ -6294,6 +6294,8 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                         if (!triggeredSpell)
                             return false;
                         basepoints0 = int32(triggerAmount * damage / 100 / (GetSpellMaxDuration(triggeredSpell) / triggeredSpell->EffectAmplitude[0]));
+						// Add remaining ticks to damage done
+                        basepoints0 += pVictim->GetRemainingDotDamage(GetGUID(), triggered_spell_id);
                     }
                     break;
                 }
