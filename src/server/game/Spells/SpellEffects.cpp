@@ -2726,6 +2726,9 @@ void Spell::EffectEnergize(SpellEffIndex effIndex)
         case 68082:                                         // Glyph of Seal of Command
             damage = damage * unitTarget->GetCreateMana() / 100;
             break;
+		case 71132:                                         // Glyph of Shadow Word: Pain
+            damage = int32(CalculatePctN(unitTarget->GetCreateMana(), 1));
+            break;
         case 48542:                                         // Revitalize
             damage = damage * unitTarget->GetMaxPower(power) / 100;
             break;
