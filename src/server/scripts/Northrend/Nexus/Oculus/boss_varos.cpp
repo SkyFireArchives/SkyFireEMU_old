@@ -59,6 +59,8 @@ public:
         boss_varosAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
+			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         InstanceScript* pInstance;
