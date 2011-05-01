@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -83,8 +83,6 @@ public:
         boss_gal_darahAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
-			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         uint32 uiStampedeTimer;
@@ -284,7 +282,6 @@ public:
     };
 
 };
-
 
 void AddSC_boss_gal_darah()
 {
