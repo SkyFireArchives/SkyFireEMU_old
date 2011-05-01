@@ -4029,6 +4029,10 @@ void SpellMgr::LoadSpellCustomAttr()
         case 74434: // Soulburn
             spellInfo->procCharges = 1;
             break;
+		case 23126: // World Enlarger
+            spellInfo->AuraInterruptFlags |= AURA_INTERRUPT_FLAG_SPELL_ATTACK;
+            count++;
+            break;
         default:
             break;
         }
