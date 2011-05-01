@@ -171,6 +171,8 @@ public:
         boss_skadiAI(Creature *c) : ScriptedAI(c), Summons(me)
         {
             m_pInstance = c->GetInstanceScript();
+			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         InstanceScript* m_pInstance;

@@ -67,6 +67,8 @@ public:
         boss_drakosAI(Creature* pCreature) : ScriptedAI(pCreature), lSummons(me)
         {
             pInstance = pCreature->GetInstanceScript();
+			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         uint32 uiMagicPullTimer;

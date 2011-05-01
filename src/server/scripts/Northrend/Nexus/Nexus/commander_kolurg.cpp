@@ -50,6 +50,8 @@ public:
     struct boss_commander_kolurgAI : public ScriptedAI
     {
         boss_commander_kolurgAI(Creature *c) : ScriptedAI(c) {}
+		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
 
         void Reset() {}
         void EnterCombat(Unit* /*who*/) {}

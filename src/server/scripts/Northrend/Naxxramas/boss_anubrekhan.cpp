@@ -64,6 +64,8 @@ public:
     struct boss_anubrekhanAI : public BossAI
     {
         boss_anubrekhanAI(Creature *c) : BossAI(c, BOSS_ANUBREKHAN) {}
+		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
 
         bool hasTaunted;
 
