@@ -49,9 +49,9 @@ public:
 
     struct boss_commander_stoutbeardAI : public ScriptedAI
     {
-        boss_commander_stoutbeardAI(Creature *c) : ScriptedAI(c) {}
+        boss_commander_stoutbeardAI(Creature *c) : ScriptedAI(c) {
 		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         void Reset() {}
         void EnterCombat(Unit* /*who*/)
