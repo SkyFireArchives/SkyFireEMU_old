@@ -87,6 +87,8 @@ public:
         boss_ichoronAI(Creature* pCreature) : ScriptedAI(pCreature), m_waterElements(pCreature)
         {
             pInstance  = pCreature->GetInstanceScript();
+			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         bool bIsExploded;

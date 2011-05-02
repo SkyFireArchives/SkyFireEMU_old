@@ -6294,6 +6294,8 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                         if (!triggeredSpell)
                             return false;
                         basepoints0 = int32(triggerAmount * damage / 100 / (GetSpellMaxDuration(triggeredSpell) / triggeredSpell->EffectAmplitude[0]));
+						// Add remaining ticks to damage done
+                        basepoints0 += pVictim->GetRemainingDotDamage(GetGUID(), triggered_spell_id);
                     }
                     break;
                 }
@@ -8452,6 +8454,14 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
             target = this;
             trigger_spell_id = 22588;
         }
+		// Glyph of Shadow Word: Pain
+        case 55681:
+        {
+            // Shadow Word: Pain
+            if (!(procSpell->SpellFamilyFlags[0] & 0x8000))
+                return false;
+            break;
+        }
         // Greater Heal Refund (Avatar Raiment set)
         case 37594:
         {
@@ -10450,7 +10460,10 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
     // Pets just add their bonus damage to their spell damage
     // note that their spell damage is just gain of their own auras
     if (HasUnitTypeMask(UNIT_MASK_GUARDIAN))
-        DoneAdvertisedBenefit += ((Guardian*)this)->GetBonusDamage();
+        if (!(GetSpellSchoolMask(spellProto) & SPELL_SCHOOL_MASK_NORMAL))                 // Do not add Spellpower to melee abilities
+            DoneAdvertisedBenefit += ((Guardian*)this)->GetBonusDamage();
+        else if (((Guardian*)this)->GetBonusDamage())                                     // Instead add a fixed amount of AP
+            DoneAdvertisedBenefit += GetTotalAttackPowerValue(BASE_ATTACK) * 0.2f;
 
     // Check for table values
     float coeff = 0;
@@ -11350,7 +11363,8 @@ bool Unit::IsImmunedToSpellEffect(SpellEntry const* spellInfo, uint32 index) con
         // Check for immune to application of harmful magical effects
         AuraEffectList const& immuneAuraApply = GetAuraEffectsByType(SPELL_AURA_MOD_IMMUNE_AURA_APPLY_SCHOOL);
         for (AuraEffectList::const_iterator iter = immuneAuraApply.begin(); iter != immuneAuraApply.end(); ++iter)
-            if (spellInfo->Dispel == DISPEL_MAGIC &&                                      // Magic debuff
+            if ((spellInfo->Dispel == DISPEL_MAGIC || spellInfo->Dispel == DISPEL_CURSE ||                          // Magical debuff
+                spellInfo->Dispel == DISPEL_DISEASE || spellInfo->Dispel == DISPEL_POISON) &&
                 ((*iter)->GetMiscValue() & GetSpellSchoolMask(spellInfo)) &&  // Check school
                 !IsPositiveEffect(spellInfo->Id, index))                                  // Harmful
                 return true;
@@ -11376,6 +11390,12 @@ bool Unit::IsDamageToThreatSpell(SpellEntry const * spellInfo) const
             break;
         case SPELLFAMILY_DEATHKNIGHT:
             if (spellInfo->SpellFamilyFlags[1] == 0x20000000) // Rune Strike
+                return true;
+			if (spellInfo->SpellFamilyFlags[0] == 0x20) // Death and Decay
+                return true;
+            break;
+        case SPELLFAMILY_WARRIOR:
+            if (spellInfo->SpellFamilyFlags[0] == 0x80) // Thunder Clap
                 return true;
             break;
     }
@@ -14154,7 +14174,7 @@ void Unit::ProcDamageAndSpellFor(bool isVictim, Unit * pTarget, uint32 procFlag,
                     // Skip melee hits and spells ws wrong school or zero cost
                     if (procSpell &&
                         (procSpell->manaCost != 0 || procSpell->ManaCostPercentage != 0) && // Cost check
-                        (triggeredByAura->GetMiscValue() & procSpell->SchoolMask) == 0)         // School check
+                        (triggeredByAura->GetMiscValue() & procSpell->SchoolMask))         // School check
                         takeCharges = true;
                     break;
                 case SPELL_AURA_MECHANIC_IMMUNITY:

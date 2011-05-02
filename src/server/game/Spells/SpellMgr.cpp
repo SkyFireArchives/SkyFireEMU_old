@@ -848,6 +848,11 @@ bool SpellMgr::_isPositiveEffect(uint32 spellId, uint32 effIndex, bool deep) con
             if (spellproto->SpellIconID == 45)
                 return true;
             break;
+		case SPELLFAMILY_WARRIOR:
+            // Shockwave
+            if (spellId == 46968)
+                return false;
+            break;
         case SPELLFAMILY_PRIEST:
             switch (spellId)
             {
@@ -4029,6 +4034,10 @@ void SpellMgr::LoadSpellCustomAttr()
         case 74434: // Soulburn
             spellInfo->procCharges = 1;
             break;
+		case 23126: // World Enlarger
+            spellInfo->AuraInterruptFlags |= AURA_INTERRUPT_FLAG_SPELL_ATTACK;
+            count++;
+            break;
         default:
             break;
         }
@@ -4053,6 +4062,9 @@ void SpellMgr::LoadSpellCustomAttr()
                 // Roar
                 else if (spellInfo->SpellFamilyFlags[0] & 0x8)
                     mSpellCustomAttr[i] |= SPELL_ATTR0_CU_AURA_CC;
+				// Rake
+                else if (spellInfo->SpellFamilyFlags[0] & 0x1000)
+                    mSpellCustomAttr[i] |= SPELL_ATTR0_CU_IGNORE_ARMOR;
                 else
                     break;
                 count++;

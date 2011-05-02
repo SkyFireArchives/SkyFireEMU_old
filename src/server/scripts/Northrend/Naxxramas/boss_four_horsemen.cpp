@@ -96,6 +96,8 @@ public:
                 if (me->GetEntry() == MOB_HORSEMEN[i])
                     id = Horsemen(i);
             caster = (id == HORSEMEN_LADY || id == HORSEMEN_SIR);
+			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         Horsemen id;
@@ -121,7 +123,7 @@ public:
             me->SetReactState(REACT_AGGRESSIVE);
             uiEventStarterGUID = 0;
             nextWP = 0;
-            punishTimer = 2000;
+            punishTimer = 10000;
             nextMovementStarted = false;
             movementCompleted = false;
             movementStarted = false;

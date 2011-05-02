@@ -1078,6 +1078,8 @@ bool Guardian::UpdateStats(Stats stat)
                 }
             }
             ownersBonus = float(owner->GetStat(stat)) * mod;
+			// ownersBonus is multiplied by TOTAL_PCT too
+			ownersBonus *=  GetModifierValue(UNIT_MOD_STAT_STAMINA, TOTAL_PCT);
             value += ownersBonus;
         }
     }

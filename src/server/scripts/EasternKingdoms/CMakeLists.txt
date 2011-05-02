@@ -24,6 +24,21 @@ set(scripts_STAT_SRCS
   EasternKingdoms/isle_of_queldanas.cpp
   EasternKingdoms/boss_kruul.cpp
   EasternKingdoms/searing_gorge.cpp
+  EasternKingdoms/ZulGurub/boss_hakkar.cpp
+  EasternKingdoms/ZulGurub/boss_mandokir.cpp
+  EasternKingdoms/ZulGurub/boss_marli.cpp
+  EasternKingdoms/ZulGurub/boss_hazzarah.cpp
+  EasternKingdoms/ZulGurub/boss_jeklik.cpp
+  EasternKingdoms/ZulGurub/boss_grilek.cpp
+  EasternKingdoms/ZulGurub/zulgurub.h
+  EasternKingdoms/ZulGurub/boss_renataki.cpp
+  EasternKingdoms/ZulGurub/boss_arlokk.cpp
+  EasternKingdoms/ZulGurub/boss_gahzranka.cpp
+  EasternKingdoms/ZulGurub/boss_venoxis.cpp
+  EasternKingdoms/ZulGurub/instance_zulgurub.cpp
+  EasternKingdoms/ZulGurub/boss_jindo.cpp
+  EasternKingdoms/ZulGurub/boss_wushoolay.cpp
+  EasternKingdoms/ZulGurub/boss_thekal.cpp
   EasternKingdoms/wetlands.cpp
   EasternKingdoms/arathi_highlands.cpp
   EasternKingdoms/Gnomeregan/instance_gnomeregan.cpp

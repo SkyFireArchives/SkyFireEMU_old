@@ -61,6 +61,8 @@ class boss_archavon : public CreatureScript
         {
             boss_archavonAI(Creature* creature) : BossAI(creature, DATA_ARCHAVON)
             {
+				me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+				me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
             }
 
             void EnterCombat(Unit * /*who*/)
