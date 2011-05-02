@@ -5453,6 +5453,13 @@ SpellCastResult Spell::CheckCast(bool strict)
                     return SPELL_FAILED_BAD_TARGETS;
                 break;
             }
+			case SPELL_EFFECT_REDIRECT_THREAT:
+            {
+                if (m_spellInfo->Id == 57934 && m_targets.getUnitTarget() &&
+                    m_targets.getUnitTarget()->GetTypeId() != TYPEID_PLAYER)
+                    return SPELL_FAILED_BAD_TARGETS;
+                break;
+            }
             case SPELL_EFFECT_LEAP_BACK:
             {
                 // Spell 781 (Disengage) requires player to be in combat
