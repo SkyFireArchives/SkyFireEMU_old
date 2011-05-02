@@ -823,10 +823,10 @@ class DamageInfo
 private:
     Unit * const m_attacker;
     Unit * const m_victim;
-    uint32 m_damage;
+    DamageEffectType const m_damageType;
     SpellEntry const * const m_spellInfo;
     SpellSchoolMask const m_schoolMask;
-    DamageEffectType const m_damageType;
+    uint32 m_damage;
     uint32 m_absorb;
     uint32 m_resist;
     uint32 m_block;
@@ -863,9 +863,9 @@ public:
     }
     Unit * GetAttacker() const { return m_attacker; };
     Unit * GetVictim() const { return m_victim; };
-    DamageEffectType GetDamageType() const { return m_damageType; };
+    DamageEffectType const GetDamageType() const { return m_damageType; };
     SpellEntry const * GetSpellInfo() const { return m_spellInfo; };
-    SpellSchoolMask GetSchoolMask() const { return m_schoolMask; };
+    SpellSchoolMask const GetSchoolMask() const { return m_schoolMask; };
     uint32 GetDamage() const { return m_damage; };
     uint32 GetAbsorb() const { return m_absorb; };
     uint32 GetResist() const { return m_resist; };

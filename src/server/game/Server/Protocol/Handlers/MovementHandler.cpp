@@ -61,7 +61,7 @@ void WorldSession::HandleMoveWorldportAckOpcode()
 
     // get the destination map entry, not the current one, this will fix homebind and reset greeting
     MapEntry const* mEntry = sMapStore.LookupEntry(loc.GetMapId());
-    InstanceTemplate const* mInstance = ObjectMgr::GetInstanceTemplate(loc.GetMapId());
+    InstanceTemplate const* mInstance = sObjectMgr->GetInstanceTemplate(loc.GetMapId());
 
     // reset instance validity, except if going to an instance inside an instance
     if (GetPlayer()->m_InstanceValid == false && !mInstance)
@@ -569,14 +569,6 @@ void WorldSession::HandleChangeSeatsOnControlledVehicle(WorldPacket &recv_data)
     if (!vehicle_base)
         return;
 
-    VehicleSeatEntry const* seat = GetPlayer()->GetVehicle()->GetSeatForPassenger(GetPlayer());
-    if (!seat->CanSwitchFromSeat())
-    {
-        sLog->outError("HandleChangeSeatsOnControlledVehicle, Opcode: %u, Player %u tried to switch seats but current seatflags %u don't permit that.",
-            recv_data.GetOpcode(), GetPlayer()->GetGUIDLow(), seat->m_flags);
-        return;
-    }
-
     switch (recv_data.GetOpcode())
     {
         case CMSG_REQUEST_VEHICLE_PREV_SEAT:
@@ -652,84 +644,25 @@ void WorldSession::HandleEnterPlayerVehicle(WorldPacket &data)
 
 void WorldSession::HandleEjectPassenger(WorldPacket &data)
 {
-    Vehicle* vehicle = _player->GetVehicleKit();
-    if (!vehicle)
+    if (_player->GetVehicleKit())
     {
-        sLog->outError("HandleEjectPassenger: Player %u is not in a vehicle!", GetPlayer()->GetGUIDLow());
-        return;
-    }
-
-    uint64 guid;
-    data >> guid;
-
-    if (IS_PLAYER_GUID(guid))
-    {
-        Player *plr = ObjectAccessor::FindPlayer(guid);
-        if (!plr)
-        {
-            sLog->outError("Player %u tried to eject player %u from vehicle, but the latter was not found in world!", GetPlayer()->GetGUIDLow(), GUID_LOPART(guid));
-            return;
-        }
-
-        if (!plr->IsOnVehicle(vehicle->GetBase()))
-        {
-            sLog->outError("Player %u tried to eject player %u, but they are not in the same vehicle", GetPlayer()->GetGUIDLow(), GUID_LOPART(guid));
-            return;
-        }
-
-        VehicleSeatEntry const* seat = vehicle->GetSeatForPassenger(plr);
-        ASSERT(seat);
-        if (seat->IsEjectable())
+        uint64 guid;
+        data >> guid;
+        if (Player *plr = ObjectAccessor::FindPlayer(guid))
             plr->ExitVehicle();
-        else
-            sLog->outError("Player %u attempted to eject player %u from non-ejectable seat.", GetPlayer()->GetGUIDLow(), GUID_LOPART(guid));
-    }
-
-    else if (IS_CREATURE_GUID(guid))
-    {
-        Unit *unit = ObjectAccessor::GetUnit(*_player, guid);
-        if (!unit) // creatures can be ejected too from player mounts
+        else if (Unit *unit = ObjectAccessor::GetUnit(*_player, guid)) // creatures can be ejected too from player mounts
         {
-            sLog->outError("Player %u tried to eject creature guid %u from vehicle, but the latter was not found in world!", GetPlayer()->GetGUIDLow(), GUID_LOPART(guid));
-            return;
-        }
-
-        if (!unit->IsOnVehicle(vehicle->GetBase()))
-        {
-            sLog->outError("Player %u tried to eject unit %u, but they are not in the same vehicle", GetPlayer()->GetGUIDLow(), GUID_LOPART(guid));
-            return;
-        }
-
-        VehicleSeatEntry const* seat = vehicle->GetSeatForPassenger(unit);
-        ASSERT(seat);
-        if (seat->IsEjectable())
-        {
-            ASSERT(GetPlayer() == vehicle->GetBase());
             unit->ExitVehicle();
-            unit->ToCreature()->DespawnOrUnsummon(1000);
-            ASSERT(!unit->IsOnVehicle(vehicle->GetBase()));
+            unit->ToCreature()->ForcedDespawn(1000);
         }
-        else
-            sLog->outError("Player %u attempted to eject creature GUID %u from non-ejectable seat.", GetPlayer()->GetGUIDLow(), GUID_LOPART(guid));
     }
-    else
-        sLog->outError("HandleEjectPassenger: Player %u tried to eject invalid GUID "UI64FMTD, GetPlayer()->GetGUIDLow(), guid);
 }
 
 void WorldSession::HandleRequestVehicleExit(WorldPacket &recv_data)
 {
     sLog->outDebug("WORLD: Recvd CMSG_REQUEST_VEHICLE_EXIT");
     recv_data.hexlike();
-
-    if (Vehicle* vehicle = GetPlayer()->GetVehicle())
-    {
-        if (VehicleSeatEntry const* seat = vehicle->GetSeatForPassenger(GetPlayer()))
-            if (seat->CanEnterOrExit())
-                GetPlayer()->ExitVehicle();
-            else
-                sLog->outError("Player %u tried to exit vehicle, but seatflags %u (ID: %u) don't permit that.", 
-                    GetPlayer()->GetGUIDLow(), seat->m_ID, seat->m_flags);
-    }
+    GetPlayer()->ExitVehicle();
 }
 
 void WorldSession::HandleMountSpecialAnimOpcode(WorldPacket& /*recv_data*/)
