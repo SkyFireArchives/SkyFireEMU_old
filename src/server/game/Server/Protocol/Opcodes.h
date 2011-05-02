@@ -122,7 +122,7 @@ enum Opcodes
     SMSG_PARTY_COMMAND_RESULT                        = 0x026E0, // 4.0.6a 13623
     CMSG_GUILD_CREATE                                = 0x1000C, //
     CMSG_GUILD_INVITE                                = 0x02DA8, // 4.0.6a 13623
-    SMSG_GUILD_INVITE                                = 0x0B78C, // 4.0.6a 13623
+    SMSG_GUILD_INVITE                                = 0x0010C, // 4.0.6a 13623
     CMSG_GUILD_ACCEPT                                = 0x03729, // 4.0.6a 13623
     CMSG_GUILD_DECLINE                               = 0x0352D, // 4.0.6a 13623
     SMSG_GUILD_DECLINE                               = 0x07DEC, // 4.0.6a 13623
