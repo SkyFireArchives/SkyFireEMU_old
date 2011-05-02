@@ -155,9 +155,9 @@ public:
 
     struct boss_gothikAI : public BossAI
     {
-        boss_gothikAI(Creature *c) : BossAI(c, BOSS_GOTHIK) {}
+        boss_gothikAI(Creature *c) : BossAI(c, BOSS_GOTHIK) {
 		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         uint32 waveCount;
         typedef std::vector<Creature*> TriggerVct;

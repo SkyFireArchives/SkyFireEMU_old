@@ -1010,9 +1010,9 @@ public:
 
     struct mob_tenebronAI : public dummy_dragonAI
     {
-        mob_tenebronAI(Creature* pCreature) : dummy_dragonAI(pCreature) {}
+        mob_tenebronAI(Creature* pCreature) : dummy_dragonAI(pCreature) {
 		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         uint32 m_uiShadowBreathTimer;
         uint32 m_uiShadowFissureTimer;
@@ -1102,9 +1102,9 @@ public:
 
     struct mob_shadronAI : public dummy_dragonAI
     {
-        mob_shadronAI(Creature* pCreature) : dummy_dragonAI(pCreature) {}
+        mob_shadronAI(Creature* pCreature) : dummy_dragonAI(pCreature) {
 		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         uint32 m_uiShadowBreathTimer;
         uint32 m_uiShadowFissureTimer;

@@ -577,9 +577,9 @@ class boss_acidmaw : public CreatureScript
 
     struct boss_acidmawAI : public boss_jormungarAI
     {
-        boss_acidmawAI(Creature* pCreature) : boss_jormungarAI(pCreature) { }
+        boss_acidmawAI(Creature* pCreature) : boss_jormungarAI(pCreature) { 
 		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         void Reset()
         {
@@ -613,10 +613,11 @@ public:
 
     struct boss_dreadscaleAI : public boss_jormungarAI
     {
-        boss_dreadscaleAI(Creature* pCreature) : boss_jormungarAI(pCreature) { }
+        boss_dreadscaleAI(Creature* pCreature) : boss_jormungarAI(pCreature) { 
 		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
-
+        }
+        
         void Reset()
         {
             boss_jormungarAI::Reset();
