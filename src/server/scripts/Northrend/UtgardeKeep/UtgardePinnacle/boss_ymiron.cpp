@@ -109,6 +109,8 @@ public:
         boss_ymironAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
+			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
             for (int i = 0; i < 4; ++i)
                 m_uiActiveOrder[i] = i;
             for (int i = 0; i < 3; ++i)

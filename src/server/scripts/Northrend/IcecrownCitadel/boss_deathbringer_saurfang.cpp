@@ -240,9 +240,9 @@ class boss_deathbringer_saurfang : public CreatureScript
 
         struct boss_deathbringer_saurfangAI : public BossAI
         {
-            boss_deathbringer_saurfangAI(Creature* creature) : BossAI(creature, DATA_DEATHBRINGER_SAURFANG)
+            boss_deathbringer_saurfangAI(Creature* pCreature) : BossAI(pCreature, DATA_DEATHBRINGER_SAURFANG)
             {
-                ASSERT(creature->GetVehicleKit()); // we dont actually use it, just check if exists
+                ASSERT(pCreature->GetVehicleKit()); // we dont actually use it, just check if exists
                 introDone = false;
                 fallenChampionCount = 0;
             }

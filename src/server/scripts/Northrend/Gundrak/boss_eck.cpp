@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -44,6 +44,8 @@ public:
         boss_eckAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
+			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+			me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         uint32 uiBerserkTimer;
@@ -94,7 +96,7 @@ public:
 
             if (uiSpringTimer <= diff)
             {
-                Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,1);
+                Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,1);
                 if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
                 {
                     DoCast(pTarget, RAND(SPELL_ECK_SPRING_1, SPELL_ECK_SPRING_2));
@@ -133,7 +135,6 @@ public:
 
 };
 
-
 class npc_ruins_dweller : public CreatureScript
 {
 public:
@@ -165,7 +166,6 @@ public:
     };
 
 };
-
 
 void AddSC_boss_eck()
 {
