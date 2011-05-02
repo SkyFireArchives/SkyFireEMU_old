@@ -61,6 +61,8 @@ public:
         {
             // Do not let Gluth be affected by zombies' debuff
             me->ApplySpellImmune(0, IMMUNITY_ID, SPELL_INFECTED_WOUND, true);
+			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         void MoveInLineOfSight(Unit *who)

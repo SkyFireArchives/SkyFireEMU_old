@@ -49,6 +49,8 @@ public:
     struct boss_loathebAI : public BossAI
     {
         boss_loathebAI(Creature *c) : BossAI(c, BOSS_LOATHEB) {}
+		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
 
         void EnterCombat(Unit * /*who*/)
         {

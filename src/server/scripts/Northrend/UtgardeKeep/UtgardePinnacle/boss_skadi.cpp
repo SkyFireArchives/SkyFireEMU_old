@@ -171,6 +171,8 @@ public:
         boss_skadiAI(Creature *c) : ScriptedAI(c), Summons(me)
         {
             m_pInstance = c->GetInstanceScript();
+			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         InstanceScript* m_pInstance;
@@ -311,7 +313,7 @@ public:
                     if (!UpdateVictim())
                         return;
 
-                    if (me->GetPositionX() >= 519)
+                    if (me->GetPositionX() >= 475)
                     {
                         me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
                         if (!m_bSaidEmote)

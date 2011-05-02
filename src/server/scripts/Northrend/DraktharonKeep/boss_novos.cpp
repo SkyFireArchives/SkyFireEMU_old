@@ -73,6 +73,8 @@ public:
         boss_novosAI(Creature *c) : Scripted_NoMovementAI(c), lSummons(me)
         {
             pInstance = c->GetInstanceScript();
+			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         uint32 uiTimer;
@@ -143,6 +145,10 @@ public:
 
         void UpdateAI(const uint32 diff)
         {
+			//Return since we have no target
+            if (!UpdateVictim())
+                return;
+
             switch (Phase)
             {
                 case PHASE_1:

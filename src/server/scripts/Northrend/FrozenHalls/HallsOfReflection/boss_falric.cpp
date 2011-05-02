@@ -58,6 +58,8 @@ public:
     struct boss_falricAI : public boss_horAI
     {
         boss_falricAI(Creature *pCreature) : boss_horAI(pCreature) {}
+		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
 
         uint8 uiHopelessnessCount;
 

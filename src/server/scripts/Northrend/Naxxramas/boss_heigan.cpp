@@ -55,6 +55,8 @@ public:
     struct boss_heiganAI : public BossAI
     {
         boss_heiganAI(Creature *c) : BossAI(c, BOSS_HEIGAN) {}
+		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
 
         uint32 eruptSection;
         bool eruptDirection;

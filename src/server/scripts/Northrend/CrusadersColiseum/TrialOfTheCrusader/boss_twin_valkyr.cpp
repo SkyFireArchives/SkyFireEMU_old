@@ -434,6 +434,8 @@ public:
     struct boss_fjolaAI : public boss_twin_baseAI
     {
         boss_fjolaAI(Creature* pCreature) : boss_twin_baseAI(pCreature) {}
+		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
 
         void Reset() {
             boss_twin_baseAI::Reset();
@@ -494,6 +496,8 @@ public:
     struct boss_eydisAI : public boss_twin_baseAI
     {
         boss_eydisAI(Creature* pCreature) : boss_twin_baseAI(pCreature) {}
+		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
 
         void Reset() {
             boss_twin_baseAI::Reset();

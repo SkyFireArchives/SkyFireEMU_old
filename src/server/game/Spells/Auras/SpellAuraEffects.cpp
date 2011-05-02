@@ -686,7 +686,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                 if (AuraEffect const * aurEff = caster->GetAuraEffect(34241, 0))
                     amount += cp * aurEff->GetAmount();
 
-                amount += int32(caster->GetTotalAttackPowerValue(BASE_ATTACK) * cp / 100);
+                amount += CalculatePctF(caster->GetTotalAttackPowerValue(BASE_ATTACK), cp);
             }
             // Rend
             else if (GetSpellProto()->SpellFamilyName == SPELLFAMILY_WARRIOR && GetSpellProto()->SpellFamilyFlags[0] & 0x20)

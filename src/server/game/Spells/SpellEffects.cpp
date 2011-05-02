@@ -468,6 +468,20 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                         damage = (distance > radius) ? 0 : int32(SpellMgr::CalculateSpellEffectAmount(m_spellInfo, 0) * distance);
                         break;
                     }
+					// Lightning Nova
+                    case 65279:
+                    {
+                        // Guessed: exponential diminution until max range of spell (100yd)
+                        float radius = GetSpellRadiusForHostile(sSpellRadiusStore.LookupEntry(m_spellInfo->EffectRadiusIndex[0]));
+                        if (!radius)
+                            return;
+                        float distance = m_caster->GetDistance2d(unitTarget);
+                        if (distance > radius)
+                            damage = 0; 
+                        else
+                            damage *= pow(1.0f - distance / radius, 2);
+                        break; 
+                    }
                 }
                 break;
             }
@@ -2712,6 +2726,9 @@ void Spell::EffectEnergize(SpellEffIndex effIndex)
         case 68082:                                         // Glyph of Seal of Command
             damage = damage * unitTarget->GetCreateMana() / 100;
             break;
+		case 71132:                                         // Glyph of Shadow Word: Pain
+            damage = int32(CalculatePctN(unitTarget->GetCreateMana(), 1));
+            break;
         case 48542:                                         // Revitalize
             damage = damage * unitTarget->GetMaxPower(power) / 100;
             break;
@@ -4354,7 +4371,19 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
              weapon_total_pct = m_caster->GetModifierValue(unitMod, TOTAL_PCT);
 
         if (fixed_bonus)
+		{
             fixed_bonus = int32(fixed_bonus * weapon_total_pct);
+			// Death Strike, Scourge Strike and Plague Strike fixed bonus take talents bonuses twice
+            if (m_spellInfo->SpellFamilyName == SPELLFAMILY_DEATHKNIGHT && m_caster->ToPlayer())
+            {
+                if (m_spellInfo->SpellFamilyFlags[0] & 0x11 || m_spellInfo->SpellFamilyFlags[1] & 0x8000000)
+                {
+                    float coeff = 1.0f;
+                    m_caster->ToPlayer()->ApplySpellMod(m_spellInfo->Id, SPELLMOD_DAMAGE, coeff);
+                    fixed_bonus *= coeff;
+                }
+            }
+        }
         if (spell_bonus)
             spell_bonus = int32(spell_bonus * weapon_total_pct);
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -47,7 +47,8 @@ enum mainCreatures
     CREATURE_MOORABI                              = 29305,
     CREATURE_GALDARAH                             = 29306,
     CREATURE_DRAKKARICOLOSSUS                     = 29307,
-    CREATURE_ECK                                  = 29932
+    CREATURE_ECK                                  = 29932,
+    CREATURE_LIVING_MOJO                          = 29830
 };
 
 #endif
