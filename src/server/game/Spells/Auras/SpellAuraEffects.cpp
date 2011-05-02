@@ -4551,7 +4551,7 @@ void AuraEffect::HandleModStateImmunityMask(AuraApplication const *aurApp, uint8
             target->RemoveAurasByType(*iter);
 
     // stop handling the effect if it was removed by linked event
-    if (apply && aurApp->GetRemoveMode())
+    if (aurApp->GetRemoveMode())
         return;
 
     for (std::list <AuraType>::iterator iter = immunity_list.begin(); iter != immunity_list.end(); ++iter)
