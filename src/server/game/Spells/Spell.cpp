@@ -1519,7 +1519,7 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask, bool 
                 duration = m_originalCaster->ModSpellDuration(aurSpellInfo, unit, duration, positive);
 
                 // Haste modifies duration of channeled spells
-                ifif (IsChanneledSpell(m_spellInfo) && m_spellInfo->AttributesEx5 & SPELL_ATTR5_HASTE_AFFECT_DURATION)
+                if (IsChanneledSpell(m_spellInfo) && m_spellInfo->AttributesEx5 & SPELL_ATTR5_HASTE_AFFECT_DURATION)
                     m_originalCaster->ModSpellCastTime(aurSpellInfo, duration, this);
 
                 // and duration of auras affected by SPELL_AURA_PERIODIC_HASTE
