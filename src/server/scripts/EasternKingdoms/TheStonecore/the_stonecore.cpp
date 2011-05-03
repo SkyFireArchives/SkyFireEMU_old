@@ -20,6 +20,7 @@
 
 /***************************************TRASH SPELLS*************************************/
 // Crystalspawn Giant (42810) Health: 536,810 - 1,202,925
+// update creature_template set
 #define SPELL_QUAKE                      DUNGEON_MODE(81008,92631)
 
 // IMP (43014) Health: 4,468 - 7,749, Mana: 16,676 - 17,816
@@ -27,7 +28,7 @@
 
 // Millhouse Manastorm (43391) Health: 386,505 - 513,248, Mana: 186,560 - 197,380
 #define SPELL_BLUR						 81216
-#define SPELL_FEAR						 81442
+#define SPELL_MILL_FEAR					 81442
 #define SPELL_FROSTBOLT_VOLLEY			 DUNGEON_MODE(81440,92642)
 #define SPELL_IMPENDING_DOOM			 86830
 #define SPELL_SHADOW_BOLT				 DUNGEON_MODE(81439,92641)
@@ -75,7 +76,7 @@ enum eEvents
     EVENT_QUAKE,
     EVENT_FELL_FIREBALL,
     EVENT_BLUR,
-    EVENT_FEAR,
+    EVENT_MILL_FEAR,
     EVENT_FROSTBOLT_VOLLEY,
     EVENT_IMPENDING_DOOM,
     EVENT_SHADOW_BOLT,
@@ -99,7 +100,7 @@ enum eEvents
     EVENT_RAGE,
 };
 
-// Crystalspawn Giant (42810) AI
+// Crystalspawn Giant AI
 class mob_crystalspawn_giant : public CreatureScript
 {
 public:
@@ -125,7 +126,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            events.ScheduleEvent(EVENT_QUAKE, 5000);
+            events.ScheduleEvent(EVENT_QUAKE, 5000 + rand()%5000);
         }
 
         void UpdateAI(const uint32 diff)
@@ -144,7 +145,7 @@ public:
                 {
                     case EVENT_QUAKE:
                         DoCast(me->getVictim(), SPELL_QUAKE);
-                        events.RescheduleEvent(EVENT_QUAKE, 7000);
+                        events.RescheduleEvent(EVENT_QUAKE, 5000 + rand()%5000);
                         return;
                 }
             }
@@ -155,7 +156,7 @@ public:
 
 };
 
-// Imp (43014)
+// Imp AI
 class mob_impp : public CreatureScript
 {
 public:
@@ -212,9 +213,147 @@ public:
 
 };
 
+// Rock Borer AI
+class mob_rock_borer : public CreatureScript
+{
+public:
+    mob_rock_borer() : CreatureScript("mob_rock_borer") { }
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_rock_borerAI(pCreature);
+    }
+
+    struct mob_rock_borerAI : public ScriptedAI
+    {
+        mob_rock_borerAI(Creature *c) : ScriptedAI(c)
+        {
+        }
+
+        EventMap events;
+
+        void Reset()
+        {
+            events.Reset();
+        }
+
+        void EnterCombat(Unit* /*who*/)
+        {
+            events.ScheduleEvent(EVENT_ROCK_BORE, 1000);
+        }
+
+        void UpdateAI(const uint32 diff)
+        {
+            if (!UpdateVictim())
+                return;
+
+            events.Update(diff);
+
+            if (me->HasUnitState(UNIT_STAT_CASTING))
+                return;
+
+            while (uint32 eventId = events.ExecuteEvent())
+            {
+                switch(eventId)
+                {
+                    case EVENT_ROCK_BORE:
+                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                            DoCast(pTarget, SPELL_ROCK_BORE);
+                        events.RescheduleEvent(EVENT_ROCK_BORE, 1000);
+                        return;
+                }
+            }
+
+            DoMeleeAttackIfReady();
+        }
+    };
+
+};
+
+// Millhouse Manastorm AI
+class mob_millhouse_manastorm : public CreatureScript
+{
+public:
+    mob_millhouse_manastorm() : CreatureScript("mob_millhouse_manastorm") { }
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_millhouse_manastormAI(pCreature);
+    }
+
+    struct mob_millhouse_manastormAI : public ScriptedAI
+    {
+        mob_millhouse_manastormAI(Creature *c) : ScriptedAI(c)
+        {
+        }
+
+        EventMap events;
+
+        void Reset()
+        {
+            events.Reset();
+        }
+
+        void EnterCombat(Unit* /*who*/)
+        {
+            events.ScheduleEvent(EVENT_MILL_FEAR, 10000);
+			events.ScheduleEvent(EVENT_FROSTBOLT_VOLLEY, 7000 + rand()%10000);
+			events.ScheduleEvent(EVENT_IMPENDING_DOOM, 10000 + rand()%10000);
+			events.ScheduleEvent(EVENT_SHADOW_BOLT, 1000);
+			events.ScheduleEvent(EVENT_SHADOWFURY, 5000 + rand()%15000);
+        }
+
+        void UpdateAI(const uint32 diff)
+        {
+            if (!UpdateVictim())
+                return;
+
+            events.Update(diff);
+
+            if (me->HasUnitState(UNIT_STAT_CASTING))
+                return;
+
+            while (uint32 eventId = events.ExecuteEvent())
+            {
+                switch(eventId)
+                {
+                    case EVENT_MILL_FEAR:
+                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                            DoCast(pTarget, SPELL_MILL_FEAR);
+                        events.RescheduleEvent(EVENT_MILL_FEAR, 10000);
+                        return;
+                    case EVENT_SHADOW_BOLT:
+                        DoCast(me->getVictim(), SPELL_SHADOW_BOLT);
+                        events.RescheduleEvent(EVENT_SHADOWBOLT, 1000);
+                        return;
+                    case EVENT_FROSTBOLT_VOLLEY:
+                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                            DoCast(pTarget, SPELL_FROSTBOLT_VOLLEY);
+                        events.RescheduleEvent(EVENT_FROSTBOLT_VOLLEY, rand()%15000);
+                        return;
+                    case EVENT_IMPENDING_DOOM:
+                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                            DoCast(pTarget, SPELL_IMPENDING_DOOM);
+                        events.RescheduleEvent(EVENT_IMPENDING_DOOM, rand()%15000);
+                        return;
+                    case EVENT_SHADOWFURY:
+                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                            DoCast(pTarget, SPELL_SHADOWFURY);
+                        events.RescheduleEvent(SPELL_SHADOWFURY, 5000 + RAND()%15000);
+                        return;
+                }
+            }
+
+            DoMeleeAttackIfReady();
+        }
+    };
+
+};
+
 void AddSC_the_stonecore()
 {
     new mob_crystalspawn_giant();
     new mob_impp();
-
+	new mob_millhouse_manastorm();
+	new mob_rock_borer;
 }
