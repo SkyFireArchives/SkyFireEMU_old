@@ -1461,7 +1461,7 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask, bool 
         m_diminishLevel = unit->GetDiminishing(m_diminishGroup);
         DiminishingReturnsType type = GetDiminishingReturnsGroupType(m_diminishGroup);
         // Increase Diminishing on unit, current informations for actually casts will use values above
-        if ((type == DRTYPE_PLAYER && (unit->GetTypeId() == TYPEID_PLAYER || unit->ToCreature()->isPet() || unit->ToCreature()->isPossessedByPlayer())) || type == DRTYPE_ALL)
+        if ((type == DRTYPE_PLAYER && unit->GetCharmerOrOwnerPlayerOrPlayerItself()) || type == DRTYPE_ALL)
             unit->IncrDiminishing(m_diminishGroup);
     }
 
@@ -1519,11 +1519,11 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask, bool 
                 duration = m_originalCaster->ModSpellDuration(aurSpellInfo, unit, duration, positive);
 
                 // Haste modifies duration of channeled spells
-                if (IsChanneledSpell(m_spellInfo))
+                if (IsChanneledSpell(m_spellInfo) && m_spellInfo->AttributesEx5 & SPELL_ATTR5_HASTE_AFFECT_DURATION)
                     m_originalCaster->ModSpellCastTime(aurSpellInfo, duration, this);
 
                 // and duration of auras affected by SPELL_AURA_PERIODIC_HASTE
-                if (m_originalCaster->HasAuraTypeWithAffectMask(SPELL_AURA_PERIODIC_HASTE, aurSpellInfo))
+                if (m_originalCaster->HasAuraTypeWithAffectMask(SPELL_AURA_PERIODIC_HASTE, aurSpellInfo) || m_spellInfo->AttributesEx5 & SPELL_ATTR5_HASTE_AFFECT_DURATION)
                     duration = int32(duration * m_originalCaster->GetFloatValue(UNIT_MOD_CAST_SPEED));
 
                 if (duration != m_spellAura->GetMaxDuration())
@@ -3422,7 +3422,8 @@ void Spell::handle_immediate()
             if (Player* modOwner = m_caster->GetSpellModOwner())
                 modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_DURATION, duration);
             // Apply haste mods
-            m_caster->ModSpellCastTime(m_spellInfo, duration, this);
+            if (m_spellInfo->AttributesEx5 & SPELL_ATTR5_HASTE_AFFECT_DURATION)
+                m_caster->ModSpellCastTime(m_spellInfo, duration, this);
 
             m_spellState = SPELL_STATE_CASTING;
             m_caster->AddInterruptMask(m_spellInfo->ChannelInterruptFlags);
@@ -5449,6 +5450,13 @@ SpellCastResult Spell::CheckCast(bool strict)
             case SPELL_EFFECT_STEAL_BENEFICIAL_BUFF:
             {
                 if (m_targets.getUnitTarget() == m_caster)
+                    return SPELL_FAILED_BAD_TARGETS;
+                break;
+            }
+			case SPELL_EFFECT_REDIRECT_THREAT:
+            {
+                if (m_spellInfo->Id == 57934 && m_targets.getUnitTarget() &&
+                    m_targets.getUnitTarget()->GetTypeId() != TYPEID_PLAYER)
                     return SPELL_FAILED_BAD_TARGETS;
                 break;
             }

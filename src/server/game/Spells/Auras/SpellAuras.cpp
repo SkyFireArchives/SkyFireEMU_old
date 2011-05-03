@@ -1028,8 +1028,8 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         if (target->GetTypeId() == TYPEID_PLAYER)
                             if (GameObject* obj = target->GetGameObject(48018))
                 {
-                  target->ToPlayer()->TeleportTo(obj->GetMapId(),obj->GetPositionX(),obj->GetPositionY(),obj->GetPositionZ(),obj->GetOrientation());
-                  target->ToPlayer()->RemoveMovementImpairingAuras();
+                  target->NearTeleportTo(obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation());
+                  target->RemoveMovementImpairingAuras();
                 }
                         break;
                 }
@@ -1461,6 +1461,12 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         target->CastSpell(target, GetEffect(0)->GetAmount(), true, NULL, GetEffect(0));
                         break;
                 }
+                break;
+			case SPELLFAMILY_HUNTER:
+                // Glyph of Freezing Trap
+                if (GetSpellProto()->SpellFamilyFlags[0] & 0x00000008)
+                    if (caster && caster->HasAura(56845))
+                        target->CastSpell(target, 61394, true);
                 break;
         }
     }

@@ -1471,7 +1471,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                 }
 
                 //Any effect which causes you to lose control of your character will supress the starfall effect.
-                if (m_caster->HasUnitState(UNIT_STAT_STUNNED | UNIT_STAT_FLEEING | UNIT_STAT_ROOT | UNIT_STAT_CONFUSED))
+                if (m_caster->HasUnitState(UNIT_STAT_CONTROLLED))
                     return;
 
                 m_caster->CastSpell(unitTarget, damage, true);
@@ -1531,10 +1531,10 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     return;
                 // Restorative Totems
                 if (Unit *owner = m_caster->GetOwner())
-                    if (AuraEffect *dummy = owner->GetAuraEffect(SPELL_AURA_DUMMY, SPELLFAMILY_SHAMAN, 338, 1))
+					if (AuraEffect *dummy = owner->GetAuraEffect(SPELL_AURA_DUMMY, SPELLFAMILY_SHAMAN, 338, 1))
                         damage += damage * dummy->GetAmount() / 100;
 
-                    m_caster->CastCustomSpell(unitTarget, 52042, &damage, 0, 0, true, 0, 0, m_originalCasterGUID);
+					m_caster->CastCustomSpell(unitTarget, 52042, &damage, 0, 0, true, 0, 0, m_originalCasterGUID);
                 return;
             }
             // Mana Spring Totem

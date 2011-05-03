@@ -950,7 +950,7 @@ void AuraEffect::CalculatePeriodic(Unit *caster, bool create)
             if (IsChanneledSpell(m_spellProto))
                 caster->ModSpellCastTime(m_spellProto, m_amplitude);
             // and periodic time of auras affected by SPELL_AURA_PERIODIC_HASTE
-            if (caster->HasAuraTypeWithAffectMask(SPELL_AURA_PERIODIC_HASTE, m_spellProto))
+            if (caster->HasAuraTypeWithAffectMask(SPELL_AURA_PERIODIC_HASTE, m_spellProto) || m_spellProto->AttributesEx5 & SPELL_ATTR5_HASTE_AFFECT_DURATION)
                 m_amplitude = int32(m_amplitude * caster->GetFloatValue(UNIT_MOD_CAST_SPEED));
         }
     }
@@ -2229,8 +2229,11 @@ void AuraEffect::PeriodicDummyTick(Unit *target, Unit *caster) const
             switch (GetId())
             {
                 case 49016: // Hysteria
-                    uint32 damage = uint32(target->CountPctFromMaxHealth(1));
-                    target->DealDamage(target, damage, NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                    if (target && caster && caster->IsInRaidWith(target))
+                    {
+                        uint32 damage = uint32(target->CountPctFromMaxHealth(1));
+                        target->DealDamage(target, damage, NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                    }
                     break;
             }
             // Death and Decay
@@ -6126,6 +6129,18 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                         AuraRemoveMode mode = aurApp->GetRemoveMode();
                         if (caster && (mode == AURA_REMOVE_BY_ENEMY_SPELL || mode == AURA_REMOVE_BY_EXPIRE))
                             caster->CastSpell(target, GetAmount(), true);
+                    }
+                    break;
+				case SPELLFAMILY_ROGUE:
+                    switch (GetId())
+                    {
+                        case 59628: // Tricks of the Trade
+                            caster->SetReducedThreatPercent(0, 0);
+                            break;
+                        case 57934: // Tricks of the Trade
+                            if (aurApp->GetRemoveMode() != AURA_REMOVE_BY_DEFAULT)
+                                caster->SetReducedThreatPercent(0, 0);
+                            break;
                     }
                     break;
                 case SPELLFAMILY_WARLOCK:
