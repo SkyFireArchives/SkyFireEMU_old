@@ -339,7 +339,7 @@ public:
                     case EVENT_SHADOWFURY:
                         if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                             DoCast(pTarget, SPELL_SHADOWFURY);
-                        events.RescheduleEvent(SPELL_SHADOWFURY, 5000 + RAND()%15000);
+                        events.RescheduleEvent(SPELL_SHADOWFURY, 5000 + rand()%15000);
                         return;
                 }
             }
