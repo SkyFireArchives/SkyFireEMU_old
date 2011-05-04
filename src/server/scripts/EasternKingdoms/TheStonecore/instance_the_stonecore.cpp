@@ -30,7 +30,7 @@
 class instance_the_stonecore : public InstanceMapScript
 {
 public:
-    instance_the_stonecore() : InstanceMapScript("instance_the_stonecore", 111) { }
+    instance_the_stonecore() : InstanceMapScript("instance_the_stonecore", 725) { }
 
     InstanceScript* GetInstanceScript(InstanceMap* pMap) const
     {
