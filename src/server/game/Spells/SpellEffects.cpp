@@ -2296,6 +2296,12 @@ void Spell::EffectSendEvent(SpellEffIndex effIndex)
     else
         pTarget = NULL;
 
+    if (unitTarget)
+    {
+        if (ZoneScript* zoneScript = unitTarget->GetZoneScript())
+            zoneScript->ProcessEvent(unitTarget, m_spellInfo->EffectMiscValue[effIndex]);
+    }
+
     m_caster->GetMap()->ScriptsStart(sEventScripts, m_spellInfo->EffectMiscValue[effIndex], m_caster, pTarget);
 }
 
@@ -5080,7 +5086,7 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                     uint32 spellID = SpellMgr::CalculateSpellEffectAmount(m_spellInfo, 0);
                     uint32 questID = SpellMgr::CalculateSpellEffectAmount(m_spellInfo, 1);
 
-                    if (unitTarget->ToPlayer()->GetQuestStatus(questID) == QUEST_STATUS_COMPLETE && !unitTarget->ToPlayer()->GetQuestRewardStatus (questID))
+                    if (unitTarget->ToPlayer()->GetQuestStatus(questID) == QUEST_STATUS_COMPLETE)
                         unitTarget->CastSpell(unitTarget, spellID, true);
 
                     return;

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50510
 File Encoding         : 65001
 
-Date: 2011-04-30 12:08:23
+Date: 2011-05-04 19:51:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -19,10 +19,10 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `account_data`;
 CREATE TABLE `account_data` (
-  `account` int(11) unsigned NOT NULL DEFAULT '0',
-  `type` int(11) unsigned NOT NULL DEFAULT '0',
-  `time` bigint(11) unsigned NOT NULL DEFAULT '0',
-  `data` longblob NOT NULL,
+  `account` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `data` blob NOT NULL,
   PRIMARY KEY (`account`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -36,9 +36,9 @@ CREATE TABLE `account_data` (
 DROP TABLE IF EXISTS `addons`;
 CREATE TABLE `addons` (
   `name` varchar(120) NOT NULL DEFAULT '',
-  `crc` int(32) unsigned NOT NULL DEFAULT '0',
+  `crc` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Addons';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Addons';
 
 -- ----------------------------
 -- Records of addons
@@ -50,13 +50,13 @@ CREATE TABLE `addons` (
 DROP TABLE IF EXISTS `arena_team`;
 CREATE TABLE `arena_team` (
   `arenateamid` int(10) unsigned NOT NULL DEFAULT '0',
-  `name` char(255) NOT NULL,
+  `name` varchar(24) NOT NULL,
   `captainguid` int(10) unsigned NOT NULL DEFAULT '0',
   `type` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `BackgroundColor` int(10) unsigned NOT NULL DEFAULT '0',
-  `EmblemStyle` int(10) unsigned NOT NULL DEFAULT '0',
+  `EmblemStyle` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `EmblemColor` int(10) unsigned NOT NULL DEFAULT '0',
-  `BorderStyle` int(10) unsigned NOT NULL DEFAULT '0',
+  `BorderStyle` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `BorderColor` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`arenateamid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -107,16 +107,16 @@ CREATE TABLE `arena_team_stats` (
 -- ----------------------------
 DROP TABLE IF EXISTS `auctionhouse`;
 CREATE TABLE `auctionhouse` (
-  `id` int(11) unsigned NOT NULL DEFAULT '0',
-  `auctioneerguid` int(11) unsigned NOT NULL DEFAULT '0',
-  `itemguid` int(11) unsigned NOT NULL DEFAULT '0',
-  `itemowner` int(11) unsigned NOT NULL DEFAULT '0',
-  `buyoutprice` int(11) NOT NULL DEFAULT '0',
-  `time` bigint(40) NOT NULL DEFAULT '0',
-  `buyguid` int(11) unsigned NOT NULL DEFAULT '0',
-  `lastbid` int(11) NOT NULL DEFAULT '0',
-  `startbid` int(11) NOT NULL DEFAULT '0',
-  `deposit` int(11) NOT NULL DEFAULT '0',
+  `id` int(10) unsigned NOT NULL DEFAULT '0',
+  `auctioneerguid` int(10) unsigned NOT NULL DEFAULT '0',
+  `itemguid` int(10) unsigned NOT NULL DEFAULT '0',
+  `itemowner` int(10) unsigned NOT NULL DEFAULT '0',
+  `buyoutprice` int(10) unsigned NOT NULL DEFAULT '0',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `buyguid` int(10) unsigned NOT NULL DEFAULT '0',
+  `lastbid` int(10) unsigned NOT NULL DEFAULT '0',
+  `startbid` int(10) unsigned NOT NULL DEFAULT '0',
+  `deposit` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `item_guid` (`itemguid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -150,10 +150,10 @@ CREATE TABLE `channels` (
   `m_announce` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `m_ownership` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `m_password` varchar(32) DEFAULT NULL,
-  `BannedList` longtext,
+  `BannedList` text,
   `last_used` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`m_name`(10),`m_team`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Channel System';
+  PRIMARY KEY (`m_name`,`m_team`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Channel System';
 
 -- ----------------------------
 -- Records of channels
@@ -254,10 +254,10 @@ CREATE TABLE `characters` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_account_data`;
 CREATE TABLE `character_account_data` (
-  `guid` int(11) unsigned NOT NULL DEFAULT '0',
-  `type` int(11) unsigned NOT NULL DEFAULT '0',
-  `time` bigint(11) unsigned NOT NULL DEFAULT '0',
-  `data` longblob NOT NULL,
+  `guid` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `data` blob NOT NULL,
   PRIMARY KEY (`guid`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -270,9 +270,9 @@ CREATE TABLE `character_account_data` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_achievement`;
 CREATE TABLE `character_achievement` (
-  `guid` int(11) unsigned NOT NULL,
-  `achievement` int(11) unsigned NOT NULL,
-  `date` bigint(11) unsigned NOT NULL DEFAULT '0',
+  `guid` int(10) unsigned NOT NULL,
+  `achievement` smallint(5) unsigned NOT NULL,
+  `date` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`achievement`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -285,10 +285,10 @@ CREATE TABLE `character_achievement` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_achievement_progress`;
 CREATE TABLE `character_achievement_progress` (
-  `guid` int(11) unsigned NOT NULL,
-  `criteria` int(11) unsigned NOT NULL,
-  `counter` int(11) unsigned NOT NULL,
-  `date` bigint(11) unsigned NOT NULL DEFAULT '0',
+  `guid` int(10) unsigned NOT NULL,
+  `criteria` smallint(5) unsigned NOT NULL,
+  `counter` int(10) unsigned NOT NULL,
+  `date` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`criteria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -301,13 +301,13 @@ CREATE TABLE `character_achievement_progress` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_action`;
 CREATE TABLE `character_action` (
-  `guid` int(11) unsigned NOT NULL DEFAULT '0',
+  `guid` int(10) unsigned NOT NULL DEFAULT '0',
   `spec` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `button` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `action` int(11) unsigned NOT NULL DEFAULT '0',
+  `action` int(10) unsigned NOT NULL DEFAULT '0',
   `type` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`spec`,`button`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of character_action
@@ -319,7 +319,7 @@ CREATE TABLE `character_action` (
 DROP TABLE IF EXISTS `character_arena_stats`;
 CREATE TABLE `character_arena_stats` (
   `guid` int(10) NOT NULL,
-  `slot` smallint(1) NOT NULL,
+  `slot` tinyint(3) NOT NULL,
   `personal_rating` int(10) NOT NULL,
   `matchmaker_rating` int(10) NOT NULL,
   PRIMARY KEY (`guid`,`slot`)
@@ -334,10 +334,10 @@ CREATE TABLE `character_arena_stats` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_aura`;
 CREATE TABLE `character_aura` (
-  `guid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
+  `guid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
   `caster_guid` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'Full Global Unique Identifier',
   `item_guid` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `spell` int(11) unsigned NOT NULL DEFAULT '0',
+  `spell` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `effect_mask` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `recalculate_mask` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stackcount` tinyint(3) unsigned NOT NULL DEFAULT '1',
@@ -351,7 +351,7 @@ CREATE TABLE `character_aura` (
   `remaintime` int(11) NOT NULL DEFAULT '0',
   `remaincharges` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`caster_guid`,`item_guid`,`spell`,`effect_mask`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Player System';
 
 -- ----------------------------
 -- Records of character_aura
@@ -362,14 +362,14 @@ CREATE TABLE `character_aura` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_banned`;
 CREATE TABLE `character_banned` (
-  `guid` int(11) NOT NULL DEFAULT '0' COMMENT 'Account id',
-  `bandate` bigint(40) NOT NULL DEFAULT '0',
-  `unbandate` bigint(40) NOT NULL DEFAULT '0',
+  `guid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Account id',
+  `bandate` int(10) unsigned NOT NULL DEFAULT '0',
+  `unbandate` int(10) unsigned NOT NULL DEFAULT '0',
   `bannedby` varchar(50) NOT NULL,
   `banreason` varchar(255) NOT NULL,
-  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `active` tinyint(3) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`guid`,`bandate`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Ban List';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Ban List';
 
 -- ----------------------------
 -- Records of character_banned
@@ -380,19 +380,19 @@ CREATE TABLE `character_banned` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_battleground_data`;
 CREATE TABLE `character_battleground_data` (
-  `guid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
-  `instance_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `team` int(11) unsigned NOT NULL DEFAULT '0',
+  `guid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
+  `instance_id` int(10) unsigned NOT NULL,
+  `team` smallint(5) unsigned NOT NULL,
   `join_x` float NOT NULL DEFAULT '0',
   `join_y` float NOT NULL DEFAULT '0',
   `join_z` float NOT NULL DEFAULT '0',
   `join_o` float NOT NULL DEFAULT '0',
-  `join_map` int(11) NOT NULL DEFAULT '0',
-  `taxi_start` int(11) NOT NULL DEFAULT '0',
-  `taxi_end` int(11) NOT NULL DEFAULT '0',
-  `mount_spell` int(11) NOT NULL DEFAULT '0',
+  `join_map` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `taxi_start` int(10) unsigned NOT NULL DEFAULT '0',
+  `taxi_end` int(10) unsigned NOT NULL DEFAULT '0',
+  `mount_spell` mediumint(8) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Player System';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Player System';
 
 -- ----------------------------
 -- Records of character_battleground_data
@@ -403,7 +403,7 @@ CREATE TABLE `character_battleground_data` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_battleground_random`;
 CREATE TABLE `character_battleground_random` (
-  `guid` int(11) unsigned NOT NULL DEFAULT '0',
+  `guid` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -447,14 +447,14 @@ CREATE TABLE `character_currency` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_declinedname`;
 CREATE TABLE `character_declinedname` (
-  `guid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
+  `guid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
   `genitive` varchar(15) NOT NULL DEFAULT '',
   `dative` varchar(15) NOT NULL DEFAULT '',
   `accusative` varchar(15) NOT NULL DEFAULT '',
   `instrumental` varchar(15) NOT NULL DEFAULT '',
   `prepositional` varchar(15) NOT NULL DEFAULT '',
   PRIMARY KEY (`guid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of character_declinedname
@@ -465,30 +465,30 @@ CREATE TABLE `character_declinedname` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_equipmentsets`;
 CREATE TABLE `character_equipmentsets` (
-  `guid` int(11) NOT NULL DEFAULT '0',
+  `guid` int(10) NOT NULL DEFAULT '0',
   `setguid` bigint(20) NOT NULL AUTO_INCREMENT,
-  `setindex` tinyint(4) NOT NULL DEFAULT '0',
-  `name` varchar(100) NOT NULL,
+  `setindex` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(31) NOT NULL,
   `iconname` varchar(100) NOT NULL,
-  `item0` int(11) NOT NULL DEFAULT '0',
-  `item1` int(11) NOT NULL DEFAULT '0',
-  `item2` int(11) NOT NULL DEFAULT '0',
-  `item3` int(11) NOT NULL DEFAULT '0',
-  `item4` int(11) NOT NULL DEFAULT '0',
-  `item5` int(11) NOT NULL DEFAULT '0',
-  `item6` int(11) NOT NULL DEFAULT '0',
-  `item7` int(11) NOT NULL DEFAULT '0',
-  `item8` int(11) NOT NULL DEFAULT '0',
-  `item9` int(11) NOT NULL DEFAULT '0',
-  `item10` int(11) NOT NULL DEFAULT '0',
-  `item11` int(11) NOT NULL DEFAULT '0',
-  `item12` int(11) NOT NULL DEFAULT '0',
-  `item13` int(11) NOT NULL DEFAULT '0',
-  `item14` int(11) NOT NULL DEFAULT '0',
-  `item15` int(11) NOT NULL DEFAULT '0',
-  `item16` int(11) NOT NULL DEFAULT '0',
-  `item17` int(11) NOT NULL DEFAULT '0',
-  `item18` int(11) NOT NULL DEFAULT '0',
+  `item0` int(10) unsigned NOT NULL DEFAULT '0',
+  `item1` int(10) unsigned NOT NULL DEFAULT '0',
+  `item2` int(10) unsigned NOT NULL DEFAULT '0',
+  `item3` int(10) unsigned NOT NULL DEFAULT '0',
+  `item4` int(10) unsigned NOT NULL DEFAULT '0',
+  `item5` int(10) unsigned NOT NULL DEFAULT '0',
+  `item6` int(10) unsigned NOT NULL DEFAULT '0',
+  `item7` int(10) unsigned NOT NULL DEFAULT '0',
+  `item8` int(10) unsigned NOT NULL DEFAULT '0',
+  `item9` int(10) unsigned NOT NULL DEFAULT '0',
+  `item10` int(10) unsigned NOT NULL DEFAULT '0',
+  `item11` int(10) unsigned NOT NULL DEFAULT '0',
+  `item12` int(10) unsigned NOT NULL DEFAULT '0',
+  `item13` int(10) unsigned NOT NULL DEFAULT '0',
+  `item14` int(10) unsigned NOT NULL DEFAULT '0',
+  `item15` int(10) unsigned NOT NULL DEFAULT '0',
+  `item16` int(10) unsigned NOT NULL DEFAULT '0',
+  `item17` int(10) unsigned NOT NULL DEFAULT '0',
+  `item18` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`setguid`),
   UNIQUE KEY `idx_set` (`guid`,`setguid`,`setindex`),
   KEY `Idx_setindex` (`setindex`)
@@ -503,10 +503,10 @@ CREATE TABLE `character_equipmentsets` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_gifts`;
 CREATE TABLE `character_gifts` (
-  `guid` int(20) unsigned NOT NULL DEFAULT '0',
-  `item_guid` int(11) unsigned NOT NULL DEFAULT '0',
-  `entry` int(20) unsigned NOT NULL DEFAULT '0',
-  `flags` int(20) unsigned NOT NULL DEFAULT '0',
+  `guid` int(10) unsigned NOT NULL DEFAULT '0',
+  `item_guid` int(10) unsigned NOT NULL DEFAULT '0',
+  `entry` int(10) unsigned NOT NULL DEFAULT '0',
+  `flags` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_guid`),
   KEY `idx_guid` (`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -520,16 +520,16 @@ CREATE TABLE `character_gifts` (
 -- ----------------------------
 DROP TABLE IF EXISTS `character_glyphs`;
 CREATE TABLE `character_glyphs` (
-  `guid` int(11) unsigned NOT NULL,
+  `guid` int(10) unsigned NOT NULL,
   `spec` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `glyph1` int(11) unsigned NOT NULL DEFAULT '0',
-  `glyph2` int(11) unsigned DEFAULT '0',
-  `glyph3` int(11) unsigned DEFAULT '0',
-  `glyph4` int(11) unsigned DEFAULT '0',
-  `glyph5` int(11) unsigned DEFAULT '0',
-  `glyph6` int(11) unsigned DEFAULT '0',
-  `glyph7` int(11) unsigned DEFAULT '0',
-  `glyph8` int(11) unsigned DEFAULT '0',
+  `glyph1` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `glyph2` smallint(5) unsigned DEFAULT '0',
+  `glyph3` smallint(5) unsigned DEFAULT '0',
+  `glyph4` smallint(5) unsigned DEFAULT '0',
+  `glyph5` smallint(5) unsigned DEFAULT '0',
+  `glyph6` smallint(5) unsigned DEFAULT '0',
+  `glyph7` smallint(5) unsigned DEFAULT '0',
+  `glyph8` smallint(5) unsigned DEFAULT '0',
   `glyph9` int(11) unsigned DEFAULT '0',
   PRIMARY KEY (`guid`,`spec`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
