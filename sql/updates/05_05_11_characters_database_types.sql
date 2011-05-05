@@ -51,8 +51,7 @@ CHANGE `type` `type` TINYINT(3) UNSIGNED DEFAULT '0' NOT NULL;
 
 ALTER TABLE `petition`
 ROW_FORMAT=DEFAULT,
-CHANGE `name` `name` VARCHAR(24) NOT NULL,
-CHANGE `type` `type` TINYINT(3) UNSIGNED DEFAULT '0' NOT NULL;
+CHANGE `name` `name` VARCHAR(24) NOT NULL;
 
 ALTER TABLE `pet_spell_cooldown`
 CHANGE `guid` `guid` INT(10) UNSIGNED DEFAULT '0' NOT NULL COMMENT 'Global Unique Identifier, Low part',
@@ -267,20 +266,9 @@ CHANGE `subsurveyid` `subsurveyid` INT(10) UNSIGNED DEFAULT '0' NOT NULL,
 CHANGE `rank` `rank` INT(10) UNSIGNED DEFAULT '0' NOT NULL,
 CHANGE `comment` `comment` TEXT NOT NULL;
 
-ALTER TABLE `gameobject_respawn`
-CHANGE `respawntime` `respawntime` INT(10) UNSIGNED DEFAULT '0' NOT NULL,
-CHANGE `instance` `instance` INT(10) UNSIGNED DEFAULT '0' NOT NULL;
-ALTER TABLE `game_event_save`
-CHANGE `event_id` `event_id` SMALLINT(5) UNSIGNED NOT NULL,
-CHANGE `next_start` `next_start` INT(10) UNSIGNED DEFAULT '0' NOT NULL;
-
 ALTER TABLE `game_event_condition_save`
 CHANGE `event_id` `event_id` SMALLINT(5) UNSIGNED NOT NULL,
 CHANGE `condition_id` `condition_id` INT(10) UNSIGNED DEFAULT '0' NOT NULL;
-
-ALTER TABLE `creature_respawn`
-CHANGE `respawntime` `respawntime` INT(10) UNSIGNED DEFAULT '0' NOT NULL,
-CHANGE `instance` `instance` INT(10) UNSIGNED DEFAULT '0' NOT NULL;
 
 ALTER TABLE `corpse`
 ROW_FORMAT=DEFAULT,
