@@ -2202,10 +2202,19 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
             }
 
             Position pos;
-            if (cur == TARGET_DEST_CASTER_FRONT_LEAP)
-                m_caster->GetFirstCollisionPosition(pos, dist, angle);
-            else
-                m_caster->GetNearPosition(pos, dist, angle);
+            switch (cur)
+            {
+                case TARGET_DEST_CASTER_FRONT_LEAP:
+                case TARGET_DEST_CASTER_FRONT_LEFT:
+                case TARGET_DEST_CASTER_BACK_LEFT:
+                case TARGET_DEST_CASTER_BACK_RIGHT:
+                case TARGET_DEST_CASTER_FRONT_RIGHT:
+                    m_caster->GetFirstCollisionPosition(pos, dist, angle);
+                    break;
+                default:
+                    m_caster->GetNearPosition(pos, dist, angle);
+                    break;
+            }
             m_targets.setDst(*m_caster);
             m_targets.modDst(pos);
             break;
@@ -4029,16 +4038,20 @@ void Spell::SendSpellGo()
 
     if (castFlags & CAST_FLAG_RUNE_LIST)                   // rune cooldowns list
     {
-        uint8 v1 = m_runesState;
-        uint8 v2 = m_caster->ToPlayer()->GetRunesState();
-        data << uint8(v1);                                  // runes state before
-        data << uint8(v2);                                  // runes state after
+        Player* player = m_caster->ToPlayer();
+        uint8 runeMaskInitial = m_runesState;
+        uint8 runeMaskAfterCast = player->GetRunesState();
+        data << uint8(runeMaskInitial);                     // runes state before
+        data << uint8(runeMaskAfterCast);                   // runes state after
         for (uint8 i = 0; i < MAX_RUNES; ++i)
         {
-            uint8 m = (1 << i);
-            if (m & v1)                                      // usable before...
-                if (!(m & v2))                               // ...but on cooldown now...
-                    data << uint8(0);                       // some unknown byte (time?)
+            uint8 mask = (1 << i);
+            if (mask & runeMaskInitial && !(mask & runeMaskAfterCast))  // usable before andon cooldown now...
+            {
+                // float casts ensure the division is performed on floats as we need float result
+                float baseCd = float(player->GetRuneBaseCooldown(i));
+                data << uint8((baseCd - float(player->GetRuneCooldown(i))) / baseCd * 255); // rune cooldown passed
+            }
         }
     }
 
@@ -4463,15 +4476,15 @@ void Spell::TakePower()
     bool hit = true;
     if (m_caster->GetTypeId() == TYPEID_PLAYER)
     {
-        if (m_spellInfo->powerType == POWER_RAGE || m_spellInfo->powerType == POWER_ENERGY)
+        if (m_spellInfo->powerType == POWER_RAGE || m_spellInfo->powerType == POWER_ENERGY ||
+            m_spellInfo->powerType == POWER_RUNE || m_spellInfo->powerType == POWER_RUNIC_POWER)
             if (uint64 targetGUID = m_targets.getUnitTargetGUID())
                 for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
                     if (ihit->targetGUID == targetGUID)
                     {
-                        if (ihit->missCondition != SPELL_MISS_NONE && ihit->missCondition != SPELL_MISS_MISS/* && ihit->targetGUID != m_caster->GetGUID()*/)
-                            hit = false;
                         if (ihit->missCondition != SPELL_MISS_NONE)
                         {
+							hit = false;
                             //lower spell cost on fail (by talent aura)
                             if (Player *modOwner = m_caster->ToPlayer()->GetSpellModOwner())
                                 modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_SPELL_COST_REFUND_ON_FAIL, m_powerCost);
@@ -4482,9 +4495,9 @@ void Spell::TakePower()
 
     Powers powerType = Powers(m_spellInfo->powerType);
 
-    if (hit && powerType == POWER_RUNE)
+    if (powerType == POWER_RUNE)
     {
-        TakeRunePower();
+        TakeRunePower(hit);
         return;
     }
 
@@ -4504,10 +4517,10 @@ void Spell::TakePower()
         return;
     }
 
-    if (hit)
+    if (hit || m_spellInfo->AttributesEx & SPELL_ATTR1_REQ_COMBO_POINTS1)
         m_caster->ModifyPower(powerType, -m_powerCost);
     else
-        m_caster->ModifyPower(powerType, -irand(0, m_powerCost/4));
+        m_caster->ModifyPower(powerType, -m_powerCost/5);
 
     // Set the five second timer
     if (powerType == POWER_MANA && m_powerCost > 0)
@@ -4592,28 +4605,28 @@ SpellCastResult Spell::CheckRuneCost(uint32 runeCostID)
     return SPELL_CAST_OK;
 }
 
-void Spell::TakeRunePower()
+void Spell::TakeRunePower(bool didHit)
 {
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return;
 
-    Player *plr = (Player*)m_caster;
+    Player* player = m_caster->ToPlayer();
 
-    if (plr->getClass() != CLASS_DEATH_KNIGHT)
+    if (player->getClass() != CLASS_DEATH_KNIGHT)
         return;
 
-    SpellRuneCostEntry const *src = sSpellRuneCostStore.LookupEntry(m_spellInfo->runeCostID);
+    SpellRuneCostEntry const *runeCostData = sSpellRuneCostStore.LookupEntry(m_spellInfo->runeCostID);
 
-    if (!src || (src->NoRuneCost() && src->NoRunicPowerGain()))
+    if (!runeCostData || (runeCostData->NoRuneCost() && runeCostData->NoRunicPowerGain()))
         return;
 
-    m_runesState = plr->GetRunesState();                    // store previous state
+    m_runesState = player->GetRunesState();                    // store previous state
 
     int32 runeCost[NUM_RUNE_TYPES];                         // blood, frost, unholy, death
 
     for (uint32 i = 0; i < RUNE_DEATH; ++i)
     {
-        runeCost[i] = src->RuneCost[i];
+        runeCost[i] = runeCostData->RuneCost[i];
         if (Player* modOwner = m_caster->GetSpellModOwner())
             modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_COST, runeCost[i], this);
     }
@@ -4622,11 +4635,11 @@ void Spell::TakeRunePower()
 
     for (uint32 i = 0; i < MAX_RUNES; ++i)
     {
-        RuneType rune = plr->GetCurrentRune(i);
-        if ((plr->GetRuneCooldown(i) == 0) && (runeCost[rune] > 0))
+        RuneType rune = player->GetCurrentRune(i);
+        if (!player->GetRuneCooldown(i) && runeCost[rune] > 0)
         {
-            plr->SetRuneCooldown(i, plr->GetRuneBaseCooldown(i));
-            plr->SetLastUsedRune(RuneType(rune));
+            player->SetRuneCooldown(i, didHit ? player->GetRuneBaseCooldown(i) : RUNE_MISS_COOLDOWN);
+            player->SetLastUsedRune(rune);
             runeCost[rune]--;
         }
     }
@@ -4637,14 +4650,16 @@ void Spell::TakeRunePower()
     {
         for (uint32 i = 0; i < MAX_RUNES; ++i)
         {
-            RuneType rune = plr->GetCurrentRune(i);
-            if ((plr->GetRuneCooldown(i) == 0) && (rune == RUNE_DEATH))
+            RuneType rune = player->GetCurrentRune(i);
+            if (!player->GetRuneCooldown(i) && rune == RUNE_DEATH)
             {
-                plr->SetRuneCooldown(i, plr->GetRuneBaseCooldown(i));
-                plr->SetLastUsedRune(RuneType(rune));
+                player->SetRuneCooldown(i, didHit ? player->GetRuneBaseCooldown(i) : RUNE_MISS_COOLDOWN);
+                player->SetLastUsedRune(rune);
                 runeCost[rune]--;
 
-                plr->RestoreBaseRune(i);
+                // keep Death Rune type if missed
+                if (didHit)
+                    player->RestoreBaseRune(i);
 
                 if (runeCost[RUNE_DEATH] == 0)
                     break;
@@ -4653,9 +4668,9 @@ void Spell::TakeRunePower()
     }
 
     // you can gain some runic power when use runes
-    float rp = (float)src->runePowerGain;
-    rp *= sWorld->getRate(RATE_POWER_RUNICPOWER_INCOME);
-    plr->ModifyPower(POWER_RUNIC_POWER, (int32)rp);
+    if (didHit)
+        if (int32 rp = int32(runeCostData->runePowerGain * sWorld->getRate(RATE_POWER_RUNICPOWER_INCOME)))
+            player->ModifyPower(POWER_RUNIC_POWER, int32(rp));
 }
 
 void Spell::TakeReagents()
@@ -5113,6 +5128,56 @@ SpellCastResult Spell::CheckCast(bool strict)
             return castResult;
     }
 
+	// Dispel check - only if the first effect is dispel
+    if (!m_IsTriggeredSpell && (m_spellInfo->Effect[EFFECT_0] == SPELL_EFFECT_DISPEL))
+        if (Unit const * target = m_targets.getUnitTarget())
+            if (!GetSpellRadius(m_spellInfo, EFFECT_0, target->IsFriendlyTo(m_caster)))
+            {
+                bool check = true;
+                uint32 dispelMask = GetDispellMask(DispelType(m_spellInfo->EffectMiscValue[EFFECT_0]));
+
+                for (uint8 effIndex = EFFECT_1; effIndex < MAX_SPELL_EFFECTS; ++effIndex)
+                {
+                    if (m_spellInfo->Effect[effIndex] == SPELL_EFFECT_DISPEL)
+                        dispelMask |= GetDispellMask(DispelType(m_spellInfo->EffectMiscValue[effIndex]));
+                    // If there is any other effect don't check
+                    else if (m_spellInfo->Effect[effIndex])
+                    {
+                        check = false;
+                        break;
+                    }
+                }
+
+                if (check)
+                {
+                    bool failed = true;
+
+                    Unit::AuraMap const & auras = target->GetOwnedAuras();
+                    for (Unit::AuraMap::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+                    {
+                        Aura * aura = itr->second;
+                        AuraApplication * aurApp = aura->GetApplicationOfTarget(target->GetGUID());
+                        if (!aurApp)
+                            continue;
+
+                        if ((1 << aura->GetSpellProto()->Dispel) & dispelMask)
+                        {
+                            bool positive = aurApp->IsPositive() ? !(aura->GetSpellProto()->AttributesEx & SPELL_ATTR1_NEGATIVE) : false;
+
+                            // Can only dispel positive auras on enemies and negative on allies
+                            if (positive != target->IsFriendlyTo(m_caster))
+                            {
+                                failed = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (failed)
+                        return SPELL_FAILED_NOTHING_TO_DISPEL;
+                }
+            }
+
     for (int i = 0; i < MAX_SPELL_EFFECTS; i++)
     {
         // for effects of spells that have only one target
@@ -5142,6 +5207,8 @@ SpellCastResult Spell::CheckCast(bool strict)
                     Unit* target = m_targets.getUnitTarget();
                     if (!target || (target->IsFriendlyTo(m_caster) && target->GetCreatureType() != CREATURE_TYPE_UNDEAD))
                         return SPELL_FAILED_BAD_TARGETS;
+					if (!target->IsFriendlyTo(m_caster) && !m_caster->HasInArc(static_cast<float>(M_PI), target))
+                        return SPELL_FAILED_UNIT_NOT_INFRONT;
                 }
                 else if (m_spellInfo->Id == 19938)          // Awaken Peon
                 {
@@ -5261,6 +5328,10 @@ SpellCastResult Spell::CheckCast(bool strict)
                 }
                 if (m_caster->HasUnitState(UNIT_STAT_ROOT))
                     return SPELL_FAILED_ROOTED;
+				if (m_caster->GetTypeId() == TYPEID_PLAYER)
+                    if (Unit* target = m_targets.getUnitTarget())
+                        if (!target->isAlive())
+                            return SPELL_FAILED_BAD_TARGETS;
                 break;
             }
             case SPELL_EFFECT_SKINNING:

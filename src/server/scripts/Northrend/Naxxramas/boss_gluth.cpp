@@ -153,8 +153,35 @@ public:
 
 };
 
+class spell_gluth_decimate : public SpellScriptLoader
+{
+    public:
+        spell_gluth_decimate() : SpellScriptLoader("spell_gluth_decimate") { }
+
+        class spell_gluth_decimate_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_gluth_decimate_SpellScript);
+
+            void FilterTargets(std::list<Unit*>& unitList)
+            {
+                unitList.remove(GetCaster());
+            }
+
+            void Register()
+            {
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_gluth_decimate_SpellScript::FilterTargets, EFFECT_0, TARGET_SRC_CASTER);
+            }
+        };
+
+        SpellScript *GetSpellScript() const
+        {
+            return new spell_gluth_decimate_SpellScript();
+        }
+};
+
 
 void AddSC_boss_gluth()
 {
     new boss_gluth();
+	new spell_gluth_decimate();
 }
