@@ -77,9 +77,9 @@ uint32 AuctionHouseMgr::GetAuctionDeposit(AuctionHouseEntry const* entry, uint32
     if (MSV <= 0)
         return AH_MINIMUM_DEPOSIT;
 
-    uint32 timeHr = (((time / 60) / 60) /12);
-    float multiplier = (float)(entry->depositPercent * 3) / 100.0f;
-    uint32 deposit = ((uint32)((float)MSV * multiplier * (float)count)/3) * 3 * timeHr;
+    float multiplier = CalculatePctN(float(entry->depositPercent), 3);
+    uint32 timeHr = (((time / 60) / 60) / 12);
+    uint32 deposit = uint32(multiplier * MSV * count / 3) * timeHr * 3;
 
     sLog->outDebug("MSV:        %u", MSV);
     sLog->outDebug("Items:      %u", count);
@@ -717,20 +717,15 @@ bool AuctionEntry::BuildAuctionInfo(WorldPacket & data) const
 
 uint32 AuctionEntry::GetAuctionCut() const
 {
-    int32 cut = int32(((double)auctionHouseEntry->cutPercent / 100.0f) * (double)sWorld->getRate(RATE_AUCTION_CUT)) * bid;
-    if (cut > 0)
-        return cut;
-    else
-        return 0;
+    int32 cut = int32(CalculatePctU(sWorld->getRate(RATE_AUCTION_CUT), auctionHouseEntry->cutPercent)) * bid;
+    return std::max(cut, 0);
 }
 
 /// the sum of outbid is (1% from current bid)*5, if bid is very small, it is 1c
 uint64 AuctionEntry::GetAuctionOutBid() const
 {
-    uint64 outbid = (uint32)((double)bid / 100.0f) * 5;
-    if (!outbid)
-        outbid = 1;
-    return outbid;
+    uint32 outbid = CalculatePctN(bid, 5);
+    return outbid ? outbid : 1;
 }
 
 void AuctionEntry::DeleteFromDB(SQLTransaction& trans) const
