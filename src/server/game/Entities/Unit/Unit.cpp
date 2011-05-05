@@ -7442,7 +7442,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                 {
                      if ((*i)->GetCasterGUID() != GetGUID() || (*i)->GetId() != 50536)
                          continue;
-                     basepoints0 += ((*i)->GetAmount() * ((*i)->GetTotalTicks() - ((*i)->GetTickNumber()))) / (*i)->GetTotalTicks();
+                     basepoints0 += (*i)->GetAmount() * ((*i)->GetTotalTicks() - ((*i)->GetTickNumber()));
                      break;
                 }
 
