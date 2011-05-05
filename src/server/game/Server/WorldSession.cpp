@@ -441,6 +441,12 @@ void WorldSession::LogoutPlayer(bool Save)
             _player->BuildPlayerRepop();
             _player->RepopAtGraveyard();
         }
+        else if (_player->HasPendingBind())
+        {
+            _player->RepopAtGraveyard();
+            _player->SetPendingBind(NULL, 0);
+        }
+
         //drop a flag if player is carrying it
         if (Battleground *bg = _player->GetBattleground())
             bg->EventPlayerLoggedOut(_player);
