@@ -6177,13 +6177,17 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                     break;
                 case SPELLFAMILY_PRIEST:
                     // Vampiric Touch
-                    if (m_spellProto->SpellFamilyFlags[1] & 0x0400 && aurApp->GetRemoveMode() == AURA_REMOVE_BY_ENEMY_SPELL)
+                    if (m_spellProto->SpellFamilyFlags[1] & 0x400 && aurApp->GetEffectMask() == 0)
                     {
-                        if (AuraEffect const * aurEff = GetBase()->GetEffect(1))
+                        if (aurApp->GetRemoveMode() == AURA_REMOVE_BY_ENEMY_SPELL)
                         {
-                            int32 damage = aurEff->GetAmount() * 4;
-                            // backfire damage
-                            target->CastCustomSpell(target, 64085, &damage, NULL, NULL, true, NULL, NULL, GetCasterGUID());
+                            if (AuraEffect const * aurEff = GetBase()->GetEffect(1))
+                            {
+                                // backfire damage
+                                int32 damage = aurEff->GetAmount() * 8;
+                                int32 dispelDamage = caster->SpellDamageBonus(caster, m_spellProto, damage, SPELL_DIRECT_DAMAGE);
+                                target->CastCustomSpell(target, 64085, &dispelDamage, NULL, NULL, true, NULL, NULL,GetCasterGUID());
+                            }
                         }
                     }
                     break;
