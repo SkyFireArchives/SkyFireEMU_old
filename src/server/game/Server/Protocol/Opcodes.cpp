@@ -339,7 +339,7 @@ void InitOpcodeTable()
     OPCODE( SMSG_AI_REACTION,                             STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_SET_SELECTION,                           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleSetSelectionOpcode        );
     OPCODE( CMSG_EQUIPMENT_SET_DELETE,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleEquipmentSetDelete        );
-    OPCODE( CMSG_INSTANCE_LOCK_WARNING_RESPONSE,          STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
+    OPCODE( CMSG_INSTANCE_LOCK_WARNING_RESPONSE,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleInstanceLockResponse      );
     OPCODE( CMSG_UNUSED2,                                 STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
     OPCODE( CMSG_ATTACKSWING,                             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleAttackSwingOpcode         );
     OPCODE( CMSG_ATTACKSTOP,                              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleAttackStopOpcode          );
@@ -550,7 +550,7 @@ void InitOpcodeTable()
     OPCODE( CMSG_GMTICKET_GETTICKET,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleGMTicketGetTicketOpcode   );
     OPCODE( SMSG_GMTICKET_GETTICKET,                      STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_UNLEARN_TALENTS,                         STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
-    OPCODE( SMSG_GAMEOBJECT_SPAWN_ANIM_OBSOLETE,          STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
+    OPCODE( SMSG_UPDATE_INSTANCE_ENCOUNTER_UNIT,          STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_GAMEOBJECT_DESPAWN_ANIM,                 STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( MSG_CORPSE_QUERY,                             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleCorpseQueryOpcode         );
     OPCODE( CMSG_GMTICKET_DELETETICKET,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleGMTicketDeleteOpcode      );

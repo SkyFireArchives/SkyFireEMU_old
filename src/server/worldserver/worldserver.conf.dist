@@ -2091,6 +2091,10 @@ CharDelete.KeepDays = 30
 #        Default: 1 - on
 #                 0 - off
 #
+#   AccountInstancesPerHour
+#        Description: Controls the max amount of different instances player can enter within hour
+#        Default:     5
+#
 ###############################################################################
 
 PlayerStart.AllReputation = 0
@@ -2113,4 +2117,5 @@ LevelReq.Trade = 1
 LevelReq.Ticket = 1
 LevelReq.Auction = 1
 LevelReq.Mail = 1
-DungeonFinder.Enable = 1
+DungeonFinder.Enable = 1^
+AccountInstancesPerHour = 5

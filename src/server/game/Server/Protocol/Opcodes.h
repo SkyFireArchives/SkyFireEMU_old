@@ -548,7 +548,7 @@ enum Opcodes
     CMSG_GMTICKET_GETTICKET                          = 0x0B4C4, // 4.0.6a 13623
     SMSG_GMTICKET_GETTICKET                          = 0x02284, // 4.0.6a 13623
     CMSG_UNLEARN_TALENTS                             = 0x10098, //
-    SMSG_GAMEOBJECT_SPAWN_ANIM_OBSOLETE              = 0x0EDA4, // 4.0.6a 13623
+    SMSG_UPDATE_INSTANCE_ENCOUNTER_UNIT              = 0x0EDA4, // 4.0.6a 13623
     SMSG_GAMEOBJECT_DESPAWN_ANIM                     = 0x0BFA8, // 4.0.6a 13623
     MSG_CORPSE_QUERY                                 = 0x0E0C8, // 4.0.6a 13623
     CMSG_GMTICKET_DELETETICKET                       = 0x0FBE4, // 4.0.6a 13623
