@@ -510,7 +510,7 @@ void WorldSession::SendStablePetCallback(QueryResult result, uint64 guid)
             data << uint32(fields[1].GetUInt32());                  // slot
             data << uint32(fields[2].GetUInt32());                  // petnumber
             data << uint32(fields[3].GetUInt32());                  // creature entry
-            data << uint32(fields[4].GetUInt32());                  // level
+            data << uint32(fields[4].GetUInt16());                  // level
             data << fields[5].GetString();                          // name
             data << uint8(fields[1].GetUInt32() <= PET_SLOT_STABLE_FIRST ? 1 : 2);   // 1 = current, 2/3 = in stable (any from 4,5,... create problems with proper show)
 
@@ -590,7 +590,7 @@ void WorldSession::HandleStableChangeSlotCallback(QueryResult result, uint8 new_
 
     Field *fields = result->Fetch();
 
-    uint32 slot        = fields[0].GetUInt32();
+    uint32 slot        = fields[0].GetUInt8();
     uint32 creature_id = fields[1].GetUInt32();
     uint32 pet_number  = fields[2].GetUInt32();
 

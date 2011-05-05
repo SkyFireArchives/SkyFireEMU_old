@@ -1976,16 +1976,11 @@ void ObjectMgr::LoadCreatureRespawnTimes()
 
     if (!result)
     {
-        
-
-        
 
         sLog->outString();
         sLog->outString(">> Loaded 0 creature respawn time.");
         return;
     }
-
-    
 
     do
     {
@@ -1993,7 +1988,7 @@ void ObjectMgr::LoadCreatureRespawnTimes()
         
 
         uint32 loguid       = fields[0].GetUInt32();
-        uint64 respawn_time = fields[1].GetUInt64();
+        uint64 respawn_time = fields[1].GetUInt32();
         uint32 instance     = fields[2].GetUInt32();
 
         mCreatureRespawnTimes[MAKE_PAIR64(loguid,instance)] = time_t(respawn_time);
@@ -2034,7 +2029,7 @@ void ObjectMgr::LoadGameobjectRespawnTimes()
         
 
         uint32 loguid       = fields[0].GetUInt32();
-        uint64 respawn_time = fields[1].GetUInt64();
+        uint32 respawn_time = fields[1].GetUInt32();
         uint32 instance     = fields[2].GetUInt32();
 
         mGORespawnTimes[MAKE_PAIR64(loguid,instance)] = time_t(respawn_time);
@@ -5751,7 +5746,7 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
         m->sender = fields[2].GetUInt32();
         m->receiver = fields[3].GetUInt32();
         bool has_items = fields[4].GetBool();
-        m->expire_time = (time_t)fields[5].GetUInt64();
+        m->expire_time = time_t(fields[5].GetUInt32());
         m->deliver_time = 0;
         m->COD = fields[6].GetUInt32();
         m->checked = fields[7].GetUInt32();
