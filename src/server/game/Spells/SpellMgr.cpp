@@ -4060,6 +4060,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->CastingTimeIndex = 1;
             count++;
             break;
+		case 49206: // Summon Gargoyle
+            spellInfo->DurationIndex = 587;
+            count++;
+            break;
         default:
             break;
         }
