@@ -3586,6 +3586,30 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (i)
         {
+		case 1680: // Whirlwind  (Fury)
+			spellInfo->EffectRadiusIndex[0] = 8;
+			spellInfo->EffectRadiusIndex[1] = 8;
+			spellInfo->EffectRadiusIndex[2] = 8;
+			count++;
+            break;
+		case 50622: // Whirlwind (triggered by Bladestorm)
+            spellInfo->EffectRadiusIndex[0] = 8;
+            spellInfo->EffectRadiusIndex[1] = 8;
+            spellInfo->EffectRadiusIndex[2] = 8;
+            count++;
+            break;
+        case 44543: //Fingers of Frost rank 1
+            spellInfo->procChance = 7;
+            count++;
+            break;
+        case 44545: //Fingers of Frost rank 2
+            spellInfo->procChance = 14;
+            count++;
+            break;
+        case 83074: //Fingers of Frost rank 3
+            spellInfo->procChance = 20;
+            count++;
+            break;
         case 2643: // Multi-Shot no-target Effect 0 fix.
             spellInfo->EffectImplicitTargetA[0] = TARGET_DST_TARGET_ENEMY;
             count++;
