@@ -4209,6 +4209,7 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
 					break;
 				}
 				(m_caster->HasAura(63220)) ? totalDamagePercentMod *= 1.15f : 0 ; // Glyphe of Templar's Verdict
+				m_caster->SetPower(POWER_HOLY_POWER, 0);
 			}
 
             // Seal of Command Unleashed
