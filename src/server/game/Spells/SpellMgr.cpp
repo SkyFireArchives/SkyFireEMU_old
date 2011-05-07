@@ -4117,6 +4117,15 @@ void SpellMgr::LoadSpellCustomAttr()
                     break;
                 count++;
                 break;
+            case SPELLFAMILY_HUNTER:
+                // Monstrous Bite target fix
+                // seems we incorrectly handle spell with "no target"
+                if (spellInfo->SpellIconID == 599)
+                    spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
+                else
+                    break;
+                count++;
+                break;
             case SPELLFAMILY_DRUID:
                 // Starfall Target Selection
                 if (spellInfo->SpellFamilyFlags[2] & 0x100)
