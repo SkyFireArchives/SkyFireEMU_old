@@ -848,7 +848,7 @@ bool SpellMgr::_isPositiveEffect(uint32 spellId, uint32 effIndex, bool deep) con
             if (spellproto->SpellIconID == 45)
                 return true;
             break;
-		case SPELLFAMILY_WARRIOR:
+        case SPELLFAMILY_WARRIOR:
             // Shockwave
             if (spellId == 46968)
                 return false;
@@ -2947,9 +2947,9 @@ DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto
             // Cheap Shot
             else if (spellproto->SpellFamilyFlags[0] & 0x400)
                 return DIMINISHING_CHEAPSHOT_POUNCE;
-			// Kidney Shot
-			else if (spellproto->SpellFamilyFlags[0] & 0x200000)
-				return DIMINISHING_CHEAPSHOT_POUNCE;
+            // Kidney Shot
+            else if (spellproto->SpellFamilyFlags[0] & 0x200000)
+                return DIMINISHING_CHEAPSHOT_POUNCE;
             // Crippling poison - Limit to 10 seconds in PvP (No SpellFamilyFlags)
             else if (spellproto->SpellIconID == 163)
                 return DIMINISHING_LIMITONLY;
@@ -3589,13 +3589,13 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (i)
         {
-		case 1680: // Whirlwind  (Fury)
-			spellInfo->EffectRadiusIndex[0] = 8;
-			spellInfo->EffectRadiusIndex[1] = 8;
-			spellInfo->EffectRadiusIndex[2] = 8;
-			count++;
+        case 1680: // Whirlwind  (Fury)
+            spellInfo->EffectRadiusIndex[0] = 8;
+            spellInfo->EffectRadiusIndex[1] = 8;
+            spellInfo->EffectRadiusIndex[2] = 8;
+            count++;
             break;
-		case 50622: // Whirlwind (triggered by Bladestorm)
+        case 50622: // Whirlwind (triggered by Bladestorm)
             spellInfo->EffectRadiusIndex[0] = 8;
             spellInfo->EffectRadiusIndex[1] = 8;
             spellInfo->EffectRadiusIndex[2] = 8;
@@ -3632,7 +3632,7 @@ void SpellMgr::LoadSpellCustomAttr()
             count++;
             break;
         case 49838: // Stop Time
-		case 50526: // Wandering Plague
+        case 50526: // Wandering Plague
         case 52916: // Honor Among Thieves
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_INITIAL_AGGRO;
             count++;
@@ -3713,7 +3713,7 @@ void SpellMgr::LoadSpellCustomAttr()
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_EXCLUDE_SELF;
             count++;
             break;
-		case 64844: // Divine Hymn 
+        case 64844: // Divine Hymn 
         case 64904: // Hymn of Hope
             spellInfo->AttributesEx &= ~SPELL_ATTR1_NEGATIVE;
             ++count;
@@ -3868,7 +3868,7 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->Stances = 1 << (FORM_TREE - 1);
             count++;
             break;
-		case 8145: // Tremor Totem (instant pulse)
+        case 8145: // Tremor Totem (instant pulse)
         case 6474: // Earthbind Totem (instant pulse)
             spellInfo->AttributesEx5 |= SPELL_ATTR5_START_PERIODIC_AT_APPLY;
             count++;
@@ -3877,11 +3877,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectBasePoints[2] += 30000;
             count++;
             break;
-		case 42650: // Army of the Dead - can be interrupted
+        case 42650: // Army of the Dead - can be interrupted
             spellInfo->InterruptFlags = SPELL_INTERRUPT_FLAG_INTERRUPT;
             count++;
             break;
-		case 61607: // Mark of Blood
+        case 61607: // Mark of Blood
             spellInfo->AttributesEx |= SPELL_ATTR1_NO_THREAT;
             ++count;
             break;
@@ -4015,7 +4015,7 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetB[0] = TARGET_UNIT_MASTER;
             count++;
             break;
-		case 54800: // Sigil of the Frozen Conscience - change class mask to custom extended flags of Icy Touch
+        case 54800: // Sigil of the Frozen Conscience - change class mask to custom extended flags of Icy Touch
                     // this is done because another spell also uses the same SpellFamilyFlags as Icy Touch
                     // SpellFamilyFlags[0] & 0x00000040 in SPELLFAMILY_DEATHKNIGHT is currently unused (3.3.5a)
                     // this needs research on modifier applying rules, does not seem to be in Attributes fields
@@ -4074,11 +4074,11 @@ void SpellMgr::LoadSpellCustomAttr()
         case 74434: // Soulburn
             spellInfo->procCharges = 1;
             break;
-		case 23126: // World Enlarger
+        case 23126: // World Enlarger
             spellInfo->AuraInterruptFlags |= AURA_INTERRUPT_FLAG_SPELL_ATTACK;
             count++;
             break;
-		case 19970: // Entangling Roots (Rank 6) -- Nature's Grasp Proc
+        case 19970: // Entangling Roots (Rank 6) -- Nature's Grasp Proc
         case 19971: // Entangling Roots (Rank 5) -- Nature's Grasp Proc
         case 19972: // Entangling Roots (Rank 4) -- Nature's Grasp Proc
         case 19973: // Entangling Roots (Rank 3) -- Nature's Grasp Proc
@@ -4089,11 +4089,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->CastingTimeIndex = 1;
             count++;
             break;
-		case 49206: // Summon Gargoyle
+        case 49206: // Summon Gargoyle
             spellInfo->DurationIndex = 587;
             count++;
             break;
-		case 53480: // Roar of Sacrifice Split damage
+        case 53480: // Roar of Sacrifice Split damage
             spellInfo->Effect[1] = SPELL_EFFECT_APPLY_AURA;
             spellInfo->EffectApplyAuraName[1] = SPELL_AURA_SPLIT_DAMAGE_PCT;
             spellInfo->EffectMiscValue[1] = 127;
@@ -4123,7 +4123,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 // Roar
                 else if (spellInfo->SpellFamilyFlags[0] & 0x8)
                     mSpellCustomAttr[i] |= SPELL_ATTR0_CU_AURA_CC;
-				// Rake
+                // Rake
                 else if (spellInfo->SpellFamilyFlags[0] & 0x1000)
                     mSpellCustomAttr[i] |= SPELL_ATTR0_CU_IGNORE_ARMOR;
                 else
@@ -4138,7 +4138,7 @@ void SpellMgr::LoadSpellCustomAttr()
                     break;
                 count++;
                 break;
-			case SPELLFAMILY_DEATHKNIGHT:
+            case SPELLFAMILY_DEATHKNIGHT:
                 // Icy Touch - extend FamilyFlags (unused value) for Sigil of the Frozen Conscience to use
                 if (spellInfo->SpellIconID == 2721 && spellInfo->SpellFamilyFlags[0] & 0x2)
                     spellInfo->SpellFamilyFlags[0] |= 0x40;
