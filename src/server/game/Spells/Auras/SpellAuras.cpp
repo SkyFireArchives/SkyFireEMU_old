@@ -1024,17 +1024,6 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
             case SPELLFAMILY_WARLOCK:
                 switch(GetId())
                 {
-					case 6358: // Seduction
-                        if (!caster)
-                            break;
-                        if (Unit *owner = caster->GetOwner())
-                            if (owner->HasAura(56250)) // Glyph of Succubus
-                            {
-                                target->RemoveAurasByType(SPELL_AURA_PERIODIC_DAMAGE, 0, target->GetAura(32409)); // SW:D shall not be removed.
-                                target->RemoveAurasByType(SPELL_AURA_PERIODIC_DAMAGE_PERCENT);
-                                target->RemoveAurasByType(SPELL_AURA_PERIODIC_LEECH);
-                            }
-                        break;
                     case 48020: // Demonic Circle
                         if (target->GetTypeId() == TYPEID_PLAYER)
                             if (GameObject* obj = target->GetGameObject(48018))
