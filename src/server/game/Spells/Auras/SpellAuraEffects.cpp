@@ -2962,7 +2962,7 @@ void AuraEffect::HandleModInvisibility(AuraApplication const *aurApp, uint8 mode
             // if not have different invisibility auras.
             // remove glow vision
             if (target->GetTypeId() == TYPEID_PLAYER)
-                target->RemoveFlag(PLAYER_FIELD_BYTES2,PLAYER_FIELD_BYTE2_INVISIBILITY_GLOW);
+                target->RemoveByteFlag(PLAYER_FIELD_BYTES2, 3, PLAYER_FIELD_BYTE2_INVISIBILITY_GLOW);
 
             target->m_invisibility.DelFlag(type);
         }
