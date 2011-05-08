@@ -3376,7 +3376,7 @@ void Spell::EffectDispel(SpellEffIndex effIndex)
 
         if ((1<<aura->GetSpellProto()->Dispel) & dispelMask)
         {
-            if (aura->GetSpellProto()->Dispel == DISPEL_MAGIC)
+            if (aura->GetSpellProto()->Dispel == DISPEL_MAGIC || aura->GetSpellProto()->Dispel == DISPEL_POISON)
             {
                 bool positive = aurApp->IsPositive() ? (!(aura->GetSpellProto()->AttributesEx & SPELL_ATTR1_NEGATIVE)) : false;
 
