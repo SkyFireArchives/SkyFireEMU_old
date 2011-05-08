@@ -844,6 +844,9 @@ bool SpellMgr::_isPositiveEffect(uint32 spellId, uint32 effIndex, bool deep) con
             // Envenom
             if (spellproto->SpellFamilyFlags[1] & 0x8)
                 return true;
+            // Slice and Dice
+            else if (spellproto->SpellFamilyFlags[0] & 0x40000)
+                return true;
             break;
         case SPELLFAMILY_MAGE:
             // Amplify Magic, Dampen Magic
