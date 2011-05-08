@@ -4360,14 +4360,10 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
             // Obliterate (12.5% more damage per disease)
             if (m_spellInfo->SpellFamilyFlags[EFFECT_1] & 0x20000)
             {
-                bool consumeDiseases = true;
                 // Annihilation
                 if (AuraEffect const * aurEff = m_caster->GetDummyAuraEffect(SPELLFAMILY_DEATHKNIGHT, 2710, EFFECT_0))
-                    // Do not consume diseases if roll sucesses
-                    if (roll_chance_i(aurEff->GetAmount()))
-                        consumeDiseases = false;
 
-                totalDamagePercentMod *= ((SpellMgr::CalculateSpellEffectAmount(m_spellInfo, EFFECT_2) * unitTarget->GetDiseasesByCaster(m_caster->GetGUID(), consumeDiseases) / 2.0f) + 100.0f) / 100.0f;
+                totalDamagePercentMod *= ((SpellMgr::CalculateSpellEffectAmount(m_spellInfo, EFFECT_2) * unitTarget->GetDiseasesByCaster(m_caster->GetGUID()) / 2.0f) + 100.0f) / 100.0f;
                 break;
             }
             // Blood-Caked Strike - Blood-Caked Blade
