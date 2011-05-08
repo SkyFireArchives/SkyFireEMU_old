@@ -3013,17 +3013,16 @@ void Unit::InterruptSpell(CurrentSpellTypes spellType, bool withDelayed, bool wi
         if (!spell->IsInterruptable())
             return;
 
-        m_currentSpells[spellType] = NULL;
-
         // send autorepeat cancel message for autorepeat spells
         if (spellType == CURRENT_AUTOREPEAT_SPELL)
-        {
-            if (GetTypeId() == TYPEID_PLAYER)
-                this->ToPlayer()->SendAutoRepeatCancel(this);
-        }
+
+        if (GetTypeId() == TYPEID_PLAYER)
+            ToPlayer()->SendAutoRepeatCancel(this);
 
         if (spell->getState() != SPELL_STATE_FINISHED)
             spell->cancel();
+
+        m_currentSpells[spellType] = NULL;
         spell->SetReferencedFromCurrent(false);
     }
 }
@@ -10420,6 +10419,10 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
             if (spellProto->SpellFamilyFlags[0] & 0x00004000)
                 if (HasAura(200000))
                     DoneTotalMod *= 2;
+            // Shadow Bite (15% increase from each dot)
+            if (spellProto->SpellFamilyFlags[1] & 0x00400000 && isPet() && GetOwner())
+                if (uint8 count = pVictim->GetDoTsByCaster(GetOwnerGUID()))
+                    AddPctN(DoneTotalMod, 15 * count);
         break;
         case SPELLFAMILY_HUNTER:
             // Steady Shot

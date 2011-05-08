@@ -125,11 +125,9 @@ public:
                         uint32 MostHP = 0;
                         Unit* pMostHPTarget = NULL;
 
-                        std::list<HostileReference*> m_threatlist = me->getThreatManager().getThreatList();
-                        m_threatlist.resize(RAID_MODE(2,3));  // Picks 2 (3) highest threat targets as Hateful Strike candidates
-                        std::list<HostileReference*>::const_iterator i = m_threatlist.begin();
-
-                        for (; i != me->getThreatManager().getThreatList().end(); ++i)
+                        std::list<HostileReference*>::const_iterator i = me->getThreatManager().getThreatList().begin();
+                        int targetCounter = RAID_MODE(2,3); // Picks 2 (3) highest threat targets as Hateful Strike candidates
+                        for (; i != me->getThreatManager().getThreatList().end() && targetCounter > 0; ++i, --targetCounter)
                         {
                             Unit *pTarget = (*i)->getTarget();
                             if (pTarget->isAlive() && pTarget != me->getVictim() && pTarget->GetHealth() > MostHP && me->IsWithinMeleeRange(pTarget))

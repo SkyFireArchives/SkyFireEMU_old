@@ -1024,17 +1024,6 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
             case SPELLFAMILY_WARLOCK:
                 switch(GetId())
                 {
-					case 6358: // Seduction
-                        if (!caster)
-                            break;
-                        if (Unit *owner = caster->GetOwner())
-                            if (owner->HasAura(56250)) // Glyph of Succubus
-                            {
-                                target->RemoveAurasByType(SPELL_AURA_PERIODIC_DAMAGE, 0, target->GetAura(32409)); // SW:D shall not be removed.
-                                target->RemoveAurasByType(SPELL_AURA_PERIODIC_DAMAGE_PERCENT);
-                                target->RemoveAurasByType(SPELL_AURA_PERIODIC_LEECH);
-                            }
-                        break;
                     case 48020: // Demonic Circle
                         if (target->GetTypeId() == TYPEID_PLAYER)
                             if (GameObject* obj = target->GetGameObject(48018))
@@ -1494,6 +1483,32 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                     else
                         target->SetReducedThreatPercent(0,0);
                     break;
+            }
+            break;
+        case SPELLFAMILY_DRUID:
+            // Enrage
+            if (GetSpellProto()->SpellFamilyFlags[0] & 0x80000)
+            {
+                if (target->HasAura(70726)) // Druid T10 Feral 4P Bonus
+                {
+                    if (apply)
+                        target->CastSpell(target, 70725, true);
+                }
+                else // armor reduction implemented here
+                    if (AuraEffect * auraEff = target->GetAuraEffectOfRankedSpell(1178, 0))
+                    {
+                        int32 value = auraEff->GetAmount();
+                        int32 mod;
+                        switch (auraEff->GetId())
+                        {
+                            case 1178: mod = 27; break;
+                            case 9635: mod = 16; break;
+                        }
+                        mod = value / 100 * mod;
+                        value = value + (apply ? -mod : mod);
+                        auraEff->ChangeAmount(value);
+                    }
+                break;
             }
             break;
         case SPELLFAMILY_ROGUE:

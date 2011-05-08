@@ -529,7 +529,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                 break;
             switch(GetSpellProto()->SpellFamilyName)
             {
-				case SPELLFAMILY_GENERIC:
+                case SPELLFAMILY_GENERIC:
                     if (GetId()==70845)
                         DoneActualBenefit = caster->GetMaxHealth() * 0.2f;
                     break;
@@ -640,12 +640,12 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                 break;
             // Earth Shield
             if (GetSpellProto()->SpellFamilyName == SPELLFAMILY_SHAMAN && m_spellProto->SpellFamilyFlags[1] & 0x400)
-			{
+            {
                 // return to unmodified by spellmods value
                 amount = m_spellProto->EffectBasePoints[m_effIndex];
                 // apply spell healing bonus
                 amount = caster->SpellHealingBonus(GetBase()->GetUnitOwner(), GetSpellProto(), GetEffIndex(), amount, SPELL_DIRECT_DAMAGE);
-				// apply spellmods
+                // apply spellmods
                 amount = caster->ApplyEffectModifiers(GetSpellProto(), m_effIndex, float(amount));
             }
             break;
@@ -1698,6 +1698,25 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
 
                 damage = uint32(target->CountPctFromMaxHealth(damage));
                 damage = uint32(damage * TakenTotalMod);
+
+                switch (m_spellProto->Id)
+                {
+                    uint32 dmg;
+                case 16488: // Blood Craze Rank 1
+                    dmg = caster->GetMaxHealth() / 100 * 0.2;
+                    damage = dmg;
+                    break;
+                case 16490: // Blod Craze Rank 2
+                    dmg = caster->GetMaxHealth() / 100 * 0.4;
+                    damage = dmg;
+                    break;
+                case 16491: // Blod Craze Rank 3
+                    dmg = caster->GetMaxHealth() / 100 * 0.6;
+                    damage = dmg;
+                    break;
+                default:
+                    break;
+                }
             }
             else
             {
@@ -2445,6 +2464,16 @@ void AuraEffect::TriggerSpell(Unit *target, Unit *caster) const
                         return;
                 }
                 break;
+            }
+           case SPELLFAMILY_WARRIOR:
+           {
+               switch(auraId)
+               {
+               case 46924: // Bladestorm
+                   triggerSpellId = 50622; // Whirldwind
+                   return;
+               }
+               break;
             }
             case SPELLFAMILY_MAGE:
             {
@@ -4388,9 +4417,9 @@ void AuraEffect::HandleAuraControlVehicle(AuraApplication const *aurApp, uint8 m
         return;
 
     if (apply)
-	{
+    {
         caster->EnterVehicle(target->GetVehicleKit(), m_amount - 1, true);
-	}
+    }
     else
     {
         if (GetId() == 53111) // Devour Humanoid
@@ -4552,11 +4581,12 @@ void AuraEffect::HandleModStateImmunityMask(AuraApplication const *aurApp, uint8
     // TODO: figure out a better place to put this...
     // Patch 3.0.3 Bladestorm now breaks all snares and roots on the warrior when activated.
     // however not all mechanic specified in immunity
-    if (apply && GetId() == 46924)
+    if (GetId() == 46924)
     {
         immunity_list.pop_back(); // delete Disarm
-        target->RemoveAurasByType(SPELL_AURA_MOD_ROOT);
-        target->RemoveAurasByType(SPELL_AURA_MOD_DECREASE_SPEED);
+        immunity_list.push_back(SPELL_AURA_MOD_PACIFY_SILENCE);
+        target->ApplySpellImmune(GetId(), IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, apply);
+        target->ApplySpellImmune(GetId(), IMMUNITY_MECHANIC, MECHANIC_SNARE, apply);
     }
 
     if (apply && GetSpellProto()->AttributesEx & SPELL_ATTR1_DISPEL_AURAS_ON_IMMUNITY)
@@ -5050,8 +5080,8 @@ void AuraEffect::HandleModTotalPercentStat(AuraApplication const *aurApp, uint8 
     if ((GetMiscValue() == STAT_STAMINA) && (maxHPValue > 0) && (m_spellProto->Attributes & SPELL_ATTR0_UNK4))
     {
         uint32 newHPValue = target->CountPctFromMaxHealth(int32(100.0f * curHPValue / maxHPValue));
-		if (!newHPValue)
-			newHPValue = 1;
+        if (!newHPValue)
+            newHPValue = 1;
         target->SetHealth(newHPValue);
     }
 }
@@ -6141,7 +6171,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             caster->CastSpell(target, GetAmount(), true);
                     }
                     break;
-				case SPELLFAMILY_ROGUE:
+                case SPELLFAMILY_ROGUE:
                     switch (GetId())
                     {
                         case 59628: // Tricks of the Trade

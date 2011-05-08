@@ -194,7 +194,7 @@ CREATE TABLE `characters` (
   `position_x` float NOT NULL DEFAULT '0',
   `position_y` float NOT NULL DEFAULT '0',
   `position_z` float NOT NULL DEFAULT '0',
-  `map` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Map Identifier',
+  `map` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Map Identifier',
   `instance_id` int(10) unsigned NOT NULL DEFAULT '0',
   `instance_mode_mask` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `orientation` float NOT NULL DEFAULT '0',
