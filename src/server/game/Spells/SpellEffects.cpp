@@ -1568,6 +1568,11 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             }
             break;
         case SPELLFAMILY_DEATHKNIGHT:
+			// Hungering Cold
+			if (m_spellInfo->SpellFamilyFlags[1] & SPELLFAMILYFLAG1_DK_HUNGERING_COLD)
+			{
+				m_caster->CastCustomSpell(m_caster, 51209, &bp, NULL, NULL, true);
+			}
             // Chains of Ice
             if (m_spellInfo->SpellFamilyFlags[0] & SPELLFAMILYFLAG_DK_CHAINS_OF_ICE)
             {
