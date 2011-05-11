@@ -583,18 +583,27 @@ void AchievementMgr::LoadFromDB(PreparedQueryResult achievementResult, PreparedQ
         {
             Field* fields = achievementResult->Fetch();
 
-            uint32 achievement_id = fields[0].GetUInt16();
+            uint32 achievementid = fields[0].GetUInt16();
 
             // don't must happen: cleanup at server startup in sAchievementMgr->LoadCompletedAchievements()
-            if (!sAchievementStore.LookupEntry(achievement_id))
+            AchievementEntry const* achievement = sAchievementStore.LookupEntry(achievementid);
+            if (!achievement)
                 continue;
 
-            CompletedAchievementData& ca = m_completedAchievements[achievement_id];
+            CompletedAchievementData& ca = m_completedAchievements[achievementid];
             ca.date = time_t(fields[1].GetUInt32());
             ca.changed = false;
             
-            if (AchievementEntry const* pAchievement = sAchievementStore.LookupEntry(achievement_id))
+            if (AchievementEntry const* pAchievement = sAchievementStore.LookupEntry(achievementid))
                 achievementPoints += pAchievement->points;
+
+            // title achievement rewards are retroactive
+            if (AchievementReward const* reward = sAchievementMgr->GetAchievementReward(achievement))
+                if (uint32 titleId = reward->titleId[GetPlayer()->GetTeam() == ALLIANCE ? 0 : 1])
+                    if (CharTitlesEntry const* titleEntry = sCharTitlesStore.LookupEntry(titleId))
+                        if (!GetPlayer()->HasTitle(titleEntry))
+                            GetPlayer()->SetTitle(titleEntry);
+
         }
         while (achievementResult->NextRow());
     }
