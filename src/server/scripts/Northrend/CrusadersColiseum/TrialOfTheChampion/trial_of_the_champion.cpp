@@ -89,11 +89,11 @@ public:
 
         IntroPhase Phase;
 
-        Creature* pTrall;	
-        Creature* pGarrosh;	
-        Creature* pKing;	
-        Creature* pLady;	
-        Creature* pHighlord;	
+        uint64 TrallGUID;
+        uint64 GarroshGUID;
+        uint64 KingGUID;
+        uint64 LadyGUID;
+        uint64 HighlordGUID;
 
         InstanceScript* pInstance;
     	
@@ -105,11 +105,11 @@ public:
             Phase = IDLE;
             uiIntroTimer = 0;
             uiIntroPhase = 0;
-            pTrall = NULL;	
-            pGarrosh = NULL;	
-            pKing = NULL;	
-            pLady = NULL;	
-            pHighlord = NULL;
+            TrallGUID = 0;
+            GarroshGUID = 0;
+            KingGUID = 0;
+            LadyGUID = 0;
+            HighlordGUID = 0;
         }
 
         void MoveInLineOfSight(Unit* pWho)
@@ -121,28 +121,33 @@ public:
                 Phase = INTRO;
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
-                if (pTrall = me->SummonCreature(CREATURE_TRALL, 685.569f, 615.103f, 435.396f, 6.23544f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000))
+                if (Creature* pTrall = me->SummonCreature(CREATURE_TRALL, 685.569f, 615.103f, 435.396f, 6.23544f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000))
                 {
+                    TrallGUID = pTrall->GetGUID();
                     pTrall->SetReactState(REACT_PASSIVE);	
                     pTrall->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 }
-                if (pGarrosh = me->SummonCreature(CREATURE_GARROSH, 685.7f, 621.134f, 435.396f, 6.259f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000))
+                if (Creature* pGarrosh = me->SummonCreature(CREATURE_GARROSH, 685.7f, 621.134f, 435.396f, 6.259f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000))
                 {
+                    GarroshGUID = pGarrosh->GetGUID();
                     pGarrosh->SetReactState(REACT_PASSIVE);	
                     pGarrosh->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 }
-                if (pKing = me->SummonCreature(CREATURE_KING, 807.724f, 617.9f, 435.396f, 3.18416f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000))
+                if (Creature* pKing = me->SummonCreature(CREATURE_KING, 807.724f, 617.9f, 435.396f, 3.18416f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000))
                 {
+                    KingGUID = pKing->GetGUID();
                     pKing->SetReactState(REACT_PASSIVE);	
                     pKing->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 }
-                if (pLady = me->SummonCreature(CREATURE_LADY, 807.401f, 613.667f, 435.397f, 3.0585f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000))
+                if (Creature* pLady = me->SummonCreature(CREATURE_LADY, 807.401f, 613.667f, 435.397f, 3.0585f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000))
                 {
+                    LadyGUID = pLady->GetGUID();
                     pLady->SetReactState(REACT_PASSIVE);	
                     pLady->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 }
-                if (pHighlord = me->SummonCreature(CREATURE_HIGHLORD, 746.482f, 556.857f, 435.396f, 1.5898f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000))
+                if (Creature* pHighlord = me->SummonCreature(CREATURE_HIGHLORD, 746.482f, 556.857f, 435.396f, 1.5898f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000))
                 {
+                    HighlordGUID = pHighlord->GetGUID();
                     pHighlord->SetReactState(REACT_PASSIVE);	
                     pHighlord->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 }			
@@ -159,6 +164,12 @@ public:
 
             if (uiIntroTimer <= diff)
             {
+                Creature* pTrall = Unit::GetCreature(*me, TrallGUID);
+                Creature* pGarrosh = Unit::GetCreature(*me, GarroshGUID);
+                Creature* pKing = Unit::GetCreature(*me, KingGUID);
+                Creature* pLady = Unit::GetCreature(*me, LadyGUID);
+                Creature* pHighlord = Unit::GetCreature(*me, HighlordGUID);
+
                 if(!pTrall)
                     return;
                 if(!pGarrosh)

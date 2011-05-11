@@ -1301,6 +1301,18 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             break;
         case SPELLFAMILY_MAGE:
         {
+            // Cone of Cold
+            if (m_spellInfo->SpellFamilyFlags && SPELLFAMILYFLAG1_MAGE_CONEOFCOLD)
+            {
+                if (m_caster->HasAura(11190)) // Improved Cone of Cold Rank 1
+                {
+                    m_caster->CastCustomSpell(unitTarget, 83301, &bp, NULL, NULL, true, 0);
+                }
+                if (m_caster->HasAura(12489)) // Improved Cone of Cold Rank 2
+                {
+                    m_caster->CastCustomSpell(unitTarget, 83302, &bp, NULL, NULL, true, 0);
+                }
+			}
             switch (m_spellInfo->Id)
             {
                 case 1459: // Arcane Brilliance
@@ -1568,6 +1580,11 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             }
             break;
         case SPELLFAMILY_DEATHKNIGHT:
+			// Hungering Cold
+			if (m_spellInfo->SpellFamilyFlags[1] & SPELLFAMILYFLAG1_DK_HUNGERING_COLD)
+			{
+				m_caster->CastCustomSpell(m_caster, 51209, &bp, NULL, NULL, true);
+			}
             // Chains of Ice
             if (m_spellInfo->SpellFamilyFlags[0] & SPELLFAMILYFLAG_DK_CHAINS_OF_ICE)
             {
@@ -3376,7 +3393,7 @@ void Spell::EffectDispel(SpellEffIndex effIndex)
 
         if ((1<<aura->GetSpellProto()->Dispel) & dispelMask)
         {
-            if (aura->GetSpellProto()->Dispel == DISPEL_MAGIC)
+            if (aura->GetSpellProto()->Dispel == DISPEL_MAGIC || aura->GetSpellProto()->Dispel == DISPEL_POISON)
             {
                 bool positive = aurApp->IsPositive() ? (!(aura->GetSpellProto()->AttributesEx & SPELL_ATTR1_NEGATIVE)) : false;
 
@@ -4360,14 +4377,10 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
             // Obliterate (12.5% more damage per disease)
             if (m_spellInfo->SpellFamilyFlags[EFFECT_1] & 0x20000)
             {
-                bool consumeDiseases = true;
                 // Annihilation
                 if (AuraEffect const * aurEff = m_caster->GetDummyAuraEffect(SPELLFAMILY_DEATHKNIGHT, 2710, EFFECT_0))
-                    // Do not consume diseases if roll sucesses
-                    if (roll_chance_i(aurEff->GetAmount()))
-                        consumeDiseases = false;
 
-                totalDamagePercentMod *= ((SpellMgr::CalculateSpellEffectAmount(m_spellInfo, EFFECT_2) * unitTarget->GetDiseasesByCaster(m_caster->GetGUID(), consumeDiseases) / 2.0f) + 100.0f) / 100.0f;
+                totalDamagePercentMod *= ((SpellMgr::CalculateSpellEffectAmount(m_spellInfo, EFFECT_2) * unitTarget->GetDiseasesByCaster(m_caster->GetGUID()) / 2.0f) + 100.0f) / 100.0f;
                 break;
             }
             // Blood-Caked Strike - Blood-Caked Blade
