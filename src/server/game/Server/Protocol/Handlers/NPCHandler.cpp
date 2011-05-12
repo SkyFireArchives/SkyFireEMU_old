@@ -286,7 +286,7 @@ void WorldSession::HandleGossipHelloOpcode(WorldPacket & recv_data)
     //if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
     //    GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
-    if (unit->isArmorer() || unit->isCivilian() || unit->isQuestGiver() || unit->isServiceProvider())
+    if (unit->isArmorer() || unit->isCivilian() || unit->isQuestGiver() || unit->isServiceProvider() || unit->isGuard())
     {
         unit->StopMoving();
     }

@@ -23,12 +23,12 @@
 #ifndef TRINITY_GUARDAI_H
 #define TRINITY_GUARDAI_H
 
-#include "CreatureAI.h"
+#include "ScriptedCreature.h"
 #include "Timer.h"
 
 class Creature;
 
-class GuardAI : public CreatureAI
+class GuardAI : public ScriptedAI
 {
     enum GuardState
     {
@@ -43,7 +43,7 @@ class GuardAI : public CreatureAI
         void MoveInLineOfSight(Unit *);
         void EnterEvadeMode();
         void JustDied(Unit *);
-        bool IsVisible(Unit *) const;
+        bool CanSeeAlways(WorldObject const* obj);
 
         void UpdateAI(const uint32);
         static int Permissible(const Creature *);
