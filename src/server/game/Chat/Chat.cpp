@@ -412,7 +412,6 @@ ChatCommand * ChatHandler::getCommandTable()
         { "item_enchantment_template",   SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadItemEnchantementsCommand>,       "", NULL },
         { "item_loot_template",          SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadLootTemplatesItemCommand>,       "", NULL },
         { "item_set_names",              SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadItemSetNamesCommand>,            "", NULL },
-        { "lfg_dungeon_encounters",      SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadLfgEncountersCommand>,           "", NULL },
         { "lfg_dungeon_rewards",         SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadLfgRewardsCommand>,              "", NULL },
         { "locales_achievement_reward",  SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadLocalesAchievementRewardCommand>,"", NULL },
         { "locales_creature",            SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadLocalesCreatureCommand>,         "", NULL },

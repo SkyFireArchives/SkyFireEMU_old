@@ -43,7 +43,6 @@
 #include "BattlegroundAB.h"
 #include "Map.h"
 #include "InstanceScript.h"
-#include "LFGMgr.h"
 #include "zlib.h"
 
 namespace Trinity
@@ -1565,9 +1564,6 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, ui
                 if (IsCompletedAchievement(*itr))
                     CompletedAchievement(*itr);
         }
-
-        if (const uint32 dungeonId = sLFGMgr->GetDungeonIdForAchievement(achievement->ID))
-            sLFGMgr->RewardDungeonDoneFor(dungeonId, GetPlayer());
     }
 }
 

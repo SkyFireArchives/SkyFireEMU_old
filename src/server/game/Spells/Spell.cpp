@@ -56,6 +56,7 @@
 #include "ConditionMgr.h"
 #include "DisableMgr.h"
 #include "SpellScript.h"
+#include "InstanceScript.h"
 #include "DB2Structure.h"
 #include "DB2Stores.h"
 
@@ -3749,15 +3750,13 @@ void Spell::finish(bool ok)
         // triggered spell pointer can be not set in some cases
         // this is needed for proper apply of triggered spell mods
         m_caster->ToPlayer()->SetSpellModTakingSpell(this, true);
-    }
-
-    // Take mods after trigger spell (needed for 14177 to affect 48664)
-    // mods are taken only on succesfull cast and independantly from targets of the spell
-    if (m_caster->GetTypeId() == TYPEID_PLAYER)
-    {
         m_caster->ToPlayer()->RemoveSpellMods(this);
         m_caster->ToPlayer()->SetSpellModTakingSpell(this, false);
     }
+
+    if (m_caster->GetTypeId() == TYPEID_UNIT)
+        if (InstanceScript* instance = m_caster->GetInstanceScript())
+            instance->UpdateEncounterState(ENCOUNTER_CREDIT_CAST_SPELL, m_spellInfo->Id, m_caster);
 
     // Stop Attack for some spells
     if (m_spellInfo->Attributes & SPELL_ATTR0_STOP_ATTACK_TARGET)

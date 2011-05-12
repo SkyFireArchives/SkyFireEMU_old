@@ -827,6 +827,18 @@ struct DestructibleModelDataEntry
     //uint32  Unk5;
 };
 
+struct DungeonEncounterEntry
+{
+    uint32 id;                                              // 0 - unique id
+    uint32 mapId;                                           // 1 - map id
+    uint32 difficulty;                                      // 2 - instance mode
+    //uint32 unk0;                                          // 3
+    uint32 encounterIndex;                                  // 4 - encounter index for creating completed mask
+    DBCString encounterName;                                // 5 - encounter name
+    //uint32 nameFlags                                      // 6
+    //uint32 unk1;                                          // 7
+};
+
 struct DurabilityCostsEntry
 {
     uint32    Itemlvl;                                      // 0

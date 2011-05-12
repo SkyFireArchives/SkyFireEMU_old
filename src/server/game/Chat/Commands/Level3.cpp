@@ -1063,14 +1063,6 @@ bool ChatHandler::HandleReloadLocalesAchievementRewardCommand(const char*)
     return true;
 }
 
-bool ChatHandler::HandleReloadLfgEncountersCommand(const char*)
-{
-    sLog->outString("Re-Loading dungeon encounter lfg associations...");
-    sLFGMgr->LoadDungeonEncounters();
-    SendGlobalGMSysMessage("DB table `lfg_dungeon_encounters` reloaded.");
-    return true;
-}
-
 bool ChatHandler::HandleReloadLfgRewardsCommand(const char*)
 {
     sLog->outString("Re-Loading lfg dungeon rewards...");

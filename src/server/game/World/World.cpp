@@ -1451,7 +1451,7 @@ void World::SetInitialWorldSettings()
     sGameEventMgr->LoadFromDB();
 
     sLog->outString("Loading Dungeon boss data...");
-    sLFGMgr->LoadDungeonEncounters();
+    sObjectMgr->LoadInstanceEncounters();
 
     sLog->outString("Loading LFG rewards...");
     sLFGMgr->LoadRewards();
