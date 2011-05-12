@@ -511,8 +511,12 @@ int WorldSocket::handle_input_header (void)
 
     if ((header.size < 4) || (header.size > 10240))
     {
-        sLog->outError ("WorldSocket::handle_input_header: client sent malformed packet size = %d , cmd = %d",
-                       header.size, header.cmd);
+        Player *_player = m_Session ? m_Session->GetPlayer() : NULL;
+        sLog->outError ("WorldSocket::handle_input_header(): client (account: %u, char [GUID: %u, name: %s]) sent malformed packet (size: %d , cmd: %d)",
+            m_Session ? m_Session->GetAccountId() : 0,
+            _player ? _player->GetGUIDLow() : 0,
+            _player ? _player->GetName() : "<none>", 
+            header.size, header.cmd);
 
         errno = EINVAL;
         return -1;
@@ -1085,10 +1089,13 @@ int WorldSocket::HandlePing (WorldPacket& recvPacket)
             m_Session->SetLatency (latency);
         else
         {
-            sLog->outError ("WorldSocket::HandlePing: peer sent CMSG_PING, "
-                            "but is not authenticated or got recently kicked,"
-                            " address = %s",
-                            GetRemoteAddress().c_str());
+            Player* _player = m_Session->GetPlayer();
+            sLog->outError("WorldSocket::HandlePing: Player (account: %u, GUID: %u, name: %s) kicked for over-speed pings (address: %s)",
+                m_Session->GetAccountId(),
+                _player ? _player->GetGUIDLow() : 0,
+                _player ? _player->GetName() : "<none>",
+                GetRemoteAddress().c_str());
+
              return -1;
         }
     }

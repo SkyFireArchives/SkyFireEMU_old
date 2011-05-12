@@ -197,12 +197,11 @@ void WorldSession::QueuePacket(WorldPacket* new_packet)
 }
 
 /// Logging helper for unexpected opcodes
-void WorldSession::LogUnexpectedOpcode(WorldPacket* packet, const char *reason)
+void WorldSession::LogUnexpectedOpcode(WorldPacket *packet, const char* status, const char *reason)
 {
-    sLog->outError("SESSION: received unexpected opcode %s (0x%.4X) %s",
-        LookupOpcodeName(packet->GetOpcode()),
-        packet->GetOpcode(),
-        reason);
+    sLog->outError("SESSION (account: %u, guidlow: %u, char: %s): received unexpected opcode %s (0x%.4X, status: %s) %s",
+        GetAccountId(), m_GUIDLow, _player ? _player->GetName() : "<none>",
+        LookupOpcodeName(packet->GetOpcode()), packet->GetOpcode(), status, reason);
 }
 
 /// Logging helper for unexpected opcodes
@@ -259,7 +258,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
                         {
                             // skip STATUS_LOGGEDIN opcode unexpected errors if player logout sometime ago - this can be network lag delayed packets
                             if (!m_playerRecentlyLogout)
-                                LogUnexpectedOpcode(packet, "the player has not logged in yet");
+                                LogUnexpectedOpcode(packet, "STATUS_LOGGEDIN", "the player has not logged in yet");
                         }
                         else if (_player->IsInWorld())
                         {
@@ -273,7 +272,8 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
                     case STATUS_LOGGEDIN_OR_RECENTLY_LOGGOUT:
                         if (!_player && !m_playerRecentlyLogout)
                         {
-                            LogUnexpectedOpcode(packet, "the player has not logged in yet and not recently logout");
+                            LogUnexpectedOpcode(packet, "STATUS_LOGGEDIN_OR_RECENTLY_LOGGOUT",
+                                "the player has not logged in yet and not recently logout");
                         }
                         else
                         {
@@ -286,9 +286,9 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
                         break;
                     case STATUS_TRANSFER:
                         if (!_player)
-                            LogUnexpectedOpcode(packet, "the player has not logged in yet");
+                            LogUnexpectedOpcode(packet, "STATUS_TRANSFER", "the player has not logged in yet");
                         else if (_player->IsInWorld())
-                            LogUnexpectedOpcode(packet, "the player is still in world");
+                            LogUnexpectedOpcode(packet, "STATUS_TRANSFER", "the player is still in world");
                         else
                         {
                             sScriptMgr->OnPacketReceive(m_Socket, WorldPacket(*packet));
@@ -301,7 +301,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
                         // prevent cheating with skip queue wait
                         if (m_inQueue)
                         {
-                            LogUnexpectedOpcode(packet, "the player not pass queue yet");
+                            LogUnexpectedOpcode(packet, "STATUS_AUTHED", "the player not pass queue yet");
                             break;
                         }
 
@@ -316,21 +316,17 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
                             LogUnprocessedTail(packet);
                         break;
                     case STATUS_NEVER:
-                        if(strcmp(LookupOpcodeName(packet->GetOpcode()), "UNKNOWN") == 0)
-                        {
+                        if (strcmp(LookupOpcodeName(packet->GetOpcode()), "UNKNOWN") == 0)
                             sLog->outDebug("received not found opcode 0x%.4X", packet->GetOpcode());
-                        }
                         else
-                        {
-                            sLog->outDebug("SESSION: received not allowed opcode %s (0x%.4X)",
-                                          LookupOpcodeName(packet->GetOpcode()),
-                                          packet->GetOpcode());
-                        }
+                            sLog->outError("SESSION (account: %u, guidlow: %u, char: %s): received not allowed opcode %s (0x%.4X)",
+                                GetAccountId(), m_GUIDLow, _player ? _player->GetName() : "<none>",
+                                LookupOpcodeName(packet->GetOpcode()), packet->GetOpcode());
                         break;
                     case STATUS_UNHANDLED:    
-                        sLog->outDebug("SESSION: received not handled opcode %s (0x%.4X)",    
-                            LookupOpcodeName(packet->GetOpcode()),    
-                            packet->GetOpcode());    
+                        sLog->outDebug("SESSION (account: %u, guidlow: %u, char: %s): received not handled opcode %s (0x%.4X)",
+                            GetAccountId(), m_GUIDLow, _player ? _player->GetName() : "<none>",
+                            LookupOpcodeName(packet->GetOpcode()), packet->GetOpcode());  
                         break;
                 }
             }
