@@ -122,8 +122,8 @@ bool ChatHandler::HandleReloadAllLootCommand(const char*)
 
 bool ChatHandler::HandleReloadAllNpcCommand(const char* args)
 {
-    if(*args != 'a')                                          // will be reloaded from all_gossips
-        HandleReloadNpcGossipCommand("a");
+    //if(*args != 'a')                                          // will be reloaded from all_gossips
+    //    HandleReloadNpcGossipCommand("a");
     HandleReloadNpcTrainerCommand("a");
     HandleReloadNpcVendorCommand("a");
     HandleReloadPointsOfInterestCommand("a");
@@ -197,7 +197,6 @@ bool ChatHandler::HandleReloadAllGossipsCommand(const char* args)
    HandleReloadGossipMenuOptionCommand("a");
    if(*args != 'a')                                          // already reload from all_scripts
        HandleReloadGossipScriptsCommand("a");
-   HandleReloadNpcGossipCommand("a");
    HandleReloadPointsOfInterestCommand("a");
    return true;
 }
@@ -639,14 +638,6 @@ bool ChatHandler::HandleReloadTrinityStringCommand(const char*)
     sLog->outString("Re-Loading trinity_string Table!");
     sObjectMgr->LoadTrinityStrings();
     SendGlobalGMSysMessage("DB table `trinity_string` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadNpcGossipCommand(const char*)
-{
-    sLog->outString("Re-Loading `npc_gossip` Table!");
-    sObjectMgr->LoadNpcTextId();
-    SendGlobalGMSysMessage("DB table `npc_gossip` reloaded.");
     return true;
 }
 

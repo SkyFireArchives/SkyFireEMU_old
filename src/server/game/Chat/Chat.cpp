@@ -427,7 +427,6 @@ ChatCommand * ChatHandler::getCommandTable()
         { "mail_level_reward",           SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadMailLevelRewardCommand>,       "", NULL },
         { "mail_loot_template",          SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadLootTemplatesMailCommand>,       "", NULL },
         { "milling_loot_template",       SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadLootTemplatesMillingCommand>,    "", NULL },
-        { "npc_gossip",                  SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadNpcGossipCommand>,               "", NULL },
         { "npc_spellclick_spells",       SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadSpellClickSpellsCommand>,          "",NULL},
         { "npc_trainer",                 SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadNpcTrainerCommand>,              "", NULL },
         { "npc_vendor",                  SEC_ADMINISTRATOR, true,  OldHandler<&ChatHandler::HandleReloadNpcVendorCommand>,               "", NULL },
