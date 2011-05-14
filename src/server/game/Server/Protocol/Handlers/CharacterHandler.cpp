@@ -219,6 +219,7 @@ void WorldSession::HandleCharEnum(QueryResult result)
 
     data << num;
 
+    _allowedCharsToLogin.clear();
     if (result)
     {
         do
