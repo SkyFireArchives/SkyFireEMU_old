@@ -852,6 +852,12 @@ class WorldSession
         void LogUnexpectedOpcode(WorldPacket *packet, const char * reason);
         void LogUnprocessedTail(WorldPacket *packet);
 
+        bool CharCanLogin(uint32 lowGUID)
+        {
+            return _allowedCharsToLogin.find(lowGUID) != _allowedCharsToLogin.end();
+        }
+        std::set<uint32> _allowedCharsToLogin;
+
         uint32 m_GUIDLow;                                   // set loggined or recently logout player (while m_playerRecentlyLogout set)
         Player *_player;
         WorldSocket *m_Socket;
