@@ -1,19 +1,25 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* ScriptData
@@ -219,7 +225,7 @@ public:
             me->RemoveAurasDueToSpell(SPELL_RED_COLORATION);
             me->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
-            me->SetVisibility(VISIBILITY_ON);
+            me->SetVisible(true);
 
             //Reset Phase
             if (pInst)
@@ -404,7 +410,7 @@ public:
                     //Remove any target
                     me->SetUInt64Value(UNIT_FIELD_TARGET, 0);
                     me->SetHealth(0);
-                    me->SetVisibility(VISIBILITY_OFF);
+                    me->SetVisible(false);
                     break;
 
                 //Dead phase
@@ -542,7 +548,7 @@ public:
             //Reset flags
             me->RemoveAurasDueToSpell(SPELL_TRANSFORM);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
-            me->SetVisibility(VISIBILITY_OFF);
+            me->SetVisible(false);
 
             if (pInst)
                 pInst->SetData(DATA_CTHUN_PHASE, PHASE_NOT_STARTED);
@@ -670,7 +676,7 @@ public:
                         DoCast(me, SPELL_TRANSFORM, false);
                         me->SetFullHealth();
 
-                        me->SetVisibility(VISIBILITY_ON);
+                        me->SetVisible(true);
                         me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
 
                         //Emerging phase
@@ -1062,7 +1068,7 @@ public:
                         p->Kill(p);
 
                     //Dissapear and reappear at new position
-                    me->SetVisibility(VISIBILITY_OFF);
+                    me->SetVisible(false);
 
                     Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
                     if (!pTarget)
@@ -1086,7 +1092,7 @@ public:
                         AttackStart(pTarget);
                     }
 
-                    me->SetVisibility(VISIBILITY_ON);
+                    me->SetVisible(true);
                 } else EvadeTimer -= diff;
             }
 
@@ -1174,7 +1180,7 @@ public:
                         p->Kill(p);
 
                     //Dissapear and reappear at new position
-                    me->SetVisibility(VISIBILITY_OFF);
+                    me->SetVisible(false);
 
                     Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                     if (!pTarget)
@@ -1198,7 +1204,7 @@ public:
                         EvadeTimer = 5000;
                         AttackStart(pTarget);
                     }
-                    me->SetVisibility(VISIBILITY_ON);
+                    me->SetVisible(true);
                 } else EvadeTimer -= diff;
             }
 

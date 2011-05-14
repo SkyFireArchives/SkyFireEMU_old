@@ -43,6 +43,7 @@ EndContentData */
 
 #include "ScriptPCH.h"
 #include "ScriptedEscortAI.h"
+#include "Group.h"
 
 /*#####
 # mob_mature_netherwing_drake
@@ -226,7 +227,7 @@ public:
 
             FlyTimer = 10000;
             me->RemoveUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
-            me->SetVisibility(VISIBILITY_ON);
+            me->SetVisible(true);
         }
 
         void SpellHit(Unit* caster, const SpellEntry* spell)
@@ -271,7 +272,7 @@ public:
 
                     PlayerGUID = 0;
                 }
-                me->SetVisibility(VISIBILITY_OFF);
+                me->SetVisible(false);
                 me->RemoveUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
                 me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 me->RemoveCorpse();
@@ -808,7 +809,7 @@ public:
             if (Illidan)
             {
                 IllidanGUID = Illidan->GetGUID();
-                Illidan->SetVisibility(VISIBILITY_OFF);
+                Illidan->SetVisible(false);
             }
             if (PlayerGUID)
             {
@@ -840,7 +841,7 @@ public:
             case 2: DoScriptText(OVERLORD_YELL_1, me, plr); return 4500; break;
             case 3: me->SetInFront(plr); return 3200;  break;
             case 4: DoScriptText(OVERLORD_SAY_2, me, plr); return 2000; break;
-            case 5: Illi->SetVisibility(VISIBILITY_ON);
+            case 5: Illi->SetVisible(true);
                  Illi->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE); return 350; break;
             case 6:
                 Illi->CastSpell(Illi, SPELL_ONE, true);
@@ -876,7 +877,7 @@ public:
                 return 500; break;
             case 21: DoScriptText(OVERLORD_SAY_5, me); return 500; break;
             case 22:
-                Illi->SetVisibility(VISIBILITY_OFF);
+                Illi->SetVisible(false);
                 Illi->setDeathState(JUST_DIED);
                 return 1000; break;
             case 23: me->SetUInt32Value(UNIT_FIELD_BYTES_1,0); return 2000; break;
@@ -1257,7 +1258,7 @@ public:
             AggroTargetGUID = 0;
             Timers = false;
 
-            me->addUnitState(UNIT_STAT_ROOT);
+            me->AddUnitState(UNIT_STAT_ROOT);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             me->SetUInt64Value(UNIT_FIELD_TARGET, 0);
         }
@@ -1301,7 +1302,7 @@ public:
                 if (Player* AggroTarget = (Unit::GetPlayer(*me, AggroTargetGUID)))
                 {
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    me->clearUnitState(UNIT_STAT_ROOT);
+                    me->ClearUnitState(UNIT_STAT_ROOT);
 
                     float x, y, z;
                     AggroTarget->GetPosition(x,y,z);
@@ -1429,7 +1430,7 @@ public:
             Announced = false;
             Failed = false;
 
-            me->SetVisibility(VISIBILITY_OFF);
+            me->SetVisible(false);
         }
 
         void EnterCombat(Unit* /*who*/) {}
@@ -1463,7 +1464,6 @@ public:
                     if (!GroupMember->IsWithinDistInMap(me, EVENT_AREA_RADIUS) && GroupMember->GetQuestStatus(QUEST_BATTLE_OF_THE_CRIMSON_WATCH) == QUEST_STATUS_INCOMPLETE)
                     {
                         GroupMember->FailQuest(QUEST_BATTLE_OF_THE_CRIMSON_WATCH);
-                        GroupMember->SetQuestStatus(QUEST_BATTLE_OF_THE_CRIMSON_WATCH, QUEST_STATUS_NONE);
                         ++FailedMemberCount;
                     }
                     ++GroupMemberCount;
@@ -1488,7 +1488,6 @@ public:
                         if (GroupMember && GroupMember->GetQuestStatus(QUEST_BATTLE_OF_THE_CRIMSON_WATCH) == QUEST_STATUS_INCOMPLETE)
                         {
                             GroupMember->FailQuest(QUEST_BATTLE_OF_THE_CRIMSON_WATCH);
-                            GroupMember->SetQuestStatus(QUEST_BATTLE_OF_THE_CRIMSON_WATCH, QUEST_STATUS_NONE);
                         }
                     }
                     Failed = true;
@@ -1862,7 +1861,7 @@ public:
                      Unit* Owner = totemOspirits->GetOwner();
                      if (Owner && Owner->GetTypeId() == TYPEID_PLAYER)
                          // DoCast(Owner, credit); -- not working!
-                         CAST_PLR(Owner)->KilledMonsterCredit(credit, Summoned->GetGUID());
+                         CAST_PLR(Owner)->KilledMonsterCredit(credit, 0);
                      DoCast(totemOspirits, SPELL_SOUL_CAPTURED);
                  }
             }

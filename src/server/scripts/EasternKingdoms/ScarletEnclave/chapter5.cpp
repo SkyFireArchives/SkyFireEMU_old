@@ -1,18 +1,25 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "ScriptPCH.h"
@@ -389,7 +396,7 @@ public:
 
                 me->SetStandState(UNIT_STAND_STATE_STAND);
                 me->Mount(25279);
-                me->SetVisibility(VISIBILITY_ON);
+                me->SetVisible(true);
 
                 UpdateWorldState(me->GetMap(), WORLD_STATE_REMAINS, 0);
                 //UpdateWorldState(me->GetMap(), WORLD_STATE_COUNTDOWN, 0);
@@ -426,13 +433,13 @@ public:
                 }
 
                 if (Creature* pTemp = Unit::GetCreature(*me, uiKoltiraGUID))
-                    pTemp->setDeathState(JUST_DIED);
+                    pTemp->Respawn();
                 if (Creature* pTemp = Unit::GetCreature(*me, uiOrbazGUID))
-                    pTemp->setDeathState(JUST_DIED);
+                    pTemp->Respawn();
                 if (Creature* pTemp = Unit::GetCreature(*me, uiThassarianGUID))
-                    pTemp->setDeathState(JUST_DIED);
+                    pTemp->Respawn();
                 if (Creature* pTemp = Unit::GetCreature(*me, uiLichKingGUID))
-                    pTemp->setDeathState(JUST_DIED);
+                    pTemp->Respawn();
 
                 uiKoltiraGUID = NULL;
                 uiOrbazGUID = NULL;
@@ -912,7 +919,7 @@ public:
                             if (Creature* pTemp = Unit::GetCreature(*me, uiAlexandrosGUID)) // just hide him
                             {
                                 DoScriptText(EMOTE_LIGHT_OF_DAWN09, pTemp);
-                                pTemp->SetVisibility(VISIBILITY_OFF);
+                                pTemp->SetVisible(false);
                             }
                             if (Creature* pTemp = Unit::GetCreature(*me, uiLichKingGUID))
                             {
@@ -1320,7 +1327,7 @@ public:
                                             i->getSource()->CastSpell(i->getSource(), SPELL_THE_LIGHT_OF_DAWN_Q, false);
                                 }
                             }
-                            me->SetVisibility(VISIBILITY_OFF); // respawns another Darion for quest turn in
+                            me->SetVisible(false); // respawns another Darion for quest turn in
                             me->SummonCreature(NPC_HIGHLORD_DARION_MOGRAINE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 180000);
                             JumpToNextStep(1000);
                             break;
@@ -1331,6 +1338,14 @@ public:
                             break;
 
                         case 73:
+                            if (Creature* pTemp = Unit::GetCreature(*me, uiKoltiraGUID))
+                                pTemp->DespawnOrUnsummon();
+                            if (Creature* pTemp = Unit::GetCreature(*me, uiOrbazGUID))
+                                pTemp->DespawnOrUnsummon();
+                            if (Creature* pTemp = Unit::GetCreature(*me, uiThassarianGUID))
+                                pTemp->DespawnOrUnsummon();
+                            if (Creature* pTemp = Unit::GetCreature(*me, uiLichKingGUID))
+                                pTemp->DespawnOrUnsummon();
                             me->ForcedDespawn();
                             break;
                     }
@@ -1647,7 +1662,7 @@ public:
             if (Creature* pTemp = Unit::GetCreature(*me, pGUID))
                 if (pTemp->isAlive())
                 {
-                    pTemp->SetVisibility(VISIBILITY_OFF);
+                    pTemp->SetVisible(false);
                     pTemp->Kill(pTemp);
                 }
         }

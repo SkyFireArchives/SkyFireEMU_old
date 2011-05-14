@@ -38,6 +38,7 @@
 #include "ObjectMgr.h"
 #include "Language.h"
 #include "WorldPacket.h"
+#include "Group.h"
 
 extern GridState* si_GridStates[];                          // debugging code, should be deleted some day
 
@@ -49,16 +50,6 @@ MapManager::MapManager()
 
 MapManager::~MapManager()
 {
-    for (MapMapType::iterator iter=i_maps.begin(); iter != i_maps.end(); ++iter)
-        delete iter->second;
-
-    for (TransportSet::iterator i = m_Transports.begin(); i != m_Transports.end(); ++i)
-    {
-        (*i)->RemoveFromWorld();
-        delete *i;
-    }
-
-    Map::DeleteStateMachine();
 }
 
 void MapManager::Initialize()
@@ -160,14 +151,14 @@ Map* MapManager::FindMap(uint32 mapid, uint32 instanceId) const
 
 bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
 {
-    const MapEntry *entry = sMapStore.LookupEntry(mapid);
+    MapEntry const* entry = sMapStore.LookupEntry(mapid);
     if (!entry)
        return false;
 
     if (!entry->IsDungeon())
         return true;
 
-    InstanceTemplate const* instance = sObjectMgr->GetInstanceTemplate(mapid);
+    InstanceTemplate const* instance = ObjectMgr::GetInstanceTemplate(mapid);
     if (!instance)
         return false;
 
@@ -190,13 +181,13 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
     if (player->isGameMaster())
         return true;
 
-    const char *mapName = entry->name;
+    char const* mapName = entry->name;
 
-    Group* pGroup = player->GetGroup();
+    Group* group = player->GetGroup();
     if (entry->IsRaid())
     {
         // can only enter in a raid group
-        if ((!pGroup || !pGroup->isRaidGroup()) && !sWorld->getBoolConfig(CONFIG_INSTANCE_IGNORE_RAID))
+        if ((!group || !group->isRaidGroup()) && !sWorld->getBoolConfig(CONFIG_INSTANCE_IGNORE_RAID))
         {
             // probably there must be special opcode, because client has this string constant in GlobalStrings.lua
             // TODO: this is not a good place to send the message
@@ -208,21 +199,20 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
 
     if (!player->isAlive())
     {
-        if (Corpse *corpse = player->GetCorpse())
+        if (Corpse* corpse = player->GetCorpse())
         {
             // let enter in ghost mode in instance that connected to inner instance with corpse
-            uint32 instance_map = corpse->GetMapId();
+            uint32 corpseMap = corpse->GetMapId();
             do
             {
-                if (instance_map == mapid)
+                if (corpseMap == mapid)
                     break;
 
-                InstanceTemplate const* instance = sObjectMgr->GetInstanceTemplate(instance_map);
-                instance_map = instance ? instance->parent : 0;
-            }
-            while (instance_map);
+                InstanceTemplate const* instance = ObjectMgr::GetInstanceTemplate(corpseMap);
+                corpseMap = instance ? instance->parent : 0;
+            } while (corpseMap);
 
-            if (!instance_map)
+            if (!corpseMap)
             {
                 WorldPacket data(SMSG_CORPSE_NOT_IN_INSTANCE);
                 player->GetSession()->SendPacket(&data);
@@ -233,6 +223,21 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
         }
         else
             sLog->outDebug("Map::CanPlayerEnter - player '%s' is dead but does not have a corpse!", player->GetName());
+    }
+
+    // players are only allowed to enter 5 instances per hour
+    if (entry->IsDungeon() && (!player->GetGroup() || (player->GetGroup() && !player->GetGroup()->isLFGGroup())))
+    {
+        uint32 instaceIdToCheck = 0;
+        if (InstanceSave* save = player->GetInstanceSave(mapid, entry->IsRaid()))
+            instaceIdToCheck = save->GetInstanceId();
+
+        // instanceId can never be 0 - will not be found
+        if (!player->CheckInstanceCount(instaceIdToCheck))
+        {
+            player->SendTransferAborted(mapid, TRANSFER_ABORT_TOO_MANY_INSTANCES);
+            return false;
+        }
     }
 
     //Other requirements
@@ -283,23 +288,29 @@ bool MapManager::ExistMapAndVMap(uint32 mapid, float x,float y)
 bool MapManager::IsValidMAP(uint32 mapid)
 {
     MapEntry const* mEntry = sMapStore.LookupEntry(mapid);
-    return mEntry && (!mEntry->IsDungeon() || sObjectMgr->GetInstanceTemplate(mapid));
+    return mEntry && (!mEntry->IsDungeon() || ObjectMgr::GetInstanceTemplate(mapid));
     // TODO: add check for battleground template
 }
 
 void MapManager::UnloadAll()
 {
-    for (MapMapType::iterator iter=i_maps.begin(); iter != i_maps.end(); ++iter)
-        iter->second->UnloadAll();
-
-    while (!i_maps.empty())
+    for (TransportSet::iterator i = m_Transports.begin(); i != m_Transports.end(); ++i)
     {
-        delete i_maps.begin()->second;
-        i_maps.erase(i_maps.begin());
+        (*i)->RemoveFromWorld();
+        delete *i;
+    }
+
+    for (MapMapType::iterator iter = i_maps.begin(); iter != i_maps.end();)
+    {
+        iter->second->UnloadAll();
+        delete iter->second;
+        i_maps.erase(iter++);
     }
 
     if (m_updater.activated())
         m_updater.deactivate();
+
+    Map::DeleteStateMachine();
 }
 
 void MapManager::InitMaxInstanceId()

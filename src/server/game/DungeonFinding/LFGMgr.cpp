@@ -78,90 +78,30 @@ LFGMgr::~LFGMgr()
         delete it->second;
 }
 
-/// Load achievement <-> encounter associations
-void LFGMgr::LoadDungeonEncounters()
-{
-    m_EncountersByAchievement.clear();
-
-    uint32 count = 0;
-    QueryResult result = WorldDatabase.Query("SELECT achievementId, dungeonId FROM lfg_dungeon_encounters");
-
-    if (!result)
-    {
-        
-        
-
-        sLog->outString();
-        sLog->outErrorDb(">> Loaded 0 dungeon encounter lfg associations. DB table `lfg_dungeon_encounters` is empty!");
-        return;
-    }
-
-    
-
-    Field* fields = NULL;
-    do
-    {
-        
-        fields = result->Fetch();
-        uint32 achievementId = fields[0].GetUInt32();
-        uint32 dungeonId = fields[1].GetUInt32();
-
-        if (AchievementEntry const* achievement = sAchievementStore.LookupEntry(achievementId))
-        {
-            if (!(achievement->flags & ACHIEVEMENT_FLAG_COUNTER))
-            {
-                sLog->outErrorDb("Achievement %u specified in table `lfg_dungeon_encounters` is not a statistic!", achievementId);
-                continue;
-            }
-        }
-        else
-        {
-            sLog->outErrorDb("Achievement %u specified in table `lfg_dungeon_encounters` does not exist!", achievementId);
-            continue;
-        }
-
-        if (!sLFGDungeonStore.LookupEntry(dungeonId))
-        {
-            sLog->outErrorDb("Dungeon %u specified in table `lfg_dungeon_encounters` does not exist!", dungeonId);
-            continue;
-        }
-
-        m_EncountersByAchievement[achievementId] = dungeonId;
-        ++count;
-    } while (result->NextRow());
-
-    sLog->outString();
-    sLog->outString(">> Loaded %u dungeon encounter lfg associations.", count);
-}
-
-
 /// Load rewards for completing dungeons
 void LFGMgr::LoadRewards()
 {
+    uint32 oldMSTime = getMSTime();
+
     for (LfgRewardMap::iterator itr = m_RewardMap.begin(); itr != m_RewardMap.end(); ++itr)
         delete itr->second;
     m_RewardMap.clear();
 
-    uint32 count = 0;
     // ORDER BY is very important for GetRandomDungeonReward!
     QueryResult result = WorldDatabase.Query("SELECT dungeonId, maxLevel, firstQuestId, firstMoneyVar, firstXPVar, otherQuestId, otherMoneyVar, otherXPVar FROM lfg_dungeon_rewards ORDER BY dungeonId, maxLevel ASC");
 
     if (!result)
     {
-        
-        
-
-        sLog->outString();
         sLog->outErrorDb(">> Loaded 0 lfg dungeon rewards. DB table `lfg_dungeon_rewards` is empty!");
+        sLog->outString();
         return;
     }
 
-    
+    uint32 count = 0;    
 
     Field* fields = NULL;
     do
     {
-        
         fields = result->Fetch();
         uint32 dungeonId = fields[0].GetUInt32();
         uint32 maxLevel = fields[1].GetUInt8();
@@ -198,10 +138,11 @@ void LFGMgr::LoadRewards()
 
         m_RewardMap.insert(LfgRewardMap::value_type(dungeonId, new LfgReward(maxLevel, firstQuestId, firstMoneyVar, firstXPVar, otherQuestId, otherMoneyVar, otherXPVar)));
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u lfg dungeon rewards in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u lfg dungeon rewards.", count);
 }
 
 void LFGMgr::Update(uint32 diff)
@@ -1723,7 +1664,7 @@ void LFGMgr::TeleportPlayer(Player* plr, bool out, bool fromOpcode /*= false*/)
         error = LFG_TELEPORTERROR_INVALID_LOCATION;
     else if (!plr->isAlive())
         error = LFG_TELEPORTERROR_PLAYER_DEAD;
-    else if (plr->IsFalling() || plr->hasUnitState(UNIT_STAT_JUMPING))
+    else if (plr->IsFalling() || plr->HasUnitState(UNIT_STAT_JUMPING))
         error = LFG_TELEPORTERROR_FALLING;
     else
     {
@@ -1933,21 +1874,6 @@ LfgType LFGMgr::GetDungeonType(uint32 dungeonId)
 
     return LfgType(dungeon->type);
 }
-
-/**
-   Given a Achievement id returns the related dungeon id
-
-   @param[in]     achievementId Achievement id
-   @returns dungeon id
-*/
-uint32 LFGMgr::GetDungeonIdForAchievement(uint32 achievementId)
-{
-    std::map<uint32, uint32>::iterator itr = m_EncountersByAchievement.find(achievementId);
-    if (itr != m_EncountersByAchievement.end())
-        return itr->second;
-
-    return 0;
-};
 
 /**
    Given a list of guids returns the concatenation using | as delimiter

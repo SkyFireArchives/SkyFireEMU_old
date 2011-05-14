@@ -36,6 +36,8 @@
 DB2Storage <ItemEntry> sItemStore(Itemfmt);
 typedef std::list<std::string> StoreProblemList1;
 
+uint32 DB2FileCount = 0;
+
 static bool LoadDB2_assert_print(uint32 fsize,uint32 rsize, const std::string& filename)
 {
     sLog->outError("Size of '%s' setted by format string (%u) not equal size of C++ structure (%u).", filename.c_str(), fsize, rsize);
@@ -60,6 +62,7 @@ inline void LoadDB2(uint32& availableDb2Locales, StoreProblemList1& errlist, DB2
     // compatibility format and C++ structure sizes
     ASSERT(DB2FileLoader::GetFormatRecordSize(storage.GetFormat()) == sizeof(T) || LoadDB2_assert_print(DB2FileLoader::GetFormatRecordSize(storage.GetFormat()), sizeof(T), filename));
 
+    ++DB2FileCount;
     std::string db2_filename = db2_path + filename;
     if (storage.Load(db2_filename.c_str()))
     {
@@ -83,9 +86,9 @@ inline void LoadDB2(uint32& availableDb2Locales, StoreProblemList1& errlist, DB2
 
 void LoadDB2Stores(const std::string& dataPath)
 {
-    std::string db2Path = dataPath + "dbc/";
+    uint32 oldMSTime = getMSTime();
 
-    const uint32 DB2FilesCount = 1;
+    std::string db2Path = dataPath + "dbc/";
     
     StoreProblemList1 bad_db2_files;
     uint32 availableDb2Locales = 0xFFFFFFFF;
@@ -93,9 +96,9 @@ void LoadDB2Stores(const std::string& dataPath)
     LoadDB2(availableDb2Locales, bad_db2_files, sItemStore, db2Path, "Item.db2");
 
     // error checks
-    if (bad_db2_files.size() >= DB2FilesCount)
+    if (bad_db2_files.size() >= DB2FileCount)
     {
-        sLog->outError("\nIncorrect DataDir value in worldserver.conf or ALL required *.db2 files (%d) not found by path: %sdb2", DB2FilesCount, dataPath.c_str());
+        sLog->outError("\nIncorrect DataDir value in worldserver.conf or ALL required *.db2 files (%d) not found by path: %sdb2", DB2FileCount, dataPath.c_str());
         exit(1);
     }
     else if (!bad_db2_files.empty())
@@ -104,18 +107,18 @@ void LoadDB2Stores(const std::string& dataPath)
         for (std::list<std::string>::iterator i = bad_db2_files.begin(); i != bad_db2_files.end(); ++i)
             str += *i + "\n";
 
-        sLog->outError("\nSome required *.db2 files (%u from %d) not found or not compatible:\n%s", (uint32)bad_db2_files.size(), DB2FilesCount,str.c_str());
+        sLog->outError("\nSome required *.db2 files (%u from %d) not found or not compatible:\n%s", (uint32)bad_db2_files.size(), DB2FileCount,str.c_str());
         exit(1);
     }
 
     // Check loaded DBC files proper version
     if (!sItemStore.LookupEntry(68815))                     // last client known item added in 4.0.6a
     {
-        sLog->outString(" ");
+        sLog->outString();
         sLog->outError("Please extract correct db2 files from client 4.0.6a 13623.");
         exit(1);
     }
 
-    sLog->outString(">> Initialized %d data stores.", DB2FilesCount);
+    sLog->outString(">> Initialized %d Db2 data stores in %u ms", DB2FileCount, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }

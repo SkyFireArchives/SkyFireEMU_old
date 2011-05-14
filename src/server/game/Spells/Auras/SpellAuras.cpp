@@ -1010,6 +1010,13 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         else
                             target->AddAura(74396, target);
                     }
+                    case 83301: // Improved Cone of Cold r1 freeze
+                        if(!caster->HasAura(11190)) // r1 talent
+                            target->RemoveAura(83301);
+                    case 83302: // Improved Cone of Cold r2 freeze
+                        if(!caster->HasAura(12489)) // r2 talent
+                            target->RemoveAura(83302);
+
                     default:
                         break;
                 }
@@ -1021,8 +1028,8 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         if (target->GetTypeId() == TYPEID_PLAYER)
                             if (GameObject* obj = target->GetGameObject(48018))
                 {
-                  target->ToPlayer()->TeleportTo(obj->GetMapId(),obj->GetPositionX(),obj->GetPositionY(),obj->GetPositionZ(),obj->GetOrientation());
-                  target->ToPlayer()->RemoveMovementImpairingAuras();
+                  target->NearTeleportTo(obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation());
+                  target->RemoveMovementImpairingAuras();
                 }
                         break;
                 }
@@ -1040,6 +1047,24 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         caster->CastCustomSpell(target, 63675, &basepoints0, NULL, NULL, true, NULL, GetEffect(0));
                     }
                 }
+				// Mind fly
+				else if (GetId() == 15407)
+				{
+					// Pain and Suffering: Rank 1
+					if (Aura* pain = caster->GetAura(47580)) {
+						if (Aura* swp = target->GetAura(589)) {
+							if (roll_chance_i(30))
+								swp->RefreshDuration();
+						}
+					}
+					// Pain and Suffering: Rank 2
+					if (Aura* pain = caster->GetAura(47581)) {
+						if (Aura* swp = target->GetAura(589)) {
+							if (roll_chance_i(60))
+								swp->RefreshDuration();
+						}
+					}
+				}
                 // Renew
                 else if (GetSpellProto()->SpellFamilyFlags[0] & 0x00000040 && GetEffect(0))
                 {
@@ -1076,6 +1101,26 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         snd->RefreshDuration();
                     if (Aura* rec = target->GetAura(73651))
                         rec->RefreshDuration();
+                }
+                break;
+            case SPELLFAMILY_PALADIN: // Speed of Light (talent)
+                if(GetId() == 82327)
+                {
+                    if(target->HasAura(85495)) // r1
+                    {
+                        target->CastSpell(target, 85497, true);
+                        target->SetSpeed(MOVE_RUN, 1.2f, true);
+                    }
+                    if(target->HasAura(85498)) // r2
+                    {
+                        target->CastSpell(target, 85497, true);
+                        target->SetSpeed(MOVE_RUN, 1.4f, true);
+                    }
+                    if(target->HasAura(85499)) // r3
+                    {
+                        target->CastSpell(target, 85497, true);
+                        target->SetSpeed(MOVE_RUN, 1.6f, true);
+                    }
                 }
                 break;
             case SPELLFAMILY_DEATHKNIGHT:
@@ -1208,8 +1253,14 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                 if (removeMode == AURA_REMOVE_BY_ENEMY_SPELL && GetSpellProto()->SpellFamilyFlags[1] & 0x1)
                 {
                     // Shattered Barrier
-                    if (caster->GetDummyAuraEffect(SPELLFAMILY_MAGE, 2945, 0))
-                        caster->CastSpell(target, 55080, true, NULL, GetEffect(0));
+                    if (target->HasAura(44745))
+                    {
+                        caster->CastSpell(target, 55080, true);
+                    }
+                    if (target->HasAura(54787))
+                    {
+                        caster->CastSpell(target, 83073, true);
+                    }
                 }
                 break;
             case SPELLFAMILY_WARRIOR:
@@ -1411,6 +1462,12 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         break;
                 }
                 break;
+			case SPELLFAMILY_HUNTER:
+                // Glyph of Freezing Trap
+                if (GetSpellProto()->SpellFamilyFlags[0] & 0x00000008)
+                    if (caster && caster->HasAura(56845))
+                        target->CastSpell(target, 61394, true);
+                break;
         }
     }
 
@@ -1426,6 +1483,32 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                     else
                         target->SetReducedThreatPercent(0,0);
                     break;
+            }
+            break;
+        case SPELLFAMILY_DRUID:
+            // Enrage
+            if (GetSpellProto()->SpellFamilyFlags[0] & 0x80000)
+            {
+                if (target->HasAura(70726)) // Druid T10 Feral 4P Bonus
+                {
+                    if (apply)
+                        target->CastSpell(target, 70725, true);
+                }
+                else // armor reduction implemented here
+                    if (AuraEffect * auraEff = target->GetAuraEffectOfRankedSpell(1178, 0))
+                    {
+                        int32 value = auraEff->GetAmount();
+                        int32 mod;
+                        switch (auraEff->GetId())
+                        {
+                            case 1178: mod = 27; break;
+                            case 9635: mod = 16; break;
+                        }
+                        mod = value / 100 * mod;
+                        value = value + (apply ? -mod : mod);
+                        auraEff->ChangeAmount(value);
+                    }
+                break;
             }
             break;
         case SPELLFAMILY_ROGUE:
@@ -1938,7 +2021,7 @@ void UnitAura::FillTargetMap(std::map<Unit *, uint8> & targets, Unit * caster)
             if (modOwner)
                 modOwner->ApplySpellMod(GetId(), SPELLMOD_RADIUS, radius);
 
-            if (!GetUnitOwner()->hasUnitState(UNIT_STAT_ISOLATED))
+            if (!GetUnitOwner()->HasUnitState(UNIT_STAT_ISOLATED))
             {
                 switch(GetSpellProto()->Effect[effIndex])
                 {
@@ -1949,6 +2032,8 @@ void UnitAura::FillTargetMap(std::map<Unit *, uint8> & targets, Unit * caster)
                     case SPELL_EFFECT_APPLY_AREA_AURA_RAID:
                         targetList.push_back(GetUnitOwner());
                         GetUnitOwner()->GetRaidMember(targetList, radius);
+						if (GetSpellProto()->SpellIconID == 691)
+							GetUnitOwner()->GetRaidMember(targetList, GetSpellRadiusForFriend(sSpellRadiusStore.LookupEntry(GetSpellProto()->EffectRadiusIndex[1])));
                         break;
                     case SPELL_EFFECT_APPLY_AREA_AURA_FRIEND:
                     {

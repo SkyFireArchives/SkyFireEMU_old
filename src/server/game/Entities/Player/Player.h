@@ -23,37 +23,38 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
 
-#include "Common.h"
-#include "ItemPrototype.h"
-#include "Unit.h"
-#include "Item.h"
-#include "DatabaseEnv.h"
-#include "NPCHandler.h"
-#include "QuestDef.h"
-#include "Group.h"
-#include "Bag.h"
-#include "WorldSession.h"
-#include "Pet.h"
-#include "MapReference.h"
-#include "Util.h"                                           // for Tokens typedef
 #include "AchievementMgr.h"
-#include "ReputationMgr.h"
 #include "Battleground.h"
+#include "Bag.h"
+#include "Common.h"
+#include "DatabaseEnv.h"
 #include "DBCEnums.h"
+#include "GroupReference.h"
+#include "ItemPrototype.h"
+#include "Item.h"
+#include "MapReference.h"
+#include "NPCHandler.h"
+#include "Pet.h"
+#include "QuestDef.h"
+#include "ReputationMgr.h"
+#include "Unit.h"
+#include "Util.h"                                           // for Tokens typedef
+#include "WorldSession.h"
+#include "Group.h"
 
 #include<string>
 #include<vector>
 
 struct Mail;
 class Channel;
-class DynamicObject;
 class Creature;
+class DynamicObject;
+class OutdoorPvP;
 class Pet;
 class PlayerMenu;
-class UpdateMask;
-class SpellCastTargets;
 class PlayerSocial;
-class OutdoorPvP;
+class SpellCastTargets;
+class UpdateMask;
 
 typedef std::deque<Mail*> PlayerMails;
 
@@ -160,6 +161,8 @@ struct SpellCooldown
 };
 
 typedef std::map<uint32, SpellCooldown> SpellCooldowns;
+
+typedef UNORDERED_MAP<uint32 /*instanceId*/, time_t/*releaseTime*/> InstanceTimeMap;
 
 enum TrainerSpellState
 {
@@ -315,7 +318,13 @@ struct Areas
 };
 
 #define MAX_RUNES       6
-#define RUNE_COOLDOWN   10000
+
+enum RuneCooldowns
+
+{
+    RUNE_BASE_COOLDOWN  = 10000,
+    RUNE_MISS_COOLDOWN  = 1500,     // cooldown applied on runes when the spell misses
+};
 
 enum RuneType
 {
@@ -535,6 +544,10 @@ enum AtLoginFlags
 };
 
 typedef std::map<uint32, QuestStatusData> QuestStatusMap;
+typedef std::set<uint32> RewardedQuestSet;
+
+//               quest,  keep
+typedef std::map<uint32, bool> QuestStatusSaveMap;
 
 enum QuestSlotOffsets
 {
@@ -819,10 +832,12 @@ enum PlayerLoginQueryIndex
     PLAYER_LOGIN_QUERY_LOADRANDOMBG             = 27,
     PLAYER_LOGIN_QUERY_LOADARENASTATS           = 28,
     PLAYER_LOGIN_QUERY_LOADBANNED               = 29,
-    PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS    = 30,
-    PLAYER_LOGIN_QUERY_LOADPETSLOT              = 31,
-	PLAYER_LOGIN_QUERY_LOAD_CURRENCY            = 35,
-	MAX_PLAYER_LOGIN_QUERY                      = 36
+    PLAYER_LOGIN_QUERY_LOADQUESTSTATUSREW       = 30,
+    PLAYER_LOGIN_QUERY_LOADINSTANCELOCKTIMES    = 31,
+    PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS    = 32,
+    PLAYER_LOGIN_QUERY_LOADPETSLOT              = 33,
+	PLAYER_LOGIN_QUERY_LOAD_CURRENCY            = 34,
+	MAX_PLAYER_LOGIN_QUERY                      = 35
 };
 
 enum PlayerDelayedOperations
@@ -1193,7 +1208,7 @@ class Player : public Unit, public GridObject<Player>
         uint8 GetBankBagSlotCount() const { return GetByteValue(PLAYER_BYTES_2, 2); }
         void SetBankBagSlotCount(uint8 count) { SetByteValue(PLAYER_BYTES_2, 2, count); }
         bool HasItemCount(uint32 item, uint32 count, bool inBankAlso = false) const;
-        bool HasItemFitToSpellReqirements(SpellEntry const* spellInfo, Item const* ignoreItem = NULL);
+        bool HasItemFitToSpellRequirements(SpellEntry const* spellInfo, Item const* ignoreItem = NULL);
         bool CanNoReagentCast(SpellEntry const* spellInfo) const;
         bool HasItemOrGemWithIdEquipped(uint32 item, uint32 count, uint8 except_slot = NULL_SLOT) const;
         bool HasItemOrGemWithLimitCategoryEquipped(uint32 limitCategory, uint32 count, uint8 except_slot = NULL_SLOT) const;
@@ -1377,6 +1392,8 @@ class Player : public Unit, public GridObject<Player>
         bool GetQuestRewardStatus(uint32 quest_id) const;
         QuestStatus GetQuestStatus(uint32 quest_id) const;
         void SetQuestStatus(uint32 quest_id, QuestStatus status);
+        void RemoveActiveQuest(uint32 quest_id);
+        void RemoveRewardedQuest(uint32 quest_id);
 
         void SetDailyQuestStatus(uint32 quest_id);
         void SetWeeklyQuestStatus(uint32 quest_id);
@@ -1516,7 +1533,8 @@ class Player : public Unit, public GridObject<Player>
             UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HIGHEST_GOLD_VALUE_OWNED);
         }
 
-        QuestStatusMap& getQuestStatusMap() { return mQuestStatus; };
+        RewardedQuestSet& getRewardedQuests() { return m_RewardedQuests; }
+        QuestStatusMap& getQuestStatusMap() { return m_QuestStatus; };
 
         const uint64& GetSelection() const { return m_curSelection; }
         Unit *GetSelectedUnit() const;
@@ -1745,7 +1763,7 @@ class Player : public Unit, public GridObject<Player>
         void SetContestedPvPTimer(uint32 newTime) {m_contestedPvPTimer = newTime;}
         void ResetContestedPvP()
         {
-            clearUnitState(UNIT_STAT_ATTACK_PLAYER);
+            ClearUnitState(UNIT_STAT_ATTACK_PLAYER);
             RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_CONTESTED_PVP);
             m_contestedPvPTimer = 0;
         }
@@ -1757,7 +1775,7 @@ class Player : public Unit, public GridObject<Player>
         void DuelComplete(DuelCompleteType type);
         void SendDuelCountdown(uint32 counter);
 
-        bool IsGroupVisibleFor(Player* p) const;
+        bool IsGroupVisibleFor(Player const* p) const;
         bool IsInSameGroupWith(Player const* p) const;
         bool IsInSameRaidWith(Player const* p) const { return p == this || (GetGroup() != NULL && GetGroup() == p->GetGroup()); }
         void UninviteFromGroup();
@@ -1894,7 +1912,7 @@ class Player : public Unit, public GridObject<Player>
         bool SetPosition(const Position &pos, bool teleport = false) { return SetPosition(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), teleport); }
         void UpdateUnderwaterState(Map * m, float x, float y, float z);
 
-        void SendMessageToSet(WorldPacket *data, bool self);// overwrite Object::SendMessageToSet
+        void SendMessageToSet(WorldPacket *data, bool self) {SendMessageToSetInRange(data, GetVisibilityRange(), self); };// overwrite Object::SendMessageToSet
         void SendMessageToSetInRange(WorldPacket *data, float fist, bool self);// overwrite Object::SendMessageToSetInRange
         void SendMessageToSetInRange(WorldPacket *data, float dist, bool self, bool own_team_only);
         void SendMessageToSet(WorldPacket *data, Player const* skipped_rcvr);
@@ -1967,7 +1985,6 @@ class Player : public Unit, public GridObject<Player>
         static uint32 TeamForRace(uint8 race);
         uint32 GetTeam() const { return m_team; }
         TeamId GetTeamId() const { return m_team == ALLIANCE ? TEAM_ALLIANCE : TEAM_HORDE; }
-        static uint32 getFactionForRace(uint8 race);
         void setFactionForRace(uint8 race);
 
         void InitDisplayIds();
@@ -2297,8 +2314,8 @@ class Player : public Unit, public GridObject<Player>
 
         bool HaveAtClient(WorldObject const* u) const { return u == this || m_clientGUIDs.find(u->GetGUID()) != m_clientGUIDs.end(); }
 
-        bool canSeeOrDetect(Unit const* u, bool detect, bool inVisibleList = false, bool is3dDistance = true) const;
-        bool IsVisibleInGridForPlayer(Player const* pl) const;
+        bool isValid() const;
+
         bool IsVisibleGloballyFor(Player* pl) const;
 
         void SendInitialVisiblePackets(Unit* target);
@@ -2309,9 +2326,6 @@ class Player : public Unit, public GridObject<Player>
 
         template<class T>
             void UpdateVisibilityOf(T* target, UpdateData& data, std::set<Unit*>& visibleNow);
-
-        // Stealth detection system
-        void HandleStealthedUnitsDetection();
 
         uint8 m_forced_speed_changes[MAX_MOVE_TYPE];
 
@@ -2333,7 +2347,8 @@ class Player : public Unit, public GridObject<Player>
 
         void SendCinematicStart(uint32 CinematicSequenceId);
         void SendMovieStart(uint32 MovieId);
-    
+        void SendClearFocus(Unit* target);
+
         //Worgen Transformations
         bool isInWorgenForm();
         void setInHumanForm();
@@ -2358,11 +2373,26 @@ class Player : public Unit, public GridObject<Player>
         void UnbindInstance(uint32 mapid, Difficulty difficulty, bool unload = false);
         void UnbindInstance(BoundInstancesMap::iterator &itr, Difficulty difficulty, bool unload = false);
         InstancePlayerBind* BindToInstance(InstanceSave *save, bool permanent, bool load = false);
+        void BindToInstance();
+        void SetPendingBind(InstanceSave* save, uint32 bindTimer) { _pendingBind = save; _pendingBindTimer = bindTimer; }
+        bool HasPendingBind() const { return _pendingBind != NULL; }
         void SendRaidInfo();
         void SendSavedInstances();
         static void ConvertInstancesToGroup(Player *player, Group *group = NULL, uint64 player_guid = 0);
         bool Satisfy(AccessRequirement const* ar, uint32 target_map, bool report = false);
         bool CheckInstanceLoginValid();
+        bool CheckInstanceCount(uint32 instanceId) const
+        {
+            if (_instanceResetTimes.size() < sWorld->getIntConfig(CONFIG_MAX_INSTANCES_PER_HOUR))
+                return true;
+            return _instanceResetTimes.find(instanceId) != _instanceResetTimes.end();
+        }
+
+        void AddInstanceEnterTime(uint32 instanceId, time_t enterTime)
+        {
+            if (_instanceResetTimes.find(instanceId) == _instanceResetTimes.end())
+                _instanceResetTimes.insert(InstanceTimeMap::value_type(instanceId, enterTime + HOUR));
+        }
 
         // last used pet number (for BG's)
         uint32 GetLastPetNumber() const { return m_lastpetnumber; }
@@ -2508,6 +2538,7 @@ class Player : public Unit, public GridObject<Player>
         void _LoadMail();
         void _LoadMailedItems(Mail *mail);
         void _LoadQuestStatus(PreparedQueryResult result);
+        void _LoadQuestStatusRewarded(PreparedQueryResult result);
         void _LoadDailyQuestStatus(PreparedQueryResult result);
         void _LoadWeeklyQuestStatus(PreparedQueryResult result);
         void _LoadRandomBGStatus(PreparedQueryResult result);
@@ -2523,6 +2554,7 @@ class Player : public Unit, public GridObject<Player>
         void _LoadBGData(PreparedQueryResult result);
         void _LoadGlyphs(PreparedQueryResult result);
         void _LoadTalents(PreparedQueryResult result);
+        void _LoadInstanceTimeRestrictions(PreparedQueryResult result);
         void _LoadTalentBranchSpecs(PreparedQueryResult result);
 		void _LoadCurrency(PreparedQueryResult result);
 
@@ -2546,6 +2578,7 @@ class Player : public Unit, public GridObject<Player>
         void _SaveTalentBranchSpecs(SQLTransaction& trans);
 		void _SaveCurrency();
         void _SaveStats(SQLTransaction& trans);
+        void _SaveInstanceTimeRestrictions(SQLTransaction& trans);
 
         void _SetCreateBits(UpdateMask *updateMask, Player *target) const;
         void _SetUpdateBits(UpdateMask *updateMask, Player *target) const;
@@ -2591,7 +2624,11 @@ class Player : public Unit, public GridObject<Player>
         uint64 m_comboTarget;
         int8 m_comboPoints;
 
-        QuestStatusMap mQuestStatus;
+        QuestStatusMap m_QuestStatus;
+        QuestStatusSaveMap m_QuestStatusSave;
+
+        RewardedQuestSet m_RewardedQuests;
+        QuestStatusSaveMap m_RewardedQuestsSave;
 
         SkillStatusMap mSkillStatus;
 
@@ -2713,6 +2750,10 @@ class Player : public Unit, public GridObject<Player>
         DeclinedName *m_declinedname;
         Runes *m_runes;
         EquipmentSets m_EquipmentSets;
+
+        bool canSeeAlways(WorldObject const* obj) const;
+
+        bool isAlwaysDetectableFor(WorldObject const* seer) const;  
     private:
         // internal common parts for CanStore/StoreItem functions
         uint8 _CanStoreItem_InSpecificSlot(uint8 bag, uint8 slot, ItemPosCountVec& dest, ItemPrototype const *pProto, uint32& count, bool swap, Item *pSrcItem) const;
@@ -2760,8 +2801,6 @@ class Player : public Unit, public GridObject<Player>
         bool m_bCanDelayTeleport;
         bool m_bHasDelayedTeleport;
 
-        uint32 m_DetectInvTimer;
-
         // Temporary removed pet cache
         uint32 m_temporaryUnsummonedPetNumber;
         uint32 m_oldpetspell;
@@ -2778,6 +2817,10 @@ class Player : public Unit, public GridObject<Player>
         uint32 m_timeSyncTimer;
         uint32 m_timeSyncClient;
         uint32 m_timeSyncServer;
+
+        InstanceTimeMap _instanceResetTimes;
+        InstanceSave* _pendingBind;
+        uint32 _pendingBindTimer;
 };
 
 void AddItemsSetItem(Player*player,Item *item);

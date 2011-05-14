@@ -465,7 +465,7 @@ enum SpellAttr5
 	SPELL_ATTR5_UNK10                            = 0x00000400, // 10
 	SPELL_ATTR5_UNK11                            = 0x00000800, // 11
 	SPELL_ATTR5_UNK12                            = 0x00001000, // 12
-	SPELL_ATTR5_UNK13                            = 0x00002000, // 13
+	SPELL_ATTR5_HASTE_AFFECT_DURATION            = 0x00002000, // 13 haste effects decrease duration of this
 	SPELL_ATTR5_UNK14                            = 0x00004000, // 14
 	SPELL_ATTR5_UNK15                            = 0x00008000, // 15
 	SPELL_ATTR5_SPECIAL_ITEM_CLASS_CHECK         = 0x00010000, // 16 this allows spells with EquippedItemClass to affect spells from other items if the required item is equipped
@@ -1038,6 +1038,46 @@ enum SpellCastResult
     SPELL_FAILED_UNKNOWN,                             // actually doesn't exist in client
 
     SPELL_CAST_OK = 255 // custom value, don't must be send to client
+};
+
+enum StealthType
+{
+    STEALTH_GENERAL     = 0,
+    STEALTH_TRAP        = 1,
+
+    TOTAL_STEALTH_TYPES = 2
+};
+
+enum InvisibilityType
+{
+    INVISIBILITY_GENERAL     =  0,
+    INVISIBILITY_UNK1        =  1,
+    INVISIBILITY_UNK2        =  2,
+    INVISIBILITY_TRAP        =  3,
+    INVISIBILITY_UNK4        =  4,
+    INVISIBILITY_UNK5        =  5,
+    INVISIBILITY_DRUNK       =  6,
+    INVISIBILITY_UNK7        =  7,
+    INVISIBILITY_UNK8        =  8,
+    INVISIBILITY_UNK9        =  9,
+    INVISIBILITY_UNK10       = 10,
+    INVISIBILITY_UNK11       = 11,
+
+    TOTAL_INVISIBILITY_TYPES = 12
+};
+
+enum ServerSideVisibilityType
+{
+    SERVERSIDE_VISIBILITY_GM          = 0,
+    SERVERSIDE_VISIBILITY_GHOST       = 1,
+
+    TOTAL_SERVERSIDE_VISIBILITY_TYPES = 2
+};
+
+enum GhostVisibilityType
+{
+    GHOST_VISIBILITY_ALIVE = 0x1,
+    GHOST_VISIBILITY_GHOST = 0x2
 };
 
 // Spell aura states
@@ -2227,7 +2267,7 @@ enum HolidayIds
     HOLIDAY_PILGRIMS_BOUNTY          = 404,
     HOLIDAY_WOTLK_LAUNCH             = 406,
     HOLIDAY_DAY_OF_DEAD              = 409,
-    HOLIDAY_CALL_TO_ARMS_ISLE_OF_C   = 420,
+    HOLIDAY_CALL_TO_ARMS_IC          = 420,
     HOLIDAY_LOVE_IN_THE_AIR          = 423,
     HOLIDAY_KALUAK_FISHIN_DERBY      = 424,
     HOLIDAY_CALL_TO_ARMS_BG          = 435,                 // Call to Arms: The Battle for Gilneas
@@ -3061,6 +3101,13 @@ enum XPColorChar
     XP_YELLOW,
     XP_GREEN,
     XP_GRAY
+};
+
+enum RemoveMethod
+{
+    GROUP_REMOVEMETHOD_DEFAULT = 0,
+    GROUP_REMOVEMETHOD_KICK    = 1,
+    GROUP_REMOVEMETHOD_LEAVE   = 2,
 };
 
 #endif

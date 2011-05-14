@@ -54,6 +54,7 @@
 #include "InstanceScript.h"
 #include "LFGMgr.h"
 #include "GameObjectAI.h"
+#include "Group.h"
 
 void WorldSession::HandleRepopRequestOpcode(WorldPacket & recv_data)
 {
@@ -127,7 +128,7 @@ void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket & recv_data)
     }
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     if ((unit && unit->GetCreatureInfo()->ScriptID != unit->LastUsedScriptID) || (go && go->GetGOInfo()->ScriptId != go->LastUsedScriptID))
@@ -320,7 +321,7 @@ void WorldSession::HandleWhoOpcode(WorldPacket & recv_data)
 
         std::string aname;
         if (AreaTableEntry const* areaEntry = GetAreaEntryByAreaID(itr->second->GetZoneId()))
-            aname = areaEntry->area_name[GetSessionDbcLocale()];
+            aname = areaEntry->area_name;
 
         bool s_show = true;
         for (uint32 i = 0; i < str_count; ++i)
@@ -592,7 +593,7 @@ void WorldSession::HandleAddFriendOpcodeCallBack(QueryResult result, std::string
         team = Player::TeamForRace((*result)[1].GetUInt8());
         friendAcctid = (*result)[2].GetUInt32();
 
-        if (GetSecurity() >= SEC_GAMEMASTER || sWorld->getBoolConfig(CONFIG_ALLOW_GM_FRIEND) || sAccountMgr->GetSecurity(friendAcctid) < SEC_GAMEMASTER)
+        if (GetSecurity() >= SEC_MODERATOR || sWorld->getBoolConfig(CONFIG_ALLOW_GM_FRIEND) || sAccountMgr->GetSecurity(friendAcctid, realmID) < SEC_MODERATOR)
         {
             if (friendGuid)
             {
@@ -1231,9 +1232,9 @@ void WorldSession::HandleInspectOpcode(WorldPacket& recv_data)
     if (!plr)                                                // wrong player
         return;
 
-    uint32 talent_points = 0x47;
+    uint32 talent_points = 0x29;
     uint32 guid_size = plr->GetPackGUID().wpos();
-    WorldPacket data(SMSG_INSPECT_TALENT, guid_size+4+talent_points);
+    WorldPacket data(SMSG_INSPECT_TALENT, guid_size+4+talent_points, true);
     data.append(plr->GetPackGUID());
 
     if (sWorld->getBoolConfig(CONFIG_TALENTS_INSPECTING) || _player->isGameMaster())
@@ -1762,3 +1763,21 @@ void WorldSession::HandleHearthAndResurrect(WorldPacket& /*recv_data*/)
     _player->TeleportTo(_player->m_homebindMapId, _player->m_homebindX, _player->m_homebindY, _player->m_homebindZ, _player->GetOrientation());
 }
 
+void WorldSession::HandleInstanceLockResponse(WorldPacket& recvPacket)
+{
+    uint8 accept;
+    recvPacket >> accept;
+
+    if (!_player->HasPendingBind())
+    {
+        sLog->outDetail("InstanceLockResponse: Player %s (guid %u) tried to bind himself/teleport to graveyard without a pending bind!", _player->GetName(), _player->GetGUIDLow());
+        return;
+    }
+
+    if (accept)
+        _player->BindToInstance();
+    else
+        _player->RepopAtGraveyard();
+
+    _player->SetPendingBind(NULL, 0);
+}

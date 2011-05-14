@@ -1,18 +1,25 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "ScriptPCH.h"
@@ -29,7 +36,8 @@ enum eGameObjects
     GO_FREYA_CHEST_HERO     = 194325,
     GO_FREYA_CHEST          = 194324,
     GO_LEVIATHAN_DOOR       = 194905,
-    GO_LEVIATHAN_GATE       = 194630
+    GO_LEVIATHAN_GATE       = 194630,
+    GO_VEZAX_DOOR           = 194750,
 };
 
 class instance_ulduar : public InstanceMapScript
@@ -67,6 +75,7 @@ public:
         uint64 uiAlgalonGUID;
         uint64 uiLeviathanDoor[7];
         uint64 uiLeviathanGateGUID;
+        uint64 uiVezaxDoorGUID;
 
         uint64 uiKologarnChestGUID;
         uint64 uiThorimChestGUID;
@@ -94,6 +103,7 @@ public:
             uiHodirChestGUID      = 0;
             uiFreyaChestGUID      = 0;
             uiLeviathanGateGUID   = 0;
+            uiVezaxDoorGUID       = 0;
             flag                  = 0;
 
             memset(&uiEncounter, 0, sizeof(uiEncounter));
@@ -112,103 +122,107 @@ public:
             return false;
         }
 
-        void OnCreatureCreate(Creature* pCreature, bool /*add*/)
+        void OnCreatureCreate(Creature* creature)
         {
-            switch(pCreature->GetEntry())
+            switch(creature->GetEntry())
             {
                 case NPC_LEVIATHAN:
-                    uiLeviathanGUID = pCreature->GetGUID();
+                    uiLeviathanGUID = creature->GetGUID();
                     break;
                 case NPC_IGNIS:
-                    uiIgnisGUID = pCreature->GetGUID();
+                    uiIgnisGUID = creature->GetGUID();
                     break;
                 case NPC_RAZORSCALE:
-                    uiRazorscaleGUID = pCreature->GetGUID();
+                    uiRazorscaleGUID = creature->GetGUID();
                     break;
                 case NPC_EXPEDITION_COMMANDER:
-                    uiExpCommanderGUID = pCreature->GetGUID();
+                    uiExpCommanderGUID = creature->GetGUID();
                     return;
                 case NPC_XT002:
-                    uiXT002GUID = pCreature->GetGUID();
+                    uiXT002GUID = creature->GetGUID();
                     break;
 
                 // Assembly of Iron
                 case NPC_STEELBREAKER:
-                    uiAssemblyGUIDs[0] = pCreature->GetGUID();
+                    uiAssemblyGUIDs[0] = creature->GetGUID();
                     break;
                 case NPC_MOLGEIM:
-                    uiAssemblyGUIDs[1] = pCreature->GetGUID();
+                    uiAssemblyGUIDs[1] = creature->GetGUID();
                     break;
                 case NPC_BRUNDIR:
-                    uiAssemblyGUIDs[2] = pCreature->GetGUID();
+                    uiAssemblyGUIDs[2] = creature->GetGUID();
                     break;
 
                 case NPC_KOLOGARN:
-                    uiKologarnGUID = pCreature->GetGUID();
+                    uiKologarnGUID = creature->GetGUID();
                     break;
                 case NPC_AURIAYA:
-                    uiAuriayaGUID = pCreature->GetGUID();
+                    uiAuriayaGUID = creature->GetGUID();
                     break;
                 case NPC_MIMIRON:
-                    uiMimironGUID = pCreature->GetGUID();
+                    uiMimironGUID = creature->GetGUID();
                     break;
                 case NPC_HODIR:
-                    uiHodirGUID = pCreature->GetGUID();
+                    uiHodirGUID = creature->GetGUID();
                     break;
                 case NPC_THORIM:
-                    uiThorimGUID = pCreature->GetGUID();
+                    uiThorimGUID = creature->GetGUID();
                     break;
                 case NPC_FREYA:
-                    uiFreyaGUID = pCreature->GetGUID();
+                    uiFreyaGUID = creature->GetGUID();
                     break;
                 case NPC_VEZAX:
-                    uiVezaxGUID = pCreature->GetGUID();
+                    uiVezaxGUID = creature->GetGUID();
                     break;
                 case NPC_YOGGSARON:
-                    uiYoggSaronGUID = pCreature->GetGUID();
+                    uiYoggSaronGUID = creature->GetGUID();
                     break;
                 case NPC_ALGALON:
-                    uiAlgalonGUID = pCreature->GetGUID();
+                    uiAlgalonGUID = creature->GetGUID();
                     break;
             }
 
          }
 
-        void OnGameObjectCreate(GameObject* pGO, bool add)
+        void OnGameObjectCreate(GameObject* go)
         {
-            switch(pGO->GetEntry())
+            switch(go->GetEntry())
             {
                 case GO_KOLOGARN_CHEST_HERO:
                 case GO_KOLOGARN_CHEST:
-                    uiKologarnChestGUID  = add ? pGO->GetGUID() : NULL;
+                    uiKologarnChestGUID = go->GetGUID();
                     break;
                 case GO_THORIM_CHEST_HERO:
                 case GO_THORIM_CHEST:
-                    uiThorimChestGUID = add ? pGO->GetGUID() : NULL;
+                    uiThorimChestGUID =go->GetGUID();
                     break;
                 case GO_HODIR_CHEST_HERO:
                 case GO_HODIR_CHEST:
-                    uiHodirChestGUID = add ? pGO->GetGUID() : NULL;
+                    uiHodirChestGUID = go->GetGUID();
                     break;
                 case GO_FREYA_CHEST_HERO:
                 case GO_FREYA_CHEST:
-                    uiFreyaChestGUID = add ? pGO->GetGUID() : NULL;
+                    uiFreyaChestGUID = go->GetGUID();
                     break;
                 case GO_LEVIATHAN_DOOR:
-                    uiLeviathanDoor[flag] = pGO->GetGUID();
-                    HandleGameObject(NULL, true, pGO);
+                    uiLeviathanDoor[flag] = go->GetGUID();
+                    HandleGameObject(NULL, true, go);
                     flag++;
                     if (flag == 7)
                         flag =0;
                     break;
                 case GO_LEVIATHAN_GATE:
-                    uiLeviathanGateGUID = add ? pGO->GetGUID() : NULL;
-                    HandleGameObject(NULL, false, pGO);
+                    uiLeviathanGateGUID = go->GetGUID();
+                    HandleGameObject(NULL, false, go);
+                    break;
+                case GO_VEZAX_DOOR:
+                    uiVezaxDoorGUID = go->GetGUID();
+                    HandleGameObject(NULL, false, go);
                     break;
             }
         }
 
-        void ProcessEvent(GameObject* /*pGO*/, uint32 uiEventId)
+        void ProcessEvent(GameObject* /*go*/, uint32 uiEventId)
         {
             // Flame Leviathan's Tower Event triggers
            Creature* pFlameLeviathan = instance->GetCreature(uiLeviathanGUID);
@@ -238,47 +252,46 @@ public:
 
             switch (type)
             {
-            case TYPE_LEVIATHAN:
-                if (state == IN_PROGRESS)
-                {
-                    for (uint8 uiI = 0; uiI < 7; ++uiI)
-                        HandleGameObject(uiLeviathanDoor[uiI],false);
-                }
-                else
-                {
-                    for (uint8 uiI = 0; uiI < 7; ++uiI)
-                        HandleGameObject(uiLeviathanDoor[uiI],true);
-                }
-                break;
-            case TYPE_IGNIS:
-            case TYPE_RAZORSCALE:
-            case TYPE_XT002:
-            case TYPE_ASSEMBLY:
-            case TYPE_AURIAYA:
-            case TYPE_MIMIRON:
-            case TYPE_VEZAX:
-            case TYPE_YOGGSARON:
-                break;
-            case TYPE_KOLOGARN:
-                if (state == DONE)
-                    if (GameObject* pGO = instance->GetGameObject(uiKologarnChestGUID))
-                        pGO->SetRespawnTime(pGO->GetRespawnDelay());
-                break;
-            case TYPE_HODIR:
-                if (state == DONE)
-                    if (GameObject* pGO = instance->GetGameObject(uiHodirChestGUID))
-                        pGO->SetRespawnTime(pGO->GetRespawnDelay());
-                break;
-            case TYPE_THORIM:
-                if (state == DONE)
-                    if (GameObject* pGO = instance->GetGameObject(uiThorimChestGUID))
-                        pGO->SetRespawnTime(pGO->GetRespawnDelay());
-                break;
-            case TYPE_FREYA:
-                if (state == DONE)
-                    if (GameObject* pGO = instance->GetGameObject(uiFreyaChestGUID))
-                        pGO->SetRespawnTime(pGO->GetRespawnDelay());
-                break;
+                case TYPE_LEVIATHAN:
+                    if (state == IN_PROGRESS)
+                        for (uint8 uiI = 0; uiI < 7; ++uiI)
+                            HandleGameObject(uiLeviathanDoor[uiI],false);
+                    else
+                        for (uint8 uiI = 0; uiI < 7; ++uiI)
+                            HandleGameObject(uiLeviathanDoor[uiI],true);
+                    break;
+                case TYPE_IGNIS:
+                case TYPE_RAZORSCALE:
+                case TYPE_XT002:
+                case TYPE_ASSEMBLY:
+                case TYPE_AURIAYA:
+                case TYPE_MIMIRON:
+                case TYPE_VEZAX:
+                    if (state == DONE)
+                        HandleGameObject(uiVezaxDoorGUID, true);
+                    break;
+                case TYPE_YOGGSARON:
+                    break;
+                case TYPE_KOLOGARN:
+                    if (state == DONE)
+                        if (GameObject* go = instance->GetGameObject(uiKologarnChestGUID))
+                            go->SetRespawnTime(go->GetRespawnDelay());
+                    break;
+                case TYPE_HODIR:
+                    if (state == DONE)
+                        if (GameObject* go = instance->GetGameObject(uiHodirChestGUID))
+                            go->SetRespawnTime(go->GetRespawnDelay());
+                    break;
+                case TYPE_THORIM:
+                    if (state == DONE)
+                        if (GameObject* go = instance->GetGameObject(uiThorimChestGUID))
+                            go->SetRespawnTime(go->GetRespawnDelay());
+                    break;
+                case TYPE_FREYA:
+                    if (state == DONE)
+                        if (GameObject* go = instance->GetGameObject(uiFreyaChestGUID))
+                            go->SetRespawnTime(go->GetRespawnDelay());
+                    break;
              }
 
              return true;
@@ -315,7 +328,7 @@ public:
                 case TYPE_KOLOGARN:             return uiKologarnGUID;
                 case TYPE_AURIAYA:              return uiAuriayaGUID;
                 case TYPE_MIMIRON:              return uiMimironGUID;
-                case TYPE_HODIR:                return uiMimironGUID;
+                case TYPE_HODIR:                return uiHodirGUID;
                 case TYPE_THORIM:               return uiThorimGUID;
                 case TYPE_FREYA:                return uiFreyaGUID;
                 case TYPE_VEZAX:                return uiVezaxGUID;
@@ -363,7 +376,7 @@ public:
             OUT_SAVE_INST_DATA;
 
             std::ostringstream saveStream;
-            saveStream << "U U " << GetBossSaveData() << " " << uiEncounter[14];
+            saveStream << "U U " << GetBossSaveData() << GetData(TYPE_COLOSSUS);
 
             OUT_SAVE_INST_DATA_COMPLETE;
             return saveStream.str();
@@ -380,10 +393,9 @@ public:
             OUT_LOAD_INST_DATA(strIn);
 
             char dataHead1, dataHead2;
-            uint32 data14;
 
             std::istringstream loadStream(strIn);
-            loadStream >> dataHead1 >> dataHead2 >> data14;
+            loadStream >> dataHead1 >> dataHead2;
 
             if (dataHead1 == 'U' && dataHead2 == 'U')
             {
@@ -391,12 +403,16 @@ public:
                 {
                     uint32 tmpState;
                     loadStream >> tmpState;
-                    loadStream >> uiEncounter[data14]; //colossus pre leviathan
                     if (tmpState == IN_PROGRESS || tmpState > SPECIAL)
                         tmpState = NOT_STARTED;
-                    SetBossState(i, EncounterState(tmpState));
+
+                    if (i == TYPE_COLOSSUS)
+                        SetData(i, tmpState);
+                    else
+                        SetBossState(i, EncounterState(tmpState));
                 }
             }
+
             OUT_LOAD_INST_DATA_COMPLETE;
         }
     };

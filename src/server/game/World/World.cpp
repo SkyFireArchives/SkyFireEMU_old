@@ -77,6 +77,7 @@
 #include "WeatherMgr.h"
 #include "CreatureTextMgr.h"
 #include "SmartAI.h"
+#include "Channel.h"
 
 volatile bool World::m_stopEvent = false;
 uint8 World::m_ExitCode = SHUTDOWN_EXIT_CODE;
@@ -85,11 +86,6 @@ volatile uint32 World::m_worldLoopCounter = 0;
 float World::m_MaxVisibleDistanceOnContinents = DEFAULT_VISIBILITY_DISTANCE;
 float World::m_MaxVisibleDistanceInInstances  = DEFAULT_VISIBILITY_INSTANCE;
 float World::m_MaxVisibleDistanceInBGArenas   = DEFAULT_VISIBILITY_BGARENAS;
-float World::m_MaxVisibleDistanceForObject    = DEFAULT_VISIBILITY_DISTANCE;
-
-float World::m_MaxVisibleDistanceInFlight     = DEFAULT_VISIBILITY_DISTANCE;
-float World::m_VisibleUnitGreyDistance        = 0;
-float World::m_VisibleObjectGreyDistance      = 0;
 
 int32 World::m_visibility_notify_periodOnContinents = DEFAULT_VISIBILITY_NOTIFY_PERIOD;
 int32 World::m_visibility_notify_periodInInstances  = DEFAULT_VISIBILITY_NOTIFY_PERIOD;
@@ -122,6 +118,8 @@ World::World()
     m_updateTimeCount = 0;
 
     m_isClosed = false;
+
+    m_CleaningFlags = 0;
 }
 
 /// World destructor
@@ -225,7 +223,7 @@ void World::AddSession(WorldSession* s)
 }
 
 void
-World::AddSession_ (WorldSession* s)
+World::AddSession_(WorldSession* s)
 {
     ASSERT (s);
 
@@ -277,20 +275,11 @@ World::AddSession_ (WorldSession* s)
         return;
     }
 
-    WorldPacket packet(SMSG_AUTH_RESPONSE, 1 + 4 + 1 + 4 + 1 + 1);
-    packet << uint8(AUTH_OK);
-    packet << uint32(0);                                   // BillingTimeRemaining
-    packet << uint8(0);                                    // BillingPlanFlags
-    packet << uint32(0);                                   // BillingTimeRested
-    packet << uint8(s->Expansion());                       // payed expansion
-    packet << uint8(s->Expansion());                       // server expansion
-    s->SendPacket(&packet);
+    s->SendAuthResponse(AUTH_OK, true);
 
     s->SendAddonsInfo();
 
-    WorldPacket pkt(SMSG_CLIENTCACHE_VERSION, 4);
-    pkt << uint32(sWorld->getIntConfig(CONFIG_CLIENTCACHE_VERSION));
-    s->SendPacket(&pkt);
+    s->SendClientCacheVersion(sWorld->getIntConfig(CONFIG_CLIENTCACHE_VERSION));
 
     s->SendTutorialsData();
 
@@ -345,15 +334,7 @@ void World::AddQueuedPlayer(WorldSession* sess)
     m_QueuedPlayer.push_back(sess);
 
     // The 1st SMSG_AUTH_RESPONSE needs to contain other info too.
-    WorldPacket packet(SMSG_AUTH_RESPONSE, 1+4+1+4+1+4+1);
-    packet << uint8(AUTH_WAIT_QUEUE);
-    packet << uint32(0);                                    // BillingTimeRemaining
-    packet << uint8(0);                                     // BillingPlanFlags
-    packet << uint32(0);                                    // BillingTimeRested
-    packet << uint8(sess->Expansion());                     // 0 - normal, 1 - TBC, 2 - WOTLK, must be set in database manually for each account
-    packet << uint32(GetQueuePos(sess));                    // Queue position
-    packet << uint8(0);                                     // Unk 3.3.0
-    sess->SendPacket(&packet);
+    sess->SendAuthResponse(AUTH_WAIT_QUEUE, false, GetQueuePos(sess));
 }
 
 bool World::RemoveQueuedPlayer(WorldSession* sess)
@@ -394,11 +375,7 @@ bool World::RemoveQueuedPlayer(WorldSession* sess)
         pop_sess->ResetTimeOutTime();
         pop_sess->SendAuthWaitQue(0);
         pop_sess->SendAddonsInfo();
-
-        WorldPacket pkt(SMSG_CLIENTCACHE_VERSION, 4);
-        pkt << uint32(sWorld->getIntConfig(CONFIG_CLIENTCACHE_VERSION));
-        pop_sess->SendPacket(&pkt);
-
+        pop_sess->SendClientCacheVersion(sWorld->getIntConfig(CONFIG_CLIENTCACHE_VERSION));
         pop_sess->SendAccountDataTimes(GLOBAL_CACHE_MASK);
         pop_sess->SendTutorialsData();
 
@@ -432,6 +409,9 @@ void World::LoadConfigSettings(bool reload)
     ///- Read the player limit and the Message of the day from the config file
     SetPlayerAmountLimit(sConfig->GetIntDefault("PlayerLimit", 100));
     SetMotd(sConfig->GetStringDefault("Motd", "Welcome to a SkyFire server."));
+
+    ///- Read ticket system setting from the config file
+    m_bool_configs[CONFIG_ALLOW_TICKETS] = sConfig->GetBoolDefault("AllowTickets", true);
 
     ///- Get string for new logins (newly created characters)
     SetNewCharString(sConfig->GetStringDefault("PlayerStart.String", ""));
@@ -595,6 +575,7 @@ void World::LoadConfigSettings(bool reload)
     }
     m_bool_configs[CONFIG_ADDON_CHANNEL] = sConfig->GetBoolDefault("AddonChannel", true);
     m_bool_configs[CONFIG_CLEAN_CHARACTER_DB] = sConfig->GetBoolDefault("CleanCharacterDB", false);
+    m_int_configs[CONFIG_PERSISTENT_CHARACTER_CLEAN_FLAGS] = sConfig->GetIntDefault("PersistentCharacterCleanFlags", 0);
     m_int_configs[CONFIG_CHAT_CHANNEL_LEVEL_REQ] = sConfig->GetIntDefault("ChatLevelReq.Channel", 1);
     m_int_configs[CONFIG_CHAT_WHISPER_LEVEL_REQ] = sConfig->GetIntDefault("ChatLevelReq.Whisper", 1);
     m_int_configs[CONFIG_CHAT_SAY_LEVEL_REQ] = sConfig->GetIntDefault("ChatLevelReq.Say", 1);
@@ -603,6 +584,8 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_AUCTION_LEVEL_REQ] = sConfig->GetIntDefault("LevelReq.Auction", 1);
     m_int_configs[CONFIG_MAIL_LEVEL_REQ] = sConfig->GetIntDefault("LevelReq.Mail", 1);
     m_bool_configs[CONFIG_ALLOW_PLAYER_COMMANDS] = sConfig->GetBoolDefault("AllowPlayerCommands", 1);
+    m_bool_configs[CONFIG_PRESERVE_CUSTOM_CHANNELS] = sConfig->GetBoolDefault("PreserveCustomChannels", false);
+    m_int_configs[CONFIG_PRESERVE_CUSTOM_CHANNEL_DURATION] = sConfig->GetIntDefault("PreserveCustomChannelDuration", 14);
     m_bool_configs[CONFIG_GRID_UNLOAD] = sConfig->GetBoolDefault("GridUnload", true);
     m_int_configs[CONFIG_INTERVAL_SAVE] = sConfig->GetIntDefault("PlayerSaveInterval", 15 * MINUTE * IN_MILLISECONDS);
     m_int_configs[CONFIG_INTERVAL_DISCONNECT_TOLERANCE] = sConfig->GetIntDefault("DisconnectToleranceInterval", 0);
@@ -643,15 +626,6 @@ void World::LoadConfigSettings(bool reload)
     }
     else
         m_int_configs[CONFIG_PORT_WORLD] = sConfig->GetIntDefault("WorldServerPort", 8085);
-
-    if (reload)
-    {
-        uint32 val = sConfig->GetIntDefault("SocketSelectTime", 10000);
-        if (val != m_int_configs[CONFIG_SOCKET_SELECTTIME])
-            sLog->outError("SocketSelectTime option can't be changed at worldserver.conf reload, using current value (%u).",m_int_configs[CONFIG_SOCKET_SELECTTIME]);
-    }
-    else
-        m_int_configs[CONFIG_SOCKET_SELECTTIME] = sConfig->GetIntDefault("SocketSelectTime", 10000);
 
     m_int_configs[CONFIG_SOCKET_TIMEOUTTIME] = sConfig->GetIntDefault("SocketTimeOutTime", 900000);
     m_int_configs[CONFIG_SESSION_ADD_DELAY] = sConfig->GetIntDefault("SessionAddDelay", 10000);
@@ -807,7 +781,28 @@ void World::LoadConfigSettings(bool reload)
         m_int_configs[CONFIG_START_PLAYER_MONEY] = MAX_MONEY_AMOUNT;
     }
 
-    m_int_configs[CONFIG_MAX_HONOR_POINTS] = sConfig->GetIntDefault("MaxHonorPoints", 4000);
+    m_int_configs[CONFIG_MAX_CONQUEST_POINTS] = sConfig->GetIntDefault("MaxConquestPoints", 400000);
+    if (int32(m_int_configs[CONFIG_MAX_CONQUEST_POINTS]) < 0)
+    {
+        sLog->outError("MaxConquestPoints (%i) can't be negative. Set to 0.",m_int_configs[CONFIG_MAX_CONQUEST_POINTS]);
+        m_int_configs[CONFIG_MAX_CONQUEST_POINTS] = 0;
+    }
+
+    m_int_configs[CONFIG_START_CONQUEST_POINTS] = sConfig->GetIntDefault("StartConquestPoints", 0);
+    if (int32(m_int_configs[CONFIG_START_CONQUEST_POINTS]) < 0)
+    {
+        sLog->outError("StartConquestPoints (%i) must be in range 0..MaxConquestPoints(%u). Set to %u.",
+            m_int_configs[CONFIG_START_CONQUEST_POINTS],m_int_configs[CONFIG_MAX_CONQUEST_POINTS],0);
+        m_int_configs[CONFIG_START_CONQUEST_POINTS] = 0;
+    }
+    else if (m_int_configs[CONFIG_START_CONQUEST_POINTS] > m_int_configs[CONFIG_MAX_CONQUEST_POINTS])
+    {
+        sLog->outError("StartConquestPoints (%i) must be in range 0..MaxConquestPoints(%u). Set to %u.",
+            m_int_configs[CONFIG_START_CONQUEST_POINTS],m_int_configs[CONFIG_MAX_CONQUEST_POINTS],m_int_configs[CONFIG_MAX_CONQUEST_POINTS]);
+        m_int_configs[CONFIG_START_CONQUEST_POINTS] = m_int_configs[CONFIG_MAX_CONQUEST_POINTS];
+    }
+
+    m_int_configs[CONFIG_MAX_HONOR_POINTS] = sConfig->GetIntDefault("MaxHonorPoints", 400000);
     if (int32(m_int_configs[CONFIG_MAX_HONOR_POINTS]) < 0)
     {
         sLog->outError("MaxHonorPoints (%i) can't be negative. Set to 0.",m_int_configs[CONFIG_MAX_HONOR_POINTS]);
@@ -828,7 +823,7 @@ void World::LoadConfigSettings(bool reload)
         m_int_configs[CONFIG_START_HONOR_POINTS] = m_int_configs[CONFIG_MAX_HONOR_POINTS];
     }
 
-    m_int_configs[CONFIG_MAX_JUSTICE_POINTS] = sConfig->GetIntDefault("MaxJusticePoints", 4000);
+    m_int_configs[CONFIG_MAX_JUSTICE_POINTS] = sConfig->GetIntDefault("MaxJusticePoints", 400000);
     if (int32(m_int_configs[CONFIG_MAX_JUSTICE_POINTS]) < 0)
     {
         sLog->outError("MaxJusticePoints (%i) can't be negative. Set to 0.",m_int_configs[CONFIG_MAX_JUSTICE_POINTS]);
@@ -1090,19 +1085,6 @@ void World::LoadConfigSettings(bool reload)
     if (m_int_configs[CONFIG_GUILD_BANK_EVENT_LOG_COUNT] > GUILD_BANKLOG_MAX_RECORDS)
         m_int_configs[CONFIG_GUILD_BANK_EVENT_LOG_COUNT] = GUILD_BANKLOG_MAX_RECORDS;
 
-    m_VisibleUnitGreyDistance = sConfig->GetFloatDefault("Visibility.Distance.Grey.Unit", 1);
-    if (m_VisibleUnitGreyDistance >  MAX_VISIBILITY_DISTANCE)
-    {
-        sLog->outError("Visibility.Distance.Grey.Unit can't be greater %f",MAX_VISIBILITY_DISTANCE);
-        m_VisibleUnitGreyDistance = MAX_VISIBILITY_DISTANCE;
-    }
-    m_VisibleObjectGreyDistance = sConfig->GetFloatDefault("Visibility.Distance.Grey.Object", 10);
-    if (m_VisibleObjectGreyDistance >  MAX_VISIBILITY_DISTANCE)
-    {
-        sLog->outError("Visibility.Distance.Grey.Object can't be greater %f",MAX_VISIBILITY_DISTANCE);
-        m_VisibleObjectGreyDistance = MAX_VISIBILITY_DISTANCE;
-    }
-
     //visibility on continents
     m_MaxVisibleDistanceOnContinents = sConfig->GetFloatDefault("Visibility.Distance.Continents", DEFAULT_VISIBILITY_DISTANCE);
     if (m_MaxVisibleDistanceOnContinents < 45*sWorld->getRate(RATE_CREATURE_AGGRO))
@@ -1110,10 +1092,10 @@ void World::LoadConfigSettings(bool reload)
         sLog->outError("Visibility.Distance.Continents can't be less max aggro radius %f", 45*sWorld->getRate(RATE_CREATURE_AGGRO));
         m_MaxVisibleDistanceOnContinents = 45*sWorld->getRate(RATE_CREATURE_AGGRO);
     }
-    else if (m_MaxVisibleDistanceOnContinents + m_VisibleUnitGreyDistance > MAX_VISIBILITY_DISTANCE)
+    else if (m_MaxVisibleDistanceOnContinents > MAX_VISIBILITY_DISTANCE)
     {
-        sLog->outError("Visibility.Distance.Continents can't be greater %f",MAX_VISIBILITY_DISTANCE - m_VisibleUnitGreyDistance);
-        m_MaxVisibleDistanceOnContinents = MAX_VISIBILITY_DISTANCE - m_VisibleUnitGreyDistance;
+        sLog->outError("Visibility.Distance.Continents can't be greater %f",MAX_VISIBILITY_DISTANCE);
+        m_MaxVisibleDistanceOnContinents = MAX_VISIBILITY_DISTANCE;
     }
 
     //visibility in instances
@@ -1123,10 +1105,10 @@ void World::LoadConfigSettings(bool reload)
         sLog->outError("Visibility.Distance.Instances can't be less max aggro radius %f",45*sWorld->getRate(RATE_CREATURE_AGGRO));
         m_MaxVisibleDistanceInInstances = 45*sWorld->getRate(RATE_CREATURE_AGGRO);
     }
-    else if (m_MaxVisibleDistanceInInstances + m_VisibleUnitGreyDistance > MAX_VISIBILITY_DISTANCE)
+    else if (m_MaxVisibleDistanceInInstances > MAX_VISIBILITY_DISTANCE)
     {
-        sLog->outError("Visibility.Distance.Instances can't be greater %f",MAX_VISIBILITY_DISTANCE - m_VisibleUnitGreyDistance);
-        m_MaxVisibleDistanceInInstances = MAX_VISIBILITY_DISTANCE - m_VisibleUnitGreyDistance;
+        sLog->outError("Visibility.Distance.Instances can't be greater %f",MAX_VISIBILITY_DISTANCE);
+        m_MaxVisibleDistanceInInstances = MAX_VISIBILITY_DISTANCE;
     }
 
     //visibility in BG/Arenas
@@ -1136,28 +1118,10 @@ void World::LoadConfigSettings(bool reload)
         sLog->outError("Visibility.Distance.BGArenas can't be less max aggro radius %f",45*sWorld->getRate(RATE_CREATURE_AGGRO));
         m_MaxVisibleDistanceInBGArenas = 45*sWorld->getRate(RATE_CREATURE_AGGRO);
     }
-    else if (m_MaxVisibleDistanceInBGArenas + m_VisibleUnitGreyDistance > MAX_VISIBILITY_DISTANCE)
+    else if (m_MaxVisibleDistanceInBGArenas > MAX_VISIBILITY_DISTANCE)
     {
-        sLog->outError("Visibility.Distance.BGArenas can't be greater %f",MAX_VISIBILITY_DISTANCE - m_VisibleUnitGreyDistance);
-        m_MaxVisibleDistanceInBGArenas = MAX_VISIBILITY_DISTANCE - m_VisibleUnitGreyDistance;
-    }
-
-    m_MaxVisibleDistanceForObject = sConfig->GetFloatDefault("Visibility.Distance.Object", DEFAULT_VISIBILITY_DISTANCE);
-    if (m_MaxVisibleDistanceForObject < INTERACTION_DISTANCE)
-    {
-        sLog->outError("Visibility.Distance.Object can't be less max aggro radius %f",float(INTERACTION_DISTANCE));
-        m_MaxVisibleDistanceForObject = INTERACTION_DISTANCE;
-    }
-    else if (m_MaxVisibleDistanceForObject + m_VisibleObjectGreyDistance > MAX_VISIBILITY_DISTANCE)
-    {
-        sLog->outError("Visibility.Distance.Object can't be greater %f",MAX_VISIBILITY_DISTANCE-m_VisibleObjectGreyDistance);
-        m_MaxVisibleDistanceForObject = MAX_VISIBILITY_DISTANCE - m_VisibleObjectGreyDistance;
-    }
-    m_MaxVisibleDistanceInFlight = sConfig->GetFloatDefault("Visibility.Distance.InFlight", DEFAULT_VISIBILITY_DISTANCE);
-    if (m_MaxVisibleDistanceInFlight + m_VisibleObjectGreyDistance > MAX_VISIBILITY_DISTANCE)
-    {
-        sLog->outError("Visibility.Distance.InFlight can't be greater %f",MAX_VISIBILITY_DISTANCE-m_VisibleObjectGreyDistance);
-        m_MaxVisibleDistanceInFlight = MAX_VISIBILITY_DISTANCE - m_VisibleObjectGreyDistance;
+        sLog->outError("Visibility.Distance.BGArenas can't be greater %f",MAX_VISIBILITY_DISTANCE);
+        m_MaxVisibleDistanceInBGArenas = MAX_VISIBILITY_DISTANCE;
     }
 
     m_visibility_notify_periodOnContinents = sConfig->GetIntDefault("Visibility.Notify.Period.OnContinents", DEFAULT_VISIBILITY_NOTIFY_PERIOD);
@@ -1200,7 +1164,6 @@ void World::LoadConfigSettings(bool reload)
 
     m_int_configs[CONFIG_MAX_WHO] = sConfig->GetIntDefault("MaxWhoListReturns", 49);
     m_bool_configs[CONFIG_PET_LOS] = sConfig->GetBoolDefault("vmap.petLOS", true);
-    m_bool_configs[CONFIG_BG_START_MUSIC] = sConfig->GetBoolDefault("MusicInBattleground", false);
     m_bool_configs[CONFIG_START_ALL_SPELLS] = sConfig->GetBoolDefault("PlayerStart.AllSpells", false);
     if (m_bool_configs[CONFIG_START_ALL_SPELLS])
         sLog->outString("WORLD: WARNING: PlayerStart.AllSpells enabled - may not function as intended!");
@@ -1236,6 +1199,9 @@ void World::LoadConfigSettings(bool reload)
     // Dungeon finder
     m_bool_configs[CONFIG_DUNGEON_FINDER_ENABLE] = sConfig->GetBoolDefault("DungeonFinder.Enable", false);
 
+    // Max instances per hour
+    m_int_configs[CONFIG_MAX_INSTANCES_PER_HOUR] = sConfig->GetIntDefault("AccountInstancesPerHour", 5);
+
     // AutoBroadcast
     m_bool_configs[CONFIG_AUTOBROADCAST] = sConfig->GetBoolDefault("AutoBroadcast.On", false);
     m_int_configs[CONFIG_AUTOBROADCAST_CENTER] = sConfig->GetIntDefault("AutoBroadcast.Center", 0);
@@ -1250,6 +1216,9 @@ void World::LoadConfigSettings(bool reload)
 /// Initialize the World
 void World::SetInitialWorldSettings()
 {
+    ///- Server startup begin
+    uint32 startupBegin = getMSTime();
+
     ///- Initialize the random number generator
     srand((unsigned int)time(NULL));
 
@@ -1320,6 +1289,7 @@ void World::SetInitialWorldSettings()
     sInstanceSaveMgr->CleanupAndPackInstances();                // must be called before `creature_respawn`/`gameobject_respawn` tables
 
     sLog->outString("Loading Localization strings...");
+    uint32 oldMSTime = getMSTime();
     sObjectMgr->LoadCreatureLocales();
     sObjectMgr->LoadGameObjectLocales();
     sObjectMgr->LoadItemLocales();
@@ -1330,7 +1300,7 @@ void World::SetInitialWorldSettings()
     sObjectMgr->LoadGossipMenuItemsLocales();
     sObjectMgr->LoadPointOfInterestLocales();
     sObjectMgr->SetDBCLocaleIndex(GetDefaultDbcLocale());        // Get once for all the locale index of DBC language (console/broadcasts)
-    sLog->outString(">>> Localization strings loaded");
+    sLog->outString(">> Localization strings loaded in %u ms", GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 
     sLog->outString("Loading Page Texts...");
@@ -1338,9 +1308,6 @@ void World::SetInitialWorldSettings()
 
     sLog->outString("Loading Game Object Templates...");     // must be after LoadPageTexts
     sObjectMgr->LoadGameobjectInfo();
-
-    //sLog->outString("Loading Spell Rank Data...");
-    //sSpellMgr->LoadSpellRanks();
 
     sLog->outString("Loading Spell Required Data...");
     sSpellMgr->LoadSpellRequired();
@@ -1414,13 +1381,10 @@ void World::SetInitialWorldSettings()
     sLog->outString("Loading Creature Data...");
     sObjectMgr->LoadCreatures();
 
-    sLog->outString("Loading Creature Linked Respawn...");
-    sObjectMgr->LoadCreatureLinkedRespawn();                     // must be after LoadCreatures()
-
     sLog->outString("Loading pet levelup spells...");
     sSpellMgr->LoadPetLevelupSpellMap();
 
-    sLog->outString("Loading pet default spell additional to levelup spells...");
+    sLog->outString("Loading pet default spells additional to levelup spells...");
     sSpellMgr->LoadPetDefaultSpells();
 
     sLog->outString("Loading Creature Template Addon Data...");
@@ -1431,6 +1395,9 @@ void World::SetInitialWorldSettings()
 
     sLog->outString("Loading Creature Respawn Data...");         // must be after PackInstances()
     sObjectMgr->LoadCreatureRespawnTimes();
+
+    sLog->outString("Loading Creature Linked Respawn...");
+    sObjectMgr->LoadLinkedRespawn();                     // must be after LoadCreatures(), LoadGameObjects()
 
     sLog->outString("Loading Gameobject Data...");
     sObjectMgr->LoadGameobjects();
@@ -1463,7 +1430,7 @@ void World::SetInitialWorldSettings()
     sGameEventMgr->LoadFromDB();
 
     sLog->outString("Loading Dungeon boss data...");
-    sLFGMgr->LoadDungeonEncounters();
+    sObjectMgr->LoadInstanceEncounters();
 
     sLog->outString("Loading LFG rewards...");
     sLFGMgr->LoadRewards();
@@ -1561,7 +1528,6 @@ void World::SetInitialWorldSettings()
     sLog->outString("Loading Auctions...");
     sAuctionMgr->LoadAuctions();
 
-    sLog->outString("***** GUILDS *****");
     sObjectMgr->LoadGuilds();
 
     sLog->outString("Loading Guild Rewards...");
@@ -1581,9 +1547,6 @@ void World::SetInitialWorldSettings()
 
     sLog->outString("Loading GameTeleports...");
     sObjectMgr->LoadGameTele();
-
-    sLog->outString("Loading Npc Text Id...");
-    sObjectMgr->LoadNpcTextId();                                 // must be after load Creature and NpcText
 
     sObjectMgr->LoadGossipScripts();                             // must be before gossip menu options
 
@@ -1640,16 +1603,12 @@ void World::SetInitialWorldSettings()
     LoadAutobroadcasts();
 
     ///- Load and initialize scripts
-    sLog->outString("Loading Scripts...");
-    sLog->outString();
     sObjectMgr->LoadQuestStartScripts();                         // must be after load Creature/Gameobject(Template/Data) and QuestTemplate
     sObjectMgr->LoadQuestEndScripts();                           // must be after load Creature/Gameobject(Template/Data) and QuestTemplate
     sObjectMgr->LoadSpellScripts();                              // must be after load Creature/Gameobject(Template/Data)
     sObjectMgr->LoadGameObjectScripts();                         // must be after load Creature/Gameobject(Template/Data)
     sObjectMgr->LoadEventScripts();                              // must be after load Creature/Gameobject(Template/Data)
     sObjectMgr->LoadWaypointScripts();
-    sLog->outString(">>> Scripts loaded");
-    sLog->outString();
 
     sLog->outString("Loading Scripts text locales...");      // must be after Load*Scripts calls
     sObjectMgr->LoadDbScriptStrings();
@@ -1679,7 +1638,7 @@ void World::SetInitialWorldSettings()
     sSmartScriptMgr->LoadSmartAIFromDB();
 
     ///- Initialize game time and timers
-    sLog->outDebug("DEBUG:: Initialize game time and timers");
+    sLog->outString("Initialize game time and timers");
     m_gameTime = time(NULL);
     m_startTime=m_gameTime;
 
@@ -1716,7 +1675,7 @@ void World::SetInitialWorldSettings()
     mail_timer = ((((localtime(&m_gameTime)->tm_hour + 20) % 24)* HOUR * IN_MILLISECONDS) / m_timers[WUPDATE_AUCTIONS].GetInterval());
                                                             //1440
     mail_timer_expires = ((DAY * IN_MILLISECONDS) / (m_timers[WUPDATE_AUCTIONS].GetInterval()));
-    sLog->outDebug("Mail timer set to: " UI64FMTD ", mail return is called every " UI64FMTD " minutes", uint64(mail_timer), uint64(mail_timer_expires));
+    sLog->outDetail("Mail timer set to: " UI64FMTD ", mail return is called every " UI64FMTD " minutes", uint64(mail_timer), uint64(mail_timer_expires));
 
     ///- Initilize static helper structures
     AIRegistry::Initialize();
@@ -1733,8 +1692,13 @@ void World::SetInitialWorldSettings()
     // Delete all characters which have been deleted X days before
     Player::DeleteOldCharacters();
 
+    // Delete all custom channels which haven't been used for PreserveCustomChannelDuration days.
+    Channel::CleanOldChannelsInDB();
+
     sLog->outString("Starting Arena Season...");
     sGameEventMgr->StartArenaSeason();
+
+    sTicketMgr->Initialize();
 
     sLog->outString("Loading World States...");              // must be loaded before battleground and outdoor PvP
     LoadWorldStates();
@@ -1779,7 +1743,10 @@ void World::SetInitialWorldSettings()
     else
         sLog->SetLogDB(false);
 
-    sLog->outString("WORLD: World initialized");
+    uint32 startupDuration = GetMSTimeDiffToNow(startupBegin);
+    sLog->outString();
+    sLog->outString("WORLD: World initialized in %u minuntes %u seconds", (startupDuration / 60000), ((startupDuration % 60000) / 1000) );
+    sLog->outString();
 }
 
 void World::DetectDBCLang()
@@ -1854,38 +1821,34 @@ void World::RecordTimeDiff(const char *text, ...)
 
 void World::LoadAutobroadcasts()
 {
+    uint32 oldMSTime = getMSTime();
+
     m_Autobroadcasts.clear();
 
     QueryResult result = WorldDatabase.Query("SELECT text FROM autobroadcast");
 
     if (!result)
     {
-        
-        
-
+        sLog->outString(">> Loaded 0 autobroadcasts definitions. DB table `autobroadcast` is empty!");
         sLog->outString();
-        sLog->outString(">> Loaded 0 autobroadcasts definitions");
         return;
     }
-
-    
 
     uint32 count = 0;
 
     do
     {
-        
-
         Field *fields = result->Fetch();
         std::string message = fields[0].GetString();
 
         m_Autobroadcasts.push_back(message);
 
-        count++;
-    } while (result->NextRow());
+        ++count;
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u autobroadcasts definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u autobroadcasts definitions", count);
 }
 
 /// Update the World !
@@ -2563,12 +2526,17 @@ void World::UpdateSessions(uint32 diff)
         ++next;
 
         ///- and remove not active sessions from the list
-        if (!itr->second->Update(diff))                      // As interval = 0
+        WorldSession * pSession = itr->second;
+        WorldSessionFilter updater(pSession);
+
+        if(!pSession->Update(diff, updater))    // As interval = 0
         {
             if (!RemoveQueuedPlayer(itr->second) && itr->second && getIntConfig(CONFIG_INTERVAL_DISCONNECT_TOLERANCE))
                 m_disconnects[itr->second->GetAccountId()] = time(NULL);
-            delete itr->second;
+            RemoveQueuedPlayer(pSession);
             m_sessions.erase(itr);
+            delete pSession;
+
         }
     }
 }
@@ -2581,7 +2549,7 @@ void World::ProcessCliCommands()
     CliCommandHolder* command;
     while (cliCmdQueue.next(command))
     {
-        sLog->outDebug("CLI command under processing...");
+        sLog->outDetail("CLI command under processing...");
         zprint = command->m_print;
         callbackArg = command->m_callbackArg;
         CliHandler handler(callbackArg, zprint);
@@ -2622,9 +2590,9 @@ void World::SendAutoBroadcast()
         WorldPacket data(SMSG_NOTIFICATION, (msg.size()+1));
         data << msg;
         sWorld->SendGlobalMessage(&data);
-
     }
-    sLog->outDebug("AutoBroadcast: '%s'",msg.c_str());
+
+    sLog->outDetail("AutoBroadcast: '%s'",msg.c_str());
 }
 
 void World::UpdateRealmCharCount(uint32 accountId)
@@ -2660,7 +2628,7 @@ void World::InitDailyQuestResetTime()
     if (result)
     {
         Field *fields = result->Fetch();
-        mostRecentQuestTime = (time_t)fields[0].GetUInt64();
+        mostRecentQuestTime = time_t(fields[0].GetUInt32());
     }
     else
         mostRecentQuestTime = 0;
@@ -2817,30 +2785,30 @@ void World::UpdateAreaDependentAuras()
 
 void World::LoadWorldStates()
 {
+    uint32 oldMSTime = getMSTime();
+
     QueryResult result = CharacterDatabase.Query("SELECT entry, value FROM worldstates");
 
     if (!result)
     {
-        
-        
+        sLog->outString(">> Loaded 0 world states. DB table `worldstates` is empty!");
         sLog->outString();
-        sLog->outString(">> Loaded 0 world states.");
         return;
     }
 
-    
-    uint32 counter = 0;
+    uint32 count = 0;
 
     do
     {
         Field *fields = result->Fetch();
-        m_worldstates[fields[0].GetUInt32()] = fields[1].GetUInt64();
+        m_worldstates[fields[0].GetUInt32()] = fields[1].GetUInt32();
         
-        ++counter;
-    } while (result->NextRow());
+        ++count;
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u world states in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u world states.", counter);
 }
 
 // Setting a worldstate will save it to DB

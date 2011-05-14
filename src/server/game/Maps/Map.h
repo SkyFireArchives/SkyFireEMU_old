@@ -54,6 +54,7 @@ struct Position;
 class Battleground;
 class MapInstanced;
 class InstanceMap;
+namespace Trinity { struct ObjectUpdater; }
 
 struct ScriptAction
 {
@@ -273,9 +274,10 @@ class Map : public GridRefManager<NGridType>
         template<class T> void Add(T *);
         template<class T> void Remove(T *, bool);
 
+        void VisitNearbyCellsOf(WorldObject* obj, TypeContainerVisitor<Trinity::ObjectUpdater, GridTypeMapContainer> &gridVisitor, TypeContainerVisitor<Trinity::ObjectUpdater, WorldTypeMapContainer> &worldVisitor);
         virtual void Update(const uint32&);
 
-        float GetVisibilityDistance() const { return m_VisibleDistance; }
+        float GetVisibilityRange() const { return m_VisibleDistance; }
         //function for setting up visibility distance for maps on per-type/per-Id basis
         virtual void InitVisibilityDistance();
 
@@ -597,7 +599,7 @@ class InstanceMap : public Map
         void UnloadAll();
         bool CanEnter(Player* player);
         void SendResetWarnings(uint32 timeLeft) const;
-        void SetResetSchedule(bool on);
+        void SetResetSchedule(bool on, Player* player);
 
         uint32 GetMaxPlayers() const;
         uint32 GetMaxResetDelay() const;

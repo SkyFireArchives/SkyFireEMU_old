@@ -620,9 +620,9 @@ struct BarberShopStyleEntry
 
 struct BattlemasterListEntry
 {
-    uint32  id;                                             // 0
+    uint32  id;                                             // 0 m_id
     int32   mapid[8];                                       // 1-8 mapid
-    uint32  type;                                           // 9 (3 - BG, 4 - arena)
+    uint32  MapType;                                        // 9 (3 - BG, 4 - arena)
     //uint32 canJoinAsGroup;                                // 10 (0 or 1)
     DBCString name;                                         // 11
     uint32 maxGroupSize;                                    // 12 maxGroupSize, used for checking if queue as group
@@ -631,8 +631,8 @@ struct BattlemasterListEntry
     uint32 maxLevel;                                        // 15, max level (sync with PvPDifficulty.dbc content)
     uint32 maxGroupSizeRated;                               // 16 4.0.1
     uint32 maxPlayers;                                      // 17 4.0.1
-    uint32 minPlayers;                                      // 18 4.0.6
-    uint32 rated;                                           // 19 4.0.3 value 2 for Rated Battlegrounds
+    uint32 rated;                                           // 18 4.0.3 value 2 for Rated Battlegrounds
+    //uint32 unknown                                        // 19 4.0.x
 };
 
 #define MAX_OUTFIT_ITEMS 24
@@ -825,6 +825,18 @@ struct DestructibleModelDataEntry
     //uint32  SmokeUnk3;
     //uint32  Unk4;
     //uint32  Unk5;
+};
+
+struct DungeonEncounterEntry
+{
+    uint32 id;                                              // 0 - unique id
+    uint32 mapId;                                           // 1 - map id
+    uint32 difficulty;                                      // 2 - instance mode
+    //uint32 unk0;                                          // 3
+    uint32 encounterIndex;                                  // 4 - encounter index for creating completed mask
+    DBCString encounterName;                                // 5 - encounter name
+    //uint32 nameFlags                                      // 6
+    //uint32 unk1;                                          // 7
 };
 
 struct DurabilityCostsEntry
@@ -1398,7 +1410,7 @@ struct ScalingStatValuesEntry
     //uint32 trash[24];                                     // 22-45
     //uint32 unk2;                                          // 46 unk, probably also Armor for level (flag 0x80000?)
     
-    uint32  getssdMultiplier(uint32 mask) const
+    uint32 getssdMultiplier(uint32 mask) const
     {
         if (mask & 0x4001F)
         {
@@ -1412,7 +1424,7 @@ struct ScalingStatValuesEntry
         return 0;
     }
 
-    uint32  getArmorMod(uint32 mask) const
+    uint32 getArmorMod(uint32 mask) const
     {
         if (mask & 0x00F001E0)
         {

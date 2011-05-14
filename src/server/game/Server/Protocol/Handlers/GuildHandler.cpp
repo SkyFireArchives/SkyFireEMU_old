@@ -60,9 +60,9 @@ void WorldSession::HandleGuildQueryOpcode(WorldPacket& recvPacket)
     sLog->outDebug("WORLD: Received CMSG_GUILD_QUERY");
 
     uint64 guildId;
-    uint64 unk; //4.0.6a
+    uint64 player; //4.0.6a
     recvPacket >> guildId;
-    recvPacket >> unk;
+    recvPacket >> player;
     // Use received guild id to access guild method (not player's guild id)
     uint32 lowGuildId = GUID_LOPART(guildId);
     if (Guild *pGuild = sObjectMgr->GetGuildById(lowGuildId))
@@ -469,7 +469,7 @@ void WorldSession::HandleSaveGuildEmblemOpcode(WorldPacket& recvPacket)
     if (GetPlayer()->GetNPCIfCanInteractWith(vendorGuid, UNIT_NPC_FLAG_TABARDDESIGNER))
     {
         // Remove fake death
-        if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+        if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
             GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
         if (Guild* pGuild = _GetPlayerGuild(this))

@@ -41,6 +41,8 @@ class ZoneScript
         virtual void OnCreatureCreate(Creature *, bool /*add*/) {}
         virtual void OnGameObjectCreate(GameObject * /*go*/, bool /*add*/) {}
 
+        virtual void OnCreatureDeath(Creature* /*creature*/) {}
+
         //All-purpose data storage 64 bit
         virtual uint64 GetData64(uint32 /*DataId*/) { return 0; }
         virtual void SetData64(uint32 /*DataId*/, uint64 /*Value*/) {}
@@ -50,6 +52,7 @@ class ZoneScript
         virtual void SetData(uint32 /*DataId*/, uint32 /*Value*/) {}
 
         virtual void ProcessEvent(GameObject * /*obj*/, uint32 /*eventId*/) {}
+        virtual void ProcessEvent(Unit* /*unit*/, uint32 /*eventId*/) {}
 };
 
 #endif

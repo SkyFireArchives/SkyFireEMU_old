@@ -138,10 +138,6 @@ EAIErrorLevel = 2
 #        Default: 1 (unload grids)
 #                 0 (do not unload grids)
 #
-#    SocketSelectTime
-#        Socket select time (in milliseconds)
-#        Default: 10000 (10 secs)
-#
 #    SocketTimeOutTime
 #        Time in milliseconds afer which a connection sitting idle on the character
 #        selection screen is disconnected.
@@ -255,6 +251,14 @@ EAIErrorLevel = 2
 #        Default: 0 (Disabled)
 #                 1 (Enable)
 #
+#    PersistentCharacterCleanFlags
+#        Description: Determines the character clean flags that remain set after cleanups.
+#                     This is a bitmask value, check /doc/CharacterDBCleanup.txt for more
+#                     information.
+#        Example:     14 - (Cleaning up skills, talents and spells will remain enabled after the
+#                           next cleanup)
+#        Default:     0  - (All cleanup methods will be disabled after the next cleanup)
+#
 ###############################################################################
 
 UseProcessors = 0
@@ -264,7 +268,6 @@ PlayerLimit = 100
 SaveRespawnTimeImmediately = 1
 MaxOverspeedPings = 2
 GridUnload = 1
-SocketSelectTime = 10000
 SocketTimeOutTime = 900000
 SessionAddDelay = 10000
 GridCleanUpDelay = 300000
@@ -288,6 +291,7 @@ MaxCoreStuckTime = 0
 AddonChannel = 1
 MapUpdate.Threads = 1
 CleanCharacterDB = 0
+PersistentCharacterCleanFlags = 0
 
 ###############################################################################
 # SERVER LOGGING
@@ -781,20 +785,28 @@ ChatLogTimestamp = 0
 #         (100 copper = 1 silver)
 #        Default: 0
 #
+#    MaxConquestPoints
+#        Max conquest points that player can have, multiplied by 100.
+#        Default: 400000
+#
+#    StartConquestPoints
+#        Amount of conquest that new players will start with
+#        Default: 0
+#
 #    MaxHonorPoints
-#        Max honor points that player can have.
-#        Default: 4000
+#        Max honor points that player can have, multiplied by 100.
+#        Default: 400000
 #
 #    StartHonorPoints
 #        Amount of honor that new players will start with
 #        Default: 0
 #
 #    MaxJusticePoints
-#        Max justice points that player can have.
-#        Default: 4000
+#        Max justice points that player can have, multiplied by 100.
+#        Default: 400000
 #
 #    StartJusticePoints
-#        Amount of fustice points that new players will start with
+#        Amount of justice points that new players will start with
 #        Default: 0
 #
 #    RecruitAFriend.MaxLevel
@@ -965,6 +977,11 @@ ChatLogTimestamp = 0
 #        The maximum number of results a .lookup command can return
 #        Default: 0 - unlimited
 #
+#    AllowTickets
+#        Allow/disallow sending new tickets.
+#        Default: 1 (true)
+#                 0 (false)
+#
 #    GuildAdvancement.Enabled
 #        Enables the cataclysm guild leveling system. 
 #        It's currently far from being complete. 
@@ -1003,6 +1020,8 @@ MinDualSpecLevel = 30
 StartPlayerLevel = 1
 StartHeroicPlayerLevel = 55
 StartPlayerMoney = 0
+MaxConquestPoints = 4000
+StartConquestPoints = 0
 MaxHonorPoints = 4000
 StartHonorPoints = 0
 MaxJusticePoints = 4000
@@ -1039,6 +1058,7 @@ BeepAtStart = 1
 Motd = "Welcome to a SkyFire server."
 Server.LoginInfo = 0
 Command.LookupMaxResults = 0
+AllowTickets = 1
 GuildAdvancement.Enabled = 0
 GuildAdvancement.MaxLevel = 25
 
@@ -1295,6 +1315,21 @@ ListenRange.Yell = 300
 #        Allowed the players to use commands
 #        Default: 1 (allow)
 #
+#    PreserveCustomChannels
+#        Description: Store custom chat channel settings like password, automatic ownership handout
+#                     or ban list in the database. Needs to be enabled to save custom 
+#                     world/trade/etc. channels that have automatic ownership handout disabled.
+#                     (.channel set ownership $channel off)
+#        Default:     0 - (Disabled, Blizzlike, Channel settings are lost if last person left)
+#                     1 - (Enabled)
+#
+#    PreserveCustomChannelDuration
+#        Description: Time (in days) that needs to pass before the customs chat channels get
+#                     cleaned up from the database. Only channels with ownership handout enabled
+#                     (default behavior) will be cleaned.
+#        Default:     14 - (Enabled, Clean channels that haven't been used for 14 days)
+#                     0  - (Disabled, Infinite channel storage)
+#
 ###############################################################################
 
 ChatFakeMessagePreventing = 0
@@ -1309,6 +1344,8 @@ ChatLevelReq.Channel = 1
 ChatLevelReq.Whisper = 1
 ChatLevelReq.Say = 1
 AllowPlayerCommands = 1
+PreserveCustomChannels = 1
+PreserveCustomChannelDuration = 14
 
 ###############################################################################
 # GAME MASTER SETTINGS
@@ -1430,37 +1467,12 @@ GM.TicketSystem.ChanceOfGMSurvey = 50
 #        Max limited by active player zone: ~ 333
 #        Min limit is max aggro radius (45) * Rate.Creature.Aggro
 #
-#    Visibility.Distance.Object
-#        Visible distance for gameobject, dynobject, bodies, corpses, bones
-#        Min limit is iteraction distance (5)
-#
-#    Visibility.Distance.InFlight
-#        Visible distance for player in flight
-#        Min limit is 0 (not show any objects)
-#
-#    Visibility.Distance.Grey.Unit
-#        Visibility grey distance for creatures/players (fast changing objects)
-#         addition to appropriate object type Visibility.Distance.* use in case
-#         visibility removing to object (except corpse around distances)
-#         If D is distance and G is grey distance then object
-#         make visible if distance to it <= D
-#         but make non visible if distance > D+G
-#        Default: 1 (yard)
-#
-#    Visibility.Distance.Grey.Object
-#        Visibility grey distance for dynobjects/gameobjects/corpses/creatures
-#        Default: 10 (yards)
-#
 ###############################################################################
 
 Visibility.GroupMode = 1
 Visibility.Distance.Continents = 90
 Visibility.Distance.Instances = 120
 Visibility.Distance.BGArenas = 180
-Visibility.Distance.Object = 100
-Visibility.Distance.InFlight = 100
-Visibility.Distance.Grey.Unit   = 1
-Visibility.Distance.Grey.Object = 10
 
 Visibility.Notify.Period.OnContinents = 1000
 Visibility.Notify.Period.InInstances  = 1000
@@ -1924,9 +1936,6 @@ Network.TcpNodelay = 1
 #    Ra.MinLevel
 #        Minimum level that's required to login,3 by default
 #
-#    Ra.Secure
-#        Kick client on wrong pass
-#
 #    SOAP.Enable
 #        Enable soap service
 #        Default: 0 - off
@@ -1947,7 +1956,6 @@ Ra.Enable = 0
 Ra.IP = 0.0.0.0
 Ra.Port = 3443
 Ra.MinLevel = 3
-Ra.Secure = 1
 SOAP.Enabled = 0
 SOAP.IP = 127.0.0.1
 SOAP.Port = 7878
@@ -2083,6 +2091,10 @@ CharDelete.KeepDays = 30
 #        Default: 1 - on
 #                 0 - off
 #
+#   AccountInstancesPerHour
+#        Description: Controls the max amount of different instances player can enter within hour
+#        Default:     5
+#
 ###############################################################################
 
 PlayerStart.AllReputation = 0
@@ -2105,4 +2117,5 @@ LevelReq.Trade = 1
 LevelReq.Ticket = 1
 LevelReq.Auction = 1
 LevelReq.Mail = 1
-DungeonFinder.Enable = 1
+DungeonFinder.Enable = 1^
+AccountInstancesPerHour = 5

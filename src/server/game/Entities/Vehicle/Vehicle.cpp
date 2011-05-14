@@ -55,13 +55,20 @@ Vehicle::Vehicle(Unit *unit, VehicleEntry const *vehInfo) : me(unit), m_vehicleI
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK_DEST, true);
         case 158:
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_HEAL, true);
+			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_HEAL_PCT, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_ATTACK_ME, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_DISPEL, true);
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_FEAR, true);
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_PERIODIC_HEAL, true);
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_STUN, true);
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_ROOT, true);
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_DECREASE_SPEED, true);
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_CONFUSE, true);
-            me->ApplySpellImmune(0, IMMUNITY_ID, 49560, true); // Death Grip jump effect
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_SHIELD, true);
+            me->ApplySpellImmune(0, IMMUNITY_ID, 13810, true); // Frost Trap
+            me->ApplySpellImmune(0, IMMUNITY_ID, 55741, true); // Desecration Rank 1
+            me->ApplySpellImmune(0, IMMUNITY_ID, 68766, true); // Desecration Rank 2
             break;
         default:
             break;
@@ -319,9 +326,9 @@ bool Vehicle::AddPassenger(Unit *unit, int8 seatId, bool byAura)
     }
 
     if (seat->second.seatInfo->m_flags && !(seat->second.seatInfo->m_flags & VEHICLE_SEAT_FLAG_UNK11))
-        unit->addUnitState(UNIT_STAT_ONVEHICLE);
+        unit->AddUnitState(UNIT_STAT_ONVEHICLE);
 
-    unit->AddUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT);
+    unit->AddUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT | MOVEMENTFLAG_ROOT);
     VehicleSeatEntry const *veSeat = seat->second.seatInfo;
     unit->m_movementInfo.t_pos.m_positionX = veSeat->m_attachmentOffsetX;
     unit->m_movementInfo.t_pos.m_positionY = veSeat->m_attachmentOffsetY;
@@ -364,6 +371,8 @@ bool Vehicle::AddPassenger(Unit *unit, int8 seatId, bool byAura)
             RelocatePassengers(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
         }
     }
+    unit->DestroyForNearbyPlayers();
+    unit->UpdateObjectVisibility(false);
 
     if (GetBase()->GetTypeId() == TYPEID_UNIT)
         sScriptMgr->OnAddPassenger(this, unit, seatId);
@@ -398,7 +407,7 @@ void Vehicle::RemovePassenger(Unit *unit)
         ++m_usableSeatNum;
     }
 
-    unit->clearUnitState(UNIT_STAT_ONVEHICLE);
+    unit->ClearUnitState(UNIT_STAT_ONVEHICLE);
 
     if (me->GetTypeId() == TYPEID_UNIT
         && unit->GetTypeId() == TYPEID_PLAYER
@@ -450,4 +459,24 @@ void Vehicle::Dismiss()
     me->SendObjectDeSpawnAnim(me->GetGUID());
     me->CombatStop();
     me->AddObjectToRemoveList();
+}
+
+uint16 Vehicle::GetExtraMovementFlagsForBase() const
+{
+    uint16 movementMask = MOVEMENTFLAG2_NONE;
+    uint32 vehicleFlags = GetVehicleInfo()->m_flags;
+
+    if (vehicleFlags & VEHICLE_FLAG_NO_STRAFE)
+        movementMask |= MOVEMENTFLAG2_NO_STRAFE;
+    if (vehicleFlags & VEHICLE_FLAG_NO_JUMPING)
+        movementMask |= MOVEMENTFLAG2_NO_JUMPING;
+    if (vehicleFlags & VEHICLE_FLAG_FULLSPEEDTURNING)
+        movementMask |= MOVEMENTFLAG2_FULL_SPEED_TURNING;
+    if (vehicleFlags & VEHICLE_FLAG_ALLOW_PITCHING)
+        movementMask |= MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING;
+    if (vehicleFlags & VEHICLE_FLAG_FULLSPEEDPITCHING)
+        movementMask |= MOVEMENTFLAG2_FULL_SPEED_PITCHING;
+
+    sLog->outDebug("Vehicle::GetExtraMovementFlagsForBase() returned %u", movementMask);
+    return movementMask;
 }

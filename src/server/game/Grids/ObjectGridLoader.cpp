@@ -99,24 +99,22 @@ class ObjectWorldLoader
         uint32 i_corpses;
 };
 
-template<class T> void addUnitState(T* /*obj*/, CellPair const& /*cell_pair*/)
+template<class T> void AddUnitState(T* /*obj*/, CellPair const& /*cell_pair*/)
 {
 }
 
-template<> void addUnitState(Creature *obj, CellPair const& cell_pair)
+template<> void AddUnitState(Creature *obj, CellPair const& cell_pair)
 {
     Cell cell(cell_pair);
 
     obj->SetCurrentCell(cell);
-    if (obj->isSpiritService())
-        obj->setDeathState(DEAD);
 }
 
 template <class T>
 void AddObjectHelper(CellPair &cell, GridRefManager<T> &m, uint32 &count, Map* map, T *obj)
 {
     obj->GetGridRef().link(&m, obj);
-    addUnitState(obj,cell);
+    AddUnitState(obj,cell);
     obj->AddToWorld();
     if (obj->isActiveObject())
         map->AddToActive(obj);
@@ -287,13 +285,13 @@ ObjectGridStoper::Visit(CreatureMapType &m)
     // stop any fights at grid de-activation and remove dynobjects created at cast by creatures
     for (CreatureMapType::iterator iter=m.begin(); iter != m.end(); ++iter)
     {
-        iter->getSource()->RemoveAllDynObjects();
         if (iter->getSource()->isInCombat())
         {
             iter->getSource()->CombatStop();
             iter->getSource()->DeleteThreatList();
             iter->getSource()->AI()->EnterEvadeMode();
         }
+        iter->getSource()->RemoveAllDynObjects();       // Calls RemoveFromWorld, needs to be after RemoveAllAuras or we invalidate the Owner pointer of the aura
     }
 }
 

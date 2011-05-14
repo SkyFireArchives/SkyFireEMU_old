@@ -38,7 +38,8 @@
 #define CONTACT_DISTANCE            0.5f
 #define INTERACTION_DISTANCE        5.0f
 #define ATTACK_DISTANCE             5.0f
-#define MAX_VISIBILITY_DISTANCE 333.0f // max distance for visible object show, limited in 333 yards
+#define MAX_VISIBILITY_DISTANCE     500.0f // max distance for visible objects
+#define SIGHT_RANGE_UNIT            50.0f
 #define DEFAULT_VISIBILITY_DISTANCE 90.0f // default visible distance, 90 yards on continents
 #define DEFAULT_VISIBILITY_INSTANCE 120.0f // default visible distance in instances, 120 yards
 #define DEFAULT_VISIBILITY_BGARENAS 180.0f // default visible distance in BG/Arenas, 180 yards
@@ -232,8 +233,9 @@ class Object
 
         void ApplyPercentModFloatValue(uint16 index, float val, bool apply)
         {
-            val = val != -100.0f ? val : -99.9f ;
-            SetFloatValue(index, GetFloatValue(index) * (apply?(100.0f+val)/100.0f : 100.0f / (100.0f+val)));
+            float value = GetFloatValue(index);
+            ApplyPercentModFloatVar(value, val, apply);
+            SetFloatValue(index, value);
         }
 
         void SetFlag(uint16 index, uint32 newFlag);
@@ -519,6 +521,11 @@ struct MovementInfo
     uint32 GetMovementFlags() { return flags; }
     void AddMovementFlag(uint32 flag) { flags |= flag; }
     bool HasMovementFlag(uint32 flag) const { return flags & flag; }
+
+    uint16 GetExtraMovementFlags() { return flags2; }
+    void AddExtraMovementFlag(uint16 flag) { flags2 |= flag; }
+    bool HasExtraMovementFlag(uint16 flag) const { return flags2 & flag; }
+
     void OutDebug();
 };
 
@@ -547,6 +554,30 @@ class GridObject
         GridReference<T> m_gridRef;
 };
 
+template <class T_VALUES, class T_FLAGS, class FLAG_TYPE, uint8 ARRAY_SIZE>
+class FlaggedValuesArray32
+{
+    public:
+        FlaggedValuesArray32()
+        {
+            memset(&m_values, 0x00, sizeof(T_VALUES) * ARRAY_SIZE);
+            m_flags = 0;
+        }
+
+        T_FLAGS  GetFlags() const { return m_flags; }
+        bool     HasFlag(FLAG_TYPE flag) const { return m_flags & (1 << flag); }
+        void     AddFlag(FLAG_TYPE flag) { m_flags |= (1 << flag); }
+        void     DelFlag(FLAG_TYPE flag) { m_flags &= ~(1 << flag); }
+
+        T_VALUES GetValue(FLAG_TYPE flag) const { return m_values[flag]; }
+        void     SetValue(FLAG_TYPE flag, T_VALUES value) { m_values[flag] = value; }
+        void     AddValue(FLAG_TYPE flag, T_VALUES value) { m_values[flag] += value; }
+
+    private:
+        T_VALUES m_values[ARRAY_SIZE];
+        T_FLAGS m_flags;
+};
+
 class WorldObject : public Object, public WorldLocation
 {
     protected:
@@ -557,6 +588,16 @@ class WorldObject : public Object, public WorldLocation
         virtual void Update (uint32 /*time_diff*/) { }
 
         void _Create(uint32 guidlow, HighGuid guidhigh, uint32 phaseMask);
+
+        virtual void RemoveFromWorld()
+        {
+            if (!IsInWorld())
+                return;
+
+            DestroyForNearbyPlayers();
+
+            Object::RemoveFromWorld();
+        }
 
         void GetNearPoint2D(float &x, float &y, float distance, float absAngle) const;
         void GetNearPoint(WorldObject const* searcher, float &x, float &y, float &z, float searcher_size, float distance2d,float absAngle) const;
@@ -686,9 +727,11 @@ class WorldObject : public Object, public WorldLocation
 
         virtual void CleanupsBeforeDelete(bool finalCleanup = true);  // used in destructor or explicitly before mass creature delete to remove cross-references to already deleted units
 
-        virtual void SendMessageToSet(WorldPacket *data, bool self);
+        virtual void SendMessageToSet(WorldPacket *data, bool self) { SendMessageToSetInRange(data, GetVisibilityRange(), self); }
         virtual void SendMessageToSetInRange(WorldPacket *data, float dist, bool self);
         virtual void SendMessageToSet(WorldPacket *data, Player const* skipped_rcvr);
+
+        virtual uint8 getLevelForTarget(WorldObject const* /*target*/) const { return 1; }
 
         void MonsterSay(const char* text, uint32 language, uint64 TargetGuid);
         void MonsterYell(const char* text, uint32 language, uint64 TargetGuid);
@@ -709,11 +752,32 @@ class WorldObject : public Object, public WorldLocation
         virtual void SaveRespawnTime() {}
         void AddObjectToRemoveList();
 
-        // main visibility check function in normal case (ignore grey zone distance check)
-        bool isVisibleFor(Player const* u) const { return isVisibleForInState(u,false); }
+        virtual bool isValid() const;
 
-        // low level function for visibility change code, must be define in all main world object subclasses
-        virtual bool isVisibleForInState(Player const* u, bool inVisibleList) const = 0;
+        virtual bool isAlwaysVisibleFor(WorldObject const* /*seer*/) const { return false; }
+        virtual bool canSeeAlways(WorldObject const* /*obj*/) const { return false; }
+        bool canDetect(WorldObject const* obj, bool ignoreStealth) const;
+
+        virtual bool isVisibleForInState(WorldObject const* /*seer*/) const { return true; }
+
+        bool canDetectInvisibilityOf(WorldObject const* obj) const;
+        bool canDetectStealthOf(WorldObject const* obj) const;
+
+        virtual bool isAlwaysDetectableFor(WorldObject const* /*seer*/) const { return false; }
+
+        float GetGridActivationRange() const;
+        float GetVisibilityRange() const;
+        float GetSightRange(const WorldObject* target = NULL) const;
+        bool canSeeOrDetect(WorldObject const* obj, bool ignoreStealth = false, bool distanceCheck = false) const;
+
+        FlaggedValuesArray32<int32, uint32, StealthType, TOTAL_STEALTH_TYPES> m_stealth;
+        FlaggedValuesArray32<int32, uint32, StealthType, TOTAL_STEALTH_TYPES> m_stealthDetect;
+
+        FlaggedValuesArray32<int32, uint32, InvisibilityType, TOTAL_INVISIBILITY_TYPES> m_invisibility;
+        FlaggedValuesArray32<int32, uint32, InvisibilityType, TOTAL_INVISIBILITY_TYPES> m_invisibilityDetect;
+
+        FlaggedValuesArray32<int32, uint32, ServerSideVisibilityType, TOTAL_SERVERSIDE_VISIBILITY_TYPES> m_serverSideVisibility;
+        FlaggedValuesArray32<int32, uint32, ServerSideVisibilityType, TOTAL_SERVERSIDE_VISIBILITY_TYPES> m_serverSideVisibilityDetect;
 
         // Low Level Packets
         void SendPlaySound(uint32 Sound, bool OnlySelf);

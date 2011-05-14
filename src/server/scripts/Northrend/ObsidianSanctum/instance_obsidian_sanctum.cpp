@@ -1,18 +1,25 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "ScriptPCH.h"
@@ -36,7 +43,7 @@ public:
 
     struct instance_obsidian_sanctum_InstanceMapScript : public InstanceScript
     {
-        instance_obsidian_sanctum_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {Initialize();};
+        instance_obsidian_sanctum_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {}
 
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         uint64 m_uiSartharionGUID;
@@ -62,26 +69,35 @@ public:
             m_bVesperonKilled = false;
         }
 
-        void OnCreatureCreate(Creature* pCreature, bool /*add*/)
+        bool IsEncounterInProgress() const
         {
-            switch(pCreature->GetEntry())
+            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                if (m_auiEncounter[i] == IN_PROGRESS)
+                    return true;
+
+            return false;
+        }
+
+        void OnCreatureCreate(Creature* creature)
+        {
+            switch(creature->GetEntry())
             {
                 case NPC_SARTHARION:
-                    m_uiSartharionGUID = pCreature->GetGUID();
+                    m_uiSartharionGUID = creature->GetGUID();
                     break;
                 //three dragons below set to active state once created.
                 //we must expect bigger raid to encounter main boss, and then three dragons must be active due to grid differences
                 case NPC_TENEBRON:
-                    m_uiTenebronGUID = pCreature->GetGUID();
-                    pCreature->setActive(true);
+                    m_uiTenebronGUID = creature->GetGUID();
+                    creature->setActive(true);
                     break;
                 case NPC_SHADRON:
-                    m_uiShadronGUID = pCreature->GetGUID();
-                    pCreature->setActive(true);
+                    m_uiShadronGUID = creature->GetGUID();
+                    creature->setActive(true);
                     break;
                 case NPC_VESPERON:
-                    m_uiVesperonGUID = pCreature->GetGUID();
-                    pCreature->setActive(true);
+                    m_uiVesperonGUID = creature->GetGUID();
+                    creature->setActive(true);
                     break;
             }
         }
@@ -130,7 +146,6 @@ public:
     };
 
 };
-
 
 void AddSC_instance_obsidian_sanctum()
 {

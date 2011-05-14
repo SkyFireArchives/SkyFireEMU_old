@@ -803,7 +803,9 @@ enum TrinityStrings
     LANG_BANLIST_MATCHINGCHARACTER      = 1131,
     LANG_BANLIST_CHARACTERS             = 1132,
     LANG_BANLIST_CHARACTERS_HEADER      = 1133,
-    // Room for more level 3              1134-1199 not used
+    LANG_ALLOW_TICKETS                  = 1134,
+    LANG_DISALLOW_TICKETS               = 1135,
+    // Room for more level 3              1136-1199 not used
 
     // Debug commands
     LANG_CINEMATIC_NOT_EXIST            = 1200,
@@ -834,7 +836,24 @@ enum TrinityStrings
     LANG_BG_IC_ALLIANCE                 = 1225,
     LANG_BG_IC_HORDE                    = 1226,
 
-    // FREE IDS                           1228-9999
+    // Twin Peaks
+    LANG_BG_TP_START_TWO_MINUTES        = 1230,
+    LANG_BG_TP_START_ONE_MINUTE         = 1231,
+    LANG_BG_TP_START_HALF_MINUTE        = 1232,
+    LANG_BG_TP_HAS_BEGUN                = 1233,
+    LANG_BG_TP_CAPTURED_HF              = 1234,
+    LANG_BG_TP_CAPTURED_AF              = 1235,
+    LANG_BG_TP_DROPPED_HF               = 1236,
+    LANG_BG_TP_DROPPED_AF               = 1237,
+    LANG_BG_TP_RETURNED_AF              = 1238,
+    LANG_BG_TP_RETURNED_HF              = 1239,
+    LANG_BG_TP_PICKEDUP_HF              = 1240,
+    LANG_BG_TP_PICKEDUP_AF              = 1241,
+    LANG_BG_TP_F_PLACED                 = 1242,
+    LANG_BG_TP_ALLIANCE_FLAG_RESPAWNED  = 1243,
+    LANG_BG_TP_HORDE_FLAG_RESPAWNED     = 1244,
+
+    // FREE IDS                           1234-1299
 
     // AV
     LANG_BG_AV_ALLY                     = 1300,
@@ -929,8 +948,8 @@ enum TrinityStrings
     LANG_MOUNTABLE                      = 5019,
     LANG_NPCINFO_PHASEMASK              = 5020,
     LANG_NPCINFO_ARMOR                  = 5021,
-    LANG_CHANNEL_NOT_PUBLIC             = 5022,
-    LANG_CHANNEL_PUBLIC_CHANGED         = 5023,
+    LANG_CHANNEL_ENABLE_OWNERSHIP       = 5022,
+    LANG_CHANNEL_DISABLE_OWNERSHIP      = 5023,
     LANG_GOINFO_ENTRY                   = 5024,
     LANG_GOINFO_TYPE                    = 5025,
     LANG_GOINFO_DISPLAYID               = 5026,

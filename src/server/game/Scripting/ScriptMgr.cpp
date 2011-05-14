@@ -183,17 +183,17 @@ ScriptMgr::~ScriptMgr()
 
 void ScriptMgr::Initialize()
 {
+    uint32 oldMSTime = getMSTime();
+
     LoadDatabase();
 
     sLog->outString("Loading C++ scripts");
-    
-    
-    sLog->outString();
 
     FillSpellSummary();
     AddScripts();
 
-    sLog->outString(">> Loaded %u C++ scripts", GetScriptCount());
+    sLog->outString(">> Loaded %u C++ scripts in %u ms", GetScriptCount(), GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString();
 }
 
 void ScriptMgr::LoadDatabase()
@@ -1208,6 +1208,16 @@ void ScriptMgr::OnPlayerDelete(uint64 guid)
 void ScriptMgr::OnPlayerBindToInstance(Player* player, Difficulty difficulty, uint32 mapid, bool permanent)
 {
     FOREACH_SCRIPT(PlayerScript)->OnBindToInstance(player, difficulty, mapid, permanent);
+}
+
+void ScriptMgr::OnPlayerDamageDealt(Player* player, Unit* victim, uint32& damage, DamageEffectType damageType, SpellEntry const *spellProto)
+{
+    FOREACH_SCRIPT(PlayerScript)->OnDamageDealt(player, victim, damage, damageType, spellProto);
+}
+
+void ScriptMgr::OnPlayerSpellCastWithProto(Player *player, SpellEntry const *spellProto)
+{
+    FOREACH_SCRIPT(PlayerScript)->OnSpellCastWithProto(player, spellProto);
 }
 
 // Guild

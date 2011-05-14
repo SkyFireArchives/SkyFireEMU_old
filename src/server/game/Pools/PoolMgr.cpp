@@ -370,7 +370,7 @@ void PoolGroup<Creature>::Spawn1Object(PoolObject* obj)
         // We use spawn coords to spawn
         if (!map->Instanceable() && map->IsLoaded(data->posX, data->posY))
         {
-            CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(data->id);
+            CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(data->id);
             if (!ci)
                 return;
             
@@ -558,10 +558,12 @@ PoolMgr::PoolMgr()
 
 void PoolMgr::LoadFromDB()
 {
+    uint32 oldMSTime = getMSTime();
+
     QueryResult result = WorldDatabase.Query("SELECT MAX(entry) FROM pool_template");
     if (!result)
     {
-        sLog->outString(">> Table pool_template is empty.");
+        sLog->outString(">> Loaded 0 object pools. DB table `pool_template` is empty.");
         sLog->outString();
         return;
     }
@@ -577,35 +579,33 @@ void PoolMgr::LoadFromDB()
     if (!result)
     {
         mPoolTemplate.clear();
-        sLog->outString(">> Table pool_template is empty:");
+        sLog->outString(">> Loaded 0 object pools. DB table `pool_template` is empty.");
         sLog->outString();
         return;
     }
 
     uint32 count = 0;
 
-    
     do
     {
         ++count;
         Field *fields = result->Fetch();
-
-        
 
         uint32 pool_id = fields[0].GetUInt32();
 
         PoolTemplateData& pPoolTemplate = mPoolTemplate[pool_id];
         pPoolTemplate.MaxLimit  = fields[1].GetUInt32();
 
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u objects pools in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u objects pools", count);
 
     // Creatures
 
-    sLog->outString();
     sLog->outString("Loading Creatures Pooling Data...");
+    oldMSTime = getMSTime();
 
     mPoolCreatureGroups.resize(max_pool_id + 1);
     mCreatureSearchMap.clear();
@@ -615,11 +615,12 @@ void PoolMgr::LoadFromDB()
     count = 0;
     if (!result)
     {
+        sLog->outString(">> Loaded 0 creatures in  pools. DB table `pool_creature` is empty.");
         sLog->outString();
-        sLog->outString(">> Loaded %u creatures in pools", count);
     }
     else
     {
+
         do
         {
             Field *fields = result->Fetch();
@@ -654,9 +655,11 @@ void PoolMgr::LoadFromDB()
             SearchPair p(guid, pool_id);
             mCreatureSearchMap.insert(p);
 
-        } while (result->NextRow());
+        }
+        while (result->NextRow());
+
+        sLog->outString(">> Loaded %u creatures in pools in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
         sLog->outString();
-        sLog->outString(">> Loaded %u creatures in pools", count);
     }
 
     // Gameobjects
@@ -671,8 +674,8 @@ void PoolMgr::LoadFromDB()
     count = 0;
     if (!result)
     {
+        sLog->outString(">> Loaded 0 gameobjects in  pools. DB table `pool_gameobject` is empty.");
         sLog->outString();
-        sLog->outString(">> Loaded %u gameobject in pools", count);
     }
     else
     {
@@ -690,7 +693,7 @@ void PoolMgr::LoadFromDB()
                 sLog->outErrorDb("`pool_gameobject` has a non existing gameobject spawn (GUID: %u) defined for pool id (%u), skipped.", guid, pool_id);
                 continue;
             }
-            GameObjectInfo const* goinfo = sObjectMgr->GetGameObjectInfo(data->id);
+            GameObjectInfo const* goinfo = ObjectMgr::GetGameObjectInfo(data->id);
             if (goinfo->type != GAMEOBJECT_TYPE_CHEST &&
                 goinfo->type != GAMEOBJECT_TYPE_GOOBER &&
                 goinfo->type != GAMEOBJECT_TYPE_FISHINGHOLE)
@@ -720,13 +723,15 @@ void PoolMgr::LoadFromDB()
             mGameobjectSearchMap.insert(p);
 
         } while (result->NextRow());
+
+        sLog->outString(">> Loaded %u gameobject in pools in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
         sLog->outString();
-        sLog->outString(">> Loaded %u gameobject in pools", count);
     }
 
     // Pool of pools
 
     sLog->outString("Loading Mother Pooling Data...");
+    oldMSTime = getMSTime();
 
     mPoolPoolGroups.resize(max_pool_id + 1);
     //                                      1        2            3
@@ -735,16 +740,14 @@ void PoolMgr::LoadFromDB()
     count = 0;
     if (!result)
     {
+        sLog->outString(">> Loaded 0 pools in pools");
         sLog->outString();
-        sLog->outString(">> Loaded %u pools in pools", count);
     }
     else
     {
         do
         {
             Field *fields = result->Fetch();
-
-            
 
             uint32 child_pool_id  = fields[0].GetUInt32();
             uint32 mother_pool_id = fields[1].GetUInt32();
@@ -781,7 +784,8 @@ void PoolMgr::LoadFromDB()
             SearchPair p(child_pool_id, mother_pool_id);
             mPoolSearchMap.insert(p);
 
-        } while (result->NextRow());
+        }
+        while (result->NextRow());
 
         // Now check for circular reference
         for (uint32 i=0; i<max_pool_id; ++i)
@@ -807,13 +811,15 @@ void PoolMgr::LoadFromDB()
             }
         }
 
+        sLog->outString(">> Loaded %u pools in mother pools in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
         sLog->outString();
-        sLog->outString(">> Loaded %u pools in mother pools", count);
     }
 }
 
 void PoolMgr::LoadQuestPools()
 {
+    uint32 oldMSTime = getMSTime();
+
     PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_LOAD_QUEST_POOLS);
     PreparedQueryResult result = WorldDatabase.Query(stmt);
 
@@ -823,15 +829,11 @@ void PoolMgr::LoadQuestPools()
     uint32 count = 0;
     if (!result)
     {
-        
-        
-
-        sLog->outString();
         sLog->outString(">> Loaded 0 quests in pools");
+        sLog->outString();
         return;
     }
 
-    
     PooledQuestRelationBounds creBounds;
     PooledQuestRelationBounds goBounds;
 
@@ -846,8 +848,6 @@ void PoolMgr::LoadQuestPools()
 
     do
     {
-        
-
         Field* fields = result->Fetch();
 
         uint32 entry   = fields[0].GetUInt32();
@@ -892,7 +892,6 @@ void PoolMgr::LoadQuestPools()
             continue;
         }
 
-
         PoolTemplateData *pPoolTemplate = &mPoolTemplate[pool_id];
         ++count;
 
@@ -905,9 +904,9 @@ void PoolMgr::LoadQuestPools()
 
     }
     while (result->NextRow());
-    
+
+    sLog->outString(">> Loaded %u quests in pools in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u quests in pools", count);
 }
 
 // The initialize method will spawn all pools not in an event and not in another pool, this is why there is 2 left joins with 2 null checks

@@ -1,18 +1,25 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* ScriptData
@@ -37,7 +44,11 @@ public:
 
     struct instance_onyxias_lair_InstanceMapScript : public InstanceScript
     {
-        instance_onyxias_lair_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {Initialize();};
+        instance_onyxias_lair_InstanceMapScript(Map* pMap) : InstanceScript(pMap)
+        {
+            Initialize();
+            SetBossNumber(MAX_ENCOUNTER);
+        }
 
         //Eruption is a BFS graph problem
         //One map to remember all floor, one map to keep floor that still need to erupt and one queue to know what needs to be removed
@@ -49,15 +60,11 @@ public:
         uint32 m_uiManyWhelpsCounter;
         uint32 m_uiEruptTimer;
 
-        uint8  m_auiEncounter[MAX_ENCOUNTER];
-
         bool   m_bAchievManyWhelpsHandleIt;
         bool   m_bAchievSheDeepBreathMore;
 
         void Initialize()
         {
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-
             m_uiOnyxiasGUID = 0;
             m_uiOnyxiaLiftoffTimer = 0;
             m_uiManyWhelpsCounter = 0;
@@ -67,33 +74,30 @@ public:
             m_uiEruptTimer = 0;
         }
 
-        void OnCreatureCreate(Creature* pCreature, bool /*add*/)
+        void OnCreatureCreate(Creature* creature)
         {
-            switch (pCreature->GetEntry())
+            switch (creature->GetEntry())
             {
                 case NPC_ONYXIA:
-                    m_uiOnyxiasGUID = pCreature->GetGUID();
+                    m_uiOnyxiasGUID = creature->GetGUID();
                     break;
             }
         }
 
-        void OnGameObjectCreate(GameObject* pGo, bool add)
+        void OnGameObjectCreate(GameObject* go)
         {
-            if ((pGo->GetGOInfo()->displayId == 4392 || pGo->GetGOInfo()->displayId == 4472) && pGo->GetGOInfo()->trap.spellId == 17731)
+            if ((go->GetGOInfo()->displayId == 4392 || go->GetGOInfo()->displayId == 4472) && go->GetGOInfo()->trap.spellId == 17731)
             {
-                if (add)
-                    FloorEruptionGUID[0].insert(std::make_pair(pGo->GetGUID(),0));
-                else
-                    FloorEruptionGUID[0].erase(pGo->GetGUID());
+                FloorEruptionGUID[0].insert(std::make_pair(go->GetGUID(),0));
                 return;
             }
 
-            switch(pGo->GetEntry())
+            switch(go->GetEntry())
             {
                 case GO_WHELP_SPAWNER:
-                    Position pGoPos;
-                    pGo->GetPosition(&pGoPos);
-                    if (Creature* pTemp = pGo->SummonCreature(NPC_WHELP,pGoPos,TEMPSUMMON_CORPSE_DESPAWN))
+                    Position goPos;
+                    go->GetPosition(&goPos);
+                    if (Creature* pTemp = go->SummonCreature(NPC_WHELP,goPos,TEMPSUMMON_CORPSE_DESPAWN))
                     {
                         pTemp->SetInCombatWithZone();
                         ++m_uiManyWhelpsCounter;
@@ -102,9 +106,18 @@ public:
             }
         }
 
+        void OnGameObjectRemove(GameObject* go)
+        {
+            if ((go->GetGOInfo()->displayId == 4392 || go->GetGOInfo()->displayId == 4472) && go->GetGOInfo()->trap.spellId == 17731)
+            {
+                FloorEruptionGUID[0].erase(go->GetGUID());
+                return;
+            }
+        }
+
         void FloorEruption(uint64 floorEruptedGUID)
         {
-            if (GameObject *pFloorEruption = instance->GetGameObject(floorEruptedGUID))
+            if (GameObject* pFloorEruption = instance->GetGameObject(floorEruptedGUID))
             {
                 //THIS GOB IS A TRAP - What shall i do? =(
                 //Cast it spell? Copyed Heigan method
@@ -137,11 +150,6 @@ public:
         {
             switch(uiType)
             {
-                case DATA_ONYXIA:
-                    m_auiEncounter[0] = uiData;
-                    if (uiData == IN_PROGRESS)
-                        SetData(DATA_SHE_DEEP_BREATH_MORE, IN_PROGRESS);
-                    break;
                 case DATA_ONYXIA_PHASE:
                     if (uiData == PHASE_BREATH) //Used to mark the liftoff phase
                     {
@@ -178,17 +186,6 @@ public:
             }
         }
 
-        uint32 GetData(uint32 uiType)
-        {
-            switch(uiType)
-            {
-                case DATA_ONYXIA:
-                    return m_auiEncounter[0];
-            }
-
-            return 0;
-        }
-
         uint64 GetData64(uint32 uiData)
         {
             switch(uiData)
@@ -200,9 +197,25 @@ public:
             return 0;
         }
 
+        bool SetBossState(uint32 id, EncounterState state)
+        {
+            if (!InstanceScript::SetBossState(id, state))
+                return false;
+
+            switch (id)
+            {
+                case DATA_ONYXIA:
+                    if (state == IN_PROGRESS)
+                        SetData(DATA_SHE_DEEP_BREATH_MORE, IN_PROGRESS);
+                    break;
+            }
+
+            return true;
+        }
+
         void Update(uint32 uiDiff)
         {
-            if (GetData(DATA_ONYXIA) == IN_PROGRESS)
+            if (GetBossState(DATA_ONYXIA) == IN_PROGRESS)
             {
                 if (m_uiOnyxiaLiftoffTimer && m_uiOnyxiaLiftoffTimer <= uiDiff)
                 {
@@ -246,7 +259,6 @@ public:
     };
 
 };
-
 
 void AddSC_instance_onyxias_lair()
 {

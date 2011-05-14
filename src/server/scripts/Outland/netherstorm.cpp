@@ -618,7 +618,7 @@ public:
             case 9:
                 Turn_to_eachother();
                 //hide pathaleon, unit will despawn shortly
-                pathaleon->SetVisibility(VISIBILITY_OFF);
+                pathaleon->SetVisible(false);
                 PhaseSubphase = 0;
                 ++Phase;
                 Phase_Timer = 3000;
@@ -798,7 +798,7 @@ public:
                 Materialize = true;
             }
 
-            if (me->HasAuraType(SPELL_AURA_MOD_DECREASE_SPEED) || me->hasUnitState(UNIT_STAT_ROOT)) // if the mob is rooted/slowed by spells eg.: Entangling Roots, Frost Nova, Hamstring, Crippling Poison, etc. => remove it
+            if (me->HasAuraType(SPELL_AURA_MOD_DECREASE_SPEED) || me->HasUnitState(UNIT_STAT_ROOT)) // if the mob is rooted/slowed by spells eg.: Entangling Roots, Frost Nova, Hamstring, Crippling Poison, etc. => remove it
                 DoCast(me, SPELL_PHASE_SLIP);
 
             if (!UpdateVictim())

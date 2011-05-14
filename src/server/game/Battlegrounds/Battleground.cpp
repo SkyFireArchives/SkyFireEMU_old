@@ -221,6 +221,16 @@ Battleground::~Battleground()
     for (uint32 i = 0; i < size; ++i)
         DelObject(i);
 
+    if (GetInstanceID())                                    // not spam by useless queries in case BG templates
+    {
+        // delete creature and go respawn times
+        WorldDatabase.PExecute("DELETE FROM creature_respawn WHERE instance = '%u'",GetInstanceID());
+        WorldDatabase.PExecute("DELETE FROM gameobject_respawn WHERE instance = '%u'",GetInstanceID());
+        // delete instance from db
+        CharacterDatabase.PExecute("DELETE FROM instance WHERE id = '%u'",GetInstanceID());
+        // remove from battlegrounds
+    }
+
     sBattlegroundMgr->RemoveBattleground(GetInstanceID(), GetTypeID());
     // unload map
     if (m_Map)
@@ -1904,16 +1914,16 @@ void Battleground::RewardXPAtKill(Player* plr, Player* victim)
 				// XP updated only for alive group member
 				if (pGroupGuy->isAlive() && not_gray_member_with_max_level && pGroupGuy->getLevel() <= not_gray_member_with_max_level->getLevel())
 				{
-					uint32 itr_xp = (member_with_max_level == not_gray_member_with_max_level) ? uint32(xp*rate) : uint32((xp*rate/2)+1);
+                    uint32 itr_xp = (member_with_max_level == not_gray_member_with_max_level) ? uint32(xp * rate) : uint32((xp * rate / 2) + 1);
 
 					// handle SPELL_AURA_MOD_XP_PCT auras
 					Unit::AuraEffectList const& ModXPPctAuras = plr->GetAuraEffectsByType(SPELL_AURA_MOD_XP_PCT);
 					for (Unit::AuraEffectList::const_iterator i = ModXPPctAuras.begin(); i != ModXPPctAuras.end(); ++i)
-						itr_xp = uint32(itr_xp*(1.0f + (*i)->GetAmount() / 100.0f));
+						AddPctN(itr_xp, (*i)->GetAmount());
 
 					pGroupGuy->GiveXP(itr_xp, victim);
 					if (Pet* pet = pGroupGuy->GetPet())
-						pet->GivePetXP(itr_xp/2);
+						pet->GivePetXP(itr_xp / 2);
 				}
 			}
 		}
@@ -1928,7 +1938,7 @@ void Battleground::RewardXPAtKill(Player* plr, Player* victim)
 		// handle SPELL_AURA_MOD_XP_PCT auras
 		Unit::AuraEffectList const& ModXPPctAuras = plr->GetAuraEffectsByType(SPELL_AURA_MOD_XP_PCT);
 		for (Unit::AuraEffectList::const_iterator i = ModXPPctAuras.begin(); i != ModXPPctAuras.end(); ++i)
-			xp = uint32(xp*(1.0f + (*i)->GetAmount() / 100.0f));
+			AddPctN(xp, (*i)->GetAmount());
 
 		plr->GiveXP(xp, victim);
 

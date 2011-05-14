@@ -147,6 +147,9 @@ namespace Trinity
             if (plr == i_source || (team && plr->GetTeam() != team) || skipped_receiver == plr)
                 return;
 
+            if (!plr->HaveAtClient(i_source))
+                return;
+
             if (WorldSession* session = plr->GetSession())
                 session->SendPacket(i_message);
         }
@@ -736,7 +739,7 @@ namespace Trinity
             bool operator()(Unit* u)
             {
                 if (u->isAlive() && u->isInCombat() && !i_obj->IsHostileTo(u) && i_obj->IsWithinDistInMap(u, i_range) &&
-                    (u->isFeared() || u->isCharmed() || u->isFrozen() || u->hasUnitState(UNIT_STAT_STUNNED) || u->hasUnitState(UNIT_STAT_CONFUSED)))
+                    (u->isFeared() || u->isCharmed() || u->isFrozen() || u->HasUnitState(UNIT_STAT_STUNNED) || u->HasUnitState(UNIT_STAT_CONFUSED)))
                 {
                     return true;
                 }
@@ -814,7 +817,7 @@ namespace Trinity
                 return u->isAlive()
                     && i_obj->IsWithinDistInMap(u, i_range)
                     && !i_funit->IsFriendlyTo(u)
-                    && u->isVisibleForOrDetect(i_funit, false);
+                    && i_funit->canSeeOrDetect(u);
             }
         private:
             WorldObject const* i_obj;
@@ -876,7 +879,7 @@ namespace Trinity
             bool operator()(Unit* u)
             {
                 if (u->isTargetableForAttack() && i_obj->IsWithinDistInMap(u, i_range) &&
-                    !i_funit->IsFriendlyTo(u) && u->isVisibleForOrDetect(i_funit,false))
+                    !i_funit->IsFriendlyTo(u) && i_funit->canSeeOrDetect(u))
                 {
                     i_range = i_obj->GetDistance(u);        // use found unit range as new range limit for next check
                     return true;
@@ -962,10 +965,10 @@ namespace Trinity
         bool operator()(Unit* u) { return !u->isAlive(); }
     };
 
-    struct AnyStealthedCheck
-    {
-        bool operator()(Unit* u) { return u->GetVisibility() == VISIBILITY_GROUP_STEALTH; }
-    };
+    //struct AnyStealthedCheck
+    //{
+    //    bool operator()(Unit* u) { return u->GetVisibility() == VISIBILITY_GROUP_STEALTH; }
+    //};
 
     // Creature checks
 
@@ -979,6 +982,9 @@ namespace Trinity
             bool operator()(Unit* u)
             {
                 if (!me->IsWithinDistInMap(u, m_range))
+                    return false;
+
+                if (!me->canSeeOrDetect(u))
                     return false;
 
                 if (!me->canAttack(u))
@@ -1141,7 +1147,7 @@ namespace Trinity
         AllFriendlyCreaturesInGrid(Unit const* obj) : pUnit(obj) {}
         bool operator() (Unit* u)
         {
-            if (u->isAlive() && u->GetVisibility() == VISIBILITY_ON && u->IsFriendlyTo(pUnit))
+            if (u->isAlive() && u->IsVisible() && u->IsFriendlyTo(pUnit))
                 return true;
 
             return false;

@@ -430,11 +430,6 @@ void ObjectMgr::RemoveArenaTeam(uint32 Id)
     mArenaTeamMap.erase(Id);
 }
 
-CreatureInfo const* ObjectMgr::GetCreatureTemplate(uint32 id)
-{
-    return sCreatureStorage.LookupEntry<CreatureInfo>(id);
-}
-
 void ObjectMgr::AddLocaleString(std::string& s, LocaleConstant locale, StringVector& data)
 {
     if (!s.empty())
@@ -874,6 +869,12 @@ void ObjectMgr::CheckCreatureTemplate(CreatureInfo const* cInfo)
         const_cast<CreatureInfo*>(cInfo)->expansion = 0;
     }
 
+    if (uint32 badFlags = (cInfo->flags_extra & ~CREATURE_FLAG_EXTRA_DB_ALLOWED))
+    {
+        sLog->outErrorDb("Table `creature_template` lists creature (Entry: %u) with disallowed `flags_extra` %u, removing incorrect flag.", cInfo->Entry, badFlags);
+        const_cast<CreatureInfo*>(cInfo)->flags_extra &= CREATURE_FLAG_EXTRA_DB_ALLOWED;
+    }
+
     const_cast<CreatureInfo*>(cInfo)->dmg_multiplier *= Creature::_GetDamageMod(cInfo->rank);
 }
 
@@ -1187,96 +1188,232 @@ void ObjectMgr::LoadCreatureModelInfo()
     }
 }
 
-bool ObjectMgr::CheckCreatureLinkedRespawn(uint32 guid, uint32 linkedGuid) const
+void ObjectMgr::LoadLinkedRespawn()
 {
-    const CreatureData* const slave = GetCreatureData(guid);
-    const CreatureData* const master = GetCreatureData(linkedGuid);
+    uint32 oldMSTime = getMSTime();
 
-    if (!slave || !master) // they must have a corresponding entry in db
-    {
-        sLog->outErrorDb("LinkedRespawn: Creature '%u' linking to '%u' which doesn't exist",guid,linkedGuid);
-        return false;
-    }
-
-    const MapEntry* const map = sMapStore.LookupEntry(master->mapid);
-
-    if (master->mapid != slave->mapid        // link only to same map
-        && (!map || map->Instanceable()))   // or to unistanced world
-    {
-        sLog->outErrorDb("LinkedRespawn: Creature '%u' linking to '%u' on an unpermitted map",guid,linkedGuid);
-        return false;
-    }
-
-    if (!(master->spawnMask & slave->spawnMask)  // they must have a possibility to meet (normal/heroic difficulty)
-        && (!map || map->Instanceable()))
-    {
-        sLog->outErrorDb("LinkedRespawn: Creature '%u' linking to '%u' with not corresponding spawnMask",guid,linkedGuid);
-        return false;
-    }
-
-    return true;
-}
-
-void ObjectMgr::LoadCreatureLinkedRespawn()
-{
-    mCreatureLinkedRespawnMap.clear();
-    QueryResult result = WorldDatabase.Query("SELECT guid, linkedGuid FROM creature_linked_respawn ORDER BY guid ASC");
+    mLinkedRespawnMap.clear();
+    QueryResult result = WorldDatabase.Query("SELECT guid, linkedGuid, linkType FROM linked_respawn ORDER BY guid ASC");
 
     if (!result)
     {
-        
-
-        
-
+        sLog->outErrorDb(">> Loaded 0 linked respawns. DB table `linked_respawn` is empty.");
         sLog->outString();
-        sLog->outErrorDb(">> Loaded 0 linked respawns. DB table `creature_linked_respawn` is empty.");
         return;
     }
-
-    
 
     do
     {
         Field *fields = result->Fetch();
-        
 
-        uint32 guid = fields[0].GetUInt32();
-        uint32 linkedGuid = fields[1].GetUInt32();
+        uint32 guidLow = fields[0].GetUInt32();
+        uint32 linkedGuidLow = fields[1].GetUInt32();
+        uint8  linkType = fields[2].GetUInt8();
 
-        if (CheckCreatureLinkedRespawn(guid,linkedGuid))
-            mCreatureLinkedRespawnMap[guid] = linkedGuid;
+        uint64 guid, linkedGuid;
+        bool error = false;
+        switch (linkType)
+        {
+            case CREATURE_TO_CREATURE:
+            {
+                const CreatureData* slave = GetCreatureData(guidLow);
+                if (!slave)
+                {
+                    sLog->outErrorDb("Couldn't get creature data for GUIDLow %u", guidLow);
+                    error = true;
+                    break;
+                }
 
-    } while (result->NextRow());
+                const CreatureData* master = GetCreatureData(linkedGuidLow);
+                if (!master)
+                {
+                    sLog->outErrorDb("Couldn't get creature data for GUIDLow %u", linkedGuidLow);
+                    error = true;
+                    break;
+                }
 
+                const MapEntry* const map = sMapStore.LookupEntry(master->mapid);
+                if (!map || !map->Instanceable() || (master->mapid != slave->mapid))
+                {
+                    sLog->outErrorDb("Creature '%u' linking to '%u' on an unpermitted map.", guidLow, linkedGuidLow);
+                    error = true;
+                    break;
+                }
+
+                if (!(master->spawnMask & slave->spawnMask))  // they must have a possibility to meet (normal/heroic difficulty)
+                {
+                    sLog->outErrorDb("LinkedRespawn: Creature '%u' linking to '%u' with not corresponding spawnMask", guidLow, linkedGuidLow);
+                    error = true;
+                    break;
+                }
+                
+                guid = MAKE_NEW_GUID(guidLow, slave->id, HIGHGUID_UNIT);
+                linkedGuid = MAKE_NEW_GUID(linkedGuidLow, master->id, HIGHGUID_UNIT);
+                break;
+            }
+            case CREATURE_TO_GO:
+            {
+                const CreatureData* slave = GetCreatureData(guidLow);
+                if (!slave)
+                {
+                    sLog->outErrorDb("Couldn't get creature data for GUIDLow %u", guidLow);
+                    error = true;
+                    break;
+                }
+
+                const GameObjectData* master = GetGOData(linkedGuidLow);
+                if (!master)
+                {
+                    sLog->outErrorDb("Couldn't get gameobject data for GUIDLow %u", linkedGuidLow);
+                    error = true;
+                    break;
+                }
+
+                const MapEntry* const map = sMapStore.LookupEntry(master->mapid);
+                if (!map || !map->Instanceable() || (master->mapid != slave->mapid))
+                {
+                    sLog->outErrorDb("Creature '%u' linking to '%u' on an unpermitted map.", guidLow, linkedGuidLow);
+                    error = true;
+                    break;
+                }
+
+                if (!(master->spawnMask & slave->spawnMask))  // they must have a possibility to meet (normal/heroic difficulty)
+                {
+                    sLog->outErrorDb("LinkedRespawn: Creature '%u' linking to '%u' with not corresponding spawnMask", guidLow, linkedGuidLow);
+                    error = true;
+                    break;
+                }
+
+                guid = MAKE_NEW_GUID(guidLow, slave->id, HIGHGUID_UNIT);
+                linkedGuid = MAKE_NEW_GUID(linkedGuidLow, master->id, HIGHGUID_GAMEOBJECT);
+                break;
+            }
+            case GO_TO_GO:
+            {
+                const GameObjectData* slave = GetGOData(guidLow);
+                if (!slave)
+                {
+                    sLog->outErrorDb("Couldn't get gameobject data for GUIDLow %u", guidLow);
+                    error = true;
+                    break;
+                }
+
+                const GameObjectData* master = GetGOData(linkedGuidLow);
+                if (!master)
+                {
+                    sLog->outErrorDb("Couldn't get gameobject data for GUIDLow %u", linkedGuidLow);
+                    error = true;
+                    break;
+                }
+
+                const MapEntry* const map = sMapStore.LookupEntry(master->mapid);
+                if (!map || !map->Instanceable() || (master->mapid != slave->mapid))
+                {
+                    sLog->outErrorDb("Creature '%u' linking to '%u' on an unpermitted map.", guidLow, linkedGuidLow);
+                    error = true;
+                    break;
+                }
+
+                if (!(master->spawnMask & slave->spawnMask))  // they must have a possibility to meet (normal/heroic difficulty)
+                {
+                    sLog->outErrorDb("LinkedRespawn: Creature '%u' linking to '%u' with not corresponding spawnMask", guidLow, linkedGuidLow);
+                    error = true;
+                    break;
+                }
+
+                guid = MAKE_NEW_GUID(guidLow, slave->id, HIGHGUID_GAMEOBJECT);
+                linkedGuid = MAKE_NEW_GUID(linkedGuidLow, master->id, HIGHGUID_GAMEOBJECT);
+                break;
+            }
+            case GO_TO_CREATURE:
+            {
+                const GameObjectData* slave = GetGOData(guidLow);
+                if (!slave)
+                {
+                    sLog->outErrorDb("Couldn't get gameobject data for GUIDLow %u", guidLow);
+                    error = true;
+                    break;
+                }
+
+                const CreatureData* master = GetCreatureData(linkedGuidLow);
+                if (!master)
+                {
+                    sLog->outErrorDb("Couldn't get creature data for GUIDLow %u", linkedGuidLow);
+                    error = true;
+                    break;
+                }    
+                
+                const MapEntry* const map = sMapStore.LookupEntry(master->mapid);
+                if (!map || !map->Instanceable() || (master->mapid != slave->mapid))
+                {
+                    sLog->outErrorDb("Creature '%u' linking to '%u' on an unpermitted map.", guidLow, linkedGuidLow);
+                    error = true;
+                    break;
+                }
+
+                if (!(master->spawnMask & slave->spawnMask))  // they must have a possibility to meet (normal/heroic difficulty)
+                {
+                    sLog->outErrorDb("LinkedRespawn: Creature '%u' linking to '%u' with not corresponding spawnMask", guidLow, linkedGuidLow);
+                    error = true;
+                    break;
+                }
+
+                guid = MAKE_NEW_GUID(guidLow, slave->id, HIGHGUID_GAMEOBJECT);
+                linkedGuid = MAKE_NEW_GUID(linkedGuidLow, master->id, HIGHGUID_UNIT);
+                break;
+            }
+        }
+
+        if (!error)
+            mLinkedRespawnMap[guid] = linkedGuid;
+
+    }
+    while (result->NextRow());
+
+    sLog->outString(">> Loaded " UI64FMTD " linked respawns in %u ms", uint64(mLinkedRespawnMap.size()), GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded " UI64FMTD " linked respawns", uint64(mCreatureLinkedRespawnMap.size()));
 }
 
-bool ObjectMgr::SetCreatureLinkedRespawn(uint32 guid, uint32 linkedGuid)
+bool ObjectMgr::SetCreatureLinkedRespawn(uint32 guidLow, uint32 linkedGuidLow)
 {
-    if (!guid)
+    if (!guidLow)
         return false;
 
-    if (!linkedGuid) // we're removing the linking
+    const CreatureData* master = GetCreatureData(guidLow);
+    uint64 guid = MAKE_NEW_GUID(guidLow, master->id, HIGHGUID_UNIT);
+
+    if (!linkedGuidLow) // we're removing the linking
     {
-        mCreatureLinkedRespawnMap.erase(guid);
+        mLinkedRespawnMap.erase(guid);
         PreparedStatement *stmt = WorldDatabase.GetPreparedStatement(WORLD_DEL_CRELINKED_RESPAWN);
-        stmt->setUInt32(0, guid);
+        stmt->setUInt32(0, guidLow);
         WorldDatabase.Execute(stmt);
         return true;
     }
 
-    if (CheckCreatureLinkedRespawn(guid,linkedGuid)) // we add/change linking
+    const CreatureData* slave = GetCreatureData(linkedGuidLow);
+
+    const MapEntry* const map = sMapStore.LookupEntry(master->mapid);
+    if (!map || !map->Instanceable() || (master->mapid != slave->mapid))
     {
-        mCreatureLinkedRespawnMap[guid] = linkedGuid;
-        PreparedStatement *stmt = WorldDatabase.GetPreparedStatement(WORLD_REP_CRELINKED_RESPAWN);
-        stmt->setUInt32(0, guid);
-        stmt->setUInt32(1, linkedGuid);
-        WorldDatabase.Execute(stmt);
-        return true;
+        sLog->outErrorDb("Creature '%u' linking to '%u' on an unpermitted map.", guidLow, linkedGuidLow);
+        return false;
     }
 
-    return false;
+    if (!(master->spawnMask & slave->spawnMask))  // they must have a possibility to meet (normal/heroic difficulty)
+    {
+        sLog->outErrorDb("LinkedRespawn: Creature '%u' linking to '%u' with not corresponding spawnMask", guidLow, linkedGuidLow);
+        return false;
+    }
+                
+    uint64 linkedGuid = MAKE_NEW_GUID(linkedGuidLow, slave->id, HIGHGUID_UNIT);
+
+    mLinkedRespawnMap[guid] = linkedGuid;
+    PreparedStatement *stmt = WorldDatabase.GetPreparedStatement(WORLD_REP_CRELINKED_RESPAWN);
+    stmt->setUInt32(0, guidLow);
+    stmt->setUInt32(1, linkedGuidLow);
+    WorldDatabase.Execute(stmt);
+    return true;
 }
 
 void ObjectMgr::LoadCreatures()
@@ -1575,7 +1712,7 @@ bool ObjectMgr::MoveCreData(uint32 guid, uint32 mapId, Position pos)
         // We use spawn coords to spawn
         if (!map->Instanceable() && map->IsLoaded(data.posX, data.posY))
         {
-            CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(data.id);
+            CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(data.id);
             if (!ci)
                 return 0;
             
@@ -1639,7 +1776,7 @@ uint32 ObjectMgr::AddCreData(uint32 entry, uint32 /*team*/, uint32 mapId, float 
         // We use spawn coords to spawn
         if (!map->Instanceable() && !map->IsRemovalGrid(x, y))
         {
-            CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(entry);
+            CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(entry);
             if (!ci)
                 return 0;
             
@@ -1845,16 +1982,11 @@ void ObjectMgr::LoadCreatureRespawnTimes()
 
     if (!result)
     {
-        
-
-        
 
         sLog->outString();
         sLog->outString(">> Loaded 0 creature respawn time.");
         return;
     }
-
-    
 
     do
     {
@@ -1862,7 +1994,7 @@ void ObjectMgr::LoadCreatureRespawnTimes()
         
 
         uint32 loguid       = fields[0].GetUInt32();
-        uint64 respawn_time = fields[1].GetUInt64();
+        uint64 respawn_time = fields[1].GetUInt32();
         uint32 instance     = fields[2].GetUInt32();
 
         mCreatureRespawnTimes[MAKE_PAIR64(loguid,instance)] = time_t(respawn_time);
@@ -1903,7 +2035,7 @@ void ObjectMgr::LoadGameobjectRespawnTimes()
         
 
         uint32 loguid       = fields[0].GetUInt32();
-        uint64 respawn_time = fields[1].GetUInt64();
+        uint32 respawn_time = fields[1].GetUInt32();
         uint32 instance     = fields[2].GetUInt32();
 
         mGORespawnTimes[MAKE_PAIR64(loguid,instance)] = time_t(respawn_time);
@@ -2459,7 +2591,7 @@ void ObjectMgr::LoadItemPrototypes()
 
             uint32 item_id = entry->ItemId[j];
 
-            if (!GetItemPrototype(item_id))
+            if (!ObjectMgr::GetItemPrototype(item_id))
                 notFoundOutfit.insert(item_id);
         }
     }
@@ -2566,7 +2698,7 @@ void ObjectMgr::LoadItemSetNames()
         {
             uint32 entry = *itr;
             // add data from item_template if available
-            pProto = GetItemPrototype(entry);
+            pProto = ObjectMgr::GetItemPrototype(entry);
             if (pProto)
             {
                 sLog->outErrorDb("Item set part (Entry: %u) does not have entry in `item_set_names`, adding data from `item_template`.", entry);
@@ -2968,7 +3100,7 @@ void ObjectMgr::LoadPlayerInfo()
 
                 uint32 item_id = fields[2].GetUInt32();
 
-                if (!GetItemPrototype(item_id))
+                if (!ObjectMgr::GetItemPrototype(item_id))
                 {
                     sLog->outErrorDb("Item id %u (race %u class %u) in `playercreateinfo_item` table but not listed in `item_template`, ignoring.",item_id,current_race,current_class);
                     continue;
@@ -5063,7 +5195,7 @@ void ObjectMgr::LoadScripts(ScriptsType type)
 
             case SCRIPT_COMMAND_CREATE_ITEM:
             {
-                if (!GetItemPrototype(tmp.CreateItem.ItemEntry))
+                if (!ObjectMgr::GetItemPrototype(tmp.CreateItem.ItemEntry))
                 {
                     sLog->outErrorDb("Table `%s` has nonexistent item (entry: %u) in SCRIPT_COMMAND_CREATE_ITEM for script id %u",
                         tableName.c_str(), tmp.CreateItem.ItemEntry, tmp.id);
@@ -5449,7 +5581,7 @@ void ObjectMgr::LoadInstanceTemplate()
 
     for (uint32 i = 0; i < sInstanceTemplate.MaxEntry; i++)
     {
-        InstanceTemplate* temp = const_cast<InstanceTemplate*>(GetInstanceTemplate(i));
+        InstanceTemplate* temp = const_cast<InstanceTemplate*>(ObjectMgr::GetInstanceTemplate(i));
         if (!temp)
             continue;
 
@@ -5464,6 +5596,86 @@ void ObjectMgr::LoadInstanceTemplate()
     }
 
     sLog->outString(">> Loaded %u Instance Template definitions", sInstanceTemplate.RecordCount);
+    sLog->outString();
+}
+
+void ObjectMgr::LoadInstanceEncounters()
+{
+    uint32 oldMSTime = getMSTime();
+
+    QueryResult result = WorldDatabase.Query("SELECT entry, creditType, creditEntry, lastEncounterDungeon FROM instance_encounters");
+    if (!result)
+    {
+        sLog->outErrorDb(">> Loaded 0 instance encounters, table is empty!");
+        sLog->outString();
+        return;
+    }
+
+    uint32 count = 0;
+    std::map<uint32, DungeonEncounterEntry const*> dungeonLastBosses;
+    do
+    {
+        Field* fields = result->Fetch();
+        uint32 entry = fields[0].GetUInt32();
+        uint8 creditType = fields[1].GetUInt8();
+        uint32 creditEntry = fields[2].GetUInt32();
+        uint32 lastEncounterDungeon = fields[3].GetUInt32();
+        DungeonEncounterEntry const* dungeonEncounter = sDungeonEncounterStore.LookupEntry(entry);
+        if (!dungeonEncounter)
+        {
+            sLog->outErrorDb("Table `instance_encounters` has an invalid encounter id %u, skipped!", entry);
+            continue;
+        }
+
+        if (lastEncounterDungeon && !sLFGDungeonStore.LookupEntry(lastEncounterDungeon))
+        {
+            sLog->outErrorDb("Table `instance_encounters` has an encounter %u (%s) marked as final for invalid dungeon id %u, skipped!", entry, dungeonEncounter->encounterName, lastEncounterDungeon);
+            continue;
+        }
+
+        std::map<uint32, DungeonEncounterEntry const*>::const_iterator itr = dungeonLastBosses.find(lastEncounterDungeon);
+        if (lastEncounterDungeon)
+        {
+            if (itr != dungeonLastBosses.end())
+            {
+                sLog->outErrorDb("Table `instance_encounters` specified encounter %u (%s) as last encounter but %u (%s) is already marked as one, skipped!", entry, dungeonEncounter->encounterName, itr->second->id, itr->second->encounterName);
+                continue;
+            }
+
+            dungeonLastBosses[lastEncounterDungeon] = dungeonEncounter;
+        }
+
+        switch (creditType)
+        {
+            case ENCOUNTER_CREDIT_KILL_CREATURE:
+            {
+                CreatureInfo const* creatureInfo = GetCreatureInfo(creditEntry);
+                if (!creatureInfo)
+                {
+                    sLog->outErrorDb("Table `instance_encounters` has an invalid creature (entry %u) linked to the encounter %u (%s), skipped!", creditEntry, entry, dungeonEncounter->encounterName);
+                    continue;
+                }
+                const_cast<CreatureInfo*>(creatureInfo)->flags_extra |= CREATURE_FLAG_EXTRA_DUNGEON_BOSS;
+                break;
+            }
+            case ENCOUNTER_CREDIT_CAST_SPELL:
+                if (!sSpellStore.LookupEntry(creditEntry))
+                {
+                    sLog->outErrorDb("Table `instance_encounters` has an invalid spell (entry %u) linked to the encounter %u (%s), skipped!", creditEntry, entry, dungeonEncounter->encounterName);
+                    continue;
+                }
+                break;
+            default:
+                sLog->outErrorDb("Table `instance_encounters` has an invalid credit type (%u) for encounter %u (%s), skipped!", creditType, entry, dungeonEncounter->encounterName);
+                continue;
+        }
+
+        DungeonEncounterList& encounters = mDungeonEncounters[MAKE_PAIR32(dungeonEncounter->mapId, dungeonEncounter->difficulty)];
+        encounters.push_back(new DungeonEncounter(dungeonEncounter, EncounterCreditType(creditType), creditEntry, lastEncounterDungeon));
+        ++count;
+    } while (result->NextRow());
+
+    sLog->outString(">> Loaded %u instance encounters in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 
@@ -5620,7 +5832,7 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
         m->sender = fields[2].GetUInt32();
         m->receiver = fields[3].GetUInt32();
         bool has_items = fields[4].GetBool();
-        m->expire_time = (time_t)fields[5].GetUInt64();
+        m->expire_time = time_t(fields[5].GetUInt32());
         m->deliver_time = 0;
         m->COD = fields[6].GetUInt32();
         m->checked = fields[7].GetUInt32();
@@ -6338,7 +6550,7 @@ void ObjectMgr::LoadAccessRequirements()
 
         if (ar.item)
         {
-            ItemPrototype const *pProto = GetItemPrototype(ar.item);
+            ItemPrototype const *pProto = ObjectMgr::GetItemPrototype(ar.item);
             if (!pProto)
             {
                 sLog->outError("Key item %u does not exist for map %u difficulty %u, removing key requirement.", ar.item, mapid, difficulty);
@@ -6348,7 +6560,7 @@ void ObjectMgr::LoadAccessRequirements()
 
         if (ar.item2)
         {
-            ItemPrototype const *pProto = GetItemPrototype(ar.item2);
+            ItemPrototype const *pProto = ObjectMgr::GetItemPrototype(ar.item2);
             if (!pProto)
             {
                 sLog->outError("Second item %u does not exist for map %u difficulty %u, removing key requirement.", ar.item2, mapid, difficulty);
@@ -6403,7 +6615,7 @@ AreaTrigger const* ObjectMgr::GetGoBackTrigger(uint32 Map) const
 
     if (mapEntry->IsDungeon())
     {
-        const InstanceTemplate *iTemplate = sObjectMgr->GetInstanceTemplate(Map);
+        const InstanceTemplate *iTemplate = ObjectMgr::GetInstanceTemplate(Map);
 
         if (!iTemplate)
             return NULL;
@@ -8681,56 +8893,6 @@ void ObjectMgr::LoadVendors()
     sLog->outString(">> Loaded %d Vendors ", count);
 }
 
-void ObjectMgr::LoadNpcTextId()
-{
-
-    m_mCacheNpcTextIdMap.clear();
-
-    QueryResult result = WorldDatabase.Query("SELECT npc_guid, textid FROM npc_gossip");
-    if (!result)
-    {
-        
-
-        
-
-        sLog->outString();
-        sLog->outErrorDb(">> Loaded `npc_gossip`, table is empty!");
-        return;
-    }
-
-    
-
-    uint32 count = 0;
-    uint32 guid,textid;
-    do
-    {
-        
-
-        Field* fields = result->Fetch();
-
-        guid   = fields[0].GetUInt32();
-        textid = fields[1].GetUInt32();
-
-        if (!GetCreatureData(guid))
-        {
-            sLog->outErrorDb("Table `npc_gossip` have not existed creature (GUID: %u) entry, ignore. ",guid);
-            continue;
-        }
-        if (!GetGossipText(textid))
-        {
-            sLog->outErrorDb("Table `npc_gossip` for creature (GUID: %u) have wrong Textid (%u), ignore. ", guid, textid);
-            continue;
-        }
-
-        m_mCacheNpcTextIdMap[guid] = textid ;
-        ++count;
-
-    } while (result->NextRow());
-
-    sLog->outString();
-    sLog->outString(">> Loaded %d NpcTextId ", count);
-}
-
 void ObjectMgr::LoadGossipMenu()
 {
     m_mGossipMenusMap.clear();
@@ -8739,10 +8901,6 @@ void ObjectMgr::LoadGossipMenu()
 
     if (!result)
     {
-        
-
-        
-
         sLog->outString();
         sLog->outErrorDb(">> Loaded `gossip_menu`, table is empty!");
         return;
@@ -8927,7 +9085,7 @@ bool ObjectMgr::IsVendorItemValid(uint32 vendor_entry, uint32 item_id, int32 max
         return false;
     }
 
-    if (!GetItemPrototype(item_id))
+    if (!ObjectMgr::GetItemPrototype(item_id))
     {
         if (pl)
             ChatHandler(pl).PSendSysMessage(LANG_ITEM_NOT_FOUND, item_id);
@@ -9126,12 +9284,12 @@ ObjectMgr::ScriptNameMap & GetScriptNames()
 
 GameObjectInfo const *GetGameObjectInfo(uint32 id)
 {
-    return sObjectMgr->GetGameObjectInfo(id);
+    return ObjectMgr::GetGameObjectInfo(id);
 }
 
 CreatureInfo const *GetCreatureInfo(uint32 id)
 {
-    return sObjectMgr->GetCreatureTemplate(id);
+    return ObjectMgr::GetCreatureTemplate(id);
 }
 
 CreatureInfo const* GetCreatureTemplateStore(uint32 entry)
@@ -9294,14 +9452,13 @@ void ObjectMgr::LoadFactionChangeItems()
         uint32 alliance = fields[0].GetUInt32();
         uint32 horde = fields[1].GetUInt32();
 
-        if (!GetItemPrototype(alliance))
+        if (!ObjectMgr::GetItemPrototype(alliance))
             sLog->outErrorDb("Item %u referenced in `player_factionchange_items` does not exist, pair skipped!", alliance);
-        else if (!GetItemPrototype(horde))
+        else if (!ObjectMgr::GetItemPrototype(horde))
             sLog->outErrorDb("Item %u referenced in `player_factionchange_items` does not exist, pair skipped!", horde);
         else
             factionchange_items[alliance] = horde;
 
-        
         ++counter;
     }
     while (result->NextRow());

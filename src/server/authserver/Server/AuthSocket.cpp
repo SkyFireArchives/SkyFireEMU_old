@@ -20,9 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-/** \file
-    \ingroup realmd
-*/
+#include <openssl/md5.h>
 
 #include "Common.h"
 #include "Database/DatabaseEnv.h"
@@ -32,29 +30,27 @@
 #include "RealmList.h"
 #include "AuthSocket.h"
 #include "AuthCodes.h"
-#include <openssl/md5.h>
 #include "SHA1.h"
-//#include "Util.h" -- for commented utf8ToUpperOnlyLatin
 
 #define ChunkSize 2048
 
 enum eAuthCmd
 {
-    AUTH_LOGON_CHALLENGE        = 0x00,
-    AUTH_LOGON_PROOF            = 0x01,
-    AUTH_RECONNECT_CHALLENGE    = 0x02,
-    AUTH_RECONNECT_PROOF        = 0x03,
-    REALM_LIST                  = 0x10,
-    XFER_INITIATE               = 0x30,
-    XFER_DATA                   = 0x31,
-    XFER_ACCEPT                 = 0x32,
-    XFER_RESUME                 = 0x33,
-    XFER_CANCEL                 = 0x34
+    AUTH_LOGON_CHALLENGE                         = 0x00,
+    AUTH_LOGON_PROOF                             = 0x01,
+    AUTH_RECONNECT_CHALLENGE                     = 0x02,
+    AUTH_RECONNECT_PROOF                         = 0x03,
+    REALM_LIST                                   = 0x10,
+    XFER_INITIATE                                = 0x30,
+    XFER_DATA                                    = 0x31,
+    XFER_ACCEPT                                  = 0x32,
+    XFER_RESUME                                  = 0x33,
+    XFER_CANCEL                                  = 0x34
 };
 
 enum eStatus
 {
-    STATUS_CONNECTED = 0,
+    STATUS_CONNECTED                              = 0,
     STATUS_AUTHED
 };
 
@@ -109,9 +105,7 @@ typedef struct AUTH_LOGON_PROOF_S_OLD
     uint8   cmd;
     uint8   error;
     uint8   M2[20];
-    //uint32  unk1;
     uint32  unk2;
-    //uint16  unk3;
 } sAuthLogonProof_S_Old;
 
 typedef struct AUTH_RECONNECT_PROOF_C
@@ -355,8 +349,6 @@ bool AuthSocket::_HandleLogonChallenge()
     _expversion = (AuthHelper::IsPostWotLKAcceptedClientBuild(_build) ? POST_WOTLK_EXP_FLAG : NO_VALID_EXP_FLAG) |
                   (AuthHelper::IsPostBCAcceptedClientBuild(_build) ? POST_BC_EXP_FLAG : NO_VALID_EXP_FLAG) |
                   (AuthHelper::IsPreBCAcceptedClientBuild(_build) ? PRE_BC_EXP_FLAG : NO_VALID_EXP_FLAG);
-
-    _build = ch->build;
 
     pkt << (uint8) AUTH_LOGON_CHALLENGE;
     pkt << (uint8) 0x00;
@@ -739,6 +731,14 @@ bool AuthSocket::_HandleReconnectChallenge()
         socket().shutdown();
         return false;
     }
+
+    // Reinitialize build, expansion and the account securitylevel
+    _build = ch->build;
+    _expversion = (AuthHelper::IsPostBCAcceptedClientBuild(_build) ? POST_BC_EXP_FLAG : NO_VALID_EXP_FLAG) | (AuthHelper::IsPreBCAcceptedClientBuild(_build) ? PRE_BC_EXP_FLAG : NO_VALID_EXP_FLAG);
+
+    Field* fields = result->Fetch();
+    uint8 secLevel = fields[2].GetUInt8();
+    _accountSecurityLevel = secLevel <= SEC_ADMINISTRATOR ? AccountTypes(secLevel) : SEC_ADMINISTRATOR;
 
     K.SetHexStr ((*result)[0].GetCString());
 
