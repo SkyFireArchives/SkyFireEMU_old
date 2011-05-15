@@ -1302,7 +1302,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
         case SPELLFAMILY_MAGE:
         {
             // Cone of Cold
-            if (m_spellInfo->SpellFamilyFlags && SPELLFAMILYFLAG1_MAGE_CONEOFCOLD)
+            if (m_spellInfo->SpellFamilyFlags & SPELLFAMILYFLAG1_MAGE_CONEOFCOLD)
             {
                 if (m_caster->HasAura(11190)) // Improved Cone of Cold Rank 1
                 {
