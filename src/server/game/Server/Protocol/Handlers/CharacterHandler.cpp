@@ -219,6 +219,7 @@ void WorldSession::HandleCharEnum(QueryResult result)
 
     data << num;
 
+    _allowedCharsToLogin.clear();
     if (result)
     {
         do
@@ -226,7 +227,10 @@ void WorldSession::HandleCharEnum(QueryResult result)
             uint32 guidlow = (*result)[0].GetUInt32();
             sLog->outDetail("Loading char guid %u from account %u.",guidlow,GetAccountId());
             if (Player::BuildEnumData(result, &data))
+            {
+                _allowedCharsToLogin.insert(guidlow);
                 ++num;
+            }
         }
         while (result->NextRow());
     }
@@ -786,6 +790,12 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPacket & recv_data)
     sLog->outStaticDebug("WORLD: Recvd Player Logon Message");
 
     recv_data >> playerGuid;
+
+    if (!CharCanLogin(playerGuid))
+    {
+        KickPlayer();
+        return;
+    }
 
     LoginQueryHolder *holder = new LoginQueryHolder(GetAccountId(), playerGuid);
     if (!holder->Initialize())
