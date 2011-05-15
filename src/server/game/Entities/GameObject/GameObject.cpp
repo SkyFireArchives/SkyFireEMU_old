@@ -1536,7 +1536,7 @@ void GameObject::Use(Unit* user)
                     {
                         case 179785:                        // Silverwing Flag
                             // check if it's correct bg
-                            if (bg->IsRandom() ? bg->GetTypeID(true) : bg->GetTypeID(false) == BATTLEGROUND_WS || BATTLEGROUND_TP)
+                            if (bg->IsRandom() ? bg->GetTypeID(true) : (bg->GetTypeID(false) == BATTLEGROUND_WS || bg->GetTypeID(false) == BATTLEGROUND_TP))
                                 bg->EventPlayerClickedOnFlag(player, this);
                             break;
                         case 179786:                        // Warsong Flag
