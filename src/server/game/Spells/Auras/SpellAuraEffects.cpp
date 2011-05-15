@@ -3184,7 +3184,7 @@ void AuraEffect::HandlePhase(AuraApplication const *aurApp, uint8 mode, bool app
     }
 
     // need triggering visibility update base at phase update of not GM invisible (other GMs anyway see in any phases)
-    if (!target->IsVisible())
+    if (target->IsVisible())
         target->UpdateObjectVisibility();
 }
 
