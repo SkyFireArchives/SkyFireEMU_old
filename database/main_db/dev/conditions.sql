@@ -27,7 +27,7 @@ CREATE TABLE `conditions` (
 
 LOCK TABLES `conditions` WRITE;
 /*!40000 ALTER TABLE `conditions` DISABLE KEYS */;
-INSERT INTO `conditions` VALUES (13,0,26393,0,18,1,0,0,0,'','Elune\'s Blessing'),(15,10667,0,0,7,202,350,0,0,'','Jeeves: Bank requires Engineering 350'),(17,0,60089,0,1,5487,0,0,0,'','Faerie Fire - Bear Form'),(15,10131,0,0,27,65,3,0,0,'','Zidormi - Teleport to CoT level restriction');
+INSERT INTO `conditions` VALUES (13,0,26393,0,18,1,0,0,0,'','Elune\'s Blessing'),(15,10667,0,0,7,202,350,0,0,'','Jeeves: Bank requires Engineering 350'),(17,0,60089,0,1,5487,0,0,0,'','Faerie Fire - Bear Form'),(15,10131,0,0,27,65,3,0,0,'','Zidormi - Teleport to CoT level restriction'),(13,0,69228,0,18,1,36727,0,0,'',NULL),(13,0,69228,0,18,1,37155,0,0,'',NULL),(13,0,69228,0,18,1,37156,0,0,'',NULL);
 /*!40000 ALTER TABLE `conditions` ENABLE KEYS */;
 UNLOCK TABLES;
 DELIMITER ;;
