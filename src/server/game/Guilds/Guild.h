@@ -676,9 +676,10 @@ public:
     void SendBankTabsInfo(WorldSession *session) const;
     void SendBankTabData(WorldSession* session, uint8 tabId) const;
     void SendBankTabText(WorldSession *session, uint8 tabId) const;
-    void SendPermissions(WorldSession *session) const;
+    void SendPermissions(WorldSession *session);
     void SendMoneyInfo(WorldSession *session) const;
     void SendLoginInfo(WorldSession* session);
+    void SendGuildRankInfo(WorldSession* session);
 
     // Load from DB
     bool LoadFromDB(Field* fields);
