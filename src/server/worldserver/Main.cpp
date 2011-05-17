@@ -41,7 +41,7 @@
 
 #ifdef _WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "SkyFireEMU";
+char serviceName[] = "Acheron Core Cataclysm";
 char serviceLongName[] = "SkyFireEMU service";
 char serviceDescription[] = "Cataclysm Server";
 /*
