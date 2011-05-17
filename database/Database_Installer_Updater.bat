@@ -9,7 +9,7 @@ ECHO          ษออออออออออออออออออออออออออออออออป
 ECHO          บ                                บ
 ECHO          บ        Welcome to the DB       บ
 ECHO          บ              for               บ
-ECHO          บ     SkyFireEMU 406a Rev 1015+  บ
+ECHO          บ     SkyFireEMU 406a Rev 1179+  บ
 ECHO          บ        Installation Tool       บ
 ECHO          บ                                บ
 ECHO          ศออออออออออออออออออออออออออออออออผ

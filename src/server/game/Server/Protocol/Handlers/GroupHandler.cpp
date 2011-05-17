@@ -255,10 +255,13 @@ void WorldSession::HandleGroupDeclineOpcode(WorldPacket & /*recv_data*/)
     GetPlayer()->UninviteFromGroup();
 
     // report
-    std::string name = std::string(GetPlayer()->GetName());
-    WorldPacket data(SMSG_GROUP_DECLINE, name.length());
-    data << name.c_str();
-    leader->GetSession()->SendPacket(&data);
+    if (leader)
+    {
+        std::string name = std::string(GetPlayer()->GetName());
+        WorldPacket data(SMSG_GROUP_DECLINE, name.length());
+        data << name.c_str();
+        leader->GetSession()->SendPacket(&data);
+    }
 }
 
 void WorldSession::HandleGroupUninviteGuidOpcode(WorldPacket & recv_data)
@@ -1008,7 +1011,6 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
     }
     
     Group* grp = plr->GetGroup();
-    uint64 gguid = grp->GetGUID();
     if (!grp)
     {
         sLog->outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Not in group", plr->GetGUID());
@@ -1024,5 +1026,8 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
     
     plr->SetRoles(roles);
     if (grp->isLFGGroup())
+    {
+        uint64 gguid = grp->GetGUID();
         sLFGMgr->UpdateRoleCheck(gguid, guid, roles);
+    }
 }
