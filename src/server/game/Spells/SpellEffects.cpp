@@ -1301,18 +1301,6 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             break;
         case SPELLFAMILY_MAGE:
         {
-            // Cone of Cold
-            if (m_spellInfo->SpellFamilyFlags[0] & SPELLFAMILYFLAG1_MAGE_CONEOFCOLD)
-            {
-                if (m_caster->HasAura(11190)) // Improved Cone of Cold Rank 1
-                {
-                    m_caster->CastCustomSpell(unitTarget, 83301, &bp, NULL, NULL, true, 0);
-                }
-                if (m_caster->HasAura(12489)) // Improved Cone of Cold Rank 2
-                {
-                    m_caster->CastCustomSpell(unitTarget, 83302, &bp, NULL, NULL, true, 0);
-                }
-            }
             switch (m_spellInfo->Id)
             {
                 case 1459: // Arcane Brilliance
@@ -1581,11 +1569,11 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             }
             break;
         case SPELLFAMILY_DEATHKNIGHT:
-            // Hungering Cold
-            if (m_spellInfo->SpellFamilyFlags[1] & SPELLFAMILYFLAG1_DK_HUNGERING_COLD)
-            {
-                m_caster->CastCustomSpell(m_caster, 51209, &bp, NULL, NULL, true);
-            }
+			// Hungering Cold
+			if (m_spellInfo->SpellFamilyFlags[1] & SPELLFAMILYFLAG1_DK_HUNGERING_COLD)
+			{
+				m_caster->CastCustomSpell(m_caster, 51209, &bp, NULL, NULL, true);
+			}
             // Chains of Ice
             if (m_spellInfo->SpellFamilyFlags[0] & SPELLFAMILYFLAG_DK_CHAINS_OF_ICE)
             {
@@ -2078,7 +2066,7 @@ void Spell::EffectTeleportUnits(SpellEffIndex /*effIndex*/)
     uint8 uiMaxSafeLevel = 0;
     switch (m_spellInfo->Id)
     {
-        case 36563:        // Shadowstep
+        case 36563:		// Shadowstep
             if (Player * plr = unitTarget->ToPlayer())
             {
                 if (Unit * target = plr->GetSelectedUnit())
@@ -4248,6 +4236,11 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
                 (m_caster->HasAura(63220)) ? totalDamagePercentMod *= 1.15f : 0 ; // Glyphe of Templar's Verdict
                 m_caster->SetPower(POWER_HOLY_POWER, 0);
             }
+
+            if (m_spellInfo->Id == 85673) // Word of Glory
+            {
+                m_caster->SetPower(POWER_HOLY_POWER, 0);
+            }   
 
             // Seal of Command Unleashed
             else if (m_spellInfo->Id == 20467)

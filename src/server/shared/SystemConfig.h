@@ -28,7 +28,7 @@
 #include "Define.h"
 #include "revision.h"
 
-#define _PACKAGENAME "SkyFireEMU "
+#define _PACKAGENAME "Dragonmaw "
 #define _CODENAME "COLD_DAY_IN_HELL"
 
 #if TRINITY_ENDIAN == TRINITY_BIGENDIAN

@@ -229,15 +229,13 @@ void Guild::RankInfo::SaveToDB(SQLTransaction& trans) const
 
 void Guild::RankInfo::WritePacket(WorldPacket& data) const
 {
-    data << m_name;
     data << uint32(m_rights);
-
-    for(uint8 i = 0; i < GUILD_BANK_MAX_TABS; i++)
+    data << uint32(m_bankMoneyPerDay);                  // In game set in gold, in packet set in bronze.
+    for (uint8 i = 0; i < GUILD_BANK_MAX_TABS; ++i)
+    {
         data << uint32(m_bankTabRightsAndSlots[i].rights);
-    for(uint8 i = 0; i < GUILD_BANK_MAX_TABS; i++)
         data << uint32(m_bankTabRightsAndSlots[i].slots);
-        
-    data << uint32(m_bankMoneyPerDay);
+    }
 }
 
 void Guild::RankInfo::SetName(const std::string& name)
@@ -1228,7 +1226,6 @@ void Guild::UpdateMemberData(Player* plr, uint8 dataid, uint32 value)
             break;
         case GUILD_MEMBER_DATA_LEVEL:
             pMember->SetLevel(value);
-         break;
         default: 
             sLog->outError("Guild::UpdateMemberData: Called with incorrect DATAID %u (value %u)", dataid, value);
             break;
@@ -1354,30 +1351,38 @@ void Guild::HandleRoster(WorldSession *session /*= NULL*/)
     else 
         BroadcastPacket(&data);
 
-    SendGuildRankInfo(session);
+    // TODO !
+    WorldPacket data7(SMSG_GUILD_RANK);
+    data7 << uint32(_GetRanksSize());
+    for(uint32 i = 0; i < _GetRanksSize(); i++)
+    {
+        //data7 << uint32(m_ranks[i].GetId());
+        data7 << uint32(i);
+        data7 << uint32(i);
+        data7 << m_ranks[i].m_name;
+        data7 << uint32(m_ranks[i].m_rights);
+
+        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
+        //    data7 << uint32(m_ranks[i].m_bankMoneyPerDay);
+            data7 << uint32(0xFFFFFFFF);
+        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
+            //data7 << uint32(m_ranks[i].m_rights);
+            data7 << uint32(0xFFFFFFFF);
+
+        data7 << uint32(0xFFFFFFFF); // GuildBankRightsAndSlots
+        
+        //data7 << (uint32)/*GuildBankRightsAndSlots(i)*/0;
+    }
+    if (session)
+        session->SendPacket(&data7);
+    else
+        BroadcastPacket(&data7);
 
     // This is to make client refresh the list
     SendUpdateRoster(session);
 
     sLog->outDebug("WORLD: Sent (SMSG_GUILD_ROSTER)");
 }
-
-void Guild::SendGuildRankInfo(WorldSession* session)
-{
-    WorldPacket data7(SMSG_GUILD_RANK);
-    data7 << uint32(_GetRanksSize());
-    for(uint32 i = 0; i < _GetRanksSize(); i++)
-    {
-        data7 << uint32(i) << uint32(i); // double i for now, TODO change
-        //data7 << uint32(m_ranks[i].GetId());
-        m_ranks[i].WritePacket(data7);
-    }
-    if (session)
-        session->SendPacket(&data7);
-    else
-        BroadcastPacket(&data7);
-}
-
 
 void Guild::HandleQuery(WorldSession *session)
 {
@@ -1975,7 +1980,7 @@ void Guild::SendBankTabText(WorldSession *session, uint8 tabId) const
         pTab->SendText(this, session);
 }
 
-void Guild::SendPermissions(WorldSession *session)
+void Guild::SendPermissions(WorldSession *session) const
 {
     const uint64& guid = session->GetPlayer()->GetGUID();
     uint8 rankId = session->GetPlayer()->GetRank();
@@ -1995,7 +2000,28 @@ void Guild::SendPermissions(WorldSession *session)
     session->SendPacket(&data);
     sLog->outDebug("WORLD: Sent (MSG_GUILD_PERMISSIONS)");
 
-    SendGuildRankInfo(session);
+    WorldPacket data7(SMSG_GUILD_RANK);
+    data7 << uint32(_GetRanksSize());
+    for(uint32 i = 0; i < _GetRanksSize(); i++)
+    {
+        //data7 << uint32(m_ranks[i].GetId());
+        data7 << uint32(i);
+        data7 << uint32(i);
+        data7 << m_ranks[i].m_name;
+        data7 << uint32(m_ranks[i].m_rights);
+
+        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
+            data7 << uint32(m_ranks[i].m_bankMoneyPerDay);
+            //data7 << uint32(0xFFFFFFFF);
+        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
+            data7 << uint32(m_ranks[i].m_rights);
+            //data7 << uint32(0xFFFFFFFF);
+
+        data7 << uint32(0xFFFFFFFF); // GuildBankRightsAndSlots
+        
+        //data7 << (uint32)/*GuildBankRightsAndSlots(i)*/0;
+    }
+     session->SendPacket(&data7);
 }
 
 void Guild::SendMoneyInfo(WorldSession *session) const

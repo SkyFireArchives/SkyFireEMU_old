@@ -156,7 +156,7 @@ MotionMaster::DelayedClean()
     {
         MovementGenerator *curr = top();
         pop();
-        removeEmptyTops();
+		removeEmptyTops();
         if (curr)
             DelayedDelete(curr);
     }
@@ -169,7 +169,7 @@ MotionMaster::DirectExpire(bool reset)
     {
         MovementGenerator *curr = top();
         pop();
-        removeEmptyTops();
+		removeEmptyTops();
         DirectDelete(curr);
     }
 
@@ -191,7 +191,7 @@ MotionMaster::DelayedExpire()
     {
         MovementGenerator *curr = top();
         pop();
-        removeEmptyTops();
+		removeEmptyTops();
         DelayedDelete(curr);
     }
 
@@ -508,7 +508,7 @@ void MotionMaster::Mutate(MovementGenerator *m, MovementSlot slot)
 {
     if (MovementGenerator *curr = Impl[slot])
     {
-        bool wasAtTop = (i_top == slot);
+		bool wasAtTop = (i_top == slot);
 
         Impl[slot] = NULL; // in case a new one is generated in this slot during directdelete
         removeEmptyTops();
