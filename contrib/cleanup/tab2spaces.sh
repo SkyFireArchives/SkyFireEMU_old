@@ -1,2 +1,3 @@
 #!/bin/bash
-perl -wpi -e "s/\t/    /g" $1
+# Example "sh tab2spaces.sh src/server/game"
+find $1 -type f -exec sed -i 's/\t/    /g' {} \;
