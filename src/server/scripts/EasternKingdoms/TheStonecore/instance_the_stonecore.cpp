@@ -100,10 +100,10 @@ public:
         {
             switch(identifier)
             {
-                case DATA_CORBORUS:					return uiCorborus;
-                case DATA_SLABHIDE:					return uiSlabhide;
-                case DATA_OZRUK:					return uiOzruk;
-                case DATA_HIGH_PRIESTESS_AZIL:		return uiHighPriestessAzil;
+                case DATA_CORBORUS:                    return uiCorborus;
+                case DATA_SLABHIDE:                    return uiSlabhide;
+                case DATA_OZRUK:                    return uiOzruk;
+                case DATA_HIGH_PRIESTESS_AZIL:        return uiHighPriestessAzil;
             }
 
             return 0;
@@ -135,10 +135,10 @@ public:
         {
             switch(type)
             {
-                case DATA_CORBORUS_EVENT:				return uiEncounter[0];
-                case DATA_SLABHIDE_EVENT:				return uiEncounter[1];
-                case DATA_OZRUK_EVENT:					return uiEncounter[2];
-                case DATA_HIGH_PRIESTESS_AZIL_EVENT:	return uiEncounter[3];
+                case DATA_CORBORUS_EVENT:                return uiEncounter[0];
+                case DATA_SLABHIDE_EVENT:                return uiEncounter[1];
+                case DATA_OZRUK_EVENT:                    return uiEncounter[2];
+                case DATA_HIGH_PRIESTESS_AZIL_EVENT:    return uiEncounter[3];
             }
 
             return 0;
