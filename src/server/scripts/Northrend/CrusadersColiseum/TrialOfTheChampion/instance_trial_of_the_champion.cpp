@@ -30,7 +30,7 @@
 enum eEnums
 {
     SPELL_DEATH_RESPITE     = 67745,
-	
+    
     SAY_BLACK_KNIGHT_1                        = -1999928,
     SAY_BLACK_KNIGHT_2                        = -1999929,
     SAY_START_1                               = -1999927,
@@ -41,11 +41,11 @@ class instance_trial_of_the_champion : public InstanceMapScript
 public:
     instance_trial_of_the_champion() : InstanceMapScript("instance_trial_of_the_champion", 650) { }
 
-	InstanceScript* GetInstanceScript(InstanceMap* pMap) const
+    InstanceScript* GetInstanceScript(InstanceMap* pMap) const
     {
         return new instance_trial_of_the_champion_InstanceMapScript(pMap);
     }
-	
+    
     struct instance_trial_of_the_champion_InstanceMapScript : public InstanceScript
     {
         instance_trial_of_the_champion_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {}
@@ -53,13 +53,13 @@ public:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
 
         uint8 uiBlackKnightEvent;
-    	uint8 uiBlackKnightEvent2;
+        uint8 uiBlackKnightEvent2;
         uint16 uiMovementDone;
         uint16 uiGrandChampionsDeaths;
         uint8 uiArgentSoldierDeaths;
 
         uint64 uiAnnouncerGUID;
-    	uint64 uiBlackKnightGUID;
+        uint64 uiBlackKnightGUID;
         uint64 uiMainGateGUID;
         uint64 uiMainGate1GUID;
         uint64 uiGrandChampionVehicle1GUID;
@@ -79,7 +79,7 @@ public:
 
         void Initialize()
         {
-    	    uiBlackKnightEvent     = 0;
+            uiBlackKnightEvent     = 0;
             uiMovementDone         = 0;
             uiGrandChampionsDeaths = 0;
             uiArgentSoldierDeaths  = 0;
@@ -149,30 +149,30 @@ public:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_LANA_STOUTHAMMER_MOUNT, ALLIANCE);
                     break;
-    			case VEHICLE_ORGRIMMAR_WOLF:
+                case VEHICLE_ORGRIMMAR_WOLF:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_STORMWIND_STEED, ALLIANCE);
                     break;
-    			case VEHICLE_SILVERMOON_HAWKSTRIDER:
+                case VEHICLE_SILVERMOON_HAWKSTRIDER:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_GNOMEREGAN_MECHANOSTRIDER, ALLIANCE);
                     break;
-    			case VEHICLE_THUNDER_BLUFF_KODO:
+                case VEHICLE_THUNDER_BLUFF_KODO:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_EXODAR_ELEKK, ALLIANCE);
                     break;
-    			case VEHICLE_DARKSPEAR_RAPTOR:
+                case VEHICLE_DARKSPEAR_RAPTOR:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_DARNASSIA_NIGHTSABER, ALLIANCE);
-                    break;	
-    			case VEHICLE_FORSAKE_WARHORSE:
+                    break;    
+                case VEHICLE_FORSAKE_WARHORSE:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_IRONFORGE_RAM, ALLIANCE);
-                    break;	
-    			case NPC_RISEN_JAEREN:
+                    break;    
+                case NPC_RISEN_JAEREN:
                     if (TeamInInstance == ALLIANCE)
                         creature->UpdateEntry(NPC_RISEN_ARELAS, HORDE);
-                    break;	
+                    break;    
                 // Coliseum Announcer || Just NPC_JAEREN must be spawned.
                 case NPC_JAEREN:
                     uiAnnouncerGUID = creature->GetGUID();
@@ -182,7 +182,7 @@ public:
                 case NPC_JAEREN_AN:
                     if (TeamInInstance == ALLIANCE)
                         creature->UpdateEntry(NPC_ARELAS_AN,ALLIANCE);
-                    break;				
+                    break;                
                 case VEHICLE_ARGENT_WARHORSE:
                 case VEHICLE_ARGENT_BATTLEWORG:
                     VehicleList.push_back(creature->GetGUID());
@@ -244,75 +244,75 @@ public:
     {
         switch(uiType)
         {
-		    case DATA_BLACK_KNIGHT:
+            case DATA_BLACK_KNIGHT:
                 uiBlackKnightEvent = uiData;
                 if (uiData == NOT_STARTED)
                 {
                     if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
-					{
-				    	pBlackKnight->setFaction(35);
+                    {
+                        pBlackKnight->setFaction(35);
                         pBlackKnight->SetReactState(REACT_DEFENSIVE);
-		                pBlackKnight->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
-					}
-				
+                        pBlackKnight->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
+                    }
+                
                 }else if (uiData == IN_PROGRESS)
                 {
                     if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
-					{
+                    {
                         DoScriptText(SAY_BLACK_KNIGHT_1, pBlackKnight);
-					}
-				
-				}else if (uiData == DONE)
-				{
-				    if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
-					{
+                    }
+                
+                }else if (uiData == DONE)
+                {
+                    if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
+                    {
                         if (Creature* pAnnouncer =  instance->GetCreature(uiAnnouncerGUID))
                         {
-					        if (Creature* pAnnouncer =  instance->GetCreature(uiAnnouncerGUID))
+                            if (Creature* pAnnouncer =  instance->GetCreature(uiAnnouncerGUID))
                             pBlackKnight->CastSpell(pAnnouncer,SPELL_DEATH_RESPITE,true);
-						}
-					}
-				}
-				break;
-			case DATA_KNIGHT:
+                        }
+                    }
+                }
+                break;
+            case DATA_KNIGHT:
                 uiBlackKnightEvent2 = uiData;
-				if (uiData == NOT_STARTED)
-				{
-				    if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
-					{
-        		        pBlackKnight->SetOrientation(4.714f);						
-					}
-				
+                if (uiData == NOT_STARTED)
+                {
+                    if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
+                    {
+                        pBlackKnight->SetOrientation(4.714f);                        
+                    }
+                
                 }else if (uiData == IN_PROGRESS)
-				{
-				    if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
-					{
+                {
+                    if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
+                    {
                         DoScriptText(SAY_BLACK_KNIGHT_2, pBlackKnight);
-						if (Creature* pAnnouncer =  instance->GetCreature(uiAnnouncerGUID))
-                        {
-					        pAnnouncer->setDeathState(JUST_DIED);
-						}
-					}
-				
-				}else if (uiData == DONE)
-				{
-				    if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
-					{
-					    pBlackKnight->setFaction(14);
-						pBlackKnight->SetReactState(REACT_AGGRESSIVE);
-                        pBlackKnight->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
-						AggroAllPlayers(pBlackKnight);
                         if (Creature* pAnnouncer =  instance->GetCreature(uiAnnouncerGUID))
                         {
-	                    	pAnnouncer->DisappearAndDie();
+                            pAnnouncer->setDeathState(JUST_DIED);
+                        }
+                    }
+                
+                }else if (uiData == DONE)
+                {
+                    if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
+                    {
+                        pBlackKnight->setFaction(14);
+                        pBlackKnight->SetReactState(REACT_AGGRESSIVE);
+                        pBlackKnight->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
+                        AggroAllPlayers(pBlackKnight);
+                        if (Creature* pAnnouncer =  instance->GetCreature(uiAnnouncerGUID))
+                        {
+                            pAnnouncer->DisappearAndDie();
                             if (Creature* pGhoul = pAnnouncer->SummonCreature(NPC_RISEN_JAEREN,pAnnouncer->GetPositionX(),pAnnouncer->GetPositionY(),pAnnouncer->GetPositionZ(),pAnnouncer->GetOrientation()))
                             {
-                                pGhoul->setFaction(14);							
-		                        AggroAllPlayers(pGhoul);
+                                pGhoul->setFaction(14);                            
+                                AggroAllPlayers(pGhoul);
                             }
-                        }						
-					}
-				}				
+                        }                        
+                    }
+                }                
                 break;
             case DATA_MOVEMENT_DONE:
                 uiMovementDone = uiData;
@@ -333,13 +333,13 @@ public:
                 {
                     ++uiGrandChampionsDeaths;
                     if (uiGrandChampionsDeaths == 3)
-                    {		
+                    {        
                         if (Creature* pAnnouncer =  instance->GetCreature(uiAnnouncerGUID))
                         {
-							DoScriptText(SAY_START_1, pAnnouncer);
+                            DoScriptText(SAY_START_1, pAnnouncer);
                             pAnnouncer->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
                             pAnnouncer->SummonGameObject(instance->IsHeroic()? GO_CHAMPIONS_LOOT_H : GO_CHAMPIONS_LOOT,746.59f,618.49f,411.09f,1.42f,0, 0, 0, 0,90000000);
-						}
+                        }
                     }
                 }
                 break;
@@ -349,53 +349,53 @@ public:
                 {
                     for(std::list<uint64>::const_iterator itr = VehicleList.begin(); itr != VehicleList.end(); ++itr)
                         if (Creature* pSummon = instance->GetCreature(*itr))
-						{
+                        {
                             pSummon->RemoveFromWorld();
-						}
+                        }
                     if (Creature* pBoss =  instance->GetCreature(uiArgentChampionGUID))
                     {
                         pBoss->setFaction(14);
                         pBoss->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
                         pBoss->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NOT_SELECTABLE);
                         pBoss->SetReactState(REACT_AGGRESSIVE);
-						AggroAllPlayers(pBoss);
+                        AggroAllPlayers(pBoss);
                     }
                     if (Creature* pAnnouncer = instance->GetCreature(uiAnnouncerGUID))
                     {
-						DoScriptText(SAY_START_2, pAnnouncer);
+                        DoScriptText(SAY_START_2, pAnnouncer);
                     }
                 }
                 break;
             case BOSS_ARGENT_CHALLENGE_E:
                 m_auiEncounter[1] = uiData;
-				if (uiData == IN_PROGRESS)
+                if (uiData == IN_PROGRESS)
                 {
                     for(std::list<uint64>::const_iterator itr = VehicleList.begin(); itr != VehicleList.end(); ++itr)
                         if (Creature* pSummon = instance->GetCreature(*itr))
                             pSummon->RemoveFromWorld();
-                }else if (uiData == DONE)				
+                }else if (uiData == DONE)                
                 if (Creature* pAnnouncer = instance->GetCreature(uiAnnouncerGUID))
                 {
-         			DoScriptText(SAY_START_1, pAnnouncer);
+                     DoScriptText(SAY_START_1, pAnnouncer);
 
                     pAnnouncer->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-					pAnnouncer->GetMotionMaster()->MovePoint(0,740.755f, 636.509f, 411.575f);
+                    pAnnouncer->GetMotionMaster()->MovePoint(0,740.755f, 636.509f, 411.575f);
                     pAnnouncer->SummonGameObject(instance->IsHeroic()? GO_EADRIC_LOOT_H : GO_EADRIC_LOOT,746.59f,618.49f,411.09f,1.42f,0, 0, 0, 0,90000000);
                 }
                 break;
             case BOSS_ARGENT_CHALLENGE_P:
                 m_auiEncounter[2] = uiData;
-				if (uiData == IN_PROGRESS)
+                if (uiData == IN_PROGRESS)
                 {
                     for(std::list<uint64>::const_iterator itr = VehicleList.begin(); itr != VehicleList.end(); ++itr)
                         if (Creature* pSummon = instance->GetCreature(*itr))
                             pSummon->RemoveFromWorld();
-                }else if (uiData == DONE)				
+                }else if (uiData == DONE)                
                 if (Creature* pAnnouncer = instance->GetCreature(uiAnnouncerGUID))
                 {
-         			DoScriptText(SAY_START_1, pAnnouncer);
+                     DoScriptText(SAY_START_1, pAnnouncer);
                     pAnnouncer->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-					pAnnouncer->GetMotionMaster()->MovePoint(0,740.755f, 636.509f, 411.575f);
+                    pAnnouncer->GetMotionMaster()->MovePoint(0,740.755f, 636.509f, 411.575f);
                     pAnnouncer->SummonGameObject(instance->IsHeroic()? GO_PALETRESS_LOOT_H : GO_PALETRESS_LOOT,746.59f,618.49f,411.09f,1.42f,0, 0, 0, 0,90000000);
                 }
                 break;
@@ -413,10 +413,10 @@ public:
             case BOSS_ARGENT_CHALLENGE_E: return m_auiEncounter[1];
             case BOSS_ARGENT_CHALLENGE_P: return m_auiEncounter[2];
             case BOSS_BLACK_KNIGHT: return m_auiEncounter[3];
-			
-			case DATA_KNIGHT: return uiBlackKnightEvent2;
-			case DATA_BLACK_KNIGHT: return uiBlackKnightEvent;
-		    case DATA_MOVEMENT_DONE: return uiMovementDone;
+            
+            case DATA_KNIGHT: return uiBlackKnightEvent2;
+            case DATA_BLACK_KNIGHT: return uiBlackKnightEvent;
+            case DATA_MOVEMENT_DONE: return uiMovementDone;
             case DATA_ARGENT_SOLDIER_DEFEATED: return uiArgentSoldierDeaths;
         }
 

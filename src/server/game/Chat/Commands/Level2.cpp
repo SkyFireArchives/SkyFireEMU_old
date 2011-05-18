@@ -1197,74 +1197,74 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
     switch(race)
     {
         case RACE_HUMAN:
-			race_s = "Human"; 
-			break;
+            race_s = "Human"; 
+            break;
         case RACE_ORC:
-			race_s = "Orc";    
-			break;
+            race_s = "Orc";    
+            break;
         case RACE_DWARF:
-			race_s = "Dwarf";     
-			break;
+            race_s = "Dwarf";     
+            break;
         case RACE_NIGHTELF:
-			race_s = "Night Elf"; 
-			break;
+            race_s = "Night Elf"; 
+            break;
         case RACE_UNDEAD_PLAYER:
-			race_s = "Undead";     
-			break;
+            race_s = "Undead";     
+            break;
         case RACE_TAUREN:   
-			race_s = "Tauren";      
-			break;
+            race_s = "Tauren";      
+            break;
         case RACE_GNOME:    
-			race_s = "Gnome";      
-			break;
+            race_s = "Gnome";      
+            break;
         case RACE_TROLL:   
-			race_s = "Troll";    
-			break;
+            race_s = "Troll";    
+            break;
         case RACE_BLOODELF:  
-			race_s = "Blood Elf";  
-			break;
+            race_s = "Blood Elf";  
+            break;
         case RACE_DRAENEI: 
-			race_s = "Draenei";   
-			break;
+            race_s = "Draenei";   
+            break;
         case RACE_WORGEN: 
-			race_s = "Worgen";    
-			break;
+            race_s = "Worgen";    
+            break;
         case RACE_GOBLIN: 
-			race_s = "Goblin";     
-			break;
+            race_s = "Goblin";     
+            break;
     }
     switch(Class)
     {
         case CLASS_WARRIOR:  
-			Class_s = "Warrior";     
-			break;
+            Class_s = "Warrior";     
+            break;
         case CLASS_PALADIN:  
-			Class_s = "Paladin";     
-			break;
+            Class_s = "Paladin";     
+            break;
         case CLASS_HUNTER:  
-			Class_s = "Hunter";     
-			break;
+            Class_s = "Hunter";     
+            break;
         case CLASS_ROGUE:    
-			Class_s = "Rogue";     
-			break;
+            Class_s = "Rogue";     
+            break;
         case CLASS_PRIEST:     
-			Class_s = "Priest";    
-			break;
+            Class_s = "Priest";    
+            break;
         case CLASS_DEATH_KNIGHT: 
-			Class_s = "Death Knight"; 
-			break;
+            Class_s = "Death Knight"; 
+            break;
         case CLASS_SHAMAN:     
-			Class_s = "Shaman";     
-			break;
+            Class_s = "Shaman";     
+            break;
         case CLASS_MAGE:      
-			Class_s = "Mage";      
-			break;
+            Class_s = "Mage";      
+            break;
         case CLASS_WARLOCK:     
-			Class_s = "Warlock";   
-			break;
+            Class_s = "Warlock";   
+            break;
         case CLASS_DRUID:  
-			Class_s = "Druid";    
-			break;
+            Class_s = "Druid";    
+            break;
     }
 
     std::string timeStr = secsToTimeString(total_player_time,true,true);
