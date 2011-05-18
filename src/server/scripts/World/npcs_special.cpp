@@ -1282,7 +1282,7 @@ public:
         if (pCreature->isCanTrainingAndResetTalentsOf(pPlayer))
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_TRAINER, GOSSIP_HELLO_ROGUE1, GOSSIP_SENDER_MAIN, GOSSIP_OPTION_UNLEARNTALENTS);
 
-		if (pPlayer->GetSpecsCount() == 1 && pCreature->isCanTrainingAndResetTalentsOf(pPlayer) && pPlayer->getLevel() >= sWorld->getIntConfig(CONFIG_MIN_DUALSPEC_LEVEL))
+        if (pPlayer->GetSpecsCount() == 1 && pCreature->isCanTrainingAndResetTalentsOf(pPlayer) && pPlayer->getLevel() >= sWorld->getIntConfig(CONFIG_MIN_DUALSPEC_LEVEL))
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_TRAINER, GOSSIP_HELLO_ROGUE3, GOSSIP_SENDER_MAIN, GOSSIP_OPTION_LEARNDUALSPEC);
 
         if (pPlayer->getClass() == CLASS_ROGUE && pPlayer->getLevel() >= 24 && !pPlayer->HasItemCount(17126,1) && !pPlayer->GetQuestRewardStatus(6681))
@@ -1863,7 +1863,7 @@ public:
             // Clone Me!
             owner->CastSpell(me, 45204, false);
 
-			if (owner->ToPlayer() && owner->ToPlayer()->GetSelectedUnit())
+            if (owner->ToPlayer() && owner->ToPlayer()->GetSelectedUnit())
                 me->AI()->AttackStart(owner->ToPlayer()->GetSelectedUnit());
         }
 
@@ -2053,7 +2053,7 @@ enum eTrainingDummy
 {
     NPC_ADVANCED_TARGET_DUMMY                  = 2674,
     NPC_TARGET_DUMMY                           = 2673,
-	NPC_CATACLYSM_TARGET_DUMMY                 = 44548
+    NPC_CATACLYSM_TARGET_DUMMY                 = 44548
 };
 
 class npc_training_dummy : public CreatureScript
@@ -2117,7 +2117,7 @@ public:
 
             if (uiEntry != NPC_CATACLYSM_TARGET_DUMMY)
             {            
-			    if (uiEntry != NPC_ADVANCED_TARGET_DUMMY && uiEntry != NPC_TARGET_DUMMY)
+                if (uiEntry != NPC_ADVANCED_TARGET_DUMMY && uiEntry != NPC_TARGET_DUMMY)
                 {
                     if (uiResetTimer <= uiDiff)
                     {
@@ -2135,7 +2135,7 @@ public:
                     else
                         uiDespawnTimer -= uiDiff;
                 }
-			}
+            }
         }
         void MoveInLineOfSight(Unit * /*who*/){return;}
     };

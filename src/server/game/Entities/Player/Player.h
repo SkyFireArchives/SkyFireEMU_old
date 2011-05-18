@@ -836,8 +836,8 @@ enum PlayerLoginQueryIndex
     PLAYER_LOGIN_QUERY_LOADINSTANCELOCKTIMES    = 31,
     PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS    = 32,
     PLAYER_LOGIN_QUERY_LOADPETSLOT              = 33,
-	PLAYER_LOGIN_QUERY_LOAD_CURRENCY            = 34,
-	MAX_PLAYER_LOGIN_QUERY                      = 35
+    PLAYER_LOGIN_QUERY_LOAD_CURRENCY            = 34,
+    MAX_PLAYER_LOGIN_QUERY                      = 35
 };
 
 enum PlayerDelayedOperations
@@ -903,52 +903,52 @@ enum CurrencyItems
 class PlayerTaxi
 {
 public:
-	PlayerTaxi();
-	~PlayerTaxi() {}
-	// Nodes
-	void InitTaxiNodesForLevel(uint32 race, uint32 chrClass, uint8 level);
-	void LoadTaxiMask(const char* data);
+    PlayerTaxi();
+    ~PlayerTaxi() {}
+    // Nodes
+    void InitTaxiNodesForLevel(uint32 race, uint32 chrClass, uint8 level);
+    void LoadTaxiMask(const char* data);
 
-	bool IsTaximaskNodeKnown(uint32 nodeidx) const
-	{
-		uint8  field   = uint8((nodeidx - 1) / 32);
-		uint32 submask = 1<<((nodeidx-1)%32);
-		return (m_taximask[field] & submask) == submask;
-	}
-	bool SetTaximaskNode(uint32 nodeidx)
-	{
-		uint8  field   = uint8((nodeidx - 1) / 32);
-		uint32 submask = 1<<((nodeidx-1)%32);
-		if ((m_taximask[field] & submask) != submask)
-		{
-			m_taximask[field] |= submask;
-			return true;
-		}
-		else
-			return false;
-	}
-	void AppendTaximaskTo(ByteBuffer& data,bool all);
+    bool IsTaximaskNodeKnown(uint32 nodeidx) const
+    {
+        uint8  field   = uint8((nodeidx - 1) / 32);
+        uint32 submask = 1<<((nodeidx-1)%32);
+        return (m_taximask[field] & submask) == submask;
+    }
+    bool SetTaximaskNode(uint32 nodeidx)
+    {
+        uint8  field   = uint8((nodeidx - 1) / 32);
+        uint32 submask = 1<<((nodeidx-1)%32);
+        if ((m_taximask[field] & submask) != submask)
+        {
+            m_taximask[field] |= submask;
+            return true;
+        }
+        else
+            return false;
+    }
+    void AppendTaximaskTo(ByteBuffer& data,bool all);
 
-	// Destinations
-	bool LoadTaxiDestinationsFromString(const std::string& values, uint32 team);
-	std::string SaveTaxiDestinationsToString();
+    // Destinations
+    bool LoadTaxiDestinationsFromString(const std::string& values, uint32 team);
+    std::string SaveTaxiDestinationsToString();
 
-	void ClearTaxiDestinations() { m_TaxiDestinations.clear(); }
-	void AddTaxiDestination(uint32 dest) { m_TaxiDestinations.push_back(dest); }
-	uint32 GetTaxiSource() const { return m_TaxiDestinations.empty() ? 0 : m_TaxiDestinations.front(); }
-	uint32 GetTaxiDestination() const { return m_TaxiDestinations.size() < 2 ? 0 : m_TaxiDestinations[1]; }
-	uint32 GetCurrentTaxiPath() const;
-	uint32 NextTaxiDestination()
-	{
-		m_TaxiDestinations.pop_front();
-		return GetTaxiDestination();
-	}
-	bool empty() const { return m_TaxiDestinations.empty(); }
+    void ClearTaxiDestinations() { m_TaxiDestinations.clear(); }
+    void AddTaxiDestination(uint32 dest) { m_TaxiDestinations.push_back(dest); }
+    uint32 GetTaxiSource() const { return m_TaxiDestinations.empty() ? 0 : m_TaxiDestinations.front(); }
+    uint32 GetTaxiDestination() const { return m_TaxiDestinations.size() < 2 ? 0 : m_TaxiDestinations[1]; }
+    uint32 GetCurrentTaxiPath() const;
+    uint32 NextTaxiDestination()
+    {
+        m_TaxiDestinations.pop_front();
+        return GetTaxiDestination();
+    }
+    bool empty() const { return m_TaxiDestinations.empty(); }
 
-	friend std::ostringstream& operator<< (std::ostringstream& ss, PlayerTaxi const& taxi);
+    friend std::ostringstream& operator<< (std::ostringstream& ss, PlayerTaxi const& taxi);
 private:
-	TaxiMask m_taximask;
-	std::deque<uint32> m_TaxiDestinations;
+    TaxiMask m_taximask;
+    std::deque<uint32> m_TaxiDestinations;
 };
 
 std::ostringstream& operator<< (std::ostringstream& ss, PlayerTaxi const& taxi);
@@ -1255,11 +1255,11 @@ class Player : public Unit, public GridObject<Player>
         void AddRefundReference(uint32 it);
         void DeleteRefundReference(uint32 it);
 
-		void SendCurrencies() const;
-		uint32 GetCurrency(uint32 id) const;
-		bool HasCurrency(uint32 id, uint32 count) const;
-		void SetCurrency(uint32 id, uint32 count);
-		void ModifyCurrency(uint32 id, int32 count);
+        void SendCurrencies() const;
+        uint32 GetCurrency(uint32 id) const;
+        bool HasCurrency(uint32 id, uint32 count) const;
+        void SetCurrency(uint32 id, uint32 count);
+        void ModifyCurrency(uint32 id, int32 count);
 
         void ApplyEquipCooldown(Item * pItem);
         void SetAmmo(uint32 item);
@@ -2015,7 +2015,7 @@ class Player : public Unit, public GridObject<Player>
         bool RewardHonor(Unit *pVictim, uint32 groupsize, int32 honor = -1, bool pvptoken = false);
         uint32 GetMaxPersonalArenaRatingRequirement(uint32 minarenaslot);
         
-		//End of PvP System
+        //End of PvP System
 
         inline SpellCooldowns GetSpellCooldowns() const { return m_spellCooldowns; }
 
@@ -2556,7 +2556,7 @@ class Player : public Unit, public GridObject<Player>
         void _LoadTalents(PreparedQueryResult result);
         void _LoadInstanceTimeRestrictions(PreparedQueryResult result);
         void _LoadTalentBranchSpecs(PreparedQueryResult result);
-		void _LoadCurrency(PreparedQueryResult result);
+        void _LoadCurrency(PreparedQueryResult result);
 
         /*********************************************************/
         /***                   SAVE SYSTEM                     ***/
@@ -2576,7 +2576,7 @@ class Player : public Unit, public GridObject<Player>
         void _SaveGlyphs(SQLTransaction& trans);
         void _SaveTalents(SQLTransaction& trans);
         void _SaveTalentBranchSpecs(SQLTransaction& trans);
-		void _SaveCurrency();
+        void _SaveCurrency();
         void _SaveStats(SQLTransaction& trans);
         void _SaveInstanceTimeRestrictions(SQLTransaction& trans);
 
@@ -2612,8 +2612,8 @@ class Player : public Unit, public GridObject<Player>
 
         Item* m_items[PLAYER_SLOTS_COUNT];
         uint32 m_currentBuybackSlot;
-		PlayerCurrenciesMap m_currencies;
-		uint32 _GetCurrencyWeekCap(const CurrencyTypesEntry* currency) const;
+        PlayerCurrenciesMap m_currencies;
+        uint32 _GetCurrencyWeekCap(const CurrencyTypesEntry* currency) const;
 
         std::vector<Item*> m_itemUpdateQueue;
         bool m_itemUpdateQueueBlocked;

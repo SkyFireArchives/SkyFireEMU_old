@@ -342,7 +342,7 @@ private:
         uint32 m_zoneId;
         uint8  m_level;
         uint8  m_class;
-		uint8 m_flags;
+        uint8 m_flags;
         uint64 m_logoutTime;
         uint32 m_accountId;
         // Fields from guild_member table

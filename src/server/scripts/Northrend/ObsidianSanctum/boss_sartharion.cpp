@@ -239,7 +239,7 @@ public:
         boss_sartharionAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             pInstance = pCreature->GetInstanceScript();
-			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
@@ -1018,7 +1018,7 @@ public:
     struct mob_tenebronAI : public dummy_dragonAI
     {
         mob_tenebronAI(Creature* pCreature) : dummy_dragonAI(pCreature) {
-		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         uint32 m_uiShadowBreathTimer;
@@ -1110,7 +1110,7 @@ public:
     struct mob_shadronAI : public dummy_dragonAI
     {
         mob_shadronAI(Creature* pCreature) : dummy_dragonAI(pCreature) {
-		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         uint32 m_uiShadowBreathTimer;
@@ -1561,7 +1561,7 @@ public:
                 if(Tenebron)
                     (CAST_AI(mob_tenebron::mob_tenebronAI,Tenebron->AI()))->m_bHasPortalOpen = false;
                 SpawnWhelps();
-				m_uiHatchEggTimer = urand(40000,50000);
+                m_uiHatchEggTimer = urand(40000,50000);
             }
             else
                 m_uiHatchEggTimer -= uiDiff;

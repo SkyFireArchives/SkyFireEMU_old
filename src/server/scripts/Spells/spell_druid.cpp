@@ -68,9 +68,9 @@ public:
         };
 
         AuraScript *GetAuraScript() const
-		{
-			return new spell_dru_savage_defense_AuraScript();
-		}
+        {
+            return new spell_dru_savage_defense_AuraScript();
+        }
 };
 
 class spell_dru_t10_restoration_4p_bonus : public SpellScriptLoader
@@ -106,7 +106,7 @@ class spell_dru_t10_restoration_4p_bonus : public SpellScriptLoader
         SpellScript* GetSpellScript() const
         {
             return new spell_dru_t10_restoration_4p_bonus_SpellScript();
-		}
+        }
 };
 
 // 54846 Glyph of Starfire

@@ -752,7 +752,7 @@ enum Opcodes
     SMSG_WARDEN_DATA                                 = 0x0F8A0, // 4.0.6a 13623
     CMSG_WARDEN_DATA                                 = 0x02F84, // 4.0.6a 13623
     SMSG_GROUP_JOINED_BATTLEGROUND                   = 0x00D1E, // 4.0.6a 13623
-	CMSG_BATTLEGROUND_PLAYER_POSITIONS               = 0x00293, // 4.0.6a 13623
+    CMSG_BATTLEGROUND_PLAYER_POSITIONS               = 0x00293, // 4.0.6a 13623
     SMSG_BATTLEGROUND_PLAYER_POSITIONS               = 0x0045C, // 4.0.6a 13623
     CMSG_PET_STOP_ATTACK                             = 0x10100, //
     SMSG_BINDER_CONFIRM                              = 0x033C4, // 4.0.6a 13623
