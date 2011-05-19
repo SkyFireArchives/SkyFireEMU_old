@@ -1,6 +1,6 @@
 -- Innkeeper Teresa <Innkeeper>
 UPDATE creature_template SET 
-minlevel=84, maxlevel=84, faction_A=12, faction_H=12, npcflag=66177, Health_mod=70946, ScriptName='npc_innkeeper' WHERE entry=49686;
+minlevel=84, maxlevel=84, exp=3, faction_A=12, faction_H=12, npcflag=66177, Health_mod=1.1, ScriptName='npc_innkeeper' WHERE entry=49686;
 
 -- Innkeeper Teresa <Innkeeper> (VENDOR DATA)
 DELETE FROM npc_vendor WHERE entry=49686;

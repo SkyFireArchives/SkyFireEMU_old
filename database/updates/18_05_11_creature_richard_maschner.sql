@@ -1,6 +1,6 @@
 -- Richard Maschner <Blacksmithing Supplies>
 UPDATE creature_template SET 
-minlevel=84, maxlevel=84, faction_A=12, faction_H=12, npcflag=4224, Health_mod=70946 WHERE entry=49726;
+minlevel=84, maxlevel=84, exp=3, faction_A=12, faction_H=12, npcflag=4224, Health_mod=1.1 WHERE entry=49726;
 
 -- Richard Maschner <Blacksmithing Supplies> (VENDOR DATA)
 DELETE FROM npc_vendor WHERE entry=49726;
