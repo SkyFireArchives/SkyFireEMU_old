@@ -29,6 +29,7 @@
 #include "DatabaseEnv.h"
 #include "DBCStructure.h"
 
+
 class Item;
 class Player;
 class WorldPacket;
@@ -57,12 +58,12 @@ struct AuctionEntry
     uint32 auctioneer;                                      // creature low guid
     uint32 item_guidlow;
     uint32 item_template;
-    uint64 owner;
-    uint64 startbid;                                        //maybe useless
-    uint64 bid;
+    uint32 owner;
+    uint32 startbid;                                        //maybe useless
+    uint32 bid;
     uint32 buyout;
     time_t expire_time;
-    uint64 bidder;
+    uint32 bidder;
     uint32 deposit;                                         //deposit can be calculated only when creating auction
     AuctionHouseEntry const* auctionHouseEntry;             // in AuctionHouse.dbc
     uint32 factionTemplateId;
@@ -71,7 +72,7 @@ struct AuctionEntry
     uint32 GetHouseId() const { return auctionHouseEntry->houseId; }
     uint32 GetHouseFaction() const { return auctionHouseEntry->faction; }
     uint32 GetAuctionCut() const;
-    uint64 GetAuctionOutBid() const;
+    uint32 GetAuctionOutBid() const;
     bool BuildAuctionInfo(WorldPacket & data) const;
     void DeleteFromDB(SQLTransaction& trans) const;
     void SaveToDB(SQLTransaction& trans) const;
@@ -81,7 +82,7 @@ struct AuctionEntry
 //this class is used as auctionhouse instance
 class AuctionHouseObject
 {
-  public:
+public:
     // Initialize storage
     AuctionHouseObject() { next = AuctionsMap.begin(); }
     ~AuctionHouseObject()
@@ -116,7 +117,7 @@ class AuctionHouseObject
         uint32 inventoryType, uint32 itemClass, uint32 itemSubClass, uint32 quality,
         uint32& count, uint32& totalcount);
 
-  private:
+private:
     AuctionEntryMap AuctionsMap;
 
     // storage for "next" auction item for next Update()
@@ -129,52 +130,51 @@ class AuctionHouseMgr
     AuctionHouseMgr();
     ~AuctionHouseMgr();
 
-    public:
+public:
 
-        typedef UNORDERED_MAP<uint32, Item*> ItemMap;
+    typedef UNORDERED_MAP<uint32, Item*> ItemMap;
 
-        AuctionHouseObject* GetAuctionsMap(uint32 factionTemplateId);
-        AuctionHouseObject* GetBidsMap(uint32 factionTemplateId);
+    AuctionHouseObject* GetAuctionsMap(uint32 factionTemplateId);
+    AuctionHouseObject* GetBidsMap(uint32 factionTemplateId);
 
-        Item* GetAItem(uint32 id)
-        {
-            ItemMap::const_iterator itr = mAitems.find(id);
-            if (itr != mAitems.end())
-                return itr->second;
+    Item* GetAItem(uint32 id)
+    {
+        ItemMap::const_iterator itr = mAitems.find(id);
+        if (itr != mAitems.end())
+            return itr->second;
 
-            return NULL;
-        }
+        return NULL;
+    }
 
-        //auction messages
-        void SendAuctionWonMail(AuctionEntry * auction, SQLTransaction& trans);
-        void SendAuctionSalePendingMail(AuctionEntry * auction, SQLTransaction& trans);
-        void SendAuctionSuccessfulMail(AuctionEntry * auction, SQLTransaction& trans);
-        void SendAuctionExpiredMail(AuctionEntry * auction, SQLTransaction& trans);
-        void SendAuctionRemovedMail(AuctionEntry * auction, SQLTransaction& trans);
-        void SendAuctionOutbiddedMail(AuctionEntry * auction, uint64 newPrice, Player* newBidder, SQLTransaction& trans);
-        void SendAuctionCancelledToBidderMail(AuctionEntry* auction, SQLTransaction& trans);
+    //auction messages
+    void SendAuctionWonMail(AuctionEntry * auction, SQLTransaction& trans);
+    void SendAuctionSalePendingMail(AuctionEntry * auction, SQLTransaction& trans);
+    void SendAuctionSuccessfulMail(AuctionEntry * auction, SQLTransaction& trans);
+    void SendAuctionExpiredMail(AuctionEntry * auction, SQLTransaction& trans);
+    void SendAuctionOutbiddedMail(AuctionEntry * auction, uint32 newPrice, Player* newBidder, SQLTransaction& trans);
+    void SendAuctionCancelledToBidderMail(AuctionEntry* auction, SQLTransaction& trans);
 
-        static uint32 GetAuctionDeposit(AuctionHouseEntry const* entry, uint32 time, Item *pItem, uint32 count);
-        static AuctionHouseEntry const* GetAuctionHouseEntry(uint32 factionTemplateId);
+    static uint32 GetAuctionDeposit(AuctionHouseEntry const* entry, uint32 time, Item *pItem, uint32 count);
+    static AuctionHouseEntry const* GetAuctionHouseEntry(uint32 factionTemplateId);
 
-    public:
+public:
 
-        //load first auction items, because of check if item exists, when loading
-        void LoadAuctionItems();
-        void LoadAuctions();
+    //load first auction items, because of check if item exists, when loading
+    void LoadAuctionItems();
+    void LoadAuctions();
 
-        void AddAItem(Item* it);
-        bool RemoveAItem(uint32 id);
+    void AddAItem(Item* it);
+    bool RemoveAItem(uint32 id);
 
-        void Update();
+    void Update();
 
-    private:
+private:
 
-        AuctionHouseObject mHordeAuctions;
-        AuctionHouseObject mAllianceAuctions;
-        AuctionHouseObject mNeutralAuctions;
+    AuctionHouseObject mHordeAuctions;
+    AuctionHouseObject mAllianceAuctions;
+    AuctionHouseObject mNeutralAuctions;
 
-        ItemMap mAitems;
+    ItemMap mAitems;
 };
 
 #define sAuctionMgr ACE_Singleton<AuctionHouseMgr, ACE_Null_Mutex>::instance()

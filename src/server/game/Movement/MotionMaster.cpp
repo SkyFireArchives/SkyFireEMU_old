@@ -50,7 +50,9 @@ MotionMaster::Initialize()
     {
         MovementGenerator *curr = top();
         pop();
-        if (curr) DirectDelete(curr);
+        removeEmptyTops();
+        if (curr)
+            DirectDelete(curr);
     }
 
     InitDefault();
@@ -70,6 +72,15 @@ void MotionMaster::InitDefault()
     }
 }
 
+// reduce size so that top() != NULL
+void MotionMaster::removeEmptyTops()
+{
+    while (!top() && size() > 1) // we don't want to remove last element
+    {
+        --i_top;
+    }
+}
+
 MotionMaster::~MotionMaster()
 {
     // clear ALL movement generators (including default)
@@ -77,7 +88,9 @@ MotionMaster::~MotionMaster()
     {
         MovementGenerator *curr = top();
         pop();
-        if (curr) DirectDelete(curr);
+        removeEmptyTops();
+        if (curr)
+            DirectDelete(curr);
     }
 }
 
@@ -125,7 +138,9 @@ MotionMaster::DirectClean(bool reset)
     {
         MovementGenerator *curr = top();
         pop();
-        if (curr) DirectDelete(curr);
+        removeEmptyTops();
+        if (curr)
+            DirectDelete(curr);
     }
 
     if (needInitTop())
@@ -141,6 +156,7 @@ MotionMaster::DelayedClean()
     {
         MovementGenerator *curr = top();
         pop();
+        removeEmptyTops();
         if (curr)
             DelayedDelete(curr);
     }
@@ -153,6 +169,7 @@ MotionMaster::DirectExpire(bool reset)
     {
         MovementGenerator *curr = top();
         pop();
+        removeEmptyTops();
         DirectDelete(curr);
     }
 
@@ -174,6 +191,7 @@ MotionMaster::DelayedExpire()
     {
         MovementGenerator *curr = top();
         pop();
+        removeEmptyTops();
         DelayedDelete(curr);
     }
 
@@ -490,13 +508,18 @@ void MotionMaster::Mutate(MovementGenerator *m, MovementSlot slot)
 {
     if (MovementGenerator *curr = Impl[slot])
     {
+        bool wasAtTop = (i_top == slot);
+
         Impl[slot] = NULL; // in case a new one is generated in this slot during directdelete
-        if (i_top == slot && (m_cleanFlag & MMCF_UPDATE))
+        removeEmptyTops();
+
+        if (wasAtTop && (m_cleanFlag & MMCF_UPDATE))
             DelayedDelete(curr);
         else
             DirectDelete(curr);
     }
-    else if (i_top < slot)
+
+    if (i_top < slot)
     {
         i_top = slot;
     }
