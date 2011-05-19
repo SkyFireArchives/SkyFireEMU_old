@@ -1502,7 +1502,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             }
             break;
         case SPELLFAMILY_DRUID:
-            // Starfall
+          { // Starfall
             if (m_spellInfo->SpellFamilyFlags[2] & SPELLFAMILYFLAG2_DRUID_STARFALL)
             {
                 //Shapeshifting into an animal form or mounting cancels the effect.
@@ -1519,10 +1519,36 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
 
                 m_caster->CastSpell(unitTarget, damage, true);
                 return;
-            }
-            break;
+             }
+           switch(m_spellInfo->Id)
+            {   
+             case 1126: // Mark of the Wild
+		  {
+		  if (m_caster->GetTypeId() == TYPEID_PLAYER)
+		     {
+			std::list<Unit*> PartyMembers;
+			m_caster->GetPartyMembers(PartyMembers);
+			bool Continue = false;
+			uint32 player = 0;
+			for(std::list<Unit*>::iterator itr = PartyMembers.begin(); itr != PartyMembers.end(); ++itr) // If caster is in party with a player
+			   {
+			   ++player;
+			   if (Continue == false && player > 1)
+				Continue = true;
+			   }
+			if (Continue == true)
+			    m_caster->CastSpell(unitTarget, 79061, true); // Mark of the Wild (Raid)
+			else
+			    m_caster->CastSpell(unitTarget, 79060, true); // Mark of the Wild (Caster)
+		     }
+		  break;
+	         } 
+             }
+           break;
+          }
+
         case SPELLFAMILY_PALADIN:
-            // Divine Storm
+         {  // Divine Storm
             if (m_spellInfo->SpellFamilyFlags[1] & SPELLFAMILYFLAG1_PALADIN_DIVINESTORM && effIndex == 1)
             {
                 int32 dmg = m_damage * damage / 100;
@@ -1533,8 +1559,52 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             }
 
             switch(m_spellInfo->Id)
-            {
-                case 31789:                                 // Righteous Defense (step 1)
+            {   
+               case 19740: // Blessing of Might
+		  {
+		  if (m_caster->GetTypeId() == TYPEID_PLAYER)
+		     {
+			std::list<Unit*> PartyMembers;
+			m_caster->GetPartyMembers(PartyMembers);
+			bool Continue = false;
+			uint32 player = 0;
+			for(std::list<Unit*>::iterator itr = PartyMembers.begin(); itr != PartyMembers.end(); ++itr) // If caster is in party with a player
+			   {
+			   ++player;
+			   if (Continue == false && player > 1)
+				Continue = true;
+			   }
+			if (Continue == true)
+			    m_caster->CastSpell(unitTarget, 79102, true); // Blessing of Might (Raid)
+			else
+			    m_caster->CastSpell(unitTarget, 79101, true); // Blessing of Might (Caster)
+		     }
+		  break;
+	         } 
+                     
+                case 20217: // Blessing of Kings
+		  {
+		  if (m_caster->GetTypeId() == TYPEID_PLAYER)
+		     {
+			std::list<Unit*> PartyMembers;
+			m_caster->GetPartyMembers(PartyMembers);
+			bool Continue = false;
+			uint32 player = 0;
+			for(std::list<Unit*>::iterator itr = PartyMembers.begin(); itr != PartyMembers.end(); ++itr) // If caster is in party with a player
+			   {
+			   ++player;
+			   if (Continue == false && player > 1)
+				Continue = true;
+			   }
+			if (Continue == true)               
+			    m_caster->CastSpell(unitTarget, 79063, true); // Blessing of Kings (Raid)
+			else                                
+			    m_caster->CastSpell(unitTarget, 79062, true); // Blessing of Kings (Caster)
+		     }
+		  break;
+	         } 
+
+                case 31789: // Righteous Defense (step 1)
                 {
                     // Clear targets for eff 1
                     for (std::list<TargetInfo>::iterator ihit = m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
@@ -1557,7 +1627,9 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     return;
                 }
             }
-            break;
+          break;
+        }
+
         case SPELLFAMILY_SHAMAN:
             // Cleansing Totem Pulse
             if (m_spellInfo->SpellFamilyFlags[0] & SPELLFAMILYFLAG_SHAMAN_TOTEM_EFFECTS && m_spellInfo->SpellIconID == 1673)
