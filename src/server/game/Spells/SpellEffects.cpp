@@ -1502,7 +1502,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             }
             break;
         case SPELLFAMILY_DRUID:
-            // Starfall
+          { // Starfall
             if (m_spellInfo->SpellFamilyFlags[2] & SPELLFAMILYFLAG2_DRUID_STARFALL)
             {
                 //Shapeshifting into an animal form or mounting cancels the effect.
@@ -1519,8 +1519,34 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
 
                 m_caster->CastSpell(unitTarget, damage, true);
                 return;
-            }
-            break;
+             }
+           switch(m_spellInfo->Id)
+            {   
+             case 1126: // Mark of the Wild
+		  {
+		  if (m_caster->GetTypeId() == TYPEID_PLAYER)
+		     {
+			std::list<Unit*> PartyMembers;
+			m_caster->GetPartyMembers(PartyMembers);
+			bool Continue = false;
+			uint32 player = 0;
+			for(std::list<Unit*>::iterator itr = PartyMembers.begin(); itr != PartyMembers.end(); ++itr) // If caster is in party with a player
+			   {
+			   ++player;
+			   if (Continue == false && player > 1)
+				Continue = true;
+			   }
+			if (Continue == true)
+			    m_caster->CastSpell(unitTarget, 79061, true); // Mark of the Wild (Raid)
+			else
+			    m_caster->CastSpell(unitTarget, 79060, true); // Mark of the Wild (Caster)
+		     }
+		  break;
+	         } 
+             }
+           break;
+          }
+
         case SPELLFAMILY_PALADIN:
             // Divine Storm
             if (m_spellInfo->SpellFamilyFlags[1] & SPELLFAMILYFLAG1_PALADIN_DIVINESTORM && effIndex == 1)
