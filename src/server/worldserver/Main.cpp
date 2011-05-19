@@ -41,9 +41,9 @@
 
 #ifdef _WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "Acheron Core Cataclysm";
-char serviceLongName[] = "SkyFireEMU service";
-char serviceDescription[] = "Cataclysm Server";
+char serviceName[] = "FrozenCore Cataclysm";
+char serviceLongName[] = "FrozenCore service";
+char serviceDescription[] = "FrozenCore Server";
 /*
  * -1 - not in service mode
  *  0 - stopped
