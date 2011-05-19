@@ -833,6 +833,7 @@ bool SpellMgr::_isPositiveEffect(uint32 spellId, uint32 effIndex, bool deep) con
                 case 34700: // Allergic Reaction
                 case 61987: // Avenging Wrath Marker
                 case 61988: // Divine Shield exclude aura
+                case 63322: // Saronite Vapors
                     return false;
                 case 30877: // Tag Murloc
                     return true;
@@ -3742,6 +3743,22 @@ void SpellMgr::LoadSpellCustomAttr()
         case 45761: // Shoot
         case 42611: // Shoot
         case 62374: // Pursued
+        case 63024: // Gravity Bomb Normal
+        case 64234: // Gravity Bomb Hero
+        case 63018: // Searing Light Normal
+        case 65121: // Searing Light Hero
+        case 62016: // Charge Orb
+        case 62470: // Defeaning Thunder
+        case 48278: // Spell Paralayze
+        case 50988: // Glare of the Tribunal (N)
+        case 59870: // Glare of the Tribunal (H)
+        case 56397: // Arcane Barrage
+        case 64599: // Arcane Barrage
+        case 64607: // Arcane Barrage
+        case 55927: // Sear Beam (N)
+        case 59509: // Sear Beam (H)
+        case 47731: // Critter
+        case 62301: // Cosmic Smash
             spellInfo->MaxAffectedTargets = 1;
             count++;
             break;
@@ -3765,6 +3782,9 @@ void SpellMgr::LoadSpellCustomAttr()
         case 28542: // Life Drain - Sapphiron
         case 66588: // Flaming Spear
         case 54171: // Divine Storm
+        case 61693: // Arcane Storm
+        case 64598: // Cosmic Smash
+        case 61916: // Lightning Whirl (10N)
             spellInfo->MaxAffectedTargets = 3;
             count++;
             break;
@@ -3939,6 +3959,77 @@ void SpellMgr::LoadSpellCustomAttr()
             // 322-330 switch - effect changed to dummy, target entry not changed in client:(
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
             count++;
+            break;
+         //Titanic Storm
+        case 64172:
+            spellInfo->excludeTargetAuraSpell = 65294; // Empowered
+            count++;
+            break;
+        case 63830: // Malady of the Mind
+        case 63881: // Malady of the Mind proc
+        case 63795: // Psychosis
+            spellInfo->EffectImplicitTargetB[0] = TARGET_UNIT_TARGET_ANY;
+            spellInfo->EffectImplicitTargetB[1] = TARGET_UNIT_TARGET_ANY;
+            spellInfo->EffectImplicitTargetB[2] = TARGET_UNIT_TARGET_ANY;
+            count++;
+            break;
+        case 63802: // Brain Link
+            spellInfo->MaxAffectedTargets = 2;
+            spellInfo->EffectRadiusIndex[0] = 12; // 100 yard
+            count++;
+            break;
+        case 62713: // Ironbranch's Essence
+        case 62968: // Brightleaf's Essence
+        case 64320: // Rune of Power
+            spellInfo->DurationIndex = 39;
+            count++;
+            break;
+        case 62775: // Tympanic Tantrum
+            spellInfo->EffectRadiusIndex[0] = 41; // 150 yard
+            spellInfo->EffectRadiusIndex[1] = 41;
+            count++;
+            break;
+        case 55098: // Moorabi Transformation
+        case 62661: // Searing Flames
+        case 61915: // Lightning Whirl 10
+        case 63483: // Lightning Whirl 25
+        case 62396: // Flammendüsen
+        case 68982: // Phantomschlag 5 Normal
+        case 70322: // Phantomschlag 5 Heroic
+        case 28478: // Frostbolt 10
+        case 55802: // Frostbolt 25
+        case 66134: // ShadowStrike
+        case 71420: // Frostbolt 10 Normal Version
+        case 72007: // Frostbolt 25 Normal Version
+        case 72501: // Frostbolt 10 Heroic Version
+        case 72502: // Frostbolt 25 Heroic Version
+        case 66532: // Fel Fireball 10N
+        case 66963: // Fel Fireball 25N
+        case 66964: // Fel Fireball 10H
+        case 66965: // Fel Fireball 25H
+            spellInfo->InterruptFlags = 47;
+            count++;
+            break;
+        case 62345: // Ram (Ulduar Siege)
+        case 62308: // Ram (Ulduar Demolisher)
+        case 62714: // Shadow Nova
+        case 65209: // Shadow Nova
+            spellInfo->Effect[0] = 0;
+            count++;
+            break;
+        case 64145: // Diminish Power
+            spellInfo->AttributesEx3 |= SPELL_ATTR1_STACK_FOR_DIFF_CASTERS;
+            count++;
+            break;
+        case 63882: // Death Ray Warning Visual
+        case 63886: // Death Ray Damage Visual
+            spellInfo->AttributesEx3 |= SPELL_ATTR1_STACK_FOR_DIFF_CASTERS;
+            spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ALLY;
+            count++;
+            break;
+        case 29306: // infected wounds (zombie chow)
+            spellInfo->AttributesEx |= SPELL_ATTR1_STACK_FOR_DIFF_CASTERS;        
+            count++;    
             break;
         case 12051: // Evocation - now we can interrupt this
             spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_INTERRUPT;

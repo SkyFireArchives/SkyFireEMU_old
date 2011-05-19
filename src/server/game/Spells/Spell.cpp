@@ -2601,6 +2601,14 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                             }
                             break;
 
+                        case 62834: // Boom (Boombot)
+                        case 64320: // Rune of Power (Assembly of Iron)
+                        case 62343: // Heat buff (Ignis)
+                        case 28374: // Decimate (Gluth)
+                        case 54426: // Decimate
+                            SearchAreaTarget(unitList, radius, pushType, SPELL_TARGETS_ANY);
+                            break;
+
                         default:
                             sLog->outDebug("Spell (ID: %u) (caster Entry: %u) does not have type CONDITION_SOURCE_TYPE_SPELL_SCRIPT_TARGET record in `conditions` table.", m_spellInfo->Id, m_caster->GetEntry());
 
@@ -2824,7 +2832,21 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                     unitList.remove(m_targets.getUnitTarget());
                 Trinity::RandomResizeList(unitList, maxTargets);
             }
-
+            else
+            {
+            switch (m_spellInfo->Id)
+            {
+                case 63025: // Gravity Bomb 10
+                case 64233: // Gravity Bomb 25
+	                unitList.remove(m_targets.getUnitTarget());
+	                break;
+                case 28374: // Decimate 10
+                case 54426: // Decimate 25
+                case 62343: // Heat (Ignis) not hits the trigger
+	                unitList.remove(m_caster);
+	                break;
+                }
+            }
             CallScriptAfterUnitTargetSelectHandlers(unitList, SpellEffIndex(i));
 
             for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end(); ++itr)

@@ -2536,6 +2536,7 @@ void Spell::EffectHealthLeech(SpellEffIndex effIndex)
 
     if (m_caster->isAlive())
     {
+        if (m_spellInfo->Id != 63278) // No Heal Hack for Mark of the Faceless
         healthGain = m_caster->SpellHealingBonus(m_caster, m_spellInfo, effIndex, healthGain, HEAL);
         m_caster->HealBySpell(m_caster, m_spellInfo, uint32(healthGain));
     }
@@ -4730,6 +4731,40 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                 case 26465:
                     unitTarget->RemoveAuraFromStack(26464);
                     return;
+                                // Tournament Mount spell
+                case 62552:
+                case 62917:
+                case 66482:
+                {
+                    Aura *pAura = m_caster->GetAura(62552);
+                    if (pAura)
+                    {
+                        switch (pAura->GetStackAmount())
+                        {
+                            case 1: m_caster->CastSpell(m_caster,63130,false); break;
+                            case 2: m_caster->CastSpell(m_caster,63131,false); break;
+                            case 3: m_caster->CastSpell(m_caster,63132,false); break;
+                            default:
+                                break;
+                        }
+                    }
+                    return;
+                }
+                case 62575:
+                {
+                    if(m_caster->GetCharmerOrOwner())
+                       m_caster->GetCharmerOrOwner()->CastSpell(unitTarget,62626,true );
+                       return;
+                }
+                case 62960:
+                {
+                    if (!unitTarget)
+                        return;
+
+                    m_caster->CastSpell(unitTarget,62563,true );
+                    m_caster->CastSpell(unitTarget,68321,true );
+                    return;
+                }
                 // Shadow Flame (All script effects, not just end ones to prevent player from dodging the last triggered spell)
                 case 22539:
                 case 22972:

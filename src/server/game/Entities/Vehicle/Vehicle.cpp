@@ -325,8 +325,20 @@ bool Vehicle::AddPassenger(Unit *unit, int8 seatId, bool byAura)
         }
     }
 
-    if (seat->second.seatInfo->m_flags && !(seat->second.seatInfo->m_flags & VEHICLE_SEAT_FLAG_UNK11))
-        unit->AddUnitState(UNIT_STAT_ONVEHICLE);
+    if (seat->second.seatInfo->m_flags && !(seat->second.seatInfo->m_flags & VEHICLE_SEAT_FLAG_UNK11)) 
+    {
+        switch (GetVehicleInfo()->m_ID)
+        {
+            case 342: // Ignis
+            case 353: // XT-002
+            case 380: // Kologarn's Right Arm
+            case 385: // Constrictor Tentacle
+                break;
+            default:
+                unit->AddUnitState(UNIT_STAT_ONVEHICLE);
+            break;
+        }
+    }
 
     unit->AddUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT | MOVEMENTFLAG_ROOT);
     VehicleSeatEntry const *veSeat = seat->second.seatInfo;
