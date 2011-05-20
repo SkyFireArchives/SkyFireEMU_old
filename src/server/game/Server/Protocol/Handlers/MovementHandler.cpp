@@ -36,6 +36,7 @@
 #include "WaypointMovementGenerator.h"
 #include "InstanceSaveMgr.h"
 #include "ObjectMgr.h"
+#include "AnticheatMgr.h"
 
 void WorldSession::HandleMoveWorldportAckOpcode(WorldPacket & /*recv_data*/)
 {
@@ -343,6 +344,9 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
         // now client not include swimming flag in case jumping under water
         plMover->SetInWater(!plMover->IsInWater() || plMover->GetBaseMap()->IsUnderWater(movementInfo.pos.GetPositionX(), movementInfo.pos.GetPositionY(), movementInfo.pos.GetPositionZ()));
     }
+
+    if (plMover)
+        sAnticheatMgr->StartHackDetection(plMover, movementInfo, opcode);
 
     /*----------------------*/
 
