@@ -63,9 +63,5 @@ ALTER TABLE guild ENGINE = InnoDB;
 
 ALTER TABLE group_member ENGINE = InnoDB;
 
--- These two in the auth db
 
-ALTER TABLE account ENGINE = InnoDB;
-
-ALTER TABLE account_access ENGINE = InnoDB;
 
