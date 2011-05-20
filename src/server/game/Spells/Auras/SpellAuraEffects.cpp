@@ -4600,9 +4600,9 @@ void AuraEffect::HandleModStateImmunityMask(AuraApplication const *aurApp, uint8
         for (std::list <AuraType>::iterator iter = immunity_list.begin(); iter != immunity_list.end(); ++iter)
             target->RemoveAurasByType(*iter);
 
-	    for (std::list <AuraType>::iterator iter = immunity_list.begin(); iter != immunity_list.end(); ++iter)
+        for (std::list <AuraType>::iterator iter = immunity_list.begin(); iter != immunity_list.end(); ++iter)
         target->ApplySpellImmune(GetId(), IMMUNITY_STATE, *iter, apply);
-	// stop handling the effect if it was removed by linked event
+    // stop handling the effect if it was removed by linked event
     if (aurApp->GetRemoveMode())
         return;
 }
