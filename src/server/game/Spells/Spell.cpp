@@ -3769,7 +3769,7 @@ void Spell::finish(bool ok)
             m_caster->RemoveAuraFromStack(44544);
         }
     }
-        if(m_spellInfo->Id == 44572) // Deep Freeze
+    if(m_spellInfo->Id == 44572) // Deep Freeze
     {
         if(m_caster->HasAura(44544)) // Fingers of Frost
         {

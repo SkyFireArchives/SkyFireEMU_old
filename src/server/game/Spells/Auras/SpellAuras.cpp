@@ -1051,15 +1051,19 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                 else if (GetId() == 15407)
                 {
                     // Pain and Suffering: Rank 1
-                    if (Aura* pain = caster->GetAura(47580)) {
-                        if (Aura* swp = target->GetAura(589)) {
+                    if (Aura* pain = caster->GetAura(47580)) 
+                    {
+                        if (Aura* swp = target->GetAura(589)) 
+                        {
                             if (roll_chance_i(30))
                                 swp->RefreshDuration();
                         }
                     }
                     // Pain and Suffering: Rank 2
-                    if (Aura* pain = caster->GetAura(47581)) {
-                        if (Aura* swp = target->GetAura(589)) {
+                    if (Aura* pain = caster->GetAura(47581)) 
+                    {
+                        if (Aura* swp = target->GetAura(589)) 
+                        {
                             if (roll_chance_i(60))
                                 swp->RefreshDuration();
                         }
