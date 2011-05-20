@@ -9512,8 +9512,6 @@ void ObjectMgr::LoadFactionChangeReputations()
 
     if (!result)
     {
-        
-        
         sLog->outString();
         sLog->outString(">> Loaded 0 faction change reputation pairs. DB table `player_factionchange_reputations` is empty.");
         return;
