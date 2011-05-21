@@ -589,7 +589,37 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                 break;
             }
             case SPELLFAMILY_PRIEST:
-            {
+            { 
+              //Evangelism and Dark Evangelism
+                if (m_caster->HasAura(81659)) // Rank 1
+                { 
+                    if (m_spellInfo->Id == 585)
+                    {
+                        m_caster->CastSpell(m_caster,81660,true);
+                    }
+                    
+                    else
+                    {
+                        if (m_spellInfo->Id == 15407)      // Dark Evangelism from Mind Flay                   
+                            m_caster->CastSpell(m_caster,87117,true);
+                    }
+                }
+                else
+                 
+                if (m_caster->HasAura(81662)) // Rank 2
+                {
+                    if (m_spellInfo->Id == 585)
+                    {
+                        m_caster->CastSpell(m_caster,81661,true);
+                    }
+                    
+                    else
+                    { 
+                        if (m_spellInfo->Id == 15407)      // Dark Evangelism from Mind Flay 
+                            m_caster->CastSpell(m_caster,87118,true);
+                    }     
+                }
+
                 // Shadow Word: Death - deals damage equal to damage done to caster
                 if ((m_spellInfo->SpellFamilyFlags[1] & 0x2))
                 {
