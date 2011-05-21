@@ -11053,8 +11053,10 @@ uint32 Unit::SpellHealingBonus(Unit *pVictim, SpellEntry const *spellProto, uint
         return healamount;
 	// and Warlock's Healthstones      
     if (spellProto->SpellFamilyName == SPELLFAMILY_WARLOCK && (spellProto->SpellFamilyFlags[0] & 0x10000))
+    {
+        healamount = 0.45 * (GetMaxHealth() - 10 * (STAT_STAMINA - 180));    
         return healamount;
-
+    }
     // Healing Done
     // Taken/Done total percent damage auras
     float  DoneTotalMod = 1.0f;
