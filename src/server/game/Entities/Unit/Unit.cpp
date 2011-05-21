@@ -20,7 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "AnticheatMgr.h"
 #include "gamePCH.h"
 #include "Common.h"
 #include "CreatureAIImpl.h"
@@ -59,6 +58,7 @@
 #include "TemporarySummon.h"
 #include "Vehicle.h"
 #include "Transport.h"
+#include "AnticheatMgr.h"
 
 #include <math.h>
 
