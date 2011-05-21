@@ -4206,6 +4206,19 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectMiscValue[1] = 127;
             count++;
             break;
+        /* Cataclysm Spells */
+        case 88954: //Consuming Darkness
+        case 95173:
+            spellInfo->EffectRadiusIndex[0] = 12;
+            count++;
+            break;
+        case 88942: //Meteor Slash
+        case 95172:
+            spellInfo->EffectRadiusIndex[0] = 24;
+            spellInfo->EffectRadiusIndex[1] = 24;
+            mSpellCustomAttr[i] |= SPELL_ATTR0_CU_SHARE_DAMAGE;
+            count++;
+            break;
         default:
             break;
         }
