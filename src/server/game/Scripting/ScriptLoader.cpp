@@ -576,6 +576,7 @@ void AddSC_the_stonecore();					 //Cata:TheStonecore
 void AddSC_instance_the_stonecore();
 void AddSC_lost_city_of_the_tolvir();        //Cata:The Lost City of the Tol'vir
 void AddSC_instance_lost_city_of_the_tolvir();
+
 // battlegrounds
 
 // outdoor pvp
@@ -951,6 +952,8 @@ void AddKalimdorScripts()
     AddSC_thunder_bluff();
     AddSC_ungoro_crater();
     AddSC_winterspring();
+	AddSC_lost_city_of_the_tolvir();
+	AddSC_instance_lost_city_of_the_tolvir();
 #endif
 }
 
@@ -1184,8 +1187,6 @@ void AddNorthrendScripts()
     // Cataclysm Scripts
     AddSC_the_stonecore();
     AddSC_instance_the_stonecore();
-    AddSC_lost_city_of_the_tolvir();
-    AddSC_instance_lost_city_of_the_tolvir();
 
 #endif
 }
