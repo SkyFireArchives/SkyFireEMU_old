@@ -103,9 +103,7 @@ set(scripts_STAT_SRCS
   Kalimdor/OnyxiasLair/onyxias_lair.h
   Kalimdor/OnyxiasLair/instance_onyxias_lair.cpp
   Kalimdor/LostCityOfTheTolvir/instance_lost_city_of_the_tolvir.cpp
-  Kalimdor/LostCityOfTheTolvir/lost_city_of_the_tolvir.h
-  Kalimdor/LostCityOfTheTolvir/lost_city_of_the_tolvir.cpp
-
+ 
 )
 
 message("  -> Prepared: Kalimdor")
