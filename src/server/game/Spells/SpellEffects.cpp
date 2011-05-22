@@ -747,7 +747,14 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                 break;
             }
             case SPELLFAMILY_HUNTER:
-            {
+            {   // Rapid Recuperation
+                if (m_caster->HasAura(3045))      			   
+                      if (m_caster->HasAura(53228)) 			   // Rank 1
+                          m_caster->CastSpell(m_caster,53230,true);
+                    else
+                      if (m_caster->HasAura(53232)) 			   // Rank 2
+                          m_caster->CastSpell(m_caster,54227,true);
+
                 //Gore
                 if (m_spellInfo->SpellIconID == 1578)
                 {
