@@ -1182,10 +1182,10 @@ void AddNorthrendScripts()
     AddSC_isle_of_conquest();
 
     // Cataclysm Scripts
-    AddSC_instance_the_stonecore();			   //Cata: The Stonecore
     AddSC_the_stonecore();
-	AddSC_instance_lost_city_of_the_tolvir();  //Cata: The Lost City of the Tol'vir
-	AddSC_lost_city_of_the_tolvir();
+    AddSC_instance_the_stonecore();
+    AddSC_lost_city_of_the_tolvir();
+    AddSC_instance_lost_city_of_the_tolvir();
 
 #endif
 }
