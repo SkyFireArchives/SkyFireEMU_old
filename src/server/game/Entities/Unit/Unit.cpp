@@ -1937,6 +1937,12 @@ void Unit::CalcHealAbsorb(Unit *pVictim, const SpellEntry *healSpell, uint32 &he
             existExpired = true;
     }
 
+    //Necrotic Strike
+    if(pVictim->HasAura(73975))
+    {
+        RemainingHeal -= (0.75f * GetTotalAttackPowerValue(BASE_ATTACK));
+    }
+
     // Remove all expired absorb auras
     if (existExpired)
     {
