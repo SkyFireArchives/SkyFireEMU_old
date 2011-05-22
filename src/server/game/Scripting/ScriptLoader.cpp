@@ -574,7 +574,8 @@ void AddSC_zangarmarsh();
 
 void AddSC_the_stonecore();					 //Cata:TheStonecore
 void AddSC_instance_the_stonecore();
-
+void AddSC_lost_city_of_the_tolvir();        //Cata:The Lost City of the Tol'vir
+void AddSC_instance_lost_city_of_the_tolvir();
 // battlegrounds
 
 // outdoor pvp
@@ -1181,8 +1182,10 @@ void AddNorthrendScripts()
     AddSC_isle_of_conquest();
 
     // Cataclysm Scripts
-    AddSC_instance_the_stonecore();			//Cata: The Stonecore
+    AddSC_instance_the_stonecore();			   //Cata: The Stonecore
     AddSC_the_stonecore();
+	AddSC_instance_lost_city_of_the_tolvir();  //Cata: The Lost City of the Tol'vir
+	AddSC_lost_city_of_the_tolvir();
 
 #endif
 }
