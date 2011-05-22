@@ -3945,7 +3945,7 @@ void SpellMgr::LoadSpellCustomAttr()
             ++count;
             break;
         case 26573 : //Consecration
-            spellInfo->EffectTriggerSpell[2] = 69930;
+            spellInfo->EffectTriggerSpell[2] = 82366;
             count++;
             break;
         case 25771: // Forbearance - wrong mechanic immunity in DBC since 3.0.x
