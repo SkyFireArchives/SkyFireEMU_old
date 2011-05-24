@@ -256,11 +256,11 @@ void WorldSession::HandleGuildExperienceOpcode(WorldPacket& recvPacket)
     if (Guild* pGuild = sObjectMgr->GetGuildById(_player->GetGuildId()))
     {
         WorldPacket data(SMSG_GUILD_XP_UPDATE, 8*5);
-	    data << uint64(0x37); // max daily xp
-	    data << uint64(pGuild->GetNextLevelXP()); // next level XP
-	    data << uint64(0x37); // weekly xp
-	    data << uint64(pGuild->GetCurrentXP()); // Curr exp
-	    data << uint64(0); // Today exp (unsupported)
+        data << uint64(0x37); // max daily xp
+        data << uint64(pGuild->GetNextLevelXP()); // next level XP
+        data << uint64(0x37); // weekly xp
+        data << uint64(pGuild->GetCurrentXP()); // Curr exp
+        data << uint64(0); // Today exp (unsupported)
         SendPacket(&data);
     }
 }
@@ -306,7 +306,7 @@ void WorldSession::HandleGuildRewardsOpcode(WorldPacket& recvPacket)
         
     for(uint32 i = 0; i < vec.size(); ++i)
         data << uint32(vec[i]->item); // item entry
-	SendPacket(&data);
+    SendPacket(&data);
 }
 
 // Cata Status: Done

@@ -436,7 +436,7 @@ void Unit::SendMonsterMoveTransport(Unit *vehicleOwner)
     data << GetTransOffsetO();              // facing angle?
     data << uint32(SPLINEFLAG_TRANSPORT);
     data << uint32(0);                      // move time
-	data << uint32(1);
+    data << uint32(1);
     data << uint32(GetTransOffsetX());
     data << uint32(GetTransOffsetY());
     data << uint32(GetTransOffsetZ());
@@ -5580,7 +5580,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     triggered_spell_id = 70701;
                     break;
                 }
-				// Item - Icecrown 25 Normal Heartpiece
+                // Item - Icecrown 25 Normal Heartpiece
                 case 71880:
                 {
                     switch (getPowerType())
@@ -6350,7 +6350,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     triggered_spell_id = 32747;
                     break;
                 }
-				// Tricks of the Trade
+                // Tricks of the Trade
                 case 57934:
                 {
                     if (Unit* unitTarget = GetMisdirectionTarget())
@@ -6373,7 +6373,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                         if (!triggeredSpell)
                             return false;
                         basepoints0 = int32(triggerAmount * damage / 100 / (GetSpellMaxDuration(triggeredSpell) / triggeredSpell->EffectAmplitude[0]));
-						// Add remaining ticks to damage done
+                        // Add remaining ticks to damage done
                         basepoints0 += pVictim->GetRemainingDotDamage(GetGUID(), triggered_spell_id);
                     }
                     break;
@@ -6587,7 +6587,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                 pVictim->CastSpell(pVictim, 57894, true, NULL, NULL, GetGUID());
                 return true;
             }
-			// Misdirection
+            // Misdirection
             if (dummySpell->Id == 34477)
             {
                 RemoveAura(dummySpell->Id, GetGUID(), 0, AURA_REMOVE_BY_DEFAULT);
@@ -7857,7 +7857,7 @@ bool Unit::HandleAuraProc(Unit * pVictim, uint32 damage, Aura * triggeredByAura,
                     return true;
                 }
             }
-			// Glyph of Divinity
+            // Glyph of Divinity
             else if (dummySpell->Id == 54939)
             {
                 *handled = true;
@@ -8045,7 +8045,7 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                         if (GetStat(STAT_SPIRIT)   > stat) { trigger_spell_id = 60235;                               }
                         break;
                     }
-					case 64568:             // Blood Reserve
+                    case 64568:             // Blood Reserve
                     {
                         if (GetHealth() - damage < GetMaxHealth() * 0.35)
                         {
@@ -8167,7 +8167,7 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                     }
                     basepoints0 = CalculatePctN(int32(damage), triggerAmount) / 3;
                     target = this;
-					if (AuraEffect * aurEff = target->GetAuraEffect(trigger_spell_id, 0))
+                    if (AuraEffect * aurEff = target->GetAuraEffect(trigger_spell_id, 0))
                         basepoints0 += aurEff->GetAmount();
                 }
                 break;
@@ -8516,7 +8516,7 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                     return false;
                 break;
             }
-		// Brambles
+        // Brambles
         case 50419:
         {
             if (!roll_chance_i(triggerAmount))
@@ -8541,7 +8541,7 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
             target = this;
             trigger_spell_id = 22588;
         }
-		// Glyph of Shadow Word: Pain
+        // Glyph of Shadow Word: Pain
         case 55681:
         {
             // Shadow Word: Pain
@@ -8619,7 +8619,7 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
             break;
     }
 
-	// Sword Specialization
+    // Sword Specialization
     if (auraSpellInfo->SpellFamilyName == SPELLFAMILY_GENERIC && auraSpellInfo->SpellIconID == 1462 && procSpell)
         if (Player * plr = ToPlayer())
     {
@@ -10473,7 +10473,7 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                     if (pVictim->GetDiseasesByCaster(owner->GetGUID()) > 0)
                         DoneTotalMod *= (100.0f + aurEff->GetAmount()) / 100.0f;
 
-			// Rune Strike
+            // Rune Strike
             if (spellProto->SpellFamilyFlags[1] & 0x20000000)
                 {
                     float ApCoeffMod = 1.0f;
@@ -10712,7 +10712,7 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
             coeff *= 100.0f;
             modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_BONUS_MULTIPLIER, coeff);
             coeff /= 100.0f;
-			// DoneAdvertisedBenefit should be modified by owner auras
+            // DoneAdvertisedBenefit should be modified by owner auras
             if (isPet())
                 modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_ALL_EFFECTS, DoneAdvertisedBenefit);
 
@@ -11057,7 +11057,7 @@ uint32 Unit::SpellHealingBonus(Unit *pVictim, SpellEntry const *spellProto, uint
     // no bonus for heal potions/bandages
     if (spellProto->SpellFamilyName == SPELLFAMILY_POTION)
         return healamount;
-	// and Warlock's Healthstones      
+    // and Warlock's Healthstones      
     if (spellProto->SpellFamilyName == SPELLFAMILY_WARLOCK && (spellProto->SpellFamilyFlags[0] & 0x10000))
     {
         healamount = 0.45 * (GetMaxHealth() - 10 * (STAT_STAMINA - 180));    
@@ -11538,7 +11538,7 @@ bool Unit::IsDamageToThreatSpell(SpellEntry const * spellInfo) const
         case SPELLFAMILY_DEATHKNIGHT:
             if (spellInfo->SpellFamilyFlags[1] == 0x20000000) // Rune Strike
                 return true;
-			if (spellInfo->SpellFamilyFlags[2] == 0x8) // Death and Decay
+            if (spellInfo->SpellFamilyFlags[2] == 0x8) // Death and Decay
                 return true;
             break;
         case SPELLFAMILY_WARRIOR:

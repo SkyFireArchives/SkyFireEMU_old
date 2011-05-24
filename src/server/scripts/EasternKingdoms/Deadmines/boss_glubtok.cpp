@@ -48,19 +48,19 @@ class boss_glubtok : public CreatureScript
 public:
     boss_glubtok() : CreatureScript("boss_glubtok") { }
 
-	CreatureAI* GetAI(Creature* pCreature) const
+    CreatureAI* GetAI(Creature* pCreature) const
     {
         return new boss_glubtokAI (pCreature);
     }
 
-	struct boss_glubtokAI : public ScriptedAI
+    struct boss_glubtokAI : public ScriptedAI
     {
         boss_glubtokAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             pInstance = pCreature->GetInstanceScript();
         }
 
-		InstanceScript* pInstance;
+        InstanceScript* pInstance;
 
         uint32 uiTrashTimer;
         uint32 uiSlamTimer;

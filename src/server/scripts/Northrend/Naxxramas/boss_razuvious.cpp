@@ -72,7 +72,7 @@ public:
     struct boss_razuviousAI : public BossAI
     {
         boss_razuviousAI(Creature *c) : BossAI(c, BOSS_RAZUVIOUS) {
-		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         void KilledUnit(Unit* /*victim*/)

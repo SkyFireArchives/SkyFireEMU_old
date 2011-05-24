@@ -192,9 +192,9 @@ bool LoginQueryHolder::Initialize()
     stmt->setUInt32(0, lowGuid);
     res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADRANDOMBG, stmt);
 
-    stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PLAYER_ARENASTATS);
+    stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PLAYER_ARENAINFO);
     stmt->setUInt32(0, lowGuid);
-    res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADARENASTATS, stmt);
+    res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADARENAINFO, stmt);
 
     stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PLAYER_BANNED);
     stmt->setUInt32(0, lowGuid);
@@ -420,7 +420,7 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
     }
 
     QueryResult petquery = CharacterDatabase.PQuery("SELECT id FROM character_pet WHERE id != 0 ORDER BY id DESC LIMIT 1");
-	QueryResult result = CharacterDatabase.PQuery("SELECT COUNT(guid) FROM characters WHERE account = '%d'", GetAccountId());
+    QueryResult result = CharacterDatabase.PQuery("SELECT COUNT(guid) FROM characters WHERE account = '%d'", GetAccountId());
     uint8 charcount = 0;
     if (result)
     {

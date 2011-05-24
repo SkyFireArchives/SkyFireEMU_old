@@ -1248,11 +1248,11 @@ class debug_commandscript : public CommandScript
             uint32 opcode = atoi(args);
             if (opcode != 0)
                 handler->PSendSysMessage("Set debugOpcode to %u for debugging. WARNING, NO PACKETS APART FROM IT WILL BE SENT UNTIL YOU DISABLE THIS OPTION !!!", sWorld->debugOpcode);
-	
-	        sWorld->debugOpcode = opcode;
+    
+            sWorld->debugOpcode = opcode;
 
-	        if (opcode == 0)
-		        handler->PSendSysMessage("debugOpcode state was reset. The server will function normally now.");
+            if (opcode == 0)
+                handler->PSendSysMessage("debugOpcode state was reset. The server will function normally now.");
             return true;
         }
 };
