@@ -846,7 +846,7 @@ class World
 
     private:
         void ProcessQueryCallbacks();
-        QueryCallback<uint32> m_realmCharCallback;
+        QueryCallback<QueryResult, uint32> m_realmCharCallback;
 };
 
 extern uint32 realmID;
