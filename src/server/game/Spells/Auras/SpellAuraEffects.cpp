@@ -5789,22 +5789,23 @@ void AuraEffect::HandleModDamagePercentDone(AuraApplication const *aurApp, uint8
         for (int i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; ++i)
             target->ApplyModSignedFloatValue(PLAYER_FIELD_MOD_DAMAGE_DONE_PCT+i,GetAmount()/100.0f,apply);
      
-    if(GetSpellProto()->Id == 84963) //Inquisition
+    if (GetSpellProto()->Id == 84963) //Inquisition
     {
        switch (GetBase()->GetUnitOwner()->GetPower(POWER_HOLY_POWER))
        {
-            case 0:
-                  GetBase()->SetDuration(4000);
-                  break;
-            case 1:
-                  GetBase()->SetDuration(8000);
-                  break;
-            case 2:
-                  GetBase()->SetDuration(12000);
-                  break;
+            case 1: // 1HP
+               GetBase()->SetDuration(4000);
+               break;
+            case 2: // 2HP
+               GetBase()->SetDuration(8000);
+               break;
+            case 3: // 3HP
+               GetBase()->SetDuration(12000);
+               break;
        }
-     }
-
+	 target->SetPower(POWER_HOLY_POWER,0);
+     
+	 }
 }
 
 void AuraEffect::HandleModOffhandDamagePercent(AuraApplication const *aurApp, uint8 mode, bool apply) const

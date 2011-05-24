@@ -781,13 +781,24 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                     damage += count * int32(average * IN_MILLISECONDS) / m_caster->GetAttackTime(BASE_ATTACK);
                     break;
                 }
-                /*// Shield of Righteousness
-                if (m_spellInfo->SpellFamilyFlags[EFFECT_1] & 0x100000)
+                
+				if (m_spellInfo->Id == 5360) //Shield of Righteousness
                 {
-                    damage += m_caster->GetShieldBlockValue() * SpellMgr::CalculateSpellEffectAmount(m_spellInfo, EFFECT_1) / 100;
-                    break;
-                }*/
-                break;
+                   switch(m_caster->GetPower(POWER_HOLY_POWER)
+                   {
+                        case 1: 
+                           damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 20 / 100 );
+                           break;
+                        case 2: 
+                           damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 60 / 100 );
+                           break;
+                        case 3: 
+                           damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 120 / 100 );
+                           break;
+                   }
+                }
+
+             break;
             }
             case SPELLFAMILY_DEATHKNIGHT:
             {   
@@ -2644,6 +2655,27 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
         // Remove Grievious bite if fully healed
         if (unitTarget->HasAura(48920) && (unitTarget->GetHealth() + addhealth >= unitTarget->GetMaxHealth()))
             unitTarget->RemoveAura(48920);
+        if (m_spellInfo->Id == 85673) // Word of Glory
+		{
+          int32 dmg;
+          switch (m_caster->GetPower(POWER_HOLY_POWER))
+          {
+               case 1: 
+                  dmg = int32(addhealth + 1*(m-caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
+                  addhealth = dmg;
+                  break;
+               case 2: 
+                  dmg = int32(addhealth + 2*(m-caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
+                  addhealth = dmg;
+                  break;
+               case 3: 
+                  dmg = int32(addhealth + 3*(m-caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
+                  addhealth = dmg;
+                  break;
+          }
+		 m_caster->SetPower(POWER_HOLY_POWER,0);
+        
+		}
 
         m_damage -= addhealth;
     }
@@ -4404,12 +4436,7 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
                 (m_caster->HasAura(63220)) ? totalDamagePercentMod *= 1.15f : 0 ; // Glyphe of Templar's Verdict
                 m_caster->SetPower(POWER_HOLY_POWER, 0);
             }
-            // Word of Glory
-            if (m_spellInfo->Id == 85673)
-            {
-                m_caster->SetPower(POWER_HOLY_POWER, 0);
-            }
-            
+                      
             // Seal of Command Unleashed
             else if (m_spellInfo->Id == 20467)
             {
