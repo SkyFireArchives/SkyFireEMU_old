@@ -20,7 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "gamePCH.h"
 #include "Common.h"
 #include "Language.h"
 #include "WorldPacket.h"
@@ -35,6 +34,7 @@
 #include "SocialMgr.h"
 
 #define CHARTER_DISPLAY_ID 16161
+
 
 // Charters ID in item_template
 enum CharterItemIDs
@@ -85,12 +85,14 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
     sLog->outDebug("Petitioner with GUID %u tried sell petition: name %s", GUID_LOPART(guidNPC), name.c_str());
 
     // prevent cheating
-    Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(guidNPC,UNIT_NPC_FLAG_PETITIONER);
+    Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(guidNPC, UNIT_NPC_FLAG_PETITIONER);
     if (!pCreature)
     {
         sLog->outDebug("WORLD: HandlePetitionBuyOpcode - Unit (GUID: %u) not found or you can't interact with him.", GUID_LOPART(guidNPC));
         return;
     }
+
+
     if (!pCreature->isTabardDesigner())
         return;
 
@@ -106,18 +108,19 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NAME_EXISTS_S, name);
         return;
     }
+
     if (sObjectMgr->IsReservedName(name) || !ObjectMgr::IsValidCharterName(name))
     {
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NAME_INVALID, name);
         return;
     }
 
-    ItemPrototype const *pProto = ObjectMgr::GetItemPrototype(charterid);
+    /*ItemTemplate const *pProto = sObjectMgr->GetItemTemplate(charterid);
     if (!pProto)
     {
         _player->SendBuyError(BUY_ERR_CANT_FIND_ITEM, NULL, charterid, 0);
         return;
-    }
+    }*/
 
     if (!_player->HasEnoughMoney(cost))
     {                                                       //player hasn't got enough money
@@ -126,12 +129,12 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
     }
 
     ItemPosCountVec dest;
-    uint8 msg = _player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, charterid, pProto->BuyCount);
+    /*InventoryResult msg = _player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, charterid, pProto->BuyCount);
     if (msg != EQUIP_ERR_OK)
     {
-        _player->SendBuyError(msg, pCreature, charterid, 0);
+        _player->SendEquipError(msg, NULL, NULL, charterid);
         return;
-    }
+    }*/
 
     _player->ModifyMoney(-(int32)cost);
     Item *charter = _player->StoreNewItem(dest, charterid, true);
@@ -147,7 +150,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
     // a petition is invalid, if both the owner and the type matches
     // we checked above, if this player is in an arenateam, so this must be
     // datacorruption
-    QueryResult result = CharacterDatabase.PQuery("SELECT petitionguid FROM petition WHERE ownerguid = '%u'", _player->GetGUIDLow());
+    QueryResult result = CharacterDatabase.PQuery("SELECT petitionguid FROM petition WHERE ownerguid = '%u' ", _player->GetGUIDLow());
 
     std::ostringstream ssInvalidPetitionGUIDs;
 
@@ -168,7 +171,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     trans->PAppend("DELETE FROM petition WHERE petitionguid IN (%s)",  ssInvalidPetitionGUIDs.str().c_str());
     trans->PAppend("DELETE FROM petition_sign WHERE petitionguid IN (%s)", ssInvalidPetitionGUIDs.str().c_str());
-    trans->PAppend("INSERT INTO petition (ownerguid, petitionguid, name) VALUES ('%u', '%u', '%s')",
+    trans->PAppend("INSERT INTO petition (ownerguid, petitionguid, name, type) VALUES ('%u', '%u', '%s')",
         _player->GetGUIDLow(), charter->GetGUIDLow(), name.c_str());
     CharacterDatabase.CommitTransaction(trans);
 }
@@ -177,7 +180,7 @@ void WorldSession::HandlePetitionShowSignOpcode(WorldPacket & recv_data)
 {
     if (_player->GetGuildId())
         return;
-
+ 
     sLog->outDebug("Received opcode CMSG_PETITION_SHOW_SIGNATURES");
 
     uint8 signs = 0;
@@ -187,7 +190,20 @@ void WorldSession::HandlePetitionShowSignOpcode(WorldPacket & recv_data)
     // solve (possible) some strange compile problems with explicit use GUID_LOPART(petitionguid) at some GCC versions (wrong code optimization in compiler?)
     uint32 petitionguid_low = GUID_LOPART(petitionguid);
 
-    QueryResult result = CharacterDatabase.PQuery("SELECT playerguid FROM petition_sign WHERE petitionguid = '%u'", petitionguid_low);
+    QueryResult result = CharacterDatabase.PQuery("SELECT type FROM petition WHERE petitionguid = '%u'", petitionguid_low);
+    if (!result)
+    {
+        sLog->outError("Petition %u is not found for player %u %s", GUID_LOPART(petitionguid), GetPlayer()->GetGUIDLow(), GetPlayer()->GetName());
+        return;
+    }
+    Field *fields = result->Fetch();
+    uint32 type = fields[0].GetUInt8();
+
+    // if guild petition and has guild => error, return;
+    if (type == GUILD_CHARTER_TYPE && _player->GetGuildId())
+        return;
+
+    result = CharacterDatabase.PQuery("SELECT playerguid FROM petition_sign WHERE petitionguid = '%u'", petitionguid_low);
 
     // result == NULL also correct in case no sign yet
     if (result)
@@ -236,7 +252,7 @@ void WorldSession::SendPetitionQueryOpcode(uint64 petitionguid)
 
     QueryResult result = CharacterDatabase.PQuery(
         "SELECT ownerguid, name, "
-        "  (SELECT COUNT(playerguid) FROM petition_sign WHERE petition_sign.petitionguid = '%u') AS signs "
+        "  (SELECT COUNT(playerguid) FROM petition_sign WHERE petition_sign.petitionguid = '%u') AS signs, "
         "FROM petition WHERE petitionguid = '%u'", GUID_LOPART(petitionguid), GUID_LOPART(petitionguid));
 
     if (result)
@@ -296,11 +312,13 @@ void WorldSession::HandlePetitionRenameOpcode(WorldPacket & recv_data)
     if (!item)
         return;
 
+
     if (sObjectMgr->GetGuildByName(newname))
     {
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NAME_EXISTS_S, newname);
         return;
     }
+
     if (sObjectMgr->IsReservedName(newname) || !ObjectMgr::IsValidCharterName(newname))
     {
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NAME_INVALID, newname);
@@ -332,7 +350,7 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket & recv_data)
 
     QueryResult result = CharacterDatabase.PQuery(
         "SELECT ownerguid, "
-        "  (SELECT COUNT(playerguid) FROM petition_sign WHERE petition_sign.petitionguid = '%u') AS signs "
+        "  (SELECT COUNT(playerguid) FROM petition_sign WHERE petition_sign.petitionguid = '%u') AS signs, "
         "FROM petition WHERE petitionguid = '%u'", GUID_LOPART(petitionguid), GUID_LOPART(petitionguid));
 
     if (!result)
@@ -361,6 +379,7 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket & recv_data)
         Guild::SendCommandResult(this, GUILD_INVITE_S, ERR_ALREADY_IN_GUILD_S, _player->GetName());
         return;
     }
+
     if (_player->GetGuildIdInvited())
     {
         Guild::SendCommandResult(this, GUILD_INVITE_S, ERR_ALREADY_INVITED_TO_GUILD_S, _player->GetName());
@@ -390,9 +409,9 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket & recv_data)
         return;
     }
 
-    CharacterDatabase.PExecute("INSERT INTO petition_sign (ownerguid,petitionguid, playerguid, player_account) VALUES ('%u', '%u', '%u','%u')", GUID_LOPART(ownerguid),GUID_LOPART(petitionguid), plguidlo,GetAccountId());
+    CharacterDatabase.PExecute("INSERT INTO petition_sign (ownerguid, petitionguid, playerguid, player_account) VALUES ('%u', '%u', '%u', '%u')", GUID_LOPART(ownerguid), GUID_LOPART(petitionguid), plguidlo, GetAccountId());
 
-    sLog->outDebug("PETITION SIGN: GUID %u by player: %s (GUID: %u Account: %u)", GUID_LOPART(petitionguid), _player->GetName(),plguidlo,GetAccountId());
+    sLog->outDebug("PETITION SIGN: GUID %u by player: %s (GUID: %u Account: %u)", GUID_LOPART(petitionguid), _player->GetName(), plguidlo, GetAccountId());
 
     WorldPacket data(SMSG_PETITION_SIGN_RESULTS, (8+8+4));
     data << uint64(petitionguid);
@@ -461,6 +480,7 @@ void WorldSession::HandleOfferPetitionOpcode(WorldPacket & recv_data)
         Guild::SendCommandResult(this, GUILD_INVITE_S, ERR_ALREADY_IN_GUILD_S, _player->GetName());
         return;
     }
+
     if (player->GetGuildIdInvited())
     {
         Guild::SendCommandResult(this, GUILD_INVITE_S, ERR_ALREADY_INVITED_TO_GUILD_S, _player->GetName());
@@ -494,21 +514,29 @@ void WorldSession::HandleOfferPetitionOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
 {
-    sLog->outDebug("Received opcode CMSG_TURN_IN_PETITION"); // ok
-    //recv_data.hexlike();
+    sLog->outDebug("Received opcode CMSG_TURN_IN_PETITION");
 
+    // Get petition guid from packet
     WorldPacket data;
-    uint64 petitionguid;
+    uint64 petitionGuid;
 
+    recv_data >> petitionGuid;
+
+    // Check if player really has the required petition charter
+    Item* item = _player->GetItemByGuid(petitionGuid);
+    if (!item)
+        return;
+
+    sLog->outDebug("Petition %u turned in by %u", GUID_LOPART(petitionGuid), _player->GetGUIDLow());
+
+    // Get petition data from db
     uint32 ownerguidlo;
     std::string name;
 
-    recv_data >> petitionguid;
+    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PETITION);
+    stmt->setUInt32(0, GUID_LOPART(petitionGuid));
+    PreparedQueryResult result = CharacterDatabase.Query(stmt);
 
-    sLog->outDebug("Petition %u turned in by %u", GUID_LOPART(petitionguid), _player->GetGUIDLow());
-
-    // data
-    QueryResult result = CharacterDatabase.PQuery("SELECT ownerguid, name FROM petition WHERE petitionguid = '%u'", GUID_LOPART(petitionguid));
     if (result)
     {
         Field *fields = result->Fetch();
@@ -517,60 +545,57 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
     }
     else
     {
-        sLog->outError("petition table has broken data!");
+        sLog->outError("Player %s (guid: %u) tried to turn in petition (guid: %u) that is not present in the database", _player->GetName(), _player->GetGUIDLow(), GUID_LOPART(petitionGuid));
         return;
     }
 
-    if (_player->GetGuildId())
-    {
-        data.Initialize(SMSG_TURN_IN_PETITION_RESULTS, 4);
-        data << (uint32)PETITION_TURN_ALREADY_IN_GUILD; // already in guild
-        _player->GetSession()->SendPacket(&data);
-        return;
-    }
-
+    // Only the petition owner can turn in the petition
     if (_player->GetGUIDLow() != ownerguidlo)
         return;
 
-    // signs
-    uint8 signs;
-    result = CharacterDatabase.PQuery("SELECT playerguid FROM petition_sign WHERE petitionguid = '%u'", GUID_LOPART(petitionguid));
-    if (result)
-        signs = uint8(result->GetRowCount());
-    else
-        signs = 0;
+    // Get petition signatures from db
+    uint8 signatures;
 
-    if (signs < sWorld->getIntConfig(CONFIG_MIN_PETITION_SIGNS))
+    stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PETITION_SIGNATURE);
+    stmt->setUInt32(0, GUID_LOPART(petitionGuid));
+    result = CharacterDatabase.Query(stmt);
+
+    if (result)
+        signatures = uint8(result->GetRowCount());
+    else
+        signatures = 0;
+
+    uint32 requiredSignatures;
+    if (_player->GetGuildId())
+        requiredSignatures = sWorld->getIntConfig(CONFIG_MIN_PETITION_SIGNS);
+
+    // Notify player if signatures are missing
+    if (signatures < requiredSignatures)
     {
         data.Initialize(SMSG_TURN_IN_PETITION_RESULTS, 4);
-        data << (uint32)PETITION_TURN_NEED_MORE_SIGNATURES; // need more signatures...
+        data << (uint32)PETITION_TURN_NEED_MORE_SIGNATURES;
         SendPacket(&data);
         return;
     }
 
-    if (sObjectMgr->GetGuildByName(name))
-    {
-        Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_NAME_EXISTS_S, name);
-        return;
-    }
+    // Proceed with guild/arena team creation
 
-    // and at last charter item check
-    Item *item = _player->GetItemByGuid(petitionguid);
-    if (!item)
-        return;
+    // Delete charter item
+    _player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
 
-    // delete charter item
-    _player->DestroyItem(item->GetBagSlot(),item->GetSlot(), true);
-
+    
     Guild* guild = new Guild;
     if (!guild->Create(_player, name))
     {
         delete guild;
         return;
     }
+ 
 
     // register guild and add guildmaster
     sObjectMgr->AddGuild(guild);
+
+    uint8 signs = 0;
 
     // add members
     for (uint8 i = 0; i < signs; ++i)
@@ -578,15 +603,15 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
         Field* fields = result->Fetch();
         guild->AddMember(fields[0].GetUInt64());
         result->NextRow();
-    }
+     }
 
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
-    trans->PAppend("DELETE FROM petition WHERE petitionguid = '%u'", GUID_LOPART(petitionguid));
-    trans->PAppend("DELETE FROM petition_sign WHERE petitionguid = '%u'", GUID_LOPART(petitionguid));
+    trans->PAppend("DELETE FROM petition WHERE petitionguid = '%u'", GUID_LOPART(petitionGuid));
+    trans->PAppend("DELETE FROM petition_sign WHERE petitionguid = '%u'", GUID_LOPART(petitionGuid));
     CharacterDatabase.CommitTransaction(trans);
 
     // created
-    sLog->outDebug("TURN IN PETITION GUID %u", GUID_LOPART(petitionguid));
+    sLog->outDebug("TURN IN PETITION GUID %u", GUID_LOPART(petitionGuid));
 
     data.Initialize(SMSG_TURN_IN_PETITION_RESULTS, 4);
     data << (uint32)PETITION_TURN_OK;
@@ -595,8 +620,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandlePetitionShowListOpcode(WorldPacket & recv_data)
 {
-    sLog->outDebug("Received CMSG_PETITION_SHOWLIST");       // ok
-    //recv_data.hexlike();
+    sLog->outDebug("Received CMSG_PETITION_SHOWLIST");
 
     uint64 guid;
     recv_data >> guid;
@@ -613,20 +637,16 @@ void WorldSession::SendPetitionShowList(uint64 guid)
         return;
     }
 
-    // remove fake death
-    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
-        GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
-
     WorldPacket data(SMSG_PETITION_SHOWLIST, 8+1+4*6);
     data << guid;                                           // npc guid
-    data << uint8(1);                                          // count
 
-    data << uint32(1);                                  // index
-    data << uint32(GUILD_CHARTER);                      // charter entry
-    data << uint32(CHARTER_DISPLAY_ID);                 // charter display id
-    data << uint32(GUILD_CHARTER_COST);                 // charter cost
-    data << uint32(0);                                  // unknown
-    data << uint32(9);                                  // required signs?
+        data << uint8(1);                                   // count
+        data << uint32(1);                                  // index
+        data << uint32(GUILD_CHARTER);                      // charter entry
+        data << uint32(CHARTER_DISPLAY_ID);                 // charter display id
+        data << uint32(GUILD_CHARTER_COST);                 // charter cost
+        data << uint32(0);                                  // unknown
+        data << uint32(9);                                  // required signs?
 
     SendPacket(&data);
     sLog->outDebug("Sent SMSG_PETITION_SHOWLIST");
