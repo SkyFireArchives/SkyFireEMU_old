@@ -70,8 +70,8 @@ int32 ReputationMgr::GetBaseReputation(FactionEntry const* factionEntry) const
             (factionEntry->BaseRepRaceMask[i] == 0  &&
              factionEntry->BaseRepClassMask[i] != 0)) &&
             (factionEntry->BaseRepClassMask[i] & classMask ||
-             factionEntry->BaseRepClassMask[i] == 0)
-)
+             factionEntry->BaseRepClassMask[i] == 0))
+            
             return factionEntry->BaseRepValue[i];
     }
 
@@ -124,8 +124,8 @@ uint32 ReputationMgr::GetDefaultStateFlags(FactionEntry const* factionEntry) con
             (factionEntry->BaseRepRaceMask[i] == 0  &&
              factionEntry->BaseRepClassMask[i] != 0)) &&
             (factionEntry->BaseRepClassMask[i] & classMask ||
-             factionEntry->BaseRepClassMask[i] == 0)
-)
+             factionEntry->BaseRepClassMask[i] == 0))
+
             return factionEntry->ReputationFlags[i];
     }
     return 0;
@@ -183,7 +183,7 @@ void ReputationMgr::SendInitialReputations()
 
     RepListID a = 0;
 
-    for (FactionStateList::const_iterator itr = m_factions.begin(); itr != m_factions.end(); ++itr)
+    for (FactionStateList::iterator itr = m_factions.begin(); itr != m_factions.end(); ++itr)
     {
         // fill in absent fields
         for (; a != itr->first; a++)
@@ -195,6 +195,8 @@ void ReputationMgr::SendInitialReputations()
         // fill in encountered data
         data << uint8  (itr->second.Flags);
         data << uint32 (itr->second.Standing);
+
+        itr->second.needSend = false;
 
         ++a;
     }
