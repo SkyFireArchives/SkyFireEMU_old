@@ -802,8 +802,8 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
 
     if (mi->HasExtraMovementFlag(MOVEMENTFLAG2_INTERPOLATED_TURNING))    // 4.0.6
     {
-	     data >> mi->fallTime;
-	     data >> mi->j_zspeed;
+         data >> mi->fallTime;
+         data >> mi->j_zspeed;
 
         if (mi->HasMovementFlag(MOVEMENTFLAG_JUMPING))
         {

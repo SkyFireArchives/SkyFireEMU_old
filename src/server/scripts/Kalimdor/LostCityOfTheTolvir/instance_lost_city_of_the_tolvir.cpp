@@ -38,130 +38,130 @@
 class instance_lost_city_of_the_tolvir : public InstanceMapScript
 {
 public:
-	instance_lost_city_of_the_tolvir() : InstanceMapScript("instance_lost_city_of_the_tolvir", 755) { }
+    instance_lost_city_of_the_tolvir() : InstanceMapScript("instance_lost_city_of_the_tolvir", 755) { }
 
-	InstanceScript* GetInstanceScript(InstanceMap* pMap) const
-	{
-		return new instance_lost_city_of_the_tolvir_InstanceMapScript(pMap);
-	}
+    InstanceScript* GetInstanceScript(InstanceMap* pMap) const
+    {
+        return new instance_lost_city_of_the_tolvir_InstanceMapScript(pMap);
+    }
 
-	struct instance_lost_city_of_the_tolvir_InstanceMapScript: public InstanceScript
-	{
-	instance_lost_city_of_the_tolvir_InstanceMapScript(Map* pMap): 
-	
-	    InstanceScript(pMap) { };
+    struct instance_lost_city_of_the_tolvir_InstanceMapScript: public InstanceScript
+    {
+    instance_lost_city_of_the_tolvir_InstanceMapScript(Map* pMap): 
+    
+        InstanceScript(pMap) { };
 
-		uint32 uiEncounter[ENCOUNTERS];
+        uint32 uiEncounter[ENCOUNTERS];
 
-		uint64 uiGeneralHusam;
-		uint64 uiHighProphetBarim;
-		uint64 uiLockmaw;
-		uint64 uiAugh;
-		uint64 uiSiamat;
-		uint64 uiTeamInInstance;
-		
-	void Initialize()
-	{
-		uiGeneralHusam = 0;
-		uiHighProphetBarim = 0;
-		uiLockmaw = 0;
-		uiAugh = 0;
-		uiSiamat = 0;
-			
-		for(uint8 i=0 ; i<ENCOUNTERS; ++i)
-			
-			uiEncounter[i] = NOT_STARTED;
+        uint64 uiGeneralHusam;
+        uint64 uiHighProphetBarim;
+        uint64 uiLockmaw;
+        uint64 uiAugh;
+        uint64 uiSiamat;
+        uint64 uiTeamInInstance;
+        
+    void Initialize()
+    {
+        uiGeneralHusam = 0;
+        uiHighProphetBarim = 0;
+        uiLockmaw = 0;
+        uiAugh = 0;
+        uiSiamat = 0;
+            
+        for(uint8 i=0 ; i<ENCOUNTERS; ++i)
+            
+            uiEncounter[i] = NOT_STARTED;
  
-	}
+    }
     
       bool IsEncounterInProgress() const
-	{
-		for(uint8 i=0; i<ENCOUNTERS; ++i)
-		{
-			if (uiEncounter[i] == IN_PROGRESS)
-			
-				return true;
-		}			
-		return false;
-	}
+    {
+        for(uint8 i=0; i<ENCOUNTERS; ++i)
+        {
+            if (uiEncounter[i] == IN_PROGRESS)
+            
+                return true;
+        }            
+        return false;
+    }
 
       void OnCreatureCreate(Creature* pCreature, bool )
       {
-	   switch(pCreature->GetEntry())
-	   {
-			case BOSS_GENERAL_HUSAM:
-				uiGeneralHusam = pCreature->GetGUID();
-				break;
-			case BOSS_HIGH_PROPHET_BARIM:
-				uiHighProphetBarim = pCreature->GetGUID();
-				break;
-			case BOSS_LOCKMAW:
-				uiLockmaw = pCreature->GetGUID();
-				break;
-			case BOSS_AUGH:
-				uiAugh = pCreature->GetGUID();
-				break;
-			case BOSS_SIAMAT:
-				uiSiamat = pCreature->GetGUID();
-				break;
-	   }
+       switch(pCreature->GetEntry())
+       {
+            case BOSS_GENERAL_HUSAM:
+                uiGeneralHusam = pCreature->GetGUID();
+                break;
+            case BOSS_HIGH_PROPHET_BARIM:
+                uiHighProphetBarim = pCreature->GetGUID();
+                break;
+            case BOSS_LOCKMAW:
+                uiLockmaw = pCreature->GetGUID();
+                break;
+            case BOSS_AUGH:
+                uiAugh = pCreature->GetGUID();
+                break;
+            case BOSS_SIAMAT:
+                uiSiamat = pCreature->GetGUID();
+                break;
+       }
      }
 
       uint64 getData64(uint32 identifier)
       {
-	   switch(identifier)
-	   {
-		case DATA_GENERAL_HUSAM: 
-		     return uiGeneralHusam;
-		case DATA_HIGH_PROPHET_BARIM:
-		     return uiHighProphetBarim;
-		case DATA_LOCKMAW:
-		     return uiLockmaw;
-	       case DATA_AUGH:
-		     return uiAugh;
-	       case DATA_SIAMAT:
-		     return uiSiamat;
-	   }
+       switch(identifier)
+       {
+        case DATA_GENERAL_HUSAM: 
+             return uiGeneralHusam;
+        case DATA_HIGH_PROPHET_BARIM:
+             return uiHighProphetBarim;
+        case DATA_LOCKMAW:
+             return uiLockmaw;
+           case DATA_AUGH:
+             return uiAugh;
+           case DATA_SIAMAT:
+             return uiSiamat;
+       }
 
-	   return 0;
+       return 0;
 
       }
 
       void SetData(uint32 type, uint32 data)
       {
-	   switch(type)
-	   {
-	   case DATA_GENERAL_HUSAM_EVENT:
-		uiEncounter[0] = data;
-		break;
-	   case DATA_HIGH_PROPHET_BARIM_EVENT:
-	 	uiEncounter[1] = data;
-		break;
-	   case DATA_LOCKMAW_AUGH_EVENT:
-		uiEncounter[2] = data;
-		break;
-	   case DATA_SIAMAT_EVENT:
-		uiEncounter[3] = data;
-		break;
-	   }
+       switch(type)
+       {
+       case DATA_GENERAL_HUSAM_EVENT:
+        uiEncounter[0] = data;
+        break;
+       case DATA_HIGH_PROPHET_BARIM_EVENT:
+         uiEncounter[1] = data;
+        break;
+       case DATA_LOCKMAW_AUGH_EVENT:
+        uiEncounter[2] = data;
+        break;
+       case DATA_SIAMAT_EVENT:
+        uiEncounter[3] = data;
+        break;
+       }
 
-	   if (data == DONE)
-	      SaveToDB();
+       if (data == DONE)
+          SaveToDB();
        }
 
       uint32 GetData(uint32 type)
       {
-	   switch(type)
-	   {
-	   case DATA_GENERAL_HUSAM_EVENT:
-		return uiEncounter[0];
-	   case DATA_HIGH_PROPHET_BARIM_EVENT:
-		return uiEncounter[1];
-	   case DATA_LOCKMAW_AUGH_EVENT:
-		return uiEncounter[2];
-	   case DATA_SIAMAT_EVENT:
-		return uiEncounter[3];
-	   }
+       switch(type)
+       {
+       case DATA_GENERAL_HUSAM_EVENT:
+        return uiEncounter[0];
+       case DATA_HIGH_PROPHET_BARIM_EVENT:
+        return uiEncounter[1];
+       case DATA_LOCKMAW_AUGH_EVENT:
+        return uiEncounter[2];
+       case DATA_SIAMAT_EVENT:
+        return uiEncounter[3];
+       }
 
       return 0;
 
@@ -169,50 +169,50 @@ public:
 
       std::string GetSaveData()
       {
-	OUT_SAVE_INST_DATA;
+    OUT_SAVE_INST_DATA;
 
-	std::string str_data;
+    std::string str_data;
 
-	std::ostringstream saveStream;
-	saveStream << "L V" << uiEncounter[0] << " " << uiEncounter[1]  << " " << uiEncounter[2]  << " " << uiEncounter[3];
+    std::ostringstream saveStream;
+    saveStream << "L V" << uiEncounter[0] << " " << uiEncounter[1]  << " " << uiEncounter[2]  << " " << uiEncounter[3];
 
-	str_data = saveStream.str();
+    str_data = saveStream.str();
 
-	OUT_SAVE_INST_DATA_COMPLETE;
-	return str_data;
+    OUT_SAVE_INST_DATA_COMPLETE;
+    return str_data;
       }
 
-	void Load(const char* in)
-	{
-	   if (!in)
-	   {
-	      OUT_LOAD_INST_DATA_FAIL;
-	      return;
-	   }
+    void Load(const char* in)
+    {
+       if (!in)
+       {
+          OUT_LOAD_INST_DATA_FAIL;
+          return;
+       }
 
-	 OUT_LOAD_INST_DATA(in);
+     OUT_LOAD_INST_DATA(in);
 
-	 char dataHead1, dataHead2;
-	 uint16 data0, data1, data2, data3;
+     char dataHead1, dataHead2;
+     uint16 data0, data1, data2, data3;
 
-	 std::istringstream loadStream(in);
-	 loadStream >> dataHead1 >> dataHead2 >> data0 >> data1 >> data2 >> data3;
+     std::istringstream loadStream(in);
+     loadStream >> dataHead1 >> dataHead2 >> data0 >> data1 >> data2 >> data3;
 
-	 if (dataHead1 == 'L' && dataHead2 == 'V')
-	 {
-	   uiEncounter[0] = data0;
-	   uiEncounter[1] = data1;
-	   uiEncounter[2] = data2;
-	   uiEncounter[3] = data3;
-	   
-	 for(uint8 i=0; i<ENCOUNTERS; ++i)
-	    if (uiEncounter[i] == IN_PROGRESS)
-		 uiEncounter[i] == NOT_STARTED;
-	 }
-	   
-	   else OUT_LOAD_INST_DATA_FAIL;
+     if (dataHead1 == 'L' && dataHead2 == 'V')
+     {
+       uiEncounter[0] = data0;
+       uiEncounter[1] = data1;
+       uiEncounter[2] = data2;
+       uiEncounter[3] = data3;
+       
+     for(uint8 i=0; i<ENCOUNTERS; ++i)
+        if (uiEncounter[i] == IN_PROGRESS)
+         uiEncounter[i] == NOT_STARTED;
+     }
+       
+       else OUT_LOAD_INST_DATA_FAIL;
 
-	OUT_LOAD_INST_DATA_COMPLETE;
+    OUT_LOAD_INST_DATA_COMPLETE;
        }
 
     };
@@ -247,9 +247,9 @@ public:
 
 
 
-	   
+       
 
  
 
-	    
+        
  

@@ -181,7 +181,7 @@ class instance_deadmines : public InstanceMapScript
                }
             }
         
-			}                                                
+            }                                                
             virtual void Update(uint32 diff)
             {
                 if (!IronCladDoorGUID || !DefiasCannonGUID || !DoorLeverGUID)

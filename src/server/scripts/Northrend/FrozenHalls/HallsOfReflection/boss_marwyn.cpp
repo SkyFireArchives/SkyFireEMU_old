@@ -65,7 +65,7 @@ public:
     struct boss_marwynAI : public boss_horAI
     {
         boss_marwynAI(Creature *pCreature) : boss_horAI(pCreature) {
-		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         void Reset()

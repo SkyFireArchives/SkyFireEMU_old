@@ -77,7 +77,7 @@ public:
     struct boss_faerlinaAI : public BossAI
     {
         boss_faerlinaAI(Creature *c) : BossAI(c, BOSS_FAERLINA), greet(false) {
-		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         bool greet;

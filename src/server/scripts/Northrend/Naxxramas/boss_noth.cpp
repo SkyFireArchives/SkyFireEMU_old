@@ -83,7 +83,7 @@ public:
     struct boss_nothAI : public BossAI
     {
         boss_nothAI(Creature *c) : BossAI(c, BOSS_NOTH) {
-		me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         uint32 waveCount, balconyCount;
