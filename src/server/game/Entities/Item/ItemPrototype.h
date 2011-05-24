@@ -651,7 +651,7 @@ struct ItemPrototype
     int32  RandomProperty;                                  // id from ItemRandomProperties.dbc
     int32  RandomSuffix;                                    // id from ItemRandomSuffix.dbc
     uint32 Block;
-	uint32 ItemSet;                                         // id from ItemSet.dbc
+    uint32 ItemSet;                                         // id from ItemSet.dbc
     uint32 MaxDurability;
     uint32 Area;                                            // id from AreaTable.dbc
     uint32 Map;                                             // id from Map.dbc

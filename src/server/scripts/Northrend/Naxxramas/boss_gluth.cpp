@@ -68,7 +68,7 @@ public:
         {
             // Do not let Gluth be affected by zombies' debuff
             me->ApplySpellImmune(0, IMMUNITY_ID, SPELL_INFECTED_WOUND, true);
-			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
@@ -183,5 +183,5 @@ class spell_gluth_decimate : public SpellScriptLoader
 void AddSC_boss_gluth()
 {
     new boss_gluth();
-	new spell_gluth_decimate();
+    new spell_gluth_decimate();
 }

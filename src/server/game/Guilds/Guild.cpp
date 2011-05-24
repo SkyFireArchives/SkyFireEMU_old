@@ -1228,6 +1228,7 @@ void Guild::UpdateMemberData(Player* plr, uint8 dataid, uint32 value)
             break;
         case GUILD_MEMBER_DATA_LEVEL:
             pMember->SetLevel(value);
+            break;
         default: 
             sLog->outError("Guild::UpdateMemberData: Called with incorrect DATAID %u (value %u)", dataid, value);
             break;

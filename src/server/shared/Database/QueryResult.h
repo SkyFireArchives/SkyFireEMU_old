@@ -46,8 +46,8 @@ class ResultSet
 
         Field *Fetch() const { return m_currentRow; }
         const Field & operator [] (uint32 index) const
-        { 
-            ASSERT(index < m_fieldCount); 
+        {
+            ASSERT(index < m_fieldCount);
             return m_currentRow[index];
         }
 
@@ -77,14 +77,14 @@ class PreparedResultSet
         Field* Fetch() const
         {
             ASSERT(m_rowPosition < m_rowCount);
-            return m_rows[m_rowPosition];
+            return m_rows[uint32(m_rowPosition)];
         }
 
         const Field & operator [] (uint32 index) const
         {
             ASSERT(m_rowPosition < m_rowCount);
             ASSERT(index < m_fieldCount);
-            return m_rows[m_rowPosition][index];
+            return m_rows[uint32(m_rowPosition)][index];
         }
 
     protected:
@@ -92,7 +92,7 @@ class PreparedResultSet
         uint64 m_rowPosition;
         std::vector<Field*> m_rows;
         uint32 m_fieldCount;
-      
+
     private:
         MYSQL_BIND* m_rBind;
         MYSQL_STMT* m_stmt;

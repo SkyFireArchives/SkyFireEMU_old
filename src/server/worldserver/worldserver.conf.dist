@@ -46,10 +46,10 @@
 #        Default: 1
 #
 #    LoginDatabase.SynchThreads
-#    WorldDatabase.SynchThreads	
-#    CharacterDatabase.SynchThreads	
-#        Description: The amount of MySQL connections spawned to handle.	
-#        Default:     1 - (LoginDatabase.WorkerThreads)	
+#    WorldDatabase.SynchThreads    
+#    CharacterDatabase.SynchThreads    
+#        Description: The amount of MySQL connections spawned to handle.    
+#        Default:     1 - (LoginDatabase.WorkerThreads)    
 #                     1 - (WorldDatabase.WorkerThreads)
 #
 #    MaxPingTime
@@ -73,7 +73,7 @@ CharacterDatabaseInfo = "127.0.0.1;3306;user;password;characters"
 LoginDatabase.WorkerThreads = 1
 WorldDatabase.WorkerThreads = 1
 CharacterDatabase.WorkerThreads = 1
-LoginDatabase.SynchThreads     = 1	
+LoginDatabase.SynchThreads     = 1    
 WorldDatabase.SynchThreads     = 1
 CharacterDatabase.SynchThreads = 2
 MaxPingTime = 30
@@ -1350,6 +1350,15 @@ PreserveCustomChannelDuration = 14
 ###############################################################################
 # GAME MASTER SETTINGS
 #
+#    GM.EnableDevTag
+#        GM Developer Tag
+#        Default: 0 (disable)
+#                 1 (enable)
+#
+#    GM.DevTagGMLevel
+#        GM Level for Developer Tag
+#        Default: 100
+#
 #    GM.LoginState
 #        GM mode at login
 #        Default: 2 (last save state)
@@ -1431,6 +1440,8 @@ PreserveCustomChannelDuration = 14
 #
 ###############################################################################
 
+GM.EnableDevTag          = 0
+GM.DevTagGMLevel         = 100
 GM.LoginState            = 2
 GM.Visible               = 2
 GM.AcceptTickets         = 2

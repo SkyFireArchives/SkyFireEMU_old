@@ -302,7 +302,7 @@ public:
     {
         return new boss_warrior_toc5AI(pCreature);
     }
-	
+    
     struct boss_warrior_toc5AI : public ScriptedAI
     {
 
@@ -318,7 +318,7 @@ public:
 
             me->SetReactState(REACT_PASSIVE);
             me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
-			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
@@ -331,7 +331,7 @@ public:
         uint32 uiInterceptTimer;
         uint32 uiMortalStrikeTimer;
         uint32 uiAttackTimer;
-    	uint32 uiResetTimer;
+        uint32 uiResetTimer;
 
         bool bDone;
         bool bHome;
@@ -362,7 +362,7 @@ public:
             {
                 bDone = true;
 
-     		DoScriptText(SAY_START_2, me);
+             DoScriptText(SAY_START_2, me);
 
                 if (pInstance && me->GetGUID() == pInstance->GetData64(DATA_GRAND_CHAMPION_1))
                     me->SetHomePosition(739.678f,662.541f,412.393f,4.49f);
@@ -424,7 +424,7 @@ public:
 
         void JustDied(Unit* pKiller)
         {
-    	 		DoScriptText(SAY_START_1, me);
+                 DoScriptText(SAY_START_1, me);
             if (pInstance)
                 pInstance->SetData(BOSS_GRAND_CHAMPIONS, DONE);
 
@@ -443,7 +443,7 @@ public:
     {
         return new boss_mage_toc5AI(pCreature);
     }
-	
+    
     struct boss_mage_toc5AI : public ScriptedAI
     {
 
@@ -459,7 +459,7 @@ public:
 
             me->SetReactState(REACT_PASSIVE);
             me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
-			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
@@ -561,7 +561,7 @@ public:
 
         void JustDied(Unit* pKiller)
         {
-    	 		DoScriptText(SAY_START_1, me);
+                 DoScriptText(SAY_START_1, me);
             if (pInstance)
                 pInstance->SetData(BOSS_GRAND_CHAMPIONS, DONE);
 
@@ -595,7 +595,7 @@ public:
 
             me->SetReactState(REACT_PASSIVE);
             me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
-			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
@@ -712,7 +712,7 @@ public:
 
         void JustDied(Unit* pKiller)
         {
-    	 		DoScriptText(SAY_START_1, me);
+                 DoScriptText(SAY_START_1, me);
             if (pInstance)
                 pInstance->SetData(BOSS_GRAND_CHAMPIONS, DONE);
 
@@ -746,7 +746,7 @@ public:
 
             me->SetReactState(REACT_PASSIVE);
             me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
-			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
@@ -886,7 +886,7 @@ public:
 
         void JustDied(Unit* pKiller)
         {
-    	 	DoScriptText(SAY_START_1, me);
+             DoScriptText(SAY_START_1, me);
             if (pInstance)
                 pInstance->SetData(BOSS_GRAND_CHAMPIONS, DONE);
 
@@ -921,7 +921,7 @@ public:
 
             me->SetReactState(REACT_PASSIVE);
             me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
-			me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
@@ -1013,7 +1013,7 @@ public:
 
         void JustDied(Unit* pKiller)
         {
-    	 	DoScriptText(SAY_START_1, me);
+             DoScriptText(SAY_START_1, me);
             if (pInstance)
                 pInstance->SetData(BOSS_GRAND_CHAMPIONS, DONE);
 

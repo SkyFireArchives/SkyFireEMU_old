@@ -230,6 +230,8 @@ enum WorldIntConfigs
     CONFIG_INSTANCE_UNLOAD_DELAY,
     CONFIG_MAX_PRIMARY_TRADE_SKILL,
     CONFIG_MIN_PETITION_SIGNS,
+    CONFIG_GM_DEV_TAG_ENABLE,
+    CONFIG_GM_DEV_TAG_LEVEL,
     CONFIG_GM_LOGIN_STATE,
     CONFIG_GM_VISIBLE_STATE,
     CONFIG_GM_ACCEPT_TICKETS,
@@ -840,7 +842,7 @@ class World
 
     private:
         void ProcessQueryCallbacks();
-        QueryCallback<uint32> m_realmCharCallback;
+        QueryCallback<QueryResult, uint32> m_realmCharCallback;
 };
 
 extern uint32 realmID;

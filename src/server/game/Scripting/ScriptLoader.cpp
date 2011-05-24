@@ -219,7 +219,7 @@ void AddSC_boss_nalorakk();
 void AddSC_boss_zuljin();
 void AddSC_instance_zulaman();
 void AddSC_zulaman();
-void AddSC_boss_jeklik();					//Zul'Gurub
+void AddSC_boss_jeklik();                    //Zul'Gurub
 void AddSC_boss_venoxis();
 void AddSC_boss_marli();
 void AddSC_boss_mandokir();
@@ -348,6 +348,8 @@ void AddSC_thousand_needles();
 void AddSC_thunder_bluff();
 void AddSC_ungoro_crater();
 void AddSC_winterspring();
+//void AddSC_lost_city_of_the_tolvir();        //Cata:The Lost City of the Tol'vir
+void AddSC_instance_lost_city_of_the_tolvir();
 
 //northrend
 void AddSC_boss_slad_ran();
@@ -572,8 +574,9 @@ void AddSC_zangarmarsh();
 
 // Cataclysm Scripts
 
-void AddSC_the_stonecore();					 //Cata:TheStonecore
+void AddSC_the_stonecore();                     //Cata:TheStonecore
 void AddSC_instance_the_stonecore();
+
 
 // battlegrounds
 
@@ -817,7 +820,7 @@ void AddEasternKingdomsScripts()
     AddSC_boss_zuljin();
     AddSC_instance_zulaman();
     AddSC_zulaman();
-	AddSC_boss_jeklik();					//Zul'Gurub
+    AddSC_boss_jeklik();                    //Zul'Gurub
     AddSC_boss_venoxis();
     AddSC_boss_marli();
     AddSC_boss_mandokir();
@@ -925,7 +928,7 @@ void AddKalimdorScripts()
     AddSC_instance_wailing_caverns();
     AddSC_zulfarrak();                      //Zul'Farrak generic
     AddSC_instance_zulfarrak();             //Zul'Farrak instance script
-	AddSC_npc_pusillin();                   //Dire maul npc Pusillin
+    AddSC_npc_pusillin();                   //Dire maul npc Pusillin
 
     AddSC_ashenvale();
     AddSC_azshara();
@@ -950,6 +953,8 @@ void AddKalimdorScripts()
     AddSC_thunder_bluff();
     AddSC_ungoro_crater();
     AddSC_winterspring();
+    //AddSC_lost_city_of_the_tolvir();
+    AddSC_instance_lost_city_of_the_tolvir();
 #endif
 }
 
@@ -1181,8 +1186,8 @@ void AddNorthrendScripts()
     AddSC_isle_of_conquest();
 
     // Cataclysm Scripts
-    AddSC_instance_the_stonecore();			//Cata: The Stonecore
     AddSC_the_stonecore();
+    AddSC_instance_the_stonecore();
 
 #endif
 }

@@ -47,7 +47,7 @@ enum Data64
 {
     DATA_ANNOUNCER,
     DATA_MAIN_GATE,
-    DATA_MAIN_GATE1,				
+    DATA_MAIN_GATE1,                
 
     DATA_GRAND_CHAMPION_VEHICLE_1,
     DATA_GRAND_CHAMPION_VEHICLE_2,
@@ -74,27 +74,27 @@ enum eNpcs
     NPC_JAELYNE                 = 34657,
     NPC_LANA                    = 34703,
 
-	// Crusader Champions
+    // Crusader Champions
     NPC_EADRIC                  = 35119,
     NPC_PALETRESS               = 34928,
 
-	// Crusader mobs
+    // Crusader mobs
     NPC_ARGENT_LIGHWIELDER      = 35309,
     NPC_ARGENT_MONK             = 35305,
     NPC_PRIESTESS               = 35307,
 
-	// Black Knight
+    // Black Knight
     NPC_BLACK_KNIGHT            = 35451,
-	
-	// Black Knight's add
+    
+    // Black Knight's add
     NPC_RISEN_JAEREN            = 35545,
     NPC_RISEN_ARELAS            = 35564,
-	
-	// Announcer	
+    
+    // Announcer    
     NPC_JAEREN_AN               = 35591,
     NPC_ARELAS_AN               = 35592,
 
-	// Memory	
+    // Memory    
     MEMORY_ALGALON              = 35052,
     MEMORY_ARCHIMONDE           = 35041,
     MEMORY_CHROMAGGUS           = 35033,
@@ -121,7 +121,7 @@ enum eNpcs
     MEMORY_VEKNILASH            = 35036,
     MEMORY_VEZAX                = 35051,
 
-	// Announcer Start Event
+    // Announcer Start Event
     NPC_JAEREN                  = 35004,
     NPC_ARELAS                  = 35005
 };

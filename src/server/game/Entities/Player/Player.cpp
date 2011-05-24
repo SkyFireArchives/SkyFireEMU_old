@@ -1122,7 +1122,7 @@ void Player::HandleDrowning(uint32 time_diff)
     // In water
     if (m_MirrorTimerFlags & UNDERWATER_INWATER)
     {
-		if (m_zoneUpdateId == 5144) return;
+        if (m_zoneUpdateId == 5144) return;
         if (m_zoneUpdateId == 5145) return;
         if (m_zoneUpdateId == 4815) return;
         // Breath timer not activated - activate it
@@ -1161,7 +1161,7 @@ void Player::HandleDrowning(uint32 time_diff)
     // In dark water
     if (m_MirrorTimerFlags & UNDERWARER_INDARKWATER)
     {
-		if (m_zoneUpdateId == 5144) return;
+        if (m_zoneUpdateId == 5144) return;
         if (m_zoneUpdateId == 5145) return;
         if (m_zoneUpdateId == 4815) return;
         // Fatigue timer not activated - activate it
@@ -2599,7 +2599,16 @@ void Player::SetGameMaster(bool on)
     {
         m_ExtraFlags |= PLAYER_EXTRA_GM_ON;
         setFaction(35);
-        SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_GM);
+
+        if(sWorld->getIntConfig(CONFIG_GM_DEV_TAG_ENABLE) == 1)
+        {
+            if(sWorld->getIntConfig(CONFIG_GM_DEV_TAG_LEVEL) == GetSession()->GetSecurity())
+                SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_DEVELOPER);
+            else
+                SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_GM);
+        }
+        else
+            SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_GM);
 
         if (Pet* pet = GetPet())
         {
@@ -2631,6 +2640,7 @@ void Player::SetGameMaster(bool on)
         m_ExtraFlags &= ~ PLAYER_EXTRA_GM_ON;
         setFactionForRace(getRace());
         RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_GM);
+        RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_DEVELOPER);
 
         if (Pet* pet = GetPet())
         {
@@ -3060,7 +3070,7 @@ void Player::InitStatsForLevel(bool reapplyMods)
     // cleanup unit flags (will be re-applied if need at aura load).
     RemoveFlag(UNIT_FIELD_FLAGS,
         UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_DISABLE_MOVE | UNIT_FLAG_NOT_ATTACKABLE_1 |
-		UNIT_FLAG_OOC_NOT_ATTACKABLE | UNIT_FLAG_PASSIVE  | UNIT_FLAG_LOOTING          |
+        UNIT_FLAG_OOC_NOT_ATTACKABLE | UNIT_FLAG_PASSIVE  | UNIT_FLAG_LOOTING          |
         UNIT_FLAG_PET_IN_COMBAT  | UNIT_FLAG_SILENCED     | UNIT_FLAG_PACIFIED         |
         UNIT_FLAG_STUNNED        | UNIT_FLAG_IN_COMBAT    | UNIT_FLAG_DISARMED         |
         UNIT_FLAG_CONFUSED       | UNIT_FLAG_FLEEING      | UNIT_FLAG_NOT_SELECTABLE   |
@@ -3070,7 +3080,7 @@ void Player::InitStatsForLevel(bool reapplyMods)
     SetFlag(UNIT_FIELD_FLAGS_2,UNIT_FLAG2_REGENERATE_POWER);// must be set
 
     // cleanup player flags (will be re-applied if need at aura load), to avoid have ghost flag without ghost aura, for example.
-    RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_AFK | PLAYER_FLAGS_DND | PLAYER_FLAGS_GM | PLAYER_FLAGS_GHOST | PLAYER_ALLOW_ONLY_ABILITY);
+    RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_AFK | PLAYER_FLAGS_DND | PLAYER_FLAGS_DEVELOPER | PLAYER_FLAGS_GM | PLAYER_FLAGS_GHOST | PLAYER_ALLOW_ONLY_ABILITY);
 
     RemoveStandFlags(UNIT_STAND_FLAGS_ALL);                 // one form stealth modified bytes
     RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP | UNIT_BYTE2_FLAG_SANCTUARY);
@@ -4741,7 +4751,9 @@ void Player::DeleteFromDB(uint64 playerguid, uint32 accountId, bool updateRealmC
             trans->PAppend("DELETE FROM character_equipmentsets WHERE guid = '%u'",guid);
             trans->PAppend("DELETE FROM guild_eventlog WHERE PlayerGuid1 = '%u' OR PlayerGuid2 = '%u'",guid, guid);
             trans->PAppend("DELETE FROM guild_bank_eventlog WHERE PlayerGuid = '%u'",guid);
-            trans->PAppend("DELETE FROM character_battleground_data WHERE guid = '%u'",guid);
+            PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_PLAYER_BGDATA);
+            stmt->setUInt32(0, guid);
+            trans->Append(stmt);
             trans->PAppend("DELETE FROM character_glyphs WHERE guid = '%u'",guid);
             trans->PAppend("DELETE FROM character_queststatus_daily WHERE guid = '%u'",guid);
             trans->PAppend("DELETE FROM character_talent WHERE guid = '%u'",guid);
@@ -16254,6 +16266,7 @@ void Player::_LoadArenaTeamInfo(PreparedQueryResult result)
 {
     // arenateamid, played_week, played_season, personal_rating
     memset((void*)&m_uint32Values[PLAYER_FIELD_ARENA_TEAM_INFO_1_1], 0, sizeof(uint32) * MAX_ARENA_SLOT * ARENA_TEAM_END);
+
     if (!result)
         return;
 
@@ -16261,63 +16274,46 @@ void Player::_LoadArenaTeamInfo(PreparedQueryResult result)
     {
         Field* fields = result->Fetch();
 
-        uint32 arenateamid       = fields[0].GetUInt32();
-        uint32 played_week       = fields[1].GetUInt32();
-        uint32 played_season     = fields[2].GetUInt32();
-        uint32 wons_season       = fields[3].GetUInt32();
+        uint32 arenaTeamId      = fields[0].GetUInt32();
 
-        ArenaTeam* aTeam = sObjectMgr->GetArenaTeamById(arenateamid);
-        if (!aTeam)
+        ArenaTeam* arenaTeam = sObjectMgr->GetArenaTeamById(arenaTeamId);
+        if (!arenaTeam)
         {
-            sLog->outError("Player::_LoadArenaTeamInfo: couldn't load arenateam %u", arenateamid);
+            sLog->outError("Player::_LoadArenaTeamInfo: couldn't load arenateam %u", arenaTeamId);
             continue;
         }
 
-        uint8  arenaSlot = aTeam->GetSlot();
+        uint8 arenaSlot = arenaTeam->GetSlot();
 
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_ID, arenateamid);
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_TYPE, aTeam->GetType());
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_MEMBER, (aTeam->GetCaptain() == GetGUID()) ? 0 : 1);
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_GAMES_WEEK, played_week);
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_GAMES_SEASON, played_season);
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_WINS_SEASON, wons_season);
+        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_ID, arenaTeamId);
+        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_TYPE, arenaTeam->GetType());
+        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_MEMBER, (arenaTeam->GetCaptain() == GetGUID()) ? 0 : 1);
+        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_GAMES_WEEK, uint32(fields[1].GetUInt16()));
+        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_GAMES_SEASON, uint32(fields[2].GetUInt16()));
+        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_WINS_SEASON, uint32(fields[3].GetUInt16()));
     }
     while (result->NextRow());
 }
 
 void Player::_LoadArenaStatsInfo(PreparedQueryResult result)
 {
-    uint8 slot = 0;
-    if (!result)
+    uint16 personalRatingCache[] = {0, 0, 0};
+
+    if (result)
     {
-        for (; slot <= 2; ++slot)
+        do
         {
-            CharacterDatabase.PExecute("INSERT INTO character_arena_stats (guid, slot, personal_rating, matchmaker_rating) VALUES (%u, %u, 0, 1500)", GetGUIDLow(), slot);
-            SetArenaTeamInfoField(slot, ARENA_TEAM_PERSONAL_RATING, 0);
+            Field* fields = result->Fetch();
+
+            personalRatingCache[fields[0].GetUInt8()] = fields[1].GetUInt16();
         }
-        return;
+        while (result->NextRow());
     }
 
-    do
+    for (uint8 slot = 0; slot <= 2; ++slot)
     {
-        Field* fields = result->Fetch();
-
-        uint32 personalrating = 0;
-        uint32 matchmakerrating = 1500;
-        if (fields[0].GetUInt8() > slot)
-        {
-            CharacterDatabase.PExecute("INSERT INTO character_arena_stats (guid, slot, personal_rating, matchmaker_rating) VALUES (%u, %u, %u, %u)", GetGUIDLow(), slot, personalrating, matchmakerrating);
-            SetArenaTeamInfoField(slot, ARENA_TEAM_PERSONAL_RATING, personalrating);
-            slot++;
-            continue;
-        }
-
-        personalrating = fields[1].GetUInt32();
-        matchmakerrating = fields[2].GetUInt32();
-        SetArenaTeamInfoField(slot, ARENA_TEAM_PERSONAL_RATING, personalrating);
-        slot++;
+        SetArenaTeamInfoField(slot, ARENA_TEAM_PERSONAL_RATING, uint32(personalRatingCache[slot]));
     }
-    while (result->NextRow());
 }
 
 void Player::_LoadEquipmentSets(PreparedQueryResult result)
@@ -16358,8 +16354,8 @@ void Player::_LoadBGData(PreparedQueryResult result)
 
     Field* fields = result->Fetch();
     // Expecting only one row
-    //             0         1      2       3       4       5       6          7           8          9
-    // SELECT instance_id, team, join_x, join_y, join_z, join_o, join_map, taxi_start, taxi_end, mount_spell FROM character_battleground_data WHERE guid = ?
+    //        0           1     2      3      4      5      6          7          8        9
+    // SELECT instanceId, team, joinX, joinY, joinZ, joinO, joinMapId, taxiStart, taxiEnd, mountSpell FROM character_battleground_data WHERE guid = ?
 
     m_bgData.bgInstanceID = fields[0].GetUInt32();
     m_bgData.bgTeam       = fields[1].GetUInt16();
@@ -16643,7 +16639,7 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
             continue;
 
         if (ArenaTeam * at = sObjectMgr->GetArenaTeamById(arena_team_id))
-            if (at->HaveMember(GetGUID()))
+            if (at->IsMember(GetGUID()))
                 continue;
 
         // arena team not exist or not member, cleanup fields
@@ -19965,21 +19961,25 @@ void Player::RemovePetitionsAndSigns(uint64 guid, uint32 type)
 
 void Player::LeaveAllArenaTeams(uint64 guid)
 {
-    QueryResult result = CharacterDatabase.PQuery("SELECT arena_team_member.arenateamid FROM arena_team_member JOIN arena_team ON arena_team_member.arenateamid = arena_team.arenateamid WHERE guid='%u'", GUID_LOPART(guid));
+    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PLAYER_ARENA_TEAMS);
+    stmt->setUInt32(0, GUID_LOPART(guid));
+    PreparedQueryResult result = CharacterDatabase.Query(stmt);
+
     if (!result)
         return;
 
     do
     {
-        Field *fields = result->Fetch();
-        uint32 at_id = fields[0].GetUInt32();
-        if (at_id != 0)
+        Field* fields = result->Fetch();
+        uint32 arenaTeamId = fields[0].GetUInt32();
+        if (arenaTeamId != 0)
         {
-            ArenaTeam * at = sObjectMgr->GetArenaTeamById(at_id);
-            if (at)
-                at->DelMember(guid);
+            ArenaTeam* arenaTeam = sObjectMgr->GetArenaTeamById(arenaTeamId);
+            if (arenaTeam)
+                arenaTeam->DelMember(guid, true);
         }
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 }
 
 void Player::SetRestBonus (float rest_bonus_new)
@@ -24419,13 +24419,25 @@ void Player::_SaveEquipmentSets(SQLTransaction& trans)
 
 void Player::_SaveBGData(SQLTransaction& trans)
 {
-    trans->PAppend("DELETE FROM character_battleground_data WHERE guid='%u'", GetGUIDLow());
+    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_PLAYER_BGDATA);
+    stmt->setUInt32(0, GetGUIDLow());
+    trans->Append(stmt);
     if (m_bgData.bgInstanceID)
     {
         /* guid, bgInstanceID, bgTeam, x, y, z, o, map, taxi[0], taxi[1], mountSpell */
-        trans->PAppend("INSERT INTO character_battleground_data VALUES ('%u', '%u', '%u', '%f', '%f', '%f', '%f', '%u', '%u', '%u', '%u')",
-            GetGUIDLow(), m_bgData.bgInstanceID, m_bgData.bgTeam, m_bgData.joinPos.GetPositionX(), m_bgData.joinPos.GetPositionY(), m_bgData.joinPos.GetPositionZ(),
-            m_bgData.joinPos.GetOrientation(), m_bgData.joinPos.GetMapId(), m_bgData.taxiPath[0], m_bgData.taxiPath[1], m_bgData.mountSpell);
+        stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_PLAYER_BGDATA);
+        stmt->setUInt32(0, GetGUIDLow());
+        stmt->setUInt32(1, m_bgData.bgInstanceID);
+        stmt->setUInt16(2, m_bgData.bgTeam);
+        stmt->setFloat (3, m_bgData.joinPos.GetPositionX());
+        stmt->setFloat (4, m_bgData.joinPos.GetPositionY());
+        stmt->setFloat (5, m_bgData.joinPos.GetPositionZ());
+        stmt->setFloat (6, m_bgData.joinPos.GetOrientation());
+        stmt->setUInt16(7, m_bgData.joinPos.GetMapId());
+        stmt->setUInt16(8, m_bgData.taxiPath[0]);
+        stmt->setUInt16(9, m_bgData.taxiPath[1]);
+        stmt->setUInt16(10,m_bgData.mountSpell);
+        trans->Append(stmt);
     }
 }
 

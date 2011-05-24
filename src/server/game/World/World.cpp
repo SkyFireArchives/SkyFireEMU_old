@@ -879,6 +879,8 @@ void World::LoadConfigSettings(bool reload)
         m_int_configs[CONFIG_MIN_PETITION_SIGNS] = 9;
     }
 
+    m_int_configs[CONFIG_GM_DEV_TAG_ENABLE]     = sConfig->GetIntDefault("GM.EnableDevTag", 0);
+    m_int_configs[CONFIG_GM_DEV_TAG_LEVEL]      = sConfig->GetIntDefault("GM.DevTagGMLevel", 100);
     m_int_configs[CONFIG_GM_LOGIN_STATE]        = sConfig->GetIntDefault("GM.LoginState", 2);
     m_int_configs[CONFIG_GM_VISIBLE_STATE]      = sConfig->GetIntDefault("GM.Visible", 2);
     m_int_configs[CONFIG_GM_CHAT]               = sConfig->GetIntDefault("GM.Chat", 2);
@@ -2712,7 +2714,7 @@ void World::SetPlayerSecurityLimit(AccountTypes _sec)
 void World::ResetWeeklyQuests()
 {
     CharacterDatabase.Execute("DELETE FROM character_queststatus_weekly");
-	CharacterDatabase.Execute("UPDATE character_currency SET thisweek = 0");
+    CharacterDatabase.Execute("UPDATE character_currency SET thisweek = 0");
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
         if (itr->second->GetPlayer())
             itr->second->GetPlayer()->ResetWeeklyQuestStatus();

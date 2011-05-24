@@ -3597,6 +3597,10 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (i)
         {
+	    case 85673: // World of Glory
+            spellInfo->Effect[1] = 0;
+            count++;
+            break;
         case 1680: // Whirlwind  (Fury)
             spellInfo->EffectRadiusIndex[0] = 8;
             spellInfo->EffectRadiusIndex[1] = 8;
@@ -3943,6 +3947,10 @@ void SpellMgr::LoadSpellCustomAttr()
         case 12051: // Evocation - now we can interrupt this
             spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_INTERRUPT;
             ++count;
+            break;
+        case 26573 : //Consecration
+            spellInfo->EffectTriggerSpell[2] = 82366;
+            count++;
             break;
         case 25771: // Forbearance - wrong mechanic immunity in DBC since 3.0.x
             spellInfo->EffectMiscValue[0] = MECHANIC_IMMUNE_SHIELD;

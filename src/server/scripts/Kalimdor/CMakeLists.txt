@@ -102,6 +102,8 @@ set(scripts_STAT_SRCS
   Kalimdor/OnyxiasLair/boss_onyxia.cpp
   Kalimdor/OnyxiasLair/onyxias_lair.h
   Kalimdor/OnyxiasLair/instance_onyxias_lair.cpp
+  Kalimdor/LostCityOfTheTolvir/instance_lost_city_of_the_tolvir.cpp
+ 
 )
 
 message("  -> Prepared: Kalimdor")

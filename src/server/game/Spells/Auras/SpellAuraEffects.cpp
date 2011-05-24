@@ -4600,9 +4600,9 @@ void AuraEffect::HandleModStateImmunityMask(AuraApplication const *aurApp, uint8
         for (std::list <AuraType>::iterator iter = immunity_list.begin(); iter != immunity_list.end(); ++iter)
             target->RemoveAurasByType(*iter);
 
-	    for (std::list <AuraType>::iterator iter = immunity_list.begin(); iter != immunity_list.end(); ++iter)
+        for (std::list <AuraType>::iterator iter = immunity_list.begin(); iter != immunity_list.end(); ++iter)
         target->ApplySpellImmune(GetId(), IMMUNITY_STATE, *iter, apply);
-	// stop handling the effect if it was removed by linked event
+    // stop handling the effect if it was removed by linked event
     if (aurApp->GetRemoveMode())
         return;
 }
@@ -5788,6 +5788,24 @@ void AuraEffect::HandleModDamagePercentDone(AuraApplication const *aurApp, uint8
     if (target->GetTypeId() == TYPEID_PLAYER)
         for (int i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; ++i)
             target->ApplyModSignedFloatValue(PLAYER_FIELD_MOD_DAMAGE_DONE_PCT+i,GetAmount()/100.0f,apply);
+     
+    if (GetSpellProto()->Id == 84963) //Inquisition
+    {
+       switch (GetBase()->GetUnitOwner()->GetPower(POWER_HOLY_POWER))
+       {
+            case 1: // 1HP
+               GetBase()->SetDuration(4000);
+               break;
+            case 2: // 2HP
+               GetBase()->SetDuration(8000);
+               break;
+            case 3: // 3HP
+               GetBase()->SetDuration(12000);
+               break;
+       }
+	 target->SetPower(POWER_HOLY_POWER,0);
+     
+	 }
 }
 
 void AuraEffect::HandleModOffhandDamagePercent(AuraApplication const *aurApp, uint8 mode, bool apply) const

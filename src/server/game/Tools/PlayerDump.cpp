@@ -29,7 +29,7 @@
 #include "ObjectMgr.h"
 #include "AccountMgr.h"
 
-#define DUMP_TABLE_COUNT 27
+#define DUMP_TABLE_COUNT 29
 struct DumpTable
 {
     char const* name;
@@ -44,6 +44,8 @@ static DumpTable dumpTables[DUMP_TABLE_COUNT] =
     { "character_achievement_progress",   DTT_CHAR_TABLE },
     { "character_action",                 DTT_CHAR_TABLE },
     { "character_aura",                   DTT_CHAR_TABLE },
+    { "character_branchspec",             DTT_CHAR_TABLE },
+    { "character_currency",               DTT_CHAR_TABLE },
     { "character_declinedname",           DTT_CHAR_TABLE },
     { "character_equipmentsets",          DTT_EQSET_TABLE},
     { "character_gifts",                  DTT_ITEM_GIFT  },
@@ -321,9 +323,9 @@ bool PlayerDumpWriter::DumpTable(std::string& dump, uint32 guid, char const*tabl
                     StoreGUID(result,1,items); break;       // item guid collection (mail_items.item_guid)
                 case DTT_CHARACTER:
                 {
-                    if (result->GetFieldCount() <= 67)      // avoid crashes on next check
+                    if (result->GetFieldCount() <= 72)      // avoid crashes on next check
                         return true;
-                    if (result->Fetch()[67].GetUInt32())    // characters.deleteInfos_Account - if filled error
+                    if (result->Fetch()[72].GetUInt32())    // characters.deleteInfos_Account - if filled error
                         return false;
                     break;
                 }
@@ -526,11 +528,11 @@ DumpReturn PlayerDumpReader::LoadDump(const std::string& file, uint32 account, s
                     ROLLBACK(DUMP_FILE_BROKEN);
 
                 const char null[5] = "NULL";
-                if (!changenth(line, 68, null))             // characters.deleteInfos_Account
+                if (!changenth(line, 71, null))             // characters.deleteInfos_Account
                     ROLLBACK(DUMP_FILE_BROKEN);
-                if (!changenth(line, 69, null))             // characters.deleteInfos_Name
+                if (!changenth(line, 72, null))             // characters.deleteInfos_Name
                     ROLLBACK(DUMP_FILE_BROKEN);
-                if (!changenth(line, 70, null))             // characters.deleteDate
+                if (!changenth(line, 73, null))             // characters.deleteDate
                     ROLLBACK(DUMP_FILE_BROKEN);
                 break;
             }

@@ -1347,7 +1347,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
             m_magnetingAura->DropCharge();
         m_magnetingAura = NULL;
     }
-	
+    
     if (missInfo != SPELL_MISS_EVADE && m_caster && !m_caster->IsFriendlyTo(unit) && !IsPositiveSpell(m_spellInfo->Id))
     {
         m_caster->CombatStart(unit, !(m_spellInfo->AttributesEx3 & SPELL_ATTR3_NO_INITIAL_AGGRO));
@@ -3762,27 +3762,27 @@ void Spell::finish(bool ok)
     if (m_spellInfo->Attributes & SPELL_ATTR0_STOP_ATTACK_TARGET)
         m_caster->AttackStop();
 
-	if(m_spellInfo->Id == 30455) // Ice Lance
-	{
-		if(m_caster->HasAura(44544)) // Fingers of Frost
-		{
-			m_caster->RemoveAuraFromStack(44544);
-		}
-	}
-		if(m_spellInfo->Id == 44572) // Deep Freeze
-	{
-		if(m_caster->HasAura(44544)) // Fingers of Frost
-		{
-			m_caster->RemoveAuraFromStack(44544);
-		}
-	}
-	if(m_spellInfo->Id == 2061) // Flash Heal
-	{
-		if(m_caster->HasAura(88688)) // Surge of Light 
-		{
-			m_caster->RemoveAura(88688);
-		}
-	}
+    if(m_spellInfo->Id == 30455) // Ice Lance
+    {
+        if(m_caster->HasAura(44544)) // Fingers of Frost
+        {
+            m_caster->RemoveAuraFromStack(44544);
+        }
+    }
+    if(m_spellInfo->Id == 44572) // Deep Freeze
+    {
+        if(m_caster->HasAura(44544)) // Fingers of Frost
+        {
+            m_caster->RemoveAuraFromStack(44544);
+        }
+    }
+    if(m_spellInfo->Id == 2061) // Flash Heal
+    {
+        if(m_caster->HasAura(88688)) // Surge of Light 
+        {
+            m_caster->RemoveAura(88688);
+        }
+    }
 }
 
 void Spell::SendCastResult(SpellCastResult result)
@@ -4145,7 +4145,7 @@ void Spell::WriteSpellGoTargets(WorldPacket * data)
 
 void Spell::SendLogExecute()
 {
-	WorldPacket data(SMSG_SPELLLOGEXECUTE, 8+4+4+4+4+8);
+    WorldPacket data(SMSG_SPELLLOGEXECUTE, 8+4+4+4+4+8);
 
     data.append(m_caster->GetPackGUID());
 
@@ -4335,7 +4335,7 @@ void Spell::SendResurrectRequest(Player* target)
     data << uint8(0);
 
     data << uint8(m_caster->GetTypeId() == TYPEID_PLAYER ? 0 : 1);
-	data << uint32(target->GetResurrectionSpellId());
+    data << uint32(target->GetResurrectionSpellId());
     target->GetSession()->SendPacket(&data);
 }
 
@@ -4428,7 +4428,7 @@ void Spell::TakePower()
                     {
                         if (ihit->missCondition != SPELL_MISS_NONE)
                         {
-							hit = false;
+                            hit = false;
                             //lower spell cost on fail (by talent aura)
                             if (Player *modOwner = m_caster->ToPlayer()->GetSpellModOwner())
                                 modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_SPELL_COST_REFUND_ON_FAIL, m_powerCost);
@@ -5072,7 +5072,7 @@ SpellCastResult Spell::CheckCast(bool strict)
             return castResult;
     }
 
-	// Dispel check - only if the first effect is dispel
+    // Dispel check - only if the first effect is dispel
     if (!m_IsTriggeredSpell && (m_spellInfo->Effect[EFFECT_0] == SPELL_EFFECT_DISPEL))
         if (Unit const * target = m_targets.getUnitTarget())
             if (!GetSpellRadius(m_spellInfo, EFFECT_0, target->IsFriendlyTo(m_caster)))
@@ -5151,7 +5151,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                     Unit* target = m_targets.getUnitTarget();
                     if (!target || (target->IsFriendlyTo(m_caster) && target->GetCreatureType() != CREATURE_TYPE_UNDEAD))
                         return SPELL_FAILED_BAD_TARGETS;
-					if (!target->IsFriendlyTo(m_caster) && !m_caster->HasInArc(static_cast<float>(M_PI), target))
+                    if (!target->IsFriendlyTo(m_caster) && !m_caster->HasInArc(static_cast<float>(M_PI), target))
                         return SPELL_FAILED_UNIT_NOT_INFRONT;
                 }
                 else if (m_spellInfo->Id == 19938)          // Awaken Peon
@@ -5272,7 +5272,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                 }
                 if (m_caster->HasUnitState(UNIT_STAT_ROOT))
                     return SPELL_FAILED_ROOTED;
-				if (m_caster->GetTypeId() == TYPEID_PLAYER)
+                if (m_caster->GetTypeId() == TYPEID_PLAYER)
                     if (Unit* target = m_targets.getUnitTarget())
                         if (!target->isAlive())
                             return SPELL_FAILED_BAD_TARGETS;
@@ -5468,7 +5468,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                     return SPELL_FAILED_BAD_TARGETS;
                 break;
             }
-			case SPELL_EFFECT_REDIRECT_THREAT:
+            case SPELL_EFFECT_REDIRECT_THREAT:
             {
                 if (m_spellInfo->Id == 57934 && m_targets.getUnitTarget() &&
                     m_targets.getUnitTarget()->GetTypeId() != TYPEID_PLAYER)
