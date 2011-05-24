@@ -268,10 +268,8 @@ void CharacterDatabaseConnection::DoPrepareStatements()
     PrepareStatement(CHAR_DEL_PLAYER_BGDATA, "DELETE FROM character_battleground_data WHERE guid = ?", CONNECTION_ASYNC);
     PrepareStatement(CHAR_RESET_PLAYERS_BGDATA, "UPDATE character_battleground_data SET instanceId = 0", CONNECTION_SYNCH);
 
-}
-
     // Petitions
-    PrepareStatement(CHAR_LOAD_PETITION, "SELECT ownerguid, name, type FROM petition WHERE petitionguid = ?", CONNECTION_SYNCH);
+    PrepareStatement(CHAR_LOAD_PETITION, "SELECT ownerguid, name, FROM petition WHERE petitionguid = ?", CONNECTION_SYNCH);
     PrepareStatement(CHAR_LOAD_PETITION_SIGNATURE, "SELECT playerguid FROM petition_sign WHERE petitionguid = ?", CONNECTION_SYNCH);
 
     // Arena teams
@@ -287,3 +285,5 @@ void CharacterDatabaseConnection::DoPrepareStatements()
     PrepareStatement(CHAR_UPDATE_ARENA_TEAM_MEMBER_STATS, "REPLACE INTO character_arena_stats (guid, slot, personalRating, matchMakerRating) VALUES (?, ?, ?, ?)", CONNECTION_ASYNC);
     PrepareStatement(CHAR_UPDATE_CHARACTER_ARENA_STATS, "REPLACE INTO character_arena_stats (guid, slot, matchMakerRating) VALUES (?, ?, ?)", CONNECTION_ASYNC);
     PrepareStatement(CHAR_LOAD_PLAYER_ARENA_TEAMS, "SELECT arena_team_member.arenaTeamId FROM arena_team_member JOIN arena_team ON arena_team_member.arenaTeamId = arena_team.arenaTeamId WHERE guid = ?", CONNECTION_SYNCH);
+
+}
