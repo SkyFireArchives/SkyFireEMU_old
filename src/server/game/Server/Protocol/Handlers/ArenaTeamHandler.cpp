@@ -43,14 +43,12 @@ void WorldSession::HandleArenaTeamCreate(WorldPacket & recv_data)
     recv_data >> name;
 
     ArenaTeam* at = new ArenaTeam;
-    if (!at->Create(_player->GetGUID(), type, name))
+    if (!at->Create(GUID_LOPART(_player->GetGUID()), type, name, background, icon, iconcolor, border, bordercolor))
     {
         sLog->outError("ArenaTeamHandler: arena team create failed.");
         delete at;
         return;
     }
-
-    at->SetEmblem(background, icon, iconcolor, border, bordercolor);
 
     // register team and add captain
     sObjectMgr->AddArenaTeam(at);
