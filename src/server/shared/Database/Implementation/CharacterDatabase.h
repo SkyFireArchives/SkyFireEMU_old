@@ -34,7 +34,7 @@ class CharacterDatabaseConnection : public MySQLConnection
         CharacterDatabaseConnection(ACE_Activation_Queue* q, MySQLConnectionInfo& connInfo) : MySQLConnection(q, connInfo) {}
 
         //- Loads databasetype specific prepared statements
-        bool Open();
+        void DoPrepareStatements();
 };
 
 typedef DatabaseWorkerPool<CharacterDatabaseConnection> CharacterDatabaseWorkerPool;
@@ -219,8 +219,10 @@ enum CharacterDatabaseStatements
     CHAR_DEL_AURA,
     CHAR_ADD_AURA,
 
-	CHAR_LOAD_PLAYER_CURRENCY,
+    CHAR_LOAD_PLAYER_CURRENCY,
 
+    CHAR_ADD_PLAYER_BGDATA,
+    CHAR_DEL_PLAYER_BGDATA,
     CHAR_ADD_INSTANCE_SAVE,
     CHAR_UPDATE_INSTANCE_DATA,
 

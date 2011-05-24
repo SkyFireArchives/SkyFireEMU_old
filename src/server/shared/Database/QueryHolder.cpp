@@ -37,7 +37,7 @@ bool SQLQueryHolder::SetQuery(size_t index, const char *sql)
     SQLElementData element;
     element.type = SQL_ELEMENT_RAW;
     element.element.query = strdup(sql);
-    
+
     SQLResultSetUnion result;
     result.qresult = NULL;
 
@@ -49,7 +49,7 @@ bool SQLQueryHolder::SetPQuery(size_t index, const char *format, ...)
 {
     if (!format)
     {
-        sLog->outError("Query (index: %zu) is empty.",index);
+        sLog->outError("Query (index: %zu) is empty.", index);
         return false;
     }
 
@@ -61,7 +61,7 @@ bool SQLQueryHolder::SetPQuery(size_t index, const char *format, ...)
 
     if (res == -1)
     {
-        sLog->outError("SQL Query truncated (and not execute) for format: %s",format);
+        sLog->outError("SQL Query truncated (and not execute) for format: %s", format);
         return false;
     }
 
@@ -80,7 +80,7 @@ bool SQLQueryHolder::SetPreparedQuery(size_t index, PreparedStatement* stmt)
     SQLElementData element;
     element.type = SQL_ELEMENT_PREPARED;
     element.element.stmt = stmt;
-    
+
     SQLResultSetUnion result;
     result.presult = NULL;
 

@@ -878,10 +878,10 @@ class WorldSession
         ACE_Future_Set<QueryResult> m_nameQueryCallbacks;
         QueryResultFuture m_charEnumCallback;
         QueryResultFuture m_addIgnoreCallback;
-        QueryCallback<std::string> m_charRenameCallback;
-        QueryCallback<std::string> m_addFriendCallback;
-        QueryCallback<uint8> m_stableChangeSlotCallback;
-        QueryCallback<uint64> m_sendStabledPetCallback;
+        QueryCallback<QueryResult, std::string> m_charRenameCallback;
+        QueryCallback<QueryResult, std::string> m_addFriendCallback;
+        QueryCallback<QueryResult, uint32> m_stableChangeSlotCallback;
+        QueryCallback<QueryResult, uint64> m_sendStabledPetCallback;
         QueryResultHolderFuture m_charLoginCallback;
 
     private:
