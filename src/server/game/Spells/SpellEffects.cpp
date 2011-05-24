@@ -796,6 +796,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                            damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 120 / 100 );
                            break;
                    }
+				m_caster->SetPower(POWER_HOLY_POWER,0);
                 }
 
              break;
