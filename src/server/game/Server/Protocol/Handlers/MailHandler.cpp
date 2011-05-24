@@ -301,10 +301,10 @@ void WorldSession::HandleMailMarkAsRead(WorldPacket & recv_data)
 {
     uint64 mailbox;
     uint32 mailId;
-	uint64 unk;
+    uint64 unk;
     recv_data >> mailbox;
     recv_data >> mailId;
-	recv_data >> unk;			// 4.0.6
+    recv_data >> unk;            // 4.0.6
 
     if (!GetPlayer()->GetGameObjectIfCanInteractWith(mailbox, GAMEOBJECT_TYPE_MAILBOX))
         return;

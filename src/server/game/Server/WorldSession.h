@@ -378,7 +378,7 @@ class WorldSession
         void HandleCharCreateOpcode(WorldPacket& recvPacket);
         void HandlePlayerLoginOpcode(WorldPacket& recvPacket);
 
-		void HandleWorldLoginOpcode(WorldPacket& recvPacket);
+        void HandleWorldLoginOpcode(WorldPacket& recvPacket);
 
         void HandleCharEnum(QueryResult result);
         void HandlePlayerLogin(LoginQueryHolder * holder);
@@ -421,7 +421,7 @@ class WorldSession
         void HandlePingOpcode(WorldPacket& recvPacket);
         void HandleAuthSessionOpcode(WorldPacket& recvPacket);
         void HandleRepopRequestOpcode(WorldPacket& recvPacket);
-		void HandleAutostoreLootItemOpcode(WorldPacket& recvPacket);
+        void HandleAutostoreLootItemOpcode(WorldPacket& recvPacket);
         void HandleLootMoneyOpcode(WorldPacket& recvPacket);
         void HandleLootOpcode(WorldPacket& recvPacket);
         void HandleLootReleaseOpcode(WorldPacket& recvPacket);

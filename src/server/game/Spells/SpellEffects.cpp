@@ -755,11 +755,11 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
             }
             case SPELLFAMILY_HUNTER:
             {   // Rapid Recuperation
-                if (m_caster->HasAura(3045))      			   
-                      if (m_caster->HasAura(53228)) 			   // Rank 1
+                if (m_caster->HasAura(3045))                     
+                      if (m_caster->HasAura(53228))                // Rank 1
                           m_caster->CastSpell(m_caster,53230,true);
                     else
-                      if (m_caster->HasAura(53232)) 			   // Rank 2
+                      if (m_caster->HasAura(53232))                // Rank 2
                           m_caster->CastSpell(m_caster,54227,true);
 
                 //Gore
@@ -2234,7 +2234,7 @@ void Spell::EffectTeleportUnits(SpellEffIndex /*effIndex*/)
     uint8 uiMaxSafeLevel = 0;
     switch (m_spellInfo->Id)
     {
-        case 36563:		// Shadowstep
+        case 36563:        // Shadowstep
             if (Player * plr = unitTarget->ToPlayer())
             {
                 if (Unit * target = plr->GetSelectedUnit())

@@ -130,9 +130,9 @@ int Master::Run()
     sLog->outString("%s (core-daemon)", _FULLVERSION);
     sLog->outString("<Ctrl-C> to stop.\n");
 
-	sLog->outString( "Welcome to Project SkyFire Cataclysm");
-	sLog->outString( "Portions of TrinityCore & CactusEMU");
-	sLog->outString( "http://www.projectskyfire.org/");
+    sLog->outString( "Welcome to Project SkyFire Cataclysm");
+    sLog->outString( "Portions of TrinityCore & CactusEMU");
+    sLog->outString( "http://www.projectskyfire.org/");
 
 #ifdef USE_SFMT_FOR_RNG
     sLog->outString("\n");

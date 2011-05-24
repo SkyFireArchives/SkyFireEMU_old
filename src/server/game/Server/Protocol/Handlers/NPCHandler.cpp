@@ -447,10 +447,10 @@ void WorldSession::SendBindPoint(Creature *npc)
     _player->m_homebindY = _player->GetPositionY();
     _player->m_homebindZ = _player->GetPositionZ();
 
-	// send spell for homebinding (3286)
+    // send spell for homebinding (3286)
     npc->CastSpell(_player, bindspell, true);
 
-	_player->PlayerTalkClass->CloseGossip();
+    _player->PlayerTalkClass->CloseGossip();
 }
 
 void WorldSession::HandleListStabledPetsOpcode(WorldPacket & recv_data)

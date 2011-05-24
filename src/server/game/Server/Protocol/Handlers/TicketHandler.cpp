@@ -65,7 +65,7 @@ void WorldSession::HandleGMTicketCreateOpcode(WorldPacket & recv_data)
     recv_data >> ticketText;
     recv_data >> unk;          // not sure what this is... replyTo?
     recv_data >> needResponse; // always 1/0 -- not sure what retail does with this
-	recv_data >> unk1;
+    recv_data >> unk1;
     recv_data >> unk2;
 
     GM_Ticket *ticket = new GM_Ticket;

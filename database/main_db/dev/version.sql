@@ -12,7 +12,7 @@
 DROP TABLE IF EXISTS `version`;
 CREATE TABLE `version` (
   `core_version` varchar(120) DEFAULT NULL COMMENT 'Core revision dumped at startup.',
-  `core_revision` bigint(20) unsigned DEFAULT NULL,
+  `core_revision` varchar(120) DEFAULT NULL,
   `db_version` varchar(120) DEFAULT NULL COMMENT 'Version of world DB.',
   `script_version` varchar(120) DEFAULT NULL COMMENT 'Version of scripts DB.',
   `cache_id` int(10) DEFAULT '0'
@@ -20,7 +20,7 @@ CREATE TABLE `version` (
 
 LOCK TABLES `version` WRITE;
 /*!40000 ALTER TABLE `version` DISABLE KEYS */;
-INSERT INTO `version` VALUES ('SkyFireEMU Rev: 678 Release Hash: 24a341c17b27 (Win32,little-endian)',678,'SkyFireDB 406a.05_02_2011 Rev 340','SkyFireDB 406a.05_02_2011 Rev 340',0);
+INSERT INTO `version` VALUES ('SkyFireEMU Rev: 678 Release Hash: 24a341c17b27 (Win32,little-endian)','678','SkyFireDB 406a.05_02_2011 Rev 340','SkyFireDB 406a.05_02_2011 Rev 340',0);
 /*!40000 ALTER TABLE `version` ENABLE KEYS */;
 UNLOCK TABLES;
 DELIMITER ;;
