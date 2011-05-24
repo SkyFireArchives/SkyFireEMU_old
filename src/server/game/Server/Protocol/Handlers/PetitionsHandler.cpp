@@ -603,7 +603,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
         Field* fields = result->Fetch();
         guild->AddMember(fields[0].GetUInt64());
         result->NextRow();
-     }
+    }
 
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     trans->PAppend("DELETE FROM petition WHERE petitionguid = '%u'", GUID_LOPART(petitionGuid));
