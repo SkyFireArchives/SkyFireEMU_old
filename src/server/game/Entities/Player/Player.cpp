@@ -19953,7 +19953,7 @@ void Player::RemovePetitionsAndSigns(uint64 guid, uint32 type)
     }
     else
     {
-        trans->PAppend("DELETE FROM petition WHERE ownerguid = '%u' AND type = '%u'", GUID_LOPART(guid), type);
+        trans->PAppend("DELETE FROM petition WHERE ownerguid = '%u'", GUID_LOPART(guid));
         trans->PAppend("DELETE FROM petition_sign WHERE ownerguid = '%u' AND type = '%u'", GUID_LOPART(guid), type);
     }
     CharacterDatabase.CommitTransaction(trans);
