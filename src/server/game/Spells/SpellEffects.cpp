@@ -784,7 +784,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                 
 				if (m_spellInfo->Id == 5360) //Shield of Righteousness
                 {
-                   switch(m_caster->GetPower(POWER_HOLY_POWER)
+                   switch(m_caster->GetPower(POWER_HOLY_POWER))
                    {
                         case 1: 
                            damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 20 / 100 );
@@ -2662,15 +2662,15 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
           switch (m_caster->GetPower(POWER_HOLY_POWER))
           {
                case 1: 
-                  dmg = int32(addhealth + 1*(m-caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
+                  dmg = int32(addhealth + 1*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
                   addhealth = dmg;
                   break;
                case 2: 
-                  dmg = int32(addhealth + 2*(m-caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
+                  dmg = int32(addhealth + 2*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
                   addhealth = dmg;
                   break;
                case 3: 
-                  dmg = int32(addhealth + 3*(m-caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
+                  dmg = int32(addhealth + 3*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
                   addhealth = dmg;
                   break;
           }
