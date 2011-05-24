@@ -881,7 +881,6 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
         SendPacket(&data);
         sLog->outStaticDebug("WORLD: Sent motd (SMSG_MOTD)");
 
-
         if (sWorld->getIntConfig(CONFIG_ENABLE_SINFO_LOGIN) == 1)
         {
             uint32 PlayersNum = sWorld->GetPlayerCount();
