@@ -348,5 +348,5 @@ void AddSC_ghostlands()
     new npc_budd_nedreck();
     new npc_rathis_tomber();
     new npc_ranger_lilatha();
-	new npc_captive();
+    new npc_captive();
 }

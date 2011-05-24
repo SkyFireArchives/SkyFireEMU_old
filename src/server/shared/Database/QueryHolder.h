@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+
 #ifndef _QUERYHOLDER_H
 #define _QUERYHOLDER_H
 
@@ -35,7 +36,7 @@ class SQLQueryHolder
         SQLQueryHolder() {}
         ~SQLQueryHolder();
         bool SetQuery(size_t index, const char *sql);
-        bool SetPQuery(size_t index, const char *format, ...) ATTR_PRINTF(3,4);
+        bool SetPQuery(size_t index, const char *format, ...) ATTR_PRINTF(3, 4);
         bool SetPreparedQuery(size_t index, PreparedStatement* stmt);
         void SetSize(size_t size);
         QueryResult GetResult(size_t index);
