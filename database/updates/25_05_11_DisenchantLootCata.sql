@@ -7,7 +7,7 @@ INSERT INTO disenchant_loot_template (entry, item, ChanceOrQuestChance, groupid,
 -- /ITEM LEVEL 292/316/ BLUE
 DELETE FROM disenchant_loot_template WHERE entry=81;
 INSERT INTO disenchant_loot_template (entry, item, ChanceOrQuestChance, groupid, mincountOrRef, maxcount) VALUES 
-(81, 52720, 75, 0, 1, 5),
+(81, 52720, 75, 0, 1, 5);
 
 -- /ITEM LEVEL /325/333/352/ BLUE
 DELETE FROM disenchant_loot_template WHERE entry=82;
