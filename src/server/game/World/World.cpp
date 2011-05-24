@@ -413,6 +413,9 @@ void World::LoadConfigSettings(bool reload)
     ///- Read ticket system setting from the config file
     m_bool_configs[CONFIG_ALLOW_TICKETS] = sConfig->GetBoolDefault("AllowTickets", true);
 
+    ///- Send server info on login?
+    m_int_configs[CONFIG_ENABLE_SINFO_LOGIN] = sConfig->GetIntDefault("Server.LoginInfo", 0);
+
     ///- Get string for new logins (newly created characters)
     SetNewCharString(sConfig->GetStringDefault("PlayerStart.String", ""));
 
