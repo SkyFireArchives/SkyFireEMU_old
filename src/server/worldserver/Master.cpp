@@ -224,7 +224,7 @@ int Master::Run()
                         sLog->outError("Can't set used processors (hex): %x", curAff);
                 }
             }
-            sLog->outString("");
+            sLog->outString();
         }
 
         bool Prio = sConfig->GetBoolDefault("ProcessPriority", false);
