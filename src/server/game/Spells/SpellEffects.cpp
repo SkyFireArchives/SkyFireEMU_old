@@ -773,7 +773,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
             case SPELLFAMILY_PALADIN:
             {
                 // Hammer of the Righteous
-                if (m_spellInfo->SpellFamilyFlags[1]&0x00040000)
+                if (m_spellInfo->SpellFamilyFlags[1] & 0x00040000)
                 {
                     // Add main hand dps * effect[2] amount
                     float average = (m_caster->GetFloatValue(UNIT_FIELD_MINDAMAGE) + m_caster->GetFloatValue(UNIT_FIELD_MAXDAMAGE)) / 2;
@@ -786,14 +786,13 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                 {
                     switch(m_caster->GetPower(POWER_HOLY_POWER))
                     {
+                        case 0:
+                            damage = int32(damage * 1.16f);
                         case 1: 
-                            damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 20 / 100 );
+                            damage = int32((damage * 1.16f) * 3);
                             break;
                         case 2: 
-                            damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 60 / 100 );
-                            break;
-                        case 3: 
-                            damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 120 / 100 );
+                            damage = int32((damage * 1.16f) * 6);
                             break;
                     }
                 }
@@ -2673,8 +2672,6 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
                     addhealth = dmg;
                     break;
             }
-		m_caster->SetPower(POWER_HOLY_POWER,0);
-        
 		}
 
         m_damage -= addhealth;
@@ -4434,7 +4431,6 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
                     break;
                 }
                 (m_caster->HasAura(63220)) ? totalDamagePercentMod *= 1.15f : 0 ; // Glyphe of Templar's Verdict
-                m_caster->SetPower(POWER_HOLY_POWER, 0);
             }
                       
             // Seal of Command Unleashed

@@ -3762,27 +3762,24 @@ void Spell::finish(bool ok)
     if (m_spellInfo->Attributes & SPELL_ATTR0_STOP_ATTACK_TARGET)
         m_caster->AttackStop();
 
-    if(m_spellInfo->Id == 30455) // Ice Lance
-    {
-        if(m_caster->HasAura(44544)) // Fingers of Frost
+    switch (m_spellInfo->Id)
         {
-            m_caster->RemoveAuraFromStack(44544);
+            case 30455: // Ice Lance
+            case 44572: // Deep Freeze
+                if (m_caster->HasAura(44544)) // Fingers of Frost
+                     m_caster->RemoveAuraFromStack(44544);
+                break;
+            case 2061: // Flash heal
+                if(m_caster->HasAura(88688)) // Surge of Light 
+                    m_caster->RemoveAura(88688);
+                break;
+            case 85673: // Word of Glory
+            case 53600: // Shield of the Righteous
+            case 85256: // Templar's Verdict
+            case 84963: // Inquisition
+                m_caster->SetPower(POWER_HOLY_POWER, 0);
+                break;
         }
-    }
-    if(m_spellInfo->Id == 44572) // Deep Freeze
-    {
-        if(m_caster->HasAura(44544)) // Fingers of Frost
-        {
-            m_caster->RemoveAuraFromStack(44544);
-        }
-    }
-    if(m_spellInfo->Id == 2061) // Flash Heal
-    {
-        if(m_caster->HasAura(88688)) // Surge of Light 
-        {
-            m_caster->RemoveAura(88688);
-        }
-    }
 }
 
 void Spell::SendCastResult(SpellCastResult result)
