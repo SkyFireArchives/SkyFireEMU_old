@@ -20,6 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#include "gamePCH.h"
 #include "Common.h"
 #include "Language.h"
 #include "WorldPacket.h"
@@ -603,7 +604,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
         Field* fields = result->Fetch();
         guild->AddMember(fields[0].GetUInt64());
         result->NextRow();
-     }
+    }
 
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     trans->PAppend("DELETE FROM petition WHERE petitionguid = '%u'", GUID_LOPART(petitionGuid));
