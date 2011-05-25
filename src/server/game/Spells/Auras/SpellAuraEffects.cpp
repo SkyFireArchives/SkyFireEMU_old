@@ -5793,13 +5793,13 @@ void AuraEffect::HandleModDamagePercentDone(AuraApplication const *aurApp, uint8
     {
         switch (GetBase()->GetUnitOwner()->GetPower(POWER_HOLY_POWER))
         {
-            case 1: // 1HP
+            case 0: // 1HP
                 GetBase()->SetDuration(4000);
                 break;
-            case 2: // 2HP
+            case 1: // 2HP
                 GetBase()->SetDuration(8000);
                 break;
-            case 3: // 3HP
+            case 2: // 3HP
                 GetBase()->SetDuration(12000);
                 break;
         }
