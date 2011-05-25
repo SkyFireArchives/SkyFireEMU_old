@@ -3597,6 +3597,10 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (i)
         {
+	    case 85673: // World of Glory
+            spellInfo->Effect[1] = 0;
+            count++;
+            break;
         case 1680: // Whirlwind  (Fury)
             spellInfo->EffectRadiusIndex[0] = 8;
             spellInfo->EffectRadiusIndex[1] = 8;
