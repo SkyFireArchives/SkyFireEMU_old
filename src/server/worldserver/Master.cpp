@@ -130,9 +130,9 @@ int Master::Run()
     sLog->outString("%s (core-daemon)", _FULLVERSION);
     sLog->outString("<Ctrl-C> to stop.\n");
 
-    sLog->outString( "Welcome to Project SkyFire Cataclysm");
-    sLog->outString( "Portions of TrinityCore & CactusEMU");
-    sLog->outString( "http://www.projectskyfire.org/");
+    sLog->outString("Welcome to Project SkyFire Cataclysm");
+    sLog->outString("Portions of TrinityCore & CactusEMU");
+    sLog->outString("http://www.projectskyfire.org/");
 
 #ifdef USE_SFMT_FOR_RNG
     sLog->outString("\n");
@@ -165,13 +165,13 @@ int Master::Run()
     ///- Initialize the World
     sWorld->SetInitialWorldSettings();
 
-    // Initialise the signal handlers
+    ///- Initialize the signal handlers
     CoredSignalHandler SignalINT, SignalTERM;
     #ifdef _WIN32
     CoredSignalHandler SignalBREAK;
     #endif /* _WIN32 */
 
-    // Register core's signal handlers
+    ///- Register core's signal handlers
     ACE_Sig_Handler Handler;
     Handler.register_handler(SIGINT, &SignalINT);
     Handler.register_handler(SIGTERM, &SignalTERM);
@@ -254,7 +254,7 @@ int Master::Run()
     if (uint32 freeze_delay = sConfig->GetIntDefault("MaxCoreStuckTime", 0))
     {
         FreezeDetectorRunnable *fdr = new FreezeDetectorRunnable();
-        fdr->SetDelayTime(freeze_delay*1000);
+        fdr->SetDelayTime(freeze_delay * 1000);
         ACE_Based::Thread freeze_thread(fdr);
         freeze_thread.setPriority(ACE_Based::Highest);
     }
@@ -263,7 +263,7 @@ int Master::Run()
     uint16 wsport = sWorld->getIntConfig(CONFIG_PORT_WORLD);
     std::string bind_ip = sConfig->GetStringDefault("BindIP", "0.0.0.0");
 
-    if (sWorldSocketMgr->StartNetwork(wsport, bind_ip.c_str ()) == -1)
+    if (sWorldSocketMgr->StartNetwork(wsport, bind_ip.c_str()) == -1)
     {
         sLog->outError("Failed to start network");
         World::StopNow(ERROR_EXIT_CODE);
