@@ -788,6 +788,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                     {
                         case 0:
                             damage = int32(damage * 1.16f);
+                            break;
                         case 1: 
                             damage = int32((damage * 1.16f) * 3);
                             break;
