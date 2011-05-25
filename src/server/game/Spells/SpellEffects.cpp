@@ -782,7 +782,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                     break;
                 }
                 
-				if (m_spellInfo->Id == 5360) //Shield of Righteousness
+                if (m_spellInfo->Id == 53600) //Shield of  Righteous
                 {
                     switch(m_caster->GetPower(POWER_HOLY_POWER))
                     {
@@ -796,7 +796,6 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                             damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 120 / 100 );
                             break;
                     }
-				m_caster->SetPower(POWER_HOLY_POWER,0);
                 }
 
              break;
