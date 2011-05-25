@@ -5791,21 +5791,21 @@ void AuraEffect::HandleModDamagePercentDone(AuraApplication const *aurApp, uint8
      
     if (GetSpellProto()->Id == 84963) //Inquisition
     {
-       switch (GetBase()->GetUnitOwner()->GetPower(POWER_HOLY_POWER))
-       {
+        switch (GetBase()->GetUnitOwner()->GetPower(POWER_HOLY_POWER))
+        {
             case 1: // 1HP
-               GetBase()->SetDuration(4000);
-               break;
+                GetBase()->SetDuration(4000);
+                break;
             case 2: // 2HP
-               GetBase()->SetDuration(8000);
-               break;
+                GetBase()->SetDuration(8000);
+                break;
             case 3: // 3HP
-               GetBase()->SetDuration(12000);
-               break;
-       }
-	 target->SetPower(POWER_HOLY_POWER,0);
+                GetBase()->SetDuration(12000);
+                break;
+        }
+    target->SetPower(POWER_HOLY_POWER,0);
      
-	 }
+    }
 }
 
 void AuraEffect::HandleModOffhandDamagePercent(AuraApplication const *aurApp, uint8 mode, bool apply) const

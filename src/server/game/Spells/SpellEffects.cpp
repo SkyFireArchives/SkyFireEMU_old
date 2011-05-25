@@ -784,18 +784,18 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                 
 				if (m_spellInfo->Id == 5360) //Shield of Righteousness
                 {
-                   switch(m_caster->GetPower(POWER_HOLY_POWER))
-                   {
+                    switch(m_caster->GetPower(POWER_HOLY_POWER))
+                    {
                         case 1: 
-                           damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 20 / 100 );
-                           break;
+                            damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 20 / 100 );
+                            break;
                         case 2: 
-                           damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 60 / 100 );
-                           break;
+                            damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 60 / 100 );
+                            break;
                         case 3: 
-                           damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 120 / 100 );
-                           break;
-                   }
+                            damage = int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 120 / 100 );
+                            break;
+                    }
 				m_caster->SetPower(POWER_HOLY_POWER,0);
                 }
 
@@ -806,14 +806,14 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                 // Ebon Plaguebringer 
                   if(m_caster->HasAura(51099)) // Rank 1
                   {
-                     if(m_spellInfo->Id == 45462 || m_spellInfo->Id == 45477 || m_spellInfo->Id == 45524)
-                     m_caster->CastSpell(unitTarget,65142,true);
+                      if(m_spellInfo->Id == 45462 || m_spellInfo->Id == 45477 || m_spellInfo->Id == 45524)
+                      m_caster->CastSpell(unitTarget,65142,true);
                   }
                   else
                   if(m_caster->HasAura(51160)) // Rank 2
                   {
-                     if(m_spellInfo->Id == 45462 || m_spellInfo->Id == 45477 || m_spellInfo->Id == 45524) 
-                     m_caster->CastSpell(unitTarget,65142,true);
+                      if(m_spellInfo->Id == 45462 || m_spellInfo->Id == 45477 || m_spellInfo->Id == 45524) 
+                      m_caster->CastSpell(unitTarget,65142,true);
                   }
                 
                else 
@@ -2658,23 +2658,23 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
             unitTarget->RemoveAura(48920);
         if (m_spellInfo->Id == 85673) // Word of Glory
 		{
-          int32 dmg;
-          switch (m_caster->GetPower(POWER_HOLY_POWER))
-          {
-               case 1: 
-                  dmg = int32(addhealth + 1*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
-                  addhealth = dmg;
-                  break;
-               case 2: 
-                  dmg = int32(addhealth + 2*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
-                  addhealth = dmg;
-                  break;
-               case 3: 
-                  dmg = int32(addhealth + 3*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
-                  addhealth = dmg;
-                  break;
-          }
-		 m_caster->SetPower(POWER_HOLY_POWER,0);
+            int32 dmg;
+            switch (m_caster->GetPower(POWER_HOLY_POWER))
+            {
+                case 1: 
+                    dmg = int32(addhealth + 1*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
+                    addhealth = dmg;
+                    break;
+                case 2: 
+                    dmg = int32(addhealth + 2*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
+                    addhealth = dmg;
+                    break;
+                case 3: 
+                    dmg = int32(addhealth + 3*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
+                    addhealth = dmg;
+                    break;
+            }
+		m_caster->SetPower(POWER_HOLY_POWER,0);
         
 		}
 
