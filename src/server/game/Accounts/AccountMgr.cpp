@@ -44,20 +44,20 @@ AccountOpResult AccountMgr::CreateAccount(std::string username, std::string pass
         return AOR_NAME_ALREDY_EXIST;                       // username does already exist
     }
 
-    LoginDatabase.PExecute("INSERT INTO account(username,sha_pass_hash,joindate) VALUES('%s','%s',NOW())", username.c_str(), CalculateShaPassHash(username, password).c_str());
-    LoginDatabase.Execute("INSERT INTO realmcharacters (realmid, acctid, numchars) SELECT realmlist.id, account.id, 0 FROM realmlist,account LEFT JOIN realmcharacters ON acctid=account.id WHERE acctid IS NULL");
+    LoginDatabase.PExecute("INSERT INTO account(username, sha_pass_hash, joindate) VALUES('%s', '%s', NOW())", username.c_str(), CalculateShaPassHash(username, password).c_str());
+    LoginDatabase.Execute("INSERT INTO realmcharacters (realmid, acctid, numchars) SELECT realmlist.id, account.id, 0 FROM realmlist, account LEFT JOIN realmcharacters ON acctid = account.id WHERE acctid IS NULL");
 
     return AOR_OK;                                          // everything's fine
 }
 
 AccountOpResult AccountMgr::DeleteAccount(uint32 accid)
 {
-    QueryResult result = LoginDatabase.PQuery("SELECT 1 FROM account WHERE id='%d'", accid);
+    QueryResult result = LoginDatabase.PQuery("SELECT 1 FROM account WHERE id = '%d'", accid);
     if (!result)
         return AOR_NAME_NOT_EXIST;                          // account doesn't exist
 
     // existed characters list
-    result = CharacterDatabase.PQuery("SELECT guid FROM characters WHERE account='%d'",accid);
+    result = CharacterDatabase.PQuery("SELECT guid FROM characters WHERE account = '%d'", accid);
     if (result)
     {
         do
@@ -79,14 +79,14 @@ AccountOpResult AccountMgr::DeleteAccount(uint32 accid)
     }
 
     // table realm specific but common for all characters of account for realm
-    CharacterDatabase.PExecute("DELETE FROM character_tutorial WHERE account = '%u'",accid);
-    CharacterDatabase.PExecute("DELETE FROM account_data WHERE account = '%u'",accid);
+    CharacterDatabase.PExecute("DELETE FROM character_tutorial WHERE account = '%u'", accid);
+    CharacterDatabase.PExecute("DELETE FROM account_data WHERE account = '%u'", accid);
 
     SQLTransaction trans = LoginDatabase.BeginTransaction();
 
-    trans->PAppend("DELETE FROM account WHERE id='%d'", accid);
-    trans->PAppend("DELETE FROM account_access WHERE id ='%d'", accid);
-    trans->PAppend("DELETE FROM realmcharacters WHERE acctid='%d'", accid);
+    trans->PAppend("DELETE FROM account WHERE id = '%d'", accid);
+    trans->PAppend("DELETE FROM account_access WHERE id = '%d'", accid);
+    trans->PAppend("DELETE FROM realmcharacters WHERE acctid = '%d'", accid);
 
     LoginDatabase.CommitTransaction(trans);
 
@@ -95,7 +95,7 @@ AccountOpResult AccountMgr::DeleteAccount(uint32 accid)
 
 AccountOpResult AccountMgr::ChangeUsername(uint32 accid, std::string new_uname, std::string new_passwd)
 {
-    QueryResult result = LoginDatabase.PQuery("SELECT 1 FROM account WHERE id='%d'", accid);
+    QueryResult result = LoginDatabase.PQuery("SELECT 1 FROM account WHERE id = '%d'", accid);
     if (!result)
         return AOR_NAME_NOT_EXIST;                          // account doesn't exist
 
@@ -111,8 +111,7 @@ AccountOpResult AccountMgr::ChangeUsername(uint32 accid, std::string new_uname, 
     std::string safe_new_uname = new_uname;
     LoginDatabase.escape_string(safe_new_uname);
 
-    LoginDatabase.PExecute("UPDATE account SET v='0',s='0',username='%s',sha_pass_hash='%s' WHERE id='%d'", safe_new_uname.c_str(),
-                CalculateShaPassHash(new_uname, new_passwd).c_str(), accid);
+    LoginDatabase.PExecute("UPDATE account SET v = '0', s = '0', username = '%s', sha_pass_hash = '%s' WHERE id = '%d'", safe_new_uname.c_str(), CalculateShaPassHash(new_uname, new_passwd).c_str(), accid);
 
     return AOR_OK;
 }
@@ -131,8 +130,7 @@ AccountOpResult AccountMgr::ChangePassword(uint32 accid, std::string new_passwd)
     normalizeString(new_passwd);
 
     // also reset s and v to force update at next realmd login
-    LoginDatabase.PExecute("UPDATE account SET v='0', s='0', sha_pass_hash='%s' WHERE id='%d'",
-                CalculateShaPassHash(username, new_passwd).c_str(), accid);
+    LoginDatabase.PExecute("UPDATE account SET v = '0', s = '0', sha_pass_hash = '%s' WHERE id = '%d'", CalculateShaPassHash(username, new_passwd).c_str(), accid);
 
     return AOR_OK;
 }
@@ -197,7 +195,7 @@ bool AccountMgr::CheckPassword(uint32 accid, std::string passwd)
     normalizeString(username);
     normalizeString(passwd);
 
-    QueryResult result = LoginDatabase.PQuery("SELECT 1 FROM account WHERE id='%d' AND sha_pass_hash='%s'", accid, CalculateShaPassHash(username, passwd).c_str());
+    QueryResult result = LoginDatabase.PQuery("SELECT 1 FROM account WHERE id = '%d' AND sha_pass_hash = '%s'", accid, CalculateShaPassHash(username, passwd).c_str());
     if (result)
         return true;
 
@@ -222,7 +220,7 @@ bool AccountMgr::normalizeString(std::string& utf8str)
     wchar_t wstr_buf[MAX_ACCOUNT_STR+1];
 
     size_t wstr_len = MAX_ACCOUNT_STR;
-    if (!Utf8toWStr(utf8str,wstr_buf,wstr_len))
+    if (!Utf8toWStr(utf8str, wstr_buf,wstr_len))
         return false;
 #ifdef _MSC_VER
 #pragma warning(disable: 4996)
@@ -232,7 +230,7 @@ bool AccountMgr::normalizeString(std::string& utf8str)
 #pragma warning(default: 4996)
 #endif
 
-    return WStrToUtf8(wstr_buf,wstr_len,utf8str);
+    return WStrToUtf8(wstr_buf, wstr_len,utf8str);
 }
 
 std::string AccountMgr::CalculateShaPassHash(std::string& name, std::string& password)
@@ -249,4 +247,3 @@ std::string AccountMgr::CalculateShaPassHash(std::string& name, std::string& pas
 
     return encoded;
 }
-
