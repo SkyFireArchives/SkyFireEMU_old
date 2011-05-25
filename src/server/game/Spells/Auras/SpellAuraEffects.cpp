@@ -5975,21 +5975,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                     if (!pet)
                         break;
 
-                    target->CastSpell(target, 34027, true, NULL, this);
-
-                    // set 3 stacks and 3 charges (to make all auras not disappear at once)
-                    Aura *owner_aura = target->GetAura(34027, GetCasterGUID());
-                    Aura *pet_aura  = pet->GetAura(58914, GetCasterGUID());
-
-                    if (owner_aura)
-                        owner_aura->SetStackAmount(owner_aura->GetSpellProto()->StackAmount);
-
-                    if (pet_aura)
-                    {
-                        pet_aura->SetCharges(0);
-                        pet_aura->SetStackAmount(owner_aura->GetSpellProto()->StackAmount);
-                    }
-
+                    pet->CastSpell(target,83381,true,NULL,this);
                     break;
                 }
                 case 37096:                                     // Blood Elf Illusion
