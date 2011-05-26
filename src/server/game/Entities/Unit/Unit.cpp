@@ -1681,6 +1681,10 @@ void Unit::CalcAbsorbResist(Unit *pVictim, SpellSchoolMask schoolMask, DamageEff
             if ((*j)->GetMiscValue() & schoolMask)
                 AddPctN(damageResisted, -(*j)->GetAmount());
 
+        // These spells should ignore any resistances
+        if (spellInfo && spellInfo->AttributesEx3 & SPELL_ATTR3_IGNORE_HIT_RESULT)
+            damageResisted = 0;
+
         dmgInfo.ResistDamage(uint32(damageResisted));
     }
 
