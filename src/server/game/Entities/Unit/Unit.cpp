@@ -5725,14 +5725,16 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
             {
                 // Glyph of Polymorph
                 case 56375:
+                {
                     target->RemoveAurasByType(SPELL_AURA_PERIODIC_DAMAGE, 0, target->GetAura(32409)); // SW:D shall not be removed.
                     target->RemoveAurasByType(SPELL_AURA_PERIODIC_DAMAGE_PERCENT);
                     target->RemoveAurasByType(SPELL_AURA_PERIODIC_LEECH);
                     return true;
+                }
                 // Glyph of Icy Veins
                 case 56374:
                 {
-                    RemoveAurasByType(SPELL_AURA_MOD_MELEE_HASTE, 0, 0, true, false);
+                    RemoveAurasByType(SPELL_AURA_HASTE_SPELLS, 0, 0, true, false);
                     RemoveAurasByType(SPELL_AURA_MOD_DECREASE_SPEED);
                     return true;
                 }
@@ -16586,9 +16588,22 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form)
                 return 20857;
             return 20872;
         case FORM_FLIGHT_EPIC:
-            if (Player::TeamForRace(getRace()) == ALLIANCE)
+            if (getRace() == RACE_NIGHTELF)
+            {
                 return 21243;
-            return 21244;
+            }
+            else if (getRace() == RACE_TAUREN)
+            {
+                return 21244;
+            }
+            else if (getRace() == RACE_WORGEN)
+            {
+                return 37729;
+            }
+            else if (getRace() == RACE_TROLL)
+            {
+                return 37730;
+            }
         default:
         {
             uint32 modelid = 0;
