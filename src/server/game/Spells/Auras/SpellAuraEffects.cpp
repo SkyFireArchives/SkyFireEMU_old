@@ -2258,7 +2258,7 @@ void AuraEffect::PeriodicDummyTick(Unit *target, Unit *caster) const
                     if (target && caster && caster->IsInRaidWith(target))
                     {
                         uint32 damage = uint32(target->CountPctFromMaxHealth(1));
-                        target->DealDamage(target, damage, NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                        target->DealDamage(target, damage, NULL, NODAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                     }
                     break;
             }
