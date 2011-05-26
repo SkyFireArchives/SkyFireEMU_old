@@ -751,19 +751,16 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
             {
                 if (caster->GetTypeId() == TYPEID_PLAYER)
                 {
-                    int32 value = (-1 * amount) - 10;
-                    uint32 defva = uint32(caster->ToPlayer()->GetSkillValue(SKILL_DEFENSE) + caster->ToPlayer()->GetRatingBonusValue(CR_DEFENSE_SKILL));
-
-                    if (defva > 400)
-                        value += int32((defva - 400) * 0.15);
+                    int32 value = -amount;
 
                     // Glyph of Icebound Fortitude
                     if (AuraEffect const * aurEff = caster->GetAuraEffect(58625, 0))
-                    {
-                        int32 valMax = aurEff->GetAmount();
-                        if (value < valMax)
-                            value = valMax;
-                    }
+                        value = aurEff->GetAmount();
+
+                    uint32 defval = uint32(caster->ToPlayer()->GetSkillValue(SKILL_DEFENSE) + caster->ToPlayer()->GetRatingBonusValue(CR_DEFENSE_SKILL));
+                    if (defval > 400)
+                        value += int32((defval - 400) * 0.075);
+
                     amount = -value;
                 }
             }
