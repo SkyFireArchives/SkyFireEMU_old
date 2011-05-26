@@ -427,6 +427,11 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
                         data->put(extraFields, 2);                                                      // count of next fields
                         *data << uint32(((BattlegroundICScore*)itr2->second)->BasesAssaulted);          // bases asssulted
                         *data << uint32(((BattlegroundICScore*)itr2->second)->BasesDefended);           // bases defended
+                    case 726:
+                        data->put(extraFields, 2);                                                      // count of next fields
+                        *data << uint32(((BattlegroundTPScore*)itr2->second)->FlagCaptures);            // flag captures
+                        *data << uint32(((BattlegroundTPScore*)itr2->second)->FlagReturns);             // flag returns
+                        break;
                     default:
                         data->put(extraFields, 0);                                                      // count of next fields
                         break;
@@ -463,12 +468,12 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
                 *data << uint32(((BattlegroundICScore*)itr2->second)->BasesAssaulted);         // bases asssulted
                 *data << uint32(((BattlegroundICScore*)itr2->second)->BasesDefended);          // bases defended
                 break;
-            case BATTLEGROUND_TP:                                                               // Twin Peaks
+            case BATTLEGROUND_TP:                                                              // Twin Peaks
                 data->put(extraFields, 2);                                                     // count of next fields
                 *data << uint32(((BattlegroundTPScore*)itr2->second)->FlagCaptures);           // flag captures
                 *data << uint32(((BattlegroundTPScore*)itr2->second)->FlagReturns);            // flag returns
                 break;
-            case BATTLEGROUND_BG:                                                               // Battle of Gilneas
+            case BATTLEGROUND_BG:                                                              // Battle of Gilneas
                 data->put(extraFields, 0);                                                     // count of next fields
                 break;
             case BATTLEGROUND_NA:
