@@ -1681,10 +1681,6 @@ void Unit::CalcAbsorbResist(Unit *pVictim, SpellSchoolMask schoolMask, DamageEff
             if ((*j)->GetMiscValue() & schoolMask)
                 AddPctN(damageResisted, -(*j)->GetAmount());
 
-        // These spells should ignore any resistances
-        if (spellInfo && spellInfo->AttributesEx3 & SPELL_ATTR3_IGNORE_HIT_RESULT)
-            damageResisted = 0;
-
         dmgInfo.ResistDamage(uint32(damageResisted));
     }
 
@@ -7454,7 +7450,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     AddPctN(basepoints0, glyph->GetAmount());
 
                 triggered_spell_id = 50536;
-                basepoints0 += pVictim->GetRemainingPeriodicAmount(GetGUID(), triggered_spell_id, SPELL_AURA_PERIODIC_DAMAGE);
+                basepoints0 += pVictim->GetRemainingDotDamage(GetGUID(), triggered_spell_id, SPELL_AURA_PERIODIC_DAMAGE);
                 break;
             }
             // Vendetta
