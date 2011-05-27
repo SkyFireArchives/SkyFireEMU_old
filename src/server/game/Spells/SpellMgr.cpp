@@ -3460,6 +3460,116 @@ void SpellMgr::LoadSpellRequired()
     sLog->outString();
 }
 
+void SpellMgr::LoadSpellRanks()
+{
+    uint32 oldMSTime = getMSTime();
+
+    mSpellChains.clear();                                   // need for reload case
+
+    QueryResult result = WorldDatabase.Query("SELECT first_spell_id, spell_id, rank from spell_ranks ORDER BY first_spell_id , rank");
+
+    if (!result)
+    {
+        sLog->outString(">> Loaded 0 spell rank records");
+        sLog->outString();
+        sLog->outErrorDb("`spell_ranks` table is empty!");
+        return;
+    }
+
+    uint32 rows = 0;
+    bool finished = false;
+
+    do
+    {
+        // spellid, rank
+        std::list < std::pair < int32, int32 > > rankChain;
+        int32 currentSpell = -1;
+        int32 lastSpell = -1;
+
+        // fill one chain
+        while (currentSpell == lastSpell && !finished)
+        {
+            Field *fields = result->Fetch();
+
+            currentSpell = fields[0].GetUInt32();
+            if (lastSpell == -1)
+                lastSpell = currentSpell;
+            uint32 spell_id = fields[1].GetUInt32();
+            uint32 rank = fields[2].GetUInt32();
+
+            // don't drop the row if we're moving to the next rank
+            if (currentSpell == lastSpell)
+            {
+                rankChain.push_back(std::make_pair(spell_id, rank));
+                if (!result->NextRow())
+                    finished = true;
+            }
+            else
+                break;
+        }
+        // check if chain is made with valid first spell
+        SpellEntry const * first = sSpellStore.LookupEntry(lastSpell);
+        if (!first)
+        {
+            sLog->outErrorDb("Spell rank identifier(first_spell_id) %u listed in `spell_ranks` does not exist!", lastSpell);
+            continue;
+        }
+        // check if chain is long enough
+        if (rankChain.size() < 2)
+        {
+            sLog->outErrorDb("There is only 1 spell rank for identifier(first_spell_id) %u in `spell_ranks`, entry is not needed!", lastSpell);
+            continue;
+        }
+        int32 curRank = 0;
+        bool valid = true;
+        // check spells in chain
+        for (std::list<std::pair<int32, int32> >::iterator itr = rankChain.begin() ; itr!= rankChain.end(); ++itr)
+        {
+            SpellEntry const * spell = sSpellStore.LookupEntry(itr->first);
+            if (!spell)
+            {
+                sLog->outErrorDb("Spell %u (rank %u) listed in `spell_ranks` for chain %u does not exist!", itr->first, itr->second, lastSpell);
+                valid = false;
+                break;
+            }
+            ++curRank;
+            if (itr->second != curRank)
+            {
+                sLog->outErrorDb("Spell %u (rank %u) listed in `spell_ranks` for chain %u does not have proper rank value(should be %u)!", itr->first, itr->second, lastSpell, curRank);
+                valid = false;
+                break;
+            }
+        }
+        if (!valid)
+            continue;
+        int32 prevRank = 0;
+        // insert the chain
+        std::list<std::pair<int32, int32> >::iterator itr = rankChain.begin();
+        do
+        {
+            ++rows;
+            int32 addedSpell = itr->first;
+            mSpellChains[addedSpell].first = lastSpell;
+            mSpellChains[addedSpell].last = rankChain.back().first;
+            mSpellChains[addedSpell].rank = itr->second;
+            mSpellChains[addedSpell].prev = prevRank;
+            prevRank = addedSpell;
+            ++itr;
+            if (itr == rankChain.end())
+            {
+                mSpellChains[addedSpell].next = 0;
+                break;
+            }
+            else
+                mSpellChains[addedSpell].next = itr->first;
+        }
+        while (true);
+    } while (!finished);
+
+    sLog->outString(">> Loaded %u spell rank records in %u ms", rows, GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString();
+}
+
 void SpellMgr::LoadSpellCustomAttr()
 {
     uint32 oldMSTime = getMSTime();
