@@ -107,7 +107,7 @@ void LoadMapMPQFiles()
     if(!SFileIsPatchedArchive(WorldMPQ))
         assert(false && "An error occured");
     
-    for(int j = 0; j < 2; j++)
+    for(int j = 0; j < 3; j++)
     {
         sprintf(filename, "%s/Data/expansion%u.MPQ", input_path, j+1);
         printf("Loading %s\n", filename);
