@@ -18,8 +18,6 @@
 #ifndef DEF_LOST_CITY_OF_THE_TOLVIR_H
 #define DEF_LOST_CITY_OF_THE_TOLVIR_H
 
-#define LCTScriptName "instance_lost_city_of_the_tolvir"
-
 enum Data
 {
     DATA_GENERAL_HUSAM_EVENT,

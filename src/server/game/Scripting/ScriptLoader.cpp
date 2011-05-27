@@ -348,7 +348,7 @@ void AddSC_thousand_needles();
 void AddSC_thunder_bluff();
 void AddSC_ungoro_crater();
 void AddSC_winterspring();
-//void AddSC_lost_city_of_the_tolvir();        //Cata:The Lost City of the Tol'vir
+void AddSC_lost_city_of_the_tolvir();        //Cata:The Lost City of the Tol'vir
 void AddSC_instance_lost_city_of_the_tolvir();
 
 //northrend
@@ -953,7 +953,7 @@ void AddKalimdorScripts()
     AddSC_thunder_bluff();
     AddSC_ungoro_crater();
     AddSC_winterspring();
-    //AddSC_lost_city_of_the_tolvir();
+    AddSC_lost_city_of_the_tolvir();
     AddSC_instance_lost_city_of_the_tolvir();
 #endif
 }
