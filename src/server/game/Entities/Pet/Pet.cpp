@@ -370,17 +370,9 @@ void Pet::SavePetToDB(PetSlot mode)
     Player* pOwner = (Player*)GetOwner();
     if (!pOwner)
         return;
-
-    if(mode == PET_SLOT_ACTUAL_PET_SLOT)
-        mode = pOwner->m_currentPetSlot;
-    if(mode >= PET_SLOT_HUNTER_FIRST && mode <= PET_SLOT_HUNTER_LAST && getPetType() != HUNTER_PET)
-        assert(false);
-    if(mode == PET_SLOT_OTHER_PET && getPetType() == HUNTER_PET)
-        assert(false);
-    
+   
     // not save pet as current if another pet temporary unsummoned
-    if (mode == pOwner->m_currentPetSlot && pOwner->GetTemporaryUnsummonedPetNumber() &&
-        pOwner->GetTemporaryUnsummonedPetNumber() != m_charmInfo->GetPetNumber())
+    if (mode == pOwner->m_currentPetSlot && pOwner->GetTemporaryUnsummonedPetNumber() && pOwner->GetTemporaryUnsummonedPetNumber() != m_charmInfo->GetPetNumber())
     {
         // pet will lost anyway at restore temporary unsummoned
         if (getPetType() == HUNTER_PET)
@@ -413,7 +405,7 @@ void Pet::SavePetToDB(PetSlot mode)
         CharacterDatabase.escape_string(name);
         SQLTransaction trans = CharacterDatabase.BeginTransaction();
         // remove current data
-        trans->PAppend("DELETE FROM character_pet WHERE owner = '%u' AND id = '%u'", owner,m_charmInfo->GetPetNumber());
+        trans->PAppend("DELETE FROM character_pet WHERE owner = '%u' AND id = '%u'", owner, m_charmInfo->GetPetNumber());
         
         // save pet
         std::ostringstream ss;
