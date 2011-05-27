@@ -1246,8 +1246,7 @@ void World::SetInitialWorldSettings()
         || (m_int_configs[CONFIG_EXPANSION] && (
             !MapManager::ExistMapAndVMap(530,10349.6f,-6357.29f) ||
             !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f) ||
-            !MapManager::ExistMapAndVMap(638, -1428.569946f, 1436.880005f ||
-            !MapManager::ExistMapAndVMap(648, -8423.809570f, 1361.300049f)))))
+            !MapManager::ExistMapAndVMap(648, -8423.809570f, 1361.300049f))))
     {
         exit(1);
     }
