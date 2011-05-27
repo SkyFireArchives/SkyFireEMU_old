@@ -1,0 +1,1 @@
+UPDATE quest_template SET RequiredRaces = 946 WHERE entry IN (12759, 12703, 12760);

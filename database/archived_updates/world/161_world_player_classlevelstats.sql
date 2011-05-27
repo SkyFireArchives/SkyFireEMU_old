@@ -1,0 +1,10 @@
+UPDATE player_classlevelstats SET basehp = 43285 WHERE LEVEL = 85 AND class = 1;
+UPDATE player_classlevelstats SET basehp = 43285 WHERE LEVEL = 85 AND class = 2;
+UPDATE player_classlevelstats SET basehp = 39037 WHERE LEVEL = 85 AND class = 3;
+UPDATE player_classlevelstats SET basehp = 40529 WHERE LEVEL = 85 AND class = 4;
+UPDATE player_classlevelstats SET basehp = 43285 WHERE LEVEL = 85 AND class = 5;
+UPDATE player_classlevelstats SET basehp = 43285 WHERE LEVEL = 85 AND class = 6;
+UPDATE player_classlevelstats SET basehp = 37097 WHERE LEVEL = 85 AND class = 7;
+UPDATE player_classlevelstats SET basehp = 37113 WHERE LEVEL = 85 AND class = 8;
+UPDATE player_classlevelstats SET basehp = 38184 WHERE LEVEL = 85 AND class = 9;
+UPDATE player_classlevelstats SET basehp = 39533 WHERE LEVEL = 85 AND class = 11;
