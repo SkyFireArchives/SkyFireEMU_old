@@ -1620,9 +1620,6 @@ void Player::setDeathState(DeathState s)
 
         clearResurrectRequestData();
 
-        // remove form before other mods to prevent incorrect stats calculation
-        RemoveAurasByType(SPELL_AURA_MOD_SHAPESHIFT);
-
         //FIXME: is pet dismissed at dying or releasing spirit? if second, add setDeathState(DEAD) to HandleRepopRequestOpcode and define pet unsummon here with (s == DEAD)
         RemovePet(NULL, PET_SLOT_ACTUAL_PET_SLOT, true);
 
@@ -1644,14 +1641,8 @@ void Player::setDeathState(DeathState s)
         SetUInt32Value(PLAYER_SELF_RES_SPELL, ressSpellId);
 
     if (isAlive() && !cur)
-    {
         //clear aura case after resurrection by another way (spells will be applied before next death)
         SetUInt32Value(PLAYER_SELF_RES_SPELL, 0);
-
-        // restore default warrior stance
-        if (getClass() == CLASS_WARRIOR)
-            CastSpell(this, 2457, true);
-    }
 }
 
 bool Player::BuildEnumData(QueryResult result, WorldPacket * p_data)
@@ -4690,7 +4681,7 @@ void Player::DeleteFromDB(uint64 playerguid, uint32 accountId, bool updateRealmC
 
                     uint32 pl_account = sObjectMgr->GetPlayerAccountIdByGUID(MAKE_NEW_GUID(guid, 0, HIGHGUID_PLAYER));
 
-                    draft.AddMoney(money).SendReturnToSender(pl_account, guid, sender);
+                    draft.AddMoney(money).SendReturnToSender(pl_account, guid, sender, trans);
                 }
                 while (resultMail->NextRow());
             }
@@ -16891,12 +16882,6 @@ bool Player::_LoadFromDB(uint32 guid, SQLQueryHolder * holder, PreparedQueryResu
     m_resetTalentsCost = fields[24].GetUInt32();
     m_resetTalentsTime = time_t(fields[25].GetUInt32());
 
-    // reserve some flags
-    uint32 old_safe_flags = GetUInt32Value(PLAYER_FLAGS) & (PLAYER_FLAGS_HIDE_CLOAK | PLAYER_FLAGS_HIDE_HELM);
-
-    if (HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_GM))
-        SetUInt32Value(PLAYER_FLAGS, 0 | old_safe_flags);
-
     m_taxi.LoadTaxiMask(fields[17].GetCString());                // must be before InitTaxiNodesForLevel
 
     uint32 extraflags = fields[31].GetUInt16();
@@ -17237,10 +17222,10 @@ void Player::_LoadAuras(PreparedQueryResult result, uint32 timediff)
             // negative effects should continue counting down after logout
             if (remaintime != -1 && !IsPositiveSpell(spellid))
             {
-                if (remaintime/IN_MILLISECONDS <= int32(timediff))
+                if (remaintime / IN_MILLISECONDS <= int32(timediff))
                     continue;
 
-                remaintime -= timediff*IN_MILLISECONDS;
+                remaintime -= timediff * IN_MILLISECONDS;
             }
 
             // prevent wrong values of remaincharges
@@ -17259,16 +17244,13 @@ void Player::_LoadAuras(PreparedQueryResult result, uint32 timediff)
                     aura->Remove();
                     continue;
                 }
-                aura->SetLoadedState(maxduration,remaintime,remaincharges,stackcount,recalculatemask,&damage[0]);
+                aura->SetLoadedState(maxduration, remaintime, remaincharges, stackcount, recalculatemask, &damage[0]);
                 aura->ApplyForTargets();
                 sLog->outDetail("Added aura spellid %u, effectmask %u", spellproto->Id, effmask);
             }
         }
         while (result->NextRow());
     }
-
-    if (getClass() == CLASS_WARRIOR && !HasAuraType(SPELL_AURA_MOD_SHAPESHIFT))
-        CastSpell(this, 2457, true);
 }
 
 void Player::_LoadGlyphAuras()
@@ -18843,11 +18825,11 @@ void Player::_SaveDailyQuestStatus(SQLTransaction& trans)
     // save last daily quest time for all quests: we need only mostly reset time for reset check anyway
 
     // we don't need transactions here.
-    trans->PAppend("DELETE FROM character_queststatus_daily WHERE guid = '%u'",GetGUIDLow());
+    trans->PAppend("DELETE FROM character_queststatus_daily WHERE guid = '%u'", GetGUIDLow());
     for (uint32 quest_daily_idx = 0; quest_daily_idx < PLAYER_MAX_DAILY_QUESTS; ++quest_daily_idx)
-        if (GetUInt32Value(PLAYER_FIELD_DAILY_QUESTS_1+quest_daily_idx))
+        if (GetUInt32Value(PLAYER_FIELD_DAILY_QUESTS_1 + quest_daily_idx))
             trans->PAppend("INSERT INTO character_queststatus_daily (guid,quest,time) VALUES ('%u', '%u','" UI64FMTD "')",
-                GetGUIDLow(), GetUInt32Value(PLAYER_FIELD_DAILY_QUESTS_1+quest_daily_idx),uint64(m_lastDailyQuestTime));
+                GetGUIDLow(), GetUInt32Value(PLAYER_FIELD_DAILY_QUESTS_1 + quest_daily_idx), uint64(m_lastDailyQuestTime));
 
     if (!m_DFQuests.empty())
     {
