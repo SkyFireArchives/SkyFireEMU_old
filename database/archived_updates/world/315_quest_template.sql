@@ -1,0 +1,1 @@
+UPDATE quest_template SET QuestFlags = 8, ReqCreatureOrGOId1 = -204247, ReqCreatureOrGOCount1 = 8 WHERE entry = 26492;

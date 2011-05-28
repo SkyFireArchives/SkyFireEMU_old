@@ -1,0 +1,1 @@
+UPDATE quest_template SET QuestFlags = 8 WHERE entry IN (185, 194, 190);

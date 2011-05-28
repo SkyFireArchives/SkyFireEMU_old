@@ -67,8 +67,6 @@ void MapManager::Initialize()
     // Start mtmaps if needed.
     if (num_threads > 0 && m_updater.activate(num_threads) == -1)
         abort();
-
-    InitMaxInstanceId();
 }
 
 void MapManager::InitializeVisibilityDistanceInfo()
@@ -158,7 +156,7 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
     if (!entry->IsDungeon())
         return true;
 
-    InstanceTemplate const* instance = ObjectMgr::GetInstanceTemplate(mapid);
+    InstanceTemplate const* instance = sObjectMgr->GetInstanceTemplate(mapid);
     if (!instance)
         return false;
 
@@ -225,6 +223,26 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
             sLog->outDebug("Map::CanPlayerEnter - player '%s' is dead but does not have a corpse!", player->GetName());
     }
 
+    //Get instance where player's group is bound & its map
+    if (group)
+    {
+        InstanceGroupBind* boundInstance = group->GetBoundInstance(entry);
+        if (boundInstance && boundInstance->save)
+            if (Map* boundMap = sMapMgr->FindMap(mapid, boundInstance->save->GetInstanceId()))
+                if (!loginCheck && !boundMap->CanEnter(player))
+                    return false;
+            /*
+                This check has to be moved to InstanceMap::CanEnter()
+                // Player permanently bounded to different instance than groups one
+                InstancePlayerBind* playerBoundedInstance = player->GetBoundInstance(mapid, player->GetDifficulty(entry->IsRaid()));
+                if (playerBoundedInstance && playerBoundedInstance->perm && playerBoundedInstance->save &&
+                    boundedInstance->save->GetInstanceId() != playerBoundedInstance->save->GetInstanceId())
+                {
+                    //TODO: send some kind of error message to the player
+                    return false;
+                }*/
+    }
+
     // players are only allowed to enter 5 instances per hour
     if (entry->IsDungeon() && (!player->GetGroup() || (player->GetGroup() && !player->GetGroup()->isLFGGroup())))
     {
@@ -275,20 +293,25 @@ void MapManager::DoDelayedMovesAndRemoves()
 {
 }
 
-bool MapManager::ExistMapAndVMap(uint32 mapid, float x,float y)
+bool MapManager::ExistMapAndVMap(uint32 mapid, float x, float y)
 {
-    GridPair p = Trinity::ComputeGridPair(x,y);
+    GridPair p = Trinity::ComputeGridPair(x, y);
 
     int gx=63-p.x_coord;
     int gy=63-p.y_coord;
 
-    return Map::ExistMap(mapid,gx,gy) && Map::ExistVMap(mapid,gx,gy);
+    return Map::ExistMap(mapid, gx, gy) && Map::ExistVMap(mapid, gx, gy);
 }
 
-bool MapManager::IsValidMAP(uint32 mapid)
+bool MapManager::IsValidMAP(uint32 mapid, bool startUp)
 {
     MapEntry const* mEntry = sMapStore.LookupEntry(mapid);
-    return mEntry && (!mEntry->IsDungeon() || ObjectMgr::GetInstanceTemplate(mapid));
+
+    if (startUp)
+        return mEntry ? true : false;
+    else
+        return mEntry && (!mEntry->IsDungeon() || sObjectMgr->GetInstanceTemplate(mapid));
+
     // TODO: add check for battleground template
 }
 
@@ -313,18 +336,9 @@ void MapManager::UnloadAll()
     Map::DeleteStateMachine();
 }
 
-void MapManager::InitMaxInstanceId()
-{
-    i_MaxInstanceId = 0;
-
-    QueryResult result = CharacterDatabase.Query("SELECT MAX(id) FROM instance");
-    if (result)
-        i_MaxInstanceId = result->Fetch()[0].GetUInt32();
-}
-
 uint32 MapManager::GetNumInstances()
 {
-    ACE_GUARD_RETURN(ACE_Thread_Mutex, Guard, Lock, NULL);
+    ACE_GUARD_RETURN(ACE_Thread_Mutex, Guard, Lock, 0);
 
     uint32 ret = 0;
     for (MapMapType::iterator itr = i_maps.begin(); itr != i_maps.end(); ++itr)
@@ -341,7 +355,7 @@ uint32 MapManager::GetNumInstances()
 
 uint32 MapManager::GetNumPlayersInInstances()
 {
-    ACE_GUARD_RETURN(ACE_Thread_Mutex, Guard, Lock, NULL);
+    ACE_GUARD_RETURN(ACE_Thread_Mutex, Guard, Lock, 0);
 
     uint32 ret = 0;
     for (MapMapType::iterator itr = i_maps.begin(); itr != i_maps.end(); ++itr)
@@ -355,4 +369,70 @@ uint32 MapManager::GetNumPlayersInInstances()
                 ret += ((InstanceMap*)mitr->second)->GetPlayers().getSize();
     }
     return ret;
+}
+
+void MapManager::InitInstanceIds()
+{
+    _nextInstanceId = 1;
+
+    QueryResult result = CharacterDatabase.Query("SELECT MAX(id) FROM instance");
+    if (result)
+    {
+        uint32 maxId = (*result)[0].GetUInt32();
+
+        // Resize to multiples of 32 (vector<bool> allocates memory the same way)
+        _instanceIds.resize((maxId / 32) * 32 + (maxId % 32 > 0 ? 32 : 0));
+    }
+}
+
+void MapManager::RegisterInstanceId(uint32 instanceId)
+{
+    // Allocation and sizing was done in InitInstanceIds()
+    _instanceIds[instanceId] = true;
+}
+
+uint32 MapManager::GenerateInstanceId()
+{
+    uint32 newInstanceId = _nextInstanceId;
+
+    // Find the lowest available id starting from the current NextInstanceId (which should be the lowest according to the logic in FreeInstanceId()
+    for (uint32 i = ++_nextInstanceId; i < 0xFFFFFFFF; ++i)
+    {
+        if ((i < _instanceIds.size() && !_instanceIds[i]) || i >= _instanceIds.size())
+        {
+            _nextInstanceId = i;
+            break;
+        }
+    }
+
+    if (newInstanceId == _nextInstanceId)
+    {
+        sLog->outError("Instance ID overflow!! Can't continue, shutting down server. ");
+        World::StopNow(ERROR_EXIT_CODE);
+    }
+
+    // Allocate space if necessary
+    if (newInstanceId >= uint32(_instanceIds.size()))
+    {
+        // Due to the odd memory allocation behavior of vector<bool> we match size to capacity before triggering a new allocation
+        if (_instanceIds.size() < _instanceIds.capacity())
+        {
+            _instanceIds.resize(_instanceIds.capacity());
+        }
+        else
+            _instanceIds.resize((newInstanceId / 32) * 32 + (newInstanceId % 32 > 0 ? 32 : 0));
+    }
+
+    _instanceIds[newInstanceId] = true;
+
+    return newInstanceId;
+}
+
+void MapManager::FreeInstanceId(uint32 instanceId)
+{
+    // If freed instance id is lower than the next id available for new instances, use the freed one instead
+    if (instanceId < _nextInstanceId)
+        SetNextInstanceId(instanceId);
+
+    _instanceIds[instanceId] = false;
 }

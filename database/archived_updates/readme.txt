@@ -1,0 +1,1 @@
+These updates have already been applied to the main database structure. Please only apply if you are updating an older database.
