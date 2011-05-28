@@ -4273,10 +4273,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->Effect[1] = 0;
             count++;
             break;
-        case 71340: // Pact of the Darkfallen
-            spellInfo->DurationIndex = 21;
-            count++;
-            break;
         default:
             break;
         }
