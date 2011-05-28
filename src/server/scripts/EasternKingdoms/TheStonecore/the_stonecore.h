@@ -44,26 +44,26 @@ enum Data64
 
 enum Creatures
 {
-    // Boss
-    BOSS_CORBORUS                                        = 43438,
-    BOSS_SLABHIDE                                        = 43214,
-    BOSS_OZRUK                                            = 42188,
-    BOSS_HIGH_PRIESTESS_AZIL                            = 42333,
+    // Bosses
+    BOSS_CORBORUS            = 43438,
+    BOSS_SLABHIDE            = 43214,
+    BOSS_OZRUK               = 42188,
+    BOSS_HIGH_PRIESTESS_AZIL = 42333,
 
     // Trash npc
-    CREATURE_CRYSTALSPAWN_GIANT                         = 42810,
-    CREATURE_IMP                                        = 43014,
-    CREATURE_MILLHOUSE_MANASTORM                        = 43391,
-    CREATURE_ROCK_BORER                                    = 43917,
-    CREATURE_ROCK_BORER2                                = 42845,
-    CREATURE_STONECORE_BERSERKER                        = 43430,
-    CREATURE_STONECORE_BRUISER                            = 42692,
-    CREATURE_STONECORE_EARTHSHAPER                        = 43537,
-    CREATURE_STONECORE_FLAYER                            = 42808,
-    CREATURE_MAGMALORD                                    = 42789,
-    CREATURE_RIFT_CONJURER                                = 42691,
-    CREATURE_STONECORE_SENTRY                            = 42695,
-    CREATURE_STONECORE_WARBRINGER                        = 42696,
+    CREATURE_CRYSTALSPAWN_GIANT    = 42810,
+    CREATURE_IMP                   = 43014,
+    CREATURE_MILLHOUSE_MANASTORM   = 43391,
+    CREATURE_ROCK_BORER            = 43917,
+    CREATURE_ROCK_BORER2           = 42845,
+    CREATURE_STONECORE_BERSERKER   = 43430,
+    CREATURE_STONECORE_BRUISER     = 42692,
+    CREATURE_STONECORE_EARTHSHAPER = 43537,
+    CREATURE_STONECORE_FLAYER      = 42808,
+    CREATURE_MAGMALORD             = 42789,
+    CREATURE_RIFT_CONJURER         = 42691,
+    CREATURE_STONECORE_SENTRY      = 42695,
+    CREATURE_STONECORE_WARBRINGER  = 42696,
 };
 
 #endif
