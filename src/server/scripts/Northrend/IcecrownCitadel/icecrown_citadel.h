@@ -289,7 +289,4 @@ enum SharedActions
     ACTION_TRIGGER_ASPHYXIATION = -368531,
 };
 
-// Declaration
-extern Position const SindragosaSpawnPos;
-
 #endif // DEF_ICECROWN_CITADEL_H
