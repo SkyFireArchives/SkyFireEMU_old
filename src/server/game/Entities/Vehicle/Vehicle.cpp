@@ -287,6 +287,9 @@ bool Vehicle::AddPassenger(Unit *unit, int8 seatId, bool byAura)
     if (unit->GetVehicle() != this)
         return false;
 
+   if (unit->GetTypeId() == TYPEID_PLAYER && unit->GetMap()->IsBattleArena())
+         return false;
+
     SeatMap::iterator seat;
     if (seatId < 0) // no specific seat requirement
     {
