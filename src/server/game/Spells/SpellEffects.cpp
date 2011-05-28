@@ -2662,7 +2662,7 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
         if (unitTarget->HasAura(48920) && (unitTarget->GetHealth() + addhealth >= unitTarget->GetMaxHealth()))
             unitTarget->RemoveAura(48920);
         if (m_spellInfo->Id == 85673) // Word of Glory
-		{
+        {
             int32 dmg;
             switch (m_caster->GetPower(POWER_HOLY_POWER))
             {
@@ -2679,7 +2679,7 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
                     addhealth = dmg;
                     break;
             }
-		}
+        }
 
         m_damage -= addhealth;
     }
