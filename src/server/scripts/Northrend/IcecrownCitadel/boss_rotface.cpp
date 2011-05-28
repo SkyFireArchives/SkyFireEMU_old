@@ -107,15 +107,12 @@ class boss_rotface : public CreatureScript
 
             void Reset()
             {
-                events.Reset();
+                _Reset();
                 events.ScheduleEvent(EVENT_SLIME_SPRAY, 20000);
                 events.ScheduleEvent(EVENT_HASTEN_INFECTIONS, 90000);
                 events.ScheduleEvent(EVENT_MUTATED_INFECTION, 14000);
                 infectionStage = 0;
                 infectionCooldown = 14000;
-                summons.DespawnAll();
-
-                instance->SetBossState(DATA_ROTFACE, NOT_STARTED);
             }
 
             void EnterCombat(Unit* who)
@@ -127,23 +124,24 @@ class boss_rotface : public CreatureScript
                     return;
                 }
 
+                me->setActive(true);
                 Talk(SAY_AGGRO);
                 if (Creature* professor = Unit::GetCreature(*me, instance->GetData64(DATA_PROFESSOR_PUTRICIDE)))
                     professor->AI()->DoAction(ACTION_ROTFACE_COMBAT);
-
-                DoZoneInCombat(me);
+                DoZoneInCombat();
             }
 
             void JustDied(Unit* /*killer*/)
             {
+                _JustDied();
                 Talk(SAY_DEATH);
-                instance->SetBossState(DATA_ROTFACE, DONE);
                 if (Creature* professor = Unit::GetCreature(*me, instance->GetData64(DATA_PROFESSOR_PUTRICIDE)))
                     professor->AI()->DoAction(ACTION_ROTFACE_DEATH);
             }
 
             void JustReachedHome()
             {
+                _JustReachedHome();
                 instance->SetBossState(DATA_ROTFACE, FAIL);
                 instance->SetData(DATA_OOZE_DANCE_ACHIEVEMENT, uint32(true));   // reset
             }
@@ -269,18 +267,11 @@ class npc_little_ooze : public CreatureScript
                 DoCast(me, SPELL_WEAK_RADIATING_OOZE, true);
                 events.ScheduleEvent(EVENT_STICKY_OOZE, 5000);
                 me->AddThreat(summoner, 500000.0f);
-                // register in Rotface's summons - not summoned with Rotface as owner
-                if (InstanceScript* instance = me->GetInstanceScript())
-                    if (Creature* rotface = Unit::GetCreature(*me, instance->GetData64(DATA_ROTFACE)))
-                        rotface->AI()->JustSummoned(me);
             }
 
             void JustDied(Unit* /*killer*/)
             {
                 me->DespawnOrUnsummon();
-                if (InstanceScript* instance = me->GetInstanceScript())
-                    if (Creature* rotface = Unit::GetCreature(*me, instance->GetData64(DATA_ROTFACE)))
-                        rotface->AI()->SummonedCreatureDespawn(me);
             }
 
             void UpdateAI(const uint32 diff)
@@ -336,10 +327,10 @@ class npc_big_ooze : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
-                me->DespawnOrUnsummon();
                 if (InstanceScript* instance = me->GetInstanceScript())
                     if (Creature* rotface = Unit::GetCreature(*me, instance->GetData64(DATA_ROTFACE)))
                         rotface->AI()->SummonedCreatureDespawn(me);
+                me->DespawnOrUnsummon();
             }
 
             void DoAction(const int32 action)
@@ -479,9 +470,19 @@ class spell_rotface_ooze_flood : public SpellScriptLoader
                 GetHitUnit()->CastSpell(list.back(), uint32(GetEffectValue()), false, NULL, NULL, GetOriginalCaster() ? GetOriginalCaster()->GetGUID() : 0);
             }
 
+            void FilterTargets(std::list<Unit*>& targetList)
+            {
+                // get 2 targets except 2 nearest
+                targetList.sort(Trinity::ObjectDistanceOrderPred(GetCaster()));
+                targetList.resize(4);
+                while (targetList.size() > 2)
+                    targetList.pop_front();
+            }
+
             void Register()
             {
                 OnEffect += SpellEffectFn(spell_rotface_ooze_flood_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_rotface_ooze_flood_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_AREA_ENTRY_SRC);
             }
         };
 
