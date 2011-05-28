@@ -4173,8 +4173,9 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectSpellClassMask[0] = flag96(0x00000040, 0x00000000, 0x00000000);
             count++;
             break;
-        case 70460: // Coldflame Jets
+        case 70460: // Coldflame Jets (Traps after Saurfang)
             spellInfo->DurationIndex = 1;   // 10 seconds
+            count++;
             break;
         case 71413: // Green Ooze Summon
         case 71414: // Orange Ooze Summon
@@ -4215,13 +4216,17 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectRadiusIndex[0] = 28;   // another missing radius
             count++;
             break;
-        case 71708: // Empowered Flare
-        case 72785: // Empowered Flare
-        case 72786: // Empowered Flare
-        case 72787: // Empowered Flare
+        case 71708: // Empowered Flare (Blood Prince Council)
+        case 72785: // Empowered Flare (Blood Prince Council)
+        case 72786: // Empowered Flare (Blood Prince Council)
+        case 72787: // Empowered Flare (Blood Prince Council)
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_DONE_BONUS;
             count++;
             break;
+         case 71340: // Pact of the Darkfallen (Blood-Queen Lana'thel)
+             spellInfo->DurationIndex = 21;
+             count++;
+             break;
         case 44614: // Frostfire Bolt
             spellInfo->StackAmount = 0; //TODO: remove when stacking of Decrease Run Speed % aura is fixed
             break;
