@@ -1,5 +1,5 @@
 # Copyright (C) 2006 MySQL AB
-# Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
+# Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
 #
 # Copyright (C) 2010-2011 SkyFire <http://www.projectskyfire.org/>
 #
