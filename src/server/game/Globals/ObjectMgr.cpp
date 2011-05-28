@@ -1977,7 +1977,7 @@ void ObjectMgr::LoadCreatureRespawnTimes()
 {
     uint32 count = 0;
 
-    QueryResult result = WorldDatabase.Query("SELECT guid,respawntime,instance FROM creature_respawn");
+    QueryResult result = CharacterDatabase.Query("SELECT guid, respawnTime, instanceId FROM creature_respawn");
 
     if (!result)
     {
@@ -2008,30 +2008,24 @@ void ObjectMgr::LoadCreatureRespawnTimes()
 void ObjectMgr::LoadGameobjectRespawnTimes()
 {
     // remove outdated data
-    PreparedStatement *stmt = WorldDatabase.GetPreparedStatement(WORLD_DEL_GAMEOBJECT_RESPAWN_TIMES);
-    WorldDatabase.DirectExecute(stmt);
+    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_EXPIRED_GO_RESPAWNS);
+    CharacterDatabase.DirectExecute(stmt);
 
     uint32 count = 0;
 
-    QueryResult result = WorldDatabase.Query("SELECT guid,respawntime,instance FROM gameobject_respawn");
+    QueryResult result = CharacterDatabase.Query("SELECT guid, respawnTime, instanceId FROM gameobject_respawn");
 
     if (!result)
     {
-        
-
-        
-
         sLog->outString();
         sLog->outString(">> Loaded 0 gameobject respawn time.");
         return;
     }
 
-    
-
+   
     do
     {
         Field *fields = result->Fetch();
-        
 
         uint32 loguid       = fields[0].GetUInt32();
         uint32 respawn_time = fields[1].GetUInt32();
@@ -4003,37 +3997,33 @@ void ObjectMgr::LoadGuildRewards()
 
 void ObjectMgr::LoadArenaTeams()
 {
-    uint32 count;
+
+    uint32 oldMSTime = getMSTime();
 
     // Clean out the trash before loading anything
     CharacterDatabase.Execute("DELETE FROM arena_team_member WHERE arenaTeamId NOT IN (SELECT arenaTeamId FROM arena_team)");
 
-
     //                                                                   0        1         2         3          4              5            6            7           8
-    QueryResult result = CharacterDatabase.Query("SELECT arena_team.arenaTeamId, name, captainGuid, type, backgroundColor, emblemStyle, emblemColor, borderStyle, borderColor,"
-    //                                               9      10             11          12          13       14
-                                                 "rating, seasonGames, seasonWins, weekGames, weekWins, rank FROM arena_team ORDER BY arena_team.arenaTeamId ASC");
+    QueryResult result = CharacterDatabase.Query("SELECT arena_team.arenaTeamId, name, captainGuid, type, backgroundColor, emblemStyle, emblemColor, borderStyle, borderColor, "
+        //                                               9        10        11         12           13       14
+        "rating, weekGames, weekWins, seasonGames, seasonWins, rank FROM arena_team ORDER BY arena_team.arenaTeamId ASC");
 
     if (!result)
     {
-
-        
-
-        
-
+        sLog->outString(">> Loaded 0 arena teams. DB table `arena_team` is empty!");
         sLog->outString();
-        sLog->outString(">> Loaded %u arenateam definitions", count);
         return;
     }
 
     QueryResult result2 = CharacterDatabase.Query(
-    //              0              1           2             3              4                 5          6     7          8                  9
+        //              0              1           2             3              4                 5          6     7          8                  9
         "SELECT arenaTeamId, atm.guid, atm.weekGames, atm.weekWins, atm.seasonGames, atm.seasonWins, c.name, class, personalRating, matchMakerRating FROM arena_team_member atm"
         " INNER JOIN arena_team ate USING (arenaTeamId)"
         " LEFT JOIN characters AS c ON atm.guid = c.guid"
         " LEFT JOIN character_arena_stats AS cas ON c.guid = cas.guid AND (cas.slot = 0 AND ate.type = 2 OR cas.slot = 1 AND ate.type = 3 OR cas.slot = 2 AND ate.type = 5)"
         " ORDER BY atm.arenateamid ASC");
-   
+
+    uint32 count = 0;
     do
     {
         ArenaTeam* newArenaTeam = new ArenaTeam;
@@ -4044,13 +4034,15 @@ void ObjectMgr::LoadArenaTeams()
             delete newArenaTeam;
             continue;
         }
+
         AddArenaTeam(newArenaTeam);
 
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u arena teams in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u arenateam definitions", count);
 }
 
 void ObjectMgr::LoadGroups()
@@ -5629,10 +5621,10 @@ void ObjectMgr::LoadInstanceTemplate()
         if (!temp)
             continue;
 
-        if (!MapManager::IsValidMAP(temp->map))
+        if (!MapManager::IsValidMAP(temp->map, true))
             sLog->outErrorDb("ObjectMgr::LoadInstanceTemplate: bad mapid %d for template!", temp->map);
 
-        if (!MapManager::IsValidMapCoord(temp->parent,temp->startLocX,temp->startLocY,temp->startLocZ,temp->startLocO))
+        if (!MapManager::IsValidMapCoord(temp->parent, temp->startLocX, temp->startLocY, temp->startLocZ, temp->startLocO))
         {
             sLog->outErrorDb("ObjectMgr::LoadInstanceTemplate: bad parent entrance coordinates for map id %d template!", temp->map);
             temp->parent = 0;                               // will have wrong continent 0 parent, at least existed
@@ -7274,32 +7266,23 @@ uint32 ObjectMgr::GeneratePetNumber()
 
 void ObjectMgr::LoadCorpses()
 {
-    uint32 count = 0;
-    //                                                                    0           1           2            3    4          5          6       7       8      9     10        11    12           13        14         15    16      17
-    QueryResult result = CharacterDatabase.Query("SELECT position_x, position_y, position_z, orientation, map, displayId, itemCache, bytes1, bytes2, guild, flags, dynFlags, time, corpse_type, instance, phaseMask, guid, player FROM corpse WHERE corpse_type <> 0");
+    uint32 oldMSTime = getMSTime();
 
+    PreparedQueryResult result = CharacterDatabase.Query(CharacterDatabase.GetPreparedStatement(CHAR_LOAD_CORPSES));
     if (!result)
     {
-        
-
-        
-
+        sLog->outString(">> Loaded 0 corpses. DB table `pet_name_generation` is empty.");
         sLog->outString();
-        sLog->outString(">> Loaded %u corpses", count);
         return;
     }
 
-    
-
+    uint32 count = 0;
     do
     {
-        
-
         Field *fields = result->Fetch();
-
         uint32 guid = fields[16].GetUInt32();
 
-        Corpse *corpse = new Corpse;
+        Corpse *corpse = new Corpse();
         if (!corpse->LoadFromDB(guid, fields))
         {
             delete corpse;
@@ -7307,13 +7290,12 @@ void ObjectMgr::LoadCorpses()
         }
 
         sObjectAccessor->AddCorpse(corpse);
-
         ++count;
     }
     while (result->NextRow());
 
+    sLog->outString(">> Loaded %u corpses in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u corpses", count);
 }
 
 void ObjectMgr::LoadReputationRewardRate()
@@ -7825,11 +7807,11 @@ void ObjectMgr::SaveCreatureRespawnTime(uint32 loguid, uint32 instance, time_t t
         m_CreatureRespawnTimesMtx.release();
     }
 
-    PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_ADD_CREATURE_RESPAWN_TIME);
+    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_CREATURE_RESPAWN);
     stmt->setUInt32(0, loguid);
     stmt->setUInt64(1, uint64(t));
     stmt->setUInt32(2, instance);
-    WorldDatabase.Execute(stmt);
+    CharacterDatabase.Execute(stmt);
 }
 
 void ObjectMgr::RemoveCreatureRespawnTime(uint32 loguid, uint32 instance)
@@ -7841,10 +7823,10 @@ void ObjectMgr::RemoveCreatureRespawnTime(uint32 loguid, uint32 instance)
         m_CreatureRespawnTimesMtx.release();
     }
 
-    PreparedStatement *stmt = WorldDatabase.GetPreparedStatement(WORLD_DEL_CREATURE_RESPAWN_TIME);
+    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CREATURE_RESPAWN);
     stmt->setUInt32(0, loguid);
     stmt->setUInt32(1, instance);
-    WorldDatabase.Execute(stmt);
+    CharacterDatabase.Execute(stmt);
 }
 
 void ObjectMgr::DeleteCreatureData(uint32 guid)
@@ -7873,11 +7855,11 @@ void ObjectMgr::SaveGORespawnTime(uint32 loguid, uint32 instance, time_t t)
         m_GORespawnTimesMtx.release();
     }
 
-    PreparedStatement *stmt = WorldDatabase.GetPreparedStatement(WORLD_ADD_GO_RESPAWN_TIME);
+    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_GO_RESPAWN);
     stmt->setUInt32(0, loguid);
     stmt->setUInt64(1, uint64(t));
     stmt->setUInt32(2, instance);
-    WorldDatabase.Execute(stmt);
+    CharacterDatabase.Execute(stmt);
 }
 
 void ObjectMgr::RemoveGORespawnTime(uint32 loguid, uint32 instance)
@@ -7889,10 +7871,10 @@ void ObjectMgr::RemoveGORespawnTime(uint32 loguid, uint32 instance)
         m_GORespawnTimesMtx.release();
     }
 
-    PreparedStatement *stmt = WorldDatabase.GetPreparedStatement(WORLD_DEL_GO_RESPAWN_TIME);
+    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_GO_RESPAWN);
     stmt->setUInt32(0, loguid);
     stmt->setUInt32(1, instance);
-    WorldDatabase.Execute(stmt);
+    CharacterDatabase.Execute(stmt);
 }
 
 void ObjectMgr::DeleteRespawnTimeForInstance(uint32 instance)
@@ -7924,8 +7906,8 @@ void ObjectMgr::DeleteRespawnTimeForInstance(uint32 instance)
         }
         m_CreatureRespawnTimesMtx.release();
     }
-    WorldDatabase.PExecute("DELETE FROM creature_respawn WHERE instance = '%u'", instance);
-    WorldDatabase.PExecute("DELETE FROM gameobject_respawn WHERE instance = '%u'", instance);
+    CharacterDatabase.PExecute("DELETE FROM creature_respawn WHERE instanceId = '%u'", instance);
+    CharacterDatabase.PExecute("DELETE FROM gameobject_respawn WHERE instanceId = '%u'", instance);
 }
 
 void ObjectMgr::DeleteGOData(uint32 guid)

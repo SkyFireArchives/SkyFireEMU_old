@@ -268,12 +268,12 @@ void InstanceScript::DoUseDoorOrButton(uint64 uiGuid, uint32 uiWithRestoreTime, 
         if (pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR || pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON)
         {
             if (pGo->getLootState() == GO_READY)
-                pGo->UseDoorOrButton(uiWithRestoreTime,bUseAlternativeState);
+                pGo->UseDoorOrButton(uiWithRestoreTime, bUseAlternativeState);
             else if (pGo->getLootState() == GO_ACTIVATED)
                 pGo->ResetDoorOrButton();
         }
         else
-            sLog->outError("SD2: Script call DoUseDoorOrButton, but gameobject entry %u is type %u.",pGo->GetEntry(),pGo->GetGoType());
+            sLog->outError("SD2: Script call DoUseDoorOrButton, but gameobject entry %u is type %u.", pGo->GetEntry(), pGo->GetGoType());
     }
 }
 
@@ -346,14 +346,14 @@ void InstanceScript::DoCompleteAchievement(uint32 achievement)
 }
 
 // Update Achievement Criteria for all players in instance
-void InstanceScript::DoUpdateAchievementCriteria(AchievementCriteriaTypes type, uint32 miscvalue1, uint32 miscvalue2, Unit *unit, uint32 time)
+void InstanceScript::DoUpdateAchievementCriteria(AchievementCriteriaTypes type, uint32 miscValue1 /*= 0*/, uint32 miscValue2 /*= 0*/, Unit* unit /*= NULL*/)
 {
     Map::PlayerList const &PlayerList = instance->GetPlayers();
 
     if (!PlayerList.isEmpty())
         for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
             if (Player *pPlayer = i->getSource())
-                pPlayer->UpdateAchievementCriteria(type, miscvalue1, miscvalue2, unit, time);
+                pPlayer->UpdateAchievementCriteria(type, miscValue1, miscValue2, unit);
 }
 
 // Start timed achievement for all players in instance
@@ -403,7 +403,7 @@ void InstanceScript::DoCastSpellOnPlayers(uint32 spell)
 bool InstanceScript::CheckAchievementCriteriaMeet(uint32 criteria_id, Player const* /*source*/, Unit const* /*target*/ /*= NULL*/, uint32 /*miscvalue1*/ /*= 0*/)
 {
     sLog->outError("Achievement system call InstanceScript::CheckAchievementCriteriaMeet but instance script for map %u not have implementation for achievement criteria %u",
-        instance->GetId(),criteria_id);
+        instance->GetId(), criteria_id);
     return false;
 }
 
@@ -449,7 +449,7 @@ void InstanceScript::UpdateEncounterState(EncounterCreditType type, uint32 credi
         if ((*itr)->creditType == type && (*itr)->creditEntry == creditEntry)
         {
             completedEncounters |= 1 << (*itr)->dbcEntry->encounterIndex;
-            sLog->outDebug("Instance %s (instanceId %u) completed encounter %s", instance->GetMapName(), instance->GetInstanceId(), (*itr)->dbcEntry->encounterName);
+            sLog->outDebug("Instance %s (instanceId %u) completed encounter %s", instance->GetMapName(), instance->GetInstanceId(), (*itr)->dbcEntry->encounterName[0]);
             if (uint32 dungeonId = (*itr)->lastEncounterDungeon)
             {
                 Map::PlayerList const& players = instance->GetPlayers();
