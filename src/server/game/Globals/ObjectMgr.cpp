@@ -8045,26 +8045,20 @@ void ObjectMgr::LoadReservedPlayersNames()
 {
     m_ReservedNames.clear();                                // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT name FROM reserved_name");
+    QueryResult result = CharacterDatabase.Query("SELECT name FROM reserved_name");
 
     uint32 count = 0;
 
     if (!result)
     {
-        
-        
-
         sLog->outString();
         sLog->outString(">> Loaded %u reserved player names", count);
         return;
     }
 
-    
-
     Field* fields;
     do
     {
-        
         fields = result->Fetch();
         std::string name= fields[0].GetString();
 
@@ -8079,7 +8073,8 @@ void ObjectMgr::LoadReservedPlayersNames()
 
         m_ReservedNames.insert(wstr);
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
     sLog->outString();
     sLog->outString(">> Loaded %u reserved player names", count);
