@@ -1,5 +1,5 @@
-DELETE FROM `spell_script_names` WHERE `ScriptName`='spell_gen_dungeon_credit';
-INSERT INTO `spell_script_names` (`spell_id`,`ScriptName`) VALUES
+DELETE FROM spell_script_names WHERE ScriptName='spell_gen_dungeon_credit';
+INSERT INTO spell_script_names (spell_id,ScriptName) VALUES
 (58630,'spell_gen_dungeon_credit'),
 (59046,'spell_gen_dungeon_credit'),
 (59450,'spell_gen_dungeon_credit'),
