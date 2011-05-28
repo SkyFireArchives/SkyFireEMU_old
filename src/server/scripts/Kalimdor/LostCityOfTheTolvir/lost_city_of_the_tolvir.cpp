@@ -18,101 +18,99 @@
 #include"ScriptPCH.h"
 #include"lost_city_of_the_tolvir.h"
 
-/*Dungeon NPCs*/
-
 enum Spells
 {
-    /*Blaze of Heavens*/
-    SPELL_BLAZE = 48906,
+    // Blaze of Heavens
+    SPELL_BLAZE                 = 48906,
 
-    /*Harbinger of Death*/
-    SPELL_SOUL_SEVER = 82255,
-    SPELL_WAIL_DARKNESS = 82533,
-    H_SPELL_WAIL_DARKNESS = 90038,
+    // Harbinger of Death
+    SPELL_SOUL_SEVER            = 82255,
+    SPELL_WAIL_DARKNESS         = 82533,
+    H_SPELL_WAIL_DARKNESS       = 90038,
 
-    /*Minion of Siamat*/
-    SPELL_CHAIN_LIGHTNING = 44704,
-    H_SPELL_CHAIN_LIGHTNING = 90027,
+    // Minion of Siamat
+    SPELL_CHAIN_LIGHTNING       = 44704,
+    H_SPELL_CHAIN_LIGHTNING     = 90027,
 
-    /*Neferset Darkcaster*/
-    SPELL_HEX = 82760,
-    SPELL_METEOR = 84032,
-    H_SPELL_METEOR = 90023, 
-    SPELL_SHADOW_BOLT = 82765,               
-    H_SPELL_SHADOW_BOLT = 90036,
+    // Neferset Darkcaster
+    SPELL_HEX                   = 82760,
+    SPELL_METEOR                = 84032,
+    H_SPELL_METEOR              = 90023, 
+    SPELL_SHADOW_BOLT           = 82765,               
+    H_SPELL_SHADOW_BOLT         = 90036,
 
-    /*Neferset Plaguebringer*/
-    SPELL_DISEASE_BREATH = 73976,         
-    H_SPELL_DISEASE_BREATH = 90005,
-    SPELL_INFECTIOUS_PLAGUE = 82768,
+    // Neferset Plaguebringer
+    SPELL_DISEASE_BREATH        = 73976,         
+    H_SPELL_DISEASE_BREATH      = 90005,
+    SPELL_INFECTIOUS_PLAGUE     = 82768,
 
-    /*Neferset Theurgist*/
+    // Neferset Theurgist
     SPELL_MIXTURE = 82759,
-    SPELL_RITUAL_BLOODLETTING = 82753,
+    SPELL_RITUAL_BLOODLETTING   = 82753,
     H_SPELL_RITUAL_BLOODLETTING = 89993, 
-    SPELL_VICIOUS_LEECHES = 82757,
+    SPELL_VICIOUS_LEECHES       = 82757,
 
-    /*Neferset Torturer*/
-    SPELL_BRANDED_TONGUE = 82744,    
-    H_SPELL_BRANDED_TONGUE = 90037, 
-    SPELL_SERUM_TORMENT = 82750,            
-    H_SPELL_SERUM_TORMENT = 89994,
+    // Neferset Torturer
+    SPELL_BRANDED_TONGUE        = 82744,    
+    H_SPELL_BRANDED_TONGUE      = 90037, 
+    SPELL_SERUM_TORMENT         = 82750,            
+    H_SPELL_SERUM_TORMENT       = 89994,
+ 
+    // Oathsworn Axemaster
+    SPELL_SKULL_CRUSH           = 44922,
+    SPELL_SLAM                  = 82763,
 
-    /*Oathsworn Axemaster*/
-    SPELL_SKULL_CRUSH = 44922,
-    SPELL_SLAM = 82763,
+    // Oathsworn Captain
+    SPELL_SKULL_CRACK           = 82670,
 
-    /*Oathsworn Captain*/
-    SPELL_SKULL_CRACK = 82670,
+    // Oathsworn Myrmidon
+    SPELL_BLADED_SHIELD         = 82671,
+    H_SPELL_BLADED_SHIELD       = 95184,
+    SPELL_RESISTANCE            = 82673,
 
-    /*Oathsworn Myrmidon*/
-    SPELL_BLADED_SHIELD = 82671,
-    H_SPELL_BLADED_SHIELD = 95184,
-    SPELL_RESISTANCE = 82673,
+    // Oathsworn Pathfinder
+    SPELL_CALL_FALCON           = 82792,
+    SPELL_SHOOT                 = 83877, 
+    SPELL_WING_CLIP             = 82764,
 
-    /*Oathsworn Pathfinder*/
-    SPELL_CALL_FALCON = 82792,
-    SPELL_SHOOT = 83877, 
-    SPELL_WING_CLIP = 82764,
+    // Oathsworn Scorpid Keeper
+    SPELL_BLINK                 = 84123,
+    SPELL_CALL_SCORPID          = 84126,
+    SPELL_EVASION               = 84122,
 
-    /*Oathsworn Scorpid Keeper*/
-    SPELL_BLINK = 84123,
-    SPELL_CALL_SCORPID = 84126,
-    SPELL_EVASION = 84122,
+    // Oathsworn Skinner
+    SPELL_FAN_KNIVES            = 82789,
+    H_SPELL_FAN_KNIVES          = 90034,
+    SPELL_SPINAL_PIERCE         = 84031,
 
-    /*Oathsworn Skinner*/
-    SPELL_FAN_KNIVES = 82789,
-    H_SPELL_FAN_KNIVES = 90034,
-    SPELL_SPINAL_PIERCE = 84031,
+    // Oathsworn Tamer
+    SPELL_FERAL_LINK            = 84230,
 
-    /*Oathsworn Tamer*/
-    SPELL_FERAL_LINK = 84230,
+    // Wanderer
+    SPELL_CALL_CROCO            = 82791,
+    SPELL_FORKED_SHOT           = 82794,
+    H_SPELL_FORKED_SHOT         = 89992,
 
-    /*Wanderer*/
-    SPELL_CALL_CROCO = 82791,
-    SPELL_FORKED_SHOT = 82794,
-    H_SPELL_FORKED_SHOT = 89992,
+    // Pygmy Brute
+    SPELL_IMPALE                = 83783,
+    H_SPELL_IMPALE              = 89990,
+    SPELL_SHOCKWAVE             = 83785,                
+    H_SPELL_SHOCKWAVE           = 90024,
 
-    /*Pygmy Brute*/
-    SPELL_IMPALE = 83783,
-    H_SPELL_IMPALE = 89990,
-    SPELL_SHOCKWAVE = 83785,                
-    H_SPELL_SHOCKWAVE = 90024,
+    // Pygmy Fire Breather
+    SPELL_DRAGON_BREATH         = 83776,  
+    H_SPELL_DRAGON_BREATH       = 90026,
+    SPELL_FIRE_BLAST            = 83778,
+    H_SPELL_FIREBLAST           = 90025,
 
-    /*Pygmy Fire Breather*/
-    SPELL_DRAGON_BREATH = 83776,  
-    H_SPELL_DRAGON_BREATH = 90026,
-    SPELL_FIRE_BLAST = 83778,
-    H_SPELL_FIREBLAST = 90025,
+    // Pygmy Scout                    
+    SPELL_TOXIC_DART            = 83780,
+    H_SPELL_TOXIC_DART          = 89991,
 
-    /*Pygmy Scout*/                    
-    SPELL_TOXIC_DART = 83780,
-    H_SPELL_TOXIC_DART = 89991,
-
-    /*Servent of Siamat*/
-    SPELL_LIGHTNING_NOVA = 84544,            
-    H_SPELL_LIGHTNING_NOVA = 90015,
-    SPELL_THUNDER_CRASH = 84521,
+    // Servent of Siamat
+    SPELL_LIGHTNING_NOVA        = 84544,            
+    H_SPELL_LIGHTNING_NOVA      = 90015,
+    SPELL_THUNDER_CRASH         = 84521,
 };
 
 enum eEvents
