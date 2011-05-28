@@ -3816,6 +3816,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 26029: // dark glare
         case 37433: // spout
         case 43140: case 43215: // flame breath
+        case 70461: // Coldflame Trap
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_CONE_LINE;
             count++;
             break;
@@ -4171,6 +4172,9 @@ void SpellMgr::LoadSpellCustomAttr()
                     // this needs research on modifier applying rules, does not seem to be in Attributes fields
             spellInfo->EffectSpellClassMask[0] = flag96(0x00000040, 0x00000000, 0x00000000);
             count++;
+            break;
+        case 70460: // Coldflame Jets
+            spellInfo->DurationIndex = 1;   // 10 seconds
             break;
         case 71413: // Green Ooze Summon
         case 71414: // Orange Ooze Summon
