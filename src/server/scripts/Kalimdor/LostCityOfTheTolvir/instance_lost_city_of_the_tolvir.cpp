@@ -47,18 +47,16 @@ public:
 
     struct instance_lost_city_of_the_tolvir_InstanceMapScript: public InstanceScript
     {
-        instance_lost_city_of_the_tolvir_InstanceMapScript(InstanceMap* map) : InstanceScript(map) 
-        {
+        instance_lost_city_of_the_tolvir_InstanceMapScript(InstanceMap* map) : InstanceScript(map) {}
 
-            uint32 uiEncounter[ENCOUNTERS];
+        uint32 uiEncounter[ENCOUNTERS];
 
-            uint64 uiGeneralHusam;
-            uint64 uiHighProphetBarim;
-            uint64 uiLockmaw;
-            uint64 uiAugh;
-            uint64 uiSiamat;
-            uint64 uiTeamInInstance;
-        }
+        uint64 uiGeneralHusam;
+        uint64 uiHighProphetBarim;
+        uint64 uiLockmaw;
+        uint64 uiAugh;
+        uint64 uiSiamat;
+        uint64 uiTeamInInstance;
 
         void Initialize()
         {
