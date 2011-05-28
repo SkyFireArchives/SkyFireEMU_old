@@ -1,4 +1,8 @@
-# Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
+# Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+#
+# Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+#
+# Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
 #
 # Copyright (C) 2010-2011 SkyFire <http://www.projectskyfire.org/>
 #
@@ -19,6 +23,7 @@ endif()
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
   if(SERVERS)
     add_subdirectory(jemalloc)
+    set(JEMALLOC_LIB "jemalloc")
   endif()
 endif()
 
@@ -29,9 +34,9 @@ if(CMAKE_SYSTEM_NAME MATCHES "Windows")
       add_subdirectory(mysqllite)
     endif()
   endif()
-  if(TOOLS)
-    add_subdirectory(bzip2)
-  endif()
+if(TOOLS)
+  add_subdirectory(bzip2)
+endif()
   add_subdirectory(zlib)
 endif()
 
