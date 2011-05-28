@@ -1,18 +1,25 @@
 /*
- * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "ObjectMgr.h"
@@ -54,6 +61,7 @@ enum Spells
     SPELL_DELIRIOUS_SLASH                   = 71623,
     SPELL_PACT_OF_THE_DARKFALLEN_TARGET     = 71336,
     SPELL_PACT_OF_THE_DARKFALLEN            = 71340,
+    SPELL_PACT_OF_THE_DARKFALLEN_DAMAGE     = 71341,
     SPELL_SWARMING_SHADOWS                  = 71264,
     SPELL_TWILIGHT_BLOODBOLT_TARGET         = 71445,
     SPELL_TWILIGHT_BLOODBOLT                = 71446,
@@ -139,7 +147,7 @@ class boss_blood_queen_lana_thel : public CreatureScript
 
             void Reset()
             {
-                events.Reset();
+                _Reset();
                 events.ScheduleEvent(EVENT_BERSERK, 330000);
                 events.ScheduleEvent(EVENT_VAMPIRIC_BITE, 15000);
                 events.ScheduleEvent(EVENT_BLOOD_MIRROR, 2500, EVENT_GROUP_CANCELLABLE);
@@ -151,8 +159,6 @@ class boss_blood_queen_lana_thel : public CreatureScript
                 me->SetSpeed(MOVE_FLIGHT, 0.642857f, true);
                 offtank = NULL;
                 vampires.clear();
-
-                instance->SetBossState(DATA_BLOOD_QUEEN_LANA_THEL, NOT_STARTED);
             }
 
             void EnterCombat(Unit* who)
@@ -164,6 +170,7 @@ class boss_blood_queen_lana_thel : public CreatureScript
                     return;
                 }
 
+                me->setActive(true);
                 DoZoneInCombat();
                 Talk(SAY_AGGRO);
                 instance->SetBossState(DATA_BLOOD_QUEEN_LANA_THEL, IN_PROGRESS);
@@ -174,6 +181,7 @@ class boss_blood_queen_lana_thel : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
+                _JustDied();
                 Talk(SAY_DEATH);
                 instance->DoRemoveAurasDueToSpellOnPlayers(ESSENCE_OF_BLOOD_QUEEN);
                 instance->DoRemoveAurasDueToSpellOnPlayers(ESSENCE_OF_BLOOD_QUEEN_PLR);
@@ -184,11 +192,11 @@ class boss_blood_queen_lana_thel : public CreatureScript
                 instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_BLOOD_MIRROR_DUMMY);
                 instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_DELIRIOUS_SLASH);
                 instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_PACT_OF_THE_DARKFALLEN);
-                instance->SetBossState(DATA_BLOOD_QUEEN_LANA_THEL, DONE);
             }
 
             void JustReachedHome()
             {
+                _JustReachedHome();
                 Talk(SAY_WIPE);
                 instance->SetBossState(DATA_BLOOD_QUEEN_LANA_THEL, FAIL);
             }
@@ -229,7 +237,8 @@ class boss_blood_queen_lana_thel : public CreatureScript
                         me->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, 0x01);
                         me->SetFlying(false);
                         me->SetReactState(REACT_AGGRESSIVE);
-                        AttackStart(me->getVictim());
+                        if (Unit *victim = me->SelectVictim())
+                            AttackStart(victim);
                         events.ScheduleEvent(EVENT_BLOOD_MIRROR, 2500, EVENT_GROUP_CANCELLABLE);
                         break;
                     default:
@@ -266,19 +275,23 @@ class boss_blood_queen_lana_thel : public CreatureScript
                             break;
                         case EVENT_BLOOD_MIRROR:
                         {
-                            Player* newOfftank = SelectRandomTarget(true);
-                            if (offtank != newOfftank)
+                            // victim can be NULL when this is processed in the same update tick as EVENT_AIR_PHASE
+                            if (me->getVictim())
                             {
-                                offtank = newOfftank;
-                                if (offtank)
+                                Player* newOfftank = SelectRandomTarget(true);
+                                if (offtank != newOfftank)
                                 {
-                                    offtank->CastSpell(me->getVictim(), SPELL_BLOOD_MIRROR_DAMAGE, true);
-                                    me->getVictim()->CastSpell(offtank, SPELL_BLOOD_MIRROR_DUMMY, true);
-                                    DoCastVictim(SPELL_BLOOD_MIRROR_VISUAL);
-                                    if (Item* shadowsEdge = offtank->GetWeaponForAttack(BASE_ATTACK, true))
-                                        if (!offtank->HasAura(SPELL_THIRST_QUENCHED) && shadowsEdge->GetEntry() == ITEM_SHADOW_S_EDGE && !offtank->HasAura(SPELL_GUSHING_WOUND))
-                                            offtank->CastSpell(offtank, SPELL_GUSHING_WOUND, true);
+                                    offtank = newOfftank;
+                                    if (offtank)
+                                    {
+                                        offtank->CastSpell(me->getVictim(), SPELL_BLOOD_MIRROR_DAMAGE, true);
+                                        me->getVictim()->CastSpell(offtank, SPELL_BLOOD_MIRROR_DUMMY, true);
+                                        DoCastVictim(SPELL_BLOOD_MIRROR_VISUAL);
+                                        if (Item* shadowsEdge = offtank->GetWeaponForAttack(BASE_ATTACK, true))
+                                            if (!offtank->HasAura(SPELL_THIRST_QUENCHED) && shadowsEdge->GetEntry() == ITEM_SHADOW_S_EDGE && !offtank->HasAura(SPELL_GUSHING_WOUND))
+                                                offtank->CastSpell(offtank, SPELL_GUSHING_WOUND, true);
 
+                                    }
                                 }
                             }
                             events.ScheduleEvent(EVENT_BLOOD_MIRROR, 2500, EVENT_GROUP_CANCELLABLE);
@@ -555,13 +568,18 @@ class spell_blood_queen_bloodbolt : public SpellScriptLoader
         }
 };
 
-class PactOfTheDarkfallenChack
+class PactOfTheDarkfallenCheck
 {
     public:
+        PactOfTheDarkfallenCheck(bool hasPact) : _hasPact(hasPact) { }
+
         bool operator() (Unit* unit)
         {
-            return !unit->HasAura(SPELL_PACT_OF_THE_DARKFALLEN);
+            return unit->HasAura(SPELL_PACT_OF_THE_DARKFALLEN) == _hasPact;
         }
+
+    private:
+        bool _hasPact;
 };
 
 class spell_blood_queen_pact_of_the_darkfallen : public SpellScriptLoader
@@ -575,7 +593,7 @@ class spell_blood_queen_pact_of_the_darkfallen : public SpellScriptLoader
 
             void FilterTargets(std::list<Unit*>& unitList)
             {
-                unitList.remove_if(PactOfTheDarkfallenChack());
+                unitList.remove_if(PactOfTheDarkfallenCheck(false));
 
                 bool remove = true;
                 std::list<Unit*>::const_iterator itrEnd = unitList.end(), itr, itr2;
@@ -609,6 +627,71 @@ class spell_blood_queen_pact_of_the_darkfallen : public SpellScriptLoader
         SpellScript* GetSpellScript() const
         {
             return new spell_blood_queen_pact_of_the_darkfallen_SpellScript();
+        }
+};
+
+class spell_blood_queen_pact_of_the_darkfallen_dmg : public SpellScriptLoader
+{
+    public:
+        spell_blood_queen_pact_of_the_darkfallen_dmg() : SpellScriptLoader("spell_blood_queen_pact_of_the_darkfallen_dmg") { }
+
+        class spell_blood_queen_pact_of_the_darkfallen_dmg_AuraScript : public AuraScript
+        {
+            PrepareAuraScript(spell_blood_queen_pact_of_the_darkfallen_dmg_AuraScript);
+
+            bool Validate(SpellEntry const* /*spell*/)
+            {
+                if (!sSpellStore.LookupEntry(SPELL_PACT_OF_THE_DARKFALLEN_DAMAGE))
+                    return false;
+                return true;
+            }
+
+            // this is an additional effect to be executed
+            void PeriodicTick(AuraEffect const* aurEff)
+            {
+                SpellEntry const* damageSpell = sSpellStore.LookupEntry(SPELL_PACT_OF_THE_DARKFALLEN_DAMAGE);
+                int32 damage = SpellMgr::CalculateSpellEffectAmount(damageSpell, EFFECT_0);
+                float multiplier = 0.3375f + 0.1f * uint32(aurEff->GetTickNumber()/10); // do not convert to 0.01f - we need tick number/10 as INT (damage increases every 10 ticks)
+                damage = uint32(damage * multiplier);
+                GetTarget()->CastCustomSpell(SPELL_PACT_OF_THE_DARKFALLEN_DAMAGE, SPELLVALUE_BASE_POINT0, damage, GetTarget(), true);
+            }
+
+            void Register()
+            {
+                OnEffectPeriodic += AuraEffectPeriodicFn(spell_blood_queen_pact_of_the_darkfallen_dmg_AuraScript::PeriodicTick, EFFECT_1, SPELL_AURA_PERIODIC_TRIGGER_SPELL);
+            }
+        };
+
+        AuraScript* GetAuraScript() const
+        {
+            return new spell_blood_queen_pact_of_the_darkfallen_dmg_AuraScript();
+        }
+};
+
+class spell_blood_queen_pact_of_the_darkfallen_dmg_target : public SpellScriptLoader
+{
+    public:
+        spell_blood_queen_pact_of_the_darkfallen_dmg_target() : SpellScriptLoader("spell_blood_queen_pact_of_the_darkfallen_dmg_target") { }
+
+        class spell_blood_queen_pact_of_the_darkfallen_dmg_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_blood_queen_pact_of_the_darkfallen_dmg_SpellScript);
+
+            void FilterTargets(std::list<Unit*>& unitList)
+            {
+                unitList.remove_if(PactOfTheDarkfallenCheck(true));
+                unitList.push_back(GetCaster());
+            }
+
+            void Register()
+            {
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_blood_queen_pact_of_the_darkfallen_dmg_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_AREA_ALLY_SRC);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_blood_queen_pact_of_the_darkfallen_dmg_SpellScript();
         }
 };
 
@@ -651,6 +734,8 @@ void AddSC_boss_blood_queen_lana_thel()
     new spell_blood_queen_frenzied_bloodthirst();
     new spell_blood_queen_bloodbolt();
     new spell_blood_queen_pact_of_the_darkfallen();
+    new spell_blood_queen_pact_of_the_darkfallen_dmg();
+    new spell_blood_queen_pact_of_the_darkfallen_dmg_target();
     new achievement_once_bitten_twice_shy_n();
     new achievement_once_bitten_twice_shy_v();
 }
