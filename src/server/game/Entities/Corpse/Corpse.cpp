@@ -122,13 +122,12 @@ void Corpse::SaveToDB()
     stmt->setString(8, _ConcatFields(CORPSE_FIELD_ITEM, EQUIPMENT_SLOT_END));   // itemCache
     stmt->setUInt32(9, GetUInt32Value(CORPSE_FIELD_BYTES_1));                   // bytes1
     stmt->setUInt32(10, GetUInt32Value(CORPSE_FIELD_BYTES_2));                  // bytes2
-    stmt->setUInt32(11, uint32(0) /*GetUInt32Value(CORPSE_FIELD_GUILD)*/);                    // guildId
-    stmt->setUInt8 (12, GetUInt32Value(CORPSE_FIELD_FLAGS));                    // flags
-    stmt->setUInt8 (13, GetUInt32Value(CORPSE_FIELD_DYNAMIC_FLAGS));            // dynFlags
-    stmt->setUInt32(14, uint32(m_time));                                        // time
-    stmt->setUInt8 (15, GetType());                                             // corpseType
-    stmt->setUInt32(16, GetInstanceId());                                       // instanceId
-    stmt->setUInt16(17, GetPhaseMask());                                        // phaseMask
+    stmt->setUInt8 (11, GetUInt32Value(CORPSE_FIELD_FLAGS));                    // flags
+    stmt->setUInt8 (12, GetUInt32Value(CORPSE_FIELD_DYNAMIC_FLAGS));            // dynFlags
+    stmt->setUInt32(13, uint32(m_time));                                        // time
+    stmt->setUInt8 (14, GetType());                                             // corpseType
+    stmt->setUInt32(15, GetInstanceId());                                       // instanceId
+    stmt->setUInt16(16, GetPhaseMask());                                        // phaseMask
     trans->Append(stmt);
 
     CharacterDatabase.CommitTransaction(trans);
@@ -150,12 +149,20 @@ void Corpse::DeleteBonesFromWorld()
 
 void Corpse::DeleteFromDB(SQLTransaction& trans)
 {
+    PreparedStatement* stmt = NULL;
     if (GetType() == CORPSE_BONES)
-        // only specific bones
-        trans->PAppend("DELETE FROM corpse WHERE guid = '%d'", GetGUIDLow());
+    {
+        // Only specific bones
+        stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CORPSE);
+        stmt->setUInt32(0, GetGUIDLow());
+    }
     else
+    {
         // all corpses (not bones)
-        trans->PAppend("DELETE FROM corpse WHERE player = '%d' AND corpse_type <> '0'",  GUID_LOPART(GetOwnerGUID()));
+        stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_PLAYER_CORPSES);
+        stmt->setUInt32(0, GUID_LOPART(GetOwnerGUID()));
+    }
+    trans->Append(stmt);
 }
 
 bool Corpse::LoadFromDB(uint32 guid, Field *fields)
