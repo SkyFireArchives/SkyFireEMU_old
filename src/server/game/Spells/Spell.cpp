@@ -2824,9 +2824,107 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                     unitList.remove(m_targets.getUnitTarget());
                 Trinity::RandomResizeList(unitList, maxTargets);
             }
+            else
+            {
+                switch (m_spellInfo->Id)
+                {
+                    case 27285: // Seed of Corruption proc spell
+                        unitList.remove(m_targets.getUnitTarget());
+                        break;
+                    case 55789: // Improved Icy Talons
+                    case 59725: // Improved Spell Reflection - aoe aura
+                        unitList.remove(m_caster);
+                        break;
+                    case 72255: // Mark of the Fallen Champion (Deathbringer Saurfang)
+                    case 72444:
+                    case 72445:
+                    case 72446:
+                        for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end();)
+                        {
+                            if (!(*itr)->HasAura(72293))
+                                itr = unitList.erase(itr);
+                            else
+                                ++itr;
+                        }
+                        break;
+                    case 69782: case 69796:                 // Ooze Flood
+                    case 69798: case 69801:                 // Ooze Flood
+                        // get 2 targets except 2 nearest
+                        unitList.sort(Trinity::ObjectDistanceOrderPred(m_caster));
+                        unitList.resize(4);
+                        while (unitList.size() > 2)
+                            unitList.pop_front();
+                        // crashfix
+                        if (unitList.empty())
+                            return;
+                        break;
+                    case 68921: case 69049:                 // Soulstorm
+                        for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end();)
+                        {
+                            Position pos;
+                            (*itr)->GetPosition(&pos);
+                            if (m_caster->GetExactDist2d(&pos) <= 10.0f)
+                                itr = unitList.erase(itr);
+                            else
+                                ++itr;
+                        }
+                        break;
+                    case 71390:                             // Pact of the Darkfallen
+                    {
+                        for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end();)
+                        {
+                            if (!(*itr)->HasAura(71340))
+                                itr = unitList.erase(itr);
+                            else
+                                ++itr;
+                        }
+                        bool remove = true;
+                        // we can do this, unitList is MAX 4 in size
+                        for (std::list<Unit*>::const_iterator itr = unitList.begin(); itr != unitList.end() && remove; ++itr)
+                        {
+                            if (!m_caster->IsWithinDist(*itr, 5.0f, false))
+                                remove = false;
 
-            CallScriptAfterUnitTargetSelectHandlers(unitList, SpellEffIndex(i));
+                            for (std::list<Unit*>::const_iterator itr2 = unitList.begin(); itr2 != unitList.end() && remove; ++itr2)
+                                if (itr != itr2 && !(*itr2)->IsWithinDist(*itr, 5.0f, false))
+                                    remove = false;
+                        }
 
+                        if (remove)
+                            for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end(); ++itr)
+                                (*itr)->RemoveAura(71340);
+                        break;
+                    }
+                }
+                // Death Pact
+                if (m_spellInfo->SpellFamilyName == SPELLFAMILY_DEATHKNIGHT && m_spellInfo->SpellFamilyFlags[0] & 0x00080000)
+                {
+                    Unit * unit_to_add = NULL;
+                    for (std::list<Unit*>::iterator itr = unitList.begin() ; itr != unitList.end(); ++itr)
+                    {
+                        if ((*itr)->GetTypeId() == TYPEID_UNIT
+                            && (*itr)->GetOwnerGUID() == m_caster->GetGUID()
+                            && (*itr)->ToCreature()->GetCreatureInfo()->type == CREATURE_TYPE_UNDEAD)
+                        {
+                            unit_to_add = (*itr);
+                            break;
+                        }
+                    }
+                    if (unit_to_add)
+                    {
+                        unitList.clear();
+                        unitList.push_back(unit_to_add);
+                    }
+                    // Pet not found - remove cooldown
+                    else
+                    {
+                        if (modOwner->GetTypeId() == TYPEID_PLAYER)
+                            modOwner->RemoveSpellCooldown(m_spellInfo->Id,true);
+                        SendCastResult(SPELL_FAILED_NO_PET);
+                        finish(false);
+                    }
+                }
+            }
             for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end(); ++itr)
                 AddUnitTarget(*itr, i);
         }
