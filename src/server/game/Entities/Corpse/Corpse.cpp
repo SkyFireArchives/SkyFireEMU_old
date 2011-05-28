@@ -150,12 +150,20 @@ void Corpse::DeleteBonesFromWorld()
 
 void Corpse::DeleteFromDB(SQLTransaction& trans)
 {
+    PreparedStatement* stmt = NULL;
     if (GetType() == CORPSE_BONES)
-        // only specific bones
-        trans->PAppend("DELETE FROM corpse WHERE guid = '%d'", GetGUIDLow());
+    {
+        // Only specific bones
+        stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CORPSE);
+        stmt->setUInt32(0, GetGUIDLow());
+    }
     else
-        // all corpses (not bones)
-        trans->PAppend("DELETE FROM corpse WHERE player = '%d' AND corpse_type <> '0'",  GUID_LOPART(GetOwnerGUID()));
+    {	
+        // all corpses (not bones)	 	
+        stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_PLAYER_CORPSES);
+        stmt->setUInt32(0, GUID_LOPART(GetOwnerGUID()));
+    }
+    trans->Append(stmt);
 }
 
 bool Corpse::LoadFromDB(uint32 guid, Field *fields)

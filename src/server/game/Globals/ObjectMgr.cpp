@@ -6724,7 +6724,7 @@ void ObjectMgr::SetHighestGuids()
     if (result)
         m_mailid = (*result)[0].GetUInt32()+1;
 
-    result = CharacterDatabase.Query("SELECT MAX(guid) FROM corpse");
+    result = CharacterDatabase.Query("SELECT MAX(corpseGuid) FROM corpse");
     if (result)
         m_hiCorpseGuid = (*result)[0].GetUInt32()+1;
 
@@ -8045,7 +8045,7 @@ void ObjectMgr::LoadReservedPlayersNames()
 {
     m_ReservedNames.clear();                                // need for reload case
 
-    QueryResult result = CharacterDatabase.Query("SELECT name FROM reserved_name");
+    QueryResult result = WorldDatabase.Query("SELECT name FROM reserved_name");
 
     uint32 count = 0;
 
