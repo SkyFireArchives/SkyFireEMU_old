@@ -1,27 +1,21 @@
---
--- Table structure for table `instance_encounters`
---
-
-DROP TABLE IF EXISTS `instance_encounters`;
+-- Table structure for table instance_encounters
+DROP TABLE IF EXISTS instance_encounters;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `instance_encounters` (
-  `entry` int(10) unsigned NOT NULL COMMENT 'Unique entry from DungeonEncounter.dbc',
-  `creditType` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `creditEntry` int(10) unsigned NOT NULL DEFAULT '0',
-  `lastEncounterDungeon` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'If not 0, LfgDungeon.dbc entry for the instance it is last encounter in',
-  `comment` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`entry`)
+CREATE TABLE instance_encounters (
+  entry int(10) unsigned NOT NULL COMMENT 'Unique entry from DungeonEncounter.dbc',
+  creditType tinyint(3) unsigned NOT NULL DEFAULT '0',
+  creditEntry int(10) unsigned NOT NULL DEFAULT '0',
+  lastEncounterDungeon smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'If not 0, LfgDungeon.dbc entry for the instance it is last encounter in',
+  comment varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (entry)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `instance_encounters`
---
-
-LOCK TABLES `instance_encounters` WRITE;
-/*!40000 ALTER TABLE `instance_encounters` DISABLE KEYS */;
-INSERT INTO `instance_encounters` VALUES
+-- Dumping data for table instance_encounters
+LOCK TABLES instance_encounters WRITE;
+/*!40000 ALTER TABLE instance_encounters DISABLE KEYS */;
+INSERT INTO instance_encounters VALUES
 (161,0,644,0, 'Rhahk''zor'),
 (162,0,643,0, 'Sneed'),
 (163,0,1763,0, 'Gilnid'),
@@ -634,7 +628,7 @@ INSERT INTO `instance_encounters` VALUES
 (892,0,39747,0, 'Saviana Ragefire'),
 (893,0,39746,0, 'General Zarithrian'),
 (894,0,39746,0, 'General Zarithrian');
-/*!40000 ALTER TABLE `instance_encounters` ENABLE KEYS */;
+/*!40000 ALTER TABLE instance_encounters ENABLE KEYS */;
 UNLOCK TABLES;
 
-DELETE FROM `command` WHERE `name`='reload lfg_dungeon_encounters';
+DELETE FROM command WHERE name='reload lfg_dungeon_encounters';

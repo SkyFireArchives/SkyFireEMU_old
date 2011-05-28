@@ -1,14 +1,14 @@
 delete from event_scripts where id=2268;
 
 DELETE FROM gameobject WHERE id=124369;
-INSERT INTO `gameobject` (`id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES ('124369', '70', '1', '1', '137.654', '288.125', '-52.1341', '-2.70526', '0', '0', '0.976296', '-0.21644', '3600', '100', '1');
+INSERT INTO gameobject (id, map, spawnMask, phaseMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecs, animprogress, state) VALUES ('124369', '70', '1', '1', '137.654', '288.125', '-52.1341', '-2.70526', '0', '0', '0.976296', '-0.21644', '3600', '100', '1');
 
-INSERT INTO `creature` (`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+INSERT INTO creature (id,map,spawnMask,phaseMask,modelid,equipment_id,position_x,position_y,position_z,orientation,spawntimesecs,spawndist,currentwaypoint,curhealth,curmana,DeathState,MovementType) VALUES
 (35591, 650, 3, 64, 0, 0, 746.626, 618.54, 411.09, 4.63158, 86400, 0, 0, 10635, 0, 0, 0),
 (35592, 650, 3, 128, 0, 0, 746.626, 618.54, 411.09, 4.63158, 86400, 0, 0, 10635, 0, 0, 0);
 
-DELETE FROM `creature` WHERE `id`=7076;
-INSERT INTO `creature` (`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+DELETE FROM creature WHERE id=7076;
+INSERT INTO creature (id,map,spawnMask,phaseMask,modelid,equipment_id,position_x,position_y,position_z,orientation,spawntimesecs,spawndist,currentwaypoint,curhealth,curmana,DeathState,MovementType) VALUES
 (7076, 70, 1, 1, 6026, 0, 106.737, 290.618, -51.6997, 4.59022, 7200, 0, 0, 349, 0, 0, 0),
 (7076, 70, 1, 1, 6026, 0, 89.731, 282.814, -51.6997, 5.67232, 7200, 0, 0, 349, 0, 0, 0),
 (7076, 70, 1, 1, 6026, 0, 102.634, 255.188, -51.6997, 1.48353, 7200, 0, 0, 349, 0, 0, 0),
@@ -16,8 +16,8 @@ INSERT INTO `creature` (`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_
 (7076, 70, 1, 1, 6026, 0, 120.997, 280.152, -51.6997, 3.61283, 7200, 0, 0, 349, 0, 0, 0),
 (7076, 70, 1, 1, 6026, 0, 119.465, 263.298, -51.6997, 2.56563, 7200, 0, 0, 349, 0, 0, 0);
 
-DELETE FROM `creature` WHERE `id`=7309;
-INSERT INTO `creature` (`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+DELETE FROM creature WHERE id=7309;
+INSERT INTO creature (id,map,spawnMask,phaseMask,modelid,equipment_id,position_x,position_y,position_z,orientation,spawntimesecs,spawndist,currentwaypoint,curhealth,curmana,DeathState,MovementType) VALUES
 (7309, 70, 1, 1, 6025, 0, 132.846, 259.723, -52.1213, 2.60054, 7200, 0, 0, 446, 0, 0, 0),
 (7309, 70, 1, 1, 6025, 0, 79.827, 292.044, -52.1213, 5.84685, 7200, 0, 0, 446, 0, 0, 0),
 (7309, 70, 1, 1, 6025, 0, 119.714, 299.935, -52.1213, 4.18879, 7200, 0, 0, 446, 0, 0, 0),
