@@ -32,14 +32,14 @@ class instance_the_stonecore : public InstanceMapScript
 public:
     instance_the_stonecore() : InstanceMapScript("instance_the_stonecore", 725) { }
 
-    InstanceScript* GetInstanceScript(InstanceMap* pMap) const
+    InstanceScript* GetInstanceScript(InstanceMap* map) const
     {
-        return new instance_the_stonecore_InstanceMapScript(pMap);
+        return new instance_the_stonecore_InstanceMapScript(map);
     }
 
     struct instance_the_stonecore_InstanceMapScript : public InstanceScript
     {
-        instance_the_stonecore_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {};
+        instance_the_stonecore_InstanceMapScript(Map* map) : InstanceScript(map) {};
 
         uint64 uiCorborus;
         uint64 uiSlabhide;
