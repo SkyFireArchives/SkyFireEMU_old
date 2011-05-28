@@ -1138,6 +1138,8 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_CHARDELETE_MIN_LEVEL] = sConfig->GetIntDefault("CharDelete.MinLevel", 0);
     m_int_configs[CONFIG_CHARDELETE_KEEP_DAYS] = sConfig->GetIntDefault("CharDelete.KeepDays", 30);
 
+    m_int_configs[CONFIG_IGNORING_MAPS_VERSION] = sConfig->GetIntDefault("IgnoringMapsVersion", 0);
+    
     ///- Read the "Data" directory from the config file
     std::string dataPath = sConfig->GetStringDefault("DataDir","./");
     if (dataPath.at(dataPath.length()-1) != '/' && dataPath.at(dataPath.length()-1) != '\\')
@@ -1236,19 +1238,22 @@ void World::SetInitialWorldSettings()
     ///- Init highest guids before any table loading to prevent using not initialized guids in some code.
     sObjectMgr->SetHighestGuids();
 
-    ///- Check the existence of the map files for all races' startup areas.
-    if (!MapManager::ExistMapAndVMap(0,-6240.32f, 331.033f)
-        || !MapManager::ExistMapAndVMap(0,-8949.95f,-132.493f)
-        || !MapManager::ExistMapAndVMap(1,-618.518f,-4251.67f)
-        || !MapManager::ExistMapAndVMap(0, 1676.35f, 1677.45f)
-        || !MapManager::ExistMapAndVMap(1, 10311.3f, 832.463f)
-        || !MapManager::ExistMapAndVMap(1,-2917.58f,-257.98f)
-        || (m_int_configs[CONFIG_EXPANSION] && (
-            !MapManager::ExistMapAndVMap(530,10349.6f,-6357.29f) ||
-            !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f) ||
-            !MapManager::ExistMapAndVMap(648, -8423.809570f, 1361.300049f))))
+    if(sWorld->getIntConfig(CONFIG_IGNORING_MAPS_VERSION) == 0)
     {
-        exit(1);
+        ///- Check the existence of the map files for all races' startup areas.
+        if (!MapManager::ExistMapAndVMap(0,-6240.32f, 331.033f)
+            || !MapManager::ExistMapAndVMap(0,-8949.95f,-132.493f)
+            || !MapManager::ExistMapAndVMap(1,-618.518f,-4251.67f)
+            || !MapManager::ExistMapAndVMap(0, 1676.35f, 1677.45f)
+            || !MapManager::ExistMapAndVMap(1, 10311.3f, 832.463f)
+            || !MapManager::ExistMapAndVMap(1,-2917.58f,-257.98f)
+            || (m_int_configs[CONFIG_EXPANSION] && (
+                !MapManager::ExistMapAndVMap(530,10349.6f,-6357.29f) ||
+                !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f) ||
+                !MapManager::ExistMapAndVMap(648, -8423.809570f, 1361.300049f))))
+        {
+            exit(1);
+        }    
     }
 
     ///- Loading strings. Getting no records means core load has to be canceled because no error message can be output.
