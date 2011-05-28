@@ -77,6 +77,12 @@ enum GroupMemberFlags
     MEMBER_FLAG_MAINASSIST  = 0x04,
 };
 
+enum GroupMemberAssignment
+{
+    GROUP_ASSIGN_MAINTANK   = 0,
+    GROUP_ASSIGN_MAINASSIST = 1,
+};
+
 enum GroupType
 {
     GROUPTYPE_NORMAL = 0x00,
@@ -181,14 +187,14 @@ class Group
         ~Group();
 
         // group manipulation methods
-        bool   Create(const uint64 &guid, const char * name);
+        bool   Create(Player *leader);
         bool   LoadGroupFromDB(const uint32 &guid, QueryResult result, bool loadMembers = true);
         bool   LoadMemberFromDB(uint32 guidLow, uint8 memberFlags, uint8 subgroup, uint8 roles);
         bool   AddInvite(Player *player);
         void   RemoveInvite(Player *player);
         void   RemoveAllInvites();
         bool   AddLeaderInvite(Player *player);
-        bool   AddMember(const uint64 &guid, const char* name);
+        bool   AddMember(Player *player);
         uint32 RemoveMember(const uint64 &guid, const RemoveMethod &method = GROUP_REMOVEMETHOD_DEFAULT, uint64 kicker = 0, const char* reason = NULL);
         void   ChangeLeader(const uint64 &guid);
         void   SetLootMethod(LootMethod method);
@@ -246,10 +252,9 @@ class Group
         void ChangeMembersGroup(const uint64 &guid, const uint8 &group);
         void ChangeMembersGroup(Player *player, const uint8 &group);
 
-        void SetAssistant(uint64 guid, const bool &apply);
-        void SetMainTank(uint64 guid, const bool &apply);
-        void SetMainAssistant(uint64 guid, const bool &apply);
         void SetTargetIcon(uint8 id, uint64 whoGuid, uint64 targetGuid);
+        void SetGroupMemberFlag(uint64 guid, const bool &apply, GroupMemberFlags flag);
+        void RemoveUniqueGroupMemberFlag(GroupMemberFlags flag);
 
         Difficulty GetDifficulty(bool isRaid) const;
         Difficulty GetDungeonDifficulty() const;
@@ -305,18 +310,7 @@ class Group
         void BroadcastGroupUpdate(void);
 
     protected:
-        bool _addMember(const uint64 &guid, const char* name);
-        bool _addMember(const uint64 &guid, const char* name, uint8 group);
-        bool _removeMember(const uint64 &guid);             // returns true if leader has changed
-        void _setLeader(const uint64 &guid);
-
-        void _removeRolls(const uint64 &guid);
-
         bool _setMembersGroup(const uint64 &guid, const uint8 &group);
-        bool _setAssistantFlag(const uint64 &guid, const bool &apply);
-        bool _setMainTank(const uint64 &guid, const bool &apply);
-        bool _setMainAssistant(const uint64 &guid, const bool &apply);
-
         void _homebindIfInstance(Player *player);
 
         void _initRaidSubGroupsCounter();
@@ -324,7 +318,6 @@ class Group
         member_witerator _getMemberWSlot(uint64 Guid);
         void SubGroupCounterIncrease(uint8 subgroup);
         void SubGroupCounterDecrease(uint8 subgroup);
-        void RemoveUniqueGroupMemberFlag(GroupMemberFlags flag);
         void ToggleGroupMemberFlag(member_witerator slot, uint8 flag, bool apply);
 
         MemberSlotList      m_memberSlots;
