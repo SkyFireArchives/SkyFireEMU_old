@@ -231,12 +231,12 @@ void WorldSession::HandleGroupAcceptOpcode(WorldPacket & recv_data)
     {
         if (leader)
             group->RemoveInvite(leader);
-        group->Create(group->GetLeaderGUID(), group->GetLeaderName());
+        group->Create(leader);
         sObjectMgr->AddGroup(group);
     }
 
     // everything's fine, do it, PLAYER'S GROUP IS SET IN ADDMEMBER!!!
-    if (!group->AddMember(GetPlayer()->GetGUID(), GetPlayer()->GetName()))
+    if (!group->AddMember(GetPlayer()))
         return;
 
     group->BroadcastGroupUpdate();
