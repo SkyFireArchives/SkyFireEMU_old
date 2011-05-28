@@ -950,4 +950,5 @@ void AddSC_lost_city_of_the_tolvir()
     new npc_oathsworn_skinner();
     new npc_pygmy_brute();
     new npc_pygmy_firebreather();
+    new npc_pygmy_scout();
 }
