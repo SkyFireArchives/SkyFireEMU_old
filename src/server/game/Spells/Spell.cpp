@@ -5652,6 +5652,14 @@ SpellCastResult Spell::CheckCast(bool strict)
                         if (!m_targets.getUnitTarget() || m_targets.getUnitTarget()->GetTypeId() == TYPEID_PLAYER)
                             return SPELL_FAILED_BAD_IMPLICIT_TARGETS;
 
+                        // Check if there are to many so that you don't get mixed with pets
+                        // being there from the begining
+                        if (m_caster->ToPlayer()->getSlotForNewPet() == PET_SLOT_FULL_LIST)
+                        {   
+                            m_caster->ToPlayer()->SendToManyPets(m_caster->ToPlayer());
+                            return SPELL_FAILED_NO_ACTIONS; // i havent found the right error message to use so this need to be changed
+                        }
+
                         Creature* target = m_targets.getUnitTarget()->ToCreature();
 
                         if (target->getLevel() > m_caster->getLevel())
