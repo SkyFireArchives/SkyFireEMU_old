@@ -3865,24 +3865,27 @@ void Spell::finish(bool ok)
             case 49143: // Frost Strike
             case 47541: // Death Coil
             case 56815: // Rune Strike
-                if(roll_chance_i(45))
+                if(m_caster->HasAura(81229)) // Runic Empowerment
+                {
+                    if(roll_chance_i(45))
                     {
-                    if(m_caster->HasAura(81229)) // Runic Empowerment
-                        {
+                        uint32 cooldownrunes[MAX_RUNES];
+                        uint8 runescount = 0;
                         for (uint32 j = 0; j < MAX_RUNES; ++j)
-                           {
-                           if (m_caster->ToPlayer()->GetRuneCooldown(j))
-                              {
-                              uint32 randomrune = -1;
-                              while(randomrune != j)
-                                  {
-                                  randomrune = urand(0,6);
-                                  }
-                              m_caster->ToPlayer()->SetRuneCooldown(randomrune, 0);
-                              }
-                           }
+                        {
+                            if (m_caster->ToPlayer()->GetRuneCooldown(j))
+                            {
+                                cooldownrunes[runescount] = j;
+                                runescount++;
+                            }
+                        }
+                        if (runescount > 0)
+                        {
+                            uint8 rndrune = urand(0,runescount);
+                            m_caster->ToPlayer()->SetRuneCooldown(cooldownrunes[rndrune], 0);
                         }
                     }
+                }
                 break;
             case 30455: // Ice Lance
             case 44572: // Deep Freeze
