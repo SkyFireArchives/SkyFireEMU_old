@@ -1796,6 +1796,14 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             }
             switch (m_spellInfo->Id)
             {
+            case 49020: //Obliterate
+            case 66198: //Obliterate Off-Hand
+                {
+                    uint32 count = unitTarget->GetDiseasesByCaster(m_caster->GetGUID());
+                    if (count > 0)
+                       damage = int32(damage + (damage * count * 12.5 / 100));
+                    break;
+                }
             case 49560: // Death Grip
                 Position pos;
                 GetSummonPosition(effIndex, pos);
@@ -4113,6 +4121,13 @@ void Spell::EffectTameCreature(SpellEffIndex /*effIndex*/)
     if (m_caster->getClass() != CLASS_HUNTER)
         return;
 
+    // If we have a full list we shoulden't be able to create a new one.
+    if (m_caster->ToPlayer()->getSlotForNewPet() == PET_SLOT_FULL_LIST)
+    {
+        // Need to get the right faluire numbers or maby a custom message to the screen ?
+        return;
+    }
+
     // cast finish successfully
     //SendChannelUpdate(0);
     finish();
@@ -4143,7 +4158,8 @@ void Spell::EffectTameCreature(SpellEffIndex /*effIndex*/)
     if (m_caster->GetTypeId() == TYPEID_PLAYER)
     {
         //slot is defined by SetMinion.
-        pet->SavePetToDB(PET_SLOT_ACTUAL_PET_SLOT);
+        m_caster->ToPlayer()->getSlotForNewPet();
+        pet->SavePetToDB(m_caster->ToPlayer()->m_currentPetSlot);
         m_caster->ToPlayer()->PetSpellInitialize();
     }
 }

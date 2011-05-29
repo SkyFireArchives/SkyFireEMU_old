@@ -2189,6 +2189,7 @@ Pet* Player::SummonPet(uint32 entry, float x, float y, float z, float ang, PetTy
     }
 
     // petentry == 0 for hunter "call pet" (current pet summoned if any)
+    sLog->outDebug("Player::SummonPet PetSlot [%i]", int32(slotID));
     if (!entry)
     {
         delete pet;
