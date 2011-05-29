@@ -1,8 +1,8 @@
+DROP PROCEDURE IF EXISTS fix_multiple_pets;
+
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS fix_duplex;
-
-CREATE PROCEDURE fix_multiple_pets();
+CREATE PROCEDURE fix_multiple_pets()
 
 BEGIN
 
