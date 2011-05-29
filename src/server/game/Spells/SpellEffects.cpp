@@ -1801,7 +1801,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     uint32 count = unitTarget->GetDiseasesByCaster(m_caster->GetGUID());
                     if (count > 0)
                        damage = int32(damage + (damage * count * 12.5 / 100));
-                    return;
+                    break;
                 }
             case 49560: // Death Grip
                 Position pos;
