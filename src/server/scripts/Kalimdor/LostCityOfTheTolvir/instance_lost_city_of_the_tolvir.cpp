@@ -207,7 +207,7 @@ public:
        
      for(uint8 i=0; i<ENCOUNTERS; ++i)
         if (uiEncounter[i] == IN_PROGRESS)
-         uiEncounter[i] == NOT_STARTED;
+         uiEncounter[i] = NOT_STARTED;
      }
        
        else OUT_LOAD_INST_DATA_FAIL;

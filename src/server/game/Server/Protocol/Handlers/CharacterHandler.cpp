@@ -690,7 +690,7 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
             CharacterDatabase.PExecute("REPLACE INTO character_pet (`id`, `entry`, `owner`, `modelid`, `CreatedBySpell`, `PetType`, `level`, `exp`, `Reactstate`, `name`, `renamed`, `slot`, `curhealth`, `curmana`, `curhappiness`, `savetime`, `resettalents_cost`, `resettalents_time`, `abdata`) VALUES (%u, 42722, %u, 30221, 13481, 1, 1, 0, 0, 'Dog', 0, 0, 192, 0, 166500, 1295728219, 0, 0, '7 2 7 1 7 0 129 2649 129 17253 1 0 1 0 6 2 6 1 6 0 ')",  pet_id, pNewChar->GetGUIDLow());
             break;
         }
-        CharacterDatabase.PExecute("UPDATE characters SET currentPetSlot = '0' WHERE guid = %u", pNewChar->GetGUIDLow());
+        CharacterDatabase.PExecute("UPDATE characters SET currentPetSlot = '0', petSlotUsed = '1' WHERE guid = %u", pNewChar->GetGUIDLow());
         pNewChar->SetTemporaryUnsummonedPetNumber(pet_id);
     }
 
