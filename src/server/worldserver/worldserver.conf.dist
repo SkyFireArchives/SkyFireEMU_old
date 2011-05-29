@@ -2106,6 +2106,11 @@ CharDelete.KeepDays = 30
 #        Description: Controls the max amount of different instances player can enter within hour
 #        Default:     5
 #
+#   IgnoringMapsVersion
+#        Disable startup error => Maps version mismatch.
+#        Default: 0 - off
+#                 1 - on
+#
 ###############################################################################
 
 PlayerStart.AllReputation = 0
@@ -2130,6 +2135,7 @@ LevelReq.Auction = 1
 LevelReq.Mail = 1
 DungeonFinder.Enable = 1
 AccountInstancesPerHour = 5
+IgnoringMapsVersion = 0
 
 #     Anticheat.Enable
 #        Description: Enables or disables the Anticheat System functionality
