@@ -19356,7 +19356,10 @@ void Player::RemovePet(Pet* pet, PetSlot mode, bool returnreagent)
     // only if current pet in slot
     pet->SavePetToDB(mode);
 
-    SetMinion(pet, false, PET_SLOT_UNK_SLOT);
+    if(pet->getPetType() != HUNTER_PET)
+        SetMinion(pet, false, PET_SLOT_UNK_SLOT);
+    else
+        SetMinion(pet, false, PET_SLOT_ACTUAL_PET_SLOT);
 
     pet->AddObjectToRemoveList();
     pet->m_removed = true;
@@ -25096,4 +25099,9 @@ void Player::BroadcastMessage(const char* Format, ...)
     WorldPacket data;
     ChatHandler::FillMessageData(&data, NULL, CHAT_MSG_SYSTEM, LANG_UNIVERSAL, NULL, 0, Message, NULL);
     GetSession()->SendPacket(&data);
+}
+
+void Player::SendToManyPets(Player *pl)
+{
+    ChatHandler(pl).PSendSysMessage(LANG_FAILED_NO_PLACE_FOR_PET);
 }
