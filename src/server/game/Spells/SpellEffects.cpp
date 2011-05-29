@@ -1797,6 +1797,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             switch (m_spellInfo->Id)
             {
             case 49020: //Obliterate
+            case 66198: //Obliterate Off-Hand
                 {
                     uint32 count = unitTarget->GetDiseasesByCaster(m_caster->GetGUID());
                     if (count > 0)
