@@ -1436,25 +1436,6 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         caster->CastSpell(target, 79124, true);
                 }
                 break;
-            case SPELLFAMILY_HUNTER:
-                // Wyvern Sting
-                // If implemented through spell_linked_spell it can't proc from breaking by damage
-                if (removeMode != AURA_REMOVE_BY_STACK && removeMode != AURA_REMOVE_BY_DEATH &&
-                    GetSpellProto()->SpellFamilyFlags[1] & 0x1000 && caster)
-                {
-                    uint32 spell_id = 0;
-                    switch(GetId())
-                    {
-                        case 19386: spell_id = 24131; break;
-                        case 24132: spell_id = 24134; break;
-                        case 24133: spell_id = 24135; break;
-                        case 27068: spell_id = 27069; break;
-                        case 49011: spell_id = 49009; break;
-                        case 49012: spell_id = 49010; break;
-                    }
-                    caster->CastSpell(target, spell_id, true);
-                }
-                break;
             case SPELLFAMILY_PALADIN:
                 // Remove the immunity shield marker on Forbearance removal if AW marker is not present
                 if (GetId() == 25771 && target->HasAura(61988) && !target->HasAura(61987))
@@ -1486,6 +1467,24 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                 }
                 break;
             case SPELLFAMILY_HUNTER:
+                // Wyvern Sting
+                // If implemented through spell_linked_spell it can't proc from breaking by damage
+                if (removeMode != AURA_REMOVE_BY_STACK && removeMode != AURA_REMOVE_BY_DEATH &&
+                    GetSpellProto()->SpellFamilyFlags[1] & 0x1000 && caster)
+                {
+                    uint32 spell_id = 0;
+                    switch(GetId())
+                    {
+                        case 19386: spell_id = 24131; break;
+                        case 24132: spell_id = 24134; break;
+                        case 24133: spell_id = 24135; break;
+                        case 27068: spell_id = 27069; break;
+                        case 49011: spell_id = 49009; break;
+                        case 49012: spell_id = 49010; break;
+                    }
+                    caster->CastSpell(target, spell_id, true);
+                }
+                break;
                 // Glyph of Freezing Trap
                 if (GetSpellProto()->SpellFamilyFlags[0] & 0x00000008)
                     if (caster && caster->HasAura(56845))
