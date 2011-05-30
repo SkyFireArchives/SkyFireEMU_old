@@ -4348,7 +4348,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectMiscValue[1] = 127;
             count++;
             break;
-<<<<<<< HEAD
         /* Cataclysm Spells */
         case 88954: //Consuming Darkness
         case 95173:
@@ -4360,7 +4359,8 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectRadiusIndex[0] = 24;
             spellInfo->EffectRadiusIndex[1] = 24;
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_SHARE_DAMAGE;
-=======
+            count++;
+            break;
         case 71357: // Order Whelp
             spellInfo->EffectRadiusIndex[0] = 22;
             count++;
@@ -4375,16 +4375,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetB[0] = TARGET_UNIT_TARGET_ANY;
             spellInfo->Effect[1] = 0;
             count++;
-            break;
-<<<<<<< HEAD
-        case 71340: // Pact of the Darkfallen
-            spellInfo->DurationIndex = 21;
->>>>>>> 12b9c18... Scripts/Icecrown Citadel: Added Sindragosa script, by Shauren.
-            count++;
-            break;
-=======
->>>>>>> 1664f6e... Fixed build.
-        default:
             break;
         }
 

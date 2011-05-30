@@ -246,3 +246,4 @@ std::string AccountMgr::CalculateShaPassHash(std::string& name, std::string& pas
     hexEncodeByteArray(sha.GetDigest(), sha.GetLength(), encoded);
 
     return encoded;
+}

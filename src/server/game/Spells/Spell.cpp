@@ -2837,9 +2837,9 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
             }
             else
             {
-<<<<<<< HEAD
             switch (m_spellInfo->Id)
             {
+                case 27285: // Seed of Corruption proc spell
                 case 63025: // Gravity Bomb 10
                 case 64233: // Gravity Bomb 25
 	                unitList.remove(m_targets.getUnitTarget());
@@ -2847,22 +2847,11 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                 case 28374: // Decimate 10
                 case 54426: // Decimate 25
                 case 62343: // Heat (Ignis) not hits the trigger
+                case 55789: // Improved Icy Talons
+                case 59725: // Improved Spell Reflection - aoe aura
 	                unitList.remove(m_caster);
 	                break;
-                }
-            }
-            CallScriptAfterUnitTargetSelectHandlers(unitList, SpellEffIndex(i));
-=======
-                switch (m_spellInfo->Id)
-                {
-                    case 27285: // Seed of Corruption proc spell
-                        unitList.remove(m_targets.getUnitTarget());
-                        break;
-                    case 55789: // Improved Icy Talons
-                    case 59725: // Improved Spell Reflection - aoe aura
-                        unitList.remove(m_caster);
-                        break;
-                    case 72255: // Mark of the Fallen Champion (Deathbringer Saurfang)
+                case 72255: // Mark of the Fallen Champion (Deathbringer Saurfang)
                     case 72444:
                     case 72445:
                     case 72446:
@@ -2916,7 +2905,6 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                                 if (itr != itr2 && !(*itr2)->IsWithinDist(*itr, 5.0f, false))
                                     remove = false;
                         }
->>>>>>> 12b9c18... Scripts/Icecrown Citadel: Added Sindragosa script, by Shauren.
 
                         if (remove)
                             for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end(); ++itr)
