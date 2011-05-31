@@ -190,7 +190,7 @@ void WorldSession::HandlePetitionShowSignOpcode(WorldPacket & recv_data)
     // solve (possible) some strange compile problems with explicit use GUID_LOPART(petitionguid) at some GCC versions (wrong code optimization in compiler?)
     uint32 petitionguid_low = GUID_LOPART(petitionguid);
 
-    QueryResult result = CharacterDatabase.PQuery("SELECT type FROM petition WHERE petitionguid = '%u'", petitionguid_low);
+    QueryResult result = CharacterDatabase.PQuery("SELECT name FROM petition WHERE petitionguid = '%u'", petitionguid_low);
     if (!result)
     {
         sLog->outError("Petition %u is not found for player %u %s", GUID_LOPART(petitionguid), GetPlayer()->GetGUIDLow(), GetPlayer()->GetName());
