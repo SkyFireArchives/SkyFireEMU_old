@@ -3675,25 +3675,7 @@ void Unit::RemoveAurasDueToSpellByDispel(uint32 spellId, uint64 casterGUID, Unit
                 Unit * caster = aura->GetCaster();
                 if (caster)
                 {
-                    //Lava Surge
-                    if(AuraEffect const * aurEff = caster->GetDummyAuraEffect(SPELLFAMILY_SHAMAN, 4777, 0))
-                    {
-                        switch (aurEff->GetId())
-                        {
-                            case 77755: // Rank 1
-                                if (roll_chance_i(10))
-                                    caster->ToPlayer()->RemoveSpellCooldown(51505, true);
-                                break;
-                            case 77756: // Rank 2
-                                if (roll_chance_i(20))
-                                    caster->ToPlayer()->RemoveSpellCooldown(51505, true);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-
-                    uint32 triggeredSpellId = 0;
+                 uint32 triggeredSpellId = 0;
                     // Lava Flows
                     if (AuraEffect const * aurEff = caster->GetDummyAuraEffect(SPELLFAMILY_SHAMAN, 3087, 0))
                     {
