@@ -1,0 +1,26 @@
+DROP TABLE IF EXISTS `corpse`;
+CREATE TABLE `corpse` (
+  `guid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
+  `player` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Character Global Unique Identifier',
+  `position_x` float NOT NULL DEFAULT '0',
+  `position_y` float NOT NULL DEFAULT '0',
+  `position_z` float NOT NULL DEFAULT '0',
+  `orientation` float NOT NULL DEFAULT '0',
+  `map` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Map Identifier',
+  `phaseMask` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `displayId` int(10) unsigned NOT NULL DEFAULT '0',
+  `itemCache` text NOT NULL,
+  `bytes1` int(10) unsigned NOT NULL DEFAULT '0',
+  `bytes2` int(10) unsigned NOT NULL DEFAULT '0',
+  `guild` int(10) unsigned NOT NULL DEFAULT '0',
+  `flags` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `dynFlags` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `corpse_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `instance` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`guid`),
+  KEY `idx_type` (`corpse_type`),
+  KEY `instance` (`instance`),
+  KEY `Idx_player` (`player`),
+  KEY `Idx_time` (`time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Death System';
