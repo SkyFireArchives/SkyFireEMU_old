@@ -1432,7 +1432,7 @@ bool Pet::addSpell(uint32 spell_id,ActiveStates active /*= ACT_DECIDE*/, PetSpel
 
             if (sSpellMgr->IsRankSpellDueToSpell(spellInfo,itr2->first))
             {
-                // INSERT by new high rank
+                // replace by new high rank
                 if (sSpellMgr->IsHighRankOfSpell(spell_id,itr2->first))
                 {
                     newspell.active = itr2->second.active;
