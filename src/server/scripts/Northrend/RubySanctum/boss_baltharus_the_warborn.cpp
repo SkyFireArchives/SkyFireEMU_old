@@ -145,14 +145,14 @@ class boss_baltharus_the_warborn : public CreatureScript
 
             void DamageTaken(Unit* /*attacker*/, uint32& damage)
             {
-                if (GetDifficulty() != RAID_DIFFICULTY_10MAN_NORMAL)
+                if (getDifficulty() != RAID_DIFFICULTY_10MAN_NORMAL)
                 {
                     if (me->HealthBelowPctDamaged(66, damage) && _cloneCount == 2)
                         DoAction(ACTION_CLONE);
                     else if (me->HealthBelowPctDamaged(33, damage) && _cloneCount == 1)
                         DoAction(ACTION_CLONE);
                 }
-                else if (GetDifficulty() == RAID_DIFFICULTY_25MAN_HEROIC)
+                else if (getDifficulty() == RAID_DIFFICULTY_25MAN_HEROIC)
                 {
                     if (me->HealthBelowPctDamaged(75, damage) && _cloneCount == 3)
                         DoAction(ACTION_CLONE);

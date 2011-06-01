@@ -99,8 +99,9 @@ bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
     //uint32 updateTime = sWorld->GetUpdateTime();
 
     PSendSysMessage(_FULLVERSION);
+    PSendSysMessage("Last update 01/06/2011");
     PSendSysMessage(LANG_CONNECTED_PLAYERS, PlayersNum, MaxPlayersNum);
-    PSendSysMessage(LANG_CONNECTED_USERS, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);
+    //PSendSysMessage(LANG_CONNECTED_USERS, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);
     PSendSysMessage(LANG_UPTIME, uptime.c_str());
     //PSendSysMessage("Update time diff: %u.", updateTime); // This is useless
 
