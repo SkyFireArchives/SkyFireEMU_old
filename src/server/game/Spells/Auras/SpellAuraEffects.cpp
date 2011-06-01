@@ -6233,11 +6233,11 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             if (aurApp->GetRemoveMode() != AURA_REMOVE_BY_DEFAULT)
                                 target->SetReducedThreatPercent(0, 0);
                             break;
+                    }
                 case SPELLFAMILY_DEATHKNIGHT:
                     // Summon Gargoyle (Dismiss Gargoyle at remove)
                     if (GetId() == 61777)
                         target->CastSpell(target, GetAmount(), true);
-                    }
                     break;
             }
         }
