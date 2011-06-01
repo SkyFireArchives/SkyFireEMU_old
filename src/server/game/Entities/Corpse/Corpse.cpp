@@ -118,17 +118,17 @@ void Corpse::SaveToDB()
     stmt->setFloat (4, GetPositionZ());                                         // posZ
     stmt->setFloat (5, GetOrientation());                                       // orientation
     stmt->setUInt16(6, GetMapId());                                             // mapId
-    stmt->setUInt32(7, GetUInt32Value(CORPSE_FIELD_DISPLAY_ID));                // displayId
-    stmt->setString(8, _ConcatFields(CORPSE_FIELD_ITEM, EQUIPMENT_SLOT_END));   // itemCache
-    stmt->setUInt32(9, GetUInt32Value(CORPSE_FIELD_BYTES_1));                   // bytes1
-    stmt->setUInt32(10, GetUInt32Value(CORPSE_FIELD_BYTES_2));                  // bytes2
-    stmt->setUInt32(11, uint32(0) /*GetUInt32Value(CORPSE_FIELD_GUILD)*/);                    // guildId
-    stmt->setUInt8 (12, GetUInt32Value(CORPSE_FIELD_FLAGS));                    // flags
-    stmt->setUInt8 (13, GetUInt32Value(CORPSE_FIELD_DYNAMIC_FLAGS));            // dynFlags
-    stmt->setUInt32(14, uint32(m_time));                                        // time
-    stmt->setUInt8 (15, GetType());                                             // corpseType
-    stmt->setUInt32(16, GetInstanceId());                                       // instanceId
-    stmt->setUInt16(17, GetPhaseMask());                                        // phaseMask
+    stmt->setUInt16(7, GetPhaseMask());                                        // phaseMask
+    stmt->setUInt32(8, GetUInt32Value(CORPSE_FIELD_DISPLAY_ID));                // displayId
+    stmt->setString(9, _ConcatFields(CORPSE_FIELD_ITEM, EQUIPMENT_SLOT_END));   // itemCache
+    stmt->setUInt32(10, GetUInt32Value(CORPSE_FIELD_BYTES_1));                   // bytes1
+    stmt->setUInt32(11, GetUInt32Value(CORPSE_FIELD_BYTES_2));                  // bytes2
+    stmt->setUInt32(12, uint32(0) /*GetUInt32Value(CORPSE_FIELD_GUILD)*/);                    // guildId
+    stmt->setUInt8 (13, GetUInt32Value(CORPSE_FIELD_FLAGS));                    // flags
+    stmt->setUInt8 (14, GetUInt32Value(CORPSE_FIELD_DYNAMIC_FLAGS));            // dynFlags
+    stmt->setUInt32(15, uint32(m_time));                                        // time
+    stmt->setUInt8 (16, GetType());                                             // corpseType
+    stmt->setUInt32(17, GetInstanceId());                                       // instanceId
     trans->Append(stmt);
 
     CharacterDatabase.CommitTransaction(trans);
