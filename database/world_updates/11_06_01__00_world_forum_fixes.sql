@@ -255,7 +255,7 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 (252741, 524, 0, 1, 1, 389, 524, -9691.55, -157.904, 43.7348, 5.78707, 300, 9, 0, 137, 0, 0, 1, 0, 0, 0),
 (252703, 524, 0, 1, 1, 389, 524, -9914.03, -320.438, 32.5468, 1.34663, 300, 12, 0, 156, 0, 0, 1, 0, 0, 0);
 
---Mangy Wolf
+-- Mangy Wolf
 DELETE FROM `creature` WHERE `id`=525;
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`,`npcflag`,`unit_flags`,`dynamicflags`) VALUES
 (255284, 525, 0, 1, 1, 903, 525, -9411.12, 245.275, 61.3038, 5.38879, 300, 12, 0, 120, 0, 0, 1, 0, 0, 0),
