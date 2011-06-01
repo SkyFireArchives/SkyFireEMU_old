@@ -132,6 +132,7 @@ void Corpse::SaveToDB()
     trans->Append(stmt);
 
     CharacterDatabase.CommitTransaction(trans);
+
 }
 
 void Corpse::DeleteBonesFromWorld()
@@ -179,7 +180,6 @@ bool Corpse::LoadFromDB(uint32 guid, Field *fields)
     }
     if (m_type != CORPSE_BONES)
         m_isWorldObject = true;
-
     float posX   = fields[0].GetFloat();
     float posY   = fields[1].GetFloat();
     float posZ   = fields[2].GetFloat();
