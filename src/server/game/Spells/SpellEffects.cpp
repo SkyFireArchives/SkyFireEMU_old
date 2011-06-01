@@ -693,6 +693,13 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                         if (unitTarget->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_DRUID, 0x00200000, 0, 0))
                             damage = int32(damage*(100.0f+aurEff->GetAmount())/100.0f);
                 }
+                else if (m_spellInfo->Id == 8921) // Moonfire 
+                {
+                    if (m_caster->HasAura(78784)) // Blessing of the Grove rank 1
+                        damage = int32 (damage * 0.03f);
+                    if (m_caster->HasAura(78785)) // Blessing of the Grove rank 2
+                        damage = int32 (damage * 0.06f);
+                }
                 break;
             }
             case SPELLFAMILY_ROGUE:
