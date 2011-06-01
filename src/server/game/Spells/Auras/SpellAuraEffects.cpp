@@ -4464,12 +4464,7 @@ void AuraEffect::HandleAuraModIncreaseSpeed(AuraApplication const *aurApp, uint8
                     target->ToPlayer()->setInWorgenForm(UNIT_FLAG2_WORGEN_TRANSFORM2);
                 break;
             }
-			case 87840: // Running wild /!\ TEST !
-            {
-                if (target->GetTypeId() == TYPEID_PLAYER)
-                    target->ToPlayer()->setInWorgenForm(UNIT_FLAG2_WORGEN_TRANSFORM2);
-                break;
-            }
+
             default:
                 break;
         }
