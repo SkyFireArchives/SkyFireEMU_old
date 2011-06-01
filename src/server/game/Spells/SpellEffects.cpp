@@ -4442,18 +4442,18 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
                 switch (m_caster->GetPower(POWER_HOLY_POWER))
                 {
                     // 1 Holy Power
-                    case 1:
-                        totalDamagePercentMod *= 1.30f; // 130%
+                    case 0:
+                        totalDamagePercentMod += 1.0f; // 1*30 = 30%
                         (m_caster->HasAura(31866 || 31867 || 31868)) ? totalDamagePercentMod += 0.3f : 0; //Crusade Rank 1,2,3 - 133%
                     break;
                     // 2 Holy Power
-                    case 2:
-                        totalDamagePercentMod *= 1.30f; // 130%
+                    case 1:
+                        totalDamagePercentMod += 3.0f; // 3*30 = 90%
                         (m_caster->HasAura(31866 || 31867 || 31868)) ? totalDamagePercentMod += 0.3f : 0; //Crusade Rank 1,2,3 - 133%
                     break;
                     // 3 Holy Power
-                    case 3:
-                        totalDamagePercentMod *= 1.90f; // 190%
+                    case 2:
+                        totalDamagePercentMod += 7.5f; // 7.5*30 = 225%
                         (m_caster->HasAura(31866 || 31867 || 31868)) ? totalDamagePercentMod += 0.9f : 0; //Crusade Rank 1,2,3  - 199%
                     break;
                 }
