@@ -28,7 +28,7 @@
 #include "Define.h"
 #include "revision.h"
 
-#define _PACKAGENAME "UnderCore (http://under-wow.ru/) "
+#define _PACKAGENAME "SkyFireEMU "
 #define _CODENAME "COLD_DAY_IN_HELL"
 
 #if TRINITY_ENDIAN == TRINITY_BIGENDIAN
@@ -39,12 +39,12 @@
 
 #if PLATFORM == PLATFORM_WINDOWS
 # ifdef _WIN64
-#  define _FULLVERSION _PACKAGENAME "Hash: " _HASH " (Win64," _ENDIAN_STRING ")"
+#  define _FULLVERSION _PACKAGENAME "Rev: " _REVISION " " _BUILD_DIRECTIVE " Hash: " _HASH " (Win64," _ENDIAN_STRING ")"
 # else
-#  define _FULLVERSION _PACKAGENAME "Hash: " _HASH " (Win32," _ENDIAN_STRING ")"
+#  define _FULLVERSION _PACKAGENAME "Rev: " _REVISION " " _BUILD_DIRECTIVE " Hash: " _HASH " (Win32," _ENDIAN_STRING ")"
 # endif
 #else
-#  define _FULLVERSION _PACKAGENAME "Hash: " _HASH " (Unix," _ENDIAN_STRING ")"
+#  define _FULLVERSION _PACKAGENAME "Rev: " _REVISION " " _BUILD_DIRECTIVE " Hash: " _HASH " (Unix," _ENDIAN_STRING ")"
 #endif
 #endif
 
