@@ -7280,7 +7280,7 @@ void ObjectMgr::LoadCorpses()
     do
     {
         Field *fields = result->Fetch();
-        uint32 guid = fields[16].GetUInt32();
+        uint32 guid = fields[0].GetUInt32();
 
         Corpse *corpse = new Corpse();
         if (!corpse->LoadFromDB(guid, fields))
