@@ -6172,6 +6172,19 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             break;
                     }
                     break;
+                case SPELLFAMILY_SHAMAN:
+                    switch (GetId())
+                    {
+                        case 77755: // Lava Surge Rank 1
+                            if (roll_chance_i(10))
+                                caster->ToPlayer()->RemoveSpellCooldown(51505, true);
+                            break;
+                        case 77756: // Lava Surge Rank 2
+                            if (roll_chance_i(20))
+                                caster->ToPlayer()->RemoveSpellCooldown(51505, true);
+                            break;
+                    }
+                    
                 case SPELLFAMILY_MAGE:
                     // Living Bomb
                     if (m_spellProto->SpellFamilyFlags[1] & 0x20000)
