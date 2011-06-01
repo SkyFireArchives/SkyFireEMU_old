@@ -100,6 +100,7 @@ bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
 
     PSendSysMessage(_FULLVERSION);
     PSendSysMessage("Last update 01/06/2011");
+    PSendSysMessage("Forums: http://under-wow.ru/forums/");
     PSendSysMessage(LANG_CONNECTED_PLAYERS, PlayersNum, MaxPlayersNum);
     //PSendSysMessage(LANG_CONNECTED_USERS, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);
     PSendSysMessage(LANG_UPTIME, uptime.c_str());
