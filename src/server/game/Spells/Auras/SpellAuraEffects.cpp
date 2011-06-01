@@ -6184,6 +6184,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                                 caster->ToPlayer()->RemoveSpellCooldown(51505, true);
                             break;
                     }
+                    break;
                     
                 case SPELLFAMILY_MAGE:
                     // Living Bomb
