@@ -98,7 +98,8 @@ bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
     std::string uptime = secsToTimeString(sWorld->GetUptime());
     //uint32 updateTime = sWorld->GetUpdateTime();
 
-    PSendSysMessage(_FULLVERSION, "Last update 01/06/2011");
+    PSendSysMessage(_FULLVERSION,);
+    PSendSysMessage("Last update 01/06/2011");
     PSendSysMessage("Forums: http://under-wow.ru/forums/");
     PSendSysMessage("Admin contacts ICQ: 397-795-901, Skype: impass_underwow_administrator, Email: impasioned@mail.ru");
     PSendSysMessage(LANG_CONNECTED_PLAYERS, PlayersNum, MaxPlayersNum);
