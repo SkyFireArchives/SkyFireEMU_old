@@ -1593,7 +1593,7 @@ DROP TABLE IF EXISTS `creature_respawn`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `creature_respawn` (
   `guid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
-  `respawntime` bigint(20) unsigned NOT NULL DEFAULT '0',,
+  `respawntime` bigint(20) unsigned NOT NULL DEFAULT '0',
   `instance` mediumint(8) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`instance`),
   KEY `instance` (`instance`)
@@ -2654,7 +2654,7 @@ DROP TABLE IF EXISTS `gameobject_respawn`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gameobject_respawn` (
   `guid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Global Unique Identifier',
-  `respawntime` bigint(20) unsigned NOT NULL DEFAULT '0',,
+  `respawntime` bigint(20) unsigned NOT NULL DEFAULT '0',
   `instance` mediumint(8) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`,`instance`),
   KEY `instance` (`instance`)
