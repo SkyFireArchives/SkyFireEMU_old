@@ -71,14 +71,26 @@ void BattlegroundBG::HandleAreaTrigger(Player * /*Source*/, uint32 /*Trigger*/)
         return;
 }
 
-void BattlegroundBG::UpdatePlayerScore(Player* Source, uint32 type, uint32 value, bool doAddHonor)
+void BattlegroundBG::UpdatePlayerScore(Player *Source, uint32 type, uint32 value, bool doAddHonor)
 {
-    std::map<uint64, BattlegroundScore*>::iterator itr = m_PlayerScores.find(Source->GetGUID());
-
+    BattlegroundScoreMap::iterator itr = m_PlayerScores.find(Source->GetGUID());
     if (itr == m_PlayerScores.end())                         // player not found...
         return;
 
-    Battleground::UpdatePlayerScore(Source, type, value, doAddHonor);
+    switch(type)
+    {
+        case SCORE_BASES_ASSAULTED:
+            ((BattlegroundABScore*)itr->second)->BasesAssaulted += value;
+            Source->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BG_OBJECTIVE_CAPTURE, BG_OBJECTIVE_ASSAULT_BASE);
+            break;
+        case SCORE_BASES_DEFENDED:
+            ((BattlegroundABScore*)itr->second)->BasesDefended += value;
+            Source->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BG_OBJECTIVE_CAPTURE, BG_OBJECTIVE_DEFEND_BASE);
+            break;
+        default:
+            Battleground::UpdatePlayerScore(Source,type,value, doAddHonor);
+            break;
+    }
 }
 
 bool BattlegroundBG::SetupBattleground()

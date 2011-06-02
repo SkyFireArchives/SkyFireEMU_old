@@ -23,13 +23,22 @@
 #ifndef __BattlegroundBG_H
 #define __BattlegroundBG_H
 
+
 class Battleground;
+
+enum BG_BG_Objectives
+{
+    BG_OBJECTIVE_ASSAULT_BASE           = 122,
+    BG_OBJECTIVE_DEFEND_BASE            = 123
+};
 
 class BattlegroundBGScore : public BattlegroundScore
 {
     public:
-        BattlegroundBGScore() {};
+        BattlegroundBGScore(): BasesAssaulted(0), BasesDefended(0) {};
         virtual ~BattlegroundBGScore() {};
+        uint32 BasesAssaulted;
+        uint32 BasesDefended;
 };
 
 class BattlegroundBG : public Battleground
