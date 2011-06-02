@@ -590,8 +590,9 @@ ChatCommand * ChatHandler::getCommandTable()
         { "flusharenapoints",SEC_ADMINISTRATOR, false, OldHandler<&ChatHandler::HandleFlushArenaPointsCommand>,    "", NULL },
         { "repairitems",    SEC_GAMEMASTER,     true,  OldHandler<&ChatHandler::HandleRepairitemsCommand>,         "", NULL },
         { "waterwalk",      SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandleWaterwalkCommand>,           "", NULL },
-
+// UnderCore
         { "freeze",         SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleFreezeCommand>,              "", NULL },
+        { "home",      SEC_PLAYER,      false, OldHandler<&ChatHandler::HandleHomeCommand>,        "", NULL },
         { "unfreeze",       SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleUnFreezeCommand>,            "", NULL },
         { "listfreeze",     SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleListFreezeCommand>,          "", NULL },
         { "root",           SEC_MODERATOR,      false, OldHandler<&ChatHandler::HandleFreezeCommand>,              "", NULL },

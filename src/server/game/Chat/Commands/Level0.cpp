@@ -86,6 +86,41 @@ bool ChatHandler::HandleStartCommand(const char* /*args*/)
     chr->CastSpell(chr, 7355, false);
     return true;
 }
+// UnderCore
+//Home Teleporter
+bool ChatHandler::HandleHomeCommand(const char* /*args*/)
+{
+        //Home command
+        
+        Player *chr = m_session->GetPlayer();
+
+        if (chr->isInCombat())
+        {
+        SendSysMessage(LANG_YOU_IN_COMBAT);
+        SetSentErrorMessage(true);
+        return false;
+        }
+        if (chr->isInFlight())
+        {
+        SendSysMessage(LANG_YOU_IN_FLIGHT);
+        SetSentErrorMessage(true);
+        return false;
+        }
+
+        chr->ResurrectPlayer(0.5, false);
+
+        switch(chr->GetTeam())
+   {
+        case ALLIANCE:
+                chr->TeleportTo(0, -8865.454102f, 591.230469f, 92.323326f, 4.69254f);    // Insert Ally Home Cords here
+                break;
+
+        case HORDE:
+                        chr->TeleportTo(1, 1566.470459, -4398.960449, 16.259722, 0.548813);    // Insert Horde Home Cords here						
+                break;
+   }
+        return true;
+}
 
 bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
 {
