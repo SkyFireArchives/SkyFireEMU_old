@@ -158,7 +158,7 @@ void Corpse::DeleteFromDB(SQLTransaction& trans)
         trans->PAppend("DELETE FROM corpse WHERE guid = '%d'", GetGUIDLow());
     else
         // all corpses (not bones)
-        trans->PAppend("DELETE FROM corpse WHERE guid = '%d' AND corpsType <> '0'",  GUID_LOPART(GetOwnerGUID()));
+        trans->PAppend("DELETE FROM corpse WHERE guid = '%d' AND corpseType <> '0'",  GUID_LOPART(GetOwnerGUID()));
 }
 
 bool Corpse::LoadFromDB(uint32 guid, Field *fields)
