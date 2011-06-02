@@ -99,7 +99,7 @@ bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
     //uint32 updateTime = sWorld->GetUpdateTime();
 
     //PSendSysMessage(_FULLVERSION,);
-    PSendSysMessage("UnderCore: Last update 01/06/2011");
+    PSendSysMessage("UnderCore: Last update 02/06/2011");
     PSendSysMessage("Forums: http://under-wow.ru/forums/");
     PSendSysMessage("Admin contacts ICQ: 397-795-901, Skype: impass_underwow_administrator, Email: impasioned@mail.ru");
     PSendSysMessage(LANG_CONNECTED_PLAYERS, PlayersNum, MaxPlayersNum);
