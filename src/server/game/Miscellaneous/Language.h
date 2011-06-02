@@ -852,8 +852,14 @@ enum TrinityStrings
     LANG_BG_TP_F_PLACED                 = 1242,
     LANG_BG_TP_ALLIANCE_FLAG_RESPAWNED  = 1243,
     LANG_BG_TP_HORDE_FLAG_RESPAWNED     = 1244,
+    // FREE IDS                           1245-1249
 
-    // FREE IDS                           1234-1299
+    // Battle For Gilneas
+    LANG_BG_BG_START_TWO_MINUTES        = 1250,
+    LANG_BG_BG_START_ONE_MINUTE         = 1251,
+    LANG_BG_BG_START_HALF_MINUTE        = 1252,
+    LANG_BG_BG_HAS_BEGUN                = 1253,
+    // FREE IDS                           1254-1299
 
     // AV
     LANG_BG_AV_ALLY                     = 1300,
