@@ -800,7 +800,7 @@ REPLACE INTO `trinity_string` VALUES ('10052', 'Take me to Eastwall Tower.', nul
 REPLACE INTO `trinity_string` VALUES ('10053', 'Take me to Crown Guard Tower.', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('10054', 'Give me the flag, I\'ll take it to the central beacon for the glory of the Alliance!', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('10055', 'Give me the flag, I\'ll take it to the central beacon for the glory of the Horde!', null, null, null, null, null, null, null, null);
-REPLACE INTO `trinity_string` VALUES ('11000', '|cff00FF00Autobroadcast]: %s|r', null, null, null, null, null, null, null, '|cff00FF00[Авто-Сообщение]: %s|r');
+REPLACE INTO `trinity_string` VALUES ('11000', '|cff00FFFFAutobroadcast]: %s|r', null, null, null, null, null, null, null, '|cff00FFFF[Авто-Сообщение]: %s|r');
 REPLACE INTO `trinity_string` VALUES ('11001', 'You have not chosen -1 or the current realmID that you are on.', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('5020', 'Phasemask: %u', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('5021', 'Armor: %u', null, null, null, null, null, null, null, null);
