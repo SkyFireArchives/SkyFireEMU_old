@@ -233,7 +233,7 @@ REPLACE INTO `trinity_string` VALUES ('297', 'Spawn distance changed to: %f', nu
 REPLACE INTO `trinity_string` VALUES ('298', 'Spawn time changed to: %i', null, null, null, null, null, null, null, 'Время перерождения изменено на: %i');
 REPLACE INTO `trinity_string` VALUES ('299', 'The honor of %s was set to %u!', null, null, null, null, null, null, null, 'Значение чести %s изменено на %u!');
 REPLACE INTO `trinity_string` VALUES ('300', 'Your chat has been disabled for %u minutes. Reason: %s.', null, null, null, null, null, null, null, 'Ваш чат заблокирован на %u минут. Причина: %s.');
-REPLACE INTO `trinity_string` VALUES ('301', '|cffFF0000%s has been muted for %u minutes. Reason: %s.|r', null, null, null, null, null, null, null, null);
+REPLACE INTO `trinity_string` VALUES ('301', '|cffFF0000%s has been muted for %u minutes. Reason: %s.|r', null, null, null, null, null, null, null, '|cffFF0000%s получил блокировку чата на %u минут. Причина: %s.|r');
 REPLACE INTO `trinity_string` VALUES ('302', 'Player\'s chat is already enabled.', null, null, null, null, null, null, null, 'Чат игрока уже разблокирован.');
 REPLACE INTO `trinity_string` VALUES ('303', 'Your chat has been enabled.', null, null, null, null, null, null, null, 'Ваш чат теперь разблокирован.');
 REPLACE INTO `trinity_string` VALUES ('304', 'You have enabled %s\'s chat.', null, null, null, null, null, null, null, 'Вы разблокировали чат %s.');
@@ -596,7 +596,7 @@ REPLACE INTO `trinity_string` VALUES ('352', 'Invalid title id: %u', null, null,
 REPLACE INTO `trinity_string` VALUES ('353', 'Title %u (%s) added to known titles list for player %s.', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('349', '%d (idx:%d) - |cffffffff|Htitle:%d|h[%s %s]|h|r %s %s ', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('785', 'Arena testing turned %s', null, null, null, null, null, null, null, 'Тест Арены %s');
-REPLACE INTO `trinity_string` VALUES ('786', '|cffff0000[Automatic]:|r', null, null, null, null, null, null, null, '|cffff0000[Авто-объявление]:|r');
+REPLACE INTO `trinity_string` VALUES ('786', '|cff00FF00[Automatic]:|r', null, null, null, null, null, null, null, '|cff00FF00[Авто-сообщения]:|r');
 REPLACE INTO `trinity_string` VALUES ('787', '|cffffff00[|c1f40af20Announce by|r |cffff0000%s|cffffff00]:|r %s|r', null, null, null, null, null, null, null, '|cffffff00[|c1f40af20Объявление от|r |cffff0000%s|cffffff00]:|r %s|r');
 REPLACE INTO `trinity_string` VALUES ('800', 'Invalid name', null, null, null, null, null, null, null, 'Неправильное имя');
 REPLACE INTO `trinity_string` VALUES ('801', 'You do not have enough gold', null, null, null, null, null, null, null, 'У вас недостаточно денег');
@@ -800,7 +800,7 @@ REPLACE INTO `trinity_string` VALUES ('10052', 'Take me to Eastwall Tower.', nul
 REPLACE INTO `trinity_string` VALUES ('10053', 'Take me to Crown Guard Tower.', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('10054', 'Give me the flag, I\'ll take it to the central beacon for the glory of the Alliance!', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('10055', 'Give me the flag, I\'ll take it to the central beacon for the glory of the Horde!', null, null, null, null, null, null, null, null);
-REPLACE INTO `trinity_string` VALUES ('11000', '|cffffff00[|c00077766Autobroadcast|cffffff00]: |cFFF222FF%s|r', null, null, null, null, null, null, null, '|cffffff00[|c00077766Авто-объявление|cffffff00]: |cFFF222FF%s|r');
+REPLACE INTO `trinity_string` VALUES ('11000', '|cffff0000[Autobroadcast]: %s|r', null, null, null, null, null, null, null, '|cffff0000[Авто-Сообщение]: %s|r');
 REPLACE INTO `trinity_string` VALUES ('11001', 'You have not chosen -1 or the current realmID that you are on.', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('5020', 'Phasemask: %u', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('5021', 'Armor: %u', null, null, null, null, null, null, null, null);
