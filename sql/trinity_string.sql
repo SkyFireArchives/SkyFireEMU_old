@@ -233,7 +233,7 @@ REPLACE INTO `trinity_string` VALUES ('297', 'Spawn distance changed to: %f', nu
 REPLACE INTO `trinity_string` VALUES ('298', 'Spawn time changed to: %i', null, null, null, null, null, null, null, 'Время перерождения изменено на: %i');
 REPLACE INTO `trinity_string` VALUES ('299', 'The honor of %s was set to %u!', null, null, null, null, null, null, null, 'Значение чести %s изменено на %u!');
 REPLACE INTO `trinity_string` VALUES ('300', 'Your chat has been disabled for %u minutes. Reason: %s.', null, null, null, null, null, null, null, 'Ваш чат заблокирован на %u минут. Причина: %s.');
-REPLACE INTO `trinity_string` VALUES ('301', 'Player %s\'s muted chat for %u minutes. Reason: %s.', null, null, null, null, null, null, null, null);
+REPLACE INTO `trinity_string` VALUES ('301', '%s\'s is muted chat for %u minutes. Reason: %s.', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('302', 'Player\'s chat is already enabled.', null, null, null, null, null, null, null, 'Чат игрока уже разблокирован.');
 REPLACE INTO `trinity_string` VALUES ('303', 'Your chat has been enabled.', null, null, null, null, null, null, null, 'Ваш чат теперь разблокирован.');
 REPLACE INTO `trinity_string` VALUES ('304', 'You have enabled %s\'s chat.', null, null, null, null, null, null, null, 'Вы разблокировали чат %s.');
