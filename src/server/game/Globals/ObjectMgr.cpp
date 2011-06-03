@@ -6724,7 +6724,7 @@ void ObjectMgr::SetHighestGuids()
     if (result)
         m_mailid = (*result)[0].GetUInt32()+1;
 
-    result = CharacterDatabase.Query("SELECT MAX(corpseGuid) FROM corpse");
+    result = CharacterDatabase.Query("SELECT MAX(guid) FROM corpse");
     if (result)
         m_hiCorpseGuid = (*result)[0].GetUInt32()+1;
 
@@ -7280,7 +7280,7 @@ void ObjectMgr::LoadCorpses()
     do
     {
         Field *fields = result->Fetch();
-        uint32 guid = fields[16].GetUInt32();
+        uint32 guid = fields[0].GetUInt32();
 
         Corpse *corpse = new Corpse();
         if (!corpse->LoadFromDB(guid, fields))

@@ -1141,7 +1141,7 @@ enum Opcodes
     SMSG_ACHIEVEMENT_EARNED                          = 0x0F5E4, // 4.0.6a 13623
     SMSG_DYNAMIC_DROP_ROLL_RESULT                    = 0x101D7, //
     SMSG_CRITERIA_UPDATE                             = 0x0AFC8, // 4.0.6a 13623 
-    CMSG_QUERY_INSPECT_ACHIEVEMENTS                  = 0x028EC, // 4.0.6a 13623 
+    CMSG_QUERY_INSPECT_ACHIEVEMENTS                  = 0x069A0, // 4.0.6a 13623 old 28EC
     SMSG_RESPOND_INSPECT_ACHIEVEMENTS                = 0x101DA, //
     CMSG_DISMISS_CONTROLLED_VEHICLE                  = 0x0E3C0, // 4.0.6a 13623
     CMSG_COMPLETE_ACHIEVEMENT_CHEAT                  = 0x101DC, //
@@ -1199,7 +1199,7 @@ enum Opcodes
     SMSG_SERVER_INFO_RESPONSE                        = 0x101F7, //
     CMSG_CHECK_LOGIN_CRITERIA                        = 0x101F8, //
     SMSG_SERVER_BUCK_DATA_START                      = 0x101F9, //
-    CMSG_QUERY_VEHICLE_STATUS                        = 0x069A0, // 4.0.6a 13623
+    CMSG_QUERY_VEHICLE_STATUS                        = 0x101F0, // 69A0 ????
     SMSG_BATTLEGROUND_INFO_THROTTLED                 = 0x075C4, // 4.0.6a 13623
     SMSG_PLAYER_VEHICLE_DATA                         = 0x0A5A4, // 4.0.6a 13623
     CMSG_PLAYER_VEHICLE_ENTER                        = 0x0AEC8, // 4.0.6a 13623
@@ -1240,7 +1240,7 @@ enum Opcodes
     SMSG_BATTLEFIELD_MGR_ENTRY_INVITE                = 0x10226, //
     CMSG_BATTLEFIELD_MGR_ENTRY_INVITE_RESPONSE       = 0x00005, // 4.0.6a 13623
     SMSG_BATTLEFIELD_MGR_ENTERED                     = 0x00004, // 4.0.6a 13623
-    SMSG_BATTLEFIELD_MGR_QUEUE_INVITE                = 0x0E5E8, // 4.0.6a 13623
+    SMSG_BATTLEFIELD_MGR_QUEUE_INVITE                = 0x10069, // ??? E5E8
     CMSG_BATTLEFIELD_MGR_QUEUE_INVITE_RESPONSE       = 0x08108, // 4.0.6a 13623
     CMSG_BATTLEFIELD_MGR_QUEUE_REQUEST               = 0x0011D, // 4.0.6a 13623
     SMSG_BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE      = 0x0011C, // 4.0.6a 13623
