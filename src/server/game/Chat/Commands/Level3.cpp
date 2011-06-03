@@ -4116,7 +4116,7 @@ bool ChatHandler::HandleBanHelper(BanMode mode, const char *args)
     {
         case BAN_SUCCESS:
             if (atoi(duration)>0)
-                PSendSysMessage(LANG_BAN_YOUBANNED,nameOrIP.c_str(),secsToTimeString(TimeStringToSecs(duration),true).c_str(),reason);
+                sWorld->SendWorldText(LANG_BAN_YOUBANNED,nameOrIP.c_str(),secsToTimeString(TimeStringToSecs(duration),true).c_str(),reason);
             else
                 PSendSysMessage(LANG_BAN_YOUPERMBANNED,nameOrIP.c_str(),reason);
             break;
