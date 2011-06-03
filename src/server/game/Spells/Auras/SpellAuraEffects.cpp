@@ -6224,7 +6224,6 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             break;
                     }
                     break;
-                    }
                 case SPELLFAMILY_WARLOCK:
                     // Haunt
                     if (m_spellProto->SpellFamilyFlags[1] & 0x40000)
