@@ -4015,7 +4015,7 @@ bool ChatHandler::HandleBanAccountByCharCommand(const char *args)
     return HandleBanHelper(BAN_CHARACTER,args);
 }
 
-bool ChatHandler::HandleBanCharacterCommand(const char *args)
+/*bool ChatHandler::HandleBanCharacterCommand(const char *args)
 {
     if (!*args)
         return false;
@@ -4062,7 +4062,7 @@ bool ChatHandler::HandleBanCharacterCommand(const char *args)
     }
 
     return true;
-}
+}*/
 
 bool ChatHandler::HandleBanIPCommand(const char *args)
 {
