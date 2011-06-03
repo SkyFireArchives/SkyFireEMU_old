@@ -233,7 +233,7 @@ REPLACE INTO `trinity_string` VALUES ('297', 'Spawn distance changed to: %f', nu
 REPLACE INTO `trinity_string` VALUES ('298', 'Spawn time changed to: %i', null, null, null, null, null, null, null, 'Время перерождения изменено на: %i');
 REPLACE INTO `trinity_string` VALUES ('299', 'The honor of %s was set to %u!', null, null, null, null, null, null, null, 'Значение чести %s изменено на %u!');
 REPLACE INTO `trinity_string` VALUES ('300', 'Your chat has been disabled for %u minutes. Reason: %s.', null, null, null, null, null, null, null, 'Ваш чат заблокирован на %u минут. Причина: %s.');
-REPLACE INTO `trinity_string` VALUES ('301', '%s has been muted for %u minutes. Reason: %s.', null, null, null, null, null, null, null, null);
+REPLACE INTO `trinity_string` VALUES ('301', '|cffFF0000%s has been muted for %u minutes. Reason: %s.|r', null, null, null, null, null, null, null, null);
 REPLACE INTO `trinity_string` VALUES ('302', 'Player\'s chat is already enabled.', null, null, null, null, null, null, null, 'Чат игрока уже разблокирован.');
 REPLACE INTO `trinity_string` VALUES ('303', 'Your chat has been enabled.', null, null, null, null, null, null, null, 'Ваш чат теперь разблокирован.');
 REPLACE INTO `trinity_string` VALUES ('304', 'You have enabled %s\'s chat.', null, null, null, null, null, null, null, 'Вы разблокировали чат %s.');
@@ -289,7 +289,7 @@ REPLACE INTO `trinity_string` VALUES ('404', 'Creature movement disabled.', null
 REPLACE INTO `trinity_string` VALUES ('405', 'Creature movement enabled.', null, null, null, null, null, null, null, 'Передвижение существа разрешено.');
 REPLACE INTO `trinity_string` VALUES ('406', 'Weather can\'t be changed for this zone.', null, null, null, null, null, null, null, 'Погода не может быть изменена на этой территории.');
 REPLACE INTO `trinity_string` VALUES ('407', 'Weather system disabled at server.', null, null, null, null, null, null, null, 'Погода отключена на сервере.');
-REPLACE INTO `trinity_string` VALUES ('408', '%s is banned for %s. Reason: %s.', null, null, null, null, null, null, null, '%s получил бан на %s. Причина: %s.');
+REPLACE INTO `trinity_string` VALUES ('408', '|cffFF0000%s is banned for %s. Reason: %s.|r', null, null, null, null, null, null, null, '|cffFF0000%s получил бан на %s. Причина: %s.|r');
 REPLACE INTO `trinity_string` VALUES ('409', '%s is banned permanently for %s.', null, null, null, null, null, null, null, '%s забанен навечно за %s.');
 REPLACE INTO `trinity_string` VALUES ('410', '%s %s not found', null, null, null, null, null, null, null, '%s %s не найден');
 REPLACE INTO `trinity_string` VALUES ('411', '%s unbanned.', null, null, null, null, null, null, null, '%s разбанен.');
