@@ -3613,7 +3613,7 @@ bool Player::addSpell(uint32 spell_id, bool active, bool learning, bool dependen
                 switch(GetSkillRangeType(pSkill,_spell_idx->second->racemask != 0))
                 {
                     case SKILL_RANGE_LANGUAGE:
-                        SetSkill(pSkill->id, GetSkillStep(pSkill->id), 300, 300);
+                        SetSkill(pSkill->id, GetSkillStep(pSkill->id), 1, 1);
                         break;
                     case SKILL_RANGE_LEVEL:
                         SetSkill(pSkill->id, GetSkillStep(pSkill->id), 1, GetMaxSkillValueForLevel());
