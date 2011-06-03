@@ -10,7 +10,7 @@ REPLACE INTO `trinity_string` VALUES ('9', 'Commands available to you:', null, n
 REPLACE INTO `trinity_string` VALUES ('10', 'Incorrect syntax.', null, null, null, null, null, null, null, 'Неправильный синтаксис.');
 REPLACE INTO `trinity_string` VALUES ('11', 'Your account level is: %i', null, null, null, null, null, null, null, 'Уровень вашей учетной записи: %i');
 REPLACE INTO `trinity_string` VALUES ('12', 'Active connections: %u (max: %u) Queued connections: %u (max: %u)', null, null, null, null, null, null, null, 'Игроков онлайн: %u (максимум: %u) Игроков в очереди: %u (максимум: %u)');
-REPLACE INTO `trinity_string` VALUES ('13', 'Server uptime: %s', null, null, null, null, null, null, null, 'Продолжительность работы сервера: %s');
+REPLACE INTO `trinity_string` VALUES ('13', '|cff00FF00Server uptime: %s|r', null, null, null, null, null, null, null, '|cff00FF00Продолжительность работы сервера: %s|r');
 REPLACE INTO `trinity_string` VALUES ('14', 'Player saved.', null, null, null, null, null, null, null, 'Игрок сохранен.');
 REPLACE INTO `trinity_string` VALUES ('15', 'All players saved.', null, null, null, null, null, null, null, 'Все игроки сохранены.');
 REPLACE INTO `trinity_string` VALUES ('16', 'There are the following active GMs on this server:', null, null, null, null, null, null, null, 'На этом сервере есть следующие активные гейм-мастеры');
