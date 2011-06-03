@@ -57,7 +57,7 @@ REPLACE INTO `trinity_string` VALUES ('56', 'Current Message of the day: \r\n%s'
 REPLACE INTO `trinity_string` VALUES ('57', 'Using World DB: %s', null, null, null, null, null, null, null, 'Используемая База Данных: %s');
 REPLACE INTO `trinity_string` VALUES ('58', 'Using script library: %s', null, null, null, null, null, null, null, 'Используемая библиотека скриптов: %s');
 REPLACE INTO `trinity_string` VALUES ('59', 'Using creature EventAI: %s', null, null, null, null, null, null, null, 'Использование существом EventAI:');
-REPLACE INTO `trinity_string` VALUES ('60', 'Online players: %u (max: %u)', null, null, null, null, null, null, null, 'Онлайн игроков: %u (максимум: %u)');
+REPLACE INTO `trinity_string` VALUES ('60', '|cff00FF00Online players: %u (max: %u)|r', null, null, null, null, null, null, null, '|cff00FF00Онлайн игроков: %u (максимум: %u)|r');
 REPLACE INTO `trinity_string` VALUES ('61', 'Up to %u expansion allowed now.', null, null, null, null, null, null, null, 'Разрешенная версия аддона игры %u.');
 REPLACE INTO `trinity_string` VALUES ('100', 'Global notify: ', null, null, null, null, null, null, null, 'Глобальное сообщение: ');
 REPLACE INTO `trinity_string` VALUES ('101', 'Map: %u (%s) Zone: %u (%s) Area: %u (%s) Phase: %u\nX: %f Y: %f Z: %f Orientation: %f\ngrid[%u,%u]cell[%u,%u] InstanceID: %u\n ZoneX: %f ZoneY: %f\nGroundZ: %f FloorZ: %f Have height data (Map: %u VMap: %u)', null, null, null, null, null, null, null, 'Карта: %u (%s) Зона: %u (%s) Область: %u (%s) Фаза: %u X: %f Y: %f Z: %f Ориентация: %f сетка[%u,%u]ячейка[%u,%u] ИНИнстанса: %u  XЗоны: %f YЗоны: %f ZОснования: %f ZПола: %f имеете данные Высот (Карта: %u КартаВ: %u)');
