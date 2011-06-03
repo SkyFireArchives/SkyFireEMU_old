@@ -134,13 +134,12 @@ bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
     //uint32 updateTime = sWorld->GetUpdateTime();
 
     //PSendSysMessage(_FULLVERSION,);
-    PSendSysMessage("UnderCore: Last update 02/06/2011");
-    PSendSysMessage("Home: http://under-wow.ru");
-    PSendSysMessage("Forums: http://under-wow.ru/forums/");
-    PSendSysMessage("Admin contacts ICQ: 397-795-901, Skype: impass_underwow_administrator, Email: impasioned@mail.ru");
+    PSendSysMessage("UnderCore: Last update 03/06/2011");
+    PSendSysMessage("Home:http://under-wow.ru Forums:http://under-wow.ru/forums/");
     PSendSysMessage(LANG_CONNECTED_PLAYERS, PlayersNum, MaxPlayersNum);
     //PSendSysMessage(LANG_CONNECTED_USERS, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);
     PSendSysMessage(LANG_UPTIME, uptime.c_str());
+    PSendSysMessage("Admin contacts ICQ: 397-795-901, Skype: impass_underwow_administrator");
     //PSendSysMessage("Update time diff: %u.", updateTime); // This is useless
 
     return true;
