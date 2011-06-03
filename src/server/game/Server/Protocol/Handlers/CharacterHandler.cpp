@@ -833,6 +833,27 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
 
     pCurrChar->SendDungeonDifficulty(false);
 
+	//currency hack fix
+	uint32 conquestcap = sWorld->getIntConfig(CONFIG_MAX_CONQUEST_POINTS) * PLAYER_CURRENCY_PRECISION;
+	QueryResult count = CharacterDatabase.PQuery("SELECT count FROM character_currency WHERE guid ='%u' AND currency ='390'", GUID_LOPART(playerGuid));
+	uint32 conquest;
+    if(count)
+    {
+	Field* fields = count->Fetch();
+    conquest = fields[0].GetUInt32();
+    }
+	else
+	{
+	conquest = 0;
+	}
+
+	if(conquest >= conquestcap)
+	{
+	conquest = conquestcap;
+	}
+	pCurrChar->SetCurrency(CURRENCY_TYPE_CONQUEST_POINTS, uint32(conquest));
+	//end of fix
+
     WorldPacket data(SMSG_LOGIN_VERIFY_WORLD, 20);
     data << pCurrChar->GetMapId();
     data << pCurrChar->GetPositionX();
