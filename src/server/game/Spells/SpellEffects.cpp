@@ -1409,20 +1409,22 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
         }
         case SPELLFAMILY_MAGE:
         {
-            // Cone of Cold
-            if (m_spellInfo->SpellFamilyFlags[0] & SPELLFAMILYFLAG1_MAGE_CONEOFCOLD)
-            {
-                if (m_caster->HasAura(11190)) // Improved Cone of Cold Rank 1
-                {
-                    m_caster->CastCustomSpell(unitTarget, 83301, &bp, NULL, NULL, true, 0);
-                }
-                if (m_caster->HasAura(12489)) // Improved Cone of Cold Rank 2
-                {
-                    m_caster->CastCustomSpell(unitTarget, 83302, &bp, NULL, NULL, true, 0);
-                }
-            }
             switch (m_spellInfo->Id)
             {
+                case 120: // Cone of Cold
+                    {
+                        if (m_caster->GetTypeId() == TYPEID_PLAYER)
+                            {
+                                if (m_caster->HasAura(11190)) // Improved Cone of Cold Rank 1
+                                {
+                                    m_caster->CastCustomSpell(unitTarget, 83301, &bp, NULL, NULL, true, 0);
+                                }
+                                if (m_caster->HasAura(12489)) // Improved Cone of Cold Rank 2
+                                {
+                                    m_caster->CastCustomSpell(unitTarget, 83302, &bp, NULL, NULL, true, 0);
+                                }
+                            }
+                    }
                 case 1459: // Arcane Brilliance
                 {
                     if (m_caster->GetTypeId() == TYPEID_PLAYER)
