@@ -112,6 +112,9 @@ enum BG_BG_Objectives
     BG_OBJECTIVE_DEFEND_BASE            = 123
 };
 
+const uint32 BG_BG_TickIntervals[4] = {0, 12000, 6000, 1000};
+const uint32 BG_BG_TickPoints[4] = {0, 10, 10, 30};
+
 class BattlegroundBGScore : public BattlegroundScore
 {
     public:
