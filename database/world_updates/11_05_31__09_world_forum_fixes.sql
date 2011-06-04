@@ -345,7 +345,8 @@ INSERT INTO npc_vendor VALUES
 (37762, 0, 49601, 0, 0, 0);
 
 -- by Tutu
-delete from creature where map = 725;
+DELETE FROM creature where map=725;
+DELETE FROM creature_template_addon WHERE entry=42808;
 INSERT INTO `creature_template_addon` VALUES (42808, 0, 0, 0, 0, 438, NULL);  /*Stonecore Flayer animation*/
 INSERT INTO `creature` (id, map, spawnMask, phaseMask, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, MovementType) VALUES (43662, 725, 3, 1, 925.611, 979.747, 316.984, 3.04637, 86400, 10, 1);
 INSERT INTO `creature` (id, map, spawnMask, phaseMask, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, MovementType) VALUES (50048, 725, 3, 1, 839.101, 994.357, 317.44, 5.67962, 86400, 0, 0);

@@ -23,8 +23,46 @@
 #ifndef __BattlegroundBG_H
 #define __BattlegroundBG_H
 
-
 class Battleground;
+
+enum BG_BG_NodeObjectId
+{
+    BG_BG_OBJECTID_NODE_BANNER_0    = 205557,       // Lighthouse banner
+    BG_BG_OBJECTID_NODE_BANNER_1    = 208782,       // Mine banner
+    BG_BG_OBJECTID_NODE_BANNER_2    = 208785,       // Watterworks banner
+};
+
+enum BG_BG_ObjectType
+{
+    BG_BG_OBJECT_BANNER_NEUTRAL          = 0,
+    BG_BG_OBJECT_BANNER_CONT_A           = 1,
+    BG_BG_OBJECT_BANNER_CONT_H           = 2,
+    BG_BG_OBJECT_BANNER_ALLY             = 3,
+    BG_BG_OBJECT_BANNER_HORDE            = 4,
+    BG_BG_OBJECT_AURA_ALLY               = 5,
+    BG_BG_OBJECT_AURA_HORDE              = 6,
+    BG_BG_OBJECT_AURA_CONTESTED          = 7,
+    BG_BG_OBJECT_GATE_A                  = 24,
+    BG_BG_OBJECT_GATE_H                  = 25,
+    BG_BG_OBJECT_MAX                     = 26,
+};
+
+/* Object id templates from DB */
+enum BG_BG_ObjectTypes
+{
+    // BG_BG_OBJECTID_BANNER_A             =
+    // BG_BG_OBJECTID_BANNER_CONT_A        =
+    // BG_BG_OBJECTID_BANNER_H             =
+    // BG_BG_OBJECTID_BANNER_CONT_H        =
+
+    BG_BG_OBJECTID_GATE_A               = 205496,
+    BG_BG_OBJECTID_GATE_H               = 207178
+};
+
+enum BG_BG_Timers
+{
+    BG_BG_FLAG_CAPTURING_TIME   = 60000,
+};
 
 /* do NOT change the order, else wrong behaviour */
 enum BG_BG_BattlegroundNodes
@@ -39,6 +77,17 @@ enum BG_BG_BattlegroundNodes
     BG_BG_SPIRIT_HORDE          = 4,
 
     BG_BG_ALL_NODES_COUNT       = 5,                        // all nodes (dynamic and static)
+};
+
+enum BG_BG_NodeStatus
+{
+    BG_BG_NODE_TYPE_NEUTRAL             = 0,
+    BG_BG_NODE_TYPE_CONTESTED           = 1,
+    BG_BG_NODE_STATUS_ALLY_CONTESTED    = 1,
+    BG_BG_NODE_STATUS_HORDE_CONTESTED   = 2,
+    BG_BG_NODE_TYPE_OCCUPIED            = 3,
+    BG_BG_NODE_STATUS_ALLY_OCCUPIED     = 3,
+    BG_BG_NODE_STATUS_HORDE_OCCUPIED    = 4
 };
 
 enum BG_BG_Sounds
