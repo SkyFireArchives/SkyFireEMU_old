@@ -26,6 +26,11 @@
 
 class Battleground;
 
+enum BG_BG_Timers
+{
+    BG_BG_FLAG_CAPTURING_TIME   = 60000,
+};
+
 /* do NOT change the order, else wrong behaviour */
 enum BG_BG_BattlegroundNodes
 {
