@@ -44,6 +44,7 @@ enum BG_BG_ObjectType
     BG_BG_OBJECT_AURA_CONTESTED          = 7,
     BG_BG_OBJECT_GATE_A                  = 24,
     BG_BG_OBJECT_GATE_H                  = 25,
+    BG_BG_OBJECT_MAX                     = 26,
 };
 
 enum BG_BG_Timers
