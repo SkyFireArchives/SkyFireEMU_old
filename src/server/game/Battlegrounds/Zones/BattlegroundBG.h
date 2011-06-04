@@ -67,6 +67,17 @@ enum BG_BG_BattlegroundNodes
     BG_BG_ALL_NODES_COUNT       = 5,                        // all nodes (dynamic and static)
 };
 
+enum BG_BG_NodeStatus
+{
+    BG_BG_NODE_TYPE_NEUTRAL             = 0,
+    BG_BG_NODE_TYPE_CONTESTED           = 1,
+    BG_BG_NODE_STATUS_ALLY_CONTESTED    = 1,
+    BG_BG_NODE_STATUS_HORDE_CONTESTED   = 2,
+    BG_BG_NODE_TYPE_OCCUPIED            = 3,
+    BG_BG_NODE_STATUS_ALLY_OCCUPIED     = 3,
+    BG_BG_NODE_STATUS_HORDE_OCCUPIED    = 4
+};
+
 enum BG_BG_Sounds
 {
     BG_BG_SOUND_NODE_CLAIMED            = 8192,
