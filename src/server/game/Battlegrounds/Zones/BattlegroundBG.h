@@ -32,6 +32,20 @@ enum BG_BG_NodeObjectId
     BG_BG_OBJECTID_NODE_BANNER_2    = 208785,       // Watterworks banner
 };
 
+enum BG_BG_ObjectType
+{
+    BG_BG_OBJECT_BANNER_NEUTRAL          = 0,
+    BG_BG_OBJECT_BANNER_CONT_A           = 1,
+    BG_BG_OBJECT_BANNER_CONT_H           = 2,
+    BG_BG_OBJECT_BANNER_ALLY             = 3,
+    BG_BG_OBJECT_BANNER_HORDE            = 4,
+    BG_BG_OBJECT_AURA_ALLY               = 5,
+    BG_BG_OBJECT_AURA_HORDE              = 6,
+    BG_BG_OBJECT_AURA_CONTESTED          = 7,
+    BG_BG_OBJECT_GATE_A                  = 24,
+    BG_BG_OBJECT_GATE_H                  = 25,
+};
+
 enum BG_BG_Timers
 {
     BG_BG_FLAG_CAPTURING_TIME   = 60000,
