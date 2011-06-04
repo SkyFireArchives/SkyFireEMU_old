@@ -23,8 +23,14 @@
 #ifndef __BattlegroundBG_H
 #define __BattlegroundBG_H
 
-
 class Battleground;
+
+enum BG_BG_NodeObjectId
+{
+    BG_BG_OBJECTID_NODE_BANNER_0    = 205557,       // Lighthouse banner
+    BG_BG_OBJECTID_NODE_BANNER_1    = 208782,       // Mine banner
+    BG_BG_OBJECTID_NODE_BANNER_2    = 208785,       // Watterworks banner
+};
 
 enum BG_BG_Timers
 {
