@@ -47,6 +47,18 @@ enum BG_BG_ObjectType
     BG_BG_OBJECT_MAX                     = 26,
 };
 
+/* Object id templates from DB */
+enum BG_BG_ObjectTypes
+{
+    // BG_BG_OBJECTID_BANNER_A             =
+    // BG_BG_OBJECTID_BANNER_CONT_A        =
+    // BG_BG_OBJECTID_BANNER_H             =
+    // BG_BG_OBJECTID_BANNER_CONT_H        =
+
+    BG_BG_OBJECTID_GATE_A               = 205496,
+    BG_BG_OBJECTID_GATE_H               = 207178
+};
+
 enum BG_BG_Timers
 {
     BG_BG_FLAG_CAPTURING_TIME   = 60000,
