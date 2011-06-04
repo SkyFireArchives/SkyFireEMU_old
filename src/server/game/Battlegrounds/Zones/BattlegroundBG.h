@@ -115,6 +115,13 @@ enum BG_BG_Objectives
 const uint32 BG_BG_TickIntervals[4] = {0, 12000, 6000, 1000};
 const uint32 BG_BG_TickPoints[4] = {0, 10, 10, 30};
 
+struct BG_BG_BannerTimer
+{
+    uint32      timer;
+    uint8       type;
+    uint8       teamIndex;
+};
+
 class BattlegroundBGScore : public BattlegroundScore
 {
     public:
