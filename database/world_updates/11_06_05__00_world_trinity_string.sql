@@ -1,4 +1,4 @@
-DELETE FROM trinity_string WHERE entry IN (1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262);
+DELETE FROM trinity_string WHERE entry IN (1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263, 1264);
 INSERT INTO trinity_string (entry, content_default) VALUES
 (1254, 'Alliance'),
 (1255, 'Horde'),
