@@ -13,7 +13,7 @@ REPLACE INTO `trinity_string` VALUES ('12', 'Active connections: %u (max: %u) Qu
 REPLACE INTO `trinity_string` VALUES ('13', '|cff00FF00Server uptime: %s|r', null, null, null, null, null, null, null, '|cff00FF00Продолжительность работы сервера: %s|r');
 REPLACE INTO `trinity_string` VALUES ('14', 'Player saved.', null, null, null, null, null, null, null, 'Игрок сохранен.');
 REPLACE INTO `trinity_string` VALUES ('15', 'All players saved.', null, null, null, null, null, null, null, 'Все игроки сохранены.');
-REPLACE INTO `trinity_string` VALUES ('16', 'There are the following active GMs on this server:', null, null, null, null, null, null, null, 'На этом сервере есть следующие активные гейм-мастеры');
+REPLACE INTO `trinity_string` VALUES ('16', '|cffFF0000There are the following active GMs on this server:|r', null, null, null, null, null, null, null, '|cffFF0000На этом сервере есть следующие активные гейм-мастеры:|r');
 REPLACE INTO `trinity_string` VALUES ('17', 'There are no GMs currently logged in on this server.', null, null, null, null, null, null, null, 'На этом сервере нет гейм-мастеров вошедших в игру.');
 REPLACE INTO `trinity_string` VALUES ('18', 'Cannot do that while flying.', null, null, null, null, null, null, null, 'Не могу сделать это в полете.');
 REPLACE INTO `trinity_string` VALUES ('19', 'Cannot do that in Battlegrounds.', null, null, null, null, null, null, null, 'Не могу сделать это на Полях битвы.');
@@ -549,12 +549,12 @@ REPLACE INTO `trinity_string` VALUES ('708', '%s is Away from Keyboard: %s', nul
 REPLACE INTO `trinity_string` VALUES ('709', 'Do not Disturb', null, null, null, null, null, null, null, 'Не беспокоить');
 REPLACE INTO `trinity_string` VALUES ('710', 'Away from Keyboard', null, null, null, null, null, null, null, 'Отошел');
 REPLACE INTO `trinity_string` VALUES ('711', 'Queue status for %s (Lvl: %u to %u)\nQueued alliances: %u (Need at least %u more)\nQueued hordes: %u (Need at least %u more)', null, null, null, null, null, null, null, 'Состояние очереди для %s (Уровень: с %u до %u)\r\nАльянса в очереди: %u (Нужно еще %u)\r\nОрды в очереди: %u (Нужно еще %u)');
-REPLACE INTO `trinity_string` VALUES ('712', '|cffff0000[BG Queue Announcer]:|r %s -- [%u-%u] A: %u/%u, H: %u/%u|r', null, null, null, null, null, null, null, '|cffff0000[Анонс БГ]:|r %s -- [%u-%u] Альянс: %u/%u, Орда: %u/%u|r');
+REPLACE INTO `trinity_string` VALUES ('712', '|cffff0000[UnderWoW BG Queue Announcer]:|r %s -- [%u-%u] A: %u/%u, H: %u/%u|r', null, null, null, null, null, null, null, '|cffff0000[UnderWoW Анонс БГ]:|r %s -- [%u-%u] Альянс: %u/%u, Орда: %u/%u|r');
 REPLACE INTO `trinity_string` VALUES ('713', 'You must be level %u to join an arena team!', null, null, null, null, null, null, null, 'Вы должны быть %u уровня, чтобы присоединиться к арена команде!');
 REPLACE INTO `trinity_string` VALUES ('715', 'You don\'t meet Battleground level requirements', null, null, null, null, null, null, null, 'У вас недостаточно высокий уровень для этого поля боя');
-REPLACE INTO `trinity_string` VALUES ('717', '|cffff0000[BG Queue Announcer]:|r %s -- [%u-%u] Started!|r', null, null, null, null, null, null, null, '|cffff0000[Анонс БГ]:|r %s -- [%u-%u] Начинается!|r');
-REPLACE INTO `trinity_string` VALUES ('718', '|cffff0000[Arena Queue Announcer]:|r %s -- Joined : %ux%u : %u|r', null, null, null, null, null, null, null, '|cffff0000[Анонс БГ]:|r %s -- Присоединились : %ux%u : %u|r');
-REPLACE INTO `trinity_string` VALUES ('719', '|cffff0000[Arena Queue Announcer]:|r %s -- Exited : %ux%u : %u|r', null, null, null, null, null, null, null, '|cffff0000[Анонс БГ]:|r %s -- Вышли : %ux%u : %u|r');
+REPLACE INTO `trinity_string` VALUES ('717', '|cffff0000[UnderWoW BG Queue Announcer]:|r %s -- [%u-%u] Started!|r', null, null, null, null, null, null, null, '|cffff0000[UnderWoW Анонс БГ]:|r %s -- [%u-%u] Начинается!|r');
+REPLACE INTO `trinity_string` VALUES ('718', '|cffff0000[UnderWoW Arena Queue Announcer]:|r %s -- Joined : %ux%u : %u|r', null, null, null, null, null, null, null, '|cffff0000[UnderWoW Анонс Arena]:|r %s -- Присоединились : %ux%u : %u|r');
+REPLACE INTO `trinity_string` VALUES ('719', '|cffff0000[UnderWoW Arena Queue Announcer]:|r %s -- Exited : %ux%u : %u|r', null, null, null, null, null, null, null, '|cffff0000[UnderWoW Анонс Arena]:|r %s -- Вышли : %ux%u : %u|r');
 REPLACE INTO `trinity_string` VALUES ('720', 'Your group is too large for this battleground. Please regroup to join.', null, null, null, null, null, null, null, 'Ваша группа слишком большая для этого поля боя. Пожалуйста, перегруппируйтесь и попробуйте снова.');
 REPLACE INTO `trinity_string` VALUES ('721', 'Your group is too large for this arena. Please regroup to join.', null, null, null, null, null, null, null, 'Ваша группа слишком большая для этой арены. Пожалуйста, перегруппируйтесь и попробуйте снова.');
 REPLACE INTO `trinity_string` VALUES ('722', 'Your group has members not in your arena team. Please regroup to join.', null, null, null, null, null, null, null, 'Ваша группа содержит игроков, которых нет в вашей команде. Пожалуйста, перегруппируйтесь и попробуйте снова.');
