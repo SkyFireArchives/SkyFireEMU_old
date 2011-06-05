@@ -134,7 +134,7 @@ bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
     //uint32 updateTime = sWorld->GetUpdateTime();
 
     //PSendSysMessage(_FULLVERSION,);
-    PSendSysMessage("UnderCore:not stable Last update 04/06/2011");
+    PSendSysMessage("UnderCore:not stable Last update 05/06/2011");
     PSendSysMessage("Home:http://under-wow.ru Forums:http://under-wow.ru/forums/");
     PSendSysMessage(LANG_CONNECTED_PLAYERS, PlayersNum, MaxPlayersNum);
     //PSendSysMessage(LANG_CONNECTED_USERS, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);

@@ -53,7 +53,7 @@ REPLACE INTO `trinity_string` VALUES ('52', 'Invaid item count (%u) for item %u'
 REPLACE INTO `trinity_string` VALUES ('53', 'Mail can\'t have more %u item stacks', null, null, null, null, null, null, null, 'У почты не может быть больше %u ячеек для предметов');
 REPLACE INTO `trinity_string` VALUES ('54', 'The new passwords do not match', null, null, null, null, null, null, null, 'Новые пароли не соответствуют');
 REPLACE INTO `trinity_string` VALUES ('55', 'Your password can\'t be longer than 16 characters (client limit), password not changed!', null, null, null, null, null, null, null, 'Ваш пароль не может быть длиннее 16 символов (предел клиента), пароль не изменен!');
-REPLACE INTO `trinity_string` VALUES ('56', 'Current Message of the day: \r\n%s', null, null, null, null, null, null, null, 'Текущее сообщение дня: %s');
+REPLACE INTO `trinity_string` VALUES ('56', '|cffA020F0Current Message of the day: \r\n%s|r', null, null, null, null, null, null, null, '|cffA020F0Текущее сообщение дня: %s|r');
 REPLACE INTO `trinity_string` VALUES ('57', 'Using World DB: %s', null, null, null, null, null, null, null, 'Используемая База Данных: %s');
 REPLACE INTO `trinity_string` VALUES ('58', 'Using script library: %s', null, null, null, null, null, null, null, 'Используемая библиотека скриптов: %s');
 REPLACE INTO `trinity_string` VALUES ('59', 'Using creature EventAI: %s', null, null, null, null, null, null, null, 'Использование существом EventAI:');
