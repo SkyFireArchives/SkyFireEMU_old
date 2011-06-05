@@ -888,7 +888,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
             std::string uptime = secsToTimeString(sWorld->GetUptime());
             
             //chH.PSendSysMessage(_FULLVERSION);
-            chH.PSendSysMessage("UnderCore:not stable Last update 05/06/2011");
+            chH.PSendSysMessage("UnderCore:not stable. Last update 05/06/2011");
             chH.PSendSysMessage("Home:http://under-wow.ru Forums:http://under-wow.ru/forums/");
             chH.PSendSysMessage(LANG_CONNECTED_PLAYERS, PlayersNum, MaxPlayersNum);
             chH.PSendSysMessage(LANG_UPTIME, uptime.c_str());
