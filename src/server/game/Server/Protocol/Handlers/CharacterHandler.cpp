@@ -889,10 +889,11 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
             
             //chH.PSendSysMessage(_FULLVERSION);
             chH.PSendSysMessage("UnderCore:not stable. Last update 05/06/2011");
-            chH.PSendSysMessage("Home:http://under-wow.ru Forums:http://under-wow.ru/forums/");
             chH.PSendSysMessage(LANG_CONNECTED_PLAYERS, PlayersNum, MaxPlayersNum);
             chH.PSendSysMessage(LANG_UPTIME, uptime.c_str());
-            chH.PSendSysMessage("Admin contacts ICQ: 397-795-901, Skype: impass_underwow_administrator");
+            chH.PSendSysMessage("Home: http://under-wow.ru");
+            chH.PSendSysMessage("Forums: http://under-wow.ru/forums/");
+            chH.PSendSysMessage("Admin contacts: ICQ 397-795-901, Skype impass_underwow_administrator");
             
             sLog->outStaticDebug("WORLD: Sent server info");
         }
