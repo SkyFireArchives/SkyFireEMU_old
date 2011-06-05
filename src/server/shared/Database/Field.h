@@ -34,7 +34,7 @@ class Field
     friend class PreparedResultSet;
 
     public:
-        
+
         bool GetBool() const // Wrapper, actually gets integer
         {
             return GetUInt8() == 1 ? true : false;
@@ -141,7 +141,7 @@ class Field
                 return *reinterpret_cast<int32*>(data.value);
             return static_cast<int32>(atol((char*)data.value));
         }
-    
+
         uint64 GetUInt64() const
         {
             if (!data.value)
@@ -237,24 +237,34 @@ class Field
                     string = "";
                 return std::string(string, data.length);
             }
-            return std::string((char*)data.value);            
+            return std::string((char*)data.value);
         }
-    
+
     protected:
         Field();
         ~Field();
 
-        struct 
+        #if defined(__GNUC__)
+        #pragma pack(1)
+        #else
+        #pragma pack(push, 1)
+        #endif
+        struct
         {
-            enum_field_types type;  // Field type
-            void* value;            // Actual data in memory
-            bool raw;               // Raw bytes? (Prepared statement or adhoc)
             uint32 length;          // Length (prepared strings only)
-        } data;
+            void* value;            // Actual data in memory
+            enum_field_types type;  // Field type
+            bool raw;               // Raw bytes? (Prepared statement or ad hoc)
+         } data;
+        #if defined(__GNUC__)
+        #pragma pack()
+        #else
+        #pragma pack(pop)
+        #endif
 
         void SetByteValue(const void* newValue, const size_t newSize, enum_field_types newType, uint32 length);
         void SetStructuredValue(char* newValue, enum_field_types newType);
-        
+
         void CleanUp()
         {
             delete[] ((char*)data.value);
