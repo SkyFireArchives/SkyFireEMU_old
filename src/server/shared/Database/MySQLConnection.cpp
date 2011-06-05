@@ -384,15 +384,17 @@ void MySQLConnection::CommitTransaction()
 
 bool MySQLConnection::ExecuteTransaction(SQLTransaction& transaction)
 {
-    std::queue<SQLElementData> &queries = transaction->m_queries;
+    std::list<SQLElementData> const& queries = transaction->m_queries;
     if (queries.empty())
         return false;
 
     BeginTransaction();
-    while (!queries.empty())
+
+    std::list<SQLElementData>::const_iterator itr;
+    for (itr = queries.begin(); itr != queries.end(); ++itr)
     {
-        SQLElementData data = queries.front();
-        switch (data.type)
+        SQLElementData const& data = *itr;
+        switch (itr->type)
         {
             case SQL_ELEMENT_PREPARED:
             {
@@ -404,7 +406,6 @@ bool MySQLConnection::ExecuteTransaction(SQLTransaction& transaction)
                     RollbackTransaction();
                     return false;
                 }
-                delete data.element.stmt;
             }
             break;
             case SQL_ELEMENT_RAW:
@@ -417,11 +418,9 @@ bool MySQLConnection::ExecuteTransaction(SQLTransaction& transaction)
                     RollbackTransaction();
                     return false;
                 }
-                free((void*)const_cast<char*>(sql));
             }
             break;
         }
-        queries.pop();
     }
 
     CommitTransaction();
@@ -496,8 +495,6 @@ PreparedResultSet* MySQLConnection::Query(PreparedStatement* stmt)
 
 bool MySQLConnection::_HandleMySQLErrno(uint32 errNo)
 {
-    sLog->outSQLDriver("%s", __FUNCTION__);
-
     switch (errNo)
     {
         case 2006:  // "MySQL server has gone away"
@@ -526,8 +523,7 @@ bool MySQLConnection::_HandleMySQLErrno(uint32 errNo)
         }
 
         case 1213:      // "Deadlock found when trying to get lock; try restarting transaction"
-            return true;    // Implemented in TransactionTask::Execute and DatabaseWorkerPool<T>::DirectCommitTransaction
-
+            return false;    // Implemented in TransactionTask::Execute and DatabaseWorkerPool<T>::DirectCommitTransaction
         // Query related errors - skip query
         case 1058:      // "Column count doesn't match value count"
         case 1062:      // "Duplicate entry '%s' for key '%d'"
