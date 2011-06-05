@@ -33,7 +33,7 @@ class WorldDatabaseConnection : public MySQLConnection
         WorldDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) {}
         WorldDatabaseConnection(ACE_Activation_Queue* q, MySQLConnectionInfo& connInfo) : MySQLConnection(q, connInfo) {}
 
-        //- Loads databasetype specific prepared statements
+        //- Loads database type specific prepared statements
         void DoPrepareStatements();
 };
 
@@ -53,6 +53,7 @@ enum WorldDatabaseStatements
     WORLD_LOAD_CRETEXT,
     WORLD_LOAD_SMART_SCRIPTS,
     WORLD_LOAD_SMARTAI_WP,
+
     MAX_WORLDDATABASE_STATEMENTS,
 };
 
