@@ -6382,7 +6382,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                 }
             }
             // Living Seed
-            else if (dummySpell->SpellIconID == 2860)
+            if (dummySpell->SpellIconID == 2860)
             {
                 triggered_spell_id = 48504;
                 basepoints0 = triggerAmount * damage / 100;
@@ -17295,3 +17295,4 @@ bool CharmInfo::IsReturning()
 {
     return m_isReturning;
 }
+// Living Seed
