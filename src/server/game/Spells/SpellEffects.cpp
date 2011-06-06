@@ -1461,6 +1461,22 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                         m_caster->CastSpell(m_caster, 84765, true); // Summon Flame Orb
                     break;
                 }
+                case 43987: // Ritual of Refreshment
+                {
+                    if (m_caster->GetTypeId() == TYPEID_PLAYER)
+                    {
+                        m_caster->ToPlayer()->RemoveSpellCooldown(74650, true); // Rank 1
+                        m_caster->ToPlayer()->RemoveSpellCooldown(92824, true); // Rank 2
+                        m_caster->ToPlayer()->RemoveSpellCooldown(92827, true); // Rank 3
+                        if (m_caster->getLevel() > 75 && m_caster->getLevel() < 80)
+                            m_caster->CastSpell(m_caster, 74650, true);
+                        if (m_caster->getLevel() > 80 && m_caster->getLevel() < 85)
+                            m_caster->CastSpell(m_caster, 92824, true);
+                        if (m_caster->getLevel() == 85)
+                            m_caster->CastSpell(m_caster, 92827, true);
+                    }
+                    break;
+                }
             }
             break;
         }

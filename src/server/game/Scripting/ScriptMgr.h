@@ -962,7 +962,7 @@ class ScriptMgr
         void OnPlayerBindToInstance(Player* player, Difficulty difficulty, uint32 mapid, bool permanent);
         void OnPlayerDamageDealt(Player* player, Unit* victim, uint32& damage, DamageEffectType damageType, SpellEntry const *spellProto);
         void OnPlayerSpellCastWithProto(Player* player, SpellEntry const *spellProto);
-
+        void OnPlayerAura(Player* player, SpellEntry const* spellProto);
 
     public: /* GuildScript */
         void OnGuildAddMember(Guild *guild, Player *player, uint8& plRank);
