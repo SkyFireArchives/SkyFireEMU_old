@@ -24,21 +24,6 @@ set(scripts_STAT_SRCS
   EasternKingdoms/isle_of_queldanas.cpp
   EasternKingdoms/boss_kruul.cpp
   EasternKingdoms/searing_gorge.cpp
-  EasternKingdoms/ZulGurub/boss_hakkar.cpp
-  EasternKingdoms/ZulGurub/boss_mandokir.cpp
-  EasternKingdoms/ZulGurub/boss_marli.cpp
-  EasternKingdoms/ZulGurub/boss_hazzarah.cpp
-  EasternKingdoms/ZulGurub/boss_jeklik.cpp
-  EasternKingdoms/ZulGurub/boss_grilek.cpp
-  EasternKingdoms/ZulGurub/zulgurub.h
-  EasternKingdoms/ZulGurub/boss_renataki.cpp
-  EasternKingdoms/ZulGurub/boss_arlokk.cpp
-  EasternKingdoms/ZulGurub/boss_gahzranka.cpp
-  EasternKingdoms/ZulGurub/boss_venoxis.cpp
-  EasternKingdoms/ZulGurub/instance_zulgurub.cpp
-  EasternKingdoms/ZulGurub/boss_jindo.cpp
-  EasternKingdoms/ZulGurub/boss_wushoolay.cpp
-  EasternKingdoms/ZulGurub/boss_thekal.cpp
   EasternKingdoms/wetlands.cpp
   EasternKingdoms/arathi_highlands.cpp
   EasternKingdoms/Gnomeregan/instance_gnomeregan.cpp
@@ -198,6 +183,18 @@ set(scripts_STAT_SRCS
   EasternKingdoms/Karazhan/karazhan.h
   EasternKingdoms/Gilneas/gilneas_quest.cpp
   EasternKingdoms/gilneas.cpp
+  EasternKingdoms/BaradinHold/boss_argaloth.cpp
+  EasternKingdoms/BlackwingDescent/boss_romogg_bonecrusher.cpp
+  EasternKingdoms/TheStonecore/boss_corborus.cpp
+  EasternKingdoms/TheStonecore/boss_high_priestess_azil.cpp
+  EasternKingdoms/TheStonecore/boss_slabhide.cpp
+  EasternKingdoms/TheStonecore/instance_the_stonecore.cpp
+  EasternKingdoms/TheStonecore/the_stone_core.cpp
+  EasternKingdoms/TheStonecore/the_stonecore.cpp
+  EasternKingdoms/ThroneOfTheTides/boss_commander_ulthok.cpp
+  EasternKingdoms/ThroneOfTheTides/boss_lady_nazjar.cpp
+  EasternKingdoms/ThroneOfTheTides/instance_throne_of_the_tides.cpp
+  EasternKingdoms/ThroneOfTheTides/throne_of_the_tides.cpp
 )
 
 message("  -> Prepared: Eastern Kingdoms")

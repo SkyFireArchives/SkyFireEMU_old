@@ -1,111 +1,94 @@
-/*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
- *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
- *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- */
 
 #include "ScriptPCH.h"
-#include "the_stonecore.h"
+#include "the_stone_core.h"
 
-#define MAX_ENCOUNTER     4
+#define ENCOUNTERS  4
 
-class instance_the_stonecore : public InstanceMapScript
+class instance_the_stone_core : public InstanceMapScript
 {
 public:
-    instance_the_stonecore() : InstanceMapScript("instance_the_stonecore", 725) { }
+	instance_the_stone_core() : InstanceMapScript("instance_the_stone_core", 725) { }
 
-    InstanceScript* GetInstanceScript(InstanceMap* map) const
+    InstanceScript* GetInstanceScript(InstanceMap* pMap) const
     {
-        return new instance_the_stonecore_InstanceMapScript(map);
+        return new instance_the_stonecore_InstanceMapScript(pMap);
     }
 
     struct instance_the_stonecore_InstanceMapScript : public InstanceScript
     {
-        instance_the_stonecore_InstanceMapScript(Map* map) : InstanceScript(map) {};
+    	instance_the_stonecore_InstanceMapScript(Map *Map) : InstanceScript(Map) {};
+
+        uint32 uiEncounters[ENCOUNTERS];
 
         uint64 uiCorborus;
-        uint64 uiSlabhide;
+        uint64 uiSlaphide;
         uint64 uiOzruk;
-        uint64 uiHighPriestessAzil;
-        uint32 uiTeamInInstance;
-        uint32 uiEncounter[MAX_ENCOUNTER];
+        uint64 uiHighPriestAzil;
 
         void Initialize()
         {
-             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-                 uiEncounter[i] = NOT_STARTED;
- 
-             uiCorborus = 0;
-             uiSlabhide = 0;
-             uiOzruk = 0;
-             uiHighPriestessAzil = 0;
+        	uiCorborus = 0;
+            uiSlaphide = 0;
+            uiOzruk = 0;
+            uiHighPriestAzil = 0;
 
+            for (uint8 i = 0; i < ENCOUNTERS; i++)
+                uiEncounters[i] = NOT_STARTED;
         }
 
         bool IsEncounterInProgress() const
         {
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-                if (uiEncounter[i] == IN_PROGRESS)
+            for (uint8 i = 0; i < ENCOUNTERS; i++)
+                if (uiEncounters[i] == IN_PROGRESS)
                     return true;
- 
-             return false;
+
+            return false;
         }
 
-        void OnCreatureCreate(Creature* pCreature, bool /*add*/)
+        void OnCreatureCreate(Creature *creature, bool /*add*/)
         {
-            Map::PlayerList const &players = instance->GetPlayers();
-
-            if (!players.isEmpty())
+            switch(creature->GetEntry())
             {
-                if (Player* pPlayer = players.begin()->getSource())
-                    uiTeamInInstance = pPlayer->GetTeam();
-            }
-
-            switch(pCreature->GetEntry())
-            {
-                case BOSS_CORBORUS:
-                    uiCorborus = pCreature->GetGUID();
+                case CREATURE_CORBORUS: uiCorborus  = creature->GetGUID(); 
                     break;
-                case BOSS_SLABHIDE:
-                    uiSlabhide = pCreature->GetGUID();
+                case CREATURE_SLAPHIDE: uiSlaphide  = creature->GetGUID(); 
                     break;
-                case BOSS_OZRUK:
-                    uiOzruk = pCreature->GetGUID();
+                case CREATURE_OZRUK: uiOzruk  = creature->GetGUID(); 
                     break;
-                case BOSS_HIGH_PRIESTESS_AZIL:
-                    uiHighPriestessAzil = pCreature->GetGUID();
+                case CREATURE_HIGH_PRIESTESS_AZIL: uiHighPriestAzil  = creature->GetGUID(); 
                     break;
             }
+        }
+
+        uint32 GetData(uint32 type)
+        {
+            switch(type)
+            {
+                case DATA_CORBORUS_EVENT: 
+                    return uiEncounters[0];
+                case DATA_SLAPHIDE_EVENT: 
+                    return uiEncounters[1];
+                case DATA_OZRUK_EVENT: 
+                    return uiEncounters[2];
+                case DATA_HIGH_PRIESTESS_AZIL_EVENT: 
+                    return uiEncounters[3];
+            }
+            return 0;
         }
 
         uint64 GetData64(uint32 identifier)
         {
             switch(identifier)
             {
-                case DATA_CORBORUS:                    return uiCorborus;
-                case DATA_SLABHIDE:                    return uiSlabhide;
-                case DATA_OZRUK:                    return uiOzruk;
-                case DATA_HIGH_PRIESTESS_AZIL:        return uiHighPriestessAzil;
+                case DATA_CORBORUS: 
+                    return uiCorborus;
+                case DATA_SLAPHIDE: 
+                    return uiSlaphide;
+                case DATA_OZRUK: 
+                    return uiOzruk;
+                case DATA_HIGH_PRIESTESS_AZIL: 
+                    return uiHighPriestAzil;
             }
-
             return 0;
         }
 
@@ -113,50 +96,35 @@ public:
         {
             switch(type)
             {
-                case DATA_CORBORUS_EVENT:
-                    uiEncounter[0] = data;
-                    break;
-                case DATA_SLABHIDE_EVENT:
-                    uiEncounter[1] = data;
-                    break;
-                case DATA_OZRUK_EVENT:
-                    uiEncounter[2] = data;
-                    break;
-                case DATA_HIGH_PRIESTESS_AZIL_EVENT:
-                    uiEncounter[3] = data;
-                    break;
+                case DATA_CORBORUS_EVENT:   
+                    uiEncounters[0] = data; break;
+                case DATA_SLAPHIDE_EVENT:   
+                    uiEncounters[1] = data; break;
+                case DATA_OZRUK_EVENT:   
+                    uiEncounters[2] = data; break;
+                case DATA_HIGH_PRIESTESS_AZIL_EVENT:   
+                    uiEncounters[3] = data; break;
             }
 
             if (data == DONE)
-               SaveToDB();
-        }
-
-        uint32 GetData(uint32 type)
-        {
-            switch(type)
-            {
-                case DATA_CORBORUS_EVENT:                return uiEncounter[0];
-                case DATA_SLABHIDE_EVENT:                return uiEncounter[1];
-                case DATA_OZRUK_EVENT:                    return uiEncounter[2];
-                case DATA_HIGH_PRIESTESS_AZIL_EVENT:    return uiEncounter[3];
-            }
-
-            return 0;
+                SaveToDB();
         }
 
         std::string GetSaveData()
         {
             OUT_SAVE_INST_DATA;
+            std::ostringstream stream;
+            stream << uiEncounters[0] << " " << uiEncounters[1] << " " << uiEncounters[2] << " " << uiEncounters[3];
 
-            std::string str_data;
+            char* out = new char[stream.str().length() + 1];
+            strcpy(out, stream.str().c_str());
+            if (out)
+            {
+                OUT_SAVE_INST_DATA_COMPLETE;
+                return out;
+            }
 
-            std::ostringstream saveStream;
-            saveStream << "P S " << uiEncounter[0] << " " << uiEncounter[1]  << " " << uiEncounter[2]  << " " << uiEncounter[3];
-
-            str_data = saveStream.str();
-
-            OUT_SAVE_INST_DATA_COMPLETE;
-            return str_data;
+            return NULL;
         }
 
         void Load(const char* in)
@@ -169,33 +137,19 @@ public:
 
             OUT_LOAD_INST_DATA(in);
 
-            char dataHead1, dataHead2;
-            uint16 data0, data1, data2, data3;
+            std::istringstream stream(in);
+            stream >> uiEncounters[0] >> uiEncounters[1] >> uiEncounters[2] >> uiEncounters[3];
 
-            std::istringstream loadStream(in);
-            loadStream >> dataHead1 >> dataHead2 >> data0 >> data1 >> data2 >> data3;
-
-            if (dataHead1 == 'P' && dataHead2 == 'S')
-            {
-                uiEncounter[0] = data0;
-                uiEncounter[1] = data1;
-                uiEncounter[2] = data2;
-                uiEncounter[3] = data3;
-
-                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-                    if (uiEncounter[i] == IN_PROGRESS)
-                        uiEncounter[i] = NOT_STARTED;
-
-            } 
-            else OUT_LOAD_INST_DATA_FAIL;
+            for (uint8 i = 0; i < ENCOUNTERS; ++i)
+                if (uiEncounters[i] == IN_PROGRESS)
+                    uiEncounters[i] = NOT_STARTED;
 
             OUT_LOAD_INST_DATA_COMPLETE;
         }
     };
 };
 
-
 void AddSC_instance_the_stonecore()
 {
-    new instance_the_stonecore();
+    new instance_the_stone_core();
 }
