@@ -723,7 +723,7 @@ class PlayerScript : public ScriptObject
 
         virtual void OnDamageDealt(Player* /*player*/, Unit* /*victim*/, uint32& /*damage*/, DamageEffectType /*damageType*/, SpellEntry const* /*spellProto*/) { }
         virtual void OnSpellCastWithProto(Player* /*player*/, SpellEntry const* /*spellProto*/) { }
-
+        virtual void OnAura(Player* /*player*/, SpellEntry const* /*spellProto*/) { }
 };
 
 class GuildScript : public ScriptObject

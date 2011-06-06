@@ -1989,6 +1989,8 @@ UnitAura::UnitAura(SpellEntry const* spellproto, uint8 effMask, WorldObject * ow
     LoadScripts();
     _InitEffects(effMask, caster, baseAmount);
     GetUnitOwner()->_AddAura(this, caster);
+   if (GetUnitOwner()->GetTypeId() == TYPEID_PLAYER)
+       sScriptMgr->OnPlayerAura(GetUnitOwner()->ToPlayer(), spellproto);
 };
 
 void UnitAura::_ApplyForTarget(Unit * target, Unit * caster, AuraApplication * aurApp)

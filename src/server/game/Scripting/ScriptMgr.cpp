@@ -1220,6 +1220,11 @@ void ScriptMgr::OnPlayerSpellCastWithProto(Player *player, SpellEntry const *spe
     FOREACH_SCRIPT(PlayerScript)->OnSpellCastWithProto(player, spellProto);
 }
 
+void ScriptMgr::OnPlayerAura(Player* player, SpellEntry const *spellProto)
+{
+    FOREACH_SCRIPT(PlayerScript)->OnAura(player, spellProto);
+}
+
 // Guild
 void ScriptMgr::OnGuildAddMember(Guild *guild, Player *player, uint8& plRank)
 {
