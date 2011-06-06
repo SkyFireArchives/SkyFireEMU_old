@@ -693,6 +693,13 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                         if (unitTarget->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_DRUID, 0x00200000, 0, 0))
                             damage = int32(damage*(100.0f+aurEff->GetAmount())/100.0f);
                 }
+                else if (m_spellInfo->Id == 8921) // Moonfire 
+                {
+                    if (m_caster->HasAura(78784)) // Blessing of the Grove rank 1
+                        damage = int32 (damage * 0.03f);
+                    if (m_caster->HasAura(78785)) // Blessing of the Grove rank 2
+                        damage = int32 (damage * 0.06f);
+                }
                 break;
             }
             case SPELLFAMILY_ROGUE:
@@ -4442,18 +4449,17 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
                 switch (m_caster->GetPower(POWER_HOLY_POWER))
                 {
                     // 1 Holy Power
-                    case 1:
-                        totalDamagePercentMod *= 1.30f; // 130%
+                    case 0:
                         (m_caster->HasAura(31866 || 31867 || 31868)) ? totalDamagePercentMod += 0.3f : 0; //Crusade Rank 1,2,3 - 133%
                     break;
                     // 2 Holy Power
-                    case 2:
-                        totalDamagePercentMod *= 1.30f; // 130%
+                    case 1:
+                        totalDamagePercentMod += 2.0f; // 3*30 = 90%
                         (m_caster->HasAura(31866 || 31867 || 31868)) ? totalDamagePercentMod += 0.3f : 0; //Crusade Rank 1,2,3 - 133%
                     break;
                     // 3 Holy Power
-                    case 3:
-                        totalDamagePercentMod *= 1.90f; // 190%
+                    case 2:
+                        totalDamagePercentMod += 6.5f; // 7.5*30 = 225%
                         (m_caster->HasAura(31866 || 31867 || 31868)) ? totalDamagePercentMod += 0.9f : 0; //Crusade Rank 1,2,3  - 199%
                     break;
                 }

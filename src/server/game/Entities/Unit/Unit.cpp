@@ -3674,11 +3674,11 @@ void Unit::RemoveAurasDueToSpellByDispel(uint32 spellId, uint64 casterGUID, Unit
                 Unit * caster = aura->GetCaster();
                 if (caster)
                 {
-                    uint32 triggeredSpellId = 0;
+                 uint32 triggeredSpellId = 0;
                     // Lava Flows
                     if (AuraEffect const * aurEff = caster->GetDummyAuraEffect(SPELLFAMILY_SHAMAN, 3087, 0))
                     {
-                        switch(aurEff->GetId())
+                        switch (aurEff->GetId())
                         {
                             case 51482: // Rank 3
                                 triggeredSpellId = 65264;
@@ -13473,22 +13473,39 @@ void Unit::SetMaxHealth(uint32 val)
         SetHealth(val);
 }
 
-void Unit::SetPower(Powers power, uint32 val)
+void Unit::SetPower(Powers power, int32 val)
 {
-    if (GetPower(power) == val)
-        return;
+    if (power != POWER_ECLIPSE)
+    {
+        if (GetPower(power) == val)
+            return;
 
-    uint32 maxPower = GetMaxPower(power);
-    if (maxPower < val)
-        val = maxPower;
-
+        int32 maxPower = GetMaxPower(power);
+        if (maxPower < val)
+            val = maxPower;
+    } else
+     
+    if (power == POWER_ECLIPSE)     // This is needed for eclipse  :)
+    {
+        if (val >= 100)  // Max check
+        { 
+            val = 100;
+            GetOwner()->AddAura(48517, GetOwner()); // Eclipse Solar
+        }
+               
+        if (val <= -100) // Min check
+        { 
+            val = -100;
+            GetOwner()->AddAura(48518, GetOwner()); // Eclipse Lunar
+        }     
+    }
     SetStatInt32Value(UNIT_FIELD_POWER1 + power, val);
-
     WorldPacket data(SMSG_POWER_UPDATE);
+
     data.append(GetPackGUID());
-    data << uint32(1);  // count of updates. uint8 and uint32 for each
+    data << int32(1);  // count of updates. uint8 and int32 for each
     data << uint8(power);
-    data << uint32(val);
+    data << int32(val);
     SendMessageToSet(&data, GetTypeId() == TYPEID_PLAYER ? true : false);
 
     // group update
@@ -13513,7 +13530,7 @@ void Unit::SetPower(Powers power, uint32 val)
     }
 }
 
-void Unit::SetMaxPower(Powers power, uint32 val)
+void Unit::SetMaxPower(Powers power, int32 val)
 {
     uint32 cur_power = GetPower(power);
     SetStatInt32Value(UNIT_FIELD_MAXPOWER1 + power, val);

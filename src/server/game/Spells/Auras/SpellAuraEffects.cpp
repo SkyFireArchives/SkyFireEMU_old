@@ -1735,6 +1735,23 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
 
                     damage += addition;
             }
+            
+
+            if (m_spellProto->Id == 774)
+                {
+                float bonus = 1.0f;
+                if (caster->HasAura(78784)) // Blessing of the Grove rank 1
+                    bonus += 0.02f;
+                if (caster->HasAura(78785)) // Blessing of the Grove rank 2
+                    bonus += 0.04f;
+                if (caster->HasAura(17111)) // Improved Rejuvenation rank 1
+                    bonus += 0.05f;
+                if (caster->HasAura(17112)) // Improved Rejuvenation rank 2
+                    bonus += 0.1f;
+                if (caster->HasAura(17113)) // Improved Rejuvenation rank 3
+                    bonus += 0.15f;
+                damage = int32 (damage * bonus);
+                }
 
             bool crit = IsPeriodicTickCrit(target, caster);
             if (crit)
@@ -3281,7 +3298,7 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const *aurApp, uint8 mo
 
         if (PowerType != POWER_MANA)
         {
-            uint32 oldPower = target->GetPower(PowerType);
+            int32 oldPower = target->GetPower(PowerType);
             // reset power to default values only at power change
             if (target->getPowerType() != PowerType)
                 target->setPowerType(PowerType);
@@ -3293,7 +3310,7 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const *aurApp, uint8 mo
                 case FORM_DIREBEAR:
                 {
                     // get furor proc chance
-                    uint32 FurorChance = 0;
+                    int32 FurorChance = 0;
                     if (AuraEffect const *dummy = target->GetDummyAuraEffect(SPELLFAMILY_DRUID, 238, 0))
                         FurorChance = std::max(dummy->GetAmount(), 0);
 
@@ -3312,7 +3329,7 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const *aurApp, uint8 mo
                             target->CastSpell(target, 17057, true);
                         default:
                         {
-                            uint32 newEnergy = std::min(target->GetPower(POWER_ENERGY), FurorChance);
+                            int32 newEnergy = std::min(target->GetPower(POWER_ENERGY), FurorChance);
                             target->SetPower(POWER_ENERGY, newEnergy);
                         }
                         break;
@@ -3365,7 +3382,7 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const *aurApp, uint8 mo
             case FORM_DEFENSIVESTANCE:
             case FORM_BERSERKERSTANCE:
             {
-                uint32 Rage_val = 0;
+                int32 Rage_val = 0;
                 // Defensive Tactics
                 if (form == FORM_DEFENSIVESTANCE)
                 {
@@ -6172,6 +6189,20 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             break;
                     }
                     break;
+                case SPELLFAMILY_SHAMAN:
+                    switch (GetId())
+                    {
+                        case 77755: // Lava Surge Rank 1
+                            if (roll_chance_i(10))
+                                caster->ToPlayer()->RemoveSpellCooldown(51505, true);
+                            break;
+                        case 77756: // Lava Surge Rank 2
+                            if (roll_chance_i(20))
+                                caster->ToPlayer()->RemoveSpellCooldown(51505, true);
+                            break;
+                    }
+                    break;
+                    
                 case SPELLFAMILY_MAGE:
                     // Living Bomb
                     if (m_spellProto->SpellFamilyFlags[1] & 0x20000)
@@ -6236,11 +6267,11 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             if (aurApp->GetRemoveMode() != AURA_REMOVE_BY_DEFAULT)
                                 target->SetReducedThreatPercent(0, 0);
                             break;
+                    }
                 case SPELLFAMILY_DEATHKNIGHT:
                     // Summon Gargoyle (Dismiss Gargoyle at remove)
                     if (GetId() == 61777)
                         target->CastSpell(target, GetAmount(), true);
-                    }
                     break;
             }
         }

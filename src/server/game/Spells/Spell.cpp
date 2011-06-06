@@ -3865,6 +3865,22 @@ void Spell::finish(bool ok)
 
     switch (m_spellInfo->Id)
         {
+            case 5176: // Wrath
+            {
+                if (m_caster->HasAura(48517))
+                    m_caster->RemoveAura(48517);
+                int32 points = int32(m_caster->GetPower(POWER_ECLIPSE)+13);
+                m_caster->SetPower(POWER_ECLIPSE, points);
+                break;
+            }        
+            case 2912: // StarFire
+            {
+                if (m_caster->HasAura(48518))
+                    m_caster->RemoveAura(48518);
+                int32 points = int32(m_caster->GetPower(POWER_ECLIPSE)-20);
+                m_caster->SetPower(POWER_ECLIPSE, points);
+                break;
+            }
             case 49143: // Frost Strike
             case 47541: // Death Coil
             case 56815: // Rune Strike
