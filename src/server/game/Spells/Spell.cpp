@@ -4843,6 +4843,37 @@ void Spell::HandleEffects(Unit *pUnitTarget,Item *pItemTarget,GameObject *pGOTar
 
 SpellCastResult Spell::CheckCast(bool strict)
 {
+    Unit* Target = m_targets.getUnitTarget();
+    if (m_spellInfo->Id == 30449 && Target) // Spellsteal Check
+    {
+        if (Target != m_caster && !Target->IsFriendlyTo(m_caster))
+        {
+            int SpellSteal = 0;
+            bool Continue = false;
+            Unit::AuraMap const& auras = Target->GetOwnedAuras();
+            for (Unit::AuraMap::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+            {
+                Aura * aura = itr->second;
+                AuraApplication * aurApp = aura->GetApplicationOfTarget(Target->GetGUID());
+                if (!aurApp)
+                    continue;
+                if ((1<<aura->GetSpellProto()->Dispel))
+                {
+                    if (!aurApp->IsPositive() || aura->IsPassive() || aura->GetSpellProto()->AttributesEx4 & SPELL_ATTR4_NOT_STEALABLE)
+                        continue;
+                    bool dispel_charges = aura->GetSpellProto()->AttributesEx7 & SPELL_ATTR7_DISPEL_CHARGES;
+                    uint8 charges = dispel_charges ? aura->GetCharges() : aura->GetStackAmount();
+                    if (charges > 0)
+                        if (aura->GetDuration() > 0) // If spell has a duration
+                            if (aura->GetSpellProto()->Dispel == DISPEL_MAGIC) // If spell type is magic
+                                ++SpellSteal;
+                }
+            }
+            if (SpellSteal == 0)
+                return SPELL_FAILED_NOTHING_TO_STEAL;
+        }
+    }
+
     // check death state
     if (!m_IsTriggeredSpell && !m_caster->isAlive() && !(m_spellInfo->Attributes & SPELL_ATTR0_PASSIVE) && !(m_spellInfo->Attributes & SPELL_ATTR0_CASTABLE_WHILE_DEAD))
         return SPELL_FAILED_CASTER_DEAD;
