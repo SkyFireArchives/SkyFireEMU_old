@@ -2300,14 +2300,45 @@ class Player : public Unit, public GridObject<Player>
     
         PetSlot getSlotForNewPet()
         {
-            for(uint32 i = (uint32)PET_SLOT_HUNTER_FIRST; i <= (uint32)PET_SLOT_HUNTER_LAST; i++)
+            // Some changes here.
+            uint32 last_known = 0;
+            // Call Pet Spells.
+            // 883, 83242, 83243, 83244, 83245
+            //  1     2      3      4      5
+            if(HasSpell(83245))
+            {
+                last_known = 5;
+            }
+            else if(HasSpell(83244))
+            {
+                last_known = 4;
+            }
+            else if(HasSpell(83243))
+            {
+                last_known = 3;
+            }
+            else if(HasSpell(83242))
+            {
+                last_known = 2;
+            }
+            else if(HasSpell(883))
+            {
+                last_known = 1;
+            }
+           
+            for(uint32 i = uint32(PET_SLOT_HUNTER_FIRST); i < last_known; i++)
+            {   
                 if((m_petSlotUsed & (1 << i)) == 0)
-                    return (PetSlot)i;
-            if(m_currentPetSlot >= PET_SLOT_HUNTER_FIRST && m_currentPetSlot <= PET_SLOT_HUNTER_LAST)
-                return m_currentPetSlot;
-            return PET_SLOT_HUNTER_LAST;
-        }
-    
+ 
+                    return PetSlot(i);
+            }
+
+            // If there is no slots available, then we should point that out
+            return PET_SLOT_FULL_LIST; //(PetSlot)last_known;
+       }
+
+        void SendToManyPets(Player *pl);
+
         // currently visible objects at player client
         typedef std::set<uint64> ClientGUIDs;
         ClientGUIDs m_clientGUIDs;
@@ -2378,7 +2409,7 @@ class Player : public Unit, public GridObject<Player>
         bool HasPendingBind() const { return _pendingBind != NULL; }
         void SendRaidInfo();
         void SendSavedInstances();
-        static void ConvertInstancesToGroup(Player *player, Group *group, bool switchLeader);
+        static void ConvertInstancesToGroup(Player *player, Group *group = NULL, uint64 player_guid = 0);
         bool Satisfy(AccessRequirement const* ar, uint32 target_map, bool report = false);
         bool CheckInstanceLoginValid();
         bool CheckInstanceCount(uint32 instanceId) const

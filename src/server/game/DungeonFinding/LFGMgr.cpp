@@ -1353,14 +1353,14 @@ void LFGMgr::UpdateProposal(uint32 proposalId, const uint64& guid, bool accept)
             if (!grp)
             {
                 grp = new Group();
-                grp->Create(plr);
+                grp->Create(pguid, plr->GetName());
                 grp->ConvertToLFG();
                 uint64 gguid = grp->GetGUID();
                 SetState(gguid, LFG_STATE_PROPOSAL);
                 sObjectMgr->AddGroup(grp);
             }
             else if (group != grp)
-                grp->AddMember(plr);
+                grp->AddMember(pguid, plr->GetName());
 
             // Update timers
             uint8 role = GetRoles(pguid);

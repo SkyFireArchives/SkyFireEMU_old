@@ -852,8 +852,26 @@ enum TrinityStrings
     LANG_BG_TP_F_PLACED                 = 1242,
     LANG_BG_TP_ALLIANCE_FLAG_RESPAWNED  = 1243,
     LANG_BG_TP_HORDE_FLAG_RESPAWNED     = 1244,
+    // FREE IDS                           1245-1249
 
-    // FREE IDS                           1234-1299
+    // Battle For Gilneas
+    LANG_BG_BG_START_TWO_MINUTES        = 1250,
+    LANG_BG_BG_START_ONE_MINUTE         = 1251,
+    LANG_BG_BG_START_HALF_MINUTE        = 1252,
+    LANG_BG_BG_HAS_BEGUN                = 1253,
+
+    LANG_BG_BG_ALLY                     = 1254,
+    LANG_BG_BG_HORDE                    = 1255,
+    LANG_BG_BG_NODE_LIGHTHOUSE          = 1256,
+    LANG_BG_BG_NODE_WATERWORKS          = 1257,
+    LANG_BG_BG_NODE_MINE                = 1258,
+    LANG_BG_BG_NODE_TAKEN               = 1259,
+    LANG_BG_BG_NODE_DEFENDED            = 1260,
+    LANG_BG_BG_NODE_ASSAULTED           = 1261,
+    LANG_BG_BG_NODE_CLAIMED             = 1262,
+    LANG_BG_BG_A_NEAR_VICTORY           = 1263,
+    LANG_BG_BG_H_NEAR_VICTORY           = 1264,
+    // FREE IDS                           1265-1299
 
     // AV
     LANG_BG_AV_ALLY                     = 1300,
@@ -1067,6 +1085,7 @@ enum TrinityStrings
     // Use for custom patches             11000-11999
     LANG_AUTO_BROADCAST                 = 11000,
     LANG_INVALID_REALMID                = 11001,
+    LANG_FAILED_NO_PLACE_FOR_PET        = 11002,
 
     // NOT RESERVED IDS                   12000-1999999999
     // `db_script_string` table index     2000000000-2000009999 (MIN_DB_SCRIPT_STRING_ID-MAX_DB_SCRIPT_STRING_ID)

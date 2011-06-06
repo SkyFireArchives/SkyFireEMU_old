@@ -461,8 +461,8 @@ enum SpellAttr5
     SPELL_ATTR5_UNK6                             = 0x00000040, //  6
     SPELL_ATTR5_UNK7                             = 0x00000080, //  7
     SPELL_ATTR5_UNK8                             = 0x00000100, //  8
-    SPELL_ATTR5_START_PERIODIC_AT_APPLY          = 0x00000200, //  9  begin periodic tick at aura apply
-    SPELL_ATTR5_UNK10                            = 0x00000400, // 10
+    SPELL_ATTR5_START_PERIODIC_AT_APPLY          = 0x00000200, //  9 begin periodic tick at aura apply
+    SPELL_ATTR5_HIDE_DURATION                    = 0x00000400, // 10 do not send duration to client
     SPELL_ATTR5_UNK11                            = 0x00000800, // 11
     SPELL_ATTR5_UNK12                            = 0x00001000, // 12
     SPELL_ATTR5_HASTE_AFFECT_DURATION            = 0x00002000, // 13 haste effects decrease duration of this
@@ -532,8 +532,8 @@ enum SpellAttr7
     SPELL_ATTR7_SUMMON_PLAYER_TOTEM              = 0x00000020, //  5 Only Shaman player totems.
     SPELL_ATTR7_UNK6                             = 0x00000040, //  6 Dark Surge, Surge of Light, Burning Breath triggers (boss spells).
     SPELL_ATTR7_UNK7                             = 0x00000080, //  7 66218 (Launch) spell.
-    SPELL_ATTR7_UNK8                             = 0x00000100, //  8 Teleports, mounts and other spells.
-    SPELL_ATTR7_UNK9                             = 0x00000200, //  9 Teleports, mounts and other spells.
+    SPELL_ATTR7_HORDE_ONLY                       = 0x00000100, //  8 Teleports, mounts and other spells.
+    SPELL_ATTR7_ALLIANCE_ONLY                    = 0x00000200, //  9 Teleports, mounts and other spells.
     SPELL_ATTR7_DISPEL_CHARGES                   = 0x00000400, // 10 Dispel and Spellsteal individual charges instead of whole aura.
     SPELL_ATTR7_INTERRUPT_ONLY_NONPLAYER         = 0x00000800, // 11 Only non-player casts interrupt, though Feral Charge - Bear has it.
     SPELL_ATTR7_UNK12                            = 0x00001000, // 12 Not set in 3.2.2a.
@@ -3050,6 +3050,7 @@ enum SpellFamilyNames
 enum PetSlot
 {
     //Some not-in-db slots
+    PET_SLOT_FULL_LIST       =  -4,        //Used when there is no slot free for tameing
     PET_SLOT_UNK_SLOT        =  -3,        //Used in some scripts.
     
     PET_SLOT_ACTUAL_PET_SLOT =  -2,        //Save the pet in his actual slot.

@@ -744,7 +744,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                     if (uint32 combo = ((Player*)m_caster)->GetComboPoints())
                     {
                         float ap = m_caster->GetTotalAttackPowerValue(BASE_ATTACK);
-                        damage += irand(int32(ap * combo * 0.03f), int32(ap * combo * 0.07f));
+                        damage += int32(ap * combo * 0.091f);
 
                         // Eviscerate and Envenom Bonus Damage (item set effect)
                         if (m_caster->HasAura(37169))
@@ -1796,6 +1796,14 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             }
             switch (m_spellInfo->Id)
             {
+            case 49020: //Obliterate
+            case 66198: //Obliterate Off-Hand
+                {
+                    uint32 count = unitTarget->GetDiseasesByCaster(m_caster->GetGUID());
+                    if (count > 0)
+                       damage = int32(damage + (damage * count * 12.5 / 100));
+                    break;
+                }
             case 49560: // Death Grip
                 Position pos;
                 GetSummonPosition(effIndex, pos);
@@ -4112,6 +4120,13 @@ void Spell::EffectTameCreature(SpellEffIndex /*effIndex*/)
     if (m_caster->getClass() != CLASS_HUNTER)
         return;
 
+    // If we have a full list we shoulden't be able to create a new one.
+    if (m_caster->ToPlayer()->getSlotForNewPet() == PET_SLOT_FULL_LIST)
+    {
+        // Need to get the right faluire numbers or maby a custom message to the screen ?
+        return;
+    }
+
     // cast finish successfully
     //SendChannelUpdate(0);
     finish();
@@ -4142,7 +4157,8 @@ void Spell::EffectTameCreature(SpellEffIndex /*effIndex*/)
     if (m_caster->GetTypeId() == TYPEID_PLAYER)
     {
         //slot is defined by SetMinion.
-        pet->SavePetToDB(PET_SLOT_ACTUAL_PET_SLOT);
+        m_caster->ToPlayer()->getSlotForNewPet();
+        pet->SavePetToDB(m_caster->ToPlayer()->m_currentPetSlot);
         m_caster->ToPlayer()->PetSpellInitialize();
     }
 }
@@ -5662,7 +5678,7 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                     if (chargesaura && chargesaura->GetCharges() > 1)
                     {
                         chargesaura->SetCharges(chargesaura->GetCharges() - 1);
-                        m_caster->CastSpell(unitTarget, spell_heal, true, NULL, NULL, m_caster->ToTempSummon()->GetSummonerGUID());
+                        unitTarget->CastSpell(unitTarget, spell_heal, true, NULL, NULL, m_caster->ToTempSummon()->GetSummonerGUID());
                     }
                     else
                         m_caster->ToTempSummon()->UnSummon();
@@ -5752,33 +5768,28 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
             }
             break;
         }
-
         case SPELLFAMILY_WARLOCK:
-		{
-         // Demon Soul
-         if (m_spellInfo->Id == 77801)
-		 {
-			sLog->outDebug("Casted Demon Soul");
-			if (m_caster)
-			{
-				 if (!unitTarget || !unitTarget->isAlive())
-				    return;
-				 if(unitTarget->GetEntry() == 416)            // Summoned Imp
-				   m_caster->CastSpell(m_caster,79459,true);
-				 if(unitTarget->GetEntry() == 1860)           // Summoned Voidwalker
-				   m_caster->CastSpell(m_caster,79464,true);
-				 if(unitTarget->GetEntry() == 417)            // Summoned Felhunter
-				   m_caster->CastSpell(m_caster,79460,true);
-				 if(unitTarget->GetEntry() == 1863)           // Summoned Succubus
-				   m_caster->CastSpell(m_caster,79463,true);
-				 if(unitTarget->GetEntry() == 17252)          // Summoned Felguard
-				   m_caster->CastSpell(m_caster,79462,true);
-            }	 
-
-          }	
-		break;
+        {
+            if (m_spellInfo->Id == 77801) // Demon Soul
+            {
+                if (m_caster)
+                {
+                    if (!unitTarget || !unitTarget->isAlive())
+                        return;
+                    if (unitTarget->GetEntry() == 416)            // Summoned Imp
+                        m_caster->CastSpell(m_caster,79459,true);
+                    if (unitTarget->GetEntry() == 1860)           // Summoned Voidwalker
+                        m_caster->CastSpell(m_caster,79464,true);
+                    if (unitTarget->GetEntry() == 417)            // Summoned Felhunter
+                        m_caster->CastSpell(m_caster,79460,true);
+                    if (unitTarget->GetEntry() == 1863)           // Summoned Succubus
+                        m_caster->CastSpell(m_caster,79463,true);
+                    if (unitTarget->GetEntry() == 17252)          // Summoned Felguard
+                        m_caster->CastSpell(m_caster,79462,true);
+                }	 
+            }	
+            break;
         }
-
         case SPELLFAMILY_PALADIN:
         {
             // Judgement (seal trigger)
@@ -6817,8 +6828,8 @@ void Spell::EffectSummonDeadPet(SpellEffIndex /*effIndex*/)
     _player->GetPosition(x, y, z);
     _player->GetMap()->CreatureRelocation(pet, x, y, z, _player->GetOrientation());
 
-    pet->SetUInt32Value(UNIT_DYNAMIC_FLAGS, 0);
-    pet->RemoveFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE);
+    pet->SetUInt32Value(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_NONE);
+    pet->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE);
     pet->setDeathState(ALIVE);
     pet->ClearUnitState(UNIT_STAT_ALL_STATE);
     pet->SetHealth(pet->CountPctFromMaxHealth(damage));

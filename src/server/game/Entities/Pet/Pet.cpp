@@ -356,6 +356,8 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petentry, uint32 petnumber, bool c
 
 void Pet::SavePetToDB(PetSlot mode)
 {
+    sLog->outDebug("Pet::SavePetToDB PetSlot [%i]", int32(mode));
+
     if (!GetEntry())
         return;
 
@@ -397,7 +399,7 @@ void Pet::SavePetToDB(PetSlot mode)
     _SaveAuras(trans);
 
     // stable and not in slot saves
-    if (mode > PET_SLOT_HUNTER_LAST)
+    if (mode > PET_SLOT_HUNTER_LAST && getPetType() == HUNTER_PET)
         RemoveAllAuras();
 
     _SaveSpells(trans);
@@ -477,8 +479,8 @@ void Pet::setDeathState(DeathState s)                       // overwrite virtual
         if (getPetType() == HUNTER_PET)
         {
             // pet corpse non lootable and non skinnable
-            SetUInt32Value(UNIT_DYNAMIC_FLAGS, 0x00);
-            RemoveFlag (UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE);
+            SetUInt32Value(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_NONE);
+            RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE);
 
              //lose happiness when died and not in BG/Arena
             MapEntry const* mapEntry = sMapStore.LookupEntry(GetMapId());
@@ -835,6 +837,7 @@ bool Guardian::InitStatsForLevel(uint8 petlevel)
     {
         if ((m_owner->getClass() == CLASS_WARLOCK)
             || (m_owner->getClass() == CLASS_SHAMAN)        // Fire Elemental
+            || (m_owner->getClass() == CLASS_PRIEST)        // Shadowfiend
             || (m_owner->getClass() == CLASS_DEATH_KNIGHT)) // Risen Ghoul
             petType = SUMMON_PET;
         else if (m_owner->getClass() == CLASS_HUNTER)

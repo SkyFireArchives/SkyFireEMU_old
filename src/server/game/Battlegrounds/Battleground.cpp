@@ -224,8 +224,8 @@ Battleground::~Battleground()
     if (GetInstanceID())                                    // not spam by useless queries in case BG templates
     {
         // delete creature and go respawn times
-        WorldDatabase.PExecute("DELETE FROM creature_respawn WHERE instance = '%u'",GetInstanceID());
-        WorldDatabase.PExecute("DELETE FROM gameobject_respawn WHERE instance = '%u'",GetInstanceID());
+        CharacterDatabase.PExecute("DELETE FROM creature_respawn WHERE instanceId = '%u'",GetInstanceID());
+        CharacterDatabase.PExecute("DELETE FROM gameobject_respawn WHERE instanceId = '%u'",GetInstanceID());
         // delete instance from db
         CharacterDatabase.PExecute("DELETE FROM instance WHERE id = '%u'",GetInstanceID());
         // remove from battlegrounds
@@ -1151,7 +1151,7 @@ void Battleground::AddOrSetPlayerToCorrectBgGroup(Player* player, uint32 team)
     {
         group = new Group;
         SetBgRaid(team, group);
-        group->Create(player);
+        group->Create(plr_guid, player->GetName());
     }
     else                                            // raid already exist
     {
@@ -1162,7 +1162,7 @@ void Battleground::AddOrSetPlayerToCorrectBgGroup(Player* player, uint32 team)
         }
         else
         {
-            group->AddMember(player);
+            group->AddMember(plr_guid, player->GetName());
             if (Group* originalGroup = player->GetOriginalGroup())
                 if (originalGroup->IsLeader(plr_guid))
                 {

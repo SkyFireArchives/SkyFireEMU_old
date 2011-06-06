@@ -741,6 +741,9 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                 // Bonus from Glyph of Lightwell
                 if (AuraEffect* modHealing = caster->GetAuraEffect(55673, 0))
                     amount = int32(amount * (100.0f + modHealing->GetAmount()) / 100.0f);
+                // Bonus from talent Spiritual Healing
+                if (AuraEffect* modHealing = caster->GetAuraEffect(SPELL_AURA_ADD_PCT_MODIFIER, SPELLFAMILY_PRIEST, 46, 1))
+                    AddPctN(amount, modHealing->GetAmount());
             }
             break;
         case SPELL_AURA_MOD_DAMAGE_PERCENT_TAKEN:
@@ -919,7 +922,7 @@ void AuraEffect::CalculatePeriodic(Unit *caster, bool create)
             m_isPeriodic = true;
             break;
         case SPELL_AURA_DUMMY:
-            // Haunting Spirits - perdiodic trigger demon
+            // Haunting Spirits
             if (GetId() == 7057)
             {
                 m_isPeriodic = true;
@@ -6233,6 +6236,10 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             if (aurApp->GetRemoveMode() != AURA_REMOVE_BY_DEFAULT)
                                 target->SetReducedThreatPercent(0, 0);
                             break;
+                case SPELLFAMILY_DEATHKNIGHT:
+                    // Summon Gargoyle (Dismiss Gargoyle at remove)
+                    if (GetId() == 61777)
+                        target->CastSpell(target, GetAmount(), true);
                     }
                     break;
             }

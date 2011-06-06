@@ -542,7 +542,7 @@ void WorldSession::HandleStableChangeSlot(WorldPacket & recv_data)
     uint64 npcGUID;
     uint8 new_slot;
 
-    recv_data >> pet_number >> npcGUID >> new_slot;
+    recv_data >> new_slot >> pet_number >> npcGUID;
 
     if (!CheckStableMaster(npcGUID))
     {
@@ -611,8 +611,16 @@ void WorldSession::HandleStableChangeSlotCallback(QueryResult result, uint8 new_
         return;
     }
 
-    CharacterDatabase.PExecute("UPDATE character_pet SET slot = '%u' WHERE slot = '%u' AND owner='%u'",                      new_slot, slot, GetPlayer()->GetGUIDLow());
+    CharacterDatabase.PExecute("UPDATE character_pet SET slot = '%u' WHERE slot = '%u' AND owner='%u'", new_slot, slot, GetPlayer()->GetGUIDLow());
     CharacterDatabase.PExecute("UPDATE character_pet SET slot = '%u' WHERE slot = '%u' AND owner='%u' AND id<>'%u'", slot, new_slot, GetPlayer()->GetGUIDLow(), pet_number);
+
+    // Update if its a Hunter pet
+    if (new_slot != 100)
+    {
+        // We need to remove and add the new pet to there diffrent slots
+        GetPlayer()->setPetSlotUsed((PetSlot)slot, false); 
+        GetPlayer()->setPetSlotUsed((PetSlot)new_slot, true); 
+    }
     
     SendStableResult(STABLE_SUCCESS_STABLE);
 }

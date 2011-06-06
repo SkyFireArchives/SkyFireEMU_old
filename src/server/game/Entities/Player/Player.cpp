@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
  * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
@@ -1217,7 +1217,7 @@ void Player::HandleDrowning(uint32 time_diff)
                     EnvironmentalDamage(DAMAGE_LAVA, damage);
                 // need to skip Slime damage in Undercity,
                 // maybe someone can find better way to handle environmental damage
-                else if (m_zoneUpdateId != 1497)
+                else if (m_zoneUpdateId != 1497 && m_zoneUpdateId != 3968)
                     EnvironmentalDamage(DAMAGE_SLIME, damage);
             }
         }
@@ -1812,7 +1812,7 @@ bool Player::ToggleAFK()
     bool state = HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_AFK);
 
     // afk player not allowed in battleground
-    if (state && InBattleground())
+    if (state && InBattleground() && !InArena())
         LeaveBattleground();
     if(Guild *pGuild = sObjectMgr->GetGuildById(GetGuildId()))
         pGuild->OnPlayerStatusChange(this, GUILD_MEMBER_FLAG_AFK, state);
@@ -5024,7 +5024,7 @@ void Player::KillPlayer()
     setDeathState(CORPSE);
     //SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_IN_PVP);
 
-    SetFlag(UNIT_DYNAMIC_FLAGS, 0x00);
+    SetUInt32Value(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_NONE);
     ApplyModFlag(PLAYER_FIELD_BYTES, PLAYER_FIELD_BYTE_RELEASE_TIMER, !sMapStore.LookupEntry(GetMapId())->Instanceable());
 
     // 6 minutes until repop at graveyard
@@ -7318,7 +7318,7 @@ void Player::UpdateZone(uint32 newZone, uint32 newArea)
 
     // group update
     if (GetGroup())
-        SetGroupUpdateFlag(GROUP_UPDATE_FULL);
+        SetGroupUpdateFlag(GROUP_UPDATE_FLAG_ZONE);
 
     UpdateZoneDependentAuras(newZone);
 }
@@ -7411,7 +7411,8 @@ void Player::DuelComplete(DuelCompleteType type)
             GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_LOSE_DUEL, 1);
             if (duel->opponent)
             {
-                 duel->opponent->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_DUEL, 1);
+                duel->opponent->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_DUEL, 1);
+                duel->opponent->HandleEmoteCommand(EMOTE_ONESHOT_CHEER);
 
                 //Credit for quest Death's Challenge
                 if (getClass() == CLASS_DEATH_KNIGHT && duel->opponent->GetQuestStatus(12733) == QUEST_STATUS_INCOMPLETE)
@@ -18134,26 +18135,50 @@ void Player::SendSavedInstances()
 }
 
 /// convert the player's binds to the group
-void Player::ConvertInstancesToGroup(Player *player, Group *group, bool switchLeader)
+void Player::ConvertInstancesToGroup(Player *player, Group *group, uint64 player_guid)
 {
+    bool has_binds = false;
+    bool has_solo = false;
+
+    if (player)
+    {
+        player_guid = player->GetGUID();
+        if (!group)
+            group = player->GetGroup();
+    }
+    ASSERT(player_guid);
+
     // copy all binds to the group, when changing leader it's assumed the character
     // will not have any solo binds
 
-    for (uint8 i = 0; i < MAX_DIFFICULTY; ++i)
+    if (player)
     {
         for (uint8 i = 0; i < MAX_DIFFICULTY; ++i)
         {
-            group->BindToInstance(itr->second.save, itr->second.perm, false);
-            // permanent binds are not removed
-            if (switchLeader && !itr->second.perm)
+            for (BoundInstancesMap::iterator itr = player->m_boundInstances[i].begin(); itr != player->m_boundInstances[i].end();)
             {
-                // increments itr in call
-                player->UnbindInstance(itr, Difficulty(i), false);
+                has_binds = true;
+                if (group)
+                    group->BindToInstance(itr->second.save, itr->second.perm, true);
+                // permanent binds are not removed
+                if (!itr->second.perm)
+                {
+                    // increments itr in call
+                    player->UnbindInstance(itr, Difficulty(i), true);
+                    has_solo = true;
+                }
+                else
+                    ++itr;
             }
-            else
-                ++itr;
         }
     }
+
+    // if the player's not online we don't know what binds it has
+    if (!player || !group || has_binds)
+        CharacterDatabase.PExecute("INSERT INTO group_instance SELECT guid, instance, permanent FROM character_instance WHERE guid = '%u'", GUID_LOPART(player_guid));
+    // the following should not get executed when changing leaders
+    if (!player || has_solo)
+        CharacterDatabase.PExecute("DELETE FROM character_instance WHERE guid = '%d' AND permanent = 0", GUID_LOPART(player_guid));
 }
 
 bool Player::Satisfy(AccessRequirement const* ar, uint32 target_map, bool report)
@@ -19332,7 +19357,10 @@ void Player::RemovePet(Pet* pet, PetSlot mode, bool returnreagent)
     // only if current pet in slot
     pet->SavePetToDB(mode);
 
-    SetMinion(pet, false, PET_SLOT_UNK_SLOT);
+    if(pet->getPetType() != HUNTER_PET)
+        SetMinion(pet, false, PET_SLOT_UNK_SLOT);
+    else
+        SetMinion(pet, false, PET_SLOT_ACTUAL_PET_SLOT);
 
     pet->AddObjectToRemoveList();
     pet->m_removed = true;
@@ -25072,4 +25100,9 @@ void Player::BroadcastMessage(const char* Format, ...)
     WorldPacket data;
     ChatHandler::FillMessageData(&data, NULL, CHAT_MSG_SYSTEM, LANG_UNIVERSAL, NULL, 0, Message, NULL);
     GetSession()->SendPacket(&data);
+}
+
+void Player::SendToManyPets(Player *pl)
+{
+    ChatHandler(pl).PSendSysMessage(LANG_FAILED_NO_PLACE_FOR_PET);
 }

@@ -2093,10 +2093,13 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                     pushType = PUSH_CHAIN;
                     break;
                 case TARGET_UNIT_TARGET_ALLY:
+                    AddUnitTarget(target, i);
+                    break;
                 case TARGET_UNIT_TARGET_RAID:
                 case TARGET_UNIT_TARGET_PARTY:
                 case TARGET_UNIT_TARGET_PUPPET:
-                    AddUnitTarget(target, i);
+                    if (IsValidSingleTargetSpell(target))
+                        AddUnitTarget(target, i);
                     break;
                 case TARGET_UNIT_PARTY_TARGET:
                 case TARGET_UNIT_CLASS_TARGET:
@@ -3862,6 +3865,31 @@ void Spell::finish(bool ok)
 
     switch (m_spellInfo->Id)
         {
+            case 49143: // Frost Strike
+            case 47541: // Death Coil
+            case 56815: // Rune Strike
+                if(m_caster->HasAura(81229)) // Runic Empowerment
+                {
+                    if(roll_chance_i(45))
+                    {
+                        uint32 cooldownrunes[MAX_RUNES];
+                        uint8 runescount = 0;
+                        for (uint32 j = 0; j < MAX_RUNES; ++j)
+                        {
+                            if (m_caster->ToPlayer()->GetRuneCooldown(j))
+                            {
+                                cooldownrunes[runescount] = j;
+                                runescount++;
+                            }
+                        }
+                        if (runescount > 0)
+                        {
+                            uint8 rndrune = urand(0,runescount);
+                            m_caster->ToPlayer()->SetRuneCooldown(cooldownrunes[rndrune], 0);
+                        }
+                    }
+                }
+                break;
             case 30455: // Ice Lance
             case 44572: // Deep Freeze
                 if (m_caster->HasAura(44544)) // Fingers of Frost
@@ -5626,6 +5654,14 @@ SpellCastResult Spell::CheckCast(bool strict)
 
                         if (!m_targets.getUnitTarget() || m_targets.getUnitTarget()->GetTypeId() == TYPEID_PLAYER)
                             return SPELL_FAILED_BAD_IMPLICIT_TARGETS;
+
+                        // Check if there are to many so that you don't get mixed with pets
+                        // being there from the begining
+                        if (m_caster->ToPlayer()->getSlotForNewPet() == PET_SLOT_FULL_LIST)
+                        {   
+                            m_caster->ToPlayer()->SendToManyPets(m_caster->ToPlayer());
+                            return SPELL_FAILED_NO_ACTIONS; // i havent found the right error message to use so this need to be changed
+                        }
 
                         Creature* target = m_targets.getUnitTarget()->ToCreature();
 
