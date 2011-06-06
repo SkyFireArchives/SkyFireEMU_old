@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -41,7 +34,8 @@ enum Yells
     SAY_SLAY_3                                    = -1619017,
     SAY_DEATH                                     = -1619018,
     SAY_EGG_SAC_1                                 = -1619019,
-    SAY_EGG_SAC_2                                 = -1619020
+    SAY_EGG_SAC_2                                 = -1619020,
+    EMOTE_HATCHES                                 = -1574024,
 };
 
 enum Spells
@@ -50,8 +44,8 @@ enum Spells
     H_SPELL_BROOD_PLAGUE                          = 59467,
     H_SPELL_BROOD_RAGE                            = 59465,
     SPELL_ENRAGE                                  = 26662, // Enraged if too far away from home
-    SPELL_SUMMON_SWARMERS                         = 56119, //2x 30178  -- 2x every 10secs
-    SPELL_SUMMON_SWARM_GUARD                      = 56120, //1x 30176  -- every 25secs
+    SPELL_SUMMON_SWARMERS                         = 56119, // 2x 30178  -- 2x every 10secs
+    SPELL_SUMMON_SWARM_GUARD                      = 56120, // 1x 30176  -- every 25%
 };
 
 enum Creatures
@@ -59,8 +53,6 @@ enum Creatures
     MOB_AHNKAHAR_SWARMER                          = 30178,
     MOB_AHNKAHAR_GUARDIAN_ENTRY                   = 30176
 };
-
-#define EMOTE_HATCHES                       "An Ahn'kahar Guardian hatches!"
 
 class boss_elder_nadox : public CreatureScript
 {
@@ -72,33 +64,19 @@ public:
         boss_elder_nadoxAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
-            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        uint32 uiPlagueTimer;
-        uint32 uiRagueTimer;
-
-        uint32 uiSwarmerSpawnTimer;
-        uint32 uiGuardSpawnTimer;
-        uint32 uiEnragueTimer;
-
-        bool bGuardSpawned;
-
-        InstanceScript *pInstance;
 
         void Reset()
         {
-            uiPlagueTimer = 13*IN_MILLISECONDS;
-            uiRagueTimer = 20*IN_MILLISECONDS;
+            PlagueTimer = 13*IN_MILLISECONDS;
+            RageTimer = 10*IN_MILLISECONDS;
 
-            uiSwarmerSpawnTimer = 10*IN_MILLISECONDS;
-            uiGuardSpawnTimer = 25*IN_MILLISECONDS;
+            SwarmerSpawnTimer = 10*IN_MILLISECONDS;
+            EnrageTimer = 5*IN_MILLISECONDS;
 
-            uiEnragueTimer = 5*IN_MILLISECONDS;
+            HealthAmountModifier = 1;
 
             DeadAhnkaharGuardian = false;
-            bGuardSpawned = false;
 
             if (pInstance)
                 pInstance->SetData(DATA_ELDER_NADOX_EVENT, NOT_STARTED);
@@ -134,57 +112,61 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (uiPlagueTimer <= diff)
+            if (PlagueTimer <= diff)
             {
-                DoCast(me->getVictim(), SPELL_BROOD_PLAGUE);
-                uiPlagueTimer = 15*IN_MILLISECONDS;
-            } else uiPlagueTimer -= diff;
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                    DoCast(pTarget, DUNGEON_MODE(SPELL_BROOD_PLAGUE, H_SPELL_BROOD_PLAGUE));
+
+                PlagueTimer = 15*IN_MILLISECONDS;
+            } else PlagueTimer -= diff;
 
             if (IsHeroic())
             {
-                if (uiRagueTimer <= diff)
+                if (RageTimer <= diff)
                 {
-                    if (Creature *pSwarmer = me->FindNearestCreature(MOB_AHNKAHAR_SWARMER, 35))
-                    {
-                        DoCast(pSwarmer, H_SPELL_BROOD_RAGE, true);
-                        uiRagueTimer = 15*IN_MILLISECONDS;
-                    }
-                } else uiRagueTimer -= diff;
+                    DoCast(H_SPELL_BROOD_RAGE);
+                    RageTimer = 5*IN_MILLISECONDS;
+                } else RageTimer -= diff;
             }
 
-            if (uiSwarmerSpawnTimer <= diff)
+            if (SwarmerSpawnTimer <= diff)
             {
-                DoCast(me, SPELL_SUMMON_SWARMERS, true);
                 DoCast(me, SPELL_SUMMON_SWARMERS);
                 if (urand(1,3) == 3) // 33% chance of dialog
                     DoScriptText(RAND(SAY_EGG_SAC_1,SAY_EGG_SAC_2), me);
 
-                uiSwarmerSpawnTimer = 10*IN_MILLISECONDS;
-            } else uiSwarmerSpawnTimer -= diff;
+                SwarmerSpawnTimer = 10*IN_MILLISECONDS;
+            } else SwarmerSpawnTimer -= diff;
 
-            if (!bGuardSpawned && uiGuardSpawnTimer <= diff)
+            if (me->HealthBelowPct(100 - HealthAmountModifier * 25))
             {
-                me->MonsterTextEmote(EMOTE_HATCHES,me->GetGUID(),true);
+                DoScriptText(EMOTE_HATCHES, me);
                 DoCast(me, SPELL_SUMMON_SWARM_GUARD);
-                bGuardSpawned = true;
-            } else uiGuardSpawnTimer -= diff;
+                ++HealthAmountModifier;
+            }
 
-            if (uiEnragueTimer <= diff)
+            if (EnrageTimer <= diff)
             {
                 if (me->HasAura(SPELL_ENRAGE,0))
                     return;
 
-                float x, y, z, o;
-                me->GetHomePosition(x, y, z, o);
-                if (z < 24)
+                if (me->GetPositionZ() < 24.0f)
                     if (!me->IsNonMeleeSpellCasted(false))
                         DoCast(me, SPELL_ENRAGE, true);
 
-                uiEnragueTimer = 5*IN_MILLISECONDS;
-            } else uiEnragueTimer -= diff;
+                EnrageTimer = 5*IN_MILLISECONDS;
+            } else EnrageTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
+
+    private:
+        uint32 PlagueTimer;
+        uint32 RageTimer;
+        uint32 SwarmerSpawnTimer;
+        uint32 EnrageTimer;
+        uint32 HealthAmountModifier;
+        InstanceScript *pInstance;
     };
 
     CreatureAI *GetAI(Creature *creature) const
@@ -196,7 +178,8 @@ public:
 enum AddSpells
 {
     SPELL_SPRINT                                  = 56354,
-    SPELL_GUARDIAN_AURA                           = 56151
+    SPELL_GUARDIAN_AURA                           = 56151,
+    SPELL_GUARDIAN_AURA_TRIGGERED                 = 56153
 };
 
 class mob_ahnkahar_nerubian : public CreatureScript
@@ -211,14 +194,12 @@ public:
             pInstance = c->GetInstanceScript();
         }
 
-        InstanceScript *pInstance;
-        uint32 uiSprintTimer;
-
         void Reset()
         {
             if (me->GetEntry() == MOB_AHNKAHAR_GUARDIAN_ENTRY) //magic numbers are bad!
                 DoCast(me, SPELL_GUARDIAN_AURA, true);
-            uiSprintTimer = 10*IN_MILLISECONDS;
+
+            SprintTimer = 5*IN_MILLISECONDS;
         }
 
         void JustDied(Unit * /*killer*/)
@@ -229,33 +210,33 @@ public:
 
         void EnterCombat(Unit * /*who*/){}
 
+        void SpellHit(Unit * /*caster*/, const SpellEntry *spell)
+        {
+            if (spell->Id == SPELL_GUARDIAN_AURA_TRIGGERED && me->GetEntry() == MOB_AHNKAHAR_GUARDIAN_ENTRY)
+                me->RemoveAurasDueToSpell(SPELL_GUARDIAN_AURA_TRIGGERED);
+        }
+
         void UpdateAI(const uint32 diff)
         {
-            if (!UpdateVictim())
-                return;
-
-            if (me->GetEntry() == MOB_AHNKAHAR_GUARDIAN_ENTRY)
-                me->RemoveAurasDueToSpell(SPELL_GUARDIAN_AURA);
-
             if (pInstance)
-            {
                 if (pInstance->GetData(DATA_ELDER_NADOX_EVENT) != IN_PROGRESS)
-                {
                     me->DisappearAndDie();
-                }
-            }
 
             if (!UpdateVictim())
                 return;
 
-            if (uiSprintTimer <= diff)
+            if (SprintTimer <= diff)
             {
                 DoCast(me, SPELL_SPRINT);
-                uiSprintTimer = 25*IN_MILLISECONDS;
-            } else uiSprintTimer -= diff;
+                SprintTimer = 20*IN_MILLISECONDS;
+            } else SprintTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
+
+    private:
+        InstanceScript *pInstance;
+        uint32 SprintTimer;
     };
 
     CreatureAI *GetAI(Creature *creature) const

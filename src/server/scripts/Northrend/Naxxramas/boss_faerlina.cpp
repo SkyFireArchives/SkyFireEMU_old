@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -34,7 +27,9 @@ enum Yells
     SAY_AGGRO_4     = -1533013,
     SAY_SLAY_1      = -1533014,
     SAY_SLAY_2      = -1533015,
-    SAY_DEATH       = -1533016
+    SAY_DEATH       = -1533016,
+    EMOTE_DISPELL_BAN = -1533123,
+    EMOTE_ENRAGE    = -1533124,
 };
 //#define SOUND_RANDOM_AGGRO  8955                            //soundId containing the 4 aggro sounds, we not using this
 
@@ -76,9 +71,7 @@ public:
 
     struct boss_faerlinaAI : public BossAI
     {
-        boss_faerlinaAI(Creature *c) : BossAI(c, BOSS_FAERLINA), greet(false) {
-        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
+        boss_faerlinaAI(Creature *c) : BossAI(c, BOSS_FAERLINA), greet(false) {}
 
         bool greet;
         bool doDelayFrenzy;
@@ -151,12 +144,12 @@ public:
                         events.ScheduleEvent(EVENT_POISON, urand(8000,15000));
                         break;
                     case EVENT_FIRE:
-                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             DoCast(pTarget, RAID_MODE(SPELL_RAIN_OF_FIRE, H_SPELL_RAIN_OF_FIRE));
                         events.ScheduleEvent(EVENT_FIRE, urand(6000,18000));
                         break;
                     case EVENT_FRENZY:
-                        // TODO : Add Text
+                        DoScriptText(EMOTE_ENRAGE, me);
                         if (!me->HasAura(RAID_MODE(SPELL_WIDOWS_EMBRACE,H_SPELL_WIDOWS_EMBRACE)))
                             DoCast(me, RAID_MODE(SPELL_FRENZY, H_SPELL_FRENZY));
                         else
@@ -174,7 +167,7 @@ public:
         {
             if (spell->Id == SPELL_WIDOWS_EMBRACE || spell->Id == H_SPELL_WIDOWS_EMBRACE)
             {
-                 // TODO : Add Text
+                 DoScriptText(EMOTE_DISPELL_BAN, me);
                  bAchievement = false;
                  doDelayFrenzy = true;
                  me->Kill(caster);

@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /*
@@ -32,7 +25,7 @@
 enum Spells
 {
     SPELL_EMERGE                                  = 54850,
-    SPELL_ELEMENTAL_SPAWN_EFEFCT                  = 54888,
+    SPELL_ELEMENTAL_SPAWN_EFFECT                  = 54888,
     SPELL_MOJO_VOLLEY                             = 54849,
     SPELL_SURGE_VISUAL                            = 54827,
     SPELL_MERGE                                   = 54878,
@@ -99,6 +92,8 @@ class boss_drakkari_colossus : public CreatureScript
 
             void Reset()
             {
+                _Reset();
+
                 if (GetData(DATA_INTRO_DONE))
                 {
                     me->SetReactState(REACT_AGGRESSIVE);
@@ -106,29 +101,42 @@ class boss_drakkari_colossus : public CreatureScript
                     me->RemoveAura(SPELL_FREEZE_ANIM);
                 }
 
-                events.Reset();
+                //events.Reset(); -> done in _Reset();
                 events.ScheduleEvent(EVENT_MIGHTY_BLOW, urand(10000,30000));
 
                 phase = COLOSSUS_PHASE_NORMAL;
 
-                instance->SetBossState(DATA_DRAKKARI_COLOSSUS_EVENT, NOT_STARTED);
+
+                // Note: This should not be called, but before use SetBossState function we should use BossAI
+                //        in all the bosses of the instance
+                instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, NOT_STARTED);
             }
 
             void EnterCombat(Unit* /*who*/)
             {
-                instance->SetBossState(DATA_DRAKKARI_COLOSSUS_EVENT, IN_PROGRESS);
-
+                _EnterCombat();
+               
                 me->RemoveAura(SPELL_FREEZE_ANIM);
+
+                // Note: This should not be called, but before use SetBossState function we should use BossAI
+                //        in all the bosses of the instance
+                instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, IN_PROGRESS);
             }
 
             void JustDied(Unit* /*killer*/)
             {
-                instance->SetBossState(DATA_DRAKKARI_COLOSSUS_EVENT, DONE);
+                _JustDied();
+
+                // Note: This should not be called, but before use SetBossState function we should use BossAI
+                //        in all the bosses of the instance
+                instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, DONE);
             }
 
             void JustReachedHome()
             {
-                instance->SetBossState(DATA_DRAKKARI_COLOSSUS_EVENT, FAIL);
+                // Note: This should not be called, but before use SetBossState function we should use BossAI
+                //        in all the bosses of the instance
+                instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, FAIL);
             }
 
             void DoAction(const int32 action)
@@ -251,8 +259,7 @@ class boss_drakkari_elemental : public CreatureScript
         {
             boss_drakkari_elementalAI(Creature* creature) : ScriptedAI(creature)
             {
-                DoCast(me,SPELL_ELEMENTAL_SPAWN_EFEFCT);
-
+                DoCast(me,SPELL_ELEMENTAL_SPAWN_EFFECT);
                 instance = creature->GetInstanceScript();
             }
 
@@ -311,7 +318,8 @@ class boss_drakkari_elemental : public CreatureScript
                         if (instance)
                         {
                             if (Creature* colossus = Unit::GetCreature(*me, instance->GetData64(DATA_DRAKKARI_COLOSSUS)))
-                                DoCast(colossus,SPELL_MERGE);
+                                // what if the elemental is more than 80 yards from drakkari colossus ?
+                                DoCast(colossus,SPELL_MERGE,true);
                         }
                         break;
                 }
@@ -325,8 +333,23 @@ class boss_drakkari_elemental : public CreatureScript
                     {
                         if (colossus->AI()->GetData(DATA_COLOSSUS_PHASE) ==  COLOSSUS_PHASE_FIRST_ELEMENTAL_SUMMON)
                         {
-                            DoAction(ACTION_RETURN_TO_COLOSSUS);
                             damage = 0;
+
+                            // to prevent spell spaming
+                            if (me->HasUnitState(UNIT_STAT_CHARGING))
+                                return;
+
+                            // not sure about this, the idea of this code is to prevent bug the elemental 
+                            // if it is not in a acceptable distance to cast the charge spell.
+                            /*if (me->GetDistance(colossus) > 80.0f)
+                            {
+                                if (me->GetMotionMaster()->GetCurrentMovementGeneratorType() == POINT_MOTION_TYPE)
+                                    return;
+
+                                me->GetMotionMaster()->MovePoint(0,colossus->GetPositionX(),colossus->GetPositionY(),colossus->GetPositionZ());
+                                return;
+                            }*/
+                            DoAction(ACTION_RETURN_TO_COLOSSUS);
                         }
                     }
                 }
@@ -334,7 +357,7 @@ class boss_drakkari_elemental : public CreatureScript
 
             void EnterEvadeMode()
             {
-                me->DespawnOrUnsummon();
+                me->ForcedDespawn();
             }
 
             void SpellHitTarget(Unit* target, SpellEntry const* spell)
@@ -344,8 +367,7 @@ class boss_drakkari_elemental : public CreatureScript
                     if (Creature* colossus = target->ToCreature())
                     {
                         colossus->AI()->DoAction(ACTION_UNFREEZE_COLOSSUS);
-
-                        me->DespawnOrUnsummon();
+                        me->ForcedDespawn();
                     }
                 }
             }
@@ -411,7 +433,7 @@ public:
                     if (!colossus->AI()->GetData(DATA_INTRO_DONE))
                         colossus->AI()->SetData(DATA_INTRO_DONE,true);
                     colossus->SetInCombatWithZone();
-                    me->DespawnOrUnsummon();
+                    me->ForcedDespawn();
                 }
             }
         }

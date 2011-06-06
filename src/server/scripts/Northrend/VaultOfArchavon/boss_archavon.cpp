@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -33,6 +26,7 @@
 #define SPELL_STOMP              RAID_MODE(58663,60880)
 #define SPELL_IMPALE             RAID_MODE(58666,60882) //Lifts an enemy off the ground with a spiked fist, inflicting 47125 to 52875 Physical damage and 9425 to 10575 additional damage each second for 8 sec.
 #define SPELL_BERSERK            47008
+#define SPELL_CHOKING_CLOUD      RAID_MODE(58965,61672)
 //Spells Archavon Warders
 #define SPELL_ROCK_SHOWER        RAID_MODE(60919,60923)
 #define SPELL_SHIELD_CRUSH       RAID_MODE(60897,60899)
@@ -52,6 +46,8 @@ enum Events
     EVENT_STOMP             = 3,    // 45s cd
     EVENT_IMPALE            = 4,
     EVENT_BERSERK           = 5,    // 300s cd
+    EVENT_ENTERVEHICLE      = 6,
+    EVENT_EXITVEHICLE       = 7,
 
     //mob
     EVENT_ROCK_SHOWER       = 6,    // set = 20s cd,unkown cd
@@ -66,20 +62,43 @@ class boss_archavon : public CreatureScript
 
         struct boss_archavonAI : public BossAI
         {
-            boss_archavonAI(Creature* creature) : BossAI(creature, DATA_ARCHAVON)
+            boss_archavonAI(Creature* creature) : BossAI(creature, DATA_ARCHAVON), vehicle(me->GetVehicleKit())
             {
                 me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
+            }
+
+            void Reset()
+            {
+                events.Reset();
+
+                if (instance)
+                    instance->SetData(DATA_ARCHAVON, NOT_STARTED);
+
+                if (vehicle)
+                    vehicle->RemoveAllPassengers();
+            }
+
+            void JustDied(Unit* killer)
+            {
+                if (instance)
+                    instance->SetData(DATA_ARCHAVON, DONE);
+
+                _JustDied();
             }
 
             void EnterCombat(Unit * /*who*/)
             {
+                if (instance)
+                    instance->SetData(DATA_ARCHAVON, IN_PROGRESS);
+
                 events.ScheduleEvent(EVENT_ROCK_SHARDS, 15000);
                 events.ScheduleEvent(EVENT_CHOKING_CLOUD, 30000);
                 events.ScheduleEvent(EVENT_STOMP, 45000);
                 events.ScheduleEvent(EVENT_BERSERK, 300000);
 
                 _EnterCombat();
+                ImpaleGUID = 0;
             }
 
             // Below UpdateAI may need review/debug.
@@ -105,6 +124,7 @@ class boss_archavon : public CreatureScript
                         case EVENT_CHOKING_CLOUD:
                             if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                                 DoCast(target, SPELL_CRUSHING_LEAP, true); //10y~80y, ignore range
+                            DoCast(SPELL_CHOKING_CLOUD);
                             events.ScheduleEvent(EVENT_CHOKING_CLOUD, 30000);
                             break;
                         case EVENT_STOMP:
@@ -113,7 +133,27 @@ class boss_archavon : public CreatureScript
                             events.ScheduleEvent(EVENT_STOMP, 45000);
                             break;
                         case EVENT_IMPALE:
-                            DoCastVictim(SPELL_IMPALE);
+                            if (Unit* target = me->getVictim())
+                            {
+                                DoCast(target, SPELL_IMPALE);
+                                ImpaleGUID = target->GetGUID();
+                                events.ScheduleEvent(EVENT_ENTERVEHICLE, 1);
+                            }
+                            break;
+                        case EVENT_ENTERVEHICLE:
+                            if (Unit* ImpaleTarget = Unit::GetUnit(*me, ImpaleGUID))
+                            {   
+                                /*DoCast(ImpaleTarget, 58672);*/
+                                ImpaleTarget->EnterVehicle(me, 0);
+                                events.ScheduleEvent(EVENT_EXITVEHICLE, 7000);
+                            }
+                            break;
+                        case EVENT_EXITVEHICLE:
+                            if (Unit* ImpaleTarget = Unit::GetUnit(*me, ImpaleGUID))
+                            {   
+                                ImpaleTarget->ExitVehicle();
+                                ImpaleTarget = NULL;
+                            }
                             break;
                         case EVENT_BERSERK:
                             DoCast(me, SPELL_BERSERK);
@@ -126,6 +166,10 @@ class boss_archavon : public CreatureScript
 
                 DoMeleeAttackIfReady();
             }
+
+        private:
+            Vehicle* vehicle;
+            uint32 ImpaleGUID;
         };
 
         CreatureAI* GetAI(Creature* creature) const
@@ -146,9 +190,9 @@ class mob_archavon_warder : public CreatureScript
         {
             mob_archavon_warderAI(Creature* creature) : ScriptedAI(creature)
             {
+                me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
             }
-
-            EventMap events;
 
             void Reset()
             {
@@ -197,6 +241,9 @@ class mob_archavon_warder : public CreatureScript
 
                 DoMeleeAttackIfReady();
             }
+
+        private:
+            EventMap events;
         };
 
         CreatureAI* GetAI(Creature* creature) const

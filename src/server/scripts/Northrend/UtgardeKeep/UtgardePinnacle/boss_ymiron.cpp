@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* Script Data Start
@@ -106,83 +99,49 @@ class boss_ymiron : public CreatureScript
 public:
     boss_ymiron() : CreatureScript("boss_ymiron") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_ymironAI(pCreature);
-    }
-
     struct boss_ymironAI : public ScriptedAI
     {
         boss_ymironAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
             for (int i = 0; i < 4; ++i)
-                m_uiActiveOrder[i] = i;
+                ActiveOrder[i] = i;
             for (int i = 0; i < 3; ++i)
             {
                 int r = i + (rand() % (4 - i));
-                int temp = m_uiActiveOrder[i];
-                m_uiActiveOrder[i] = m_uiActiveOrder[r];
-                m_uiActiveOrder[r] = temp;
+                int temp = ActiveOrder[i];
+                ActiveOrder[i] = ActiveOrder[r];
+                ActiveOrder[r] = temp;
             }
         }
 
-        bool m_bIsWalking;
-        bool m_bIsPause;
-        bool m_bIsActiveWithBJORN;
-        bool m_bIsActiveWithHALDOR;
-        bool m_bIsActiveWithRANULF;
-        bool m_bIsActiveWithTORGYN;
-
-        uint8 m_uiActiveOrder[4];
-        uint8 m_uiActivedNumber;
-
-        uint32 m_uiFetidRot_Timer;
-        uint32 m_uiBane_Timer;
-        uint32 m_uiDarkSlash_Timer;
-        uint32 m_uiAncestors_Vengeance_Timer;
-
-        uint32 m_uiAbility_BJORN_Timer;
-        uint32 m_uiAbility_HALDOR_Timer;
-        uint32 m_uiAbility_RANULF_Timer;
-        uint32 m_uiAbility_TORGYN_Timer;
-
-        uint32 m_uiPause_Timer;
-        uint32 m_uiHealthAmountModifier;
-        uint32 m_uiHealthAmountMultipler;
-
-        uint64 m_uiActivedCreatureGUID;
-        uint64 m_uiOrbGUID;
-
-        InstanceScript *pInstance;
-
         void Reset()
         {
-            m_bIsPause = false;
-            m_bIsActiveWithBJORN = false;
-            m_bIsActiveWithHALDOR = false;
-            m_bIsActiveWithRANULF = false;
-            m_bIsActiveWithTORGYN = false;
+            bPause = false;
+            bActiveWithBJORN = false;
+            bActiveWithHALDOR = false;
+            bActiveWithRANULF = false;
+            bActiveWithTORGYN = false;
 
-            m_uiFetidRot_Timer            = urand(8000, 13000);
-            m_uiBane_Timer                = urand(18000, 23000);
-            m_uiDarkSlash_Timer           = urand(28000, 33000);
-            m_uiAncestors_Vengeance_Timer = DUNGEON_MODE(60000, 45000);
-            m_uiPause_Timer               = 0;
+            FetidRotTimer            = urand(8000, 13000);
+            BaneTimer                = urand(18000, 23000);
+            DarkSlashTimer           = urand(28000, 33000);
+            AncestorsVengeanceTimer = DUNGEON_MODE(60000, 45000);
+            PauseTimer               = 0;
 
-            m_uiAbility_BJORN_Timer  = 0;
-            m_uiAbility_HALDOR_Timer = 0;
-            m_uiAbility_RANULF_Timer = 0;
-            m_uiAbility_TORGYN_Timer = 0;
+            AbilityBjornTimer  = 0;
+            AbilityHaldorTimer = 0;
+            AbilityRanulfTimer = 0;
+            AbilityTorgynTimer = 0;
 
-            m_uiActivedNumber        = 0;
-            m_uiHealthAmountModifier = 1;
-            m_uiHealthAmountMultipler = DUNGEON_MODE(20, 25);
+            ActivedNumber        = 0;
+            HealthAmountModifier = 1;
+            HealthAmountMultipler = DUNGEON_MODE(20, 25);
 
-            DespawnBoatGhosts(m_uiActivedCreatureGUID);
-            DespawnBoatGhosts(m_uiOrbGUID);
+            DespawnBoatGhosts(ActivedCreatureGUID);
+            DespawnBoatGhosts(OrbGUID);
 
             if (pInstance)
                 pInstance->SetData(DATA_KING_YMIRON_EVENT, NOT_STARTED);
@@ -198,45 +157,45 @@ public:
 
         void UpdateAI(const uint32 diff)
         {
-            if (m_bIsWalking)
+            if (bWalking)
             {
-                if (m_uiPause_Timer <= diff)
+                if (PauseTimer <= diff)
                 {
-                    DoScriptText(ActiveBot[m_uiActiveOrder[m_uiActivedNumber]].say, me);
+                    DoScriptText(ActiveBot[ActiveOrder[ActivedNumber]].say, me);
                     DoCast(me, SPELL_CHANNEL_YMIRON_TO_SPIRIT); // should be on spirit
-                    if (Creature* pTemp = me->SummonCreature(ActiveBot[m_uiActiveOrder[m_uiActivedNumber]].npc, ActiveBot[m_uiActiveOrder[m_uiActivedNumber]].SpawnX, ActiveBot[m_uiActiveOrder[m_uiActivedNumber]].SpawnY, ActiveBot[m_uiActiveOrder[m_uiActivedNumber]].SpawnZ, ActiveBot[m_uiActiveOrder[m_uiActivedNumber]].SpawnO, TEMPSUMMON_CORPSE_DESPAWN, 0))
+                    if (Creature* pTemp = me->SummonCreature(ActiveBot[ActiveOrder[ActivedNumber]].npc, ActiveBot[ActiveOrder[ActivedNumber]].SpawnX, ActiveBot[ActiveOrder[ActivedNumber]].SpawnY, ActiveBot[ActiveOrder[ActivedNumber]].SpawnZ, ActiveBot[ActiveOrder[ActivedNumber]].SpawnO, TEMPSUMMON_CORPSE_DESPAWN, 0))
                     {
-                        m_uiActivedCreatureGUID = pTemp->GetGUID();
+                        ActivedCreatureGUID = pTemp->GetGUID();
                         pTemp->CastSpell(me, SPELL_CHANNEL_SPIRIT_TO_YMIRON, true);
                         pTemp->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
                         pTemp->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
-                        switch(m_uiActiveOrder[m_uiActivedNumber])
+                        switch(ActiveOrder[ActivedNumber])
                         {
-                            case 0: m_bIsActiveWithBJORN  = true; break;
-                            case 1: m_bIsActiveWithHALDOR = true; break;
-                            case 2: m_bIsActiveWithRANULF = true; break;
-                            case 3: m_bIsActiveWithTORGYN = true; break;
+                            case 0: bActiveWithBJORN  = true; break;
+                            case 1: bActiveWithHALDOR = true; break;
+                            case 2: bActiveWithRANULF = true; break;
+                            case 3: bActiveWithTORGYN = true; break;
                         }
                     }
 
-                    m_bIsPause = true;
-                    m_bIsWalking = false;
-                    m_uiPause_Timer = 3000;
-                } else m_uiPause_Timer -= diff;
+                    bPause = true;
+                    bWalking = false;
+                    PauseTimer = 3000;
+                } else PauseTimer -= diff;
                 return;
             }
-            else if (m_bIsPause)
+            else if (bPause)
             {
-                if (m_uiPause_Timer <= diff)
+                if (PauseTimer <= diff)
                 {
-                    m_uiAbility_BJORN_Timer = 5000;
-                    m_uiAbility_HALDOR_Timer = 5000;
-                    m_uiAbility_RANULF_Timer = 5000;
-                    m_uiAbility_TORGYN_Timer = 5000;
+                    AbilityBjornTimer = 5000;
+                    AbilityHaldorTimer = 5000;
+                    AbilityRanulfTimer = 5000;
+                    AbilityTorgynTimer = 5000;
 
-                    m_bIsPause = false;
-                    m_uiPause_Timer = 0;
-                } else m_uiPause_Timer -= diff;
+                    bPause = false;
+                    PauseTimer = 0;
+                } else PauseTimer -= diff;
                 return;
             }
 
@@ -244,35 +203,35 @@ public:
              if (!UpdateVictim())
                  return;
 
-            if (!m_bIsPause)
+            if (!bPause)
             {
                 // Normal spells ------------------------------------------------------------------------
-                if (m_uiBane_Timer <= diff)
+                if (BaneTimer <= diff)
                 {
                     DoCast(me, SPELL_BANE);
-                    m_uiBane_Timer = urand(20000, 25000);
-                } else m_uiBane_Timer -= diff;
+                    BaneTimer = urand(20000, 25000);
+                } else BaneTimer -= diff;
 
-                if (m_uiFetidRot_Timer <= diff)
+                if (FetidRotTimer <= diff)
                 {
                     DoCast(me->getVictim(), SPELL_FETID_ROT);
-                    m_uiFetidRot_Timer = urand(10000, 15000);
-                } else m_uiFetidRot_Timer -= diff;
+                    FetidRotTimer = urand(10000, 15000);
+                } else FetidRotTimer -= diff;
 
-                if (m_uiDarkSlash_Timer <= diff)
+                if (DarkSlashTimer <= diff)
                 {
                     DoCast(me->getVictim(), SPELL_DARK_SLASH);
-                    m_uiDarkSlash_Timer = urand(30000, 35000);
-                } else m_uiDarkSlash_Timer -= diff;
+                    DarkSlashTimer = urand(30000, 35000);
+                } else DarkSlashTimer -= diff;
 
-                if (m_uiAncestors_Vengeance_Timer <= diff)
+                if (AncestorsVengeanceTimer <= diff)
                 {
                     DoCast(me, SPELL_ANCESTORS_VENGEANCE);
-                    m_uiAncestors_Vengeance_Timer = DUNGEON_MODE(urand(60000, 65000), urand(45000, 50000));
-                } else m_uiAncestors_Vengeance_Timer -= diff;
+                    AncestorsVengeanceTimer = DUNGEON_MODE(urand(60000, 65000), urand(45000, 50000));
+                } else AncestorsVengeanceTimer -= diff;
 
                 // Abilities ------------------------------------------------------------------------------
-                if (m_bIsActiveWithBJORN && m_uiAbility_BJORN_Timer <= diff)
+                if (bActiveWithBJORN && AbilityBjornTimer <= diff)
                 {
                     //DoCast(me, SPELL_SUMMON_SPIRIT_FOUNT); // works fine, but using summon has better control
                     if (Creature* pTemp = me->SummonCreature(CREATURE_SPIRIT_FOUNT, 385.0f + rand() % 10, -330.0f + rand() % 10, 104.756f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 180000))
@@ -281,24 +240,24 @@ public:
                         pTemp->CastSpell(pTemp, DUNGEON_MODE(SPELL_SPIRIT_FOUNT, H_SPELL_SPIRIT_FOUNT), true);
                         pTemp->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
                         pTemp->SetDisplayId(11686);
-                        m_uiOrbGUID = pTemp->GetGUID();
+                        OrbGUID = pTemp->GetGUID();
                     }
-                    m_bIsActiveWithBJORN = false; // only one orb
-                } else m_uiAbility_BJORN_Timer -= diff;
+                    bActiveWithBJORN = false; // only one orb
+                } else AbilityBjornTimer -= diff;
 
-                if (m_bIsActiveWithHALDOR && m_uiAbility_HALDOR_Timer <= diff)
+                if (bActiveWithHALDOR && AbilityHaldorTimer <= diff)
                 {
                     DoCast(me->getVictim(), SPELL_SPIRIT_STRIKE);
-                    m_uiAbility_HALDOR_Timer = 5000; // overtime
-                } else m_uiAbility_HALDOR_Timer -= diff;
+                    AbilityHaldorTimer = 5000; // overtime
+                } else AbilityHaldorTimer -= diff;
 
-                if (m_bIsActiveWithRANULF && m_uiAbility_RANULF_Timer <= diff)
+                if (bActiveWithRANULF && AbilityRanulfTimer <= diff)
                 {
                     DoCast(me, SPELL_SPIRIT_BURST);
-                    m_uiAbility_RANULF_Timer = 10000; // overtime
-                } else m_uiAbility_RANULF_Timer -= diff;
+                    AbilityRanulfTimer = 10000; // overtime
+                } else AbilityRanulfTimer -= diff;
 
-                if (m_bIsActiveWithTORGYN && m_uiAbility_TORGYN_Timer <= diff)
+                if (bActiveWithTORGYN && AbilityTorgynTimer <= diff)
                 {
                     float x,y,z;
                     x = me->GetPositionX()-5;
@@ -309,45 +268,45 @@ public:
                         //DoCast(me, SPELL_SUMMON_AVENGING_SPIRIT); // works fine, but using summon has better control
                         if (Creature* pTemp = me->SummonCreature(CREATURE_AVENGING_SPIRIT, x + rand() % 10, y + rand() % 10, z, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000))
                         {
-                            if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             {
                                 pTemp->AddThreat(pTarget, 0.0f);
                                 pTemp->AI()->AttackStart(pTarget);
                             }
                         }
                     }
-                    m_uiAbility_TORGYN_Timer = 15000; // overtime
-                } else m_uiAbility_TORGYN_Timer -= diff;
+                    AbilityTorgynTimer = 15000; // overtime
+                } else AbilityTorgynTimer -= diff;
 
                 // Health check -----------------------------------------------------------------------------
-                if (me->HealthBelowPct(100 - m_uiHealthAmountMultipler * m_uiHealthAmountModifier))
+                if (me->HealthBelowPct(100 - HealthAmountMultipler * HealthAmountModifier))
                 {
-                    uint8 m_uiOrder = m_uiHealthAmountModifier - 1;
-                    ++m_uiHealthAmountModifier;
+                    uint8 m_uiOrder = HealthAmountModifier - 1;
+                    ++HealthAmountModifier;
 
                     me->InterruptNonMeleeSpells(true);
                     DoCast(me, SPELL_SCREAMS_OF_THE_DEAD);
                     me->GetMotionMaster()->Clear();
                     me->StopMoving();
                     me->AttackStop();
-                    me->GetMotionMaster()->MovePoint(0, ActiveBot[m_uiActiveOrder[m_uiOrder]].MoveX, ActiveBot[m_uiActiveOrder[m_uiOrder]].MoveY, ActiveBot[m_uiActiveOrder[m_uiOrder]].MoveZ);
+                    me->GetMotionMaster()->MovePoint(0, ActiveBot[ActiveOrder[m_uiOrder]].MoveX, ActiveBot[ActiveOrder[m_uiOrder]].MoveY, ActiveBot[ActiveOrder[m_uiOrder]].MoveZ);
 
-                    DespawnBoatGhosts(m_uiActivedCreatureGUID);
-                    DespawnBoatGhosts(m_uiOrbGUID);
+                    DespawnBoatGhosts(ActivedCreatureGUID);
+                    DespawnBoatGhosts(OrbGUID);
 
-                    m_bIsActiveWithBJORN  = false;
-                    m_bIsActiveWithHALDOR = false;
-                    m_bIsActiveWithRANULF = false;
-                    m_bIsActiveWithTORGYN = false;
+                    bActiveWithBJORN  = false;
+                    bActiveWithHALDOR = false;
+                    bActiveWithRANULF = false;
+                    bActiveWithTORGYN = false;
 
-                    m_uiBane_Timer                += 8000;
-                    m_uiFetidRot_Timer            += 8000;
-                    m_uiDarkSlash_Timer           += 8000;
-                    m_uiAncestors_Vengeance_Timer += 8000;
+                    BaneTimer                += 8000;
+                    FetidRotTimer            += 8000;
+                    DarkSlashTimer           += 8000;
+                    AncestorsVengeanceTimer += 8000;
 
-                    m_uiActivedNumber = m_uiOrder;
-                    m_bIsWalking = true;
-                    m_uiPause_Timer = 2000;
+                    ActivedNumber = m_uiOrder;
+                    bWalking = true;
+                    PauseTimer = 2000;
                     return;
                 }
                 DoMeleeAttackIfReady();
@@ -358,8 +317,8 @@ public:
         {
             DoScriptText(SAY_DEATH, me);
 
-            DespawnBoatGhosts(m_uiActivedCreatureGUID);
-            DespawnBoatGhosts(m_uiOrbGUID);
+            DespawnBoatGhosts(ActivedCreatureGUID);
+            DespawnBoatGhosts(OrbGUID);
 
             if (pInstance)
                 pInstance->SetData(DATA_KING_YMIRON_EVENT, DONE);
@@ -378,8 +337,36 @@ public:
 
             m_uiCreatureGUID = 0;
         }
+
+    private:
+        uint8 ActiveOrder[4];
+        uint8 ActivedNumber;
+        uint32 FetidRotTimer;
+        uint32 BaneTimer;
+        uint32 DarkSlashTimer;
+        uint32 AncestorsVengeanceTimer;
+        uint32 AbilityBjornTimer;
+        uint32 AbilityHaldorTimer;
+        uint32 AbilityRanulfTimer;
+        uint32 AbilityTorgynTimer;
+        uint32 PauseTimer;
+        uint32 HealthAmountModifier;
+        uint32 HealthAmountMultipler;
+        uint64 ActivedCreatureGUID;
+        uint64 OrbGUID;
+        bool bWalking;
+        bool bPause;
+        bool bActiveWithBJORN;
+        bool bActiveWithHALDOR;
+        bool bActiveWithRANULF;
+        bool bActiveWithTORGYN;
+        InstanceScript *pInstance;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_ymironAI(pCreature);
+    }
 };
 
 void AddSC_boss_ymiron()

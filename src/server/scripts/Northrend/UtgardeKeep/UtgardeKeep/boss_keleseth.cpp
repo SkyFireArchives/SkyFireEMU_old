@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* ScriptData
@@ -47,14 +40,14 @@ enum eEnums
 
     SAY_AGGRO                                = -1574000,
     SAY_FROST_TOMB                           = -1574001,
-    SAY_SKELETONS                            = -1574002,
+    SAY_bSkeletons                            = -1574002,
     SAY_KILL                                 = -1574003,
     SAY_DEATH                                = -1574004
 };
 
-#define SKELETONSPAWN_Z                          42.8668f
+#define bSkeletonsPAWN_Z                          42.8668f
 
-float SkeletonSpawnPoint[5][5]=
+float bSkeletonspawnPoint[5][5]=
 {
     {156.2559f, 259.2093f},
     {156.2559f, 259.2093f},
@@ -72,19 +65,14 @@ class mob_frost_tomb : public CreatureScript
 public:
     mob_frost_tomb() : CreatureScript("mob_frost_tomb") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new mob_frost_tombAI(pCreature);
-    }
-
     struct mob_frost_tombAI : public ScriptedAI
     {
         mob_frost_tombAI(Creature *c) : ScriptedAI(c)
         {
             FrostTombGUID = 0;
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        uint64 FrostTombGUID;
 
         void SetPrisoner(Unit* uPrisoner)
         {
@@ -115,8 +103,15 @@ public:
             if ((temp && temp->isAlive() && !temp->HasAura(SPELL_FROST_TOMB)) || !temp)
                 me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
         }
+
+    private:
+        uint64 FrostTombGUID;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_frost_tombAI(pCreature);
+    }
 };
 
 class boss_keleseth : public CreatureScript
@@ -124,34 +119,19 @@ class boss_keleseth : public CreatureScript
 public:
     boss_keleseth() : CreatureScript("boss_keleseth") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_kelesethAI (pCreature);
-    }
-
     struct boss_kelesethAI : public ScriptedAI
     {
         boss_kelesethAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        InstanceScript* pInstance;
-
-        uint32 FrostTombTimer;
-        uint32 SummonSkeletonsTimer;
-        uint32 RespawnSkeletonsTimer;
-        uint32 ShadowboltTimer;
-        uint64 SkeletonGUID[5];
-        bool Skeletons;
-        bool RespawnSkeletons;
 
         void Reset()
         {
             ShadowboltTimer = 0;
-            Skeletons = false;
+            bSkeletons = false;
 
             ShatterFrostTomb = false;
 
@@ -175,17 +155,8 @@ public:
 
             if (IsHeroic() && !ShatterFrostTomb)
             {
-                AchievementEntry const *AchievOnTheRocks = GetAchievementStore()->LookupEntry(ACHIEVEMENT_ON_THE_ROCKS);
-                if (AchievOnTheRocks)
-                {
-                    Map* pMap = me->GetMap();
-                    if (pMap && pMap->IsDungeon())
-                    {
-                        Map::PlayerList const &players = pMap->GetPlayers();
-                        for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
-                            itr->getSource()->CompletedAchievement(AchievOnTheRocks);
-                    }
-                }
+                if (pInstance)
+                    pInstance->DoCompleteAchievement(ACHIEVEMENT_ON_THE_ROCKS);
             }
 
             if (pInstance)
@@ -214,21 +185,21 @@ public:
 
             if (ShadowboltTimer <= diff)
             {
-                Unit *pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 0);
+                Unit* pTarget = SelectTarget(SELECT_TARGET_TOPAGGRO, 0);
                 if (pTarget && pTarget->isAlive() && pTarget->GetTypeId() == TYPEID_PLAYER)
                     me->CastSpell(pTarget, DUNGEON_MODE(SPELL_SHADOWBOLT, SPELL_SHADOWBOLT_HEROIC), true);
                 ShadowboltTimer = 10000;
             } else ShadowboltTimer -= diff;
 
-            if (!Skeletons)
+            if (!bSkeletons)
             {
                 if ((SummonSkeletonsTimer <= diff))
                 {
                     Creature* Skeleton;
-                    DoScriptText(SAY_SKELETONS, me);
+                    DoScriptText(SAY_bSkeletons, me);
                     for (uint8 i = 0; i < 5; ++i)
                     {
-                        Skeleton = me->SummonCreature(CREATURE_SKELETON, SkeletonSpawnPoint[i][0], SkeletonSpawnPoint[i][1] , SKELETONSPAWN_Z, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000);
+                        Skeleton = me->SummonCreature(CREATURE_SKELETON, bSkeletonspawnPoint[i][0], bSkeletonspawnPoint[i][1] , bSkeletonsPAWN_Z, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000);
                         if (Skeleton)
                         {
                             Skeleton->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
@@ -237,7 +208,7 @@ public:
                             DoZoneInCombat(Skeleton);
                         }
                     }
-                    Skeletons = true;
+                    bSkeletons = true;
                 } else SummonSkeletonsTimer -= diff;
             }
 
@@ -260,8 +231,22 @@ public:
 
             DoMeleeAttackIfReady();
         }
+
+    private:
+        InstanceScript* pInstance;
+        uint32 FrostTombTimer;
+        uint32 SummonSkeletonsTimer;
+        uint32 RespawnSkeletonsTimer;
+        uint32 ShadowboltTimer;
+        uint64 SkeletonGUID[5];
+        bool bSkeletons;
+        bool bRespawnSkeletons;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_kelesethAI (pCreature);
+    }
 };
 
 class mob_vrykul_skeleton : public CreatureScript
@@ -269,30 +254,20 @@ class mob_vrykul_skeleton : public CreatureScript
 public:
     mob_vrykul_skeleton() : CreatureScript("mob_vrykul_skeleton") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new mob_vrykul_skeletonAI (pCreature);
-    }
-
     struct mob_vrykul_skeletonAI : public ScriptedAI
     {
         mob_vrykul_skeletonAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        InstanceScript *pInstance;
-        uint32 Respawn_Time;
-        uint64 Target_Guid;
-        uint32 Decrepify_Timer;
-
-        bool isDead;
 
         void Reset()
         {
-            Respawn_Time = 12000;
-            Decrepify_Timer = urand(10000,20000);
-            isDead = false;
+            RespawnTime = 12000;
+            DecrepifyTimer = urand(10000,20000);
+            bDead = false;
         }
 
         void EnterCombat(Unit * /*who*/){}
@@ -310,7 +285,7 @@ public:
 
         void PretendToDie()
         {
-            isDead = true;
+            bDead = true;
             me->InterruptNonMeleeSpells(true);
             me->RemoveAllAuras();
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -321,7 +296,7 @@ public:
 
         void Resurrect()
         {
-            isDead = false;
+            bDead = false;
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             me->SetStandState(UNIT_STAND_STATE_STAND);
             DoCast(me, SPELL_SCOURGE_RESSURRECTION, true);
@@ -339,24 +314,24 @@ public:
         {
             if (pInstance && pInstance->GetData(DATA_PRINCEKELESETH_EVENT) == IN_PROGRESS)
             {
-                if (isDead)
+                if (bDead)
                 {
-                    if (Respawn_Time <= diff)
+                    if (RespawnTime <= diff)
                     {
                         Resurrect();
-                        Respawn_Time = 12000;
-                    } else Respawn_Time -= diff;
+                        RespawnTime = 12000;
+                    } else RespawnTime -= diff;
                 }
                 else
                 {
                     if (!UpdateVictim())
                         return;
 
-                    if (Decrepify_Timer <= diff)
+                    if (DecrepifyTimer <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_DECREPIFY);
-                        Decrepify_Timer = 30000;
-                    } else Decrepify_Timer -= diff;
+                        DecrepifyTimer = 30000;
+                    } else DecrepifyTimer -= diff;
 
                     DoMeleeAttackIfReady();
                 }
@@ -367,12 +342,20 @@ public:
             }
 
         }
+
+    private:
+        InstanceScript *pInstance;
+        uint32 RespawnTime;
+        uint64 TargetGuid;
+        uint32 DecrepifyTimer;
+        bool bDead;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_vrykul_skeletonAI (pCreature);
+    }
 };
-
-
-
 
 void AddSC_boss_keleseth()
 {

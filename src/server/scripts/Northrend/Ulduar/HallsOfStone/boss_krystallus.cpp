@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* Script Data Start
@@ -61,37 +54,24 @@ class boss_krystallus : public CreatureScript
 public:
     boss_krystallus() : CreatureScript("boss_krystallus") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_krystallusAI (pCreature);
-    }
-
     struct boss_krystallusAI : public ScriptedAI
     {
         boss_krystallusAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        uint32 uiBoulderTossTimer;
-        uint32 uiGroundSpikeTimer;
-        uint32 uiGroundSlamTimer;
-        uint32 uiShatterTimer;
-        uint32 uiStompTimer;
-
-        bool bIsSlam;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
-            bIsSlam = false;
+            bSlam = false;
 
-            uiBoulderTossTimer = 3000 + rand()%6000;
-            uiGroundSpikeTimer = 9000 + rand()%5000;
-            uiGroundSlamTimer = 15000 + rand()%3000;
-            uiStompTimer = 20000 + rand()%9000;
-            uiShatterTimer = 0;
+            BoulderTossTimer = 3000 + rand()%6000;
+            GroundSpikeTimer = 9000 + rand()%5000;
+            GroundSlamTimer = 15000 + rand()%3000;
+            StompTimer = 20000 + rand()%9000;
+            ShatterTimer = 0;
 
             if (pInstance)
                 pInstance->SetData(DATA_KRYSTALLUS_EVENT, NOT_STARTED);
@@ -110,40 +90,40 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (uiBoulderTossTimer <= diff)
+            if (BoulderTossTimer <= diff)
             {
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_BOULDER_TOSS);
-                uiBoulderTossTimer = 9000 + rand()%6000;
-            } else uiBoulderTossTimer -= diff;
+                BoulderTossTimer = 9000 + rand()%6000;
+            } else BoulderTossTimer -= diff;
 
-            if (uiGroundSpikeTimer <= diff)
+            if (GroundSpikeTimer <= diff)
             {
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_GROUND_SPIKE);
-                uiGroundSpikeTimer = 12000 + rand()%5000;
-            } else uiGroundSpikeTimer -= diff;
+                GroundSpikeTimer = 12000 + rand()%5000;
+            } else GroundSpikeTimer -= diff;
 
-            if (uiStompTimer <= diff)
+            if (StompTimer <= diff)
             {
                 DoCast(me, SPELL_STOMP);
-                uiStompTimer = 20000 + rand()%9000;
-            } else uiStompTimer -= diff;
+                StompTimer = 20000 + rand()%9000;
+            } else StompTimer -= diff;
 
-            if (uiGroundSlamTimer <= diff)
+            if (GroundSlamTimer <= diff)
             {
                 DoCast(me, SPELL_GROUND_SLAM);
-                bIsSlam = true;
-                uiShatterTimer = 10000;
-                uiGroundSlamTimer = 15000 + rand()%3000;
-            } else uiGroundSlamTimer -= diff;
+                bSlam = true;
+                ShatterTimer = 10000;
+                GroundSlamTimer = 15000 + rand()%3000;
+            } else GroundSlamTimer -= diff;
 
-            if (bIsSlam)
+            if (bSlam)
             {
-                if (uiShatterTimer <= diff)
+                if (ShatterTimer <= diff)
                 {
                     DoCast(me, DUNGEON_MODE(SPELL_SHATTER, H_SPELL_SHATTER));
-                } else uiShatterTimer -= diff;
+                } else ShatterTimer -= diff;
             }
 
             DoMeleeAttackIfReady();
@@ -176,9 +156,9 @@ public:
                     pTarget->RemoveAurasDueToSpell(SPELL_STONED);
 
                 //clear this, if we are still performing
-                if (bIsSlam)
+                if (bSlam)
                 {
-                    bIsSlam = false;
+                    bSlam = false;
 
                     //and correct movement, if not already
                     if (me->GetMotionMaster()->GetCurrentMovementGeneratorType() != TARGETED_MOTION_TYPE)
@@ -189,8 +169,23 @@ public:
                 }
             }
         }
+
+    private:
+        uint32 BoulderTossTimer;
+        uint32 GroundSpikeTimer;
+        uint32 GroundSlamTimer;
+        uint32 ShatterTimer;
+        uint32 StompTimer;
+
+        bool bSlam;
+
+        InstanceScript* pInstance;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_krystallusAI (pCreature);
+    }
 };
 
 

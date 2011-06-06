@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -37,7 +30,7 @@ enum StalagSpells
 {
     SPELL_POWERSURGE        = 28134,
     H_SPELL_POWERSURGE      = 54529,
-    SPELL_MAGNETIC_PULL     = 28338,
+    SPELL_MAGNETIC_PULL     = 28337, //28338
     SPELL_STALAGG_TESLA     = 28097
 };
 
@@ -81,7 +74,10 @@ enum ThaddiusYells
     SAY_SCREAM1             = -1533036, //not used
     SAY_SCREAM2             = -1533037, //not used
     SAY_SCREAM3             = -1533038, //not used
-    SAY_SCREAM4             = -1533039 //not used
+    SAY_SCREAM4             = -1533039, //not used
+    EMOTE_POLARITÄT         = -1533132,
+    EMOTE_FEUGEN_STALLAG    = -1533133,
+    EMOTE_TESLA             = -1533134,
 };
 
 enum ThaddiusSpells
@@ -115,6 +111,8 @@ public:
     {
         boss_thaddiusAI(Creature *c) : BossAI(c, BOSS_THADDIUS)
         {
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
             // init is a bit tricky because thaddius shall track the life of both adds, but not if there was a wipe
             // and, in particular, if there was a crash after both adds were killed (should not respawn)
 
@@ -137,8 +135,6 @@ public:
             {
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_STUNNED);
                 me->SetReactState(REACT_PASSIVE);
-                me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
             }
         }
 
@@ -241,6 +237,7 @@ public:
                 switch(eventId)
                 {
                     case EVENT_SHIFT:
+                        DoScriptText(EMOTE_POLARITÄT, me);
                         DoCastAOE(SPELL_POLARITY_SHIFT);
                         events.ScheduleEvent(EVENT_SHIFT, 30000);
                         return;
@@ -298,7 +295,13 @@ public:
 
         void EnterCombat(Unit * /*pWho*/)
         {
+            DoScriptText(SAY_STAL_AGGRO, me);
             DoCast(SPELL_STALAGG_TESLA);
+        }
+
+        void KilledUnit(Unit * /*victim*/)
+        {
+            DoScriptText(SAY_STAL_SLAY,me);
         }
 
         void JustDied(Unit * /*killer*/)
@@ -307,6 +310,9 @@ public:
                 if (Creature *pThaddius = me->GetCreature(*me, pInstance->GetData64(DATA_THADDIUS)))
                     if (pThaddius->AI())
                         pThaddius->AI()->DoAction(ACTION_STALAGG_DIED);
+
+            DoScriptText(EMOTE_FEUGEN_STALLAG, me);
+            DoScriptText(SAY_STAL_DEATH, me);
         }
 
         void UpdateAI(const uint32 uiDiff)
@@ -323,14 +329,12 @@ public:
 
                     if (pFeugenVictim && pStalaggVictim)
                     {
-                        // magnetic pull is not working. So just jump.
-
                         // reset aggro to be sure that feugen will not follow the jump
                         pFeugen->getThreatManager().modifyThreatPercent(pFeugenVictim, -100);
-                        pFeugenVictim->JumpTo(me, 0.3f);
+                        me->CastSpell(pFeugenVictim, SPELL_MAGNETIC_PULL, true);
 
                         me->getThreatManager().modifyThreatPercent(pStalaggVictim, -100);
-                        pStalaggVictim->JumpTo(pFeugen, 0.3f);
+                        pFeugen->CastSpell(pStalaggVictim, SPELL_MAGNETIC_PULL, true);
                     }
                 }
 
@@ -383,6 +387,7 @@ public:
 
         void EnterCombat(Unit * /*pWho*/)
         {
+            DoScriptText(SAY_FEUG_AGGRO, me);
             DoCast(SPELL_FEUGEN_TESLA);
         }
 
@@ -392,6 +397,14 @@ public:
                 if (Creature *pThaddius = me->GetCreature(*me, pInstance->GetData64(DATA_THADDIUS)))
                     if (pThaddius->AI())
                         pThaddius->AI()->DoAction(ACTION_FEUGEN_DIED);
+
+            DoScriptText(EMOTE_FEUGEN_STALLAG, me);
+            DoScriptText(SAY_FEUG_DEATH,me);
+        }
+
+        void KilledUnit(Unit * /*victim*/)
+        {
+            DoScriptText(SAY_FEUG_SLAY,me);
         }
 
         void UpdateAI(const uint32 uiDiff)

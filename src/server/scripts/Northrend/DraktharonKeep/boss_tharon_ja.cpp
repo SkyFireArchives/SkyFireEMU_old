@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -82,27 +75,15 @@ public:
         {
             pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        uint32 uiPhaseTimer;
-        uint32 uiCurseOfLifeTimer;
-        uint32 uiRainOfFireTimer;
-        uint32 uiShadowVolleyTimer;
-        uint32 uiEyeBeamTimer;
-        uint32 uiLightningBreathTimer;
-        uint32 uiPoisonCloudTimer;
-
-        CombatPhase Phase;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
-            uiPhaseTimer = 20*IN_MILLISECONDS;
-            uiCurseOfLifeTimer = 1*IN_MILLISECONDS;
-            uiRainOfFireTimer = urand(14*IN_MILLISECONDS,18*IN_MILLISECONDS);
-            uiShadowVolleyTimer = urand(8*IN_MILLISECONDS,10*IN_MILLISECONDS);
+            PhaseTimer = 20*IN_MILLISECONDS;
+            CurseOfLifeTimer = 1*IN_MILLISECONDS;
+            RainOfFireTimer = urand(14*IN_MILLISECONDS,18*IN_MILLISECONDS);
+            ShadowVolleyTimer = urand(8*IN_MILLISECONDS,10*IN_MILLISECONDS);
             Phase = SKELETAL;
             me->SetDisplayId(me->GetNativeDisplayId());
             if (pInstance)
@@ -126,36 +107,36 @@ public:
             switch (Phase)
             {
                 case SKELETAL:
-                    if (uiCurseOfLifeTimer < diff)
+                    if (CurseOfLifeTimer < diff)
                     {
                         if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                             DoCast(pTarget, SPELL_CURSE_OF_LIFE);
-                        uiCurseOfLifeTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
-                    } else uiCurseOfLifeTimer -= diff;
+                        CurseOfLifeTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
+                    } else CurseOfLifeTimer -= diff;
 
-                    if (uiShadowVolleyTimer < diff)
+                    if (ShadowVolleyTimer < diff)
                     {
                         DoCastVictim(SPELL_SHADOW_VOLLEY);
-                        uiShadowVolleyTimer = urand(8*IN_MILLISECONDS,10*IN_MILLISECONDS);
-                    } else uiShadowVolleyTimer -= diff;
+                        ShadowVolleyTimer = urand(8*IN_MILLISECONDS,10*IN_MILLISECONDS);
+                    } else ShadowVolleyTimer -= diff;
 
-                    if (uiRainOfFireTimer < diff)
+                    if (RainOfFireTimer < diff)
                     {
                         DoCastAOE(SPELL_RAIN_OF_FIRE);
-                        uiRainOfFireTimer = urand(14*IN_MILLISECONDS,18*IN_MILLISECONDS);
-                    } else uiRainOfFireTimer -= diff;
+                        RainOfFireTimer = urand(14*IN_MILLISECONDS,18*IN_MILLISECONDS);
+                    } else RainOfFireTimer -= diff;
 
-                    if (uiPhaseTimer < diff)
+                    if (PhaseTimer < diff)
                     {
                         DoCast(SPELL_DECAY_FLESH);
                         Phase = GOING_FLESH;
-                        uiPhaseTimer = 6*IN_MILLISECONDS;
-                    } else uiPhaseTimer -= diff;
+                        PhaseTimer = 6*IN_MILLISECONDS;
+                    } else PhaseTimer -= diff;
 
                     DoMeleeAttackIfReady();
                     break;
                 case GOING_FLESH:
-                    if (uiPhaseTimer < diff)
+                    if (PhaseTimer < diff)
                     {
                         DoScriptText(RAND(SAY_FLESH_1,SAY_FLESH_2),me);
                         me->SetDisplayId(MODEL_FLESH);
@@ -168,52 +149,52 @@ public:
                             me->AddAura(SPELL_GIFT_OF_THARON_JA,pTemp);
                             pTemp->SetDisplayId(MODEL_SKELETON);
                         }
-                        uiPhaseTimer = 20*IN_MILLISECONDS;
-                        uiLightningBreathTimer = urand(3*IN_MILLISECONDS,4*IN_MILLISECONDS);
-                        uiEyeBeamTimer = urand(4*IN_MILLISECONDS,8*IN_MILLISECONDS);
-                        uiPoisonCloudTimer = urand(6*IN_MILLISECONDS,7*IN_MILLISECONDS);
+                        PhaseTimer = 20*IN_MILLISECONDS;
+                        LightningBreathTimer = urand(3*IN_MILLISECONDS,4*IN_MILLISECONDS);
+                        EyeBeamTimer = urand(4*IN_MILLISECONDS,8*IN_MILLISECONDS);
+                        PoisonCloudTimer = urand(6*IN_MILLISECONDS,7*IN_MILLISECONDS);
                         Phase = FLESH;
-                    } else uiPhaseTimer -= diff;
+                    } else PhaseTimer -= diff;
                     break;
                 case FLESH:
-                    if (uiLightningBreathTimer < diff)
+                    if (LightningBreathTimer < diff)
                     {
                         if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                             DoCast(pTarget, SPELL_LIGHTNING_BREATH);
-                        uiLightningBreathTimer = urand(6*IN_MILLISECONDS,7*IN_MILLISECONDS);
-                    } else uiLightningBreathTimer -= diff;
+                        LightningBreathTimer = urand(6*IN_MILLISECONDS,7*IN_MILLISECONDS);
+                    } else LightningBreathTimer -= diff;
 
-                    if (uiEyeBeamTimer < diff)
+                    if (EyeBeamTimer < diff)
                     {
                         if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                             DoCast(pTarget, SPELL_EYE_BEAM);
-                        uiEyeBeamTimer = urand(4*IN_MILLISECONDS,6*IN_MILLISECONDS);
-                    } else uiEyeBeamTimer -= diff;
+                        EyeBeamTimer = urand(4*IN_MILLISECONDS,6*IN_MILLISECONDS);
+                    } else EyeBeamTimer -= diff;
 
-                    if (uiPoisonCloudTimer < diff)
+                    if (PoisonCloudTimer < diff)
                     {
                         DoCastAOE(SPELL_POISON_CLOUD);
-                        uiPoisonCloudTimer = urand(10*IN_MILLISECONDS,12*IN_MILLISECONDS);
-                    } else uiPoisonCloudTimer -= diff;
+                        PoisonCloudTimer = urand(10*IN_MILLISECONDS,12*IN_MILLISECONDS);
+                    } else PoisonCloudTimer -= diff;
 
-                    if (uiPhaseTimer < diff)
+                    if (PhaseTimer < diff)
                     {
                         DoCast(SPELL_RETURN_FLESH);
                         Phase = GOING_SKELETAL;
-                        uiPhaseTimer = 6*IN_MILLISECONDS;
-                    } else uiPhaseTimer -= diff;
+                        PhaseTimer = 6*IN_MILLISECONDS;
+                    } else PhaseTimer -= diff;
                     DoMeleeAttackIfReady();
                     break;
                 case GOING_SKELETAL:
-                    if (uiPhaseTimer < diff)
+                    if (PhaseTimer < diff)
                     {
                         DoScriptText(RAND(SAY_SKELETON_1,SAY_SKELETON_2), me);
                         me->DeMorph();
                         Phase = SKELETAL;
-                        uiPhaseTimer = 20*IN_MILLISECONDS;
-                        uiCurseOfLifeTimer = 1*IN_MILLISECONDS;
-                        uiRainOfFireTimer = urand(14*IN_MILLISECONDS,18*IN_MILLISECONDS);
-                        uiShadowVolleyTimer = urand(8*IN_MILLISECONDS,10*IN_MILLISECONDS);
+                        PhaseTimer = 20*IN_MILLISECONDS;
+                        CurseOfLifeTimer = 1*IN_MILLISECONDS;
+                        RainOfFireTimer = urand(14*IN_MILLISECONDS,18*IN_MILLISECONDS);
+                        ShadowVolleyTimer = urand(8*IN_MILLISECONDS,10*IN_MILLISECONDS);
 
                         std::list<Unit *> playerList;
                         SelectTargetList(playerList, 5, SELECT_TARGET_TOPAGGRO, 0, true);
@@ -224,7 +205,7 @@ public:
                                 pTemp->RemoveAura(SPELL_GIFT_OF_THARON_JA);
                             pTemp->DeMorph();
                         }
-                    } else uiPhaseTimer -= diff;
+                    } else PhaseTimer -= diff;
                     break;
             }
         }
@@ -251,6 +232,19 @@ public:
                 pInstance->SetData(DATA_THARON_JA_EVENT, DONE);
             }
         }
+
+    private:
+        uint32 PhaseTimer;
+        uint32 CurseOfLifeTimer;
+        uint32 RainOfFireTimer;
+        uint32 ShadowVolleyTimer;
+        uint32 EyeBeamTimer;
+        uint32 LightningBreathTimer;
+        uint32 PoisonCloudTimer;
+
+        CombatPhase Phase;
+
+        InstanceScript* pInstance;
     };
 
     CreatureAI *GetAI(Creature *creature) const

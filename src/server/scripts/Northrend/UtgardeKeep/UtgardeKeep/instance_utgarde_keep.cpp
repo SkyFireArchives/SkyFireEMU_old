@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* ScriptData
@@ -29,31 +22,34 @@ SDComment: Instance Data Scripts and functions to acquire mobs and set encounter
 SDCategory: Utgarde Keep
 EndScriptData */
 
-#include "ScriptPCH.h"
-#include "utgarde_keep.h"
-
-#define MAX_ENCOUNTER     3
-
-#define ENTRY_BELLOW_1          186688
-#define ENTRY_BELLOW_2          186689
-#define ENTRY_BELLOW_3          186690
-
-#define ENTRY_FORGEFIRE_1       186692
-#define ENTRY_FORGEFIRE_2       186693
-#define ENTRY_FORGEFIRE_3       186691
-
-#define ENTRY_GLOWING_ANVIL_1   186609
-#define ENTRY_GLOWING_ANVIL_2   186610
-#define ENTRY_GLOWING_ANVIL_3   186611
-
-#define ENTRY_GIANT_PORTCULLIS_1    186756
-#define ENTRY_GIANT_PORTCULLIS_2    186694
-
 /* Utgarde Keep encounters:
 0 - Prince Keleseth
 1 - Skarvald Dalronn
 2 - Ingvar the Plunderer
 */
+
+#include "ScriptPCH.h"
+#include "utgarde_keep.h"
+
+#define MAX_ENCOUNTER     3
+
+enum GoEntrys
+{
+    ENTRY_BELLOW_1             = 186688,
+    ENTRY_BELLOW_2             = 186689,
+    ENTRY_BELLOW_3             = 186690,
+
+    ENTRY_FORGEFIRE_1          = 186692,
+    ENTRY_FORGEFIRE_2          = 186693,
+    ENTRY_FORGEFIRE_3          = 186691,
+
+    ENTRY_GLOWING_ANVIL_1      = 186609,
+    ENTRY_GLOWING_ANVIL_2      = 186610,
+    ENTRY_GLOWING_ANVIL_3      = 186611,
+
+    ENTRY_GIANT_PORTCULLIS_1   = 186756,
+    ENTRY_GIANT_PORTCULLIS_2   = 186694
+};
 
 class instance_utgarde_keep : public InstanceMapScript
 {
@@ -67,7 +63,7 @@ public:
 
     struct instance_utgarde_keep_InstanceMapScript : public InstanceScript
     {
-        instance_utgarde_keep_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {Initialize();};
+        instance_utgarde_keep_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {}
 
         uint64 Keleseth;
         uint64 Skarvald;
@@ -124,12 +120,10 @@ public:
                     return plr;
                 }
             }
-
-            sLog->outDebug("TSCR: Instance Utgarde Keep: GetPlayerInMap, but PlayerList is empty!");
             return NULL;
         }
 
-        void OnCreatureCreate(Creature* pCreature, bool /*add*/)
+        void OnCreatureCreate(Creature *pCreature, bool /*bAdd*/)
         {
             switch(pCreature->GetEntry())
             {
@@ -140,33 +134,33 @@ public:
             }
         }
 
-        void OnGameObjectCreate(GameObject* pGo, bool /*add*/)
+        void OnGameObjectCreate(GameObject *pGo, bool /*bAdd*/)
         {
             switch(pGo->GetEntry())
             {
             //door and object id
             case ENTRY_BELLOW_1: forge_bellow[0] = pGo->GetGUID();
-            if (forge_event[0] != NOT_STARTED)HandleGameObject(NULL,true,pGo);break;
+            if (forge_event[0] != NOT_STARTED)HandleGameObject(0,true,pGo);break;
             case ENTRY_BELLOW_2: forge_bellow[1] = pGo->GetGUID();
-            if (forge_event[1] != NOT_STARTED)HandleGameObject(NULL,true,pGo);break;
+            if (forge_event[1] != NOT_STARTED)HandleGameObject(0,true,pGo);break;
             case ENTRY_BELLOW_3: forge_bellow[2] = pGo->GetGUID();
-            if (forge_event[2] != NOT_STARTED)HandleGameObject(NULL,true,pGo);break;
+            if (forge_event[2] != NOT_STARTED)HandleGameObject(0,true,pGo);break;
             case ENTRY_FORGEFIRE_1: forge_fire[0] = pGo->GetGUID();
-            if (forge_event[0] != NOT_STARTED)HandleGameObject(NULL,true,pGo);break;
+            if (forge_event[0] != NOT_STARTED)HandleGameObject(0,true,pGo);break;
             case ENTRY_FORGEFIRE_2: forge_fire[1] = pGo->GetGUID();
-            if (forge_event[1] != NOT_STARTED)HandleGameObject(NULL,true,pGo);break;
+            if (forge_event[1] != NOT_STARTED)HandleGameObject(0,true,pGo);break;
             case ENTRY_FORGEFIRE_3: forge_fire[2] = pGo->GetGUID();
-            if (forge_event[2] != NOT_STARTED)HandleGameObject(NULL,true,pGo);break;
+            if (forge_event[2] != NOT_STARTED)HandleGameObject(0,true,pGo);break;
             case ENTRY_GLOWING_ANVIL_1: forge_anvil[0] = pGo->GetGUID();
-            if (forge_event[0] != NOT_STARTED)HandleGameObject(NULL,true,pGo);break;
+            if (forge_event[0] != NOT_STARTED)HandleGameObject(0,true,pGo);break;
             case ENTRY_GLOWING_ANVIL_2: forge_anvil[1] = pGo->GetGUID();
-            if (forge_event[1] != NOT_STARTED)HandleGameObject(NULL,true,pGo);break;
+            if (forge_event[1] != NOT_STARTED)HandleGameObject(0,true,pGo);break;
             case ENTRY_GLOWING_ANVIL_3: forge_anvil[2] = pGo->GetGUID();
-            if (forge_event[2] != NOT_STARTED)HandleGameObject(NULL,true,pGo);break;
+            if (forge_event[2] != NOT_STARTED)HandleGameObject(0,true,pGo);break;
             case ENTRY_GIANT_PORTCULLIS_1: portcullis[0] = pGo->GetGUID();
-            if (m_auiEncounter[2] == DONE)HandleGameObject(NULL,true,pGo);break;
+            if (m_auiEncounter[2] == DONE)HandleGameObject(0,true,pGo);break;
             case ENTRY_GIANT_PORTCULLIS_2: portcullis[1] = pGo->GetGUID();
-            if (m_auiEncounter[2] == DONE)HandleGameObject(NULL,true,pGo);break;
+            if (m_auiEncounter[2] == DONE)HandleGameObject(0,true,pGo);break;
             }
         }
 

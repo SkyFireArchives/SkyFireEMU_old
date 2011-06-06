@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -30,6 +23,7 @@ enum Spells
     //Spiteful Apparition
     SPELL_SPITE                                 = 68895,
     H_SPELL_SPITE                               = 70212,
+    SPELL_APPARITION_VISUAL                     = 69658,
 
     //Spectral Warden
     SPELL_VEIL_OF_SHADOWS                       = 69633,
@@ -433,11 +427,19 @@ public:
         void Reset()
         {
             events.Reset();
+
+            if(me->HasAura(SPELL_APPARITION_VISUAL))
+                me->RemoveAllAuras();
+
+            me->SetVisible(false);
+            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            events.ScheduleEvent(EVENT_SPITE, 8000);
+            events.ScheduleEvent(EVENT_SPITE, 4000);
+            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
+            me->SetVisible(true);
         }
 
         void UpdateAI(const uint32 diff)
@@ -445,6 +447,9 @@ public:
             //Return since we have no target
             if (!UpdateVictim())
                 return;
+
+            if(!me->HasAura(SPELL_APPARITION_VISUAL))
+                DoCast(me, SPELL_APPARITION_VISUAL);
 
             events.Update(diff);
 
@@ -456,8 +461,8 @@ public:
                 switch(eventId)
                 {
                     case EVENT_SPITE:
-                        DoCastVictim(SPELL_SPITE);
-                        events.RescheduleEvent(EVENT_SPITE, 8000);
+                        DoCastAOE(SPELL_SPITE);
+                        events.RescheduleEvent(EVENT_SPITE, 4000);
                         return;
                 }
             }
@@ -516,7 +521,7 @@ public:
                         events.RescheduleEvent(EVENT_VEIL_OF_SHADOWS, 10000);
                         return;
                     case EVENT_WAIL_OF_SOULS:
-                        if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             DoCast(target, SPELL_WAIL_OF_SOULS);
                         events.RescheduleEvent(EVENT_WAIL_OF_SOULS, 5000);
                         return;
@@ -631,7 +636,7 @@ public:
                         events.RescheduleEvent(EVENT_FROST_NOVA, 9600);
                         return;
                     case EVENT_SHADOW_LANCE:
-                        if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             DoCast(target, SPELL_SHADOW_LANCE);
                         events.RescheduleEvent(EVENT_SHADOW_LANCE, 8000);
                         return;
@@ -757,17 +762,17 @@ public:
                         events.RescheduleEvent(EVENT_RAISE_DEAD, 25000);
                         return;
                     case EVENT_SHADOW_BOLT:
-                        if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             DoCast(target, SPELL_SHADOW_BOLT);
                         events.RescheduleEvent(EVENT_SHADOW_BOLT, 5000);
                         return;
                     case EVENT_SOUL_SICKNESS:
-                        if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             DoCast(target, SPELL_SOUL_SICKNESS);
                         events.RescheduleEvent(EVENT_SOUL_SICKNESS, 10000);
                         return;
                     case EVENT_SOUL_SIPHON:
-                        if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             DoCast(target, SPELL_SOUL_SIPHON);
                         events.RescheduleEvent(EVENT_SOUL_SIPHON, 8000);
                         return;
@@ -830,12 +835,12 @@ public:
                         events.RescheduleEvent(EVENT_RAISE_DEAD, 25000);
                         return;
                     case EVENT_SHADOW_BOLT:
-                        if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             DoCast(target, SPELL_SHADOW_BOLT);
                         events.RescheduleEvent(EVENT_SHADOW_BOLT, 4000);
                         return;
                     case EVENT_DRAIN_LIFE:
-                        if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             DoCast(target, SPELL_DRAIN_LIFE);
                         events.RescheduleEvent(EVENT_DRAIN_LIFE, 9000);
                         return;

@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -55,35 +48,22 @@ class boss_erekem : public CreatureScript
 public:
     boss_erekem() : CreatureScript("boss_erekem") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_erekemAI (pCreature);
-    }
-
     struct boss_erekemAI : public ScriptedAI
     {
         boss_erekemAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        uint32 uiBloodlustTimer;
-        uint32 uiChainHealTimer;
-        uint32 uiEarthShockTimer;
-        uint32 uiLightningBoltTimer;
-        uint32 uiEarthShieldTimer;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
-            uiBloodlustTimer = 15000;
-            uiChainHealTimer = 0;
-            uiEarthShockTimer = urand(2000,8000);
-            uiLightningBoltTimer = urand(5000,10000);
-            uiEarthShieldTimer = 20000;
+            BloodlustTimer = 15000;
+            ChainHealTimer = 0;
+            EarthShockTimer = urand(2000,8000);
+            LightningBoltTimer = urand(5000,10000);
+            EarthShieldTimer = 20000;
             if (pInstance)
             {
                 if (pInstance->GetData(DATA_WAVE_COUNT) == 6)
@@ -163,23 +143,27 @@ public:
             //spam stormstrike in hc mode if spawns are dead
             if (IsHeroic())
             {
-                if (Creature *pGuard1 = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_EREKEM_GUARD_1) : 0))
+                if (StormStrikeTimer <= diff)
                 {
-                    if (Creature *pGuard2 = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_EREKEM_GUARD_2) : 0))
+                    if (Creature *pGuard1 = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_EREKEM_GUARD_1) : 0))
                     {
-                        if (!pGuard1->isAlive() && !pGuard2->isAlive())
-                            DoCast(me->getVictim(), SPELL_STORMSTRIKE);
+                        if (Creature *pGuard2 = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_EREKEM_GUARD_2) : 0))
+                        {
+                            if (!pGuard1->isAlive() && !pGuard2->isAlive())
+                                DoCast(me->getVictim(), SPELL_STORMSTRIKE);
+                            StormStrikeTimer = 2000;
+                        }
                     }
-                }
+                } else EarthShieldTimer -= diff;
             }
 
-            if (uiEarthShieldTimer <= diff)
+            if (EarthShieldTimer <= diff)
             {
                 DoCast(me, SPELL_EARTH_SHIELD);
-                uiEarthShieldTimer = 20000;
-            } else uiEarthShieldTimer -= diff;
+                EarthShieldTimer = 20000;
+            } else EarthShieldTimer -= diff;
 
-            if (uiChainHealTimer <= diff)
+            if (ChainHealTimer <= diff)
             {
                 if (uint64 TargetGUID = GetChainHealTargetGUID())
                 {
@@ -189,28 +173,28 @@ public:
                     //If one of the adds is dead spawn heals faster
                     Creature *pGuard1 = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_EREKEM_GUARD_1) : 0);
                     Creature *pGuard2 = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_EREKEM_GUARD_2) : 0);
-                    uiChainHealTimer = ((pGuard1 && !pGuard1->isAlive()) || (pGuard2 && !pGuard2->isAlive()) ? 3000 : 8000) + rand()%3000;
+                    ChainHealTimer = ((pGuard1 && !pGuard1->isAlive()) || (pGuard2 && !pGuard2->isAlive()) ? 3000 : 8000) + rand()%3000;
                 }
-            } else uiChainHealTimer -= diff;
+            } else ChainHealTimer -= diff;
 
-            if (uiBloodlustTimer <= diff)
+            if (BloodlustTimer <= diff)
             {
                 DoCast(me, SPELL_BLOODLUST);
-                uiBloodlustTimer = urand(35000,45000);
-            } else uiBloodlustTimer -= diff;
+                BloodlustTimer = urand(35000,45000);
+            } else BloodlustTimer -= diff;
 
-            if (uiEarthShockTimer <= diff)
+            if (EarthShockTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_EARTH_SHOCK);
-                uiEarthShockTimer = urand(8000,13000);
-            } else uiEarthShockTimer -= diff;
+                EarthShockTimer = urand(8000,13000);
+            } else EarthShockTimer -= diff;
 
-            if (uiLightningBoltTimer <= diff)
+            if (LightningBoltTimer <= diff)
             {
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_LIGHTNING_BOLT);
-                uiLightningBoltTimer = urand(18000,24000);
-            } else uiLightningBoltTimer -= diff;
+                LightningBoltTimer = urand(18000,24000);
+            } else LightningBoltTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -256,10 +240,23 @@ public:
 
             return 0;
         }
+
+    private:
+        uint32 BloodlustTimer;
+        uint32 ChainHealTimer;
+        uint32 EarthShockTimer;
+        uint32 LightningBoltTimer;
+        uint32 EarthShieldTimer;
+        uint32 StormStrikeTimer;
+
+        InstanceScript* pInstance;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_erekemAI (pCreature);
+    }
 };
-
 
 enum GuardSpells
 {
@@ -273,11 +270,6 @@ class mob_erekem_guard : public CreatureScript
 public:
     mob_erekem_guard() : CreatureScript("mob_erekem_guard") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new mob_erekem_guardAI (pCreature);
-    }
-
     struct mob_erekem_guardAI : public ScriptedAI
     {
         mob_erekem_guardAI(Creature *c) : ScriptedAI(c)
@@ -285,17 +277,11 @@ public:
             pInstance = c->GetInstanceScript();
         }
 
-        uint32 uiGushingWoundTimer;
-        uint32 uiHowlingScreechTimer;
-        uint32 uiStrikeTimer;
-
-        InstanceScript* pInstance;
-
         void Reset()
         {
-            uiStrikeTimer = urand(4000,8000);
-            uiHowlingScreechTimer = urand(8000,13000);
-            uiGushingWoundTimer = urand(1000,3000);
+            StrikeTimer = urand(4000,8000);
+            HowlingScreechTimer = urand(8000,13000);
+            GushingWoundTimer = urand(1000,3000);
         }
 
         void AttackStart(Unit* pWho)
@@ -321,28 +307,37 @@ public:
 
             DoMeleeAttackIfReady();
 
-            if (uiStrikeTimer <= diff)
+            if (StrikeTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_STRIKE);
-                uiStrikeTimer = urand(4000,8000);
-            } else uiStrikeTimer -= diff;
+                StrikeTimer = urand(4000,8000);
+            } else StrikeTimer -= diff;
 
-            if (uiHowlingScreechTimer <= diff)
+            if (HowlingScreechTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_HOWLING_SCREECH);
-                uiHowlingScreechTimer = urand(8000,13000);
-            } else uiHowlingScreechTimer -= diff;
+                HowlingScreechTimer = urand(8000,13000);
+            } else HowlingScreechTimer -= diff;
 
-            if (uiGushingWoundTimer <= diff)
+            if (GushingWoundTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_GUSHING_WOUND);
-                uiGushingWoundTimer = urand(7000,12000);
-            } else uiGushingWoundTimer -= diff;
+                GushingWoundTimer = urand(7000,12000);
+            } else GushingWoundTimer -= diff;
         }
+
+    private:
+        uint32 GushingWoundTimer;
+        uint32 HowlingScreechTimer;
+        uint32 StrikeTimer;
+        InstanceScript* pInstance;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_erekem_guardAI (pCreature);
+    }
 };
-
 
 void AddSC_boss_erekem()
 {

@@ -1,31 +1,25 @@
-/*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ /*
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* ScriptData
 SDName: Azuremyst_Isle
 SD%Complete: 75
-SDComment: Quest support: 9283, 9537, 9582, 9554, 9531, 9303(special flight path, proper model for mount missing). Injured Draenei cosmetic only, 9582.
+SDComment: Quest support: 9283, 9537, 9582, 9554, 9531, ? (special flight path, proper model for mount missing). Injured Draenei cosmetic only, 9582.
 SDCategory: Azuremyst Isle
 EndScriptData */
 
@@ -35,7 +29,6 @@ npc_engineer_spark_overgrind
 npc_injured_draenei
 npc_magwin
 npc_geezle
-mob_nestlewood_owlkin
 go_ravager_cage
 npc_death_ravager
 EndContentData */
@@ -145,7 +138,7 @@ public:
                     {
                         DoScriptText(RAND(SAY_HEAL1, SAY_HEAL2, SAY_HEAL3, SAY_HEAL4), me, pPlayer);
 
-                        pPlayer->TalkedToCreature(me->GetEntry(),me->GetGUID());
+                        pPlayer->TalkedToCreature(me->GetEntry(), me->GetGUID());
                     }
 
                     me->GetMotionMaster()->Clear();
@@ -161,7 +154,7 @@ public:
             if (RunAwayTimer)
             {
                 if (RunAwayTimer <= diff)
-                    me->ForcedDespawn();
+                    me->DespawnOrUnsummon();
                 else
                     RunAwayTimer -= diff;
 
@@ -292,9 +285,6 @@ public:
 
 };
 
-
-
-
 /*######
 ## npc_injured_draenei
 ######*/
@@ -400,7 +390,7 @@ public:
             case 29:
                 DoScriptText(EMOTE_HUG, me, pPlayer);
                 DoScriptText(SAY_END2, me, pPlayer);
-                pPlayer->GroupEventHappens(QUEST_A_CRY_FOR_SAY_HELP,me);
+                pPlayer->GroupEventHappens(QUEST_A_CRY_FOR_SAY_HELP, me);
                 break;
             }
         }
@@ -414,7 +404,6 @@ public:
     };
 
 };
-
 
 /*######
 ## npc_geezle
@@ -544,7 +533,7 @@ public:
                 if ((*itr)->GetQuestStatus(QUEST_TREES_COMPANY) == QUEST_STATUS_INCOMPLETE
                     &&(*itr)->HasAura(SPELL_TREE_DISGUISE))
                 {
-                    (*itr)->KilledMonsterCredit(MOB_SPARK,0);
+                    (*itr)->KilledMonsterCredit(MOB_SPARK, 0);
                 }
             }
         }
@@ -552,7 +541,7 @@ public:
         void DespawnNagaFlag(bool despawn)
         {
             std::list<GameObject*> FlagList;
-            me->GetGameObjectListWithEntryInGrid(FlagList,GO_NAGA_FLAG, 100.0f);
+            me->GetGameObjectListWithEntryInGrid(FlagList, GO_NAGA_FLAG, 100.0f);
 
             if (!FlagList.empty())
             {
@@ -582,80 +571,6 @@ public:
 
 };
 
-/*######
-## mob_nestlewood_owlkin
-######*/
-
-enum eOwlkin
-{
-    SPELL_INOCULATE_OWLKIN  = 29528,
-    ENTRY_OWLKIN            = 16518,
-    ENTRY_OWLKIN_INOC       = 16534
-};
-
-class npc_nestlewood_owlkin : public CreatureScript
-{
-public:
-    npc_nestlewood_owlkin() : CreatureScript("npc_nestlewood_owlkin") { }
-
-    struct npc_nestlewood_owlkinAI : public ScriptedAI
-    {
-        npc_nestlewood_owlkinAI(Creature *c) : ScriptedAI(c) {}
-
-        uint32 DespawnTimer;
-
-        void Reset()
-        {
-            DespawnTimer = 0;
-        }
-
-        void UpdateAI(const uint32 diff)
-        {
-            //timer gets adjusted by the triggered aura effect
-            if (DespawnTimer)
-            {
-                if (DespawnTimer <= diff)
-                {
-                    //once we are able to, despawn us
-                    me->ForcedDespawn();
-                    return;
-                } else DespawnTimer -= diff;
-            }
-
-            if (!UpdateVictim())
-                return;
-
-            DoMeleeAttackIfReady();
-        }
-    };
-
-    bool EffectDummyCreature(Unit * /*pCaster*/, uint32 spellId, uint32 effIndex, Creature *pCreatureTarget)
-    {
-        //always check spellid and effectindex
-        if (spellId == SPELL_INOCULATE_OWLKIN && effIndex == 0)
-        {
-            if (pCreatureTarget->GetEntry() != ENTRY_OWLKIN)
-                return true;
-
-            pCreatureTarget->UpdateEntry(ENTRY_OWLKIN_INOC);
-
-            //set despawn timer, since we want to remove Creature after a short time
-            CAST_AI(npc_nestlewood_owlkin::npc_nestlewood_owlkinAI, pCreatureTarget->AI())->DespawnTimer = 15000;
-
-            //always return true when we are handling this spell and effect
-            return true;
-        }
-        return false;
-    }
-
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new npc_nestlewood_owlkinAI (pCreature);
-    }
-
-};
-
-
 enum eRavegerCage
 {
     NPC_DEATH_RAVAGER       = 17556,
@@ -677,7 +592,7 @@ public:
         {
             if (Creature* ravager = pGo->FindNearestCreature(NPC_DEATH_RAVAGER, 5.0f, true))
             {
-                ravager->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
+                ravager->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 ravager->SetReactState(REACT_AGGRESSIVE);
                 ravager->AI()->AttackStart(pPlayer);
             }
@@ -740,75 +655,109 @@ public:
 /*########
 ## Quest: The Prophecy of Akida
 ########*/
+
 enum BristlelimbCage
 {
     QUEST_THE_PROPHECY_OF_AKIDA         = 9544,
     NPC_STILLPINE_CAPITIVE              = 17375,
     GO_BRISTELIMB_CAGE                  = 181714,
+
     CAPITIVE_SAY_1                      = -1000474,
     CAPITIVE_SAY_2                      = -1000475,
-    CAPITIVE_SAY_3                      = -1000476
+    CAPITIVE_SAY_3                      = -1000476,
+
+    POINT_INIT                          = 1,
+    EVENT_DESPAWN                       = 1,
 };
 
 class npc_stillpine_capitive : public CreatureScript
 {
-public:
-    npc_stillpine_capitive() : CreatureScript("npc_stillpine_capitive") { }
+    public:
+        npc_stillpine_capitive() : CreatureScript("npc_stillpine_capitive") { }
 
-    struct npc_stillpine_capitiveAI : public ScriptedAI
-    {
-        npc_stillpine_capitiveAI(Creature *c) : ScriptedAI(c){}
-
-        uint32 FleeTimer;
-
-        void Reset()
+        struct npc_stillpine_capitiveAI : public ScriptedAI
         {
-            FleeTimer = 0;
-            GameObject* cage = me->FindNearestGameObject(GO_BRISTELIMB_CAGE, 5.0f);
-            if(cage)
-                cage->ResetDoorOrButton();
-        }
-
-        void UpdateAI(const uint32 diff)
-        {
-            if(FleeTimer)
+            npc_stillpine_capitiveAI(Creature* creature) : ScriptedAI(creature)
             {
-                if(FleeTimer <= diff)
-                    me->ForcedDespawn();
-                else FleeTimer -= diff;
             }
+
+            void Reset()
+            {
+                if (GameObject* cage = me->FindNearestGameObject(GO_BRISTELIMB_CAGE, 5.0f))
+                {
+                    cage->SetLootState(GO_JUST_DEACTIVATED);
+                    cage->SetGoState(GO_STATE_READY);
+                }
+                _events.Reset();
+                _player = NULL;
+                _movementComplete = false;
+            }
+
+            void StartMoving(Player* owner)
+            {
+                if (owner)
+                {
+                    DoScriptText(RAND(CAPITIVE_SAY_1, CAPITIVE_SAY_2, CAPITIVE_SAY_3), me, owner);
+                    _player = owner;
+                }
+                Position pos;
+                me->GetNearPosition(pos, 3.0f, 0.0f);
+                me->GetMotionMaster()->MovePoint(POINT_INIT, pos);
+            }
+
+            void MovementInform(uint32 type, uint32 id)
+            {
+                if (type != POINT_MOTION_TYPE || id != POINT_INIT)
+                    return;
+
+                if (_player)
+                    _player->KilledMonsterCredit(me->GetEntry(), me->GetGUID());
+
+                _movementComplete = true;
+                _events.ScheduleEvent(EVENT_DESPAWN, 3500);
+            }
+
+            void UpdateAI(uint32 const diff)
+            {
+                if (!_movementComplete)
+                    return;
+
+                _events.Update(diff);
+
+                if (_events.ExecuteEvent() == EVENT_DESPAWN)
+                    me->DespawnOrUnsummon();
+            }
+
+        private:
+            Player* _player;
+            EventMap _events;
+            bool _movementComplete;
+        };
+
+        CreatureAI* GetAI(Creature* creature) const
+        {
+            return new npc_stillpine_capitiveAI(creature);
         }
-    };
-
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new npc_stillpine_capitiveAI(pCreature);
-    }
-
 };
 
 class go_bristlelimb_cage : public GameObjectScript
 {
-public:
-    go_bristlelimb_cage() : GameObjectScript("go_bristlelimb_cage") { }
+    public:
+        go_bristlelimb_cage() : GameObjectScript("go_bristlelimb_cage") { }
 
-    bool OnGossipHello(Player* pPlayer, GameObject* pGo)
-    {
-        if(pPlayer->GetQuestStatus(QUEST_THE_PROPHECY_OF_AKIDA) == QUEST_STATUS_INCOMPLETE)
+        bool OnGossipHello(Player* player, GameObject* go)
         {
-            Creature* pCreature = pGo->FindNearestCreature(NPC_STILLPINE_CAPITIVE, 5.0f, true);
-            if(pCreature)
+            if (player->GetQuestStatus(QUEST_THE_PROPHECY_OF_AKIDA) == QUEST_STATUS_INCOMPLETE)
             {
-                DoScriptText(RAND(CAPITIVE_SAY_1, CAPITIVE_SAY_2, CAPITIVE_SAY_3), pCreature, pPlayer);
-                pCreature->GetMotionMaster()->MoveFleeing(pPlayer, 3500);
-                pPlayer->KilledMonsterCredit(pCreature->GetEntry(), pCreature->GetGUID());
-                CAST_AI(npc_stillpine_capitive::npc_stillpine_capitiveAI, pCreature->AI())->FleeTimer = 3500;
-                return false;
+                if (Creature* capitive = go->FindNearestCreature(NPC_STILLPINE_CAPITIVE, 5.0f, true))
+                {
+                    go->ResetDoorOrButton();
+                    CAST_AI(npc_stillpine_capitive::npc_stillpine_capitiveAI, capitive->AI())->StartMoving(player);
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
-    }
-
 };
 
 void AddSC_azuremyst_isle()
@@ -818,7 +767,6 @@ void AddSC_azuremyst_isle()
     new npc_injured_draenei();
     new npc_magwin();
     new npc_geezle();
-    new npc_nestlewood_owlkin();
     new npc_death_ravager();
     new go_ravager_cage();
     new npc_stillpine_capitive();

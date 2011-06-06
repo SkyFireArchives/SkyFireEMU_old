@@ -127,7 +127,7 @@ public:
             GahzRillaEncounter = NOT_STARTED;
         }
 
-        void OnCreatureCreate(Creature* pCreature, bool add)
+        void OnCreatureCreate(Creature* pCreature, bool /*add*/)
         {
             switch (pCreature->GetEntry())
             {
@@ -156,16 +156,9 @@ public:
                     break;
                 case NPC_GAHZRILLA:
                     if (GahzRillaEncounter >= IN_PROGRESS)
-                    {
-                        if (add)
-                        {
-                            pCreature->DisappearAndDie();
-                        }
-                    }
+                        pCreature->DisappearAndDie();
                     else
-                        {
-                            GahzRillaEncounter = IN_PROGRESS;
-                        }
+                        GahzRillaEncounter = IN_PROGRESS;
                     break;
             }
         }

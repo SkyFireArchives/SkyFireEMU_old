@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -29,9 +22,9 @@ enum Spells
 {
     SPELL_BLOODTHIRST                             = 55968, //Trigger Spell + add aura
     SPELL_CONJURE_FLAME_SPHERE                    = 55931,
-    SPELL_FLAME_SPHERE_SUMMON_1                   = 55895,// 1x 30106
-    H_SPELL_FLAME_SPHERE_SUMMON_1                 = 59511,// 1x 31686
-    H_SPELL_FLAME_SPHERE_SUMMON_2                 = 59512,// 1x 31687
+    SPELL_FLAME_SPHERE_SUMMON_1                   = 55895, // 1x 30106
+    H_SPELL_FLAME_SPHERE_SUMMON_1                 = 59511, // 1x 31686
+    H_SPELL_FLAME_SPHERE_SUMMON_2                 = 59512, // 1x 31687
     SPELL_FLAME_SPHERE_SPAWN_EFFECT               = 55891,
     SPELL_FLAME_SPHERE_VISUAL                     = 55928,
     SPELL_FLAME_SPHERE_PERIODIC                   = 55926,
@@ -49,21 +42,22 @@ enum Misc
 {
     DATA_EMBRACE_DMG                              = 20000,
     H_DATA_EMBRACE_DMG                            = 40000,
-    DATA_SPHERE_DISTANCE                          =    15
+    DATA_SPHERE_DISTANCE                          =   100
 };
 #define DATA_SPHERE_ANGLE_OFFSET            0.7f
 #define DATA_GROUND_POSITION_Z             11.4f
 
 enum Yells
 {
-    SAY_AGGRO                                     = -1619021,
-    SAY_SLAY_1                                    = -1619022,
-    SAY_SLAY_2                                    = -1619023,
-    SAY_DEATH                                     = -1619024,
-    SAY_FEED_1                                    = -1619025,
-    SAY_FEED_2                                    = -1619026,
-    SAY_VANISH_1                                  = -1619027,
-    SAY_VANISH_2                                  = -1619028
+    SAY_AGGRO                                     = -1619021, // 14360
+    SAY_SLAY_1                                    = -1619022, // 14365
+    SAY_SLAY_2                                    = -1619023, // 14366
+    //SAY_SLAY_3                                  = ????      // 14367
+    SAY_DEATH                                     = -1619024, // 14368
+    SAY_FEED_1                                    = -1619025, // 14363
+    SAY_FEED_2                                    = -1619026, // 14364
+    SAY_VANISH_1                                  = -1619027, // 14361
+    SAY_VANISH_2                                  = -1619028  // 14362
 };
 enum CombatPhase
 {
@@ -91,34 +85,30 @@ public:
             pInstance = c->GetInstanceScript();
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+
+            //SPELL_BLOODTHIRST should trigger effect 1 on self
+            //TODO: move to core
+            SpellEntry *TempSpell;
+            TempSpell = GET_SPELL(SPELL_BLOODTHIRST);
+            if (TempSpell)
+                TempSpell->EffectImplicitTargetA[1] = 1;
+
+            //below may need another adjustment
+            TempSpell = GET_SPELL(DUNGEON_MODE(SPELL_FLAME_SPHERE_PERIODIC, H_SPELL_FLAME_SPHERE_PERIODIC));
+            if (TempSpell)
+                TempSpell->EffectAmplitude[0] = 500;
         }
-
-        uint32 uiBloodthirstTimer;
-        uint32 uiVanishTimer;
-        uint32 uiWaitTimer;
-        uint32 uiEmbraceTimer;
-        uint32 uiEmbraceTakenDamage;
-        uint32 uiFlamesphereTimer;
-        uint32 uiPhaseTimer;
-
-        uint64 uiEmbraceTarget;
-
-        CombatPhase Phase;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
-            uiBloodthirstTimer = 10*IN_MILLISECONDS;
-            uiVanishTimer = urand(25*IN_MILLISECONDS,35*IN_MILLISECONDS);
-            uiEmbraceTimer = 20*IN_MILLISECONDS;
-            uiFlamesphereTimer = 5*IN_MILLISECONDS;
-            uiEmbraceTakenDamage = 0;
+            BloodthirstTimer = 10*IN_MILLISECONDS;
+            VanishTimer = urand(25*IN_MILLISECONDS, 35*IN_MILLISECONDS);
+            EmbraceTimer = 20*IN_MILLISECONDS;
+            FlamesphereTimer = 5*IN_MILLISECONDS;
+            EmbraceTakenDamage = 0;
             Phase = NORMAL;
-            uiPhaseTimer = 0;
-            uiEmbraceTarget = 0;
+            PhaseTimer = 0;
+            EmbraceTarget = 0;
             if (pInstance)
                 pInstance->SetData(DATA_PRINCE_TALDARAM_EVENT, NOT_STARTED);
         }
@@ -134,7 +124,8 @@ public:
         {
             if (!UpdateVictim())
                 return;
-            if (uiPhaseTimer <= diff)
+
+            if (PhaseTimer <= diff)
             {
                 switch (Phase)
                 {
@@ -174,7 +165,7 @@ public:
                         }
 
                         Phase = NORMAL;
-                        uiPhaseTimer = 0;
+                        PhaseTimer = 0;
                         break;
                     }
                     case JUST_VANISHED:
@@ -185,38 +176,39 @@ public:
                             me->GetMotionMaster()->MoveChase(pEmbraceTarget);
                         }
                         Phase = VANISHED;
-                        uiPhaseTimer = 1300;
+                        PhaseTimer = 1300;
                         break;
                     case VANISHED:
+                        me->SetVisible(true);
                         if (Unit *pEmbraceTarget = GetEmbraceTarget())
-                            DoCast(pEmbraceTarget, SPELL_EMBRACE_OF_THE_VAMPYR);
+                            DoCast(pEmbraceTarget, DUNGEON_MODE(SPELL_EMBRACE_OF_THE_VAMPYR, H_SPELL_EMBRACE_OF_THE_VAMPYR));
                         me->GetMotionMaster()->Clear();
                         me->SetSpeed(MOVE_WALK, 1.0f, true);
                         me->GetMotionMaster()->MoveChase(me->getVictim());
                         Phase = FEEDING;
-                        uiPhaseTimer = 20*IN_MILLISECONDS;
+                        PhaseTimer = 20*IN_MILLISECONDS;
                         break;
                     case FEEDING:
                         Phase = NORMAL;
-                        uiPhaseTimer = 0;
-                        uiEmbraceTarget = 0;
+                        PhaseTimer = 0;
+                        EmbraceTarget = 0;
                         break;
                     case NORMAL:
-                        if (uiBloodthirstTimer <= diff)
+                        if (BloodthirstTimer <= diff)
                         {
                             DoCast(me->getVictim(), SPELL_BLOODTHIRST);
-                            uiBloodthirstTimer = 10*IN_MILLISECONDS;
-                        } else uiBloodthirstTimer -= diff;
+                            BloodthirstTimer = 10*IN_MILLISECONDS;
+                        } else BloodthirstTimer -= diff;
 
-                        if (uiFlamesphereTimer <= diff)
+                        if (FlamesphereTimer <= diff)
                         {
                             DoCast(me, SPELL_CONJURE_FLAME_SPHERE);
                             Phase = CASTING_FLAME_SPHERES;
-                            uiPhaseTimer = 3*IN_MILLISECONDS + diff;
-                            uiFlamesphereTimer = 15*IN_MILLISECONDS;
-                        } else uiFlamesphereTimer -= diff;
+                            PhaseTimer = 3*IN_MILLISECONDS + diff;
+                            FlamesphereTimer = 15*IN_MILLISECONDS;
+                        } else FlamesphereTimer -= diff;
 
-                        if (uiVanishTimer <= diff)
+                        if (VanishTimer <= diff)
                         {
                             //Count alive players
                             Unit *pTarget = NULL;
@@ -233,21 +225,22 @@ public:
                             //He only vanishes if there are 3 or more alive players
                             if (target_list.size() > 2)
                             {
-                                DoScriptText(RAND(SAY_VANISH_1,SAY_VANISH_2), me);
-                                DoCast(me, SPELL_VANISH);
+                                DoScriptText(RAND(SAY_VANISH_1, SAY_VANISH_2), me);
+                                //DoCast(me, SPELL_VANISH);                             // causes health reset issue?
+                                me->SetVisible(false);
                                 Phase = JUST_VANISHED;
-                                uiPhaseTimer = 500;
+                                PhaseTimer = 500;
                                 if (Unit* pEmbraceTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                                    uiEmbraceTarget = pEmbraceTarget->GetGUID();
+                                    EmbraceTarget = pEmbraceTarget->GetGUID();
 
                             }
-                            uiVanishTimer = urand(25*IN_MILLISECONDS,35*IN_MILLISECONDS);
-                        } else uiVanishTimer -= diff;
+                            VanishTimer = urand(25*IN_MILLISECONDS, 35*IN_MILLISECONDS);
+                        } else VanishTimer -= diff;
 
                         DoMeleeAttackIfReady();
                     break;
                 }
-            } else uiPhaseTimer -= diff;
+            } else PhaseTimer -= diff;
         }
 
         void DamageTaken(Unit* /*done_by*/, uint32 &damage)
@@ -256,14 +249,33 @@ public:
 
             if (Phase == FEEDING && pEmbraceTarget && pEmbraceTarget->isAlive())
             {
-              uiEmbraceTakenDamage += damage;
-              if (uiEmbraceTakenDamage > (uint32) DUNGEON_MODE(DATA_EMBRACE_DMG, H_DATA_EMBRACE_DMG))
+              EmbraceTakenDamage += damage;
+              if (EmbraceTakenDamage > (uint32) DUNGEON_MODE(DATA_EMBRACE_DMG, H_DATA_EMBRACE_DMG))
               {
                   Phase = NORMAL;
-                  uiPhaseTimer = 0;
-                  uiEmbraceTarget = 0;
+                  PhaseTimer = 0;
+                  EmbraceTarget = 0;
                   me->CastStop();
               }
+            }
+        }
+
+        void MovementInform(uint32 type, uint32 point)
+        {
+            if (type != POINT_MOTION_TYPE)
+                return;
+
+            switch (point)
+            {
+            case 1:
+                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                me->SetUnitMovementFlags(MOVEMENTFLAG_WALKING);
+                me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), DATA_GROUND_POSITION_Z, me->GetOrientation());
+                break;
+            default:
+                break;
             }
         }
 
@@ -284,8 +296,8 @@ public:
             if (Phase == FEEDING && pEmbraceTarget && victim == pEmbraceTarget)
             {
                 Phase = NORMAL;
-                uiPhaseTimer = 0;
-                uiEmbraceTarget = 0;
+                PhaseTimer = 0;
+                EmbraceTarget = 0;
             }
             DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
         }
@@ -313,24 +325,35 @@ public:
 
         Unit* GetEmbraceTarget()
         {
-            if (!uiEmbraceTarget)
+            if (!EmbraceTarget)
                 return NULL;
 
-            return Unit::GetUnit(*me, uiEmbraceTarget);
+            return Unit::GetUnit(*me, EmbraceTarget);
         }
 
         void RemovePrison()
         {
             if (!pInstance)
                 return;
-            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+
+            me->RemoveAllAuras();
             me->RemoveAurasDueToSpell(SPELL_BEAM_VISUAL);
-            me->SetUnitMovementFlags(MOVEMENTFLAG_WALKING);
-            me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), DATA_GROUND_POSITION_Z, me->GetOrientation());
+            me->GetMotionMaster()->MovePoint(1, 528.851563f, -845.959595f, 11.308105f);
             uint64 prison_GUID = pInstance->GetData64(DATA_PRINCE_TALDARAM_PLATFORM);
             pInstance->HandleGameObject(prison_GUID,true);
         }
+
+    private:
+        uint32 BloodthirstTimer;
+        uint32 VanishTimer;
+        uint32 WaitTimer;
+        uint32 EmbraceTimer;
+        uint32 EmbraceTakenDamage;
+        uint32 FlamesphereTimer;
+        uint32 PhaseTimer;
+        uint64 EmbraceTarget;
+        CombatPhase Phase;
+        InstanceScript* pInstance;
     };
 
     CreatureAI *GetAI(Creature *creature) const
@@ -351,9 +374,6 @@ public:
             pInstance = c->GetInstanceScript();
         }
 
-        uint32 uiDespawnTimer;
-        InstanceScript* pInstance;
-
         void Reset()
         {
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -362,8 +382,8 @@ public:
             me->SetFloatValue(OBJECT_FIELD_SCALE_X, 1.0f);
             DoCast(me, SPELL_FLAME_SPHERE_VISUAL);
             DoCast(me, SPELL_FLAME_SPHERE_SPAWN_EFFECT);
-            DoCast(me, SPELL_FLAME_SPHERE_PERIODIC);
-            uiDespawnTimer = 10*IN_MILLISECONDS;
+            DoCast(me, DUNGEON_MODE(SPELL_FLAME_SPHERE_PERIODIC, H_SPELL_FLAME_SPHERE_PERIODIC));
+            DespawnTimer = 10*IN_MILLISECONDS;
         }
 
         void EnterCombat(Unit * /*who*/) {}
@@ -376,11 +396,15 @@ public:
 
         void UpdateAI(const uint32 diff)
         {
-            if (uiDespawnTimer <= diff)
+            if (DespawnTimer <= diff)
                 me->DisappearAndDie();
             else
-                uiDespawnTimer -= diff;
+                DespawnTimer -= diff;
         }
+
+    private:
+        uint32 DespawnTimer;
+        InstanceScript* pInstance;
     };
 
     CreatureAI *GetAI(Creature *creature) const

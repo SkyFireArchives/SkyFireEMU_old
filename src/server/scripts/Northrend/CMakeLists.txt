@@ -144,7 +144,6 @@ set(scripts_STAT_SRCS
   Northrend/VioletHold/boss_erekem.cpp
   Northrend/VioletHold/violet_hold.cpp
   Northrend/IcecrownCitadel/instance_icecrown_citadel.cpp
-  Northrend/IcecrownCitadel/icecrown_citadel.cpp
   Northrend/IcecrownCitadel/icecrown_citadel.h
   Northrend/IcecrownCitadel/icecrown_citadel_teleport.cpp
   Northrend/IcecrownCitadel/boss_lord_marrowgar.cpp
@@ -154,8 +153,6 @@ set(scripts_STAT_SRCS
   Northrend/IcecrownCitadel/boss_rotface.cpp
   Northrend/IcecrownCitadel/boss_professor_putricide.cpp
   Northrend/IcecrownCitadel/boss_blood_prince_council.cpp
-  Northrend/IcecrownCitadel/boss_blood_queen_lana_thel.cpp
-  Northrend/IcecrownCitadel/boss_sindragosa.cpp
   Northrend/zuldrak.cpp
   Northrend/icecrown.cpp
   Northrend/Gundrak/boss_slad_ran.cpp
@@ -174,10 +171,6 @@ set(scripts_STAT_SRCS
   Northrend/DraktharonKeep/drak_tharon_keep.h
   Northrend/DraktharonKeep/boss_tharon_ja.cpp
   Northrend/DraktharonKeep/boss_dred.cpp
-  Northrend/RubySanctum/instance_ruby_sanctum.cpp
-  Northrend/RubySanctum/ruby_sanctum.h
-  Northrend/RubySanctum/ruby_sanctum.cpp
-  Northrend/RubySanctum/boss_baltharus_the_warborn.cpp
 )
 
 message("  -> Prepared: Northrend")

@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -30,9 +23,9 @@ enum Events
     // Koralon
     EVENT_BURNING_BREATH    = 1,
     EVENT_BURNING_FURY      = 2,
-    EVENT_FLAME_CINDER_A    = 3,
-    EVENT_METEOR_FISTS_A    = 4,
-    EVENT_METEOR_FISTS_B    = 5,
+    EVENT_FLAME_CINDER_A_1  = 3,
+    EVENT_FLAME_CINDER_A_2  = 4,
+    EVENT_METEOR_FISTS      = 5,
 
     // Flame Warder
     EVENT_FW_LAVA_BIRST     = 6,
@@ -45,15 +38,19 @@ enum Spells
     // Spells Koralon
     SPELL_BURNING_BREATH                        = 66665,
     SPELL_BURNING_FURY                          = 66721,
-    SPELL_FLAME_CINDER_A                        = 66684,
+    SPELL_FLAME_CINDER_A                        = 66682,
     SPELL_FLAME_CINDER_B                        = 66681, // don't know the real relation to SPELL_FLAME_CINDER_A atm.
-    SPELL_METEOR_FISTS_A                        = 66725,
-    SPELL_METEOR_FISTS_B                        = 67333,
+    SPELL_METEOR_FISTS                          = 66725,
 
     // Spells Flame Warder
     SPELL_FW_LAVA_BIRST                         = 66813,
     SPELL_FW_METEOR_FISTS_A                     = 66808,
     SPELL_FW_METEOR_FISTS_B                     = 67331,
+};
+
+enum Emotes
+{
+    EMOTE_METEOR_FISTS                          = -1590004
 };
 
 class boss_koralon : public CreatureScript
@@ -66,17 +63,35 @@ class boss_koralon : public CreatureScript
             boss_koralonAI(Creature* creature) : BossAI(creature, DATA_KORALON)
             {
                 me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
+            }
+
+            void Reset()
+            {
+                events.Reset();
+                if (instance)
+                    instance->SetData(DATA_KORALON, NOT_STARTED);
+            }
+
+            void JustDied(Unit* killer)
+            {
+                if (instance)
+                    instance->SetData(DATA_KORALON, DONE);
+
+                _JustDied();
             }
 
             void EnterCombat(Unit* /*who*/)
             {
+                if (instance)
+                    instance->SetData(DATA_KORALON, IN_PROGRESS);
+
                 DoCast(me, SPELL_BURNING_FURY);
 
-                events.ScheduleEvent(EVENT_BURNING_FURY, 20000);    // TODO check timer
-                events.ScheduleEvent(EVENT_BURNING_BREATH, 15000);  // 1st after 15sec, then every 45sec
-                events.ScheduleEvent(EVENT_METEOR_FISTS_A, 75000);  // 1st after 75sec, then every 45sec
-                events.ScheduleEvent(EVENT_FLAME_CINDER_A, 30000);  // TODO check timer
+                events.ScheduleEvent(EVENT_BURNING_FURY, 20000);    
+                events.ScheduleEvent(EVENT_BURNING_BREATH, 15000);  
+                events.ScheduleEvent(EVENT_METEOR_FISTS, 35000);  
+                events.ScheduleEvent(EVENT_FLAME_CINDER_A_1, 5000);
 
                 _EnterCombat();
             }
@@ -101,19 +116,24 @@ class boss_koralon : public CreatureScript
                             break;
                         case EVENT_BURNING_BREATH:
                             DoCast(me, SPELL_BURNING_BREATH);
+                            me->GetMotionMaster()->MoveRotate(10000, ROTATE_DIRECTION_RIGHT);
                             events.ScheduleEvent(EVENT_BURNING_BREATH, 45000);
                             break;
-                        case EVENT_METEOR_FISTS_A:
-                            DoCast(me, SPELL_METEOR_FISTS_A);
-                            events.ScheduleEvent(EVENT_METEOR_FISTS_B, 1500);
+                        case EVENT_METEOR_FISTS:
+                            DoScriptText(EMOTE_METEOR_FISTS, me);
+                            DoCast(me, SPELL_METEOR_FISTS);
+                            MeteorFistCount = 6;
+                            events.ScheduleEvent(EVENT_METEOR_FISTS, 45000);
                             break;
-                        case EVENT_METEOR_FISTS_B:
-                            DoCast(me, SPELL_METEOR_FISTS_B);
-                            events.ScheduleEvent(EVENT_METEOR_FISTS_A, 45000);
+                        case EVENT_FLAME_CINDER_A_1:
+                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                                DoCast(target, SPELL_FLAME_CINDER_A);
+                            events.ScheduleEvent(EVENT_FLAME_CINDER_A_2, 1500);
                             break;
-                        case EVENT_FLAME_CINDER_A:
-                            DoCast(me, SPELL_FLAME_CINDER_A);
-                            events.ScheduleEvent(EVENT_FLAME_CINDER_A, 30000);
+                        case EVENT_FLAME_CINDER_A_2:
+                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                                DoCast(target, SPELL_FLAME_CINDER_A);
+                            events.ScheduleEvent(EVENT_FLAME_CINDER_A_1, 15000);
                             break;
                         default:
                             break;
@@ -122,6 +142,8 @@ class boss_koralon : public CreatureScript
 
                 DoMeleeAttackIfReady();
             }
+        private:
+            int8 MeteorFistCount;
         };
 
         CreatureAI* GetAI(Creature* creature) const
@@ -174,11 +196,15 @@ class mob_flame_warder : public CreatureScript
                             break;
                         case EVENT_FW_METEOR_FISTS_A:
                             DoCast(me, SPELL_FW_METEOR_FISTS_A);
+                            MetorTick = 6;
                             events.ScheduleEvent(EVENT_FW_METEOR_FISTS_B, 1500);
                             break;
                         case EVENT_FW_METEOR_FISTS_B:
                             DoCast(me, SPELL_FW_METEOR_FISTS_B);
-                            events.ScheduleEvent(EVENT_FW_METEOR_FISTS_A, 20000);
+                            if(--MetorTick)
+                                events.ScheduleEvent(EVENT_FW_METEOR_FISTS_B, 1500);
+                            else
+                                events.ScheduleEvent(EVENT_FW_METEOR_FISTS_A, 20000);
                             break;
                         default:
                             break;
@@ -190,6 +216,7 @@ class mob_flame_warder : public CreatureScript
 
         private:
             EventMap events;
+            uint8 MetorTick;
         };
 
         CreatureAI* GetAI(Creature* creature) const
@@ -198,8 +225,58 @@ class mob_flame_warder : public CreatureScript
         }
 };
 
+class spell_koralon_meteor_fists : public SpellScriptLoader
+{
+    public:
+        spell_koralon_meteor_fists() : SpellScriptLoader("spell_koralon_meteor_fists") { }
+
+        class spell_koralon_meteor_fists_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_koralon_meteor_fists_SpellScript);
+
+            uint32 totalTargets;
+
+            void FilterTargets(std::list<Unit*>& unitList)
+            {
+                totalTargets = NULL;
+                for (std::list<Unit*>::iterator itr = unitList.begin() ; itr != unitList.end(); ++itr)
+                {
+                    Unit *target = (*itr);
+                    if (!target)
+                        continue;
+
+                    if (!target->IsWithinDist(GetTargetUnit(), 10.0f))
+                    {
+                        unitList.remove(target);
+                        continue;
+                    }
+                    
+                    totalTargets++;
+                }
+            }
+
+            void CalculateSplitDamage()
+            {
+                if (totalTargets)
+                    SetHitDamage(GetHitDamage() / totalTargets);
+            }
+
+            void Register()
+            {
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_koralon_meteor_fists_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_TARGET_ENEMY);
+                OnHit += SpellHitFn(spell_koralon_meteor_fists_SpellScript::CalculateSplitDamage);
+            }
+        };
+
+        SpellScript *GetSpellScript() const
+        {
+            return new spell_koralon_meteor_fists_SpellScript();
+        }
+};
+
 void AddSC_boss_koralon()
 {
     new boss_koralon();
     new mob_flame_warder();
+    new spell_koralon_meteor_fists();
 }

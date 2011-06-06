@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -50,8 +43,7 @@ public:
         instance_gundrak_InstanceMapScript(Map* pMap) : InstanceScript(pMap)
         {
             bHeroicMode = pMap->IsHeroic();
-            Initialize();
-        };
+        }
 
         bool bHeroicMode;
         bool spawnSupport;
@@ -90,7 +82,6 @@ public:
         GOState uiCollisionState;
 
         std::set<uint64> DwellerGUIDs;
-        std::vector<uint64> LivingMojoGUIDs;
 
         std::string str_data;
 
@@ -133,7 +124,6 @@ public:
             uiCollisionState = GO_STATE_READY;
 
             DwellerGUIDs.clear();
-            LivingMojoGUIDs.clear();
 
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
         }
@@ -146,119 +136,113 @@ public:
             return false;
         }
 
-        void OnCreatureCreate(Creature* creature)
+        void OnCreatureCreate(Creature *pCreature, bool /*bAdd*/)
         {
-            switch(creature->GetEntry())
+            switch(pCreature->GetEntry())
             {
-                case CREATURE_SLAD_RAN: uiSladRan = creature->GetGUID(); break;
-                case CREATURE_MOORABI: uiMoorabi = creature->GetGUID(); break;
-                case CREATURE_GALDARAH: uiGalDarah = creature->GetGUID(); break;
-                case CREATURE_DRAKKARICOLOSSUS: uiDrakkariColossus = creature->GetGUID(); break;
-                case CREATURE_ECK: uiEckTheFerocious = creature->GetGUID(); break;
+                case CREATURE_SLAD_RAN: uiSladRan = pCreature->GetGUID(); break;
+                case CREATURE_MOORABI: uiMoorabi = pCreature->GetGUID(); break;
+                case CREATURE_GALDARAH: uiGalDarah = pCreature->GetGUID(); break;
+                case CREATURE_DRAKKARICOLOSSUS: uiDrakkariColossus = pCreature->GetGUID(); break;
+                case CREATURE_ECK: uiEckTheFerocious = pCreature->GetGUID(); break;
                 case CREATURE_RUIN_DWELLER:
-                    if (creature->isAlive())
-                        DwellerGUIDs.insert(creature->GetGUID());
-                    break;
-                case CREATURE_LIVING_MOJO:
-                    if (creature->isAlive())
-                        if (Creature* pDrakkari = instance->GetCreature(uiDrakkariColossus))
-                            if (creature->IsWithinDist(pDrakkari, 20.0f))
-                                LivingMojoGUIDs.push_back(creature->GetGUID());
+                    if (pCreature->isAlive())
+                        DwellerGUIDs.insert(pCreature->GetGUID());
                     break;
             }
         }
 
-        void OnGameObjectCreate(GameObject* go)
+        void OnGameObjectCreate(GameObject *pGo, bool /*bAdd*/)
         {
-            switch(go->GetEntry())
+            switch(pGo->GetEntry())
             {
                 case 192518:
-                    uiSladRanAltar = go->GetGUID();
+                    uiSladRanAltar = pGo->GetGUID();
                     // Make sure that they start out as unusuable
-                    go->SetFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
+                    pGo->SetFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
                     if (m_auiEncounter[0] == DONE)
                     {
                         if (uiSladRanStatueState == GO_STATE_ACTIVE)
-                            go->RemoveFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
+                            pGo->RemoveFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
                         else
                         {
                             ++phase;
-                            go->SetGoState(GO_STATE_ACTIVE);
+                            pGo->SetGoState(GO_STATE_ACTIVE);
                         }
                     }
                     break;
                 case 192519:
-                    uiMoorabiAltar = go->GetGUID();
+                    uiMoorabiAltar = pGo->GetGUID();
                     // Make sure that they start out as unusuable
-                    go->SetFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
+                    pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
                     if (m_auiEncounter[0] == DONE)
                     {
                         if (uiMoorabiStatueState == GO_STATE_ACTIVE)
-                            go->RemoveFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
+                            pGo->RemoveFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
                         else
                         {
                             ++phase;
-                            go->SetGoState(GO_STATE_ACTIVE);
+                            pGo->SetGoState(GO_STATE_ACTIVE);
                         }
                     }
                     break;
                 case 192520:
-                    uiDrakkariColossusAltar = go->GetGUID();
+                    uiDrakkariColossusAltar = pGo->GetGUID();
                     // Make sure that they start out as unusuable
-                    go->SetFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
+                    pGo->SetFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
                     if (m_auiEncounter[0] == DONE)
                     {
                         if (uiDrakkariColossusStatueState == GO_STATE_ACTIVE)
-                            go->RemoveFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
+                            pGo->RemoveFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
                         else
                         {
                             ++phase;
-                            go->SetGoState(GO_STATE_ACTIVE);
+                            pGo->SetGoState(GO_STATE_ACTIVE);
                         }
                     }
                     break;
                 case 192564:
-                    uiSladRanStatue = go->GetGUID();
-                    go->SetGoState(uiSladRanStatueState);
+                    uiSladRanStatue = pGo->GetGUID();
+                    pGo->SetGoState(uiSladRanStatueState);
                     break;
                 case 192565:
-                    uiMoorabiStatue = go->GetGUID();
-                    go->SetGoState(uiMoorabiStatueState);
+                    uiMoorabiStatue = pGo->GetGUID();
+                    pGo->SetGoState(uiMoorabiStatueState);
                     break;
                 case 192566:
-                    uiGalDarahStatue = go->GetGUID();
-                    go->SetGoState(uiGalDarahStatueState);
+                    uiGalDarahStatue = pGo->GetGUID();
+                    pGo->SetGoState(uiGalDarahStatueState);
                     break;
                 case 192567:
-                    uiDrakkariColossusStatue = go->GetGUID();
-                    go->SetGoState(uiDrakkariColossusStatueState);
+                    uiDrakkariColossusStatue = pGo->GetGUID();
+                    pGo->SetGoState(uiDrakkariColossusStatueState);
                     break;
                 case 192632:
-                    uiEckTheFerociousDoor = go->GetGUID();
+                    uiEckTheFerociousDoor = pGo->GetGUID();
                     if (bHeroicMode && m_auiEncounter[1] == DONE)
-                        HandleGameObject(NULL,true,go);
+                        HandleGameObject(0,true,pGo);
                     break;
                 case 192569:
-                    uiEckTheFerociousDoorBehind = go->GetGUID();
+                    uiEckTheFerociousDoorBehind = pGo->GetGUID();
                     if (bHeroicMode && m_auiEncounter[4] == DONE)
-                        HandleGameObject(NULL,true,go);
+                        HandleGameObject(0,true,pGo);
                 case 193208:
-                    uiGalDarahDoor1 = go->GetGUID();
+                    uiGalDarahDoor1 = pGo->GetGUID();
                     if (m_auiEncounter[3] == DONE)
-                        HandleGameObject(NULL,true,go);
+                        HandleGameObject(0,true,pGo);
                     break;
                 case 193209:
-                    uiGalDarahDoor2 = go->GetGUID();
+                    uiGalDarahDoor2 = pGo->GetGUID();
                     if (m_auiEncounter[3] == DONE)
-                        HandleGameObject(NULL,true,go);
+                        HandleGameObject(0,true,pGo);
                     break;
                 case 193188:
-                    uiBridge = go->GetGUID();
-                    go->SetGoState(uiBridgeState);
+                    uiBridge = pGo->GetGUID();
+                    pGo->SetGoState(uiBridgeState);
                     break;
                 case 192633:
-                    uiCollision = go->GetGUID();
-                    go->SetGoState(uiCollisionState);
+                    uiCollision = pGo->GetGUID();
+                    pGo->SetGoState(uiCollisionState);
 
                     // Can't spawn here with SpawnGameObject because go isn't added to world yet...
                     if (uiCollisionState == GO_STATE_ACTIVE_ALTERNATIVE)
@@ -299,12 +283,6 @@ public:
                   if (go)
                       go->RemoveFlag(GAMEOBJECT_FLAGS,GO_FLAG_UNK1);
                 }
-                else if (data == NOT_STARTED)
-                {
-                    for (std::vector<uint64>::const_iterator itr = LivingMojoGUIDs.begin(); itr != LivingMojoGUIDs.end(); ++itr)
-                        if (Creature* pLivingMojo = instance->GetCreature(*itr))
-                            pLivingMojo->Respawn();
-                }
                 break;
             case DATA_GAL_DARAH_EVENT:
                 m_auiEncounter[3] = data;
@@ -328,7 +306,7 @@ public:
         void SetData64(uint32 type, uint64 data)
         {
             if (type == DATA_RUIN_DWELLER_DIED)
-            DwellerGUIDs.erase(data);
+                DwellerGUIDs.erase(data);
         }
 
         uint32 GetData(uint32 type)
@@ -372,6 +350,7 @@ public:
                  << (uiSladRanStatue ? GetObjState(uiSladRanStatue) : GO_STATE_ACTIVE) << " " << (uiMoorabiStatue ? GetObjState(uiMoorabiStatue) : GO_STATE_ACTIVE) << " "
                  << (uiDrakkariColossusStatue ? GetObjState(uiDrakkariColossusStatue) : GO_STATE_ACTIVE) << " " << (uiGalDarahStatue ? GetObjState(uiGalDarahStatue) : GO_STATE_READY) << " "
                  << (uiBridge ? GetObjState(uiBridge) : GO_STATE_ACTIVE) << " " << (uiCollision ? GetObjState(uiCollision) : GO_STATE_READY);
+
 
             str_data = saveStream.str();
 
@@ -553,6 +532,7 @@ public:
     }
 
 };
+
 
 void AddSC_instance_gundrak()
 {

@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -39,7 +32,13 @@ enum Spells
     SPELL_STAMPEDE                                = 55218,
     SPELL_WHIRLING_SLASH                          = 55250,
     H_SPELL_WHIRLING_SLASH                        = 59824,
-    SPELL_ECK_RESIDUE                             = 55817
+    SPELL_IMPALING_CHARGE_VEHICLE                 = 54958,
+    SPELL_ECK_RESIDUE                             = 55817,
+    //rhino spirit spells
+    SPELL_STAMEPDE_VISUAL                         = 55221,
+    SPELL_STAMPEDE_DMG                            = 55220,
+    H_SPELL_STAMPEDE_DMG                          = 59823,
+    SPELL_HEART_BEAM                              = 54988,
 };
 
 //Yells
@@ -54,7 +53,13 @@ enum Yells
     SAY_SUMMON_RHINO_2                            = -1604006,
     SAY_SUMMON_RHINO_3                            = -1604007,
     SAY_TRANSFORM_1                               = -1604008,  //Phase change
-    SAY_TRANSFORM_2                               = -1604009
+    SAY_TRANSFORM_2                               = -1604009,
+    EMOTE_PUNCTURE                                = -1574030,
+};
+
+enum Creatures
+{
+    CREATURE_RHINO                                =   29791, // Summons DoZoneInCombat ;)
 };
 
 enum Achievements
@@ -80,51 +85,31 @@ class boss_gal_darah : public CreatureScript
 public:
     boss_gal_darah() : CreatureScript("boss_gal_darah") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_gal_darahAI (pCreature);
-    }
-
     struct boss_gal_darahAI : public ScriptedAI
     {
         boss_gal_darahAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
+            me->CastSpell(me, SPELL_HEART_BEAM, true);
         }
-
-        uint32 uiStampedeTimer;
-        uint32 uiWhirlingSlashTimer;
-        uint32 uiPunctureTimer;
-        uint32 uiEnrageTimer;
-        uint32 uiImpalingChargeTimer;
-        uint32 uiStompTimer;
-        uint32 uiTransformationTimer;
-        std::set<uint64> lImpaledPlayers;
-
-        CombatPhase Phase;
-
-        uint8 uiPhaseCounter;
-
-        bool bStartOfTransformation;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
-            uiStampedeTimer = 10*IN_MILLISECONDS;
-            uiWhirlingSlashTimer = 21*IN_MILLISECONDS;
-            uiPunctureTimer = 10*IN_MILLISECONDS;
-            uiEnrageTimer = 15*IN_MILLISECONDS;
-            uiImpalingChargeTimer = 21*IN_MILLISECONDS;
-            uiStompTimer = 25*IN_MILLISECONDS;
-            uiTransformationTimer = 9*IN_MILLISECONDS;
-            uiPhaseCounter = 0;
+            StampedeTimer = 10*IN_MILLISECONDS;
+            WhirlingSlashTimer = 20*IN_MILLISECONDS;
+            PunctureTimer = 5*IN_MILLISECONDS;
+            EnrageTimer = 15*IN_MILLISECONDS;
+            ImpalingChargeTimer = 20*IN_MILLISECONDS;
+            StompTimer = 10*IN_MILLISECONDS;
+            TransformationTimer = 6*IN_MILLISECONDS;
+            PhaseCounter = 0;
 
             lImpaledPlayers.clear();
 
             bStartOfTransformation = true;
+            bTransformated = false;
 
             Phase = TROLL;
 
@@ -140,6 +125,14 @@ public:
 
             if (pInstance)
                 pInstance->SetData(DATA_GAL_DARAH_EVENT, IN_PROGRESS);
+
+            // Funktioniert =D
+            me->CastStop();
+        }
+
+        void JustReachedHome()
+        {
+            me->CastSpell(me, SPELL_HEART_BEAM, true);
         }
 
         void UpdateAI(const uint32 diff)
@@ -148,25 +141,32 @@ public:
             if (!UpdateVictim())
                 return;
 
+            if (!bTransformated && HealthBelowPct(50)) //transform at least once at 50% health
+            {
+                bTransformated = true;
+                PhaseCounter = 2;
+            }
+
             switch (Phase)
             {
                 case TROLL:
-                    if (uiPhaseCounter == 2)
+                    if (PhaseCounter >= 2)
                     {
-                        if (uiTransformationTimer <= diff)
+                        if (TransformationTimer <= diff)
                         {
                             me->SetDisplayId(DISPLAY_RHINO);
                             Phase = RHINO;
-                            uiPhaseCounter = 0;
+                            PhaseCounter = 0;
                             DoScriptText(SAY_TRANSFORM_1, me);
-                            uiTransformationTimer = 5*IN_MILLISECONDS;
+                            TransformationTimer = 5*IN_MILLISECONDS;
                             bStartOfTransformation = true;
+                            bTransformated = true;
                             me->ClearUnitState(UNIT_STAT_STUNNED|UNIT_STAT_ROOT);
                             me->SetReactState(REACT_AGGRESSIVE);
                         }
                         else
                         {
-                            uiTransformationTimer -= diff;
+                            TransformationTimer -= diff;
 
                             if (bStartOfTransformation)
                             {
@@ -178,38 +178,38 @@ public:
                     }
                     else
                     {
-                        if (uiStampedeTimer <= diff)
+                        if (StampedeTimer <= diff)
                         {
                             DoCast(me, SPELL_STAMPEDE);
                             DoScriptText(RAND(SAY_SUMMON_RHINO_1,SAY_SUMMON_RHINO_2,SAY_SUMMON_RHINO_3),me);
-                            uiStampedeTimer = 15*IN_MILLISECONDS;
-                        } else uiStampedeTimer -= diff;
+                            StampedeTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
+                        } else StampedeTimer -= diff;
 
-                        if (uiWhirlingSlashTimer <= diff)
+                        if (WhirlingSlashTimer <= diff)
                         {
-                            DoCast(me->getVictim(), SPELL_WHIRLING_SLASH);
-                            uiWhirlingSlashTimer = 21*IN_MILLISECONDS;
-                            ++uiPhaseCounter;
-                        } else uiWhirlingSlashTimer -= diff;
+                            DoCast(me->getVictim(), DUNGEON_MODE(SPELL_WHIRLING_SLASH, H_SPELL_WHIRLING_SLASH));
+                            WhirlingSlashTimer = urand(18*IN_MILLISECONDS,22*IN_MILLISECONDS);;
+                            ++PhaseCounter;
+                        } else WhirlingSlashTimer -= diff;
                     }
                 break;
                 case RHINO:
-                    if (uiPhaseCounter == 2)
+                    if (PhaseCounter >= 2)
                     {
-                        if (uiTransformationTimer <= diff)
+                        if (TransformationTimer <= diff)
                         {
                             me->SetDisplayId(DISPLAY_TROLL);
                             Phase = TROLL;
-                            uiPhaseCounter = 0;
+                            PhaseCounter = 0;
                             DoScriptText(SAY_TRANSFORM_2, me);
-                            uiTransformationTimer = 9*IN_MILLISECONDS;
+                            TransformationTimer = 6*IN_MILLISECONDS;
                             bStartOfTransformation = true;
                             me->ClearUnitState(UNIT_STAT_STUNNED|UNIT_STAT_ROOT);
                             me->SetReactState(REACT_AGGRESSIVE);
                         }
                         else
                         {
-                            uiTransformationTimer -= diff;
+                            TransformationTimer -= diff;
 
                             if (bStartOfTransformation)
                             {
@@ -221,34 +221,36 @@ public:
                     }
                     else
                     {
-                        if (uiPunctureTimer <= diff)
+                        if (PunctureTimer <= diff)
                         {
-                            DoCast(me->getVictim(), SPELL_PUNCTURE);
-                            uiPunctureTimer = 8*IN_MILLISECONDS;
-                        } else uiPunctureTimer -= diff;
+                            DoCast(me->getVictim(), DUNGEON_MODE(SPELL_PUNCTURE, H_SPELL_PUNCTURE));
+                            PunctureTimer = 15*IN_MILLISECONDS;
+                        } else PunctureTimer -= diff;
 
-                        if (uiEnrageTimer <= diff)
+                        if (EnrageTimer <= diff)
                         {
-                            DoCast(me->getVictim(), SPELL_ENRAGE);
-                            uiEnrageTimer = 20*IN_MILLISECONDS;
-                        } else uiEnrageTimer -= diff;
+                            DoCast(me->getVictim(), DUNGEON_MODE(SPELL_ENRAGE, H_SPELL_ENRAGE));
+                            EnrageTimer = 30*IN_MILLISECONDS;
+                        } else EnrageTimer -= diff;
 
-                        if (uiStompTimer <= diff)
+                        if (StompTimer <= diff)
                         {
-                            DoCast(me->getVictim(), SPELL_STOMP);
-                            uiStompTimer = 20*IN_MILLISECONDS;
-                        } else uiStompTimer -= diff;
+                            DoCast(me->getVictim(), DUNGEON_MODE(SPELL_STOMP, H_SPELL_STOMP));
+                            StompTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
+                        } else StompTimer -= diff;
 
-                        if (uiImpalingChargeTimer <= diff)
+                        if (ImpalingChargeTimer <= diff)
                         {
-                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1, 100, true))
                             {
-                                DoCast(pTarget, SPELL_IMPALING_CHARGE);
+                                DoScriptText(EMOTE_PUNCTURE,me,pTarget);
+                                DoCast(pTarget, DUNGEON_MODE(SPELL_IMPALING_CHARGE, H_SPELL_IMPALING_CHARGE));
+                                //pTarget->CastSpell(me, SPELL_IMPALING_CHARGE_VEHICLE, true);  // needs vehicle id and take dmg while seated
                                 lImpaledPlayers.insert(pTarget->GetGUID());
                             }
-                            uiImpalingChargeTimer = 31*IN_MILLISECONDS;
-                            ++uiPhaseCounter;
-                        } else uiImpalingChargeTimer -= diff;
+                            ImpalingChargeTimer = 20*IN_MILLISECONDS;
+                            ++PhaseCounter;
+                        } else ImpalingChargeTimer -= diff;
                     }
                 break;
             }
@@ -288,11 +290,68 @@ public:
 
             DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
         }
+
+    private:
+        uint8 PhaseCounter;
+        uint32 StampedeTimer;
+        uint32 WhirlingSlashTimer;
+        uint32 PunctureTimer;
+        uint32 EnrageTimer;
+        uint32 ImpalingChargeTimer;
+        uint32 StompTimer;
+        uint32 TransformationTimer;
+        std::set<uint64> lImpaledPlayers;
+        CombatPhase Phase;
+        bool bStartOfTransformation;
+        bool bTransformated;
+        InstanceScript* pInstance;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_gal_darahAI (pCreature);
+    }
+};
+
+class mob_rhino_spirit : public CreatureScript
+{
+public:
+    mob_rhino_spirit() : CreatureScript("mob_rhino_spirit") { }
+
+    struct mob_rhino_spiritAI : public ScriptedAI
+    {
+        mob_rhino_spiritAI(Creature *c) : ScriptedAI(c) {}
+
+        void Reset()
+        {
+            StampedeTimer = 1000;
+        }
+
+        void UpdateAI(const uint32 diff)
+        {
+            if (!UpdateVictim())
+               return;
+
+            if (StampedeTimer <= diff)
+            {
+                DoCastVictim(RAID_MODE(SPELL_STAMPEDE_DMG, H_SPELL_STAMPEDE_DMG));
+                me->ForcedDespawn(5000);
+                StampedeTimer = 10000;
+            } else StampedeTimer -= diff;
+        }  
+
+    private:
+        uint32 StampedeTimer;
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_rhino_spiritAI (pCreature);
+    }
 };
 
 void AddSC_boss_gal_darah()
 {
     new boss_gal_darah();
+    new mob_rhino_spirit();
 }

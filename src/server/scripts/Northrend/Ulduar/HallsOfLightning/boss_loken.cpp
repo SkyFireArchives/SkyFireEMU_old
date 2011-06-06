@@ -1,25 +1,19 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* ScriptData
@@ -60,48 +54,30 @@ enum eEnums
     SPELL_PULSING_SHOCKWAVE_AURA                  = 59414
 };
 
-/*######
-## Boss Loken
-######*/
-
 class boss_loken : public CreatureScript
 {
 public:
     boss_loken() : CreatureScript("boss_loken") { }
-
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_lokenAI(pCreature);
-    }
 
     struct boss_lokenAI : public ScriptedAI
     {
         boss_lokenAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             m_pInstance = pCreature->GetInstanceScript();
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        InstanceScript* m_pInstance;
-
-        bool m_bIsAura;
-
-        uint32 m_uiArcLightning_Timer;
-        uint32 m_uiLightningNova_Timer;
-        uint32 m_uiPulsingShockwave_Timer;
-        uint32 m_uiResumePulsingShockwave_Timer;
-
-        uint32 m_uiHealthAmountModifier;
 
         void Reset()
         {
-            m_bIsAura = false;
+            bIsAura = false;
 
-            m_uiArcLightning_Timer = 15000;
-            m_uiLightningNova_Timer = 20000;
-            m_uiPulsingShockwave_Timer = 2000;
-            m_uiResumePulsingShockwave_Timer = 15000;
+            ArcLightningTimer = 15000;
+            LightningNovaTimer = 20000;
+            PulsingShockwaveTimer = 2000;
+            ResumePulsingShockwaveTimer = 15000;
 
-            m_uiHealthAmountModifier = 1;
+            HealthAmountModifier = 1;
 
             if (m_pInstance)
             {
@@ -140,10 +116,10 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (m_bIsAura)
+            if (bIsAura)
             {
                 // workaround for PULSING_SHOCKWAVE
-                if (m_uiPulsingShockwave_Timer <= uiDiff)
+                if (PulsingShockwaveTimer <= uiDiff)
                 {
                     Map* pMap = me->GetMap();
                     if (pMap->IsDungeon())
@@ -166,66 +142,73 @@ public:
                                 me->CastCustomSpell(i->getSource(), DUNGEON_MODE(52942, 59837), &dmg, 0, 0, false);
                             }
                     }
-                    m_uiPulsingShockwave_Timer = 2000;
-                } else m_uiPulsingShockwave_Timer -= uiDiff;
+                    PulsingShockwaveTimer = 2000;
+                } else PulsingShockwaveTimer -= uiDiff;
             }
             else
             {
-                if (m_uiResumePulsingShockwave_Timer <= uiDiff)
+                if (ResumePulsingShockwaveTimer <= uiDiff)
                 {
                     //breaks at movement, can we assume when it's time, this spell is casted and also must stop movement?
                     DoCast(me, SPELL_PULSING_SHOCKWAVE_AURA, true);
 
                     DoCast(me, SPELL_PULSING_SHOCKWAVE_N); // need core support
-                    m_bIsAura = true;
-                    m_uiResumePulsingShockwave_Timer = 0;
+                    bIsAura = true;
+                    ResumePulsingShockwaveTimer = 0;
                 }
-                else
-                    m_uiResumePulsingShockwave_Timer -= uiDiff;
+                else ResumePulsingShockwaveTimer -= uiDiff;
             }
 
-            if (m_uiArcLightning_Timer <= uiDiff)
+            if (ArcLightningTimer <= uiDiff)
             {
-                if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(pTarget, SPELL_ARC_LIGHTNING);
 
-                m_uiArcLightning_Timer = 15000 + rand()%1000;
+                ArcLightningTimer = 15000 + rand()%1000;
             }
-            else
-                m_uiArcLightning_Timer -= uiDiff;
+            else ArcLightningTimer -= uiDiff;
 
-            if (m_uiLightningNova_Timer <= uiDiff)
+            if (LightningNovaTimer <= uiDiff)
             {
                 DoScriptText(RAND(SAY_NOVA_1,SAY_NOVA_2,SAY_NOVA_3), me);
                 DoScriptText(EMOTE_NOVA, me);
                 DoCast(me, SPELL_LIGHTNING_NOVA_N);
 
-                m_bIsAura = false;
-                m_uiResumePulsingShockwave_Timer = DUNGEON_MODE(5000, 4000); // Pause Pulsing Shockwave aura
-                m_uiLightningNova_Timer = 20000 + rand()%1000;
+                bIsAura = false;
+                ResumePulsingShockwaveTimer = DUNGEON_MODE(5000, 4000); // Pause Pulsing Shockwave aura
+                LightningNovaTimer = 20000 + rand()%1000;
             }
-            else
-                m_uiLightningNova_Timer -= uiDiff;
+            else LightningNovaTimer -= uiDiff;
 
             // Health check
-            if (HealthBelowPct(100 - 25 * m_uiHealthAmountModifier))
+            if (HealthBelowPct(100 - 25 * HealthAmountModifier))
             {
-                switch(m_uiHealthAmountModifier)
+                switch(HealthAmountModifier)
                 {
                     case 1: DoScriptText(SAY_75HEALTH, me); break;
                     case 2: DoScriptText(SAY_50HEALTH, me); break;
                     case 3: DoScriptText(SAY_25HEALTH, me); break;
                 }
 
-                ++m_uiHealthAmountModifier;
+                ++HealthAmountModifier;
             }
-
             DoMeleeAttackIfReady();
         }
+    private:
+        InstanceScript* m_pInstance;
+        bool bIsAura;
+        uint32 ArcLightningTimer;
+        uint32 LightningNovaTimer;
+        uint32 PulsingShockwaveTimer;
+        uint32 ResumePulsingShockwaveTimer;
+        uint32 HealthAmountModifier;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_lokenAI(pCreature);
+    }
 };
-
 
 void AddSC_boss_loken()
 {

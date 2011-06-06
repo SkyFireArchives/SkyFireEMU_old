@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -68,6 +61,7 @@ enum Spells
     SPELL_WAILING_SOULS_BEAM                      = 68875,  // the beam visual
     SPELL_WAILING_SOULS                           = 68873,  // the actual spell
     H_SPELL_WAILING_SOULS                         = 70324,
+    SPELL_SCHMELZTIEGEL                           = 69859,
 //    68871,68873,68875,68876,68899,68912,70324,
 // 68899 trigger 68871
 };
@@ -81,6 +75,7 @@ enum Events
     EVENT_WAILING_SOULS         = 5,
     EVENT_WAILING_SOULS_TICK    = 6,
     EVENT_FACE_ANGER            = 7,
+    EVENT_RESET_CHECK           = 8,
 };
 
 enum eEnum
@@ -90,6 +85,14 @@ enum eEnum
     DISPLAY_SORROW              = 30149,
     DISPLAY_DESIRE              = 30150,
 };
+
+enum eCreatures
+{
+    NPC_WELL_OF_SOULS           = 36536,
+    NPC_UNLEASHED_SOULS         = 36595,
+    NPC_SCHMELZTIEGEL           = 37094,
+};
+
 
 struct outroPosition
 {
@@ -130,10 +133,10 @@ class boss_devourer_of_souls : public CreatureScript
 
         struct boss_devourer_of_soulsAI : public BossAI
         {
-            boss_devourer_of_soulsAI(Creature *creature) : BossAI(creature, DATA_DEVOURER_EVENT)
+            boss_devourer_of_soulsAI(Creature *creature) : BossAI(creature, DATA_DEVOURER_EVENT), Summons(me)
             {
                 me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
             }
 
             void InitializeAI()
@@ -148,25 +151,34 @@ class boss_devourer_of_souls : public CreatureScript
             {
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 me->SetDisplayId(DISPLAY_ANGER);
-                me->SetReactState(REACT_AGGRESSIVE);
-
+                
                 events.Reset();
 
                 threeFaceAchievement = true;
+                
                 mirroredSoulTarget = 0;
 
                 instance->SetData(DATA_DEVOURER_EVENT, NOT_STARTED);
+
+                Despawncreatures();
+            }
+
+            void Despawncreatures()
+            {
+                DespawnCreatures(NPC_WELL_OF_SOULS, 250);
+                DespawnCreatures(NPC_UNLEASHED_SOULS, 250);
             }
 
             void EnterCombat(Unit* /*who*/)
             {
                 DoScriptText(RAND(SAY_FACE_ANGER_AGGRO, SAY_FACE_DESIRE_AGGRO), me);
 
+                events.ScheduleEvent(EVENT_RESET_CHECK, 2000);
                 events.ScheduleEvent(EVENT_PHANTOM_BLAST, 5000);
                 events.ScheduleEvent(EVENT_MIRRORED_SOUL, 8000);
-                events.ScheduleEvent(EVENT_WELL_OF_SOULS, 30000);
+                events.ScheduleEvent(EVENT_WELL_OF_SOULS, 15000);
                 events.ScheduleEvent(EVENT_UNLEASHED_SOULS, 20000);
-                events.ScheduleEvent(EVENT_WAILING_SOULS, urand(60000, 70000));
+                events.ScheduleEvent(EVENT_WAILING_SOULS, urand(40000, 50000));
 
                 instance->SetData(DATA_DEVOURER_EVENT, IN_PROGRESS);
             }
@@ -186,6 +198,19 @@ class boss_devourer_of_souls : public CreatureScript
                             mirroredSoulTarget = 0;
                     }
                 }
+            }
+
+            void JustSummoned(Creature* summoned)
+            {
+                switch(summoned->GetEntry())
+                {
+                case NPC_UNLEASHED_SOULS:
+                    Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM,0);
+                    summoned->AI()->AttackStart(pTarget);
+                    summoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    break;
+                }
+                Summons.Summon(summoned);
             }
 
             void KilledUnit(Unit* victim)
@@ -215,6 +240,15 @@ class boss_devourer_of_souls : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
+                Despawncreatures();
+
+                if (Creature *schmelztiegel = me->FindNearestCreature(NPC_SCHMELZTIEGEL, 300.0f, true))
+                {
+                    schmelztiegel->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    schmelztiegel->CastSpell(schmelztiegel, SPELL_SCHMELZTIEGEL, true);
+                }
+
+				Summons.DespawnAll();
                 Position spawnPoint = {5618.139f, 2451.873f, 705.854f, 0};
 
                 DoScriptText(RAND(SAY_FACE_SORROW_DEATH, SAY_FACE_DESIRE_DEATH), me);
@@ -243,10 +277,35 @@ class boss_devourer_of_souls : public CreatureScript
                 }
             }
 
+            void DespawnCreatures(uint32 entry, float distance)
+            {
+                std::list<Creature*> m_creatures;
+                GetCreatureListWithEntryInGrid(m_creatures, me, entry, distance);
+	 
+                if (m_creatures.empty())
+                return;
+	 
+                for(std::list<Creature*>::iterator iter = m_creatures.begin(); iter != m_creatures.end(); ++iter)
+                (*iter)->ForcedDespawn();
+            }
+
             void SpellHitTarget(Unit* /*target*/, const SpellEntry *spell)
             {
                 if (spell->Id == H_SPELL_PHANTOM_BLAST)
                     threeFaceAchievement = false;
+            }
+
+            void JustReachedHome()
+            {
+                me->SetReactState(REACT_AGGRESSIVE);
+                me->SetVisible(true);
+            }
+
+            void EnterEvadeModeOfArea()
+            {
+                EnterEvadeMode();
+                me->SetVisible(false);
+                me->SetReactState(REACT_PASSIVE);
             }
 
             void UpdateAI(const uint32 diff)
@@ -264,6 +323,11 @@ class boss_devourer_of_souls : public CreatureScript
                 {
                     switch(eventId)
                     {
+                        case EVENT_RESET_CHECK:
+                            if (me->GetDistance2d(me->GetHomePosition().GetPositionX(), me->GetHomePosition().GetPositionY()) > 50)
+                                EnterEvadeModeOfArea();
+                            events.ScheduleEvent(EVENT_RESET_CHECK, 2000);
+                            break;
                         case EVENT_PHANTOM_BLAST:
                             DoCastVictim(SPELL_PHANTOM_BLAST);
                             events.ScheduleEvent(EVENT_PHANTOM_BLAST, 5000);
@@ -278,14 +342,13 @@ class boss_devourer_of_souls : public CreatureScript
                             events.ScheduleEvent(EVENT_MIRRORED_SOUL, urand(15000, 30000));
                             break;
                         case EVENT_WELL_OF_SOULS:
-                            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                                 DoCast(target, SPELL_WELL_OF_SOULS);
-                            events.ScheduleEvent(EVENT_WELL_OF_SOULS, 20000);
+                            events.ScheduleEvent(EVENT_WELL_OF_SOULS, 10000);
                             break;
                         case EVENT_UNLEASHED_SOULS:
-                            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                                 DoCast(target, SPELL_UNLEASHED_SOULS);
-                            me->SetDisplayId(DISPLAY_SORROW);
                             DoScriptText(RAND(SAY_FACE_ANGER_UNLEASH_SOUL, SAY_FACE_SORROW_UNLEASH_SOUL, SAY_FACE_DESIRE_UNLEASH_SOUL), me);
                             DoScriptText(EMOTE_UNLEASH_SOUL, me);
                             events.ScheduleEvent(EVENT_UNLEASHED_SOULS, 30000);
@@ -300,7 +363,7 @@ class boss_devourer_of_souls : public CreatureScript
                             DoScriptText(RAND(SAY_FACE_ANGER_WAILING_SOUL,SAY_FACE_DESIRE_WAILING_SOUL), me);
                             DoScriptText(EMOTE_WAILING_SOUL, me);
                             DoCast(me, SPELL_WAILING_SOULS_STARTING);
-                            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             {
                                 me->SetOrientation(me->GetAngle(target));
                                 DoCast(me, SPELL_WAILING_SOULS_BEAM);
@@ -357,6 +420,7 @@ class boss_devourer_of_souls : public CreatureScript
             float beamAngle;
             float beamAngleDiff;
             int8 wailingSoulTick;
+			SummonList Summons;
 
             uint64 mirroredSoulTarget;
         };
@@ -367,7 +431,56 @@ class boss_devourer_of_souls : public CreatureScript
         }
 };
 
+class mob_unleashd_souls : public CreatureScript
+{
+public:
+    mob_unleashd_souls() : CreatureScript("mob_unleashd_souls") { }
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_unleashd_soulsAI (pCreature);
+    }
+
+    struct mob_unleashd_soulsAI : public ScriptedAI
+    {
+        mob_unleashd_soulsAI(Creature *c) : ScriptedAI(c){}
+
+        uint32 uiTargetTimer;
+        uint32 uiDeathTimer;
+
+        void Reset()
+        {
+           uiTargetTimer = 5000;
+           uiDeathTimer = 15000;
+        }
+
+        void UpdateAI(const uint32 diff)
+        {
+            //Return since we have no target
+            if (!UpdateVictim())
+                return;
+
+            if (uiTargetTimer <= diff)
+            {
+                if (Unit *target = SelectTarget(SELECT_TARGET_RANDOM, 1))
+                    if (target->isAlive())
+                        me->Attack(target, true);
+                uiTargetTimer = 5000;
+            } else uiTargetTimer -= diff;
+
+            if (uiDeathTimer <= diff)
+            {
+                me->Kill(me);
+                uiDeathTimer = 20000;
+            } else uiDeathTimer -= diff;
+
+            DoMeleeAttackIfReady();
+        }
+    };
+};
+
 void AddSC_boss_devourer_of_souls()
 {
     new boss_devourer_of_souls();
+    new mob_unleashd_souls();
 }

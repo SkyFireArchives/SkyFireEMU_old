@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -42,6 +35,13 @@ enum Creatures
 {
     MOB_WEB_WRAP                = 16486,
     MOB_SPIDERLING              = 17055,
+};
+
+enum Emotes
+{
+    EMOTE_SPINE                 = -1533125,
+    EMOTE_SPIDERLINGS_WEB       = -1533126,
+    EMOTE_SPRAYS                = -1533127,
 };
 
 #define MAX_POS_WRAP            3
@@ -75,9 +75,7 @@ public:
 
     struct boss_maexxnaAI : public BossAI
     {
-        boss_maexxnaAI(Creature *c) : BossAI(c, BOSS_MAEXXNA) {
-        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
+        boss_maexxnaAI(Creature *c) : BossAI(c, BOSS_MAEXXNA) {}
 
         bool enraged;
 
@@ -110,7 +108,7 @@ public:
                 switch(eventId)
                 {
                     case EVENT_WRAP:
-                        // TODO : Add missing text
+                        DoScriptText(EMOTE_SPINE, me);
                         for (uint8 i = 0; i < RAID_MODE(1,2); ++i)
                         {
                             if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1, 0, true, -SPELL_WEB_WRAP))
@@ -141,7 +139,7 @@ public:
                         events.ScheduleEvent(EVENT_FRENZY, 600000);
                         break;
                     case EVENT_SUMMON:
-                        // TODO : Add missing text
+                        DoScriptText(EMOTE_SPIDERLINGS_WEB, me);
                         uint8 amount = urand(8,10);
                         for (uint8 i = 0; i < amount; ++i)
                             DoSummon(MOB_SPIDERLING, me, 0, TEMPSUMMON_CORPSE_DESPAWN);

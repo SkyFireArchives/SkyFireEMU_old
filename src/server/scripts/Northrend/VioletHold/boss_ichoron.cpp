@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -36,7 +29,7 @@ enum Spells
     SPELL_WATER_BOLT_VOLLEY                     = 54241,
     SPELL_WATER_BOLT_VOLLEY_H                   = 59521,
     SPELL_SPLASH                                = 59516,
-    SPELL_WATER_GLOBULE                         = 54268
+    SPELL_WATER_GLOBULE                         = 54268,
 };
 
 enum IchoronCreatures
@@ -54,7 +47,8 @@ enum Yells
     SAY_SPAWN                                   = -1608023,
     SAY_ENRAGE                                  = -1608024,
     SAY_SHATTER                                 = -1608025,
-    SAY_BUBBLE                                  = -1608026
+    SAY_BUBBLE                                  = -1608026,
+    EMOTE_EXPLOSION                             = -1574027,
 };
 
 enum Achievements
@@ -84,38 +78,22 @@ class boss_ichoron : public CreatureScript
 public:
     boss_ichoron() : CreatureScript("boss_ichoron") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_ichoronAI (pCreature);
-    }
-
     struct boss_ichoronAI : public ScriptedAI
     {
-        boss_ichoronAI(Creature* pCreature) : ScriptedAI(pCreature), m_waterElements(pCreature)
+        boss_ichoronAI(Creature* pCreature) : ScriptedAI(pCreature), waterElements(pCreature)
         {
             pInstance  = pCreature->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        bool bIsExploded;
-        bool bIsFrenzy;
-        bool bAchievement;
-
-        uint32 uiBubbleCheckerTimer;
-        uint32 uiWaterBoltVolleyTimer;
-
-        InstanceScript* pInstance;
-
-        SummonList m_waterElements;
 
         void Reset()
         {
-            bIsExploded = false;
-            bIsFrenzy = false;
+            bExploded = false;
+            bFrenzy = false;
             bAchievement = true;
-            uiBubbleCheckerTimer = 1000;
-            uiWaterBoltVolleyTimer = urand(10000, 15000);
+            BubbleCheckerTimer = 1000;
+            WaterBoltVolleyTimer = urand(10000, 15000);
 
             me->SetVisible(true);
             DespawnWaterElements();
@@ -171,32 +149,32 @@ public:
 
             switch(param)
             {
-                case ACTION_WATER_ELEMENT_HIT:
-                    me->ModifyHealth(int32(me->CountPctFromMaxHealth(1)));
+            case ACTION_WATER_ELEMENT_HIT:
+                me->ModifyHealth(int32(me->CountPctFromMaxHealth(1)));
 
-                    if (bIsExploded)
-                        DoExplodeCompleted();
+                if (bExploded)
+                    DoExplodeCompleted();
 
-                    bAchievement = false;
-                    break;
-                case ACTION_WATER_ELEMENT_KILLED:
-                    uint32 damage = me->CountPctFromMaxHealth(3);
-                    me->ModifyHealth(-int32(damage));
-                    me->LowerPlayerDamageReq(damage);
-                    break;
+                bAchievement = false;
+                break;
+            case ACTION_WATER_ELEMENT_KILLED:
+                uint32 damage = me->CountPctFromMaxHealth(3);
+                me->ModifyHealth(-int32(damage));
+                me->LowerPlayerDamageReq(damage);
+                break;
             }
         }
 
         void DespawnWaterElements()
         {
-            m_waterElements.DespawnAll();
+            waterElements.DespawnAll();
         }
 
         // call when explode shall stop.
         // either when "hit" by a bubble, or when there is no bubble left.
         void DoExplodeCompleted()
         {
-            bIsExploded = false;
+            bExploded = false;
 
             if (!HealthBelowPct(25))
             {
@@ -216,25 +194,26 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (!bIsFrenzy && HealthBelowPct(25) && !bIsExploded)
+            if (!bFrenzy && HealthBelowPct(25) && !bExploded)
             {
                 DoScriptText(SAY_ENRAGE, me);
                 DoCast(me, SPELL_FRENZY, true);
-                bIsFrenzy = true;
+                bFrenzy = true;
             }
 
-            if (!bIsFrenzy)
+            if (!bFrenzy)
             {
-                if (uiBubbleCheckerTimer <= uiDiff)
+                if (BubbleCheckerTimer <= uiDiff)
                 {
-                    if (!bIsExploded)
+                    if (!bExploded)
                     {
                         if (!me->HasAura(SPELL_PROTECTIVE_BUBBLE, 0))
                         {
+                            DoScriptText(EMOTE_EXPLOSION, me);
                             DoScriptText(SAY_SHATTER, me);
                             DoCast(me, SPELL_WATER_BLAST);
                             DoCast(me, SPELL_DRAINED);
-                            bIsExploded = true;
+                            bExploded = true;
                             me->AttackStop();
                             me->SetVisible(false);
                             for (uint8 i = 0; i < 10; i++)
@@ -247,9 +226,9 @@ public:
                     else
                     {
                         bool bIsWaterElementsAlive = false;
-                        if (!m_waterElements.empty())
+                        if (!waterElements.empty())
                         {
-                            for (std::list<uint64>::const_iterator itr = m_waterElements.begin(); itr != m_waterElements.end(); ++itr)
+                            for (std::list<uint64>::const_iterator itr = waterElements.begin(); itr != waterElements.end(); ++itr)
                                 if (Creature* pTemp = Unit::GetCreature(*me, *itr))
                                     if (pTemp->isAlive())
                                     {
@@ -261,19 +240,19 @@ public:
                         if (!bIsWaterElementsAlive)
                             DoExplodeCompleted();
                     }
-                    uiBubbleCheckerTimer = 1000;
+                    BubbleCheckerTimer = 1000;
                 }
-                else uiBubbleCheckerTimer -= uiDiff;
+                else BubbleCheckerTimer -= uiDiff;
             }
 
-            if (!bIsExploded)
+            if (!bExploded)
             {
-                if (uiWaterBoltVolleyTimer <= uiDiff)
+                if (WaterBoltVolleyTimer <= uiDiff)
                 {
                     DoCast(me, SPELL_WATER_BOLT_VOLLEY);
-                    uiWaterBoltVolleyTimer = urand(10000, 15000);
+                    WaterBoltVolleyTimer = urand(10000, 15000);
                 }
-                else uiWaterBoltVolleyTimer -= uiDiff;
+                else WaterBoltVolleyTimer -= uiDiff;
 
                 DoMeleeAttackIfReady();
             }
@@ -283,9 +262,9 @@ public:
         {
             DoScriptText(SAY_DEATH, me);
 
-            if (bIsExploded)
+            if (bExploded)
             {
-                bIsExploded = false;
+                bExploded = false;
                 me->SetVisible(true);
             }
 
@@ -315,7 +294,7 @@ public:
             {
                 pSummoned->SetSpeed(MOVE_RUN, 0.3f);
                 pSummoned->GetMotionMaster()->MoveFollow(me, 0, 0);
-                m_waterElements.push_back(pSummoned->GetGUID());
+                waterElements.push_back(pSummoned->GetGUID());
                 pInstance->SetData64(DATA_ADD_TRASH_MOB,pSummoned->GetGUID());
             }
         }
@@ -325,7 +304,7 @@ public:
         {
             if (pSummoned)
             {
-                m_waterElements.remove(pSummoned->GetGUID());
+                waterElements.remove(pSummoned->GetGUID());
                 pInstance->SetData64(DATA_DEL_TRASH_MOB,pSummoned->GetGUID());
             }
         }
@@ -336,35 +315,40 @@ public:
                 return;
             DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
         }
+
+    private:
+        bool bExploded;
+        bool bFrenzy;
+        bool bAchievement;
+        uint32 BubbleCheckerTimer;
+        uint32 WaterBoltVolleyTimer;
+        InstanceScript* pInstance;
+        SummonList waterElements;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_ichoronAI (pCreature);
+    }
 };
-
 
 class mob_ichor_globule : public CreatureScript
 {
 public:
     mob_ichor_globule() : CreatureScript("mob_ichor_globule") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new mob_ichor_globuleAI (pCreature);
-    }
-
     struct mob_ichor_globuleAI : public ScriptedAI
     {
         mob_ichor_globuleAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             pInstance = pCreature->GetInstanceScript();
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        InstanceScript* pInstance;
-
-        uint32 uiRangeCheck_Timer;
 
         void Reset()
         {
-            uiRangeCheck_Timer = 1000;
+            RangeCheckTimer = 1000;
             DoCast(me,SPELL_WATER_GLOBULE);
         }
 
@@ -375,7 +359,7 @@ public:
 
         void UpdateAI(const uint32 uiDiff)
         {
-            if (uiRangeCheck_Timer < uiDiff)
+            if (RangeCheckTimer < uiDiff)
             {
                 if (pInstance)
                 {
@@ -389,9 +373,9 @@ public:
                         }
                     }
                 }
-                uiRangeCheck_Timer = 1000;
+                RangeCheckTimer = 1000;
             }
-            else uiRangeCheck_Timer -= uiDiff;
+            else RangeCheckTimer -= uiDiff;
         }
 
         void JustDied(Unit* /*pKiller*/)
@@ -401,8 +385,16 @@ public:
                 if (pIchoron->AI())
                     pIchoron->AI()->DoAction(ACTION_WATER_ELEMENT_KILLED);
         }
+
+    private:
+        InstanceScript* pInstance;
+        uint32 RangeCheckTimer;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_ichor_globuleAI (pCreature);
+    }
 };
 
 

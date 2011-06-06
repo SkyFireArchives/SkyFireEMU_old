@@ -61,21 +61,14 @@ public:
             m_uiIkissDoorGUID = 0;
         }
 
-        void OnCreatureCreate(Creature* pCreature, bool add)
+        void OnCreatureCreate(Creature* pCreature, bool /*add*/)
         {
             if (pCreature->GetEntry() == NPC_ANZU)
             {
                 if (AnzuEncounter >= IN_PROGRESS)
-                {
-                    if (add)
-                    {
-                        pCreature->DisappearAndDie();
-                    }
-                }
+                    pCreature->DisappearAndDie();
                 else
-                {
                     AnzuEncounter = IN_PROGRESS;
-                }
             }
         }
 

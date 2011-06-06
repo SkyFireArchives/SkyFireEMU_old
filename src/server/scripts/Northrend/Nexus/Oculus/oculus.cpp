@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -49,6 +49,18 @@ enum Drakes
     NPC_BELGARISTRASZ                             = 27658,
     NPC_ETERNOS                                   = 27659
 };
+
+static Position InsideInstanceTeleport =
+{
+    985.333740f, 1057.043457f, 359.967f
+};
+
+static Position OutsideInstanceTeleport =
+{
+    3864.169189f, 6983.767578f, 106.320381f
+};
+
+#define BOREAN_TUNDRA_MAP 571
 
 class npc_oculus_drake : public CreatureScript
 {
@@ -155,15 +167,18 @@ public:
         return true;
     }
 
-    bool OnGossipHello(Player* pPlayer, Creature* pCreature)
+    bool OnGossipHello(Player* player, Creature* creature)
     {
-        if (pCreature->isQuestGiver())
-            pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        if (creature->isQuestGiver())
+            player->PrepareQuestMenu(creature->GetGUID());
 
-        if (pCreature->GetInstanceScript()->GetData(DATA_DRAKOS_EVENT) == DONE)
+        if (InstanceScript* instance = creature->GetInstanceScript())
         {
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DRAKES, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-            pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DRAKES, pCreature->GetGUID());
+            if (instance->GetBossState(DATA_DRAKOS_EVENT) == DONE)
+            {
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DRAKES, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DRAKES, creature->GetGUID());
+            }
         }
 
         return true;
@@ -171,8 +186,43 @@ public:
 
 };
 
+class go_orb_of_the_nexus : public GameObjectScript
+{
+public:
+    go_orb_of_the_nexus() : GameObjectScript("go_orb_of_the_nexus") { }
+
+    bool OnGossipHello(Player* pPlayer, GameObject* pGo)
+    {
+        InstanceScript* pInstance = pGo->GetInstanceScript();
+
+        if (!pInstance)
+            return false;
+
+        pPlayer->TeleportTo(BOREAN_TUNDRA_MAP,OutsideInstanceTeleport.GetPositionX(),OutsideInstanceTeleport.GetPositionY(),OutsideInstanceTeleport.GetPositionZ(),pPlayer->GetOrientation());
+        return true;
+    }
+};
+
+class go_nexus_portal : public GameObjectScript
+{
+public:
+    go_nexus_portal() : GameObjectScript("go_nexus_portal") { }
+
+    bool OnGossipHello(Player* pPlayer, GameObject* pGo)
+    {
+        InstanceScript* pInstance = pGo->GetInstanceScript();
+
+        if (!pInstance)
+            return false;
+
+        pPlayer->TeleportTo(pPlayer->GetMapId(),InsideInstanceTeleport.GetPositionX(),InsideInstanceTeleport.GetPositionY(),InsideInstanceTeleport.GetPositionZ(),pPlayer->GetOrientation());
+        return true;
+    }
+};
 
 void AddSC_oculus()
 {
     new npc_oculus_drake();
+    new go_orb_of_the_nexus();
+    new go_nexus_portal();
 }

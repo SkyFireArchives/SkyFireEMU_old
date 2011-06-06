@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -151,11 +144,11 @@ public:
         time_t minHorsemenDiedTime;
         time_t maxHorsemenDiedTime;
 
-        void OnCreatureCreate(Creature* pCreature, bool add)
+        void OnCreatureCreate(Creature *pCreature, bool /*bAdd*/)
         {
             switch(pCreature->GetEntry())
             {
-                case 15989: SapphironGUID = add ? pCreature->GetGUID() : 0; return;
+                case 15989: SapphironGUID = pCreature->GetGUID(); return;
                 case 15953: uiFaerlina = pCreature->GetGUID(); return;
                 case 16064: uiThane = pCreature->GetGUID(); return;
                 case 16065: uiLady = pCreature->GetGUID(); return;
@@ -167,44 +160,83 @@ public:
                 case 15990: uiKelthuzad = pCreature->GetGUID(); return;
             }
 
-            AddMinion(pCreature, add);
+            AddMinion(pCreature, true);
         }
 
-        void OnGameObjectCreate(GameObject* pGo, bool add)
+        void OnCreatureRemove(Creature *pCreature, bool /*bAdd*/)
+        {
+            AddMinion(pCreature, false);
+        }
+
+        void OnGameObjectCreate(GameObject *pGo, bool /*bAdd*/)
         {
             if (pGo->GetGOInfo()->displayId == 6785 || pGo->GetGOInfo()->displayId == 1287)
             {
                 uint32 section = GetEruptionSection(pGo->GetPositionX(), pGo->GetPositionY());
-                if (add)
-                    HeiganEruptionGUID[section].insert(pGo->GetGUID());
-                else
-                    HeiganEruptionGUID[section].erase(pGo->GetGUID());
+                HeiganEruptionGUID[section].insert(pGo->GetGUID());
+
                 return;
             }
 
-            switch(pGo->GetEntry())
+            switch (pGo->GetEntry())
             {
-                case GO_BIRTH:
-                if (!add && SapphironGUID)
-                {
-                    if (Creature *pSapphiron = instance->GetCreature(SapphironGUID))
-                        pSapphiron->AI()->DoAction(DATA_SAPPHIRON_BIRTH);
-                    return;
-                }
                 case GO_GOTHIK_GATE:
-                    GothikGateGUID = add ? pGo->GetGUID() : 0;
+                    GothikGateGUID = pGo->GetGUID();
                     pGo->SetGoState(gothikDoorState);
                     break;
-                case GO_HORSEMEN_CHEST: HorsemenChestGUID = add ? pGo->GetGUID() : 0; break;
-                case GO_HORSEMEN_CHEST_HERO: HorsemenChestGUID = add ? pGo->GetGUID() : 0; break;
-                case GO_KELTHUZAD_PORTAL01: uiPortals[0] = pGo->GetGUID(); break;
-                case GO_KELTHUZAD_PORTAL02: uiPortals[1] = pGo->GetGUID(); break;
-                case GO_KELTHUZAD_PORTAL03: uiPortals[2] = pGo->GetGUID(); break;
-                case GO_KELTHUZAD_PORTAL04: uiPortals[3] = pGo->GetGUID(); break;
-                case GO_KELTHUZAD_TRIGGER: uiKelthuzadTrigger = pGo->GetGUID(); break;
+                case GO_HORSEMEN_CHEST:
+                    HorsemenChestGUID = pGo->GetGUID();
+                    break;
+                case GO_HORSEMEN_CHEST_HERO:
+                    HorsemenChestGUID = pGo->GetGUID();
+                    break;
+                case GO_KELTHUZAD_PORTAL01:
+                    uiPortals[0] = pGo->GetGUID();
+                    break;
+                case GO_KELTHUZAD_PORTAL02:
+                    uiPortals[1] = pGo->GetGUID();
+                    break;
+                case GO_KELTHUZAD_PORTAL03:
+                    uiPortals[2] = pGo->GetGUID();
+                    break;
+                case GO_KELTHUZAD_PORTAL04:
+                    uiPortals[3] = pGo->GetGUID();
+                    break;
+                case GO_KELTHUZAD_TRIGGER:
+                    uiKelthuzadTrigger = pGo->GetGUID();
+                    break;
+                default:
+                    break;
             }
 
-            AddDoor(pGo, add);
+            AddDoor(pGo, true);
+        }
+
+        void OnGameObjectRemove(GameObject *pGo, bool /*bAdd*/)
+        {
+            if (pGo->GetGOInfo()->displayId == 6785 || pGo->GetGOInfo()->displayId == 1287)
+            {
+                uint32 section = GetEruptionSection(pGo->GetPositionX(), pGo->GetPositionY());
+
+                HeiganEruptionGUID[section].erase(pGo->GetGUID());
+                return;
+            }
+
+            switch (pGo->GetEntry())
+            {
+                case GO_BIRTH:
+                    if (SapphironGUID)
+                    {
+                        if (Creature* pSapphiron = instance->GetCreature(SapphironGUID))
+                            pSapphiron->AI()->DoAction(DATA_SAPPHIRON_BIRTH);
+                        return;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            AddDoor(pGo, false);
         }
 
         void SetData(uint32 id, uint32 value)
@@ -215,8 +247,8 @@ public:
                     HeiganErupt(value);
                     break;
                 case DATA_GOTHIK_GATE:
-                    if (GameObject *pGothikGate = instance->GetGameObject(GothikGateGUID))
-                        pGothikGate->SetGoState(GOState(value));
+                    if (GameObject* gothikGate = instance->GetGameObject(GothikGateGUID))
+                        gothikGate->SetGoState(GOState(value));
                     gothikDoorState = GOState(value);
                     break;
 
@@ -285,7 +317,7 @@ public:
 
             if (id == BOSS_HORSEMEN && state == DONE)
             {
-                if (GameObject *pHorsemenChest = instance->GetGameObject(HorsemenChestGUID))
+                if (GameObject* pHorsemenChest = instance->GetGameObject(HorsemenChestGUID))
                     pHorsemenChest->SetRespawnTime(pHorsemenChest->GetRespawnDelay());
             }
 
@@ -301,7 +333,7 @@ public:
 
                 for (std::set<uint64>::const_iterator itr = HeiganEruptionGUID[i].begin(); itr != HeiganEruptionGUID[i].end(); ++itr)
                 {
-                    if (GameObject *pHeiganEruption = instance->GetGameObject(*itr))
+                    if (GameObject* pHeiganEruption = instance->GetGameObject(*itr))
                     {
                         pHeiganEruption->SendCustomAnim(pHeiganEruption->GetGoAnimProgress());
                         pHeiganEruption->CastSpell(NULL, SPELL_ERUPTION);
@@ -350,8 +382,32 @@ public:
 
 };
 
+class at_naxxramas_frostwyrm_wing : public AreaTriggerScript
+{
+public:
+    at_naxxramas_frostwyrm_wing() : AreaTriggerScript("at_naxxramas_frostwyrm_wing") { }
+
+    bool OnTrigger(Player* pPlayer, const AreaTriggerEntry* /*pAt*/)
+    {
+        if (pPlayer->isGameMaster())
+            return false;
+    
+        InstanceScript* pInstance = pPlayer->GetInstanceScript();
+        if (pInstance)
+        {
+            for (uint32 i = BOSS_ANUBREKHAN; i < BOSS_SAPPHIRON; ++i)
+                if (pInstance->GetBossState(i) != DONE)
+                    return true;
+        }
+
+        return false;
+    }
+
+};
 
 void AddSC_instance_naxxramas()
 {
     new instance_naxxramas();
+    new at_naxxramas_frostwyrm_wing();
 }
+

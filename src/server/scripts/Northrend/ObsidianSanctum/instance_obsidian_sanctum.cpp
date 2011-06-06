@@ -1,27 +1,3 @@
-/*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
- *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
- *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- */
-
 #include "ScriptPCH.h"
 #include "obsidian_sanctum.h"
 
@@ -78,26 +54,26 @@ public:
             return false;
         }
 
-        void OnCreatureCreate(Creature* creature)
+        void OnCreatureCreate(Creature *pCreature, bool /*bAdd*/)
         {
-            switch(creature->GetEntry())
+            switch(pCreature->GetEntry())
             {
                 case NPC_SARTHARION:
-                    m_uiSartharionGUID = creature->GetGUID();
+                    m_uiSartharionGUID = pCreature->GetGUID();
                     break;
                 //three dragons below set to active state once created.
                 //we must expect bigger raid to encounter main boss, and then three dragons must be active due to grid differences
                 case NPC_TENEBRON:
-                    m_uiTenebronGUID = creature->GetGUID();
-                    creature->setActive(true);
+                    m_uiTenebronGUID = pCreature->GetGUID();
+                    pCreature->setActive(true);
                     break;
                 case NPC_SHADRON:
-                    m_uiShadronGUID = creature->GetGUID();
-                    creature->setActive(true);
+                    m_uiShadronGUID = pCreature->GetGUID();
+                    pCreature->setActive(true);
                     break;
                 case NPC_VESPERON:
-                    m_uiVesperonGUID = creature->GetGUID();
-                    creature->setActive(true);
+                    m_uiVesperonGUID = pCreature->GetGUID();
+                    pCreature->setActive(true);
                     break;
             }
         }

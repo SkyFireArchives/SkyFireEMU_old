@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -162,9 +155,7 @@ public:
 
     struct boss_gothikAI : public BossAI
     {
-        boss_gothikAI(Creature *c) : BossAI(c, BOSS_GOTHIK) {
-        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
+        boss_gothikAI(Creature *c) : BossAI(c, BOSS_GOTHIK) {}
 
         uint32 waveCount;
         typedef std::vector<Creature*> TriggerVct;
@@ -257,27 +248,60 @@ public:
 
         void DoGothikSummon(uint32 entry)
         {
-            switch(entry)
+            if (getDifficulty() == RAID_DIFFICULTY_25MAN_NORMAL)
             {
-                case MOB_LIVE_TRAINEE:
+                switch(entry)
                 {
-                    if (Creature *LiveTrigger0 = Unit::GetCreature(*me, LiveTriggerGUID[4]))
-                        DoSummon(MOB_LIVE_TRAINEE, LiveTrigger0, 1);
-                    if (Creature *LiveTrigger1 = Unit::GetCreature(*me, LiveTriggerGUID[4]))
-                        DoSummon(MOB_LIVE_TRAINEE, LiveTrigger1, 1);
-                    break;
+                    case MOB_LIVE_TRAINEE:
+                    {
+                        if (Creature *LiveTrigger0 = Unit::GetCreature(*me, LiveTriggerGUID[0]))
+                            DoSummon(MOB_LIVE_TRAINEE, LiveTrigger0, 1);
+                        if (Creature *LiveTrigger1 = Unit::GetCreature(*me, LiveTriggerGUID[1]))
+                            DoSummon(MOB_LIVE_TRAINEE, LiveTrigger1, 1);
+                        if (Creature *LiveTrigger2 = Unit::GetCreature(*me, LiveTriggerGUID[2]))
+                            DoSummon(MOB_LIVE_TRAINEE, LiveTrigger2, 1);
+                        break;
+                    }
+                    case MOB_LIVE_KNIGHT:
+                    {
+                        if (Creature *LiveTrigger3 = Unit::GetCreature(*me, LiveTriggerGUID[3]))
+                            DoSummon(MOB_LIVE_KNIGHT, LiveTrigger3, 1);
+                        if (Creature *LiveTrigger5 = Unit::GetCreature(*me, LiveTriggerGUID[5]))
+                            DoSummon(MOB_LIVE_KNIGHT, LiveTrigger5, 1);
+                        break;
+                    }
+                    case MOB_LIVE_RIDER:
+                    {
+                        if (Creature *LiveTrigger4 = Unit::GetCreature(*me, LiveTriggerGUID[4]))
+                            DoSummon(MOB_LIVE_RIDER, LiveTrigger4, 1);
+                        break;
+                    }
                 }
-                case MOB_LIVE_KNIGHT:
+            }
+            else
+            {
+                switch(entry)
                 {
-                    if (Creature *LiveTrigger5 = Unit::GetCreature(*me, LiveTriggerGUID[4]))
-                        DoSummon(MOB_LIVE_KNIGHT, LiveTrigger5, 1);
-                    break;
-                }
-                case MOB_LIVE_RIDER:
-                {
-                    if (Creature *LiveTrigger4 = Unit::GetCreature(*me, LiveTriggerGUID[4]))
-                        DoSummon(MOB_LIVE_RIDER, LiveTrigger4, 1);
-                    break;
+                    case MOB_LIVE_TRAINEE:
+                    {
+                        if (Creature *LiveTrigger0 = Unit::GetCreature(*me, LiveTriggerGUID[4]))
+                            DoSummon(MOB_LIVE_TRAINEE, LiveTrigger0, 1);
+                        if (Creature *LiveTrigger1 = Unit::GetCreature(*me, LiveTriggerGUID[4]))
+                            DoSummon(MOB_LIVE_TRAINEE, LiveTrigger1, 1);
+                        break;
+                    }
+                    case MOB_LIVE_KNIGHT:
+                    {
+                        if (Creature *LiveTrigger5 = Unit::GetCreature(*me, LiveTriggerGUID[4]))
+                            DoSummon(MOB_LIVE_KNIGHT, LiveTrigger5, 1);
+                        break;
+                    }
+                    case MOB_LIVE_RIDER:
+                    {
+                        if (Creature *LiveTrigger4 = Unit::GetCreature(*me, LiveTriggerGUID[4]))
+                            DoSummon(MOB_LIVE_RIDER, LiveTrigger4, 1);
+                        break;
+                    }
                 }
             }
         }

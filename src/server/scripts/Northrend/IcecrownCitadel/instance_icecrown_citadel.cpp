@@ -55,8 +55,6 @@ static const DoorData doorData[] =
     {0,                                      0,                          DOOR_TYPE_ROOM,    BOUNDARY_NONE} // END
 };
 
-static Position const SindragosaSpawnPos  = {4818.700f, 2483.710f, 287.0650f, 3.089233f};
-
 struct WeeklyQuest
 {
     uint32 npcStart;
@@ -117,7 +115,7 @@ class instance_icecrown_citadel : public InstanceMapScript
                     teamInInstance = player->GetTeam();
             }
 
-            void OnCreatureCreate(Creature* creature)
+            void OnCreatureCreate(Creature *creature, bool /*bAdd*/)
             {
                 if (!teamInInstance)
                 {
@@ -259,7 +257,7 @@ class instance_icecrown_citadel : public InstanceMapScript
                     coldflameJets.erase(creature->GetGUID());
             }
 
-            void OnGameObjectCreate(GameObject* go)
+            void OnGameObjectCreate(GameObject *go, bool /*bAdd*/)
             {
                 switch (go->GetEntry())
                 {

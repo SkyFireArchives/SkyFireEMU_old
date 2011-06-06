@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* Script Data Start
@@ -57,8 +50,6 @@ enum Yells
     SAY_DEATH                                              = -1599015
 };
 
-#define EMOTE_GENERIC_FRENZY                               -1000002
-
 enum SjonnirCreatures
 {
     CREATURE_FORGED_IRON_TROGG                             = 27979,
@@ -69,7 +60,6 @@ enum SjonnirCreatures
 
 enum Misc
 {
-    DATA_TIME_BEFORE_OOZE                                  = 150000, //2min 30 secs
     ACHIEV_ABUSE_THE_OOZE                                  = 2155
 };
 
@@ -91,45 +81,27 @@ class boss_sjonnir : public CreatureScript
 public:
     boss_sjonnir() : CreatureScript("boss_sjonnir") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_sjonnirAI (pCreature);
-    }
-
     struct boss_sjonnirAI : public ScriptedAI
     {
         boss_sjonnirAI(Creature *c) : ScriptedAI(c), lSummons(me)
         {
             pInstance = c->GetInstanceScript();
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        bool bIsFrenzy;
-
-        uint32 uiChainLightningTimer;
-        uint32 uiLightningShieldTimer;
-        uint32 uiStaticChargeTimer;
-        uint32 uiLightningRingTimer;
-        uint32 uiSummonTimer;
-        uint32 uiFrenzyTimer;
-        uint32 uiEncounterTimer;
-        uint32 uiKilledIronSludges;
-
-        SummonList lSummons;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
-            bIsFrenzy = false;
+            bFrenzy = false;
 
-            uiEncounterTimer = 0;
-            uiChainLightningTimer = 3000 + rand()%5000;
-            uiLightningShieldTimer = 20000 + rand()%5000;
-            uiStaticChargeTimer = 20000 + rand()%5000;
-            uiLightningRingTimer = 30000 + rand()%5000;
-            uiSummonTimer = 5000;
-            uiFrenzyTimer = 300000; //5 minutes
-            uiKilledIronSludges = 0;
+            EncounterTimer = 0;
+            ChainLightningTimer = 3000 + rand()%5000;
+            LightningShieldTimer = 20000 + rand()%5000;
+            StaticChargeTimer = 20000 + rand()%5000;
+            LightningRingTimer = 30000 + rand()%5000;
+            SummonTimer = 5000;
+            FrenzyTimer = 300000; //5 minutes
+            KilledIronSludges = 0;
 
             lSummons.DespawnAll();
 
@@ -141,7 +113,7 @@ public:
         {
             DoScriptText(SAY_AGGRO, me);
 
-            uiEncounterTimer = 0;
+            EncounterTimer = 0;
 
             if (pInstance)
             {
@@ -151,7 +123,6 @@ public:
                         EnterEvadeMode();
                         return;
                     }
-
                 pInstance->SetData(DATA_SJONNIR_EVENT, IN_PROGRESS);
             }
         }
@@ -162,63 +133,61 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (uiChainLightningTimer <= diff)
+            if (ChainLightningTimer <= diff)
             {
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_CHAIN_LIGHTING);
-                uiChainLightningTimer = 10000 + rand()%5000;
-            } else uiChainLightningTimer -= diff;
+                ChainLightningTimer = 10000 + rand()%5000;
+            } else ChainLightningTimer -= diff;
 
-            if (uiLightningShieldTimer <= diff)
+            if (LightningShieldTimer <= diff)
             {
                 DoCast(me, SPELL_LIGHTING_SHIELD);
-                uiLightningShieldTimer -= diff;
+                LightningShieldTimer -= diff;
             }
 
-            if (uiStaticChargeTimer <= diff)
+            if (StaticChargeTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_STATIC_CHARGE);
-                uiStaticChargeTimer = 20000 + rand()%5000;
-            } uiStaticChargeTimer -= diff;
+                StaticChargeTimer = 20000 + rand()%5000;
+            } StaticChargeTimer -= diff;
 
-            if (uiLightningRingTimer <= diff)
+            if (LightningRingTimer <= diff)
             {
                 if (me->IsNonMeleeSpellCasted(false))
                     me->InterruptNonMeleeSpells(false);
                 DoCast(me, SPELL_LIGHTING_RING);
-                uiLightningRingTimer = 30000 + rand()%5000;
-            } else uiLightningRingTimer -= diff;
+                LightningRingTimer = 30000 + rand()%5000;
+            } else LightningRingTimer -= diff;
 
-            if (uiSummonTimer <= diff)
+            if (SummonTimer <= diff)
             {
                 uint32 uiSummonPipe = rand()%2;
-                me->SummonCreature(uiEncounterTimer > DATA_TIME_BEFORE_OOZE ? CREATURE_MALFORMED_OOZE :
-                                           RAND(CREATURE_FORGED_IRON_DWARF,CREATURE_FORGED_IRON_TROGG),
-                                           PipeLocations[uiSummonPipe].x, PipeLocations[uiSummonPipe].y, PipeLocations[uiSummonPipe].z, 0.0f,
-                                           TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
-                uiSummonTimer = 20000;
-            } else uiSummonTimer -= diff;
+                me->SummonCreature(HealthBelowPct(50) ? CREATURE_MALFORMED_OOZE : RAND(CREATURE_FORGED_IRON_DWARF,CREATURE_FORGED_IRON_TROGG), PipeLocations[uiSummonPipe].x, PipeLocations[uiSummonPipe].y, PipeLocations[uiSummonPipe].z, 0.0f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                SummonTimer = 20000;
+            } else SummonTimer -= diff;
 
-            if (!bIsFrenzy)
+            if (!bFrenzy)
             {
-              if (uiFrenzyTimer <= diff)
+              if (FrenzyTimer <= diff)
               {
                   DoCast(me, SPELL_FRENZY);
-                  bIsFrenzy = true;
+                  bFrenzy = true;
               }
-              else uiFrenzyTimer -= diff;
+              else FrenzyTimer -= diff;
             }
 
-            uiEncounterTimer +=diff;
+            EncounterTimer +=diff;
 
             DoMeleeAttackIfReady();
         }
 
         void JustSummoned(Creature* summon)
-        {
+        {        
+        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+            summon->AI()->AttackStart(pTarget);
+        else
             summon->GetMotionMaster()->MovePoint(0, CenterPoint.x, CenterPoint.y, CenterPoint.z);
-            /*if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                summon->AI()->AttackStart(pTarget);*/
             lSummons.Summon(summon);
         }
 
@@ -230,7 +199,7 @@ public:
             if (pInstance)
             {
                 pInstance->SetData(DATA_SJONNIR_EVENT, DONE);
-                if (IsHeroic() && uiKilledIronSludges > 4)
+                if (IsHeroic() && KilledIronSludges > 4)
                     pInstance->DoCompleteAchievement(ACHIEV_ABUSE_THE_OOZE);
             }
         }
@@ -243,10 +212,29 @@ public:
 
         void KilledIronSludge()
         {
-            ++uiKilledIronSludges;
+            ++KilledIronSludges;
         }
+
+    private:
+        bool bFrenzy;
+        uint32 ChainLightningTimer;
+        uint32 LightningShieldTimer;
+        uint32 StaticChargeTimer;
+        uint32 LightningRingTimer;
+        uint32 SummonTimer;
+        uint32 FrenzyTimer;
+        uint32 EncounterTimer;
+        uint32 KilledIronSludges;
+
+        SummonList lSummons;
+
+        InstanceScript* pInstance;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_sjonnirAI (pCreature);
+    }
 };
 
 
@@ -255,25 +243,18 @@ class mob_malformed_ooze : public CreatureScript
 public:
     mob_malformed_ooze() : CreatureScript("mob_malformed_ooze") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new mob_malformed_oozeAI(pCreature);
-    }
-
     struct mob_malformed_oozeAI : public ScriptedAI
     {
         mob_malformed_oozeAI(Creature *c) : ScriptedAI(c) {}
 
-        uint32 uiMergeTimer;
-
         void Reset()
         {
-            uiMergeTimer = 10000;
+            MergeTimer = 10000;
         }
 
         void UpdateAI(const uint32 diff)
         {
-            if (uiMergeTimer <= diff)
+            if (MergeTimer <= diff)
             {
                 if (Creature* pTemp = me->FindNearestCreature(CREATURE_MALFORMED_OOZE, 3.0f, true))
                 {
@@ -281,16 +262,23 @@ public:
                     pTemp->DisappearAndDie();
                     me->DisappearAndDie();
                 }
-                uiMergeTimer = 3000;
-            } else uiMergeTimer -= diff;
+                MergeTimer = 3000;
+            } else MergeTimer -= diff;
 
             if (!UpdateVictim())
                 return;
 
             DoMeleeAttackIfReady();
         }
+
+    private:
+        uint32 MergeTimer;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_malformed_oozeAI(pCreature);
+    }
 };
 
 
@@ -298,11 +286,6 @@ class mob_iron_sludge : public CreatureScript
 {
 public:
     mob_iron_sludge() : CreatureScript("mob_iron_sludge") { }
-
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new mob_iron_sludgeAI(pCreature);
-    }
 
     struct mob_iron_sludgeAI : public ScriptedAI
     {
@@ -321,6 +304,10 @@ public:
         }
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_iron_sludgeAI(pCreature);
+    }
 };
 
 

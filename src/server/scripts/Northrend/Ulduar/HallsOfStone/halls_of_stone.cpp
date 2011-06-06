@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -99,6 +92,7 @@ enum BrannCreatures
 {
     CREATURE_TRIBUNAL_OF_THE_AGES       = 28234,
     CREATURE_BRANN_BRONZEBEARD          = 28070,
+    CREATURE_DARK_MATTER                = 28235,
     CREATURE_DARK_MATTER_TARGET         = 28237,
     CREATURE_SEARING_GAZE_TARGET        = 28265,
     CREATURE_DARK_RUNE_PROTECTOR        = 27983,
@@ -111,13 +105,16 @@ enum Spells
     SPELL_STEALTH                       = 58506,
     //Kadrak
     SPELL_GLARE_OF_THE_TRIBUNAL         = 50988,
-    H_SPELL_GLARE_OF_THE_TRIBUNAL       = 59868,
+    H_SPELL_GLARE_OF_THE_TRIBUNAL       = 59870,
     //Marnak
+    SPELL_DARK_MATTER_VISUAL            = 51000,
+    SPELL_DARK_MATTER_DUMMY             = 51001,
     SPELL_DARK_MATTER                   = 51012,
     H_SPELL_DARK_MATTER                 = 59868,
     //Abedneum
-    SPELL_SEARING_GAZE                  = 51136,
-    H_SPELL_SEARING_GAZE                = 59867
+    SPELL_SEARING_GAZE_DUMMY            = 51136,
+    SPELL_SEARING_GAZE                  = 51125,
+    H_SPELL_SEARING_GAZE                = 59866
 };
 
 enum Quests
@@ -130,24 +127,19 @@ enum Achievements
     ACHIEV_BRANN_SPANKIN_NEW            = 2154
 };
 
-#define GOSSIP_ITEM_START               "Brann, it would be our honor!"
-#define GOSSIP_ITEM_PROGRESS            "Let's move Brann, enough of the history lessons!"
-
 static Position SpawnLocations[]=
 {
-    {946.992f, 397.016f, 208.374f, 0.0f},
-    {960.748f, 382.944f, 208.374f, 0.0f},
+    {946.992f, 397.016f, 208.374f},
+    {960.748f, 382.944f, 208.374f},
 };
+
+#define GOSSIP_ITEM_START               "Brann, it would be our honor!"
+#define GOSSIP_ITEM_PROGRESS            "Let's move Brann, enough of the history lessons!"
 
 class mob_tribuna_controller : public CreatureScript
 {
 public:
     mob_tribuna_controller() : CreatureScript("mob_tribuna_controller") { }
-
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new mob_tribuna_controllerAI(pCreature);
-    }
 
     struct mob_tribuna_controllerAI : public ScriptedAI
     {
@@ -155,29 +147,49 @@ public:
         {
             pInstance = c->GetInstanceScript();
             SetCombatMovement(false);
+
+            //temporary
+            SpellEntry *TempSpell;
+            TempSpell = GET_SPELL(SPELL_SEARING_GAZE_DUMMY);
+            if (TempSpell)
+            { 
+                TempSpell->EffectImplicitTargetA[0] = 6;
+                TempSpell->EffectImplicitTargetA[1] = 6;
+                TempSpell->EffectImplicitTargetB[0] = 0;
+                TempSpell->EffectImplicitTargetB[1] = 0;
+                TempSpell->Effect[1] = 0;
+            }
+            TempSpell = GET_SPELL(SPELL_DARK_MATTER_DUMMY);
+            if (TempSpell)
+            { 
+                TempSpell->EffectImplicitTargetA[0] = 6;
+                TempSpell->EffectImplicitTargetA[1] = 6;
+                TempSpell->EffectImplicitTargetB[0] = 0;
+                TempSpell->EffectImplicitTargetB[1] = 0;
+            }
         }
-
-        InstanceScript* pInstance;
-
-        uint32 uiKaddrakEncounterTimer;
-        uint32 uiMarnakEncounterTimer;
-        uint32 uiAbedneumEncounterTimer;
 
         bool bKaddrakActivated;
         bool bMarnakActivated;
         bool bAbedneumActivated;
-
+        bool bLoadingDarkMatter;
         std::list<uint64> KaddrakGUIDList;
+        std::list<uint64> AbedneumGUIDList;
+        std::list<uint64> MarnakGUIDList;
 
         void Reset()
         {
-            uiKaddrakEncounterTimer = 1500;
-            uiMarnakEncounterTimer = 10000;
-            uiAbedneumEncounterTimer = 10000;
+            KaddrakEncounterTimer = 1500;
+            MarnakEncounterTimer = 10*IN_MILLISECONDS;
+            AbedneumEncounterTimer = 10*IN_MILLISECONDS;
+            LoadingTimer = 5*IN_MILLISECONDS;
 
             bKaddrakActivated = false;
             bMarnakActivated = false;
             bAbedneumActivated = false;
+            bLoadingDarkMatter = false;
+
+            DarkMatterGUID = 0;
 
             if (pInstance)
             {
@@ -188,122 +200,141 @@ public:
             }
 
             KaddrakGUIDList.clear();
+            AbedneumGUIDList.clear();
+            MarnakGUIDList.clear();
         }
 
-        void UpdateFacesList()
-       {
-            /*GetCreatureListWithEntryInGrid(lKaddrakGUIDList, me, CREATURE_KADDRAK, 50.0f);
-            if (!lKaddrakGUIDList.empty())
+        void SetInCombat()
+        {
+            Map *map = me->GetMap();
+            if (!map->IsDungeon())
+                return;
+
+            Map::PlayerList const &PlayerList = map->GetPlayers();
+            for(Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
             {
-                uint32 uiPositionCounter = 0;
-                for (std::list<Creature*>::const_iterator itr = lKaddrakGUIDList.begin(); itr != lKaddrakGUIDList.end(); ++itr)
-                {
-                    if ((*itr)->isAlive())
+                if (Player* i_pl = i->getSource())
+                    if (!i_pl->isGameMaster() && i_pl->isAlive() && me->GetDistance(i_pl) <= 100)
                     {
-                        if (uiPositionCounter == 0)
-                        {
-                            (*itr)->GetMap()->CreatureRelocation((*itr), 927.265f, 333.200f, 218.780f, (*itr)->GetOrientation());
-                            (*itr)->SendMonsterMove(927.265f, 333.200f, 218.780f, 0, (*itr)->GetMovementFlags(), 1);
-                        }
-                        else
-                        {
-                            (*itr)->GetMap()->CreatureRelocation((*itr), 921.745f, 328.076f, 218.780f, (*itr)->GetOrientation());
-                            (*itr)->SendMonsterMove(921.745f, 328.076f, 218.780f, 0, (*itr)->GetMovementFlags(), 1);
-                        }
+                        me->SetInCombatWith(i_pl);
+                        i_pl->SetInCombatWith(me);
+                        me->AddThreat(i_pl, 1.0f);
                     }
-                    ++uiPositionCounter;
-                }
-            }*/
+            }
         }
 
         void UpdateAI(const uint32 diff)
         {
             if (bKaddrakActivated)
             {
-                if (uiKaddrakEncounterTimer <= diff)
+                if (KaddrakEncounterTimer <= diff)
                 {
-                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                        if (!KaddrakGUIDList.empty())
-                            for (std::list<uint64>::const_iterator itr = KaddrakGUIDList.begin(); itr != KaddrakGUIDList.end(); ++itr)
-                            {
+                    if (!KaddrakGUIDList.empty())
+                        for (std::list<uint64>::const_iterator itr = KaddrakGUIDList.begin(); itr != KaddrakGUIDList.end(); ++itr)
+                        {
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                                 if (Creature *pKaddrak = Unit::GetCreature(*me, *itr))
-                                {
                                     if (pKaddrak->isAlive())
                                         pKaddrak->CastSpell(pTarget, DUNGEON_MODE(SPELL_GLARE_OF_THE_TRIBUNAL, H_SPELL_GLARE_OF_THE_TRIBUNAL), true);
-                                }
-                            }
-                    uiKaddrakEncounterTimer = 1500;
-                } else uiKaddrakEncounterTimer -= diff;
+                        }
+
+                    KaddrakEncounterTimer = 3*IN_MILLISECONDS;
+                } else KaddrakEncounterTimer -= diff;
             }
+
             if (bMarnakActivated)
             {
-                if (uiMarnakEncounterTimer <= diff)
+                if (MarnakEncounterTimer <= diff)
                 {
-                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                    {
-                        if (Creature* pSummon = me->SummonCreature(CREATURE_DARK_MATTER_TARGET, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN, 1000))
+                    if (!MarnakGUIDList.empty())
+                        if (Creature* pSummon = me->SummonCreature(CREATURE_DARK_MATTER, 904.07f, 351.363f, 214.77f, 0, TEMPSUMMON_TIMED_DESPAWN, 20*IN_MILLISECONDS))
                         {
-                            pSummon->SetDisplayId(11686);
-                            pSummon->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                            pSummon->CastSpell(pTarget, DUNGEON_MODE(SPELL_DARK_MATTER, H_SPELL_DARK_MATTER), true);
+                            pSummon->SetDisplayId(17200);
+                            pSummon->setFaction(16);
+                            DarkMatterGUID = pSummon->GetGUID();
+                            
+                            bLoadingDarkMatter = true;
+
+                            for (std::list<uint64>::const_iterator itr = MarnakGUIDList.begin(); itr != MarnakGUIDList.end(); ++itr)
+                            {
+                                if (Creature *pMarnak = Unit::GetCreature(*me, *itr))
+                                    if (pMarnak->isAlive())
+                                    {
+                                        pMarnak->AI()->AttackStart(pSummon);
+                                        pMarnak->CastSpell(pSummon, SPELL_DARK_MATTER_DUMMY, true);
+                                    }
+                            }
                         }
-                    }
-                    uiMarnakEncounterTimer = 30000 + rand()%1000;
-                } else uiMarnakEncounterTimer -= diff;
+
+                    MarnakEncounterTimer = urand(20000, 25000);
+                } else MarnakEncounterTimer -= diff;
+
+                if (bLoadingDarkMatter && DarkMatterGUID)
+                {
+                    if (LoadingTimer <= diff)
+                    {
+                        if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                            if (Creature* pMatter = Unit::GetCreature(*me, DarkMatterGUID))
+                            {
+                                float x, y, z;
+                                pTarget->GetPosition(x, y, z);
+                
+                                me->SummonCreature(CREATURE_DARK_MATTER_TARGET, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 20*IN_MILLISECONDS);
+                                pMatter->GetMotionMaster()->MovePoint(0, x, y, z);
+                            }
+
+                        bLoadingDarkMatter = false;
+                        LoadingTimer = 5*IN_MILLISECONDS;
+                    } else LoadingTimer -= diff;
+                }
             }
+
             if (bAbedneumActivated)
             {
-                if (uiAbedneumEncounterTimer <= diff)
+                if (AbedneumEncounterTimer <= diff)
                 {
                     if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                    {
-                        if (Creature* pSummon = me->SummonCreature(CREATURE_SEARING_GAZE_TARGET, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN, 1000))
-                        {
-                            pSummon->SetDisplayId(11686);
-                            pSummon->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                            pSummon->CastSpell(pTarget, DUNGEON_MODE(SPELL_SEARING_GAZE, H_SPELL_SEARING_GAZE), true);
-                        }
-                    }
-                    uiAbedneumEncounterTimer = 30000 + rand()%1000;
-                } else uiAbedneumEncounterTimer -= diff;
+                        if (!AbedneumGUIDList.empty())
+                            if (Creature* pSummon = me->SummonCreature(CREATURE_SEARING_GAZE_TARGET, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN, 11*IN_MILLISECONDS))
+                            {
+                                pSummon->SetDisplayId(11686);
+                                pSummon->setFaction(16);
+
+                                for (std::list<uint64>::const_iterator itr = AbedneumGUIDList.begin(); itr != AbedneumGUIDList.end(); ++itr)
+                                {
+                                    if (Creature *pAbedneum = Unit::GetCreature(*me, *itr))
+                                        if (pAbedneum->isAlive())
+                                        {
+                                            pAbedneum->AI()->AttackStart(pSummon);
+                                            pAbedneum->CastSpell(pSummon, SPELL_SEARING_GAZE_DUMMY, true);
+                                        }
+                                }
+                            }
+
+                    AbedneumEncounterTimer = urand(17500, 22500);
+                } else AbedneumEncounterTimer -= diff;
             }
         }
+
+        private:
+        InstanceScript* pInstance;
+        uint64 DarkMatterGUID;
+        uint32 KaddrakEncounterTimer;
+        uint32 MarnakEncounterTimer;
+        uint32 AbedneumEncounterTimer;
+        uint32 LoadingTimer;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_tribuna_controllerAI(pCreature);
+    }
 };
 
 class npc_brann_hos : public CreatureScript
 {
 public:
     npc_brann_hos() : CreatureScript("npc_brann_hos") { }
-
-    bool OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
-    {
-        pPlayer->PlayerTalkClass->ClearMenus();
-        if (uiAction == GOSSIP_ACTION_INFO_DEF+1 || uiAction == GOSSIP_ACTION_INFO_DEF+2)
-        {
-            pPlayer->CLOSE_GOSSIP_MENU();
-            CAST_AI(npc_brann_hos::npc_brann_hosAI, pCreature->AI())->StartWP();
-        }
-
-        return true;
-    }
-
-    bool OnGossipHello(Player* pPlayer, Creature* pCreature)
-    {
-        if (pCreature->isQuestGiver())
-            pPlayer->PrepareQuestMenu(pCreature->GetGUID());
-
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_START, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-        pPlayer->SEND_GOSSIP_MENU(TEXT_ID_START, pCreature->GetGUID());
-
-        return true;
-    }
-
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new npc_brann_hosAI(pCreature);
-    }
 
     struct npc_brann_hosAI : public npc_escortAI
     {
@@ -312,17 +343,7 @@ public:
             pInstance = c->GetInstanceScript();
         }
 
-        uint32 uiStep;
-        uint32 uiPhaseTimer;
-
-        uint64 uiControllerGUID;
-        std::list<uint64> lDwarfGUIDList;
-
-        InstanceScript* pInstance;
-
-        bool bIsBattle;
-        bool bIsLowHP;
-        bool bHasBeenDamaged;
+        uint32 Step;
 
         void Reset()
         {
@@ -331,28 +352,30 @@ public:
                 bIsLowHP = false;
                 bIsBattle = false;
                 bHasBeenDamaged = false;
-                uiStep = 0;
-                uiPhaseTimer = 0;
-                uiControllerGUID = 0;
+                Step = 0;
+                PhaseTimer = 0;
+                ControllerGUID = 0;
 
-                DespawnDwarf();
+                DespawnSummon();
 
                 if (pInstance)
-                    pInstance->SetData(DATA_BRANN_EVENT, NOT_STARTED);
+                    if (pInstance->GetData(DATA_BRANN_EVENT) != DONE) // dont reset if already done
+                        pInstance->SetData(DATA_BRANN_EVENT, NOT_STARTED);
             }
         }
 
-        void DespawnDwarf()
+        void DespawnSummon()
         {
-            if (lDwarfGUIDList.empty())
+            if (lSummonGUIDList.empty())
                 return;
-            for (std::list<uint64>::const_iterator itr = lDwarfGUIDList.begin(); itr != lDwarfGUIDList.end(); ++itr)
+
+            for (std::list<uint64>::const_iterator itr = lSummonGUIDList.begin(); itr != lSummonGUIDList.end(); ++itr)
             {
                 Creature* pTemp = Unit::GetCreature(*me, pInstance ? (*itr) : 0);
                 if (pTemp && pTemp->isAlive())
                     pTemp->ForcedDespawn();
             }
-            lDwarfGUIDList.clear();
+            lSummonGUIDList.clear();
         }
 
         void WaypointReached(uint32 uiPointId)
@@ -360,13 +383,7 @@ public:
             switch(uiPointId)
             {
                 case 7:
-                    if (Creature* pCreature = GetClosestCreatureWithEntry(me, CREATURE_TRIBUNAL_OF_THE_AGES, 100.0f))
-                    {
-                        if (!pCreature->isAlive())
-                            pCreature->Respawn();
-                        CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pCreature->AI())->UpdateFacesList();
-                        uiControllerGUID = pCreature->GetGUID();
-                    }
+                    SpawnSummon(4);
                     break;
                 case 13:
                     DoScriptText(SAY_EVENT_INTRO_1, me);
@@ -385,48 +402,157 @@ public:
                     SetEscortPaused(true);
                     break;
             }
-         }
+        }
 
-         void SpawnDwarf(uint32 uiType)
-         {
-           switch(uiType)
-           {
-               case 1:
-               {
-                   uint32 uiSpawnNumber = DUNGEON_MODE(2,3);
-                   for (uint8 i = 0; i < uiSpawnNumber; ++i)
-                       me->SummonCreature(CREATURE_DARK_RUNE_PROTECTOR, SpawnLocations[0], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
-                   me->SummonCreature(CREATURE_DARK_RUNE_STORMCALLER, SpawnLocations[0], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
-                   break;
-               }
-               case 2:
-                   for (uint8 i = 0; i < 2; ++i)
-                       me->SummonCreature(CREATURE_DARK_RUNE_STORMCALLER, SpawnLocations[0], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
-                   break;
-               case 3:
-                   me->SummonCreature(CREATURE_IRON_GOLEM_CUSTODIAN, SpawnLocations[0], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
-                   break;
-           }
-         }
+        void SpawnSummon(uint32 uiType)
+        {
+            uint32 rnd = urand(0, 1);
+
+            switch(uiType)
+            {
+                case 1:
+                {
+                    uint32 uiSpawnNumber = DUNGEON_MODE(2,3);
+                    for (uint8 i = 0; i < uiSpawnNumber; ++i)
+                        me->SummonCreature(CREATURE_DARK_RUNE_PROTECTOR, SpawnLocations[rnd], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                    me->SummonCreature(CREATURE_DARK_RUNE_STORMCALLER, SpawnLocations[rnd], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                    break;
+                }
+                case 2:
+                    for (uint8 i = 0; i < 2; ++i)
+                        me->SummonCreature(CREATURE_DARK_RUNE_STORMCALLER, SpawnLocations[rnd], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                    break;
+                case 3:
+                    me->SummonCreature(CREATURE_IRON_GOLEM_CUSTODIAN, SpawnLocations[rnd], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                    break;
+                case 4:
+                    if (Creature* pCreature = me->SummonCreature(CREATURE_TRIBUNAL_OF_THE_AGES, 910.126f, 345.795f, 237.928f, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000))
+                    {
+                        ControllerGUID = pCreature->GetGUID();
+                        pCreature->SetVisible(false);
+                    }
+                    break;
+                case 5:
+                {
+                    if (Creature* pTemp = Unit::GetCreature(*me, ControllerGUID))
+                    {
+                        uint32 uiPositionCounter = 0;
+                        for (uint8 i = 0; i < 2; ++i)
+                        {
+                            Creature* pKaddrak = 0;
+
+                            if (uiPositionCounter == 0)
+                            {
+                                pKaddrak = me->SummonCreature(CREATURE_KADDRAK, 927.265f, 333.200f, 218.780f, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                            }
+                            else
+                            {
+                                pKaddrak = me->SummonCreature(CREATURE_KADDRAK, 921.745f, 328.076f, 218.780f, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                            }
+                            
+                            if (pKaddrak)
+                                CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->KaddrakGUIDList.push_back(pKaddrak->GetGUID());
+
+                            ++uiPositionCounter;
+                        }
+                        
+                        CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->SetInCombat();
+                        CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->bKaddrakActivated = true;
+                    }
+                    break;
+                }
+                case 6:
+                {
+                    if (Creature* pTemp = Unit::GetCreature(*me, ControllerGUID))
+                    {
+                        uint32 uiPositionCounter = 0;
+                        for (uint8 i = 0; i < 2; ++i)
+                        {
+                            Creature* pMarnak = 0;
+
+                            if (uiPositionCounter == 0)
+                            {
+                                pMarnak = me->SummonCreature(CREATURE_MARNAK, 891.309f, 359.382f, 217.422f, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                            }
+                            else
+                            {
+                                pMarnak = me->SummonCreature(CREATURE_MARNAK, 895.834f, 363.436f, 217.422f, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                            }
+                            
+                            if (pMarnak)
+                                CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->MarnakGUIDList.push_back(pMarnak->GetGUID());
+
+                            ++uiPositionCounter;
+                        }
+                        
+                        CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->SetInCombat();
+                        CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->bMarnakActivated = true;
+                    }
+                    break;
+                }
+                case 7:
+                {
+                    if (Creature* pTemp = Unit::GetCreature(*me, ControllerGUID))
+                    {
+                        uint32 uiPositionCounter = 0;
+                        for (uint8 i = 0; i < 2; ++i)
+                        {
+                            Creature* pAbedneum = 0;
+
+                            if (uiPositionCounter == 0)
+                            {
+                                pAbedneum = me->SummonCreature(CREATURE_ABEDNEUM, 897.865f, 328.341f, 223.84f, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                            }
+                            else
+                            {
+                                pAbedneum = me->SummonCreature(CREATURE_ABEDNEUM, 893.012f, 332.804f, 223.545f, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
+                            }
+                            
+                            if (pAbedneum)
+                                CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->AbedneumGUIDList.push_back(pAbedneum->GetGUID());
+
+                            ++uiPositionCounter;
+                        }
+                        
+                        CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->SetInCombat();
+                        CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->bAbedneumActivated = true;
+                    }
+                    break;
+                }
+            }
+        }
 
         void JustSummoned(Creature* pSummoned)
         {
-            lDwarfGUIDList.push_back(pSummoned->GetGUID());
-            pSummoned->AddThreat(me, 0.0f);
-            pSummoned->AI()->AttackStart(me);
+            lSummonGUIDList.push_back(pSummoned->GetGUID());
+
+            switch(pSummoned->GetEntry())
+            {
+                case CREATURE_DARK_RUNE_PROTECTOR:
+                case CREATURE_DARK_RUNE_STORMCALLER:
+                case CREATURE_IRON_GOLEM_CUSTODIAN:
+                    pSummoned->AddThreat(me, 1.0f);
+                    pSummoned->AI()->AttackStart(me);
+                    break;
+            }
         }
 
         void JumpToNextStep(uint32 uiTimer)
         {
-          uiPhaseTimer = uiTimer;
-          ++uiStep;
+          PhaseTimer = uiTimer;
+          ++Step;
+        }
+
+        void JustDied(Unit* /*victim*/)
+        {
+            me->Respawn();
         }
 
         void StartWP()
         {
             me->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
             SetEscortPaused(false);
-            uiStep = 1;
+            Step = 1;
             Start();
         }
 
@@ -438,9 +564,9 @@ public:
 
         void UpdateEscortAI(const uint32 uiDiff)
         {
-            if (uiPhaseTimer <= uiDiff)
+            if (PhaseTimer <= uiDiff)
             {
-                switch(uiStep)
+                switch(Step)
                 {
                     case 1:
                         if (pInstance)
@@ -462,7 +588,7 @@ public:
                         if (pInstance)
                             if (Creature* pTemp = (Unit::GetCreature(*me, pInstance->GetData64(DATA_ABEDNEUM))))
                                 DoScriptText(SAY_EVENT_INTRO_3_ABED, pTemp);
-                            JumpToNextStep(8500);
+                        JumpToNextStep(8500);
                         break;
                     case 6:
                         DoScriptText(SAY_EVENT_A_1, me);
@@ -472,19 +598,16 @@ public:
                         if (pInstance)
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_KADDRAK)))
                                 DoScriptText(SAY_EVENT_A_2_KADD, pTemp);
-                            JumpToNextStep(12500);
+                        JumpToNextStep(12500);
                         break;
                     case 8:
                         DoScriptText(SAY_EVENT_A_3, me);
-                        if (pInstance)
-                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_KADDRAK),true);
-                        if (Creature* pTemp = Unit::GetCreature(*me, uiControllerGUID))
-                            CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->bKaddrakActivated = true;
+                        SpawnSummon(5);
                         JumpToNextStep(5000);
                         break;
                     case 9:
                         me->SetReactState(REACT_PASSIVE);
-                        SpawnDwarf(1);
+                        SpawnSummon(1);
                         JumpToNextStep(20000);
                         break;
                     case 10:
@@ -495,91 +618,85 @@ public:
                         if (pInstance)
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_MARNAK)))
                                 DoScriptText(SAY_EVENT_B_2_MARN, pTemp);
-                        SpawnDwarf(1);
+                        SpawnSummon(1);
                         JumpToNextStep(20000);
                         break;
                     case 12:
                         DoScriptText(SAY_EVENT_B_3, me);
-                        if (pInstance)
-                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_MARNAK),true);
-                        if (Creature* pTemp = Unit::GetCreature(*me, uiControllerGUID))
-                            CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->bMarnakActivated = true;
+                        SpawnSummon(6);
                         JumpToNextStep(10000);
                         break;
                     case 13:
-                        SpawnDwarf(1);
+                        SpawnSummon(1);
                         JumpToNextStep(10000);
                         break;
                     case 14:
-                        SpawnDwarf(2);
+                        SpawnSummon(2);
                         JumpToNextStep(20000);
                         break;
                     case 15:
                         DoScriptText(SAY_EVENT_C_1, me);
-                        SpawnDwarf(1);
+                        SpawnSummon(1);
                         JumpToNextStep(10000);
                         break;
                     case 16:
-                        SpawnDwarf(2);
+                        SpawnSummon(2);
                         JumpToNextStep(20000);
                         break;
                     case 17:
                         if (pInstance)
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_ABEDNEUM)))
                                 DoScriptText(SAY_EVENT_C_2_ABED, pTemp);
-                            SpawnDwarf(1);
+                        SpawnSummon(1);
                         JumpToNextStep(20000);
                         break;
                     case 18:
                         DoScriptText(SAY_EVENT_C_3, me);
-                        if (pInstance)
-                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_ABEDNEUM),true);
-                        if (Creature* pTemp = Unit::GetCreature(*me, uiControllerGUID))
-                            CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->bAbedneumActivated = true;
+                        SpawnSummon(7);
                         JumpToNextStep(5000);
                         break;
                     case 19:
-                        SpawnDwarf(2);
+                        SpawnSummon(2);
                         JumpToNextStep(10000);
                         break;
                     case 20:
-                        SpawnDwarf(1);
+                        SpawnSummon(1);
                         JumpToNextStep(15000);
                         break;
                     case 21:
                         DoScriptText(SAY_EVENT_D_1, me);
-                        SpawnDwarf(3);
+                        SpawnSummon(3);
                         JumpToNextStep(20000);
                         break;
                     case 22:
                         if (pInstance)
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_ABEDNEUM)))
                                 DoScriptText(SAY_EVENT_D_2_ABED, pTemp);
-                        SpawnDwarf(1);
+                        SpawnSummon(1);
                         JumpToNextStep(5000);
                         break;
                     case 23:
-                        SpawnDwarf(2);
+                        SpawnSummon(2);
                         JumpToNextStep(15000);
                         break;
                     case 24:
                         DoScriptText(SAY_EVENT_D_3, me);
-                        SpawnDwarf(3);
+                        SpawnSummon(3);
                         JumpToNextStep(5000);
                         break;
                     case 25:
-                        SpawnDwarf(1);
+                        SpawnSummon(1);
                         JumpToNextStep(5000);
                         break;
                     case 26:
-                        SpawnDwarf(2);
+                        SpawnSummon(2);
                         JumpToNextStep(10000);
                         break;
                     case 27:
                         if (pInstance)
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_ABEDNEUM)))
                                 DoScriptText(SAY_EVENT_D_4_ABED, pTemp);
-                        SpawnDwarf(1);
+                        SpawnSummon(1);
                         JumpToNextStep(10000);
                         break;
                     case 28:
@@ -588,7 +705,7 @@ public:
                         me->SetStandState(UNIT_STAND_STATE_STAND);
                         if (pInstance)
                             pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_SKY_FLOOR),true);
-                        if (Creature* pTemp = Unit::GetCreature(*me, uiControllerGUID))
+                        if (Creature* pTemp = Unit::GetCreature(*me, ControllerGUID))
                             pTemp->DealDamage(pTemp, pTemp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                         bIsBattle = true;
                         SetEscortPaused(false);
@@ -598,14 +715,18 @@ public:
                         DoScriptText(SAY_EVENT_END_02, me);
                         if (pInstance)
                         {
+                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_ABEDNEUM),true);
                             pInstance->SetData(DATA_BRANN_EVENT, DONE);
+
+                            DespawnSummon(); 
 
                             // Achievement criteria is with spell 59046 which does not exist.
                             // There is thus no way it can be given by casting the spell on the players.
                             pInstance->DoUpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, 59046);
 
-                            if (!bHasBeenDamaged)
-                                pInstance->DoCompleteAchievement(ACHIEV_BRANN_SPANKIN_NEW);
+                            if (!bHasBeenDamaged && IsHeroic())
+                                pInstance->DoCompleteAchievement(ACHIEV_BRANN_SPANKIN_NEW); 
+                            me->SummonGameObject(DUNGEON_MODE(190586, 193996), 879.869995f, 345.109985f, 203.705994f, 0.008020f,0,0,1,1,604800);
                         }
 
                         JumpToNextStep(5500);
@@ -614,6 +735,7 @@ public:
                         if (pInstance)
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_ABEDNEUM)))
                                 DoScriptText(SAY_EVENT_END_03_ABED, pTemp);
+                        me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
                         JumpToNextStep(8500);
                         break;
                     case 31:
@@ -624,7 +746,7 @@ public:
                         if (pInstance)
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_ABEDNEUM)))
                                 DoScriptText(SAY_EVENT_END_05_ABED, pTemp);
-                            JumpToNextStep(11500);
+                        JumpToNextStep(11500);
                         break;
                     case 33:
                         DoScriptText(SAY_EVENT_END_06, me);
@@ -634,7 +756,7 @@ public:
                         if (pInstance)
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_ABEDNEUM)))
                                 DoScriptText(SAY_EVENT_END_07_ABED, pTemp);
-                            JumpToNextStep(22500);
+                        JumpToNextStep(22500);
                         break;
                     case 35:
                         DoScriptText(SAY_EVENT_END_08, me);
@@ -642,8 +764,11 @@ public:
                         break;
                     case 36:
                         if (pInstance)
+                        {
+                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_KADDRAK),true);
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_KADDRAK)))
                                 DoScriptText(SAY_EVENT_END_09_KADD, pTemp);
+                        }
                         JumpToNextStep(18500);
                         break;
                     case 37:
@@ -672,9 +797,12 @@ public:
                         break;
                     case 42:
                         if (pInstance)
+                        {
+                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_MARNAK),true);
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_MARNAK)))
                                 DoScriptText(SAY_EVENT_END_15_MARN, pTemp);
-                            JumpToNextStep(6500);
+                        }
+                        JumpToNextStep(6500);
                         break;
                     case 43:
                         DoScriptText(SAY_EVENT_END_16, me);
@@ -694,7 +822,7 @@ public:
                         if (pInstance)
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_MARNAK)))
                                 DoScriptText(SAY_EVENT_END_19_MARN, pTemp);
-                            JumpToNextStep(3500);
+                        JumpToNextStep(3500);
                         break;
                     case 47:
                         DoScriptText(SAY_EVENT_END_20, me);
@@ -704,7 +832,7 @@ public:
                         if (pInstance)
                             if (Creature* pTemp = Unit::GetCreature(*me, pInstance->GetData64(DATA_ABEDNEUM)))
                                 DoScriptText(SAY_EVENT_END_21_ABED, pTemp);
-                            JumpToNextStep(5500);
+                        JumpToNextStep(5500);
                         break;
                     case 49:
                     {
@@ -718,15 +846,15 @@ public:
                         Player* pPlayer = GetPlayerForEscort();
                         if (pPlayer)
                             pPlayer->GroupEventHappens(QUEST_HALLS_OF_STONE, me);
-                        me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                        JumpToNextStep(180000);
+
+                        JumpToNextStep(10000); // (180000);
                         break;
                     }
                     case 50:
                         SetEscortPaused(false);
                         break;
                 }
-            } else uiPhaseTimer -= uiDiff;
+            } else PhaseTimer -= uiDiff;
 
             if (!bIsLowHP && HealthBelowPct(30))
             {
@@ -741,16 +869,160 @@ public:
 
             DoMeleeAttackIfReady();
         }
+
+    private:
+        uint32 PhaseTimer;
+        uint64 ControllerGUID;
+        std::list<uint64> lSummonGUIDList;
+        InstanceScript* pInstance;
+        bool bIsBattle;
+        bool bIsLowHP;
+        bool bHasBeenDamaged;
     };
 
+    bool OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
+    {
+        switch (uiAction)
+        {
+            case GOSSIP_ACTION_INFO_DEF+1:
+                CAST_AI(npc_brann_hos::npc_brann_hosAI, pCreature->AI())->StartWP();
+                break;
+            case GOSSIP_ACTION_INFO_DEF+2:
+                CAST_AI(npc_brann_hos::npc_brann_hosAI, pCreature->AI())->Step = 49;
+                break;
+        }
+
+        pPlayer->CLOSE_GOSSIP_MENU();
+
+        return true;
+    }
+
+    bool OnGossipHello(Player* pPlayer, Creature* pCreature)
+    {
+        if (pCreature->isQuestGiver())
+            pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+
+        InstanceScript* pInstance = pCreature->GetInstanceScript();
+
+        uint32 brann_event_data = pInstance->GetData(DATA_BRANN_EVENT);
+        uint32 StepCount = CAST_AI(npc_brann_hos::npc_brann_hosAI, pCreature->AI())->Step;
+
+        if (brann_event_data == NOT_STARTED && StepCount == 0)
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_START, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+
+        if (StepCount > 29 && StepCount < 49)
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_PROGRESS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+        
+        pPlayer->SEND_GOSSIP_MENU(TEXT_ID_START, pCreature->GetGUID());
+
+        return true;
+    }
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new npc_brann_hosAI(pCreature);
+    }
 };
 
+class mob_dark_matter : public CreatureScript
+{
+public:
+    mob_dark_matter() : CreatureScript("mob_dark_matter") { }
 
+    struct mob_dark_matterAI : public ScriptedAI
+    {
+        mob_dark_matterAI(Creature *pCreature) : ScriptedAI(pCreature) { }
 
+        void Reset()
+        {
+            bAura = false;
+            bCasted = false;
+            CheckTimer = 5500;
 
+            me->SetReactState(REACT_PASSIVE);
+            me->SetSpeed(MOVE_FLIGHT, 0.7f, true);
+        }
+
+        void UpdateAI(const uint32 diff)
+        {
+            if (CheckTimer <= diff)
+            {
+                if (!bAura)
+                {
+                    me->RemoveAllAuras();
+                    me->AddAura(SPELL_DARK_MATTER_VISUAL, me);
+
+                    bAura = true;
+                }
+
+                if (bCasted)
+                {
+                    me->DisappearAndDie();
+                }
+
+                if (Creature* pTarget = me->FindNearestCreature(CREATURE_DARK_MATTER_TARGET, 1.0f, true))
+                {
+                    if (!bCasted) // prevent double cast
+                        DoCast(DUNGEON_MODE(SPELL_DARK_MATTER, H_SPELL_DARK_MATTER));
+
+                    bCasted = true;
+                }
+
+                CheckTimer = 1*IN_MILLISECONDS;
+            } 
+            else CheckTimer -= diff;
+        }
+
+    private:
+        bool bAura;
+        bool bCasted;
+        uint32 CheckTimer;
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_dark_matterAI(pCreature);
+    }
+};
+
+class mob_searing_gaze : public CreatureScript
+{
+public:
+    mob_searing_gaze() : CreatureScript("mob_searing_gaze") { }
+
+    struct mob_searing_gazeAI : public ScriptedAI
+    {
+        mob_searing_gazeAI(Creature *pCreature) : ScriptedAI(pCreature) { }
+
+        void Reset()
+        {
+            me->SetReactState(REACT_PASSIVE);
+            CheckTimer = 1*IN_MILLISECONDS;
+        }
+
+        void UpdateAI(const uint32 diff)
+        {
+            if (CheckTimer <= diff)
+            {
+                DoCast(DUNGEON_MODE(SPELL_SEARING_GAZE, H_SPELL_SEARING_GAZE));
+                CheckTimer = 1*IN_MILLISECONDS;
+            } else CheckTimer -= diff;
+        }
+
+    private:
+        uint32 CheckTimer;
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new mob_searing_gazeAI(pCreature);
+    }
+};
 
 void AddSC_halls_of_stone()
 {
     new npc_brann_hos();
     new mob_tribuna_controller();
+    new mob_dark_matter();
+    new mob_searing_gaze();
 }

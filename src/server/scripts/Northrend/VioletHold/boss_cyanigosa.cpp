@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -57,35 +50,23 @@ class boss_cyanigosa : public CreatureScript
 public:
     boss_cyanigosa() : CreatureScript("boss_cyanigosa") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_cyanigosaAI (pCreature);
-    }
-
     struct boss_cyanigosaAI : public ScriptedAI
     {
         boss_cyanigosaAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        uint32 uiArcaneVacuumTimer;
-        uint32 uiBlizzardTimer;
-        uint32 uiManaDestructionTimer;
-        uint32 uiTailSweepTimer;
-        uint32 uiUncontrollableEnergyTimer;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
-            uiArcaneVacuumTimer = 10000;
-            uiBlizzardTimer = 15000;
-            uiManaDestructionTimer = 30000;
-            uiTailSweepTimer = 20000;
-            uiUncontrollableEnergyTimer = 25000;
+            ArcaneVacuumTimer = 10000;
+            BlizzardTimer = 15000;
+            ManaDestructionTimer = 30000;
+            TailSweepTimer = 20000;
+            UncontrollableEnergyTimer = 25000;
+
             if (pInstance)
                 pInstance->SetData(DATA_CYANIGOSA_EVENT, NOT_STARTED);
         }
@@ -112,39 +93,42 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (uiArcaneVacuumTimer <= diff)
+            if (ArcaneVacuumTimer <= diff)
             {
+                DoScriptText(SAY_DISRUPTION, me);
                 DoCast(SPELL_ARCANE_VACUUM);
-                uiArcaneVacuumTimer = 10000;
-            } else uiArcaneVacuumTimer -= diff;
+                ArcaneVacuumTimer = 10000;
+            } else ArcaneVacuumTimer -= diff;
 
-            if (uiBlizzardTimer <= diff)
+            if (BlizzardTimer <= diff)
             {
                 if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_BLIZZARD);
-                uiBlizzardTimer = 15000;
-            } else uiBlizzardTimer -= diff;
+                BlizzardTimer = 15000;
+            } else BlizzardTimer -= diff;
 
-            if (uiTailSweepTimer <= diff)
+            if (TailSweepTimer <= diff)
             {
                 DoCast(SPELL_TAIL_SWEEP);
-                uiTailSweepTimer = 20000;
-            } else uiTailSweepTimer -= diff;
+                TailSweepTimer = 20000;
+            } else TailSweepTimer -= diff;
 
-            if (uiUncontrollableEnergyTimer <= diff)
+            if (UncontrollableEnergyTimer <= diff)
             {
+                DoScriptText(SAY_BREATH_ATTACK, me);
                 DoCastVictim(SPELL_UNCONTROLLABLE_ENERGY);
-                uiUncontrollableEnergyTimer = 25000;
-            } else uiUncontrollableEnergyTimer -= diff;
+                UncontrollableEnergyTimer = 25000;
+            } else UncontrollableEnergyTimer -= diff;
 
             if (IsHeroic())
             {
-                if (uiManaDestructionTimer <= diff)
+                if (ManaDestructionTimer <= diff)
                 {
+                    DoScriptText(RAND(SAY_SPECIAL_ATTACK_1,SAY_SPECIAL_ATTACK_2),me);
                     if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                         DoCast(pTarget, SPELL_MANA_DESTRUCTION);
-                    uiManaDestructionTimer = 30000;
-                } else uiManaDestructionTimer -= diff;
+                    ManaDestructionTimer = 8000;
+                } else ManaDestructionTimer -= diff;
             }
 
             DoMeleeAttackIfReady();
@@ -164,8 +148,20 @@ public:
                 return;
             DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
         }
+
+    private:
+        uint32 ArcaneVacuumTimer;
+        uint32 BlizzardTimer;
+        uint32 ManaDestructionTimer;
+        uint32 TailSweepTimer;
+        uint32 UncontrollableEnergyTimer;
+        InstanceScript* pInstance;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_cyanigosaAI (pCreature);
+    }
 };
 
 

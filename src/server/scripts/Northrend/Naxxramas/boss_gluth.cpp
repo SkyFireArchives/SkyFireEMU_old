@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -50,6 +43,13 @@ enum Events
     EVENT_SUMMON,
 };
 
+enum Emotes
+{
+    EMOTE_ENRAGE    = -1533129,
+    EMOTE_DEZIMATE  = -1533130,
+    EMOTE_ZOMBIE    = -1533131,
+};
+
 #define EMOTE_NEARBY    " spots a nearby zombie to devour!"
 
 class boss_gluth : public CreatureScript
@@ -68,8 +68,6 @@ public:
         {
             // Do not let Gluth be affected by zombies' debuff
             me->ApplySpellImmune(0, IMMUNITY_ID, SPELL_INFECTED_WOUND, true);
-            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         void MoveInLineOfSight(Unit *who)
@@ -77,7 +75,7 @@ public:
             if (who->GetEntry() == MOB_ZOMBIE && me->IsWithinDistInMap(who, 7))
             {
                 SetGazeOn(who);
-                // TODO: use a script text
+                DoScriptText(EMOTE_ZOMBIE, me);
                 me->MonsterTextEmote(EMOTE_NEARBY, 0, true);
             }
             else
@@ -101,6 +99,15 @@ public:
             summons.Summon(summon);
         }
 
+        void SpellHitTarget(Unit* target, const SpellEntry* spell) 
+        {
+            if (target->GetTypeId() == TYPEID_UNIT && target->GetEntry() == MOB_ZOMBIE && spell->Id == SPELL_DECIMATE)
+            {
+                target->ToCreature()->AI()->AttackStart(me);
+                target->ToCreature()->SetReactState(REACT_PASSIVE);
+            }
+        }
+
         void UpdateAI(const uint32 diff)
         {
             if (!UpdateVictimWithGaze() || !CheckInRoom())
@@ -117,12 +124,12 @@ public:
                         events.ScheduleEvent(EVENT_WOUND, 10000);
                         break;
                     case EVENT_ENRAGE:
-                        // TODO : Add missing text
+                        DoScriptText(EMOTE_ENRAGE, me);
                         DoCast(me, SPELL_ENRAGE);
                         events.ScheduleEvent(EVENT_ENRAGE, 15000);
                         break;
                     case EVENT_DECIMATE:
-                        // TODO : Add missing text
+                        DoScriptText(EMOTE_DEZIMATE, me);
                         DoCastAOE(SPELL_DECIMATE);
                         events.ScheduleEvent(EVENT_DECIMATE, 105000);
                         break;
@@ -153,35 +160,8 @@ public:
 
 };
 
-class spell_gluth_decimate : public SpellScriptLoader
-{
-    public:
-        spell_gluth_decimate() : SpellScriptLoader("spell_gluth_decimate") { }
-
-        class spell_gluth_decimate_SpellScript : public SpellScript
-        {
-            PrepareSpellScript(spell_gluth_decimate_SpellScript);
-
-            void FilterTargets(std::list<Unit*>& unitList)
-            {
-                unitList.remove(GetCaster());
-            }
-
-            void Register()
-            {
-                OnUnitTargetSelect += SpellUnitTargetFn(spell_gluth_decimate_SpellScript::FilterTargets, EFFECT_0, TARGET_SRC_CASTER);
-            }
-        };
-
-        SpellScript *GetSpellScript() const
-        {
-            return new spell_gluth_decimate_SpellScript();
-        }
-};
-
 
 void AddSC_boss_gluth()
 {
     new boss_gluth();
-    new spell_gluth_decimate();
 }

@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -81,16 +74,25 @@ class boss_emalon : public CreatureScript
         {
             boss_emalonAI(Creature* creature) : BossAI(creature, DATA_EMALON)
             {
-                me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
             }
 
             void Reset()
             {
                 _Reset();
 
+                if (instance)
+                    instance->SetData(DATA_EMALON, NOT_STARTED);
+
                 for (uint8 i = 0; i < MAX_TEMPEST_MINIONS; ++i)
                     me->SummonCreature(MOB_TEMPEST_MINION, TempestMinions[i], TEMPSUMMON_CORPSE_DESPAWN, 0);
+            }
+
+            void JustDied(Unit* killer)
+            {
+                if (instance)
+                    instance->SetData(DATA_EMALON, DONE);
+
+                _JustDied();
             }
 
             void JustSummoned(Creature* summoned)
@@ -104,6 +106,9 @@ class boss_emalon : public CreatureScript
 
             void EnterCombat(Unit* who)
             {
+                if (instance)
+                    instance->SetData(DATA_EMALON, IN_PROGRESS);
+
                 if (!summons.empty())
                 {
                     for (std::list<uint64>::const_iterator itr = summons.begin(); itr != summons.end(); ++itr)
@@ -252,7 +257,7 @@ class mob_tempest_minion : public CreatureScript
                         if (overchargedAura->GetStackAmount() == 10)
                         {
                             DoCast(me, SPELL_OVERCHARGED_BLAST);
-                            me->DespawnOrUnsummon();
+                            me->Kill(me);
                             DoScriptText(EMOTE_MINION_RESPAWN, me);
                         }
                     }
@@ -279,8 +284,96 @@ class mob_tempest_minion : public CreatureScript
         }
 };
 
+class mob_tempest_warder : public CreatureScript
+{
+    public:
+        mob_tempest_warder() : CreatureScript("mob_tempest_warder") { }
+
+        struct mob_tempest_warderAI : public ScriptedAI
+        {
+            mob_tempest_warderAI(Creature* creature) : ScriptedAI(creature)
+            {
+                instance = creature->GetInstanceScript();
+            }
+
+            void Reset()
+            {
+                events.Reset();
+                OverchargedTimer = 0;
+
+                Cast = false;
+            }
+
+            void EnterCombat(Unit * who)
+            {
+                DoZoneInCombat();
+                events.ScheduleEvent(EVENT_SHOCK, 10000);
+            }
+
+            void UpdateAI(const uint32 diff)
+            {
+                //Return since we have no target
+                if (!UpdateVictim())
+                    return;
+
+                events.Update(diff);
+
+                if (me->HasUnitState(UNIT_STAT_CASTING))
+                    return;
+
+                if (HealthBelowPct(50) && !Cast)
+                {
+                    DoCast(me, SPELL_OVERCHARGED);
+                    Cast = true;
+                }
+
+                if (Aura const* overchargedAura = me->GetAura(SPELL_OVERCHARGED))
+                {
+                    if (overchargedAura->GetStackAmount() < 10)
+                    {
+                        if (OverchargedTimer <= diff)
+                        {
+                            DoCast(me, SPELL_OVERCHARGED);
+                            OverchargedTimer = 2000;
+                        }
+                        else
+                            OverchargedTimer -= diff;
+                    }
+                    else
+                    {
+                        if (overchargedAura->GetStackAmount() == 10)
+                        {
+                            DoCast(me, SPELL_OVERCHARGED_BLAST);
+                            me->RemoveAllAuras();
+                        }
+                    }
+                }
+
+                if (events.ExecuteEvent() == EVENT_SHOCK)
+                {
+                    DoCastVictim(SPELL_SHOCK);
+                    events.ScheduleEvent(EVENT_SHOCK, 20000);
+                }
+
+                DoMeleeAttackIfReady();
+            }
+
+        private:
+            InstanceScript* instance;
+            EventMap events;
+            uint32 OverchargedTimer;
+            bool Cast;
+        };
+
+        CreatureAI* GetAI(Creature* creature) const
+        {
+            return new mob_tempest_warderAI(creature);
+        }
+};
+
 void AddSC_boss_emalon()
 {
     new boss_emalon();
     new mob_tempest_minion();
+    new mob_tempest_warder();
 }

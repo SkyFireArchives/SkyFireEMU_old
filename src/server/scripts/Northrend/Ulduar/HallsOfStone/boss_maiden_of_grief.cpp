@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* Script Data Start
@@ -65,24 +58,14 @@ class boss_maiden_of_grief : public CreatureScript
 public:
     boss_maiden_of_grief() : CreatureScript("boss_maiden_of_grief") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_maiden_of_griefAI (pCreature);
-    }
-
     struct boss_maiden_of_griefAI : public ScriptedAI
     {
         boss_maiden_of_griefAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = me->GetInstanceScript();
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        InstanceScript* pInstance;
-
-        uint32 PartingSorrowTimer;
-        uint32 StormOfGriefTimer;
-        uint32 ShockOfSorrowTimer;
-        uint32 PillarOfWoeTimer;
 
         void Reset()
         {
@@ -126,7 +109,7 @@ public:
             {
                 if (PartingSorrowTimer <= diff)
                 {
-                    Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
+                    Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0);
 
                     if (pTarget)
                         DoCast(pTarget, SPELL_PARTING_SORROW);
@@ -151,7 +134,7 @@ public:
 
             if (PillarOfWoeTimer <= diff)
             {
-                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
+                Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1);
 
                 if (pTarget)
                     DoCast(pTarget, SPELL_PILLAR_OF_WOE_N);
@@ -179,8 +162,19 @@ public:
 
             DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3,SAY_SLAY_4), me);
         }
+
+    private:
+        InstanceScript* pInstance;
+        uint32 PartingSorrowTimer;
+        uint32 StormOfGriefTimer;
+        uint32 ShockOfSorrowTimer;
+        uint32 PillarOfWoeTimer;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_maiden_of_griefAI (pCreature);
+    }
 };
 
 

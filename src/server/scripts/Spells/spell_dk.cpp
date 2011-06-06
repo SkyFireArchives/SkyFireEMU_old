@@ -26,9 +26,9 @@
 
 enum DeathKnightSpells
 {
+    DK_SPELL_SUMMON_GARGOYLE                = 50514,
     DISPLAY_GHOUL_CORPSE                    = 25537,
     DK_SPELL_SCOURGE_STRIKE_TRIGGERED       = 70890,
-    DK_SPELL_BLOOD_BOIL_TRIGGERED           = 65658,
 };
 
 // 50462 - Anti-Magic Shell (on raid member)
@@ -190,6 +190,46 @@ public:
     }
 };
 
+// 50524 Runic Power Feed (keeping Gargoyle alive)
+class spell_dk_runic_power_feed : public SpellScriptLoader
+{
+public:
+    spell_dk_runic_power_feed() : SpellScriptLoader("spell_dk_runic_power_feed") { }
+
+    class spell_dk_runic_power_feed_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_dk_runic_power_feed_SpellScript)
+        bool Validate(SpellEntry const * /*spellEntry*/)
+        {
+            if (!sSpellStore.LookupEntry(DK_SPELL_SUMMON_GARGOYLE))
+                return false;
+            return true;
+        }
+
+        void HandleDummy(SpellEffIndex /*effIndex*/)
+        {
+            if (Unit* caster = GetCaster())
+            {
+                // No power, dismiss Gargoyle
+                if (caster->GetPower(POWER_RUNIC_POWER) < 30)
+                    caster->RemoveAurasDueToSpell(DK_SPELL_SUMMON_GARGOYLE, caster->GetGUID());
+                else
+                    caster->ModifyPower(POWER_RUNIC_POWER, -30);
+            }
+        }
+
+        void Register()
+        {
+            OnEffect += SpellEffectFn(spell_dk_runic_power_feed_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+        }
+    };
+
+    SpellScript* GetSpellScript() const
+    {
+        return new spell_dk_runic_power_feed_SpellScript();
+    }
+};
+
 // 55090 Scourge Strike (55265, 55270, 55271)
 class spell_dk_scourge_strike : public SpellScriptLoader
 {
@@ -228,57 +268,11 @@ public:
     }
 };
 
-// 48721 Blood Boil
-class spell_dk_blood_boil : public SpellScriptLoader
-{
-    public:
-        spell_dk_blood_boil() : SpellScriptLoader("spell_dk_blood_boil") { }
-
-        class spell_dk_blood_boil_SpellScript : public SpellScript
-        {
-            PrepareSpellScript(spell_dk_blood_boil_SpellScript);
-
-            bool Validate(SpellEntry const * /*spellEntry*/)
-            {
-                if (!sSpellStore.LookupEntry(DK_SPELL_BLOOD_BOIL_TRIGGERED))
-                    return false;
-                return true;
-            }
-
-            bool Load()
-            {
-                _executed = false;
-                return GetCaster()->GetTypeId() == TYPEID_PLAYER && GetCaster()->getClass() == CLASS_DEATH_KNIGHT;
-            }
-
-            void HandleAfterHit()
-            {
-                if (_executed || !GetHitUnit())
-                    return;
-
-                _executed = true;
-                GetCaster()->CastSpell(GetCaster(), DK_SPELL_BLOOD_BOIL_TRIGGERED, true);
-            }
-
-            void Register()
-            {
-                AfterHit += SpellHitFn(spell_dk_blood_boil_SpellScript::HandleAfterHit);
-            }
-
-            bool _executed;
-        };
-
-        SpellScript* GetSpellScript() const
-        {
-            return new spell_dk_blood_boil_SpellScript();
-        }
-};
-
 void AddSC_deathknight_spell_scripts()
 {
     new spell_dk_anti_magic_shell_raid();
     new spell_dk_anti_magic_shell_self();
     new spell_dk_anti_magic_zone();
+    new spell_dk_runic_power_feed();
     new spell_dk_scourge_strike();
-    new spell_dk_blood_boil();
 }

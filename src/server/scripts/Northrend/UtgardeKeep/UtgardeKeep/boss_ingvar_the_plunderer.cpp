@@ -1,32 +1,25 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* ScriptData
 SDName: Boss_Ingvar_The_Plunderer
 SD%Complete: 95
 SDComment: Some Problems with Annhylde Movement, Blizzlike Timers
-SDCategory: Udgarde Keep
+SDCategory: Utgarde Keep
 EndScriptData */
 
 #include "ScriptPCH.h"
@@ -43,6 +36,7 @@ enum Yells
 
     YELL_KILL_1                                 = -1574009,
     YELL_KILL_2                                 = -1574010,
+    EMOTE_ROARS                                 = -1574021
 };
 
 enum Creatures
@@ -50,6 +44,8 @@ enum Creatures
     MOB_INGVAR_HUMAN                            = 23954,
     MOB_ANNHYLDE_THE_CALLER                     = 24068,
     MOB_INGVAR_UNDEAD                           = 23980,
+    MOB_SMASH_TARGET                            = 89,
+    DISPLAY_INVISIBLE                           = 11686
 };
 
 enum Spells
@@ -69,6 +65,7 @@ enum Spells
 
     //Ingvar Spells undead form
     SPELL_DARK_SMASH                            = 42723,
+    H_SPELL_DARK_SMASH                          = 59709,
     SPELL_DREADFUL_ROAR                         = 42729,
     H_SPELL_DREADFUL_ROAR                       = 59734,
     SPELL_WOE_STRIKE                            = 42730,
@@ -93,8 +90,6 @@ public:
         boss_ingvar_the_plundererAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
-            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         InstanceScript* pInstance;
@@ -218,7 +213,7 @@ public:
                 if (!me->HasUnitState(UNIT_STAT_CASTING))
                 {
                     if (bIsUndead)
-                        DoCast(me->getVictim(), SPELL_WOE_STRIKE);
+                        DoCast(me->getVictim(), DUNGEON_MODE(SPELL_WOE_STRIKE,H_SPELL_WOE_STRIKE));
                     else
                         DoCast(me->getVictim(), SPELL_CLEAVE);
                     uiCleaveTimer = rand()%5000 + 2000;
@@ -229,10 +224,19 @@ public:
             {
                 if (!me->HasUnitState(UNIT_STAT_CASTING))
                 {
-                    if (bIsUndead)
-                        DoCast(me->getVictim(), SPELL_DARK_SMASH);
-                    else
-                        DoCast(me->getVictim(), SPELL_SMASH);
+                    float x, y, z;
+                    z = me->GetPositionZ();
+                    me->GetNearPoint2D(x, y, 0.0f, me->GetOrientation());
+
+                    // summon the temp target relative to self instead of current victim, should prevent facing issues while casting
+                    if (Creature* tempTarget = me->SummonCreature(MOB_SMASH_TARGET, x, y, z, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 5000))
+                    {
+                        me->SetFacingToObject(tempTarget);
+                        tempTarget->SetReactState(REACT_PASSIVE);
+                        tempTarget->SetDisplayId(DISPLAY_INVISIBLE);
+                        tempTarget->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE|UNIT_FLAG_PASSIVE|UNIT_FLAG_NOT_SELECTABLE);
+                        me->CastSpell(tempTarget, bIsUndead ? SPELL_DARK_SMASH : DUNGEON_MODE(SPELL_SMASH,H_SPELL_SMASH), false);
+                    }                    
                     uiSmashTimer = 10000;
                 }
             } else uiSmashTimer -= diff;
@@ -241,7 +245,8 @@ public:
             {
                 if (uiEnrageTimer <= diff)
                 {
-                    DoCast(me, SPELL_ENRAGE);
+                    DoScriptText(EMOTE_ROARS, me);
+                    DoCast(me, DUNGEON_MODE(SPELL_ENRAGE,H_SPELL_ENRAGE));
                     uiEnrageTimer = 10000;
                 } else uiEnrageTimer -= diff;
             } else // In Undead form used to summon weapon
@@ -251,7 +256,7 @@ public:
                     if (!me->HasUnitState(UNIT_STAT_CASTING))
                     {
                         // Spawn target for Axe
-                        Unit *pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 1);
+                        Unit *pTarget = SelectTarget(SELECT_TARGET_TOPAGGRO, 1);
                         if (pTarget)
                         {
                             me->SummonCreature(ENTRY_THROW_TARGET,pTarget->GetPositionX(),pTarget->GetPositionY(),pTarget->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN,2000);
@@ -268,9 +273,9 @@ public:
                 if (!me->HasUnitState(UNIT_STAT_CASTING))
                 {
                     if (bIsUndead)
-                        DoCast(me, SPELL_DREADFUL_ROAR);
+                        DoCast(me, DUNGEON_MODE(SPELL_DREADFUL_ROAR,H_SPELL_DREADFUL_ROAR));
                     else
-                        DoCast(me, SPELL_STAGGERING_ROAR);
+                        DoCast(me, DUNGEON_MODE(SPELL_STAGGERING_ROAR,H_SPELL_STAGGERING_ROAR));
                     uiRoarTimer = 10000;
                 }
             } else uiRoarTimer -= diff;
@@ -281,11 +286,10 @@ public:
 
 };
 
-
 enum eSpells
 {
 //we don't have that text in db so comment it until we get this text
-//    YELL_RESSURECT                      = -1574025,
+    YELL_RESSURECT                      = -1574025,
 
 //Spells for Annhylde
     SPELL_SCOURG_RESURRECTION_HEAL              = 42704, //Heal Max + DummyAura
@@ -319,10 +323,10 @@ public:
         void Reset()
         {
             me->AddUnitMovementFlag(MOVEMENTFLAG_FLYING | MOVEMENTFLAG_HOVER);
-            me->SetSpeed(MOVE_SWIM , 1.0f);
-            me->SetSpeed(MOVE_RUN , 1.0f);
-            me->SetSpeed(MOVE_WALK , 1.0f);
-            //me->SetSpeed(MOVE_FLIGHT , 1.0f);
+            me->SetSpeed(MOVE_SWIM, 1.0f);
+            me->SetSpeed(MOVE_RUN, 1.0f);
+            me->SetSpeed(MOVE_WALK, 1.0f);
+            // me->SetSpeed(MOVE_FLIGHT , 1.0f);
 
             me->GetPosition(x,y,z);
             DoTeleportTo(x+1,y,z+30);
@@ -331,8 +335,7 @@ public:
             if (ingvar)
             {
                 me->GetMotionMaster()->MovePoint(1,x,y,z+15);
-
-    //            DoScriptText(YELL_RESSURECT,me);
+                DoScriptText(YELL_RESSURECT,me);
             }
         }
 
@@ -340,6 +343,7 @@ public:
         {
             if (type != POINT_MOTION_TYPE)
                 return;
+
             Unit* ingvar = Unit::GetUnit((*me), pInstance ? pInstance->GetData64(DATA_INGVAR) : 0);
             if (ingvar)
             {
@@ -364,6 +368,7 @@ public:
         void AttackStart(Unit* /*who*/) {}
         void MoveInLineOfSight(Unit* /*who*/) {}
         void EnterCombat(Unit * /*who*/) {}
+
         void UpdateAI(const uint32 diff)
         {
             if (uiResurectTimer)
@@ -376,7 +381,7 @@ public:
                         if (ingvar)
                         {
                             ingvar->SetStandState(UNIT_STAND_STATE_STAND);
-                            ingvar->CastSpell(ingvar,SPELL_SCOURG_RESURRECTION_HEAL,false);
+                            ingvar->CastSpell(ingvar, SPELL_SCOURG_RESURRECTION_HEAL,false);
                         }
                         uiResurectTimer = 3000;
                         uiResurectPhase = 2;
@@ -401,7 +406,6 @@ public:
     };
 };
 
-
 enum eShadowAxe
 {
     SPELL_SHADOW_AXE_DAMAGE                     = 42750,
@@ -420,40 +424,48 @@ public:
 
     struct mob_ingvar_throw_dummyAI : public ScriptedAI
     {
-        mob_ingvar_throw_dummyAI(Creature *c) : ScriptedAI(c)
-        {
-        }
+        mob_ingvar_throw_dummyAI(Creature *c) : ScriptedAI(c) { }
 
+        bool reachedTarget;
         uint32 uiDespawnTimer;
 
         void Reset()
         {
-            Unit *pTarget = me->FindNearestCreature(ENTRY_THROW_TARGET,50);
-            if (pTarget)
+            Unit* target = me->FindNearestCreature(ENTRY_THROW_TARGET, 50.0f);
+            if (target)
             {
-                DoCast(me, SPELL_SHADOW_AXE_DAMAGE);
-                float x,y,z;
-                pTarget->GetPosition(x,y,z);
-                me->GetMotionMaster()->MovePoint(0,x,y,z);
+                float x, y, z;
+                target->GetPosition(x, y, z);
+                me->GetMotionMaster()->MovePoint(1, x, y, z);
             }
-            uiDespawnTimer = 7000;
+            reachedTarget = false;
+            uiDespawnTimer = 10000;
         }
+
+        void MovementInform(uint32 type, uint32 id)
+        {
+            if (type != POINT_MOTION_TYPE)
+                return;
+
+            reachedTarget = true;
+            DoCast(me, DUNGEON_MODE(SPELL_SHADOW_AXE_DAMAGE, H_SPELL_SHADOW_AXE_DAMAGE));
+        }
+
         void AttackStart(Unit* /*who*/) {}
         void MoveInLineOfSight(Unit* /*who*/) {}
         void EnterCombat(Unit * /*who*/) {}
+
         void UpdateAI(const uint32 diff)
         {
-            if (uiDespawnTimer <= diff)
-            {
-                me->DealDamage(me,me->GetHealth());
-                me->RemoveCorpse();
-                uiDespawnTimer = 0;
-            } else uiDespawnTimer -= diff;
+            if (reachedTarget)
+                if (uiDespawnTimer <= diff)
+                {
+                    me->DealDamage(me, me->GetHealth());
+                    me->RemoveCorpse();
+                } else uiDespawnTimer -= diff;
         }
     };
-
 };
-
 
 void AddSC_boss_ingvar_the_plunderer()
 {

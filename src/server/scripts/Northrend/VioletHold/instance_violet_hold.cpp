@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -122,7 +115,7 @@ public:
 
     struct instance_violet_hold_InstanceMapScript : public InstanceScript
     {
-        instance_violet_hold_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {Initialize();};
+        instance_violet_hold_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {}
 
         uint64 uiMoragg;
         uint64 uiErekem;
@@ -234,7 +227,7 @@ public:
             return false;
         }
 
-        void OnCreatureCreate(Creature* pCreature, bool add)
+        void OnCreatureCreate(Creature *pCreature, bool /*bAdd*/)
         {
             switch(pCreature->GetEntry())
             {
@@ -272,14 +265,14 @@ public:
                     break;
             }
 
-            if (add && (pCreature->GetGUID() == uiFirstBoss || pCreature->GetGUID() == uiSecondBoss))
+            if (pCreature->GetGUID() == uiFirstBoss || pCreature->GetGUID() == uiSecondBoss)
             {
                 pCreature->AllLootRemovedFromCorpse();
                 pCreature->RemoveLootMode(1);
             }
         }
 
-        void OnGameObjectCreate(GameObject* pGo, bool /*add*/)
+        void OnGameObjectCreate(GameObject *pGo, bool /*bAdd*/)
         {
             switch(pGo->GetEntry())
             {
@@ -475,8 +468,8 @@ public:
         void SpawnPortal()
         {
             SetData(DATA_PORTAL_LOCATION, (GetData(DATA_PORTAL_LOCATION) + urand(1,5))%6);
-            if (Creature *pSinclari = instance->GetCreature(uiSinclari))
-                if(Creature *portal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL,PortalLocation[GetData(DATA_PORTAL_LOCATION)],TEMPSUMMON_CORPSE_DESPAWN))
+            if (Creature* pSinclari = instance->GetCreature(uiSinclari))
+                if(Creature* portal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL,PortalLocation[GetData(DATA_PORTAL_LOCATION)],TEMPSUMMON_CORPSE_DESPAWN))
                     uiTeleportationPortal = portal->GetGUID();
         }
 
@@ -576,11 +569,11 @@ public:
                 case 6:
                     if (uiFirstBoss == 0)
                         uiFirstBoss = urand(1,6);
-                    if (Creature *pSinclari = instance->GetCreature(uiSinclari))
+                    if (Creature* pSinclari = instance->GetCreature(uiSinclari))
                     {
-                        if(Creature *pPortal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL, MiddleRoomPortalSaboLocation, TEMPSUMMON_CORPSE_DESPAWN))
+                        if(Creature* pPortal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL, MiddleRoomPortalSaboLocation, TEMPSUMMON_CORPSE_DESPAWN))
                             uiSaboteurPortal = pPortal->GetGUID();
-                        if (Creature *pAzureSaboteur = pSinclari->SummonCreature(CREATURE_SABOTEOUR, MiddleRoomLocation, TEMPSUMMON_DEAD_DESPAWN))
+                        if (Creature* pAzureSaboteur = pSinclari->SummonCreature(CREATURE_SABOTEOUR, MiddleRoomLocation, TEMPSUMMON_DEAD_DESPAWN))
                             pAzureSaboteur->CastSpell(pAzureSaboteur, SABOTEUR_SHIELD_EFFECT, false);
                     }
                     break;
@@ -590,17 +583,17 @@ public:
                         {
                             uiSecondBoss = urand(1,6);
                         } while (uiSecondBoss == uiFirstBoss);
-                    if (Creature *pSinclari = instance->GetCreature(uiSinclari))
+                    if (Creature* pSinclari = instance->GetCreature(uiSinclari))
                     {
-                        if(Creature *pPortal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL, MiddleRoomPortalSaboLocation, TEMPSUMMON_CORPSE_DESPAWN))
+                        if(Creature* pPortal = pSinclari->SummonCreature(CREATURE_TELEPORTATION_PORTAL, MiddleRoomPortalSaboLocation, TEMPSUMMON_CORPSE_DESPAWN))
                             uiSaboteurPortal = pPortal->GetGUID();
-                        if (Creature *pAzureSaboteur = pSinclari->SummonCreature(CREATURE_SABOTEOUR, MiddleRoomLocation, TEMPSUMMON_DEAD_DESPAWN))
+                        if (Creature* pAzureSaboteur = pSinclari->SummonCreature(CREATURE_SABOTEOUR, MiddleRoomLocation, TEMPSUMMON_DEAD_DESPAWN))
                             pAzureSaboteur->CastSpell(pAzureSaboteur, SABOTEUR_SHIELD_EFFECT, false);
                     }
                     break;
                 case 18:
                 {
-                    Creature *pSinclari = instance->GetCreature(uiSinclari);
+                    Creature* pSinclari = instance->GetCreature(uiSinclari);
                     if (pSinclari)
                         pSinclari->SummonCreature(CREATURE_CYANIGOSA,CyanigosasSpawnLocation,TEMPSUMMON_DEAD_DESPAWN);
                     break;
@@ -734,7 +727,7 @@ public:
             }
 
             // Cyanigosa is spawned but not tranformed, prefight event
-            Creature *pCyanigosa = instance->GetCreature(uiCyanigosa);
+            Creature* pCyanigosa = instance->GetCreature(uiCyanigosa);
             if (pCyanigosa && !pCyanigosa->HasAura(CYANIGOSA_SPELL_TRANSFORM))
             {
                 if (uiCyanigosaEventTimer <= diff)
@@ -795,9 +788,9 @@ public:
             // TODO: All visual, spells etc
             for (std::set<uint64>::const_iterator itr = trashMobs.begin(); itr != trashMobs.end(); ++itr)
             {
-                Creature* pCreature = instance->GetCreature(*itr);
-                if (pCreature && pCreature->isAlive())
-                    pCreature->CastSpell(pCreature,SPELL_ARCANE_LIGHTNING,true);  // Who should cast the spell?
+                Creature* creature = instance->GetCreature(*itr);
+                if (creature && creature->isAlive())
+                    creature->CastSpell(creature,SPELL_ARCANE_LIGHTNING,true);  // Who should cast the spell?
             }
         }
 

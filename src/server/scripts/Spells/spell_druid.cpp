@@ -68,9 +68,9 @@ public:
         };
 
         AuraScript *GetAuraScript() const
-        {
-            return new spell_dru_savage_defense_AuraScript();
-        }
+		{
+			return new spell_dru_savage_defense_AuraScript();
+		}
 };
 
 class spell_dru_t10_restoration_4p_bonus : public SpellScriptLoader
@@ -82,38 +82,19 @@ class spell_dru_t10_restoration_4p_bonus : public SpellScriptLoader
         {
             PrepareSpellScript(spell_dru_t10_restoration_4p_bonus_SpellScript);
 
-            bool Load()
-            {
-                return GetCaster()->GetTypeId() == TYPEID_PLAYER;
-            }
-
             void FilterTargets(std::list<Unit*>& unitList)
             {
-                if (!GetCaster()->ToPlayer()->GetGroup())
-                {
-                    unitList.clear();
-                    unitList.push_back(GetCaster());
-                }
-                else
-                {
-                    unitList.remove(GetTargetUnit());
-                    std::list<Unit*> tempTargets;
-                    for (std::list<Unit*>::const_iterator itr = unitList.begin(); itr != unitList.end(); ++itr)
-                        if ((*itr)->GetTypeId() == TYPEID_PLAYER && GetCaster()->IsInRaidWith(*itr))
-                            tempTargets.push_back(*itr);
+                unitList.remove(GetTargetUnit());
+                std::list<Unit*> tempTargets;
+                std::list<Unit*>::iterator end = unitList.end(), itr = unitList.begin();
+                for (; itr != end; ++itr)
+                    if (GetCaster()->IsInRaidWith(*itr))
+                        tempTargets.push_back(*itr);
 
-                    if (tempTargets.empty())
-                    {
-                        unitList.clear();
-                        FinishCast(SPELL_FAILED_DONT_REPORT);
-                        return;
-                    }
-
-                    std::list<Unit*>::const_iterator it2 = tempTargets.begin();
-                    std::advance(it2, urand(0, tempTargets.size() - 1));
-                    unitList.clear();
-                    unitList.push_back(*it2);
-               }
+                itr = tempTargets.begin();
+                std::advance(itr, urand(0, tempTargets.size()-1));
+                unitList.clear();
+                unitList.push_back(*itr);
             }
 
             void Register()
@@ -125,7 +106,7 @@ class spell_dru_t10_restoration_4p_bonus : public SpellScriptLoader
         SpellScript* GetSpellScript() const
         {
             return new spell_dru_t10_restoration_4p_bonus_SpellScript();
-        }
+		}
 };
 
 // 54846 Glyph of Starfire

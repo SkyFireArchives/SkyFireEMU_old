@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -46,7 +39,8 @@ enum Yells
     SAY_DEATH                                     = -1600002,
     SAY_NECRO_ADD                                 = -1600003,
     SAY_REUBBLE_1                                 = -1600004,
-    SAY_REUBBLE_2                                 = -1600005
+    SAY_REUBBLE_2                                 = -1600005,
+    EMOTE_HELP                                    = -1574025,
 };
 enum Creatures
 {
@@ -81,21 +75,17 @@ public:
         {
             pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
 
-        uint32 uiTimer;
-        uint32 uiCrystalHandlerTimer;
+        uint32 Timer;
+        uint32 CrystalHandlerTimer;
         uint8 crystalHandlerAmount;
 
         bool bAchiev;
-
         SummonList lSummons;
-
         std::list<uint64> luiCrystals;
-
         CombatPhase Phase;
-
         InstanceScript* pInstance;
 
         void Reset()
@@ -133,9 +123,10 @@ public:
         {
             DoScriptText(SAY_AGGRO, me);
             Phase = PHASE_1;
-            uiCrystalHandlerTimer = 30*IN_MILLISECONDS;
-            uiTimer = 1*IN_MILLISECONDS;
+            CrystalHandlerTimer = 30*IN_MILLISECONDS;
+            Timer = 1*IN_MILLISECONDS;
             DoCast(SPELL_ARCANE_FIELD);
+
             if (pInstance)
             {
                 for (std::list<uint64>::const_iterator itr = luiCrystals.begin(); itr != luiCrystals.end(); ++itr)
@@ -145,55 +136,68 @@ public:
                 }
                 pInstance->SetData(DATA_NOVOS_EVENT, IN_PROGRESS);
             }
-            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE | UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
         }
 
         void UpdateAI(const uint32 diff)
         {
-            //Return since we have no target
             if (!UpdateVictim())
-                return;
+                return;   
 
             switch (Phase)
             {
                 case PHASE_1:
-                    if (uiTimer <= diff)
+                    if (Timer <= diff)
                     {
                         Creature *pSummon = me->SummonCreature(RAND(CREATURE_FETID_TROLL_CORPSE,CREATURE_HULKING_CORPSE,CREATURE_RISEN_SHADOWCASTER), AddSpawnPoint, TEMPSUMMON_CORPSE_TIMED_DESPAWN,20*IN_MILLISECONDS);
-                        pSummon->GetMotionMaster()->MovePoint(0, AddDestinyPoint);
-                        //If spell is casted stops casting arcane field so no spell casting
-                        //DoCast(me, SPELL_SUMMON_MINIONS);
-                        uiTimer = 3*IN_MILLISECONDS;
-                    } else uiTimer -= diff;
+                            pSummon->GetMotionMaster()->MovePoint(0, AddDestinyPoint);
+                        Timer = 3*IN_MILLISECONDS;
+                    } else Timer -= diff;
                     if (crystalHandlerAmount < 4)
                     {
-                        if (uiCrystalHandlerTimer <= diff)
+                        if (CrystalHandlerTimer <= diff)
                         {
+                            DoScriptText(EMOTE_HELP, me);
                             DoScriptText(SAY_NECRO_ADD, me);
                             Creature *pCrystalHandler = me->SummonCreature(CREATURE_CRYSTAL_HANDLER, CrystalHandlerSpawnPoint, TEMPSUMMON_CORPSE_TIMED_DESPAWN,20*IN_MILLISECONDS);
                             pCrystalHandler->GetMotionMaster()->MovePoint(0, AddDestinyPoint);
-                            uiCrystalHandlerTimer = urand(20*IN_MILLISECONDS,30*IN_MILLISECONDS);
-                        } else uiCrystalHandlerTimer -= diff;
+                            CrystalHandlerTimer = urand(20*IN_MILLISECONDS,21*IN_MILLISECONDS);
+                        } else CrystalHandlerTimer -= diff;
                     }
                     break;
                 case PHASE_2:
-                    if (uiTimer <= diff)
+                    if (Timer <= diff)
                     {
                         if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                            DoCast(pTarget, DUNGEON_MODE(RAND(SPELL_ARCANE_BLAST,SPELL_BLIZZARD,SPELL_FROSTBOLT,SPELL_WRATH_OF_MISERY),
-                                                         RAND(H_SPELL_ARCANE_BLAST,H_SPELL_BLIZZARD,H_SPELL_FROSTBOLT,H_SPELL_WRATH_OF_MISERY)));
-                        uiTimer = urand(1*IN_MILLISECONDS,3*IN_MILLISECONDS);
-                    } else uiTimer -= diff;
+                        switch(urand(0,5))
+                        {
+                            case 0: 
+                            case 1:
+                                DoCast(pTarget,(DUNGEON_MODE(SPELL_ARCANE_BLAST,H_SPELL_ARCANE_BLAST)));
+                                break;
+                            case 2:
+                            case 3:
+                                DoCast(pTarget,(DUNGEON_MODE(SPELL_BLIZZARD,H_SPELL_BLIZZARD)));
+                                break;
+                            case 4:
+                                DoCast(pTarget,(DUNGEON_MODE(SPELL_WRATH_OF_MISERY, H_SPELL_WRATH_OF_MISERY)));
+                                break;
+                            case 5:
+                                DoCast(pTarget,(DUNGEON_MODE(SPELL_FROSTBOLT, H_SPELL_FROSTBOLT)));
+                                break;
+                        }
+                        Timer = urand(1*IN_MILLISECONDS,3*IN_MILLISECONDS);
+                    } else Timer -= diff;
                     break;
                 default:
                     break;
             }
         }
+
         void JustDied(Unit* /*killer*/)
         {
             DoScriptText(SAY_DEATH, me);
+
             if (pInstance)
             {
                 pInstance->SetData(DATA_NOVOS_EVENT, DONE);
@@ -208,6 +212,7 @@ public:
         {
             if (victim == me)
                 return;
+
             DoScriptText(SAY_KILL, me);
         }
 
@@ -228,14 +233,13 @@ public:
                         pTemp->SetGoState(GO_STATE_READY);
                 luiCrystals.pop_back();
             }
+
             if (luiCrystals.empty())
             {
                 me->CastStop();
-                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE | UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
                 Phase = PHASE_2;
-                uiTimer = 1*IN_MILLISECONDS;
+                Timer = 1*IN_MILLISECONDS;
             }
         }
 
@@ -302,6 +306,7 @@ public:
         {
             if (type != POINT_MOTION_TYPE || id != 0)
                 return;
+
             if (Creature *pNovos = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_NOVOS) : 0))
                 if (Unit *pTarget = CAST_AI(boss_novos::boss_novosAI, pNovos->AI())->GetRandomTarget())
                     AttackStart(pTarget);
@@ -332,6 +337,7 @@ public:
         {
             if (type != POINT_MOTION_TYPE || id !=0)
                 return;
+
             if (Creature* pNovos = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_NOVOS) : 0))
             {
                 CAST_AI(boss_novos::boss_novosAI, pNovos->AI())->bAchiev = false;

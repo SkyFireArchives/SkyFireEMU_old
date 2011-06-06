@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -32,6 +25,8 @@ enum Spells
     SPELL_FROZEN_ORB        = 72091,
     SPELL_WHITEOUT          = 72034,    // Every 38 sec. cast. (after SPELL_FROZEN_ORB)
     SPELL_FROZEN_MALLET     = 71993,
+    SPELL_WHITEOUT_VISUAL   = 72036,
+
 
     // Frost Warder
     SPELL_FROST_BLAST       = 72123,    // don't know cd... using 20 secs.
@@ -68,11 +63,29 @@ class boss_toravon : public CreatureScript
             boss_toravonAI(Creature* creature) : BossAI(creature, DATA_TORAVON)
             {
                 me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
+            }
+
+            void Reset()
+            {
+                events.Reset();
+                if (instance)
+                    instance->SetData(DATA_TORAVON, NOT_STARTED);
+            }
+
+            void JustDied(Unit* killer)
+            {
+                if (instance)
+                    instance->SetData(DATA_TORAVON, DONE);
+
+                _JustDied();
             }
 
             void EnterCombat(Unit* /*who*/)
             {
+                if (instance)
+                    instance->SetData(DATA_TORAVON, IN_PROGRESS);
+
                 DoCast(me, SPELL_FROZEN_MALLET);
 
                 events.ScheduleEvent(EVENT_FROZEN_ORB, 11000);
@@ -101,7 +114,7 @@ class boss_toravon : public CreatureScript
                             events.ScheduleEvent(EVENT_FROZEN_ORB, 38000);
                             break;
                         case EVENT_WHITEOUT:
-                            DoCast(me, SPELL_WHITEOUT);
+                            DoCastAOE(SPELL_WHITEOUT);
                             events.ScheduleEvent(EVENT_WHITEOUT, 38000);
                             break;
                         case EVENT_FREEZING_GROUND:
@@ -134,7 +147,11 @@ class mob_frost_warder : public CreatureScript
 
         struct mob_frost_warderAI : public ScriptedAI
         {
-            mob_frost_warderAI(Creature* c) : ScriptedAI(c) {}
+            mob_frost_warderAI(Creature* c) : ScriptedAI(c) 
+            {
+                me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
+            }
 
             void Reset()
             {
@@ -191,6 +208,8 @@ public:
     {
         mob_frozen_orbAI(Creature* creature) : ScriptedAI(creature)
         {
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
 
         void Reset()
@@ -216,7 +235,7 @@ public:
             if (killTimer <= diff)
             {
                 if (!UpdateVictim())
-                    me->DespawnOrUnsummon();
+                   me->ForcedDespawn();
                 killTimer = 10000;
             }
             else

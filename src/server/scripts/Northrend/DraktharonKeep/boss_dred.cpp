@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /*
@@ -53,6 +46,8 @@ enum Creatures
     NPC_RAPTOR_2                                  = 26628
 };
 
+#define EMOTE_CLAW                                -1574026
+
 class boss_dred : public CreatureScript
 {
 public:
@@ -64,17 +59,8 @@ public:
         {
             pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        uint32 uiBellowingRoarTimer;
-        uint32 uiGrievousBiteTimer;
-        uint32 uiManglingSlashTimer;
-        uint32 uiFearsomeRoarTimer;
-        uint32 uiPiercingSlashTimer;
-        uint32 uiRaptorCallTimer;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
@@ -84,18 +70,21 @@ public:
                 pInstance->SetData(DATA_KING_DRED_ACHIEV, 0);
             }
 
-            uiBellowingRoarTimer = 33*IN_MILLISECONDS;
-            uiGrievousBiteTimer  = 20*IN_MILLISECONDS;
-            uiManglingSlashTimer = 18500;
-            uiFearsomeRoarTimer  = urand(10*IN_MILLISECONDS,20*IN_MILLISECONDS);
-            uiPiercingSlashTimer = 17*IN_MILLISECONDS;
-            uiRaptorCallTimer    = urand(20*IN_MILLISECONDS,25*IN_MILLISECONDS);
+            BellowingRoarTimer = 33*IN_MILLISECONDS;
+            GrievousBiteTimer  = 20*IN_MILLISECONDS;
+            ManglingSlashTimer = 18500;
+            FearsomeRoarTimer  = urand(10*IN_MILLISECONDS,20*IN_MILLISECONDS);
+            PiercingSlashTimer = 17*IN_MILLISECONDS;
+            RaptorCallTimer    = urand(20*IN_MILLISECONDS,25*IN_MILLISECONDS);
+            me->SetReactState(REACT_PASSIVE);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             if (pInstance)
                 pInstance->SetData(DATA_DRED_EVENT,IN_PROGRESS);
+
+            me->SetReactState(REACT_AGGRESSIVE);
         }
 
         void UpdateAI(const uint32 diff)
@@ -104,37 +93,38 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (uiBellowingRoarTimer < diff)
+            if (BellowingRoarTimer < diff)
             {
                 DoCastAOE(SPELL_BELLOWING_ROAR, false);
-                uiBellowingRoarTimer = 40*IN_MILLISECONDS;
-            } else uiBellowingRoarTimer -=diff;
+                BellowingRoarTimer = 40*IN_MILLISECONDS;
+            } else BellowingRoarTimer -=diff;
 
-            if (uiGrievousBiteTimer < diff)
+            if (GrievousBiteTimer < diff)
             {
                 DoCastVictim(SPELL_GRIEVOUS_BITE ,false);
-                uiGrievousBiteTimer = 20*IN_MILLISECONDS;
-            } else uiGrievousBiteTimer -=diff;
+                GrievousBiteTimer = 20*IN_MILLISECONDS;
+            } else GrievousBiteTimer -=diff;
 
-            if (uiManglingSlashTimer < diff)
+            if (ManglingSlashTimer < diff)
             {
                 DoCastVictim(SPELL_MANGLING_SLASH,false);
-                uiManglingSlashTimer = 20*IN_MILLISECONDS;
-            } else uiManglingSlashTimer -=diff;
+                ManglingSlashTimer = 20*IN_MILLISECONDS;
+            } else ManglingSlashTimer -=diff;
 
-            if (uiFearsomeRoarTimer < diff)
+            if (FearsomeRoarTimer < diff)
             {
                 DoCastAOE(SPELL_FEARSOME_ROAR,false);
-                uiFearsomeRoarTimer = urand(16*IN_MILLISECONDS,18*IN_MILLISECONDS);
-            } else uiFearsomeRoarTimer -=diff;
+                FearsomeRoarTimer = urand(15*IN_MILLISECONDS,16*IN_MILLISECONDS);
+            } else FearsomeRoarTimer -=diff;
 
-            if (uiPiercingSlashTimer < diff)
+            if (PiercingSlashTimer < diff)
             {
+                DoScriptText(EMOTE_CLAW, me);
                 DoCastVictim(SPELL_PIERCING_SLASH,false);
-                uiPiercingSlashTimer = 20*IN_MILLISECONDS;
-            } else uiPiercingSlashTimer -=diff;
+                PiercingSlashTimer = 18*IN_MILLISECONDS;
+            } else PiercingSlashTimer -=diff;
 
-            if (uiRaptorCallTimer < diff)
+            if (RaptorCallTimer < diff)
             {
                 DoCastVictim(SPELL_RAPTOR_CALL,false);
 
@@ -143,8 +133,8 @@ public:
                 me->GetClosePoint(x,y,z,me->GetObjectSize()/3,10.0f);
                 me->SummonCreature(RAND(NPC_RAPTOR_1,NPC_RAPTOR_2),x,y,z,0,TEMPSUMMON_DEAD_DESPAWN,1*IN_MILLISECONDS);
 
-                uiRaptorCallTimer = urand(20*IN_MILLISECONDS,25*IN_MILLISECONDS);
-            } else uiRaptorCallTimer -=diff;
+                RaptorCallTimer = urand(20*IN_MILLISECONDS,25*IN_MILLISECONDS);
+            } else RaptorCallTimer -=diff;
 
             DoMeleeAttackIfReady();
         }
@@ -159,6 +149,15 @@ public:
                     pInstance->DoCompleteAchievement(ACHIEV_BETTER_OFF_DRED);
             }
         }
+
+    private:
+        uint32 BellowingRoarTimer;
+        uint32 GrievousBiteTimer;
+        uint32 ManglingSlashTimer;
+        uint32 FearsomeRoarTimer;
+        uint32 PiercingSlashTimer;
+        uint32 RaptorCallTimer;
+        InstanceScript* pInstance;
     };
 
     CreatureAI *GetAI(Creature *creature) const
@@ -178,10 +177,6 @@ public:
         {
             pInstance = c->GetInstanceScript();
         }
-
-        InstanceScript* pInstance;
-
-        uint32 GutRipTimer;
 
         void Reset()
         {
@@ -213,6 +208,10 @@ public:
                 }
             }
         }
+
+    private:
+        InstanceScript* pInstance;
+        uint32 GutRipTimer;
     };
 
     CreatureAI *GetAI(Creature *creature) const
@@ -233,13 +232,9 @@ public:
             pInstance = c->GetInstanceScript();
         }
 
-        InstanceScript* pInstance;
-
-        uint32 uiRendTimer;
-
         void Reset()
         {
-            uiRendTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
+            RendTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -248,11 +243,11 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (uiRendTimer < diff)
+            if (RendTimer < diff)
             {
                 DoCastVictim(SPELL_REND,false);
-                uiRendTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
-            }else uiRendTimer -=diff;
+                RendTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
+            }else RendTimer -=diff;
 
             DoMeleeAttackIfReady();
         }
@@ -267,6 +262,10 @@ public:
                 }
             }
         }
+
+    private:
+        InstanceScript* pInstance;
+        uint32 RendTimer;
     };
 
     CreatureAI *GetAI(Creature *creature) const

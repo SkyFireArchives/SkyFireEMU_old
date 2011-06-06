@@ -1,37 +1,23 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
 #include "halls_of_reflection.h"
-
-#define MAX_ENCOUNTER 3
-
-/* Halls of Reflection encounters:
-0- Falric
-1- Marwyn
-2- The Lich King
-*/
+#include "World.h"
 
 enum eEnum
 {
@@ -108,29 +94,41 @@ class instance_halls_of_reflection : public InstanceMapScript
 public:
     instance_halls_of_reflection() : InstanceMapScript("instance_halls_of_reflection", 668) { }
 
-    InstanceScript* GetInstanceScript(InstanceMap* pMap) const
-    {
-        return new instance_halls_of_reflection_InstanceMapScript(pMap);
-    }
-
     struct instance_halls_of_reflection_InstanceMapScript : public InstanceScript
     {
-        instance_halls_of_reflection_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {};
+        instance_halls_of_reflection_InstanceMapScript(Map* map) : InstanceScript(map) 
+        {};
 
-        uint64 uiFalric;
-        uint64 uiMarwyn;
-        uint64 uiLichKingEvent;
-        uint64 uiJainaPart1;
-        uint64 uiSylvanasPart1;
-
-        uint64 uiFrostmourne;
-        uint64 uiFrostmourneAltar;
-        uint64 uiArthasDoor;
-        uint64 uiFrontDoor;
-
-        uint32 uiEncounter[MAX_ENCOUNTER];
+        uint32 uiEncounter[MAX_ENCOUNTERS];
+        uint32 uiLider;
         uint32 uiTeamInInstance;
         uint32 uiWaveCount;
+        uint8 uiSummons;
+
+        uint64 uiFalric;
+        uint64 uiMarwyn;  
+        uint64 uiLichKingEvent;
+        uint64 uiLiderGUID;
+        uint64 uiJainaPart1;
+        uint64 uiJainaPart2;
+        uint64 uiSylvanasPart1;
+        uint64 uiSylvanasPart2;
+
+        uint64 uiMainGate;
+        uint64 uiExitGate;
+        uint64 uiDoor2;
+        uint64 uiDoor3;
+
+        uint64 uiFrostGeneral;
+        uint64 uiFrostmourne;
+        uint64 uiFrostmourneAltar;
+        uint64 uiPortal;
+        uint64 uiIceWall1;
+        uint64 uiIceWall2;
+        uint64 uiIceWall3;
+        uint64 uiIceWall4;
+        uint64 uiGoCave;
+
         bool bIntroDone;
 
         EventMap events;
@@ -139,29 +137,50 @@ public:
         {
             events.Reset();
 
-            uiFalric = 0;
-            uiMarwyn = 0;
-            uiLichKingEvent = 0;
-            uiJainaPart1 = 0;
-            uiSylvanasPart1 = 0;
-
+            uiMainGate = 0;
             uiFrostmourne = 0;
-            uiFrostmourneAltar = 0;
-            uiArthasDoor = 0;
-            uiFrontDoor = 0;
-            uiTeamInInstance = 0;
-            uiWaveCount = 0;
-            bIntroDone = false;
+            uiFalric = 0;
+            uiLiderGUID = 0;
+            uiLichKingEvent = 0;
+            uiExitGate = 0;
+            uiSummons = 0;
+            uiIceWall1 = 0;
+            uiIceWall2 = 0;
+            uiIceWall3 = 0;
+            uiIceWall4 = 0;
+            uiGoCave = 0;
+            uiJainaPart1 = 0;
+            uiJainaPart2 = 0;
+            uiSylvanasPart1 = 0;
+            uiSylvanasPart2 = 0;
 
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+            for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
                 uiEncounter[i] = NOT_STARTED;
         }
 
-        void OnCreatureCreate(Creature* pCreature, bool add)
+        void OpenDoor(uint64 guid)
         {
-            if (!add)
+            if(!guid) 
                 return;
 
+            GameObject* go = instance->GetGameObject(guid);
+
+            if (go) 
+                go->SetGoState(GO_STATE_ACTIVE);
+        }
+
+        void CloseDoor(uint64 guid)
+        {
+            if(!guid) 
+                return;
+                GameObject* go = instance->GetGameObject(guid);
+
+            if (go) 
+                go->SetGoState(GO_STATE_READY);
+        }
+
+        void OnCreatureCreate(Creature *pCreature, bool /*bAdd*/)
+        {
             Map::PlayerList const &players = instance->GetPlayers();
             if (!players.isEmpty())
                 if (Player* pPlayer = players.begin()->getSource())
@@ -169,88 +188,170 @@ public:
 
             switch(pCreature->GetEntry())
             {
-                case NPC_FALRIC:
-                    uiFalric = pCreature->GetGUID();
-                    break;
-                case NPC_MARWYN:
-                    uiMarwyn = pCreature->GetGUID();
-                    break;
-                case NPC_LICH_KING_EVENT:
-                    uiLichKingEvent = pCreature->GetGUID();
-                    break;
-                case NPC_JAINA_PART1:
-                    uiJainaPart1 = pCreature->GetGUID();
-                    break;
-                case NPC_SYLVANAS_PART1:
-                    uiSylvanasPart1 = pCreature->GetGUID();
-                    break;
+            case NPC_FALRIC: 
+                uiFalric = pCreature->GetGUID(); 
+                break;
+            case NPC_MARWYN: 
+                uiMarwyn = pCreature->GetGUID();  
+                break;
+            case BOSS_LICH_KING: 
+                uiLichKingEvent = pCreature->GetGUID();
+                break;
+            case NPC_FROST_GENERAL:
+                uiFrostGeneral = pCreature->GetGUID();
+                break;
+            case NPC_JAINA:
+                uiJainaPart1 = pCreature->GetGUID();
+                break;
+            case NPC_JAINA_OUTRO:
+                uiJainaPart2 = pCreature->GetGUID();
+                break;
+            case NPC_SYLVANA:
+                uiSylvanasPart1 = pCreature->GetGUID();
+                break;
+            case NPC_SYLVANA_OUTRO:
+                uiSylvanasPart2 = pCreature->GetGUID();
+                break;
             }
         }
 
-        void OnGameObjectCreate(GameObject* pGo, bool add)
+        void OnGameObjectCreate(GameObject *pGo, bool /*bAdd*/)
         {
-            if (!add)
-                return;
-
-            // TODO: init state depending on encounters
             switch(pGo->GetEntry())
             {
-                case GO_FROSTMOURNE:
-                    uiFrostmourne = pGo->GetGUID();
-                    pGo->SetFlag(GAMEOBJECT_FLAGS,GO_FLAG_INTERACT_COND);
-                    HandleGameObject(0, false, pGo);
+                case GO_IMPENETRABLE_DOOR: 
+                    uiMainGate = pGo->GetGUID(); 
                     break;
-                case GO_FROSTMOURNE_ALTAR:
-                    uiFrostmourneAltar = pGo->GetGUID();
-                    pGo->SetFlag(GAMEOBJECT_FLAGS,GO_FLAG_INTERACT_COND);
-                    HandleGameObject(0, true, pGo);
+                case GO_FROSTMOURNE: 
+                    uiFrostmourne = pGo->GetGUID(); 
                     break;
-                case GO_FRONT_DOOR:
-                    uiFrontDoor = pGo->GetGUID();
-                    pGo->SetFlag(GAMEOBJECT_FLAGS,GO_FLAG_INTERACT_COND);
-                    HandleGameObject(0, true, pGo);
+                case GO_ICECROWN_DOOR:     
+                    uiExitGate = pGo->GetGUID(); 
                     break;
-                case GO_ARTHAS_DOOR:
-                    uiArthasDoor = pGo->GetGUID();
-                    pGo->SetFlag(GAMEOBJECT_FLAGS,GO_FLAG_INTERACT_COND);
-
-                    if (uiEncounter[1] == DONE)
-                        HandleGameObject(0, true, pGo);
-                    else
-                        HandleGameObject(0, false, pGo);
+                case GO_ICECROWN_DOOR_2:   
+                    uiDoor2 = pGo->GetGUID(); 
+                    break;
+                case GO_ICECROWN_DOOR_3:   
+                    uiDoor3 = pGo->GetGUID(); 
+                    break;
+                case GO_PORTAL:            
+                    uiPortal = pGo->GetGUID(); 
+                    break;
+                case GO_ICE_WALL_1:
+                    uiIceWall1 = pGo->GetGUID();
+                    pGo->SetGoState(GO_STATE_ACTIVE);
+                    break;
+                case GO_ICE_WALL_2:
+                    uiIceWall2 = pGo->GetGUID();
+                    pGo->SetGoState(GO_STATE_ACTIVE);
+                    break;
+                case GO_ICE_WALL_3:
+                    uiIceWall3 = pGo->GetGUID();
+                    pGo->SetGoState(GO_STATE_ACTIVE);
+                    break;
+                case GO_ICE_WALL_4:
+                    uiIceWall4 = pGo->GetGUID();
+                    pGo->SetGoState(GO_STATE_ACTIVE);
+                    break;
+                case GO_CAVE:
+                    uiGoCave = pGo->GetGUID();
+                    pGo->SetGoState(GO_STATE_ACTIVE);
                     break;
             }
         }
 
         void SetData(uint32 type, uint32 data)
         {
-            if (type == DATA_WAVE_COUNT && data == SPECIAL)
+            if (type == TYPE_WAVE_COUNT && data == SPECIAL)
             {
                 bIntroDone = true;
                 events.ScheduleEvent(EVENT_NEXT_WAVE, 10000);
                 return;
             }
 
-
             if (uiWaveCount && data == NOT_STARTED)
                 DoWipe();
 
             switch(type)
             {
-                case DATA_FALRIC_EVENT:
+                case TYPE_FALRIC:               
                     uiEncounter[0] = data;
-                    if (data == DONE)
+                     if (data == DONE)
                         events.ScheduleEvent(EVENT_NEXT_WAVE, 60000);
                     break;
-                case DATA_MARWYN_EVENT:
+                case TYPE_MARWYN:               
                     uiEncounter[1] = data;
-                    if (data == DONE)
-                        HandleGameObject(uiArthasDoor, true);
+                    if(data == DONE)
+                    {
+                        OpenDoor(uiMainGate);
+                        OpenDoor(uiExitGate);
+                    }
                     break;
-                case DATA_LICHKING_EVENT:
+                case TYPE_LICH_KING:            
                     uiEncounter[2] = data;
+                    if(data == IN_PROGRESS)
+                        OpenDoor(uiDoor3);
+                    if(data == NOT_STARTED)
+                        CloseDoor(uiDoor3);
+                    if(data == DONE)
+                    {
+                        if (GameObject* pPortal = instance->GetGameObject(uiPortal))
+                            if (pPortal && !pPortal->isSpawned()) 
+                            {
+                                pPortal->SetRespawnTime(DAY);
+                            }
+                    }
                     break;
-            }
+                case TYPE_PHASE:                
+                    uiEncounter[3] = data; 
+                    break;
+                case TYPE_EVENT:                
+                    uiEncounter[4] = data;                   
+                    data = NOT_STARTED;
+                    break;
+                case TYPE_FROST_GENERAL:        
+                    uiEncounter[5] = data; 
+                    if(data == DONE)
+                        OpenDoor(uiDoor2);
+                    break;
+                case TYPE_ICE_WALL_01:          
+                    uiEncounter[6] = data; 
+                    break;
+                case TYPE_ICE_WALL_02:          
+                    uiEncounter[7] = data; 
+                    break;
+                case TYPE_ICE_WALL_03:          
+                    uiEncounter[8] = data; 
+                    break;
+                case TYPE_ICE_WALL_04:          
+                    uiEncounter[9] = data; 
+                    break;
+                case TYPE_HALLS:                
+                    uiEncounter[10] = data; 
+                    break;
+                case DATA_START_ENCOUNTER:
+                    if(data == IN_PROGRESS)
+                        CloseDoor(uiExitGate);
+                    if(data == NOT_STARTED)
+                        OpenDoor(uiExitGate);
+                    if(data == DONE)
+                        OpenDoor(uiExitGate);
+                    if(data == DONE)
+                    uiEncounter[11] = data; 
+                    break;
+                case DATA_LIDER:                
+                    uiLider = data;
+                    data = NOT_STARTED;
+                    break;
+                case DATA_SUMMONS:              
+                    if (data == 3) 
+                        uiSummons = 0;
+                    else if (data == 1) 
+                        ++uiSummons;
+                    else if (data == 0) 
+                        --uiSummons;
+                    data = NOT_STARTED;
+                }
 
             if (data == DONE)
                 SaveToDB();
@@ -260,27 +361,58 @@ public:
         {
             switch(type)
             {
-                case DATA_FALRIC_EVENT:         return uiEncounter[0];
-                case DATA_MARWYN_EVENT:         return uiEncounter[1];
-                case DATA_LICHKING_EVENT:       return uiEncounter[2];
-                case DATA_WAVE_COUNT:           return uiWaveCount;
+                case TYPE_FALRIC:               return uiEncounter[0];
+                case TYPE_MARWYN:               return uiEncounter[1];
+                case TYPE_LICH_KING:            return uiEncounter[2];
+                case TYPE_PHASE:                return uiEncounter[3];
+                case TYPE_EVENT:                return uiEncounter[4];
+                case TYPE_FROST_GENERAL:        return uiEncounter[5];
+                case TYPE_ICE_WALL_01:          return uiEncounter[6];
+                case TYPE_ICE_WALL_02:          return uiEncounter[7];
+                case TYPE_ICE_WALL_03:          return uiEncounter[8];
+                case TYPE_ICE_WALL_04:          return uiEncounter[9];
+                case TYPE_HALLS:                return uiEncounter[10];
+                case TYPE_WAVE_COUNT:           return uiWaveCount;
+                case DATA_LIDER:                return uiLider;
                 case DATA_TEAM_IN_INSTANCE:     return uiTeamInInstance;
+                case DATA_SUMMONS:              return uiSummons;
             }
 
             return 0;
         }
 
-        uint64 GetData64(uint32 identifier)
+        uint64 GetData64(uint32 data)
         {
-            switch(identifier)
+            switch(data)
             {
-                case DATA_FALRIC:               return uiFalric;
-                case DATA_MARWYN:               return uiMarwyn;
-                case DATA_LICHKING:             return uiLichKingEvent;
-                case DATA_FROSTMOURNE:          return uiFrostmourne;
+                case NPC_FALRIC:           return uiFalric;
+                case NPC_MARWYN:           return uiMarwyn;
+                case NPC_FROST_GENERAL:    return uiFrostGeneral;
+                case BOSS_LICH_KING:       return uiLichKingEvent;
+                case DATA_ESCAPE_LIDER:    return uiLiderGUID;
+                case GO_IMPENETRABLE_DOOR: return uiMainGate;
+                case GO_FROSTMOURNE:       return uiFrostmourne;
+                case GO_ICECROWN_DOOR:     return uiExitGate;
+                case GO_ICECROWN_DOOR_2:   return uiDoor2;
+                case GO_ICECROWN_DOOR_3:   return uiDoor3;
+                case GO_ICE_WALL_1:        return uiIceWall1;
+                case GO_ICE_WALL_2:        return uiIceWall2;
+                case GO_ICE_WALL_3:        return uiIceWall3;
+                case GO_ICE_WALL_4:        return uiIceWall4;
+                case GO_CAVE:              return uiGoCave;
             }
 
             return 0;
+        }
+
+        void SetData64(uint32 data, uint64 uiGuid)
+        {
+            switch(data)
+            {
+                case DATA_ESCAPE_LIDER:
+                    uiLiderGUID = uiGuid;
+                    break;
+            }
         }
 
         std::string GetSaveData()
@@ -288,7 +420,10 @@ public:
             OUT_SAVE_INST_DATA;
 
             std::ostringstream saveStream;
-            saveStream << "H R 1 " << uiEncounter[0] << " " << uiEncounter[1] << " " << uiEncounter[2];
+            saveStream << "H R 1 " << uiEncounter[0] << " " << uiEncounter[1] << " " << uiEncounter[2] << " " 
+            << uiEncounter[3] << " " << uiEncounter[4] << " " << uiEncounter[5] << " " << uiEncounter[6] << " "
+            << uiEncounter[7] << " " << uiEncounter[8] << " " << uiEncounter[9] << " " << uiEncounter[10] << " " << uiEncounter[11];
+
 
             OUT_SAVE_INST_DATA_COMPLETE;
             return saveStream.str();
@@ -306,18 +441,29 @@ public:
 
             char dataHead1, dataHead2;
             uint16 version;
-            uint16 data0, data1, data2;
+            uint16 data0, data1, data2, data3, data4, data5, data6, data7, data8, data9, data10, data11;
 
             std::istringstream loadStream(in);
-            loadStream >> dataHead1 >> dataHead2 >> version >> data0 >> data1 >> data2;
+            loadStream >> dataHead1 >> dataHead2 >> version 
+                >> data0 >> data1 >> data2 >> data3 >> data4 >> data5
+                >> data6 >> data7 >> data8 >> data9 >> data10 >> data11;
 
             if (dataHead1 == 'H' && dataHead2 == 'R')
             {
                 uiEncounter[0] = data0;
                 uiEncounter[1] = data1;
                 uiEncounter[2] = data2;
+                uiEncounter[3] = data3;
+                uiEncounter[4] = data4;
+                uiEncounter[5] = data5;
+                uiEncounter[6] = data6;
+                uiEncounter[7] = data7;
+                uiEncounter[8] = data8;
+                uiEncounter[9] = data9;
+                uiEncounter[10] = data10;
+                uiEncounter[11] = data11;
 
-                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
                     if (uiEncounter[i] == IN_PROGRESS)
                         uiEncounter[i] = NOT_STARTED;
 
@@ -340,13 +486,13 @@ public:
                 case 2:
                 case 3:
                 case 4:
-                    if (Creature *pFalric = instance->GetCreature(uiFalric))
+                    if (Creature* pFalric = instance->GetCreature(uiFalric))
                         SpawnWave(pFalric);
                     break;
                 case 5:
-                    if (GetData(DATA_FALRIC_EVENT) == DONE)
+                    if (GetData(TYPE_FALRIC) == DONE)
                         events.ScheduleEvent(EVENT_NEXT_WAVE, 10000);
-                    else if (Creature *pFalric = instance->GetCreature(uiFalric))
+                    else if (Creature* pFalric = instance->GetCreature(uiFalric))
                         if (pFalric->AI())
                             pFalric->AI()->DoAction(ACTION_ENTER_COMBAT);
                     break;
@@ -354,12 +500,12 @@ public:
                 case 7:
                 case 8:
                 case 9:
-                    if (Creature *pMarwyn  = instance->GetCreature(uiMarwyn))
+                    if (Creature* pMarwyn  = instance->GetCreature(uiFalric))
                         SpawnWave(pMarwyn);
                     break;
                 case 10:
-                    if (GetData(DATA_MARWYN_EVENT) != DONE) // wave should not have been started if DONE. Check anyway to avoid bug exploit!
-                        if (Creature *pMarwyn = instance->GetCreature(uiMarwyn))
+                    if (GetData(TYPE_MARWYN) != DONE) // wave should not have been started if DONE. Check anyway to avoid bug exploit!
+                        if (Creature* pMarwyn = instance->GetCreature(uiMarwyn))
                             if (pMarwyn->AI())
                                 pMarwyn->AI()->DoAction(ACTION_ENTER_COMBAT);
                     break;
@@ -373,13 +519,13 @@ public:
             events.Reset();
             DoUpdateWorldState(WORLD_STATE_HOR, 1);
             DoUpdateWorldState(WORLD_STATE_HOR_WAVE_COUNT, uiWaveCount);
-            HandleGameObject(uiFrontDoor, true);
 
             // TODO
             // in case of wipe, the event is normally restarted by jumping into the center of the room.
             // As I can't find a trigger area there, just respawn Jaina/Sylvanas so the event may be restarted.
             if (Creature* pJaina = instance->GetCreature(uiJainaPart1))
                 pJaina->Respawn();
+
             if (Creature* pSylvanas = instance->GetCreature(uiSylvanasPart1))
                 pSylvanas->Respawn();
 
@@ -389,8 +535,9 @@ public:
                 pMarwyn->SetVisible(false);
         }
 
+
         // spawn a wave on behalf of the summoner.
-        void SpawnWave(Creature *pSummoner)
+        void SpawnWave(Creature* pSummoner)
         {
             uint32 index;
 
@@ -423,17 +570,18 @@ public:
 
             switch(events.ExecuteEvent())
             {
-                case EVENT_NEXT_WAVE:
-                    uiWaveCount++;
-                    AddWave();
-                    break;
-                case EVENT_START_LICH_KING:
-                    // TODO
-                    break;
+            case EVENT_NEXT_WAVE:
+                uiWaveCount++;
+                AddWave();
+                break;
             }
         }
     };
 
+    InstanceScript* GetInstanceScript (InstanceMap* map) const
+    {
+        return new instance_halls_of_reflection_InstanceMapScript(map);
+    }
 };
 
 

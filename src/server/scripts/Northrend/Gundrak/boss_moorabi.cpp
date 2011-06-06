@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -27,18 +20,22 @@
 
 enum eSpells
 {
+    // troll form
     SPELL_DETERMINED_STAB                         = 55104,
     SPELL_GROUND_TREMOR                           = 55142,
     SPELL_NUMBING_SHOUT                           = 55106,
+    SPELL_MOJO_FRENZY                             = 55163,
+    SPELL_MOJO_FRENZY_HASTE                       = 55096,
+    SPELL_TRANSFORMATION                          = 55098, //Periodic, The caster transforms into a powerful mammoth, increasing Physical damage done by 25% and granting immunity to Stun effects.
+    // mammoth
     SPELL_DETERMINED_GORE                         = 55102,
     H_SPELL_DETERMINED_GORE                       = 59444,
     SPELL_QUAKE                                   = 55101,
     SPELL_NUMBING_ROAR                            = 55100,
-    SPELL_MOJO_FRENZY                             = 55163,
-    SPELL_TRANSFORMATION                          = 55098, //Periodic, The caster transforms into a powerful mammoth, increasing Physical damage done by 25% and granting immunity to Stun effects.
+    SPELL_DUAL_WIELD                              = 42459,
 };
 
-enum eArchivements
+enum eAchievements
 {
     ACHIEV_LESS_RABI                              = 2040
 };
@@ -60,39 +57,36 @@ class boss_moorabi : public CreatureScript
 public:
     boss_moorabi() : CreatureScript("boss_moorabi") { }
 
-    CreatureAI* GetAI(Creature *pCreature) const
-    {
-        return new boss_moorabiAI(pCreature);
-    }
-
     struct boss_moorabiAI : public ScriptedAI
     {
         boss_moorabiAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             pInstance = pCreature->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
+            // make 55098 interruptable
+            SpellEntry *TempSpell;
+            TempSpell = GET_SPELL(SPELL_TRANSFORMATION);
+            if (TempSpell)
+                TempSpell->InterruptFlags = 13;
         }
-
-        InstanceScript* pInstance;
-
-        bool bPhase;
-
-        uint32 uiNumblingShoutTimer;
-        uint32 uiGroundTremorTimer;
-        uint32 uiDeterminedStabTimer;
-        uint32 uiTransformationTImer;
 
         void Reset()
         {
-            uiGroundTremorTimer = 18*IN_MILLISECONDS;
-            uiNumblingShoutTimer =  10*IN_MILLISECONDS;
-            uiDeterminedStabTimer = 20*IN_MILLISECONDS;
-            uiTransformationTImer = 12*IN_MILLISECONDS;
+            GroundTremorTimer = 18*IN_MILLISECONDS;
+            NumblingShoutTimer = 10*IN_MILLISECONDS;
+            DeterminedStabTimer = 20*IN_MILLISECONDS;
+            TransformationTimer = 12*IN_MILLISECONDS;
+
             bPhase = false;
 
             if (pInstance)
                 pInstance->SetData(DATA_MOORABI_EVENT, NOT_STARTED);
+
+            DoCast(me, SPELL_DUAL_WIELD);
+            me->SetAttackTime(OFF_ATTACK, 1400);
+            me->SetStatFloatValue(UNIT_FIELD_MINOFFHANDDAMAGE, float(RAID_MODE(3000, 6000)));
+            me->SetStatFloatValue(UNIT_FIELD_MAXOFFHANDDAMAGE, float(RAID_MODE(5000, 8000)));
         }
 
         void EnterCombat(Unit* /*pWho*/)
@@ -104,53 +98,74 @@ public:
                 pInstance->SetData(DATA_MOORABI_EVENT, IN_PROGRESS);
         }
 
+        void AdjustCastSpeed()
+        {
+            // bad workaround for mojo frenzy aura
+            SpellEntry *TempSpell;
+            TempSpell = GET_SPELL(SPELL_TRANSFORMATION);
+            uint32 value = 15;  //spell 55098 default
+        
+            if (HealthBelowPct(80)) value = 28;
+            if (HealthBelowPct(65)) value = 21;
+            if (HealthBelowPct(50)) value = 5;
+            if (HealthBelowPct(40)) value = 130;
+            if (HealthBelowPct(30)) value = 206;
+            if (HealthBelowPct(20)) value = 110;
+            if (HealthBelowPct(15)) value = 3;
+            if (HealthBelowPct(10)) value = 2;
+
+            if (TempSpell && value)
+                TempSpell->CastingTimeIndex = value;
+        }
+
         void UpdateAI(const uint32 uiDiff)
         {
             //Return since we have no target
-             if (!UpdateVictim())
+            if (!UpdateVictim())
                  return;
-
+        
             if (!bPhase && me->HasAura(SPELL_TRANSFORMATION))
             {
                 bPhase = true;
                 me->RemoveAura(SPELL_MOJO_FRENZY);
             }
 
-            if (uiGroundTremorTimer <= uiDiff)
+            if (GroundTremorTimer <= uiDiff)
             {
                 DoScriptText(SAY_QUAKE, me);
                 if (bPhase)
-                    DoCast(me->getVictim(), SPELL_QUAKE, true);
+                    DoCast(me->getVictim(), SPELL_QUAKE);
                 else
-                    DoCast(me->getVictim(), SPELL_GROUND_TREMOR, true);
-                uiGroundTremorTimer = 10*IN_MILLISECONDS;
-            } else uiGroundTremorTimer -= uiDiff;
+                    DoCast(me->getVictim(), SPELL_GROUND_TREMOR);
+                GroundTremorTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
+            } else GroundTremorTimer -= uiDiff;
 
-            if (uiNumblingShoutTimer <= uiDiff)
+            if (NumblingShoutTimer <= uiDiff)
             {
                 if (bPhase)
                     DoCast(me->getVictim(), SPELL_NUMBING_ROAR, true);
                 else
                     DoCast(me->getVictim(), SPELL_NUMBING_SHOUT, true);
-                uiNumblingShoutTimer = 10*IN_MILLISECONDS;
-            } else uiNumblingShoutTimer -=uiDiff;
+                NumblingShoutTimer = 10*IN_MILLISECONDS;
+            } else NumblingShoutTimer -=uiDiff;
 
-            if (uiDeterminedStabTimer <= uiDiff)
+            if (DeterminedStabTimer <= uiDiff)
             {
                 if (bPhase)
-                    DoCast(me->getVictim(), SPELL_DETERMINED_GORE);
+                    DoCast(me->getVictim(), DUNGEON_MODE(SPELL_DETERMINED_GORE, H_SPELL_DETERMINED_GORE), true);
                 else
                     DoCast(me->getVictim(), SPELL_DETERMINED_STAB, true);
-                uiDeterminedStabTimer = 8*IN_MILLISECONDS;
-            } else uiDeterminedStabTimer -=uiDiff;
+                DeterminedStabTimer = 7*IN_MILLISECONDS;
+            } else DeterminedStabTimer -=uiDiff;
 
-            if (!bPhase && uiTransformationTImer <= uiDiff)
+            if (!bPhase && TransformationTimer <= uiDiff)
             {
                 DoScriptText(EMOTE_TRANSFORM, me);
                 DoScriptText(SAY_TRANSFORM, me);
+                AdjustCastSpeed(); //FIXME
                 DoCast(me, SPELL_TRANSFORMATION, false);
-                uiTransformationTImer = 10*IN_MILLISECONDS;
-            } else uiTransformationTImer -= uiDiff;
+                TransformationTimer = 10*IN_MILLISECONDS;
+            } else TransformationTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
          }
@@ -162,7 +177,7 @@ public:
             if (pInstance)
             {
                 pInstance->SetData(DATA_MOORABI_EVENT, DONE);
-
+            
                 if (IsHeroic() && !bPhase)
                     pInstance->DoCompleteAchievement(ACHIEV_LESS_RABI);
             }
@@ -175,8 +190,20 @@ public:
 
             DoScriptText(RAND(SAY_SLAY_2,SAY_SLAY_3), me);
         }
+
+    private:
+        InstanceScript* pInstance;
+        bool bPhase;
+        uint32 NumblingShoutTimer;
+        uint32 GroundTremorTimer;
+        uint32 DeterminedStabTimer;
+        uint32 TransformationTimer;
     };
 
+    CreatureAI* GetAI(Creature *pCreature) const
+    {
+        return new boss_moorabiAI(pCreature);
+    }
 };
 
 void AddSC_boss_moorabi()

@@ -1,25 +1,19 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -27,7 +21,6 @@
 
 enum Spells
 {
-    //Spells
     SPELL_FROZEN_PRISON                           = 47854,
     SPELL_TAIL_SWEEP                              = 50155,
     SPELL_CRYSTAL_CHAINS                          = 50997,
@@ -38,6 +31,7 @@ enum Spells
     SPELL_INTENSE_COLD                            = 48094,
     SPELL_INTENSE_COLD_TRIGGERED                  = 48095
 };
+
 enum Yells
 {
     //Yell
@@ -47,10 +41,12 @@ enum Yells
     SAY_DEATH                                     = -1576043,
     SAY_CRYSTAL_NOVA                              = -1576044
 };
+
 enum Achievements
 {
     ACHIEV_INTENSE_COLD                           = 2036
 };
+
 enum Misc
 {
     DATA_CONTAINMENT_SPHERES                      = 3
@@ -61,40 +57,23 @@ class boss_keristrasza : public CreatureScript
 public:
     boss_keristrasza() : CreatureScript("boss_keristrasza") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_keristraszaAI (pCreature);
-    }
-
     struct boss_keristraszaAI : public ScriptedAI
     {
         boss_keristraszaAI(Creature *c) : ScriptedAI(c)
         {
             pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
         }
-
-        InstanceScript* pInstance;
-
-        uint32 uiCrystalfireBreathTimer;
-        uint32 uiCrystalChainsCrystalizeTimer;
-        uint32 uiTailSweepTimer;
-        bool bEnrage;
-
-        uint64 auiContainmentSphereGUIDs[DATA_CONTAINMENT_SPHERES];
-
-        uint32 uiCheckIntenseColdTimer;
-        bool bMoreThanTwoIntenseCold; // needed for achievement: Intense Cold(2036)
 
         void Reset()
         {
-            uiCrystalfireBreathTimer = 14*IN_MILLISECONDS;
-            uiCrystalChainsCrystalizeTimer = DUNGEON_MODE(30*IN_MILLISECONDS,11*IN_MILLISECONDS);
-            uiTailSweepTimer = 5*IN_MILLISECONDS;
+            CrystalfireBreathTimer = 14*IN_MILLISECONDS;
+            CrystalChainsCrystalizeTimer = DUNGEON_MODE(30*IN_MILLISECONDS,11*IN_MILLISECONDS);
+            TailSweepTimer = 5*IN_MILLISECONDS;
             bEnrage = false;
 
-            uiCheckIntenseColdTimer = 2*IN_MILLISECONDS;
+            CheckIntenseColdTimer = 2*IN_MILLISECONDS;
             bMoreThanTwoIntenseCold = false;
 
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_STUNNED);
@@ -177,7 +156,7 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (uiCheckIntenseColdTimer < diff && !bMoreThanTwoIntenseCold)
+            if (CheckIntenseColdTimer < diff && !bMoreThanTwoIntenseCold)
             {
                 std::list<HostileReference*> ThreatList = me->getThreatManager().getThreatList();
                 for (std::list<HostileReference*>::const_iterator itr = ThreatList.begin(); itr != ThreatList.end(); ++itr)
@@ -193,8 +172,8 @@ public:
                         break;
                     }
                 }
-                uiCheckIntenseColdTimer = 2*IN_MILLISECONDS;
-            } else uiCheckIntenseColdTimer -= diff;
+                CheckIntenseColdTimer = 2*IN_MILLISECONDS;
+            } else CheckIntenseColdTimer -= diff;
 
             if (!bEnrage && HealthBelowPct(25))
             {
@@ -203,34 +182,47 @@ public:
                 bEnrage = true;
             }
 
-            if (uiCrystalfireBreathTimer <= diff)
+            if (CrystalfireBreathTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_CRYSTALFIRE_BREATH);
-                uiCrystalfireBreathTimer = 14*IN_MILLISECONDS;
-            } else uiCrystalfireBreathTimer -= diff;
+                CrystalfireBreathTimer = 14*IN_MILLISECONDS;
+            } else CrystalfireBreathTimer -= diff;
 
-            if (uiTailSweepTimer <= diff)
+            if (TailSweepTimer <= diff)
             {
                 DoCast(me, SPELL_TAIL_SWEEP);
-                uiTailSweepTimer = 5*IN_MILLISECONDS;
-            } else uiTailSweepTimer -= diff;
+                TailSweepTimer = 5*IN_MILLISECONDS;
+            } else TailSweepTimer -= diff;
 
-            if (uiCrystalChainsCrystalizeTimer <= diff)
+            if (CrystalChainsCrystalizeTimer <= diff)
             {
                 DoScriptText(SAY_CRYSTAL_NOVA, me);
                 if (IsHeroic())
                     DoCast(me, SPELL_CRYSTALIZE);
                 else if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_CRYSTAL_CHAINS);
-                uiCrystalChainsCrystalizeTimer = DUNGEON_MODE(30*IN_MILLISECONDS,11*IN_MILLISECONDS);
-            } else uiCrystalChainsCrystalizeTimer -= diff;
+                CrystalChainsCrystalizeTimer = DUNGEON_MODE(30*IN_MILLISECONDS,11*IN_MILLISECONDS);
+            } else CrystalChainsCrystalizeTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
+
+    private:
+        InstanceScript* pInstance;
+        uint32 CrystalfireBreathTimer;
+        uint32 CrystalChainsCrystalizeTimer;
+        uint32 TailSweepTimer;
+        uint32 CheckIntenseColdTimer;
+        uint64 auiContainmentSphereGUIDs[DATA_CONTAINMENT_SPHERES];
+        bool bMoreThanTwoIntenseCold;
+        bool bEnrage;
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_keristraszaAI (pCreature);
+    }
 };
-
 
 class containment_sphere : public GameObjectScript
 {
@@ -252,7 +244,6 @@ public:
         }
         return true;
     }
-
 };
 
 void AddSC_boss_keristrasza()

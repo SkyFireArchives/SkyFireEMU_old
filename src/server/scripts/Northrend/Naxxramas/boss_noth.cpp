@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -48,6 +41,13 @@
 #define TELE_O 6.277f
 
 #define MAX_SUMMON_POS 5
+
+enum Emotes
+{
+    EMOTE_SUMMON_WARRIOR = -1533136,
+    EMOTE_BALKON         = -1533137,
+    EMOTE_SKELETS        = -1533138,
+};
 
 const float SummonPos[MAX_SUMMON_POS][4] =
 {
@@ -82,9 +82,7 @@ public:
 
     struct boss_nothAI : public BossAI
     {
-        boss_nothAI(Creature *c) : BossAI(c, BOSS_NOTH) {
-        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
+        boss_nothAI(Creature *c) : BossAI(c, BOSS_NOTH) {}
 
         uint32 waveCount, balconyCount;
 
@@ -165,6 +163,7 @@ public:
                         events.ScheduleEvent(EVENT_CURSE, 50000 + rand()%10000);
                         return;
                     case EVENT_WARRIOR:
+                        DoScriptText(EMOTE_SUMMON_WARRIOR, me);
                         DoScriptText(SAY_SUMMON, me);
                         SummonUndead(MOB_WARRIOR, RAID_MODE(2,3));
                         events.ScheduleEvent(EVENT_WARRIOR, 30000);
@@ -176,6 +175,7 @@ public:
                         events.ScheduleEvent(EVENT_BLINK, 40000);
                         return;
                     case EVENT_BALCONY:
+                        DoScriptText(EMOTE_BALKON, me);
                         me->SetReactState(REACT_PASSIVE);
                         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                         me->AttackStop();
@@ -187,6 +187,7 @@ public:
                         return;
                     case EVENT_WAVE:
                         DoScriptText(SAY_SUMMON, me);
+                        DoScriptText(EMOTE_SKELETS, me);
                         switch(balconyCount)
                         {
                             case 0: SummonUndead(MOB_CHAMPION, RAID_MODE(2,4)); break;

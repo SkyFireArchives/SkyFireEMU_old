@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -58,6 +51,13 @@ enum
     ACHIEV_TIMED_START_EVENT                      = 9891,
 };
 
+enum Emotes
+{
+    EMOTE_SUMMON_GUARDIAN   = -1533120,
+    EMOTE_SUMMON_SWARM      = -1533121,
+    EMOTE_SCARABS           = -1533122,
+};
+
 class boss_anubrekhan : public CreatureScript
 {
 public:
@@ -70,9 +70,7 @@ public:
 
     struct boss_anubrekhanAI : public BossAI
     {
-        boss_anubrekhanAI(Creature *c) : BossAI(c, BOSS_ANUBREKHAN) {
-        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
+        boss_anubrekhanAI(Creature *c) : BossAI(c, BOSS_ANUBREKHAN) {}
 
         bool hasTaunted;
 
@@ -146,6 +144,7 @@ public:
             if (!me->isAlive() || summon->isAlive() || summon->GetEntry() != MOB_CRYPT_GUARD)
                 return;
 
+            DoScriptText(EMOTE_SCARABS, me);
             summon->CastSpell(summon, SPELL_SUMMON_CORPSE_SCARABS_MOB, true, NULL, NULL, me->GetGUID());
         }
 
@@ -165,18 +164,18 @@ public:
                         //Cast Impale on a random target
                         //Do NOT cast it when we are afflicted by locust swarm
                         if (!me->HasAura(RAID_MODE(SPELL_LOCUST_SWARM_10,SPELL_LOCUST_SWARM_25)))
-                            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                            if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0))
                                 DoCast(pTarget, RAID_MODE(SPELL_IMPALE_10,SPELL_IMPALE_25));
                         events.ScheduleEvent(EVENT_IMPALE, urand(10000,20000));
                         break;
                     case EVENT_LOCUST:
-                        // TODO : Add Text
+                        DoScriptText(EMOTE_SUMMON_SWARM, me);
                         DoCast(me, RAID_MODE(SPELL_LOCUST_SWARM_10,SPELL_LOCUST_SWARM_25));
                         DoSummon(MOB_CRYPT_GUARD, GuardSummonPos, 0, TEMPSUMMON_CORPSE_DESPAWN);
                         events.ScheduleEvent(EVENT_LOCUST, 90000);
                         break;
                     case EVENT_SPAWN_GUARDIAN_NORMAL:
-                        // TODO : Add Text
+                        DoScriptText(EMOTE_SUMMON_GUARDIAN, me);
                         DoSummon(MOB_CRYPT_GUARD, GuardSummonPos, 0, TEMPSUMMON_CORPSE_DESPAWN);
                         break;
                     case EVENT_BERSERK:

@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -75,7 +68,8 @@ class boss_bronjahm : public CreatureScript
             boss_bronjahmAI(Creature* creature) : BossAI(creature, DATA_BRONJAHM)
             {
                 me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
+                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true); // Death Grip
+                me->CastSpell(me, SPELL_SOULSTORM_CHANNEL, true);
             }
 
             void InitializeAI()
@@ -92,9 +86,7 @@ class boss_bronjahm : public CreatureScript
                 events.SetPhase(PHASE_1);
                 events.ScheduleEvent(EVENT_SHADOW_BOLT, 2000);
                 events.ScheduleEvent(EVENT_MAGIC_BANE, urand(8000, 15000));
-                events.ScheduleEvent(EVENT_CORRUPT_SOUL, urand(25000, 35000), 0, PHASE_1);
-
-                me->CastSpell(me, SPELL_SOULSTORM_CHANNEL, true);
+                events.ScheduleEvent(EVENT_CORRUPT_SOUL, urand(10000, 12000), 0, PHASE_1);
 
                 instance->SetBossState(DATA_BRONJAHM, NOT_STARTED);
             }
@@ -105,6 +97,11 @@ class boss_bronjahm : public CreatureScript
                 me->RemoveAurasDueToSpell(SPELL_SOULSTORM_CHANNEL);
 
                 instance->SetBossState(DATA_BRONJAHM, IN_PROGRESS);
+            }
+
+            void JustReachedHome()
+            {
+                me->CastSpell(me, SPELL_SOULSTORM_CHANNEL, true);
             }
 
             void JustDied(Unit* /*killer*/)
@@ -120,13 +117,13 @@ class boss_bronjahm : public CreatureScript
                     DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
             }
 
-            void DamageTaken(Unit* /*attacker*/, uint32& damage)
+            void DamageTaken(Unit* /*attacker*/, uint32& /*damage*/)
             {
-                if (events.GetPhaseMask() & (1 << PHASE_1) && !HealthAbovePct(30))
+                if (events.GetPhaseMask() & (1 << PHASE_1) && !HealthAbovePct(35))
                 {
                     events.SetPhase(PHASE_2);
                     DoCast(me, SPELL_TELEPORT);
-                    events.ScheduleEvent(EVENT_FEAR, urand(12000, 16000), 0, PHASE_2);
+                    events.ScheduleEvent(EVENT_FEAR, 12000, 0, PHASE_2);
                     events.ScheduleEvent(EVENT_SOULSTORM, 700, 0, PHASE_2);
                 }
             }
@@ -168,8 +165,9 @@ class boss_bronjahm : public CreatureScript
                             {
                                 DoScriptText(SAY_CORRUPT_SOUL, me);
                                 DoCast(target, SPELL_CORRUPT_SOUL);
+                                me->ModifyPower(POWER_MANA, 333520);
                             }
-                            events.ScheduleEvent(EVENT_CORRUPT_SOUL, urand(25000, 35000), 0, PHASE_1);
+                            events.ScheduleEvent(EVENT_CORRUPT_SOUL, urand(12000, 15000), 0, PHASE_1);
                             break;
                         case EVENT_SOULSTORM:
                             DoScriptText(SAY_SOUL_STORM, me);
@@ -179,7 +177,7 @@ class boss_bronjahm : public CreatureScript
                         case EVENT_FEAR:
                             if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
                                 me->CastCustomSpell(SPELL_FEAR, SPELLVALUE_MAX_TARGETS, 1, target, false);
-                            events.ScheduleEvent(EVENT_FEAR, urand(8000, 12000), 0, PHASE_2);
+                            events.ScheduleEvent(EVENT_FEAR, urand(8000, 10000), 0, PHASE_2);
                             break;
                         default:
                             break;

@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /*
@@ -39,13 +32,15 @@ enum Spells
     SPELL_POISONOUS_MUSHROOM_POISON_CLOUD         = 57061, // Self - Duration 8 Sec
     SPELL_POISONOUS_MUSHROOM_VISUAL_AREA          = 61566, // Self
     SPELL_POISONOUS_MUSHROOM_VISUAL_AURA          = 56741, // Self
-    SPELL_PUTRID_MUSHROOM                         = 31690, // To make the mushrooms visible
+    SPELL_POWER_MUSHROOM_VISUAL_AURA              = 56740,
+    SPELL_PUTRID_MUSHROOM                         = 31690
 };
 
 enum Creatures
 {
     NPC_HEALTHY_MUSHROOM                          = 30391,
-    NPC_POISONOUS_MUSHROOM                        = 30435
+    NPC_POISONOUS_MUSHROOM                        = 30435,
+    NPC_HELPER                                    = 19656
 };
 
 class boss_amanitar : public CreatureScript
@@ -59,32 +54,23 @@ public:
         {
             pInstance = c->GetInstanceScript();
             bFirstTime = true;
-            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
-
-        uint32 uiRootTimer;
-        uint32 uiBashTimer;
-        uint32 uiBoltTimer;
-        uint32 uiSpawnTimer;
-
-        bool bFirstTime;
 
         void Reset()
         {
-            uiRootTimer = urand(5*IN_MILLISECONDS,9*IN_MILLISECONDS);
-            uiBashTimer = urand(10*IN_MILLISECONDS,14*IN_MILLISECONDS);
-            uiBoltTimer = urand(15*IN_MILLISECONDS,30*IN_MILLISECONDS);
-            uiSpawnTimer = 0;
+            RootTimer = urand(5*IN_MILLISECONDS, 9*IN_MILLISECONDS);
+            BashTimer = urand(10*IN_MILLISECONDS, 14*IN_MILLISECONDS);
+            BoltTimer = urand(15*IN_MILLISECONDS, 20*IN_MILLISECONDS);
+            MiniTimer = urand(12*IN_MILLISECONDS, 18*IN_MILLISECONDS);
+            SpawnTimer = 5*IN_MILLISECONDS;
 
             me->SetMeleeDamageSchool(SPELL_SCHOOL_NATURE);
             me->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_NATURE, true);
 
             if (pInstance)
             {
-                pInstance->DoRemoveAurasDueToSpellOnPlayers(SPELL_MINI);
+                DoRemoveAurasDueToSpellOnPlayersAndPets(SPELL_MINI);
+
                 if (!bFirstTime)
                     pInstance->SetData(DATA_AMANITAR_EVENT, FAIL);
                 else
@@ -97,32 +83,57 @@ public:
             if (pInstance)
             {
                 pInstance->SetData(DATA_AMANITAR_EVENT, DONE);
-                pInstance->DoRemoveAurasDueToSpellOnPlayers(SPELL_MINI);
+                DoRemoveAurasDueToSpellOnPlayersAndPets(SPELL_MINI);
             }
+        }
+
+        void DoRemoveAurasDueToSpellOnPlayersAndPets(uint32 spell)
+        {
+            if (!pInstance)
+                return;
+
+            Map::PlayerList const &PlayerList = pInstance->instance->GetPlayers();
+
+            if (!PlayerList.isEmpty())
+                for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+                    if (Player* pPlayer = i->getSource())
+                    {
+                        pPlayer->RemoveAurasDueToSpell(spell);
+
+                        if (Pet* pPet = pPlayer->GetPet())
+                            pPet->RemoveAurasDueToSpell(spell);
+                    }
         }
 
         void EnterCombat(Unit * /*who*/)
         {
             if (pInstance)
                 pInstance->SetData(DATA_AMANITAR_EVENT, IN_PROGRESS);
-
-            DoCast(me, SPELL_MINI, false);
         }
 
         void SpawnAdds()
         {
-            for (uint8 i = 0; i < 30; ++i)
-            {
-                Unit* victim = SelectUnit(SELECT_TARGET_RANDOM, 0);
+            uint8 u = 0;
 
-                if (victim)
+            for (uint8 i = 0; i < 100; ++i)
+            {
+                Position pos;
+                me->GetPosition(&pos);
+                me->GetRandomNearPosition(pos, 45.0f);
+                if (Creature* pHelp = me->SummonCreature(NPC_HELPER, pos, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 1*IN_MILLISECONDS))
                 {
-                    Position pos;
-                    victim->GetPosition(&pos);
-                    me->GetRandomNearPosition(pos, float(urand(5,80)));
-                    me->SummonCreature(NPC_POISONOUS_MUSHROOM, pos, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30*IN_MILLISECONDS);
-                    me->GetRandomNearPosition(pos, float(urand(5,80)));
-                    me->SummonCreature(NPC_HEALTHY_MUSHROOM, pos, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30*IN_MILLISECONDS);
+                    Creature* temp1 = pHelp->FindNearestCreature(NPC_HEALTHY_MUSHROOM, 5.0f, true);
+                    Creature* temp2 = pHelp->FindNearestCreature(NPC_POISONOUS_MUSHROOM, 5.0f, true);
+                    if (temp1 || temp2)
+                    {
+                        pHelp->DisappearAndDie();
+                    }
+                    else  // found good place to spawn
+                    {
+                        u = 1 - u;
+                        pHelp->DisappearAndDie();
+                        me->SummonCreature(u > 0 ? NPC_POISONOUS_MUSHROOM : NPC_HEALTHY_MUSHROOM, pos, TEMPSUMMON_CORPSE_DESPAWN, 3*IN_MILLISECONDS);
+                    }
                 }
             }
         }
@@ -133,34 +144,62 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (uiSpawnTimer <= diff)
+            if (SpawnTimer <= diff)
             {
                 SpawnAdds();
-                uiSpawnTimer = urand(35*IN_MILLISECONDS,40*IN_MILLISECONDS);
-            } else uiSpawnTimer -= diff;
+                SpawnTimer = 20*IN_MILLISECONDS;
+            } else SpawnTimer -= diff;
 
-            if (uiRootTimer <= diff)
-            {
-                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                    DoCast(pTarget, SPELL_ENTANGLING_ROOTS);
-                uiRootTimer = urand(15*IN_MILLISECONDS,30*IN_MILLISECONDS);
-            } else uiRootTimer -= diff;
 
-            if (uiBashTimer <= diff)
+            if (MiniTimer <= diff)
             {
-                DoCastVictim(SPELL_BASH);
-                uiBashTimer = urand(15*IN_MILLISECONDS,30*IN_MILLISECONDS);
-            } else uiBashTimer -= diff;
+                if(!me->IsNonMeleeSpellCasted(false))
+                {
+                    DoCast(SPELL_MINI);
+                    MiniTimer = urand(25*IN_MILLISECONDS, 30*IN_MILLISECONDS);
+                }
+            } else MiniTimer -= diff;
 
-            if (uiBoltTimer <= diff)
+            if (RootTimer <= diff)
             {
-                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                    DoCast(pTarget, SPELL_VENOM_BOLT_VOLLEY);
-                uiBoltTimer = urand(15*IN_MILLISECONDS,30*IN_MILLISECONDS);
-            } else uiBoltTimer -= diff;
+                if(!me->IsNonMeleeSpellCasted(false))
+                {
+                    if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                        DoCast(pTarget, SPELL_ENTANGLING_ROOTS);
+                    RootTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
+                }
+            } else RootTimer -= diff;
+
+            if (BashTimer <= diff)
+            {
+                if(!me->IsNonMeleeSpellCasted(false))
+                {
+                    DoCastVictim(SPELL_BASH);
+                    BashTimer = urand(7*IN_MILLISECONDS, 12*IN_MILLISECONDS);
+                }
+            } else BashTimer -= diff;
+
+            if (BoltTimer <= diff)
+            {
+                if(!me->IsNonMeleeSpellCasted(false))
+                {
+                    if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                        DoCast(pTarget, SPELL_VENOM_BOLT_VOLLEY);
+                    BoltTimer = urand(18*IN_MILLISECONDS, 22*IN_MILLISECONDS);
+                }
+            } else BoltTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
+
+    private:
+        InstanceScript* pInstance;
+        uint32 RootTimer;
+        uint32 BashTimer;
+        uint32 BoltTimer;
+        uint32 SpawnTimer;
+        uint32 MiniTimer;
+        bool bFirstTime;
     };
 
     CreatureAI *GetAI(Creature *creature) const
@@ -178,30 +217,24 @@ public:
     {
         mob_amanitar_mushroomsAI(Creature* c) : Scripted_NoMovementAI(c) {}
 
-        uint32 uiAuraTimer;
-        uint32 uiDeathTimer;
-
         void Reset()
         {
-            DoCast(me, SPELL_PUTRID_MUSHROOM, true); // Hack, to make the mushrooms visible, can't find orig. spell...
+            me->SetDisplayId(26981);
+            DoCast(SPELL_PUTRID_MUSHROOM); // Hack, to make the mushrooms visible, can't find orig. spell...
 
             if (me->GetEntry() == NPC_POISONOUS_MUSHROOM)
-                DoCast(me, SPELL_POISONOUS_MUSHROOM_VISUAL_AURA, true);
+                DoCast(SPELL_POISONOUS_MUSHROOM_VISUAL_AURA);
+            else
+                DoCast(SPELL_POWER_MUSHROOM_VISUAL_AURA);
 
-            uiAuraTimer = 0;
-            uiDeathTimer = 30*IN_MILLISECONDS;
+            AuraTimer = 1*IN_MILLISECONDS;
+            DeathTimer = 30*IN_MILLISECONDS;
         }
 
         void JustDied(Unit *killer)
         {
-            if (!killer)
-                return;
-
-            if (me->GetEntry() == NPC_HEALTHY_MUSHROOM && killer->GetTypeId() == TYPEID_PLAYER)
-            {
-                me->InterruptNonMeleeSpells(false);
-                DoCast(killer, SPELL_HEALTHY_MUSHROOM_POTENT_FUNGUS, false);
-            }
+            if (me->GetEntry() == NPC_HEALTHY_MUSHROOM)
+                DoCast(me, SPELL_HEALTHY_MUSHROOM_POTENT_FUNGUS, true);
         }
 
         void EnterCombat(Unit * /*who*/) {}
@@ -211,17 +244,21 @@ public:
         {
             if (me->GetEntry() == NPC_POISONOUS_MUSHROOM)
             {
-                if (uiAuraTimer <= diff)
+                if (AuraTimer <= diff)
                 {
-                    DoCast(me, SPELL_POISONOUS_MUSHROOM_VISUAL_AREA, true);
                     DoCast(me, SPELL_POISONOUS_MUSHROOM_POISON_CLOUD, false);
-                    uiAuraTimer = 7*IN_MILLISECONDS;
-                } else uiAuraTimer -= diff;
+                    AuraTimer = 7*IN_MILLISECONDS;
+                } else AuraTimer -= diff;
             }
-            if (uiDeathTimer <= diff)
+
+            if (DeathTimer <= diff)
                 me->DisappearAndDie();
-            else uiDeathTimer -= diff;
+            else DeathTimer -= diff;
         }
+
+    private:
+        uint32 AuraTimer;
+        uint32 DeathTimer;
     };
 
     CreatureAI *GetAI(Creature *creature) const

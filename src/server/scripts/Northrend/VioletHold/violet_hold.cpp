@@ -122,7 +122,8 @@ enum Spells
 
 enum eSinclari
 {
-    SAY_SINCLARI_1                    = -1608045
+    SAY_SINCLARI_1                    = -1608045,
+    EMOTE_ELITE_PORTAL                = -1574028,
 };
 
 float FirstPortalWPs [6][3] =
@@ -322,6 +323,19 @@ public:
 
             me->SetReactState(REACT_AGGRESSIVE);
 
+            DespawnCreatures(CREATURE_AZURE_INVADER_1, 250);
+            DespawnCreatures(CREATURE_AZURE_INVADER_2, 250);
+            DespawnCreatures(CREATURE_AZURE_SPELLBREAKER_1, 250);
+            DespawnCreatures(CREATURE_AZURE_SPELLBREAKER_2, 250);
+            DespawnCreatures(CREATURE_AZURE_BINDER_1, 250);
+            DespawnCreatures(CREATURE_AZURE_BINDER_2, 250);
+            DespawnCreatures(CREATURE_AZURE_MAGE_SLAYER_1, 250);
+            DespawnCreatures(CREATURE_AZURE_MAGE_SLAYER_2, 250);
+            DespawnCreatures(CREATURE_AZURE_CAPTAIN, 250);
+            DespawnCreatures(CREATURE_AZURE_SORCEROR, 250);
+            DespawnCreatures(CREATURE_AZURE_RAIDER, 250);
+            DespawnCreatures(CREATURE_AZURE_STALKER, 250);
+
             std::list<Creature*> GuardList;
             me->GetCreatureListWithEntryInGrid(GuardList, NPC_VIOLET_HOLD_GUARD, 40.0f);
             if (!GuardList.empty())
@@ -337,6 +351,18 @@ public:
                     }
                 }
             }
+        }
+
+        void DespawnCreatures(uint32 entry, float distance)
+        {
+            std::list<Creature*> m_creatures;
+            GetCreatureListWithEntryInGrid(m_creatures, me, entry, distance);
+	 
+            if (m_creatures.empty())
+            return;
+	 
+            for(std::list<Creature*>::iterator iter = m_creatures.begin(); iter != m_creatures.end(); ++iter)
+            (*iter)->ForcedDespawn();
         }
 
         void UpdateAI(const uint32 uiDiff)
@@ -602,6 +628,7 @@ public:
                     {
                         if (uiSpawnTimer <= diff)
                         {
+                            DoScriptText(EMOTE_ELITE_PORTAL, me);
                             bPortalGuardianOrKeeperOrEliteSpawn = true;
                             uint8 k = uiWaveCount < 12 ? 2 : 3;
                             for (uint8 i = 0; i < k; ++i)

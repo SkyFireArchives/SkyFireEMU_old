@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -41,6 +34,7 @@ enum Spells
     SPELL_WELL_OF_CORRUPTION                      = 72362,
     SPELL_CORRUPTED_FLESH                         = 72363,
     SPELL_SHARED_SUFFERING                        = 72368,
+    SPELL_DUAL_WIELD                              = 42459,
 };
 
 enum Events
@@ -57,30 +51,33 @@ class boss_marwyn : public CreatureScript
 public:
     boss_marwyn() : CreatureScript("boss_marwyn") { }
 
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_marwynAI(pCreature);
-    }
-
     struct boss_marwynAI : public boss_horAI
     {
-        boss_marwynAI(Creature *pCreature) : boss_horAI(pCreature) {
-        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
-        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
+        boss_marwynAI(Creature *pCreature) : boss_horAI(pCreature) 
+        {
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);  // Death Grip
+        }
 
         void Reset()
         {
             boss_horAI::Reset();
 
             if (pInstance)
-                pInstance->SetData(DATA_MARWYN_EVENT, NOT_STARTED);
+                pInstance->SetData(TYPE_MARWYN, NOT_STARTED);
+
+            DoCast(me, SPELL_DUAL_WIELD);
+            me->SetAttackTime(OFF_ATTACK, 1400);
+            me->SetStatFloatValue(UNIT_FIELD_MINOFFHANDDAMAGE, float(RAID_MODE(3000, 6000)));
+            me->SetStatFloatValue(UNIT_FIELD_MAXOFFHANDDAMAGE, float(RAID_MODE(5000, 8000)));
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
+
             if (pInstance)
-                pInstance->SetData(DATA_MARWYN_EVENT, IN_PROGRESS);
+                pInstance->SetData(TYPE_MARWYN, IN_PROGRESS);
 
             events.ScheduleEvent(EVENT_OBLITERATE, 30000);          // TODO Check timer
             events.ScheduleEvent(EVENT_WELL_OF_CORRUPTION, 13000);
@@ -93,7 +90,11 @@ public:
             DoScriptText(SAY_DEATH, me);
 
             if (pInstance)
-                pInstance->SetData(DATA_MARWYN_EVENT, DONE);
+            {
+                pInstance->SetData(TYPE_MARWYN, DONE);
+                pInstance->SetData(TYPE_PHASE, 3);
+                pInstance->SetData(DATA_START_ENCOUNTER, DONE);
+            }
         }
 
         void KilledUnit(Unit * /*victim*/)
@@ -116,10 +117,11 @@ public:
             {
                 case EVENT_OBLITERATE:
                     DoCast(SPELL_OBLITERATE);
-                    events.ScheduleEvent(EVENT_OBLITERATE, 30000);
+                    events.ScheduleEvent(EVENT_OBLITERATE, 15000);
                     break;
                 case EVENT_WELL_OF_CORRUPTION:
-                    DoCast(SPELL_WELL_OF_CORRUPTION);
+                    if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
+                        DoCast(pTarget, SPELL_WELL_OF_CORRUPTION);
                     events.ScheduleEvent(EVENT_WELL_OF_CORRUPTION, 13000);
                     break;
                 case EVENT_CORRUPTED_FLESH:
@@ -130,7 +132,7 @@ public:
                 case EVENT_SHARED_SUFFERING:
                     if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM))
                         DoCast(pTarget, SPELL_SHARED_SUFFERING);
-                    events.ScheduleEvent(EVENT_SHARED_SUFFERING, 20000);
+                    events.ScheduleEvent(EVENT_SHARED_SUFFERING, 10000);
                     break;
             }
 
@@ -138,6 +140,10 @@ public:
         }
     };
 
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new boss_marwynAI(pCreature);
+    }
 };
 
 

@@ -1,25 +1,18 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -37,7 +30,7 @@
 
 enum Achievements
 {
-    ACHIEV_VOLUNTEER_WORK                         = 2056
+    ACHIEV_VOLUNTEER_WORK   = 2056
 };
 
 class instance_ahnkahet : public InstanceMapScript
@@ -47,7 +40,7 @@ public:
 
     struct instance_ahnkahet_InstanceScript : public InstanceScript
     {
-        instance_ahnkahet_InstanceScript(Map* pMap) : InstanceScript(pMap) {Initialize();};
+        instance_ahnkahet_InstanceScript(Map* pMap) : InstanceScript(pMap) {}
 
         uint64 Elder_Nadox;
         uint64 Prince_Taldaram;
@@ -67,8 +60,8 @@ public:
         uint32 spheres[2];
 
         uint8 InitiandCnt,
-            switchtrigger,
-            initiandkilled;
+        switchtrigger,
+        initiandkilled;
 
         std::string str_data;
 
@@ -101,25 +94,25 @@ public:
             return false;
         }
 
-        void OnCreatureCreate(Creature* pCreature, bool /*add*/)
+        void OnCreatureCreate(Creature *pCreature, bool /*bAdd*/)
         {
             switch(pCreature->GetEntry())
             {
-                case 29309: Elder_Nadox = pCreature->GetGUID();                     break;
-                case 29308: Prince_Taldaram = pCreature->GetGUID();                 break;
-                case 29310: Jedoga_Shadowseeker = pCreature->GetGUID();             break;
-                case 29311: Herald_Volazj = pCreature->GetGUID();                   break;
-                case 30258: Amanitar = pCreature->GetGUID();                        break;
-                case 30114: InitiandGUIDs.insert(pCreature->GetGUID());             break;
+                case 29309: Elder_Nadox = pCreature->GetGUID();          break;
+                case 29308: Prince_Taldaram = pCreature->GetGUID();      break;
+                case 29310: Jedoga_Shadowseeker = pCreature->GetGUID();  break;
+                case 29311: Herald_Volazj = pCreature->GetGUID();        break;
+                case 30258: Amanitar = pCreature->GetGUID();             break;
+                case 30114: InitiandGUIDs.insert(pCreature->GetGUID());  break;
             }
         }
 
-        void OnGameObjectCreate(GameObject* pGo, bool /*add*/)
+        void OnGameObjectCreate(GameObject *pGo, bool /*bAdd*/)
         {
             switch(pGo->GetEntry())
             {
                 case 193564:     Prince_TaldaramPlatform = pGo->GetGUID();
-                    if (m_auiEncounter[1] == DONE) HandleGameObject(NULL,true,pGo); break;
+                    if (m_auiEncounter[1] == DONE) HandleGameObject(0,true,pGo); break;
                 case 193093:     Prince_TaldaramSpheres[0] = pGo->GetGUID();
                     if (spheres[0] == IN_PROGRESS)
                     {
@@ -137,7 +130,7 @@ public:
                     else pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
                     break;
                 case 192236:    Prince_TaldaramGate = pGo->GetGUID(); // Web gate past Prince Taldaram
-                    if (m_auiEncounter[1] == DONE)HandleGameObject(NULL,true,pGo);break;
+                    if (m_auiEncounter[1] == DONE)HandleGameObject(0,true,pGo);break;
             }
         }
 
@@ -241,7 +234,7 @@ public:
                 case DATA_PRINCE_TALDARAM_EVENT:        return m_auiEncounter[1];
                 case DATA_JEDOGA_SHADOWSEEKER_EVENT:    return m_auiEncounter[2];
                 case DATA_HERALD_VOLAZJ:                return m_auiEncounter[3];
-                case DATA_AMANITAR_EVENT:                     return m_auiEncounter[4];
+                case DATA_AMANITAR_EVENT:               return m_auiEncounter[4];
                 case DATA_SPHERE1_EVENT:                return spheres[0];
                 case DATA_SPHERE2_EVENT:                return spheres[1];
                 case DATA_ALL_INITIAND_DEAD:
