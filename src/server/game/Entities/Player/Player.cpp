@@ -1,4 +1,4 @@
-*/
+/*
  * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
  * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
