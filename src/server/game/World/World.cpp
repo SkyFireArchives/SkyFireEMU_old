@@ -1238,7 +1238,7 @@ void World::SetInitialWorldSettings()
     ///- Init highest guids before any table loading to prevent using not initialized guids in some code.
     sObjectMgr->SetHighestGuids();
 
-    if(sWorld->getIntConfig(CONFIG_IGNORING_MAPS_VERSION) == 0)
+    if (sWorld->getIntConfig(CONFIG_IGNORING_MAPS_VERSION) == 0)
     {
         ///- Check the existence of the map files for all races' startup areas.
         if (!MapManager::ExistMapAndVMap(0,-6240.32f, 331.033f)
@@ -1249,8 +1249,7 @@ void World::SetInitialWorldSettings()
             || !MapManager::ExistMapAndVMap(1,-2917.58f,-257.98f)
             || (m_int_configs[CONFIG_EXPANSION] && (
                 !MapManager::ExistMapAndVMap(530,10349.6f,-6357.29f) ||
-                !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f) ||
-                !MapManager::ExistMapAndVMap(648, -8423.809570f, 1361.300049f))))
+                !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f))))
         {
             exit(1);
         }    
@@ -1258,7 +1257,7 @@ void World::SetInitialWorldSettings()
 
     ///- Loading strings. Getting no records means core load has to be canceled because no error message can be output.
     sLog->outString();
-    sLog->outString("Loading Trinity strings...");
+    sLog->outString("Loading SkyFire strings...");
     if (!sObjectMgr->LoadTrinityStrings())
         exit(1);                                            // Error message displayed in function already
 

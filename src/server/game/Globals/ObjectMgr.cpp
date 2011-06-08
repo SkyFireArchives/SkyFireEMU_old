@@ -7440,6 +7440,8 @@ void ObjectMgr::LoadReputationOnKill()
 
 void ObjectMgr::LoadReputationSpilloverTemplate()
 {
+    uint32 oldMSTime = getMSTime();
+
     m_RepSpilloverTemplateMap.clear();                      // for reload case
 
     uint32 count = 0;
@@ -7447,13 +7449,14 @@ void ObjectMgr::LoadReputationSpilloverTemplate()
 
     if (!result)
     {
-        sLog->outString();
         sLog->outString(">> Loaded `reputation_spillover_template`, table is empty.");
+        sLog->outString();
         return;
     }
 
     do
     {
+
         Field *fields = result->Fetch();
 
         uint32 factionId                = fields[0].GetUInt32();
@@ -7544,8 +7547,8 @@ void ObjectMgr::LoadReputationSpilloverTemplate()
     }
     while (result->NextRow());
 
+    sLog->outString(">> Loaded %u reputation_spillover_template in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u reputation_spillover_template", count);
 }
 
 void ObjectMgr::LoadPointsOfInterest()
