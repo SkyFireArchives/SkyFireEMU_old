@@ -1006,7 +1006,7 @@ void Battleground::RemovePlayerAtLeave(const uint64& guid, bool Transport, bool 
             plr->TeleportToBGEntryPoint();
 
         sLog->outDetail("BATTLEGROUND: Removed player %s from Battleground.", plr->GetName());
-        plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BG_OBJECTIVE_CAPTURE, ACHIEVEMENT_CRITERIA_CONDITION_MAP, GetMapId(), true);
+        plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BG_OBJECTIVE_CAPTURE, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
     }
 
     //battleground object will be deleted next Battleground::Update() call

@@ -1433,14 +1433,12 @@ void SpellMgr::LoadSpellBonusess()
             continue;
         }
 
-        SpellBonusEntry sbe;
-
+        SpellBonusEntry& sbe = mSpellBonusMap[entry];
         sbe.direct_damage = fields[1].GetFloat();
         sbe.dot_damage    = fields[2].GetFloat();
         sbe.ap_bonus      = fields[3].GetFloat();
         sbe.ap_dot_bonus   = fields[4].GetFloat();
 
-        mSpellBonusMap[entry] = sbe;
         // compare with DBC coefficient
         float DBCcoef = 0;
         for(uint32 i=0;i<3;i++)
