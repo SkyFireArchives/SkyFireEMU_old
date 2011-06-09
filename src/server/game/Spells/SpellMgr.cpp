@@ -3818,6 +3818,12 @@ void SpellMgr::LoadSpellCustomAttr()
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_NEGATIVE_EFF0;
             count++;
             break;
+        case 46841: // Escape to the Isle of Quel'Danas
+            // not sure why this is needed
+            spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ANY;
+            spellInfo->EffectImplicitTargetB[0] = TARGET_DST_DB;
+            count++;
+            break;
         case 26029: // dark glare
         case 37433: // spout
         case 43140: case 43215: // flame breath
