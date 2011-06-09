@@ -2482,10 +2482,12 @@ void AuraEffect::TriggerSpell(Unit *target, Unit *caster) const
                         break;
                     // Aura of Desire
                     case 41350:
+                        {
                         AuraEffect * aurEff = this->GetBase()->GetEffect(EFFECT_1);
                         int32 amount = aurEff->GetAmount() - 5 < -100 ? -100 : aurEff->GetAmount() - 5;
                         aurEff->ChangeAmount(amount, false);
                         return;
+                        }
                     // Personalized Weather
                     case 46736:
                         triggerSpellId = 46737;
