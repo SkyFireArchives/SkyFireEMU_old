@@ -4230,7 +4230,7 @@ bool Player::resetTalents(bool no_cost)
         }
     }
 
-    RemovePet(NULL, PET_SAVE_NOT_IN_SLOT, true);	
+    RemovePet(NULL, PET_SLOT_ACTUAL_PET_SLOT, true);
 
     for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
     {
