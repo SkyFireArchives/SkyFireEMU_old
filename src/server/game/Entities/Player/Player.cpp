@@ -7806,12 +7806,11 @@ void Player::_ApplyWeaponDamage(uint8 slot, ItemPrototype const *proto, ScalingS
 
     float minDamage = proto->GetMinDamage();
     float maxDamage = proto->GetMaxDamage();
-    int32 extraDPS = 0;
 
     // If set dpsMod in ScalingStatValue use it for min (70% from average), max (130% from average) damage
     if (ssv)
     {
-        extraDPS = ssv->getDPSMod(proto->ScalingStatValue);
+        int32 extraDPS = ssv->getDPSMod(proto->ScalingStatValue);
         if (extraDPS)
         {
             float average = extraDPS * proto->Delay / 1000.0f;
