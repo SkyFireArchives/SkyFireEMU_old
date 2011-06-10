@@ -885,7 +885,7 @@ enum Opcodes
     CMSG_LFG_SET_NEEDS                               = 0x10145, //
     CMSG_LFG_SET_BOOT_VOTE                           = 0x0D65D, //
     SMSG_LFG_BOOT_PROPOSAL_UPDATE                    = 0x079AC, // 
-    CMSG_LFD_PLAYER_LOCK_INFO_REQUEST                = 0x00C76, // 4.0.6a 13623
+    CMSG_LFD_PLAYER_LOCK_INFO_REQUEST                = 0x0E5E8, // 4.0.6a 13623
     SMSG_LFG_PLAYER_INFO                             = 0x0E088, // 4.0.6a 13623
     CMSG_LFG_TELEPORT                                = 0x0FA88, // 4.0.6a 13623
     CMSG_LFD_PARTY_LOCK_INFO_REQUEST                 = 0x00574, //
@@ -1240,7 +1240,7 @@ enum Opcodes
     SMSG_BATTLEFIELD_MGR_ENTRY_INVITE                = 0x10226, //
     CMSG_BATTLEFIELD_MGR_ENTRY_INVITE_RESPONSE       = 0x00005, // 4.0.6a 13623
     SMSG_BATTLEFIELD_MGR_ENTERED                     = 0x00004, // 4.0.6a 13623
-    SMSG_BATTLEFIELD_MGR_QUEUE_INVITE                = 0x10069, // ??? E5E8
+    SMSG_BATTLEFIELD_MGR_QUEUE_INVITE                = 0x10069, // 4.0.6a 13623
     CMSG_BATTLEFIELD_MGR_QUEUE_INVITE_RESPONSE       = 0x08108, // 4.0.6a 13623
     CMSG_BATTLEFIELD_MGR_QUEUE_REQUEST               = 0x0011D, // 4.0.6a 13623
     SMSG_BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE      = 0x0011C, // 4.0.6a 13623
