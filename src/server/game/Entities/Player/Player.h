@@ -166,9 +166,10 @@ typedef UNORDERED_MAP<uint32 /*instanceId*/, time_t/*releaseTime*/> InstanceTime
 
 enum TrainerSpellState
 {
-    TRAINER_SPELL_ALREADY_LEARN = 00,
-    TRAINER_SPELL_CAN_LEARN     = 01,
-    TRAINER_SPELL_CANT_LEARN    = 02
+    TRAINER_SPELL_GREEN = 0,
+    TRAINER_SPELL_RED   = 1,
+    TRAINER_SPELL_GRAY  = 2,
+    TRAINER_SPELL_GREEN_DISABLED = 10                       // custom value, not send to client: formally green but learn not allowed
 };
 
 enum ActionButtonUpdateState

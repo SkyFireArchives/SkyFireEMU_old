@@ -4492,7 +4492,7 @@ bool Player::HasActiveSpell(uint32 spell) const
 TrainerSpellState Player::GetTrainerSpellState(TrainerSpell const* trainer_spell) const
 {
     if (!trainer_spell)
-        return TRAINER_SPELL_CANT_LEARN;
+        return TRAINER_SPELL_RED;
 
     bool hasSpell = true;
     for (uint8 i = 0; i < MAX_SPELL_EFFECTS ; ++i)
@@ -4508,15 +4508,15 @@ TrainerSpellState Player::GetTrainerSpellState(TrainerSpell const* trainer_spell
     }
     // known spell
     if (hasSpell)
-        return TRAINER_SPELL_ALREADY_LEARN;
+        return TRAINER_SPELL_GRAY;
 
     // check skill requirement
     if (trainer_spell->reqSkill && GetBaseSkillValue(trainer_spell->reqSkill) < trainer_spell->reqSkillValue)
-        return TRAINER_SPELL_CANT_LEARN;
+        return TRAINER_SPELL_RED;
 
     // check level requirement
     if (getLevel() < trainer_spell->reqLevel)
-        return TRAINER_SPELL_CANT_LEARN;
+        return TRAINER_SPELL_RED;
 
     for (uint8 i = 0; i < MAX_SPELL_EFFECTS ; ++i)
     {
@@ -4525,13 +4525,13 @@ TrainerSpellState Player::GetTrainerSpellState(TrainerSpell const* trainer_spell
 
         // check race/class requirement
         if (!IsSpellFitByClassAndRace(trainer_spell->learnedSpell[i]))
-            return TRAINER_SPELL_CANT_LEARN;
+            return TRAINER_SPELL_RED;
 
         if (SpellChainNode const* spell_chain = sSpellMgr->GetSpellChainNode(trainer_spell->learnedSpell[i]))
         {
             // check prev.rank requirement
             if (spell_chain->prev && !HasSpell(spell_chain->prev))
-                return TRAINER_SPELL_CANT_LEARN;
+                return TRAINER_SPELL_RED;
         }
 
         SpellsRequiringSpellMapBounds spellsRequired = sSpellMgr->GetSpellsRequiredForSpellBounds(trainer_spell->learnedSpell[i]);
@@ -4539,7 +4539,7 @@ TrainerSpellState Player::GetTrainerSpellState(TrainerSpell const* trainer_spell
         {
             // check additional spell requirement
             if (!HasSpell(itr->second))
-                return TRAINER_SPELL_CANT_LEARN;
+                return TRAINER_SPELL_RED;
         }
     }
 
@@ -4550,10 +4550,10 @@ TrainerSpellState Player::GetTrainerSpellState(TrainerSpell const* trainer_spell
         if (!trainer_spell->learnedSpell[i])
             continue;
         if ((sSpellMgr->IsPrimaryProfessionFirstRankSpell(trainer_spell->learnedSpell[i])) && (GetFreePrimaryProfessionPoints() == 0))
-            return TRAINER_SPELL_CANT_LEARN;
+            return TRAINER_SPELL_GREEN_DISABLED;
     }
 
-    return TRAINER_SPELL_CAN_LEARN;
+    return TRAINER_SPELL_GREEN;
 }
 
 /**
