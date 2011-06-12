@@ -29,7 +29,6 @@
 #include "DatabaseEnv.h"
 #include "DBCStructure.h"
 
-
 class Item;
 class Player;
 class WorldPacket;
@@ -58,12 +57,12 @@ struct AuctionEntry
     uint32 auctioneer;                                      // creature low guid
     uint32 item_guidlow;
     uint32 item_template;
-    uint32 owner;
-    uint32 startbid;                                        //maybe useless
-    uint32 bid;
+    uint64 owner;
+    uint64 startbid;                                        //maybe useless
+    uint64 bid;
     uint32 buyout;
     time_t expire_time;
-    uint32 bidder;
+    uint64 bidder;
     uint32 deposit;                                         //deposit can be calculated only when creating auction
     AuctionHouseEntry const* auctionHouseEntry;             // in AuctionHouse.dbc
     uint32 factionTemplateId;
@@ -72,7 +71,7 @@ struct AuctionEntry
     uint32 GetHouseId() const { return auctionHouseEntry->houseId; }
     uint32 GetHouseFaction() const { return auctionHouseEntry->faction; }
     uint32 GetAuctionCut() const;
-    uint32 GetAuctionOutBid() const;
+    uint64 GetAuctionOutBid() const;
     bool BuildAuctionInfo(WorldPacket & data) const;
     void DeleteFromDB(SQLTransaction& trans) const;
     void SaveToDB(SQLTransaction& trans) const;
@@ -151,7 +150,8 @@ public:
     void SendAuctionSalePendingMail(AuctionEntry * auction, SQLTransaction& trans);
     void SendAuctionSuccessfulMail(AuctionEntry * auction, SQLTransaction& trans);
     void SendAuctionExpiredMail(AuctionEntry * auction, SQLTransaction& trans);
-    void SendAuctionOutbiddedMail(AuctionEntry * auction, uint32 newPrice, Player* newBidder, SQLTransaction& trans);
+    void SendAuctionRemovedMail(AuctionEntry * auction, SQLTransaction& trans);
+    void SendAuctionOutbiddedMail(AuctionEntry * auction, uint64 newPrice, Player* newBidder, SQLTransaction& trans);
     void SendAuctionCancelledToBidderMail(AuctionEntry* auction, SQLTransaction& trans);
 
     static uint32 GetAuctionDeposit(AuctionHouseEntry const* entry, uint32 time, Item *pItem, uint32 count);
