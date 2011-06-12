@@ -36,7 +36,7 @@ enum LazyPeonYells
 
 enum LazyPeon
 {
-    QUEST_LAZY_PEONS                              = 5441,
+    QUEST_LAZY_PEONS                              = 25134,
     GO_LUMBERPILE                                 = 175784,
     SPELL_BUFF_SLEEP                              = 17743,
     SPELL_AWAKEN_PEON                             = 19938
