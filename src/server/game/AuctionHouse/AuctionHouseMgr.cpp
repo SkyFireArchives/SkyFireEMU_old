@@ -116,7 +116,7 @@ void AuctionHouseMgr::SendAuctionWonMail(AuctionEntry *auction, SQLTransaction& 
         else
         {
             bidder_accId = sObjectMgr->GetPlayerAccountIdByGUID(bidder_guid);
-            bidder_security = sAccountMgr->GetSecurity(bidder_accId);
+            bidder_security = sAccountMgr->GetSecurity(bidder_accId, realmID);
 
             if (bidder_security > SEC_PLAYER) // not do redundant DB requests
             {
@@ -152,7 +152,7 @@ void AuctionHouseMgr::SendAuctionWonMail(AuctionEntry *auction, SQLTransaction& 
         // set owner to bidder (to prevent delete item with sender char deleting)
         // owner in `data` will set at mail receive and item extracting
         PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SET_ITEM_OWNER);
-        stmt->setUInt32(0, auction->bidder);
+        stmt->setUInt64(0, auction->bidder);
         stmt->setUInt32(1, pItem->GetGUIDLow());
         trans->Append(stmt);
 
@@ -165,7 +165,7 @@ void AuctionHouseMgr::SendAuctionWonMail(AuctionEntry *auction, SQLTransaction& 
 
         MailDraft(msgAuctionWonSubject.str(), msgAuctionWonBody.str())
             .AddItem(pItem)
-            .SendMailTo(trans, MailReceiver(bidder,auction->bidder), auction, MAIL_CHECK_MASK_COPIED);
+            .SendMailTo(trans, MailReceiver(bidder, auction->bidder), auction, MAIL_CHECK_MASK_COPIED);
     }
 }
 
@@ -220,7 +220,7 @@ void AuctionHouseMgr::SendAuctionSuccessfulMail(AuctionEntry * auction, SQLTrans
 
         sLog->outDebug("AuctionSuccessful body string : %s", auctionSuccessfulBody.str().c_str());
 
-        uint32 profit = auction->bid + auction->deposit - auctionCut;
+        uint64 profit = auction->bid + auction->deposit - auctionCut;
 
         //FIXME: what do if owner offline
         if (owner)
@@ -263,7 +263,7 @@ void AuctionHouseMgr::SendAuctionExpiredMail(AuctionEntry * auction, SQLTransact
 }
 
 //this function sends mail to old bidder
-void AuctionHouseMgr::SendAuctionOutbiddedMail(AuctionEntry *auction, uint32 newPrice, Player* newBidder, SQLTransaction& trans)
+void AuctionHouseMgr::SendAuctionOutbiddedMail(AuctionEntry *auction, uint64 newPrice, Player* newBidder, SQLTransaction& trans)
 {
     uint64 oldBidder_guid = MAKE_NEW_GUID(auction->bidder,0, HIGHGUID_PLAYER);
     Player *oldBidder = sObjectMgr->GetPlayer(oldBidder_guid);
@@ -308,7 +308,6 @@ void AuctionHouseMgr::SendAuctionCancelledToBidderMail(AuctionEntry* auction, SQ
             .SendMailTo(trans, MailReceiver(bidder, auction->bidder), auction, MAIL_CHECK_MASK_COPIED);
     }
 }
-
 
 void AuctionHouseMgr::LoadAuctionItems()
 {
@@ -378,7 +377,6 @@ void AuctionHouseMgr::LoadAuctions()
     do
     {
         Field* fields = result->Fetch();
-
 
         AuctionEntry *aItem = new AuctionEntry();
         if (!aItem->LoadFromDB(fields))
@@ -470,9 +468,8 @@ void AuctionHouseObject::AddAuction(AuctionEntry *auction)
     sScriptMgr->OnAuctionAdd(this, auction);
 }
 
-bool AuctionHouseObject::RemoveAuction(AuctionEntry *auction, uint32 item_template)
+bool AuctionHouseObject::RemoveAuction(AuctionEntry *auction, uint32 /*item_template*/)
 {
-
     bool wasInMap = AuctionsMap.erase(auction->Id) ? true : false;
 
     sScriptMgr->OnAuctionRemove(this, auction);
@@ -637,13 +634,13 @@ void AuctionHouseObject::BuildListAuctionItems(WorldPacket& data, Player* player
                         {
                             // Append the suffix (ie: of the Monkey) to the name using localization
                             name += " ";
-                            name += temp;
+                            name += temp[locdbc_idx];
                         }
                         else
                         {
                             // Invalid localization? Append the suffix using default enUS
                             name += " ";
-                            name += temp;
+                            name += temp[LOCALE_enUS];
                         }
                     }
                 }
@@ -689,13 +686,13 @@ bool AuctionEntry::BuildAuctionInfo(WorldPacket & data) const
     data << uint32(pItem->GetSpellCharges());               //item->charge FFFFFFF
     data << uint32(0);                                      //Unknown
     data << uint64(owner);                                  //Auction->owner
-    data << uint32(startbid);                               //Auction->startbid (not sure if useful)
-    data << uint32(bid ? GetAuctionOutBid() : 0);
+    data << uint64(startbid);                               //Auction->startbid (not sure if useful)
+    data << uint64(bid ? GetAuctionOutBid() : 0);
     //minimal outbid
-    data << uint32(buyout);                                 //auction->buyout
-    data << uint32((expire_time-time(NULL))*IN_MILLISECONDS);//time left
+    data << uint64(buyout);                                 //auction->buyout
+    data << uint64((expire_time-time(NULL))*IN_MILLISECONDS);//time left
     data << uint64(bidder);                                 //auction->bidder current
-    data << uint32(bid);                                    //current bid
+    data << uint64(bid);                                    //current bid
     return true;
 }
 
@@ -706,9 +703,9 @@ uint32 AuctionEntry::GetAuctionCut() const
 }
 
 /// the sum of outbid is (1% from current bid)*5, if bid is very small, it is 1c
-uint32 AuctionEntry::GetAuctionOutBid() const
+uint64 AuctionEntry::GetAuctionOutBid() const
 {
-    uint32 outbid = CalculatePctN(bid, 5);
+    uint64 outbid = CalculatePctN(bid, 5);
     return outbid ? outbid : 1;
 }
 
@@ -725,10 +722,10 @@ void AuctionEntry::SaveToDB(SQLTransaction& trans) const
     stmt->setUInt32(0, Id);
     stmt->setUInt32(1, auctioneer);
     stmt->setUInt32(2, item_guidlow);
-    stmt->setUInt32(3, owner);
+    stmt->setUInt64(3, owner);
     stmt->setInt32 (4, int32(buyout));
     stmt->setUInt64(5, uint64(expire_time));
-    stmt->setUInt32(6, bidder);
+    stmt->setUInt64(6, bidder);
     stmt->setInt32 (7, int32(bid));
     stmt->setInt32 (8, int32(startbid));
     stmt->setInt32 (9, int32(deposit));
