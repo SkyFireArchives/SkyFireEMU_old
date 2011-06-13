@@ -16358,41 +16358,63 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form)
                 uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
                 switch (hairColor)
                 {
-                    case 7: // Violet
-                    case 8:
-                        return 33665;
-                    case 3: // Light Blue
-                        return 33666;
-                    case 0: // Green
-                    case 1: // Light Green
-                    case 2: // Dark Green
-                        return 33667;
-                    case 4: // White
-                        return 33669;
-                    default: // original - Dark Blue
+                    case 0: // Red
+                    case 1:
                         return 33668;
+                    case 2: // Yellow
+                    case 3:
+			return 33667;
+                    case 4: // Blue
+                    case 5:
+                    case 6:
+                        return 33666;
+                    case 7: // Purple
+                    case 10:
+                        return 33665;
+                    default: // original - white
+                        return 33669;
                 }
             }
             else if (getRace() == RACE_WORGEN)
-            {
-                uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
-                switch (hairColor)
+            {   // Based on Skin color
+                uint8 skinColor = GetByteValue(PLAYER_BYTES, 0);
+                // Male
+                if (getGender() == GENDER_MALE)
                 {
-                    case 7: // Violet
-                    case 8:
-                        return 33660;
-                    case 3: // Light Blue
-                        return 33661;
-                    case 0: // Green
-                    case 1: // Light Green
-                    case 2: // Dark Green
-                        return 33662;
-                    case 4: // White
-                        return 33663;
-                    default: // original - Dark Blue
-                        return 33664;
-                }
-            }
+		    switch(skinColor)
+		    {
+			case 1: // Brown
+			    return 33662;
+			case 2: // Black
+		        case 7:
+			    return 33661;
+			case 4: // yellow
+			    return 33664;
+			case 3: // White
+			case 5:
+			    return 33663;
+			default: // original - Gray
+			    return 33660;
+		    }
+		}
+                // Female
+                else switch(skinColor)
+		    {
+			case 5: // Brown
+			case 6:
+			    return 33662;
+			case 7: // Black
+		        case 8:
+			    return 33661;
+			case 3: // yellow
+			case 4:
+			    return 33664;
+			case 2: // White
+			    return 33663;
+			default: // original - Gray
+			    return 33660;
+		    }
+		}
             // Based on Skin color
             else if (getRace() == RACE_TAUREN)
             {
@@ -16477,38 +16499,65 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form)
                 uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
                 switch (hairColor)
                 {
-                    case 0: // Green
-                    case 1: // Light Green
-                    case 2: // Dark Green
-                        return 33659;
-                    case 6: // Dark Blue
-                        return 33655;
-                    case 4: // White
-                        return 33658;
-                    case 3: // Light Blue
+                    case 0: // Red
+                    case 1:
                         return 33657;
-                    default: // original - Violet
+                    case 2: // Yellow
+                    case 3:
+			return 33659;
+                    case 7: // Purple
+                    case 10:
                         return 33656;
+		    case 8: // White
+                    case 9:
+                    case 11:
+                    case 12:
+			return 33658;
+                    default: // original - Blue
+                        return 33655;
                 }
             }
             else if (getRace() == RACE_WORGEN)
             {
-                uint8 hairColor = GetByteValue(PLAYER_BYTES, 3);
-                switch (hairColor)
+		// Based on Skin color
+                uint8 skinColor = GetByteValue(PLAYER_BYTES, 0);
+                // Male
+                if (getGender() == GENDER_MALE)
                 {
-                    case 0: // Green
-                    case 1: // Light Green
-                    case 2: // Dark Green
-                        return 33650;
-                    case 6: // Dark Blue
-                        return 33651;
-                    case 4: // White
-                        return 33654;
-                    case 3: // Light Blue
-                        return 33652;
-                    default: // original - Violet
-                        return 33653;
-                }
+		    switch(skinColor)
+		    {
+			case 1: // Brown
+			    return 33652;
+			case 2: // Black
+			case 7:
+			    return 33651;
+			case 4: // Yellow
+			    return 33653;
+			case 3: // White
+			case 5:
+			    return 33654;
+			default: // original - Gray
+			    return 33650;
+		    }
+		}
+                // Female
+                else 
+		    switch(skinColor)
+		    {
+			case 5: // Brown
+			case 6:
+			    return 33652;
+			case 7: // Black
+		        case 8:
+			    return 33651;
+			case 3: // yellow
+			case 4:
+			    return 33654;
+			case 2: // White
+			    return 33653;
+			default: // original - Gray
+			    return 33650;
+		    }
             }
             // Based on Skin color
             else if (getRace() == RACE_TAUREN)
@@ -16568,26 +16617,29 @@ uint32 Unit::GetModelForForm(ShapeshiftForm form)
             else
                 return 2289;
         case FORM_FLIGHT:
-            if (Player::TeamForRace(getRace()) == ALLIANCE)
-                return 20857;
-            return 20872;
+		switch(getRace())
+		{
+			case RACE_NIGHTELF:
+				return 20857;
+			case RACE_WORGEN:
+				return 37727;
+			case RACE_TROLL:
+				return 37728;
+			default: // RACE_TAUREN
+				return 20872;
+		}
         case FORM_FLIGHT_EPIC:
-            if (getRace() == RACE_NIGHTELF)
-            {
-                return 21243;
-            }
-            else if (getRace() == RACE_TAUREN)
-            {
-                return 21244;
-            }
-            else if (getRace() == RACE_WORGEN)
-            {
-                return 37729;
-            }
-            else if (getRace() == RACE_TROLL)
-            {
-                return 37730;
-            }
+        	switch(getRace())
+		{
+			case RACE_NIGHTELF:
+				return 21243;
+			case RACE_WORGEN:
+				return 37729;
+			case RACE_TROLL:
+				return 37730;
+			default: // RACE_TAUREN
+				return 21244;
+		}
         default:
         {
             uint32 modelid = 0;
