@@ -400,7 +400,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
             // 0x40
             if (flags & UPDATEFLAG_HAS_POSITION)
             {
-                assert(dynamic_cast<Unit*>(const_cast<Object*>(this)) != NULL);
+                assert(dynamic_cast<GameObject*>(const_cast<Object*>(this)) != NULL);
                 // 0x02
                 if (flags & UPDATEFLAG_TRANSPORT && ((GameObject*)this)->GetGoType() == GAMEOBJECT_TYPE_MO_TRANSPORT)
                 {
