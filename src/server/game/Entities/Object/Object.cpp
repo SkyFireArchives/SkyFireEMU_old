@@ -291,6 +291,8 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     // 0x20
     if (flags & UPDATEFLAG_LIVING)
     {
+        assert(dynamic_cast<Unit*>(const_cast<Object*>(this)) != NULL);
+        
         ((Unit*)this)->BuildMovementPacket(data);
 
         *data << ((Unit*)this)->GetSpeed(MOVE_WALK);
@@ -378,6 +380,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     {
         if (flags & UPDATEFLAG_POSITION)
         {
+            assert(dynamic_cast<WorldObject*>(const_cast<Object*>(this)) != NULL);
             *data << uint8(0);                              // unk PGUID!
             *data << ((WorldObject*)this)->GetPositionX();
             *data << ((WorldObject*)this)->GetPositionY();
@@ -397,6 +400,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
             // 0x40
             if (flags & UPDATEFLAG_HAS_POSITION)
             {
+                assert(dynamic_cast<Unit*>(const_cast<Object*>(this)) != NULL);
                 // 0x02
                 if (flags & UPDATEFLAG_TRANSPORT && ((GameObject*)this)->GetGoType() == GAMEOBJECT_TYPE_MO_TRANSPORT)
                 {
@@ -419,6 +423,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     // 0x4
     if (flags & UPDATEFLAG_HAS_TARGET)                       // packed guid (current target guid)
     {
+        assert(dynamic_cast<Unit*>(const_cast<Object*>(this)) != NULL);
         if (Unit *victim = ((Unit*)this)->getVictim())
             data->append(victim->GetPackGUID());
         else
@@ -434,8 +439,9 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     // 0x80
     if (flags & UPDATEFLAG_VEHICLE)                          // unused for now
     {
+        assert(dynamic_cast<Unit*>(const_cast<Object*>(this)) != NULL);
         *data << uint32(((Unit*)this)->GetVehicleKit()->GetVehicleInfo()->m_ID);  // vehicle id
-        *data << float(((Creature*)this)->GetOrientation());  // facing adjustment
+        *data << float(((Unit*)this)->GetOrientation());  // facing adjustment
     }
 
     // 0x800
@@ -447,6 +453,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     // 0x200
     if (flags & UPDATEFLAG_ROTATION)
     {
+        assert(dynamic_cast<GameObject*>(const_cast<Object*>(this)) != NULL);
         *data << uint64(((GameObject*)this)->GetRotation());
     }
     
