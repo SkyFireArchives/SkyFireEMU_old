@@ -6545,7 +6545,7 @@ void ObjectMgr::LoadAccessRequirements()
 
     uint32 count = 0;
 
-    //                                                           0           1          2          3     4      5             6             7                      8                  9
+    //                                               0           1          2          3     4      5             6             7                      8                  9
     QueryResult result = WorldDatabase.Query("SELECT mapid, difficulty, level_min, level_max, item, item2, quest_done_A, quest_done_H, completed_achievement, quest_failed_text FROM access_requirement");
     if (!result)
     {
@@ -7578,14 +7578,14 @@ void ObjectMgr::LoadPointsOfInterest()
         Field *fields = result->Fetch();
         
 
-        uint32 point_id = fields[0].GetUInt32();
+        uint32 point_id = fields[0].GetUInt16();
 
         PointOfInterest POI;
         POI.x                    = fields[1].GetFloat();
         POI.y                    = fields[2].GetFloat();
-        POI.icon                 = fields[3].GetUInt32();
-        POI.flags                = fields[4].GetUInt32();
-        POI.data                 = fields[5].GetUInt32();
+        POI.icon                 = fields[3].GetUInt16();
+        POI.flags                = fields[4].GetUInt16();
+        POI.data                 = fields[5].GetUInt16();
         POI.icon_name            = fields[6].GetString();
 
         if (!Trinity::IsValidMapCoord(POI.x,POI.y))
