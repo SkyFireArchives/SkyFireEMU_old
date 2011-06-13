@@ -234,7 +234,10 @@ void TempSummon::UnSummon()
     //ASSERT(!isPet());
     if (isPet())
     {
-        ((Pet*)this)->Remove(PET_SLOT_OTHER_PET);
+        if(((Pet*)this)->getPetType() == HUNTER_PET)
+            ((Pet*)this)->Remove(PET_SLOT_ACTUAL_PET_SLOT);
+        else
+            ((Pet*)this)->Remove(PET_SLOT_OTHER_PET);
         ASSERT(!IsInWorld());
         return;
     }

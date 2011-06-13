@@ -295,7 +295,16 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petentry, uint32 petnumber, bool c
         owner->SendMessageToSet(&data, true);
     }
 
-    owner->SetMinion(this, true, slotID == PET_SLOT_UNK_SLOT ? PET_SLOT_OTHER_PET : slotID);
+    if(slotID == PET_SLOT_UNK_SLOT)
+    {
+        if(getPetType() == HUNTER_PET)
+            owner->SetMinion(this, true, (PetSlot)fields[7].GetUInt8());
+        else
+            owner->SetMinion(this, true, PET_SLOT_OTHER_PET);
+    }
+    else
+        owner->SetMinion(this, true, slotID);
+    
     map->Add(this->ToCreature());
 
     m_resetTalentsCost = fields[15].GetUInt32();
