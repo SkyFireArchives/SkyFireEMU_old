@@ -400,10 +400,10 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
             // 0x40
             if (flags & UPDATEFLAG_HAS_POSITION)
             {
-                assert(dynamic_cast<GameObject*>(const_cast<Object*>(this)) != NULL);
                 // 0x02
                 if (flags & UPDATEFLAG_TRANSPORT && ((GameObject*)this)->GetGoType() == GAMEOBJECT_TYPE_MO_TRANSPORT)
                 {
+                    assert(dynamic_cast<GameObject*>(const_cast<Object*>(this)) != NULL);
                     *data << (float)0;
                     *data << (float)0;
                     *data << (float)0;
@@ -411,6 +411,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
                 }
                 else
                 {
+                    assert(dynamic_cast<WorldObject*>(const_cast<Object*>(this)) != NULL);
                     *data << ((WorldObject *)this)->GetPositionX();
                     *data << ((WorldObject *)this)->GetPositionY();
                     *data << ((WorldObject *)this)->GetPositionZ();
