@@ -3889,7 +3889,7 @@ void Spell::finish(bool ok)
                         }
                         if (runescount > 0)
                         {
-                            uint8 rndrune = urand(0,runescount);
+                            uint8 rndrune = urand(0,runescount-1);
                             m_caster->ToPlayer()->SetRuneCooldown(cooldownrunes[rndrune], 0);
                         }
                     }
