@@ -12632,8 +12632,26 @@ bool Unit::CanHaveThreatList() const
     //    return false;
 
     // summons can not have a threat list, unless they are controlled by a creature
-    if (HasUnitTypeMask(UNIT_MASK_MINION | UNIT_MASK_GUARDIAN | UNIT_MASK_CONTROLABLE_GUARDIAN) && IS_PLAYER_GUID(((Pet*)this)->GetOwnerGUID()))
-        return false;
+    if (HasUnitTypeMask(UNIT_MASK_MINION))
+    {
+        assert(dynamic_cast<Minion*>(const_cast<Unit*>(this)));
+        if(IS_PLAYER_GUID(((Minion*)this)->GetOwnerGUID()))
+            return false;
+    }
+    
+    if(HasUnitTypeMask(UNIT_MASK_GUARDIAN | UNIT_MASK_CONTROLABLE_GUARDIAN))
+    {
+        assert(dynamic_cast<Guardian*>(const_cast<Unit*>(this)));
+        if(IS_PLAYER_GUID(((Guardian*)this)->GetOwnerGUID()))
+            return false;
+    }
+    
+    if(this->ToCreature()->isPet())
+    {
+        assert(dynamic_cast<Pet*>(const_cast<Unit*>(this)));
+        if(IS_PLAYER_GUID(((Pet*)this)->GetOwnerGUID()))
+            return false;
+    }
 
     return true;
 }
