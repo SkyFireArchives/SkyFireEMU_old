@@ -251,14 +251,14 @@ void OPvPCapturePointTF::ChangeState()
     {
         if (((OutdoorPvPTF*)m_PvP)->m_AllianceTowersControlled)
             ((OutdoorPvPTF*)m_PvP)->m_AllianceTowersControlled--;
-        sWorld->SendZoneText(OutdoorPvPTFBuffZones[0],sObjectMgr->GetTrinityStringForDBCLocale(LANG_OPVP_TF_LOOSE_A));
+        sWorld->SendZoneText(OutdoorPvPTFBuffZones[0],sObjectMgr->GetSkyFireStringForDBCLocale(LANG_OPVP_TF_LOOSE_A));
     }
     // if changing from controlling horde to alliance
     else if (m_OldState == OBJECTIVESTATE_HORDE)
     {
         if (((OutdoorPvPTF*)m_PvP)->m_HordeTowersControlled)
             ((OutdoorPvPTF*)m_PvP)->m_HordeTowersControlled--;
-        sWorld->SendZoneText(OutdoorPvPTFBuffZones[0],sObjectMgr->GetTrinityStringForDBCLocale(LANG_OPVP_TF_LOOSE_H));
+        sWorld->SendZoneText(OutdoorPvPTFBuffZones[0],sObjectMgr->GetSkyFireStringForDBCLocale(LANG_OPVP_TF_LOOSE_H));
     }
 
     uint32 artkit = 21;
@@ -270,7 +270,7 @@ void OPvPCapturePointTF::ChangeState()
         artkit = 2;
         if (((OutdoorPvPTF*)m_PvP)->m_AllianceTowersControlled<TF_TOWER_NUM)
             ((OutdoorPvPTF*)m_PvP)->m_AllianceTowersControlled++;
-        sWorld->SendZoneText(OutdoorPvPTFBuffZones[0],sObjectMgr->GetTrinityStringForDBCLocale(LANG_OPVP_TF_CAPTURE_A));
+        sWorld->SendZoneText(OutdoorPvPTFBuffZones[0],sObjectMgr->GetSkyFireStringForDBCLocale(LANG_OPVP_TF_CAPTURE_A));
         for (PlayerSet::iterator itr = m_activePlayers[0].begin(); itr != m_activePlayers[0].end(); ++itr)
             (*itr)->AreaExploredOrEventHappens(TF_ALLY_QUEST);
         break;
@@ -279,7 +279,7 @@ void OPvPCapturePointTF::ChangeState()
         artkit = 1;
         if (((OutdoorPvPTF*)m_PvP)->m_HordeTowersControlled<TF_TOWER_NUM)
             ((OutdoorPvPTF*)m_PvP)->m_HordeTowersControlled++;
-        sWorld->SendZoneText(OutdoorPvPTFBuffZones[0],sObjectMgr->GetTrinityStringForDBCLocale(LANG_OPVP_TF_CAPTURE_H));
+        sWorld->SendZoneText(OutdoorPvPTFBuffZones[0],sObjectMgr->GetSkyFireStringForDBCLocale(LANG_OPVP_TF_CAPTURE_H));
         for (PlayerSet::iterator itr = m_activePlayers[1].begin(); itr != m_activePlayers[1].end(); ++itr)
             (*itr)->AreaExploredOrEventHappens(TF_HORDE_QUEST);
         break;

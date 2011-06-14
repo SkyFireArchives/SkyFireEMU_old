@@ -95,7 +95,7 @@ void WorldSession::SendNameQueryOpcodeFromDBCallBack(QueryResult result)
     std::string name = fields[1].GetString();
     uint8 pRace = 0, pGender = 0, pClass = 0;
     if (name == "")
-        name         = GetTrinityString(LANG_NON_EXIST_CHARACTER);
+        name         = GetSkyFireString(LANG_NON_EXIST_CHARACTER);
     else
     {
         pRace        = fields[2].GetUInt8();

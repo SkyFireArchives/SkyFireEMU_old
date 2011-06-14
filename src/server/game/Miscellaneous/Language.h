@@ -23,7 +23,7 @@
 #ifndef __TRINITY_LANGUAGE_H
 #define __TRINITY_LANGUAGE_H
 
-enum TrinityStrings
+enum SkyFireStrings
 {
     // for chat commands
     LANG_SELECT_CHAR_OR_CREATURE        = 1,
@@ -942,7 +942,7 @@ enum TrinityStrings
     LANG_COMMAND_TICKETLISTAGECREATE    = 2025,
     LANG_COMMAND_TICKETSHOWESCALATEDLIST = 2026,
 
-    // Trinity strings                    5000-9999
+    // SkyFire Strings                    5000-9999
     LANG_COMMAND_FREEZE                 = 5000,
     LANG_COMMAND_FREEZE_ERROR           = 5001,
     LANG_COMMAND_FREEZE_WRONG           = 5002,
@@ -974,7 +974,7 @@ enum TrinityStrings
     LANG_GOINFO_NAME                    = 5027,
     LANG_GOINFO_LOOTID                  = 5028,
     LANG_COMMAND_LOOKUP_MAX_RESULTS     = 5029,
-    // Room for more Trinity strings      5030-9999
+    // Room for more SkyFire Strings      5030-9999
 
     // Level requirement notifications
     LANG_SAY_REQ                        = 6604,

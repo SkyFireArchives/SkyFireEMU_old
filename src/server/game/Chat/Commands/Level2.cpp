@@ -739,7 +739,7 @@ bool ChatHandler::HandleGameObjectAddCommand(const char* args)
         return false;
     }
 
-    sLog->outDebug(GetTrinityString(LANG_GAMEOBJECT_CURRENT), gInfo->name, db_lowGUID, x, y, z, o);
+    sLog->outDebug(GetSkyFireString(LANG_GAMEOBJECT_CURRENT), gInfo->name, db_lowGUID, x, y, z, o);
 
     map->Add(pGameObj);
 
@@ -885,7 +885,7 @@ bool ChatHandler::HandleModifyRepCommand(const char * args)
         amount = -42000;
         for (; r < MAX_REPUTATION_RANK; ++r)
         {
-            std::string rank = GetTrinityString(ReputationRankStrIndex[r]);
+            std::string rank = GetSkyFireString(ReputationRankStrIndex[r]);
             if (rank.empty())
                 continue;
 
@@ -1159,11 +1159,11 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
         Class = fields[5].GetUInt8();
     }
 
-    std::string username = GetTrinityString(LANG_ERROR);
-    std::string email = GetTrinityString(LANG_ERROR);
-    std::string last_ip = GetTrinityString(LANG_ERROR);
+    std::string username = GetSkyFireString(LANG_ERROR);
+    std::string email = GetSkyFireString(LANG_ERROR);
+    std::string last_ip = GetSkyFireString(LANG_ERROR);
     uint32 security = 0;
-    std::string last_login = GetTrinityString(LANG_ERROR);
+    std::string last_login = GetSkyFireString(LANG_ERROR);
 
     QueryResult result = LoginDatabase.PQuery("SELECT a.username, aa.gmlevel, a.email, a.last_ip, a.last_login, a.mutetime "
         "FROM account a "
@@ -1195,7 +1195,7 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
 
     std::string nameLink = playerLink(target_name);
 
-    PSendSysMessage(LANG_PINFO_ACCOUNT, (target?"":GetTrinityString(LANG_OFFLINE)), nameLink.c_str(), GUID_LOPART(target_guid), username.c_str(), accId, email.c_str(), security, last_ip.c_str(), last_login.c_str(), latency);
+    PSendSysMessage(LANG_PINFO_ACCOUNT, (target?"":GetSkyFireString(LANG_OFFLINE)), nameLink.c_str(), GUID_LOPART(target_guid), username.c_str(), accId, email.c_str(), security, last_ip.c_str(), last_login.c_str(), latency);
 
     if (QueryResult result = LoginDatabase.PQuery("SELECT unbandate, bandate = unbandate FROM account_banned WHERE id = '%u' AND active ORDER BY bandate ASC LIMIT 1", accId))
     {
@@ -2340,7 +2340,7 @@ bool ChatHandler::HandleCharacterReputationCommand(const char* args)
         FactionEntry const *factionEntry = sFactionStore.LookupEntry(itr->second.ID);
         char const* factionName = factionEntry ? factionEntry->name : "#Not found#";
         ReputationRank rank = target->GetReputationMgr().GetRank(factionEntry);
-        std::string rankName = GetTrinityString(ReputationRankStrIndex[rank]);
+        std::string rankName = GetSkyFireString(ReputationRankStrIndex[rank]);
         std::ostringstream ss;
         if (m_session)
             ss << itr->second.ID << " - |cffffffff|Hfaction:" << itr->second.ID << "|h[" << factionName << " " << localeNames[loc] << "]|h|r";
@@ -2350,17 +2350,17 @@ bool ChatHandler::HandleCharacterReputationCommand(const char* args)
         ss << " " << rankName << " (" << target->GetReputationMgr().GetReputation(factionEntry) << ")";
 
         if (itr->second.Flags & FACTION_FLAG_VISIBLE)
-            ss << GetTrinityString(LANG_FACTION_VISIBLE);
+            ss << GetSkyFireString(LANG_FACTION_VISIBLE);
         if (itr->second.Flags & FACTION_FLAG_AT_WAR)
-            ss << GetTrinityString(LANG_FACTION_ATWAR);
+            ss << GetSkyFireString(LANG_FACTION_ATWAR);
         if (itr->second.Flags & FACTION_FLAG_PEACE_FORCED)
-            ss << GetTrinityString(LANG_FACTION_PEACE_FORCED);
+            ss << GetSkyFireString(LANG_FACTION_PEACE_FORCED);
         if (itr->second.Flags & FACTION_FLAG_HIDDEN)
-            ss << GetTrinityString(LANG_FACTION_HIDDEN);
+            ss << GetSkyFireString(LANG_FACTION_HIDDEN);
         if (itr->second.Flags & FACTION_FLAG_INVISIBLE_FORCED)
-            ss << GetTrinityString(LANG_FACTION_INVISIBLE_FORCED);
+            ss << GetSkyFireString(LANG_FACTION_INVISIBLE_FORCED);
         if (itr->second.Flags & FACTION_FLAG_INACTIVE)
-            ss << GetTrinityString(LANG_FACTION_INACTIVE);
+            ss << GetSkyFireString(LANG_FACTION_INACTIVE);
 
         SendSysMessage(ss.str().c_str());
     }
@@ -2474,7 +2474,7 @@ bool ChatHandler::HandleLookupEventCommand(const char* args)
                 return true;
             }
 
-            char const* active = activeEvents.find(id) != activeEvents.end() ? GetTrinityString(LANG_ACTIVE) : "";
+            char const* active = activeEvents.find(id) != activeEvents.end() ? GetSkyFireString(LANG_ACTIVE) : "";
 
             if (m_session)
                 PSendSysMessage(LANG_EVENT_ENTRY_LIST_CHAT,id,id,eventData.description.c_str(),active);
@@ -2499,7 +2499,7 @@ bool ChatHandler::HandleEventActiveListCommand(const char* /*args*/)
     GameEventMgr::GameEventDataMap const& events = sGameEventMgr->GetEventMap();
     GameEventMgr::ActiveEvents const& activeEvents = sGameEventMgr->GetActiveEventList();
 
-    char const* active = GetTrinityString(LANG_ACTIVE);
+    char const* active = GetSkyFireString(LANG_ACTIVE);
 
     for (GameEventMgr::ActiveEvents::const_iterator itr = activeEvents.begin(); itr != activeEvents.end(); ++itr)
     {
@@ -2551,7 +2551,7 @@ bool ChatHandler::HandleEventInfoCommand(const char* args)
 
     GameEventMgr::ActiveEvents const& activeEvents = sGameEventMgr->GetActiveEventList();
     bool active = activeEvents.find(event_id) != activeEvents.end();
-    char const* activeStr = active ? GetTrinityString(LANG_ACTIVE) : "";
+    char const* activeStr = active ? GetSkyFireString(LANG_ACTIVE) : "";
 
     std::string startTimeStr = TimeToTimestampStr(eventData.start);
     std::string endTimeStr = TimeToTimestampStr(eventData.end);
@@ -3258,10 +3258,10 @@ bool ChatHandler::HandleLookupTitleCommand(const char* args)
                     return true;
                 }
 
-                char const* knownStr = target && target->HasTitle(titleInfo) ? GetTrinityString(LANG_KNOWN) : "";
+                char const* knownStr = target && target->HasTitle(titleInfo) ? GetSkyFireString(LANG_KNOWN) : "";
 
                 char const* activeStr = target && target->GetUInt32Value(PLAYER_CHOSEN_TITLE) == titleInfo->bit_index
-                    ? GetTrinityString(LANG_ACTIVE)
+                    ? GetSkyFireString(LANG_ACTIVE)
                     : "";
 
                 char titleNameStr[80];
@@ -3436,7 +3436,7 @@ bool ChatHandler::HandleCharacterTitlesCommand(const char* args)
 
     LocaleConstant loc = GetSessionDbcLocale();
     char const* targetName = target->GetName();
-    char const* knownStr = GetTrinityString(LANG_KNOWN);
+    char const* knownStr = GetSkyFireString(LANG_KNOWN);
 
     // Search in CharTitles.dbc
     for (uint32 id = 0; id < sCharTitlesStore.GetNumRows(); id++)
@@ -3449,7 +3449,7 @@ bool ChatHandler::HandleCharacterTitlesCommand(const char* args)
                 continue;
 
             char const* activeStr = target && target->GetUInt32Value(PLAYER_CHOSEN_TITLE) == titleInfo->bit_index
-                ? GetTrinityString(LANG_ACTIVE)
+                ? GetSkyFireString(LANG_ACTIVE)
                 : "";
 
             char titleNameStr[80];
