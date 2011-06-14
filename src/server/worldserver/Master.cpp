@@ -214,7 +214,7 @@ int Master::Run()
 
                 if (!curAff)
                 {
-                    sLog->outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for SkyFireEmu. Accessible processors bitmask (hex): %x", Aff, appAff);
+                    sLog->outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for SkyFireEMU. Accessible processors bitmask (hex): %x", Aff, appAff);
                 }
                 else
                 {
@@ -233,9 +233,9 @@ int Master::Run()
         if (Prio)
         {
             if (SetPriorityClass(hProcess, HIGH_PRIORITY_CLASS))
-                sLog->outString("SkyFireEmu process priority class set to HIGH");
+                sLog->outString("SkyFireEMU process priority class set to HIGH");
             else
-                sLog->outError("Can't set SkyFireEmu process priority class.");
+                sLog->outError("Can't set SkyFireEMU process priority class.");
             sLog->outString("");
         }
     }
