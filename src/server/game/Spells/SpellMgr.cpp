@@ -3722,15 +3722,15 @@ void SpellMgr::LoadSpellCustomAttr()
             count++;
             break;
         case 1680: // Whirlwind  (Fury)
-            spellInfo->EffectRadiusIndex[0] = 8;
-            spellInfo->EffectRadiusIndex[1] = 8;
-            spellInfo->EffectRadiusIndex[2] = 8;
+            spellInfo->EffectRadiusIndex[0] = 14;
+            spellInfo->EffectRadiusIndex[1] = 14;
+            spellInfo->EffectRadiusIndex[2] = 14;
             count++;
             break;
         case 50622: // Whirlwind (triggered by Bladestorm)
-            spellInfo->EffectRadiusIndex[0] = 8;
-            spellInfo->EffectRadiusIndex[1] = 8;
-            spellInfo->EffectRadiusIndex[2] = 8;
+            spellInfo->EffectRadiusIndex[0] = 14;
+            spellInfo->EffectRadiusIndex[1] = 14;
+            spellInfo->EffectRadiusIndex[2] = 14;
             count++;
             break;
         case 44543: //Fingers of Frost rank 1
