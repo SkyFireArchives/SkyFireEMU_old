@@ -1211,9 +1211,9 @@ bool ChatHandler::HandleModifyASpeedCommand(const char* args)
     float ASpeed = (float)atof((char*)args);
 
     if (ASpeed > 50.0f)
-	ASpeed = 50.0f;
+        ASpeed = 50.0f;
     else if (ASpeed < 0.1f)
-	ASpeed = 0.1f;
+        ASpeed = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
@@ -1259,9 +1259,9 @@ bool ChatHandler::HandleModifySpeedCommand(const char* args)
     float Speed = (float)atof((char*)args);
 
     if (Speed > 50.0f)
-	Speed = 50.0f;
+        Speed = 50.0f;
     else if (Speed < 0.1f)
-	Speed = 0.1f;
+        Speed = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
@@ -1302,9 +1302,9 @@ bool ChatHandler::HandleModifySwimCommand(const char* args)
     float Swim = (float)atof((char*)args);
 
     if (Swim > 50.0f)
-	Swim = 50.0f;
+        Swim = 50.0f;
     else if (Swim < 0.1f)
-	Swim = 0.1f;
+        Swim = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
@@ -1345,9 +1345,9 @@ bool ChatHandler::HandleModifyBWalkCommand(const char* args)
     float BSpeed = (float)atof((char*)args);
 
     if (BSpeed > 50.0f)
-	BSpeed = 50.0f;
+        BSpeed = 50.0f;
     else if (BSpeed < 0.1f)
-	BSpeed = 0.1f;
+        BSpeed = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
@@ -1388,9 +1388,9 @@ bool ChatHandler::HandleModifyFlyCommand(const char* args)
     float FSpeed = (float)atof((char*)args);
 
     if (FSpeed > 50.0f)
-	FSpeed = 50.0f;
+        FSpeed = 50.0f;
     else if (FSpeed < 0.1f)
-	FSpeed = 0.1f;
+        FSpeed = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
@@ -1422,9 +1422,9 @@ bool ChatHandler::HandleModifyScaleCommand(const char* args)
     float Scale = (float)atof((char*)args);
 
     if (Scale > 10.0f)
-	Scale = 10.0f;
+        Scale = 10.0f;
     else if (Scale < 0.1f)
-	Scale = 0.1f;
+        Scale = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
