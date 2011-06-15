@@ -705,7 +705,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                         m_caster->SetEclipse(0);
                     }
 
-                m_caster->SetEclipse(int32(m_caster->GetEclipse() - 20));
+                    m_caster->SetEclipse(int32(m_caster->GetEclipse() - 20));
                 }
                 // Wrath
                 else if (m_spellInfo->SpellFamilyFlags[0] & 0x00000001)
