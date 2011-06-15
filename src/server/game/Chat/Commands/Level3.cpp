@@ -4670,11 +4670,20 @@ bool ChatHandler::HandleGMFlyCommand(const char *args)
     if (!target)
         target = m_session->GetPlayer();
 
+    std::string argstr = (char*)args;
     WorldPacket data(SMSG_MULTIPLE_PACKETS, 14);
-    if (strncmp(args, "on", 3) == 0)
+
+    if (argstr == "change")
+    {
+        if (target->canFly())
+            argstr = "off";
+        else
+            argstr = "on";
+    }
+    if (argstr == "on")
         //data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
         data << uint16(SMSG_MOVE_SET_CAN_FLY);
-    else if (strncmp(args, "off", 4) == 0)
+    else if (argstr == "off")
         //data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12);
         data << uint16(SMSG_MOVE_UNSET_CAN_FLY);
     else
@@ -4685,7 +4694,7 @@ bool ChatHandler::HandleGMFlyCommand(const char *args)
     data.append(target->GetPackGUID());
     data << uint32(0);                                      // unknown
     target->SendMessageToSet(&data, true);
-    PSendSysMessage(LANG_COMMAND_FLYMODE_STATUS, GetNameLink(target).c_str(), args);
+    PSendSysMessage(LANG_COMMAND_FLYMODE_STATUS, GetNameLink(target).c_str(), argstr);
     return true;
 }
 
