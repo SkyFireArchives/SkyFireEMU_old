@@ -17387,38 +17387,42 @@ void Unit::SetEclipse(int32 power)
     eclipse = power;
 
     if (eclipse > 0)
-        {
+    {
         AddAura(67483, ToPlayer());
         if (HasAura(67484))
             RemoveAurasDueToSpell(67484);
-        }
+    }
 
     if (eclipse < 0)
-        {
+    {
         AddAura(67484, ToPlayer());
         if (HasAura(67483))
             RemoveAurasDueToSpell(67483);
-        }
+    }
 
     if (eclipse == 0)
-        {
+    {
         if (HasAura(67483))
             RemoveAurasDueToSpell(67483);
         if (HasAura(67484))
             RemoveAurasDueToSpell(67484);
-        }
+    }
 
     if (eclipse >= 100)
-        {
+    {
+        if (HasAura(48518))
+            RemoveAurasDueToSpell(48518);
         eclipse = 100;
         AddAura(48517, ToPlayer());
-        }
+    }
 
     if (eclipse <= -100)
-        {
+    {
+        if (HasAura(48517))
+            RemoveAurasDueToSpell(48517);
         eclipse = -100;
         AddAura(48518, ToPlayer());
-        }
+    }
 
     WorldPacket data(SMSG_POWER_UPDATE);
     data.append(GetPackGUID());
