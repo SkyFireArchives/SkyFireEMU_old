@@ -3870,6 +3870,38 @@ void Spell::finish(bool ok)
 
     switch (m_spellInfo->Id)
         {
+            case 2912: // StarFire
+
+                if (m_caster->HasAura(48517))
+                {
+                    m_caster->RemoveAurasDueToSpell(48517);
+                    m_caster->SetEclipse(0);
+                }
+
+                if (m_caster->HasAura(48518))
+                {
+                    m_caster->RemoveAurasDueToSpell(48518);
+                    m_caster->SetEclipse(0);
+                }
+
+                m_caster->SetEclipse(int32(m_caster->GetEclipse() - 20));
+                break;
+            case 5176: // Wrath
+
+                if (m_caster->HasAura(48518))
+                {
+                    m_caster->RemoveAurasDueToSpell(48518);
+                    m_caster->SetEclipse(0);
+                }
+
+                if (m_caster->HasAura(48517))
+                {
+                    m_caster->RemoveAurasDueToSpell(48517);
+                    m_caster->SetEclipse(0);
+                }
+
+                m_caster->SetEclipse(int32(m_caster->GetEclipse() + 13));
+                break;
             case 49143: // Frost Strike
             case 47541: // Death Coil
             case 56815: // Rune Strike
