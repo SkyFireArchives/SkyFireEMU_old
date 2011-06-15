@@ -14693,7 +14693,7 @@ bool Player::CanRewardQuest(Quest const *pQuest, bool msg)
         return false;
 
     // prevent receive reward with quest items in bank
-    if (pQuest->HasFlag(QUEST_SPECIAL_FLAGS_DELIVER))
+    if (pQuest->HasFlag(QUEST_SPECIAL_FLAG_DELIVER))
     {
         for (uint8 i = 0; i < QUEST_ITEM_OBJECTIVES_COUNT; i++)
         {
@@ -14768,13 +14768,13 @@ void Player::AddQuest(Quest const *pQuest, Object *questGiver)
     questStatusData.m_status = QUEST_STATUS_INCOMPLETE;
     questStatusData.m_explored = false;
 
-    if (pQuest->HasFlag(QUEST_SPECIAL_FLAGS_DELIVER))
+    if (pQuest->HasFlag(QUEST_SPECIAL_FLAG_DELIVER))
     {
         for (uint8 i = 0; i < QUEST_ITEM_OBJECTIVES_COUNT; ++i)
             questStatusData.m_itemcount[i] = 0;
     }
 
-    if (pQuest->HasFlag(QUEST_TRINITY_FLAGS_KILL_OR_CAST | QUEST_SPECIAL_FLAGS_SPEAKTO))
+    if (pQuest->HasFlag(QUEST_SPECIAL_FLAG_KILL_OR_CAST | QUEST_SPECIAL_FLAG_SPEAKTO))
     {
         for (uint8 i = 0; i < QUEST_OBJECTIVES_COUNT; ++i)
             questStatusData.m_creatureOrGOcount[i] = 0;
@@ -14792,7 +14792,7 @@ void Player::AddQuest(Quest const *pQuest, Object *questGiver)
             GetReputationMgr().SetVisible(factionEntry);
 
     uint32 qtime = 0;
-    if (pQuest->HasFlag(QUEST_SPECIAL_FLAGS_TIMED))
+    if (pQuest->HasFlag(QUEST_SPECIAL_FLAG_TIMED))
     {
         uint32 limittime = pQuest->GetLimitTime();
 
@@ -15059,7 +15059,7 @@ void Player::FailQuest(uint32 questId)
             SetQuestSlotState(log_slot, QUEST_STATE_FAIL);
         }
 
-        if (pQuest->HasFlag(QUEST_SPECIAL_FLAGS_TIMED))
+        if (pQuest->HasFlag(QUEST_SPECIAL_FLAG_TIMED))
         {
             QuestStatusData& q_status = m_QuestStatus[questId];
 
