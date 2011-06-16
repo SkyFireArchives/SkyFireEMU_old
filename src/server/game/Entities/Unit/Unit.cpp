@@ -17386,20 +17386,6 @@ void Unit::SetEclipse(int32 power)
 {
     eclipse = power;
 
-    if (eclipse > 0)
-    {
-        AddAura(67483, ToPlayer());
-        if (HasAura(67484))
-            RemoveAurasDueToSpell(67484);
-    }
-
-    if (eclipse < 0)
-    {
-        AddAura(67484, ToPlayer());
-        if (HasAura(67483))
-            RemoveAurasDueToSpell(67483);
-    }
-
     if (eclipse == 0)
     {
         if (HasAura(67483))
