@@ -1024,11 +1024,6 @@ struct GtChanceToSpellCritEntry
     float    ratio;
 };
 
-struct GtOCTClassCombatRatingScalarEntry
-{
-    float    ratio;
-};	
-
 /*struct GtOCTRegenHPEntry
 {
     //uint32 level;
