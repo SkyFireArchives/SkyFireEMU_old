@@ -113,9 +113,6 @@ namespace VMAP
                 return getMapFileName(pMapId);
             }
             virtual bool existsMap(const char* pBasePath, unsigned int pMapId, int x, int y);
-
-        public:
-            void getInstanceMapTree(InstanceTreeMap &instanceMapTree);
     };
 }
 #endif

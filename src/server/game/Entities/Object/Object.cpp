@@ -1534,36 +1534,6 @@ bool Position::HasInArc(float arc, const Position *obj) const
     return ((angle >= lborder) && (angle <= rborder));
 }
 
-bool Position::HasInArc(const float arcangle, const float x, const float y) const
-{
-    // always have self in arc
-    if (x == m_positionX && y == m_positionY)
-        return true;
-
-    float arc = arcangle;
-
-    // move arc to range 0.. 2*pi
-    arc = MapManager::NormalizeOrientation(arc);
-
-    float angle = GetAngle(x, y);
-    angle -= m_orientation;
-
-    // move angle to range -pi ... +pi
-    angle = MapManager::NormalizeOrientation(angle);
-    if (angle > M_PI)
-        angle -= 2.0f*M_PI;
-
-    float lborder =  -1 * (arc/2.0f);                       // in range -pi..0
-    float rborder = (arc/2.0f);                             // in range 0..pi
-    return (( angle >= lborder ) && ( angle <= rborder ));
-}
-
-float WorldObject::GetDistanceSqr(float x, float y, float z) const
-{
-    float d = GetExactDistSq(x, y, z) - GetObjectSize();
-    return d > 0.0f ? d : 0.0f;
-}
-
 bool WorldObject::IsInBetween(const WorldObject *obj1, const WorldObject *obj2, float size) const
 {
     if (GetPositionX() > std::max(obj1->GetPositionX(), obj2->GetPositionX())

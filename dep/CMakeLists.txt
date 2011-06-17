@@ -40,7 +40,6 @@ endif()
   add_subdirectory(zlib)
 endif()
 
-add_subdirectory(recastnavigation)
 add_subdirectory(g3dlite)
 
 if(SERVERS)

@@ -33,7 +33,7 @@ namespace VMAP
         while(str.length() >0)
         {
             char lc = str[str.length()-1];
-            if (lc == '\r' || lc == '\n' || lc == ' ' || lc == '"' || lc == '\'')
+            if(lc == '\r' || lc == '\n' || lc == ' ' || lc == '"' || lc == '\'')
             {
                 str = str.substr(0,str.length()-1);
             }
@@ -45,7 +45,7 @@ namespace VMAP
         while(str.length() >0)
         {
             char lc = str[0];
-            if (lc == ' ' || lc == '"' || lc == '\'')
+            if(lc == ' ' || lc == '"' || lc == '\'')
             {
                 str = str.substr(1,str.length()-1);
             }
@@ -66,14 +66,14 @@ namespace VMAP
     {
         bool result = false;
         unsigned int i;
-        for (i = pStartPos; i < pString.size(); ++i)
+        for(i=pStartPos;i<pString.size(); ++i)
         {
-            if (pString[i] == ',')
+            if(pString[i] == ',')
             {
                 break;
             }
         }
-        if (i > pStartPos)
+        if(i>pStartPos)
         {
             std::string idString = pString.substr(pStartPos, i-pStartPos);
             pStartPos = i+1;
@@ -91,9 +91,9 @@ namespace VMAP
 
     void VMapFactory::preventSpellsFromBeingTestedForLoS(const char* pSpellIdString)
     {
-        if (!iIgnoreSpellIds)
+        if(!iIgnoreSpellIds)
             iIgnoreSpellIds = new Table<unsigned int , bool>();
-        if (pSpellIdString != NULL)
+        if(pSpellIdString != NULL)
         {
             unsigned int pos =0;
             unsigned int id;
@@ -117,7 +117,7 @@ namespace VMAP
     // just return the instance
     IVMapManager* VMapFactory::createOrGetVMapManager()
     {
-        if (gVMapManager == 0)
+        if(gVMapManager == 0)
             gVMapManager= new VMapManager2();                // should be taken from config ... Please change if you like :-)
         return gVMapManager;
     }
