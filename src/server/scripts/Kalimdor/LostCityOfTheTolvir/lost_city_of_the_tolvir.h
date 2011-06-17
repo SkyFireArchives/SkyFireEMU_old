@@ -22,7 +22,8 @@ enum Data
 {
     DATA_GENERAL_HUSAM_EVENT,
     DATA_HIGH_PROPHET_BARIM_EVENT,
-    DATA_LOCKMAW_AUGH_EVENT,
+    DATA_LOCKMAW_EVENT,
+    DATA_AUGH_EVENT,
     DATA_SIAMAT_EVENT,
     DATA_TEAM_IN_INSTANCE,
 };
@@ -40,11 +41,11 @@ enum CreatureIds
 {
     // Dungeon Bosses
 
-    BOSS_GENERAL_HUSAM      = 44577,
-    BOSS_HIGH_PROPHET_BARIM = 43612,
-    BOSS_LOCKMAW            = 43614,
-    BOSS_AUGH               = 49045,
-    BOSS_SIAMAT             = 44819,
+    BOSS_GENERAL_HUSAM           = 44577,
+    BOSS_HIGH_PROPHET_BARIM      = 43612,
+    BOSS_LOCKMAW                 = 43614,
+    BOSS_AUGH                    = 49045,
+    BOSS_SIAMAT                  = 44819,
 
     // Trash mobs
 
@@ -67,6 +68,16 @@ enum CreatureIds
     NPC_PYGMY_FIREBREATHER       = 44898,
     NPC_PYGMY_SCOUT              = 44897,
     NPC_SERVANT_OF_SIAMAT        = 45269,
+
+    // Various NPCs
+
+    NPC_CAPTAIN_HADAN            = 50038,
+    NPC_WIND_TUNNEL              = 48092,
+};
+
+enum GameObjectIds
+{
+    GO_TOLVIR_GRAVE              = 207409,
 };
 
 #endif

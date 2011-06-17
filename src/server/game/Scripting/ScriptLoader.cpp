@@ -579,7 +579,10 @@ void AddSC_zangarmarsh();
 
 void AddSC_the_stonecore();                     //Cata:TheStonecore
 void AddSC_instance_the_stonecore();
-
+void AddSC_instance_halls_of_origination();     //Halls of Origination
+void AddSC_boss_temple_guardian_anhuur();
+void AddSC_boss_earthrager_ptah();
+void AddSC_boss_anraphet();
 
 // battlegrounds
 
@@ -1192,8 +1195,12 @@ void AddNorthrendScripts()
     AddSC_isle_of_conquest();
 
     // Cataclysm Scripts
-    AddSC_the_stonecore();
+    AddSC_the_stonecore();                     //The Stonecore
     AddSC_instance_the_stonecore();
+    AddSC_instance_halls_of_origination();     //Halls of Origination
+    AddSC_boss_temple_guardian_anhuur();
+    AddSC_boss_earthrager_ptah();
+    AddSC_boss_anraphet();
 
 #endif
 }

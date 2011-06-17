@@ -16,7 +16,7 @@
 */
 
 #include"ScriptPCH.h"
-#include"halls_or_origination.h"
+#include"halls_of_origination.h"
 
 #define ENCOUNTERS 7
 
@@ -46,24 +46,26 @@ public:
         
         uint32 uiEncounter[ENCOUNTERS];
 
-        uint64 uiTempleGuardianAnhuur,
-        uint64 uiEarthragerPtah,
-        uint64 uiAnraphet,
-        uint64 Isiset,
-        uint64 Ammunae,
-        uint64 Setesh,
-        uint64 Rajh,
-        uint64 TeamInInstance;
-
+        uint64 uiTempleGuardianAnhuur;
+        uint64 uiEarthragerPtah;
+        uint64 uiAnraphet;
+        uint64 uiIsiset;
+        uint64 uiAmmunae;
+        uint64 uiSetesh;
+        uint64 uiRajh;
+        uint64 OriginationElevatorGUID;
+        uint64 uiTeamInInstance;
+      
         void Initialize()
         {
-            uiTempleGuardianANhuur = 0;
+            uiTempleGuardianAnhuur = 0;
             uiEarthragerPtah = 0;
             uiAnraphet = 0;
             uiIsiset = 0;
             uiAmmunae = 0;
             uiSetesh = 0;
             uiRajh = 0;
+            uint64 OriginationElevatorGUID = 0;
 
             for(uint i=0; i<ENCOUNTERS; ++i)
                 uiEncounter[i] = NOT_STARTED;
@@ -86,10 +88,10 @@ public:
             switch(pCreature->GetEntry())
             {
                 case BOSS_TEMPLE_GUARDIAN_ANHUUR:
-                    uiTempleGuardianANhuur = pCreature->GetGUID();
+                    uiTempleGuardianAnhuur = pCreature->GetGUID();
                     break;
                 case BOSS_EARTHRAGER_PTAH:
-                    uiEarthRagerPtah = pCreature->GetGUID();
+                    uiEarthragerPtah = pCreature->GetGUID();
                     break;
                 case BOSS_ANRAPHET:
                     uiAnraphet = pCreature->GetGUID();
@@ -105,6 +107,21 @@ public:
                 case BOSS_RAJH:
                     uiRajh = pCreature->GetGUID();
             }
+        }
+
+	void OnGameObjectCreate(GameObject* go)
+        {
+            switch (go->GetEntry()) /* Elevator active switch to second level. Need more info on Id */
+                {
+                case GO_ORIGINATION_ELEVATOR:
+                     OriginationElevatorGUID = go->GetGUID();
+                     if (GetData(DATA_TEMPLE_GUARDIAN_ANHUUR) == DONE && GetData(DATA_ANRAPHET) == DONE && GetData(DATA_EARTHRAGER_PTAH) == DONE)
+                         {
+                            go->SetUInt32Value(GAMEOBJECT_LEVEL, 0);
+                            go->SetGoState(GO_STATE_READY);
+                         }
+                     break;
+                }
         }
 
         uint64 GetData64(uint32 identifier)
@@ -156,8 +173,8 @@ public:
                     break;
             }
          
-         if (DATA == done)
-             SavetoDB();
+         if (data == DONE)
+             SaveToDB();
         }
 
         uint32 GetData(uint32 type)

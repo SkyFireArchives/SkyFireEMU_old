@@ -105,6 +105,11 @@ set(scripts_STAT_SRCS
   Kalimdor/LostCityOfTheTolvir/instance_lost_city_of_the_tolvir.cpp
   Kalimdor/LostCityOfTheTolvir/lost_city_of_the_tolvir.cpp
   Kalimdor/LostCityOfTheTolvir/lost_city_of_the_tolvir.h
+  Kalimdor/HallsOfOrigination/instance_halls_of_origination.cpp
+  Kalimdor/HallsOfOrigination/halls_of_origination.h
+  Kalimdor/HallsOfOrigination/boss_temple_guardian_anhuur.cpp
+  Kalimdor/HallsOfOrigination/boss_earthrager_ptah.cpp
+  Kalimdor/HallsOfOrigination/boss_anraphet.cpp
 )
 
 message("  -> Prepared: Kalimdor")
