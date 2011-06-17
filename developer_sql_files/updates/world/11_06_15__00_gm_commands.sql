@@ -1,4 +1,0 @@
-UPDATE command SET help='Syntax: .gm fly on/off/change\r\nEnable or Disable gm fly mode.' WHERE name='gm fly' LIMIT 1;
-UPDATE command SET help='Syntax: .gm [on/off/change]\r\n\r\nEnable or Disable in game GM MODE or show current state of on/off not provided.' WHERE name='gm' LIMIT 1;
-UPDATE command SET help='Syntax: .gm chat [on/off/change]\r\n\r\nEnable or disable chat GM MODE (show gm badge in messages) or show current state of on/off not provided.' WHERE name='gm chat' LIMIT 1;
-UPDATE command SET help='Syntax: .gm visible [on/off/change]\r\n\r\nOutput current visibility state or make GM visible(on) and invisible(off) for other players.' WHERE name='gm visible' LIMIT 1;
