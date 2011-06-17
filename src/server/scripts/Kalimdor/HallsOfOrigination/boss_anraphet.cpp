@@ -23,11 +23,15 @@
 #include"SpellScript.h"
 #include"SpellAuraEffects.h"
 
-#define SAY_AGGRO "Purge of unauthorized entities commencing."
-#define SAY_KILL1 "Purge Complete."
-#define SAY_KILL2 "Target Annihilated."
-#define SAY_OMEGA "Omega Stance activated. Annihilation of foreign unit is now imminent."
-#define SAY_DEATH "Anraphet unit shutting down..."
+enum ScriptTexts
+{
+    SAY_INTRO                = 0,
+    SAY_AGGRO                = 1,
+    SAY_KILL_1               = 2,
+    SAY_KILL_2               = 3,
+    SAY_OMEGA                = 4,
+    SAY_DEATH                = 5,
+};
 
 enum Spells
 {
@@ -43,7 +47,7 @@ enum Spells
 
 enum Events
 {
-    EVENT_SPELL_ALPHA_BEAMS    = 1,
+    EVENT_ALPHA_BEAMS          = 1,
     EVENT_CRUMBLING_RUIN       = 2,
     EVENT_DESTRUCTION_PROTOCOL = 3,
     EVENT_NEMESIS_STRIKE       = 4,
@@ -55,11 +59,11 @@ class boss_anraphet : public CreatureScript
     public:
         boss_anraphet() : CreatureScript("boss_anraphet") { }
          
-        CreatureAI *GetAI(Creature* pCreature) const
+        CreatureAI* GetAI(Creature* pCreature) const
         {
             return new boss_anraphetAI(pCreature);
         }
-        struct boss_anraphetAI() : public ScriptedAI
+        struct boss_anraphetAI : public ScriptedAI
         {
             boss_anraphetAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
@@ -72,7 +76,7 @@ class boss_anraphet : public CreatureScript
 
             void Reset()
             {
-                events.Reset()
+                events.Reset();
                 
                 if(pInstance && (pInstance->GetData(DATA_ANRAPHET_EVENT) != DONE && !check_in))
                    pInstance->SetData(DATA_ANRAPHET_EVENT, NOT_STARTED);
@@ -92,13 +96,12 @@ class boss_anraphet : public CreatureScript
 				if (pInstance)
                     pInstance->SetData(DATA_ANRAPHET_EVENT, IN_PROGRESS);
                 
-                me->SetInCombatZone();
+                DoZoneInCombat();
 			}
 
             void KilledUnit(Unit* /*Killed*/)
             {
-                if (who->GetTypeId() == TYPEID_PLAYER)
-                    DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
+                DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
             }
 
             void UpdateAI(const uint32 uiDiff)
@@ -107,13 +110,13 @@ class boss_anraphet : public CreatureScript
                    return;
                 events.Update(uiDiff);
 
-                while(uint32 eventId == events.ExecuteEvent())
+                while(uint32 eventId = events.ExecuteEvent())
                 {
                     switch(eventId)
                     {
                         case EVENT_ALPHA_BEAMS:
                             if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, true))
-                                DoCast(target, SPELL_ALPHA_BEAMS);
+                                DoCast(me->getVictim(), SPELL_ALPHA_BEAMS);
                                 events.ScheduleEvent(EVENT_ALPHA_BEAMS, 1000);
                                 break;
                         case EVENT_CRUMBLING_RUIN:
@@ -121,11 +124,11 @@ class boss_anraphet : public CreatureScript
                             events.ScheduleEvent(EVENT_CRUMBLING_RUIN, urand(10000, 16000));
                             break;
                         case EVENT_NEMESIS_STRIKE:
-                            DoCast(me->GetVictim(), SPELL_NEMESIS_STRIKE);
+                            DoCast(me->getVictim(), SPELL_NEMESIS_STRIKE);
                             events.ScheduleEvent(EVENT_NEMESIS_STRIKE, 2000);
                             break;
                         case EVENT_OMEGA_STANCE:
-                            DoCast(me->GetVictim(), SPELL_OMEGA_STANCE);
+                            DoCast(me, SPELL_OMEGA_STANCE);
                             events.ScheduleEvent(EVENT_OMEGA_STANCE, 14000);
                             break;
                         default:

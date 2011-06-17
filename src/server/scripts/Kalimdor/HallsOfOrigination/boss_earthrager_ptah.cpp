@@ -23,8 +23,13 @@
 #include"SpellScript.h"
 #include"SpellAuraEffects.h"
 
-#define SAY_AGGRO "More carrion for the swarm..."
-#define SAY_DEATH "Ptah... is... no more..."
+enum ScriptTexts
+{
+    SAY_AGGRO                = 0,
+    SAY_KILL_1               = 1,
+    SAY_KILL_2               = 2,
+    SAY_DEATH                = 3,
+};
 
 enum Spells
 {
@@ -43,11 +48,11 @@ class boss_earthrager_ptah : public CreatureScript
     public:
         boss_earthrager_ptah() : CreatureScript("boss_earthrager_ptah") { }
         
-        CreatureAI *GetAI(Creature* pCreature) const
+        CreatureAI* GetAI(Creature* pCreature) const
         {
             return new boss_earthrager_ptahAI(pCreature);
         }
-        struct boss_earthrager_ptahAI() : public ScriptedAI
+        struct boss_earthrager_ptahAI : public ScriptedAI
         {
             boss_earthrager_ptahAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
@@ -60,11 +65,16 @@ class boss_earthrager_ptah : public CreatureScript
 
             void Reset()
             {
-                events.Reset()
+                events.Reset();
                 
                 if(pInstance && (pInstance->GetData(DATA_EARTHRAGER_PTAH_EVENT) != DONE && !check_in))
                    pInstance->SetData(DATA_EARTHRAGER_PTAH_EVENT, NOT_STARTED);
                 check_in = false;
+            }
+            
+            void KilledUnit(Unit* /*Killed*/)
+            {
+                DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
             }
 
             void JustDied(Unit* /*Kill*/)
@@ -80,7 +90,7 @@ class boss_earthrager_ptah : public CreatureScript
 				if (pInstance)
                     pInstance->SetData(DATA_EARTHRAGER_PTAH_EVENT, IN_PROGRESS);
                 
-                me->SetInCombatZone();
+                DoZoneInCombat();
 			}
 
             void UpdateAI(const uint32 uiDiff)
@@ -89,7 +99,7 @@ class boss_earthrager_ptah : public CreatureScript
                    return;
                 events.Update(uiDiff);
 
-                while(uint32 eventId == events.ExecuteEvent())
+                while(uint32 eventId = events.ExecuteEvent())
                 {
                     switch(eventId)
                     {

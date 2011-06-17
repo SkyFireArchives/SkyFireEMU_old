@@ -31,7 +31,7 @@ enum ScriptTexts
     SAY_KILL_1               = 2,
     SAY_KILL_2               = 3,
     SAY_DEATH                = 4,
-}
+};
 
 enum Spells
 {
@@ -103,8 +103,8 @@ class boss_temple_guardian_anhuur : public CreatureScript
 				if (pInstance)
                     pInstance->SetData(DATA_TEMPLE_GUARDIAN_ANHUUR_EVENT, IN_PROGRESS);
                 
-                me->SetInCombatZone();
-	        }
+                DoZoneInCombat();
+            }
 
             void DamageTaken(Unit* /*attacker*/, uint32& damage)
             {
@@ -129,7 +129,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
 
                 events.Update(uiDiff);
                 
-                while(uint32 eventId == events.ExecuteEvent())
+                while(uint32 eventId = events.ExecuteEvent())
                 {
                     switch(eventId)
                     {
