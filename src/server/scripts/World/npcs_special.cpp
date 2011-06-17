@@ -2802,6 +2802,84 @@ public:
         return new npc_ring_of_frostAI(pCreature);
     }
 };
+/* Power Word Barrier */
+
+class npc_power_word_barrier : public CreatureScript
+{
+public:
+    npc_power_word_barrier() : CreatureScript("npc_power_word_barrier") { }
+
+    struct npc_power_word_barrierAI : public ScriptedAI
+    {
+        npc_power_word_barrierAI(Creature *pCreature) : ScriptedAI(pCreature) {}
+        
+        bool checker;
+        uint32 cron; // Duration
+        
+        void Reset()
+        {
+            checker = false;
+			cron = 10000;
+            DoCast(me, 81781);
+        }
+
+        void InitializeAI()
+        {
+            ScriptedAI::InitializeAI();
+            Unit * owner = me->GetOwner();
+            if (!owner || owner->GetTypeId() != TYPEID_PLAYER)
+		        return;
+
+            me->SetReactState(REACT_PASSIVE);
+            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+        }
+                
+        void BarrierChecker(Unit *who)
+        {
+			if (who->isAlive() && !who->HasAura(81782))
+			{
+				me->CastSpell(who, 81782, true);
+			}
+			if (who->isAlive() && who->HasAura(81782))
+			{
+			
+			    if (AuraEffect const* aur = who->GetAuraEffect(81782,0))
+                    aur->GetBase()->SetDuration(GetSpellMaxDuration(aur->GetSpellProto()), true);
+            }
+		}
+
+        void UpdateAI(const uint32 diff)
+        {
+            if (cron <= diff)
+			{
+                if (!checker)
+                {
+                    checker = true;
+                    cron = 10000;   //10 seconds
+                }
+                else
+                    me->DisappearAndDie();
+            }
+            else
+                cron -= diff;
+
+		   //Check friendly entities
+           std::list<Unit*> targets;
+            Trinity::AnyFriendlyUnitInObjectRangeCheck u_check(me, me, 7.0f);
+            Trinity::UnitListSearcher<Trinity::AnyFriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
+            
+            me->VisitNearbyObject(7.0f, searcher);
+            for (std::list<Unit*>::const_iterator iter = targets.begin(); iter != targets.end(); ++iter)
+                BarrierChecker(*iter);
+        }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new npc_power_word_barrierAI(pCreature);
+    }
+};
 
 /*######
 ## npc_flame_orb
@@ -2925,5 +3003,7 @@ void AddSC_npcs_special()
     new npc_spring_rabbit;
     new npc_ring_of_frost;
     new npc_flame_orb;
+    new npc_power_word_barrier;
+
 }
 

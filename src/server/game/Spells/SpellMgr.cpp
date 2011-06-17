@@ -4161,6 +4161,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->AttributesEx5 &= ~SPELL_ATTR5_USABLE_WHILE_STUNNED;
             count++;
             break;
+        case 81782: // Power Word : Barrier 
+	        spellInfo->DurationIndex = 39;
+	        count++;
+            break;
         // this is here until targetAuraSpell and alike support SpellDifficulty.dbc
         case 70459: // Ooze Eruption Search Effect
             spellInfo->targetAuraSpell = 0;
