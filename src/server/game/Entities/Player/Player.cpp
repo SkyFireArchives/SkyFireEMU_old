@@ -429,6 +429,8 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
     m_spellModTakingSpell = NULL;
     //m_pad = 0;
 
+    eclipse = 0;
+
     // players always accept
     if (GetSession()->GetSecurity() == SEC_PLAYER)
         SetAcceptWhispers(true);

@@ -689,9 +689,33 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                     damage += int32(energy * multiple);
                     damage += int32(m_caster->ToPlayer()->GetComboPoints() * ap * 7 / 100);
                 }
+                // Starfire
+                else if (m_spellInfo->SpellFamilyFlags[0] & 0x00000004)
+                {
+                    if (m_caster->ToPlayer()->HasAura(16913))   // Tallent from Balance spec, there is no other way how to check spec :S 
+                    {
+                        if (m_caster->HasAura(48517))
+                        {
+                            m_caster->RemoveAurasDueToSpell(48517);
+                            m_caster->SetEclipsePower(0);
+                        }
+
+                        m_caster->SetEclipsePower(int32(m_caster->GetEclipsePower() + 20));
+                    }
+                }
                 // Wrath
                 else if (m_spellInfo->SpellFamilyFlags[0] & 0x00000001)
                 {
+                    if (m_caster->ToPlayer()->HasAura(16913))   // Tallent from Balance spec, there is no other way how to check spec :S
+                    {   
+                        if (m_caster->HasAura(48518))
+                        {
+                            m_caster->RemoveAurasDueToSpell(48518);
+                            m_caster->SetEclipsePower(0);
+                        }
+
+                        m_caster->SetEclipsePower(int32(m_caster->GetEclipsePower() - 13));
+                    }
                     // Improved Insect Swarm
                     if (AuraEffect const * aurEff = m_caster->GetDummyAuraEffect(SPELLFAMILY_DRUID, 1771, 0))
                         if (unitTarget->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_DRUID, 0x00200000, 0, 0))

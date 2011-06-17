@@ -2058,6 +2058,10 @@ class Unit : public WorldObject
         TempSummon* ToTempSummon() { if (isSummon()) return reinterpret_cast<TempSummon*>(this); else return NULL; }
         const TempSummon* ToTempSummon() const { if (isSummon()) return reinterpret_cast<const TempSummon*>(this); else return NULL; }
 
+        int32 eclipse;
+        int32 GetEclipsePower() {return eclipse;};
+        void SetEclipsePower(int32 power);
+
     protected:
         explicit Unit ();
 

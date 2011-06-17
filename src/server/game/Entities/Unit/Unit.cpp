@@ -17381,3 +17381,39 @@ bool CharmInfo::IsReturning()
     return m_isReturning;
 }
 // Living Seed
+
+void Unit::SetEclipsePower(int32 power)
+{
+    eclipse = power;
+
+    if (eclipse == 0)
+    {
+        if (HasAura(67483))
+            RemoveAurasDueToSpell(67483);
+        if (HasAura(67484))
+            RemoveAurasDueToSpell(67484);
+    }
+
+    if (eclipse >= 100)
+    {
+        if (HasAura(48518))
+            RemoveAurasDueToSpell(48518);
+        eclipse = 100;
+        AddAura(48517, ToPlayer());
+    }
+
+    if (eclipse <= -100)
+    {
+        if (HasAura(48517))
+            RemoveAurasDueToSpell(48517);
+        eclipse = -100;
+        AddAura(48518, ToPlayer());
+    }
+
+    WorldPacket data(SMSG_POWER_UPDATE);
+    data.append(GetPackGUID());
+    data << int32(1);
+    data << int8(POWER_ECLIPSE);
+    data << int32(eclipse);
+    SendMessageToSet(&data, GetTypeId() == TYPEID_PLAYER ? true : false);
+}
