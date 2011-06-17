@@ -1,39 +1,49 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "ScriptPCH.h"
+#include "ObjectMgr.h"
+#include "ScriptMgr.h"
+#include "ScriptedCreature.h"
+#include "SpellScript.h"
+#include "SpellAuras.h"
 #include "icecrown_citadel.h"
 
-enum eScriptTexts
+enum ScriptTexts
 {
-    SAY_STINKY_DEAD             = -1631078,
-    SAY_AGGRO                   = -1631079,
-    EMOTE_GAS_SPORE             = -1631081,
-    EMOTE_WARN_GAS_SPORE        = -1631082,
-    SAY_PUNGENT_BLIGHT          = -1631083,
-    EMOTE_WARN_PUNGENT_BLIGHT   = -1631084,
-    EMOTE_PUNGENT_BLIGHT        = -1631085,
-    SAY_KILL_1                  = -1631086,
-    SAY_KILL_2                  = -1631087,
-    SAY_BERSERK                 = -1631088,
-    SAY_DEATH                   = -1631089
+    SAY_STINKY_DEAD             = 0,
+    SAY_AGGRO                   = 1,
+    EMOTE_GAS_SPORE             = 2,
+    EMOTE_WARN_GAS_SPORE        = 3,
+    SAY_PUNGENT_BLIGHT          = 4,
+    EMOTE_WARN_PUNGENT_BLIGHT   = 5,
+    EMOTE_PUNGENT_BLIGHT        = 6,
+    SAY_KILL                    = 7,
+    SAY_BERSERK                 = 8,
+    SAY_DEATH                   = 9,
 };
 
-enum eSpells
+enum Spells
 {
     // Festergut
     SPELL_INHALE_BLIGHT         = 69165,
@@ -47,7 +57,7 @@ enum eSpells
     // Stinky
     SPELL_MORTAL_WOUND          = 71127,
     SPELL_DECIMATE              = 71123,
-    SPELL_PLAGUE_STENCH         = 71805
+    SPELL_PLAGUE_STENCH         = 71805,
 };
 
 // Used for HasAura checks
@@ -57,7 +67,7 @@ enum eSpells
 static const uint32 gaseousBlight[3]        = {69157, 69162, 69164};
 static const uint32 gaseousBlightVisual[3]  = {69126, 69152, 69154};
 
-enum eEvents
+enum Events
 {
     EVENT_BERSERK       = 1,
     EVENT_INHALE_BLIGHT = 2,
@@ -66,7 +76,7 @@ enum eEvents
     EVENT_GASTRIC_BLOAT = 5,
 
     EVENT_DECIMATE      = 6,
-    EVENT_MORTAL_WOUND  = 7
+    EVENT_MORTAL_WOUND  = 7,
 };
 
 #define DATA_INOCULATED_STACK 69291
@@ -78,16 +88,16 @@ class boss_festergut : public CreatureScript
 
         struct boss_festergutAI : public BossAI
         {
-            boss_festergutAI(Creature* pCreature) : BossAI(pCreature, DATA_FESTERGUT)
+            boss_festergutAI(Creature* creature) : BossAI(creature, DATA_FESTERGUT)
             {
-                uiMaxInoculatedStack = 0;
-                uiInhaleCounter = 0;
+                maxInoculatedStack = 0;
+                inhaleCounter = 0;
                 gasDummyGUID = 0;
             }
 
             void InitializeAI()
             {
-                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCSCRIPTNAME))
+                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
                     me->IsAIEnabled = false;
                 else if (!me->isDead())
                     Reset();
@@ -95,56 +105,56 @@ class boss_festergut : public CreatureScript
 
             void Reset()
             {
-                events.Reset();
+                _Reset();
                 events.ScheduleEvent(EVENT_BERSERK, 300000);
                 events.ScheduleEvent(EVENT_INHALE_BLIGHT, urand(25000, 30000));
-                events.ScheduleEvent(EVENT_VILE_GAS, urand(30000, 32500));
                 events.ScheduleEvent(EVENT_GAS_SPORE, urand(20000, 25000));
                 events.ScheduleEvent(EVENT_GASTRIC_BLOAT, urand(12500, 15000));
-                uiMaxInoculatedStack = 0;
-                uiInhaleCounter = 0;
+                maxInoculatedStack = 0;
+                inhaleCounter = 0;
                 me->RemoveAurasDueToSpell(SPELL_BERSERK2);
-                if (Creature* gasDummy = GetClosestCreatureWithEntry(me, NPC_GAS_DUMMY, 100.0f, true))
+                if (Creature* gasDummy = me->FindNearestCreature(NPC_GAS_DUMMY, 100.0f, true))
                 {
                     gasDummyGUID = gasDummy->GetGUID();
                     for (uint8 i = 0; i < 3; ++i)
                     {
-                        gasDummy->RemoveAurasDueToSpell(gaseousBlight[i]);
+                        me->RemoveAurasDueToSpell(gaseousBlight[i]);
                         gasDummy->RemoveAurasDueToSpell(gaseousBlightVisual[i]);
                     }
                 }
-
-                instance->SetBossState(DATA_FESTERGUT, NOT_STARTED);
             }
 
-            void EnterCombat(Unit* /*who*/)
+            void EnterCombat(Unit* who)
             {
-                DoScriptText(SAY_AGGRO, me);
-                if (Creature* gasDummy = GetClosestCreatureWithEntry(me, NPC_GAS_DUMMY, 100.0f, true))
+                if (!instance->CheckRequiredBosses(DATA_FESTERGUT, who->ToPlayer()))
+                {
+                    EnterEvadeMode();
+                    instance->DoCastSpellOnPlayers(LIGHT_S_HAMMER_TELEPORT);
+                    return;
+                }
+
+                me->setActive(true);
+                Talk(SAY_AGGRO);
+                if (Creature* gasDummy = me->FindNearestCreature(NPC_GAS_DUMMY, 100.0f, true))
                     gasDummyGUID = gasDummy->GetGUID();
                 if (Creature* professor = ObjectAccessor::GetCreature(*me, instance->GetData64(DATA_PROFESSOR_PUTRICIDE)))
                     professor->AI()->DoAction(ACTION_FESTERGUT_COMBAT);
-
-                DoZoneInCombat(me);
+                DoZoneInCombat();
             }
 
             void JustDied(Unit* /*killer*/)
             {
-                DoScriptText(SAY_DEATH, me);
-                instance->SetBossState(DATA_FESTERGUT, DONE);
+                _JustDied();
+                Talk(SAY_DEATH);
                 if (Creature* professor = ObjectAccessor::GetCreature(*me, instance->GetData64(DATA_PROFESSOR_PUTRICIDE)))
                     professor->AI()->DoAction(ACTION_FESTERGUT_DEATH);
 
-                if (Creature* gasDummy = ObjectAccessor::GetCreature(*me, gasDummyGUID))
-                    for (uint8 i = 0; i < 3; ++i)
-                    {
-                        gasDummy->RemoveAurasDueToSpell(gaseousBlight[i]);
-                        gasDummy->RemoveAurasDueToSpell(gaseousBlightVisual[i]);
-                    }
+                _RemoveBlight();
             }
 
             void JustReachedHome()
             {
+                _JustReachedHome();
                 instance->SetBossState(DATA_FESTERGUT, FAIL);
             }
 
@@ -155,10 +165,10 @@ class boss_festergut : public CreatureScript
                     professor->AI()->EnterEvadeMode();
             }
 
-            void KilledUnit(Unit *victim)
+            void KilledUnit(Unit* victim)
             {
                 if (victim->GetTypeId() == TYPEID_PLAYER)
-                    DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
+                    Talk(SAY_KILL);
             }
 
             void MoveInLineOfSight(Unit* /*who*/)
@@ -166,7 +176,7 @@ class boss_festergut : public CreatureScript
                 // don't enter combat
             }
 
-            void SpellHitTarget(Unit* target, const SpellEntry* spell)
+            void SpellHitTarget(Unit* target, SpellEntry const* spell)
             {
                 if (spell->Id == PUNGENT_BLIGHT_HELPER)
                     target->RemoveAurasDueToSpell(INOCULATED_HELPER);
@@ -179,7 +189,7 @@ class boss_festergut : public CreatureScript
 
                 events.Update(diff);
 
-                if (me->hasUnitState(UNIT_STAT_CASTING))
+                if (me->HasUnitState(UNIT_STAT_CASTING))
                     return;
 
                 while (uint32 eventId = events.ExecuteEvent())
@@ -188,28 +198,24 @@ class boss_festergut : public CreatureScript
                     {
                         case EVENT_INHALE_BLIGHT:
                         {
-                            if (Creature* gasDummy = ObjectAccessor::GetCreature(*me, gasDummyGUID))
-                                for (uint8 i = 0; i < 3; ++i)
-                                {
-                                    gasDummy->RemoveAurasDueToSpell(gaseousBlight[i]);
-                                    gasDummy->RemoveAurasDueToSpell(gaseousBlightVisual[i]);
-                                }
-                            if (uiInhaleCounter == 3)
+                            _RemoveBlight();
+                            if (inhaleCounter == 3)
                             {
-                                DoScriptText(EMOTE_WARN_PUNGENT_BLIGHT, me);
-                                DoScriptText(SAY_PUNGENT_BLIGHT, me);
+                                Talk(EMOTE_WARN_PUNGENT_BLIGHT);
+                                Talk(SAY_PUNGENT_BLIGHT);
                                 DoCast(me, SPELL_PUNGENT_BLIGHT);
-                                uiInhaleCounter = 0;
+                                inhaleCounter = 0;
                                 if (Creature* professor = ObjectAccessor::GetCreature(*me, instance->GetData64(DATA_PROFESSOR_PUTRICIDE)))
                                     professor->AI()->DoAction(ACTION_FESTERGUT_GAS);
+                                events.RescheduleEvent(EVENT_GAS_SPORE, urand(20000, 25000));
                             }
                             else
                             {
                                 DoCast(me, SPELL_INHALE_BLIGHT);
                                 // just cast and dont bother with target, conditions will handle it
-                                ++uiInhaleCounter;
-                                if (uiInhaleCounter < 3)
-                                    me->CastSpell(me, gaseousBlight[uiInhaleCounter], true, NULL, NULL, me->GetGUID());
+                                ++inhaleCounter;
+                                if (inhaleCounter < 3)
+                                    me->CastSpell(me, gaseousBlight[inhaleCounter], true, NULL, NULL, me->GetGUID());
                             }
                             events.ScheduleEvent(EVENT_INHALE_BLIGHT, urand(33500, 35000));
                             break;
@@ -217,7 +223,7 @@ class boss_festergut : public CreatureScript
                         case EVENT_VILE_GAS:
                         {
                             std::list<Unit*> targets;
-                            uint32 minTargets = RAID_MODE(3,8,3,8);
+                            uint32 minTargets = RAID_MODE<uint32>(3, 8, 3, 8);
                             SelectTargetList(targets, minTargets, SELECT_TARGET_RANDOM, -5.0f, true);
                             float minDist = 0.0f;
                             if (targets.size() >= minTargets)
@@ -229,10 +235,11 @@ class boss_festergut : public CreatureScript
                             break;
                         }
                         case EVENT_GAS_SPORE:
-                            DoScriptText(EMOTE_WARN_GAS_SPORE, me);
-                            me->CastCustomSpell(SPELL_GAS_SPORE, SPELLVALUE_MAX_TARGETS, RAID_MODE<int32>(2,3,2,3), me);
-                            DoScriptText(EMOTE_GAS_SPORE, me);
+                            Talk(EMOTE_WARN_GAS_SPORE);
+                            Talk(EMOTE_GAS_SPORE);
+                            me->CastCustomSpell(SPELL_GAS_SPORE, SPELLVALUE_MAX_TARGETS, RAID_MODE<int32>(2, 3, 2, 3), me);
                             events.ScheduleEvent(EVENT_GAS_SPORE, urand(40000, 45000));
+                            events.RescheduleEvent(EVENT_VILE_GAS, urand(28000, 35000));
                             break;
                         case EVENT_GASTRIC_BLOAT:
                             DoCastVictim(SPELL_GASTRIC_BLOAT);
@@ -240,7 +247,7 @@ class boss_festergut : public CreatureScript
                             break;
                         case EVENT_BERSERK:
                             DoCast(me, SPELL_BERSERK2);
-                            DoScriptText(SAY_BERSERK, me);
+                            Talk(SAY_BERSERK);
                             break;
                         default:
                             break;
@@ -252,27 +259,37 @@ class boss_festergut : public CreatureScript
 
             void SetData(uint32 type, uint32 data)
             {
-                if (type == DATA_INOCULATED_STACK && data > uiMaxInoculatedStack)
-                    uiMaxInoculatedStack = data;
+                if (type == DATA_INOCULATED_STACK && data > maxInoculatedStack)
+                    maxInoculatedStack = data;
             }
 
             uint32 GetData(uint32 type)
             {
                 if (type == DATA_INOCULATED_STACK)
-                    return uint32(uiMaxInoculatedStack);
+                    return uint32(maxInoculatedStack);
 
                 return 0;
             }
 
+            void _RemoveBlight()
+            {
+                if (Creature* gasDummy = ObjectAccessor::GetCreature(*me, gasDummyGUID))
+                    for (uint8 i = 0; i < 3; ++i)
+                    {
+                        me->RemoveAurasDueToSpell(gaseousBlight[i]);
+                        gasDummy->RemoveAurasDueToSpell(gaseousBlightVisual[i]);
+                    }
+            }
+
         private:
-            uint32 uiMaxInoculatedStack;
-            uint8 uiInhaleCounter;
             uint64 gasDummyGUID;
+            uint32 maxInoculatedStack;
+            uint8 inhaleCounter;
         };
 
-        CreatureAI* GetAI(Creature* pCreature) const
+        CreatureAI* GetAI(Creature* creature) const
         {
-            return new boss_festergutAI(pCreature);
+            return new boss_festergutAI(creature);
         }
 };
 
@@ -283,9 +300,9 @@ class npc_stinky_icc : public CreatureScript
 
         struct npc_stinky_iccAI : public ScriptedAI
         {
-            npc_stinky_iccAI(Creature* pCreature) : ScriptedAI(pCreature)
+            npc_stinky_iccAI(Creature* creature) : ScriptedAI(creature)
             {
-                pInstance = pCreature->GetInstanceScript();
+                instance = creature->GetInstanceScript();
             }
 
             void Reset()
@@ -303,7 +320,7 @@ class npc_stinky_icc : public CreatureScript
 
                 events.Update(diff);
 
-                if (me->hasUnitState(UNIT_STAT_CASTING))
+                if (me->HasUnitState(UNIT_STAT_CASTING))
                     return;
 
                 while (uint32 eventId = events.ExecuteEvent())
@@ -328,20 +345,20 @@ class npc_stinky_icc : public CreatureScript
 
             void JustDied(Unit* /*who*/)
             {
-                uint64 festergutGUID = pInstance ? pInstance->GetData64(DATA_FESTERGUT) : 0;
-                if (Creature *festergut = me->GetCreature(*me, festergutGUID))
+                uint64 festergutGUID = instance ? instance->GetData64(DATA_FESTERGUT) : 0;
+                if (Creature* festergut = me->GetCreature(*me, festergutGUID))
                     if (festergut->isAlive())
-                        DoScriptText(SAY_STINKY_DEAD, festergut);
+                        festergut->AI()->Talk(SAY_STINKY_DEAD);
             }
 
         private:
             EventMap events;
-            InstanceScript* pInstance;
+            InstanceScript* instance;
         };
 
-        CreatureAI* GetAI(Creature* pCreature) const
+        CreatureAI* GetAI(Creature* creature) const
         {
-            return new npc_stinky_iccAI(pCreature);
+            return new npc_stinky_iccAI(creature);
         }
 };
 
@@ -352,11 +369,12 @@ class spell_festergut_pungent_blight : public SpellScriptLoader
 
         class spell_festergut_pungent_blight_SpellScript : public SpellScript
         {
-            PrepareSpellScript(spell_festergut_pungent_blight_SpellScript)
+            PrepareSpellScript(spell_festergut_pungent_blight_SpellScript);
+
             void HandleScript(SpellEffIndex /*effIndex*/)
             {
-                SpellEntry const* spellInfo = sSpellStore.LookupEntry(GetEffectValue());
-                if (!spellInfo)
+                SpellEntry const* spellInfo = sSpellStore.LookupEntry(uint32(GetEffectValue()));
+                if (!spellInfo || GetCaster()->GetTypeId() != TYPEID_UNIT)
                     return;
 
                 // Get Inhaled Blight id for our difficulty
@@ -364,7 +382,7 @@ class spell_festergut_pungent_blight : public SpellScriptLoader
 
                 // ...and remove it
                 GetCaster()->RemoveAurasDueToSpell(spellInfo->Id);
-                DoScriptText(EMOTE_PUNGENT_BLIGHT, GetCaster());
+                GetCaster()->ToCreature()->AI()->Talk(EMOTE_PUNGENT_BLIGHT);
             }
 
             void Register()
@@ -386,7 +404,8 @@ class spell_festergut_gastric_bloat : public SpellScriptLoader
 
         class spell_festergut_gastric_bloat_SpellScript : public SpellScript
         {
-            PrepareSpellScript(spell_festergut_gastric_bloat_SpellScript)
+            PrepareSpellScript(spell_festergut_gastric_bloat_SpellScript);
+
             void HandleScript(SpellEffIndex /*effIndex*/)
             {
                 Aura const* aura = GetHitUnit()->GetAura(GetSpellInfo()->Id);
@@ -422,7 +441,8 @@ class spell_festergut_blighted_spores : public SpellScriptLoader
 
         class spell_festergut_blighted_spores_AuraScript : public AuraScript
         {
-            PrepareAuraScript(spell_festergut_blighted_spores_AuraScript)
+            PrepareAuraScript(spell_festergut_blighted_spores_AuraScript);
+
             void ExtraEffect(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
             {
                 if (!GetCaster()->IsAIEnabled || GetCaster()->GetTypeId() != TYPEID_UNIT)
@@ -435,8 +455,7 @@ class spell_festergut_blighted_spores : public SpellScriptLoader
 
                 GetTarget()->CastSpell(GetTarget(), SPELL_INOCULATED, true);
                 ++currStack;
-                if (GetCaster())
-                    GetCaster()->ToCreature()->AI()->SetData(DATA_INOCULATED_STACK, currStack);
+                GetCaster()->ToCreature()->AI()->SetData(DATA_INOCULATED_STACK, currStack);
             }
 
             void Register()
@@ -448,6 +467,42 @@ class spell_festergut_blighted_spores : public SpellScriptLoader
         AuraScript* GetAuraScript() const
         {
             return new spell_festergut_blighted_spores_AuraScript();
+        }
+};
+
+class spell_festergut_gaseous_blight : public SpellScriptLoader
+{
+    public:
+        spell_festergut_gaseous_blight() : SpellScriptLoader("spell_festergut_gaseous_blight") { }
+
+        class spell_festergut_gaseous_blight_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_festergut_gaseous_blight_SpellScript);
+
+            bool Validate(SpellEntry const* /*spell*/)
+            {
+                if (!sSpellStore.LookupEntry(SPELL_ORANGE_BLIGHT_RESIDUE))
+                    return false;
+                return true;
+            }
+
+            void ExtraEffect()
+            {
+                if (GetHitUnit()->HasAura(SPELL_ORANGE_BLIGHT_RESIDUE))
+                    return;
+
+                GetHitUnit()->CastSpell(GetHitUnit(), SPELL_ORANGE_BLIGHT_RESIDUE, true);
+            }
+
+            void Register()
+            {
+                AfterHit += SpellHitFn(spell_festergut_gaseous_blight_SpellScript::ExtraEffect);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_festergut_gaseous_blight_SpellScript();
         }
 };
 
@@ -472,5 +527,6 @@ void AddSC_boss_festergut()
     new spell_festergut_pungent_blight();
     new spell_festergut_gastric_bloat();
     new spell_festergut_blighted_spores();
+    new spell_festergut_gaseous_blight();
     new achievement_flu_shot_shortage();
 }

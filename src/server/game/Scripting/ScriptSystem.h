@@ -23,6 +23,8 @@
 #ifndef SC_SYSTEM_H
 #define SC_SYSTEM_H
 
+#include <ace/Singleton.h>
+
 #define TEXT_SOURCE_RANGE -1000000                          //the amount of entries each text source has available
 
 //TODO: find better namings and definitions.
@@ -69,13 +71,11 @@ struct StringTextData
 
 class SystemMgr
 {
-    public:
-
-        SystemMgr();
+        friend class ACE_Singleton<SystemMgr, ACE_Null_Mutex>;
+        SystemMgr() {}
         ~SystemMgr() {}
 
-        static SystemMgr& Instance();
-
+    public:
         //Maps and lists
         typedef UNORDERED_MAP<int32, StringTextData> TextDataMap;
         typedef UNORDERED_MAP<uint32, std::vector<ScriptPointMove> > PointMoveMap;

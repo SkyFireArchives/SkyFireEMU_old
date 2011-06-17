@@ -48,34 +48,31 @@ struct Realm
 /// Storage object for the list of realms on the server
 class RealmList
 {
-    public:
-        // Null_Mutex is safe because the singleton initialized before the acceptor initialized(another place where the singleton called)
-        static RealmList* instance() { return ACE_Singleton<RealmList, ACE_Null_Mutex>::instance(); }
+public:
+    typedef std::map<std::string, Realm> RealmMap;
 
-        typedef std::map<std::string, Realm> RealmMap;
+    RealmList();
+    ~RealmList() {}
 
-        RealmList();
-        ~RealmList() {}
+    void Initialize(uint32 updateInterval);
 
-        void Initialize(uint32 updateInterval);
+    void UpdateIfNeed();
 
-        void UpdateIfNeed();
+    void AddRealm(Realm NewRealm) {m_realms[NewRealm.name] = NewRealm;}
 
-        void AddRealm(Realm NewRealm) {m_realms[NewRealm.name] = NewRealm;}
+    RealmMap::const_iterator begin() const { return m_realms.begin(); }
+    RealmMap::const_iterator end() const { return m_realms.end(); }
+    uint32 size() const { return m_realms.size(); }
+private:
+    void UpdateRealms(bool init);
+    void UpdateRealm(uint32 ID, const std::string& name, const std::string& address, uint32 port, uint8 icon, uint8 color, uint8 timezone, AccountTypes allowedSecurityLevel, float popu, uint32 build);
 
-        RealmMap::const_iterator begin() const { return m_realms.begin(); }
-        RealmMap::const_iterator end() const { return m_realms.end(); }
-        uint32 size() const { return m_realms.size(); }
-    private:
-        void UpdateRealms(bool init);
-        void UpdateRealm(uint32 ID, const std::string& name, const std::string& address, uint32 port, uint8 icon, uint8 color, uint8 timezone, AccountTypes allowedSecurityLevel, float popu, uint32 build);
-
-        RealmMap m_realms;                                  ///< Internal map of realms
-        uint32   m_UpdateInterval;
-        time_t   m_NextUpdateTime;
+    RealmMap m_realms;                                  ///< Internal map of realms
+    uint32   m_UpdateInterval;
+    time_t   m_NextUpdateTime;
 };
 
-#define sRealmList RealmList::instance()
+#define sRealmList ACE_Singleton<RealmList, ACE_Null_Mutex>::instance()
 
 #endif
 /// @}

@@ -229,13 +229,15 @@ void Guild::RankInfo::SaveToDB(SQLTransaction& trans) const
 
 void Guild::RankInfo::WritePacket(WorldPacket& data) const
 {
+    data << m_name;
     data << uint32(m_rights);
-    data << uint32(m_bankMoneyPerDay);                  // In game set in gold, in packet set in bronze.
-    for (uint8 i = 0; i < GUILD_BANK_MAX_TABS; ++i)
-    {
+
+    for(uint8 i = 0; i < GUILD_BANK_MAX_TABS; i++)
         data << uint32(m_bankTabRightsAndSlots[i].rights);
+    for(uint8 i = 0; i < GUILD_BANK_MAX_TABS; i++)
         data << uint32(m_bankTabRightsAndSlots[i].slots);
-    }
+        
+    data << uint32(m_bankMoneyPerDay);
 }
 
 void Guild::RankInfo::SetName(const std::string& name)
@@ -614,6 +616,18 @@ void Guild::Member::SaveToDB(SQLTransaction& trans) const
 // In this case member has to be removed from guild.
 bool Guild::Member::LoadFromDB(Field* fields)
 {
+    /*
+     //          0        1        2     3      4        5                   6
+     "SELECT guildid, gm.guid, rank, pnote, offnote, BankResetTimeMoney, BankRemMoney,"
+     //   7                  8                 9                  10                11                 12
+     "BankResetTimeTab0, BankRemSlotsTab0, BankResetTimeTab1, BankRemSlotsTab1, BankResetTimeTab2, BankRemSlotsTab2,"
+     //   13                 14                15                 16                17                 18
+     "BankResetTimeTab3, BankRemSlotsTab3, BankResetTimeTab4, BankRemSlotsTab4, BankResetTimeTab5, BankRemSlotsTab5,"
+     //   19      20       21       22      23         24
+     "c.name, c.level, c.class, c.zone, c.account, c.logout_time "
+     "FROM guild_member gm LEFT JOIN characters c ON c.guid = gm.guid ORDER BY guildid ASC", CONNECTION_SYNCH);
+     */
+    
     m_publicNote    = fields[3].GetString();
     m_officerNote   = fields[4].GetString();
     m_bankRemaining[GUILD_BANK_MAX_TABS].resetTime  = fields[5].GetUInt32();
@@ -627,7 +641,7 @@ bool Guild::Member::LoadFromDB(Field* fields)
     SetStats(fields[19].GetString(),
              fields[20].GetUInt8(),
              fields[21].GetUInt8(),
-             fields[22].GetUInt32(),
+             fields[22].GetUInt16(),
              fields[23].GetUInt32());
     m_logoutTime    = fields[24].GetUInt64();
 
@@ -727,11 +741,11 @@ inline void Guild::Member::ResetMoneyTime()
 // EmblemInfo
 void EmblemInfo::LoadFromDB(Field* fields)
 {
-    m_style             = fields[3].GetUInt32();
-    m_color             = fields[4].GetUInt32();
-    m_borderStyle       = fields[5].GetUInt32();
-    m_borderColor       = fields[6].GetUInt32();
-    m_backgroundColor   = fields[7].GetUInt32();
+    m_style             = fields[3].GetUInt8();
+    m_color             = fields[4].GetUInt8();
+    m_borderStyle       = fields[5].GetUInt8();
+    m_borderColor       = fields[6].GetUInt8();
+    m_backgroundColor   = fields[7].GetUInt8();
 }
 
 void EmblemInfo::WritePacket(WorldPacket& data) const
@@ -1226,6 +1240,7 @@ void Guild::UpdateMemberData(Player* plr, uint8 dataid, uint32 value)
             break;
         case GUILD_MEMBER_DATA_LEVEL:
             pMember->SetLevel(value);
+            break;
         default: 
             sLog->outError("Guild::UpdateMemberData: Called with incorrect DATAID %u (value %u)", dataid, value);
             break;
@@ -1351,38 +1366,30 @@ void Guild::HandleRoster(WorldSession *session /*= NULL*/)
     else 
         BroadcastPacket(&data);
 
-    // TODO !
-    WorldPacket data7(SMSG_GUILD_RANK);
-    data7 << uint32(_GetRanksSize());
-    for(uint32 i = 0; i < _GetRanksSize(); i++)
-    {
-        //data7 << uint32(m_ranks[i].GetId());
-        data7 << uint32(i);
-        data7 << uint32(i);
-        data7 << m_ranks[i].m_name;
-        data7 << uint32(m_ranks[i].m_rights);
-
-        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
-        //    data7 << uint32(m_ranks[i].m_bankMoneyPerDay);
-            data7 << uint32(0xFFFFFFFF);
-        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
-            //data7 << uint32(m_ranks[i].m_rights);
-            data7 << uint32(0xFFFFFFFF);
-
-        data7 << uint32(0xFFFFFFFF); // GuildBankRightsAndSlots
-        
-        //data7 << (uint32)/*GuildBankRightsAndSlots(i)*/0;
-    }
-    if (session)
-        session->SendPacket(&data7);
-    else
-        BroadcastPacket(&data7);
+    SendGuildRankInfo(session);
 
     // This is to make client refresh the list
     SendUpdateRoster(session);
 
     sLog->outDebug("WORLD: Sent (SMSG_GUILD_ROSTER)");
 }
+
+void Guild::SendGuildRankInfo(WorldSession* session)
+{
+    WorldPacket data7(SMSG_GUILD_RANK);
+    data7 << uint32(_GetRanksSize());
+    for(uint32 i = 0; i < _GetRanksSize(); i++)
+    {
+        data7 << uint32(i) << uint32(i); // double i for now, TODO change
+        //data7 << uint32(m_ranks[i].GetId());
+        m_ranks[i].WritePacket(data7);
+    }
+    if (session)
+        session->SendPacket(&data7);
+    else
+        BroadcastPacket(&data7);
+}
+
 
 void Guild::HandleQuery(WorldSession *session)
 {
@@ -1980,7 +1987,7 @@ void Guild::SendBankTabText(WorldSession *session, uint8 tabId) const
         pTab->SendText(this, session);
 }
 
-void Guild::SendPermissions(WorldSession *session) const
+void Guild::SendPermissions(WorldSession *session)
 {
     const uint64& guid = session->GetPlayer()->GetGUID();
     uint8 rankId = session->GetPlayer()->GetRank();
@@ -2000,28 +2007,7 @@ void Guild::SendPermissions(WorldSession *session) const
     session->SendPacket(&data);
     sLog->outDebug("WORLD: Sent (MSG_GUILD_PERMISSIONS)");
 
-    WorldPacket data7(SMSG_GUILD_RANK);
-    data7 << uint32(_GetRanksSize());
-    for(uint32 i = 0; i < _GetRanksSize(); i++)
-    {
-        //data7 << uint32(m_ranks[i].GetId());
-        data7 << uint32(i);
-        data7 << uint32(i);
-        data7 << m_ranks[i].m_name;
-        data7 << uint32(m_ranks[i].m_rights);
-
-        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
-            data7 << uint32(m_ranks[i].m_bankMoneyPerDay);
-            //data7 << uint32(0xFFFFFFFF);
-        for(uint8 j = 0; j < GUILD_BANK_MAX_TABS; j++)
-            data7 << uint32(m_ranks[i].m_rights);
-            //data7 << uint32(0xFFFFFFFF);
-
-        data7 << uint32(0xFFFFFFFF); // GuildBankRightsAndSlots
-        
-        //data7 << (uint32)/*GuildBankRightsAndSlots(i)*/0;
-    }
-     session->SendPacket(&data7);
+    SendGuildRankInfo(session);
 }
 
 void Guild::SendMoneyInfo(WorldSession *session) const
@@ -2057,13 +2043,20 @@ void Guild::SendLoginInfo(WorldSession* session)
 // Loading methods
 bool Guild::LoadFromDB(Field* fields)
 {
+/*
+ //          0          1       2             3              4              5              6
+ "SELECT g.guildid, g.name, g.leaderguid, g.EmblemStyle, g.EmblemColor, g.BorderStyle, g.BorderColor,"
+ //   7                  8       9       10            11           12                  13  14
+ "g.BackgroundColor, g.info, g.motd, g.createdate, g.BankMoney, COUNT(gbt.guildid), xp, level "
+ "FROM guild g LEFT JOIN guild_bank_tab gbt ON g.guildid = gbt.guildid GROUP BY g.guildid ORDER BY g.guildid ASC", CONNECTION_SYNCH);
+*/
     m_id            = fields[0].GetUInt32();
     m_name          = fields[1].GetString();
     m_leaderGuid    = MAKE_NEW_GUID(fields[2].GetUInt32(), 0, HIGHGUID_PLAYER);
     m_emblemInfo.LoadFromDB(fields);
     m_info          = fields[8].GetString();
     m_motd          = fields[9].GetString();
-    m_createdDate   = fields[10].GetUInt64();
+    m_createdDate   = fields[10].GetUInt32(); //64 bits?
     m_bankMoney     = fields[11].GetUInt64();
 
     uint8 purchasedTabs = uint8(fields[12].GetUInt32());
@@ -2119,12 +2112,17 @@ bool Guild::LoadBankRightFromDB(Field* fields)
 
 bool Guild::LoadEventLogFromDB(Field* fields)
 {
+    /*
+     //          0        1        2          3            4            5        6
+     "SELECT guildid, LogGuid, EventType, PlayerGuid1, PlayerGuid2, NewRank, TimeStamp FROM guild_eventlog ORDER BY TimeStamp DESC, LogGuid DESC", CONNECTION_SYNCH);
+    */
+    
     if (m_eventLog->CanInsert())
     {
         m_eventLog->LoadEvent(new EventLogEntry(
             m_id,                                       // guild id
             fields[1].GetUInt32(),                      // guid
-            fields[6].GetUInt64(),                      // timestamp
+            fields[6].GetUInt32(),                      // timestamp //64 bits?
             GuildEventLogTypes(fields[2].GetUInt8()),   // event type
             fields[3].GetUInt32(),                      // player guid 1
             fields[4].GetUInt32(),                      // player guid 2
@@ -2136,6 +2134,10 @@ bool Guild::LoadEventLogFromDB(Field* fields)
 
 bool Guild::LoadBankEventLogFromDB(Field* fields)
 {
+    /*
+     //          0        1      2        3          4           5            6               7          8
+     "SELECT guildid, TabId, LogGuid, EventType, PlayerGuid, ItemOrMoney, ItemStackCount, DestTabId, TimeStamp FROM guild_bank_eventlog ORDER BY TimeStamp DESC, LogGuid DESC", 
+     */
     uint8 dbTabId = fields[1].GetUInt8();
     bool isMoneyTab = (dbTabId == GUILD_BANK_MONEY_LOGS_TAB);
     if (dbTabId < _GetPurchasedTabsSize() || isMoneyTab)
@@ -2162,7 +2164,7 @@ bool Guild::LoadBankEventLogFromDB(Field* fields)
             pLog->LoadEvent(new BankEventLogEntry(
                 m_id,                                   // guild id
                 guid,                                   // guid
-                fields[8].GetUInt64(),                  // timestamp
+                fields[8].GetUInt32(),                  // timestamp //64 bits?
                 dbTabId,                                // tab id
                 eventType,                              // event type
                 fields[4].GetUInt32(),                  // player guid
@@ -2538,11 +2540,11 @@ void Guild::_CreateDefaultGuildRanks(LocaleConstant loc)
     stmt->setUInt32(0, m_id);
     CharacterDatabase.Execute(stmt);
 
-    _CreateRank(sObjectMgr->GetTrinityString(LANG_GUILD_MASTER,   loc), GR_RIGHT_ALL);
-    _CreateRank(sObjectMgr->GetTrinityString(LANG_GUILD_OFFICER,  loc), GR_RIGHT_ALL);
-    _CreateRank(sObjectMgr->GetTrinityString(LANG_GUILD_VETERAN,  loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
-    _CreateRank(sObjectMgr->GetTrinityString(LANG_GUILD_MEMBER,   loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
-    _CreateRank(sObjectMgr->GetTrinityString(LANG_GUILD_INITIATE, loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
+    _CreateRank(sObjectMgr->GetSkyFireString(LANG_GUILD_MASTER,   loc), GR_RIGHT_ALL);
+    _CreateRank(sObjectMgr->GetSkyFireString(LANG_GUILD_OFFICER,  loc), GR_RIGHT_ALL);
+    _CreateRank(sObjectMgr->GetSkyFireString(LANG_GUILD_VETERAN,  loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
+    _CreateRank(sObjectMgr->GetSkyFireString(LANG_GUILD_MEMBER,   loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
+    _CreateRank(sObjectMgr->GetSkyFireString(LANG_GUILD_INITIATE, loc), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
 }
 
 void Guild::_CreateRank(const std::string& name, uint32 rights)

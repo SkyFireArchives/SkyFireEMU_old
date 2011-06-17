@@ -26,7 +26,6 @@
 #include "World.h"
 #include "WorldPacket.h"
 
-
 #include "ArenaTeam.h"
 #include "BattlegroundMgr.h"
 #include "BattlegroundAV.h"
@@ -427,6 +426,17 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
                         data->put(extraFields, 2);                                                      // count of next fields
                         *data << uint32(((BattlegroundICScore*)itr2->second)->BasesAssaulted);          // bases asssulted
                         *data << uint32(((BattlegroundICScore*)itr2->second)->BasesDefended);           // bases defended
+                        break;
+                    case 726:
+                        data->put(extraFields, 2);                                                      // count of next fields
+                        *data << uint32(((BattlegroundTPScore*)itr2->second)->FlagCaptures);            // flag captures
+                        *data << uint32(((BattlegroundTPScore*)itr2->second)->FlagReturns);             // flag returns
+                        break;
+                    case 761:
+                        data->put(extraFields, 2);                                                      // count of next fields
+                        *data << uint32(((BattlegroundBGScore*)itr2->second)->BasesAssaulted);          // bases asssulted
+                        *data << uint32(((BattlegroundBGScore*)itr2->second)->BasesDefended);           // bases defended
+                        break;
                     default:
                         data->put(extraFields, 0);                                                      // count of next fields
                         break;
@@ -463,11 +473,15 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
                 *data << uint32(((BattlegroundICScore*)itr2->second)->BasesAssaulted);         // bases asssulted
                 *data << uint32(((BattlegroundICScore*)itr2->second)->BasesDefended);          // bases defended
                 break;
-            case BATTLEGROUND_BG:															   // Battle of Gilneas
-                data->put(extraFields, 0);                                                     // count of next fields
+            case BATTLEGROUND_TP:                                                              // Twin Peaks
+                data->put(extraFields, 2);                                                     // count of next fields
+                *data << uint32(((BattlegroundTPScore*)itr2->second)->FlagCaptures);           // flag captures
+                *data << uint32(((BattlegroundTPScore*)itr2->second)->FlagReturns);            // flag returns
                 break;
-            case BATTLEGROUND_TP:															   // Twin Peaks
-                data->put(extraFields, 0);                                                     // count of next fields
+            case BATTLEGROUND_BG:                                                              // Battle of Gilneas
+                data->put(extraFields, 2);                                                     // count of next fields
+                *data << uint32(((BattlegroundBGScore*)itr2->second)->BasesAssaulted);         // bases asssulted
+                *data << uint32(((BattlegroundBGScore*)itr2->second)->BasesDefended);          // bases defended
                 break;
             case BATTLEGROUND_NA:
             case BATTLEGROUND_BE:
@@ -694,11 +708,11 @@ Battleground * BattlegroundMgr::CreateNewBattleground(BattlegroundTypeId bgTypeI
         case BATTLEGROUND_IC:
             bg = new BattlegroundIC(*(BattlegroundIC*)bg_template);
             break;
-        case BATTLEGROUND_BG:
-            bg = new BattlegroundBG(*(BattlegroundBG*)bg_template);
-            break;
         case BATTLEGROUND_TP:
             bg = new BattlegroundTP(*(BattlegroundTP*)bg_template);
+            break;
+        case BATTLEGROUND_BG:
+            bg = new BattlegroundBG(*(BattlegroundBG*)bg_template);
             break;
         case BATTLEGROUND_RB:
             bg = new BattlegroundRB(*(BattlegroundRB*)bg_template);
@@ -748,8 +762,8 @@ uint32 BattlegroundMgr::CreateBattleground(BattlegroundTypeId bgTypeId, bool IsA
         case BATTLEGROUND_DS: bg = new BattlegroundDS; break;
         case BATTLEGROUND_RV: bg = new BattlegroundRV; break;
         case BATTLEGROUND_IC: bg = new BattlegroundIC; break;
-        case BATTLEGROUND_BG: bg = new BattlegroundBG; break;
         case BATTLEGROUND_TP: bg = new BattlegroundTP; break;
+        case BATTLEGROUND_BG: bg = new BattlegroundBG; break;
         case BATTLEGROUND_RB: bg = new BattlegroundRB; break;
         default:
             bg = new Battleground;
@@ -779,6 +793,8 @@ uint32 BattlegroundMgr::CreateBattleground(BattlegroundTypeId bgTypeId, bool IsA
 
 void BattlegroundMgr::CreateInitialBattlegrounds()
 {
+    uint32 oldMSTime = getMSTime();
+
     float AStartLoc[4];
     float HStartLoc[4];
     uint32 MaxPlayersPerTeam, MinPlayersPerTeam, MinLvl, MaxLvl, start1, start2;
@@ -787,17 +803,19 @@ void BattlegroundMgr::CreateInitialBattlegrounds()
     WorldSafeLocsEntry const *start;
     bool IsArena;
     uint32 scriptId = 0;
-    uint32 count = 0;
 
     //                                                       0   1                 2                 3      4      5                6              7             8           9      10
     QueryResult result = WorldDatabase.Query("SELECT id, MinPlayersPerTeam,MaxPlayersPerTeam,MinLvl,MaxLvl,AllianceStartLoc,AllianceStartO,HordeStartLoc,HordeStartO,Weight,ScriptName FROM battleground_template");
 
     if (!result)
     {
-        sLog->outString();
         sLog->outErrorDb(">> Loaded 0 battlegrounds. DB table `battleground_template` is empty.");
+        sLog->outString();
         return;
     }
+
+    uint32 count = 0;
+
     do
     {
         Field *fields = result->Fetch();
@@ -815,7 +833,7 @@ void BattlegroundMgr::CreateInitialBattlegrounds()
 
         BattlegroundTypeId bgTypeID = BattlegroundTypeId(bgTypeID_);
 
-        IsArena = (bl->type == TYPE_ARENA);
+        IsArena = (bl->MapType == TYPE_ARENA);
         MinPlayersPerTeam = fields[1].GetUInt32();
         MaxPlayersPerTeam = fields[2].GetUInt32();
         MinLvl = fields[3].GetUInt32();
@@ -893,10 +911,11 @@ void BattlegroundMgr::CreateInitialBattlegrounds()
         else if (bgTypeID != BATTLEGROUND_RB)
             m_BGSelectionWeights[bgTypeID] = selectionWeight;
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u battlegrounds in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u battlegrounds", count);
 }
 
 void BattlegroundMgr::InitAutomaticArenaPointDistribution()
@@ -1039,10 +1058,10 @@ BattlegroundQueueTypeId BattlegroundMgr::BGQueueTypeId(BattlegroundTypeId bgType
             return BATTLEGROUND_QUEUE_SA;
         case BATTLEGROUND_IC:
             return BATTLEGROUND_QUEUE_IC;
-        case BATTLEGROUND_BG:
-            return BATTLEGROUND_QUEUE_BG;
         case BATTLEGROUND_TP:
             return BATTLEGROUND_QUEUE_TP;
+        case BATTLEGROUND_BG:
+            return BATTLEGROUND_QUEUE_BG;
         case BATTLEGROUND_RB:
             return BATTLEGROUND_QUEUE_RB;
         case BATTLEGROUND_AA:
@@ -1083,10 +1102,10 @@ BattlegroundTypeId BattlegroundMgr::BGTemplateId(BattlegroundQueueTypeId bgQueue
             return BATTLEGROUND_SA;
         case BATTLEGROUND_QUEUE_IC:
             return BATTLEGROUND_IC;
-        case BATTLEGROUND_QUEUE_BG:
-            return BATTLEGROUND_BG;
         case BATTLEGROUND_QUEUE_TP:
             return BATTLEGROUND_TP;
+        case BATTLEGROUND_QUEUE_BG:
+            return BATTLEGROUND_BG;
         case BATTLEGROUND_QUEUE_RB:
             return BATTLEGROUND_RB;
         case BATTLEGROUND_QUEUE_2v2:
@@ -1189,8 +1208,8 @@ HolidayIds BattlegroundMgr::BGTypeToWeekendHolidayId(BattlegroundTypeId bgTypeId
         case BATTLEGROUND_SA: return HOLIDAY_CALL_TO_ARMS_SA;
         case BATTLEGROUND_AB: return HOLIDAY_CALL_TO_ARMS_AB;
         case BATTLEGROUND_IC: return HOLIDAY_CALL_TO_ARMS_IC;
-        case BATTLEGROUND_BG: return HOLIDAY_CALL_TO_ARMS_BG;
         case BATTLEGROUND_TP: return HOLIDAY_CALL_TO_ARMS_TP;
+        case BATTLEGROUND_BG: return HOLIDAY_CALL_TO_ARMS_BG;
         default: return HOLIDAY_NONE;
     }
 }
@@ -1205,8 +1224,8 @@ BattlegroundTypeId BattlegroundMgr::WeekendHolidayIdToBGType(HolidayIds holiday)
         case HOLIDAY_CALL_TO_ARMS_SA: return BATTLEGROUND_SA;
         case HOLIDAY_CALL_TO_ARMS_AB: return BATTLEGROUND_AB;
         case HOLIDAY_CALL_TO_ARMS_IC: return BATTLEGROUND_IC;
-        case HOLIDAY_CALL_TO_ARMS_BG: return BATTLEGROUND_BG;
         case HOLIDAY_CALL_TO_ARMS_TP: return BATTLEGROUND_TP;
+        case HOLIDAY_CALL_TO_ARMS_BG: return BATTLEGROUND_BG;
         default: return BATTLEGROUND_TYPE_NONE;
     }
 }

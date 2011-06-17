@@ -95,7 +95,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
         return;
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     uint32 charterid = GUILD_CHARTER;
@@ -112,7 +112,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
         return;
     }
 
-    ItemPrototype const *pProto = sObjectMgr->GetItemPrototype(charterid);
+    ItemPrototype const *pProto = ObjectMgr::GetItemPrototype(charterid);
     if (!pProto)
     {
         _player->SendBuyError(BUY_ERR_CANT_FIND_ITEM, NULL, charterid, 0);
@@ -495,7 +495,6 @@ void WorldSession::HandleOfferPetitionOpcode(WorldPacket & recv_data)
 void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
 {
     sLog->outDebug("Received opcode CMSG_TURN_IN_PETITION"); // ok
-    //recv_data.hexlike();
 
     WorldPacket data;
     uint64 petitionguid;
@@ -614,7 +613,7 @@ void WorldSession::SendPetitionShowList(uint64 guid)
     }
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     WorldPacket data(SMSG_PETITION_SHOWLIST, 8+1+4*6);

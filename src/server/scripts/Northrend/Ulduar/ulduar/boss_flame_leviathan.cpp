@@ -1,18 +1,25 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /*
@@ -39,6 +46,7 @@ enum Spells
     SPELL_START_THE_ENGINE                      = 62472,
     SPELL_SEARING_FLAME                         = 62402,
     SPELL_BLAZE                                 = 62292,
+    SPELL_TAR_PASSIVE                           = 62288,
     SPELL_SMOKE_TRAIL                           = 63575,
     SPELL_ELECTROSHOCK                          = 62522,
     SPELL_NAPALM                                = 63666,
@@ -80,6 +88,7 @@ enum Creatures
     NPC_LOREKEEPER                              = 33686, //Hard mode starter
     NPC_BRANZ_BRONZBEARD                        = 33579,
     NPC_DELORAH                                 = 33701,
+    NPC_ULDUAR_GAUNTLET_GENERATOR               = 33571, // Trigger tied to towers
 };
 
 enum Towers
@@ -397,11 +406,11 @@ public:
             if (me->HasAura(SPELL_SYSTEMS_SHUTDOWN))
             {
                 me->SetReactState(REACT_PASSIVE);
-                me->addUnitState(UNIT_STAT_STUNNED | UNIT_STAT_ROOT);
+                me->AddUnitState(UNIT_STAT_STUNNED | UNIT_STAT_ROOT);
                 return;
             }
 
-            if (me->hasUnitState(UNIT_STAT_CASTING))
+            if (me->HasUnitState(UNIT_STAT_CASTING))
                 return;
 
             if (me->HasAura(SPELL_SYSTEMS_SHUTDOWN))
@@ -466,7 +475,7 @@ public:
                 break;
             case EVENT_REPAIR:
                 me->MonsterTextEmote(EMOTE_REPAIR, 0, true);
-                me->clearUnitState(UNIT_STAT_STUNNED | UNIT_STAT_ROOT);
+                me->ClearUnitState(UNIT_STAT_STUNNED | UNIT_STAT_ROOT);
                 InstallAdds(false);
                 events.CancelEvent(EVENT_REPAIR);
                 break;
@@ -788,7 +797,7 @@ public:
         {
         }
 
-        void JustDied()
+        void JustDied(Unit* /*killer*/)
         {
             float x,y,z;
             me->GetPosition(x,y,z);
@@ -887,6 +896,7 @@ public:
         spell_pool_of_tarAI(Creature* pCreature) : PassiveAI(pCreature)
         {
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+            me->AddAura(SPELL_TAR_PASSIVE, me);
         }
 
         void DamageTaken(Unit * /*who*/, uint32 &damage)
@@ -1323,10 +1333,8 @@ public:
     void OnDestroyed(Player* /*pPlayer*/, GameObject* pGO, uint32 /*value*/)
     {
         InstanceScript* instance = pGO->GetInstanceScript();
-        if (pGO->GetGOValue()->building.health == 0)
+        switch(pGO->GetEntry())
         {
-            switch(pGO->GetEntry())
-            {
             case GO_TOWER_OF_STORMS:
                 instance->ProcessEvent(pGO, EVENT_TOWER_OF_STORM_DESTROYED);
                 break;
@@ -1339,10 +1347,12 @@ public:
             case GO_TOWER_OF_LIFE:
                 instance->ProcessEvent(pGO, EVENT_TOWER_OF_LIFE_DESTROYED);
                 break;
-            }
         }
-    }
 
+        Creature* trigger = pGO->FindNearestCreature(NPC_ULDUAR_GAUNTLET_GENERATOR, 15.0f, true);
+        if (trigger)
+            trigger->DisappearAndDie();
+    }
 };
 
 class at_RX_214_repair_o_matic_station : public AreaTriggerScript

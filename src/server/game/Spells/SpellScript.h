@@ -192,6 +192,7 @@ class SpellScript : public _SpellScript
         void _FinishScriptCall();
         bool IsInHitPhase() { return (m_currentScriptState >= HOOK_SPELL_HIT_START && m_currentScriptState < HOOK_SPELL_HIT_END); }
         bool IsInEffectHook() { return (m_currentScriptState == SPELL_SCRIPT_HOOK_EFFECT); }
+        bool IsInAfterHitPhase() const { return (m_currentScriptState == SPELL_SCRIPT_HOOK_AFTER_HIT); }
     private:
         Spell * m_spell;
         uint8 m_hitPreventEffectMask;
@@ -266,6 +267,8 @@ class SpellScript : public _SpellScript
         int32 GetHitDamage();
         void SetHitDamage(int32 damage);
         void PreventHitDamage() { SetHitDamage(0); };
+        // returns: total damage done by spell (including crit multipliers)
+        int32 GetFinalDamage();
         // setter/getter for for heal done by spell to target of spell hit
         int32 GetHitHeal();
         void SetHitHeal(int32 heal);
@@ -295,6 +298,9 @@ class SpellScript : public _SpellScript
 
         // Creates item. Calls Spell::DoCreateItem method.
         void CreateItem(uint32 effIndex, uint32 itemId);
+
+        // finishes spellcast prematurely with selected error message
+        void FinishCast(SpellCastResult result);
 };
 
 // AuraScript interface - enum used for runtime checks of script function calls

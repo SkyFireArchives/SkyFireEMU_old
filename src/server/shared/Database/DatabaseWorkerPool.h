@@ -63,18 +63,17 @@ class DatabaseWorkerPool
             memset(m_connectionCount, 0, sizeof(m_connectionCount));
             m_connections.resize(IDX_SIZE);
 
-            mysql_library_init(-1, NULL, NULL);
             WPFatal (mysql_thread_safe(), "Used MySQL library isn't thread-safe.");
         }
 
         ~DatabaseWorkerPool()
         {
             sLog->outSQLDriver("~DatabaseWorkerPool for '%s'.", m_connectionInfo.database.c_str());
-            mysql_library_end();
         }
 
         bool Open(const std::string& infoString, uint8 async_threads, uint8 synch_threads)
         {
+            bool res = true;
             m_connectionInfo = MySQLConnectionInfo(infoString);
 
             sLog->outSQLDriver("Opening databasepool '%s'. Async threads: %u, synch threads: %u", m_connectionInfo.database.c_str(), async_threads, synch_threads);
@@ -84,33 +83,31 @@ class DatabaseWorkerPool
             for (uint8 i = 0; i < async_threads; ++i)
             {
                 T* t = new T(m_queue, m_connectionInfo);
-                t->Open();
+                res &= t->Open();
                 m_connections[IDX_ASYNC][i] = t;
                 ++m_connectionCount[IDX_ASYNC];
             }
 
             /// Open synchronous connections (direct, blocking operations)
             m_connections[IDX_SYNCH].resize(synch_threads);
-            for (uint8 i = 0; i < synch_threads; ++i) 
+            for (uint8 i = 0; i < synch_threads; ++i)
             {
                 T* t = new T(m_connectionInfo);
-                t->Open();
+                res &= t->Open();
                 m_connections[IDX_SYNCH][i] = t;
                 ++m_connectionCount[IDX_SYNCH];
             }
 
             sLog->outSQLDriver("Databasepool opened succesfuly. %u total connections running.", (m_connectionCount[IDX_SYNCH] + m_connectionCount[IDX_ASYNC]));
-            return true;
+            return res;
         }
 
         void Close()
         {
             sLog->outSQLDriver("Closing down databasepool '%s'.", m_connectionInfo.database.c_str());
 
-            /// Shuts down delaythreads for this connection pool.
-            m_queue->queue()->deactivate();
-            while (SQLOperation* op = (SQLOperation*)(m_queue->dequeue()))
-                delete op;
+            /// Shuts down delaythreads for this connection pool by underlying deactivate()
+            m_queue->queue()->close();
 
             for (uint8 i = 0; i < m_connectionCount[IDX_ASYNC]; ++i)
             {
@@ -118,9 +115,9 @@ class DatabaseWorkerPool
                 /// Now we just wait until m_queue gives the signal to the worker threads to stop
                 T* t = m_connections[IDX_ASYNC][i];
                 DatabaseWorker* worker = t->m_worker;
-                worker->wait(); // t->Close(); is called from worker thread
+                worker->wait();
                 delete worker;
-                --m_connectionCount[IDX_ASYNC];
+                t->Close();
             }
 
             sLog->outSQLDriver("Asynchronous connections on databasepool '%s' terminated. Proceeding with synchronous connections.", m_connectionInfo.database.c_str());
@@ -130,15 +127,14 @@ class DatabaseWorkerPool
             {
                 T* t = m_connections[IDX_SYNCH][i];
                 //while (1)
-                //    if (t->LockIfReady()) -- For some reason deadlocks us 
+                //    if (t->LockIfReady()) -- For some reason deadlocks us
                 t->Close();
-                --m_connectionCount[IDX_SYNCH];
             }
-            
+
             sLog->outSQLDriver("All connections on databasepool %s closed.", m_connectionInfo.database.c_str());
         }
 
-        /** 
+        /**
             Delayed one-way statement methods.
         */
 
@@ -183,7 +179,7 @@ class DatabaseWorkerPool
         {
             if (!sql)
                 return;
-            
+
             T* t = GetFreeConnection();
             t->Execute(sql);
             t->Unlock();
@@ -278,7 +274,7 @@ class DatabaseWorkerPool
             return PreparedQueryResult(ret);
         }
 
-        /** 
+        /**
             Asynchronous query (with resultset) methods.
         */
 
@@ -358,13 +354,40 @@ class DatabaseWorkerPool
             Enqueue(new TransactionTask(transaction));
         }
 
+        //! Directly executes a collection of one-way SQL operations (can be both adhoc and prepared). The order in which these operations
+        //! were appended to the transaction will be respected during execution.
+        void DirectCommitTransaction(SQLTransaction& transaction)
+        {
+            MySQLConnection* con = GetFreeConnection();
+            if (con->ExecuteTransaction(transaction))
+            {
+                con->Unlock();      // OK, operation succesful
+                return;
+            }
+
+            if (con->GetLastError() == 1213)
+            {
+                uint8 loopBreaker = 5;  // Handle MySQL Errno 1213 without extending deadlock to the core itself
+                for (uint8 i = 0; i < loopBreaker; ++i)
+                {
+                    if (con->ExecuteTransaction(transaction))
+                        break;
+                }
+            }
+
+            // Clean up now.
+            transaction->Cleanup();
+
+            con->Unlock();
+        }
+
         //! Method used to execute prepared statements in a diverse context.
         //! Will be wrapped in a transaction if valid object is present, otherwise executed standalone.
         void ExecuteOrAppend(SQLTransaction& trans, PreparedStatement* stmt)
         {
             if (trans.null())
                 Execute(stmt);
-            else 
+            else
                 trans->Append(stmt);
         }
 
@@ -374,7 +397,7 @@ class DatabaseWorkerPool
         {
             if (trans.null())
                 Execute(sql);
-            else 
+            else
                 trans->Append(sql);
         }
 
@@ -389,12 +412,6 @@ class DatabaseWorkerPool
             return new PreparedStatement(index);
         }
 
-        void DirectExecute(PreparedStatement* stmt)
-        {
-            T* t = GetFreeConnection();
-            t->Execute(stmt);
-            t->Unlock();
-        }
         //! Apply escape string'ing for current collation. (utf8)
         void escape_string(std::string& str)
         {
@@ -402,7 +419,7 @@ class DatabaseWorkerPool
                 return;
 
             char* buf = new char[str.size()*2+1];
-            escape_string(buf,str.c_str(),str.size());
+            escape_string(buf, str.c_str(), str.size());
             str = buf;
             delete[] buf;
         }
@@ -420,7 +437,7 @@ class DatabaseWorkerPool
                     t->Unlock();
                 }
             }
- 
+
             /// Assuming all worker threads are free, every worker thread will receive 1 ping operation request
             /// If one or more worker threads are busy, the ping operations will not be split evenly, but this doesn't matter
             /// as the sole purpose is to prevent connections from idling.
@@ -433,7 +450,7 @@ class DatabaseWorkerPool
         {
             if (!to || !from || !length)
                 return 0;
-            
+
             T* t = GetFreeConnection();
             unsigned long ret = mysql_real_escape_string(t->GetHandle(), to, from, length);
             t->Unlock();

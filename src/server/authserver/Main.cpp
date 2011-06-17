@@ -20,9 +20,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-/// \addtogroup realmd Realm Daemon
-/// @{
-/// \file
+#include <ace/Dev_Poll_Reactor.h>
+#include <ace/TP_Reactor.h>
+#include <ace/ACE.h>
+#include <ace/Sig_Handler.h>
+#include <openssl/opensslv.h>
+#include <openssl/crypto.h>
 
 #include "Common.h"
 #include "Database/DatabaseEnv.h"
@@ -35,23 +38,15 @@
 #include "RealmList.h"
 #include "RealmAcceptor.h"
 
-#include <ace/Dev_Poll_Reactor.h>
-#include <ace/TP_Reactor.h>
-#include <ace/ACE.h>
-#include <ace/Sig_Handler.h>
-
-#include <openssl/opensslv.h>
-#include <openssl/crypto.h>
-
 #ifndef _TRINITY_REALM_CONFIG
 # define _TRINITY_REALM_CONFIG  "authserver.conf"
 #endif //_TRINITY_REALM_CONFIG
 
 #ifdef _WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "TrinityRealm";
-char serviceLongName[] = "Trinity realm service";
-char serviceDescription[] = "Massive Network Game Object Server";
+char serviceName[] = "SkyFireAuth";
+char serviceLongName[] = "SkyFireAuth service";
+char serviceDescription[] = "Cataclysm Server";
 /*
  * -1 - not in service mode
  *  0 - stopped
@@ -113,7 +108,7 @@ extern int main(int argc, char **argv)
     int c = 1;
     while(c < argc)
     {
-        if (strcmp(argv[c],"-c") == 0)
+        if (strcmp(argv[c], "-c") == 0)
         {
             if (++c >= argc)
             {
@@ -129,7 +124,7 @@ extern int main(int argc, char **argv)
         ////////////
         //Services//
         ////////////
-        if (strcmp(argv[c],"-s") == 0)
+        if (strcmp(argv[c], "-s") == 0)
         {
             if (++c >= argc)
             {
@@ -137,13 +132,13 @@ extern int main(int argc, char **argv)
                 usage(argv[0]);
                 return 1;
             }
-            if (strcmp(argv[c],"install") == 0)
+            if (strcmp(argv[c], "install") == 0)
             {
                 if (WinServiceInstall())
                     sLog->outString("Installing service");
                 return 1;
             }
-            else if (strcmp(argv[c],"uninstall") == 0)
+            else if (strcmp(argv[c], "uninstall") == 0)
             {
                 if (WinServiceUninstall())
                     sLog->outString("Uninstalling service");
@@ -151,13 +146,13 @@ extern int main(int argc, char **argv)
             }
             else
             {
-                sLog->outError("Runtime-Error: unsupported option %s",argv[c]);
+                sLog->outError("Runtime-Error: unsupported option %s", argv[c]);
                 usage(argv[0]);
                 return 1;
             }
         }
 
-        if (strcmp(argv[c],"--service") == 0)
+        if (strcmp(argv[c], "--service") == 0)
             WinServiceRun();
 
 #endif
@@ -227,7 +222,7 @@ extern int main(int argc, char **argv)
 
     if (acceptor.open(bind_addr, ACE_Reactor::instance(), ACE_NONBLOCK) == -1)
     {
-        sLog->outError("Trinity realm can not bind to %s:%d", bind_ip.c_str(), rmport);
+        sLog->outError("SkyFireAuth can not bind to %s:%d", bind_ip.c_str(), rmport);
         return 1;
     }
 
@@ -261,7 +256,7 @@ extern int main(int argc, char **argv)
                 ULONG_PTR curAff = Aff & appAff;            // remove non accessible processors
 
                 if (!curAff)
-                    sLog->outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for realmd. Accessible processors bitmask (hex): %x",Aff,appAff);
+                    sLog->outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for realmd. Accessible processors bitmask (hex): %x", Aff, appAff);
                 else if (SetProcessAffinityMask(hProcess, curAff))
                     sLog->outString("Using processors (bitmask, hex): %x", curAff);
                 else
@@ -275,7 +270,7 @@ extern int main(int argc, char **argv)
         if (Prio)
         {
             if (SetPriorityClass(hProcess, HIGH_PRIORITY_CLASS))
-                sLog->outString("TrinityRealm process priority class set to HIGH");
+                sLog->outString("SkyFireAuth process priority class set to HIGH");
             else
                 sLog->outError("Can't set realmd process priority class.");
             sLog->outString();
@@ -284,7 +279,7 @@ extern int main(int argc, char **argv)
 #endif
 
     // maximum counter for next ping
-    uint32 numLoops = (sConfig->GetIntDefault("MaxPingTime", 30) * (MINUTE * 10));
+    uint32 numLoops = (sConfig->GetIntDefault("MaxPingTime", 30) * (MINUTE * 1000000 / 100000));
     uint32 loopCounter = 0;
 
     // possibly enable db logging; avoid massive startup spam by doing it here.

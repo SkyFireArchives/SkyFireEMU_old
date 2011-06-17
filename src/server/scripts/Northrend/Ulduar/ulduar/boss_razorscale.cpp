@@ -1,18 +1,25 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 //TODO: Harpoon event is automated needs to be checked
@@ -392,9 +399,9 @@ public:
             uint8 random = urand(1,4);
             for (uint8 i = 0; i < random; ++i)
             {
-                float x = irand(540.0f, 640.0f);    // Safe range is between 500 and 650
-                float y = irand(-230.0f, -195.0f);  // Safe range is between -235 and -145
-                float z = 391.5f;                   // Ground level
+                float x = float(irand(540, 640));       // Safe range is between 500 and 650
+                float y = float(irand(-230, -195));     // Safe range is between -235 and -145
+                float z = 391.5f;                       // Ground level
                 me->SummonCreature(MOLE_MACHINE_TRIGGER, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 10000);
             }
         }
@@ -587,7 +594,9 @@ public:
 
         void Reset()
         {
-            if (MoleMachine = me->SummonGameObject(GOB_MOLE_MACHINE,me->GetPositionX(),me->GetPositionY(),me->GetPositionZ(),urand(0,6),0,0,0,0,300))
+            MoleMachine = me->SummonGameObject(GOB_MOLE_MACHINE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(),
+                float(urand(0, 6)), 0, 0, 0, 0, 300);
+            if (MoleMachine)
                 MoleMachine->SetGoState(GO_STATE_ACTIVE);
             SummonTimer = 6000;
         }

@@ -30,6 +30,7 @@ EndScriptData */
 
 #include "ScriptPCH.h"
 #include "ScriptedFollowerAI.h"
+#include "Group.h"
 
 const float MAX_PLAYER_DISTANCE = 100.0f;
 
@@ -56,8 +57,8 @@ void FollowerAI::AttackStart(Unit* pWho)
         me->SetInCombatWith(pWho);
         pWho->SetInCombatWith(me);
 
-        if (me->hasUnitState(UNIT_STAT_FOLLOW))
-            me->clearUnitState(UNIT_STAT_FOLLOW);
+        if (me->HasUnitState(UNIT_STAT_FOLLOW))
+            me->ClearUnitState(UNIT_STAT_FOLLOW);
 
         if (IsCombatMovement())
             me->GetMotionMaster()->MoveChase(pWho);
@@ -106,7 +107,7 @@ bool FollowerAI::AssistPlayerInCombat(Unit* pWho)
 
 void FollowerAI::MoveInLineOfSight(Unit* pWho)
 {
-    if (!me->hasUnitState(UNIT_STAT_STUNNED) && pWho->isTargetableForAttack() && pWho->isInAccessiblePlaceFor(me))
+    if (!me->HasUnitState(UNIT_STAT_STUNNED) && pWho->isTargetableForAttack() && pWho->isInAccessiblePlaceFor(me))
     {
         if (HasFollowState(STATE_FOLLOW_INPROGRESS) && AssistPlayerInCombat(pWho))
             return;
@@ -358,9 +359,9 @@ Player* FollowerAI::GetLeaderForFollower()
 
 void FollowerAI::SetFollowComplete(bool bWithEndEvent)
 {
-    if (me->hasUnitState(UNIT_STAT_FOLLOW))
+    if (me->HasUnitState(UNIT_STAT_FOLLOW))
     {
-        me->clearUnitState(UNIT_STAT_FOLLOW);
+        me->ClearUnitState(UNIT_STAT_FOLLOW);
 
         me->StopMoving();
         me->GetMotionMaster()->Clear();
@@ -387,9 +388,9 @@ void FollowerAI::SetFollowPaused(bool bPaused)
     {
         AddFollowState(STATE_FOLLOW_PAUSED);
 
-        if (me->hasUnitState(UNIT_STAT_FOLLOW))
+        if (me->HasUnitState(UNIT_STAT_FOLLOW))
         {
-            me->clearUnitState(UNIT_STAT_FOLLOW);
+            me->ClearUnitState(UNIT_STAT_FOLLOW);
 
             me->StopMoving();
             me->GetMotionMaster()->Clear();

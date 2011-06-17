@@ -71,19 +71,26 @@ enum AchievementFlags
     ACHIEVEMENT_FLAG_BAR               = 0x00000080,        // Show as progress bar (value / max vale) depend from other flag (by def use last criteria value)
     ACHIEVEMENT_FLAG_REALM_FIRST_REACH = 0x00000100,        //
     ACHIEVEMENT_FLAG_REALM_FIRST_KILL  = 0x00000200,        //
+    ACHIEVEMENT_FLAG_UNK0              = 0x00000400,        //
+    ACHIEVEMENT_FLAG_UNK1              = 0x00000800,        //
+    ACHIEVEMENT_FLAG_UNK2              = 0x00001000,        // 4.0.x
+    ACHIEVEMENT_FLAG_UNK3              = 0x00002000,        // 4.0.x
+    ACHIEVEMENT_FLAG_GUILD_ACHIEVEMENT = 0x00004000,        //
+    ACHIEVEMENT_FLAG_UNK4              = 0x00008000,        // Guild related
 };
 
 #define MAX_CRITERIA_REQUIREMENTS 2
 
 enum AchievementCriteriaCondition
 {
-    ACHIEVEMENT_CRITERIA_CONDITION_NONE      = 0,
-    ACHIEVEMENT_CRITERIA_CONDITION_NO_DEATH  = 1,           // reset progress on death
-    ACHIEVEMENT_CRITERIA_CONDITION_UNK1      = 2,           // only used in "Complete a daily quest every day for five consecutive days"
-    ACHIEVEMENT_CRITERIA_CONDITION_MAP       = 3,           // requires you to be on specific map, reset at change
-    ACHIEVEMENT_CRITERIA_CONDITION_NO_LOSE   = 4,           // only used in "Win 10 arenas without losing"
-    ACHIEVEMENT_CRITERIA_CONDITION_UNK2      = 9,           // unk
-    ACHIEVEMENT_CRITERIA_CONDITION_UNK3      = 13,          // unk
+    ACHIEVEMENT_CRITERIA_CONDITION_NONE         = 0,
+    ACHIEVEMENT_CRITERIA_CONDITION_NO_DEATH     = 1,    // reset progress on death
+    ACHIEVEMENT_CRITERIA_CONDITION_UNK1         = 2,    // only used in "Complete a daily quest every day for five consecutive days"
+    ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP       = 3,    // requires you to be on specific map, reset at change
+    ACHIEVEMENT_CRITERIA_CONDITION_NO_LOSE      = 4,    // only used in "Win 10 arenas without losing"
+    ACHIEVEMENT_CRITERIA_CONDITION_UNK2         = 9,    // unk
+    ACHIEVEMENT_CRITERIA_CONDITION_NOT_IN_GROUP = 10,   // requires the player not to be in group
+    ACHIEVEMENT_CRITERIA_CONDITION_UNK3         = 13,   // unk
 };
 
 enum AchievementCriteriaCompletionFlags
@@ -220,21 +227,25 @@ enum AchievementCriteriaTypes
     // 0..115 => 116 criteria types total
     ACHIEVEMENT_CRITERIA_TYPE_EARN_ACHIEVEMENT_POINTS = 115,
     ACHIEVEMENT_CRITERIA_TYPE_USE_LFD_TO_GROUP_WITH_PLAYERS = 119,
-    // 120
-    // 121
-    // 122
-    // 123
-    // 124 spend gold on guild repairs
-    // 125 reach guild level
-    // 126 craft x items
-    // 127 catch x fish from pools
-    // 128 purchase x guild bank tabs
-    // 129 earn x guild achievement points
-    // 130 win x rated battlegrounds
-    // 131
-    // 132 reach x rated battleground rating
-    // 0..132 => 133 criteria types total
-    ACHIEVEMENT_CRITERIA_TYPE_TOTAL = 133,
+    // 120 - not valid on 4.0.6a
+    // 121 - not valid on 4.0.6a
+    // 122 - not valid on 4.0.6a
+    // 123 - not valid on 4.0.6a
+    ACHIEVEMENT_CRITERIA_TYPE_SPENT_GOLD_GUILD_REPAIRS = 124,
+    ACHIEVEMENT_CRITERIA_TYPE_REACH_GUILD_LEVEL = 125,
+    ACHIEVEMENT_CRITERIA_TYPE_CRAFT_ITEMS_GUILD = 126,
+    ACHIEVEMENT_CRITERIA_TYPE_CATCH_FROM_POOL = 127,
+    ACHIEVEMENT_CRITERIA_TYPE_BUY_GUILD_BANK_SLOTS = 128,
+    ACHIEVEMENT_CRITERIA_TYPE_EARN_GUILD_ACHIEVEMENT_POINTS = 129,
+    ACHIEVEMENT_CRITERIA_TYPE_WIN_RATED_BATTLEGROUND = 130,
+    // 131 - not valid on 4.0.6a
+    ACHIEVEMENT_CRITERIA_TYPE_REACH_BG_RATING = 132,
+    ACHIEVEMENT_CRITERIA_TYPE_BUY_GUILD_TABARD = 133,
+    ACHIEVEMENT_CRITERIA_TYPE_COMPLETE_QUESTS_GUILD = 134,
+    ACHIEVEMENT_CRITERIA_TYPE_HONORABLE_KILLS_GUILD = 135,
+    ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE_TYPE_GUILD = 136,
+    // 0..136 => 137 criteria types total
+    ACHIEVEMENT_CRITERIA_TYPE_TOTAL = 137,
 };
 
 enum AchievementCriteriaMoreReqType
@@ -441,7 +452,7 @@ enum SummonPropFlags
 
 enum CurrencyTypes
 {
-	CURRENCY_TYPE_CONQUEST_POINTS                = 390,
+    CURRENCY_TYPE_CONQUEST_POINTS                = 390,
     CURRENCY_TYPE_HONOR_POINTS                   = 392,
     CURRENCY_TYPE_JUSTICE_POINTS                 = 395,
     CURRENCY_TYPE_VALOR_POINTS                   = 396,

@@ -39,6 +39,7 @@
 #include "CellImpl.h"
 #include "InstanceSaveMgr.h"
 #include "Util.h"
+#include "Group.h"
 
 #ifdef _DEBUG_VMAPS
 #include "VMapFactory.h"
@@ -195,104 +196,6 @@ bool ChatHandler::HandleOpcodeTestCommand(const char* args)
   return true;
 }
 
-//-----------------------Npc Commands-----------------------
-bool ChatHandler::HandleNpcSayCommand(const char* args)
-{
-    if (!*args)
-        return false;
-
-    Creature* pCreature = getSelectedCreature();
-    if (!pCreature)
-    {
-        SendSysMessage(LANG_SELECT_CREATURE);
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    pCreature->MonsterSay(args, LANG_UNIVERSAL, 0);
-
-    // make some emotes
-    char lastchar = args[strlen(args) - 1];
-    switch(lastchar)
-    {
-        case '?':   pCreature->HandleEmoteCommand(EMOTE_ONESHOT_QUESTION);      break;
-        case '!':   pCreature->HandleEmoteCommand(EMOTE_ONESHOT_EXCLAMATION);   break;
-        default:    pCreature->HandleEmoteCommand(EMOTE_ONESHOT_TALK);          break;
-    }
-
-    return true;
-}
-
-bool ChatHandler::HandleNpcYellCommand(const char* args)
-{
-    if (!*args)
-        return false;
-
-    Creature* pCreature = getSelectedCreature();
-    if (!pCreature)
-    {
-        SendSysMessage(LANG_SELECT_CREATURE);
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    pCreature->MonsterYell(args, LANG_UNIVERSAL, 0);
-
-    // make an emote
-    pCreature->HandleEmoteCommand(EMOTE_ONESHOT_SHOUT);
-
-    return true;
-}
-
-//show text emote by creature in chat
-bool ChatHandler::HandleNpcTextEmoteCommand(const char* args)
-{
-    if (!*args)
-        return false;
-
-    Creature* pCreature = getSelectedCreature();
-
-    if (!pCreature)
-    {
-        SendSysMessage(LANG_SELECT_CREATURE);
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    pCreature->MonsterTextEmote(args, 0);
-
-    return true;
-}
-
-// make npc whisper to player
-bool ChatHandler::HandleNpcWhisperCommand(const char* args)
-{
-    if (!*args)
-        return false;
-
-    char* receiver_str = strtok((char*)args, " ");
-    char* text = strtok(NULL, "");
-
-    uint64 guid = m_session->GetPlayer()->GetSelection();
-    Creature* pCreature = m_session->GetPlayer()->GetMap()->GetCreature(guid);
-
-    if (!pCreature || !receiver_str || !text)
-    {
-        return false;
-    }
-
-    uint64 receiver_guid= atol(receiver_str);
-
-    // check online security
-    if (HasLowerSecurity(sObjectMgr->GetPlayer(receiver_guid), 0))
-        return false;
-
-    pCreature->MonsterWhisper(text,receiver_guid);
-
-    return true;
-}
-//----------------------------------------------------------
-
 bool ChatHandler::HandleNameAnnounceCommand(const char* args)
 {
     WorldPacket data;
@@ -320,7 +223,7 @@ bool ChatHandler::HandleAnnounceCommand(const char* args)
         return false;
 
     char buff[2048];
-    sprintf(buff, GetTrinityString(LANG_SYSTEMMESSAGE), args);
+    sprintf(buff, GetSkyFireString(LANG_SYSTEMMESSAGE), args);
     sWorld->SendServerMessage(SERVER_MSG_STRING, buff);
     return true;
 }
@@ -341,7 +244,7 @@ bool ChatHandler::HandleNotifyCommand(const char* args)
     if (!*args)
         return false;
 
-    std::string str = GetTrinityString(LANG_GLOBAL_NOTIFY);
+    std::string str = GetSkyFireString(LANG_GLOBAL_NOTIFY);
     str += args;
 
     WorldPacket data(SMSG_NOTIFICATION, (str.size()+1));
@@ -357,7 +260,7 @@ bool ChatHandler::HandleGMNotifyCommand(const char* args)
     if (!*args)
         return false;
 
-    std::string str = GetTrinityString(LANG_GM_NOTIFY);
+    std::string str = GetSkyFireString(LANG_GM_NOTIFY);
     str += args;
 
     WorldPacket data(SMSG_NOTIFICATION, (str.size()+1));
@@ -380,6 +283,14 @@ bool ChatHandler::HandleGMCommand(const char* args)
     }
 
     std::string argstr = (char*)args;
+
+    if (argstr == "change")
+    {
+        if (m_session->GetPlayer()->isGameMaster())
+            argstr = "off";
+        else
+            argstr = "on";
+    }
 
     if (argstr == "on")
     {
@@ -424,6 +335,14 @@ bool ChatHandler::HandleGMChatCommand(const char* args)
 
     std::string argstr = (char*)args;
 
+    if (argstr == "change")
+    {
+        if (m_session->GetPlayer()->isGMChat())
+            argstr = "off";
+        else
+            argstr = "on";
+    }
+
     if (argstr == "on")
     {
         m_session->GetPlayer()->SetGMChat(true);
@@ -448,11 +367,19 @@ bool ChatHandler::HandleGMVisibleCommand(const char* args)
 {
     if (!*args)
     {
-        PSendSysMessage(LANG_YOU_ARE, m_session->GetPlayer()->isGMVisible() ?  GetTrinityString(LANG_VISIBLE) : GetTrinityString(LANG_INVISIBLE));
+        PSendSysMessage(LANG_YOU_ARE, m_session->GetPlayer()->isGMVisible() ?  GetSkyFireString(LANG_VISIBLE) : GetSkyFireString(LANG_INVISIBLE));
         return true;
     }
 
     std::string argstr = (char*)args;
+
+    if (argstr == "change")
+    {
+        if (m_session->GetPlayer()->isGMVisible())
+            argstr = "off";
+        else
+            argstr = "on";
+    }
 
     if (argstr == "on")
     {
@@ -538,19 +465,6 @@ bool ChatHandler::HandleGPSCommand(const char* args)
     else PSendSysMessage("no VMAP available for area info");
 
     PSendSysMessage(LANG_MAP_POSITION,
-        obj->GetMapId(), (mapEntry ? mapEntry->name : "<unknown>"),
-        zone_id, (zoneEntry ? zoneEntry->area_name : "<unknown>"),
-        area_id, (areaEntry ? areaEntry->area_name : "<unknown>"),
-        obj->GetPhaseMask(),
-        obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation(),
-        cell.GridX(), cell.GridY(), cell.CellX(), cell.CellY(), obj->GetInstanceId(),
-        zone_x, zone_y, ground_z, floor_z, have_map, have_vmap);
-
-    sLog->outDebug("Player %s GPS call for %s '%s' (%s: %u):",
-        m_session ? GetNameLink().c_str() : GetTrinityString(LANG_CONSOLE_COMMAND),
-        (obj->GetTypeId() == TYPEID_PLAYER ? "player" : "creature"), obj->GetName(),
-        (obj->GetTypeId() == TYPEID_PLAYER ? "GUID" : "Entry"), (obj->GetTypeId() == TYPEID_PLAYER ? obj->GetGUIDLow(): obj->GetEntry()));
-    sLog->outDebug(GetTrinityString(LANG_MAP_POSITION),
         obj->GetMapId(), (mapEntry ? mapEntry->name : "<unknown>"),
         zone_id, (zoneEntry ? zoneEntry->area_name : "<unknown>"),
         area_id, (areaEntry ? areaEntry->area_name : "<unknown>"),
@@ -668,7 +582,7 @@ bool ChatHandler::HandleSummonCommand(const char* args)
 
         std::string nameLink = playerLink(target_name);
 
-        PSendSysMessage(LANG_SUMMONING, nameLink.c_str(),GetTrinityString(LANG_OFFLINE));
+        PSendSysMessage(LANG_SUMMONING, nameLink.c_str(),GetSkyFireString(LANG_OFFLINE));
 
         // in point where GM stay
         Player::SavePositionInDB(m_session->GetPlayer()->GetMapId(),
@@ -976,7 +890,7 @@ bool ChatHandler::HandleModifyEnergyCommand(const char* args)
     chr->SetMaxPower(POWER_ENERGY,energym);
     chr->SetPower(POWER_ENERGY, energy);
 
-    sLog->outDetail(GetTrinityString(LANG_CURRENT_ENERGY),chr->GetMaxPower(POWER_ENERGY));
+    sLog->outDetail(GetSkyFireString(LANG_CURRENT_ENERGY),chr->GetMaxPower(POWER_ENERGY));
 
     return true;
 }
@@ -1296,12 +1210,10 @@ bool ChatHandler::HandleModifyASpeedCommand(const char* args)
 
     float ASpeed = (float)atof((char*)args);
 
-    if (ASpeed > 50.0f || ASpeed < 0.1f)
-    {
-        SendSysMessage(LANG_BAD_VALUE);
-        SetSentErrorMessage(true);
-        return false;
-    }
+    if (ASpeed > 50.0f)
+        ASpeed = 50.0f;
+    else if (ASpeed < 0.1f)
+        ASpeed = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
@@ -1328,7 +1240,7 @@ bool ChatHandler::HandleModifyASpeedCommand(const char* args)
     if (needReportToTarget(chr))
         ChatHandler(chr).PSendSysMessage(LANG_YOURS_ASPEED_CHANGED, GetNameLink().c_str(), ASpeed);
 
-	{
+    {
         //chr->SetSpeed(MOVE_WALK,    ASpeed,true); This is not needed anymore.
         chr->SetSpeed(MOVE_RUN,     ASpeed,true);
         chr->SetSpeed(MOVE_SWIM,    ASpeed,true);
@@ -1346,12 +1258,10 @@ bool ChatHandler::HandleModifySpeedCommand(const char* args)
 
     float Speed = (float)atof((char*)args);
 
-    if (Speed > 50.0f || Speed < 0.1f)
-    {
-        SendSysMessage(LANG_BAD_VALUE);
-        SetSentErrorMessage(true);
-        return false;
-    }
+    if (Speed > 50.0f)
+        Speed = 50.0f;
+    else if (Speed < 0.1f)
+        Speed = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
@@ -1391,12 +1301,10 @@ bool ChatHandler::HandleModifySwimCommand(const char* args)
 
     float Swim = (float)atof((char*)args);
 
-    if (Swim > 50.0f || Swim < 0.1f)
-    {
-        SendSysMessage(LANG_BAD_VALUE);
-        SetSentErrorMessage(true);
-        return false;
-    }
+    if (Swim > 50.0f)
+        Swim = 50.0f;
+    else if (Swim < 0.1f)
+        Swim = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
@@ -1436,12 +1344,10 @@ bool ChatHandler::HandleModifyBWalkCommand(const char* args)
 
     float BSpeed = (float)atof((char*)args);
 
-    if (BSpeed > 50.0f || BSpeed < 0.1f)
-    {
-        SendSysMessage(LANG_BAD_VALUE);
-        SetSentErrorMessage(true);
-        return false;
-    }
+    if (BSpeed > 50.0f)
+        BSpeed = 50.0f;
+    else if (BSpeed < 0.1f)
+        BSpeed = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
@@ -1481,12 +1387,10 @@ bool ChatHandler::HandleModifyFlyCommand(const char* args)
 
     float FSpeed = (float)atof((char*)args);
 
-    if (FSpeed > 50.0f || FSpeed < 0.1f)
-    {
-        SendSysMessage(LANG_BAD_VALUE);
-        SetSentErrorMessage(true);
-        return false;
-    }
+    if (FSpeed > 50.0f)
+        FSpeed = 50.0f;
+    else if (FSpeed < 0.1f)
+        FSpeed = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
@@ -1516,12 +1420,11 @@ bool ChatHandler::HandleModifyScaleCommand(const char* args)
         return false;
 
     float Scale = (float)atof((char*)args);
-    if (Scale > 10.0f || Scale < 0.1f)
-    {
-        SendSysMessage(LANG_BAD_VALUE);
-        SetSentErrorMessage(true);
-        return false;
-    }
+
+    if (Scale > 10.0f)
+        Scale = 10.0f;
+    else if (Scale < 0.1f)
+        Scale = 0.1f;
 
     Player *chr = getSelectedPlayer();
     if (chr == NULL)
@@ -1831,7 +1734,7 @@ bool ChatHandler::HandleModifyMoneyCommand(const char* args)
     {
         int64 newmoney = int64(moneyuser) + addmoney;
 
-        sLog->outDetail(GetTrinityString(LANG_CURRENT_MONEY), moneyuser, addmoney, newmoney);
+        sLog->outDetail(GetSkyFireString(LANG_CURRENT_MONEY), moneyuser, addmoney, newmoney);
         if (newmoney <= 0)
         {
             PSendSysMessage(LANG_YOU_TAKE_ALL_MONEY, GetNameLink(chr).c_str());
@@ -1863,7 +1766,7 @@ bool ChatHandler::HandleModifyMoneyCommand(const char* args)
             chr->ModifyMoney(addmoney);
     }
 
-    sLog->outDetail(GetTrinityString(LANG_NEW_MONEY), moneyuser, addmoney, chr->GetMoney());
+    sLog->outDetail(GetSkyFireString(LANG_NEW_MONEY), moneyuser, addmoney, chr->GetMoney());
 
     return true;
 }
@@ -1940,18 +1843,18 @@ bool ChatHandler::HandleModifyCurrencyCommand (const char* args)
         if (HasLowerSecurity(target, 0))
             return false;
 
-		char* currencyid_s = strtok((char*)args, " ");
-		char* amount_s = strtok(NULL, "");
-		if (!currencyid_s || !amount_s)
-			return false;
+        char* currencyid_s = strtok((char*)args, " ");
+        char* amount_s = strtok(NULL, "");
+        if (!currencyid_s || !amount_s)
+            return false;
 
-		int32 currencyid = (int32)atoi(currencyid_s);
-		int32 amount = (int32)atoi(amount_s);
-		if (!sCurrencyTypesStore.LookupEntry(uint32(currencyid)))
-		{
-			PSendSysMessage("Currency %u does not exist.", currencyid);
-			SetSentErrorMessage(true);
-			return false;
+        int32 currencyid = (int32)atoi(currencyid_s);
+        int32 amount = (int32)atoi(amount_s);
+        if (!sCurrencyTypesStore.LookupEntry(uint32(currencyid)))
+        {
+            PSendSysMessage("Currency %u does not exist.", currencyid);
+            SetSentErrorMessage(true);
+            return false;
         }  
 
         target->ModifyCurrency(uint32(currencyid), amount);
@@ -2125,11 +2028,20 @@ bool ChatHandler::HandleWhispersCommand(const char* args)
 {
     if (!*args)
     {
-        PSendSysMessage(LANG_COMMAND_WHISPERACCEPTING, m_session->GetPlayer()->isAcceptWhispers() ?  GetTrinityString(LANG_ON) : GetTrinityString(LANG_OFF));
+        PSendSysMessage(LANG_COMMAND_WHISPERACCEPTING, m_session->GetPlayer()->isAcceptWhispers() ?  GetSkyFireString(LANG_ON) : GetSkyFireString(LANG_OFF));
         return true;
     }
 
     std::string argstr = (char*)args;
+
+    if (argstr == "change")
+    {
+        if (m_session->GetPlayer()->isAcceptWhispers())
+            argstr = "off";
+        else
+            argstr = "on";
+    }
+
     // whisper on
     if (argstr == "on")
     {
@@ -2277,7 +2189,7 @@ bool ChatHandler::HandleTeleNameCommand(const char * args)
 
         std::string nameLink = playerLink(target_name);
 
-        PSendSysMessage(LANG_TELEPORTING_TO, nameLink.c_str(), GetTrinityString(LANG_OFFLINE), tele->name.c_str());
+        PSendSysMessage(LANG_TELEPORTING_TO, nameLink.c_str(), GetSkyFireString(LANG_OFFLINE), tele->name.c_str());
         Player::SavePositionInDB(tele->mapId,tele->position_x,tele->position_y,tele->position_z,tele->orientation,
             sMapMgr->GetZoneId(tele->mapId,tele->position_x,tele->position_y,tele->position_z),target_guid);
     }

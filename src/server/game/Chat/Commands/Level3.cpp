@@ -65,1131 +65,8 @@
 #include "LFGMgr.h"
 #include "CreatureTextMgr.h"
 #include "SmartAI.h"
-
-//reload commands
-bool ChatHandler::HandleReloadAllCommand(const char*)
-{
-    HandleReloadSkillFishingBaseLevelCommand("");
-
-    HandleReloadAllAchievementCommand("");
-    HandleReloadAllAreaCommand("");
-    HandleReloadAllEventAICommand("");
-    HandleReloadAllLootCommand("");
-    HandleReloadAllNpcCommand("");
-    HandleReloadAllQuestCommand("");
-    HandleReloadAllSpellCommand("");
-    HandleReloadAllItemCommand("");
-    HandleReloadAllGossipsCommand("");
-    HandleReloadAllLocalesCommand("");
-
-    HandleReloadAccessRequirementCommand("");
-    HandleReloadMailLevelRewardCommand("");
-    HandleReloadCommandCommand("");
-    HandleReloadReservedNameCommand("");
-    HandleReloadTrinityStringCommand("");
-    HandleReloadGameTeleCommand("");
-
-    HandleReloadAutobroadcastCommand("");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAllAchievementCommand(const char*)
-{
-    HandleReloadAchievementCriteriaDataCommand("");
-    HandleReloadAchievementRewardCommand("");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAllAreaCommand(const char*)
-{
-    //HandleReloadQuestAreaTriggersCommand(""); -- reloaded in HandleReloadAllQuestCommand
-    HandleReloadAreaTriggerTeleportCommand("");
-    HandleReloadAreaTriggerTavernCommand("");
-    HandleReloadGameGraveyardZoneCommand("");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAllLootCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables...");
-    LoadLootTables();
-    SendGlobalGMSysMessage("DB tables `*_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadAllNpcCommand(const char* args)
-{
-    if(*args != 'a')                                          // will be reloaded from all_gossips
-        HandleReloadNpcGossipCommand("a");
-    HandleReloadNpcTrainerCommand("a");
-    HandleReloadNpcVendorCommand("a");
-    HandleReloadPointsOfInterestCommand("a");
-    HandleReloadSpellClickSpellsCommand("a");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAllQuestCommand(const char* /*args*/)
-{
-    HandleReloadQuestAreaTriggersCommand("a");
-    HandleReloadQuestPOICommand("a");
-    HandleReloadQuestTemplateCommand("a");
-
-    sLog->outString("Re-Loading Quests Relations...");
-    sObjectMgr->LoadQuestRelations();
-    SendGlobalGMSysMessage("DB tables `*_questrelation` and `*_involvedrelation` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAllScriptsCommand(const char*)
-{
-    if (sWorld->IsScriptScheduled())
-    {
-        PSendSysMessage("DB scripts used currently, please attempt reload later.");
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    sLog->outString("Re-Loading Scripts...");
-    HandleReloadGameObjectScriptsCommand("a");
-    HandleReloadGossipScriptsCommand("a");
-    HandleReloadEventScriptsCommand("a");
-    HandleReloadQuestEndScriptsCommand("a");
-    HandleReloadQuestStartScriptsCommand("a");
-    HandleReloadSpellScriptsCommand("a");
-    SendGlobalGMSysMessage("DB tables `*_scripts` reloaded.");
-    HandleReloadDbScriptStringCommand("a");
-    HandleReloadWpScriptsCommand("a");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAllEventAICommand(const char*)
-{
-    HandleReloadEventAITextsCommand("a");
-    HandleReloadEventAISummonsCommand("a");
-    HandleReloadEventAIScriptsCommand("a");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAllSpellCommand(const char*)
-{
-    HandleReloadSkillDiscoveryTemplateCommand("a");
-    HandleReloadSkillExtraItemTemplateCommand("a");
-    HandleReloadSpellRequiredCommand("a");
-    HandleReloadSpellAreaCommand("a");
-    HandleReloadSpellGroupsCommand("a");
-    HandleReloadSpellLearnSpellCommand("a");
-    HandleReloadSpellLinkedSpellCommand("a");
-    HandleReloadSpellProcEventCommand("a");
-    HandleReloadSpellBonusesCommand("a");
-    HandleReloadSpellTargetPositionCommand("a");
-    HandleReloadSpellThreatsCommand("a");
-    HandleReloadSpellGroupStackRulesCommand("a");
-    HandleReloadSpellPetAurasCommand("a");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAllGossipsCommand(const char* args)
-{
-   HandleReloadGossipMenuCommand("a");
-   HandleReloadGossipMenuOptionCommand("a");
-   if(*args != 'a')                                          // already reload from all_scripts
-       HandleReloadGossipScriptsCommand("a");
-   HandleReloadNpcGossipCommand("a");
-   HandleReloadPointsOfInterestCommand("a");
-   return true;
-}
-
-bool ChatHandler::HandleReloadAllItemCommand(const char*)
-{
-    HandleReloadPageTextsCommand("a");
-    HandleReloadItemEnchantementsCommand("a");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAllLocalesCommand(const char* /*args*/)
-{
-    HandleReloadLocalesAchievementRewardCommand("a");
-    HandleReloadLocalesCreatureCommand("a");
-    HandleReloadLocalesGameobjectCommand("a");
-    HandleReloadLocalesGossipMenuOptionCommand("a");
-    HandleReloadLocalesItemCommand("a");
-    HandleReloadLocalesNpcTextCommand("a");
-    HandleReloadLocalesPageTextCommand("a");
-    HandleReloadLocalesPointsOfInterestCommand("a");
-    HandleReloadLocalesQuestCommand("a");
-    return true;
-}
-
-bool ChatHandler::HandleReloadConfigCommand(const char* /*args*/)
-{
-    sLog->outString("Re-Loading config settings...");
-    sWorld->LoadConfigSettings(true);
-    sMapMgr->InitializeVisibilityDistanceInfo();
-    SendGlobalGMSysMessage("World config settings reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAccessRequirementCommand(const char*)
-{
-    sLog->outString("Re-Loading Access Requirement definitions...");
-    sObjectMgr->LoadAccessRequirements();
-    SendGlobalGMSysMessage("DB table `access_requirement` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAchievementCriteriaDataCommand(const char*)
-{
-    sLog->outString("Re-Loading Additional Achievement Criteria Data...");
-    sAchievementMgr->LoadAchievementCriteriaData();
-    SendGlobalGMSysMessage("DB table `achievement_criteria_data` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAchievementRewardCommand(const char*)
-{
-    sLog->outString("Re-Loading Achievement Reward Data...");
-    sAchievementMgr->LoadRewards();
-    SendGlobalGMSysMessage("DB table `achievement_reward` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAreaTriggerTavernCommand(const char*)
-{
-    sLog->outString("Re-Loading Tavern Area Triggers...");
-    sObjectMgr->LoadTavernAreaTriggers();
-    SendGlobalGMSysMessage("DB table `areatrigger_tavern` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAreaTriggerTeleportCommand(const char*)
-{
-    sLog->outString("Re-Loading AreaTrigger teleport definitions...");
-    sObjectMgr->LoadAreaTriggerTeleports();
-    SendGlobalGMSysMessage("DB table `areatrigger_teleport` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAutobroadcastCommand(const char*)
-{
-    sLog->outString("Re-Loading Autobroadcast...");
-    sWorld->LoadAutobroadcasts();
-    SendGlobalGMSysMessage("DB table `autobroadcast` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadCommandCommand(const char*)
-{
-    load_command_table = true;
-    SendGlobalGMSysMessage("DB table `command` will be reloaded at next chat command use.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadOnKillReputationCommand(const char*)
-{
-    sLog->outString("Re-Loading creature award reputation definitions...");
-    sObjectMgr->LoadReputationOnKill();
-    SendGlobalGMSysMessage("DB table `creature_onkill_reputation` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadCreatureTemplateCommand(const char* args)
-{
-    if (!*args)
-        return false;
-
-    uint32 entry = (uint32) atoi((char*)args);
-    QueryResult result = WorldDatabase.PQuery("SELECT difficulty_entry_1,difficulty_entry_2,difficulty_entry_3,KillCredit1,KillCredit2,modelid1,modelid2,modelid3,modelid4,name,subname,IconName,gossip_menu_id,minlevel,maxlevel,exp,faction_A,faction_H,npcflag,speed_walk,speed_run,scale,rank,mindmg,maxdmg,dmgschool,attackpower,dmg_multiplier,baseattacktime,rangeattacktime,unit_class,unit_flags,dynamicflags,family,trainer_type,trainer_spell,trainer_class,trainer_race,minrangedmg,maxrangedmg,rangedattackpower,type,type_flags,lootid,pickpocketloot,skinloot,resistance1,resistance2,resistance3,resistance4,resistance5,resistance6,spell1,spell2,spell3,spell4,spell5,spell6,spell7,spell8,PetSpellDataId,VehicleId,mingold,maxgold,AIName,MovementType,InhabitType,Health_mod,Mana_mod,Armor_mod,RacialLeader,questItem1,questItem2,questItem3,questItem4,questItem5,questItem6,movementId,RegenHealth,equipment_id,mechanic_immune_mask,flags_extra,ScriptName FROM creature_template WHERE entry = %u", entry);
-    if (!result)
-    {
-        PSendSysMessage(LANG_COMMAND_CREATURETEMPLATE_NOTFOUND, entry);
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    CreatureInfo const* cInfo = sCreatureStorage.LookupEntry<CreatureInfo>(entry);
-    if (!cInfo)
-    {
-        PSendSysMessage(LANG_COMMAND_CREATURESTORAGE_NOTFOUND, entry);
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    sLog->outString("Reloading creature template entry %u", entry);
-
-    Field *fields = result->Fetch();
-
-    const_cast<CreatureInfo*>(cInfo)->DifficultyEntry[0] = fields[0].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->DifficultyEntry[1] = fields[1].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->DifficultyEntry[2] = fields[2].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->KillCredit[0] = fields[3].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->KillCredit[1] = fields[4].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->Modelid1 = fields[5].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->Modelid2 = fields[6].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->Modelid3 = fields[7].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->Modelid4 = fields[8].GetUInt32();
-    size_t len = 0;
-    if (const char* temp = fields[9].GetCString())
-    {
-        delete[] cInfo->Name;
-        len = strlen(temp)+1;
-        const_cast<CreatureInfo*>(cInfo)->Name = new char[len];
-        strncpy(cInfo->Name, temp, len);
-    }
-    if (const char* temp = fields[10].GetCString())
-    {
-        delete[] cInfo->SubName;
-        len = strlen(temp)+1;
-        const_cast<CreatureInfo*>(cInfo)->SubName = new char[len];
-        strncpy(cInfo->SubName, temp, len);
-    }
-    if (const char* temp = fields[11].GetCString())
-    {
-        delete[] cInfo->IconName;
-        len = strlen(temp)+1;
-        const_cast<CreatureInfo*>(cInfo)->IconName = new char[len];
-        strncpy(cInfo->IconName, temp, len);
-    }
-    const_cast<CreatureInfo*>(cInfo)->GossipMenuId = fields[12].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->minlevel = fields[13].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->maxlevel = fields[14].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->expansion = fields[15].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->faction_A = fields[16].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->faction_H = fields[17].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->npcflag = fields[18].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->speed_walk = fields[19].GetFloat();
-    const_cast<CreatureInfo*>(cInfo)->speed_run = fields[20].GetFloat();
-    const_cast<CreatureInfo*>(cInfo)->scale = fields[21].GetFloat();
-    const_cast<CreatureInfo*>(cInfo)->rank = fields[22].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->mindmg = fields[23].GetFloat();
-    const_cast<CreatureInfo*>(cInfo)->maxdmg = fields[24].GetFloat();
-    const_cast<CreatureInfo*>(cInfo)->dmgschool = fields[25].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->attackpower = fields[26].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->dmg_multiplier = fields[27].GetFloat();
-    const_cast<CreatureInfo*>(cInfo)->baseattacktime = fields[28].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->rangeattacktime = fields[29].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->unit_class = fields[30].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->unit_flags = fields[31].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->dynamicflags = fields[32].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->family = fields[33].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->trainer_type = fields[34].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->trainer_spell = fields[35].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->trainer_class = fields[36].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->trainer_race = fields[37].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->minrangedmg = fields[38].GetFloat();
-    const_cast<CreatureInfo*>(cInfo)->maxrangedmg = fields[39].GetFloat();
-    const_cast<CreatureInfo*>(cInfo)->rangedattackpower = fields[40].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->type = fields[41].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->type_flags = fields[42].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->lootid = fields[43].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->pickpocketLootId = fields[44].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->SkinLootId = fields[45].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->resistance1 = fields[46].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->resistance2 = fields[47].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->resistance3 = fields[48].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->resistance4 = fields[49].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->resistance5 = fields[50].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->resistance6 = fields[51].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->spells[0] = fields[52].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->spells[1] = fields[53].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->spells[2] = fields[54].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->spells[3] = fields[55].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->spells[4] = fields[56].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->spells[5] = fields[57].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->spells[6] = fields[58].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->spells[7] = fields[59].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->PetSpellDataId = fields[60].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->VehicleId = fields[61].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->mingold = fields[62].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->maxgold = fields[63].GetUInt32();
-    if (const char* temp = fields[64].GetCString())
-    {
-        delete[] cInfo->AIName;
-        len = strlen(temp)+1;
-        const_cast<CreatureInfo*>(cInfo)->AIName = new char[len];
-        strncpy(const_cast<char*>(cInfo->AIName), temp, len);
-    }
-    const_cast<CreatureInfo*>(cInfo)->MovementType = fields[65].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->InhabitType = fields[66].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->ModHealth = fields[67].GetFloat();
-    const_cast<CreatureInfo*>(cInfo)->ModMana = fields[68].GetFloat();
-    const_cast<CreatureInfo*>(cInfo)->ModArmor = fields[69].GetFloat();
-    const_cast<CreatureInfo*>(cInfo)->RacialLeader = fields[70].GetBool();
-    const_cast<CreatureInfo*>(cInfo)->questItems[0] = fields[71].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->questItems[1] = fields[72].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->questItems[2] = fields[73].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->questItems[3] = fields[74].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->questItems[4] = fields[75].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->questItems[5] = fields[76].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->movementId = fields[77].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->RegenHealth = fields[78].GetBool();
-    const_cast<CreatureInfo*>(cInfo)->equipmentId = fields[79].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->MechanicImmuneMask = fields[80].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->flags_extra = fields[81].GetUInt32();
-    const_cast<CreatureInfo*>(cInfo)->ScriptID = sObjectMgr->GetScriptId(fields[82].GetCString());
-
-    sObjectMgr->CheckCreatureTemplate(cInfo);
-
-    SendGlobalGMSysMessage("Creature template reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadCreatureQuestRelationsCommand(const char*)
-{
-    sLog->outString("Loading Quests Relations... (`creature_questrelation`)");
-    sObjectMgr->LoadCreatureQuestRelations();
-    SendGlobalGMSysMessage("DB table `creature_questrelation` (creature quest givers) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadCreatureLinkedRespawnCommand(const char * /*args*/)
-{
-    sLog->outString("Loading Linked Respawns... (`creature_linked_respawn`)");
-    sObjectMgr->LoadCreatureLinkedRespawn();
-    SendGlobalGMSysMessage("DB table `creature_linked_respawn` (creature linked respawns) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadCreatureQuestInvRelationsCommand(const char*)
-{
-    sLog->outString("Loading Quests Relations... (`creature_involvedrelation`)");
-    sObjectMgr->LoadCreatureInvolvedRelations();
-    SendGlobalGMSysMessage("DB table `creature_involvedrelation` (creature quest takers) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadGossipMenuCommand(const char*)
-{
-    sLog->outString("Re-Loading `gossip_menu` Table!");
-    sObjectMgr->LoadGossipMenu();
-    SendGlobalGMSysMessage("DB table `gossip_menu` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadGossipMenuOptionCommand(const char*)
-{
-    sLog->outString("Re-Loading `gossip_menu_option` Table!");
-    sObjectMgr->LoadGossipMenuItems();
-    SendGlobalGMSysMessage("DB table `gossip_menu_option` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadGOQuestRelationsCommand(const char*)
-{
-    sLog->outString("Loading Quests Relations... (`gameobject_questrelation`)");
-    sObjectMgr->LoadGameobjectQuestRelations();
-    SendGlobalGMSysMessage("DB table `gameobject_questrelation` (gameobject quest givers) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadGOQuestInvRelationsCommand(const char*)
-{
-    sLog->outString("Loading Quests Relations... (`gameobject_involvedrelation`)");
-    sObjectMgr->LoadGameobjectInvolvedRelations();
-    SendGlobalGMSysMessage("DB table `gameobject_involvedrelation` (gameobject quest takers) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadQuestAreaTriggersCommand(const char*)
-{
-    sLog->outString("Re-Loading Quest Area Triggers...");
-    sObjectMgr->LoadQuestAreaTriggers();
-    SendGlobalGMSysMessage("DB table `areatrigger_involvedrelation` (quest area triggers) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadQuestTemplateCommand(const char*)
-{
-    sLog->outString("Re-Loading Quest Templates...");
-    sObjectMgr->LoadQuests();
-    SendGlobalGMSysMessage("DB table `quest_template` (quest definitions) reloaded.");
-
-    /// dependent also from `gameobject` but this table not reloaded anyway
-    sLog->outString("Re-Loading GameObjects for quests...");
-    sObjectMgr->LoadGameObjectForQuests();
-    SendGlobalGMSysMessage("Data GameObjects for quests reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesCreatureCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`creature_loot_template`)");
-    LoadLootTemplates_Creature();
-    LootTemplates_Creature.CheckLootRefs();
-    SendGlobalGMSysMessage("DB table `creature_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesDisenchantCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`disenchant_loot_template`)");
-    LoadLootTemplates_Disenchant();
-    LootTemplates_Disenchant.CheckLootRefs();
-    SendGlobalGMSysMessage("DB table `disenchant_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesFishingCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`fishing_loot_template`)");
-    LoadLootTemplates_Fishing();
-    LootTemplates_Fishing.CheckLootRefs();
-    SendGlobalGMSysMessage("DB table `fishing_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesGameobjectCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`gameobject_loot_template`)");
-    LoadLootTemplates_Gameobject();
-    LootTemplates_Gameobject.CheckLootRefs();
-    SendGlobalGMSysMessage("DB table `gameobject_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesItemCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`item_loot_template`)");
-    LoadLootTemplates_Item();
-    LootTemplates_Item.CheckLootRefs();
-    SendGlobalGMSysMessage("DB table `item_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesMillingCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`milling_loot_template`)");
-    LoadLootTemplates_Milling();
-    LootTemplates_Milling.CheckLootRefs();
-    SendGlobalGMSysMessage("DB table `milling_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesPickpocketingCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`pickpocketing_loot_template`)");
-    LoadLootTemplates_Pickpocketing();
-    LootTemplates_Pickpocketing.CheckLootRefs();
-    SendGlobalGMSysMessage("DB table `pickpocketing_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesProspectingCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`prospecting_loot_template`)");
-    LoadLootTemplates_Prospecting();
-    LootTemplates_Prospecting.CheckLootRefs();
-    SendGlobalGMSysMessage("DB table `prospecting_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesMailCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`mail_loot_template`)");
-    LoadLootTemplates_Mail();
-    LootTemplates_Mail.CheckLootRefs();
-    SendGlobalGMSysMessage("DB table `mail_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesReferenceCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`reference_loot_template`)");
-    LoadLootTemplates_Reference();
-    SendGlobalGMSysMessage("DB table `reference_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesSkinningCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`skinning_loot_template`)");
-    LoadLootTemplates_Skinning();
-    LootTemplates_Skinning.CheckLootRefs();
-    SendGlobalGMSysMessage("DB table `skinning_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadLootTemplatesSpellCommand(const char*)
-{
-    sLog->outString("Re-Loading Loot Tables... (`spell_loot_template`)");
-    LoadLootTemplates_Spell();
-    LootTemplates_Spell.CheckLootRefs();
-    SendGlobalGMSysMessage("DB table `spell_loot_template` reloaded.");
-    sConditionMgr->LoadConditions(true);
-    return true;
-}
-
-bool ChatHandler::HandleReloadTrinityStringCommand(const char*)
-{
-    sLog->outString("Re-Loading trinity_string Table!");
-    sObjectMgr->LoadTrinityStrings();
-    SendGlobalGMSysMessage("DB table `trinity_string` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadNpcGossipCommand(const char*)
-{
-    sLog->outString("Re-Loading `npc_gossip` Table!");
-    sObjectMgr->LoadNpcTextId();
-    SendGlobalGMSysMessage("DB table `npc_gossip` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadNpcTrainerCommand(const char*)
-{
-    sLog->outString("Re-Loading `npc_trainer` Table!");
-    sObjectMgr->LoadTrainerSpell();
-    SendGlobalGMSysMessage("DB table `npc_trainer` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadNpcVendorCommand(const char*)
-{
-    sLog->outString("Re-Loading `npc_vendor` Table!");
-    sObjectMgr->LoadVendors();
-    SendGlobalGMSysMessage("DB table `npc_vendor` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadPointsOfInterestCommand(const char*)
-{
-    sLog->outString("Re-Loading `points_of_interest` Table!");
-    sObjectMgr->LoadPointsOfInterest();
-    SendGlobalGMSysMessage("DB table `points_of_interest` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadQuestPOICommand(const char*)
-{
-    sLog->outString( "Re-Loading Quest POI ..." );
-    sObjectMgr->LoadQuestPOI();
-    SendGlobalGMSysMessage("DB Table `quest_poi` and `quest_poi_points` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellClickSpellsCommand(const char*)
-{
-    sLog->outString("Re-Loading `npc_spellclick_spells` Table!");
-    sObjectMgr->LoadNPCSpellClickSpells();
-    SendGlobalGMSysMessage("DB table `npc_spellclick_spells` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadReservedNameCommand(const char*)
-{
-    sLog->outString("Loading ReservedNames... (`reserved_name`)");
-    sObjectMgr->LoadReservedPlayersNames();
-    SendGlobalGMSysMessage("DB table `reserved_name` (player reserved names) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadReputationRewardRateCommand(const char*)
-{
-    sLog->outString( "Re-Loading `reputation_reward_rate` Table!" );
-    sObjectMgr->LoadReputationRewardRate();
-    SendGlobalSysMessage("DB table `reputation_reward_rate` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadReputationSpilloverTemplateCommand(const char*)
-{
-    sLog->outString( "Re-Loading `reputation_spillover_template` Table!" );
-    sObjectMgr->LoadReputationSpilloverTemplate();
-    SendGlobalSysMessage("DB table `reputation_spillover_template` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSkillDiscoveryTemplateCommand(const char* /*args*/)
-{
-    sLog->outString("Re-Loading Skill Discovery Table...");
-    LoadSkillDiscoveryTable();
-    SendGlobalGMSysMessage("DB table `skill_discovery_template` (recipes discovered at crafting) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSkillExtraItemTemplateCommand(const char* /*args*/)
-{
-    sLog->outString("Re-Loading Skill Extra Item Table...");
-    LoadSkillExtraItemTable();
-    SendGlobalGMSysMessage("DB table `skill_extra_item_template` (extra item creation when crafting) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSkillFishingBaseLevelCommand(const char* /*args*/)
-{
-    sLog->outString("Re-Loading Skill Fishing base level requirements...");
-    sObjectMgr->LoadFishingBaseSkillLevel();
-    SendGlobalGMSysMessage("DB table `skill_fishing_base_level` (fishing base level for zone/subzone) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellAreaCommand(const char*)
-{
-    sLog->outString("Re-Loading SpellArea Data...");
-    sSpellMgr->LoadSpellAreas();
-    SendGlobalGMSysMessage("DB table `spell_area` (spell dependences from area/quest/auras state) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellRequiredCommand(const char*)
-{
-    sLog->outString("Re-Loading Spell Required Data... ");
-    sSpellMgr->LoadSpellRequired();
-    SendGlobalGMSysMessage("DB table `spell_required` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellGroupsCommand(const char*)
-{
-    sLog->outString("Re-Loading Spell Groups...");
-    sSpellMgr->LoadSpellGroups();
-    SendGlobalGMSysMessage("DB table `spell_group` (spell groups) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellLearnSpellCommand(const char*)
-{
-    sLog->outString("Re-Loading Spell Learn Spells...");
-    sSpellMgr->LoadSpellLearnSpells();
-    SendGlobalGMSysMessage("DB table `spell_learn_spell` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellLinkedSpellCommand(const char*)
-{
-    sLog->outString("Re-Loading Spell Linked Spells...");
-    sSpellMgr->LoadSpellLinked();
-    SendGlobalGMSysMessage("DB table `spell_linked_spell` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellProcEventCommand(const char*)
-{
-    sLog->outString("Re-Loading Spell Proc Event conditions...");
-    sSpellMgr->LoadSpellProcEvents();
-    SendGlobalGMSysMessage("DB table `spell_proc_event` (spell proc trigger requirements) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellBonusesCommand(const char*)
-{
-    sLog->outString("Re-Loading Spell Bonus Data...");
-    sSpellMgr->LoadSpellBonusess();
-    SendGlobalGMSysMessage("DB table `spell_bonus_data` (spell damage/healing coefficients) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellTargetPositionCommand(const char*)
-{
-    sLog->outString("Re-Loading Spell target coordinates...");
-    sSpellMgr->LoadSpellTargetPositions();
-    SendGlobalGMSysMessage("DB table `spell_target_position` (destination coordinates for spell targets) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellThreatsCommand(const char*)
-{
-    sLog->outString("Re-Loading Aggro Spells Definitions...");
-    sSpellMgr->LoadSpellThreats();
-    SendGlobalGMSysMessage("DB table `spell_threat` (spell aggro definitions) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellGroupStackRulesCommand(const char*)
-{
-    sLog->outString("Re-Loading Spell Group Stack Rules...");
-    sSpellMgr->LoadSpellGroupStackRules();
-    SendGlobalGMSysMessage("DB table `spell_group_stack_rules` (spell stacking definitions) reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellPetAurasCommand(const char*)
-{
-    sLog->outString("Re-Loading Spell pet auras...");
-    sSpellMgr->LoadSpellPetAuras();
-    SendGlobalGMSysMessage("DB table `spell_pet_auras` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadPageTextsCommand(const char*)
-{
-    sLog->outString("Re-Loading Page Texts...");
-    sObjectMgr->LoadPageTexts();
-    SendGlobalGMSysMessage("DB table `page_texts` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadItemEnchantementsCommand(const char*)
-{
-    sLog->outString("Re-Loading Item Random Enchantments Table...");
-    LoadRandomEnchantmentsTable();
-    SendGlobalGMSysMessage("DB table `item_enchantment_template` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadItemSetNamesCommand(const char*)
-{
-    sLog->outString("Re-Loading Item set names...");
-    LoadRandomEnchantmentsTable();
-    SendGlobalGMSysMessage("DB table `item_set_names` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadGossipScriptsCommand(const char* arg)
-{
-    if (sWorld->IsScriptScheduled())
-    {
-        SendSysMessage("DB scripts used currently, please attempt reload later.");
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    if (*arg != 'a')
-        sLog->outString("Re-Loading Scripts from `gossip_scripts`...");
-
-    sObjectMgr->LoadGossipScripts();
-
-    if (*arg != 'a')
-        SendGlobalGMSysMessage("DB table `gossip_scripts` reloaded.");
-
-    return true;
-}
-
-bool ChatHandler::HandleReloadGameObjectScriptsCommand(const char* arg)
-{
-    if (sWorld->IsScriptScheduled())
-    {
-        SendSysMessage("DB scripts used currently, please attempt reload later.");
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    if (*arg != 'a')
-        sLog->outString("Re-Loading Scripts from `gameobject_scripts`...");
-
-    sObjectMgr->LoadGameObjectScripts();
-
-    if (*arg != 'a')
-        SendGlobalGMSysMessage("DB table `gameobject_scripts` reloaded.");
-
-    return true;
-}
-
-bool ChatHandler::HandleReloadEventScriptsCommand(const char* arg)
-{
-    if (sWorld->IsScriptScheduled())
-    {
-        SendSysMessage("DB scripts used currently, please attempt reload later.");
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    if (*arg != 'a')
-        sLog->outString("Re-Loading Scripts from `event_scripts`...");
-
-    sObjectMgr->LoadEventScripts();
-
-    if (*arg != 'a')
-        SendGlobalGMSysMessage("DB table `event_scripts` reloaded.");
-
-    return true;
-}
-
-bool ChatHandler::HandleReloadWpScriptsCommand(const char* arg)
-{
-    if (sWorld->IsScriptScheduled())
-    {
-        SendSysMessage("DB scripts used currently, please attempt reload later.");
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    if (*arg != 'a')
-        sLog->outString("Re-Loading Scripts from `waypoint_scripts`...");
-
-    sObjectMgr->LoadWaypointScripts();
-
-    if (*arg != 'a')
-        SendGlobalGMSysMessage("DB table `waypoint_scripts` reloaded.");
-
-    return true;
-}
-
-bool ChatHandler::HandleReloadEventAITextsCommand(const char* /*args*/)
-{
-
-    sLog->outString("Re-Loading Texts from `creature_ai_texts`...");
-    sEventAIMgr->LoadCreatureEventAI_Texts();
-    SendGlobalGMSysMessage("DB table `creature_ai_texts` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadEventAISummonsCommand(const char* /*args*/)
-{
-    sLog->outString("Re-Loading Summons from `creature_ai_summons`...");
-    sEventAIMgr->LoadCreatureEventAI_Summons();
-    SendGlobalGMSysMessage("DB table `creature_ai_summons` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadEventAIScriptsCommand(const char* /*args*/)
-{
-    sLog->outString("Re-Loading Scripts from `creature_ai_scripts`...");
-    sEventAIMgr->LoadCreatureEventAI_Scripts();
-    SendGlobalGMSysMessage("DB table `creature_ai_scripts` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadQuestEndScriptsCommand(const char* arg)
-{
-    if (sWorld->IsScriptScheduled())
-    {
-        SendSysMessage("DB scripts used currently, please attempt reload later.");
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    if (*arg != 'a')
-        sLog->outString("Re-Loading Scripts from `quest_end_scripts`...");
-
-    sObjectMgr->LoadQuestEndScripts();
-
-    if (*arg != 'a')
-        SendGlobalGMSysMessage("DB table `quest_end_scripts` reloaded.");
-
-    return true;
-}
-
-bool ChatHandler::HandleReloadQuestStartScriptsCommand(const char* arg)
-{
-    if (sWorld->IsScriptScheduled())
-    {
-        SendSysMessage("DB scripts used currently, please attempt reload later.");
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    if (*arg != 'a')
-        sLog->outString("Re-Loading Scripts from `quest_start_scripts`...");
-
-    sObjectMgr->LoadQuestStartScripts();
-
-    if (*arg != 'a')
-        SendGlobalGMSysMessage("DB table `quest_start_scripts` reloaded.");
-
-    return true;
-}
-
-bool ChatHandler::HandleReloadSpellScriptsCommand(const char* arg)
-{
-    if (sWorld->IsScriptScheduled())
-    {
-        SendSysMessage("DB scripts used currently, please attempt reload later.");
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    if (*arg != 'a')
-        sLog->outString("Re-Loading Scripts from `spell_scripts`...");
-
-    sObjectMgr->LoadSpellScripts();
-
-    if (*arg != 'a')
-        SendGlobalGMSysMessage("DB table `spell_scripts` reloaded.");
-
-    return true;
-}
-
-bool ChatHandler::HandleReloadDbScriptStringCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Script strings from `db_script_string`...");
-    sObjectMgr->LoadDbScriptStrings();
-    SendGlobalGMSysMessage("DB table `db_script_string` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadGameGraveyardZoneCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Graveyard-zone links...");
-
-    sObjectMgr->LoadGraveyardZones();
-
-    SendGlobalGMSysMessage("DB table `game_graveyard_zone` reloaded.");
-
-    return true;
-}
-
-bool ChatHandler::HandleReloadGameTeleCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Game Tele coordinates...");
-
-    sObjectMgr->LoadGameTele();
-
-    SendGlobalGMSysMessage("DB table `game_tele` reloaded.");
-
-    return true;
-}
-
-bool ChatHandler::HandleReloadDisablesCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading disables table...");
-    sDisableMgr->LoadDisables();
-    sLog->outString("Checking quest disables...");
-    sDisableMgr->CheckQuestDisables();
-    SendGlobalGMSysMessage("DB table `disables` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLocalesAchievementRewardCommand(const char*)
-{
-    sLog->outString("Re-Loading Locales Achievement Reward Data...");
-    sAchievementMgr->LoadRewardLocales();
-    SendGlobalGMSysMessage("DB table `locales_achievement_reward` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLfgEncountersCommand(const char*)
-{
-    sLog->outString("Re-Loading dungeon encounter lfg associations...");
-    sLFGMgr->LoadDungeonEncounters();
-    SendGlobalGMSysMessage("DB table `lfg_dungeon_encounters` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLfgRewardsCommand(const char*)
-{
-    sLog->outString("Re-Loading lfg dungeon rewards...");
-    sLFGMgr->LoadRewards();
-    SendGlobalGMSysMessage("DB table `lfg_dungeon_rewards` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLocalesCreatureCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Locales Creature ...");
-    sObjectMgr->LoadCreatureLocales();
-    SendGlobalGMSysMessage("DB table `locales_creature` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLocalesGameobjectCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Locales Gameobject ... ");
-    sObjectMgr->LoadGameObjectLocales();
-    SendGlobalGMSysMessage("DB table `locales_gameobject` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLocalesGossipMenuOptionCommand(const char* /*arg*/)
-{
-    sLog->outString( "Re-Loading Locales Gossip Menu Option ... ");
-    sObjectMgr->LoadGossipMenuItemsLocales();
-    SendGlobalGMSysMessage("DB table `locales_gossip_menu_option` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLocalesItemCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Locales Item ... ");
-    sObjectMgr->LoadItemLocales();
-    SendGlobalGMSysMessage("DB table `locales_item` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLocalesItemSetNameCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Locales Item set name... ");
-    sObjectMgr->LoadItemSetNameLocales();
-    SendGlobalGMSysMessage("DB table `locales_item_set_name` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLocalesNpcTextCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Locales NPC Text ... ");
-    sObjectMgr->LoadNpcTextLocales();
-    SendGlobalGMSysMessage("DB table `locales_npc_text` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLocalesPageTextCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Locales Page Text ... ");
-    sObjectMgr->LoadPageTextLocales();
-    SendGlobalGMSysMessage("DB table `locales_page_text` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLocalesPointsOfInterestCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Locales Points Of Interest ... ");
-    sObjectMgr->LoadPointOfInterestLocales();
-    SendGlobalGMSysMessage("DB table `locales_points_of_interest` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadLocalesQuestCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Locales Quest ... ");
-    sObjectMgr->LoadQuestLocales();
-    SendGlobalGMSysMessage("DB table `locales_quest` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadMailLevelRewardCommand(const char* /*arg*/)
-{
-    sLog->outString("Re-Loading Player level dependent mail rewards...");
-    sObjectMgr->LoadMailLevelRewards();
-    SendGlobalGMSysMessage("DB table `mail_level_reward` reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadAuctionsCommand(const char * /*args*/)
-{
-    ///- Reload dynamic data tables from the database
-    sLog->outString("Re-Loading Auctions...");
-    sAuctionMgr->LoadAuctionItems();
-    sAuctionMgr->LoadAuctions();
-    SendGlobalGMSysMessage("Auctions reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadConditions(const char* /*args*/)
-{
-    sLog->outString("Re-Loading Conditions...");
-    sConditionMgr->LoadConditions(true);
-    SendGlobalGMSysMessage("Conditions reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadCreatureText(const char* /*args*/)
-{
-    sLog->outString("Re-Loading Creature Texts...");
-    sCreatureTextMgr->LoadCreatureTexts();
-    SendGlobalGMSysMessage("Creature Texts reloaded.");
-    return true;
-}
-
-bool ChatHandler::HandleReloadSmartScripts(const char* /*args*/)
-{
-    sLog->outString("Re-Loading Smart Scripts...");
-    sSmartScriptMgr->LoadSmartAIFromDB();
-    SendGlobalGMSysMessage("Smart Scripts reloaded.");
-    return true;
-}
+#include "Group.h"
+#include "ChannelMgr.h"
 
 bool ChatHandler::HandleMaxSkillCommand(const char* /*args*/)
 {
@@ -1266,34 +143,6 @@ bool ChatHandler::HandleSetSkillCommand(const char *args)
     return true;
 }
 
-bool ChatHandler::HandleAchievementAddCommand(const char *args)
-{
-    if (!*args)
-        return false;
-
-    uint32 achievementId = atoi((char*)args);
-    if (!achievementId)
-    {
-        if (char* cId = extractKeyFromLink((char*)args, "Hachievement"))
-            achievementId = atoi(cId);
-        if (!achievementId)
-            return false;
-    }
-
-    Player* target = getSelectedPlayer();
-    if (!target)
-    {
-        SendSysMessage(LANG_NO_CHAR_SELECTED);
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    if (AchievementEntry const* pAE = GetAchievementStore()->LookupEntry(achievementId))
-        target->CompletedAchievement(pAE, true);
-
-    return true;
-}
-
 bool ChatHandler::HandleUnLearnCommand(const char *args)
 {
     if (!*args)
@@ -1355,13 +204,13 @@ bool ChatHandler::HandleCooldownCommand(const char *args)
 
         if (!sSpellStore.LookupEntry(spell_id))
         {
-            PSendSysMessage(LANG_UNKNOWN_SPELL, target == m_session->GetPlayer() ? GetTrinityString(LANG_YOU) : tNameLink.c_str());
+            PSendSysMessage(LANG_UNKNOWN_SPELL, target == m_session->GetPlayer() ? GetSkyFireString(LANG_YOU) : tNameLink.c_str());
             SetSentErrorMessage(true);
             return false;
         }
 
         target->RemoveSpellCooldown(spell_id,true);
-        PSendSysMessage(LANG_REMOVE_COOLDOWN, spell_id, target == m_session->GetPlayer() ? GetTrinityString(LANG_YOU) : tNameLink.c_str());
+        PSendSysMessage(LANG_REMOVE_COOLDOWN, spell_id, target == m_session->GetPlayer() ? GetSkyFireString(LANG_YOU) : tNameLink.c_str());
    }
     return true;
 }
@@ -2326,9 +1175,9 @@ bool ChatHandler::HandleAddItemCommand(const char *args)
     if (!plTarget)
         plTarget = pl;
 
-    sLog->outDetail(GetTrinityString(LANG_ADDITEM), itemId, count);
+    sLog->outDetail(GetSkyFireString(LANG_ADDITEM), itemId, count);
 
-    ItemPrototype const *pProto = sObjectMgr->GetItemPrototype(itemId);
+    ItemPrototype const *pProto = ObjectMgr::GetItemPrototype(itemId);
     if (!pProto)
     {
         PSendSysMessage(LANG_COMMAND_ITEMIDINVALID, itemId);
@@ -2405,7 +1254,7 @@ bool ChatHandler::HandleAddItemSetCommand(const char *args)
     if (!plTarget)
         plTarget = pl;
 
-    sLog->outDetail(GetTrinityString(LANG_ADDITEMSET), itemsetId);
+    sLog->outDetail(GetSkyFireString(LANG_ADDITEMSET), itemsetId);
 
     bool found = false;
     for (uint32 id = 0; id < sItemStorage.MaxEntry; id++)
@@ -2467,7 +1316,7 @@ bool ChatHandler::HandleListItemCommand(const char *args)
         return false;
     }
 
-    ItemPrototype const* itemProto = sObjectMgr->GetItemPrototype(item_id);
+    ItemPrototype const* itemProto = ObjectMgr::GetItemPrototype(item_id);
     if (!itemProto)
     {
         PSendSysMessage(LANG_COMMAND_ITEMIDINVALID, item_id);
@@ -2682,7 +1531,7 @@ bool ChatHandler::HandleListObjectCommand(const char *args)
         return false;
     }
 
-    GameObjectInfo const * gInfo = sObjectMgr->GetGameObjectInfo(go_id);
+    GameObjectInfo const * gInfo = ObjectMgr::GetGameObjectInfo(go_id);
     if (!gInfo)
     {
         PSendSysMessage(LANG_COMMAND_LISTOBJINVALIDID, go_id);
@@ -2812,7 +1661,7 @@ bool ChatHandler::HandleListCreatureCommand(const char *args)
         return false;
     }
 
-    CreatureInfo const* cInfo = sObjectMgr->GetCreatureTemplate(cr_id);
+    CreatureInfo const* cInfo = ObjectMgr::GetCreatureTemplate(cr_id);
     if (!cInfo)
     {
         PSendSysMessage(LANG_COMMAND_INVALIDCREATUREID, cr_id);
@@ -3039,13 +1888,13 @@ bool ChatHandler::HandleLookupSkillCommand(const char *args)
                 char const* knownStr = "";
                 if (target && target->HasSkill(id))
                 {
-                    knownStr = GetTrinityString(LANG_KNOWN);
+                    knownStr = GetSkyFireString(LANG_KNOWN);
                     uint32 curValue = target->GetPureSkillValue(id);
                     uint32 maxValue  = target->GetPureMaxSkillValue(id);
                     uint32 permValue = target->GetSkillPermBonusValue(id);
                     uint32 tempValue = target->GetSkillTempBonusValue(id);
 
-                    char const* valFormat = GetTrinityString(LANG_SKILL_VALUES);
+                    char const* valFormat = GetSkyFireString(LANG_SKILL_VALUES);
                     snprintf(valStr,50,valFormat,curValue,maxValue,permValue,tempValue);
                 }
 
@@ -3145,7 +1994,7 @@ bool ChatHandler::HandleLookupSpellCommand(const char *args)
 
                 // include rank in link name
                 if (rank)
-                    ss << GetTrinityString(LANG_SPELL_RANK) << rank;
+                    ss << GetSkyFireString(LANG_SPELL_RANK) << rank;
 
                 if (m_session)
                     ss << " " << localeNames[loc] << "]|h|r";
@@ -3153,15 +2002,15 @@ bool ChatHandler::HandleLookupSpellCommand(const char *args)
                     ss << " " << localeNames[loc];
 
                 if (talent)
-                    ss << GetTrinityString(LANG_TALENT);
+                    ss << GetSkyFireString(LANG_TALENT);
                 if (passive)
-                    ss << GetTrinityString(LANG_PASSIVE);
+                    ss << GetSkyFireString(LANG_PASSIVE);
                 if (learn)
-                    ss << GetTrinityString(LANG_LEARN);
+                    ss << GetSkyFireString(LANG_LEARN);
                 if (known)
-                    ss << GetTrinityString(LANG_KNOWN);
+                    ss << GetSkyFireString(LANG_KNOWN);
                 if (active)
-                    ss << GetTrinityString(LANG_ACTIVE);
+                    ss << GetSkyFireString(LANG_ACTIVE);
 
                 SendSysMessage(ss.str().c_str());
 
@@ -3228,12 +2077,12 @@ bool ChatHandler::HandleLookupQuestCommand(const char *args)
                             if (status == QUEST_STATUS_COMPLETE)
                             {
                                 if (target->GetQuestRewardStatus(qinfo->GetQuestId()))
-                                    statusStr = GetTrinityString(LANG_COMMAND_QUEST_REWARDED);
+                                    statusStr = GetSkyFireString(LANG_COMMAND_QUEST_REWARDED);
                                 else
-                                    statusStr = GetTrinityString(LANG_COMMAND_QUEST_COMPLETE);
+                                    statusStr = GetSkyFireString(LANG_COMMAND_QUEST_COMPLETE);
                             }
                             else if (status == QUEST_STATUS_INCOMPLETE)
-                                statusStr = GetTrinityString(LANG_COMMAND_QUEST_ACTIVE);
+                                statusStr = GetSkyFireString(LANG_COMMAND_QUEST_ACTIVE);
                         }
 
                         if (m_session)
@@ -3271,12 +2120,12 @@ bool ChatHandler::HandleLookupQuestCommand(const char *args)
                 if (status == QUEST_STATUS_COMPLETE)
                 {
                     if (target->GetQuestRewardStatus(qinfo->GetQuestId()))
-                        statusStr = GetTrinityString(LANG_COMMAND_QUEST_REWARDED);
+                        statusStr = GetSkyFireString(LANG_COMMAND_QUEST_REWARDED);
                     else
-                        statusStr = GetTrinityString(LANG_COMMAND_QUEST_COMPLETE);
+                        statusStr = GetSkyFireString(LANG_COMMAND_QUEST_COMPLETE);
                 }
                 else if (status == QUEST_STATUS_INCOMPLETE)
-                    statusStr = GetTrinityString(LANG_COMMAND_QUEST_ACTIVE);
+                    statusStr = GetSkyFireString(LANG_COMMAND_QUEST_ACTIVE);
             }
 
             if (m_session)
@@ -3511,25 +2360,25 @@ bool ChatHandler::HandleLookupFactionCommand(const char *args)
                 if (repState)                               // and then target != NULL also
                 {
                     uint32 index = target->GetReputationMgr().GetReputationRankStrIndex(factionEntry);
-                    std::string rankName = GetTrinityString(index);
+                    std::string rankName = GetSkyFireString(index);
 
                     ss << " " << rankName << "|h|r (" << target->GetReputationMgr().GetReputation(factionEntry) << ")";
 
                     if (repState->Flags & FACTION_FLAG_VISIBLE)
-                        ss << GetTrinityString(LANG_FACTION_VISIBLE);
+                        ss << GetSkyFireString(LANG_FACTION_VISIBLE);
                     if (repState->Flags & FACTION_FLAG_AT_WAR)
-                        ss << GetTrinityString(LANG_FACTION_ATWAR);
+                        ss << GetSkyFireString(LANG_FACTION_ATWAR);
                     if (repState->Flags & FACTION_FLAG_PEACE_FORCED)
-                        ss << GetTrinityString(LANG_FACTION_PEACE_FORCED);
+                        ss << GetSkyFireString(LANG_FACTION_PEACE_FORCED);
                     if (repState->Flags & FACTION_FLAG_HIDDEN)
-                        ss << GetTrinityString(LANG_FACTION_HIDDEN);
+                        ss << GetSkyFireString(LANG_FACTION_HIDDEN);
                     if (repState->Flags & FACTION_FLAG_INVISIBLE_FORCED)
-                        ss << GetTrinityString(LANG_FACTION_INVISIBLE_FORCED);
+                        ss << GetSkyFireString(LANG_FACTION_INVISIBLE_FORCED);
                     if (repState->Flags & FACTION_FLAG_INACTIVE)
-                        ss << GetTrinityString(LANG_FACTION_INACTIVE);
+                        ss << GetSkyFireString(LANG_FACTION_INACTIVE);
                 }
                 else
-                    ss << GetTrinityString(LANG_FACTION_NOREPUTATION);
+                    ss << GetSkyFireString(LANG_FACTION_NOREPUTATION);
 
                 SendSysMessage(ss.str().c_str());
 
@@ -3651,20 +2500,20 @@ bool ChatHandler::HandleLookupMapCommand(const char *args)
                     ss << id << " - [" << name << "]";
 
                 if (MapInfo->IsContinent())
-                    ss << GetTrinityString(LANG_CONTINENT);
+                    ss << GetSkyFireString(LANG_CONTINENT);
 
                 switch(MapInfo->map_type)
                 {
-                    case MAP_INSTANCE:      ss << GetTrinityString(LANG_INSTANCE);      break;
-                    case MAP_BATTLEGROUND:  ss << GetTrinityString(LANG_BATTLEGROUND);  break;
-                    case MAP_ARENA:         ss << GetTrinityString(LANG_ARENA);         break;
+                    case MAP_INSTANCE:      ss << GetSkyFireString(LANG_INSTANCE);      break;
+                    case MAP_BATTLEGROUND:  ss << GetSkyFireString(LANG_BATTLEGROUND);  break;
+                    case MAP_ARENA:         ss << GetSkyFireString(LANG_ARENA);         break;
                 }
 
                 if (MapInfo->IsRaid())
-                    ss << GetTrinityString(LANG_RAID);
+                    ss << GetSkyFireString(LANG_RAID);
 
                 if (MapInfo->SupportsHeroicMode())
-                    ss << GetTrinityString(LANG_HEROIC);
+                    ss << GetSkyFireString(LANG_HEROIC);
 
                 uint32 ResetTimeRaid = MapInfo->resetTimeRaid;
 
@@ -3678,7 +2527,7 @@ bool ChatHandler::HandleLookupMapCommand(const char *args)
                     ResetTimeHeroicStr = secsToTimeString(ResetTimeHeroic, true, false);
 
                 if (MapInfo->IsMountAllowed())
-                    ss << GetTrinityString(LANG_MOUNTABLE);
+                    ss << GetSkyFireString(LANG_MOUNTABLE);
 
                 if (ResetTimeRaid && !ResetTimeHeroic)
                     PSendSysMessage(ss.str().c_str(), ResetTimeRaidStr.c_str());
@@ -4135,14 +2984,14 @@ bool ChatHandler::HandleNearGraveCommand(const char *args)
 
         g_team = data->team;
 
-        std::string team_name = GetTrinityString(LANG_COMMAND_GRAVEYARD_NOTEAM);
+        std::string team_name = GetSkyFireString(LANG_COMMAND_GRAVEYARD_NOTEAM);
 
         if (g_team == 0)
-            team_name = GetTrinityString(LANG_COMMAND_GRAVEYARD_ANY);
+            team_name = GetSkyFireString(LANG_COMMAND_GRAVEYARD_ANY);
         else if (g_team == HORDE)
-            team_name = GetTrinityString(LANG_COMMAND_GRAVEYARD_HORDE);
+            team_name = GetSkyFireString(LANG_COMMAND_GRAVEYARD_HORDE);
         else if (g_team == ALLIANCE)
-            team_name = GetTrinityString(LANG_COMMAND_GRAVEYARD_ALLIANCE);
+            team_name = GetSkyFireString(LANG_COMMAND_GRAVEYARD_ALLIANCE);
 
         PSendSysMessage(LANG_COMMAND_GRAVEYARDNEAREST, g_id,team_name.c_str(),zone_id);
     }
@@ -4151,11 +3000,11 @@ bool ChatHandler::HandleNearGraveCommand(const char *args)
         std::string team_name;
 
         if (g_team == 0)
-            team_name = GetTrinityString(LANG_COMMAND_GRAVEYARD_ANY);
+            team_name = GetSkyFireString(LANG_COMMAND_GRAVEYARD_ANY);
         else if (g_team == HORDE)
-            team_name = GetTrinityString(LANG_COMMAND_GRAVEYARD_HORDE);
+            team_name = GetSkyFireString(LANG_COMMAND_GRAVEYARD_HORDE);
         else if (g_team == ALLIANCE)
-            team_name = GetTrinityString(LANG_COMMAND_GRAVEYARD_ALLIANCE);
+            team_name = GetSkyFireString(LANG_COMMAND_GRAVEYARD_ALLIANCE);
 
         if (g_team == ~uint32(0))
             PSendSysMessage(LANG_COMMAND_ZONENOGRAVEYARDS, zone_id);
@@ -4165,189 +3014,6 @@ bool ChatHandler::HandleNearGraveCommand(const char *args)
 
     return true;
 }
-
-//-----------------------Npc Commands-----------------------
-bool ChatHandler::HandleNpcAllowMovementCommand(const char* /*args*/)
-{
-    if (sWorld->getAllowMovement())
-    {
-        sWorld->SetAllowMovement(false);
-        SendSysMessage(LANG_CREATURE_MOVE_DISABLED);
-    }
-    else
-    {
-        sWorld->SetAllowMovement(true);
-        SendSysMessage(LANG_CREATURE_MOVE_ENABLED);
-    }
-    return true;
-}
-
-bool ChatHandler::HandleNpcChangeEntryCommand(const char *args)
-{
-    if (!*args)
-        return false;
-
-    uint32 newEntryNum = atoi(args);
-    if (!newEntryNum)
-        return false;
-
-    Unit* unit = getSelectedUnit();
-    if (!unit || unit->GetTypeId() != TYPEID_UNIT)
-    {
-        SendSysMessage(LANG_SELECT_CREATURE);
-        SetSentErrorMessage(true);
-        return false;
-    }
-    Creature* creature = unit->ToCreature();
-    if (creature->UpdateEntry(newEntryNum))
-        SendSysMessage(LANG_DONE);
-    else
-        SendSysMessage(LANG_ERROR);
-    return true;
-}
-
-bool ChatHandler::HandleNpcInfoCommand(const char* /*args*/)
-{
-    Creature* target = getSelectedCreature();
-
-    if (!target)
-    {
-        SendSysMessage(LANG_SELECT_CREATURE);
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    uint32 faction = target->getFaction();
-    uint32 npcflags = target->GetUInt32Value(UNIT_NPC_FLAGS);
-    uint32 displayid = target->GetDisplayId();
-    uint32 nativeid = target->GetNativeDisplayId();
-    uint32 Entry = target->GetEntry();
-    CreatureInfo const* cInfo = target->GetCreatureInfo();
-
-    int64 curRespawnDelay = target->GetRespawnTimeEx()-time(NULL);
-    if (curRespawnDelay < 0)
-        curRespawnDelay = 0;
-    std::string curRespawnDelayStr = secsToTimeString(uint64(curRespawnDelay),true);
-    std::string defRespawnDelayStr = secsToTimeString(target->GetRespawnDelay(),true);
-
-    PSendSysMessage(LANG_NPCINFO_CHAR,  target->GetDBTableGUIDLow(), faction, npcflags, Entry, displayid, nativeid);
-    PSendSysMessage(LANG_NPCINFO_LEVEL, target->getLevel());
-    PSendSysMessage(LANG_NPCINFO_HEALTH,target->GetCreateHealth(), target->GetMaxHealth(), target->GetHealth());
-    PSendSysMessage(LANG_NPCINFO_FLAGS, target->GetUInt32Value(UNIT_FIELD_FLAGS), target->GetUInt32Value(UNIT_DYNAMIC_FLAGS), target->getFaction());
-    PSendSysMessage(LANG_COMMAND_RAWPAWNTIMES, defRespawnDelayStr.c_str(),curRespawnDelayStr.c_str());
-    PSendSysMessage(LANG_NPCINFO_LOOT,  cInfo->lootid,cInfo->pickpocketLootId,cInfo->SkinLootId);
-    PSendSysMessage(LANG_NPCINFO_DUNGEON_ID, target->GetInstanceId());
-    PSendSysMessage(LANG_NPCINFO_PHASEMASK, target->GetPhaseMask());
-    PSendSysMessage(LANG_NPCINFO_ARMOR, target->GetArmor());
-    PSendSysMessage(LANG_NPCINFO_POSITION,float(target->GetPositionX()), float(target->GetPositionY()), float(target->GetPositionZ()));
-    if (const CreatureData* const linked = target->GetLinkedRespawnCreatureData())
-        if (CreatureInfo const *master = GetCreatureInfo(linked->id))
-            PSendSysMessage(LANG_NPCINFO_LINKGUID, sObjectMgr->GetLinkedRespawnGuid(target->GetDBTableGUIDLow()), linked->id, master->Name);
-
-    if ((npcflags & UNIT_NPC_FLAG_VENDOR))
-    {
-        SendSysMessage(LANG_NPCINFO_VENDOR);
-    }
-    if ((npcflags & UNIT_NPC_FLAG_TRAINER))
-    {
-        SendSysMessage(LANG_NPCINFO_TRAINER);
-    }
-
-    return true;
-}
-
-//play npc emote
-bool ChatHandler::HandleNpcPlayEmoteCommand(const char *args)
-{
-    uint32 emote = atoi((char*)args);
-
-    Creature* target = getSelectedCreature();
-    if (!target)
-    {
-        SendSysMessage(LANG_SELECT_CREATURE);
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    if (target->GetTransport())
-        if (target->GetGUIDTransport())
-            WorldDatabase.PQuery("UPDATE creature_transport SET emote=%u WHERE transport_entry=%u AND guid=%u", emote, target->GetTransport()->GetEntry(), target->GetGUIDTransport());
-
-    target->SetUInt32Value(UNIT_NPC_EMOTESTATE,emote);
-
-    return true;
-}
-
-//TODO: NpcCommands that needs to be fixed :
-
-bool ChatHandler::HandleNpcAddWeaponCommand(const char* /*args*/)
-{
-    /*if (!*args)
-    return false;
-
-    uint64 guid = m_session->GetPlayer()->GetSelection();
-    if (guid == 0)
-    {
-        SendSysMessage(LANG_NO_SELECTION);
-        return true;
-    }
-
-    Creature *pCreature = ObjectAccessor::GetCreature(*m_session->GetPlayer(), guid);
-
-    if (!pCreature)
-    {
-        SendSysMessage(LANG_SELECT_CREATURE);
-        return true;
-    }
-
-    char* pSlotID = strtok((char*)args, " ");
-    if (!pSlotID)
-        return false;
-
-    char* pItemID = strtok(NULL, " ");
-    if (!pItemID)
-        return false;
-
-    uint32 ItemID = atoi(pItemID);
-    uint32 SlotID = atoi(pSlotID);
-
-    ItemPrototype* tmpItem = sObjectMgr->GetItemPrototype(ItemID);
-
-    bool added = false;
-    if (tmpItem)
-    {
-        switch(SlotID)
-        {
-            case 1:
-                pCreature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY, ItemID);
-                added = true;
-                break;
-            case 2:
-                pCreature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY_01, ItemID);
-                added = true;
-                break;
-            case 3:
-                pCreature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY_02, ItemID);
-                added = true;
-                break;
-            default:
-                PSendSysMessage(LANG_ITEM_SLOT_NOT_EXIST,SlotID);
-                added = false;
-                break;
-        }
-
-        if (added)
-            PSendSysMessage(LANG_ITEM_ADDED_TO_SLOT,ItemID,tmpItem->Name1,SlotID);
-    }
-    else
-    {
-        PSendSysMessage(LANG_ITEM_NOT_FOUND,ItemID);
-        return true;
-    }
-    */
-    return true;
-}
-//----------------------------------------------------------
 
 bool ChatHandler::HandleExploreCheatCommand(const char *args)
 {
@@ -4696,8 +3362,8 @@ bool ChatHandler::HandleListAurasCommand (const char * /*args*/)
         return false;
     }
 
-    char const* talentStr = GetTrinityString(LANG_TALENT);
-    char const* passiveStr = GetTrinityString(LANG_PASSIVE);
+    char const* talentStr = GetSkyFireString(LANG_TALENT);
+    char const* passiveStr = GetSkyFireString(LANG_PASSIVE);
 
     Unit::AuraApplicationMap const& uAuras = unit->GetAppliedAuras();
     PSendSysMessage(LANG_COMMAND_TARGET_LISTAURAS, uAuras.size());
@@ -4774,7 +3440,7 @@ bool ChatHandler::HandleResetHonorCommand (const char * args)
         return false;
 
     target->SetCurrency(CURRENCY_TYPE_HONOR_POINTS, 0);
-	target->SetUInt32Value(PLAYER_FIELD_KILLS, 0);
+    target->SetUInt32Value(PLAYER_FIELD_KILLS, 0);
     target->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_EARN_HONORABLE_KILL);
 
     return true;
@@ -5232,11 +3898,8 @@ bool ChatHandler::HandleQuestRemove(const char *args)
         }
     }
 
-    // set quest status to not started (will updated in DB at next save)
-    player->SetQuestStatus(entry, QUEST_STATUS_NONE);
-
-    // reset rewarded for restart repeatable quest
-    player->getQuestStatusMap()[entry].m_rewarded = false;
+    player->RemoveActiveQuest(entry);
+    player->RemoveRewardedQuest(entry);
 
     SendSysMessage(LANG_COMMAND_QUEST_REMOVED);
     return true;
@@ -5302,7 +3965,7 @@ bool ChatHandler::HandleQuestComplete(const char *args)
         }
         else if (creature > 0)
         {
-            if (CreatureInfo const* cInfo = sObjectMgr->GetCreatureTemplate(creature))
+            if (CreatureInfo const* cInfo = ObjectMgr::GetCreatureTemplate(creature))
                 for (uint16 z = 0; z < creaturecount; ++z)
                     player->KilledMonster(cInfo,0);
         }
@@ -5628,14 +4291,14 @@ bool ChatHandler::HandleBanInfoCharacterCommand(const char *args)
     do
     {
         Field* fields = result->Fetch();
-        time_t unbandate = time_t(fields[3].GetUInt64());
+        time_t unbandate = time_t(fields[3].GetUInt32());
         bool active = false;
-        if (fields[2].GetUInt8() && (!fields[1].GetUInt64() || unbandate >= time(NULL)))
+        if (fields[2].GetUInt8() && (!fields[1].GetUInt32() || unbandate >= time(NULL)))
             active = true;
-        bool permanent = (fields[1].GetUInt64() == uint64(0));
-        std::string bantime = permanent ? GetTrinityString(LANG_BANINFO_INFINITE) : secsToTimeString(fields[1].GetUInt64(), true);
+        bool permanent = (fields[1].GetUInt32() == uint32(0));
+        std::string bantime = permanent ? GetSkyFireString(LANG_BANINFO_INFINITE) : secsToTimeString(fields[1].GetUInt32(), true);
         PSendSysMessage(LANG_BANINFO_HISTORYENTRY,
-            fields[0].GetCString(), bantime.c_str(), active ? GetTrinityString(LANG_BANINFO_YES) : GetTrinityString(LANG_BANINFO_NO), fields[4].GetCString(), fields[5].GetCString());
+            fields[0].GetCString(), bantime.c_str(), active ? GetSkyFireString(LANG_BANINFO_YES) : GetSkyFireString(LANG_BANINFO_NO), fields[4].GetCString(), fields[5].GetCString());
     } 
     while (result->NextRow());
 
@@ -5661,9 +4324,9 @@ bool ChatHandler::HandleBanInfoHelper(uint32 accountid, char const* accountname)
         if (fields[2].GetBool() && (fields[1].GetUInt64() == (uint64)0 ||unbandate >= time(NULL)))
             active = true;
         bool permanent = (fields[1].GetUInt64() == (uint64)0);
-        std::string bantime = permanent ? GetTrinityString(LANG_BANINFO_INFINITE) : secsToTimeString(fields[1].GetUInt64(), true);
+        std::string bantime = permanent ? GetSkyFireString(LANG_BANINFO_INFINITE) : secsToTimeString(fields[1].GetUInt64(), true);
         PSendSysMessage(LANG_BANINFO_HISTORYENTRY,
-            fields[0].GetCString(), bantime.c_str(), active ? GetTrinityString(LANG_BANINFO_YES) : GetTrinityString(LANG_BANINFO_NO), fields[4].GetCString(), fields[5].GetCString());
+            fields[0].GetCString(), bantime.c_str(), active ? GetSkyFireString(LANG_BANINFO_YES) : GetSkyFireString(LANG_BANINFO_NO), fields[4].GetCString(), fields[5].GetCString());
     } while (result->NextRow());
 
     return true;
@@ -5694,8 +4357,8 @@ bool ChatHandler::HandleBanInfoIPCommand(const char *args)
     Field *fields = result->Fetch();
     bool permanent = !fields[6].GetUInt64();
     PSendSysMessage(LANG_BANINFO_IPENTRY,
-        fields[0].GetCString(), fields[1].GetCString(), permanent ? GetTrinityString(LANG_BANINFO_NEVER) : fields[2].GetCString(),
-        permanent ? GetTrinityString(LANG_BANINFO_INFINITE) : secsToTimeString(fields[3].GetUInt64(), true).c_str(), fields[4].GetCString(), fields[5].GetCString());
+        fields[0].GetCString(), fields[1].GetCString(), permanent ? GetSkyFireString(LANG_BANINFO_NEVER) : fields[2].GetCString(),
+        permanent ? GetSkyFireString(LANG_BANINFO_INFINITE) : secsToTimeString(fields[3].GetUInt64(), true).c_str(), fields[4].GetCString(), fields[5].GetCString());
 
     return true;
 }
@@ -5757,10 +4420,10 @@ bool ChatHandler::HandleBanListCharacterCommand(const char *args)
                 Field* banFields = banInfo->Fetch();
                 do
                 {
-                    time_t t_ban = banFields[0].GetUInt64();
+                    time_t t_ban = time_t(banFields[0].GetUInt32());
                     tm* aTm_ban = localtime(&t_ban);
 
-                    if (banFields[0].GetUInt64() == banFields[1].GetUInt64())
+                    if (banFields[0].GetUInt32() == banFields[1].GetUInt32())
                     {
                         PSendSysMessage("|%-15.15s|%02d-%02d-%02d %02d:%02d|   permanent  |%-15.15s|%-15.15s|",
                             char_name.c_str(), aTm_ban->tm_year%100, aTm_ban->tm_mon+1, aTm_ban->tm_mday, aTm_ban->tm_hour, aTm_ban->tm_min,
@@ -5768,7 +4431,7 @@ bool ChatHandler::HandleBanListCharacterCommand(const char *args)
                     }
                     else
                     {
-                        time_t t_unban = banFields[1].GetUInt64();
+                        time_t t_unban = time_t(banFields[1].GetUInt32());
                         tm* aTm_unban = localtime(&t_unban);
                         PSendSysMessage("|%-15.15s|%02d-%02d-%02d %02d:%02d|%02d-%02d-%02d %02d:%02d|%-15.15s|%-15.15s|",
                             char_name.c_str(), aTm_ban->tm_year%100, aTm_ban->tm_mon+1, aTm_ban->tm_mday, aTm_ban->tm_hour, aTm_ban->tm_min,
@@ -6009,10 +4672,8 @@ bool ChatHandler::HandleGMFlyCommand(const char *args)
 
     WorldPacket data(SMSG_MULTIPLE_PACKETS, 14);
     if (strncmp(args, "on", 3) == 0)
-        //data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
         data << uint16(SMSG_MOVE_SET_CAN_FLY);
     else if (strncmp(args, "off", 4) == 0)
-        //data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12);
         data << uint16(SMSG_MOVE_UNSET_CAN_FLY);
     else
     {
@@ -6801,7 +5462,7 @@ bool ChatHandler::HandleSendItemsCommand(const char *args)
         if (!item_id)
             return false;
 
-        ItemPrototype const* item_proto = sObjectMgr->GetItemPrototype(item_id);
+        ItemPrototype const* item_proto = ObjectMgr::GetItemPrototype(item_id);
         if (!item_proto)
         {
             PSendSysMessage(LANG_COMMAND_ITEMIDINVALID, item_id);
@@ -7008,25 +5669,38 @@ bool ChatHandler::HandleModifyGenderCommand(const char *args)
     return true;
 }
 
-bool ChatHandler::HandleChannelSetPublic(const char *args)
+bool ChatHandler::HandleChannelSetOwnership(const char *args)
 {
     if (!*args)
         return false;
-    std::string channel = strtok((char*)args, " ");
-    uint32 val = atoi((char*)args);
+    char *channel = strtok((char*)args, " ");
+    char *argstr =  strtok(NULL, "");
 
-    if (val)
+    if (!channel || !argstr)
+        return false;
+
+    Player *player = m_session->GetPlayer();
+    Channel *chn;
+
+    if (ChannelMgr* cMgr = channelMgr(player->GetTeam()))
+        chn = cMgr->GetChannel(channel, player);
+
+    if (strcmp(argstr, "on") == 0)
     {
-        CharacterDatabase.PExecute("UPDATE channels SET m_public = 1 WHERE m_name LIKE '%s'", channel.c_str());
-        val = 1;
+        if(chn)
+            chn->SetOwnership(true);
+        CharacterDatabase.PExecute("UPDATE channels SET m_ownership = 1 WHERE m_name LIKE '%s'", channel);
+        PSendSysMessage(LANG_CHANNEL_ENABLE_OWNERSHIP, channel);
+    }
+    else if (strcmp(argstr, "off") == 0)
+    {
+        if(chn)
+            chn->SetOwnership(false);
+        CharacterDatabase.PExecute("UPDATE channels SET m_ownership = 0 WHERE m_name LIKE '%s'", channel);
+        PSendSysMessage(LANG_CHANNEL_DISABLE_OWNERSHIP, channel);
     }
     else
-    {
-        CharacterDatabase.PExecute("UPDATE channels SET m_public = 0 WHERE m_name LIKE '%s'", channel.c_str());
-        val = 0;
-    }
-
-    PSendSysMessage(LANG_CHANNEL_PUBLIC_CHANGED, channel.c_str(), val);
+        return false;
 
     return true;
 }

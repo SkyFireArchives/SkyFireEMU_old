@@ -50,7 +50,9 @@ MotionMaster::Initialize()
     {
         MovementGenerator *curr = top();
         pop();
-        if (curr) DirectDelete(curr);
+        removeEmptyTops();
+        if (curr)
+            DirectDelete(curr);
     }
 
     InitDefault();
@@ -70,6 +72,15 @@ void MotionMaster::InitDefault()
     }
 }
 
+// reduce size so that top() != NULL
+void MotionMaster::removeEmptyTops()
+{
+    while (!top() && size() > 1) // we don't want to remove last element
+    {
+        --i_top;
+    }
+}
+
 MotionMaster::~MotionMaster()
 {
     // clear ALL movement generators (including default)
@@ -77,14 +88,16 @@ MotionMaster::~MotionMaster()
     {
         MovementGenerator *curr = top();
         pop();
-        if (curr) DirectDelete(curr);
+        removeEmptyTops();
+        if (curr)
+            DirectDelete(curr);
     }
 }
 
 void
 MotionMaster::UpdateMotion(uint32 diff)
 {
-    if (i_owner->hasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED)) // what about UNIT_STAT_DISTRACTED? Why is this not included?
+    if (i_owner->HasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED)) // what about UNIT_STAT_DISTRACTED? Why is this not included?
         return;
     ASSERT(!empty());
     m_cleanFlag |= MMCF_UPDATE;
@@ -125,7 +138,9 @@ MotionMaster::DirectClean(bool reset)
     {
         MovementGenerator *curr = top();
         pop();
-        if (curr) DirectDelete(curr);
+        removeEmptyTops();
+        if (curr)
+            DirectDelete(curr);
     }
 
     if (needInitTop())
@@ -141,6 +156,7 @@ MotionMaster::DelayedClean()
     {
         MovementGenerator *curr = top();
         pop();
+        removeEmptyTops();
         if (curr)
             DelayedDelete(curr);
     }
@@ -153,6 +169,7 @@ MotionMaster::DirectExpire(bool reset)
     {
         MovementGenerator *curr = top();
         pop();
+        removeEmptyTops();
         DirectDelete(curr);
     }
 
@@ -174,6 +191,7 @@ MotionMaster::DelayedExpire()
     {
         MovementGenerator *curr = top();
         pop();
+        removeEmptyTops();
         DelayedDelete(curr);
     }
 
@@ -202,7 +220,7 @@ MotionMaster::MoveRandom(float spawndist)
 void
 MotionMaster::MoveTargetedHome()
 {
-    //if (i_owner->hasUnitState(UNIT_STAT_FLEEING))
+    //if (i_owner->HasUnitState(UNIT_STAT_FLEEING))
     //    return;
 
     Clear(false);
@@ -241,7 +259,7 @@ MotionMaster::MoveChase(Unit* target, float dist, float angle)
     if (!target || target == i_owner || i_owner->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE))
         return;
 
-    i_owner->clearUnitState(UNIT_STAT_FOLLOW);
+    i_owner->ClearUnitState(UNIT_STAT_FOLLOW);
     if (i_owner->GetTypeId() == TYPEID_PLAYER)
     {
         sLog->outStaticDebug("Player (GUID: %u) chase to %s (GUID: %u)",
@@ -267,7 +285,7 @@ MotionMaster::MoveFollow(Unit* target, float dist, float angle, MovementSlot slo
     if (!target || target == i_owner || i_owner->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE))
         return;
 
-    i_owner->addUnitState(UNIT_STAT_FOLLOW);
+    i_owner->AddUnitState(UNIT_STAT_FOLLOW);
     if (i_owner->GetTypeId() == TYPEID_PLAYER)
     {
         sLog->outStaticDebug("Player (GUID: %u) follow to %s (GUID: %u)", i_owner->GetGUIDLow(),
@@ -334,7 +352,7 @@ void MotionMaster::MoveJump(float x, float y, float z, float speedXY, float spee
     if (i_owner->IsNonMeleeSpellCasted(true))
         i_owner->InterruptNonMeleeSpells(true);
 
-    i_owner->addUnitState(UNIT_STAT_CHARGING | UNIT_STAT_JUMPING);
+    i_owner->AddUnitState(UNIT_STAT_CHARGING | UNIT_STAT_JUMPING);
     i_owner->m_TempSpeed = speedXY;
     if (i_owner->GetTypeId() == TYPEID_PLAYER)
     {
@@ -357,7 +375,7 @@ MotionMaster::MoveCharge(float x, float y, float z, float speed, uint32 id)
     if (Impl[MOTION_SLOT_CONTROLLED] && Impl[MOTION_SLOT_CONTROLLED]->GetMovementGeneratorType() != DISTRACT_MOTION_TYPE)
         return;
 
-    i_owner->addUnitState(UNIT_STAT_CHARGING);
+    i_owner->AddUnitState(UNIT_STAT_CHARGING);
     i_owner->m_TempSpeed = speed;
     if (i_owner->GetTypeId() == TYPEID_PLAYER)
     {
@@ -490,13 +508,18 @@ void MotionMaster::Mutate(MovementGenerator *m, MovementSlot slot)
 {
     if (MovementGenerator *curr = Impl[slot])
     {
+        bool wasAtTop = (i_top == slot);
+
         Impl[slot] = NULL; // in case a new one is generated in this slot during directdelete
-        if (i_top == slot && (m_cleanFlag & MMCF_UPDATE))
+        removeEmptyTops();
+
+        if (wasAtTop && (m_cleanFlag & MMCF_UPDATE))
             DelayedDelete(curr);
         else
             DirectDelete(curr);
     }
-    else if (i_top < slot)
+
+    if (i_top < slot)
     {
         i_top = slot;
     }

@@ -50,7 +50,7 @@ namespace Trinity
 
             void operator()(WorldPacket& data, LocaleConstant loc_idx)
             {
-                char const* text = sObjectMgr->GetTrinityString(_textId, loc_idx);
+                char const* text = sObjectMgr->GetSkyFireString(_textId, loc_idx);
                 if (_args)
                 {
                     // we need copy va_list before use or original va_list will corrupted
@@ -96,9 +96,9 @@ namespace Trinity
 
             void operator()(WorldPacket& data, LocaleConstant loc_idx)
             {
-                char const* text = sObjectMgr->GetTrinityString(_textId, loc_idx);
-                char const* arg1str = _arg1 ? sObjectMgr->GetTrinityString(_arg1, loc_idx) : "";
-                char const* arg2str = _arg2 ? sObjectMgr->GetTrinityString(_arg2, loc_idx) : "";
+                char const* text = sObjectMgr->GetSkyFireString(_textId, loc_idx);
+                char const* arg1str = _arg1 ? sObjectMgr->GetSkyFireString(_arg1, loc_idx) : "";
+                char const* arg2str = _arg2 ? sObjectMgr->GetSkyFireString(_arg2, loc_idx) : "";
 
                 char str[2048];
                 snprintf(str, 2048, text, arg1str, arg2str);
@@ -220,6 +220,16 @@ Battleground::~Battleground()
     size = uint32(m_BgObjects.size());
     for (uint32 i = 0; i < size; ++i)
         DelObject(i);
+
+    if (GetInstanceID())                                    // not spam by useless queries in case BG templates
+    {
+        // delete creature and go respawn times
+        CharacterDatabase.PExecute("DELETE FROM creature_respawn WHERE instanceId = '%u'",GetInstanceID());
+        CharacterDatabase.PExecute("DELETE FROM gameobject_respawn WHERE instanceId = '%u'",GetInstanceID());
+        // delete instance from db
+        CharacterDatabase.PExecute("DELETE FROM instance WHERE id = '%u'",GetInstanceID());
+        // remove from battlegrounds
+    }
 
     sBattlegroundMgr->RemoveBattleground(GetInstanceID(), GetTypeID());
     // unload map
@@ -780,7 +790,7 @@ void Battleground::EndBattleground(uint32 winner)
                 // update achievement BEFORE personal rating update
                 ArenaTeamMember* member = winner_arena_team->GetMember(plr->GetGUID());
                 if (member)
-                    plr->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_RATED_ARENA, member->personal_rating);
+                    plr->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_RATED_ARENA, member->PersonalRating);
 
                 winner_arena_team->MemberWon(plr,loser_matchmaker_rating, winner_change);
             }
@@ -996,7 +1006,7 @@ void Battleground::RemovePlayerAtLeave(const uint64& guid, bool Transport, bool 
             plr->TeleportToBGEntryPoint();
 
         sLog->outDetail("BATTLEGROUND: Removed player %s from Battleground.", plr->GetName());
-        plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BG_OBJECTIVE_CAPTURE, ACHIEVEMENT_CRITERIA_CONDITION_MAP, GetMapId(), true);
+        plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BG_OBJECTIVE_CAPTURE, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
     }
 
     //battleground object will be deleted next Battleground::Update() call
@@ -1120,9 +1130,17 @@ void Battleground::AddPlayer(Player* plr)
             plr->CastSpell(plr, SPELL_PREPARATION, true);   // reduces all mana cost of spells.
     }
 
-    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HEALING_DONE, ACHIEVEMENT_CRITERIA_CONDITION_MAP, GetMapId());
-    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_DAMAGE_DONE, ACHIEVEMENT_CRITERIA_CONDITION_MAP, GetMapId());
-	//plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEVEMENT_CRITERIA_CONDITION_MAP, GetMapId()); // Future use
+    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
+    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_BG, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
+    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_DAMAGE_DONE, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
+    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
+    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_CAST_SPELL, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
+    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BG_OBJECTIVE_CAPTURE, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
+    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HONORABLE_KILL_AT_AREA, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
+    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HONORABLE_KILL, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
+    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HEALING_DONE, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
+    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_GET_KILLING_BLOWS, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
+    plr->GetAchievementMgr().ResetAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_SPECIAL_PVP_KILL, ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP, GetMapId(), true);
 
     // setup BG group membership
     PlayerAddedToBGCheckIfBGIsRunning(plr);
@@ -1602,7 +1620,7 @@ void Battleground::PSendMessageToAll(int32 entry, ChatMsg type, Player const* so
 
 void Battleground::SendWarningToAll(int32 entry, ...)
 {
-    const char *format = sObjectMgr->GetTrinityStringForDBCLocale(entry);
+    const char *format = sObjectMgr->GetSkyFireStringForDBCLocale(entry);
 
     char str[1024];
     va_list ap;
@@ -1644,10 +1662,10 @@ void Battleground::EndNow()
 }
 
 // To be removed
-const char* Battleground::GetTrinityString(int32 entry)
+const char* Battleground::GetSkyFireString(int32 entry)
 {
     // FIXME: now we have different DBC locales and need localized message for each target client
-    return sObjectMgr->GetTrinityStringForDBCLocale(entry);
+    return sObjectMgr->GetSkyFireStringForDBCLocale(entry);
 }
 
 // IMPORTANT NOTICE:
@@ -1850,89 +1868,89 @@ void Battleground::SetBracket(PvPDifficultyEntry const* bracketEntry)
 
 void Battleground::RewardXPAtKill(Player* plr, Player* victim)
 {
-	if (!sWorld->getBoolConfig(CONFIG_BG_XP_FOR_KILL) || !plr || !victim)
-		return;
+    if (!sWorld->getBoolConfig(CONFIG_BG_XP_FOR_KILL) || !plr || !victim)
+        return;
 
-	uint32 xp = 0;
-	Player* member_with_max_level = NULL;
-	Player* not_gray_member_with_max_level = NULL;
+    uint32 xp = 0;
+    Player* member_with_max_level = NULL;
+    Player* not_gray_member_with_max_level = NULL;
 
-	if (Group *pGroup = plr->GetGroup())//should be always in a raid group while in any bg
-	{
-		uint32 count = 0;
-		uint32 sum_level = 0;
-		for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
-		{
-			Player* member = itr->getSource();
-			if (!member || !member->isAlive())                   // only for alive
-				continue;
+    if (Group *pGroup = plr->GetGroup())//should be always in a raid group while in any bg
+    {
+        uint32 count = 0;
+        uint32 sum_level = 0;
+        for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
+        {
+            Player* member = itr->getSource();
+            if (!member || !member->isAlive())                   // only for alive
+                continue;
 
-			if (!member->IsAtGroupRewardDistance(victim))        // at req. distance
-				continue;
+            if (!member->IsAtGroupRewardDistance(victim))        // at req. distance
+                continue;
 
-			++count;
-			sum_level += member->getLevel();
-			if (!member_with_max_level || member_with_max_level->getLevel() < member->getLevel())
-				member_with_max_level = member;
+            ++count;
+            sum_level += member->getLevel();
+            if (!member_with_max_level || member_with_max_level->getLevel() < member->getLevel())
+                member_with_max_level = member;
 
-			uint32 gray_level = Trinity::XP::GetGrayLevel(member->getLevel());
-			if (victim->getLevel() > gray_level && (!not_gray_member_with_max_level
-				|| not_gray_member_with_max_level->getLevel() < member->getLevel()))
-				not_gray_member_with_max_level = member;
-		}
+            uint32 gray_level = Trinity::XP::GetGrayLevel(member->getLevel());
+            if (victim->getLevel() > gray_level && (!not_gray_member_with_max_level
+                || not_gray_member_with_max_level->getLevel() < member->getLevel()))
+                not_gray_member_with_max_level = member;
+        }
 
-		if (member_with_max_level)
-		{
-			xp = !not_gray_member_with_max_level ? 0 : Trinity::XP::Gain(not_gray_member_with_max_level, victim);
+        if (member_with_max_level)
+        {
+            xp = !not_gray_member_with_max_level ? 0 : Trinity::XP::Gain(not_gray_member_with_max_level, victim);
 
-			if (!xp)
-				return;
+            if (!xp)
+                return;
 
-			float group_rate = 1.0f;
+            float group_rate = 1.0f;
 
-			for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
-			{
-				Player* pGroupGuy = itr->getSource();
-				if (!pGroupGuy)
-					continue;
+            for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
+            {
+                Player* pGroupGuy = itr->getSource();
+                if (!pGroupGuy)
+                    continue;
 
-				if (!pGroupGuy->IsAtGroupRewardDistance(victim))
-					continue;                               // member (alive or dead) or his corpse at req. distance
+                if (!pGroupGuy->IsAtGroupRewardDistance(victim))
+                    continue;                               // member (alive or dead) or his corpse at req. distance
 
-				float rate = group_rate * float(pGroupGuy->getLevel()) / sum_level;
+                float rate = group_rate * float(pGroupGuy->getLevel()) / sum_level;
 
-				// XP updated only for alive group member
-				if (pGroupGuy->isAlive() && not_gray_member_with_max_level && pGroupGuy->getLevel() <= not_gray_member_with_max_level->getLevel())
-				{
-					uint32 itr_xp = (member_with_max_level == not_gray_member_with_max_level) ? uint32(xp*rate) : uint32((xp*rate/2)+1);
+                // XP updated only for alive group member
+                if (pGroupGuy->isAlive() && not_gray_member_with_max_level && pGroupGuy->getLevel() <= not_gray_member_with_max_level->getLevel())
+                {
+                    uint32 itr_xp = (member_with_max_level == not_gray_member_with_max_level) ? uint32(xp * rate) : uint32((xp * rate / 2) + 1);
 
-					// handle SPELL_AURA_MOD_XP_PCT auras
-					Unit::AuraEffectList const& ModXPPctAuras = plr->GetAuraEffectsByType(SPELL_AURA_MOD_XP_PCT);
-					for (Unit::AuraEffectList::const_iterator i = ModXPPctAuras.begin(); i != ModXPPctAuras.end(); ++i)
-						itr_xp = uint32(itr_xp*(1.0f + (*i)->GetAmount() / 100.0f));
+                    // handle SPELL_AURA_MOD_XP_PCT auras
+                    Unit::AuraEffectList const& ModXPPctAuras = plr->GetAuraEffectsByType(SPELL_AURA_MOD_XP_PCT);
+                    for (Unit::AuraEffectList::const_iterator i = ModXPPctAuras.begin(); i != ModXPPctAuras.end(); ++i)
+                        AddPctN(itr_xp, (*i)->GetAmount());
 
-					pGroupGuy->GiveXP(itr_xp, victim);
-					if (Pet* pet = pGroupGuy->GetPet())
-						pet->GivePetXP(itr_xp/2);
-				}
-			}
-		}
-	}
-	else//should be always in a raid group while in any BG, but you never know...
-	{
-		xp = Trinity::XP::Gain(plr, victim);
+                    pGroupGuy->GiveXP(itr_xp, victim);
+                    if (Pet* pet = pGroupGuy->GetPet())
+                        pet->GivePetXP(itr_xp / 2);
+                }
+            }
+        }
+    }
+    else//should be always in a raid group while in any BG, but you never know...
+    {
+        xp = Trinity::XP::Gain(plr, victim);
 
-		if (!xp)
-			return;
+        if (!xp)
+            return;
 
-		// handle SPELL_AURA_MOD_XP_PCT auras
-		Unit::AuraEffectList const& ModXPPctAuras = plr->GetAuraEffectsByType(SPELL_AURA_MOD_XP_PCT);
-		for (Unit::AuraEffectList::const_iterator i = ModXPPctAuras.begin(); i != ModXPPctAuras.end(); ++i)
-			xp = uint32(xp*(1.0f + (*i)->GetAmount() / 100.0f));
+        // handle SPELL_AURA_MOD_XP_PCT auras
+        Unit::AuraEffectList const& ModXPPctAuras = plr->GetAuraEffectsByType(SPELL_AURA_MOD_XP_PCT);
+        for (Unit::AuraEffectList::const_iterator i = ModXPPctAuras.begin(); i != ModXPPctAuras.end(); ++i)
+            AddPctN(xp, (*i)->GetAmount());
 
-		plr->GiveXP(xp, victim);
+        plr->GiveXP(xp, victim);
 
-		if (Pet* pet = plr->GetPet())
-			pet->GivePetXP(xp);
-	}
+        if (Pet* pet = plr->GetPet())
+            pet->GivePetXP(xp);
+    }
 }

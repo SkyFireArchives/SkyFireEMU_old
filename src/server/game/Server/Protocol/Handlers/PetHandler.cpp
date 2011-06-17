@@ -34,19 +34,21 @@
 #include "Util.h"
 #include "Pet.h"
 #include "World.h"
+#include "Group.h"
 
 void WorldSession::HandleDismissCritter(WorldPacket &recv_data)
 {
     uint64 guid;
     recv_data >> guid;
 
-    sLog->outDebug("WORLD: Received CMSG_DISMISS_CRITTER for GUID " UI64FMTD "", guid);
+    sLog->outDebug("WORLD: Received CMSG_DISMISS_CRITTER for GUID " UI64FMTD, guid);
 
     Unit* pet = ObjectAccessor::GetCreatureOrPetOrVehicle(*_player, guid);
 
     if (!pet)
     {
-        sLog->outError("Vanitypet %u does not exist", uint32(GUID_LOPART(guid)));
+        sLog->outDebug("Vanitypet (guid: %u) does not exist - player '%s' (guid: %u / account: %u) attempted to dismiss it (possibly lagged out)",
+            uint32(GUID_LOPART(guid)), GetPlayer()->GetName(), GetPlayer()->GetGUIDLow(), GetAccountId());
         return;
     }
 
@@ -59,28 +61,28 @@ void WorldSession::HandleDismissCritter(WorldPacket &recv_data)
 
 void WorldSession::HandlePetAction(WorldPacket & recv_data)
 {
-	uint64 guid1;
-	uint32 data;
-	uint64 guid2;
-	recv_data >> guid1;                                     //pet guid
-	recv_data >> data;
-	recv_data >> guid2;                                     //tag guid
+    uint64 guid1;
+    uint32 data;
+    uint64 guid2;
+    recv_data >> guid1;                                     //pet guid
+    recv_data >> data;
+    recv_data >> guid2;                                     //tag guid
 
-	uint32 spellid = UNIT_ACTION_BUTTON_ACTION(data);
-	uint8 flag = UNIT_ACTION_BUTTON_TYPE(data);             //delete = 0x07 CastSpell = C1
+    uint32 spellid = UNIT_ACTION_BUTTON_ACTION(data);
+    uint8 flag = UNIT_ACTION_BUTTON_TYPE(data);             //delete = 0x07 CastSpell = C1
 
-	Unit* pet= ObjectAccessor::GetUnit(*_player, guid1);
+    Unit* pet= ObjectAccessor::GetUnit(*_player, guid1);
 
-	float pos_x = pet->GetPositionX();
-	float pos_y = pet->GetPositionY();
-	float pos_z = pet->GetPositionZ();
+    float pos_x = pet->GetPositionX();
+    float pos_y = pet->GetPositionY();
+    float pos_z = pet->GetPositionZ();
 
-	recv_data >> pos_x;                                     // 4.0.3, x
-	recv_data >> pos_y;                                     // 4.0.3, y
-	recv_data >> pos_z;                                     // 4.0.3, z
+    recv_data >> pos_x;                                     // 4.0.3, x
+    recv_data >> pos_y;                                     // 4.0.3, y
+    recv_data >> pos_z;                                     // 4.0.3, z
 
     // used also for charmed creature
-	sLog->outDetail("HandlePetAction: Pet %u - flag: %u, spellid: %u, target: %u.", uint32(GUID_LOPART(guid1)), uint32(flag), spellid, uint32(GUID_LOPART(guid2)));
+    sLog->outDetail("HandlePetAction: Pet %u - flag: %u, spellid: %u, target: %u.", uint32(GUID_LOPART(guid1)), uint32(flag), spellid, uint32(GUID_LOPART(guid2)));
     
     if (!pet)
     {
@@ -211,7 +213,7 @@ void WorldSession::HandlePetActionHelper(Unit *pet, uint64 guid1, uint16 spellid
                             return;
                     }
 
-                    pet->clearUnitState(UNIT_STAT_FOLLOW);
+                    pet->ClearUnitState(UNIT_STAT_FOLLOW);
                     // This is true if pet has no target or has target but targets differs.
                     if (pet->getVictim() != TargetUnit || (pet->getVictim() == TargetUnit && !pet->GetCharmInfo()->IsCommandAttack()))
                     {
@@ -491,7 +493,7 @@ void WorldSession::HandlePetSetAction(WorldPacket & recv_data)
 
     if (!pet || pet != _player->GetFirstControlled())
     {
-        sLog->outError("HandlePetSetAction: Unknown pet or pet owner.");
+        sLog->outError("HandlePetSetAction: Unknown pet (GUID: %u) or pet owner (GUID: %u)", GUID_LOPART(petguid), _player->GetGUIDLow());
         return;
     }
 
@@ -779,7 +781,7 @@ void WorldSession::HandlePetCastSpellOpcode(WorldPacket& recvPacket)
     targets.read(recvPacket, caster);
     HandleClientCastFlags(recvPacket, castFlags, targets);
 
-    caster->clearUnitState(UNIT_STAT_FOLLOW);
+    caster->ClearUnitState(UNIT_STAT_FOLLOW);
 
     Spell *spell = new Spell(caster, spellInfo, false);
     spell->m_cast_count = castCount;                    // probably pending spell cast

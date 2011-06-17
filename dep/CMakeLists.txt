@@ -4,6 +4,8 @@
 #
 # Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
 #
+# Copyright (C) 2010-2011 SkyFire <http://www.projectskyfire.org/>
+#
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
@@ -42,7 +44,6 @@ add_subdirectory(recastnavigation)
 add_subdirectory(g3dlite)
 
 if(SERVERS)
-  add_subdirectory(sockets)
   add_subdirectory(gsoap)
 endif()
 

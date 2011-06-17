@@ -28,6 +28,7 @@
 #include "VMapFactory.h"
 #include "InstanceSaveMgr.h"
 #include "World.h"
+#include "Group.h"
 
 MapInstanced::MapInstanced(uint32 id, time_t expiry) : Map(id, expiry, 0, DUNGEON_DIFFICULTY_NORMAL)
 {
@@ -191,7 +192,7 @@ InstanceMap* MapInstanced::CreateInstance(uint32 InstanceId, InstanceSave *save,
     }
 
     // some instances only have one difficulty
-    GetDownscaledMapDifficultyData(GetId(),difficulty);
+    GetDownscaledMapDifficultyData(GetId(), difficulty);
 
     sLog->outDebug("MapInstanced::CreateInstance: %s map instance %d for %d created with difficulty %s", save?"":"new ", InstanceId, GetId(), difficulty?"heroic":"normal");
 
@@ -212,7 +213,7 @@ BattlegroundMap* MapInstanced::CreateBattleground(uint32 InstanceId, Battlegroun
 
     sLog->outDebug("MapInstanced::CreateBattleground: map bg %d for %d created.", InstanceId, GetId());
 
-    PvPDifficultyEntry const* bracketEntry = GetBattlegroundBracketByLevel(bg->GetMapId(),bg->GetMinLevel());
+    PvPDifficultyEntry const* bracketEntry = GetBattlegroundBracketByLevel(bg->GetMapId(), bg->GetMinLevel());
 
     uint8 spawnMode;
 
@@ -249,9 +250,15 @@ bool MapInstanced::DestroyInstance(InstancedMaps::iterator &itr)
         // so in the next map creation, (EnsureGridCreated actually) VMaps will be reloaded
         Map::UnloadAll();
     }
+
+    // Free up the instance id and allow it to be reused for bgs and arenas (other instances are handled in the InstanceSaveMgr)
+    if (itr->second->IsBattlegroundOrArena())
+        sMapMgr->FreeInstanceId(itr->second->GetInstanceId());
+
     // erase map
     delete itr->second;
     m_InstancedMaps.erase(itr++);
+
     return true;
 }
 

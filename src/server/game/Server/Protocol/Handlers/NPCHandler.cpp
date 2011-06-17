@@ -64,7 +64,7 @@ void WorldSession::HandleTabardVendorActivateOpcode(WorldPacket & recv_data)
     }
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     SendTabardVendorActivate(guid);
@@ -93,7 +93,7 @@ void WorldSession::HandleBankerActivateOpcode(WorldPacket & recv_data)
     }
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     SendShowBank(guid);
@@ -118,7 +118,7 @@ void WorldSession::HandleTrainerListOpcode(WorldPacket & recv_data)
 
 void WorldSession::SendTrainerList(uint64 guid)
 {
-    std::string str = GetTrinityString(LANG_NPC_TAINER_HELLO);
+    std::string str = GetSkyFireString(LANG_NPC_TAINER_HELLO);
     SendTrainerList(guid, str);
 }
 
@@ -134,7 +134,7 @@ void WorldSession::SendTrainerList(uint64 guid, const std::string& strTitle)
     }
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     // trainer list loaded at check;
@@ -212,7 +212,7 @@ void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket & recv_data)
     }
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     if (!unit->isCanTrainingOf(_player,true))
@@ -229,7 +229,7 @@ void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket & recv_data)
         return;
 
     // can't be learn, cheat? Or double learn with lags...
-    if (_player->GetTrainerSpellState(trainer_spell) != TRAINER_SPELL_CAN_LEARN)
+    if (_player->GetTrainerSpellState(trainer_spell) != TRAINER_SPELL_GREEN)
         return;
 
     // apply reputation discount
@@ -283,10 +283,10 @@ void WorldSession::HandleGossipHelloOpcode(WorldPacket & recv_data)
 
     GetPlayer()->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TALK);
     // remove fake death
-    //if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    //if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
     //    GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
-    if (unit->isArmorer() || unit->isCivilian() || unit->isQuestGiver() || unit->isServiceProvider())
+    if (unit->isArmorer() || unit->isCivilian() || unit->isQuestGiver() || unit->isServiceProvider() || unit->isGuard())
     {
         unit->StopMoving();
     }
@@ -338,7 +338,7 @@ void WorldSession::HandleGossipHelloOpcode(WorldPacket & recv_data)
     }
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     if (!code.empty())
@@ -369,7 +369,7 @@ void WorldSession::HandleSpiritHealerActivateOpcode(WorldPacket & recv_data)
     }
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     SendSpiritResurrect();
@@ -424,7 +424,7 @@ void WorldSession::HandleBinderActivateOpcode(WorldPacket & recv_data)
     }
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     SendBindPoint(unit);
@@ -447,10 +447,10 @@ void WorldSession::SendBindPoint(Creature *npc)
     _player->m_homebindY = _player->GetPositionY();
     _player->m_homebindZ = _player->GetPositionZ();
 
-	// send spell for homebinding (3286)
+    // send spell for homebinding (3286)
     npc->CastSpell(_player, bindspell, true);
 
-	_player->PlayerTalkClass->CloseGossip();
+    _player->PlayerTalkClass->CloseGossip();
 }
 
 void WorldSession::HandleListStabledPetsOpcode(WorldPacket & recv_data)
@@ -464,7 +464,7 @@ void WorldSession::HandleListStabledPetsOpcode(WorldPacket & recv_data)
         return;
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     // remove mounts this fix bug where getting pet from stable while mounted deletes pet.
@@ -510,7 +510,7 @@ void WorldSession::SendStablePetCallback(QueryResult result, uint64 guid)
             data << uint32(fields[1].GetUInt32());                  // slot
             data << uint32(fields[2].GetUInt32());                  // petnumber
             data << uint32(fields[3].GetUInt32());                  // creature entry
-            data << uint32(fields[4].GetUInt32());                  // level
+            data << uint32(fields[4].GetUInt16());                  // level
             data << fields[5].GetString();                          // name
             data << uint8(fields[1].GetUInt32() <= PET_SLOT_STABLE_FIRST ? 1 : 2);   // 1 = current, 2/3 = in stable (any from 4,5,... create problems with proper show)
 
@@ -542,7 +542,7 @@ void WorldSession::HandleStableChangeSlot(WorldPacket & recv_data)
     uint64 npcGUID;
     uint8 new_slot;
 
-    recv_data >> pet_number >> npcGUID >> new_slot;
+    recv_data >> new_slot >> pet_number >> npcGUID;
 
     if (!CheckStableMaster(npcGUID))
     {
@@ -557,7 +557,7 @@ void WorldSession::HandleStableChangeSlot(WorldPacket & recv_data)
     }
     
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     Pet* pet = _player->GetPet();
@@ -590,7 +590,7 @@ void WorldSession::HandleStableChangeSlotCallback(QueryResult result, uint8 new_
 
     Field *fields = result->Fetch();
 
-    uint32 slot        = fields[0].GetUInt32();
+    uint32 slot        = fields[0].GetUInt8();
     uint32 creature_id = fields[1].GetUInt32();
     uint32 pet_number  = fields[2].GetUInt32();
 
@@ -600,7 +600,7 @@ void WorldSession::HandleStableChangeSlotCallback(QueryResult result, uint8 new_
         return;
     }
 
-    CreatureInfo const* creatureInfo = sObjectMgr->GetCreatureTemplate(creature_id);
+    CreatureInfo const* creatureInfo = ObjectMgr::GetCreatureTemplate(creature_id);
     if (!creatureInfo || !creatureInfo->isTameable(_player->CanTameExoticPets()))
     {
         // if problem in exotic pet
@@ -611,8 +611,16 @@ void WorldSession::HandleStableChangeSlotCallback(QueryResult result, uint8 new_
         return;
     }
 
-    CharacterDatabase.PExecute("UPDATE character_pet SET slot = '%u' WHERE slot = '%u' AND owner='%u'",                      new_slot, slot, GetPlayer()->GetGUIDLow());
+    CharacterDatabase.PExecute("UPDATE character_pet SET slot = '%u' WHERE slot = '%u' AND owner='%u'", new_slot, slot, GetPlayer()->GetGUIDLow());
     CharacterDatabase.PExecute("UPDATE character_pet SET slot = '%u' WHERE slot = '%u' AND owner='%u' AND id<>'%u'", slot, new_slot, GetPlayer()->GetGUIDLow(), pet_number);
+
+    // Update if its a Hunter pet
+    if (new_slot != 100)
+    {
+        // We need to remove and add the new pet to there diffrent slots
+        GetPlayer()->setPetSlotUsed((PetSlot)slot, false); 
+        GetPlayer()->setPetSlotUsed((PetSlot)new_slot, true); 
+    }
     
     SendStableResult(STABLE_SUCCESS_STABLE);
 }
@@ -634,7 +642,7 @@ void WorldSession::HandleRepairItemOpcode(WorldPacket & recv_data)
     }
 
     // remove fake death
-    if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+    if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     // reputation discount

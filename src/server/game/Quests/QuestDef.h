@@ -105,6 +105,7 @@ enum QuestStatus
     QUEST_STATUS_INCOMPLETE     = 3,
     //QUEST_STATUS_AVAILABLE      = 4,
     QUEST_STATUS_FAILED         = 5,
+    QUEST_STATUS_REWARDED       = 6,        // Not used in DB
     MAX_QUEST_STATUS
 };
 
@@ -124,7 +125,7 @@ enum __QuestGiverStatus
     DIALOG_STATUS_REWARD                   = 0x400             // yellow dot on minimap
 };
 
-enum __QuestFlags
+enum QuestFlags
 {
     // Flags used at server and sent to client
     QUEST_FLAGS_NONE           = 0x00000000,
@@ -147,22 +148,28 @@ enum __QuestFlags
     QUEST_FLAGS_AUTOCOMPLETE   = 0x00010000,                // auto complete
     QUEST_FLAGS_SPECIAL_ITEM   = 0x00020000,                // has something to do with ReqItemId and SrcItemId
     QUEST_FLAGS_OBJ_TEXT       = 0x00040000,                // use Objective text as Complete text
-    QUEST_FLAGS_AUTO_ACCEPT    = 0x00080000,                // The client recognizes this flag as auto-accept. However, NONE of the current quests (3.3.5a) have this flag. Maybe blizz used to use it, or will use it in the future.
+    QUEST_FLAGS_AUTO_ACCEPT    = 0x00080000,                // The client recognizes this flag as auto-accept. 
+};
 
-    // Trinity flags for set SpecialFlags in DB if required but used only at server
-    QUEST_TRINITY_FLAGS_REPEATABLE           = 0x00100000,   // Set by 1 in SpecialFlags from DB
-    QUEST_TRINITY_FLAGS_EXPLORATION_OR_EVENT = 0x00200000,   // Set by 2 in SpecialFlags from DB (if reequired area explore, spell SPELL_EFFECT_QUEST_COMPLETE casting, table `*_script` command SCRIPT_COMMAND_QUEST_EXPLORED use, set from script)
-    QUEST_TRINITY_FLAGS_AUTO_ACCEPT          = 0x00400000,  // Set by 4 in SpecialFlags in DB if the quest is to be auto-accepted.
-    QUEST_TRINITY_FLAGS_DF_QUEST             = 0x00800000,  // Set by 8 in SpecialFlags in DB if the quest is used by Dungeon Finder.
-
-    QUEST_TRINITY_FLAGS_DB_ALLOWED = 0xFFFFF | QUEST_TRINITY_FLAGS_REPEATABLE | QUEST_TRINITY_FLAGS_EXPLORATION_OR_EVENT | QUEST_TRINITY_FLAGS_AUTO_ACCEPT | QUEST_TRINITY_FLAGS_DF_QUEST,
+enum QuestSpecialFlags
+{
+    // SkyFire flags for set SpecialFlags in DB if required but used only at server
+    QUEST_SPECIAL_FLAG_REPEATABLE           = 0x001,  // Set by 1 in SpecialFlags from DB
+    QUEST_SPECIAL_FLAG_EXPLORATION_OR_EVENT = 0x002,  // Set by 2 in SpecialFlags from DB (if reequired area explore, spell SPELL_EFFECT_QUEST_COMPLETE casting, table `*_script` command SCRIPT_COMMAND_QUEST_EXPLORED use, set from script)
+    //QUEST_SPECIAL_FLAG_MONTHLY              = 0x004,  // Set by 4 in SpecialFlags. Quest reset for player at beginning of month.
+ 
 
     // Trinity flags for internal use only
-    QUEST_TRINITY_FLAGS_DELIVER              = 0x04000000,   // Internal flag computed only
-    QUEST_TRINITY_FLAGS_SPEAKTO              = 0x08000000,   // Internal flag computed only
-    QUEST_TRINITY_FLAGS_KILL_OR_CAST         = 0x10000000,   // Internal flag computed only
-    QUEST_TRINITY_FLAGS_TIMED                = 0x20000000,   // Internal flag computed only
+    QUEST_SPECIAL_FLAG_DELIVER              = 0x008,  // Internal flag computed only
+    QUEST_SPECIAL_FLAG_SPEAKTO              = 0x010,  // Internal flag computed only
+    QUEST_SPECIAL_FLAG_KILL_OR_CAST         = 0x020,  // Internal flag computed only
+    QUEST_SPECIAL_FLAG_TIMED                = 0x040,  // Internal flag computed only
+
+    QUEST_SPECIAL_FLAG_AUTO_ACCEPT          = 0x400,  // Set by 4 in SpecialFlags in DB if the quest is to be auto-accepted.
+    QUEST_SPECIAL_FLAG_DF_QUEST             = 0x800,  // Set by 8 in SpecialFlags in DB if the quest is used by Dungeon Finder.
 };
+
+#define QUEST_SPECIAL_FLAG_DB_ALLOWED (QUEST_SPECIAL_FLAG_REPEATABLE | QUEST_SPECIAL_FLAG_EXPLORATION_OR_EVENT | QUEST_SPECIAL_FLAG_AUTO_ACCEPT | QUEST_SPECIAL_FLAG_DF_QUEST)
 
 struct QuestLocale
 {
@@ -188,8 +195,11 @@ class Quest
         Quest(Field * questRecord);
         uint32 XPValue(Player *pPlayer) const;
 
+        uint32 GetQuestFlags() const { return QuestFlags; }
         bool HasFlag(uint32 flag) const { return (QuestFlags & flag) != 0; }
-        void SetFlag(uint32 flag) { QuestFlags |= flag; }
+        bool HasSpecialFlag(uint32 flag) const { return (SpecialFlags & flag) != 0; }
+        void SetSpecialFlag(uint32 flag) { SpecialFlags |= flag; }
+
 
         // table data accessors:
         uint32 GetQuestId() const { return QuestId; }
@@ -260,7 +270,7 @@ class Quest
         uint32 GetRequiredSpell() const { return RequiredSpell; }
         uint32 GetQuestStartScript() const { return QuestStartScript; }
         uint32 GetQuestCompleteScript() const { return QuestCompleteScript; }
-        bool   IsRepeatable() const { return QuestFlags & QUEST_TRINITY_FLAGS_REPEATABLE; }
+        bool   IsRepeatable() const { return SpecialFlags & QUEST_SPECIAL_FLAG_REPEATABLE; }
         bool   IsAutoComplete() const { return QuestMethod ? false : true; }
         uint32 GetFlags() const { return QuestFlags; }
         bool   IsDaily() const { return QuestFlags & QUEST_FLAGS_DAILY; }
@@ -269,7 +279,7 @@ class Quest
         bool   IsAutoAccept() const { return QuestFlags & QUEST_FLAGS_AUTO_ACCEPT; }
         bool   IsRaidQuest() const { return Type == QUEST_TYPE_RAID || Type == QUEST_TYPE_RAID_10 || Type == QUEST_TYPE_RAID_25; }
         bool   IsAllowedInRaid() const;
-        bool   IsDFQuest() const { return QuestFlags & QUEST_TRINITY_FLAGS_DF_QUEST; }
+        bool   IsDFQuest() const { return SpecialFlags & QUEST_SPECIAL_FLAG_DF_QUEST; }
 
         // multiple values
         std::string ObjectiveText[QUEST_OBJECTIVES_COUNT];
@@ -337,6 +347,7 @@ class Quest
         uint32 SuggestedPlayers;
         uint32 LimitTime;
         uint32 QuestFlags;
+        uint32 SpecialFlags;
         uint32 CharTitleId;
         uint32 PlayersSlain;
         uint32 BonusTalents;
@@ -386,30 +397,18 @@ class Quest
         uint32 QuestCompleteScript;
 };
 
-enum QuestUpdateState
-{
-    QUEST_UNCHANGED = 0,
-    QUEST_CHANGED = 1,
-    QUEST_NEW = 2
-};
-
 struct QuestStatusData
 {
-    QuestStatusData()
-        : m_status(QUEST_STATUS_NONE),m_rewarded(false),
-        m_explored(false), m_timer(0), uState(QUEST_NEW)
+    QuestStatusData(): m_status(QUEST_STATUS_NONE), m_explored(false), m_timer(0)
     {
         memset(m_itemcount, 0, QUEST_ITEM_OBJECTIVES_COUNT * sizeof(uint16));
         memset(m_creatureOrGOcount, 0, QUEST_OBJECTIVES_COUNT * sizeof(uint16));
     }
 
     QuestStatus m_status;
-    bool m_rewarded;
     bool m_explored;
     uint32 m_timer;
-    QuestUpdateState uState;
-
-    uint16 m_itemcount[ QUEST_ITEM_OBJECTIVES_COUNT ];
-    uint16 m_creatureOrGOcount[ QUEST_OBJECTIVES_COUNT ];
+    uint16 m_itemcount[QUEST_ITEM_OBJECTIVES_COUNT];
+    uint16 m_creatureOrGOcount[QUEST_OBJECTIVES_COUNT];
 };
 #endif

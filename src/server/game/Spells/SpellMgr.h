@@ -53,14 +53,6 @@ enum SpellCategories
     SPELLCATEGORY_DRINK            = 59,
 };
 
-enum SpellDisableTypes
-{
-    SPELL_DISABLE_PLAYER            = 0x1,
-    SPELL_DISABLE_CREATURE          = 0x2,
-    SPELL_DISABLE_PET               = 0x4,
-    SPELL_DISABLE_DEPRECATED_SPELL  = 0x8
-};
-
 enum SpellEffectTargetTypes
 {
     SPELL_REQUIRE_NONE,
@@ -117,6 +109,9 @@ enum SpellFamilyFlag
     SPELLFAMILYFLAG_WARRIOR_EXECUTE         = 0x20000000,
     SPELLFAMILYFLAG_WARRIOR_CONCUSSION_BLOW = 0x04000000,
 
+    // Mage
+    SPELLFAMILYFLAG1_MAGE_CONEOFCOLD        = 0x00000200,
+
     // Warlock
     SPELLFAMILYFLAG_WARLOCK_LIFETAP         = 0x00040000,
 
@@ -142,6 +137,7 @@ enum SpellFamilyFlag
     SPELLFAMILYFLAG1_DK_SCOURGE_STRIKE      = 0x08000000,
     SPELLFAMILYFLAG_DK_DEATH_COIL           = 0x00002000,
     SPELLFAMILYFLAG1_DK_HUNGERING_COLD      = 0x00001000,
+    SPELLFAMILYFLAG_DK_CHAINS_OF_ICE        = 0x00000004,
 
 
     // TODO: Figure out a more accurate name for the following familyflag(s)
@@ -949,8 +945,7 @@ bool IsPartOfSkillLine(uint32 skillId, uint32 spellId);
 
 class SpellMgr
 {
-    // Constructors
-    public:
+        friend class ACE_Singleton<SpellMgr, ACE_Null_Mutex>;
         SpellMgr();
         ~SpellMgr();
 
@@ -1422,10 +1417,9 @@ class SpellMgr
 
     // Modifiers
     public:
-        static SpellMgr& Instance();
 
         // Loading data at server startup
-        //void LoadSpellRanks();
+        void LoadSpellRanks();
         void LoadSpellRequired();
         void LoadSpellLearnSkills();
         void LoadSpellLearnSpells();

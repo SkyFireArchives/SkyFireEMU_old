@@ -3,6 +3,8 @@
  *
  * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
+ *
  * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
  *
  * This program is free software; you can redistribute it and/or modify

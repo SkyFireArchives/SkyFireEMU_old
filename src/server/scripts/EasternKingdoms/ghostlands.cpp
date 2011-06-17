@@ -1,19 +1,25 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* ScriptData
@@ -255,7 +261,86 @@ public:
     }
 
 };
-
+/*######
+## npc_captive
+######*/
+ 
+enum eCaptive
+{
+    MOB1        =16208,
+    MOB2        =16206,
+    MOB3        =16209
+};
+ 
+#define GOSSIP_HELLO_CAPTIVE1   "<Use Renzithen's Restorative Draught on Enith!>"
+#define GOSSIP_HELLO_CAPTIVE2   "<Use Renzithen's Restorative Draught on Varnis!>"
+#define GOSSIP_HELLO_CAPTIVE3   "<Use Renzithen's Restorative Draught on Vedoran!>"
+ 
+ 
+class npc_captive : public CreatureScript
+{
+public:
+    npc_captive() : CreatureScript("npc_captive") { }
+ 
+    bool OnGossipHello(Player* pPlayer, Creature* pCreature)
+    {
+        
+ 
+        if (pPlayer->GetQuestStatus(9164) == QUEST_STATUS_INCOMPLETE && pCreature->GetEntry() == MOB1)
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HELLO_CAPTIVE1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        
+        
+        if (pPlayer->GetQuestStatus(9164) == QUEST_STATUS_INCOMPLETE && pCreature->GetEntry() == MOB2)
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HELLO_CAPTIVE2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+ 
+ 
+        if (pPlayer->GetQuestStatus(9164) == QUEST_STATUS_INCOMPLETE && pCreature->GetEntry() == MOB3)
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HELLO_CAPTIVE3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+ 
+        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+ 
+        return true;
+    }
+ 
+    bool OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
+    {
+        pPlayer->PlayerTalkClass->ClearMenus();
+        
+        if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
+        {
+            pPlayer->CLOSE_GOSSIP_MENU();
+            pPlayer->KilledMonsterCredit(MOB1, 0);
+            pCreature->SetStandState(UNIT_STAND_STATE_STAND);
+            pCreature->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
+            pCreature->GetMotionMaster()->MovePoint(0, 6640.259f, -6343.529f, 8.944f);
+            pCreature->ForcedDespawn(5000);
+ 
+        }       
+ 
+        if (uiAction == GOSSIP_ACTION_INFO_DEF + 2)
+        {
+            pPlayer->CLOSE_GOSSIP_MENU();
+            pPlayer->KilledMonsterCredit(MOB2, 0);
+            pCreature->SetStandState(UNIT_STAND_STATE_STAND);
+            pCreature->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
+            pCreature->GetMotionMaster()->MovePoint(0, 6437.597f, -6618.529f, 107.436f);
+            pCreature->ForcedDespawn(5000);
+ 
+        }
+ 
+        if (uiAction == GOSSIP_ACTION_INFO_DEF + 3)
+        {
+            pPlayer->CLOSE_GOSSIP_MENU();
+            pPlayer->KilledMonsterCredit(MOB3, 0);
+            pCreature->SetStandState(UNIT_STAND_STATE_STAND);
+            pCreature->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
+            pCreature->GetMotionMaster()->MovePoint(0, 6306.514f, -6363.729f, 78.024f);
+            pCreature->ForcedDespawn(5000);
+ 
+        }return true;
+        
+    }
+};
 
 void AddSC_ghostlands()
 {
@@ -263,4 +348,5 @@ void AddSC_ghostlands()
     new npc_budd_nedreck();
     new npc_rathis_tomber();
     new npc_ranger_lilatha();
+    new npc_captive();
 }

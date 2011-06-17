@@ -1,18 +1,25 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "ScriptPCH.h"
@@ -67,6 +74,8 @@ class boss_bronjahm : public CreatureScript
         {
             boss_bronjahmAI(Creature* creature) : BossAI(creature, DATA_BRONJAHM)
             {
+                me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+                me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
             }
 
             void InitializeAI()
@@ -138,7 +147,7 @@ class boss_bronjahm : public CreatureScript
 
                 events.Update(diff);
 
-                if (me->hasUnitState(UNIT_STAT_CASTING))
+                if (me->HasUnitState(UNIT_STAT_CASTING))
                     return;
 
                 while (uint32 eventId = events.ExecuteEvent())
@@ -352,6 +361,57 @@ class spell_bronjahm_soulstorm_visual : public SpellScriptLoader
         }
 };
 
+class DistanceCheck
+{
+    public:
+        explicit DistanceCheck(Unit* _caster) : caster(_caster) { }
+
+        bool operator() (Unit* unit)
+        {
+            if (caster->GetExactDist2d(unit) <= 10.0f)
+                return true;
+            return false;
+        }
+
+        Unit* caster;
+};
+
+class spell_bronjahm_soulstorm_targeting : public SpellScriptLoader
+{
+    public:
+        spell_bronjahm_soulstorm_targeting() : SpellScriptLoader("spell_bronjahm_soulstorm_targeting") { }
+
+        class spell_bronjahm_soulstorm_targeting_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_bronjahm_soulstorm_targeting_SpellScript);
+
+            void FilterTargetsInitial(std::list<Unit*>& unitList)
+            {
+                unitList.remove_if(DistanceCheck(GetCaster()));
+                sharedUnitList = unitList;
+            }
+
+            // use the same target for first and second effect
+            void FilterTargetsSubsequent(std::list<Unit*>& unitList)
+            {
+                unitList = sharedUnitList;
+            }
+
+            void Register()
+            {
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_bronjahm_soulstorm_targeting_SpellScript::FilterTargetsInitial, EFFECT_1, TARGET_UNIT_AREA_ENEMY_DST);
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_bronjahm_soulstorm_targeting_SpellScript::FilterTargetsSubsequent, EFFECT_2, TARGET_UNIT_AREA_ENEMY_DST);
+            }
+
+            std::list<Unit*> sharedUnitList;
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_bronjahm_soulstorm_targeting_SpellScript();
+        }
+};
+
 void AddSC_boss_bronjahm()
 {
     new boss_bronjahm();
@@ -360,4 +420,5 @@ void AddSC_boss_bronjahm()
     new spell_bronjahm_consume_soul();
     new spell_bronjahm_soulstorm_channel();
     new spell_bronjahm_soulstorm_visual();
+    new spell_bronjahm_soulstorm_targeting();
 }

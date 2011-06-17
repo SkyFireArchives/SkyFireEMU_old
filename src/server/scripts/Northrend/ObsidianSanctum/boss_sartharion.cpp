@@ -1,22 +1,31 @@
 /*
- * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "ScriptPCH.h"
 #include "obsidian_sanctum.h"
+#include "SpellScript.h"
+#include "Spell.h"
 
 enum eEnums
 {
@@ -118,6 +127,11 @@ enum eEnums
 
     NPC_FLAME_TSUNAMI                           = 30616,    // for the flame waves
     NPC_LAVA_BLAZE                              = 30643,    // adds spawning from flame strike
+
+    //Pyrobuffet
+    SPELL_PYROBUFFET_TRIGGER_AURA               = 58907,    // applied at boss to cast triggered at players
+    SPELL_PYROBUFFET_DMG_AURA                   = 58903,    // triggered by aura at boss
+    NPC_SAFE_AREA                               = 30494,    // safe zone npc for Pyrobuffet
 
     //using these custom points for dragons start and end
     POINT_ID_INIT                               = 100,
@@ -232,6 +246,8 @@ public:
         boss_sartharionAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             pInstance = pCreature->GetInstanceScript();
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+            me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
         InstanceScript* pInstance;
@@ -365,6 +381,7 @@ public:
             {
                 pInstance->SetData(TYPE_SARTHARION_EVENT, IN_PROGRESS);
                 FetchDragons();
+                DoCast(SPELL_PYROBUFFET_TRIGGER_AURA);
             }
         }
 
@@ -1008,7 +1025,9 @@ public:
 
     struct mob_tenebronAI : public dummy_dragonAI
     {
-        mob_tenebronAI(Creature* pCreature) : dummy_dragonAI(pCreature) {}
+        mob_tenebronAI(Creature* pCreature) : dummy_dragonAI(pCreature) {
+        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         uint32 m_uiShadowBreathTimer;
         uint32 m_uiShadowFissureTimer;
@@ -1098,7 +1117,9 @@ public:
 
     struct mob_shadronAI : public dummy_dragonAI
     {
-        mob_shadronAI(Creature* pCreature) : dummy_dragonAI(pCreature) {}
+        mob_shadronAI(Creature* pCreature) : dummy_dragonAI(pCreature) {
+        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
+        me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         uint32 m_uiShadowBreathTimer;
         uint32 m_uiShadowFissureTimer;
@@ -1548,7 +1569,7 @@ public:
                 if(Tenebron)
                     (CAST_AI(mob_tenebron::mob_tenebronAI,Tenebron->AI()))->m_bHasPortalOpen = false;
                 SpawnWhelps();
-				m_uiHatchEggTimer = urand(40000,50000);
+                m_uiHatchEggTimer = urand(40000,50000);
             }
             else
                 m_uiHatchEggTimer -= uiDiff;
@@ -1711,6 +1732,45 @@ public:
 
 };
 
+class PyrobuffetTargetSelector
+{
+    public:
+        PyrobuffetTargetSelector() { }
+
+        bool operator()(Unit* unit)
+        {
+            return unit->FindNearestCreature(NPC_SAFE_AREA, 30);
+        }
+};
+
+class spell_pyrobuffet_target_check : public SpellScriptLoader
+{
+    public:
+        spell_pyrobuffet_target_check() : SpellScriptLoader("spell_pyrobuffet_target_check") { }
+
+        class spell_pyrobuffet_target_check_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_pyrobuffet_target_check_SpellScript);
+
+            void FilterTargets(std::list<Unit*>& unitList)
+            {
+                unitList.remove_if(PyrobuffetTargetSelector());
+            }
+
+            void Register()
+            {
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_pyrobuffet_target_check_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_AREA_ENEMY_SRC);
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_pyrobuffet_target_check_SpellScript::FilterTargets, EFFECT_1, TARGET_UNIT_AREA_ENEMY_SRC);
+                OnUnitTargetSelect += SpellUnitTargetFn(spell_pyrobuffet_target_check_SpellScript::FilterTargets, EFFECT_2, TARGET_UNIT_AREA_ENEMY_SRC);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_pyrobuffet_target_check_SpellScript();
+        }
+};
+
 void AddSC_boss_sartharion()
 {
     new boss_sartharion();
@@ -1723,4 +1783,5 @@ void AddSC_boss_sartharion()
     new npc_flame_tsunami();
     new npc_twilight_fissure();
     new mob_twilight_whelp();
+    new spell_pyrobuffet_target_check();
 }

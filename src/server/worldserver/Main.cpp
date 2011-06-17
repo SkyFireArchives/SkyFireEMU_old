@@ -81,7 +81,7 @@ extern int main(int argc, char **argv)
     int c=1;
     while( c < argc )
     {
-        if( strcmp(argv[c],"-c") == 0)
+        if( strcmp(argv[c], "-c") == 0)
         {
             if( ++c >= argc )
             {
@@ -97,7 +97,7 @@ extern int main(int argc, char **argv)
         ////////////
         //Services//
         ////////////
-        if( strcmp(argv[c],"-s") == 0)
+        if( strcmp(argv[c], "-s") == 0)
         {
             if( ++c >= argc )
             {
@@ -105,13 +105,13 @@ extern int main(int argc, char **argv)
                 usage(argv[0]);
                 return 1;
             }
-            if( strcmp(argv[c],"install") == 0)
+            if( strcmp(argv[c], "install") == 0)
             {
                 if (WinServiceInstall())
                     sLog->outString("Installing service");
                 return 1;
             }
-            else if( strcmp(argv[c],"uninstall") == 0)
+            else if( strcmp(argv[c], "uninstall") == 0)
             {
                 if(WinServiceUninstall())
                     sLog->outString("Uninstalling service");
@@ -119,12 +119,12 @@ extern int main(int argc, char **argv)
             }
             else
             {
-                sLog->outError("Runtime-Error: unsupported option %s",argv[c]);
+                sLog->outError("Runtime-Error: unsupported option %s", argv[c]);
                 usage(argv[0]);
                 return 1;
             }
         }
-        if( strcmp(argv[c],"--service") == 0)
+        if( strcmp(argv[c], "--service") == 0)
         {
             WinServiceRun();
         }

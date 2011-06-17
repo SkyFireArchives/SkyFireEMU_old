@@ -350,6 +350,8 @@ ConditionList ConditionMgr::GetConditionsForVehicleSpell(uint32 creatureID, uint
 
 void ConditionMgr::LoadConditions(bool isReload)
 {
+    uint32 oldMSTime = getMSTime();
+
     Clean();
 
     //must clear all custom handled cases (groupped types) before reload
@@ -376,26 +378,20 @@ void ConditionMgr::LoadConditions(bool isReload)
         sObjectMgr->LoadGossipMenuItems();
     }
 
-    uint32 count = 0;
-    QueryResult result = WorldDatabase.Query("SELECT SourceTypeOrReferenceId, SourceGroup, SourceEntry, ElseGroup, ConditionTypeOrReference, ConditionValue1, ConditionValue2, ConditionValue3, ErrorTextId, ScriptName FROM conditions");
+    QueryResult result = WorldDatabase.Query("SELECT SourceTypeOrReferenceId, SourceGroup, SourceEntry, ElseGroup, ConditionTypeOrReference,"
+                                             " ConditionValue1, ConditionValue2, ConditionValue3, ErrorTextId, ScriptName FROM conditions");
 
     if (!result)
     {
-        
-
-        
-
+        sLog->outErrorDb(">> Loaded 0 conditions. DB table `groups` is empty!");
         sLog->outString();
-        sLog->outErrorDb(">> Loaded `conditions`, table is empty!");
         return;
     }
 
-    
+    uint32 count = 0;
 
     do
     {
-        
-
         Field *fields = result->Fetch();
 
         Condition* cond = new Condition();
@@ -578,8 +574,8 @@ void ConditionMgr::LoadConditions(bool isReload)
     }
     while (result->NextRow());
 
+    sLog->outString(">> Loaded %u conditions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u conditions", count);
 }
 
 bool ConditionMgr::addToLootTemplate(Condition* cond, LootTemplate* loot)
@@ -937,7 +933,7 @@ bool ConditionMgr::isSourceTypeValid(Condition* cond)
                 return false;
             }
 
-            ItemPrototype const *pItemProto = sObjectMgr->GetItemPrototype(cond->mSourceEntry);
+            ItemPrototype const *pItemProto = ObjectMgr::GetItemPrototype(cond->mSourceEntry);
             if (!pItemProto)
             {
                 sLog->outErrorDb("SourceEntry %u in `condition` table, does not exist in `item_tamplate`, ignoring.", cond->mSourceEntry);
@@ -1053,7 +1049,7 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond)
         }
         case CONDITION_ITEM:
         {
-            ItemPrototype const *proto = sObjectMgr->GetItemPrototype(cond->mConditionValue1);
+            ItemPrototype const *proto = ObjectMgr::GetItemPrototype(cond->mConditionValue1);
             if (!proto)
             {
                 sLog->outErrorDb("Item condition has non existing item (%u), skipped", cond->mConditionValue1);
@@ -1069,7 +1065,7 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond)
         }
         case CONDITION_ITEM_EQUIPPED:
         {
-            ItemPrototype const *proto = sObjectMgr->GetItemPrototype(cond->mConditionValue1);
+            ItemPrototype const *proto = ObjectMgr::GetItemPrototype(cond->mConditionValue1);
             if (!proto)
             {
                 sLog->outErrorDb("ItemEquipped condition has non existing item (%u), skipped", cond->mConditionValue1);
@@ -1336,7 +1332,7 @@ bool ConditionMgr::isConditionTypeValid(Condition* cond)
         }
         case CONDITION_NOITEM:
         {
-            ItemPrototype const *proto = sObjectMgr->GetItemPrototype(cond->mConditionValue1);
+            ItemPrototype const *proto = ObjectMgr::GetItemPrototype(cond->mConditionValue1);
             if (!proto)
             {
                 sLog->outErrorDb("NoItem condition has non existing item (%u), skipped", cond->mConditionValue1);

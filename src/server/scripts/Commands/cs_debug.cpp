@@ -1,18 +1,25 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* ScriptData
@@ -852,7 +859,7 @@ class debug_commandscript : public CommandScript
 
             uint32 id = (uint32)atoi(i);
 
-            CreatureInfo const *ci = sObjectMgr->GetCreatureTemplate(entry);
+            CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(entry);
 
             if (!ci)
                 return false;
@@ -1054,14 +1061,14 @@ class debug_commandscript : public CommandScript
             if (isint32)
             {
                 iValue = (uint32)atoi(py);
-                sLog->outDebug(handler->GetTrinityString(LANG_SET_UINT), GUID_LOPART(guid), Opcode, iValue);
+                sLog->outDebug(handler->GetSkyFireString(LANG_SET_UINT), GUID_LOPART(guid), Opcode, iValue);
                 target->SetUInt32Value(Opcode , iValue);
                 handler->PSendSysMessage(LANG_SET_UINT_FIELD, GUID_LOPART(guid), Opcode,iValue);
             }
             else
             {
                 fValue = (float)atof(py);
-                sLog->outDebug(handler->GetTrinityString(LANG_SET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
+                sLog->outDebug(handler->GetSkyFireString(LANG_SET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
                 target->SetFloatValue(Opcode , fValue);
                 handler->PSendSysMessage(LANG_SET_FLOAT_FIELD, GUID_LOPART(guid), Opcode,fValue);
             }
@@ -1105,13 +1112,13 @@ class debug_commandscript : public CommandScript
             if (isint32)
             {
                 iValue = target->GetUInt32Value(Opcode);
-                sLog->outDebug(handler->GetTrinityString(LANG_GET_UINT), GUID_LOPART(guid), Opcode, iValue);
+                sLog->outDebug(handler->GetSkyFireString(LANG_GET_UINT), GUID_LOPART(guid), Opcode, iValue);
                 handler->PSendSysMessage(LANG_GET_UINT_FIELD, GUID_LOPART(guid), Opcode,    iValue);
             }
             else
             {
                 fValue = target->GetFloatValue(Opcode);
-                sLog->outDebug(handler->GetTrinityString(LANG_GET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
+                sLog->outDebug(handler->GetSkyFireString(LANG_GET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
                 handler->PSendSysMessage(LANG_GET_FLOAT_FIELD, GUID_LOPART(guid), Opcode, fValue);
             }
 
@@ -1138,7 +1145,7 @@ class debug_commandscript : public CommandScript
                 return false;
             }
 
-            sLog->outDebug(handler->GetTrinityString(LANG_CHANGE_32BIT), Opcode, Value);
+            sLog->outDebug(handler->GetSkyFireString(LANG_CHANGE_32BIT), Opcode, Value);
 
             int CurrentValue = (int)handler->GetSession()->GetPlayer()->GetUInt32Value(Opcode);
 
@@ -1224,7 +1231,7 @@ class debug_commandscript : public CommandScript
             if (Value > 32)                                         //uint32 = 32 bits
                 return false;
 
-            sLog->outDebug(handler->GetTrinityString(LANG_SET_32BIT), Opcode, Value);
+            sLog->outDebug(handler->GetSkyFireString(LANG_SET_32BIT), Opcode, Value);
 
             uint32 iValue = Value ? 1 << (Value - 1) : 0;
             target->SetUInt32Value(Opcode ,  iValue);
@@ -1241,11 +1248,11 @@ class debug_commandscript : public CommandScript
             uint32 opcode = atoi(args);
             if (opcode != 0)
                 handler->PSendSysMessage("Set debugOpcode to %u for debugging. WARNING, NO PACKETS APART FROM IT WILL BE SENT UNTIL YOU DISABLE THIS OPTION !!!", sWorld->debugOpcode);
-	
-	        sWorld->debugOpcode = opcode;
+    
+            sWorld->debugOpcode = opcode;
 
-	        if (opcode == 0)
-		        handler->PSendSysMessage("debugOpcode state was reset. The server will function normally now.");
+            if (opcode == 0)
+                handler->PSendSysMessage("debugOpcode state was reset. The server will function normally now.");
             return true;
         }
 };

@@ -38,7 +38,7 @@ FleeingMovementGenerator<T>::_setTargetLocation(T &owner)
     if (!&owner)
         return;
 
-    if (owner.hasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED))
+    if (owner.HasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED))
         return;
 
     if (!_setMoveData(owner))
@@ -48,7 +48,7 @@ FleeingMovementGenerator<T>::_setTargetLocation(T &owner)
     if (!_getPoint(owner, x, y, z))
         return;
 
-    owner.addUnitState(UNIT_STAT_FLEEING | UNIT_STAT_ROAMING);
+    owner.AddUnitState(UNIT_STAT_FLEEING | UNIT_STAT_ROAMING);
     Traveller<T> traveller(owner);
     i_destinationHolder.SetDestination(traveller, x, y, z);
 }
@@ -307,7 +307,7 @@ FleeingMovementGenerator<T>::Initialize(T &owner)
 
     _Init(owner);
     owner.CastStop();
-    owner.addUnitState(UNIT_STAT_FLEEING | UNIT_STAT_ROAMING);
+    owner.AddUnitState(UNIT_STAT_FLEEING | UNIT_STAT_ROAMING);
     owner.SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_FLEEING);
     owner.SetUInt64Value(UNIT_FIELD_TARGET, 0);
     owner.RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
@@ -356,7 +356,7 @@ void
 FleeingMovementGenerator<T>::Finalize(T &owner)
 {
     owner.RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_FLEEING);
-    owner.clearUnitState(UNIT_STAT_FLEEING | UNIT_STAT_ROAMING);
+    owner.ClearUnitState(UNIT_STAT_FLEEING | UNIT_STAT_ROAMING);
     if (owner.GetTypeId() == TYPEID_UNIT && owner.getVictim())
         owner.SetUInt64Value(UNIT_FIELD_TARGET, owner.getVictim()->GetGUID());
 }
@@ -374,7 +374,7 @@ FleeingMovementGenerator<T>::Update(T &owner, const uint32 & time_diff)
 {
     if (!&owner || !owner.isAlive())
         return false;
-    if (owner.hasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED))
+    if (owner.HasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED))
         return true;
 
     Traveller<T> traveller(owner);
@@ -417,7 +417,7 @@ template bool FleeingMovementGenerator<Creature>::Update(Creature &, const uint3
 void TimedFleeingMovementGenerator::Finalize(Unit &owner)
 {
     owner.RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_FLEEING);
-    owner.clearUnitState(UNIT_STAT_FLEEING | UNIT_STAT_ROAMING);
+    owner.ClearUnitState(UNIT_STAT_FLEEING | UNIT_STAT_ROAMING);
     if (Unit* victim = owner.getVictim())
     {
         if (owner.isAlive())
@@ -433,7 +433,7 @@ bool TimedFleeingMovementGenerator::Update(Unit & owner, const uint32 & time_dif
     if (!owner.isAlive())
         return false;
 
-    if (owner.hasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED))
+    if (owner.HasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED))
         return true;
 
     i_totalFleeTime.Update(time_diff);

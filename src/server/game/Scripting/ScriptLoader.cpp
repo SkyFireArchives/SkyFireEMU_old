@@ -29,6 +29,8 @@ void AddSC_example_creature();
 void AddSC_example_escort();
 void AddSC_example_gossip_codebox();
 void AddSC_example_misc();
+//player scripts
+void AddSC_player_mage_scripts();
 void AddSC_example_commandscript();
 
 // spells
@@ -51,14 +53,15 @@ void AddSC_SmartSCripts();
 
 //Commands
 void AddSC_account_commandscript();
-//void AddSC_achievement_commandscript();
+void AddSC_achievement_commandscript();
 //void AddSC_gm_commandscript();
-//void AddSC_npc_commandscript();
+void AddSC_npc_commandscript();
 //void AddSC_go_commandscript();
 //void AddSC_learn_commandscript();
 //void AddSC_modify_commandscript();
 void AddSC_debug_commandscript();
 void AddSC_wp_commandscript();
+void AddSC_reload_commandscript();
 
 #ifdef SCRIPTS
 //world
@@ -217,6 +220,20 @@ void AddSC_boss_nalorakk();
 void AddSC_boss_zuljin();
 void AddSC_instance_zulaman();
 void AddSC_zulaman();
+void AddSC_boss_jeklik();                    //Zul'Gurub
+void AddSC_boss_venoxis();
+void AddSC_boss_marli();
+void AddSC_boss_mandokir();
+void AddSC_boss_gahzranka();
+void AddSC_boss_thekal();
+void AddSC_boss_arlokk();
+void AddSC_boss_jindo();
+void AddSC_boss_hakkar();
+void AddSC_boss_grilek();
+void AddSC_boss_hazzarah();
+void AddSC_boss_renataki();
+void AddSC_boss_wushoolay();
+void AddSC_instance_zulgurub();
 
 //void AddSC_alterac_mountains();
 void AddSC_arathi_highlands();
@@ -307,6 +324,7 @@ void AddSC_wailing_caverns();                //Wailing caverns
 void AddSC_instance_wailing_caverns();
 void AddSC_zulfarrak();                     //Zul'Farrak generic
 void AddSC_instance_zulfarrak();            //Zul'Farrak instance script
+void AddSC_npc_pusillin();                  //Dire Maul Pusillin
 
 void AddSC_ashenvale();
 void AddSC_azshara();
@@ -331,6 +349,8 @@ void AddSC_thousand_needles();
 void AddSC_thunder_bluff();
 void AddSC_ungoro_crater();
 void AddSC_winterspring();
+void AddSC_lost_city_of_the_tolvir();        //Cata:The Lost City of the Tol'vir
+void AddSC_instance_lost_city_of_the_tolvir();
 
 //northrend
 void AddSC_boss_slad_ran();
@@ -456,8 +476,11 @@ void AddSC_boss_festergut();
 void AddSC_boss_rotface();
 void AddSC_boss_professor_putricide();
 void AddSC_boss_blood_prince_council();
+void AddSC_boss_blood_queen_lana_thel();
+void AddSC_boss_sindragosa();
 void AddSC_icecrown_citadel_teleport();
 void AddSC_instance_icecrown_citadel();
+void AddSC_icecrown_citadel();
 
 void AddSC_dalaran();
 void AddSC_borean_tundra();
@@ -553,6 +576,12 @@ void AddSC_shattrath_city();
 void AddSC_terokkar_forest();
 void AddSC_zangarmarsh();
 
+// Cataclysm Scripts
+
+void AddSC_the_stonecore();                     //Cata:TheStonecore
+void AddSC_instance_the_stonecore();
+
+
 // battlegrounds
 
 // outdoor pvp
@@ -571,6 +600,7 @@ void AddSC_chat_log();
 void AddScripts()
 {
     AddExampleScripts();
+    AddPlayerScripts();
     AddSpellScripts();
     AddSC_SmartSCripts();
     AddCommandScripts();
@@ -595,6 +625,11 @@ void AddExampleScripts()
     AddSC_example_commandscript();
 }
 
+void AddPlayerScripts()
+{
+    AddSC_player_mage_scripts();
+}
+
 void AddSpellScripts()
 {
     AddSC_deathknight_spell_scripts();
@@ -616,14 +651,15 @@ void AddSpellScripts()
 void AddCommandScripts()
 {
     AddSC_account_commandscript();
-    //AddSC_achievement_commandscript();
+    AddSC_achievement_commandscript();
     //AddSC_gm_commandscript();
-    //AddSC_npc_commandscript();
+    AddSC_npc_commandscript();
     //AddSC_go_commandscript();
     //AddSC_learn_commandscript();
     //AddSC_modify_commandscript();
     AddSC_debug_commandscript();
 	AddSC_pathfinding_commandscript();
+    AddSC_reload_commandscript();
 }
 
 void AddWorldScripts()
@@ -789,6 +825,20 @@ void AddEasternKingdomsScripts()
     AddSC_boss_zuljin();
     AddSC_instance_zulaman();
     AddSC_zulaman();
+    AddSC_boss_jeklik();                    //Zul'Gurub
+    AddSC_boss_venoxis();
+    AddSC_boss_marli();
+    AddSC_boss_mandokir();
+    AddSC_boss_gahzranka();
+    AddSC_boss_thekal();
+    AddSC_boss_arlokk();
+    AddSC_boss_jindo();
+    AddSC_boss_hakkar();
+    AddSC_boss_grilek();
+    AddSC_boss_hazzarah();
+    AddSC_boss_renataki();
+    AddSC_boss_wushoolay();
+    AddSC_instance_zulgurub();
 
     //AddSC_alterac_mountains();
     AddSC_arathi_highlands();
@@ -883,6 +933,7 @@ void AddKalimdorScripts()
     AddSC_instance_wailing_caverns();
     AddSC_zulfarrak();                      //Zul'Farrak generic
     AddSC_instance_zulfarrak();             //Zul'Farrak instance script
+    AddSC_npc_pusillin();                   //Dire maul npc Pusillin
 
     AddSC_ashenvale();
     AddSC_azshara();
@@ -907,6 +958,8 @@ void AddKalimdorScripts()
     AddSC_thunder_bluff();
     AddSC_ungoro_crater();
     AddSC_winterspring();
+    AddSC_lost_city_of_the_tolvir();
+    AddSC_instance_lost_city_of_the_tolvir();
 #endif
 }
 
@@ -1122,8 +1175,11 @@ void AddNorthrendScripts()
     AddSC_boss_rotface();
     AddSC_boss_professor_putricide();
     AddSC_boss_blood_prince_council();
+    AddSC_boss_blood_queen_lana_thel();
+    AddSC_boss_sindragosa();
     AddSC_icecrown_citadel_teleport();
     AddSC_instance_icecrown_citadel();
+    AddSC_icecrown_citadel();
 
     AddSC_dalaran();
     AddSC_borean_tundra();
@@ -1136,6 +1192,11 @@ void AddNorthrendScripts()
     AddSC_zuldrak();
     AddSC_crystalsong_forest();
     AddSC_isle_of_conquest();
+
+    // Cataclysm Scripts
+    AddSC_the_stonecore();
+    AddSC_instance_the_stonecore();
+
 #endif
 }
 

@@ -286,17 +286,6 @@ void WorldSession::HandleChannelAnnouncements(WorldPacket& recvPacket)
             chn->Announce(_player->GetGUID());
 }
 
-void WorldSession::HandleChannelModerate(WorldPacket& recvPacket)
-{
-    sLog->outDebug("Opcode %u", recvPacket.GetOpcode());
-    //recvPacket.hexlike();
-    std::string channelname;
-    recvPacket >> channelname;
-    if (ChannelMgr* cMgr = channelMgr(_player->GetTeam()))
-        if (Channel *chn = cMgr->GetChannel(channelname, _player))
-            chn->Moderate(_player->GetGUID());
-}
-
 void WorldSession::HandleChannelDisplayListQuery(WorldPacket &recvPacket)
 {
     // this should be OK because the 2 function _were_ the same

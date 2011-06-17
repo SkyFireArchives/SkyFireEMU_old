@@ -1,19 +1,25 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
- * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+ * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
  *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* ScriptData
@@ -172,8 +178,8 @@ public:
 
         void EnterCombat(Unit * who)
         {
-            if (!me->hasUnitState(UNIT_STAT_ROOT))
-                me->addUnitState(UNIT_STAT_ROOT);
+            if (!me->HasUnitState(UNIT_STAT_ROOT))
+                me->AddUnitState(UNIT_STAT_ROOT);
         }
 
         void SetData(uint32 type, uint32 data)
@@ -311,8 +317,8 @@ public:
             
             if (uiCombatTimer <= diff)
             {
-                if (me->hasUnitState(UNIT_STAT_ROOT))
-                    me->clearUnitState(UNIT_STAT_ROOT);
+                if (me->HasUnitState(UNIT_STAT_ROOT))
+                    me->ClearUnitState(UNIT_STAT_ROOT);
 
                 uiCombatTimer = 500;
             }else uiCombatTimer -= diff;
@@ -345,13 +351,13 @@ public:
         void Reset()
         {
             if (!me->HasAura(SPELL_FORTITUDE))
-                if (!me->hasUnitState(UNIT_STAT_CASTING))
+                if (!me->HasUnitState(UNIT_STAT_CASTING))
                     DoCast(me, SPELL_FORTITUDE);
         }
 
         void UpdateAI(const uint32 diff)
         {
-            if (me->hasUnitState(UNIT_STAT_CASTING) && me->isMoving())
+            if (me->HasUnitState(UNIT_STAT_CASTING) && me->isMoving())
                 me->StopMoving();
 
             if (!UpdateVictim())
@@ -600,8 +606,103 @@ public:
 
 };
 
+enum
+{
+    SPELL_RENEWEDLIFE           = 93097,
+    NPC_INJURED_SOLDIER_DUMMY   = 50378
+};
+
+class npc_injured_soldier : public CreatureScript
+{
+public:
+    npc_injured_soldier() : CreatureScript("npc_injured_soldier") { }
+
+    struct npc_injured_soldierAI : public ScriptedAI
+    {
+        npc_injured_soldierAI(Creature *pCreature) : ScriptedAI(pCreature) {}
+
+        bool IsHealed;
+        uint32 RunTimer;
+        uint8 Phase;
+
+        void Reset()
+        {
+            me->SetCreatorGUID(0);
+            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_15);
+            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_14);
+            me->SetFlag(UNIT_FIELD_BYTES_1,7);
+            IsHealed = false;
+            RunTimer = 2000;
+            Phase = 0;
+        }
+
+        void SpellHit(Unit* caster, const SpellEntry *pSpell)
+        {
+            if(pSpell->Id == SPELL_RENEWEDLIFE)
+            {
+                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_15);
+                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_14);
+                me->RemoveFlag(UNIT_FIELD_BYTES_1,7);
+                IsHealed = true;
+            }
+        }
+        void UpdateAI(const uint32 diff)
+        {
+            if(!IsHealed)
+                return;
+
+            if(Player* pOwner = me->GetPlayer(*me, me->GetCreatorGUID()))
+            {
+                if(RunTimer <= diff)
+                {
+                    switch(Phase)
+                    {
+                        case 0:
+                        {
+                            switch(urand(0,3))
+                            {
+                                //I'm really lazy ;)
+                                case 0: me->MonsterSay("Bless you, hero!", 0, NULL); break;
+                                case 1: me->MonsterSay("I will fear no evil!", 0, NULL); break;
+                                case 2: me->MonsterSay("Thank the Light!", 0, NULL); break;
+                                case 3: me->MonsterSay("You're $p! The hero that everyone has been talking about! Thank you!", 0, pOwner->GetGUID()); break;
+                                default: break;
+                            }
+                            me->HandleEmoteCommand(EMOTE_ONESHOT_WAVE);
+                            pOwner->KilledMonsterCredit(me->GetEntry(), NULL);
+                            RunTimer = 2000;
+                            Phase++;
+                            break;
+                        }
+                        case 1:
+                        {
+                            if(Creature* Dummy = me->FindNearestCreature(NPC_INJURED_SOLDIER_DUMMY, 300.0f, true))
+                            {
+                                me->GetMotionMaster()->MovePoint(1, Dummy->GetPositionX(), Dummy->GetPositionY(), Dummy->GetPositionZ());
+                                RunTimer = 8000;
+                                Phase++;
+                            }
+                            break;
+                        }
+                        case 2: me->ForcedDespawn(); break;
+                        default: break;
+                    }
+                } else RunTimer -= diff;
+            }
+        }
+    };
+
+    CreatureAI* GetAI(Creature* pCreature) const
+    {
+        return new npc_injured_soldierAI (pCreature);
+    }
+};
+
 void AddSC_elwynn_forest()
 {
+    new npc_injured_soldier();
     new npc_henze_faulk();
     new npc_stormwind_infantry();
     new npc_brother_paxton();

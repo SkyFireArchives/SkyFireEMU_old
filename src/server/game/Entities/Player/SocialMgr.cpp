@@ -134,9 +134,9 @@ void PlayerSocial::SendSocialList(Player* plr, uint32 mask)
     {
         sSocialMgr->GetFriendInfo(plr, itr->first, itr->second);
 
-        if (!(itr->second.Flags & mask))	
+        if (!(itr->second.Flags & mask))    
             continue;
-	
+    
         ++count;
 
         data << uint64(itr->first);                         // player guid
@@ -316,7 +316,7 @@ PlayerSocial *SocialMgr::LoadFromDB(PreparedQueryResult result, uint32 guid)
         Field* fields = result->Fetch();
 
         friend_guid = fields[0].GetUInt32();
-        flags = fields[1].GetUInt32();
+        flags = fields[1].GetUInt8();
         note = fields[2].GetString();
 
         social->m_playerSocialMap[friend_guid] = FriendInfo(flags, note);

@@ -48,7 +48,7 @@ Quest::Quest(Field * questRecord)
     SuggestedPlayers = questRecord[18].GetUInt32();
     LimitTime = questRecord[19].GetUInt32();
     QuestFlags = questRecord[20].GetUInt32();
-    uint32 SpecialFlags = questRecord[21].GetUInt16();
+    SpecialFlags = questRecord[21].GetUInt16();
     CharTitleId = questRecord[22].GetUInt32();
     PlayersSlain = questRecord[23].GetUInt32();
     BonusTalents = questRecord[24].GetUInt32();
@@ -172,7 +172,7 @@ Quest::Quest(Field * questRecord)
     QuestCompleteScript = questRecord[171].GetUInt32();
 
     QuestFlags |= SpecialFlags << 20;
-    if (QuestFlags & QUEST_TRINITY_FLAGS_AUTO_ACCEPT)
+    if (QuestFlags & QUEST_SPECIAL_FLAG_AUTO_ACCEPT)
         QuestFlags |= QUEST_FLAGS_AUTO_ACCEPT;
 
     m_reqitemscount = 0;

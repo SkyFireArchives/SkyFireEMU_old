@@ -29,6 +29,7 @@
 #include "Util.h"
 #include "SharedDefines.h"
 #include "SpellMgr.h"
+#include "Group.h"
 
 static Rates const qualityToRate[MAX_ITEM_QUALITY] = {
     RATE_DROP_ITEM_POOR,                                    // ITEM_QUALITY_POOR
@@ -95,79 +96,71 @@ void LootStore::Verify() const
 
 // Loads a *_loot_template DB table into loot store
 // All checks of the loaded template are called from here, no error reports at loot generation required
-void LootStore::LoadLootTable()
+uint32 LootStore::LoadLootTable()
 {
     LootTemplateMap::const_iterator tab;
 
     // Clearing store (for reloading case)
     Clear();
 
-    sLog->outString("%s :", GetName());
+    //                                                  0     1            2               3         4         5             6
+    QueryResult result = WorldDatabase.PQuery("SELECT entry, item, ChanceOrQuestChance, lootmode, groupid, mincountOrRef, maxcount FROM %s", GetName());
 
-    //                                                        0      1     2                    3         4        5              6
-    QueryResult result = WorldDatabase.PQuery("SELECT entry, item, ChanceOrQuestChance, lootmode, groupid, mincountOrRef, maxcount FROM %s",GetName());
-
-    if (result)
+    if (!result)
     {
-        uint32 count = 0;
+        return 0;
+    }
 
-        
+    uint32 count = 0;       
 
-        do
+    do
+    {
+        Field *fields = result->Fetch();
+
+        uint32 entry               = fields[0].GetUInt32();
+        uint32 item                = fields[1].GetUInt32();
+        float  chanceOrQuestChance = fields[2].GetFloat();
+        uint16 lootmode            = fields[3].GetUInt16();
+        uint8  group               = fields[4].GetUInt8();
+        int32  mincountOrRef       = fields[5].GetInt32();
+        int32  maxcount            = fields[6].GetInt32();
+
+        if (maxcount > std::numeric_limits<uint8>::max())
         {
-            Field *fields = result->Fetch();
-            
+            sLog->outErrorDb("Table '%s' entry %d item %d: maxcount value (%u) to large. must be less %u - skipped", GetName(), entry, item, maxcount,std::numeric_limits<uint8>::max());
+            continue;                                   // error already printed to log/console.
+        }
 
-            uint32 entry               = fields[0].GetUInt32();
-            uint32 item                = fields[1].GetUInt32();
-            float  chanceOrQuestChance = fields[2].GetFloat();
-            uint16 lootmode            = fields[3].GetUInt16();
-            uint8  group               = fields[4].GetUInt8();
-            int32  mincountOrRef       = fields[5].GetInt32();
-            int32  maxcount            = fields[6].GetInt32();
+        LootStoreItem storeitem = LootStoreItem(item, chanceOrQuestChance, lootmode, group, mincountOrRef, maxcount);
 
-            if (maxcount > std::numeric_limits<uint8>::max())
+        if (!storeitem.IsValid(*this,entry))            // Validity checks
+            continue;
+
+        // Looking for the template of the entry
+                                                        // often entries are put together
+        if (m_LootTemplates.empty() || tab->first != entry)
+        {
+            // Searching the template (in case template Id changed)
+            tab = m_LootTemplates.find(entry);
+            if (tab == m_LootTemplates.end())
             {
-                sLog->outErrorDb("Table '%s' entry %d item %d: maxcount value (%u) to large. must be less %u - skipped", GetName(), entry, item, maxcount,std::numeric_limits<uint8>::max());
-                continue;                                   // error already printed to log/console.
+                std::pair< LootTemplateMap::iterator, bool > pr = m_LootTemplates.insert(LootTemplateMap::value_type(entry, new LootTemplate));
+                tab = pr.first;
             }
+        }
+        // else is empty - template Id and iter are the same
+        // finally iter refers to already existed or just created <entry, LootTemplate>
 
-            LootStoreItem storeitem = LootStoreItem(item, chanceOrQuestChance, lootmode, group, mincountOrRef, maxcount);
-
-            if (!storeitem.IsValid(*this,entry))            // Validity checks
-                continue;
-
-            // Looking for the template of the entry
-                                                            // often entries are put together
-            if (m_LootTemplates.empty() || tab->first != entry)
-            {
-                // Searching the template (in case template Id changed)
-                tab = m_LootTemplates.find(entry);
-                if (tab == m_LootTemplates.end())
-                {
-                    std::pair< LootTemplateMap::iterator, bool > pr = m_LootTemplates.insert(LootTemplateMap::value_type(entry, new LootTemplate));
-                    tab = pr.first;
-                }
-            }
-            // else is empty - template Id and iter are the same
-            // finally iter refers to already existed or just created <entry, LootTemplate>
-
-            // Adds current row to the template
-            tab->second->AddEntry(storeitem);
-            ++count;
-
-        } while (result->NextRow());
-
-        Verify();                                           // Checks validity of the loot store
-
-        sLog->outString();
-        sLog->outString(">> Loaded %u loot definitions (%lu templates)", count, (unsigned long)m_LootTemplates.size());
+        // Adds current row to the template
+        tab->second->AddEntry(storeitem);
+        ++count;
+    
     }
-    else
-    {
-        sLog->outString();
-        sLog->outErrorDb(">> Loaded 0 loot definitions. DB table `%s` is empty.",GetName());
-    }
+    while (result->NextRow());
+
+    Verify();                                           // Checks validity of the loot store
+
+    return count;
 }
 
 bool LootStore::HaveQuestLootFor(uint32 loot_id) const
@@ -219,12 +212,14 @@ LootTemplate* LootStore::GetLootForConditionFill(uint32 loot_id)
     return tab->second;
 }
 
-void LootStore::LoadAndCollectLootIds(LootIdSet& ids_set)
+uint32 LootStore::LoadAndCollectLootIds(LootIdSet& ids_set)
 {
-    LoadLootTable();
+    uint32 count = LoadLootTable();
 
     for (LootTemplateMap::const_iterator tab = m_LootTemplates.begin(); tab != m_LootTemplates.end(); ++tab)
         ids_set.insert(tab->first);
+
+    return count;
 }
 
 void LootStore::CheckLootRefs(LootIdSet* ref_set) const
@@ -259,7 +254,7 @@ bool LootStoreItem::Roll(bool rate) const
     if (mincountOrRef < 0)                                   // reference case
         return roll_chance_f(chance* (rate ? sWorld->getRate(RATE_DROP_ITEM_REFERENCED) : 1.0f));
 
-    ItemPrototype const *pProto = sObjectMgr->GetItemPrototype(itemid);
+    ItemPrototype const *pProto = ObjectMgr::GetItemPrototype(itemid);
 
     float qualityModifier = pProto && rate ? sWorld->getRate(qualityToRate[pProto->Quality]) : 1.0f;
 
@@ -283,7 +278,7 @@ bool LootStoreItem::IsValid(LootStore const& store, uint32 entry) const
 
     if (mincountOrRef > 0)                                  // item (quest or non-quest) entry, maybe grouped
     {
-        ItemPrototype const *proto = sObjectMgr->GetItemPrototype(itemid);
+        ItemPrototype const *proto = ObjectMgr::GetItemPrototype(itemid);
         if (!proto)
         {
             sLog->outErrorDb("Table '%s' entry %d item %d: item entry not listed in `item_template` - skipped", store.GetName(), entry, itemid);
@@ -333,7 +328,7 @@ LootItem::LootItem(LootStoreItem const& li)
     itemid      = li.itemid;
     conditions   = li.conditions;
 
-    ItemPrototype const* proto = sObjectMgr->GetItemPrototype(itemid);
+    ItemPrototype const* proto = ObjectMgr::GetItemPrototype(itemid);
     freeforall  = proto && (proto->Flags & ITEM_PROTO_FLAG_PARTY_LOOT);
 
     needs_quest = li.needs_quest;
@@ -411,7 +406,7 @@ void Loot::AddItem(LootStoreItem const & item)
         // non-ffa conditionals are counted in FillNonQuestNonFFAConditionalLoot()
         if (item.conditions.empty())
         {
-            ItemPrototype const* proto = sObjectMgr->GetItemPrototype(item.itemid);
+            ItemPrototype const* proto = ObjectMgr::GetItemPrototype(item.itemid);
             if (!proto || (proto->Flags & ITEM_PROTO_FLAG_PARTY_LOOT) == 0)
                 ++unlootedCount;
         }
@@ -800,7 +795,7 @@ ByteBuffer& operator<<(ByteBuffer& b, LootItem const& li)
 {
     b << uint32(li.itemid);
     b << uint32(li.count);                                  // nr of items of this type
-    b << uint32(sObjectMgr->GetItemPrototype(li.itemid)->DisplayInfoID);
+    b << uint32(ObjectMgr::GetItemPrototype(li.itemid)->DisplayInfoID);
     b << uint32(li.randomSuffix);
     b << uint32(li.randomPropertyId);
     //b << uint8(0);                                        // slot type - will send after this function call
@@ -1428,8 +1423,12 @@ bool LootTemplate::isReference(uint32 id)
 
 void LoadLootTemplates_Creature()
 {
+    sLog->outString("Loading creature loot templates...");
+
+    uint32 oldMSTime = getMSTime();
+
     LootIdSet ids_set, ids_setUsed;
-    LootTemplates_Creature.LoadAndCollectLootIds(ids_set);
+    uint32 count = LootTemplates_Creature.LoadAndCollectLootIds(ids_set);
 
     // remove real entries and check existence loot
     for (uint32 i = 1; i < sCreatureStorage.MaxEntry; ++i)
@@ -1450,12 +1449,23 @@ void LoadLootTemplates_Creature()
 
     // output error for any still listed (not referenced from appropriate table) ids
     LootTemplates_Creature.ReportUnusedIds(ids_set);
+
+    if(count)
+        sLog->outString(">> Loaded %u creature loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    else
+        sLog->outErrorDb(">> Loaded 0 creature loot templates. DB table `creature_loot_template` is empty");
+
+    sLog->outString();
 }
 
 void LoadLootTemplates_Disenchant()
 {
+    sLog->outString("Loading disenchanting loot templates...");
+
+    uint32 oldMSTime = getMSTime();
+   
     LootIdSet ids_set, ids_setUsed;
-    LootTemplates_Disenchant.LoadAndCollectLootIds(ids_set);
+    uint32 count = LootTemplates_Disenchant.LoadAndCollectLootIds(ids_set);
 
     // remove real entries and check existence loot
     for (uint32 i = 1; i < sItemStorage.MaxEntry; ++i)
@@ -1475,12 +1485,22 @@ void LoadLootTemplates_Disenchant()
         ids_set.erase(*itr);
     // output error for any still listed (not referenced from appropriate table) ids
     LootTemplates_Disenchant.ReportUnusedIds(ids_set);
+
+    if(count)
+        sLog->outString(">> Loaded %u disenchanting loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    else
+        sLog->outErrorDb(">> Loaded 0 disenchanting loot templates. DB table `disenchant_loot_template` is empty");
+    sLog->outString();
 }
 
 void LoadLootTemplates_Fishing()
 {
+    sLog->outString("Loading fishing loot templates...");
+
+    uint32 oldMSTime = getMSTime();
+
     LootIdSet ids_set;
-    LootTemplates_Fishing.LoadAndCollectLootIds(ids_set);
+    uint32 count = LootTemplates_Fishing.LoadAndCollectLootIds(ids_set);
 
     // remove real entries and check existence loot
     for (uint32 i = 1; i < sAreaStore.GetNumRows(); ++i)
@@ -1490,12 +1510,23 @@ void LoadLootTemplates_Fishing()
 
     // output error for any still listed (not referenced from appropriate table) ids
     LootTemplates_Fishing.ReportUnusedIds(ids_set);
+
+    if(count)
+        sLog->outString(">> Loaded %u fishing loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    else
+        sLog->outErrorDb(">> Loaded 0 fishing loot templates. DB table `fishing_loot_template` is empty");
+
+    sLog->outString();
 }
 
 void LoadLootTemplates_Gameobject()
 {
+    sLog->outString("Loading gameobject loot templates...");
+
+    uint32 oldMSTime = getMSTime();
+
     LootIdSet ids_set, ids_setUsed;
-    LootTemplates_Gameobject.LoadAndCollectLootIds(ids_set);
+    uint32 count = LootTemplates_Gameobject.LoadAndCollectLootIds(ids_set);
 
     // remove real entries and check existence loot
     for (uint32 i = 1; i < sGOStorage.MaxEntry; ++i)
@@ -1516,12 +1547,23 @@ void LoadLootTemplates_Gameobject()
 
     // output error for any still listed (not referenced from appropriate table) ids
     LootTemplates_Gameobject.ReportUnusedIds(ids_set);
+
+    if(count)
+        sLog->outString(">> Loaded %u gameobject loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    else
+        sLog->outErrorDb(">> Loaded 0 gameobject loot templates. DB table `gameobject_loot_template` is empty");
+
+    sLog->outString();
 }
 
 void LoadLootTemplates_Item()
 {
+    sLog->outString("Loading item loot templates...");
+
+    uint32 oldMSTime = getMSTime();
+
     LootIdSet ids_set;
-    LootTemplates_Item.LoadAndCollectLootIds(ids_set);
+    uint32 count = LootTemplates_Item.LoadAndCollectLootIds(ids_set);
 
     // remove real entries and check existence loot
     for (uint32 i = 1; i < sItemStorage.MaxEntry; ++i)
@@ -1531,12 +1573,23 @@ void LoadLootTemplates_Item()
 
     // output error for any still listed (not referenced from appropriate table) ids
     LootTemplates_Item.ReportUnusedIds(ids_set);
+
+    if(count)
+        sLog->outString(">> Loaded %u prospecting loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    else
+        sLog->outErrorDb(">> Loaded 0 prospecting loot templates. DB table `item_loot_template` is empty");
+    
+    sLog->outString();
 }
 
 void LoadLootTemplates_Milling()
 {
+    sLog->outString("Loading milling loot templates...");
+
+    uint32 oldMSTime = getMSTime();
+
     LootIdSet ids_set;
-    LootTemplates_Milling.LoadAndCollectLootIds(ids_set);
+    uint32 count = LootTemplates_Milling.LoadAndCollectLootIds(ids_set);
 
     // remove real entries and check existence loot
     for (uint32 i = 1; i < sItemStorage.MaxEntry; ++i)
@@ -1554,12 +1607,23 @@ void LoadLootTemplates_Milling()
 
     // output error for any still listed (not referenced from appropriate table) ids
     LootTemplates_Milling.ReportUnusedIds(ids_set);
+
+    if(count)
+        sLog->outString(">> Loaded %u milling loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    else
+        sLog->outErrorDb(">> Loaded 0 milling loot templates. DB table `milling_loot_template` is empty");
+
+    sLog->outString();
 }
 
 void LoadLootTemplates_Pickpocketing()
 {
+    sLog->outString("Loading pickpocketing loot templates...");
+
+    uint32 oldMSTime = getMSTime();
+
     LootIdSet ids_set, ids_setUsed;
-    LootTemplates_Pickpocketing.LoadAndCollectLootIds(ids_set);
+    uint32 count = LootTemplates_Pickpocketing.LoadAndCollectLootIds(ids_set);
 
     // remove real entries and check existence loot
     for (uint32 i = 1; i < sCreatureStorage.MaxEntry; ++i)
@@ -1580,12 +1644,23 @@ void LoadLootTemplates_Pickpocketing()
 
     // output error for any still listed (not referenced from appropriate table) ids
     LootTemplates_Pickpocketing.ReportUnusedIds(ids_set);
+
+    if(count)
+        sLog->outString(">> Loaded %u pickpocketing loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    else
+        sLog->outErrorDb(">> Loaded 0 pickpocketing loot templates. DB table `pickpocketing_loot_template` is empty");
+
+    sLog->outString();
 }
 
 void LoadLootTemplates_Prospecting()
 {
+    sLog->outString("Loading prospecting loot templates...");
+
+    uint32 oldMSTime = getMSTime();
+
     LootIdSet ids_set;
-    LootTemplates_Prospecting.LoadAndCollectLootIds(ids_set);
+    uint32 count = LootTemplates_Prospecting.LoadAndCollectLootIds(ids_set);
 
     // remove real entries and check existence loot
     for (uint32 i = 1; i < sItemStorage.MaxEntry; ++i)
@@ -1603,12 +1678,23 @@ void LoadLootTemplates_Prospecting()
 
     // output error for any still listed (not referenced from appropriate table) ids
     LootTemplates_Prospecting.ReportUnusedIds(ids_set);
+
+    if(count)
+        sLog->outString(">> Loaded %u prospecting loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    else
+        sLog->outErrorDb(">> Loaded 0 prospecting loot templates. DB table `prospecting_loot_template` is empty");
+
+    sLog->outString();
 }
 
 void LoadLootTemplates_Mail()
 {
+    sLog->outString("Loading mail loot templates...");
+
+    uint32 oldMSTime = getMSTime();
+
     LootIdSet ids_set;
-    LootTemplates_Mail.LoadAndCollectLootIds(ids_set);
+    uint32 count = LootTemplates_Mail.LoadAndCollectLootIds(ids_set);
 
     // remove real entries and check existence loot
     for (uint32 i = 1; i < sMailTemplateStore.GetNumRows(); ++i)
@@ -1618,12 +1704,23 @@ void LoadLootTemplates_Mail()
 
     // output error for any still listed (not referenced from appropriate table) ids
     LootTemplates_Mail.ReportUnusedIds(ids_set);
+
+    if(count)
+        sLog->outString(">> Loaded %u mail loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    else
+        sLog->outErrorDb(">> Loaded 0 mail loot templates. DB table `mail_loot_template` is empty");
+
+    sLog->outString();
 }
 
 void LoadLootTemplates_Skinning()
 {
+    sLog->outString("Loading skinning loot templates...");
+    
+    uint32 oldMSTime = getMSTime();
+
     LootIdSet ids_set, ids_setUsed;
-    LootTemplates_Skinning.LoadAndCollectLootIds(ids_set);
+    uint32 count = LootTemplates_Skinning.LoadAndCollectLootIds(ids_set);
 
     // remove real entries and check existence loot
     for (uint32 i = 1; i < sCreatureStorage.MaxEntry; ++i)
@@ -1644,12 +1741,23 @@ void LoadLootTemplates_Skinning()
 
     // output error for any still listed (not referenced from appropriate table) ids
     LootTemplates_Skinning.ReportUnusedIds(ids_set);
+
+    if(count)
+        sLog->outString(">> Loaded %u skinning loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    else
+        sLog->outErrorDb(">> Loaded 0 skinning loot templates. DB table `skinning_loot_template` is empty");
+
+    sLog->outString();
 }
 
 void LoadLootTemplates_Spell()
 {
+    sLog->outString("Loading spell loot templates...");
+
+    uint32 oldMSTime = getMSTime();
+
     LootIdSet ids_set;
-    LootTemplates_Spell.LoadAndCollectLootIds(ids_set);
+    uint32 count = LootTemplates_Spell.LoadAndCollectLootIds(ids_set);
 
     // remove real entries and check existence loot
     for (uint32 spell_id = 1; spell_id < sSpellStore.GetNumRows(); ++spell_id)
@@ -1677,10 +1785,20 @@ void LoadLootTemplates_Spell()
 
     // output error for any still listed (not referenced from appropriate table) ids
     LootTemplates_Spell.ReportUnusedIds(ids_set);
+
+    if(count)
+        sLog->outString(">> Loaded %u spell loot templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    else
+        sLog->outErrorDb(">> Loaded 0 spell loot templates. DB table `spell_loot_template` is empty");
+    sLog->outString();
 }
 
 void LoadLootTemplates_Reference()
 {
+    sLog->outString("Loading reference loot templates...");
+
+    uint32 oldMSTime = getMSTime();
+
     LootIdSet ids_set;
     LootTemplates_Reference.LoadAndCollectLootIds(ids_set);
 
@@ -1699,4 +1817,7 @@ void LoadLootTemplates_Reference()
 
     // output error for any still listed ids (not referenced from any loot table)
     LootTemplates_Reference.ReportUnusedIds(ids_set);
+
+    sLog->outString(">> Loaded refence loot templates in %u ms", GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString();
 }

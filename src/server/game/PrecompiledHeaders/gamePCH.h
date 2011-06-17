@@ -36,6 +36,7 @@
 #include "Opcodes.h"
 #include "SharedDefines.h"
 #include "ObjectMgr.h"
+#include "Util.h"
 
 #endif /* TRINITY_COREPCH */
 #endif  /* _GAMEPCH_H */

@@ -264,12 +264,6 @@ SpellMgr::~SpellMgr()
 {
 }
 
-SpellMgr& SpellMgr::Instance()
-{
-    static SpellMgr spellMgr;
-    return spellMgr;
-}
-
 SpellScaling::SpellScaling(uint8 playerLevel_, const SpellEntry * spellEntry_)
 {
     playerLevel = playerLevel_;
@@ -846,6 +840,14 @@ bool SpellMgr::_isPositiveEffect(uint32 spellId, uint32 effIndex, bool deep) con
                     break;
             }
             break;
+        case SPELLFAMILY_ROGUE:
+            // Envenom
+            if (spellproto->SpellFamilyFlags[1] & 0x8)
+                return true;
+            // Slice and Dice
+            else if (spellproto->SpellFamilyFlags[0] & 0x40000)
+                return true;
+            break;
         case SPELLFAMILY_MAGE:
             // Amplify Magic, Dampen Magic
             if (spellproto->SpellFamilyFlags[0] == 0x00002000)
@@ -853,6 +855,11 @@ bool SpellMgr::_isPositiveEffect(uint32 spellId, uint32 effIndex, bool deep) con
             // Ignite    
             if (spellproto->SpellIconID == 45)
                 return true;
+            break;
+        case SPELLFAMILY_WARRIOR:
+            // Shockwave
+            if (spellId == 46968)
+                return false;
             break;
         case SPELLFAMILY_PRIEST:
             switch (spellId)
@@ -1195,31 +1202,24 @@ SpellCastResult GetErrorAtShapeshiftedCast (SpellEntry const *spellInfo, uint32 
 
 void SpellMgr::LoadSpellTargetPositions()
 {
-    mSpellTargetPositions.clear();                                // need for reload case
+    uint32 oldMSTime = getMSTime();
 
-    uint32 count = 0;
+    mSpellTargetPositions.clear();                                // need for reload case
 
     //                                                0   1           2                  3                  4                  5
     QueryResult result = WorldDatabase.Query("SELECT id, target_map, target_position_x, target_position_y, target_position_z, target_orientation FROM spell_target_position");
     if (!result)
     {
-
-        
-
-        
-
+        sLog->outString(">> Loaded 0 spell target coordinates. DB table `spell_target_position` is empty.");
         sLog->outString();
-        sLog->outString(">> Loaded %u spell target coordinates", count);
         return;
     }
 
-    
+    uint32 count = 0;
 
     do
     {
         Field *fields = result->Fetch();
-
-        
 
         uint32 Spell_ID = fields[0].GetUInt32();
 
@@ -1280,7 +1280,8 @@ void SpellMgr::LoadSpellTargetPositions()
         mSpellTargetPositions[Spell_ID] = st;
         ++count;
 
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
     // Check all spells
     for (uint32 i = 1; i < sSpellStore.GetNumRows(); ++i)
@@ -1316,8 +1317,8 @@ void SpellMgr::LoadSpellTargetPositions()
         }
     }
 
+    sLog->outString(">> Loaded %u spell teleport coordinates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u spell teleport coordinates", count);
 }
 
 bool SpellMgr::IsAffectedByMod(SpellEntry const *spellInfo, SpellModifier *mod) const
@@ -1340,6 +1341,8 @@ bool SpellMgr::IsAffectedByMod(SpellEntry const *spellInfo, SpellModifier *mod) 
 
 void SpellMgr::LoadSpellProcEvents()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSpellProcEventMap.clear();                             // need for reload case
 
     uint32 count = 0;
@@ -1348,20 +1351,15 @@ void SpellMgr::LoadSpellProcEvents()
     QueryResult result = WorldDatabase.Query("SELECT entry, SchoolMask, SpellFamilyName, SpellFamilyMask0, SpellFamilyMask1, SpellFamilyMask2, procFlags, procEx, ppmRate, CustomChance, Cooldown FROM spell_proc_event");
     if (!result)
     {
-        
-        
-        sLog->outString();
         sLog->outString(">> Loaded %u spell proc event conditions", count);
+        sLog->outString();
         return;
     }
-
     
     uint32 customProc = 0;
     do
     {
         Field *fields = result->Fetch();
-
-        
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -1397,27 +1395,28 @@ void SpellMgr::LoadSpellProcEvents()
             customProc++;
         }
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
-    sLog->outString();
     if (customProc)
-        sLog->outString(">> Loaded %u extra spell proc event conditions + %u custom",  count, customProc);
+        sLog->outString(">> Loaded %u extra and %u custom spell proc event conditions in %u ms",  count, customProc, GetMSTimeDiffToNow(oldMSTime));
     else
-        sLog->outString(">> Loaded %u extra spell proc event conditions", count);
+        sLog->outString(">> Loaded %u extra spell proc event conditions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString();
 }
 
 void SpellMgr::LoadSpellBonusess()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSpellBonusMap.clear();                             // need for reload case
     uint32 count = 0;
     //                                                0      1             2          3         4
     QueryResult result = WorldDatabase.Query("SELECT entry, direct_bonus, dot_bonus, ap_bonus, ap_dot_bonus FROM spell_bonus_data");
     if (!result)
     {
-        
-        
-        sLog->outString();
         sLog->outString(">> Loaded %u spell bonus data", count);
+        sLog->outString();
         return;
     }
 
@@ -1434,14 +1433,12 @@ void SpellMgr::LoadSpellBonusess()
             continue;
         }
 
-        SpellBonusEntry sbe;
-
+        SpellBonusEntry& sbe = mSpellBonusMap[entry];
         sbe.direct_damage = fields[1].GetFloat();
         sbe.dot_damage    = fields[2].GetFloat();
         sbe.ap_bonus      = fields[3].GetFloat();
         sbe.ap_dot_bonus   = fields[4].GetFloat();
 
-        mSpellBonusMap[entry] = sbe;
         // compare with DBC coefficient
         float DBCcoef = 0;
         for(uint32 i=0;i<3;i++)
@@ -1463,10 +1460,11 @@ void SpellMgr::LoadSpellBonusess()
         }
 
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u extra spell bonus data in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u extra spell bonus data",  count);
 }
 
 bool SpellMgr::IsSpellProcEventCanTriggeredBy(SpellProcEventEntry const* spellProcEvent, uint32 EventProcFlag, SpellEntry const * procSpell, uint32 procFlags, uint32 procExtra, bool active)
@@ -1600,6 +1598,8 @@ bool SpellMgr::IsSpellProcEventCanTriggeredBy(SpellProcEventEntry const* spellPr
 
 void SpellMgr::LoadSpellGroups()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSpellSpellGroup.clear();                                  // need for reload case
     mSpellGroupSpell.clear();
 
@@ -1609,25 +1609,16 @@ void SpellMgr::LoadSpellGroups()
     QueryResult result = WorldDatabase.Query("SELECT id, spell_id FROM spell_group");
     if (!result)
     {
-
-        
-
-        
-
         sLog->outString();
         sLog->outString(">> Loaded %u spell group definitions", count);
         return;
-    }
-
-    
+    } 
 
     std::set<uint32> groups;
 
     do
     {
         Field *fields = result->Fetch();
-
-        
 
         uint32 group_id = fields[0].GetUInt32();
         if (group_id <= SPELL_GROUP_DB_RANGE_MIN && group_id >= SPELL_GROUP_CORE_RANGE_MAX)
@@ -1640,7 +1631,8 @@ void SpellMgr::LoadSpellGroups()
         groups.insert(std::set<uint32>::value_type(group_id));
         mSpellGroupSpell.insert(SpellGroupSpellMap::value_type((SpellGroup)group_id, spell_id));
 
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
     for (SpellGroupSpellMap::iterator itr = mSpellGroupSpell.begin(); itr!= mSpellGroupSpell.end() ;)
     {
@@ -1685,37 +1677,30 @@ void SpellMgr::LoadSpellGroups()
         }
     }
 
+    sLog->outString(">> Loaded %u spell group definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u spell group definitions", count);
 }
 
 void SpellMgr::LoadSpellGroupStackRules()
 {
-    mSpellGroupStack.clear();                                  // need for reload case
+    uint32 oldMSTime = getMSTime();
 
-    uint32 count = 0;
+    mSpellGroupStack.clear();                                  // need for reload case
 
     //                                                       0         1
     QueryResult result = WorldDatabase.Query("SELECT group_id, stack_rule FROM spell_group_stack_rules");
     if (!result)
     {
-
-        
-
-        
-
+        sLog->outString(">> Loaded 0 spell group stack rules");
         sLog->outString();
-        sLog->outString(">> Loaded %u spell group stack rules", count);
         return;
     }
 
-    
+    uint32 count = 0;    
 
     do
     {
         Field *fields = result->Fetch();
-
-        
 
         uint32 group_id = fields[0].GetUInt32();
         uint8 stack_rule = fields[1].GetUInt32();
@@ -1736,39 +1721,33 @@ void SpellMgr::LoadSpellGroupStackRules()
         mSpellGroupStack[(SpellGroup)group_id] = (SpellGroupStackRule)stack_rule;
 
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u spell group stack rules in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u spell group stack rules", count);
 }
 
 void SpellMgr::LoadSpellThreats()
 {
-    mSpellThreatMap.clear();                                // need for reload case
+    uint32 oldMSTime = getMSTime();
 
-    uint32 count = 0;
+    mSpellThreatMap.clear();                                // need for reload case
 
     //                                                0      1
     QueryResult result = WorldDatabase.Query("SELECT entry, Threat FROM spell_threat");
     if (!result)
     {
-
-        
-
-        
-
+        sLog->outString(">> Loaded 0 aggro generating spells");
         sLog->outString();
-        sLog->outString(">> Loaded %u aggro generating spells", count);
         return;
     }
 
-    
+    uint32 count = 0;    
 
     do
     {
         Field *fields = result->Fetch();
-
-        
 
         uint32 entry = fields[0].GetUInt32();
         uint16 Threat = fields[1].GetUInt16();
@@ -1782,10 +1761,11 @@ void SpellMgr::LoadSpellThreats()
         mSpellThreatMap[entry] = Threat;
 
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u aggro generating spells in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u aggro generating spells", count);
 }
 
 bool SpellMgr::IsRankSpellDueToSpell(SpellEntry const *spellInfo_1,uint32 spellId_2) const
@@ -2087,6 +2067,8 @@ SpellEntry const* SpellMgr::SelectAuraRankForPlayerLevel(SpellEntry const* spell
 
 void SpellMgr::LoadSpellLearnSkills()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSpellLearnSkills.clear();                              // need for reload case
 
     // search auto-learned skills and add its to map also for use in unlearn spells/talents
@@ -2094,7 +2076,6 @@ void SpellMgr::LoadSpellLearnSkills()
     
     for (uint32 spell = 0; spell < sSpellStore.GetNumRows(); ++spell)
     {
-        
         SpellEntry const* entry = sSpellStore.LookupEntry(spell);
 
         if (!entry)
@@ -2119,21 +2100,20 @@ void SpellMgr::LoadSpellLearnSkills()
         }
     }
 
+    sLog->outString(">> Loaded %u Spell Learn Skills from DBC in %u ms", dbc_count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u Spell Learn Skills from DBC", dbc_count);
 }
 
 void SpellMgr::LoadSpellLearnSpells()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSpellLearnSpells.clear();                              // need for reload case
 
     //                                                  0      1        2
     QueryResult result = WorldDatabase.Query("SELECT entry, SpellID, Active FROM spell_learn_spell");
     if (!result)
     {
-        
-        
-
         sLog->outString();
         sLog->outString(">> Loaded 0 spell learn spells");
         sLog->outErrorDb("`spell_learn_spell` table is empty!");
@@ -2141,11 +2121,9 @@ void SpellMgr::LoadSpellLearnSpells()
     }
 
     uint32 count = 0;
-
     
     do
     {
-        
         Field *fields = result->Fetch();
 
         uint32 spell_id = fields[0].GetUInt32();
@@ -2176,7 +2154,8 @@ void SpellMgr::LoadSpellLearnSpells()
         mSpellLearnSpells.insert(SpellLearnSpellMap::value_type(spell_id,node));
 
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
     // search auto-learned spells and add its to map also for use in unlearn spells/talents
     uint32 dbc_count = 0;
@@ -2227,36 +2206,30 @@ void SpellMgr::LoadSpellLearnSpells()
         }
     }
 
+    sLog->outString(">> Loaded %u spell learn spells + %u found in DBC in %u ms", count, dbc_count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u spell learn spells + %u found in DBC", count, dbc_count);
 }
 
 void SpellMgr::LoadSpellPetAuras()
 {
-    mSpellPetAuraMap.clear();                                  // need for reload case
+    uint32 oldMSTime = getMSTime();
 
-    uint32 count = 0;
+    mSpellPetAuraMap.clear();                                  // need for reload case
 
     //                                                  0       1       2    3
     QueryResult result = WorldDatabase.Query("SELECT spell, effectId, pet, aura FROM spell_pet_auras");
     if (!result)
     {
-        
-
-        
-
+        sLog->outString(">> Loaded 0 spell pet auras. DB table `spell_pet_auras` is empty.");
         sLog->outString();
-        sLog->outString(">> Loaded %u spell pet auras", count);
         return;
     }
 
-    
+    uint32 count = 0;
 
     do
     {
         Field *fields = result->Fetch();
-
-        
 
         uint32 spell = fields[0].GetUInt32();
         uint8 eff = fields[1].GetUInt8();
@@ -2294,25 +2267,24 @@ void SpellMgr::LoadSpellPetAuras()
         }
 
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u spell pet auras in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u spell pet auras", count);
 }
 
 void SpellMgr::LoadPetLevelupSpellMap()
 {
+    uint32 oldMSTime = getMSTime();
+
     mPetLevelupSpellMap.clear();                                   // need for reload case
 
     uint32 count = 0;
     uint32 family_count = 0;
 
-    
-
     for (uint32 i = 0; i < sCreatureFamilyStore.GetNumRows(); ++i)
     {
-        
-
         CreatureFamilyEntry const *creatureFamily = sCreatureFamilyStore.LookupEntry(i);
         if (!creatureFamily)                                     // not exist
             continue;
@@ -2355,8 +2327,8 @@ void SpellMgr::LoadPetLevelupSpellMap()
         }
     }
 
+    sLog->outString(">> Loaded %u pet levelup and default spells for %u families in %u ms", count, family_count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u pet levelup and default spells for %u families", count, family_count);
 }
 
 bool LoadPetDefaultSpells_helper(CreatureInfo const* cInfo, PetDefaultSpellsEntry& petDefSpells)
@@ -2409,6 +2381,8 @@ bool LoadPetDefaultSpells_helper(CreatureInfo const* cInfo, PetDefaultSpellsEntr
 
 void SpellMgr::LoadPetDefaultSpells()
 {
+    uint32 oldMSTime = getMSTime();
+
     mPetDefaultSpellsMap.clear();
 
     uint32 countCreature = 0;
@@ -2440,11 +2414,15 @@ void SpellMgr::LoadPetDefaultSpells()
         }
     }
 
+    sLog->outString(">> Loaded addition spells for %u pet spell data entries in %u ms", countData, GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString();
+
+    sLog->outString("Loading summonable creature templates...");
+    oldMSTime = getMSTime();
+
     // different summon spells
     for (uint32 i = 0; i < sSpellStore.GetNumRows(); ++i)
     {
-        
-
         SpellEntry const* spellEntry = sSpellStore.LookupEntry(i);
         if (!spellEntry)
             continue;
@@ -2480,9 +2458,8 @@ void SpellMgr::LoadPetDefaultSpells()
         }
     }
 
+    sLog->outString(">> Loaded %u summonable creature templates in %u ms", countCreature, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded addition spells for %u pet spell data entries.", countData);
-    sLog->outString(">> Loaded %u summonable creature templates.", countCreature);
 }
 
 /// Some checks for spells, to prevent adding deprecated/broken spells for trainers, spell book, etc
@@ -2580,35 +2557,29 @@ bool SpellMgr::IsSpellValid(SpellEntry const *spellInfo, Player *pl, bool msg)
 
 void SpellMgr::LoadSpellAreas()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSpellAreaMap.clear();                                  // need for reload case
     mSpellAreaForQuestMap.clear();
     mSpellAreaForActiveQuestMap.clear();
     mSpellAreaForQuestEndMap.clear();
     mSpellAreaForAuraMap.clear();
 
-    uint32 count = 0;
-
     //                                                  0     1         2              3               4           5          6        7       8
     QueryResult result = WorldDatabase.Query("SELECT spell, area, quest_start, quest_start_active, quest_end, aura_spell, racemask, gender, autocast FROM spell_area");
 
     if (!result)
     {
-        
-
-        
-
+        sLog->outString(">> Loaded 0 spell area requirements. DB table `spell_area` is empty.");
         sLog->outString();
-        sLog->outString(">> Loaded %u spell area requirements", count);
         return;
     }
 
-    
+    uint32 count = 0;    
 
     do
     {
         Field *fields = result->Fetch();
-
-        
 
         uint32 spell = fields[0].GetUInt32();
         SpellArea spellArea;
@@ -2779,10 +2750,11 @@ void SpellMgr::LoadSpellAreas()
             mSpellAreaForAuraMap.insert(SpellAreaForAuraMap::value_type(abs(spellArea.auraSpell),sa));
 
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u spell area requirements in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u spell area requirements", count);
 }
 
 SpellCastResult SpellMgr::GetSpellAllowedInLocationError(SpellEntry const *spellInfo, uint32 map_id, uint32 zone_id, uint32 area_id, Player const* player)
@@ -2841,7 +2813,7 @@ SpellCastResult SpellMgr::GetSpellAllowedInLocationError(SpellEntry const *spell
     {
         case 23333:                                         // Warsong Flag
         case 23335:                                         // Silverwing Flag
-            return map_id == 489 && player && player->InBattleground() ? SPELL_CAST_OK : SPELL_FAILED_REQUIRES_AREA;
+            return map_id == 489 || 726 && player && player->InBattleground() ? SPELL_CAST_OK : SPELL_FAILED_REQUIRES_AREA;
         case 34976:                                         // Netherstorm Flag
             return map_id == 566 && player && player->InBattleground() ? SPELL_CAST_OK : SPELL_FAILED_REQUIRES_AREA;
         case 2584:                                          // Waiting to Resurrect
@@ -2920,6 +2892,8 @@ SpellCastResult SpellMgr::GetSpellAllowedInLocationError(SpellEntry const *spell
 
 void SpellMgr::LoadSkillLineAbilityMap()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSkillLineAbilityMap.clear();
 
     uint32 count = 0;
@@ -2934,8 +2908,8 @@ void SpellMgr::LoadSkillLineAbilityMap()
         ++count;
     }
 
+    sLog->outString(">> Loaded %u SkillLineAbility MultiMap Data in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u SkillLineAbility MultiMap Data", count);
 }
 
 DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto, bool triggered)
@@ -2978,6 +2952,9 @@ DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto
                 return DIMINISHING_FEAR_BLIND;
             // Cheap Shot
             else if (spellproto->SpellFamilyFlags[0] & 0x400)
+                return DIMINISHING_CHEAPSHOT_POUNCE;
+            // Kidney Shot
+            else if (spellproto->SpellFamilyFlags[0] & 0x200000)
                 return DIMINISHING_CHEAPSHOT_POUNCE;
             // Crippling poison - Limit to 10 seconds in PvP (No SpellFamilyFlags)
             else if (spellproto->SpellIconID == 163)
@@ -3378,6 +3355,8 @@ bool CanSpellPierceImmuneAura(SpellEntry const * pierceSpell, SpellEntry const *
 
 void SpellMgr::LoadSpellEnchantProcData()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSpellEnchantProcEventMap.clear();                             // need for reload case
 
     uint32 count = 0;
@@ -3386,21 +3365,14 @@ void SpellMgr::LoadSpellEnchantProcData()
     QueryResult result = WorldDatabase.Query("SELECT entry, customChance, PPMChance, procEx FROM spell_enchant_proc_data");
     if (!result)
     {
-        
-
-        
-
-        sLog->outString();
         sLog->outString(">> Loaded %u spell enchant proc event conditions", count);
+        sLog->outString();
         return;
     }
-
     
     do
     {
         Field *fields = result->Fetch();
-
-        
 
         uint32 enchantId = fields[0].GetUInt32();
 
@@ -3420,14 +3392,17 @@ void SpellMgr::LoadSpellEnchantProcData()
         mSpellEnchantProcEventMap[enchantId] = spe;
 
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u enchant proc data definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u enchant proc data definitions", count);
 }
 
 void SpellMgr::LoadSpellRequired()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSpellsReqSpell.clear();                                   // need for reload case
     mSpellReq.clear();                                         // need for reload case
 
@@ -3435,20 +3410,16 @@ void SpellMgr::LoadSpellRequired()
 
     if (!result)
     {
-        
-        
-
-        sLog->outString();
         sLog->outString(">> Loaded 0 spell required records");
+        sLog->outString();
         sLog->outErrorDb("`spell_required` table is empty!");
         return;
     }
+
     uint32 rows = 0;
 
-    
     do
     {
-        
         Field *fields = result->Fetch();
 
         uint32 spell_id =  fields[0].GetUInt32();
@@ -3480,37 +3451,35 @@ void SpellMgr::LoadSpellRequired()
         mSpellReq.insert (std::pair<uint32, uint32>(spell_id, spell_req));
         mSpellsReqSpell.insert (std::pair<uint32, uint32>(spell_req, spell_id));
         ++rows;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u spell required records in %u ms", rows, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u spell required records", rows);
 }
 
-/*void SpellMgr::LoadSpellRanks()
+void SpellMgr::LoadSpellRanks()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSpellChains.clear();                                   // need for reload case
 
     QueryResult result = WorldDatabase.Query("SELECT first_spell_id, spell_id, rank from spell_ranks ORDER BY first_spell_id , rank");
 
     if (!result)
     {
-        
-        
-
-        sLog->outString();
         sLog->outString(">> Loaded 0 spell rank records");
+        sLog->outString();
         sLog->outErrorDb("`spell_ranks` table is empty!");
         return;
     }
-
-    
 
     uint32 rows = 0;
     bool finished = false;
 
     do
     {
-                        // spellid, rank
+        // spellid, rank
         std::list < std::pair < int32, int32 > > rankChain;
         int32 currentSpell = -1;
         int32 lastSpell = -1;
@@ -3529,7 +3498,6 @@ void SpellMgr::LoadSpellRequired()
             // don't drop the row if we're moving to the next rank
             if (currentSpell == lastSpell)
             {
-                
                 rankChain.push_back(std::make_pair(spell_id, rank));
                 if (!result->NextRow())
                     finished = true;
@@ -3596,13 +3564,14 @@ void SpellMgr::LoadSpellRequired()
         while (true);
     } while (!finished);
 
+    sLog->outString(">> Loaded %u spell rank records in %u ms", rows, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u spell rank records", rows);
 }
-*/
-// set data in core for now
+
 void SpellMgr::LoadSpellCustomAttr()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSpellCustomAttr.resize(GetSpellStore()->GetNumRows(), 0);  // initialize with 0 values;
 
     uint32 count = 0;
@@ -3736,6 +3705,46 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (i)
         {
+        case 51514: // Hex
+        case 118:   // Polymorph
+        case 61305: // Polymorph (other animal)
+        case 28272: // polymorph (other animal)
+        case 61721: // Polymorph (other animal)
+        case 61780: // Polymorph (other animal)
+        case 28271: // Polymorph (other animal)
+        case 8122: // Physic Scream
+        case 5484: // Howl of Terror
+            spellInfo->AuraInterruptFlags = AURA_INTERRUPT_FLAG_TAKE_DAMAGE;
+            count++;
+            break;
+        case 85673: // World of Glory
+            spellInfo->Effect[1] = 0;
+            count++;
+            break;
+        case 1680: // Whirlwind  (Fury)
+            spellInfo->EffectRadiusIndex[0] = 8;
+            spellInfo->EffectRadiusIndex[1] = 8;
+            spellInfo->EffectRadiusIndex[2] = 8;
+            count++;
+            break;
+        case 50622: // Whirlwind (triggered by Bladestorm)
+            spellInfo->EffectRadiusIndex[0] = 8;
+            spellInfo->EffectRadiusIndex[1] = 8;
+            spellInfo->EffectRadiusIndex[2] = 8;
+            count++;
+            break;
+        case 44543: //Fingers of Frost rank 1
+            spellInfo->procChance = 7;
+            count++;
+            break;
+        case 44545: //Fingers of Frost rank 2
+            spellInfo->procChance = 14;
+            count++;
+            break;
+        case 83074: //Fingers of Frost rank 3
+            spellInfo->procChance = 20;
+            count++;
+            break;
         case 2643: // Multi-Shot no-target Effect 0 fix.
             spellInfo->EffectImplicitTargetA[0] = TARGET_DST_TARGET_ENEMY;
             count++;
@@ -3755,6 +3764,8 @@ void SpellMgr::LoadSpellCustomAttr()
             count++;
             break;
         case 49838: // Stop Time
+        case 50526: // Wandering Plague
+        case 52916: // Honor Among Thieves
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_INITIAL_AGGRO;
             count++;
             break;
@@ -3763,6 +3774,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
             spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ENEMY;
             count++;
+            break;
+        case 8494: // Mana Shield (rank 2)
+            // because of bug in dbc
+            spellInfo->procChance = 0;
+            ++count;
             break;
         // Heroism
         case 32182:
@@ -3795,9 +3811,23 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetB[0] = TARGET_DST_NEARBY_ENTRY;
             count++;
             break;
+        case 24131:                             // Wyvern Sting (rank 1)
+        case 24134:                             // Wyvern Sting (rank 2)
+        case 24135:                             // Wyvern Sting (rank 3)
+            // something wrong and it applied as positive buff
+            mSpellCustomAttr[i] |= SPELL_ATTR0_CU_NEGATIVE_EFF0;
+            count++;
+            break;
+        case 46841: // Escape to the Isle of Quel'Danas
+            // not sure why this is needed
+            spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ANY;
+            spellInfo->EffectImplicitTargetB[0] = TARGET_DST_DB;
+            count++;
+            break;
         case 26029: // dark glare
         case 37433: // spout
         case 43140: case 43215: // flame breath
+        case 70461: // Coldflame Trap
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_CONE_LINE;
             count++;
             break;
@@ -3831,8 +3861,15 @@ void SpellMgr::LoadSpellCustomAttr()
         case 69782: case 69796:                 // Ooze Flood
         case 69798: case 69801:                 // Ooze Flood
         case 69538: case 69553: case 69610:     // Ooze Combine
+        case 71447: case 71481:                 // Bloodbolt Splash
+        case 71482: case 71483:                 // Bloodbolt Splash
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_EXCLUDE_SELF;
             count++;
+            break;
+        case 64844: // Divine Hymn 
+        case 64904: // Hymn of Hope
+            spellInfo->AttributesEx &= ~SPELL_ATTR1_NEGATIVE;
+            ++count;
             break;
         case 44978: case 45001: case 45002:     // Wild Magic
         case 45004: case 45006: case 45010:     // Wild Magic
@@ -3984,9 +4021,27 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->Stances = 1 << (FORM_TREE - 1);
             count++;
             break;
+        case 47569: // Improved Shadowform (Rank 1)
+            // with this spell atrribute aura can be stacked several times
+            spellInfo->Attributes &= ~SPELL_ATTR0_NOT_SHAPESHIFT;
+            ++count;
+            break;
+        case 8145: // Tremor Totem (instant pulse)
+        case 6474: // Earthbind Totem (instant pulse)
+            spellInfo->AttributesEx5 |= SPELL_ATTR5_START_PERIODIC_AT_APPLY;
+            count++;
+            break;
         case 30421:     // Nether Portal - Perseverence
             spellInfo->EffectBasePoints[2] += 30000;
             count++;
+            break;
+        case 42650: // Army of the Dead - can be interrupted
+            spellInfo->InterruptFlags = SPELL_INTERRUPT_FLAG_INTERRUPT;
+            count++;
+            break;
+        case 61607: // Mark of Blood
+            spellInfo->AttributesEx |= SPELL_ATTR1_NO_THREAT;
+            ++count;
             break;
         // some dummy spell only has dest, should push caster in this case
         case 62324: // Throw Passenger
@@ -4035,8 +4090,12 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
             count++;
             break;
-        case 25771: // Forbearance - wrong mechanic immunity in DBC since 3.0.x
-            spellInfo->EffectMiscValue[0] = MECHANIC_IMMUNE_SHIELD;
+        case 12051: // Evocation - now we can interrupt this
+            spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_INTERRUPT;
+            ++count;
+            break;
+        case 26573 : //Consecration
+            spellInfo->EffectTriggerSpell[2] = 82366;
             count++;
             break;
         case 64321: // Potent Pheromones
@@ -4094,11 +4153,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_DST_DB;
             count++;
             break;
-        // Deathbringer Saurfang achievement (must be cast on players, cannot do that with ENTRY target)
-        case 72928:
-            spellInfo->EffectImplicitTargetB[0] = TARGET_UNIT_AREA_ENEMY_SRC;
-            count++;
-            break;
         case 63675: // Improved Devouring Plague
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_DONE_BONUS;
             count++;
@@ -4121,6 +4175,17 @@ void SpellMgr::LoadSpellCustomAttr()
         case 70893: // Culling The Herd
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
             spellInfo->EffectImplicitTargetB[0] = TARGET_UNIT_MASTER;
+            count++;
+            break;
+        case 54800: // Sigil of the Frozen Conscience - change class mask to custom extended flags of Icy Touch
+                    // this is done because another spell also uses the same SpellFamilyFlags as Icy Touch
+                    // SpellFamilyFlags[0] & 0x00000040 in SPELLFAMILY_DEATHKNIGHT is currently unused (3.3.5a)
+                    // this needs research on modifier applying rules, does not seem to be in Attributes fields
+            spellInfo->EffectSpellClassMask[0] = flag96(0x00000040, 0x00000000, 0x00000000);
+            count++;
+            break;
+        case 70460: // Coldflame Jets (Traps after Saurfang)
+            spellInfo->DurationIndex = 1;   // 10 seconds
             count++;
             break;
         case 71413: // Green Ooze Summon
@@ -4156,29 +4221,88 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetB[0] = TARGET_UNIT_TARGET_ENEMY;
             count++;
             break;
-        case 71708: // Empowered Flare
-        case 72785: // Empowered Flare
-        case 72786: // Empowered Flare
-        case 72787: // Empowered Flare
+        case 71518: // Unholy Infusion Quest Credit
+        case 72934: // Blood Infusion Quest Credit
+        case 72289: // Frost Infusion Quest Credit
+            spellInfo->EffectRadiusIndex[0] = 28;   // another missing radius
+            count++;
+            break;
+        case 71708: // Empowered Flare (Blood Prince Council)
+        case 72785: // Empowered Flare (Blood Prince Council)
+        case 72786: // Empowered Flare (Blood Prince Council)
+        case 72787: // Empowered Flare (Blood Prince Council)
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_DONE_BONUS;
             count++;
             break;
+         case 71340: // Pact of the Darkfallen (Blood-Queen Lana'thel)
+             spellInfo->DurationIndex = 21;
+             count++;
+             break;
         case 44614: // Frostfire Bolt
             spellInfo->StackAmount = 0; //TODO: remove when stacking of Decrease Run Speed % aura is fixed
             break;
         case 74434: // Soulburn
             spellInfo->procCharges = 1;
             break;
+        case 23126: // World Enlarger
+            spellInfo->AuraInterruptFlags |= AURA_INTERRUPT_FLAG_SPELL_ATTACK;
+            count++;
+            break;
+        case 19970: // Entangling Roots (Rank 6) -- Nature's Grasp Proc
+        case 19971: // Entangling Roots (Rank 5) -- Nature's Grasp Proc
+        case 19972: // Entangling Roots (Rank 4) -- Nature's Grasp Proc
+        case 19973: // Entangling Roots (Rank 3) -- Nature's Grasp Proc
+        case 19974: // Entangling Roots (Rank 2) -- Nature's Grasp Proc
+        case 19975: // Entangling Roots (Rank 1) -- Nature's Grasp Proc
+        case 27010: // Entangling Roots (Rank 7) -- Nature's Grasp Proc
+        case 53313: // Entangling Roots (Rank 8) -- Nature's Grasp Proc
+            spellInfo->CastingTimeIndex = 1;
+            count++;
+            break;
+        case 49206: // Summon Gargoyle
+            spellInfo->DurationIndex = 587;
+            count++;
+            break;
+        case 53480: // Roar of Sacrifice Split damage
+            spellInfo->Effect[1] = SPELL_EFFECT_APPLY_AURA;
+            spellInfo->EffectApplyAuraName[1] = SPELL_AURA_SPLIT_DAMAGE_PCT;
+            spellInfo->EffectMiscValue[1] = 127;
+            count++;
+            break;
+        case 71357: // Order Whelp
+            spellInfo->EffectRadiusIndex[0] = 22;
+            count++;
+            break;
+        case 70598: // Sindragosa's Fury
+            spellInfo->EffectImplicitTargetA[0] = TARGET_DST_CASTER;
+            count++;
+            break;
+        case 69846: // Frost Bomb
+            spellInfo->speed = 10;
+            spellInfo->EffectImplicitTargetA[0] = TARGET_DEST_TARGET_ANY;
+            spellInfo->EffectImplicitTargetB[0] = TARGET_UNIT_TARGET_ANY;
+            spellInfo->Effect[1] = 0;
+            count++;
+            break;
         default:
             break;
         }
 
-        switch(spellInfo->SpellFamilyName)
+        switch (spellInfo->SpellFamilyName)
         {
             case SPELLFAMILY_WARRIOR:
                 // Shout
                 if (spellInfo->SpellFamilyFlags[0] & 0x20000 || spellInfo->SpellFamilyFlags[1] & 0x20)
                     mSpellCustomAttr[i] |= SPELL_ATTR0_CU_AURA_CC;
+                else
+                    break;
+                count++;
+                break;
+            case SPELLFAMILY_HUNTER:
+                // Monstrous Bite target fix
+                // seems we incorrectly handle spell with "no target"
+                if (spellInfo->SpellIconID == 599)
+                    spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
                 else
                     break;
                 count++;
@@ -4193,6 +4317,9 @@ void SpellMgr::LoadSpellCustomAttr()
                 // Roar
                 else if (spellInfo->SpellFamilyFlags[0] & 0x8)
                     mSpellCustomAttr[i] |= SPELL_ATTR0_CU_AURA_CC;
+                // Rake
+                else if (spellInfo->SpellFamilyFlags[0] & 0x1000)
+                    mSpellCustomAttr[i] |= SPELL_ATTR0_CU_IGNORE_ARMOR;
                 else
                     break;
                 count++;
@@ -4205,6 +4332,20 @@ void SpellMgr::LoadSpellCustomAttr()
                     break;
                 count++;
                 break;
+            case SPELLFAMILY_PALADIN:
+                // Seals of the Pure should affect Seal of Righteousness
+                if (spellInfo->SpellIconID == 25 && spellInfo->Attributes & SPELL_ATTR0_PASSIVE)
+                    spellInfo->EffectSpellClassMask[0][1] |= 0x20000000;
+                else
+                    break;
+                count++;
+                break;
+            case SPELLFAMILY_DEATHKNIGHT:
+                // Icy Touch - extend FamilyFlags (unused value) for Sigil of the Frozen Conscience to use
+                if (spellInfo->SpellIconID == 2721 && spellInfo->SpellFamilyFlags[0] & 0x2)
+                    spellInfo->SpellFamilyFlags[0] |= 0x40;
+                count++;
+                break;
         }
     }
 
@@ -4215,13 +4356,15 @@ void SpellMgr::LoadSpellCustomAttr()
 
     CreatureAI::FillAISpellInfo();
 
+    sLog->outString(">> Loaded %u custom spell attributes in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u custom spell attributes", count);
 }
 
 // Fill custom data about enchancments
 void SpellMgr::LoadEnchantCustomAttr()
 {
+    uint32 oldMSTime = getMSTime();
+
     uint32 size = sSpellItemEnchantmentStore.GetNumRows();
     mEnchantCustomAttr.resize(size);
 
@@ -4255,33 +4398,30 @@ void SpellMgr::LoadEnchantCustomAttr()
         }
     }
 
+    sLog->outString(">> Loaded %u custom enchant attributes in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u custom enchant attributes", count);
 }
 
 void SpellMgr::LoadSpellLinked()
 {
+    uint32 oldMSTime = getMSTime();
+
     mSpellLinkedMap.clear();    // need for reload case
-    uint32 count = 0;
 
     //                                                0              1             2
     QueryResult result = WorldDatabase.Query("SELECT spell_trigger, spell_effect, type FROM spell_linked_spell");
     if (!result)
     {
-        
-        
+        sLog->outString(">> Loaded 0 linked spells. DB table `spell_linked_spell` is empty.");
         sLog->outString();
-        sLog->outString(">> Loaded %u linked spells", count);
         return;
     }
 
-    
+    uint32 count = 0;
 
     do
     {
         Field *fields = result->Fetch();
-
-        
 
         int32 trigger = fields[0].GetInt32();
         int32 effect =  fields[1].GetInt32();
@@ -4324,8 +4464,9 @@ void SpellMgr::LoadSpellLinked()
         mSpellLinkedMap[trigger].push_back(effect);
 
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
+    sLog->outString(">> Loaded %u linked spells in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
-    sLog->outString(">> Loaded %u linked spells", count);
 }

@@ -156,11 +156,11 @@ void WorldSession::HandleMoveWorldportAckOpcode()
     if (mInstance)
     {
         Difficulty diff = GetPlayer()->GetDifficulty(mEntry->IsRaid());
-        if (MapDifficulty const* mapDiff = GetMapDifficultyData(mEntry->MapID,diff))
+        if (MapDifficulty const* mapDiff = GetMapDifficultyData(mEntry->MapID, diff))
         {
             if (mapDiff->resetTime)
             {
-                if (time_t timeReset = sInstanceSaveMgr->GetResetTimeFor(mEntry->MapID,diff))
+                if (time_t timeReset = sInstanceSaveMgr->GetResetTimeFor(mEntry->MapID, diff))
                 {
                     uint32 timeleft = uint32(timeReset - time(NULL));
                     GetPlayer()->SendInstanceResetWarning(mEntry->MapID, diff, timeleft);
@@ -495,7 +495,7 @@ void WorldSession::HandleSetActiveMoverOpcode(WorldPacket &recv_data)
     if (guid != _player->GetCharmGUID() && guid != _player->GetGUID())
     {
         sLog->outError("Player %s is trying to change mover to an invalid value!", _player->GetName());
-		GetPlayer()->SetMover(GetPlayer());
+        GetPlayer()->SetMover(GetPlayer());
         return;
     }
 
@@ -642,7 +642,7 @@ void WorldSession::HandleEnterPlayerVehicle(WorldPacket &data)
     }
 }
 
-void WorldSession::HandleEjectPasenger(WorldPacket &data)
+void WorldSession::HandleEjectPassenger(WorldPacket &data)
 {
     if (_player->GetVehicleKit())
     {

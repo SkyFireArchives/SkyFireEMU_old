@@ -33,8 +33,8 @@ class WorldDatabaseConnection : public MySQLConnection
         WorldDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) {}
         WorldDatabaseConnection(ACE_Activation_Queue* q, MySQLConnectionInfo& connInfo) : MySQLConnection(q, connInfo) {}
 
-        //- Loads databasetype specific prepared statements
-        bool Open();
+        //- Loads database type specific prepared statements
+        void DoPrepareStatements();
 };
 
 typedef DatabaseWorkerPool<WorldDatabaseConnection> WorldDatabaseWorkerPool;
@@ -50,14 +50,10 @@ enum WorldDatabaseStatements
     WORLD_LOAD_QUEST_POOLS,
     WORLD_DEL_CRELINKED_RESPAWN,
     WORLD_REP_CRELINKED_RESPAWN,
-    WORLD_DEL_GAMEOBJECT_RESPAWN_TIMES,
-    WORLD_DEL_CREATURE_RESPAWN_TIME,
-    WORLD_ADD_CREATURE_RESPAWN_TIME,
-    WORLD_DEL_GO_RESPAWN_TIME,
-    WORLD_ADD_GO_RESPAWN_TIME,
     WORLD_LOAD_CRETEXT,
     WORLD_LOAD_SMART_SCRIPTS,
     WORLD_LOAD_SMARTAI_WP,
+
     MAX_WORLDDATABASE_STATEMENTS,
 };
 

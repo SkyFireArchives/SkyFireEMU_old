@@ -256,11 +256,11 @@ void WorldSession::HandleGuildExperienceOpcode(WorldPacket& recvPacket)
     if (Guild* pGuild = sObjectMgr->GetGuildById(_player->GetGuildId()))
     {
         WorldPacket data(SMSG_GUILD_XP_UPDATE, 8*5);
-	    data << uint64(0x37); // max daily xp
-	    data << uint64(pGuild->GetNextLevelXP()); // next level XP
-	    data << uint64(0x37); // weekly xp
-	    data << uint64(pGuild->GetCurrentXP()); // Curr exp
-	    data << uint64(0); // Today exp (unsupported)
+        data << uint64(0x37); // max daily xp
+        data << uint64(pGuild->GetNextLevelXP()); // next level XP
+        data << uint64(0x37); // weekly xp
+        data << uint64(pGuild->GetCurrentXP()); // Curr exp
+        data << uint64(0); // Today exp (unsupported)
         SendPacket(&data);
     }
 }
@@ -306,7 +306,7 @@ void WorldSession::HandleGuildRewardsOpcode(WorldPacket& recvPacket)
         
     for(uint32 i = 0; i < vec.size(); ++i)
         data << uint32(vec[i]->item); // item entry
-	SendPacket(&data);
+    SendPacket(&data);
 }
 
 // Cata Status: Done
@@ -330,36 +330,9 @@ void WorldSession::HandleGuildSetNoteOpcode(WorldPacket& recvPacket)
 
 void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
 {
-    /*  Packet Breakdown 
-        FF FF FF FF =>Bank permissions 1
-        FF FF FF FF =>Bank permissions 2
-        FF FF FF FF =>Bank permissions 3
-        FF FF FF FF =>Bank permissions 4
-        FF FF FF FF =>Bank permissions 5
-        FF FF FF FF =>Bank permissions 6
-        FF FF FF FF =>Bank permissions 7
-        FF FF FF FF =>Bank permissions 8
-        00 00 00 00 =>Bank withdrawal 1
-        00 00 00 00 =>Bank withdrawal 2
-        00 00 00 00 =>Bank withdrawal 3
-        00 00 00 00 =>Bank withdrawal 4
-        00 00 00 00 =>Bank withdrawal 5
-        00 00 00 00 =>Bank withdrawal 6
-        00 00 00 00 =>Bank withdrawal 7
-        00 00 00 00 =>Bank withdrawal 8
-        00 00 00 00 =>new rankID
-        00 00 00 00 =>last rankID
-        04 00 00 00 00 00 00 00 =>playerguid
-        FF F1 1D 00 =>new permissions
-        FF F1 1D 00 =>last permissions
-        02 00 00 00 00 00 F6 1F =>guildId
-        FF FF FF FF =>max bank withdrawal
-        47 75 69 6C 64 20 4D 61 73 74 65 72 C2 B0 30 00 =>rankName
-    */
-
-    uint32 BankRights[GUILD_BANK_MAX_TABS];
+    uint32 BankStacks[GUILD_BANK_MAX_TABS];
     for(uint32 i = 0; i < GUILD_BANK_MAX_TABS; i++)
-        recvPacket >> BankRights[i];
+        recvPacket >> BankStacks[i];
 
     uint32 new_rights;
     recvPacket >> new_rights;
@@ -370,9 +343,9 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
     uint32 old_rankId;
     recvPacket >> old_rankId;
 
-    uint32 BankStacks[GUILD_BANK_MAX_TABS];
+    uint32 BankRights[GUILD_BANK_MAX_TABS];
     for(uint32 i = 0; i < GUILD_BANK_MAX_TABS; i++)
-        recvPacket >> BankStacks[i];
+        recvPacket >> BankRights[i];
 
     uint64 guildId;
     recvPacket >> guildId;
@@ -420,7 +393,7 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
     {
         for (uint8 tabId = 0; tabId < GUILD_BANK_MAX_TABS; ++tabId)
         {
-            rightsAndSlots[tabId] = GuildBankRightsAndSlots(uint8(old_rights), new_rights);
+            rightsAndSlots[tabId] = GuildBankRightsAndSlots(BankRights[tabId], BankStacks[tabId]);
         }
 
         pGuild->HandleSetRankInfo(this, new_rankId, rankName, new_rights, money, rightsAndSlots);
@@ -469,7 +442,7 @@ void WorldSession::HandleSaveGuildEmblemOpcode(WorldPacket& recvPacket)
     if (GetPlayer()->GetNPCIfCanInteractWith(vendorGuid, UNIT_NPC_FLAG_TABARDDESIGNER))
     {
         // Remove fake death
-        if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
+        if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
             GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
         if (Guild* pGuild = _GetPlayerGuild(this))

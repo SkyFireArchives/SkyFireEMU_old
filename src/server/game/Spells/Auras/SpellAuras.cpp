@@ -202,7 +202,7 @@ void AuraApplication::ClientUpdate(bool remove)
     Aura const * aura = GetBase();
     data << uint32(aura->GetId());
     uint32 flags = m_flags;
-    if (aura->GetMaxDuration() > 0)
+    if (aura->GetMaxDuration() > 0 && !(aura->GetSpellProto()->AttributesEx5 & SPELL_ATTR5_HIDE_DURATION))
         flags |= AFLAG_DURATION;
     data << uint8(flags);
     data << uint8(aura->GetCasterLevel());
@@ -1028,8 +1028,8 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         if (target->GetTypeId() == TYPEID_PLAYER)
                             if (GameObject* obj = target->GetGameObject(48018))
                 {
-                  target->ToPlayer()->TeleportTo(obj->GetMapId(),obj->GetPositionX(),obj->GetPositionY(),obj->GetPositionZ(),obj->GetOrientation());
-                  target->ToPlayer()->RemoveMovementImpairingAuras();
+                  target->NearTeleportTo(obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation());
+                  target->RemoveMovementImpairingAuras();
                 }
                         break;
                 }
@@ -1045,6 +1045,28 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                     {
                         int32 basepoints0 = aurEff->GetAmount() * GetEffect(0)->GetTotalTicks() * caster->SpellDamageBonus(target, GetSpellProto(), 0, GetEffect(0)->GetAmount(), DOT) / 100;
                         caster->CastCustomSpell(target, 63675, &basepoints0, NULL, NULL, true, NULL, GetEffect(0));
+                    }
+                }
+                // Mind fly
+                else if (GetId() == 15407)
+                {
+                    // Pain and Suffering: Rank 1
+                    if (Aura* pain = caster->GetAura(47580)) 
+                    {
+                        if (Aura* swp = target->GetAura(589)) 
+                        {
+                            if (roll_chance_i(30))
+                                swp->RefreshDuration();
+                        }
+                    }
+                    // Pain and Suffering: Rank 2
+                    if (Aura* pain = caster->GetAura(47581)) 
+                    {
+                        if (Aura* swp = target->GetAura(589)) 
+                        {
+                            if (roll_chance_i(60))
+                                swp->RefreshDuration();
+                        }
                     }
                 }
                 // Renew
@@ -1444,6 +1466,30 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         break;
                 }
                 break;
+            case SPELLFAMILY_HUNTER:
+                // Wyvern Sting
+                // If implemented through spell_linked_spell it can't proc from breaking by damage
+                if (removeMode != AURA_REMOVE_BY_STACK && removeMode != AURA_REMOVE_BY_DEATH &&
+                    GetSpellProto()->SpellFamilyFlags[1] & 0x1000 && caster)
+                {
+                    uint32 spell_id = 0;
+                    switch(GetId())
+                    {
+                        case 19386: spell_id = 24131; break;
+                        case 24132: spell_id = 24134; break;
+                        case 24133: spell_id = 24135; break;
+                        case 27068: spell_id = 27069; break;
+                        case 49011: spell_id = 49009; break;
+                        case 49012: spell_id = 49010; break;
+                    }
+                    caster->CastSpell(target, spell_id, true);
+                }
+                break;
+                // Glyph of Freezing Trap
+                if (GetSpellProto()->SpellFamilyFlags[0] & 0x00000008)
+                    if (caster && caster->HasAura(56845))
+                        target->CastSpell(target, 61394, true);
+                break;
         }
     }
 
@@ -1459,6 +1505,32 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                     else
                         target->SetReducedThreatPercent(0,0);
                     break;
+            }
+            break;
+        case SPELLFAMILY_DRUID:
+            // Enrage
+            if (GetSpellProto()->SpellFamilyFlags[0] & 0x80000)
+            {
+                if (target->HasAura(70726)) // Druid T10 Feral 4P Bonus
+                {
+                    if (apply)
+                        target->CastSpell(target, 70725, true);
+                }
+                else // armor reduction implemented here
+                    if (AuraEffect * auraEff = target->GetAuraEffectOfRankedSpell(1178, 0))
+                    {
+                        int32 value = auraEff->GetAmount();
+                        int32 mod;
+                        switch (auraEff->GetId())
+                        {
+                            case 1178: mod = 27; break;
+                            case 9635: mod = 16; break;
+                        }
+                        mod = value / 100 * mod;
+                        value = value + (apply ? -mod : mod);
+                        auraEff->ChangeAmount(value);
+                    }
+                break;
             }
             break;
         case SPELLFAMILY_ROGUE:
@@ -1917,6 +1989,8 @@ UnitAura::UnitAura(SpellEntry const* spellproto, uint8 effMask, WorldObject * ow
     LoadScripts();
     _InitEffects(effMask, caster, baseAmount);
     GetUnitOwner()->_AddAura(this, caster);
+   if (GetUnitOwner()->GetTypeId() == TYPEID_PLAYER)
+       sScriptMgr->OnPlayerAura(GetUnitOwner()->ToPlayer(), spellproto);
 };
 
 void UnitAura::_ApplyForTarget(Unit * target, Unit * caster, AuraApplication * aurApp)
@@ -1971,7 +2045,7 @@ void UnitAura::FillTargetMap(std::map<Unit *, uint8> & targets, Unit * caster)
             if (modOwner)
                 modOwner->ApplySpellMod(GetId(), SPELLMOD_RADIUS, radius);
 
-            if (!GetUnitOwner()->hasUnitState(UNIT_STAT_ISOLATED))
+            if (!GetUnitOwner()->HasUnitState(UNIT_STAT_ISOLATED))
             {
                 switch(GetSpellProto()->Effect[effIndex])
                 {
@@ -1982,6 +2056,8 @@ void UnitAura::FillTargetMap(std::map<Unit *, uint8> & targets, Unit * caster)
                     case SPELL_EFFECT_APPLY_AREA_AURA_RAID:
                         targetList.push_back(GetUnitOwner());
                         GetUnitOwner()->GetRaidMember(targetList, radius);
+                        if (GetSpellProto()->SpellIconID == 691)
+                            GetUnitOwner()->GetRaidMember(targetList, GetSpellRadiusForFriend(sSpellRadiusStore.LookupEntry(GetSpellProto()->EffectRadiusIndex[1])));
                         break;
                     case SPELL_EFFECT_APPLY_AREA_AURA_FRIEND:
                     {

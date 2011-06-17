@@ -720,6 +720,10 @@ class PlayerScript : public ScriptObject
 
         // Called when a player is binded to an instance
         virtual void OnBindToInstance(Player* /*player*/, Difficulty /*difficulty*/, uint32 /*mapid*/, bool /*permanent*/) { }
+
+        virtual void OnDamageDealt(Player* /*player*/, Unit* /*victim*/, uint32& /*damage*/, DamageEffectType /*damageType*/, SpellEntry const* /*spellProto*/) { }
+        virtual void OnSpellCastWithProto(Player* /*player*/, SpellEntry const* /*spellProto*/) { }
+        virtual void OnAura(Player* /*player*/, SpellEntry const* /*spellProto*/) { }
 };
 
 class GuildScript : public ScriptObject
@@ -771,7 +775,7 @@ class ScriptMgr
     friend class ScriptObject;
 
     ScriptMgr();
-    ~ScriptMgr();
+    virtual ~ScriptMgr();
 
     uint32 _scriptCount;
 
@@ -785,6 +789,9 @@ class ScriptMgr
 
         void IncrementScriptCount() { ++_scriptCount; }
         uint32 GetScriptCount() const { return _scriptCount; }
+
+    public: /* Unloading */
+        void Unload();
 
     public: /* SpellScriptLoader */
 
@@ -956,6 +963,9 @@ class ScriptMgr
         void OnPlayerCreate(Player* player);
         void OnPlayerDelete(uint64 guid);
         void OnPlayerBindToInstance(Player* player, Difficulty difficulty, uint32 mapid, bool permanent);
+        void OnPlayerDamageDealt(Player* player, Unit* victim, uint32& damage, DamageEffectType damageType, SpellEntry const *spellProto);
+        void OnPlayerSpellCastWithProto(Player* player, SpellEntry const *spellProto);
+        void OnPlayerAura(Player* player, SpellEntry const* spellProto);
 
     public: /* GuildScript */
         void OnGuildAddMember(Guild *guild, Player *player, uint8& plRank);

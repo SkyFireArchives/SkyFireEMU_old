@@ -23,7 +23,7 @@
 #ifndef __TRINITY_LANGUAGE_H
 #define __TRINITY_LANGUAGE_H
 
-enum TrinityStrings
+enum SkyFireStrings
 {
     // for chat commands
     LANG_SELECT_CHAR_OR_CREATURE        = 1,
@@ -517,7 +517,7 @@ enum TrinityStrings
 
     LANG_PINFO_ACCOUNT                  = 548,
     LANG_PINFO_LEVEL                    = 549,
-    LANG_PINFO_NO_REP                   = 550,
+    LANG_PINFO_MUTE_BAN                 = 550,
 
     LANG_YOU_SET_EXPLORE_ALL            = 551,
     LANG_YOU_SET_EXPLORE_NOTHING        = 552,
@@ -836,7 +836,42 @@ enum TrinityStrings
     LANG_BG_IC_ALLIANCE                 = 1225,
     LANG_BG_IC_HORDE                    = 1226,
 
-    // FREE IDS                           1228-9999
+    // Twin Peaks
+    LANG_BG_TP_START_TWO_MINUTES        = 1230,
+    LANG_BG_TP_START_ONE_MINUTE         = 1231,
+    LANG_BG_TP_START_HALF_MINUTE        = 1232,
+    LANG_BG_TP_HAS_BEGUN                = 1233,
+    LANG_BG_TP_CAPTURED_HF              = 1234,
+    LANG_BG_TP_CAPTURED_AF              = 1235,
+    LANG_BG_TP_DROPPED_HF               = 1236,
+    LANG_BG_TP_DROPPED_AF               = 1237,
+    LANG_BG_TP_RETURNED_AF              = 1238,
+    LANG_BG_TP_RETURNED_HF              = 1239,
+    LANG_BG_TP_PICKEDUP_HF              = 1240,
+    LANG_BG_TP_PICKEDUP_AF              = 1241,
+    LANG_BG_TP_F_PLACED                 = 1242,
+    LANG_BG_TP_ALLIANCE_FLAG_RESPAWNED  = 1243,
+    LANG_BG_TP_HORDE_FLAG_RESPAWNED     = 1244,
+    // FREE IDS                           1245-1249
+
+    // Battle For Gilneas
+    LANG_BG_BG_START_TWO_MINUTES        = 1250,
+    LANG_BG_BG_START_ONE_MINUTE         = 1251,
+    LANG_BG_BG_START_HALF_MINUTE        = 1252,
+    LANG_BG_BG_HAS_BEGUN                = 1253,
+
+    LANG_BG_BG_ALLY                     = 1254,
+    LANG_BG_BG_HORDE                    = 1255,
+    LANG_BG_BG_NODE_LIGHTHOUSE          = 1256,
+    LANG_BG_BG_NODE_WATERWORKS          = 1257,
+    LANG_BG_BG_NODE_MINE                = 1258,
+    LANG_BG_BG_NODE_TAKEN               = 1259,
+    LANG_BG_BG_NODE_DEFENDED            = 1260,
+    LANG_BG_BG_NODE_ASSAULTED           = 1261,
+    LANG_BG_BG_NODE_CLAIMED             = 1262,
+    LANG_BG_BG_A_NEAR_VICTORY           = 1263,
+    LANG_BG_BG_H_NEAR_VICTORY           = 1264,
+    // FREE IDS                           1265-1299
 
     // AV
     LANG_BG_AV_ALLY                     = 1300,
@@ -907,7 +942,7 @@ enum TrinityStrings
     LANG_COMMAND_TICKETLISTAGECREATE    = 2025,
     LANG_COMMAND_TICKETSHOWESCALATEDLIST = 2026,
 
-    // Trinity strings                    5000-9999
+    // SkyFire Strings                    5000-9999
     LANG_COMMAND_FREEZE                 = 5000,
     LANG_COMMAND_FREEZE_ERROR           = 5001,
     LANG_COMMAND_FREEZE_WRONG           = 5002,
@@ -931,15 +966,15 @@ enum TrinityStrings
     LANG_MOUNTABLE                      = 5019,
     LANG_NPCINFO_PHASEMASK              = 5020,
     LANG_NPCINFO_ARMOR                  = 5021,
-    LANG_CHANNEL_NOT_PUBLIC             = 5022,
-    LANG_CHANNEL_PUBLIC_CHANGED         = 5023,
+    LANG_CHANNEL_ENABLE_OWNERSHIP       = 5022,
+    LANG_CHANNEL_DISABLE_OWNERSHIP      = 5023,
     LANG_GOINFO_ENTRY                   = 5024,
     LANG_GOINFO_TYPE                    = 5025,
     LANG_GOINFO_DISPLAYID               = 5026,
     LANG_GOINFO_NAME                    = 5027,
     LANG_GOINFO_LOOTID                  = 5028,
     LANG_COMMAND_LOOKUP_MAX_RESULTS     = 5029,
-    // Room for more Trinity strings      5030-9999
+    // Room for more SkyFire Strings      5030-9999
 
     // Level requirement notifications
     LANG_SAY_REQ                        = 6604,
@@ -1050,6 +1085,7 @@ enum TrinityStrings
     // Use for custom patches             11000-11999
     LANG_AUTO_BROADCAST                 = 11000,
     LANG_INVALID_REALMID                = 11001,
+    LANG_FAILED_NO_PLACE_FOR_PET        = 11002,
 
     // NOT RESERVED IDS                   12000-1999999999
     // `db_script_string` table index     2000000000-2000009999 (MIN_DB_SCRIPT_STRING_ID-MAX_DB_SCRIPT_STRING_ID)

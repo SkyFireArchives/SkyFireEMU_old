@@ -156,6 +156,14 @@ void Object::_Create(uint32 guidlow, uint32 entry, HighGuid guidhigh)
     m_PackGUID.appendPackGUID(GetGUID());
 }
 
+std::string Object::_ConcatFields(uint16 startIndex, uint16 size) const
+{
+    std::ostringstream ss;
+    for (uint16 index = 0; index < size; ++index)
+        ss << GetUInt32Value(index + startIndex) << " ";
+    return ss.str();
+}
+
 void Object::BuildMovementUpdateBlock(UpdateData * data, uint32 flags) const
 {
     /*ByteBuffer buf(500);
@@ -283,6 +291,8 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     // 0x20
     if (flags & UPDATEFLAG_LIVING)
     {
+        assert(dynamic_cast<Unit*>(const_cast<Object*>(this)) != NULL);
+        
         ((Unit*)this)->BuildMovementPacket(data);
 
         *data << ((Unit*)this)->GetSpeed(MOVE_WALK);
@@ -370,6 +380,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     {
         if (flags & UPDATEFLAG_POSITION)
         {
+            assert(dynamic_cast<WorldObject*>(const_cast<Object*>(this)) != NULL);
             *data << uint8(0);                              // unk PGUID!
             *data << ((WorldObject*)this)->GetPositionX();
             *data << ((WorldObject*)this)->GetPositionY();
@@ -392,6 +403,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
                 // 0x02
                 if (flags & UPDATEFLAG_TRANSPORT && ((GameObject*)this)->GetGoType() == GAMEOBJECT_TYPE_MO_TRANSPORT)
                 {
+                    assert(dynamic_cast<GameObject*>(const_cast<Object*>(this)) != NULL);
                     *data << (float)0;
                     *data << (float)0;
                     *data << (float)0;
@@ -399,6 +411,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
                 }
                 else
                 {
+                    assert(dynamic_cast<WorldObject*>(const_cast<Object*>(this)) != NULL);
                     *data << ((WorldObject *)this)->GetPositionX();
                     *data << ((WorldObject *)this)->GetPositionY();
                     *data << ((WorldObject *)this)->GetPositionZ();
@@ -411,6 +424,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     // 0x4
     if (flags & UPDATEFLAG_HAS_TARGET)                       // packed guid (current target guid)
     {
+        assert(dynamic_cast<Unit*>(const_cast<Object*>(this)) != NULL);
         if (Unit *victim = ((Unit*)this)->getVictim())
             data->append(victim->GetPackGUID());
         else
@@ -426,8 +440,9 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     // 0x80
     if (flags & UPDATEFLAG_VEHICLE)                          // unused for now
     {
+        assert(dynamic_cast<Unit*>(const_cast<Object*>(this)) != NULL);
         *data << uint32(((Unit*)this)->GetVehicleKit()->GetVehicleInfo()->m_ID);  // vehicle id
-        *data << float(((Creature*)this)->GetOrientation());  // facing adjustment
+        *data << float(((Unit*)this)->GetOrientation());  // facing adjustment
     }
 
     // 0x800
@@ -439,6 +454,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     // 0x200
     if (flags & UPDATEFLAG_ROTATION)
     {
+        assert(dynamic_cast<GameObject*>(const_cast<Object*>(this)) != NULL);
         *data << uint64(((GameObject*)this)->GetRotation());
     }
     
@@ -519,7 +535,7 @@ void Object::_BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask 
                 if (index == UNIT_NPC_FLAGS)
                 {
                     // remove custom flag before sending
-                    uint32 appendValue = m_uint32Values[ index ] & ~(UNIT_NPC_FLAG_GUARD + UNIT_NPC_FLAG_OUTDOORPVP);
+                    uint32 appendValue = m_uint32Values[ index ];
 
                     if (GetTypeId() == TYPEID_UNIT)
                     {
@@ -1904,7 +1920,7 @@ namespace Trinity
                 : i_object(obj), i_msgtype(msgtype), i_textId(textId), i_language(language), i_targetGUID(targetGUID) {}
             void operator()(WorldPacket& data, LocaleConstant loc_idx)
             {
-                char const* text = sObjectMgr->GetTrinityString(i_textId,loc_idx);
+                char const* text = sObjectMgr->GetSkyFireString(i_textId,loc_idx);
 
                 // TODO: i_object.GetName() also must be localized?
                 i_object.BuildMonsterChat(&data,i_msgtype,text,i_language,i_object.GetNameForLocaleIdx(loc_idx),i_targetGUID);
@@ -1984,7 +2000,7 @@ void WorldObject::MonsterWhisper(int32 textId, uint64 receiver, bool IsBossWhisp
         return;
 
     LocaleConstant loc_idx = player->GetSession()->GetSessionDbLocaleIndex();
-    char const* text = sObjectMgr->GetTrinityString(textId, loc_idx);
+    char const* text = sObjectMgr->GetSkyFireString(textId, loc_idx);
 
     WorldPacket data(SMSG_MESSAGECHAT, 200);
     BuildMonsterChat(&data,IsBossWhisper ? CHAT_MSG_RAID_BOSS_WHISPER : CHAT_MSG_MONSTER_WHISPER,text,LANG_UNIVERSAL,GetNameForLocaleIdx(loc_idx),receiver);
@@ -2211,6 +2227,7 @@ Pet* Player::SummonPet(uint32 entry, float x, float y, float z, float ang, PetTy
     }
 
     // petentry == 0 for hunter "call pet" (current pet summoned if any)
+    sLog->outDebug("Player::SummonPet PetSlot [%i]", int32(slotID));
     if (!entry)
     {
         delete pet;
@@ -2304,7 +2321,7 @@ GameObject* WorldObject::SummonGameObject(uint32 entry, float x, float y, float 
     if (!IsInWorld())
         return NULL;
 
-    GameObjectInfo const* goinfo = sObjectMgr->GetGameObjectInfo(entry);
+    GameObjectInfo const* goinfo = ObjectMgr::GetGameObjectInfo(entry);
     if (!goinfo)
     {
         sLog->outErrorDb("Gameobject template %u not found in database!", entry);
@@ -2412,7 +2429,7 @@ namespace Trinity
 
                 float x,y,z;
 
-                if (!c->isAlive() || c->hasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED | UNIT_STAT_DISTRACTED) ||
+                if (!c->isAlive() || c->HasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED | UNIT_STAT_DISTRACTED) ||
                     !c->GetMotionMaster()->GetDestination(x,y,z))
                 {
                     x = c->GetPositionX();

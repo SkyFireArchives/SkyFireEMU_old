@@ -39,7 +39,7 @@ void WorldSession::HandleGMTicketCreateOpcode(WorldPacket & recv_data)
 
     if (GetPlayer()->getLevel() < sWorld->getIntConfig(CONFIG_TICKET_LEVEL_REQ))
     {
-        SendNotification(GetTrinityString(LANG_TICKET_REQ), sWorld->getIntConfig(CONFIG_TICKET_LEVEL_REQ));
+        SendNotification(GetSkyFireString(LANG_TICKET_REQ), sWorld->getIntConfig(CONFIG_TICKET_LEVEL_REQ));
         return;
     }
 
@@ -65,7 +65,7 @@ void WorldSession::HandleGMTicketCreateOpcode(WorldPacket & recv_data)
     recv_data >> ticketText;
     recv_data >> unk;          // not sure what this is... replyTo?
     recv_data >> needResponse; // always 1/0 -- not sure what retail does with this
-	recv_data >> unk1;
+    recv_data >> unk1;
     recv_data >> unk2;
 
     GM_Ticket *ticket = new GM_Ticket;
@@ -240,7 +240,7 @@ void WorldSession::HandleGMSurveySubmit(WorldPacket& recv_data)
 
     ss << "INSERT INTO gm_surveys (player, surveyid, mainSurvey, overall_comment, timestamp) VALUES (";
     ss << GetPlayer()->GetGUID() << ", ";
-    ss << nextSurveyID << ", ";
+    ss << uint32(nextSurveyID) << ", ";
     ss << mainSurvey << ", ";
 
     // sub_survey1, r1, comment1, sub_survey2, r2, comment2, sub_survey3, r3, comment3, sub_survey4, r4, comment4, sub_survey5, r5, comment5, sub_survey6, r6, comment6, sub_survey7, r7, comment7, sub_survey8, r8, comment8, sub_survey9, r9, comment9, sub_survey10, r10, comment10,
@@ -259,9 +259,9 @@ void WorldSession::HandleGMSurveySubmit(WorldPacket& recv_data)
         recv_data >> rank;
         recv_data >> comment;
 
-        os << nextSurveyID << " ";
+        os << uint32(nextSurveyID) << " ";
         os << subSurveyId << ", ";
-        os << rank << ", '";
+        os << uint16(rank) << ", '";
         CharacterDatabase.escape_string(comment);
         os << comment << "');";
         CharacterDatabase.PExecute(os.str().c_str());

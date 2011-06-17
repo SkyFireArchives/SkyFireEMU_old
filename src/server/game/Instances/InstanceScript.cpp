@@ -29,14 +29,19 @@
 #include "Creature.h"
 #include "CreatureAI.h"
 #include "Log.h"
+#include "LFGMgr.h"
 
 void InstanceScript::SaveToDB()
 {
     std::string data = GetSaveData();
     if (data.empty())
         return;
-    CharacterDatabase.escape_string(data);
-    CharacterDatabase.PExecute("UPDATE instance SET data = '%s' WHERE id = '%d'", data.c_str(), instance->GetInstanceId());
+
+    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPDATE_INSTANCE_DATA);
+    stmt->setUInt32(0, GetCompletedEncounterMask());
+    stmt->setString(1, data);
+    stmt->setUInt32(2, instance->GetInstanceId());
+    CharacterDatabase.Execute(stmt);
 }
 
 void InstanceScript::HandleGameObject(uint64 GUID, bool open, GameObject *go)
@@ -111,28 +116,25 @@ void InstanceScript::UpdateDoorState(GameObject *door)
         return;
 
     bool open = true;
-    for (DoorInfoMap::iterator itr = lower; itr != upper; ++itr)
+    for (DoorInfoMap::iterator itr = lower; itr != upper && open; ++itr)
     {
-        if (itr->second.type == DOOR_TYPE_ROOM)
+        switch (itr->second.type)
         {
-            if (itr->second.bossInfo->state == IN_PROGRESS)
-            {
-                open = false;
+            case DOOR_TYPE_ROOM:
+                open = (itr->second.bossInfo->state != IN_PROGRESS);
                 break;
-            }
-        }
-        else if (itr->second.type == DOOR_TYPE_PASSAGE)
-        {
-            if (itr->second.bossInfo->state != DONE)
-            {
-                open = false;
+            case DOOR_TYPE_PASSAGE:
+                open = (itr->second.bossInfo->state == DONE);
                 break;
-            }
+            case DOOR_TYPE_SPAWN_HOLE:
+                open = (itr->second.bossInfo->state == IN_PROGRESS);
+                break;
+            default:
+                break;
         }
     }
 
     door->SetGoState(open ? GO_STATE_ACTIVE : GO_STATE_READY);
-    //sLog->outError("Door %u is %s.", door->GetEntry(), open ? "opened" : "closed");
 }
 
 void InstanceScript::AddDoor(GameObject *door, bool add)
@@ -263,12 +265,12 @@ void InstanceScript::DoUseDoorOrButton(uint64 uiGuid, uint32 uiWithRestoreTime, 
         if (pGo->GetGoType() == GAMEOBJECT_TYPE_DOOR || pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON)
         {
             if (pGo->getLootState() == GO_READY)
-                pGo->UseDoorOrButton(uiWithRestoreTime,bUseAlternativeState);
+                pGo->UseDoorOrButton(uiWithRestoreTime, bUseAlternativeState);
             else if (pGo->getLootState() == GO_ACTIVATED)
                 pGo->ResetDoorOrButton();
         }
         else
-            sLog->outError("SD2: Script call DoUseDoorOrButton, but gameobject entry %u is type %u.",pGo->GetEntry(),pGo->GetGoType());
+            sLog->outError("SD2: Script call DoUseDoorOrButton, but gameobject entry %u is type %u.", pGo->GetEntry(), pGo->GetGoType());
     }
 }
 
@@ -341,14 +343,14 @@ void InstanceScript::DoCompleteAchievement(uint32 achievement)
 }
 
 // Update Achievement Criteria for all players in instance
-void InstanceScript::DoUpdateAchievementCriteria(AchievementCriteriaTypes type, uint32 miscvalue1, uint32 miscvalue2, Unit *unit, uint32 time)
+void InstanceScript::DoUpdateAchievementCriteria(AchievementCriteriaTypes type, uint32 miscValue1 /*= 0*/, uint32 miscValue2 /*= 0*/, Unit* unit /*= NULL*/)
 {
     Map::PlayerList const &PlayerList = instance->GetPlayers();
 
     if (!PlayerList.isEmpty())
         for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
             if (Player *pPlayer = i->getSource())
-                pPlayer->UpdateAchievementCriteria(type, miscvalue1, miscvalue2, unit, time);
+                pPlayer->UpdateAchievementCriteria(type, miscValue1, miscValue2, unit);
 }
 
 // Start timed achievement for all players in instance
@@ -384,9 +386,77 @@ void InstanceScript::DoRemoveAurasDueToSpellOnPlayers(uint32 spell)
                 pPlayer->RemoveAurasDueToSpell(spell);
 }
 
+// Cast spell on all players in instance
+void InstanceScript::DoCastSpellOnPlayers(uint32 spell)
+{
+    Map::PlayerList const &PlayerList = instance->GetPlayers();
+
+    if (!PlayerList.isEmpty())
+        for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+            if (Player* player = i->getSource())
+                player->CastSpell(player, spell, true);
+}
+
 bool InstanceScript::CheckAchievementCriteriaMeet(uint32 criteria_id, Player const* /*source*/, Unit const* /*target*/ /*= NULL*/, uint32 /*miscvalue1*/ /*= 0*/)
 {
     sLog->outError("Achievement system call InstanceScript::CheckAchievementCriteriaMeet but instance script for map %u not have implementation for achievement criteria %u",
-        instance->GetId(),criteria_id);
+        instance->GetId(), criteria_id);
     return false;
+}
+
+void InstanceScript::SendEncounterUnit(uint32 type, Unit* unit /*= NULL*/, uint8 param1 /*= 0*/, uint8 param2 /*= 0*/)
+{
+    // size of this packet is at most 15 (usually less)
+    WorldPacket data(SMSG_UPDATE_INSTANCE_ENCOUNTER_UNIT, 15);
+    data << uint32(type);
+
+    switch (type)
+    {
+        case ENCOUNTER_FRAME_ADD:
+        case ENCOUNTER_FRAME_REMOVE:
+        case 2:
+            data.append(unit->GetPackGUID());
+            data << uint8(param1);
+            break;
+        case 3:
+        case 4:
+        case 6:
+            data << uint8(param1);
+            data << uint8(param2);
+            break;
+        case 5:
+            data << uint8(param1);
+            break;
+        case 7:
+        default:
+            break;
+    }
+
+    instance->SendToPlayers(&data);
+}
+
+void InstanceScript::UpdateEncounterState(EncounterCreditType type, uint32 creditEntry, Unit* source)
+{
+    DungeonEncounterList const* encounters = sObjectMgr->GetDungeonEncounterList(instance->GetId(), instance->GetDifficulty());
+    if (!encounters)
+        return;
+
+    for (DungeonEncounterList::const_iterator itr = encounters->begin(); itr != encounters->end(); ++itr)
+    {
+        if ((*itr)->creditType == type && (*itr)->creditEntry == creditEntry)
+        {
+            completedEncounters |= 1 << (*itr)->dbcEntry->encounterIndex;
+            sLog->outDebug("Instance %s (instanceId %u) completed encounter %s", instance->GetMapName(), instance->GetInstanceId(), (*itr)->dbcEntry->encounterName);
+            if (uint32 dungeonId = (*itr)->lastEncounterDungeon)
+            {
+                Map::PlayerList const& players = instance->GetPlayers();
+                if (!players.isEmpty())
+                    for (Map::PlayerList::const_iterator i = players.begin(); i != players.end(); ++i)
+                        if (Player* player = i->getSource())
+                            if (!source || player->IsAtGroupRewardDistance(source))
+                                sLFGMgr->RewardDungeonDoneFor(dungeonId, player);
+            }
+            return;
+        }
+    }
 }

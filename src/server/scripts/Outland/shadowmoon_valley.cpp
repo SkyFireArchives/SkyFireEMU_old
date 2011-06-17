@@ -43,6 +43,7 @@ EndContentData */
 
 #include "ScriptPCH.h"
 #include "ScriptedEscortAI.h"
+#include "Group.h"
 
 /*#####
 # mob_mature_netherwing_drake
@@ -1257,7 +1258,7 @@ public:
             AggroTargetGUID = 0;
             Timers = false;
 
-            me->addUnitState(UNIT_STAT_ROOT);
+            me->AddUnitState(UNIT_STAT_ROOT);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             me->SetUInt64Value(UNIT_FIELD_TARGET, 0);
         }
@@ -1301,7 +1302,7 @@ public:
                 if (Player* AggroTarget = (Unit::GetPlayer(*me, AggroTargetGUID)))
                 {
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    me->clearUnitState(UNIT_STAT_ROOT);
+                    me->ClearUnitState(UNIT_STAT_ROOT);
 
                     float x, y, z;
                     AggroTarget->GetPosition(x,y,z);
@@ -1463,7 +1464,6 @@ public:
                     if (!GroupMember->IsWithinDistInMap(me, EVENT_AREA_RADIUS) && GroupMember->GetQuestStatus(QUEST_BATTLE_OF_THE_CRIMSON_WATCH) == QUEST_STATUS_INCOMPLETE)
                     {
                         GroupMember->FailQuest(QUEST_BATTLE_OF_THE_CRIMSON_WATCH);
-                        GroupMember->SetQuestStatus(QUEST_BATTLE_OF_THE_CRIMSON_WATCH, QUEST_STATUS_NONE);
                         ++FailedMemberCount;
                     }
                     ++GroupMemberCount;
@@ -1488,7 +1488,6 @@ public:
                         if (GroupMember && GroupMember->GetQuestStatus(QUEST_BATTLE_OF_THE_CRIMSON_WATCH) == QUEST_STATUS_INCOMPLETE)
                         {
                             GroupMember->FailQuest(QUEST_BATTLE_OF_THE_CRIMSON_WATCH);
-                            GroupMember->SetQuestStatus(QUEST_BATTLE_OF_THE_CRIMSON_WATCH, QUEST_STATUS_NONE);
                         }
                     }
                     Failed = true;
@@ -1862,7 +1861,7 @@ public:
                      Unit* Owner = totemOspirits->GetOwner();
                      if (Owner && Owner->GetTypeId() == TYPEID_PLAYER)
                          // DoCast(Owner, credit); -- not working!
-                         CAST_PLR(Owner)->KilledMonsterCredit(credit, Summoned->GetGUID());
+                         CAST_PLR(Owner)->KilledMonsterCredit(credit, 0);
                      DoCast(totemOspirits, SPELL_SOUL_CAPTURED);
                  }
             }

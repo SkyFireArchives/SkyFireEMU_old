@@ -342,7 +342,7 @@ private:
         uint32 m_zoneId;
         uint8  m_level;
         uint8  m_class;
-		uint8 m_flags;
+        uint8 m_flags;
         uint64 m_logoutTime;
         uint32 m_accountId;
         // Fields from guild_member table
@@ -676,9 +676,10 @@ public:
     void SendBankTabsInfo(WorldSession *session) const;
     void SendBankTabData(WorldSession* session, uint8 tabId) const;
     void SendBankTabText(WorldSession *session, uint8 tabId) const;
-    void SendPermissions(WorldSession *session) const;
+    void SendPermissions(WorldSession *session);
     void SendMoneyInfo(WorldSession *session) const;
     void SendLoginInfo(WorldSession* session);
+    void SendGuildRankInfo(WorldSession* session);
 
     // Load from DB
     bool LoadFromDB(Field* fields);
