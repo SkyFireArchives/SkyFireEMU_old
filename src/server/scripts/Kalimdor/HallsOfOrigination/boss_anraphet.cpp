@@ -25,12 +25,12 @@
 
 enum ScriptTexts
 {
-    SAY_INTRO                = 0,
-    SAY_AGGRO                = 1,
-    SAY_KILL_1               = 2,
-    SAY_KILL_2               = 3,
-    SAY_OMEGA                = 4,
-    SAY_DEATH                = 5,
+    SAY_INTRO                  = 0,
+    SAY_AGGRO                  = 1,
+    SAY_KILL_1                 = 2,
+    SAY_KILL_2                 = 3,
+    SAY_OMEGA                  = 4,
+    SAY_DEATH                  = 5,
 };
 
 enum Spells
@@ -118,7 +118,7 @@ class boss_anraphet : public CreatureScript
                             if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, true))
                                 DoCast(me->getVictim(), SPELL_ALPHA_BEAMS);
                                 events.ScheduleEvent(EVENT_ALPHA_BEAMS, 1000);
-                                break;
+                            break;
                         case EVENT_CRUMBLING_RUIN:
                             DoCast(me->getVictim(), SPELL_CRUMBLING_RUIN);
                             events.ScheduleEvent(EVENT_CRUMBLING_RUIN, urand(10000, 16000));
