@@ -2723,15 +2723,15 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
             int32 dmg;
             switch (m_caster->GetPower(POWER_HOLY_POWER))
             {
-                case 1: 
+                case 0: // 1 hp 
                     dmg = int32(addhealth + 1*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
                     addhealth = dmg;
                     break;
-                case 2: 
+                case 1: // 2 hp
                     dmg = int32(addhealth + 2*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
                     addhealth = dmg;
                     break;
-                case 3: 
+                case 2: // 3hp
                     dmg = int32(addhealth + 3*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
                     addhealth = dmg;
                     break;
