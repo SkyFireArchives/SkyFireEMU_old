@@ -2718,7 +2718,9 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
         // Remove Grievious bite if fully healed
         if (unitTarget->HasAura(48920) && (unitTarget->GetHealth() + addhealth >= unitTarget->GetMaxHealth()))
             unitTarget->RemoveAura(48920);
-        if (m_spellInfo->Id == 85673) // Word of Glory
+
+        // Word of Glory
+        if (m_spellInfo->Id == 85673)
         {
             int32 dmg;
             switch (m_caster->GetPower(POWER_HOLY_POWER))
