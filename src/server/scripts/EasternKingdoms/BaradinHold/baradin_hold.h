@@ -21,7 +21,7 @@
 enum Creatures
 {
     BOSS_ARGALOTH  = 47120,
-    BOSS_OCCU_THAR =      ,  //This guy will appear in 4.2
+    BOSS_OCCU_THAR = 52363,
 }
 
 enum Data
