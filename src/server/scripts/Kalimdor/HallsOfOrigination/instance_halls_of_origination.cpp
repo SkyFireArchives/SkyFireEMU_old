@@ -67,7 +67,7 @@ public:
             uiRajh = 0;
             uint64 OriginationElevatorGUID = 0;
 
-            for(uint i=0; i<ENCOUNTERS; ++i)
+            for(uint8 i=0; i<ENCOUNTERS; ++i)
                 uiEncounter[i] = NOT_STARTED;
         }
 

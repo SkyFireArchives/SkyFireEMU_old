@@ -131,9 +131,6 @@ public:
                 case DATA_HIGH_PROPHET_BARIM_EVENT:
                     uiEncounter[1] = data;
                     break;
-                case DATA_LOCKMAW_AUGH_EVENT:
-                    uiEncounter[2] = data;
-                    break;
                 case DATA_SIAMAT_EVENT:
                     uiEncounter[3] = data;
                     break;
@@ -151,8 +148,6 @@ public:
                     return uiEncounter[0];
                 case DATA_HIGH_PROPHET_BARIM_EVENT:
                     return uiEncounter[1];
-                case DATA_LOCKMAW_AUGH_EVENT:
-                    return uiEncounter[2];
                 case DATA_SIAMAT_EVENT:
                     return uiEncounter[3];
             }
