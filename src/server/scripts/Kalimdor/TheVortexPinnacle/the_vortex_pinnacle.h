@@ -53,7 +53,7 @@ enum CreatureIds
     NPC_MINISTER_OF_AIR         = 45930,
     NPC_TEMPLE_ADEPT            = 45935,
     NPC_YOUNG_STORM_DRAGON      = 45919,
-
+    NPC_WILD_VORTEX             = 45912,
     // Various NPCs
     
     NPC_GOLDEN_ORB              = 51157,  /*Heroic Mode*/
