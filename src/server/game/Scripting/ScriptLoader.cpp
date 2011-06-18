@@ -577,12 +577,14 @@ void AddSC_zangarmarsh();
 
 // Cataclysm Scripts
 
-void AddSC_the_stonecore();                     //Cata:TheStonecore
+void AddSC_the_stonecore();                     //TheStonecore
 void AddSC_instance_the_stonecore();
 void AddSC_instance_halls_of_origination();     //Halls of Origination
 void AddSC_boss_temple_guardian_anhuur();
 void AddSC_boss_earthrager_ptah();
 void AddSC_boss_anraphet();
+void AddSC_instance_baradin_hold();             //Baradin Hold
+void AddSC_boss_argaloth();
 
 // battlegrounds
 
@@ -1201,6 +1203,8 @@ void AddNorthrendScripts()
     AddSC_boss_temple_guardian_anhuur();
     AddSC_boss_earthrager_ptah();
     AddSC_boss_anraphet();
+    AddSC_instance_baradin_hold();             //Baradin Hold
+    AddSC_boss_argaloth();
 
 #endif
 }

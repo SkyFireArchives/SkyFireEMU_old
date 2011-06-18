@@ -18,6 +18,8 @@
 #include"ScriptPCH.h"
 #include"baradin_hold.h"
 
+#define ENCOUNTERS 2
+
 class instance_baradin_hold: public InstanceMapScript
 {
 public:
@@ -32,7 +34,7 @@ public:
     {
         instance_baradin_hold_InstanceMapScript(InstanceMap *map) : InstanceScript(map) { }
 
-        uint32 uiEncounters[ENCOUNTERS];
+        uint32 uiEncounter[ENCOUNTERS];
 
         uint64 uiArgaloth;
         uint64 uiOccuthar;
@@ -42,7 +44,7 @@ public:
             uiArgaloth = 0;
             uiOccuthar = 0;
             for(uint8 i=0; i < ENCOUNTERS; ++i)
-                uiEncounters = NOT_STARTED;
+                uiEncounter[i] = NOT_STARTED;
             
         }
 
@@ -50,7 +52,7 @@ public:
         {
             for(uint8 i=0; i < ENCOUNTERS; ++i)
             {
-                if (uiEncounters[i] == IN_PROGRESS)
+                if (uiEncounter[i] == IN_PROGRESS)
                     return true;
             }
             return false;
@@ -71,7 +73,7 @@ public:
 
         uint64 getData64(uint32 identifier)
         {
-            switch(identifer)
+            switch(identifier)
             {
                 case DATA_ARGALOTH:
                     return uiArgaloth;

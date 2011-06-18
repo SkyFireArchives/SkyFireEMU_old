@@ -201,6 +201,9 @@ set(scripts_STAT_SRCS
   EasternKingdoms/Karazhan/karazhan.h
   EasternKingdoms/Gilneas/gilneas_quest.cpp
   EasternKingdoms/gilneas.cpp
+  EasternKingdoms/BaradinHold/baradin_hold.h
+  EasternKingdoms/BaradinHold/instance_baradin_hold.cpp
+  EasternKingdoms/BaradinHold/boss_argaloth.cpp
 )
 
 message("  -> Prepared: Eastern Kingdoms")

@@ -18,16 +18,22 @@
 #ifndef DEF_BARADIN_HOLD_H_
 #define DEF_BARADIN_HOLD_H_
 
-enum Creatures
+enum CreatureIds
 {
     BOSS_ARGALOTH  = 47120,
-    BOSS_OCCU_THAR = 52363,
+    BOSS_OCCUTHAR  = 52363,
 }
 
 enum Data
 {
+    DATA_ARGALOTH_EVENT,
+    DATA_OCCUTHAR_EVENT,
+};
+
+enum Data64
+{
     DATA_ARGALOTH,
-    DATA_OCCU_THAR,
+    DATA_OCCUTHAR,
 };
 
 #endif
