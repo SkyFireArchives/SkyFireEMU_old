@@ -22,7 +22,7 @@ enum CreatureIds
 {
     BOSS_ARGALOTH  = 47120,
     BOSS_OCCUTHAR  = 52363,
-}
+};
 
 enum Data
 {
