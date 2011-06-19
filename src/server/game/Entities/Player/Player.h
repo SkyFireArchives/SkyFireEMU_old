@@ -1874,6 +1874,12 @@ class Player : public Unit, public GridObject<Player>
         void UpdateRangedHitChances();
         void UpdateSpellHitChances();
 
+        void UpdateMastery();
+        bool HasMastery();
+        float GetMasteryPoints() { return CaclulateMasteryFromMasteryRating(m_baseRatingValue[CR_MASTERY]); }
+        float CaclulateMasteryFromMasteryRating(int32 curr_rating)  { return float(curr_rating * 0.0055779569892473); }
+        int32 CaclulateMasteryRatingFromMastery(float curr_mastery) { return int32(curr_mastery / 0.0055779569892473); }
+
         void UpdateAllSpellCritChances();
         void UpdateSpellCritChance(uint32 school);
         void UpdateArmorPenetration(int32 amount);
