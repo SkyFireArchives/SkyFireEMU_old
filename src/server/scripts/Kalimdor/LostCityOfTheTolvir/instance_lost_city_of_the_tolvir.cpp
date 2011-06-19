@@ -1,25 +1,18 @@
-/*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
- *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
- *
- * Copyright (C) 2006-2011 ScriptDev2 <http://www.scriptdev2.com/>
- *
+/* 
  * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ScriptPCH.h"
@@ -131,8 +124,14 @@ public:
                 case DATA_HIGH_PROPHET_BARIM_EVENT:
                     uiEncounter[1] = data;
                     break;
-                case DATA_SIAMAT_EVENT:
+                case DATA_LOCKMAW_EVENT:
+                    uiEncounter[2] = data;
+                    break;
+                case DATA_AUGH_EVENT:
                     uiEncounter[3] = data;
+                    break;
+                case DATA_SIAMAT_EVENT:
+                    uiEncounter[4] = data;
                     break;
             }
 
@@ -148,8 +147,12 @@ public:
                     return uiEncounter[0];
                 case DATA_HIGH_PROPHET_BARIM_EVENT:
                     return uiEncounter[1];
-                case DATA_SIAMAT_EVENT:
+                case DATA_LOCKMAW_EVENT:
+                    return uiEncounter[2];
+                case DATA_AUGH_EVENT:
                     return uiEncounter[3];
+                case DATA_SIAMAT_EVENT:
+                    return uiEncounter[4];
             }
             return 0;
         }
@@ -160,7 +163,7 @@ public:
 
             std::string str_data;
             std::ostringstream saveStream;
-            saveStream << "L V" << uiEncounter[0] << " " << uiEncounter[1]  << " " << uiEncounter[2]  << " " << uiEncounter[3];
+            saveStream << "L V" << uiEncounter[0] << " " << uiEncounter[1]  << " " << uiEncounter[2]  << " " << uiEncounter[3] << " " << uiEncounter[4];
             str_data = saveStream.str();
 
             OUT_SAVE_INST_DATA_COMPLETE;
@@ -178,10 +181,10 @@ public:
             OUT_LOAD_INST_DATA(in);
 
             char dataHead1, dataHead2;
-            uint16 data0, data1, data2, data3;
+            uint16 data0, data1, data2, data3, data4;
 
             std::istringstream loadStream(in);
-            loadStream >> dataHead1 >> dataHead2 >> data0 >> data1 >> data2 >> data3;
+            loadStream >> dataHead1 >> dataHead2 >> data0 >> data1 >> data2 >> data3 >> data4;
 
             if (dataHead1 == 'L' && dataHead2 == 'V')
             {
@@ -189,7 +192,8 @@ public:
                 uiEncounter[1] = data1;
                 uiEncounter[2] = data2;
                 uiEncounter[3] = data3;
-       
+                uiEncounter[4] = data4;
+
                 for(uint8 i=0; i<ENCOUNTERS; ++i)
                     if (uiEncounter[i] == IN_PROGRESS)
                         uiEncounter[i] = NOT_STARTED;

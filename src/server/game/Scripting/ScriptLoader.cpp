@@ -350,6 +350,7 @@ void AddSC_ungoro_crater();
 void AddSC_winterspring();
 void AddSC_lost_city_of_the_tolvir();        //Cata:The Lost City of the Tol'vir
 void AddSC_instance_lost_city_of_the_tolvir();
+void AddSC_boss_lockmaw();
 
 //northrend
 void AddSC_boss_slad_ran();
@@ -963,6 +964,8 @@ void AddKalimdorScripts()
     AddSC_winterspring();
     AddSC_lost_city_of_the_tolvir();
     AddSC_instance_lost_city_of_the_tolvir();
+    AddSC_boss_lockmaw();
+
 #endif
 }
 
