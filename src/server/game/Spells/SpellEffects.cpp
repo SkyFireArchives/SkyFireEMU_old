@@ -1835,6 +1835,16 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                 // Improved Death Strike
                 if (AuraEffect const * aurEff = m_caster->GetAuraEffect(SPELL_AURA_ADD_PCT_MODIFIER, SPELLFAMILY_DEATHKNIGHT, 2751, 0))
                     bp = int32(bp * (m_caster->CalculateSpellDamage(m_caster, aurEff->GetSpellProto(), 2) + 100.0f) / 100.0f);
+
+                if (m_caster->ToPlayer()->HasMastery())
+                {
+                    if (m_caster->ToPlayer()->HasSpell(50029)) //Temp check for spec
+                    {
+                        if (m_caster->HasAura(48263))
+                            bp += int32(bp * (50.0f + (6.25f * m_caster->ToPlayer()->GetMasteryPoints())) / 100.0f);
+                    }
+                }
+                           
                 m_caster->CastCustomSpell(m_caster, 45470, &bp, NULL, NULL, false);
                 return;
             }

@@ -7458,9 +7458,8 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     // Death Strike
                     case 49998: triggered_spell_id = 66188; break;
 
-
                     // Rune Strike
-                    case 56815: triggered_spell_id = 66217; break;                            // Rank 1
+                    case 56815: triggered_spell_id = 66217; break;
 
                     // Blood Strike
                     case 45902: triggered_spell_id = 66215; break;
