@@ -539,7 +539,7 @@ enum CombatRating
     CR_MASTERY                  = 25
 };
 
-#define MAX_COMBAT_RATING         25
+#define MAX_COMBAT_RATING         26
 
 enum DamageEffectType
 {
@@ -2057,6 +2057,10 @@ class Unit : public WorldObject
         Totem* ToTotem(){ if (isTotem()) return reinterpret_cast<Totem*>(this); else return NULL; }
         TempSummon* ToTempSummon() { if (isSummon()) return reinterpret_cast<TempSummon*>(this); else return NULL; }
         const TempSummon* ToTempSummon() const { if (isSummon()) return reinterpret_cast<const TempSummon*>(this); else return NULL; }
+
+        int32 eclipse;
+        int32 GetEclipsePower() {return eclipse;};
+        void SetEclipsePower(int32 power);
 
     protected:
         explicit Unit ();
