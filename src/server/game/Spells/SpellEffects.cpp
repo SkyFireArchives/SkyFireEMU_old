@@ -689,9 +689,33 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                     damage += int32(energy * multiple);
                     damage += int32(m_caster->ToPlayer()->GetComboPoints() * ap * 7 / 100);
                 }
+                // Starfire
+                else if (m_spellInfo->SpellFamilyFlags[0] & 0x00000004)
+                {
+                    if (m_caster->ToPlayer()->HasAura(16913))   // Tallent from Balance spec, there is no other way how to check spec :S 
+                    {
+                        if (m_caster->HasAura(48517))
+                        {
+                            m_caster->RemoveAurasDueToSpell(48517);
+                            m_caster->SetEclipsePower(0);
+                        }
+
+                        m_caster->SetEclipsePower(int32(m_caster->GetEclipsePower() + 20));
+                    }
+                }
                 // Wrath
                 else if (m_spellInfo->SpellFamilyFlags[0] & 0x00000001)
                 {
+                    if (m_caster->ToPlayer()->HasAura(16913))   // Tallent from Balance spec, there is no other way how to check spec :S
+                    {   
+                        if (m_caster->HasAura(48518))
+                        {
+                            m_caster->RemoveAurasDueToSpell(48518);
+                            m_caster->SetEclipsePower(0);
+                        }
+
+                        m_caster->SetEclipsePower(int32(m_caster->GetEclipsePower() - 13));
+                    }
                     // Improved Insect Swarm
                     if (AuraEffect const * aurEff = m_caster->GetDummyAuraEffect(SPELLFAMILY_DRUID, 1771, 0))
                         if (unitTarget->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_DRUID, 0x00200000, 0, 0))
@@ -1807,10 +1831,20 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             // Death strike
             if (m_spellInfo->SpellFamilyFlags[0] & SPELLFAMILYFLAG_DK_DEATH_STRIKE)
             {
-                int32 bp = int32(m_caster->CountPctFromMaxHealth(7));
+                int32 bp = int32(m_caster->CountPctFromMaxHealth(urand(5, 7)));
                 // Improved Death Strike
                 if (AuraEffect const * aurEff = m_caster->GetAuraEffect(SPELL_AURA_ADD_PCT_MODIFIER, SPELLFAMILY_DEATHKNIGHT, 2751, 0))
                     bp = int32(bp * (m_caster->CalculateSpellDamage(m_caster, aurEff->GetSpellProto(), 2) + 100.0f) / 100.0f);
+
+                if (m_caster->ToPlayer()->HasMastery())
+                {
+                    if (m_caster->ToPlayer()->HasSpell(50029)) //Temp check for spec
+                    {
+                        if (m_caster->HasAura(48263))
+                            bp += int32(bp * (50.0f + (6.25f * m_caster->ToPlayer()->GetMasteryPoints())) / 100.0f);
+                    }
+                }
+                           
                 m_caster->CastCustomSpell(m_caster, 45470, &bp, NULL, NULL, false);
                 return;
             }
@@ -2694,20 +2728,22 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
         // Remove Grievious bite if fully healed
         if (unitTarget->HasAura(48920) && (unitTarget->GetHealth() + addhealth >= unitTarget->GetMaxHealth()))
             unitTarget->RemoveAura(48920);
-        if (m_spellInfo->Id == 85673) // Word of Glory
+
+        // Word of Glory
+        if (m_spellInfo->Id == 85673)
         {
             int32 dmg;
             switch (m_caster->GetPower(POWER_HOLY_POWER))
             {
-                case 1: 
+                case 0: // 1 hp 
                     dmg = int32(addhealth + 1*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
                     addhealth = dmg;
                     break;
-                case 2: 
+                case 1: // 2 hp
                     dmg = int32(addhealth + 2*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
                     addhealth = dmg;
                     break;
-                case 3: 
+                case 2: // 3hp
                     dmg = int32(addhealth + 3*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
                     addhealth = dmg;
                     break;

@@ -429,6 +429,8 @@ Player::Player (WorldSession *session): Unit(), m_achievementMgr(this), m_reputa
     m_spellModTakingSpell = NULL;
     //m_pad = 0;
 
+    eclipse = 0;
+
     // players always accept
     if (GetSession()->GetSecurity() == SEC_PLAYER)
         SetAcceptWhispers(true);
@@ -1126,6 +1128,8 @@ void Player::HandleDrowning(uint32 time_diff)
         if (m_zoneUpdateId == 5144) return;
         if (m_zoneUpdateId == 5145) return;
         if (m_zoneUpdateId == 4815) return;
+        if (m_zoneUpdateId == 4816) return;
+
         // Breath timer not activated - activate it
         if (m_MirrorTimer[BREATH_TIMER] == DISABLED_MIRROR_TIMER)
         {
@@ -1165,6 +1169,8 @@ void Player::HandleDrowning(uint32 time_diff)
         if (m_zoneUpdateId == 5144) return;
         if (m_zoneUpdateId == 5145) return;
         if (m_zoneUpdateId == 4815) return;
+        if (m_zoneUpdateId == 4816) return;
+
         // Fatigue timer not activated - activate it
         if (m_MirrorTimer[FATIGUE_TIMER] == DISABLED_MIRROR_TIMER)
         {
@@ -5827,7 +5833,8 @@ void Player::UpdateRating(CombatRating cr)
         case CR_WEAPON_SKILL_OFFHAND:
         case CR_WEAPON_SKILL_RANGED:
             break;
-        case CR_MASTERY:                                    // Not implemented
+        case CR_MASTERY:                                    // Implemented in Player::UpdateMastery
+            UpdateMastery();
             break;
         case CR_EXPERTISE:
             if (affectStats)
@@ -7714,6 +7721,9 @@ void Player::_ApplyItemBonuses(ItemPrototype const *proto, uint8 slot, bool appl
             // deprecated item mods
             case ITEM_MOD_SPELL_HEALING_DONE:
             case ITEM_MOD_SPELL_DAMAGE_DONE:
+                break;
+            case ITEM_MOD_MASTERY_RATING:
+                ApplyRatingMod(CR_MASTERY, int32(val), apply);
                 break;
         }
     }
@@ -25081,4 +25091,12 @@ void Player::BroadcastMessage(const char* Format, ...)
 void Player::SendToManyPets(Player *pl)
 {
     ChatHandler(pl).PSendSysMessage(LANG_FAILED_NO_PLACE_FOR_PET);
+}
+
+bool Player::HasMastery()
+{
+    if (HasSpell(86477) || HasSpell(86470) || HasSpell(86471) || HasSpell(86472) || HasSpell(86473) || HasSpell(86474) || HasSpell(86475) || HasSpell(86476) || HasSpell(86479) || HasSpell(86478))
+        return true;
+    else
+        return false;
 }
