@@ -1,0 +1,1 @@
+UPDATE playercreateinfo SET orientation=1.58 WHERE race=9 AND class!=6;

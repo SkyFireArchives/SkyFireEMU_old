@@ -1,0 +1,55 @@
+-- Added Missing Items.
+-- Fixed startup errors related to non existing items.
+-- Pattern: Illusionary Bag
+DELETE FROM item_template WHERE (entry=54605);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54605, 9, 2, 0, 'Pattern: Illusionary Bag', 6270, 3, 64, 1, 20000, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75308, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft an Illusionary Bag.', -1, 64, 13329);
+-- Pattern: Flame-Ascended Pantaloons
+DELETE FROM item_template WHERE (entry=54604);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54604, 9, 2, 0, 'Pattern: Flame-Ascended Pantaloons', 6270,  3, 64, 1, 65264, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75301, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft Flame-Ascended Pantaloons.', -1, 64, 13329);
+-- Pattern: Dreamless Belt
+DELETE FROM item_template WHERE (entry=54602);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54602, 9, 2, 0, 'Pattern: Dreamless Belt', 6270,  3, 64, 1, 35692, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75299, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft a Dreamless Belt.', -1, 64, 13329);
+-- Pattern: Breeches of Mended Nightmares
+DELETE FROM item_template WHERE (entry=54603);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54603, 9, 2, 0, 'Pattern: Breeches of Mended Nightmares', 6270,  3, 64, 1, 71893, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75300, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft Breeches of Mended Nightmares.', -1, 64, 13329);
+-- Pattern: Belt of the Depths
+DELETE FROM item_template WHERE (entry=54601);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54601, 9, 2, 0, 'Pattern: Belt of the Depths', 6270,  3, 64, 1, 35819, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75298, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft a Belt of the Depths.', -1, 64, 13329);
+-- Pattern: Powerful Ghostly Spellthread
+DELETE FROM item_template WHERE (entry=54600);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54600, 9, 2, -1, 'Pattern: Powerful Ghostly Spellthread', 6270,  3, 64, 1, 20000, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75310, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft Powerful Ghostly Spellthread.', -1, 64, 13329);
+-- Pattern: Powerful Enchanted Spellthread
+DELETE FROM item_template WHERE (entry=54599);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54599, 9, 2, -1, 'Pattern: Powerful Enchanted Spellthread', 6270,  3, 64, 1, 20000, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75309, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft Powerful Enchanted Spellthread.', -1, 64, 13329);
+-- Pattern: Fireweave Robe
+DELETE FROM item_template WHERE (entry=54598);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54598, 9, 2, -1, 'Pattern: Fireweave Robe', 6270,  3, 64, 1, 47749, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75303, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft a Fireweave Robe.', -1, 64, 13329);
+-- Pattern: Fireweave Pants
+DELETE FROM item_template WHERE (entry=54597);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54597, 9, 2, -1, 'Pattern: Fireweave Pants', 6270,  3, 64, 1, 47208, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75302, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft Fireweave Pants.', -1, 64, 13329);
+-- Pattern: Fireweave Cowl
+DELETE FROM item_template WHERE (entry=54596);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54596, 9, 2, -1, 'Pattern: Fireweave Cowl', 6270,  3, 64, 1, 35676, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75304, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft a Fireweave Cowl.', -1, 64, 13329);
+-- Pattern: Emberfire Robe
+DELETE FROM item_template WHERE (entry=54595);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54595, 9, 2, -1, 'Pattern: Emberfire Robe', 6270,  3, 64, 1, 47924, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75305, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft an Emberfire Robe.', -1, 64, 13329);
+-- Pattern: Emberfire Pants
+DELETE FROM item_template WHERE (entry=54594);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54594, 9, 2, -1, 'Pattern: Emberfire Pants', 6270,  3, 64, 1, 48465, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75307, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft Emberfire Pants.', -1, 64, 13329);
+-- Pattern: Emberfire Cowl
+DELETE FROM item_template WHERE (entry=54593);
+INSERT INTO item_template (entry, class, subclass, unk0, name, displayid, Quality, Flags, BuyCount, SellPrice, InventoryType, AllowableClass, AllowableRace, ItemLevel, RequiredSkill, RequiredSkillRank, maxcount, stackable, ContainerSlots,  spellid_1, spelltrigger_1, spellcharges_1, spellppmRate_1, spellcooldown_1, spellcategory_1, spellcategorycooldown_1, spellid_2, spelltrigger_2, spellcharges_2, spellppmRate_2, spellcooldown_2, spellcategory_2, spellcategorycooldown_2, bonding, description, Material,BagFamily, WDBVerified) VALUES 
+(54593, 9, 2, -1, 'Pattern: Emberfire Cowl', 6270,  3, 64, 1, 36078, 0, -1, -1, 81, 197, 525, 0, 1, 0, 483, 0, -1, 0, -1, 0, -1, 75306, 6, 0, 0, -1, 0, -1, 1, 'Teaches you how to craft an Emberfire Cowl.', -1, 64, 13329);
+-- Fixed By Ari.

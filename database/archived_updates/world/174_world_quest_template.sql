@@ -1,0 +1,2 @@
+-- Fix missing text, required skillvalue and reward item for Finish the Shipment
+UPDATE `quest_template` SET `RequiredSkillValue`=375, `OfferRewardText`='Here is your Dalaran Jewelcrafter\'s Token as promised. I have new shipments going out all the time, check by from time to time to see what I need.', `RequestItemsText`='Do you have the Chalcedony yet?', `CompletedText`='Return to Timothy Jones at Cartier & Co. Fine Jewelry in Dalaran.', `RewItemId1`=41596, `RewItemCount1`=1, `WDBVerified`=13623 WHERE `entry`=13041 LIMIT 1;
