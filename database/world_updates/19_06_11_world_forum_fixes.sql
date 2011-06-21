@@ -1,6 +1,6 @@
 -- Fix by AMON
---1 Adding the enterance/exit triggers for Throne of the Tides. (Dungeon only! I have more work on the enterance form Abyssal Depths to Abyssal Breach).
---2 Fixing the exits of Gnomeregan instance. Now we will not fall under Dun morogh on exit.
+-- 1 Adding the enterance/exit triggers for Throne of the Tides. (Dungeon only! I have more work on the enterance form Abyssal Depths to Abyssal Breach).
+-- 2 Fixing the exits of Gnomeregan instance. Now we will not fall under Dun morogh on exit.
 DELETE FROM `areatrigger_teleport` WHERE `id` IN ('6197', '6201', '322', '525');
 INSERT INTO `areatrigger_teleport` (`id`, `name`, `target_map`, `target_position_x`, `target_position_y`, `target_position_z`, `target_orientation`) VALUES
         (6197,'Throne of the Tides(Exit)',0,'-5599.09','5412.06','-1798.15','2.40455'),
