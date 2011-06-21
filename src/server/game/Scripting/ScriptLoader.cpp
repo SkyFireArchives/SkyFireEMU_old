@@ -348,11 +348,8 @@ void AddSC_thousand_needles();
 void AddSC_thunder_bluff();
 void AddSC_ungoro_crater();
 void AddSC_winterspring();
-void AddSC_lost_city_of_the_tolvir();        //Cata:The Lost City of the Tol'vir
-void AddSC_instance_lost_city_of_the_tolvir();
-void AddSC_boss_lockmaw();
 
-//northrend
+//Northrend
 void AddSC_boss_slad_ran();
 void AddSC_boss_moorabi();
 void AddSC_boss_drakkari_colossus();
@@ -586,6 +583,13 @@ void AddSC_boss_earthrager_ptah();
 void AddSC_boss_anraphet();
 void AddSC_instance_baradin_hold();             //Baradin Hold
 void AddSC_boss_argaloth();
+void AddSC_lost_city_of_the_tolvir();           //Cata:The Lost City of the Tol'vir
+void AddSC_instance_lost_city_of_the_tolvir();
+void AddSC_boss_lockmaw();
+void AddSC_instance_the_vortex_pinnacle();      //The Vortex Pinnacle
+void AddSC_instance_grim_batol();               //Grim Batol
+void AddSC_instance_throne_of_the_tides();      //Throne of the Tides
+void AddSC_instance_blackrock_caverns();        //Blackrock Caverns
 
 // battlegrounds
 
@@ -962,10 +966,7 @@ void AddKalimdorScripts()
     AddSC_thunder_bluff();
     AddSC_ungoro_crater();
     AddSC_winterspring();
-    AddSC_lost_city_of_the_tolvir();
-    AddSC_instance_lost_city_of_the_tolvir();
-    AddSC_boss_lockmaw();
-
+    
 #endif
 }
 
@@ -1208,6 +1209,13 @@ void AddNorthrendScripts()
     AddSC_boss_anraphet();
     AddSC_instance_baradin_hold();             //Baradin Hold
     AddSC_boss_argaloth();
+    AddSC_lost_city_of_the_tolvir();           //Lost City of the Tol'vir
+    AddSC_instance_lost_city_of_the_tolvir();
+    AddSC_boss_lockmaw();
+    AddSC_instance_the_vortex_pinnacle();      //The Vortex Pinnacle
+    AddSC_instance_grim_batol();               //Grim Batol
+    AddSC_instance_throne_of_the_tides();      //Throne of the Tides
+    AddSC_instance_blackrock_caverns();        //Blackrock Caverns
 
 #endif
 }

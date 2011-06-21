@@ -40,7 +40,7 @@ public:
 
     struct instance_blackrock_cavernsInstanceMapScript : public InstanceScript
     {
-        instance_blackrock_cavernsInstanceMapScript(InstanceMap *map) : InstanceScript(map) { }
+        instance_blackrock_cavernsInstanceMapScript(InstanceMap* map) : InstanceScript(map) { }
         
         uint32 uiEncounter[ENCOUNTERS];
 
@@ -64,7 +64,7 @@ public:
 
         bool IsEncounterInProgress() const
         {
-            for(uint8 i = 0; i < ENCOUNTER; ++i)
+            for(uint8 i = 0; i < ENCOUNTERS; ++i)
             {
                 if (uiEncounter[i] == NOT_STARTED)
                     return true;

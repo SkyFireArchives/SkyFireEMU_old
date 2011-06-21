@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include"ScriptPCH.h"
-#include"the_vortex_pinnacle.h"
+#include "ScriptPCH.h"
+#include "the_vortex_pinnacle.h"
 
 #define ENCOUNTERS 3
 
@@ -27,19 +27,19 @@
    Asaad
 */
 
-class instance_the_vortex_pinnacle: public InstanceMapScript
+class instance_the_vortex_pinnacle : public InstanceMapScript
 {
 public:
     instance_the_vortex_pinnacle() : InstanceMapScript("instance_the_vortex_pinnacle", 657) { }
     
-    InstanceMapScript* GetInstanceScript(Instance *map) const
+    InstanceScript* GetInstanceScript(InstanceMap* map) const
     {
-        return new instance_the_vortex_pinnacle_InstanceMapScript();
+        return new instance_the_vortex_pinnacle_InstanceMapScript(map);
     }
 
-    struct instance_the_vortex_pinnacle_InstanceMapScript: public InstanceMapScript
+    struct instance_the_vortex_pinnacle_InstanceMapScript: public InstanceScript
     {
-        instance_the_vortex_pinnacle_InstanceMapScript(InstanceMapScript *map) : InstanceScript(map) { }
+        instance_the_vortex_pinnacle_InstanceMapScript(InstanceMap* map) : InstanceScript(map) { }
 
         uint32 uiEncounter[ENCOUNTERS];
 
