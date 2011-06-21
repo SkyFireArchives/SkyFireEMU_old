@@ -40,14 +40,9 @@
 #include "typedefs.h"
 
 //Live Realms
-//static int const patchRev[] = {13164, 13205, 13287, 13329, 13596, 13623};
-//#define PATCH_REV_COUNT 6
-//#define CLIENT_BUILD 13623
-
-// PTR REALMS
-static int const patchRev[] = {13417, 13449, 13482, 13529, 13561, 13596, 13682, 13698, 13707, 13726, 13750, 13793, 13812, 13850, 13875, 13914, 14002, 14040, 14107, 14133, 14179, 14199, 14241, 14265, 14288, 14299, 14313};
-#define PATCH_REV_COUNT 27
-#define CLIENT_BUILD 14313
+static int const patchRev[] = {13164, 13205, 13287, 13329, 13596, 13623, 13914, 14007};
+#define PATCH_REV_COUNT 8
+#define CLIENT_BUILD 14007
 
 static const char* const langs[] = {"enGB", "enUS", "deDE", "esES", "frFR", "koKR", "zhCN", "zhTW", "enCN", "enTW", "esMX", "ruRU" };
 #define LANG_COUNT 12
