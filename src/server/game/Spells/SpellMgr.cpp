@@ -4165,8 +4165,8 @@ void SpellMgr::LoadSpellCustomAttr()
         case 81782: // Power Word : Barrier 
 	        spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ALLY;
             spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ALLY;
-            spellInfo->EffectImplicitTargetB[0] = TARGET_UNIT_TARGET_NONE;
-            spellInfo->EffectImplicitTargetB[1] = TARGET_UNIT_TARGET_NONE;
+            spellInfo->EffectImplicitTargetB[0] = TARGET_NONE;
+            spellInfo->EffectImplicitTargetB[1] = TARGET_NONE;
             spellInfo->DurationIndex = 39;
 	        count++;
             break;
