@@ -201,7 +201,23 @@ public:
                 uint8 rank = sSpellMgr->GetSpellRank(GetSpellInfo()->Id);
 
                 if (caster->IsFriendlyTo(unitTarget))
+                {
                     caster->CastSpell(unitTarget, sSpellMgr->GetSpellWithRank(PALADIN_SPELL_HOLY_SHOCK_R1_HEALING, rank), true, 0);
+
+                    if (caster->ToPlayer()->HasMastery())
+                    {
+                        if (caster->ToPlayer()->getClass() == CLASS_PALADIN)
+                        {
+                            if (caster->ToPlayer()->GetTalentBranchSpec(caster->ToPlayer()->GetActiveSpec()) == BS_PALADIN_HOLY)
+                            {
+                                int32 bp0 = int32(caster->ToPlayer()->GetHealingDoneInPastSecs(15) * (12.0f + (1.5f * caster->ToPlayer()->GetMasteryPoints()) /100));
+                                caster->CastCustomSpell(caster, 86273, &bp0, NULL, NULL, true);
+
+                            }
+                        }
+                    }
+                }
+
                 else
                     caster->CastSpell(unitTarget, sSpellMgr->GetSpellWithRank(PALADIN_SPELL_HOLY_SHOCK_R1_DAMAGE, rank), true, 0);
             }

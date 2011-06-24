@@ -582,8 +582,6 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
         m_damage_done[0] += damage;
         pVictim->m_damage_taken[0] += damage;
     }
-    if (damagetype == HEAL)
-        m_heal_done[0] += damage;
 
     if (this->GetTypeId() == TYPEID_PLAYER)
     {
@@ -9966,6 +9964,8 @@ int32 Unit::DealHeal(Unit *pVictim, uint32 addhealth)
         gain = pVictim->ModifyHealth(int32(addhealth));
 
     Unit* unit = this;
+
+    m_heal_done[0] += addhealth;
 
     if (GetTypeId() == TYPEID_UNIT && this->ToCreature()->isTotem())
         unit = GetOwner();
