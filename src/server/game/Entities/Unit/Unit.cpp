@@ -195,6 +195,12 @@ m_vehicleKit(NULL), m_unitTypeMask(UNIT_MASK_NONE), m_HostileRefManager(this), m
     m_duringRemoveFromWorld = false;
 
     m_serverSideVisibility.SetValue(SERVERSIDE_VISIBILITY_GHOST, GHOST_VISIBILITY_ALIVE);
+
+    for (uint32 i = 0; i < 121 ; ++i)
+        m_damage_done[i] = 0;
+
+    for (uint32 i = 0; i < 121 ; ++i)
+        m_heal_done[i] = 0;
 }
 
 Unit::~Unit()
@@ -235,6 +241,28 @@ void Unit::Update(uint32 p_time)
 
     if (!IsInWorld())
         return;
+
+    // This is required for GetHealingDoneInPastSecs() and GetDamageDoneInPastSecs 
+    DmgandHealDoneTimer -= p_time;
+
+    if (DmgandHealDoneTimer <= 0)
+    {
+        for (uint32 i = 121; i > 0; i--)
+        {
+            int32 x = int32(i-1);
+            m_damage_done[i] = m_damage_done[x];
+        }
+        m_damage_done[0] = 0;
+
+        for (uint32 i = 121; i > 0; i--)
+        {
+            int32 x = int32(i-1);
+            m_heal_done[i] = m_heal_done[x];
+        }
+        m_heal_done[0] = 0;
+
+        DmgandHealDoneTimer = 1000;
+    }
 
     _UpdateSpells(p_time);
 
@@ -541,6 +569,12 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
 
     if (IsAIEnabled)
         GetAI()->DamageDealt(pVictim, damage, damagetype);
+
+    if (damagetype == DIRECT_DAMAGE || damagetype == SPELL_DIRECT_DAMAGE)
+        m_damage_done[0] += damage;
+
+    if (damagetype == HEAL)
+        m_heal_done[0] += damage;
 
     if (this->GetTypeId() == TYPEID_PLAYER)
     {
@@ -6593,7 +6627,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                         if (beaconTarget->IsWithinLOSInMap(pVictim))
                         {
                             basepoints0 = damage;
-                            triggered_spell_id = 53654;
+                            triggered_spell_id = 53652;
                             target = beaconTarget;
                             break;
                         }
@@ -17395,3 +17429,53 @@ void Unit::SetEclipsePower(int32 power)
     data << int32(eclipse);
     SendMessageToSet(&data, GetTypeId() == TYPEID_PLAYER ? true : false);
 }
+
+uint32 Unit::GetHealingDoneInPastSecs(uint32 secs)
+{
+    uint32 heal = 0;
+
+    if (secs > 120)
+        secs = 120;
+
+    for (uint32 i = 0; i < secs; i++)
+        heal += m_heal_done[i];
+
+    if (heal < 0)
+        return 0;
+
+    return heal;
+};
+
+uint32 Unit::GetDamageDoneInPastSecs(uint32 secs)
+{
+    uint32 damage = 0;
+
+    if (secs > 120)
+        secs = 120;
+
+    for (uint32 i = 0; i < secs; i++)
+        damage += m_damage_done[i];
+
+    if (damage < 0)
+        return 0;
+
+    return damage;
+};
+
+void Unit::ResetDamageDoneInPastSecs(uint32 secs)
+{
+    if (secs > 120)
+        secs = 120;
+
+    for (uint32 i = 0; i < secs; i++)
+        m_damage_done[i] = 0;
+};
+
+void Unit::ResetHealingDoneInPastSecs(uint32 secs)
+{
+    if (secs > 120)
+        secs = 120;
+
+    for (uint32 i = 0; i < secs; i++)
+        m_heal_done[i] = 0;
+};
