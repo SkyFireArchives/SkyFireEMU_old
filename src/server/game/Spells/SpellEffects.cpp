@@ -1841,7 +1841,10 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                     if (m_caster->ToPlayer()->HasSpell(50029)) //Temp check for spec
                     {
                         if (m_caster->HasAura(48263))
-                            bp += int32(bp * (50.0f + (6.25f * m_caster->ToPlayer()->GetMasteryPoints())) / 100.0f);
+                        {
+                            int32 shield = int32(bp * (50.0f + (6.25f * m_caster->ToPlayer()->GetMasteryPoints())) / 100.0f);
+                            m_caster->CastCustomSpell(m_caster, 77535, &shield, NULL, NULL, false);
+                        }
                     }
                 }
                            
