@@ -2751,21 +2751,20 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
                     addhealth = dmg;
                     break;
             }
-        }
 
-        if (m_caster->ToPlayer()->HasMastery())
-        {
-            if (m_caster->ToPlayer()->getClass() == CLASS_PALADIN)
+            if (m_caster->ToPlayer()->HasMastery())
             {
-                if (m_caster->ToPlayer()->GetTalentBranchSpec(m_caster->ToPlayer()->GetActiveSpec()) == BS_PALADIN_HOLY)
+                if (m_caster->ToPlayer()->getClass() == CLASS_PALADIN)
                 {
-                    int32 bp0 = int32(m_caster->ToPlayer()->GetHealingDoneInPastSecs(15) * (12.0f + (1.5f * m_caster->ToPlayer()->GetMasteryPoints()) /100));
-                    m_caster->CastCustomSpell(m_caster, 86273, &bp0, NULL, NULL, true);
+                    if (m_caster->ToPlayer()->GetTalentBranchSpec(m_caster->ToPlayer()->GetActiveSpec()) == BS_PALADIN_HOLY)
+                    {
+                        int32 bp0 = int32(m_caster->ToPlayer()->GetHealingDoneInPastSecs(15) * (12.0f + (1.5f * m_caster->ToPlayer()->GetMasteryPoints()) /100));
+                        m_caster->CastCustomSpell(m_caster, 86273, &bp0, NULL, NULL, true);
 
+                    }
                 }
             }
         }
-
         m_damage -= addhealth;
     }
 }
