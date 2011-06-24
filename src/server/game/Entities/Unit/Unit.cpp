@@ -196,13 +196,13 @@ m_vehicleKit(NULL), m_unitTypeMask(UNIT_MASK_NONE), m_HostileRefManager(this), m
 
     m_serverSideVisibility.SetValue(SERVERSIDE_VISIBILITY_GHOST, GHOST_VISIBILITY_ALIVE);
 
-    for (uint32 i = 0; i < 121 ; ++i)
+    for (uint32 i = 0; i < 120 ; ++i)
         m_damage_done[i] = 0;
 
-    for (uint32 i = 0; i < 121 ; ++i)
+    for (uint32 i = 0; i < 120 ; ++i)
         m_heal_done[i] = 0;
 
-    for (uint32 i = 0; i < 121 ; ++i)
+    for (uint32 i = 0; i < 120 ; ++i)
         m_damage_taken[i] = 0;
 }
 
@@ -17480,9 +17480,6 @@ uint32 Unit::GetDamageTakenInPastSecs(uint32 secs)
 
     for (uint32 i = 0; i < secs; i++)
         tdamage += m_damage_taken[i];
-
-    for (uint32 i = 0; i < secs; i++)
-        sLog->outError("%u", m_damage_taken[i]);
 
     if (tdamage < 0)
         return 0;
