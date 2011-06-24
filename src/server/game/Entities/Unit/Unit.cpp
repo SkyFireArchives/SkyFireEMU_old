@@ -6627,7 +6627,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                         if (beaconTarget->IsWithinLOSInMap(pVictim))
                         {
                             basepoints0 = damage;
-                            triggered_spell_id = 53654;
+                            triggered_spell_id = 53652;
                             target = beaconTarget;
                             break;
                         }
