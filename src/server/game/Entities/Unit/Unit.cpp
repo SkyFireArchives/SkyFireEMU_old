@@ -250,24 +250,21 @@ void Unit::Update(uint32 p_time)
 
     if (DmgandHealDoneTimer <= 0)
     {
-        for (uint32 i = 121; i > 0; i--)
+        for (uint32 i = 120; i > 0; i--)
         {
-            int32 x = int32(i-1);
-            m_damage_done[i] = m_damage_done[x];
+            m_damage_done[i] = m_damage_done[i-1];
         }
         m_damage_done[0] = 0;
 
-        for (uint32 i = 121; i > 0; i--)
+        for (uint32 i = 120; i > 0; i--)
         {
-            int32 x = int32(i-1);
-            m_heal_done[i] = m_heal_done[x];
+            m_heal_done[i] = m_heal_done[i-1];
         }
         m_heal_done[0] = 0;
 
-        for (uint32 i = 121; i > 0; i--)
+        for (uint32 i = 120; i > 0; i--)
         {
-            int32 x = int32(i-1);
-            m_damage_taken[i] = m_damage_taken[x];
+            m_damage_taken[i] = m_damage_taken[i-1];
         }
         m_damage_taken[0] = 0;
 
