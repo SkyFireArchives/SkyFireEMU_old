@@ -2064,9 +2064,11 @@ class Unit : public WorldObject
 
         uint32 m_heal_done[121];
         uint32 m_damage_done[121];
+        uint32 m_damage_taken[121];
         int32 DmgandHealDoneTimer;
         uint32 GetHealingDoneInPastSecs(uint32 secs);
         uint32 GetDamageDoneInPastSecs(uint32 secs);
+        uint32 GetDamageTakenInPastSecs(uint32 secs);
         void ResetDamageDoneInPastSecs(uint32 secs);
         void ResetHealingDoneInPastSecs(uint32 secs);
 

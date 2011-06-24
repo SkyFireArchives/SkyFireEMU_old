@@ -201,6 +201,9 @@ m_vehicleKit(NULL), m_unitTypeMask(UNIT_MASK_NONE), m_HostileRefManager(this), m
 
     for (uint32 i = 0; i < 121 ; ++i)
         m_heal_done[i] = 0;
+
+    for (uint32 i = 0; i < 121 ; ++i)
+        m_damage_taken[i] = 0;
 }
 
 Unit::~Unit()
@@ -242,7 +245,7 @@ void Unit::Update(uint32 p_time)
     if (!IsInWorld())
         return;
 
-    // This is required for GetHealingDoneInPastSecs() and GetDamageDoneInPastSecs 
+    // This is required for GetHealingDoneInPastSecs(), GetDamageDoneInPastSecs() and GetDamageTakenInPastSecs()! 
     DmgandHealDoneTimer -= p_time;
 
     if (DmgandHealDoneTimer <= 0)
@@ -260,6 +263,13 @@ void Unit::Update(uint32 p_time)
             m_heal_done[i] = m_heal_done[x];
         }
         m_heal_done[0] = 0;
+
+        for (uint32 i = 121; i > 0; i--)
+        {
+            int32 x = int32(i-1);
+            m_damage_taken[i] = m_damage_taken[x];
+        }
+        m_damage_taken[0] = 0;
 
         DmgandHealDoneTimer = 1000;
     }
@@ -571,8 +581,10 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
         GetAI()->DamageDealt(pVictim, damage, damagetype);
 
     if (damagetype == DIRECT_DAMAGE || damagetype == SPELL_DIRECT_DAMAGE)
+    {
         m_damage_done[0] += damage;
-
+        pVictim->m_damage_taken[0] += damage;
+    }
     if (damagetype == HEAL)
         m_heal_done[0] += damage;
 
@@ -17460,6 +17472,25 @@ uint32 Unit::GetDamageDoneInPastSecs(uint32 secs)
         return 0;
 
     return damage;
+};
+
+uint32 Unit::GetDamageTakenInPastSecs(uint32 secs)
+{
+    uint32 tdamage = 0;
+
+    if (secs > 120)
+        secs = 120;
+
+    for (uint32 i = 0; i < secs; i++)
+        tdamage += m_damage_taken[i];
+
+    for (uint32 i = 0; i < secs; i++)
+        sLog->outError("%u", m_damage_taken[i]);
+
+    if (tdamage < 0)
+        return 0;
+
+    return tdamage;
 };
 
 void Unit::ResetDamageDoneInPastSecs(uint32 secs)
