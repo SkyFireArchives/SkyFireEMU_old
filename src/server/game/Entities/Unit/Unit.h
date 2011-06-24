@@ -2062,6 +2062,14 @@ class Unit : public WorldObject
         int32 GetEclipsePower() {return eclipse;};
         void SetEclipsePower(int32 power);
 
+        uint32 m_heal_done[121];
+        uint32 m_damage_done[121];
+        int32 DmgandHealDoneTimer;
+        uint32 GetHealingDoneInPastSecs(uint32 secs);
+        uint32 GetDamageDoneInPastSecs(uint32 secs);
+        void ResetDamageDoneInPastSecs(uint32 secs);
+        void ResetHealingDoneInPastSecs(uint32 secs);
+
     protected:
         explicit Unit ();
 
