@@ -539,7 +539,7 @@ enum SpecialSurprise
     SAY_EXEC_START_1            = -1609025,                 // speech for all
     SAY_EXEC_START_2            = -1609026,
     SAY_EXEC_START_3            = -1609027,
-	SAY_EXEC_START_4				= -1609079,					// Cataclysm: Goblin
+	SAY_EXEC_START_4			= -1609079,					// Cataclysm: Goblin
     SAY_EXEC_PROG_1             = -1609028,
     SAY_EXEC_PROG_2             = -1609029,
     SAY_EXEC_PROG_3             = -1609030,
