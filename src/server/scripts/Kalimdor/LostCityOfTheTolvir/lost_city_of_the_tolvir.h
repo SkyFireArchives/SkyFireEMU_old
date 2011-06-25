@@ -49,8 +49,6 @@ enum CreatureIds
 
     // Trash mobs
 
-    NPC_BLAZE_OF_HEAVENS         = 48906,
-    NPC_HARBINGER_OF_DARKNESS    = 43927,
     NPC_MINION_OF_SIAMAT         = 44704,
     NPC_NEFERSET_DARKCASTER      = 44982,
     NPC_NEFERSET_PLAGUEBRINGER   = 44976,

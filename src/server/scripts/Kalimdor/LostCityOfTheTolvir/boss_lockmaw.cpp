@@ -119,12 +119,12 @@ class boss_lockmaw : public CreatureScript
                         case EVENT_DUST_FLAIL:
                             DoCast(me->getVictim(), SPELL_DUST_FLAIL);
                             events.ScheduleEvent(EVENT_DUST_FLAIL, urand(6000, 10000));
-                            break;
+                            return;
                         case EVENT_VISCOUS_POISON:
                             if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, true))
                                 DoCast(me->getVictim(), SPELL_VISCOUS_POISON);
                                 events.ScheduleEvent(EVENT_VISCOUS_POISON, 2000);
-                            break;
+                            return;
                         case EVENT_SCENT_OF_BLOOD:
                             if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, true))
                                 DoCast(me->getVictim(), SPELL_SCENT_OF_BLOOD);
@@ -135,12 +135,12 @@ class boss_lockmaw : public CreatureScript
                                   DoZoneInCombat(Crocolisk);
                                 }
                                 events.ScheduleEvent(EVENT_SCENT_OF_BLOOD, 6000);
-                            break;
+                            return;
                         case EVENT_VENOMOUS_RAGE:
                             if (me->GetHealthPct() < 30)
                                 DoCast(me, SPELL_VENOMOUS_RAGE);
                                 events.ScheduleEvent(EVENT_VENOMOUS_RAGE, 1000);
-                            break;
+                            return;
                         default:
                             break;
                     }

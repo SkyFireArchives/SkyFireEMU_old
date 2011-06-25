@@ -583,9 +583,10 @@ void AddSC_boss_earthrager_ptah();
 void AddSC_boss_anraphet();
 void AddSC_instance_baradin_hold();             //Baradin Hold
 void AddSC_boss_argaloth();
-void AddSC_lost_city_of_the_tolvir();           //Cata:The Lost City of the Tol'vir
+void AddSC_lost_city_of_the_tolvir();           //The Lost City of the Tol'vir
 void AddSC_instance_lost_city_of_the_tolvir();
 void AddSC_boss_lockmaw();
+void AddSC_boss_high_prophet_barim();
 void AddSC_instance_the_vortex_pinnacle();      //The Vortex Pinnacle
 void AddSC_instance_grim_batol();               //Grim Batol
 void AddSC_instance_throne_of_the_tides();      //Throne of the Tides
@@ -1212,6 +1213,7 @@ void AddNorthrendScripts()
     AddSC_lost_city_of_the_tolvir();           //Lost City of the Tol'vir
     AddSC_instance_lost_city_of_the_tolvir();
     AddSC_boss_lockmaw();
+    AddSC_boss_high_prophet_barim();
     AddSC_instance_the_vortex_pinnacle();      //The Vortex Pinnacle
     AddSC_instance_grim_batol();               //Grim Batol
     AddSC_instance_throne_of_the_tides();      //Throne of the Tides
