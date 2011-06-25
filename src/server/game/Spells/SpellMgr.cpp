@@ -3705,6 +3705,10 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (i)
         {
+        case 77489: // Echo of Light
+            spellInfo->StackAmount = 100; // should be inf
+            count++;
+            break;
         case 51514: // Hex
         case 118:   // Polymorph
         case 61305: // Polymorph (other animal)

@@ -2765,6 +2765,20 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
                 }
             }
         }
+
+        //Echo of Light
+        if (m_caster->getClass() == CLASS_PRIEST)
+        {
+            if (m_caster->HasAuraType(SPELL_AURA_MASTERY))
+            {
+                if (m_caster->ToPlayer()->GetTalentBranchSpec(m_caster->ToPlayer()->GetActiveSpec()) == BS_PRIEST_HOLY)
+                {
+                    int32 bp0 = int32 (addhealth * (10.0f + (1.25f * m_caster->ToPlayer()->GetMasteryPoints())) / 100);
+                    m_caster->CastCustomSpell(m_caster, 77489, &bp0, NULL, NULL, true);
+                }
+            }
+        }
+
         m_damage -= addhealth;
     }
 }
