@@ -25092,11 +25092,3 @@ void Player::SendToManyPets(Player *pl)
 {
     ChatHandler(pl).PSendSysMessage(LANG_FAILED_NO_PLACE_FOR_PET);
 }
-
-bool Player::HasMastery()
-{
-    if (HasSpell(86477) || HasSpell(86470) || HasSpell(86471) || HasSpell(86472) || HasSpell(86473) || HasSpell(86474) || HasSpell(86475) || HasSpell(86476) || HasSpell(86479) || HasSpell(86478))
-        return true;
-    else
-        return false;
-}

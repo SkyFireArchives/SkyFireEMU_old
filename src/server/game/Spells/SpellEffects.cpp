@@ -1836,7 +1836,7 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                 if (AuraEffect const * aurEff = m_caster->GetAuraEffect(SPELL_AURA_ADD_PCT_MODIFIER, SPELLFAMILY_DEATHKNIGHT, 2751, 0))
                     bp = int32(bp * (m_caster->CalculateSpellDamage(m_caster, aurEff->GetSpellProto(), 2) + 100.0f) / 100.0f);
 
-                if (m_caster->ToPlayer()->HasMastery())
+                if (m_caster->ToPlayer()->HasAuraType(SPELL_AURA_MASTERY))
                 {
                     if (m_caster->ToPlayer()->HasSpell(50029)) //Temp check for spec
                     {
@@ -2752,7 +2752,7 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
                     break;
             }
 
-            if (m_caster->ToPlayer()->HasMastery())
+            if (m_caster->ToPlayer()->HasAuraType(SPELL_AURA_MASTERY))
             {
                 if (m_caster->ToPlayer()->getClass() == CLASS_PALADIN)
                 {

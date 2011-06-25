@@ -204,7 +204,7 @@ public:
                 {
                     caster->CastSpell(unitTarget, sSpellMgr->GetSpellWithRank(PALADIN_SPELL_HOLY_SHOCK_R1_HEALING, rank), true, 0);
 
-                    if (caster->ToPlayer()->HasMastery())
+                    if (caster->ToPlayer()->HasAuraType(SPELL_AURA_MASTERY))
                     {
                         if (caster->ToPlayer()->getClass() == CLASS_PALADIN)
                         {
