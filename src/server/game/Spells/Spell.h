@@ -560,8 +560,8 @@ class Spell
         void SetSpellValue(SpellValueMod mod, int32 value);
 
         void SetMagnetingAura(Aura* aura) { m_magnetingAura = aura; }
-    protected:
 
+    protected:
         void SendLoot(uint64 guid, LootType loottype);
 
         Unit* const m_caster;

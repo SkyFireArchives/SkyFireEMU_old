@@ -204,6 +204,8 @@ m_vehicleKit(NULL), m_unitTypeMask(UNIT_MASK_NONE), m_HostileRefManager(this), m
 
     for (uint32 i = 0; i < 120 ; ++i)
         m_damage_taken[i] = 0;
+
+    m_AbsorbHeal = 0.0f;
 }
 
 Unit::~Unit()
@@ -1949,7 +1951,8 @@ void Unit::CalcHealAbsorb(Unit *pVictim, const SpellEntry *healSpell, uint32 &he
     //Necrotic Strike
     if(pVictim->HasAura(73975))
     {
-        RemainingHeal -= (0.75f * GetTotalAttackPowerValue(BASE_ATTACK));
+        int32 heal = int32(pVictim->GetAbsorbHeal());
+        RemainingHeal -= heal;
     }
 
     // Remove all expired absorb auras
