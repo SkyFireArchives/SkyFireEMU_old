@@ -1831,17 +1831,20 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             // Death strike
             if (m_spellInfo->SpellFamilyFlags[0] & SPELLFAMILYFLAG_DK_DEATH_STRIKE)
             {
-                int32 bp = int32(m_caster->CountPctFromMaxHealth(urand(5, 7)));
+                int32 bp = std::max(m_caster->CountPctFromMaxHealth(7), (20 * m_caster->GetDamageTakenInPastSecs(5) / 100));
                 // Improved Death Strike
                 if (AuraEffect const * aurEff = m_caster->GetAuraEffect(SPELL_AURA_ADD_PCT_MODIFIER, SPELLFAMILY_DEATHKNIGHT, 2751, 0))
                     bp = int32(bp * (m_caster->CalculateSpellDamage(m_caster, aurEff->GetSpellProto(), 2) + 100.0f) / 100.0f);
 
-                if (m_caster->ToPlayer()->HasMastery())
+                if (m_caster->ToPlayer()->HasAuraType(SPELL_AURA_MASTERY))
                 {
                     if (m_caster->ToPlayer()->HasSpell(50029)) //Temp check for spec
                     {
                         if (m_caster->HasAura(48263))
-                            bp += int32(bp * (50.0f + (6.25f * m_caster->ToPlayer()->GetMasteryPoints())) / 100.0f);
+                        {
+                            int32 shield = int32(bp * (50.0f + (6.25f * m_caster->ToPlayer()->GetMasteryPoints())) / 100.0f);
+                            m_caster->CastCustomSpell(m_caster, 77535, &shield, NULL, NULL, false);
+                        }
                     }
                 }
                            
@@ -2747,6 +2750,32 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
                     dmg = int32(addhealth + 3*(m_caster->SpellBaseHealingBonus(SPELL_SCHOOL_MASK_HOLY) * 0.85));
                     addhealth = dmg;
                     break;
+            }
+
+            if (m_caster->ToPlayer()->HasAuraType(SPELL_AURA_MASTERY))
+            {
+                if (m_caster->ToPlayer()->getClass() == CLASS_PALADIN)
+                {
+                    if (m_caster->ToPlayer()->GetTalentBranchSpec(m_caster->ToPlayer()->GetActiveSpec()) == BS_PALADIN_HOLY)
+                    {
+                        int32 bp0 = int32(m_caster->ToPlayer()->GetHealingDoneInPastSecs(15) * (12.0f + (1.5f * m_caster->ToPlayer()->GetMasteryPoints())) /100);
+                        m_caster->CastCustomSpell(m_caster, 86273, &bp0, NULL, NULL, true);
+
+                    }
+                }
+            }
+        }
+
+        //Echo of Light
+        if (m_caster->getClass() == CLASS_PRIEST)
+        {
+            if (m_caster->HasAuraType(SPELL_AURA_MASTERY))
+            {
+                if (m_caster->ToPlayer()->GetTalentBranchSpec(m_caster->ToPlayer()->GetActiveSpec()) == BS_PRIEST_HOLY)
+                {
+                    int32 bp0 = int32 (addhealth * (10.0f + (1.25f * m_caster->ToPlayer()->GetMasteryPoints())) / 100);
+                    m_caster->CastCustomSpell(m_caster, 77489, &bp0, NULL, NULL, true);
+                }
             }
         }
 

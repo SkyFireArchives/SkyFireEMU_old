@@ -3705,6 +3705,10 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (i)
         {
+        case 77489: // Echo of Light
+            spellInfo->StackAmount = 100; // should be inf
+            count++;
+            break;
         case 51514: // Hex
         case 118:   // Polymorph
         case 61305: // Polymorph (other animal)
@@ -4163,7 +4167,11 @@ void SpellMgr::LoadSpellCustomAttr()
             count++;
             break;
         case 81782: // Power Word : Barrier 
-	        spellInfo->DurationIndex = 39;
+	        spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ALLY;
+            spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ALLY;
+            spellInfo->EffectImplicitTargetB[0] = TARGET_NONE;
+            spellInfo->EffectImplicitTargetB[1] = TARGET_NONE;
+            spellInfo->DurationIndex = 39;
 	        count++;
             break;
         // this is here until targetAuraSpell and alike support SpellDifficulty.dbc

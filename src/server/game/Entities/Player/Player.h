@@ -194,6 +194,40 @@ enum ActionButtonType
 #define ACTION_BUTTON_TYPE(X)   ((uint32(X) & 0xFF000000) >> 24)
 #define MAX_ACTION_BUTTON_ACTION_VALUE (0x00FFFFFF+1)
 
+enum TalentBranchSpec
+{
+    BS_WARRIOR_ARMS         = 746,
+    BS_WARRIOR_FURY         = 815,
+    BS_WARRIOR_PROTECTION   = 845,
+    BS_PALADIN_HOLY         = 831,
+    BS_PALADIN_PROTECTION   = 839,
+    BS_PALADIN_RETRIBUTION  = 855,
+    BS_HUNTER_BEAST_MASTERY = 811,
+    BS_HUNTER_MARKMANSHIP   = 807,
+    BS_HUNTER_SURVIVAL      = 809,
+    BG_ROGUE_ASSASINATION   = 182,
+    BS_ROGUE_COMBAT         = 181,
+    BS_ROGUE_SUBTLETY       = 183,
+    BS_PRIEST_DISCIPLINE    = 760,
+    BS_PRIEST_HOLY          = 813,
+    BS_PRIEST_SHADOW        = 759,
+    BS_DEATH_KNIGHT_BLOOD   = 398,
+    BS_DEATH_KNIGHT_FROST   = 399,
+    BS_DEATH_KNIGHT_UNHOLY  = 400,
+    BS_SHAMAN_ELEMENTAL     = 261,
+    BS_SHAMAN_ENCHANCEMENT  = 263,
+    BS_SHAMAN_RESTORATION   = 262,
+    BS_MAGE_ARCANE          = 799,
+    BS_MAGE_FIRE            = 851,
+    BS_MAGE_FROST           = 823,
+    BS_WARLOCK_AFFLICTION   = 871,
+    BS_WARLOCK_DEMONOLOGY   = 867,
+    BS_WARLOCK_DESTRUCTION  = 865,
+    BS_DRUID_BALANCE        = 752,
+    BS_DRUID_FERAL_COMBAT   = 750,
+    BS_DRUID_RESTORATION    = 748
+};
+
 struct ActionButton
 {
     ActionButton() : packedData(0), uState(ACTIONBUTTON_NEW) {}
@@ -1875,7 +1909,6 @@ class Player : public Unit, public GridObject<Player>
         void UpdateSpellHitChances();
 
         void UpdateMastery();
-        bool HasMastery();
         float GetMasteryPoints() { return CaclulateMasteryFromMasteryRating(m_baseRatingValue[CR_MASTERY]); }
         float CaclulateMasteryFromMasteryRating(int32 curr_rating)  { return float(curr_rating * 0.0055779569892473f); }
         int32 CaclulateMasteryRatingFromMastery(float curr_mastery) { return int32(curr_mastery / 0.0055779569892473f); }
