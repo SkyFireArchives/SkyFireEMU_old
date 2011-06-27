@@ -2940,6 +2940,9 @@ DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto
             // Frost Nova / Freeze (Water Elemental)
             if (spellproto->SpellIconID == 193)
                 return DIMINISHING_CONTROL_ROOT;
+            // Dragon's Breath
+            else if (spellproto->SpellFamilyFlags[0] & 0x800000)
+                return DIMINISHING_DISORIENT;
             break;
         }
         case SPELLFAMILY_ROGUE:
@@ -2991,6 +2994,9 @@ DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto
             // Faerie Fire
             else if (spellproto->SpellFamilyFlags[0] & 0x400)
                 return DIMINISHING_LIMITONLY;
+            // Nature's Grasp
+            else if (spellproto->SpellFamilyFlags[0] & 0x00000200)
+                return DIMINISHING_CONTROLLED_ROOT;
             break;
         }
         case SPELLFAMILY_WARRIOR:
@@ -3011,6 +3017,12 @@ DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto
             // Repentance
             if (spellproto->SpellFamilyFlags[0] & 0x4)
                 return DIMINISHING_POLYMORPH;
+            // Judgement of Justice - limit duration to 10s in PvP
+            if (spellproto->SpellFamilyFlags[0] & 0x100000)
+                return DIMINISHING_LIMITONLY;
+            // Turn Evil
+            else if ((spellproto->SpellFamilyFlags[1] & 0x804000) && spellproto->SpellIconID == 309)
+                return DIMINISHING_FEAR;
             break;
         }
         case SPELLFAMILY_DEATHKNIGHT:
@@ -3032,6 +3044,15 @@ DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto
             // Scatter Shot
             if ((spellproto->SpellFamilyFlags[0] & 0x40000) && spellproto->SpellIconID == 132)
                 return DIMINISHING_NONE;
+            // Entrapment (own diminishing)
+            else if ((spellproto->SpellVisual[0] == 7484) && spellproto->SpellIconID == 20)
+                return DIMINISHING_ENTRAPMENT;
+            // Wyvern Sting mechanic is MECHANIC_SLEEP but the diminishing is DIMINISHING_DISORIENT
+            else if ((spellproto->SpellFamilyFlags[1] & 0x1000) && spellproto->SpellIconID == 1721)
+                return DIMINISHING_DISORIENT;
+            // Freezing Arrow
+            else if (spellproto->SpellFamilyFlags[0] & 0x8)
+                return DIMINISHING_DISORIENT;
             break;
         }
         default:
