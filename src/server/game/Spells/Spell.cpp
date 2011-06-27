@@ -3911,13 +3911,10 @@ void Spell::finish(bool ok)
                 m_caster->SetPower(POWER_HOLY_POWER, 0);
                 break;
             case 73975: // Necrotic Strike
-                if (m_caster->GetTypeId() == TYPEID_PLAYER)
-                {
-                    float ap = m_caster->GetTotalAttackPowerValue(BASE_ATTACK);
-                    float heal = 0.75f * ap;
-                    m_caster->getVictim()->SetAbsorbHeal(heal);
-                }
-				break;
+                float ap = m_caster->GetTotalAttackPowerValue(BASE_ATTACK);
+                float heal = 0.75f * ap;
+                m_caster->getVictim()->SetAbsorbHeal(heal);
+                break;
         }
 }
 
