@@ -3705,6 +3705,43 @@ void SpellMgr::LoadSpellCustomAttr()
 
         switch (i)
         {
+        case 77515: // Mastery: Dreadblade
+            spellInfo->EffectBasePoints[0] = 20;
+            count++;
+            break;
+        case 77514: // Mastery: Frozen Heart
+            spellInfo->EffectBasePoints[0] = 16;
+            count++;
+            break;
+        case 77493: // Mastery: Razor Claws
+            spellInfo->EffectBasePoints[0] = 25.04;
+            count++;
+            break;
+        case 76658: // Mastery: Essence of the Viper
+            spellInfo->EffectBasePoints[0] = 8;
+            count++;
+            break;
+        case 76657: // Mastery: Master of Beasts
+            spellInfo->EffectBasePoints[0] = 13.6;
+            count++;
+            break;
+        case 76595: // Mastery: Flashburn
+            spellInfo->EffectBasePoints[0] = 22.4;
+            count++;
+            break;
+        case 76671: // Mastery: Divine Bulwark
+            spellInfo->EffectBasePoints[0] = 18;
+            count++;
+            break;
+        case 77220: // Mastery: Fiery Apocalypse
+            spellInfo->EffectBasePoints[0] = 10.8;
+            count++;
+            break;
+        case 76857: // Mastery: Critical Block
+            spellInfo->EffectBasePoints[0] = 12;
+            spellInfo->EffectBasePoints[1] = 12;
+            count++;
+            break;
         case 77489: // Echo of Light
             spellInfo->StackAmount = 100; // should be inf
             count++;
