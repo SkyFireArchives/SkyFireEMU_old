@@ -28,15 +28,59 @@
 #include "Opcodes.h"
 #include "WorldSession.h"
 
-/// Correspondence between opcodes and their names
+/// Correspondence between opcodes and their names/handlers
 OpcodeHandler opcodeTable[NUM_MSG_TYPES];
 
-static void DefineOpcode(uint32 opcode, const char* name, SessionStatus status, PacketProcessing packetProcessing, void (WorldSession::*handler)(WorldPacket& recvPacket) )
+typedef UNORDERED_MAP< std::string, uint16> OpcodeNameValueMap;
+OpcodeNameValueMap OpcodeNameValues;
+
+bool LoadOpcodes()
 {
-    opcodeTable[opcode].name = name;
-    opcodeTable[opcode].status = status;
-    opcodeTable[opcode].packetProcessing = packetProcessing;
-    opcodeTable[opcode].handler = handler;
+    uint16 build = 14333;
+    QueryResult result = WorldDatabase.PQuery("SELECT name, number FROM emuopcodes where version = %d", build);
+
+    if (!result)
+    {
+        sLog->outString();
+        sLog->outErrorDb(">> Failed to load opcode values from the DB. Cannot continue.");
+        return false;
+    }
+
+    uint32 count = 0;
+    do
+    {
+        Field *fields = result->Fetch();
+        
+        std::string name = fields[0].GetString();
+        uint16 entry = fields[1].GetUInt16();
+
+        ++count;
+    } while (result->NextRow());
+
+    sLog->outString();
+    sLog->outString(">> Loaded %u opcodes for build %u", build);
+
+    return true;
+}
+
+static void DefineOpcode(uint32 enumId, const char* name, SessionStatus status, PacketProcessing packetProcessing, void (WorldSession::*handler)(WorldPacket& recvPacket) )
+{
+    OpcodeNameValueMap::iterator itr = OpcodeNameValues.find(std::string(name));
+    if (itr != OpcodeNameValues.end())
+    {
+        uint16 opcode = itr->second;
+        if(opcode == 0)
+            return; // opcode unknown yet :(
+
+        opcodeTable[opcode].name = name;
+        opcodeTable[opcode].status = status;
+        opcodeTable[opcode].packetProcessing = packetProcessing;
+        opcodeTable[opcode].handler = handler;
+    }
+    else
+    {
+        sLog->outError("Opcode not found in the DB %s", name);
+    }
 }
 
 #define OPCODE( name, status, packetProcessing, handler ) DefineOpcode( name, #name, status, packetProcessing, handler )
@@ -47,6 +91,8 @@ void InitOpcodeTable()
     {
         DefineOpcode( i, "UNKNOWN", STATUS_NEVER, PROCESS_INPLACE,  &WorldSession::Handle_NULL );
     }
+
+    LoadOpcodes();
     
     OPCODE( CMSG_WORLD_TELEPORT,                          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleWorldTeleportOpcode       );
     OPCODE( CMSG_TELEPORT_TO_UNIT,                        STATUS_LOGGEDIN, PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
@@ -1282,4 +1328,6 @@ void InitOpcodeTable()
     OPCODE( CMSG_GROUP_SET_ROLES,                         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleGroupSetRoles             );
     OPCODE( SMSG_UNKNOWN_1310,                            STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_RETURN_TO_GRAVEYARD,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleMoveToGraveyard           );
+
+    OpcodeNameValues.clear();
 };
