@@ -854,7 +854,7 @@ INSERT INTO `smart_scripts` (`entryorguid`,`source_type`,`id`,`link`,`event_type
 (@ENTRY,0,6,0,6,1,20,1,0,0,0,0,41,0,0,0,0,0,0,1,0,0,0,0,0,0,0,'Cast Despawn on Death'),
 (@ENTRY,0,7,0,7,1,100,1,0,0,0,0,22,0,0,0,0,0,0,1,0,0,0,0,0,0,0,'Reset on Evade');
 
---Overlord Drakuru
+-- Overlord Drakuru
 SET @ENTRY := 28998;
 UPDATE `creature_template` SET `AIName`='SmartAI' WHERE `entry`=@ENTRY;
 DELETE FROM `smart_scripts` WHERE `source_type`=0 AND `entryorguid`=@ENTRY;
