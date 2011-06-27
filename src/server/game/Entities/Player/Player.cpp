@@ -7372,7 +7372,7 @@ void Player::DuelComplete(DuelCompleteType type)
 
     sLog->outDebug("Duel Complete %s %s", GetName(), duel->opponent->GetName());
 
-    WorldPacket data(SMSG_DUEL_COMPLETE, (1), true);
+    WorldPacket data(SMSG_DUEL_COMPLETE, 1);
     data << (uint8)((type != DUEL_INTERRUPTED) ? 1 : 0);
     GetSession()->SendPacket(&data);
 
@@ -7381,7 +7381,7 @@ void Player::DuelComplete(DuelCompleteType type)
 
     if (type != DUEL_INTERRUPTED)
     {
-        data.Initialize(SMSG_DUEL_WINNER, (1+20), true);          // we guess size
+        data.Initialize(SMSG_DUEL_WINNER, 1+20);          // we guess size
         data << uint8(type == DUEL_WON ? 0 : 1);            // 0 = just won; 1 = fled
         data << duel->opponent->GetName();
         data << GetName();
@@ -8790,7 +8790,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
     // need know merged fishing/corpse loot type for achievements
     loot->loot_type = loot_type;
     
-    WorldPacket data(SMSG_LOOT_RESPONSE, (9+50+2), true);
+    WorldPacket data(SMSG_LOOT_RESPONSE, 9+50+2);
     data << uint64(guid);
     data << uint8(loot_type);
     data << LootView(*loot, this, permission);
@@ -8813,7 +8813,7 @@ void Player::SendNotifyLootMoneyRemoved()
 
 void Player::SendNotifyLootItemRemoved(uint8 lootSlot)
 {
-    WorldPacket data(SMSG_LOOT_REMOVED, 3, true);
+    WorldPacket data(SMSG_LOOT_REMOVED, 3);
     data << uint8(lootSlot);
     GetSession()->SendPacket(&data);
 }
@@ -13285,7 +13285,7 @@ void Player::SendEquipError(uint8 msg, Item* pItem, Item *pItem2, uint32 itemid)
 void Player::SendBuyError(uint8 msg, Creature* pCreature, uint32 item, uint32 param)
 {
     sLog->outDebug("WORLD: Sent SMSG_BUY_FAILED");
-    WorldPacket data(SMSG_BUY_FAILED, (8+4+4+1+2), true);
+    WorldPacket data(SMSG_BUY_FAILED, (8+4+4+1+2));
     data << uint64(pCreature ? pCreature->GetGUID() : 0);
     data << uint32(item);
     if (param > 0)

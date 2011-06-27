@@ -506,7 +506,7 @@ void WorldSession::HandleSetActiveMoverOpcode(WorldPacket &recv_data)
             GetPlayer()->SetMover(mover);
             if (mover != GetPlayer() && mover->canFly())
             {
-                WorldPacket data(SMSG_MOVE_SET_CAN_FLY, 12, true);
+                WorldPacket data(SMSG_MOVE_SET_CAN_FLY, 12);
                 data.append(mover->GetPackGUID());
                 data << uint32(0);
                 SendPacket(&data);

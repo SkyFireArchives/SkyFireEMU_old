@@ -1299,6 +1299,7 @@ enum Opcodes
     SMSG_WHOIS,
     SMSG_WORLD_STATE_UI_TIMER_UPDATE,
     SMSG_ZONE_UNDER_ATTACK,
+    NUM_OPCODES
 };
 
 /*
@@ -1332,18 +1333,35 @@ struct OpcodeHandler
     char const* name;
     SessionStatus status;
     PacketProcessing packetProcessing;
+    Opcodes enumValue;
     void (WorldSession::*handler)(WorldPacket& recvPacket);
 };
 
-#define NUM_MSG_TYPES 0xFFFF
-extern OpcodeHandler opcodeTable[NUM_MSG_TYPES];
+#define MAX_MSG_TYPES 0xFFFF
+extern OpcodeHandler opcodeTable[MAX_MSG_TYPES];
+extern uint16 opcodesEnumToNumber[NUM_OPCODES];
+
 
 /// Lookup opcode name for human understandable logging
 inline const char* LookupOpcodeName(uint32 id)
 {
-    if (id >= NUM_MSG_TYPES)
+    if (id >= MAX_MSG_TYPES)
         return "Received unknown opcode, it's more than max!";
     return opcodeTable[id].name;
+}
+
+inline Opcodes LookupOpcodeEnum(uint32 id)
+{
+    if (id >= MAX_MSG_TYPES)
+        return CMSG_UNUSED2;
+    return opcodeTable[id].enumValue;
+}
+
+inline uint16 LookupOpcodeNumber(uint32 enumValue)
+{
+    if (enumValue >= NUM_OPCODES)   // check can be removed for performance
+        return 0;
+    return opcodesEnumToNumber[enumValue];
 }
 #endif
 /// @}

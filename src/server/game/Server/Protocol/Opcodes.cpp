@@ -28,8 +28,9 @@
 #include "Opcodes.h"
 #include "WorldSession.h"
 
-/// Correspondence between opcodes and their names/handlers
-OpcodeHandler opcodeTable[NUM_MSG_TYPES];
+/// Correspondence between opcode numbers and their names/handlers
+OpcodeHandler opcodeTable[MAX_MSG_TYPES];
+uint16 opcodesEnumToNumber[NUM_OPCODES];
 
 typedef UNORDERED_MAP< std::string, uint16> OpcodeNameValueMap;
 OpcodeNameValueMap OpcodeNameValues;
@@ -37,7 +38,7 @@ OpcodeNameValueMap OpcodeNameValues;
 bool LoadOpcodes()
 {
     uint16 build = 14333;
-    QueryResult result = WorldDatabase.PQuery("SELECT name, number FROM emuopcodes where version = %d", build);
+    QueryResult result = WorldDatabase.PQuery("SELECT name, number FROM emuopcodes where version = %u", build);
 
     if (!result)
     {
@@ -54,21 +55,23 @@ bool LoadOpcodes()
         std::string name = fields[0].GetString();
         uint16 entry = fields[1].GetUInt16();
 
+        OpcodeNameValues[name] = entry;
         ++count;
     } while (result->NextRow());
 
     sLog->outString();
-    sLog->outString(">> Loaded %u opcodes for build %u", build);
+    sLog->outString(">> Loaded %u opcodes for build %u", count, build);
 
     return true;
 }
 
-static void DefineOpcode(uint32 enumId, const char* name, SessionStatus status, PacketProcessing packetProcessing, void (WorldSession::*handler)(WorldPacket& recvPacket) )
+static void DefineOpcode(Opcodes enumId, const char* name, SessionStatus status, PacketProcessing packetProcessing, void (WorldSession::*handler)(WorldPacket& recvPacket) )
 {
     OpcodeNameValueMap::iterator itr = OpcodeNameValues.find(std::string(name));
     if (itr != OpcodeNameValues.end())
     {
         uint16 opcode = itr->second;
+        opcodesEnumToNumber[enumId] = opcode;
         if(opcode == 0)
             return; // opcode unknown yet :(
 
@@ -76,10 +79,12 @@ static void DefineOpcode(uint32 enumId, const char* name, SessionStatus status, 
         opcodeTable[opcode].status = status;
         opcodeTable[opcode].packetProcessing = packetProcessing;
         opcodeTable[opcode].handler = handler;
+        opcodeTable[opcode].enumValue = enumId;
     }
     else
     {
         sLog->outError("Opcode not found in the DB %s", name);
+        opcodesEnumToNumber[enumId] = 0;
     }
 }
 
@@ -87,9 +92,12 @@ static void DefineOpcode(uint32 enumId, const char* name, SessionStatus status, 
 
 void InitOpcodeTable()
 {
-    for( int i = 0; i < NUM_MSG_TYPES; ++i )
+    for( int i = 0; i < MAX_MSG_TYPES; ++i )
     {
-        DefineOpcode( i, "UNKNOWN", STATUS_NEVER, PROCESS_INPLACE,  &WorldSession::Handle_NULL );
+        opcodeTable[i].name = "UNKNOWN";
+        opcodeTable[i].status = STATUS_NEVER;
+        opcodeTable[i].packetProcessing = PROCESS_INPLACE;
+        opcodeTable[i].handler = &WorldSession::Handle_NULL;
     }
 
     LoadOpcodes();
