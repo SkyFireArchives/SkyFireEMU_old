@@ -7896,6 +7896,17 @@ bool Unit::HandleAuraProc(Unit * pVictim, uint32 damage, Aura * triggeredByAura,
                     return true;
                 }
             }
+            // Light's Grace (temp solution)
+            else if (dummySpell->Id == 31834)
+            {
+                *handled = true;
+                int32 removeChance = 0;
+                if (AuraEffect* aurEff = GetAuraEffect(SPELL_AURA_PROC_TRIGGER_SPELL,SPELLFAMILY_PALADIN, 2141, 0))
+                    removeChance = aurEff->GetSpellProto()->procChance;
+                if (!roll_chance_i(removeChance))
+                    return true;
+                break;
+            }
             // Glyph of Divinity
             else if (dummySpell->Id == 54939)
             {
