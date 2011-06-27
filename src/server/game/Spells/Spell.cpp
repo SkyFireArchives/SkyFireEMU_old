@@ -2269,7 +2269,23 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
             }
 
             Position pos;
-            target->GetNearPosition(pos, dist, angle);
+            bool checkCollision = false;
+
+            switch (m_spellInfo->Id)
+            {
+                case 36563: // Shadowstep
+                case 57840: // Killing Spree
+                    checkCollision = true;
+                    break;
+                default:
+                    break;
+            }
+
+            if (checkCollision)
+                target->GetFirstCollisionPosition(pos, dist, angle);
+            else
+                target->GetNearPosition(pos, dist, angle);
+
             m_targets.setDst(*target);
             m_targets.modDst(pos);
             break;
