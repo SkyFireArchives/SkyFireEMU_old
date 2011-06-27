@@ -1078,7 +1078,6 @@ struct CharmInfo
         void GetStayPosition(float &x, float &y, float &z);
 
     private:
-
         Unit* m_unit;
         UnitActionBarEntry PetActionBar[MAX_UNIT_ACTION_BAR_INDEX];
         CharmSpellEntry m_charmspells[4];
@@ -2072,6 +2071,9 @@ class Unit : public WorldObject
         void ResetDamageDoneInPastSecs(uint32 secs);
         void ResetHealingDoneInPastSecs(uint32 secs);
 
+        float GetAbsorbHeal() const { return m_AbsorbHeal; };
+        void SetAbsorbHeal(float heal) { m_AbsorbHeal = heal; };
+
     protected:
         explicit Unit ();
 
@@ -2111,7 +2113,7 @@ class Unit : public WorldObject
 
         AuraEffectList m_modAuras[TOTAL_AURAS];
         AuraList m_scAuras;                        // casted singlecast auras
-        AuraApplicationList m_interruptableAuras;             // auras which have interrupt mask applied on unit
+        AuraApplicationList m_interruptableAuras;  // auras which have interrupt mask applied on unit
         AuraStateAurasMap m_auraStateAuras;        // Used for improve performance of aura state checks on aura apply/remove
         uint32 m_interruptMask;
 
@@ -2146,6 +2148,9 @@ class Unit : public WorldObject
         bool isVisibleForInState(WorldObject const* seer) const { return WorldObject::isVisibleForInState(seer); };
 
         bool isAlwaysDetectableFor(WorldObject const* seer) const;
+
+        float m_AbsorbHeal;
+
     private:
         bool IsTriggeredAtSpellProcEvent(Unit *pVictim, Aura * aura, SpellEntry const * procSpell, uint32 procFlag, uint32 procExtra, WeaponAttackType attType, bool isVictim, bool active, SpellProcEventEntry const *& spellProcEvent);
         bool HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* triggeredByAura, SpellEntry const *procSpell, uint32 procFlag, uint32 procEx, uint32 cooldown);
@@ -2178,7 +2183,7 @@ class Unit : public WorldObject
 
         Diminishing m_Diminishing;
         // Manage all Units threatening us
-//        ThreatManager m_ThreatManager;
+        // ThreatManager m_ThreatManager;
         // Manage all Units that are threatened by us
         HostileRefManager m_HostileRefManager;
 
