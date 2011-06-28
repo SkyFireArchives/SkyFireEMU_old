@@ -334,39 +334,191 @@ bool ChatHandler::HandleLearnAllMyClassCommand(const char* /*args*/)
 
 bool ChatHandler::HandleLearnAllMySpellsCommand(const char* /*args*/)
 {
-    ChrClassesEntry const* clsEntry = sChrClassesStore.LookupEntry(m_session->GetPlayer()->getClass());
-    if (!clsEntry)
-        return true;
-    uint32 family = clsEntry->spellfamily;
-
-    for (uint32 i = 0; i < sSpellStore.GetNumRows(); ++i)
+    switch (m_session->GetPlayer()->getClass())
     {
-        SpellEntry const *spellInfo = sSpellStore.LookupEntry(i);
-        if (!spellInfo)
-            continue;
+        case CLASS_MAGE:
+        {
+            uint32 ClassSpellList[] = 
+            {
+                5143, 2136, 116, 122, 2139, 12051, 118, 1953, 120, 30451, 86473,
+                1449, 2948, 30455, 45438, 475, 130, 30482, 543, 42955, 2120,
+                1463, 759, 55342, 89744, 10, 7302, 44614, 1459, 28272, 6117,
+                30449, 53140, 53142, 43987, 66, 86467, 82731, 82676, 80353,
+                88342, 88345, 33691, 33690, 49360, 10059, 11416, 32266, 11419,
+                49359, 3561, 3562, 32271, 3565, 88344, 88346, 35717, 35715,
+                49358, 49361, 11418, 11420, 32267, 11417, 3563, 3566, 32272, 3567
+            };
+            for each(uint32 spell in ClassSpellList)
+            {
+                if (!m_session->GetPlayer()->HasSpell(spell))
+                    m_session->GetPlayer()->learnSpell(spell, false);
+            }
+            break;
+        }
+        case CLASS_WARRIOR:
+        {
+            uint32 ClassSpellList[] = 
+            {
+                7386, 355, 71, 100, 34428, 772, 6343, 3127, 5308, 6673, 86346, 78,
+                57755, 7384, 845, 1715, 2565, 2458, 676, 1680, 6552, 6572, 97462,
+                5246, 1464, 1161, 871, 20252, 87509, 1160, 18499, 1134, 6544, 86526,
+                12678, 20230, 1719, 23920, 469, 3411, 64382, 55694, 87500, 72, 86479
+            };
+            for each(uint32 spell in ClassSpellList)
+            {
+                if (!m_session->GetPlayer()->HasSpell(spell))
+                    m_session->GetPlayer()->learnSpell(spell, false);
+            }
+            break;
+        }
+        case CLASS_HUNTER:
+        {
+            uint32 ClassSpellList[] = 
+            {
+                56641, 1494, 5116, 82243, 1462, 79682, 2641, 6991, 34026, 674, 86528,
+                1978, 1515, 13165, 19883, 2974, 781, 1130, 19503, 5118, 6197, 93321,
+                136, 83242, 19884, 13795, 2643, 19885, 1499, 5384, 19880, 86472,
+                53351, 19801, 1513, 19878, 13813, 1543, 82654, 83243, 13809, 2973,
+                19882, 77769, 87506, 20736, 19879, 3045, 13159, 83244, 20043,
+                34600, 53271, 34477, 19263, 87493, 77767, 83245, 82661, 51753
+            };
+            for each(uint32 spell in ClassSpellList)
+            {
+                if (!m_session->GetPlayer()->HasSpell(spell))
+                    m_session->GetPlayer()->learnSpell(spell, false);
+            }
+            break;
+        }
+        case CLASS_PALADIN:
+        {
+            uint32 ClassSpellList[] = 
+            {
+                20271, 20154, 465, 85673, 82242, 7328, 25780, 853, 62124, 19750,
+                633, 879, 1022, 20217, 26573, 7294, 2812, 498, 20165, 4987,
+                31789, 19746, 54428, 31801, 24275, 642, 87511, 1044, 96231,
+                19740, 32223, 82326, 20164, 1038, 31884, 19891, 10326, 6940,
+                87494, 84963, 82327, 86150, 86474, 86525, 635
+            };
+            for each(uint32 spell in ClassSpellList)
+            {
+                if (!m_session->GetPlayer()->HasSpell(spell))
+                    m_session->GetPlayer()->learnSpell(spell, false);
+            }
+            break;
+        }
+        case CLASS_DEATH_KNIGHT:
+        {
+            uint32 ClassSpellList[] = 
+            {
+                50977, 53428, 53341, 53343, 49998, 50842, 46584, 48263, 47528,
+                54447, 53342, 48721, 45524, 47476, 43265, 53331, 49020, 3714,
+                48792, 54446, 53323, 45529, 85948, 56222, 57330, 48743, 56815,
+                48707, 81229, 53344, 48265, 61999, 70164, 62158, 47568, 42650,
+                87492, 77575, 73975, 77606, 86524, 86471
+            };
+            for each(uint32 spell in ClassSpellList)
+            {
+                if (!m_session->GetPlayer()->HasSpell(spell))
+                    m_session->GetPlayer()->learnSpell(spell, false);
+            }
+            break;
+        }
+        case CLASS_DRUID:
+        {
+            uint32 ClassSpellList[] = 
+            {
+                86530, 86470, 8921, 467, 339, 768, 1082, 22568, 50464, 1822, 774,
+                2912, 5215, 8936, 50769, 5487, 99, 6795, 6807, 18960, 1066, 783,
+                779, 5570, 16864, 20484, 5229, 6785, 80964, 80965, 770, 16857, 2782,
+                5217, 8998, 1850, 20719, 5209, 29166, 2908, 1126, 5211, 5225, 9005,
+                62078, 62600, 16914, 5221, 2637, 87505, 22842, 16689, 1079, 22812,
+                33943, 22570, 33763, 33745, 740, 40120, 33786, 52610, 87491, 77758,
+                77761, 77764, 88747, 88751, 5185
+            };
+            for each(uint32 spell in ClassSpellList)
+            {
+                if (!m_session->GetPlayer()->HasSpell(spell))
+                    m_session->GetPlayer()->learnSpell(spell, false);
+            }
+            break;
+        }
+        case CLASS_PRIEST:
+        {
+            uint32 ClassSpellList[] = 
+            {
+                86475, 2061, 589, 17, 588, 139, 8092, 8122, 21562, 2006, 14914, 528,
+                586, 527, 2944, 9484, 32379, 1706, 2096, 2060, 605, 596, 32546, 89745, 
+                27683, 6346, 453, 8129, 15237, 64901, 34433, 33076, 32375, 48045, 64843,
+                87495, 73510, 73413, 73325, 2050
+            };
+            for each(uint32 spell in ClassSpellList)
+            {
+                if (!m_session->GetPlayer()->HasSpell(spell))
+                    m_session->GetPlayer()->learnSpell(spell, false);
+            }
+            break;
+        }
+        case CLASS_SHAMAN:
+        {
+            uint32 ClassSpellList[] = 
+            {
+                86529, 86477, 403, 331, 73899, 8075, 8042, 324, 8024, 3599, 2008, 79206,
+                8227, 370, 8050, 2645, 57994, 51886, 2484, 5394, 8004, 52127, 8056, 546,
+                8033, 421, 1535, 556, 66842, 20608, 36936, 8512, 8232, 51505, 6196, 8190,
+                8177, 66843, 1064, 5675, 3738, 131, 8071, 66844, 87507, 8143, 51730, 2062,
+                5730, 8184, 76780, 2894, 77472, 87718, 8017, 51514, 87497, 73680, 73920,
+                32182, 2825
+            };
+            for each(uint32 spell in ClassSpellList)
+            {
+                if (!m_session->GetPlayer()->HasSpell(spell))
+                    m_session->GetPlayer()->learnSpell(spell, false);
+            }
+            break;
+        }
+        case CLASS_ROGUE:
+        {
+            uint32 ClassSpellList[] = 
+            {
+                86531, 86476, 1752, 2098, 1784, 921, 8676, 5277, 6770, 82245, 73651, 
+                1766, 1776, 1804, 2983, 53, 5171, 1856, 1833, 1725, 408, 2836, 2094, 
+                8647, 51722, 703, 1966, 1842, 1943, 1860, 87504, 32645, 31224, 26679,
+                5938, 57934, 51723, 87496, 74001, 73981, 76577, 2842
+            };
+            for each(uint32 spell in ClassSpellList)
+            {
+                if (!m_session->GetPlayer()->HasSpell(spell))
+                    m_session->GetPlayer()->learnSpell(spell, false);
+            }
+            break;
+        }
+        case CLASS_WARLOCK:
+        {
+            uint32 ClassSpellList[] = 
+            {
+                86478, 686, 687, 348, 172, 1454, 689, 697, 6201, 1120, 74434, 
+                980, 755, 79268, 5782, 702, 5697, 5740, 5676, 693, 603, 19028, 712, 
+                126, 1714, 1098, 1949, 691, 710, 6229, 6789, 698, 5484, 86091, 1122, 
+                1490, 6353, 18540, 28176, 29722, 29858, 29893, 27243, 47897, 48018, 
+                48020, 87498, 77799, 80398, 77801, 93375, 93376, 80388
+            };
+            for each(uint32 spell in ClassSpellList)
+            {
+                if (!m_session->GetPlayer()->HasSpell(spell))
+                    m_session->GetPlayer()->learnSpell(spell, false);
+            }
+            break;
+        }
+    };
 
-        // skip server-side/triggered spells
-        if (spellInfo->spellLevel == 0)
-            continue;
-
-        // skip wrong class/race skills
-        if (!m_session->GetPlayer()->IsSpellFitByClassAndRace(spellInfo->Id))
-            continue;
-
-        // skip other spell families
-        if (spellInfo->SpellFamilyName != family)
-            continue;
-
-        // skip spells with first rank learned as talent (and all talents then also)
-        uint32 first_rank = sSpellMgr->GetFirstSpellInChain(spellInfo->Id);
-        if (GetTalentSpellCost(first_rank) > 0)
-            continue;
-
-        // skip broken spells
-        if (!SpellMgr::IsSpellValid(spellInfo,m_session->GetPlayer(),false))
-            continue;
-
-        m_session->GetPlayer()->learnSpell(i, false);
+    uint32 RidingSpellList[] = 
+    {
+        33388, 33391, 34090, 34091, 54197, 90267, 90265
+    };
+    for each(uint32 spell in RidingSpellList)
+    {
+        if (!m_session->GetPlayer()->HasSpell(spell))
+            m_session->GetPlayer()->learnSpell(spell, false);
     }
 
     SendSysMessage(LANG_COMMAND_LEARN_CLASS_SPELLS);
