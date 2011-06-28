@@ -612,18 +612,12 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
             }
             case SPELLFAMILY_PRIEST:
             { 
-              //Evangelism and Dark Evangelism
+              // Evangelism 
                 if (m_caster->HasAura(81659)) // Rank 1
                 { 
                     if (m_spellInfo->Id == 585)
                     {
                         m_caster->CastSpell(m_caster,81660,true);
-                    }
-                    
-                    else
-                    {
-                        if (m_spellInfo->Id == 15407)      // Dark Evangelism from Mind Flay                   
-                            m_caster->CastSpell(m_caster,87117,true);
                     }
                 }
                 else
@@ -634,14 +628,25 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                     {
                         m_caster->CastSpell(m_caster,81661,true);
                     }
-                    
-                    else
-                    { 
-                        if (m_spellInfo->Id == 15407)      // Dark Evangelism from Mind Flay 
-                            m_caster->CastSpell(m_caster,87118,true);
-                    }     
                 }
 
+                // Chakra
+                if (m_caster->HasAura(14751))
+                {
+                    switch(m_spellInfo->Id)
+                    {
+                        // Smite
+                        case 585:
+                            m_caster->CastSpell(m_caster, 81209, true); // Chakra: Chastise
+                            break;
+                        // Mind Spike
+                        case 73510:
+                            m_caster->CastSpell(m_caster, 81209, true); // Chakra: Chastise
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 // Shadow Word: Death - deals damage equal to damage done to caster
                 if ((m_spellInfo->SpellFamilyFlags[1] & 0x2))
                 {
@@ -2628,6 +2633,34 @@ void Spell::EffectPowerBurn(SpellEffIndex effIndex)
 
 void Spell::EffectHeal(SpellEffIndex /*effIndex*/)
 {
+    // Chakra Talent
+    if (m_caster->HasAura(14571))
+    {
+        switch(m_spellInfo->Id)
+        {
+            // Heal
+            case 2050:
+                m_caster->CastSpell(m_caster, 81208, true); // Chakra: Serenity
+                break;
+            // Greater Heal
+            case 2060:
+                m_caster->CastSpell(m_caster, 81208, true); // Chakra: Serenity
+                break;
+            // Flash Heal
+            case 2061:
+                m_caster->CastSpell(m_caster, 81208, true); // Chakra: Serenity
+                break;
+            // Binding Heal
+            case 32546:
+                m_caster->CastSpell(m_caster, 81208, true); // Chakra: Serenity
+                break;
+            // Prayer of Healing
+            case 596:
+                m_caster->CastSpell(m_caster, 81206, true); // Chakra: Sanctuary
+                break;
+        }
+    }
+
 }
 
 void Spell::SpellDamageHeal(SpellEffIndex effIndex)
