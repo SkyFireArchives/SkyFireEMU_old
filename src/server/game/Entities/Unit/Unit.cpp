@@ -8710,6 +8710,19 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
     // dummy basepoints or other customs
     switch(trigger_spell_id)
     {
+        // Will of Necropolis
+        case 81162:
+            if (HealthBelowPct(29) || (!HealthBelowPctDamaged(30, damage)))
+                return false;
+            else
+            {
+                if (!ToPlayer()->HasSpellCooldown(trigger_spell_id))
+                {
+                    AddAura(trigger_spell_id, this);
+                    ToPlayer()->AddSpellCooldown(trigger_spell_id, 0, time(NULL) + 45);
+                }
+            }
+            break;
         // Auras which should proc on area aura source (caster in this case):
         // Turn the Tables
         case 52914:
