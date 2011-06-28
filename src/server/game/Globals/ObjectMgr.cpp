@@ -4214,10 +4214,10 @@ void ObjectMgr::LoadQuests()
         "RewCurrencyId1, RewCurrencyCount1, RewCurrencyId2, RewCurrencyCount2, RewCurrencyId3, RewCurrencyCount3, RewCurrencyId4, RewCurrencyCount4,"
     //   155             156                157             158                159             160                161             162
         "ReqCurrencyId1, ReqCurrencyCount1, ReqCurrencyId2, ReqCurrencyCount2, ReqCurrencyId3, ReqCurrencyCount3, ReqCurrencyId4, ReqCurrencyCount4,"
-    //   163                     164                    165                      166                    167          168          169
-        "QuestGiverPortraitText, QuestGiverPortraitUnk, QuestTurnInPortraitText, QuestTurnInPortraitUnk, SoundAccept, SoundTurnIn, RequiredSpell,"
-    //   170          171
-        "StartScript, CompleteScript"
+    //   163                     164                    165                      166                     167              168             169
+        "QuestGiverPortraitText, QuestGiverPortraitUnk, QuestTurnInPortraitText, QuestTurnInPortraitUnk, QuestTargetMark, QuestStartType, SoundAccept,"
+    //  170           171            172          173       
+        "SoundTurnIn, RequiredSpell, StartScript, CompleteScript"
         " FROM quest_template");
     if (!result)
     {
@@ -6015,6 +6015,50 @@ void ObjectMgr::LoadQuestAreaTriggers()
 
     sLog->outString();
     sLog->outString(">> Loaded %u quest trigger points", count);
+}
+
+void ObjectMgr::LoadAreaTriggerQuestStart()
+{
+    mQuestStartAreaTriggerMap.clear();
+    QueryResult result = WorldDatabase.Query("SELECT trigger_ID, quest_ID FROM areatrigger_queststart");
+
+    uint32 count = 0;
+
+    if(!result)
+    {
+        sLog->outString();
+        sLog->outString(">> Loaded %u queststart triggers", count);
+        return;
+    }
+
+    do
+    {
+        ++count;
+        Field *fields = result->Fetch();
+        uint32 Trigger_ID = fields[0].GetUInt32();
+        uint32 Quest_ID = fields[1].GetUInt32();
+
+        AreaTriggerEntry const* atEntry = sAreaTriggerStore.LookupEntry(Trigger_ID);
+
+        if (!atEntry)
+        {
+            sLog->outErrorDb("Area trigger (ID:%u) does not exist in `AreaTrigger.dbc`.",Trigger_ID);
+            continue;
+        }
+
+        Quest const* quest = GetQuestTemplate(Quest_ID);
+
+        if(!quest)
+        {
+            sLog->outErrorDb("Table `areatrigger_queststart` has record (id: %u) for not existing quest %u",Trigger_ID,Quest_ID);
+            continue;
+        }
+
+        mQuestStartAreaTriggerMap[Trigger_ID] = Quest_ID;
+    }
+    while(result->NextRow());
+        sLog->outString();
+        sLog->outString(">> Loaded %u QuestGivers triggers", count);
 }
 
 void ObjectMgr::LoadTavernAreaTriggers()
@@ -8703,7 +8747,7 @@ void ObjectMgr::LoadMailLevelRewards()
     sLog->outString(">> Loaded %u level dependent mail rewards,", count);
 }
 
-void ObjectMgr::AddSpellToTrainer( uint32 entry, uint32 spell, uint32 spellCost, uint32 reqSkill, uint32 reqSkillValue, uint32 reqLevel)
+void ObjectMgr::AddSpellToTrainer( uint32 entry, uint32 spell, uint32 spellCost, uint32 reqSkill, uint32 reqSkillValue, uint32 reqLevel, uint32 KillCredit)
 {
     if (entry >= TRINITY_TRAINER_START_REF)
         return;
@@ -8748,6 +8792,7 @@ void ObjectMgr::AddSpellToTrainer( uint32 entry, uint32 spell, uint32 spellCost,
     trainerSpell.reqSkill      = reqSkill;
     trainerSpell.reqSkillValue = reqSkillValue;
     trainerSpell.reqLevel      = reqLevel;
+    trainerSpell.KillCredit    = KillCredit;
 
     if (!trainerSpell.reqLevel)
         trainerSpell.reqLevel = spellinfo->spellLevel;
@@ -8784,7 +8829,7 @@ void ObjectMgr::LoadTrainerSpell()
 
     std::set<uint32> skip_trainers;
 
-    QueryResult result = WorldDatabase.Query("SELECT b.entry, a.spell, a.spellcost, a.reqskill, a.reqskillvalue, a.reqlevel FROM npc_trainer AS a "
+    QueryResult result = WorldDatabase.Query("SELECT b.entry, a.spell, a.spellcost, a.reqskill, a.reqskillvalue, a.reqlevel, a.KillCredit FROM npc_trainer AS a "
                                              "INNER JOIN npc_trainer AS b ON a.entry = -(b.spell) "
                                              "UNION SELECT * FROM npc_trainer WHERE spell > 0");
 
@@ -8813,8 +8858,9 @@ void ObjectMgr::LoadTrainerSpell()
         uint32 reqSkill      = fields[3].GetUInt32();
         uint32 reqSkillValue = fields[4].GetUInt32();
         uint32 reqLevel      = fields[5].GetUInt32();
+        uint32 KillCredit    = fields[6].GetUInt32();
 
-        AddSpellToTrainer(entry, spell, spellCost, reqSkill, reqSkillValue, reqLevel);
+        AddSpellToTrainer(entry, spell, spellCost, reqSkill, reqSkillValue, reqLevel, KillCredit);
 
         count++;
 
