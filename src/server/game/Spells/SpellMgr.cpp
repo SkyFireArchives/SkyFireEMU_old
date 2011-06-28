@@ -2943,7 +2943,7 @@ DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto
                 return DIMINISHING_CONTROL_ROOT;
             // Dragon's Breath
             else if (spellproto->SpellFamilyFlags[0] & 0x800000)
-                return DIMINISHING_DISORIENT;
+                return DIMINISHING_KNOCKOUT;
             break;
         }
         case SPELLFAMILY_ROGUE:
@@ -2997,7 +2997,7 @@ DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto
                 return DIMINISHING_LIMITONLY;
             // Nature's Grasp
             else if (spellproto->SpellFamilyFlags[0] & 0x00000200)
-                return DIMINISHING_CONTROLLED_ROOT;
+                return DIMINISHING_CONTROL_ROOT;
             break;
         }
         case SPELLFAMILY_WARRIOR:
@@ -3023,7 +3023,7 @@ DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto
                 return DIMINISHING_LIMITONLY;
             // Turn Evil
             else if ((spellproto->SpellFamilyFlags[1] & 0x804000) && spellproto->SpellIconID == 309)
-                return DIMINISHING_FEAR;
+                return DIMINISHING_FEAR_BLIND;
             break;
         }
         case SPELLFAMILY_DEATHKNIGHT:
@@ -3045,15 +3045,12 @@ DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto
             // Scatter Shot
             if ((spellproto->SpellFamilyFlags[0] & 0x40000) && spellproto->SpellIconID == 132)
                 return DIMINISHING_NONE;
-            // Entrapment (own diminishing)
-            else if ((spellproto->SpellVisual[0] == 7484) && spellproto->SpellIconID == 20)
-                return DIMINISHING_ENTRAPMENT;
             // Wyvern Sting mechanic is MECHANIC_SLEEP but the diminishing is DIMINISHING_DISORIENT
             else if ((spellproto->SpellFamilyFlags[1] & 0x1000) && spellproto->SpellIconID == 1721)
-                return DIMINISHING_DISORIENT;
+                return DIMINISHING_KNOCKOUT;
             // Freezing Arrow
             else if (spellproto->SpellFamilyFlags[0] & 0x8)
-                return DIMINISHING_DISORIENT;
+                return DIMINISHING_KNOCKOUT;
             break;
         }
         default:
