@@ -4736,6 +4736,14 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
                 totalDamagePercentMod *= ((SpellMgr::CalculateSpellEffectAmount(m_spellInfo, EFFECT_2) * unitTarget->GetDiseasesByCaster(m_caster->GetGUID())) + 100.0f) / 100.0f;
                 break;
             }
+            // Necrotic Strike
+            if (m_spellInfo->Id == 73975) 
+            {
+                float ap = m_caster->GetTotalAttackPowerValue(BASE_ATTACK);
+                float heal = 0.75f * ap;
+                m_caster->getVictim()->SetAbsorbHeal(heal);
+                break;
+            }
             break;
         }
     }
