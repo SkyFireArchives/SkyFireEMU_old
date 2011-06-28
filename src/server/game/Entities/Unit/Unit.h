@@ -2071,6 +2071,7 @@ class Unit : public WorldObject
         void ResetDamageDoneInPastSecs(uint32 secs);
         void ResetHealingDoneInPastSecs(uint32 secs);
 
+        float m_AbsorbHeal;
         float GetAbsorbHeal() const { return m_AbsorbHeal; };
         void SetAbsorbHeal(float heal) { m_AbsorbHeal = heal; };
 
@@ -2148,8 +2149,6 @@ class Unit : public WorldObject
         bool isVisibleForInState(WorldObject const* seer) const { return WorldObject::isVisibleForInState(seer); };
 
         bool isAlwaysDetectableFor(WorldObject const* seer) const;
-
-        float m_AbsorbHeal;
 
     private:
         bool IsTriggeredAtSpellProcEvent(Unit *pVictim, Aura * aura, SpellEntry const * procSpell, uint32 procFlag, uint32 procExtra, WeaponAttackType attType, bool isVictim, bool active, SpellProcEventEntry const *& spellProcEvent);
