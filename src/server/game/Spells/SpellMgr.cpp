@@ -4151,11 +4151,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
             count++;
             break;
-		case 35098: // Rapid Killing
+        case 35098: // Rapid Killing
         case 35099:
             // just a temp solution to make Rapid Recuperation proc from this
             spellInfo->AttributesEx2 |= SPELL_ATTR2_TRIGGERED_CAN_TRIGGER;
-            ++count;
+            count++;
             break;
         case 12051: // Evocation - now we can interrupt this
             spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_INTERRUPT;
