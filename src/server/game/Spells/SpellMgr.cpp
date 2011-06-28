@@ -4319,6 +4319,11 @@ void SpellMgr::LoadSpellCustomAttr()
         case 74434: // Soulburn
             spellInfo->procCharges = 1;
             break;
+		case 81008: //Quake - Crystalspawn Giant
+		case 92631: //Quake - Crystalspawn Giant
+			spellInfo->EffectRadiusIndex[0] = 80;
+			count++;
+			break;
         case 23126: // World Enlarger
             spellInfo->AuraInterruptFlags |= AURA_INTERRUPT_FLAG_SPELL_ATTACK;
             count++;
