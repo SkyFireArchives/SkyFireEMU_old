@@ -1224,7 +1224,7 @@ void Player::HandleDrowning(uint32 time_diff)
                     EnvironmentalDamage(DAMAGE_LAVA, damage);
                 // need to skip Slime damage in Undercity,
                 // maybe someone can find better way to handle environmental damage
-                else if (m_zoneUpdateId != 1497 && m_zoneUpdateId != 3968)
+                else if (m_zoneUpdateId != 1497 && m_zoneUpdateId != 1)
                     EnvironmentalDamage(DAMAGE_SLIME, damage);
             }
         }
@@ -2738,6 +2738,17 @@ void Player::RemoveFromGroup(Group* group, uint64 guid, RemoveMethod method /* =
     }
 }
 
+void Player::SendPlayerMoneyNotify(Player* player, uint32 Money, uint32 Modifier)
+{
+    sLog->outDebug("World: SMSG_LOOT_MONEY_NOTIFY Player %s looted money: %d, Money Modifier: %d , Guild Money: %d", player->GetName(), Money, Modifier, Money*Modifier);
+
+    WorldPacket data(SMSG_LOOT_MONEY_NOTIFY, (4+4+1));
+    data << uint32(Money);
+    data << uint32(Money*Modifier);
+    data << uint8(0);
+
+    player->GetSession()->SendPacket(&data);
+}
 void Player::SendLogXPGain(uint32 GivenXP, Unit* victim, uint32 BonusXP, bool recruitAFriend, float /*group_rate*/)
 {
     WorldPacket data(SMSG_LOG_XPGAIN, 21); // guess size?
@@ -8913,26 +8924,26 @@ void Player::SendInitWorldStates(uint32 zoneid, uint32 areaid)
         case 4710:
             NumberOfFields = 28;
             break;
+        case 5449:
+            NumberOfFields = 92;
+            break;
          default:
             NumberOfFields = 12;
             break;
     }
 
+    //Need to Rewrote This Packet after we get sniffer
     WorldPacket data(SMSG_INIT_WORLD_STATES, (4+4+4+2+(NumberOfFields*8)));
     data << uint32(mapid);                                  // mapid
     data << uint32(zoneid);                                 // zone id
     data << uint32(areaid);                                 // area id, new 2.1.0
     data << uint16(NumberOfFields);                         // count of uint64 blocks
-    data << uint32(0x8d8) << uint32(0x0);                   // 1
-    data << uint32(0x8d7) << uint32(0x0);                   // 2
-    data << uint32(0x8d6) << uint32(0x0);                   // 3
-    data << uint32(0x8d5) << uint32(0x0);                   // 4
-    data << uint32(0x8d4) << uint32(0x0);                   // 5
-    data << uint32(0x8d3) << uint32(0x0);                   // 6
-                                                            // 7 1 - Arena season in progress, 0 - end of season
-    data << uint32(0xC77) << uint32(sWorld->getBoolConfig(CONFIG_ARENA_SEASON_IN_PROGRESS));
-                                                            // 8 Arena season id
-    data << uint32(0xF3D) << uint32(sWorld->getIntConfig(CONFIG_ARENA_SEASON_ID));
+    data << uint32(5334) << uint32(0);                      // Unknown
+    data << uint32(5332) << uint32(0);                      // Unknown
+    data << uint32(5333) << uint32(0);                      // 1 - TB "In Progress"
+
+    data << uint32(3191) << uint32(sWorld->getBoolConfig(CONFIG_ARENA_SEASON_IN_PROGRESS));
+    data << uint32(3901) << uint32(sWorld->getIntConfig(CONFIG_ARENA_SEASON_ID));
 
     if (mapid == 530)                                       // Outland
     {
@@ -8944,7 +8955,10 @@ void Player::SendInitWorldStates(uint32 zoneid, uint32 areaid)
     // insert <field> <value>
     switch (zoneid)
     {
-        case 1:                                             // Dun Morogh
+        case 1:                                             // Dun Morogh - Unknown Value maybe some day we will know that
+            data << uint32(3094) << uint32(0x1);
+            data << uint32(3096) << uint32(0x0);
+            break;
         case 11:                                            // Wetlands
         case 12:                                            // Elwynn Forest
         case 38:                                            // Loch Modan
@@ -9446,6 +9460,11 @@ void Player::SendInitWorldStates(uint32 zoneid, uint32 areaid)
                 data << uint32(0x923) << uint32(0x1);       // 14 2339 alliance (0 - hide, 1 - flag ok, 2 - flag picked up (flashing), 3 - flag picked up (not flashing)
             }
             break;
+        case 5449:
+            if(bg && bg->GetTypeID(true) == BATTLEGROUND_BG)
+                bg->FillInitialWorldStates(data);
+            break;
+
         default:
             data << uint32(0x914) << uint32(0x0);           // 7
             data << uint32(0x913) << uint32(0x0);           // 8
@@ -14838,6 +14857,19 @@ void Player::AddQuest(Quest const *pQuest, Object *questGiver)
                     CastSpell(this,itr->second->spellId,true);
     }
 
+    switch(pQuest->GetQuestId())
+    {
+        case 26966:
+        case 24528:
+        case 26918:
+        case 27023:
+        case 10069:
+        {
+            if(this->HasSpell(20271))
+                this->KilledMonsterCredit(44420, NULL);
+        }
+        default: break;
+    }
     UpdateForQuestWorldObjects();
 }
 
@@ -21353,11 +21385,42 @@ void Player::ModifyMoney(int32 d)
 
     if (d < 0)
         SetMoney (GetMoney() > uint64(-d) ? GetMoney() + d : 0);
+
     else
     {
         uint64 newAmount = 0;
         if (GetMoney() < uint32(MAX_MONEY_AMOUNT - d))
+        {
             newAmount = GetMoney() + d;
+
+            SetGuildMoneyModifier(1);
+
+            if(Guild *pGuild = sObjectMgr->GetGuildById(GetGuildId()))
+            {
+                if(pGuild)
+                {
+                    if(!this->HasAura(83940) && !this->HasAura(83941))
+                        SetGuildMoneyModifier(10);
+
+                    if(this->HasAura(83940) && !this->HasAura(83941))
+                        SetGuildMoneyModifier(15);
+
+                    if(this->HasAura(83941) && this->HasAura(83940))
+                        SetGuildMoneyModifier(25);
+
+                    //If we withdraw money from guild we don't get lootGUID, same in quests ;)
+                    if(this->GetLootGUID())
+                    {
+                        uint64 GuildMoney = (d * (GetGuildMoneyModifier() *0.01));
+
+                        if(GuildMoney < 1)
+                            GuildMoney = 1;
+
+                        pGuild->SetGuildMoney(GuildMoney);
+                    }
+                }
+            } this->SendPlayerMoneyNotify(this, d, GetGuildMoneyModifier());
+        }
         else
         {
             // "At Gold Limit"
@@ -25009,7 +25072,7 @@ float Player::GetAverageItemLevel()
     for (int i = EQUIPMENT_SLOT_START; i < EQUIPMENT_SLOT_END; ++i)
     {
         // don't check tabard, ranged, offhand or chest
-        if (i == EQUIPMENT_SLOT_TABARD || i == EQUIPMENT_SLOT_RANGED || i == EQUIPMENT_SLOT_OFFHAND || i == EQUIPMENT_SLOT_CHEST)
+        if (i == EQUIPMENT_SLOT_TABARD || i == EQUIPMENT_SLOT_RANGED || i == EQUIPMENT_SLOT_OFFHAND || i == EQUIPMENT_SLOT_BODY)
             continue;
 
         if (m_items[i] && m_items[i]->GetProto())

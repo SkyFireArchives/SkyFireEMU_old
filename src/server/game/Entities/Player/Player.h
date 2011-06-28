@@ -172,28 +172,6 @@ enum TrainerSpellState
 	TRAINER_SPELL_GREEN_DISABLED = 10               // custom value, not send to client: formally green but learn not allowed
 };
 
-enum ActionButtonUpdateState
-{
-    ACTIONBUTTON_UNCHANGED = 0,
-    ACTIONBUTTON_CHANGED   = 1,
-    ACTIONBUTTON_NEW       = 2,
-    ACTIONBUTTON_DELETED   = 3
-};
-
-enum ActionButtonType
-{
-    ACTION_BUTTON_SPELL     = 0x00,
-    ACTION_BUTTON_C         = 0x01,                         // click?
-    ACTION_BUTTON_EQSET     = 0x20,
-    ACTION_BUTTON_MACRO     = 0x40,
-    ACTION_BUTTON_CMACRO    = ACTION_BUTTON_C | ACTION_BUTTON_MACRO,
-    ACTION_BUTTON_ITEM      = 0x80
-};
-
-#define ACTION_BUTTON_ACTION(X) (uint32(X) & 0x00FFFFFF)
-#define ACTION_BUTTON_TYPE(X)   ((uint32(X) & 0xFF000000) >> 24)
-#define MAX_ACTION_BUTTON_ACTION_VALUE (0x00FFFFFF+1)
-
 enum TalentBranchSpec
 {
     BS_WARRIOR_ARMS         = 746,
@@ -227,6 +205,28 @@ enum TalentBranchSpec
     BS_DRUID_FERAL_COMBAT   = 750,
     BS_DRUID_RESTORATION    = 748
 };
+
+enum ActionButtonUpdateState
+{
+    ACTIONBUTTON_UNCHANGED = 0,
+    ACTIONBUTTON_CHANGED   = 1,
+    ACTIONBUTTON_NEW       = 2,
+    ACTIONBUTTON_DELETED   = 3
+};
+
+enum ActionButtonType
+{
+    ACTION_BUTTON_SPELL     = 0x00,
+    ACTION_BUTTON_C         = 0x01,                         // click?
+    ACTION_BUTTON_EQSET     = 0x20,
+    ACTION_BUTTON_MACRO     = 0x40,
+    ACTION_BUTTON_CMACRO    = ACTION_BUTTON_C | ACTION_BUTTON_MACRO,
+    ACTION_BUTTON_ITEM      = 0x80
+};
+
+#define ACTION_BUTTON_ACTION(X) (uint32(X) & 0x00FFFFFF)
+#define ACTION_BUTTON_TYPE(X)   ((uint32(X) & 0xFF000000) >> 24)
+#define MAX_ACTION_BUTTON_ACTION_VALUE (0x00FFFFFF+1)
 
 struct ActionButton
 {
@@ -1035,7 +1035,7 @@ class TradeData
         Item*  GetSpellCastItem() const;
         bool HasSpellCastItem() const { return m_spellCastItem != 0; }
 
-        uint32 GetMoney() const { return m_money; }
+        uint32 GetMoney() const { return m_money; } 
         void SetMoney(uint32 money);
 
         bool IsAccepted() const { return m_accepted; }
@@ -1486,6 +1486,9 @@ class Player : public Unit, public GridObject<Player>
         void UpdateForQuestWorldObjects();
         bool CanShareQuest(uint32 quest_id) const;
 
+        uint32 GetGuildMoneyModifier() { return m_GuildMoneyModifier; }
+        uint32 SetGuildMoneyModifier(uint32 m_GuildMoneyMod) { return m_GuildMoneyModifier = m_GuildMoneyMod; }
+
         void SendQuestComplete(uint32 quest_id);
         void SendQuestReward(Quest const *pQuest, uint32 XP, Object* questGiver);
         void SendQuestFailed(uint32 quest_id);
@@ -1930,6 +1933,7 @@ class Player : public Unit, public GridObject<Player>
 
         void BuildCreateUpdateBlockForPlayer(UpdateData *data, Player *target) const;
         void DestroyForPlayer(Player *target, bool anim = false) const;
+        void SendPlayerMoneyNotify(Player* player, uint32 Money, uint32 Modifier);
         void SendLogXPGain(uint32 GivenXP, Unit* victim, uint32 BonusXP, bool recruitAFriend = false, float group_rate=1.0f);
 
         // notifiers
@@ -2561,6 +2565,7 @@ class Player : public Unit, public GridObject<Player>
         float GetAverageItemLevel();
 
     protected:
+        uint32 m_GuildMoneyModifier;
         uint32 m_AreaID;
         uint32 m_regenTimerCount;
         float m_powerFraction[MAX_POWERS];

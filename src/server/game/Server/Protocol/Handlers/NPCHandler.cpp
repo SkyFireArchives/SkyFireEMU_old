@@ -258,6 +258,9 @@ void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket & recv_data)
             _player->CastSpell(_player,trainer_spell->spell,true);
         else
             _player->learnSpell(spellId, false);
+
+        if(trainer_spell->KillCredit != 0)
+            _player->KilledMonsterCredit(trainer_spell->KillCredit, NULL);
     }
 
     WorldPacket data(SMSG_TRAINER_BUY_RESULT, 16);
