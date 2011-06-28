@@ -512,34 +512,26 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                    damage = uint32(damage * (m_caster->GetTotalAttackPowerValue(BASE_ATTACK)) / 100);
                // Victory Rush
                else if (m_spellInfo->SpellFamilyFlags[1] & 0x100)
-                damage = uint32(damage * m_caster->GetTotalAttackPowerValue(BASE_ATTACK) / 100);
+                   damage = uint32(damage * m_caster->GetTotalAttackPowerValue(BASE_ATTACK) / 100);
                // Cleave
                else if (m_spellInfo->Id == 845)
-               {
-               damage = uint32(6+ m_caster->GetTotalAttackPowerValue(BASE_ATTACK)* 0.45);
-               }
+                   damage = uint32(6+ m_caster->GetTotalAttackPowerValue(BASE_ATTACK)* 0.45);
                // Intercept
-                 else if (m_spellInfo->Id == 20253)
-                 {
-                 damage = uint32(1 + m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 0.12);
-                 }
+               else if (m_spellInfo->Id == 20253)
+                   damage = uint32(1 + m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * 0.12);
                // Execute
                else if (m_spellInfo->Id ==5308)
-               {
-               damage = uint32 (10 + m_caster->GetTotalAttackPowerValue(BASE_ATTACK)* 0.437*100/100);  
-               }
+                   damage = uint32 (10 + m_caster->GetTotalAttackPowerValue(BASE_ATTACK)* 0.437*100/100);  
                // Heroic Strike
                else if (m_spellInfo->Id == 78)
-               {
-                damage = uint32(8 + m_caster->GetTotalAttackPowerValue(BASE_ATTACK)* 60 / 100);
-               }
+                   damage = uint32(8 + m_caster->GetTotalAttackPowerValue(BASE_ATTACK)* 60 / 100);
                // Shockwave
                else if (m_spellInfo->Id == 46968)
                {
-                int32 pct = m_caster->CalculateSpellDamage(unitTarget, m_spellInfo, 2);
-                if (pct > 0)
-                    damage+= int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * pct / 100);
-                    break;
+                   int32 pct = m_caster->CalculateSpellDamage(unitTarget, m_spellInfo, 2);
+                   if (pct > 0)
+                       damage+= int32(m_caster->GetTotalAttackPowerValue(BASE_ATTACK) * pct / 100);
+                   break;
                }
                break;
             }
@@ -4734,6 +4726,14 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
             if (m_spellInfo->SpellFamilyFlags[EFFECT_0] & 0x1000000)
             {
                 totalDamagePercentMod *= ((SpellMgr::CalculateSpellEffectAmount(m_spellInfo, EFFECT_2) * unitTarget->GetDiseasesByCaster(m_caster->GetGUID())) + 100.0f) / 100.0f;
+                break;
+            }
+            // Necrotic Strike
+            if (m_spellInfo->Id == 73975) 
+            {
+                float ap = m_caster->GetTotalAttackPowerValue(BASE_ATTACK);
+                float heal = 0.75f * ap;
+                m_caster->getVictim()->SetAbsorbHeal(heal);
                 break;
             }
             break;
