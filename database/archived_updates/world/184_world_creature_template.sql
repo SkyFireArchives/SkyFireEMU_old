@@ -1,1 +1,0 @@
-UPDATE creature_template SET minlevel = 25, maxlevel = 25, faction_H = 14 WHERE entry = 41075;

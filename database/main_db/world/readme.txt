@@ -1,1 +1,0 @@
-Please extract the compressed file in this folder before instalation.

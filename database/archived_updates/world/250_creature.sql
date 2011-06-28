@@ -1,3 +1,0 @@
-DELETE FROM creature WHERE id = 30714;
-insert into `creature` (`id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`) values
-('30714','571','1','1','0','0','6372.02','239.841','396.9','4.78779','300','0','0','36358','0','0','0','0','0','0');

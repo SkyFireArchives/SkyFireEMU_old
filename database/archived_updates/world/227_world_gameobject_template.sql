@@ -1,1 +1,0 @@
-UPDATE gameobject_template SET size=1.5, flags=4 WHERE entry=186634;

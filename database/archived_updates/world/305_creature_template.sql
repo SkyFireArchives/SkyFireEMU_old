@@ -1,1 +1,0 @@
-UPDATE creature_template SET skinloot = 33127 WHERE entry = 33127;

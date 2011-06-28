@@ -1,1 +1,0 @@
-UPDATE gameobject_template SET flags = 4, data1 = 26780, data6 = 30 WHERE entry = 204247;

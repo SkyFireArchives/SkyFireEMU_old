@@ -1,1 +1,0 @@
-UPDATE creature_template SET killcredit1 = 615 WHERE entry IN (437, 4463, 43327, 4064, 43329, 43350);
