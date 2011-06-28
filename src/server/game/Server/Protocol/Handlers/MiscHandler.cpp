@@ -911,6 +911,19 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket & recv_data)
         }
     }
 
+    if(GetPlayer()->GetMap()->IsDungeon())
+    {
+        uint32 QuestStartId = sObjectMgr->GetQuestStartForAreaTrigger(Trigger_ID);
+        Quest const* pQuest = sObjectMgr->GetQuestTemplate(QuestStartId);
+
+        if(pQuest && (!GetPlayer()->IsActiveQuest(pQuest->GetQuestId())) && (GetPlayer()->GetQuestStatus(pQuest->GetQuestId()) != QUEST_STATUS_COMPLETE))
+        {
+            if(GetPlayer()->CanTakeQuest(pQuest, true))
+            {
+                GetPlayer()->PlayerTalkClass->SendQuestGiverQuestDetails(pQuest, GetPlayer()->GetGUID(), true);
+            }
+        }
+    }
     if (sObjectMgr->IsTavernAreaTrigger(Trigger_ID))
     {
         // set resting flag we are in the inn
