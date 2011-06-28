@@ -7181,7 +7181,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     }
                     return false;
                 }
-				// Item - Shaman T10 Elemental 4P Bonus
+                // Item - Shaman T10 Elemental 4P Bonus
                 case 70817:
                 {
                     // try to find spell Flame Shock on the target
