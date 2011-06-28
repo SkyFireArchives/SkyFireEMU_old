@@ -1,3 +1,0 @@
--- A Little Dash of Seasoning
-UPDATE quest_template SET ReqCreatureOrGOId1='-181250',ReqCreatureOrGOId2='-181251',ReqCreatureOrGOId3='-181252',ReqCreatureOrGOCount1='1',ReqCreatureOrGOCount2='1',ReqCreatureOrGOCount3='1',ReqSpellCast1='29517',ReqSpellCast2='29517',ReqSpellCast3='29517',CompleteEmote='1' WHERE entry=9275;
-UPDATE gameobject_template SET TYPE=2, data1=9275 WHERE entry IN(181250,181251,181252);

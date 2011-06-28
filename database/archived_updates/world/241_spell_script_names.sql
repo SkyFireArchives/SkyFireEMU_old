@@ -1,1 +1,0 @@
-UPDATE `spell_script_names` SET `spell_id`='1535' where `spell_id`='8349';

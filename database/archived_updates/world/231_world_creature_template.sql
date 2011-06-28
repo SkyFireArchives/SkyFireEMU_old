@@ -1,1 +1,0 @@
-UPDATE creature_template SET skinloot = entry WHERE entry IN (SELECT entry FROM skinning_loot_template);

@@ -1,2 +1,0 @@
-insert into `creature` (`id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`) values
-('43991','530','1','1','0','0','-4127.25','-12523.6','44.2239','2.59888','300','0','0','126','0','0','0','0','0','0');

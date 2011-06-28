@@ -449,6 +449,15 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                         damage = unitTarget->CountPctFromMaxHealth(damage);
                         break;
                     }
+					// Crystalspawn Giant - Quake
+					case 81008:
+					case 92631:
+					{
+						//avoid damage when players jumps
+						if (unitTarget->GetUnitMovementFlags() == MOVEMENTFLAG_JUMPING || unitTarget->GetTypeId() != TYPEID_PLAYER)
+							return;
+						break;
+					}
                     // Gargoyle Strike
                     case 51963:
                     {
