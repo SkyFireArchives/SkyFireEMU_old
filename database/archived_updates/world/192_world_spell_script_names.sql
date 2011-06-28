@@ -1,1 +1,0 @@
-INSERT IGNORE INTO spell_script_names VALUES (-53303,'spell_hun_sniper_training'),(-53304,'spell_hun_sniper_training');
