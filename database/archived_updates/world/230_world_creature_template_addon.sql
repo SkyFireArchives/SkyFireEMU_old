@@ -1,1 +1,0 @@
-UPDATE creature_template_addon SET bytes1=16777216, bytes2=4097, auras='' WHERE entry=6491;

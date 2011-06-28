@@ -204,6 +204,8 @@ m_vehicleKit(NULL), m_unitTypeMask(UNIT_MASK_NONE), m_HostileRefManager(this), m
 
     for (uint32 i = 0; i < 120 ; ++i)
         m_damage_taken[i] = 0;
+
+    m_AbsorbHeal = 0.0f;
 }
 
 Unit::~Unit()
@@ -1946,11 +1948,16 @@ void Unit::CalcHealAbsorb(Unit *pVictim, const SpellEntry *healSpell, uint32 &he
             existExpired = true;
     }
 
-    //Necrotic Strike
+    // Necrotic Strike
     if(pVictim->HasAura(73975))
     {
-        RemainingHeal -= (0.75f * GetTotalAttackPowerValue(BASE_ATTACK));
+        int32 heal = int32(pVictim->GetAbsorbHeal());
+        RemainingHeal -= heal;
     }
+
+    // No negative heal
+    if (RemainingHeal < 0)
+        RemainingHeal = 0;
 
     // Remove all expired absorb auras
     if (existExpired)
@@ -5836,6 +5843,12 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     triggered_spell_id = 26654;
                     break;
                 }
+                // Victorious
+                case 32216:
+                {
+                    RemoveAura(dummySpell->Id);
+                    return false;
+                }
                 // Improved Spell Reflection
                 case 59088:
                 case 59089:
@@ -6575,7 +6588,6 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                 // This effect only from Rapid Killing (mana regen)
                 if (!(procSpell->SpellFamilyFlags[1] & 0x01000000))
                     return false;
-                triggered_spell_id = 56654;
 
                 target = this;
 
@@ -6761,21 +6773,28 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                         return false;
 
                     // At melee attack or Hammer of the Righteous spell damage considered as melee attack
-                    if ((procFlag & PROC_FLAG_DONE_MELEE_AUTO_ATTACK) || (procSpell && procSpell->Id == 53595))
-                        triggered_spell_id = 31803;
+                    bool stacker = !procSpell || procSpell->Id == 53595;
+                    // spells with SPELL_DAMAGE_CLASS_MELEE excluding Judgements
+                    bool damager = procSpell && procSpell->EquippedItemClass != -1;
+
+                    if (!stacker && !damager)
+                        return false;
+
+                    triggered_spell_id = 31803;
+
                     // On target with 5 stacks of Holy Vengeance direct damage is done
                     if (Aura * aur = pVictim->GetAura(triggered_spell_id, GetGUID()))
                     {
                         if (aur->GetStackAmount() == 5)
                         {
-                            aur->RefreshDuration();
+                            if (stacker)
+                                aur->RefreshDuration();
                             CastSpell(pVictim, 42463, true);
                             return true;
                         }
                     }
 
-                    // Only Autoattack can stack debuff
-                    if (procFlag & PROC_FLAG_DONE_SPELL_MELEE_DMG_CLASS)
+                    if (!stacker)
                         return false;
                     break;
                 }
@@ -6786,21 +6805,28 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                         return false;
 
                     // At melee attack or Hammer of the Righteous spell damage considered as melee attack
-                    if ((procFlag & PROC_FLAG_DONE_MELEE_AUTO_ATTACK) || (procSpell && procSpell->Id == 53595))
-                        triggered_spell_id = 53742;
+                    bool stacker = !procSpell || procSpell->Id == 53595;
+                    // spells with SPELL_DAMAGE_CLASS_MELEE excluding Judgements
+                    bool damager = procSpell && procSpell->EquippedItemClass != -1;
+
+                    if (!stacker && !damager)
+                        return false;
+
+                    triggered_spell_id = 31803;
+
                     // On target with 5 stacks of Blood Corruption direct damage is done
                     if (Aura * aur = pVictim->GetAura(triggered_spell_id, GetGUID()))
                     {
                         if (aur->GetStackAmount() == 5)
                         {
-                            aur->RefreshDuration();
+                            if (stacker)
+                                aur->RefreshDuration();
                             CastSpell(pVictim, 53739, true);
                             return true;
                         }
                     }
 
-                    // Only Autoattack can stack debuff
-                    if (procFlag & PROC_FLAG_DONE_SPELL_MELEE_DMG_CLASS)
+                    if (!stacker)
                         return false;
                     break;
                 }
@@ -7153,6 +7179,27 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                             return true;
                         }
                     }
+                    return false;
+                }
+                // Item - Shaman T10 Elemental 4P Bonus
+                case 70817:
+                {
+                    // try to find spell Flame Shock on the target
+
+                    if (AuraEffect const* aurEff = target->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_SHAMAN, 0x10000000, 0x0, 0x0, GetGUID()))
+                    {
+                        Aura* flameShock  = aurEff->GetBase();
+                        int32 maxDuration = flameShock->GetMaxDuration();
+                        int32 newDuration = flameShock->GetDuration() + 2 * aurEff->GetAmplitude();
+
+                        flameShock->SetDuration(newDuration);
+                        // is it blizzlike to change max duration for FS?
+                        if (newDuration > maxDuration)
+                            flameShock->SetMaxDuration(newDuration);
+
+                        return true;
+                    }
+                    // if not found Flame Shock
                     return false;
                 }
                 case 63280: // Glyph of Totem of Wrath
@@ -7847,6 +7894,17 @@ bool Unit::HandleAuraProc(Unit * pVictim, uint32 damage, Aura * triggeredByAura,
                     CastSpell(pVictim, 68055, true);
                     return true;
                 }
+            }
+            // Light's Grace (temp solution)
+            else if (dummySpell->Id == 31834)
+            {
+                *handled = true;
+                int32 removeChance = 0;
+                if (AuraEffect* aurEff = GetAuraEffect(SPELL_AURA_PROC_TRIGGER_SPELL,SPELLFAMILY_PALADIN, 2141, 0))
+                    removeChance = aurEff->GetSpellProto()->procChance;
+                if (!roll_chance_i(removeChance))
+                    return true;
+                break;
             }
             // Glyph of Divinity
             else if (dummySpell->Id == 54939)
@@ -8669,13 +8727,13 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
 
             target->CastSpell(target,trigger_spell_id,true,castItem,triggeredByAura);
 
-            if (cooldown && GetTypeId() == TYPEID_PLAYER)
-                this->ToPlayer()->AddSpellCooldown(trigger_spell_id,0,time(NULL) + cooldown);
+            if (cooldown && target->GetTypeId() == TYPEID_PLAYER)
+                target->ToPlayer()->AddSpellCooldown(trigger_spell_id, 0, time(NULL) + cooldown);
             return true;
         }
         // Cast positive spell on enemy target
         case 7099:  // Curse of Mending
-        case 39647: // Curse of Mending
+        case 39703: // Curse of Mending
         case 29494: // Temptation
         case 20233: // Improved Lay on Hands (cast on target)
         {
@@ -10470,6 +10528,11 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
             if (spellProto->SpellFamilyFlags[0] & 0x2)
                 if (AuraEffect * aurEff = GetDummyAuraEffect(SPELLFAMILY_DEATHKNIGHT, 2721, 0))
                     DoneTotalMod *= (100.0f + aurEff->GetAmount()) / 100.0f;
+
+            // Sigil of the Vengeful Heart
+            if (spellProto->SpellFamilyFlags[0] & 0x2000)
+               if (AuraEffect* aurEff = GetAuraEffect(64962, EFFECT_1))
+                   AddPctN(DoneTotal, aurEff->GetAmount());
 
             // Glacier Rot
             if (spellProto->SpellFamilyFlags[0] & 0x2 || spellProto->SpellFamilyFlags[1] & 0x6)

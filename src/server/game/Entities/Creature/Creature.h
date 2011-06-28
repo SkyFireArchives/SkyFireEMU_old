@@ -375,7 +375,7 @@ typedef std::list<VendorItemCount> VendorItemCounts;
 
 struct TrainerSpell
 {
-    TrainerSpell() : spell(0), spellCost(0), reqSkill(0), reqSkillValue(0), reqLevel(0)
+    TrainerSpell() : spell(0), spellCost(0), reqSkill(0), reqSkillValue(0), reqLevel(0), KillCredit(0)
     {
         for (uint8 i = 0; i < MAX_SPELL_EFFECTS ; ++i)
             learnedSpell[i] = 0;
@@ -386,6 +386,7 @@ struct TrainerSpell
     uint32 reqSkill;
     uint32 reqSkillValue;
     uint32 reqLevel;
+    uint32 KillCredit;
     uint32 learnedSpell[3];
 
     // helpers

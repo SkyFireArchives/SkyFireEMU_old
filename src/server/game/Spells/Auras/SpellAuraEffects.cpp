@@ -2626,6 +2626,14 @@ void AuraEffect::TriggerSpell(Unit *target, Unit *caster) const
                 triggerCaster->CastSpell(triggerTarget, triggeredSpellInfo, true, 0, this, triggerCaster->GetGUID());
                 return;
             }
+            // Rapid Recuperation (triggered energize have basepoints == 0)
+            case 56654:
+            case 58882:
+            {
+                if (int32 mana = target->GetMaxPower(POWER_MANA) / 100 * GetAmount())
+                    target->CastCustomSpell(target, triggerSpellId, &mana, NULL, NULL, true, NULL, this);
+                return;
+            }
             // Slime Spray - temporary here until preventing default effect works again
             // added on 9.10.2010
             case 69508:
@@ -6087,14 +6095,15 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             GetBase()->SetDuration(GetBase()->GetDuration() + aurEff->GetAmount());
                     break;
                 case 52916: // Honor Among Thieves
-                    if (caster == target && caster->GetTypeId() == TYPEID_PLAYER)
-                    {
-                        Unit * spellTarget = ObjectAccessor::GetUnit(*caster, caster->ToPlayer()->GetComboTarget());
-                        if (!spellTarget)
-                            spellTarget = caster->ToPlayer()->GetSelectedUnit();
-                        if (spellTarget && spellTarget->IsHostileTo(caster))
-                            caster->CastSpell(spellTarget, 51699, true);
-                    }
+                    if (target == caster)
+                        if (Player* pTarget = caster->ToPlayer())
+                        {
+                            Unit* spellTarget = ObjectAccessor::GetUnit(*pTarget, pTarget->GetComboTarget());
+                            if (!spellTarget)
+                                spellTarget = pTarget->GetSelectedUnit();
+                            if (spellTarget && pTarget->canAttack(spellTarget))
+                                pTarget->CastSpell(spellTarget, 51699, true);
+                        }
                     break;
                 case 28832: // Mark of Korth'azz
                 case 28833: // Mark of Blaumeux

@@ -1,1 +1,0 @@
-DELETE FROM conditions WHERE ConditionValue1=9634;

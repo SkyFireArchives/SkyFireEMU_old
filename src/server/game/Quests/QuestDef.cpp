@@ -164,12 +164,14 @@ Quest::Quest(Field * questRecord)
     QuestGiverPortraitUnk = questRecord[164].GetString();
     QuestTurnInPortraitText = questRecord[165].GetString();
     QuestTurnInPortraitUnk = questRecord[166].GetString();
-    SoundAccept = questRecord[167].GetUInt32();
-    SoundTurnIn = questRecord[168].GetUInt32();
-    RequiredSpell = questRecord[169].GetUInt32();
+    QuestTargetMark = questRecord[167].GetUInt32();
+    QuestStartType = questRecord[168].GetUInt16();
+    SoundAccept = questRecord[169].GetUInt32();
+    SoundTurnIn = questRecord[170].GetUInt32();
+    RequiredSpell = questRecord[171].GetUInt32();
 
-    QuestStartScript = questRecord[170].GetUInt32();
-    QuestCompleteScript = questRecord[171].GetUInt32();
+    QuestStartScript = questRecord[172].GetUInt32();
+    QuestCompleteScript = questRecord[173].GetUInt32();
 
     QuestFlags |= SpecialFlags << 20;
     if (QuestFlags & QUEST_SPECIAL_FLAG_AUTO_ACCEPT)

@@ -810,6 +810,7 @@ class WorldObject : public Object, public WorldLocation
 
         Creature*   FindNearestCreature(uint32 entry, float range, bool alive = true);
         GameObject* FindNearestGameObject(uint32 entry, float range);
+		Player*     FindNearestPlayer(float range, bool alive = true);
 
         void GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList, uint32 uiEntry, float fMaxSearchRange);
         void GetCreatureListWithEntryInGrid(std::list<Creature*>& lList, uint32 uiEntry, float fMaxSearchRange);
@@ -843,6 +844,7 @@ class WorldObject : public Object, public WorldLocation
 
         bool m_isWorldObject;
         uint32  LastUsedScriptID;
+        int32   LastDoScriptText;
 
         // Transports
         Transport *GetTransport() const { return m_transport; }

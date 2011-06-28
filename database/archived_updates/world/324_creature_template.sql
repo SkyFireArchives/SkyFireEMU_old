@@ -1,1 +1,0 @@
-UPDATE creature_template SET minlevel = 29, maxlevel = 29 WHERE entry = 43884;

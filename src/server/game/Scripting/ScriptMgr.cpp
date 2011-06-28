@@ -102,6 +102,9 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
             sLog->outError("TSCR: DoScriptText entry %i tried to process emote for invalid TypeId (%u).", iTextEntry, pSource->GetTypeId());
     }
 
+    // Set last text to var
+    pSource->LastDoScriptText = iTextEntry;
+
     switch (pData->uiType)
     {
         case CHAT_TYPE_SAY:

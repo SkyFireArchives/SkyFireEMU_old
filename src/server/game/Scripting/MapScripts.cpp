@@ -918,7 +918,7 @@ void Map::ScriptsProcess()
 
             case SCRIPT_COMMAND_PLAYMOVIE:
                 // Source must be Player.
-                if (Player *pSource = _GetScriptPlayer(source, true, step.script))
+                if (Player *pSource = _GetScriptPlayerSourceOrTarget(source, target, step.script))
                     pSource->SendMovieStart(step.script->PlayMovie.MovieID);
                 break;
 

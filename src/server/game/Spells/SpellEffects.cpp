@@ -449,6 +449,15 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                         damage = unitTarget->CountPctFromMaxHealth(damage);
                         break;
                     }
+					// Crystalspawn Giant - Quake
+					case 81008:
+					case 92631:
+					{
+						//avoid damage when players jumps
+						if (unitTarget->GetUnitMovementFlags() == MOVEMENTFLAG_JUMPING || unitTarget->GetTypeId() != TYPEID_PLAYER)
+							return;
+						break;
+					}
                     // Gargoyle Strike
                     case 51963:
                     {
@@ -503,10 +512,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                    damage = uint32(damage * (m_caster->GetTotalAttackPowerValue(BASE_ATTACK)) / 100);
                // Victory Rush
                else if (m_spellInfo->SpellFamilyFlags[1] & 0x100)
-               {
                 damage = uint32(damage * m_caster->GetTotalAttackPowerValue(BASE_ATTACK) / 100);
-                m_caster->ModifyAuraState(AURA_STATE_WARRIOR_VICTORY_RUSH, false);
-               }
                // Cleave
                else if (m_spellInfo->Id == 845)
                {
@@ -844,17 +850,14 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                       if(m_spellInfo->Id == 45462 || m_spellInfo->Id == 45477 || m_spellInfo->Id == 45524)
                       m_caster->CastSpell(unitTarget,65142,true);
                   }
-                  else
-                  if(m_caster->HasAura(51160)) // Rank 2
+                  else if(m_caster->HasAura(51160)) // Rank 2
                   {
                       if(m_spellInfo->Id == 45462 || m_spellInfo->Id == 45477 || m_spellInfo->Id == 45524) 
                       m_caster->CastSpell(unitTarget,65142,true);
                   }
                 
-               else 
-
                 // Blood Boil - bonus for diseased targets
-                if (m_spellInfo->SpellFamilyFlags[0] & 0x00040000)
+                else if (m_spellInfo->SpellFamilyFlags[0] & 0x00040000)
                 {
                     if (unitTarget->GetAuraEffect(SPELL_AURA_PERIODIC_DAMAGE, SPELLFAMILY_DEATHKNIGHT, 0, 0, 0x00000002, m_caster->GetGUID()))
                     {
@@ -1831,7 +1834,12 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
             // Death strike
             if (m_spellInfo->SpellFamilyFlags[0] & SPELLFAMILYFLAG_DK_DEATH_STRIKE)
             {
-                int32 bp = std::max(m_caster->CountPctFromMaxHealth(7), (20 * m_caster->GetDamageTakenInPastSecs(5) / 100));
+                int32 bp;
+                if ((m_caster->CountPctFromMaxHealth(7)) > (20 * m_caster->GetDamageTakenInPastSecs(5) / 100))
+                    bp = m_caster->CountPctFromMaxHealth(7);
+                else
+                    bp = (20 * m_caster->GetDamageTakenInPastSecs(5) / 100);
+
                 // Improved Death Strike
                 if (AuraEffect const * aurEff = m_caster->GetAuraEffect(SPELL_AURA_ADD_PCT_MODIFIER, SPELLFAMILY_DEATHKNIGHT, 2751, 0))
                     bp = int32(bp * (m_caster->CalculateSpellDamage(m_caster, aurEff->GetSpellProto(), 2) + 100.0f) / 100.0f);
