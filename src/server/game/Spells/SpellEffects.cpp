@@ -4733,7 +4733,7 @@ void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)
             {
                 float ap = m_caster->GetTotalAttackPowerValue(BASE_ATTACK);
                 float heal = 0.75f * ap;
-                m_caster->getVictim()->SetAbsorbHeal(heal);
+                unitTarget->SetAbsorbHeal(heal);
                 break;
             }
             break;
