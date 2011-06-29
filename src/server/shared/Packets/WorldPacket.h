@@ -25,6 +25,7 @@
 
 #include "Common.h"
 #include "ByteBuffer.h"
+#include "Opcodes.h"
 
 class WorldPacket : public ByteBuffer
 {
@@ -33,25 +34,34 @@ class WorldPacket : public ByteBuffer
         WorldPacket()                                       : ByteBuffer(0), m_opcode(0)
         {
         }
-        explicit WorldPacket(uint32 opcode, size_t res=200) : ByteBuffer(res)
+        explicit WorldPacket(Opcodes enumVal, size_t res=200) : ByteBuffer(res)
 		{
-			m_opcode = LookupOpcodeNumber(opcode);
+			m_opcode = LookupOpcodeNumber(enumVal);
+		}
+        explicit WorldPacket(uint32 opcode, size_t res=200) : ByteBuffer(res), m_opcode(opcode)
+		{
 		}
                                                             // copy constructor
         WorldPacket(const WorldPacket &packet)              : ByteBuffer(packet), m_opcode(packet.m_opcode)
         {
         }
 
+        void Initialize(Opcodes enumVal, size_t newres=200)
+        {
+            Initialize(LookupOpcodeNumber(enumVal), newres);
+        }
         void Initialize(uint32 opcode, size_t newres=200)
         {
             clear();
             _storage.reserve(newres);
 
-            m_opcode = LookupOpcodeNumber(opcode);
+            m_opcode = opcode;
         }
 
+        Opcodes GetOpcodeEnum() const { return LookupOpcodeEnum(m_opcode); }
         uint32 GetOpcode() const { return m_opcode; }
         void SetOpcode(uint32 opcode) { m_opcode = opcode; }
+        void SetOpcode(Opcodes enumVal) { m_opcode = LookupOpcodeNumber(enumVal); }
 
     protected:
 

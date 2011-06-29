@@ -273,8 +273,7 @@ int WorldSocket::open (void *a)
 
     m_Address = remote_addr.get_host_addr();
 
-    WorldPacket packet (0 , 45);   // 4.1 hax
-    packet.SetOpcode(((uint32)'O' << 8) | (uint32)'W');
+    WorldPacket packet (((uint32)'O' << 8) | (uint32)'W' , 45);   // 4.1 hax
     packet << "RLD OF WARCRAFT CONNECTION - SERVER TO CLIENT";
     if (SendPacket(packet) == -1)
         return -1;
@@ -530,7 +529,7 @@ int WorldSocket::handle_input_header (void)
 
     header.size -= 4;
 
-    ACE_NEW_RETURN (m_RecvWPct, WorldPacket ((uint16) header.cmd, header.size), -1);
+    ACE_NEW_RETURN (m_RecvWPct, WorldPacket ((uint32) header.cmd, header.size), -1);
 
     if (header.size > 0)
     {
@@ -767,16 +766,12 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
                 }
                 else
                 {
-                    if(opcode == 0)
+                    if(opcode == 1280462679) // opcode is "WORL"
                     {
-                        // 4.1 plaintext init message BS
-                        std::string msg;
-                        (*new_pct) >> msg;
-                        if(!msg.empty() && msg.compare(std::string("D OF WARCRAFT CONNECTION - CLIENT TO SERVER")) == 0)
-                        {
-                            // just ignore
-                            return 0;
-                        }
+                        // 4.1+ plaintext init message BS
+                        // content should be "D OF WARCRAFT CONNECTION - CLIENT TO SERVER"
+                        // just ignore
+                        return 0;
                     }
                     sLog->outError ("WorldSocket::ProcessIncoming: Client not authed opcode = %u", uint32(opcode));
                     return -1;

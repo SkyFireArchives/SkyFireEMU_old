@@ -307,7 +307,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
 
                         // single from authed time opcodes send in to after logout time
                         // and before other STATUS_LOGGEDIN_OR_RECENTLY_LOGGOUT opcodes.
-                        if (packet->GetOpcode() != CMSG_SET_ACTIVE_VOICE_CHANNEL)
+                        if (packet->GetOpcodeEnum() != CMSG_SET_ACTIVE_VOICE_CHANNEL)
                             m_playerRecentlyLogout = false;
 
                         sScriptMgr->OnPacketReceive(m_Socket, WorldPacket(*packet));

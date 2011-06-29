@@ -248,7 +248,7 @@ void WorldSession::HandleMoveTeleportAck(WorldPacket& recv_data)
 
 void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
 {
-    uint32 opcode = recv_data.GetOpcode();
+    Opcodes opcode = recv_data.GetOpcodeEnum();
     recv_data.hexlike();
 
     Unit *mover = _player->m_mover;
@@ -347,7 +347,7 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
     /*----------------------*/
 
     /* process position-change */
-    WorldPacket data(opcode, recv_data.size());
+    WorldPacket data(recv_data.GetOpcode(), recv_data.size());
     movementInfo.time = getMSTime();
     movementInfo.guid = mover->GetGUID();
     WriteMovementInfo(&data, &movementInfo);
@@ -404,7 +404,7 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
 
 void WorldSession::HandleForceSpeedChangeAck(WorldPacket &recv_data)
 {
-    uint32 opcode = recv_data.GetOpcode();
+    Opcodes opcode = recv_data.GetOpcodeEnum();
     sLog->outDebug("WORLD: Recvd %s (%u, 0x%X) opcode", LookupOpcodeName(opcode), opcode, opcode);
 
     /* extract packet */
@@ -569,7 +569,7 @@ void WorldSession::HandleChangeSeatsOnControlledVehicle(WorldPacket &recv_data)
     if (!vehicle_base)
         return;
 
-    switch (recv_data.GetOpcode())
+    switch (recv_data.GetOpcodeEnum())
     {
         case CMSG_REQUEST_VEHICLE_PREV_SEAT:
             GetPlayer()->ChangeSeat(-1, false);

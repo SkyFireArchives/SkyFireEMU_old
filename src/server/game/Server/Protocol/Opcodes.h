@@ -1357,7 +1357,7 @@ inline Opcodes LookupOpcodeEnum(uint32 id)
     return opcodeTable[id].enumValue;
 }
 
-inline uint16 LookupOpcodeNumber(uint32 enumValue)
+inline uint16 LookupOpcodeNumber(Opcodes enumValue)
 {
     if (enumValue >= NUM_OPCODES)   // check can be removed for performance
         return 0;
