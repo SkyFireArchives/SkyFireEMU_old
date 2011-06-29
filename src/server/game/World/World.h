@@ -735,7 +735,7 @@ class World
         //used World DB version
         void LoadDBVersion();
         char const* GetDBVersion() const { return m_DBVersion.c_str(); }
-        char const* GetCreatureEventAIVersion() const { return m_CreatureEventAIVersion.c_str(); }
+        char const* GetCreatureAIVersion() const { return m_CreatureAIVersion.c_str(); }
 
         void RecordTimeDiff(const char * text, ...);
 
@@ -838,7 +838,7 @@ class World
 
         //used versions
         std::string m_DBVersion;
-        std::string m_CreatureEventAIVersion;
+        std::string m_CreatureAIVersion;
 
         std::list<std::string> m_Autobroadcasts;
 
