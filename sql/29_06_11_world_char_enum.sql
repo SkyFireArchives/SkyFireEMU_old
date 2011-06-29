@@ -1,0 +1,1 @@
+UPDATE emuopcodes SET number = 50983 WHERE name = "SMSG_CHAR_ENUM";
