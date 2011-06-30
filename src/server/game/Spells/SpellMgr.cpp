@@ -4315,9 +4315,11 @@ void SpellMgr::LoadSpellCustomAttr()
              break;
         case 44614: // Frostfire Bolt
             spellInfo->StackAmount = 0; //TODO: remove when stacking of Decrease Run Speed % aura is fixed
+            count++;
             break;
         case 74434: // Soulburn
             spellInfo->procCharges = 1;
+            count++;
             break;
 		case 81008: //Quake - Crystalspawn Giant
 		case 92631: //Quake - Crystalspawn Giant
