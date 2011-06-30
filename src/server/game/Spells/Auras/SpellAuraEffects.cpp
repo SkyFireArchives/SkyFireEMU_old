@@ -1371,19 +1371,6 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
     switch(GetAuraType())
     {
         case SPELL_AURA_PERIODIC_DAMAGE:
-        {
-            // Dark Evangelism 
-            if (target->HasAura(15407)) // Mind Flay
-            {
-                if (caster->HasAura(81659)) // Rank 1
-                    caster->CastSpell(caster, 87117, true);
-                else
-                    if (caster->HasAura(81662)) // Rank 2
-                        caster->CastSpell(caster, 87118, true);
-            }
-        }
-        break;
-
         case SPELL_AURA_PERIODIC_DAMAGE_PERCENT:
         {
             if (!caster)
@@ -1409,6 +1396,15 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
                 SendTickImmune(target, caster);
                 break;
             }
+
+            // Dark Evangelism
+            if (target->HasAura(15407)) // Mind Flay
+            {
+                if (caster->HasAura(81659)) // Rank 1
+                    caster->CastSpell(caster, 87117, true);
+                else
+                    if (caster->HasAura(81662)) // Rank 2
+                        caster->CastSpell(caster, 87118, true);
 
             // some auras remove at specific health level or more
             if (GetAuraType() == SPELL_AURA_PERIODIC_DAMAGE)
