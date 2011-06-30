@@ -8723,6 +8723,19 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                 }
             }
             break;
+        // Lead Plating
+        case 92184:
+            if (HealthBelowPct(34) || (!HealthBelowPctDamaged(35, damage)))
+                return false;
+            else
+            {
+                if (!ToPlayer()->HasSpellCooldown(trigger_spell_id))
+                {
+                    AddAura(trigger_spell_id, this);
+                    ToPlayer()->AddSpellCooldown(trigger_spell_id, 0, time(NULL) + 30);
+                }
+            }
+        break;
         // Auras which should proc on area aura source (caster in this case):
         // Turn the Tables
         case 52914:
