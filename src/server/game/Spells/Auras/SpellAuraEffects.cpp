@@ -3555,6 +3555,14 @@ void AuraEffect::HandleAuraTransform(AuraApplication const *aurApp, uint8 mode, 
                             case 16126: target->SetDisplayId(17828); break;
                             // Dranei Male
                             case 16125: target->SetDisplayId(17827); break;
+                            // Worgen Female
+                            case 29423: target->SetDisplayId(30114); break;
+                            // Worgen Male
+                            case 29422: target->SetDisplayId(29335); break;
+                            // Goblin Female
+                            case 6895: target->SetDisplayId(33613); break;
+                            // Goblin Male
+                            case 6894: target->SetDisplayId(33611); break;
                             default: break;
                         }
                         break;
