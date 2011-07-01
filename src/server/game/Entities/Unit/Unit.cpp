@@ -7181,7 +7181,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     }
                     return false;
                 }
-				// Item - Shaman T10 Elemental 4P Bonus
+                // Item - Shaman T10 Elemental 4P Bonus
                 case 70817:
                 {
                     // try to find spell Flame Shock on the target
@@ -8710,6 +8710,32 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
     // dummy basepoints or other customs
     switch(trigger_spell_id)
     {
+        // Will of Necropolis
+        case 81162:
+            if (HealthBelowPct(29) || (!HealthBelowPctDamaged(30, damage)))
+                return false;
+            else
+            {
+                if (!ToPlayer()->HasSpellCooldown(trigger_spell_id))
+                {
+                    AddAura(trigger_spell_id, this);
+                    ToPlayer()->AddSpellCooldown(trigger_spell_id, 0, time(NULL) + 15);
+                }
+            }
+            break;
+        // Lead Plating
+        case 92184:
+            if (HealthBelowPct(34) || (!HealthBelowPctDamaged(35, damage)))
+                return false;
+            else
+            {
+                if (!ToPlayer()->HasSpellCooldown(trigger_spell_id))
+                {
+                    AddAura(trigger_spell_id, this);
+                    ToPlayer()->AddSpellCooldown(trigger_spell_id, 0, time(NULL) + 30);
+                }
+            }
+        break;
         // Auras which should proc on area aura source (caster in this case):
         // Turn the Tables
         case 52914:

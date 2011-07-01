@@ -75,7 +75,31 @@ void SummonList::DespawnEntry(uint32 entry)
             ++i;
     }
 }
+void SummonList::RemoveNotExisting()
+{
+    for (iterator i = begin(); i != end();)
+    {
+        if (Unit::GetCreature(*me, *i))
+            ++i;
+        else
+            erase(i++);
+    }
+}
+bool SummonList::HasEntry(uint32 entry)
+{
+    for (iterator i = begin(); i != end();)
+    {
+        Creature* summon = Unit::GetCreature(*me, *i);
+        if (!summon)
+            erase(i++);
+        else if (summon->GetEntry() == entry)
+            return true;
+        else
+            ++i;
+    }
 
+    return false;
+}
 void SummonList::DespawnAll()
 {
     while (!empty())

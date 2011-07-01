@@ -131,13 +131,16 @@ void WorldSession::HandleQuestgiverAcceptQuestOpcode(WorldPacket & recv_data)
 
     Object* pObject = ObjectAccessor::GetObjectByTypeMask(*_player, guid,TYPEMASK_UNIT|TYPEMASK_GAMEOBJECT|TYPEMASK_ITEM|TYPEMASK_PLAYER);
 
-    // no or incorrect quest giver
-    if (!pObject || (pObject->GetTypeId() != TYPEID_PLAYER && !pObject->hasQuest(quest)) || 
-        (pObject->GetTypeId() == TYPEID_PLAYER && !pObject->ToPlayer()->CanShareQuest(quest)))
+    // From 4.0.1 Player can be QuestGiver for self
+    if(!IS_PLAYER_GUID(guid))
     {
-        _player->PlayerTalkClass->CloseGossip();
-        _player->SetDivider(0);
-        return;
+        if (!pObject || (pObject->GetTypeId() != TYPEID_PLAYER && !pObject->hasQuest(quest)) || 
+            (pObject->GetTypeId() == TYPEID_PLAYER && !pObject->ToPlayer()->CanShareQuest(quest)))
+        {
+            _player->PlayerTalkClass->CloseGossip();
+            _player->SetDivider(0);
+            return;
+        }
     }
 
     Quest const* qInfo = sObjectMgr->GetQuestTemplate(quest);
@@ -247,11 +250,15 @@ void WorldSession::HandleQuestgiverQueryQuestOpcode(WorldPacket & recv_data)
     sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_QUERY_QUEST npc = %u, quest = %u, unk1 = %u", uint32(GUID_LOPART(guid)), quest, unk1);
 
     // Verify that the guid is valid and is a questgiver or involved in the requested quest
-    Object* pObject = ObjectAccessor::GetObjectByTypeMask(*_player, guid,TYPEMASK_UNIT|TYPEMASK_GAMEOBJECT|TYPEMASK_ITEM);
-    if (!pObject || (!pObject->hasQuest(quest) && !pObject->hasInvolvedQuest(quest)))
+    Object* pObject = ObjectAccessor::GetObjectByTypeMask(*_player, guid,TYPEMASK_UNIT|TYPEMASK_GAMEOBJECT|TYPEMASK_ITEM|TYPEMASK_PLAYER);
+
+    if(!IS_PLAYER_GUID(guid))
     {
-        _player->PlayerTalkClass->CloseGossip();
-        return;
+        if (!pObject || (!pObject->hasQuest(quest) && !pObject->hasInvolvedQuest(quest)))
+        {
+            _player->PlayerTalkClass->CloseGossip();
+            return;
+        }
     }
 
     Quest const* pQuest = sObjectMgr->GetQuestTemplate(quest);
@@ -304,12 +311,15 @@ void WorldSession::HandleQuestgiverChooseRewardOpcode(WorldPacket & recv_data)
 
     sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_CHOOSE_REWARD npc = %u, quest = %u, reward = %u",uint32(GUID_LOPART(guid)),quest,reward);
 
-    Object* pObject = ObjectAccessor::GetObjectByTypeMask(*_player, guid,TYPEMASK_UNIT|TYPEMASK_GAMEOBJECT);
+    Object* pObject = ObjectAccessor::GetObjectByTypeMask(*_player, guid,TYPEMASK_UNIT|TYPEMASK_GAMEOBJECT|TYPEMASK_PLAYER);
     if (!pObject)
         return;
 
-    if (!pObject->hasInvolvedQuest(quest))
-        return;
+    if(!IS_PLAYER_GUID(guid))
+    {
+        if (!pObject->hasInvolvedQuest(quest))
+            return;
+    }
 
     Quest const *pQuest = sObjectMgr->GetQuestTemplate(quest);
     if (pQuest)
@@ -339,6 +349,7 @@ void WorldSession::HandleQuestgiverChooseRewardOpcode(WorldPacket & recv_data)
                         pObject->ToGameObject()->AI()->QuestReward(_player, pQuest, reward);
                     }
                     break;
+                case TYPEID_PLAYER: break;
                 default:
                     break;
             }
@@ -359,9 +370,13 @@ void WorldSession::HandleQuestgiverRequestRewardOpcode(WorldPacket & recv_data)
 
     sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_REQUEST_REWARD npc = %u, quest = %u",uint32(GUID_LOPART(guid)),quest);
 
-    Object* pObject = ObjectAccessor::GetObjectByTypeMask(*_player, guid,TYPEMASK_UNIT|TYPEMASK_GAMEOBJECT);
-    if (!pObject||!pObject->hasInvolvedQuest(quest))
-        return;
+    Object* pObject = ObjectAccessor::GetObjectByTypeMask(*_player, guid,TYPEMASK_UNIT|TYPEMASK_GAMEOBJECT|TYPEMASK_PLAYER);
+
+    if(!IS_PLAYER_GUID(guid))
+    {
+        if (!pObject||!pObject->hasInvolvedQuest(quest))
+            return;
+    }
 
     if (_player->CanCompleteQuest(quest))
         _player->CompleteQuest(quest);
@@ -572,8 +587,9 @@ void WorldSession::HandlePushQuestToParty(WorldPacket& recvPacket)
 void WorldSession::HandleQuestPushResult(WorldPacket& recvPacket)
 {
     uint64 guid;
+    uint32 QuestID;
     uint8 msg;
-    recvPacket >> guid >> msg;
+    recvPacket >> guid >> QuestID >> msg;
 
     sLog->outDebug("WORLD: Received MSG_QUEST_PUSH_RESULT");
 
@@ -582,8 +598,9 @@ void WorldSession::HandleQuestPushResult(WorldPacket& recvPacket)
         Player *pPlayer = ObjectAccessor::FindPlayer(_player->GetDivider());
         if (pPlayer)
         {
-            WorldPacket data(MSG_QUEST_PUSH_RESULT, (8+1));
+            WorldPacket data(MSG_QUEST_PUSH_RESULT, (8+4+1));
             data << uint64(guid);
+            data << uint32(QuestID);
             data << uint8(msg);                             // valid values: 0-8
             pPlayer->GetSession()->SendPacket(&data);
             _player->SetDivider(0);

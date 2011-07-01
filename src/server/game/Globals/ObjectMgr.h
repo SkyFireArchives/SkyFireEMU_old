@@ -399,6 +399,8 @@ typedef UNORDERED_MAP<uint32,PointOfInterestLocale> PointOfInterestLocaleMap;
 
 typedef std::multimap<uint32,uint32> QuestRelations;
 typedef std::pair<QuestRelations::const_iterator, QuestRelations::const_iterator> QuestRelationBounds;
+typedef std::multimap<uint32,uint32> AreaTriggerQuestStart;
+typedef std::pair<AreaTriggerQuestStart::const_iterator, AreaTriggerQuestStart::const_iterator> AreaTriggerQuestStartBounds;
 typedef std::multimap<uint32,ItemRequiredTarget> ItemRequiredTargetMap;
 typedef std::pair<ItemRequiredTargetMap::const_iterator, ItemRequiredTargetMap::const_iterator>  ItemRequiredTargetMapBounds;
 
@@ -734,6 +736,25 @@ class ObjectMgr
                 return itr->second;
             return 0;
         }
+        
+        uint32 GetQuestStartForAreaTrigger(uint32 Trigger_ID) const
+        {
+            QuestStartAreaTriggerMap::const_iterator itr = mQuestStartAreaTriggerMap.find(Trigger_ID);
+            if (itr != mQuestStartAreaTriggerMap.end())
+                return itr->second;
+            return 0;
+        }
+        /*
+        AreaTriggerQuestStart* GetAreaTriggerQuestRelationMap()
+        {
+            return &mQuestStartAreaTriggerMap;
+        }
+
+        AreaTriggerQuestStartBounds GetAreaTriggerQuestRelationBounds(uint32 Trigger_ID)
+        {
+            return mQuestStartAreaTriggerMap.equal_range(Trigger_ID);
+        }
+        */
         bool IsTavernAreaTrigger(uint32 Trigger_ID) const
         {
             return mTavernAreaTriggerSet.find(Trigger_ID) != mTavernAreaTriggerSet.end();
@@ -941,6 +962,7 @@ class ObjectMgr
         void LoadQuestAreaTriggers();
         void LoadAreaTriggerScripts();
         void LoadTavernAreaTriggers();
+        void LoadAreaTriggerQuestStart();
         void LoadGameObjectForQuests();
 
         void LoadPageTexts();
@@ -969,7 +991,7 @@ class ObjectMgr
 
         void LoadVendors();
         void LoadTrainerSpell();
-        void AddSpellToTrainer(uint32 entry, uint32 spell, uint32 spellCost, uint32 reqSkill, uint32 reqSkillValue, uint32 reqLevel);
+        void AddSpellToTrainer(uint32 entry, uint32 spell, uint32 spellCost, uint32 reqSkill, uint32 reqSkillValue, uint32 reqLevel, uint32 KillCredit);
 
         std::string GeneratePetName(uint32 entry);
         uint32 GetBaseXP(uint8 level);
@@ -1284,6 +1306,7 @@ class ObjectMgr
 
         typedef UNORDERED_MAP<uint32, GossipText> GossipTextMap;
         typedef UNORDERED_MAP<uint32, uint32> QuestAreaTriggerMap;
+        typedef UNORDERED_MAP<uint32, uint32> QuestStartAreaTriggerMap;
         typedef std::set<uint32> TavernAreaTriggerSet;
         typedef std::set<uint32> GameObjectForQuestSet;
 
@@ -1293,6 +1316,8 @@ class ObjectMgr
         GuildRewardsVector  mGuildRewards;
 
         QuestAreaTriggerMap mQuestAreaTriggerMap;
+        QuestStartAreaTriggerMap mQuestStartAreaTriggerMap;
+        //AreaTriggerQuestStart mQuestStartAreaTriggerMap;
         TavernAreaTriggerSet mTavernAreaTriggerSet;
         GameObjectForQuestSet mGameObjectForQuestSet;
         GossipTextMap       mGossipText;

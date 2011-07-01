@@ -724,6 +724,8 @@ public:
     uint8 GetLevel() { return m_level; }
     uint64 GetCurrentXP() { return m_xp; }
     uint64 GetNextLevelXP() { return m_nextLevelXP; }
+    uint64 GetGuildMoney() { return m_bankMoney; }
+    uint64 SetGuildMoney(uint64 add) { return m_bankMoney += add; }
 
     void GainXP(uint64 xp);
     void LevelUp();
