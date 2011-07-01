@@ -238,7 +238,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
         #endif*/
 
         sLog->outDebug("SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode()>OPCODE_NOT_FOUND?"nf":LookupOpcodeName(packet->GetOpcode()));
-        if (packet->GetOpcode() >= NUM_MSG_TYPES)
+        if (packet->GetOpcode() >= MAX_MSG_TYPES)
         {
             sLog->outError("SESSION: received non-existed opcode %s (0x%.4X)",
                 LookupOpcodeName(packet->GetOpcode()),
@@ -307,7 +307,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
 
                         // single from authed time opcodes send in to after logout time
                         // and before other STATUS_LOGGEDIN_OR_RECENTLY_LOGGOUT opcodes.
-                        if (packet->GetOpcode() != CMSG_SET_ACTIVE_VOICE_CHANNEL)
+                        if (packet->GetOpcodeEnum() != CMSG_SET_ACTIVE_VOICE_CHANNEL)
                             m_playerRecentlyLogout = false;
 
                         sScriptMgr->OnPacketReceive(m_Socket, WorldPacket(*packet));
