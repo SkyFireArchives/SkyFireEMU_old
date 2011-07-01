@@ -8723,8 +8723,10 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                 }
             }
             break;
-        // Lead Plating
-        case 92184:
+        case 92184: // Lead Plating
+        case 92233: // Tectonic Shift
+        case 92355: // Turn of the Worm
+        case 92235: // Turn of the Worm
             if (HealthBelowPct(34) || (!HealthBelowPctDamaged(35, damage)))
                 return false;
             else
