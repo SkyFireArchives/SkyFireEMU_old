@@ -273,20 +273,15 @@ int WorldSocket::open (void *a)
 
     m_Address = remote_addr.get_host_addr();
 
-    WorldPacket packet (0x4F57);   // 4.1 hax ("WO")
-    packet << "RLD OF WARCRAFT CONNECTION - SERVER TO CLIENT";
-    if (SendPacket(packet) == -1)
-        return -1;
-
     // Send startup packet.
-    packet.Initialize(SMSG_AUTH_CHALLENGE, 37);
+    WorldPacket packet (SMSG_AUTH_CHALLENGE, 37);
     
     BigNumber seed1;
     seed1.SetRand(16 * 8);
     packet.append(seed1.AsByteArray(16), 16);               // new encryption seeds
     
-    packet << uint32(m_Seed);
     packet << uint8(1);
+    packet << uint32(m_Seed);
 
     BigNumber seed2;
     seed2.SetRand(16 * 8);
@@ -529,7 +524,7 @@ int WorldSocket::handle_input_header (void)
 
     header.size -= 4;
 
-    ACE_NEW_RETURN (m_RecvWPct, WorldPacket ((uint32) header.cmd, header.size), -1);
+    ACE_NEW_RETURN (m_RecvWPct, WorldPacket ((uint16) header.cmd, header.size), -1);
 
     if (header.size > 0)
     {
@@ -729,8 +724,7 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
 
     try
     {
-        Opcodes opcodeEnum = LookupOpcodeEnum(opcode);
-        switch(opcodeEnum)
+        switch(opcode)
         {
             case CMSG_PING:
                 return HandlePing (*new_pct);
@@ -766,13 +760,6 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
                 }
                 else
                 {
-                    if(opcode == 1280462679) // opcode is "WORL"
-                    {
-                        // 4.1+ plaintext init message BS
-                        // content should be "D OF WARCRAFT CONNECTION - CLIENT TO SERVER"
-                        // just ignore
-                        return 0;
-                    }
                     sLog->outError ("WorldSocket::ProcessIncoming: Client not authed opcode = %u", uint32(opcode));
                     return -1;
                 }
@@ -811,25 +798,22 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
     BigNumber v, s, g, N, K;
     WorldPacket packet;
 
-    recvPacket.read_skip<uint8>();
-    recvPacket.read(digest, 5);
-    recvPacket >> clientBuild;
-    recvPacket.read(digest, 2);
-    recvPacket.read_skip<uint8>();
-    recvPacket.read_skip<uint32>();
-    recvPacket.read(digest, 4);
-    recvPacket.read_skip<uint64>();
-    recvPacket.read_skip<uint8>();
-    recvPacket.read(digest, 2);
-    recvPacket.read_skip<uint32>();
-    recvPacket.read(digest, 4);
-    recvPacket >> clientSeed;
-    recvPacket.read(digest, 2);
+    recvPacket.read(digest, 7);
     recvPacket.read_skip<uint32>();
     recvPacket.read(digest, 1);
+    recvPacket.read_skip<uint64>();
     recvPacket.read_skip<uint32>();
-
-    recvPacket >> accountName;
+    recvPacket.read(digest, 1);
+    recvPacket.read_skip<uint8>();
+    recvPacket.read(digest, 2);
+    recvPacket >> clientSeed;
+    recvPacket.read_skip<uint32>();
+    recvPacket.read(digest, 6);
+    recvPacket >> clientBuild;
+    recvPacket.read(digest, 1);
+    recvPacket.read_skip<uint8>();
+    recvPacket.read_skip<uint32>();
+    recvPacket.read(digest, 2);
 
     recvPacket >> m_addonSize;
     uint8 * tableauAddon = new uint8[m_addonSize];
@@ -842,6 +826,8 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
         packetAddon << ByteSize;
     }
     delete tableauAddon;
+
+    recvPacket >> accountName;
    
     if (sWorld->IsClosed())
     {

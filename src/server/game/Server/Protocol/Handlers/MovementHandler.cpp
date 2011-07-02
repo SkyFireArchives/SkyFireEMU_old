@@ -248,7 +248,7 @@ void WorldSession::HandleMoveTeleportAck(WorldPacket& recv_data)
 
 void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
 {
-    Opcodes opcode = recv_data.GetOpcodeEnum();
+    uint32 opcode = recv_data.GetOpcode();
     recv_data.hexlike();
 
     Unit *mover = _player->m_mover;
@@ -347,7 +347,7 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
     /*----------------------*/
 
     /* process position-change */
-    WorldPacket data(recv_data.GetOpcode(), recv_data.size());
+    WorldPacket data(opcode, recv_data.size());
     movementInfo.time = getMSTime();
     movementInfo.guid = mover->GetGUID();
     WriteMovementInfo(&data, &movementInfo);
@@ -404,7 +404,7 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
 
 void WorldSession::HandleForceSpeedChangeAck(WorldPacket &recv_data)
 {
-    Opcodes opcode = recv_data.GetOpcodeEnum();
+    uint32 opcode = recv_data.GetOpcode();
     sLog->outDebug("WORLD: Recvd %s (%u, 0x%X) opcode", LookupOpcodeName(opcode), opcode, opcode);
 
     /* extract packet */
@@ -506,7 +506,7 @@ void WorldSession::HandleSetActiveMoverOpcode(WorldPacket &recv_data)
             GetPlayer()->SetMover(mover);
             if (mover != GetPlayer() && mover->canFly())
             {
-                WorldPacket data(SMSG_MOVE_SET_CAN_FLY, 12);
+                WorldPacket data(SMSG_MOVE_SET_CAN_FLY, 12, true);
                 data.append(mover->GetPackGUID());
                 data << uint32(0);
                 SendPacket(&data);
@@ -569,7 +569,7 @@ void WorldSession::HandleChangeSeatsOnControlledVehicle(WorldPacket &recv_data)
     if (!vehicle_base)
         return;
 
-    switch (recv_data.GetOpcodeEnum())
+    switch (recv_data.GetOpcode())
     {
         case CMSG_REQUEST_VEHICLE_PREV_SEAT:
             GetPlayer()->ChangeSeat(-1, false);

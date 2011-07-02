@@ -39,10 +39,9 @@
 #include "StormLib/src/StormCommon.h"
 #include "typedefs.h"
 
-//Live Realms
-static int const patchRev[] = {13164, 13205, 13287, 13329, 13596, 13623, 13914, 14007};
-#define PATCH_REV_COUNT 8
-#define CLIENT_BUILD 14007
+static int const patchRev[] = {13164, 13205, 13287, 13329, 13596, 13623};
+#define PATCH_REV_COUNT 6
+#define CLIENT_BUILD 13623
 
 static const char* const langs[] = {"enGB", "enUS", "deDE", "esES", "frFR", "koKR", "zhCN", "zhTW", "enCN", "enTW", "esMX", "ruRU" };
 #define LANG_COUNT 12
