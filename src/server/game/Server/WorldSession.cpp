@@ -149,6 +149,12 @@ void WorldSession::SendPacket(WorldPacket const* packet)
         return;
     if (sWorld->debugOpcode != 0 && packet->GetOpcode() != sWorld->debugOpcode)
         return;
+    // Prevent flooding client with unknown zero opcodes
+    if (packet->GetOpcode() == 0)
+    {
+        sLog->outDebug("Attempting to send an opcode which is not yet in the database. Prevented.");
+        return;
+    }
 
     #ifdef TRINITY_DEBUG
 

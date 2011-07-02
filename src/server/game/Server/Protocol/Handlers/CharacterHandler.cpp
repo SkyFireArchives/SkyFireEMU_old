@@ -213,19 +213,81 @@ bool LoginQueryHolder::Initialize()
 
 void WorldSession::HandleCharEnum(QueryResult result)
 {
-    WorldPacket data(SMSG_CHAR_ENUM, 100);                  // we guess size
+    WorldPacket data(SMSG_CHAR_ENUM, 300);                  // we guess size
 
-    uint8 num = 0;
+    uint32 num = 0;
 
+    data << uint8(1 << 7); // 0 causes the client to free memory of charlist
+    data << uint32(0); // unk loop counter
     data << num;
 
     _allowedCharsToLogin.clear();
     if (result)
     {
+        uint8 curRes = 0;
+        uint8 curPos = 0;
+        do
+        {
+            uint32 guidlow = (*result)[0].GetUInt32();
+            uint64 guid = uint64(MAKE_NEW_GUID(guidlow, 0, HIGHGUID_PLAYER));
+            uint32 zoneid = (*result)[8].GetUInt32();
+
+            for (int i = 0; i < 17; ++i)
+            {
+                if (curPos == 8)
+                {
+                    data << curRes;
+                    curRes = curPos = 0;
+                }
+                ++curPos;
+                uint8 offset = 8-curPos;
+
+                // Low GUID
+                if (i == 0) // v79
+                {
+                    if (uint8(guidlow) != 0)
+                        curRes |= (1 << offset);
+                }
+                else if (i == 7) // v68
+                {
+                    if (uint8(guidlow >> 8) != 0)
+                        curRes |= (1 << offset);
+                }
+                else if (i == 12) // v70
+                {
+                    if (uint8(guidlow >> 16) != 0)
+                        curRes |= (1 << offset);
+                }
+                else if (i == 11) // v78
+                {
+                    if (uint8(guidlow >> 24) != 0)
+                        curRes |= (1 << offset);
+                }
+                // Low GUID end
+            }
+
+           // Mask for real fields
+           // Affects GUID:
+           // 0, 7, 12, 11 - low guid
+           // 15, 4, 10, 3 - high guid
+
+           // Unk DWORD
+           // 16, 5, 8, 6
+           // Unk DWORD2:
+           // 14, 2, 9, 13
+           // }
+        } while(result->NextRow(true));
+        
+        // If some data is still there, but we didn't reach the max bit
+        if (curPos != 8 && curPos != 0)
+            data << curRes;
+
+        result->Reset();
         do
         {
             uint32 guidlow = (*result)[0].GetUInt32();
             sLog->outDetail("Loading char guid %u from account %u.",guidlow,GetAccountId());
+          
             if (Player::BuildEnumData(result, &data))
             {
                 _allowedCharsToLogin.insert(guidlow);
@@ -233,9 +295,11 @@ void WorldSession::HandleCharEnum(QueryResult result)
             }
         }
         while (result->NextRow());
+
+
     }
 
-    data.put<uint8>(0, num);
+    data.put<uint32>(5, num);
 
     SendPacket(&data);
 }
