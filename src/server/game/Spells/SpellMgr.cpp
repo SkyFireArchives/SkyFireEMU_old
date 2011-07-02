@@ -1279,7 +1279,7 @@ void SpellMgr::LoadSpellTargetPositions()
         }
 
         mSpellTargetPositions[Spell_ID] = st;
-        ++count;
+        count++;
 
     }
     while (result->NextRow());
@@ -1395,7 +1395,7 @@ void SpellMgr::LoadSpellProcEvents()
             }
             customProc++;
         }
-        ++count;
+        count++;
     }
     while (result->NextRow());
 
@@ -1460,7 +1460,7 @@ void SpellMgr::LoadSpellBonusess()
             sLog->outError("SPC: DB SP coef doesn't match DBC. ID: %d, DB: %f, DBC: %f, Name: %s", entry, sbe.direct_damage, DBCcoef, spell->SpellName);
         }
 
-        ++count;
+        count++;
     }
     while (result->NextRow());
 
@@ -1673,7 +1673,7 @@ void SpellMgr::LoadSpellGroups()
 
         for (std::set<uint32>::iterator spellItr = spells.begin() ; spellItr != spells.end() ; ++spellItr)
         {
-            ++count;
+            count++;
             mSpellSpellGroup.insert(SpellSpellGroupMap::value_type(*spellItr, SpellGroup(*groupItr)));
         }
     }
@@ -1721,7 +1721,7 @@ void SpellMgr::LoadSpellGroupStackRules()
 
         mSpellGroupStack[(SpellGroup)group_id] = (SpellGroupStackRule)stack_rule;
 
-        ++count;
+        count++;
     }
     while (result->NextRow());
 
@@ -1761,7 +1761,7 @@ void SpellMgr::LoadSpellThreats()
 
         mSpellThreatMap[entry] = Threat;
 
-        ++count;
+        count++;
     }
     while (result->NextRow());
 
@@ -2154,7 +2154,7 @@ void SpellMgr::LoadSpellLearnSpells()
 
         mSpellLearnSpells.insert(SpellLearnSpellMap::value_type(spell_id,node));
 
-        ++count;
+        count++;
     }
     while (result->NextRow());
 
@@ -2267,7 +2267,7 @@ void SpellMgr::LoadSpellPetAuras()
             mSpellPetAuraMap[(spell<<8) + eff] = pa;
         }
 
-        ++count;
+        count++;
     }
     while (result->NextRow());
 
@@ -2323,7 +2323,7 @@ void SpellMgr::LoadPetLevelupSpellMap()
                     ++family_count;
 
                 spellSet.insert(PetLevelupSpellSet::value_type(spell->spellLevel,spell->Id));
-                ++count;
+                count++;
             }
         }
     }
@@ -2750,7 +2750,7 @@ void SpellMgr::LoadSpellAreas()
         if (spellArea.auraSpell)
             mSpellAreaForAuraMap.insert(SpellAreaForAuraMap::value_type(abs(spellArea.auraSpell),sa));
 
-        ++count;
+        count++;
     }
     while (result->NextRow());
 
@@ -2906,7 +2906,7 @@ void SpellMgr::LoadSkillLineAbilityMap()
             continue;
 
         mSkillLineAbilityMap.insert(SkillLineAbilityMap::value_type(SkillInfo->spellId,SkillInfo));
-        ++count;
+        count++;
     }
 
     sLog->outString(">> Loaded %u SkillLineAbility MultiMap Data in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
@@ -3410,7 +3410,7 @@ void SpellMgr::LoadSpellEnchantProcData()
 
         mSpellEnchantProcEventMap[enchantId] = spe;
 
-        ++count;
+        count++;
     }
     while (result->NextRow());
 
@@ -3761,7 +3761,7 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectBasePoints[1] = 12;
             count++;
             break;
-        case 77489: // Echo of Light
+        case 77489: // Mastery: Echo of Light
             spellInfo->StackAmount = 100; // should be inf
             count++;
             break;
@@ -3839,7 +3839,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 8494: // Mana Shield (rank 2)
             // because of bug in dbc
             spellInfo->procChance = 0;
-            ++count;
+            count++;
             break;
         // Heroism
         case 32182:
@@ -3930,7 +3930,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 64844: // Divine Hymn 
         case 64904: // Hymn of Hope
             spellInfo->AttributesEx &= ~SPELL_ATTR1_NEGATIVE;
-            ++count;
+            count++;
             break;
         case 44978: case 45001: case 45002:     // Wild Magic
         case 45004: case 45006: case 45010:     // Wild Magic
@@ -4085,7 +4085,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 47569: // Improved Shadowform (Rank 1)
             // with this spell atrribute aura can be stacked several times
             spellInfo->Attributes &= ~SPELL_ATTR0_NOT_SHAPESHIFT;
-            ++count;
+            count++;
             break;
         case 8145: // Tremor Totem (instant pulse)
         case 6474: // Earthbind Totem (instant pulse)
@@ -4102,7 +4102,7 @@ void SpellMgr::LoadSpellCustomAttr()
             break;
         case 61607: // Mark of Blood
             spellInfo->AttributesEx |= SPELL_ATTR1_NO_THREAT;
-            ++count;
+            count++;
             break;
         // some dummy spell only has dest, should push caster in this case
         case 62324: // Throw Passenger
@@ -4315,9 +4315,11 @@ void SpellMgr::LoadSpellCustomAttr()
              break;
         case 44614: // Frostfire Bolt
             spellInfo->StackAmount = 0; //TODO: remove when stacking of Decrease Run Speed % aura is fixed
+            count++;
             break;
         case 74434: // Soulburn
             spellInfo->procCharges = 1;
+            count++;
             break;
 		case 81008: //Quake - Crystalspawn Giant
 		case 92631: //Quake - Crystalspawn Giant
@@ -4543,7 +4545,7 @@ void SpellMgr::LoadSpellLinked()
         }
         mSpellLinkedMap[trigger].push_back(effect);
 
-        ++count;
+        count++;
     }
     while (result->NextRow());
 

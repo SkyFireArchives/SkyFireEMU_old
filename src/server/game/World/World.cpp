@@ -2767,7 +2767,7 @@ void World::LoadDBVersion()
     {
         Field* fields = result->Fetch();
         m_DBVersion              = fields[0].GetString();
-        m_CreatureEventAIVersion = fields[1].GetString();
+        m_CreatureAIVersion = fields[1].GetString();
 
         // will be overwrite by config values if different and non-0
         m_int_configs[CONFIG_CLIENTCACHE_VERSION] = fields[2].GetUInt32();
@@ -2776,8 +2776,8 @@ void World::LoadDBVersion()
     if (m_DBVersion.empty())
         m_DBVersion = "Unknown world database.";
 
-    if (m_CreatureEventAIVersion.empty())
-        m_CreatureEventAIVersion = "Unknown creature EventAI.";
+    if (m_CreatureAIVersion.empty())
+        m_CreatureAIVersion = "Unknown creature AI.";
 }
 
 void World::ProcessStartEvent()
