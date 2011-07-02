@@ -852,10 +852,41 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPacket & recv_data)
 
     m_playerLoading = true;
     uint64 playerGuid = 0;
+    uint8 guidMark, byte;
 
     sLog->outStaticDebug("WORLD: Recvd Player Logon Message");
 
-    recv_data >> playerGuid;
+    //recv_data >> playerGuid;
+    recv_data >> guidMark;
+
+    // Bits are mixed up...
+    // Let's skip the highguid part -- it's 0x0000 for players anyway
+    if (guidMark & (1 << 2))
+    {
+        recv_data >> byte;
+
+        playerGuid |= uint64(byte << 8);
+    }
+    if (guidMark & (1 << 5))
+    {
+        recv_data >> byte;
+
+        playerGuid |= uint64(byte << 16);
+    }
+    if (guidMark & (1 << 6))
+    {
+        recv_data >> byte;
+
+        playerGuid |= uint64(byte);
+    }
+    if (guidMark & (1 << 4))
+    {
+        recv_data >> byte;
+
+        playerGuid |= uint64(byte << 24);
+    }
+
+    sLog->outDebug("GUID Marker: %u GUID: %u", guidMark, playerGuid);
 
     if (!CharCanLogin(playerGuid))
     {
