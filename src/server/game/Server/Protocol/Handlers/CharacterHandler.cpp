@@ -912,8 +912,10 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
     SendAccountDataTimes(PER_CHARACTER_CACHE_MASK);
 
     data.Initialize(SMSG_FEATURE_SYSTEM_STATUS, 2);         // added in 2.2.0
+    // 4.2.0 data: 00 02 1D 00 00 00 
     data << uint8(2);                                       // unknown value
     data << uint8(0);                                       // enable(1)/disable(0) voice chat interface in client
+    data << uint32(0);                                      // unk
     SendPacket(&data);
 
     // Send MOTD

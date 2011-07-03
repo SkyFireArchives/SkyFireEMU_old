@@ -3,3 +3,8 @@ UPDATE emuopcodes SET number = 48891 WHERE name = "SMSG_AUTH_RESPONSE" and versi
 UPDATE emuopcodes SET number = 50983 WHERE name = "SMSG_CHAR_ENUM" and version = @ver;
 UPDATE emuopcodes SET number = 4305 WHERE name = "CMSG_PLAYER_LOGIN" and version = @ver;
 UPDATE emuopcodes SET number = 61990 WHERE name = "CMSG_CHAR_ENUM" and version = @ver;
+UPDATE emuopcodes SET number = 47735 WHERE name = "SMSG_LOGIN_VERIFY_WORLD" and version = @ver;
+UPDATE emuopcodes SET number = 8033 WHERE name = "SMSG_FEATURE_SYSTEM_STATUS" and version = @ver;
+UPDATE emuopcodes SET number = 32294 WHERE name = "SMSG_BINDPOINTUPDATE" and version = @ver;
+UPDATE emuopcodes SET number = 63011 WHERE name = "SMSG_CORPSE_RECLAIM_DELAY" and version = @ver;
+UPDATE emuopcodes SET number = 32439 WHERE name = "SMSG_INIT_WORLD_STATES" and version = @ver;
