@@ -1734,13 +1734,13 @@ void Player::BuildEnumData(QueryResult result, WorldPacket * p_data)
         uint32 visualbase = slot * 2;
         uint32 item_id = GetUInt32ValueFromArray(data, visualbase);
         const ItemPrototype * proto = ObjectMgr::GetItemPrototype(item_id);
-        if (!proto)
-        {
+        //if (!proto)
+        //{
             *p_data << uint32(0);
             *p_data << uint32(0);
             *p_data << uint8(0);	
             continue;	
-        }
+        //}
 
         SpellItemEnchantmentEntry const *enchant = NULL;	
         uint32 enchants = GetUInt32ValueFromArray(data, visualbase + 1);	
