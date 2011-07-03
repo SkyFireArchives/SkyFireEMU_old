@@ -288,7 +288,7 @@ void WorldSession::HandleCharEnum(QueryResult result)
         } while(result->NextRow(true));
 
         // If some data is still there, but we didn't reach the max bit
-        if (curPos != 8 && curPos != 0)
+        if (curPos != 0)
             data << curRes;
 
         result->Reset();
