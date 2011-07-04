@@ -39,7 +39,7 @@ void CreateDir( const std::string& Path )
     mkdir(Path.c_str(), 0777);
 #endif
 }
-/*
+
 int ReadBuild(int locale)
 {
     // include build info file also
@@ -81,4 +81,3 @@ int ReadBuild(int locale)
 	
     return build;
 }
-*/

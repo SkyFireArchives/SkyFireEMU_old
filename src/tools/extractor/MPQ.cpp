@@ -50,20 +50,21 @@ void LoadLocaleMPQFiles(int const locale)
 	
     for(int i = 0; i < PATCH_REV_COUNT; ++i)
     {	
-        GetMPQFileName(filename, patchRev[i], input_path);
-        if(!SFileOpenPatchArchive(localeMPQ[0], filename, langs[locale], MPQ_OPEN_READ_ONLY))
+        bool result;
+        if(patchRev[i] >= 13914)
+        {
+            GetMPQFileName(filename, patchRev[i], input_path, langs[locale]);    
+            result = SFileOpenPatchArchive(localeMPQ[0], filename, NULL, MPQ_OPEN_READ_ONLY);
+        }
+        else
+        {
+            GetMPQFileName(filename, patchRev[i], input_path);
+            result = SFileOpenPatchArchive(localeMPQ[0], filename, langs[locale], MPQ_OPEN_READ_ONLY);
+        }
+        if(!result)
         {
             printf("%i\n", GetLastError());
             assert(false && "Load of MPQ patch failed");
-        }
-        if(patchRev[i] >= 13914)
-        {
-            GetMPQFileName(filename, patchRev[i], input_path, langs[locale]);
-            if(!SFileOpenPatchArchive(localeMPQ[0], filename, langs[locale], MPQ_OPEN_READ_ONLY))
-            {
-                printf("%i\n", GetLastError());
-                assert(false && "Load of MPQ patch failed");
-            }
         }
     }
     if(!SFileIsPatchedArchive(localeMPQ[0]))
@@ -72,7 +73,7 @@ void LoadLocaleMPQFiles(int const locale)
     //Others
     for(int i = 0; i < PATCH_REV_COUNT; ++i)
     {
-        GetMPQFileName(filename, patchRev[i], input_path);
+        GetMPQFileName(filename, patchRev[i], input_path, langs[locale]);
         printf("Loading %s\n", filename);
         if(!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &localeMPQ[i+1]))
         {
@@ -80,24 +81,26 @@ void LoadLocaleMPQFiles(int const locale)
             assert(false && "Load of MPQ failed");
         }
 		
-        for(int j = i; j < PATCH_REV_COUNT; ++j)
+        for(int j = i + 1; j < PATCH_REV_COUNT; ++j)
         {
-            if(patchRev[i] >= 13914)
+            bool result;
+            if(patchRev[j] >= 13914)
             {
-                GetMPQFileName(filename, patchRev[i], input_path, langs[locale]);
-                if(!SFileOpenPatchArchive(localeMPQ[i+1], filename, langs[locale], MPQ_OPEN_READ_ONLY))
-                {
-                    printf("%i\n", GetLastError());
-                    assert(false && "Load of MPQ patch failed");
-                }
+                GetMPQFileName(filename, patchRev[j], input_path, langs[locale]);    
+                result = SFileOpenPatchArchive(localeMPQ[i+1], filename, NULL, MPQ_OPEN_READ_ONLY);
             }
-            GetMPQFileName(filename, patchRev[i], input_path);
+            else
             {
-                printf("%i\n", GetLastError());
+                GetMPQFileName(filename, patchRev[j], input_path);
+                result = SFileOpenPatchArchive(localeMPQ[i+1], filename, langs[locale], MPQ_OPEN_READ_ONLY);
+            }
+            if(!result)
+            {
+                printf("%j\n", GetLastError());
                 assert(false && "Load of MPQ patch failed");
             }
         }
-        if(!SFileIsPatchedArchive(localeMPQ[i+1]))
+        if(!SFileIsPatchedArchive(localeMPQ[i+1]) && i != PATCH_REV_COUNT - 1)
             assert(false && "An error occured");
     }
 }
@@ -120,9 +123,9 @@ void LoadMapMPQFiles()
         char ext[7] = "";
         sprintf(ext, "-%i", patchRev[i]);
 		
-        sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
+        sprintf(filename,"%s/Data/wow-update%s%s.MPQ", input_path, i < 6 ? "" : "-base", ext);
         printf("    -%i\n", patchRev[i]);
-        if(!SFileOpenPatchArchive(WorldMPQ, filename, "base", MPQ_OPEN_READ_ONLY))
+        if(!SFileOpenPatchArchive(WorldMPQ, filename, i < 6 ? "base" : NULL, MPQ_OPEN_READ_ONLY))
         {
             printf("%i\n", GetLastError());
             assert(false && "Load of MPQ patch failed");
@@ -153,9 +156,9 @@ void LoadMapMPQFiles()
             char ext[7] = "";
             sprintf(ext, "-%i", patchRev[i]);
             
-            sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
+            sprintf(filename,"%s/Data/wow-update%s%s.MPQ", input_path, i < 6 ? "" : "-base", ext);
             printf("    -%i\n", patchRev[i]);
-            if(!SFileOpenPatchArchive(ExpansionsMPQ[j], filename, "base", MPQ_OPEN_READ_ONLY))
+            if(!SFileOpenPatchArchive(ExpansionsMPQ[j], filename, i < 6 ? "base" : NULL, MPQ_OPEN_READ_ONLY))
             {
                 printf("%i\n", GetLastError());
                 assert(false && "Load of MPQ patch failed");

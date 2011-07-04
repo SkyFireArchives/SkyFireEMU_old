@@ -29,6 +29,6 @@
 
 bool FileExists( const char* FileName );
 void CreateDir( const std::string& Path );
-//int ReadBuild(int locale);
+int ReadBuild(int locale);
 
 #endif

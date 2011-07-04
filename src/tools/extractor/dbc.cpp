@@ -47,7 +47,7 @@ void ExtractDBCFiles(int locale, bool basicLocale)
 			   pFileEntry->szFileName != NULL)
             {
                 std::string name = pFileEntry->szFileName;
-                if (i != 0)
+                if (i != 0 && i < 7 )
                 {
                     if(name.find(langs[locale]) == 0)
                         name = name.substr(strlen(langs[locale]) + 1);
@@ -105,7 +105,7 @@ void ExtractDBCFiles(int locale, bool basicLocale)
         std::string filename = path;
         filename += (iter->second.c_str() + strlen("DBFilesClient\\"));
 		
-        if(ExtractFileToHardDrive(localeMPQ[iter->first], iter->second.c_str(), filename.c_str()) == ERROR_SUCCESS)
+        if(ExtractFileToHardDrive(localeMPQ[0], iter->second.c_str(), filename.c_str()) == ERROR_SUCCESS)
             ++count;
         else
         {

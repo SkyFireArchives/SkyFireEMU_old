@@ -82,13 +82,13 @@ int main(int argc, char * arg[])
             if(FirstLocale < 0)
             {
                 FirstLocale = i;
-                //build = ReadBuild(FirstLocale);
-                //printf("Detected base client build: %u\n", build);
-                //if(build != CLIENT_BUILD)
-                //{
-                //    printf("ERROR: your client is not up-to-date. Client build should be %u", CLIENT_BUILD);
-                //    return 0;
-                //}
+                build = ReadBuild(FirstLocale);
+                printf("Detected base client build: %u\n", build);
+                if(build != CLIENT_BUILD)
+                {
+                    printf("ERROR: your client is not up-to-date. Client build should be %u", CLIENT_BUILD);
+                    return 0;
+                }
                 if(extractDBC)
                     ExtractDBCFiles(i, true);
             }
