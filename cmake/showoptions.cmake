@@ -1,6 +1,6 @@
 # output generic information about the core and buildtype chosen
-
-message("* SkyFireEMU revision   : ${rev_id_str} (${rev_hash_str})")
+message("")
+message("* SkyFireEMU commithash : ${rev_hash_str}")
 if( UNIX )
   message("* Build binaries in      : ${CMAKE_BUILD_TYPE} mode")
 endif()
@@ -28,7 +28,7 @@ if( SCRIPTS )
   add_definitions(-DSCRIPTS)
 else()
   message("* Build with scripts     : No")
-  #set(USE_SCRIPTPCH 0)
+  set(USE_SCRIPTPCH 0)
 endif()
 
 if( TOOLS )
@@ -39,7 +39,6 @@ endif()
 
 if( USE_COREPCH )
   message("* Build core w/PCH       : Yes (default)")
-  add_definitions(-DTRINITY_COREPCH)
 else()
   message("* Build core w/PCH       : No")
 endif()

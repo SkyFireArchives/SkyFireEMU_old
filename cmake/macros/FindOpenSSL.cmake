@@ -33,7 +33,7 @@ SET(_OPENSSL_ROOT_HINTS
 IF(PLATFORM EQUAL 64)
   SET(_OPENSSL_ROOT_PATHS
     "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\OpenSSL (64-bit)_is1;InstallLocation]"
-    "C:/Programs/OpenSSL-Win64/"
+    "C:/OpenSSL-Win64/"
     "C:/OpenSSL/"
   )
 ELSE()
