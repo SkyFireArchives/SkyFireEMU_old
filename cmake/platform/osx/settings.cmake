@@ -1,7 +1,6 @@
 set(MACOSX 1)
 set(OSX_LIBS /usr/lib/libcrypto.dylib)
 add_definitions(-D__ASSERTMACROS__)
-add_definitions(-fno-pascal-strings)
 
 # set default configuration directory
 if( NOT CONF_DIR )
