@@ -23,9 +23,7 @@ find_program(_GIT_EXEC
 if(_GIT_EXEC)
   execute_process(
     COMMAND "${_GIT_EXEC}" --version
-    COMMAND git log --pretty=format:"" origin/master
-    COMMAND wc -l    
-	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
     OUTPUT_VARIABLE _GIT_VERSION
     ERROR_QUIET
   )
@@ -37,8 +35,7 @@ endif()
 if(_GIT_VERSION_OK)
   execute_process(
     COMMAND "${_GIT_EXEC}" describe --match init --dirty=+ --abbrev=12
-    COMMAND git rev-parse --short=12 HEAD
-	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
     OUTPUT_VARIABLE rev_info
     OUTPUT_STRIP_TRAILING_WHITESPACE
     ERROR_QUIET
@@ -54,10 +51,10 @@ endif()
 # Last minute check - ensure that we have a proper revision
 # If everything above fails (means the user has erased the git revision control directory or removed the origin/HEAD tag)
 if(NOT rev_info)
+  # No valid ways available to find/set the revision/hash, so let's force some defaults
   message("")
-  message(STATUS "WARNING - No revision-information found - have you been tampering with the sources?")
-
-  # Ok, since we have no valid ways of finding/setting the revision, let's force some defaults
+  message(STATUS "WARNING - Missing repository tags - you may need to pull tags with git fetch -t")
+  message(STATUS "WARNING - Continuing, but the hash will be set to 'Archive'")
   set(rev_hash_str "Archive")
   set(rev_hash "0")
 else()
@@ -65,7 +62,6 @@ else()
   string(REGEX REPLACE init-|[0-9]+-g "" rev_hash_str ${rev_info})
   string(REGEX REPLACE [+]+ "" rev_hash ${rev_hash_str})
 endif()
-
 
 # Its not set during initial run
 if(NOT BUILDDIR)
