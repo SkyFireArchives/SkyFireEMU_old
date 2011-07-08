@@ -20,10 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-/// \addtogroup realmd
-/// @{
-/// \file
-
 #ifndef _REALMLIST_H
 #define _REALMLIST_H
 
@@ -31,7 +27,7 @@
 #include <ace/Null_Mutex.h>
 #include "Common.h"
 
-/// Storage object for a realm
+// Storage object for a realm
 struct Realm
 {
     std::string address;
@@ -63,8 +59,9 @@ public:
     RealmMap::const_iterator begin() const { return m_realms.begin(); }
     RealmMap::const_iterator end() const { return m_realms.end(); }
     uint32 size() const { return m_realms.size(); }
+
 private:
-    void UpdateRealms(bool init);
+    void UpdateRealms(bool init = false);
     void UpdateRealm(uint32 ID, const std::string& name, const std::string& address, uint32 port, uint8 icon, uint8 color, uint8 timezone, AccountTypes allowedSecurityLevel, float popu, uint32 build);
 
     RealmMap m_realms;                                  ///< Internal map of realms
@@ -75,4 +72,4 @@ private:
 #define sRealmList ACE_Singleton<RealmList, ACE_Null_Mutex>::instance()
 
 #endif
-/// @}
+
