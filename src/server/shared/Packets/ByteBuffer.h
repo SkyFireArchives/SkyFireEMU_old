@@ -92,10 +92,11 @@ class ByteBuffer
             _curbitval = 0;
             _bitpos = 8;
         }
-        void writeBit(uint8 bit)
+        bool writeBit(uint32 bit)
         {
             --_bitpos;
-            _curbitval |= (bit << (_bitpos));
+            if (bit)
+                _curbitval |= (1 << (_bitpos));
 
             if (_bitpos == 0)
             { 
@@ -103,6 +104,8 @@ class ByteBuffer
                 append((uint8 *)&_curbitval, sizeof(_curbitval));
                 _curbitval = 0;
             }
+
+            return (bit != 0);
         }
         template <typename T> void writeBits(T value, size_t bits)
         {

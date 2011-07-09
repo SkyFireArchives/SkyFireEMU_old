@@ -17108,45 +17108,23 @@ void Unit::BuildMovementPacket(ByteBuffer *data) const
         if (!this->HasUnitMovementFlag(MOVEMENTFLAG_ROOT))
             sLog->outError("Unit does not have MOVEMENTFLAG_ROOT but is in vehicle!");
 
-    data->writeBits<uint32>(GetUnitMovementFlags(), 30);
-    data->writeBits<uint16>(m_movementInfo.flags2, 12);
+    data->writeBits(GetUnitMovementFlags(), 30);
+    data->writeBits(m_movementInfo.flags2, 12);
 
     // field mask
-    if (GetUnitMovementFlags() & MOVEMENTFLAG_ONTRANSPORT)
+    if (data->writeBit(GetUnitMovementFlags() & MOVEMENTFLAG_ONTRANSPORT))
     {
-        data->writeBit(1);
-        if (m_movementInfo.flags2 & MOVEMENTFLAG2_INTERPOLATED_MOVEMENT)
-            data->writeBit(1);
-        else 
-            data->writeBit(0);
-
-        // time3 flag follows here (for 1 << 5)
-        data->writeBit(0);
+        data->writeBit(m_movementInfo.flags2 & MOVEMENTFLAG2_INTERPOLATED_MOVEMENT);
+        data->writeBit(0); // Flag for time3. Not implemented.
     }
-    else 
-        data->writeBit(0);
 
-    if ((GetUnitMovementFlags() & (MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING))
-        || (m_movementInfo.flags2 & MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING))
-        data->writeBit(1);
-    else 
-        data->writeBit(0);
+    data->writeBit((GetUnitMovementFlags() & (MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING)) 
+                   || (m_movementInfo.flags2 & MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING));
 
-    if (m_movementInfo.flags2 & MOVEMENTFLAG2_INTERPOLATED_TURNING)
-    {
-        data->writeBit(1);
+    if (data->writeBit(m_movementInfo.flags2 & MOVEMENTFLAG2_INTERPOLATED_TURNING))
+        data->writeBit(GetUnitMovementFlags() & MOVEMENTFLAG_JUMPING);
 
-        if (GetUnitMovementFlags() & MOVEMENTFLAG_JUMPING)
-            data->writeBit(1);
-        else 
-            data->writeBit(0);
-    }
-    else data->writeBit(0);
-
-    if (GetUnitMovementFlags() & MOVEMENTFLAG_SPLINE_ELEVATION)
-        data->writeBit(1);
-    else 
-        data->writeBit(0);
+    data->writeBit(GetUnitMovementFlags() & MOVEMENTFLAG_SPLINE_ELEVATION);
 
     // unk bool
     data->writeBit(0);
