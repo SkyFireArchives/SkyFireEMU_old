@@ -295,6 +295,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         
         ((Unit*)this)->BuildMovementPacket(data);
 
+        // 9 speed floats
         *data << ((Unit*)this)->GetSpeed(MOVE_WALK);
         *data << ((Unit*)this)->GetSpeed(MOVE_RUN);
         *data << ((Unit*)this)->GetSpeed(MOVE_SWIM_BACK);
@@ -305,6 +306,7 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         *data << ((Unit*)this)->GetSpeed(MOVE_TURN_RATE);
         *data << ((Unit*)this)->GetSpeed(MOVE_PITCH_RATE);
 
+        // SPLINE flags are to be updated
         // 0x08000000
         if (GetTypeId() == TYPEID_PLAYER && this->ToPlayer()->isInFlight())
         {
@@ -320,19 +322,19 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
 
             *data << uint32(flags3);                         // splines flag?
 
-            if (flags3 & 0x20000)
+            if (flags3 & 0x4000)
             {
                 *data << float(player->GetOrientation());
             }
             else
             {
-                if (flags3 & 0x10000)                        // probably guid there
+                if (flags3 & 0x2000)                        // probably guid there
                 {
                     *data << uint64(0);
                 }
                 else
                 {
-                    if (flags3 & 0x8000)
+                    if (flags3 & 0x1000)
                     {
                         *data << float(player->GetPositionX());
                         *data << float(player->GetPositionY());
@@ -359,17 +361,17 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
 
             *data << uint32(0);                             // added in 3.1
 
+            // C3Spline_CatmullRom
             uint32 poscount = uint32(path.size());
             *data << uint32(poscount);                      // points count
-
             for (uint32 i = 0; i < poscount; ++i)
             {
                 *data << float(path[i].x);
                 *data << float(path[i].y);
                 *data << float(path[i].z);
             }
-
             *data << uint8(0);                              // added in 3.0.8
+            // C3Spline_CatmullRom End
 
             *data << float(path[poscount-1].x);
             *data << float(path[poscount-1].y);
