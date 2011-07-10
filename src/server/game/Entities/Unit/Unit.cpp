@@ -12179,7 +12179,7 @@ void Unit::SetInCombatState(bool PvP, Unit* enemy)
             Unmount();
     }
     
-    if(GetTypeId() == TYPEID_PLAYER && ToPlayer()->getRace() == RACE_WORGEN)
+    if(GetTypeId() == TYPEID_PLAYER && ToPlayer()->getRace() == RACE_WORGEN && HasAura(94293))
     {
         //TODO: make a hackfix for worgen starting zone.
         ToPlayer()->setInWorgenForm(UNIT_FLAG2_WORGEN_TRANSFORM3);
