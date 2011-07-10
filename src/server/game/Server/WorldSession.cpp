@@ -690,7 +690,7 @@ void WorldSession::SetAccountData(AccountDataType type, time_t time_, std::strin
 
         SQLTransaction trans = CharacterDatabase.BeginTransaction();
         trans->PAppend("DELETE FROM account_data WHERE account='%u' AND type='%u'", acc, type);
-        CharacterDatabase.escape_string(data);
+        CharacterDatabase.EscapeString(data);
         trans->PAppend("INSERT INTO account_data VALUES ('%u','%u','%u','%s')", acc, type, (uint32)time_, data.c_str());
         CharacterDatabase.CommitTransaction(trans);
     }
@@ -702,7 +702,7 @@ void WorldSession::SetAccountData(AccountDataType type, time_t time_, std::strin
 
         SQLTransaction trans = CharacterDatabase.BeginTransaction();
         trans->PAppend("DELETE FROM character_account_data WHERE guid='%u' AND type='%u'", m_GUIDLow, type);
-        CharacterDatabase.escape_string(data);
+        CharacterDatabase.EscapeString(data);
         trans->PAppend("INSERT INTO character_account_data VALUES ('%u','%u','%u','%s')", m_GUIDLow, type, (uint32)time_, data.c_str());
         CharacterDatabase.CommitTransaction(trans);
     }

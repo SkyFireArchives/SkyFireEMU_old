@@ -287,7 +287,7 @@ bool ChatHandler::HandleGoCreatureCommand(const char* args)
         if (!guid)
         {
             std::string name = pParam1;
-            WorldDatabase.escape_string(name);
+            WorldDatabase.EscapeString(name);
             whereClause << ", creature_template WHERE creature.id = creature_template.entry AND creature_template.name "_LIKE_" '" << name << "'";
         }
         else
@@ -412,7 +412,7 @@ bool ChatHandler::HandleGameObjectTargetCommand(const char* args)
         else
         {
             std::string name = cId;
-            WorldDatabase.escape_string(name);
+            WorldDatabase.EscapeString(name);
             result = WorldDatabase.PQuery(
                 "SELECT guid, id, position_x, position_y, position_z, orientation, map, phaseMask, (POW(position_x - %f, 2) + POW(position_y - %f, 2) + POW(position_z - %f, 2)) AS order_ "
                 "FROM gameobject,gameobject_template WHERE gameobject_template.entry = gameobject.id AND map = %i AND name "_LIKE_" "_CONCAT3_("'%%'","'%s'","'%%'")" ORDER BY order_ ASC LIMIT 1",
@@ -1642,7 +1642,7 @@ bool ChatHandler::HandleWpEventCommand(const char* args)
             else
             {
                     std::string arg_str_3 = arg_3;
-                    WorldDatabase.escape_string(arg_str_3);
+                    WorldDatabase.EscapeString(arg_str_3);
                     WorldDatabase.PExecute("UPDATE waypoint_scripts SET %s='%s' WHERE guid='%u'",
                     arg_2, arg_str_3.c_str(), id);
             }
@@ -1844,7 +1844,7 @@ bool ChatHandler::HandleWpModifyCommand(const char* args)
     {
         // show_str check for present in list of correct values, no sql injection possible
         std::string text2 = text;
-        WorldDatabase.escape_string(text2);
+        WorldDatabase.EscapeString(text2);
         WorldDatabase.PExecute("UPDATE waypoint_data SET %s='%s' WHERE id='%u' AND point='%u'",
             show_str, text2.c_str(), pathid, point);
     }
@@ -2808,7 +2808,7 @@ bool ChatHandler::HandleLookupPlayerIpCommand(const char* args)
     char* limit_str = strtok (NULL, " ");
     int32 limit = limit_str ? atoi (limit_str) : -1;
 
-    LoginDatabase.escape_string (ip);
+    LoginDatabase.EscapeString (ip);
 
     QueryResult result = LoginDatabase.PQuery ("SELECT id,username FROM account WHERE last_ip = '%s'", ip.c_str ());
 
@@ -2827,7 +2827,7 @@ bool ChatHandler::HandleLookupPlayerAccountCommand(const char* args)
     if (!AccountMgr::normalizeString (account))
         return false;
 
-    LoginDatabase.escape_string (account);
+    LoginDatabase.EscapeString (account);
 
     QueryResult result = LoginDatabase.PQuery ("SELECT id,username FROM account WHERE username = '%s'", account.c_str ());
 
@@ -2844,7 +2844,7 @@ bool ChatHandler::HandleLookupPlayerEmailCommand(const char* args)
     char* limit_str = strtok (NULL, " ");
     int32 limit = limit_str ? atoi (limit_str) : -1;
 
-    LoginDatabase.escape_string (email);
+    LoginDatabase.EscapeString (email);
 
     QueryResult result = LoginDatabase.PQuery ("SELECT id,username FROM account WHERE email = '%s'", email.c_str ());
 
