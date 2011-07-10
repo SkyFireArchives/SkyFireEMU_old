@@ -67,7 +67,7 @@ class ByteBuffer
         }
 
         // copy constructor
-        ByteBuffer(const ByteBuffer &buf): _rpos(buf._rpos), _wpos(buf._wpos), _storage(buf._storage), _bitpos(8), _curbitval(0) { }
+        ByteBuffer(const ByteBuffer &buf): _rpos(buf._rpos), _wpos(buf._wpos), _storage(buf._storage), _bitpos(buf._bitpos), _curbitval(buf._curbitval) { }
 
         void clear()
         {
@@ -76,11 +76,11 @@ class ByteBuffer
         }
 
         template <typename T> void append(T value)
-        {
+        {            
+            flushBits();
+
             EndianConvert(value);
             append((uint8 *)&value, sizeof(value));
-
-            flushBits();
         }
 
         void flushBits()
@@ -110,7 +110,7 @@ class ByteBuffer
         template <typename T> void writeBits(T value, size_t bits)
         {
             for (int32 i = bits-1; i >= 0; --i)
-                writeBit(value >> i & 1);
+                writeBit((value >> i) & 1);
         }
 
         template <typename T> void put(size_t pos,T value)

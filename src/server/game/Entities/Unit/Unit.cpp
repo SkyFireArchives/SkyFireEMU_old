@@ -17126,7 +17126,7 @@ void Unit::BuildMovementPacket(ByteBuffer *data) const
 
     data->writeBit(GetUnitMovementFlags() & MOVEMENTFLAG_SPLINE_ELEVATION);
 
-    // unk bool
+    // has spline data
     data->writeBit(0);
 
     *data << uint64(GetGUID()); // added in 4.2.0
