@@ -11,3 +11,5 @@ UPDATE emuopcodes SET number = 63011 WHERE name = "SMSG_CORPSE_RECLAIM_DELAY" an
 UPDATE emuopcodes SET number = 32439 WHERE name = "SMSG_INIT_WORLD_STATES" and version = @ver;
 UPDATE emuopcodes SET number = 3216 WHERE name = "SMSG_PONG" and version = @ver;
 UPDATE emuopcodes SET number = 57919 WHERE name = "SMSG_COMPRESSED_UPDATE_OBJECT" and version = @ver;
+UPDATE emuopcodes SET number = 27310 WHERE name = "SMSG_ADDON_INFO" and version = @ver;
+UPDATE emuopcodes SET number = 41527 WHERE name = "SMSG_CLIENTCACHE_VERSION" and version = @ver;
