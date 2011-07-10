@@ -647,7 +647,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                         m_caster->CastCustomSpell(m_caster, 32409, &back_damage, 0, 0, true);
                 }
                 // Mind Blast - applies Mind Trauma if:
-                else if (m_spellInfo->SpellFamilyFlags[2] & 0x00002000)
+                else if (m_spellInfo->Id == 8092)
                 {
                     // We are in Shadow Form
                     if (m_caster->GetShapeshiftForm() == FORM_SHADOW)
@@ -656,6 +656,10 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                             // Chance has been successfully rolled
                             if (roll_chance_i(aurEff->GetAmount()))
                                 m_caster->CastSpell(unitTarget, 48301, true);
+
+                    //Mind Melt Aura remove
+                    m_caster->RemoveAurasDueToSpell(87160);
+                    m_caster->RemoveAurasDueToSpell(81292);
                 }
                 // Improved Mind Blast (Mind Blast in shadow form bonus)
                 else if (m_caster->GetShapeshiftForm() == FORM_SHADOW && (m_spellInfo->SpellFamilyFlags[0] & 0x00002000))
