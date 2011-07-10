@@ -4229,12 +4229,12 @@ void SpellMgr::LoadSpellCustomAttr()
             count++;
             break;
         case 81782: // Power Word : Barrier 
-	        spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ALLY;
+            spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ALLY;
             spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ALLY;
             spellInfo->EffectImplicitTargetB[0] = TARGET_NONE;
             spellInfo->EffectImplicitTargetB[1] = TARGET_NONE;
             spellInfo->DurationIndex = 39;
-	        count++;
+            count++;
             break;
         // this is here until targetAuraSpell and alike support SpellDifficulty.dbc
         case 70459: // Ooze Eruption Search Effect
@@ -4321,11 +4321,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->procCharges = 1;
             count++;
             break;
-		case 81008: //Quake - Crystalspawn Giant
-		case 92631: //Quake - Crystalspawn Giant
-			spellInfo->EffectRadiusIndex[0] = 80;
-			count++;
-			break;
+        case 81008: //Quake - Crystalspawn Giant
+        case 92631: //Quake - Crystalspawn Giant
+            spellInfo->EffectRadiusIndex[0] = 80;
+            count++;
+            break;
         case 23126: // World Enlarger
             spellInfo->AuraInterruptFlags |= AURA_INTERRUPT_FLAG_SPELL_ATTACK;
             count++;

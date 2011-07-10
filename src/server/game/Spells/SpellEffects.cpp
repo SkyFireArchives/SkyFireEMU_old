@@ -449,15 +449,15 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                         damage = unitTarget->CountPctFromMaxHealth(damage);
                         break;
                     }
-					// Crystalspawn Giant - Quake
-					case 81008:
-					case 92631:
-					{
-						//avoid damage when players jumps
-						if (unitTarget->GetUnitMovementFlags() == MOVEMENTFLAG_JUMPING || unitTarget->GetTypeId() != TYPEID_PLAYER)
-							return;
-						break;
-					}
+                    // Crystalspawn Giant - Quake
+                    case 81008:
+                    case 92631:
+                    {
+                        //avoid damage when players jumps
+                        if (unitTarget->GetUnitMovementFlags() == MOVEMENTFLAG_JUMPING || unitTarget->GetTypeId() != TYPEID_PLAYER)
+                            return;
+                        break;
+                    }
                     // Gargoyle Strike
                     case 51963:
                     {
@@ -3034,7 +3034,7 @@ void Spell::EffectPersistentAA(SpellEffIndex effIndex)
         // Caster not in world, might be spell triggered from aura removal
         if (!caster->IsInWorld())
             return;
-			
+            
         DynamicObject* dynObj = new DynamicObject;
         if (!dynObj->Create(sObjectMgr->GenerateLowGuid(HIGHGUID_DYNAMICOBJECT), caster, m_spellInfo->Id, m_targets.m_dstPos, radius, false))
         {
@@ -3621,7 +3621,7 @@ void Spell::EffectSummonType(SpellEffIndex effIndex)
                         summon = m_originalCaster->SummonCreature(entry, pos, summonType, duration);
                         if (!summon)
                             continue;
-							
+                            
                         if (properties->Category == SUMMON_CATEGORY_ALLY)
                         {
                             summon->SetUInt64Value(UNIT_FIELD_SUMMONEDBY, m_originalCaster->GetGUID());
@@ -3891,7 +3891,7 @@ void Spell::EffectAddFarsight(SpellEffIndex effIndex)
         delete dynObj;
         return;
     }
-	
+    
     dynObj->SetDuration(duration);
     dynObj->SetUInt32Value(DYNAMICOBJECT_BYTES, 0x80000002);
     
