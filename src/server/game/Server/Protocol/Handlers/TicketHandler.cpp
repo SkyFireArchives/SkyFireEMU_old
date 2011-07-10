@@ -262,14 +262,14 @@ void WorldSession::HandleGMSurveySubmit(WorldPacket& recv_data)
         os << uint32(nextSurveyID) << " ";
         os << subSurveyId << ", ";
         os << uint16(rank) << ", '";
-        CharacterDatabase.escape_string(comment);
+        CharacterDatabase.EscapeString(comment);
         os << comment << "');";
         CharacterDatabase.PExecute(os.str().c_str());
     }
 
     std::string comment; // just a guess
     recv_data >> comment;
-    CharacterDatabase.escape_string(comment);
+    CharacterDatabase.EscapeString(comment);
     ss << "'" << comment << "', ";
     ss << int64(time_t(NULL)) << ");";
 
