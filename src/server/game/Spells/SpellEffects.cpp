@@ -234,7 +234,7 @@ pEffect SpellEffects[TOTAL_SPELL_EFFECTS]=
     &Spell::EffectActivateSpec,                             //162 SPELL_EFFECT_TALENT_SPEC_SELECT       activate primary/secondary spec
     &Spell::EffectNULL,                                     //163 unused
     &Spell::EffectRemoveAura,                               //164 SPELL_EFFECT_REMOVE_AURA
-    &Spell::EffectNULL,                                     //165
+    &Spell::EffectDamageSelfPct,                            //165
     &Spell::EffectNULL,                                     //166
     &Spell::EffectNULL,                                     //167
     &Spell::EffectNULL,                                     //168
@@ -7872,4 +7872,15 @@ void Spell::EffectBind(SpellEffIndex effIndex)
     data << uint64(player->GetGUID());
     data << uint32(area_id);
     player->SendDirectMessage(&data);
+}
+void Spell::EffectDamageSelfPct(SpellEffIndex effIndex)
+{
+    if (!unitTarget || !unitTarget->isAlive() || damage < 0)
+        return;
+
+    // Skip if m_originalCaster not available
+    if (!m_originalCaster)
+        return;
+
+    m_damage += m_originalCaster->SpellDamageBonus(unitTarget, m_spellInfo, effIndex, unitTarget->CountPctFromMaxHealth(damage), SELF_DAMAGE);
 }
