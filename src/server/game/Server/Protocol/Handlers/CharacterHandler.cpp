@@ -777,6 +777,7 @@ void WorldSession::HandleCharDeleteOpcode(WorldPacket & recv_data)
 {
     uint64 guid;
     recv_data >> guid;
+    guid ^= 1;  // 4.2 May need more changes for GUIDs > 255
 
     // can't delete loaded character
     if (sObjectMgr->GetPlayer(guid))
