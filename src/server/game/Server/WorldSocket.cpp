@@ -1069,9 +1069,12 @@ int WorldSocket::HandlePing (WorldPacket& recvPacket)
 
                 if (m_Session && m_Session->GetSecurity() == SEC_PLAYER)
                 {
-                    sLog->outError  ("WorldSocket::HandlePing: Player kicked for "
-                                    "over-speed pings address = %s",
-                                    GetRemoteAddress().c_str());
+                    Player* _player = m_Session->GetPlayer();
+                    sLog->outError("WorldSocket::HandlePing: Player (account: %u, GUID: %u, name: %s) kicked for over-speed pings (address: %s)",
+                        m_Session->GetAccountId(),
+                        _player ? _player->GetGUIDLow() : 0,
+                        _player ? _player->GetName() : "<none>",
+                        GetRemoteAddress().c_str());
 
                     return -1;
                 }

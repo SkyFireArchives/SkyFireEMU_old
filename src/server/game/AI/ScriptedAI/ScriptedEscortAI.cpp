@@ -197,7 +197,7 @@ void npc_escortAI::EnterEvadeMode()
     {
         AddEscortState(STATE_ESCORT_RETURNING);
         ReturnToLastPoint();
-        sLog->outDebug("TSCR: EscortAI has left combat and is now returning to last point");
+        sLog->outDebug("TSCR: EscortAI (script: %s, creature entry: %u) has left combat and is now returning to last point");
     }
     else
     {
