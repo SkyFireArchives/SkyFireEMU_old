@@ -53,8 +53,8 @@
 extern int m_ServiceStatus;
 #endif
 
-/// Handle cored's termination signals
-class CoredSignalHandler : public Trinity::SignalHandler
+/// Handle worldserver's termination signals
+class WorldServerSignalHandler : public Trinity::SignalHandler
 {
     public:
         virtual void HandleSignal(int SigNum)
@@ -103,10 +103,10 @@ public:
                 w_loops = World::m_worldLoopCounter;
             }
             // possible freeze
-            else if (getMSTimeDiff(w_lastchange,curtime) > _delaytime)
+            else if (getMSTimeDiff(w_lastchange, curtime) > _delaytime)
             {
                 sLog->outError("World Thread hangs, kicking out server!");
-                *((uint32 volatile*)NULL) = 0;                       // bang crash
+                ASSERT(false);
             }
         }
         sLog->outString("Anti-freeze thread exiting without problems.");
@@ -127,12 +127,18 @@ int Master::Run()
     BigNumber seed1;
     seed1.SetRand(16 * 8);
 
-    sLog->outString("%s (core-daemon)", _FULLVERSION);
+    sLog->outString("%s (worldserver-daemon)", _FULLVERSION);
     sLog->outString("<Ctrl-C> to stop.\n");
-
-    sLog->outString("Welcome to Project SkyFire Cataclysm");
-    sLog->outString("Portions of TrinityCore & CactusEMU");
-    sLog->outString("http://www.projectskyfire.org/");
+	
+	sLog->outString(" ");
+    sLog->outString("   ______  __  __  __  __  ______ __  ______  ______ ");  
+    sLog->outString("  /\\  ___\\/\\ \\/ / /\\ \\_\\ \\/\\  ___/\\ \\/\\  == \\/\\  ___\\ ");  
+    sLog->outString("  \\ \\___  \\ \\  _'-\\ \\____ \\ \\  __\\ \\ \\ \\  __<\\ \\  __\\ ");  
+    sLog->outString("   \\/\\_____\\ \\_\\ \\_\\/\\_____\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_____\\ ");
+    sLog->outString("    \\/_____/\\/_/\\/_/\\/_____/\\/_/   \\/_/\\/_/ /_/\\/_____/ ");
+    sLog->outString("  Project SkyFireEmu 2011(c) Open-sourced Game Emulation ");                                                   
+	sLog->outString("           <http://www.projectskyfire.org/> ");
+	sLog->outString(" ");
 
 #ifdef USE_SFMT_FOR_RNG
     sLog->outString("\n");
@@ -141,7 +147,7 @@ int Master::Run()
     sLog->outString("\n");
 #endif //USE_SFMT_FOR_RNG
 
-    /// worldd PID file creation
+    /// worldserver PID file creation
     std::string pidfile = sConfig->GetStringDefault("PidFile", "");
     if (!pidfile.empty())
     {
@@ -166,12 +172,12 @@ int Master::Run()
     sWorld->SetInitialWorldSettings();
 
     ///- Initialize the signal handlers
-    CoredSignalHandler SignalINT, SignalTERM;
+    WorldServerSignalHandler SignalINT, SignalTERM;
     #ifdef _WIN32
-    CoredSignalHandler SignalBREAK;
+    WorldServerSignalHandler SignalBREAK;
     #endif /* _WIN32 */
 
-    ///- Register core's signal handlers
+    ///- Register worldserver's signal handlers
     ACE_Sig_Handler Handler;
     Handler.register_handler(SIGINT, &SignalINT);
     Handler.register_handler(SIGTERM, &SignalTERM);
@@ -214,17 +220,17 @@ int Master::Run()
 
                 if (!curAff)
                 {
-                    sLog->outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for SkyFire. Accessible processors bitmask (hex): %x", Aff, appAff);
+                    sLog->outError("Processors marked in UseProcessors bitmask (hex) %x are not accessible for the worldserver. Accessible processors bitmask (hex): %x", Aff, appAff);
                 }
                 else
                 {
-                    if (SetProcessAffinityMask(hProcess,curAff))
+                    if (SetProcessAffinityMask(hProcess, curAff))
                         sLog->outString("Using processors (bitmask, hex): %x", curAff);
                     else
                         sLog->outError("Can't set used processors (hex): %x", curAff);
                 }
             }
-            sLog->outString();
+            sLog->outString("");
         }
 
         bool Prio = sConfig->GetBoolDefault("ProcessPriority", false);
@@ -233,9 +239,9 @@ int Master::Run()
         if (Prio)
         {
             if (SetPriorityClass(hProcess, HIGH_PRIORITY_CLASS))
-                sLog->outString("SkyFire process priority class set to HIGH");
+                sLog->outString("worldserver process priority class set to HIGH");
             else
-                sLog->outError("Can't set SkyFire process priority class.");
+                sLog->outError("Can't set worldserver process priority class.");
             sLog->outString("");
         }
     }
@@ -346,6 +352,10 @@ int Master::Run()
 
         delete cliThread;
     }
+	
+	// for some unknown reason, unloading scripts here and not in worldrunnable
+    // fixes a memory leak related to detaching threads from the module
+    //UnloadScriptingModule();
 
     // Exit the process with specified return value
     return World::GetExitCode();

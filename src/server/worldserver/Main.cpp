@@ -41,9 +41,9 @@
 
 #ifdef _WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "SkyFireEMU";
-char serviceLongName[] = "SkyFireEMU service";
-char serviceDescription[] = "Cataclysm Server";
+char serviceName[] = "worldserver";
+char serviceLongName[] = "SkyFireEMU world service";
+char serviceDescription[] = "SkyFireEMU World of Warcraft emulator world service";
 /*
  * -1 - not in service mode
  *  0 - stopped
