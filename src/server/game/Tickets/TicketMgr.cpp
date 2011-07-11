@@ -143,9 +143,9 @@ void TicketMgr::AddOrUpdateGMTicket(GM_Ticket &ticket, bool create)
 void TicketMgr::_AddOrUpdateGMTicket(GM_Ticket &ticket)
 {
     std::string msg(ticket.message), name(ticket.name), comment(ticket.comment);
-    CharacterDatabase.escape_string(msg);
-    CharacterDatabase.escape_string(name);
-    CharacterDatabase.escape_string(comment);
+    CharacterDatabase.EscapeString(msg);
+    CharacterDatabase.EscapeString(name);
+    CharacterDatabase.EscapeString(comment);
     std::ostringstream ss;
     ss << "REPLACE INTO gm_tickets (guid, playerGuid, name, message, createtime, map, posX, posY, posZ, timestamp, closed, assignedto, comment, completed, escalated, viewed) VALUES (";
     ss << ticket.guid << ", ";
