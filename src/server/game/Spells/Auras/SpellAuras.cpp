@@ -204,7 +204,7 @@ void AuraApplication::ClientUpdate(bool remove)
     uint32 flags = m_flags;
     if (aura->GetMaxDuration() > 0 && !(aura->GetSpellProto()->AttributesEx5 & SPELL_ATTR5_HIDE_DURATION))
         flags |= AFLAG_DURATION;
-    data << uint8(flags);
+    data << uint16(flags);
     data << uint8(aura->GetCasterLevel());
     data << uint8(aura->GetStackAmount() > 1 ? aura->GetStackAmount() : (aura->GetCharges()) ? aura->GetCharges() : 1);
 

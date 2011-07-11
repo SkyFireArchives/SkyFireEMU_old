@@ -31,6 +31,7 @@
 /// Correspondence between opcode numbers and their names/handlers
 OpcodeHandler opcodeTable[MAX_MSG_TYPES];
 uint16 opcodesEnumToNumber[NUM_OPCODES];
+char const* opcodesEnumToName[NUM_OPCODES];
 
 typedef UNORDERED_MAP< std::string, uint16> OpcodeNameValueMap;
 OpcodeNameValueMap OpcodeNameValues;
@@ -67,6 +68,7 @@ bool LoadOpcodes()
 
 static void DefineOpcode(Opcodes enumId, const char* name, SessionStatus status, PacketProcessing packetProcessing, void (WorldSession::*handler)(WorldPacket& recvPacket) )
 {
+    opcodesEnumToName[enumId] = name;
     OpcodeNameValueMap::iterator itr = OpcodeNameValues.find(std::string(name));
     if (itr != OpcodeNameValues.end())
     {
@@ -346,7 +348,6 @@ void InitOpcodeTable()
     OPCODE( CMSG_SWAP_INV_ITEM,                           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleSwapInvItemOpcode         );
     OPCODE( CMSG_SPLIT_ITEM,                              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleSplitItemOpcode           );
     OPCODE( CMSG_AUTOEQUIP_ITEM_SLOT,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleAutoEquipItemSlotOpcode   );
-    OPCODE( OBSOLETE_DROP_ITEM,                           STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
     OPCODE( CMSG_DESTROYITEM,                             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleDestroyItemOpcode         );
     OPCODE( SMSG_INVENTORY_CHANGE_FAILURE,                STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_OPEN_CONTAINER,                          STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
@@ -1336,6 +1337,7 @@ void InitOpcodeTable()
     OPCODE( CMSG_GROUP_SET_ROLES,                         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleGroupSetRoles             );
     OPCODE( SMSG_UNKNOWN_1310,                            STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_RETURN_TO_GRAVEYARD,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleMoveToGraveyard           );
+    OPCODE( MSG_OPCODE_UNKNOWN,                           STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
 
     OpcodeNameValues.clear();
 };

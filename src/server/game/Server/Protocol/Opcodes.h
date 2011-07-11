@@ -40,6 +40,7 @@
 /// List of Opcodes
 enum Opcodes
 {
+    MSG_OPCODE_UNKNOWN,
     CMSG_ACCEPT_LEVEL_GRANT,
     CMSG_ACCEPT_TRADE,
     CMSG_ACTIVATETAXI,
@@ -702,7 +703,6 @@ enum Opcodes
     MSG_SET_RAID_DIFFICULTY,
     MSG_TABARDVENDOR_ACTIVATE,
     MSG_TALENT_WIPE_CONFIRM,
-    OBSOLETE_DROP_ITEM,
     SMSG_ACCOUNT_DATA_TIMES,
     SMSG_ACHIEVEMENT_DELETED,
     SMSG_ACHIEVEMENT_EARNED,
@@ -1340,6 +1340,8 @@ struct OpcodeHandler
 #define MAX_MSG_TYPES 0xFFFF
 extern OpcodeHandler opcodeTable[MAX_MSG_TYPES];
 extern uint16 opcodesEnumToNumber[NUM_OPCODES];
+extern char const* opcodesEnumToName[NUM_OPCODES];
+
 
 
 /// Lookup opcode name for human understandable logging
@@ -1350,10 +1352,17 @@ inline const char* LookupOpcodeName(uint32 id)
     return opcodeTable[id].name;
 }
 
+inline const char* LookupOpcodeName(Opcodes enumVal)
+{
+    if (enumVal >= NUM_OPCODES)
+        enumVal = MSG_OPCODE_UNKNOWN;
+    return opcodesEnumToName[enumVal];
+}
+
 inline Opcodes LookupOpcodeEnum(uint32 id)
 {
     if (id >= MAX_MSG_TYPES)
-        return CMSG_UNUSED2;
+        return MSG_OPCODE_UNKNOWN;
     return opcodeTable[id].enumValue;
 }
 

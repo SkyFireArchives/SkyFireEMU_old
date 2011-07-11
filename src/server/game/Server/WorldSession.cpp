@@ -149,9 +149,6 @@ void WorldSession::SendPacket(WorldPacket const* packet)
         return;
     if (sWorld->debugOpcode != 0 && packet->GetOpcode() != sWorld->debugOpcode)
         return;
-    // Prevent spamming client with non-existant opcodes
-    if (packet->GetOpcode() == 0)
-        return;
 
     #ifdef TRINITY_DEBUG
 

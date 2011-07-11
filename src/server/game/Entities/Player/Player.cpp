@@ -22074,7 +22074,7 @@ void Player::SendAurasForTarget(Unit *target)
         uint32 flags = auraApp->GetFlags();
         if (aura->GetMaxDuration() > 0)
             flags |= AFLAG_DURATION;
-        data << uint8(flags);
+        data << uint16(flags);
         // level
         data << uint8(aura->GetCasterLevel());
         // charges
