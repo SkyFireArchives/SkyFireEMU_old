@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -28,12 +28,12 @@
 ChannelMgr* channelMgr(uint32 team)
 {
     if (sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_CHANNEL))
-        return ACE_Singleton<AllianceChannelMgr,  ACE_Null_Mutex>::instance();        // cross-faction
+        return ACE_Singleton<AllianceChannelMgr, ACE_Null_Mutex>::instance();        // cross-faction
 
     if (team == ALLIANCE)
-        return ACE_Singleton<AllianceChannelMgr,  ACE_Null_Mutex>::instance();
+        return ACE_Singleton<AllianceChannelMgr, ACE_Null_Mutex>::instance();
     if (team == HORDE)
-        return ACE_Singleton<HordeChannelMgr,  ACE_Null_Mutex>::instance();
+        return ACE_Singleton<HordeChannelMgr, ACE_Null_Mutex>::instance();
 
     return NULL;
 }
@@ -46,7 +46,7 @@ ChannelMgr::~ChannelMgr()
     channels.clear();
 }
 
-Channel *ChannelMgr::GetJoinChannel(std::string name,  uint32 channel_id)
+Channel *ChannelMgr::GetJoinChannel(std::string name, uint32 channel_id)
 {
     std::wstring wname;
     Utf8toWStr(name, wname);
@@ -54,7 +54,7 @@ Channel *ChannelMgr::GetJoinChannel(std::string name,  uint32 channel_id)
 
     if (channels.find(wname) == channels.end())
     {
-        Channel *nchan = new Channel(name, channel_id,  team);
+        Channel *nchan = new Channel(name, channel_id, team);
         channels[wname] = nchan;
         return nchan;
     }
@@ -62,7 +62,7 @@ Channel *ChannelMgr::GetJoinChannel(std::string name,  uint32 channel_id)
     return channels[wname];
 }
 
-Channel *ChannelMgr::GetChannel(std::string name,  Player *p,  bool pkt)
+Channel *ChannelMgr::GetChannel(std::string name, Player *p, bool pkt)
 {
     std::wstring wname;
     Utf8toWStr(name, wname);
@@ -105,8 +105,8 @@ void ChannelMgr::LeftChannel(std::string name)
     }
 }
 
-void ChannelMgr::MakeNotOnPacket(WorldPacket *data,  std::string name)
+void ChannelMgr::MakeNotOnPacket(WorldPacket *data, std::string name)
 {
-    data->Initialize(SMSG_CHANNEL_NOTIFY,  (1+10));  // we guess size
+    data->Initialize(SMSG_CHANNEL_NOTIFY, (1+10));  // we guess size
     (*data) << (uint8)0x05 << name;
 }

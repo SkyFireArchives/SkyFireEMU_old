@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITYCORE_CHAT_H
@@ -42,7 +42,7 @@ class ChatCommand
         const char *       Name;
         uint32             SecurityLevel;                   // function pointer required correct align (use uint32)
         bool               AllowConsole;
-        bool (*Handler)(ChatHandler*,  const char* args);
+        bool (*Handler)(ChatHandler*, const char* args);
         std::string        Help;
         ChatCommand *      ChildCommands;
 };
@@ -55,16 +55,16 @@ class ChatHandler
         explicit ChatHandler(Player* player) : m_session(player->GetSession()) {}
          ~ChatHandler() {}
 
-        static void FillMessageData(WorldPacket *data,  WorldSession* session,  uint8 type,  uint32 language,  const char *channelName,  uint64 target_guid,  const char *message,  Unit *speaker);
+        static void FillMessageData(WorldPacket *data, WorldSession* session, uint8 type, uint32 language, const char *channelName, uint64 target_guid, const char *message, Unit *speaker);
 
-        void FillMessageData(WorldPacket *data,  uint8 type,  uint32 language,  uint64 target_guid,  const char* message)
+        void FillMessageData(WorldPacket *data, uint8 type, uint32 language, uint64 target_guid, const char* message)
         {
-            FillMessageData(data,  m_session,  type,  language,  NULL,  target_guid,  message,  NULL);
+            FillMessageData(data, m_session, type, language, NULL, target_guid, message, NULL);
         }
 
-        void FillSystemMessageData(WorldPacket *data,  const char* message)
+        void FillSystemMessageData(WorldPacket *data, const char* message)
         {
-            FillMessageData(data,  CHAT_MSG_SYSTEM,  LANG_UNIVERSAL,  0,  message);
+            FillMessageData(data, CHAT_MSG_SYSTEM, LANG_UNIVERSAL, 0, message);
         }
 
         static char* LineFromMessage(char*& pos) { char* start = strtok(pos, "\n"); pos = NULL; return start; }
@@ -74,9 +74,9 @@ class ChatHandler
         virtual void SendSysMessage(const char *str);
 
         void SendSysMessage(int32     entry);
-        void PSendSysMessage(const char *format,  ...) ATTR_PRINTF(2, 3);
-        void PSendSysMessage(int32     entry,  ...);
-        std::string PGetParseString(int32 entry,  ...);
+        void PSendSysMessage(const char *format, ...) ATTR_PRINTF(2, 3);
+        void PSendSysMessage(int32     entry, ...);
+        std::string PGetParseString(int32 entry, ...);
 
         int ParseCommands(const char* text);
 
@@ -85,7 +85,7 @@ class ChatHandler
         bool isValidChatMessage(const char* msg);
         void SendGlobalSysMessage(const char *str);
 
-        bool hasStringAbbr(const char* name,  const char* part);
+        bool hasStringAbbr(const char* name, const char* part);
 
         // function with different implementation for chat/console
         virtual bool isAvailable(ChatCommand const& cmd) const;
@@ -94,8 +94,8 @@ class ChatHandler
         virtual LocaleConstant GetSessionDbcLocale() const;
         virtual int GetSessionDbLocaleIndex() const;
 
-        bool HasLowerSecurity(Player* target,  uint64 guid,  bool strong = false);
-        bool HasLowerSecurityAccount(WorldSession* target,  uint32 account,  bool strong = false);
+        bool HasLowerSecurity(Player* target, uint64 guid, bool strong = false);
+        bool HasLowerSecurityAccount(WorldSession* target, uint32 account, bool strong = false);
 
         void SendGlobalGMSysMessage(const char *str);
         Player*   getSelectedPlayer();
@@ -103,20 +103,20 @@ class ChatHandler
         Unit*     getSelectedUnit();
         WorldObject* getSelectedObject();
 
-        char*     extractKeyFromLink(char* text,  char const* linkType,  char** something1 = NULL);
-        char*     extractKeyFromLink(char* text,  char const* const* linkTypes,  int* found_idx,  char** something1 = NULL);
+        char*     extractKeyFromLink(char* text, char const* linkType, char** something1 = NULL);
+        char*     extractKeyFromLink(char* text, char const* const* linkTypes, int* found_idx, char** something1 = NULL);
 
         // if args have single value then it return in arg2 and arg1 == NULL
-        void      extractOptFirstArg(char* args,  char** arg1,  char** arg2);
+        void      extractOptFirstArg(char* args, char** arg1, char** arg2);
         char*     extractQuotedArg(char* args);
 
         uint32    extractSpellIdFromLink(char* text);
         uint64    extractGuidFromLink(char* text);
         GameTele const* extractGameTeleFromLink(char* text);
-        bool GetPlayerGroupAndGUIDByName(const char* cname,  Player* &plr,  Group* &group,  uint64 &guid,  bool offline = false);
+        bool GetPlayerGroupAndGUIDByName(const char* cname, Player* &plr, Group* &group, uint64 &guid, bool offline = false);
         std::string extractPlayerNameFromLink(char* text);
         // select by arg (name/link) or in-game selection online/offline player
-        bool extractPlayerTarget(char* args,  Player** player,  uint64* player_guid = NULL,  std::string* player_name = NULL);
+        bool extractPlayerTarget(char* args, Player** player, uint64* player_guid = NULL, std::string* player_name = NULL);
  
         std::string playerLink(std::string const& name) const { return m_session ? "|cffffffff|Hplayer:"+name+"|h["+name+"]|h|r" : name; }
         std::string GetNameLink(Player* chr) const { return playerLink(chr->GetName()); }
@@ -130,10 +130,10 @@ class ChatHandler
 
     protected:
         explicit ChatHandler() : m_session(NULL) {}      // for CLI subclass
-        static bool SetDataForCommandInTable(ChatCommand *table,  const char* text,  uint32 security,  std::string const& help,  std::string const& fullcommand);
-        bool ExecuteCommandInTable(ChatCommand *table,  const char* text,  const std::string& fullcmd);
-        bool ShowHelpForCommand(ChatCommand *table,  const char* cmd);
-        bool ShowHelpForSubCommands(ChatCommand *table,  char const* cmd,  char const* subcmd);
+        static bool SetDataForCommandInTable(ChatCommand *table, const char* text, uint32 security, std::string const& help, std::string const& fullcommand);
+        bool ExecuteCommandInTable(ChatCommand *table, const char* text, const std::string& fullcmd);
+        bool ShowHelpForCommand(ChatCommand *table, const char* cmd);
+        bool ShowHelpForSubCommands(ChatCommand *table, char const* cmd, char const* subcmd);
 
         bool HandleNameAnnounceCommand(const char* args);
         bool HandleGMNameAnnounceCommand(const char* args);
@@ -456,12 +456,12 @@ class ChatHandler
         bool HandleSaveAllCommand(const char* args);
 
         // Utility methods for commands
-        bool LookupPlayerSearchCommand(QueryResult result,  int32 limit);
+        bool LookupPlayerSearchCommand(QueryResult result, int32 limit);
         bool HandleBanListHelper(QueryResult result);
         bool HandleBanHelper(BanMode mode, char const* args);
-        bool HandleBanInfoHelper(uint32 accountid,  char const* accountname);
+        bool HandleBanInfoHelper(uint32 accountid, char const* accountname);
         bool HandleUnBanHelper(BanMode mode, char const* args);
-        void HandleCharacterLevel(Player* player,  uint64 player_guid,  uint32 oldlevel,  uint32 newlevel);
+        void HandleCharacterLevel(Player* player, uint64 player_guid, uint32 oldlevel, uint32 newlevel);
         void HandleLearnSkillRecipesHelper(Player* player, uint32 skill_id);
 
         // Stores informations about a deleted character
@@ -475,8 +475,8 @@ class ChatHandler
         };
 
         typedef std::list<DeletedInfo> DeletedInfoList;
-        bool GetDeletedCharacterInfoList(DeletedInfoList& foundList,  std::string searchString = "");
-        std::string GenerateDeletedCharacterGUIDsWhereStr(DeletedInfoList::const_iterator& itr,  DeletedInfoList::const_iterator const& itr_end);
+        bool GetDeletedCharacterInfoList(DeletedInfoList& foundList, std::string searchString = "");
+        std::string GenerateDeletedCharacterGUIDsWhereStr(DeletedInfoList::const_iterator& itr, DeletedInfoList::const_iterator const& itr_end);
         void HandleCharacterDeletedListHelper(DeletedInfoList const& foundList);
         void HandleCharacterDeletedRestoreHelper(DeletedInfo const& delInfo);
 
@@ -491,8 +491,8 @@ class ChatHandler
 class CliHandler : public ChatHandler
 {
     public:
-        typedef void Print(void*,  char const*);
-        explicit CliHandler(void* callbackArg,  Print* zprint) : m_callbackArg(callbackArg),  m_print(zprint) {}
+        typedef void Print(void*, char const*);
+        explicit CliHandler(void* callbackArg, Print* zprint) : m_callbackArg(callbackArg), m_print(zprint) {}
 
         // overwrite functions
         const char *GetSkyFireString(int32 entry) const;
@@ -508,7 +508,7 @@ class CliHandler : public ChatHandler
         Print* m_print;
 };
 
-char const *fmtstring(char const *format,  ...);
+char const *fmtstring(char const *format, ...);
 
 #endif
 

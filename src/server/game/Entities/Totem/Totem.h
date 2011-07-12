@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITYCORE_TOTEM_H
@@ -29,7 +29,7 @@ enum TotemType
 {
     TOTEM_PASSIVE    = 0, 
     TOTEM_ACTIVE     = 1, 
-    TOTEM_STATUE     = 2 // copied straight from MaNGOS,  may need more implementation to work
+    TOTEM_STATUE     = 2 // copied straight from MaNGOS, may need more implementation to work
 };
 
 #define SENTRY_TOTEM_ENTRY  3968
@@ -37,7 +37,7 @@ enum TotemType
 class Totem : public Minion
 {
     public:
-        explicit Totem(SummonPropertiesEntry const *properties,  Unit *owner);
+        explicit Totem(SummonPropertiesEntry const *properties, Unit *owner);
         virtual ~Totem(){};
         void Update(uint32 time);
         void InitStats(uint32 duration);
@@ -56,7 +56,7 @@ class Totem : public Minion
         void UpdateAttackPowerAndDamage(bool /*ranged*/) {}
         void UpdateDamagePhysical(WeaponAttackType /*attType*/) {}
 
-        bool IsImmunedToSpellEffect(SpellEntry const* spellInfo,  uint32 index) const;
+        bool IsImmunedToSpellEffect(SpellEntry const* spellInfo, uint32 index) const;
 
     protected:
         TotemType m_type;

@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef SC_GOSSIP_H
@@ -161,7 +161,7 @@ extern uint32 GetSkillLevel(Player *player, uint32 skill);
 #define ADD_GOSSIP_ITEM(a, b, c, d)   PlayerTalkClass->GetGossipMenu().AddMenuItem(a, b, c, d, "", 0)
 #define ADD_GOSSIP_ITEM_EXTENDED(a, b, c, d, e, f, g)   PlayerTalkClass->GetGossipMenu().AddMenuItem(a, b, c, d, e, f, g)
 
-// This fuction Sends the current menu to show to client,  a - NPCTEXTID(uint32) ,  b - npc guid(uint64)
+// This fuction Sends the current menu to show to client, a - NPCTEXTID(uint32) , b - npc guid(uint64)
 #define SEND_GOSSIP_MENU(a, b)      PlayerTalkClass->SendGossipMenu(a, b)
 
 // This fuction shows POI(point of interest) to client.
@@ -189,7 +189,7 @@ extern uint32 GetSkillLevel(Player *player, uint32 skill);
 // d - close at cancel(bool) - in case single incomplite ques
 #define SEND_REQUESTEDITEMS(a, b, c, d) PlayerTalkClass->SendRequestedItems(a, b, c, d)
 
-// Fuctions to send NPC lists,  a - is always the npc guid(uint64)
+// Fuctions to send NPC lists, a - is always the npc guid(uint64)
 #define SEND_VENDORLIST(a)         GetSession()->SendListInventory(a)
 #define SEND_TRAINERLIST(a)        GetSession()->SendTrainerList(a)
 

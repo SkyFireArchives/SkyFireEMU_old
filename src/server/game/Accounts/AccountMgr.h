@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef _ACCMGR_H
@@ -45,22 +45,22 @@ class AccountMgr
         AccountMgr();
         ~AccountMgr();
 
-        AccountOpResult CreateAccount(std::string username,  std::string password);
+        AccountOpResult CreateAccount(std::string username, std::string password);
         AccountOpResult DeleteAccount(uint32 accid);
-        AccountOpResult ChangeUsername(uint32 accid,  std::string new_uname,  std::string new_passwd);
-        AccountOpResult ChangePassword(uint32 accid,  std::string new_passwd);
-        bool CheckPassword(uint32 accid,  std::string passwd);
+        AccountOpResult ChangeUsername(uint32 accid, std::string new_uname, std::string new_passwd);
+        AccountOpResult ChangePassword(uint32 accid, std::string new_passwd);
+        bool CheckPassword(uint32 accid, std::string passwd);
 
         uint32 GetId(std::string username);
         uint32 GetSecurity(uint32 acc_id);
-        uint32 GetSecurity(uint64 acc_id,  int32 realm_id);
-        bool GetName(uint32 acc_id,  std::string &name);
+        uint32 GetSecurity(uint64 acc_id, int32 realm_id);
+        bool GetName(uint32 acc_id, std::string &name);
         uint32 GetCharactersCount(uint32 acc_id);
-        std::string CalculateShaPassHash(std::string& name,  std::string& password);
+        std::string CalculateShaPassHash(std::string& name, std::string& password);
 
         static bool normalizeString(std::string& utf8str);
 };
 
-#define sAccountMgr ACE_Singleton<AccountMgr,  ACE_Null_Mutex>::instance()
+#define sAccountMgr ACE_Singleton<AccountMgr, ACE_Null_Mutex>::instance()
 #endif
 

@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_BAG_H
@@ -39,15 +39,15 @@ class Bag : public Item
         void AddToWorld();
         void RemoveFromWorld();
 
-        bool Create(uint32 guidlow,  uint32 itemid,  Player const* owner);
+        bool Create(uint32 guidlow, uint32 itemid, Player const* owner);
 
         void Clear();
-        void StoreItem(uint8 slot,  Item *pItem,  bool update);
-        void RemoveItem(uint8 slot,  bool update);
+        void StoreItem(uint8 slot, Item *pItem, bool update);
+        void RemoveItem(uint8 slot, bool update);
 
         Item* GetItemByPos(uint8 slot) const;
-        uint32 GetItemCount(uint32 item,  Item* eItem = NULL) const;
-        uint32 GetItemCountWithLimitCategory(uint32 limitCategory,  Item* skipItem = NULL) const;
+        uint32 GetItemCount(uint32 item, Item* eItem = NULL) const;
+        uint32 GetItemCountWithLimitCategory(uint32 limitCategory, Item* skipItem = NULL) const;
 
         uint8 GetSlotByItemGUID(uint64 guid) const;
         bool IsEmpty() const;
@@ -58,11 +58,11 @@ class Bag : public Item
         // overwrite virtual Item::SaveToDB
         void SaveToDB(SQLTransaction& trans);
         // overwrite virtual Item::LoadFromDB
-        bool LoadFromDB(uint32 guid,  uint64 owner_guid,  Field* fields,  uint32 entry);
+        bool LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entry);
         // overwrite virtual Item::DeleteFromDB
         void DeleteFromDB(SQLTransaction& trans);
 
-        void BuildCreateUpdateBlockForPlayer(UpdateData *data,  Player *target) const;
+        void BuildCreateUpdateBlockForPlayer(UpdateData *data, Player *target) const;
 
     protected:
 

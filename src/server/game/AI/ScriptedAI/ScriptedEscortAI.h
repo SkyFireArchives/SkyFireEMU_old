@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef SC_ESCORTAI_H
@@ -29,7 +29,7 @@
 
 struct Escort_Waypoint
 {
-    Escort_Waypoint(uint32 _id,  float _x,  float _y,  float _z,  uint32 _w)
+    Escort_Waypoint(uint32 _id, float _x, float _y, float _z, uint32 _w)
     {
         id = _id;
         x = _x;
@@ -47,9 +47,9 @@ struct Escort_Waypoint
 
 enum eEscortState
 {
-    STATE_ESCORT_NONE       = 0x000,                         //nothing in progress
-    STATE_ESCORT_ESCORTING  = 0x001,                         //escort are in progress
-    STATE_ESCORT_RETURNING  = 0x002,                         //escort is returning after being in combat
+    STATE_ESCORT_NONE       = 0x000,                        //nothing in progress
+    STATE_ESCORT_ESCORTING  = 0x001,                        //escort are in progress
+    STATE_ESCORT_RETURNING  = 0x002,                        //escort is returning after being in combat
     STATE_ESCORT_PAUSED     = 0x004                         //will not proceed with waypoints before state is removed
 };
 
@@ -72,18 +72,18 @@ struct npc_escortAI : public ScriptedAI
 
         void EnterEvadeMode();
 
-        void UpdateAI(const uint32);                        //the "internal" update,  calls UpdateEscortAI()
-        virtual void UpdateEscortAI(const uint32);          //used when it's needed to add code in update (abilities,  scripted events,  etc)
+        void UpdateAI(const uint32);                        //the "internal" update, calls UpdateEscortAI()
+        virtual void UpdateEscortAI(const uint32);          //used when it's needed to add code in update (abilities, scripted events, etc)
 
-        void MovementInform(uint32,  uint32);
+        void MovementInform(uint32, uint32);
 
         // EscortAI functions
-        void AddWaypoint(uint32 id,  float x,  float y,  float z,  uint32 WaitTimeMs = 0);
+        void AddWaypoint(uint32 id, float x, float y, float z, uint32 WaitTimeMs = 0);
 
         virtual void WaypointReached(uint32 uiPointId) = 0;
         virtual void WaypointStart(uint32 /*uiPointId*/) {}
 
-        void Start(bool bIsActiveAttacker = true,  bool bRun = false,  uint64 uiPlayerGUID = 0,  const Quest* pQuest = NULL,  bool bInstantRespawn = false,  bool bCanLoopPath = false);
+        void Start(bool bIsActiveAttacker = true, bool bRun = false, uint64 uiPlayerGUID = 0, const Quest* pQuest = NULL, bool bInstantRespawn = false, bool bCanLoopPath = false);
 
         void SetRun(bool bRun = true);
         void SetEscortPaused(bool uPaused);
@@ -101,7 +101,7 @@ struct npc_escortAI : public ScriptedAI
         uint64 GetEventStarterGUID() { return m_uiPlayerGUID; }
 
     protected:
-        Player* GetPlayerForEscort() { return (Player*)Unit::GetUnit(*me,  m_uiPlayerGUID); }
+        Player* GetPlayerForEscort() { return (Player*)Unit::GetUnit(*me, m_uiPlayerGUID); }
 
     private:
         bool AssistPlayerInCombat(Unit* pWho);
@@ -122,9 +122,9 @@ struct npc_escortAI : public ScriptedAI
         std::list<Escort_Waypoint> WaypointList;
         std::list<Escort_Waypoint>::iterator CurrentWP;
 
-        bool m_bIsActiveAttacker;                           //obsolete,  determined by faction.
+        bool m_bIsActiveAttacker;                           //obsolete, determined by faction.
         bool m_bIsRunning;                                  //all creatures are walking by default (has flag MOVEMENTFLAG_WALK)
-        bool m_bCanInstantRespawn;                          //if creature should respawn instantly after escort over (if not,  database respawntime are used)
+        bool m_bCanInstantRespawn;                          //if creature should respawn instantly after escort over (if not, database respawntime are used)
         bool m_bCanReturnToStart;                           //if creature can walk same path (loop) without despawn. Not for regular escort quests.
         bool DespawnAtEnd;
         bool DespawnAtFar;

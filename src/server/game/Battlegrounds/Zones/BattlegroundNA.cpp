@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -55,7 +55,7 @@ void BattlegroundNA::Update(uint32 diff)
 
     if (GetStatus() == STATUS_IN_PROGRESS)
     {
-        if (GetStartTime() >= 47*MINUTE*IN_MILLISECONDS)    // after 47 minutes without one team losing,  the arena closes with no winner and no rating change
+        if (GetStartTime() >= 47*MINUTE*IN_MILLISECONDS)    // after 47 minutes without one team losing, the arena closes with no winner and no rating change
         {
             UpdateArenaWorldState();
             CheckArenaAfterTimerConditions();
@@ -66,7 +66,7 @@ void BattlegroundNA::Update(uint32 diff)
 void BattlegroundNA::StartingEventCloseDoors()
 {
     for (uint32 i = BG_NA_OBJECT_DOOR_1; i <= BG_NA_OBJECT_DOOR_4; ++i)
-        SpawnBGObject(i,  RESPAWN_IMMEDIATELY);
+        SpawnBGObject(i, RESPAWN_IMMEDIATELY);
 }
 
 void BattlegroundNA::StartingEventOpenDoors()
@@ -75,13 +75,13 @@ void BattlegroundNA::StartingEventOpenDoors()
         DoorOpen(i);
 
     for (uint32 i = BG_NA_OBJECT_BUFF_1; i <= BG_NA_OBJECT_BUFF_2; ++i)
-        SpawnBGObject(i,  60);
+        SpawnBGObject(i, 60);
 }
 
 void BattlegroundNA::AddPlayer(Player *plr)
 {
     Battleground::AddPlayer(plr);
-    //create score and add it to map,  default values are set in constructor
+    //create score and add it to map, default values are set in constructor
     BattlegroundNAScore* sc = new BattlegroundNAScore;
 
     m_PlayerScores[plr->GetGUID()] = sc;
@@ -89,7 +89,7 @@ void BattlegroundNA::AddPlayer(Player *plr)
     UpdateArenaWorldState();
 }
 
-void BattlegroundNA::RemovePlayer(Player* /*plr*/,  uint64 /*guid*/)
+void BattlegroundNA::RemovePlayer(Player* /*plr*/, uint64 /*guid*/)
 {
     if (GetStatus() == STATUS_WAIT_LEAVE)
         return;
@@ -98,7 +98,7 @@ void BattlegroundNA::RemovePlayer(Player* /*plr*/,  uint64 /*guid*/)
     CheckArenaWinConditions();
 }
 
-void BattlegroundNA::HandleKillPlayer(Player *player,  Player *killer)
+void BattlegroundNA::HandleKillPlayer(Player *player, Player *killer)
 {
     if (GetStatus() != STATUS_IN_PROGRESS)
         return;
@@ -121,7 +121,7 @@ bool BattlegroundNA::HandlePlayerUnderMap(Player *player)
     return true;
 }
 
-void BattlegroundNA::HandleAreaTrigger(Player *Source,  uint32 Trigger)
+void BattlegroundNA::HandleAreaTrigger(Player *Source, uint32 Trigger)
 {
     if (GetStatus() != STATUS_IN_PROGRESS)
         return;
@@ -134,8 +134,8 @@ void BattlegroundNA::HandleAreaTrigger(Player *Source,  uint32 Trigger)
         case 4537:                                          // buff trigger?
             break;
         default:
-            sLog->outError("WARNING: Unhandled AreaTrigger in Battleground: %u",  Trigger);
-            Source->GetSession()->SendAreaTriggerMessage("Warning: Unhandled AreaTrigger in Battleground: %u",  Trigger);
+            sLog->outError("WARNING: Unhandled AreaTrigger in Battleground: %u", Trigger);
+            Source->GetSession()->SendAreaTriggerMessage("Warning: Unhandled AreaTrigger in Battleground: %u", Trigger);
             break;
     }
 
@@ -158,13 +158,13 @@ void BattlegroundNA::Reset()
 bool BattlegroundNA::SetupBattleground()
 {
     // gates
-    if (!AddObject(BG_NA_OBJECT_DOOR_1,  BG_NA_OBJECT_TYPE_DOOR_1,  4031.854f,  2966.833f,  12.6462f,  -2.648788f,  0,  0,  0.9697962f,  -0.2439165f,  RESPAWN_IMMEDIATELY)
-        || !AddObject(BG_NA_OBJECT_DOOR_2,  BG_NA_OBJECT_TYPE_DOOR_2,  4081.179f,  2874.97f,  12.39171f,  0.4928045f,  0,  0,  0.2439165f,  0.9697962f,  RESPAWN_IMMEDIATELY)
-        || !AddObject(BG_NA_OBJECT_DOOR_3,  BG_NA_OBJECT_TYPE_DOOR_3,  4023.709f,  2981.777f,  10.70117f,  -2.648788f,  0,  0,  0.9697962f,  -0.2439165f,  RESPAWN_IMMEDIATELY)
-        || !AddObject(BG_NA_OBJECT_DOOR_4,  BG_NA_OBJECT_TYPE_DOOR_4,  4090.064f,  2858.438f,  10.23631f,  0.4928045f,  0,  0,  0.2439165f,  0.9697962f,  RESPAWN_IMMEDIATELY)
+    if (!AddObject(BG_NA_OBJECT_DOOR_1, BG_NA_OBJECT_TYPE_DOOR_1, 4031.854f, 2966.833f, 12.6462f, -2.648788f, 0, 0, 0.9697962f, -0.2439165f, RESPAWN_IMMEDIATELY)
+        || !AddObject(BG_NA_OBJECT_DOOR_2, BG_NA_OBJECT_TYPE_DOOR_2, 4081.179f, 2874.97f, 12.39171f, 0.4928045f, 0, 0, 0.2439165f, 0.9697962f, RESPAWN_IMMEDIATELY)
+        || !AddObject(BG_NA_OBJECT_DOOR_3, BG_NA_OBJECT_TYPE_DOOR_3, 4023.709f, 2981.777f, 10.70117f, -2.648788f, 0, 0, 0.9697962f, -0.2439165f, RESPAWN_IMMEDIATELY)
+        || !AddObject(BG_NA_OBJECT_DOOR_4, BG_NA_OBJECT_TYPE_DOOR_4, 4090.064f, 2858.438f, 10.23631f, 0.4928045f, 0, 0, 0.2439165f, 0.9697962f, RESPAWN_IMMEDIATELY)
     // buffs
-        || !AddObject(BG_NA_OBJECT_BUFF_1,  BG_NA_OBJECT_TYPE_BUFF_1,  4009.189941f,  2895.250000f,  13.052700f,  -1.448624f,  0,  0,  0.6626201f,  -0.7489557f,  120)
-        || !AddObject(BG_NA_OBJECT_BUFF_2,  BG_NA_OBJECT_TYPE_BUFF_2,  4103.330078f,  2946.350098f,  13.051300f,  -0.06981307f,  0,  0,  0.03489945f,  -0.9993908f,  120))
+        || !AddObject(BG_NA_OBJECT_BUFF_1, BG_NA_OBJECT_TYPE_BUFF_1, 4009.189941f, 2895.250000f, 13.052700f, -1.448624f, 0, 0, 0.6626201f, -0.7489557f, 120)
+        || !AddObject(BG_NA_OBJECT_BUFF_2, BG_NA_OBJECT_TYPE_BUFF_2, 4103.330078f, 2946.350098f, 13.051300f, -0.06981307f, 0, 0, 0.03489945f, -0.9993908f, 120))
     {
         sLog->outErrorDb("BatteGroundNA: Failed to spawn some object!");
         return false;

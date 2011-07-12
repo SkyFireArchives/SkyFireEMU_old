@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITYCORE_TEMPSUMMON_H
@@ -28,7 +28,7 @@
 class TempSummon : public Creature
 {
     public:
-        explicit TempSummon(SummonPropertiesEntry const *properties,  Unit *owner);
+        explicit TempSummon(SummonPropertiesEntry const *properties, Unit *owner);
         virtual ~TempSummon(){};
         void Update(uint32 time);
         virtual void InitStats(uint32 lifetime);
@@ -51,7 +51,7 @@ class TempSummon : public Creature
 class Minion : public TempSummon
 {
     public:
-        Minion(SummonPropertiesEntry const *properties,  Unit *owner);
+        Minion(SummonPropertiesEntry const *properties, Unit *owner);
         void InitStats(uint32 duration);
         void RemoveFromWorld();
         Unit *GetOwner() { return m_owner; }
@@ -67,7 +67,7 @@ class Minion : public TempSummon
 class Guardian : public Minion
 {
     public:
-        Guardian(SummonPropertiesEntry const *properties,  Unit *owner);
+        Guardian(SummonPropertiesEntry const *properties, Unit *owner);
         void InitStats(uint32 duration);
         bool InitStatsForLevel(uint8 level);
         void InitSummon();
@@ -91,7 +91,7 @@ class Guardian : public Minion
 class Puppet : public Minion
 {
     public:
-        Puppet(SummonPropertiesEntry const *properties,  Unit *owner);
+        Puppet(SummonPropertiesEntry const *properties, Unit *owner);
         void InitStats(uint32 duration);
         void InitSummon();
         void Update(uint32 time);

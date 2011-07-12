@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -37,7 +37,7 @@ HostileRefManager::~HostileRefManager()
 // The pVictim is hated than by them as well
 // use for buffs and healing threat functionality
 
-void HostileRefManager::threatAssist(Unit *pVictim,  float fThreat,  SpellEntry const *pThreatSpell,  bool pSingleTarget)
+void HostileRefManager::threatAssist(Unit *pVictim, float fThreat, SpellEntry const *pThreatSpell, bool pSingleTarget)
 {
     HostileReference* ref;
 
@@ -45,18 +45,18 @@ void HostileRefManager::threatAssist(Unit *pVictim,  float fThreat,  SpellEntry 
     ref = getFirst();
     while (ref != NULL)
     {
-        float threat = ThreatCalcHelper::calcThreat(pVictim,  iOwner,  fThreat,  (pThreatSpell ? GetSpellSchoolMask(pThreatSpell) : SPELL_SCHOOL_MASK_NORMAL),  pThreatSpell);
+        float threat = ThreatCalcHelper::calcThreat(pVictim, iOwner, fThreat, (pThreatSpell ? GetSpellSchoolMask(pThreatSpell) : SPELL_SCHOOL_MASK_NORMAL), pThreatSpell);
         if (pVictim == getOwner())
             ref->addThreat(threat / size);          // It is faster to modify the threat durectly if possible
         else
-            ref->getSource()->addThreat(pVictim,  threat / size);
+            ref->getSource()->addThreat(pVictim, threat / size);
         ref = ref->next();
     }
 }
 
 //=================================================
 
-void HostileRefManager::addTempThreat(float fThreat,  bool apply)
+void HostileRefManager::addTempThreat(float fThreat, bool apply)
 {
     HostileReference* ref = getFirst();
 
@@ -134,7 +134,7 @@ void HostileRefManager::deleteReferences()
 }
 
 //=================================================
-// delete one reference,  defined by faction
+// delete one reference, defined by faction
 
 void HostileRefManager::deleteReferencesForFaction(uint32 faction)
 {
@@ -152,7 +152,7 @@ void HostileRefManager::deleteReferencesForFaction(uint32 faction)
 }
 
 //=================================================
-// delete one reference,  defined by Unit
+// delete one reference, defined by Unit
 
 void HostileRefManager::deleteReference(Unit *pCreature)
 {
@@ -171,9 +171,9 @@ void HostileRefManager::deleteReference(Unit *pCreature)
 }
 
 //=================================================
-// set state for one reference,  defined by Unit
+// set state for one reference, defined by Unit
 
-void HostileRefManager::setOnlineOfflineState(Unit *pCreature,  bool bIsOnline)
+void HostileRefManager::setOnlineOfflineState(Unit *pCreature, bool bIsOnline)
 {
     HostileReference* ref = getFirst();
     while (ref)

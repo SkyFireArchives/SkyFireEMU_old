@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef _LFG_H
@@ -36,7 +36,7 @@ enum LfgRoles
 
 enum LfgUpdateType
 {
-    LFG_UPDATETYPE_DEFAULT                       = 0,       // Internal Use
+    LFG_UPDATETYPE_DEFAULT                       = 0,      // Internal Use
     LFG_UPDATETYPE_LEADER                        = 1, 
     LFG_UPDATETYPE_ROLECHECK_ABORTED             = 4, 
     LFG_UPDATETYPE_JOIN_PROPOSAL                 = 5, 
@@ -54,20 +54,20 @@ enum LfgUpdateType
 
 enum LfgState
 {
-    LFG_STATE_NONE,                                         // Not using LFG / LFR
-    LFG_STATE_ROLECHECK,                                    // Rolecheck active
-    LFG_STATE_QUEUED,                                       // Queued
-    LFG_STATE_PROPOSAL,                                     // Proposal active
-    LFG_STATE_BOOT,                                         // Vote kick active
-    LFG_STATE_DUNGEON,                                      // In LFG Group,  in a Dungeon
-    LFG_STATE_FINISHED_DUNGEON,                             // In LFG Group,  in a finished Dungeon
+    LFG_STATE_NONE,                                        // Not using LFG / LFR
+    LFG_STATE_ROLECHECK,                                   // Rolecheck active
+    LFG_STATE_QUEUED,                                      // Queued
+    LFG_STATE_PROPOSAL,                                    // Proposal active
+    LFG_STATE_BOOT,                                        // Vote kick active
+    LFG_STATE_DUNGEON,                                     // In LFG Group, in a Dungeon
+    LFG_STATE_FINISHED_DUNGEON,                            // In LFG Group, in a finished Dungeon
     LFG_STATE_RAIDBROWSER                                  // Using Raid finder
 };
 
 /// Instance lock types
 enum LfgLockStatusType
 {
-    LFG_LOCKSTATUS_OK                            = 0,       // Internal use only
+    LFG_LOCKSTATUS_OK                            = 0,      // Internal use only
     LFG_LOCKSTATUS_INSUFFICIENT_EXPANSION        = 1, 
     LFG_LOCKSTATUS_TOO_LOW_LEVEL                 = 2, 
     LFG_LOCKSTATUS_TOO_HIGH_LEVEL                = 3, 
@@ -89,7 +89,7 @@ struct LfgLockStatus
 };
 
 typedef std::set<uint32> LfgDungeonSet;
-typedef std::map<uint32,  LfgLockStatusType> LfgLockMap;
-typedef std::map<uint64,  LfgLockMap> LfgLockPartyMap;
+typedef std::map<uint32, LfgLockStatusType> LfgLockMap;
+typedef std::map<uint64, LfgLockMap> LfgLockPartyMap;
 
 #endif

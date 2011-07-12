@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef __BATTLEGROUNDAB_H
@@ -34,46 +34,46 @@ enum BG_AB_WorldStates
     BG_AB_OP_RESOURCES_MAX              = 1780, 
     BG_AB_OP_RESOURCES_WARNING          = 1955
 /*
-    BG_AB_OP_STABLE_ICON                = 1842,              //Stable map icon (NONE)
-    BG_AB_OP_STABLE_STATE_ALIENCE       = 1767,              //Stable map state (ALIENCE)
-    BG_AB_OP_STABLE_STATE_HORDE         = 1768,              //Stable map state (HORDE)
-    BG_AB_OP_STABLE_STATE_CON_ALI       = 1769,              //Stable map state (CON ALIENCE)
-    BG_AB_OP_STABLE_STATE_CON_HOR       = 1770,              //Stable map state (CON HORDE)
-    BG_AB_OP_FARM_ICON                  = 1845,              //Farm map icon (NONE)
-    BG_AB_OP_FARM_STATE_ALIENCE         = 1772,              //Farm state (ALIENCE)
-    BG_AB_OP_FARM_STATE_HORDE           = 1773,              //Farm state (HORDE)
-    BG_AB_OP_FARM_STATE_CON_ALI         = 1774,              //Farm state (CON ALIENCE)
-    BG_AB_OP_FARM_STATE_CON_HOR         = 1775,              //Farm state (CON HORDE)
+    BG_AB_OP_STABLE_ICON                = 1842,             //Stable map icon (NONE)
+    BG_AB_OP_STABLE_STATE_ALIENCE       = 1767,             //Stable map state (ALIENCE)
+    BG_AB_OP_STABLE_STATE_HORDE         = 1768,             //Stable map state (HORDE)
+    BG_AB_OP_STABLE_STATE_CON_ALI       = 1769,             //Stable map state (CON ALIENCE)
+    BG_AB_OP_STABLE_STATE_CON_HOR       = 1770,             //Stable map state (CON HORDE)
+    BG_AB_OP_FARM_ICON                  = 1845,             //Farm map icon (NONE)
+    BG_AB_OP_FARM_STATE_ALIENCE         = 1772,             //Farm state (ALIENCE)
+    BG_AB_OP_FARM_STATE_HORDE           = 1773,             //Farm state (HORDE)
+    BG_AB_OP_FARM_STATE_CON_ALI         = 1774,             //Farm state (CON ALIENCE)
+    BG_AB_OP_FARM_STATE_CON_HOR         = 1775,             //Farm state (CON HORDE)
 
-    BG_AB_OP_BLACKSMITH_ICON            = 1846,              //Blacksmith map icon (NONE)
-    BG_AB_OP_BLACKSMITH_STATE_ALIENCE   = 1782,              //Blacksmith map state (ALIENCE)
-    BG_AB_OP_BLACKSMITH_STATE_HORDE     = 1783,              //Blacksmith map state (HORDE)
-    BG_AB_OP_BLACKSMITH_STATE_CON_ALI   = 1784,              //Blacksmith map state (CON ALIENCE)
-    BG_AB_OP_BLACKSMITH_STATE_CON_HOR   = 1785,              //Blacksmith map state (CON HORDE)
-    BG_AB_OP_LUMBERMILL_ICON            = 1844,              //Lumber Mill map icon (NONE)
-    BG_AB_OP_LUMBERMILL_STATE_ALIENCE   = 1792,              //Lumber Mill map state (ALIENCE)
-    BG_AB_OP_LUMBERMILL_STATE_HORDE     = 1793,              //Lumber Mill map state (HORDE)
-    BG_AB_OP_LUMBERMILL_STATE_CON_ALI   = 1794,              //Lumber Mill map state (CON ALIENCE)
-    BG_AB_OP_LUMBERMILL_STATE_CON_HOR   = 1795,              //Lumber Mill map state (CON HORDE)
-    BG_AB_OP_GOLDMINE_ICON              = 1843,              //Gold Mine map icon (NONE)
-    BG_AB_OP_GOLDMINE_STATE_ALIENCE     = 1787,              //Gold Mine map state (ALIENCE)
-    BG_AB_OP_GOLDMINE_STATE_HORDE       = 1788,              //Gold Mine map state (HORDE)
-    BG_AB_OP_GOLDMINE_STATE_CON_ALI     = 1789,              //Gold Mine map state (CON ALIENCE
-    BG_AB_OP_GOLDMINE_STATE_CON_HOR     = 1790,              //Gold Mine map state (CON HORDE)
+    BG_AB_OP_BLACKSMITH_ICON            = 1846,             //Blacksmith map icon (NONE)
+    BG_AB_OP_BLACKSMITH_STATE_ALIENCE   = 1782,             //Blacksmith map state (ALIENCE)
+    BG_AB_OP_BLACKSMITH_STATE_HORDE     = 1783,             //Blacksmith map state (HORDE)
+    BG_AB_OP_BLACKSMITH_STATE_CON_ALI   = 1784,             //Blacksmith map state (CON ALIENCE)
+    BG_AB_OP_BLACKSMITH_STATE_CON_HOR   = 1785,             //Blacksmith map state (CON HORDE)
+    BG_AB_OP_LUMBERMILL_ICON            = 1844,             //Lumber Mill map icon (NONE)
+    BG_AB_OP_LUMBERMILL_STATE_ALIENCE   = 1792,             //Lumber Mill map state (ALIENCE)
+    BG_AB_OP_LUMBERMILL_STATE_HORDE     = 1793,             //Lumber Mill map state (HORDE)
+    BG_AB_OP_LUMBERMILL_STATE_CON_ALI   = 1794,             //Lumber Mill map state (CON ALIENCE)
+    BG_AB_OP_LUMBERMILL_STATE_CON_HOR   = 1795,             //Lumber Mill map state (CON HORDE)
+    BG_AB_OP_GOLDMINE_ICON              = 1843,             //Gold Mine map icon (NONE)
+    BG_AB_OP_GOLDMINE_STATE_ALIENCE     = 1787,             //Gold Mine map state (ALIENCE)
+    BG_AB_OP_GOLDMINE_STATE_HORDE       = 1788,             //Gold Mine map state (HORDE)
+    BG_AB_OP_GOLDMINE_STATE_CON_ALI     = 1789,             //Gold Mine map state (CON ALIENCE
+    BG_AB_OP_GOLDMINE_STATE_CON_HOR     = 1790,             //Gold Mine map state (CON HORDE)
 */
 };
 
-const uint32 BG_AB_OP_NODESTATES[5] =    {1767,  1782,  1772,  1792,  1787};
+const uint32 BG_AB_OP_NODESTATES[5] =    {1767, 1782, 1772, 1792, 1787};
 
-const uint32 BG_AB_OP_NODEICONS[5]  =    {1842,  1846,  1845,  1844,  1843};
+const uint32 BG_AB_OP_NODEICONS[5]  =    {1842, 1846, 1845, 1844, 1843};
 
 /* Note: code uses that these IDs follow each other */
 enum BG_AB_NodeObjectId
 {
-    BG_AB_OBJECTID_NODE_BANNER_0    = 180087,        // Stables banner
-    BG_AB_OBJECTID_NODE_BANNER_1    = 180088,        // Blacksmith banner
-    BG_AB_OBJECTID_NODE_BANNER_2    = 180089,        // Farm banner
-    BG_AB_OBJECTID_NODE_BANNER_3    = 180090,        // Lumber mill banner
+    BG_AB_OBJECTID_NODE_BANNER_0    = 180087,       // Stables banner
+    BG_AB_OBJECTID_NODE_BANNER_1    = 180088,       // Blacksmith banner
+    BG_AB_OBJECTID_NODE_BANNER_2    = 180089,       // Farm banner
+    BG_AB_OBJECTID_NODE_BANNER_3    = 180090,       // Lumber mill banner
     BG_AB_OBJECTID_NODE_BANNER_4    = 180091        // Gold mine banner
 };
 
@@ -137,7 +137,7 @@ enum BG_AB_Score
     BG_AB_MAX_TEAM_SCORE                = 1600
 };
 
-/* do NOT change the order,  else wrong behaviour */
+/* do NOT change the order, else wrong behaviour */
 enum BG_AB_BattlegroundNodes
 {
     BG_AB_NODE_STABLES          = 0, 
@@ -146,12 +146,12 @@ enum BG_AB_BattlegroundNodes
     BG_AB_NODE_LUMBER_MILL      = 3, 
     BG_AB_NODE_GOLD_MINE        = 4, 
 
-    BG_AB_DYNAMIC_NODES_COUNT   = 5,                         // dynamic nodes that can be captured
+    BG_AB_DYNAMIC_NODES_COUNT   = 5,                        // dynamic nodes that can be captured
 
     BG_AB_SPIRIT_ALIANCE        = 5, 
     BG_AB_SPIRIT_HORDE          = 6, 
 
-    BG_AB_ALL_NODES_COUNT       = 7,                         // all nodes (dynamic and static)
+    BG_AB_ALL_NODES_COUNT       = 7,                        // all nodes (dynamic and static)
 };
 
 enum BG_AB_NodeStatus
@@ -186,46 +186,46 @@ enum BG_AB_Objectives
 #define BG_AB_NotABBGWeekendReputationTicks 200
 #define BG_AB_ABBGWeekendReputationTicks    150
 
-// x,  y,  z,  o
+// x, y, z, o
 const float BG_AB_NodePositions[BG_AB_DYNAMIC_NODES_COUNT][4] = {
-    {1166.785f,  1200.132f,  -56.70859f,  0.9075713f},          // stables
-    {977.0156f,  1046.616f,  -44.80923f,  -2.600541f},          // blacksmith
-    {806.1821f,  874.2723f,  -55.99371f,  -2.303835f},          // farm
-    {856.1419f,  1148.902f,  11.18469f,  -2.303835f},           // lumber mill
-    {1146.923f,  848.1782f,  -110.917f,  -0.7330382f}          // gold mine
+    {1166.785f, 1200.132f, -56.70859f, 0.9075713f},         // stables
+    {977.0156f, 1046.616f, -44.80923f, -2.600541f},         // blacksmith
+    {806.1821f, 874.2723f, -55.99371f, -2.303835f},         // farm
+    {856.1419f, 1148.902f, 11.18469f, -2.303835f},          // lumber mill
+    {1146.923f, 848.1782f, -110.917f, -0.7330382f}          // gold mine
 };
 
-// x,  y,  z,  o,  rot0,  rot1,  rot2,  rot3
+// x, y, z, o, rot0, rot1, rot2, rot3
 const float BG_AB_DoorPositions[2][8] = {
-    {1284.597f,  1281.167f,  -15.97792f,  0.7068594f,  0.012957f,  -0.060288f,  0.344959f,  0.93659f}, 
-    {708.0903f,  708.4479f,  -17.8342f,  -2.391099f,  0.050291f,  0.015127f,  0.929217f,  -0.365784f}
+    {1284.597f, 1281.167f, -15.97792f, 0.7068594f, 0.012957f, -0.060288f, 0.344959f, 0.93659f}, 
+    {708.0903f, 708.4479f, -17.8342f, -2.391099f, 0.050291f, 0.015127f, 0.929217f, -0.365784f}
 };
 
 // Tick intervals and given points: case 0, 1, 2, 3, 4, 5 captured nodes
-const uint32 BG_AB_TickIntervals[6] = {0,  12000,  9000,  6000,  3000,  1000};
-const uint32 BG_AB_TickPoints[6] = {0,  10,  10,  10,  10,  30};
+const uint32 BG_AB_TickIntervals[6] = {0, 12000, 9000, 6000, 3000, 1000};
+const uint32 BG_AB_TickPoints[6] = {0, 10, 10, 10, 10, 30};
 
-// WorldSafeLocs ids for 5 nodes,  and for ally,  and horde starting location
-const uint32 BG_AB_GraveyardIds[BG_AB_ALL_NODES_COUNT] = {895,  894,  893,  897,  896,  898,  899};
+// WorldSafeLocs ids for 5 nodes, and for ally, and horde starting location
+const uint32 BG_AB_GraveyardIds[BG_AB_ALL_NODES_COUNT] = {895, 894, 893, 897, 896, 898, 899};
 
-// x,  y,  z,  o
+// x, y, z, o
 const float BG_AB_BuffPositions[BG_AB_DYNAMIC_NODES_COUNT][4] = {
-    {1185.71f,  1185.24f,  -56.36f,  2.56f},                    // stables
-    {990.75f,  1008.18f,  -42.60f,  2.43f},                     // blacksmith
-    {817.66f,  843.34f,  -56.54f,  3.01f},                      // farm
-    {807.46f,  1189.16f,  11.92f,  5.44f},                      // lumber mill
-    {1146.62f,  816.94f,  -98.49f,  6.14f}                     // gold mine
+    {1185.71f, 1185.24f, -56.36f, 2.56f},                   // stables
+    {990.75f, 1008.18f, -42.60f, 2.43f},                    // blacksmith
+    {817.66f, 843.34f, -56.54f, 3.01f},                     // farm
+    {807.46f, 1189.16f, 11.92f, 5.44f},                     // lumber mill
+    {1146.62f, 816.94f, -98.49f, 6.14f}                     // gold mine
 };
 
-// x,  y,  z,  o
+// x, y, z, o
 const float BG_AB_SpiritGuidePos[BG_AB_ALL_NODES_COUNT][4] = {
-    {1200.03f,  1171.09f,  -56.47f,  5.15f},                    // stables
-    {1017.43f,  960.61f,  -42.95f,  4.88f},                     // blacksmith
-    {833.00f,  793.00f,  -57.25f,  5.27f},                      // farm
-    {775.17f,  1206.40f,  15.79f,  1.90f},                      // lumber mill
-    {1207.48f,  787.00f,  -83.36f,  5.51f},                     // gold mine
-    {1354.05f,  1275.48f,  -11.30f,  4.77f},                    // alliance starting base
-    {714.61f,  646.15f,  -10.87f,  4.34f}                      // horde starting base
+    {1200.03f, 1171.09f, -56.47f, 5.15f},                   // stables
+    {1017.43f, 960.61f, -42.95f, 4.88f},                    // blacksmith
+    {833.00f, 793.00f, -57.25f, 5.27f},                     // farm
+    {775.17f, 1206.40f, 15.79f, 1.90f},                     // lumber mill
+    {1207.48f, 787.00f, -83.36f, 5.51f},                    // gold mine
+    {1354.05f, 1275.48f, -11.30f, 4.77f},                   // alliance starting base
+    {714.61f, 646.15f, -10.87f, 4.34f}                      // horde starting base
 };
 
 struct BG_AB_BannerTimer
@@ -238,7 +238,7 @@ struct BG_AB_BannerTimer
 class BattlegroundABScore : public BattlegroundScore
 {
     public:
-        BattlegroundABScore(): BasesAssaulted(0),  BasesDefended(0) {};
+        BattlegroundABScore(): BasesAssaulted(0), BasesDefended(0) {};
         virtual ~BattlegroundABScore() {};
         uint32 BasesAssaulted;
         uint32 BasesDefended;
@@ -257,31 +257,31 @@ class BattlegroundAB : public Battleground
         virtual void StartingEventCloseDoors();
         virtual void StartingEventOpenDoors();
         void RemovePlayer(Player *plr, uint64 guid);
-        void HandleAreaTrigger(Player *Source,  uint32 Trigger);
+        void HandleAreaTrigger(Player *Source, uint32 Trigger);
         virtual bool SetupBattleground();
         virtual void Reset();
         void EndBattleground(uint32 winner);
         virtual WorldSafeLocsEntry const* GetClosestGraveYard(Player* player);
 
         /* Scorekeeping */
-        virtual void UpdatePlayerScore(Player *Source,  uint32 type,  uint32 value,  bool doAddHonor = true);
+        virtual void UpdatePlayerScore(Player *Source, uint32 type, uint32 value, bool doAddHonor = true);
 
         virtual void FillInitialWorldStates(WorldPacket& data);
 
         /* Nodes occupying */
-        virtual void EventPlayerClickedOnFlag(Player *source,  GameObject* target_obj);
+        virtual void EventPlayerClickedOnFlag(Player *source, GameObject* target_obj);
 
         /* achievement req. */
         bool IsAllNodesConrolledByTeam(uint32 team) const;  // overwrited
         bool IsTeamScores500Disadvantage(uint32 team) const { return m_TeamScores500Disadvantage[GetTeamIndexByTeamId(team)]; }
     private:
         /* Gameobject spawning/despawning */
-        void _CreateBanner(uint8 node,  uint8 type,  uint8 teamIndex,  bool delay);
-        void _DelBanner(uint8 node,  uint8 type,  uint8 teamIndex);
+        void _CreateBanner(uint8 node, uint8 type, uint8 teamIndex, bool delay);
+        void _DelBanner(uint8 node, uint8 type, uint8 teamIndex);
         void _SendNodeUpdate(uint8 node);
 
         /* Creature spawning/despawning */
-        // TODO: working,  scripted peons spawning
+        // TODO: working, scripted peons spawning
         void _NodeOccupied(uint8 node, Team team);
         void _NodeDeOccupied(uint8 node);
 

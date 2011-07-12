@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITYCORE_ITEM_H
@@ -149,10 +149,10 @@ enum BuyFailure
 enum SellFailure
 {
     SELL_ERR_CANT_FIND_ITEM                      = 1, 
-    SELL_ERR_CANT_SELL_ITEM                      = 2,        // merchant doesn't like that item
-    SELL_ERR_CANT_FIND_VENDOR                    = 3,        // merchant doesn't like you
-    SELL_ERR_YOU_DONT_OWN_THAT_ITEM              = 4,        // you don't own that item
-    SELL_ERR_UNK                                 = 5,        // nothing appears...
+    SELL_ERR_CANT_SELL_ITEM                      = 2,       // merchant doesn't like that item
+    SELL_ERR_CANT_FIND_VENDOR                    = 3,       // merchant doesn't like you
+    SELL_ERR_YOU_DONT_OWN_THAT_ITEM              = 4,       // you don't own that item
+    SELL_ERR_UNK                                 = 5,       // nothing appears...
     SELL_ERR_ONLY_EMPTY_BAG                      = 6        // can only do with empty bags
 };
 
@@ -165,26 +165,26 @@ enum EnchantmentSlot
     SOCK_ENCHANTMENT_SLOT_2         = 3, 
     SOCK_ENCHANTMENT_SLOT_3         = 4, 
     BONUS_ENCHANTMENT_SLOT          = 5, 
-    PRISMATIC_ENCHANTMENT_SLOT      = 6,                     // added at apply special permanent enchantment
+    PRISMATIC_ENCHANTMENT_SLOT      = 6,                    // added at apply special permanent enchantment
     MAX_INSPECTED_ENCHANTMENT_SLOT  = 7, 
 
-    PROP_ENCHANTMENT_SLOT_0         = 7,                     // used with RandomSuffix
-    PROP_ENCHANTMENT_SLOT_1         = 8,                     // used with RandomSuffix
-    PROP_ENCHANTMENT_SLOT_2         = 9,                     // used with RandomSuffix and RandomProperty
-    PROP_ENCHANTMENT_SLOT_3         = 10,                    // used with RandomProperty
-    PROP_ENCHANTMENT_SLOT_4         = 11,                    // used with RandomProperty
+    PROP_ENCHANTMENT_SLOT_0         = 7,                    // used with RandomSuffix
+    PROP_ENCHANTMENT_SLOT_1         = 8,                    // used with RandomSuffix
+    PROP_ENCHANTMENT_SLOT_2         = 9,                    // used with RandomSuffix and RandomProperty
+    PROP_ENCHANTMENT_SLOT_3         = 10,                   // used with RandomProperty
+    PROP_ENCHANTMENT_SLOT_4         = 11,                   // used with RandomProperty
     MAX_ENCHANTMENT_SLOT            = 12
 };
 
 #define MAX_VISIBLE_ITEM_OFFSET       2                     // 2 fields per visible item (entry+enchantment)
 
-#define MAX_GEM_SOCKETS               MAX_ITEM_PROTO_SOCKETS// (BONUS_ENCHANTMENT_SLOT-SOCK_ENCHANTMENT_SLOT) and item proto size,  equal value expected
+#define MAX_GEM_SOCKETS               MAX_ITEM_PROTO_SOCKETS// (BONUS_ENCHANTMENT_SLOT-SOCK_ENCHANTMENT_SLOT) and item proto size, equal value expected
 
 enum EnchantmentOffset
 {
     ENCHANTMENT_ID_OFFSET       = 0, 
     ENCHANTMENT_DURATION_OFFSET = 1, 
-    ENCHANTMENT_CHARGES_OFFSET  = 2                         // now here not only charges,  but something new in wotlk
+    ENCHANTMENT_CHARGES_OFFSET  = 2                         // now here not only charges, but something new in wotlk
 };
 
 #define MAX_ENCHANTMENT_OFFSET    3
@@ -217,7 +217,7 @@ enum ItemRequiredTargetType
 
 struct ItemRequiredTarget
 {
-    ItemRequiredTarget(ItemRequiredTargetType uiType,  uint32 uiTargetEntry) : m_uiType(uiType),  m_uiTargetEntry(uiTargetEntry) {}
+    ItemRequiredTarget(ItemRequiredTargetType uiType, uint32 uiTargetEntry) : m_uiType(uiType), m_uiTargetEntry(uiTargetEntry) {}
     ItemRequiredTargetType m_uiType;
     uint32 m_uiTargetEntry;
 
@@ -225,40 +225,40 @@ struct ItemRequiredTarget
     bool IsFitToRequirements(Unit* pUnitTarget) const;
 };
 
-bool ItemCanGoIntoBag(ItemPrototype const *proto,  ItemPrototype const *pBagProto);
+bool ItemCanGoIntoBag(ItemPrototype const *proto, ItemPrototype const *pBagProto);
 
 class Item : public Object
 {
     public:
-        static Item* CreateItem(uint32 item,  uint32 count,  Player const* player = NULL);
-        Item* CloneItem(uint32 count,  Player const* player = NULL) const;
+        static Item* CreateItem(uint32 item, uint32 count, Player const* player = NULL);
+        Item* CloneItem(uint32 count, Player const* player = NULL) const;
 
         Item ();
 
-        virtual bool Create(uint32 guidlow,  uint32 itemid,  Player const* owner);
+        virtual bool Create(uint32 guidlow, uint32 itemid, Player const* owner);
 
         ItemPrototype const* GetProto() const;
 
         uint64 const& GetOwnerGUID()    const { return GetUInt64Value(ITEM_FIELD_OWNER); }
-        void SetOwnerGUID(uint64 guid) { SetUInt64Value(ITEM_FIELD_OWNER,  guid); }
+        void SetOwnerGUID(uint64 guid) { SetUInt64Value(ITEM_FIELD_OWNER, guid); }
         Player* GetOwner()const;
 
-        void SetBinding(bool val) { ApplyModFlag(ITEM_FIELD_FLAGS,  ITEM_FLAG_SOULBOUND,  val); }
-        bool IsSoulBound() const { return HasFlag(ITEM_FIELD_FLAGS,  ITEM_FLAG_SOULBOUND); }
+        void SetBinding(bool val) { ApplyModFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_SOULBOUND, val); }
+        bool IsSoulBound() const { return HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_SOULBOUND); }
         bool IsBoundAccountWide() const { return (GetProto()->Flags & ITEM_PROTO_FLAG_BIND_TO_ACCOUNT) != 0; }
         bool IsBindedNotWith(Player const* player) const;
         bool IsBoundByEnchant() const;
         virtual void SaveToDB(SQLTransaction& trans);
-        virtual bool LoadFromDB(uint32 guid,  uint64 owner_guid,  Field* fields,  uint32 entry);
+        virtual bool LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entry);
         virtual void DeleteFromDB(SQLTransaction& trans);
         void DeleteFromInventoryDB(SQLTransaction& trans);
         void SaveRefundDataToDB();
         void DeleteRefundDataFromDB();
 
-        bool IsLocked() const { return !HasFlag(ITEM_FIELD_FLAGS,  ITEM_FLAG_UNLOCKED); }
+        bool IsLocked() const { return !HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_UNLOCKED); }
         bool IsBag() const { return GetProto()->InventoryType == INVTYPE_BAG; }
         bool IsBroken() const { return GetUInt32Value(ITEM_FIELD_MAXDURABILITY) > 0 && GetUInt32Value(ITEM_FIELD_DURABILITY) == 0; }
-        bool CanBeTraded(bool mail = false,  bool trade = false) const;
+        bool CanBeTraded(bool mail = false, bool trade = false) const;
         void SetInTrade(bool b = true) { mb_in_trade = b; }
         bool IsInTrade() const { return mb_in_trade; }
 
@@ -267,11 +267,11 @@ class Item : public Object
 
         bool IsFitToSpellRequirements(SpellEntry const* spellInfo) const;
         bool IsTargetValidForItemUse(Unit* pUnitTarget);
-        bool IsLimitedToAnotherMapOrZone(uint32 cur_mapId,  uint32 cur_zoneId) const;
+        bool IsLimitedToAnotherMapOrZone(uint32 cur_mapId, uint32 cur_zoneId) const;
         bool GemsFitSockets() const;
 
         uint32 GetCount() const { return GetUInt32Value(ITEM_FIELD_STACK_COUNT); }
-        void SetCount(uint32 value) { SetUInt32Value(ITEM_FIELD_STACK_COUNT,  value); }
+        void SetCount(uint32 value) { SetUInt32Value(ITEM_FIELD_STACK_COUNT, value); }
         uint32 GetMaxStackCount() const { return GetProto()->GetMaxStackSize(); }
         uint8 GetGemCountWithID(uint32 GemID) const;
         uint8 GetGemCountWithLimitCategory(uint32 limitCategory) const;
@@ -296,9 +296,9 @@ class Item : public Object
         void SetItemRandomProperties(int32 randomPropId);
         void UpdateItemSuffixFactor();
         static int32 GenerateItemRandomPropertyId(uint32 item_id);
-        void SetEnchantment(EnchantmentSlot slot,  uint32 id,  uint32 duration,  uint32 charges);
-        void SetEnchantmentDuration(EnchantmentSlot slot,  uint32 duration,  Player* owner);
-        void SetEnchantmentCharges(EnchantmentSlot slot,  uint32 charges);
+        void SetEnchantment(EnchantmentSlot slot, uint32 id, uint32 duration, uint32 charges);
+        void SetEnchantmentDuration(EnchantmentSlot slot, uint32 duration, Player* owner);
+        void SetEnchantmentCharges(EnchantmentSlot slot, uint32 charges);
         void ClearEnchantment(EnchantmentSlot slot);
         uint32 GetEnchantmentId(EnchantmentSlot slot)       const { return GetUInt32Value(ITEM_FIELD_ENCHANTMENT_1_1 + slot*MAX_ENCHANTMENT_OFFSET + ENCHANTMENT_ID_OFFSET);}
         uint32 GetEnchantmentDuration(EnchantmentSlot slot) const { return GetUInt32Value(ITEM_FIELD_ENCHANTMENT_1_1 + slot*MAX_ENCHANTMENT_OFFSET + ENCHANTMENT_DURATION_OFFSET);}
@@ -308,18 +308,18 @@ class Item : public Object
         void SetText(std::string const& text) { m_text = text; }
 
         void SendTimeUpdate(Player* owner);
-        void UpdateDuration(Player* owner,  uint32 diff);
+        void UpdateDuration(Player* owner, uint32 diff);
 
         // spell charges (signed but stored as unsigned)
         int32 GetSpellCharges(uint8 index/*0..5*/ = 0) const { return GetInt32Value(ITEM_FIELD_SPELL_CHARGES + index); }
-        void  SetSpellCharges(uint8 index/*0..5*/,  int32 value) { SetInt32Value(ITEM_FIELD_SPELL_CHARGES + index, value); }
+        void  SetSpellCharges(uint8 index/*0..5*/, int32 value) { SetInt32Value(ITEM_FIELD_SPELL_CHARGES + index, value); }
 
         Loot loot;
         bool m_lootGenerated;
 
         // Update States
         ItemUpdateState GetState() const { return uState; }
-        void SetState(ItemUpdateState state,  Player *forplayer = NULL);
+        void SetState(ItemUpdateState state, Player *forplayer = NULL);
         void AddToUpdateQueueOf(Player *player);
         void RemoveFromUpdateQueueOf(Player *player);
         bool IsInUpdateQueue() const { return uQueuePos != -1; }
@@ -337,7 +337,7 @@ class Item : public Object
         bool IsConjuredConsumable() const { return GetProto()->IsConjuredConsumable(); }
 
         // Item Refund system
-        void SetNotRefundable(Player *owner,  bool changestate = true);
+        void SetNotRefundable(Player *owner, bool changestate = true);
         void SetRefundRecipient(uint32 pGuidLow) { m_refundRecipient = pGuidLow; }
         void SetPaidMoney(uint32 money) { m_paidMoney = money; }
         void SetPaidExtendedCost(uint32 iece) { m_paidExtendedCost = iece; }
@@ -350,7 +350,7 @@ class Item : public Object
         bool IsRefundExpired();
 
         // Soulbound trade system
-        void SetSoulboundTradeable(AllowedLooterSet* allowedLooters,  Player* currentOwner,  bool apply);
+        void SetSoulboundTradeable(AllowedLooterSet* allowedLooters, Player* currentOwner, bool apply);
         bool CheckSoulboundTradeExpire();
 
         void BuildUpdate(UpdateDataMapType&);

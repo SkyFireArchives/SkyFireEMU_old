@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_DISABLEMGR_H
@@ -53,22 +53,22 @@ enum SpellDisableTypes
 struct DisableData
 {
     uint8 flags;
-    std::set<uint32> params[2];                             // params0,  params1
+    std::set<uint32> params[2];                             // params0, params1
 };
 
-typedef std::map<uint32,  DisableData> DisableTypeMap;       // single disables here with optional data
-typedef std::map<DisableType,  DisableTypeMap> DisableMap;   // global disable map by source
+typedef std::map<uint32, DisableData> DisableTypeMap;       // single disables here with optional data
+typedef std::map<DisableType, DisableTypeMap> DisableMap;   // global disable map by source
 
 class DisableMgr
 {
-    friend class ACE_Singleton<DisableMgr,  ACE_Null_Mutex>;
+    friend class ACE_Singleton<DisableMgr, ACE_Null_Mutex>;
     DisableMgr();
     ~DisableMgr();
 
     public:
 
         void LoadDisables();
-        bool IsDisabledFor(DisableType type,  uint32 entry,  Unit const* pUnit);
+        bool IsDisabledFor(DisableType type, uint32 entry, Unit const* pUnit);
         void CheckQuestDisables();
 
     protected:
@@ -76,6 +76,6 @@ class DisableMgr
         DisableMap m_DisableMap;
 };
 
-#define sDisableMgr ACE_Singleton<DisableMgr,  ACE_Null_Mutex>::instance()
+#define sDisableMgr ACE_Singleton<DisableMgr, ACE_Null_Mutex>::instance()
 
 #endif //TRINITY_DISABLEMGR_H

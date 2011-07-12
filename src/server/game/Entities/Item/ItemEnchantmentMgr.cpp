@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -38,14 +38,14 @@ struct EnchStoreItem
     float   chance;
 
     EnchStoreItem()
-        : ench(0),  chance(0) {}
+        : ench(0), chance(0) {}
 
-    EnchStoreItem(uint32 _ench,  float _chance)
-        : ench(_ench),  chance(_chance) {}
+    EnchStoreItem(uint32 _ench, float _chance)
+        : ench(_ench), chance(_chance) {}
 };
 
 typedef std::vector<EnchStoreItem> EnchStoreList;
-typedef UNORDERED_MAP<uint32,  EnchStoreList> EnchantmentStore;
+typedef UNORDERED_MAP<uint32, EnchStoreList> EnchantmentStore;
 
 static EnchantmentStore RandomItemEnch;
 
@@ -55,7 +55,7 @@ void LoadRandomEnchantmentsTable()
 
     RandomItemEnch.clear();                                 // for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry,  ench,  chance FROM item_enchantment_template");
+    QueryResult result = WorldDatabase.Query("SELECT entry, ench, chance FROM item_enchantment_template");
 
     if (result)
     {
@@ -70,13 +70,13 @@ void LoadRandomEnchantmentsTable()
             float chance = fields[2].GetFloat();
 
             if (chance > 0.000001f && chance <= 100.0f)
-                RandomItemEnch[entry].push_back(EnchStoreItem(ench,  chance));
+                RandomItemEnch[entry].push_back(EnchStoreItem(ench, chance));
 
             ++count;
         }
         while (result->NextRow());
 
-        sLog->outString(">> Loaded %u Item Enchantment definitions in %u ms",  count,  GetMSTimeDiffToNow(oldMSTime));
+        sLog->outString(">> Loaded %u Item Enchantment definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
         sLog->outString();
     }
     else
@@ -112,7 +112,7 @@ uint32 GetItemEnchantMod(int32 entry)
     }
 
     //we could get here only if sum of all enchantment chances is lower than 100%
-    dRoll =  (irand(0,  (int)floor(fCount * 100) + 1)) / 100;
+    dRoll =  (irand(0, (int)floor(fCount * 100) + 1)) / 100;
     fCount = 0;
 
     for (EnchStoreList::const_iterator ench_iter = tab->second.begin(); ench_iter != tab->second.end(); ++ench_iter)

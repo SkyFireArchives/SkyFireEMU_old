@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef CREATUREAIIMPL_H
@@ -31,14 +31,14 @@
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2)
+const T& RAND(const T& v1, const T& v2)
 {
     return (urand(0, 1)) ? v1 : v2;
 }
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3)
+const T& RAND(const T& v1, const T& v2, const T& v3)
 {
     switch (urand(0, 2))
     {
@@ -51,7 +51,7 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3)
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4)
 {
     switch (urand(0, 3))
     {
@@ -65,7 +65,7 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4)
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5)
 {
     switch (urand(0, 4))
     {
@@ -80,7 +80,7 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5,  const T& v6)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5, const T& v6)
 {
     switch (urand(0, 5))
     {
@@ -96,7 +96,7 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5,  const T& v6,  const T& v7)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5, const T& v6, const T& v7)
 {
     switch (urand(0, 6))
     {
@@ -113,7 +113,7 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5,  const T& v6,  const T& v7,  const T& v8)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5, const T& v6, const T& v7, const T& v8)
 {
     switch (urand(0, 7))
     {
@@ -131,7 +131,7 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5,  const T& v6,  const T& v7,  const T& v8, 
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5, const T& v6, const T& v7, const T& v8, 
               const T& v9)
 {
     switch (urand(0, 8))
@@ -151,8 +151,8 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5,  const T& v6,  const T& v7,  const T& v8, 
-              const T& v9,  const T& v10)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5, const T& v6, const T& v7, const T& v8, 
+              const T& v9, const T& v10)
 {
     switch (urand(0, 9))
     {
@@ -172,8 +172,8 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5,  const T& v6,  const T& v7,  const T& v8, 
-              const T& v9,  const T& v10,  const T& v11)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5, const T& v6, const T& v7, const T& v8, 
+              const T& v9, const T& v10, const T& v11)
 {
     switch (urand(0, 10))
     {
@@ -194,8 +194,8 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5,  const T& v6,  const T& v7,  const T& v8, 
-              const T& v9,  const T& v10,  const T& v11,  const T& v12)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5, const T& v6, const T& v7, const T& v8, 
+              const T& v9, const T& v10, const T& v11, const T& v12)
 {
     switch (urand(0, 11))
     {
@@ -217,8 +217,8 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5,  const T& v6,  const T& v7,  const T& v8, 
-              const T& v9,  const T& v10,  const T& v11,  const T& v12,  const T& v13)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5, const T& v6, const T& v7, const T& v8, 
+              const T& v9, const T& v10, const T& v11, const T& v12, const T& v13)
 {
     switch (urand(0, 12))
     {
@@ -241,8 +241,8 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5,  const T& v6,  const T& v7,  const T& v8, 
-              const T& v9,  const T& v10,  const T& v11,  const T& v12,  const T& v13,  const T& v14)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5, const T& v6, const T& v7, const T& v8, 
+              const T& v9, const T& v10, const T& v11, const T& v12, const T& v13, const T& v14)
 {
     switch (urand(0, 13))
     {
@@ -266,8 +266,8 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5,  const T& v6,  const T& v7,  const T& v8, 
-              const T& v9,  const T& v10,  const T& v11,  const T& v12,  const T& v13,  const T& v14,  const T& v15)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5, const T& v6, const T& v7, const T& v8, 
+              const T& v9, const T& v10, const T& v11, const T& v12, const T& v13, const T& v14, const T& v15)
 {
     switch (urand(0, 14))
     {
@@ -292,8 +292,8 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
 
 template<class T>
 inline
-const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v5,  const T& v6,  const T& v7,  const T& v8, 
-              const T& v9,  const T& v10,  const T& v11,  const T& v12,  const T& v13,  const T& v14,  const T& v15,  const T& v16)
+const T& RAND(const T& v1, const T& v2, const T& v3, const T& v4, const T& v5, const T& v6, const T& v7, const T& v8, 
+              const T& v9, const T& v10, const T& v11, const T& v12, const T& v13, const T& v14, const T& v15, const T& v16)
 {
     switch (urand(0, 15))
     {
@@ -317,12 +317,12 @@ const T& RAND(const T& v1,  const T& v2,  const T& v3,  const T& v4,  const T& v
     }
 }
 
-class EventMap : private std::map<uint32,  uint32>
+class EventMap : private std::map<uint32, uint32>
 {
     private:
-        uint32 m_time,  m_phase;
+        uint32 m_time, m_phase;
     public:
-        explicit EventMap(): m_time(0),  m_phase(0) {}
+        explicit EventMap(): m_time(0), m_phase(0) {}
 
         uint32 GetTimer() const { return m_time; }
 
@@ -338,7 +338,7 @@ class EventMap : private std::map<uint32,  uint32>
                 m_phase = (1 << (phase + 24));
         }
 
-        void ScheduleEvent(uint32 eventId,  uint32 time,  uint32 gcd = 0,  uint32 phase = 0)
+        void ScheduleEvent(uint32 eventId, uint32 time, uint32 gcd = 0, uint32 phase = 0)
         {
             time += m_time;
             if (gcd && gcd < 9)
@@ -351,13 +351,13 @@ class EventMap : private std::map<uint32,  uint32>
                 ++time;
                 itr = find(time);
             }
-            insert(std::make_pair(time,  eventId));
+            insert(std::make_pair(time, eventId));
         }
 
-        void RescheduleEvent(uint32 eventId,  uint32 time,  uint32 gcd = 0,  uint32 phase = 0)
+        void RescheduleEvent(uint32 eventId, uint32 time, uint32 gcd = 0, uint32 phase = 0)
         {
             CancelEvent(eventId);
-            ScheduleEvent(eventId,  time,  gcd,  phase);
+            ScheduleEvent(eventId, time, gcd, phase);
         }
 
         void RepeatEvent(uint32 time)
@@ -373,7 +373,7 @@ class EventMap : private std::map<uint32,  uint32>
                 ++time;
                 itr = find(time);
             }
-            insert(std::make_pair(time,  eventId));
+            insert(std::make_pair(time, eventId));
         }
 
         void PopEvent()
@@ -423,7 +423,7 @@ class EventMap : private std::map<uint32,  uint32>
         }
 
         // Delay all events having the specified Global Cooldown.
-        void DelayEvents(uint32 delay,  uint32 gcd)
+        void DelayEvents(uint32 delay, uint32 gcd)
         {
             uint32 nextTime = m_time + delay;
             gcd = (1 << (gcd + 16));
@@ -431,7 +431,7 @@ class EventMap : private std::map<uint32,  uint32>
             {
                 if (itr->second & gcd)
                 {
-                    ScheduleEvent(itr->second,  itr->first-m_time+delay);
+                    ScheduleEvent(itr->second, itr->first-m_time+delay);
                     erase(itr);
                     itr = begin();
                 }
@@ -492,8 +492,8 @@ enum AICondition
 
 struct AISpellInfoType
 {
-    AISpellInfoType() : target(AITARGET_SELF),  condition(AICOND_COMBAT)
-        ,  cooldown(AI_DEFAULT_COOLDOWN),  realCooldown(0),  maxRange(0.0f){}
+    AISpellInfoType() : target(AITARGET_SELF), condition(AICOND_COMBAT)
+        , cooldown(AI_DEFAULT_COOLDOWN), realCooldown(0), maxRange(0.0f){}
     AITarget target;
     AICondition condition;
     uint32 cooldown;
@@ -580,45 +580,45 @@ inline bool CreatureAI::_EnterEvadeMode()
     return true;
 }
 
-inline void UnitAI::DoCast(Unit* victim,  uint32 spellId,  bool triggered)
+inline void UnitAI::DoCast(Unit* victim, uint32 spellId, bool triggered)
 {
     if (!victim || (me->HasUnitState(UNIT_STAT_CASTING) && !triggered))
         return;
 
-    me->CastSpell(victim,  spellId,  triggered);
+    me->CastSpell(victim, spellId, triggered);
 }
 
-inline void UnitAI::DoCastVictim(uint32 spellId,  bool triggered)
+inline void UnitAI::DoCastVictim(uint32 spellId, bool triggered)
 {
-    me->CastSpell(me->getVictim(),  spellId,  triggered);
+    me->CastSpell(me->getVictim(), spellId, triggered);
 }
 
-inline void UnitAI::DoCastAOE(uint32 spellId,  bool triggered)
+inline void UnitAI::DoCastAOE(uint32 spellId, bool triggered)
 {
     if (!triggered && me->HasUnitState(UNIT_STAT_CASTING))
         return;
 
-    me->CastSpell((Unit*)NULL,  spellId,  triggered);
+    me->CastSpell((Unit*)NULL, spellId, triggered);
 }
 
-inline Creature *CreatureAI::DoSummon(uint32 uiEntry,  const Position &pos,  uint32 uiDespawntime,  TempSummonType uiType)
+inline Creature *CreatureAI::DoSummon(uint32 uiEntry, const Position &pos, uint32 uiDespawntime, TempSummonType uiType)
 {
-    return me->SummonCreature(uiEntry,  pos,  uiType,  uiDespawntime);
+    return me->SummonCreature(uiEntry, pos, uiType, uiDespawntime);
 }
 
-inline Creature *CreatureAI::DoSummon(uint32 uiEntry,  WorldObject* obj,  float fRadius,  uint32 uiDespawntime,  TempSummonType uiType)
-{
-    Position pos;
-    obj->GetRandomNearPosition(pos,  fRadius);
-    return me->SummonCreature(uiEntry,  pos,  uiType,  uiDespawntime);
-}
-
-inline Creature *CreatureAI::DoSummonFlyer(uint32 uiEntry,  WorldObject *obj,  float _fZ,  float fRadius,  uint32 uiDespawntime,  TempSummonType uiType)
+inline Creature *CreatureAI::DoSummon(uint32 uiEntry, WorldObject* obj, float fRadius, uint32 uiDespawntime, TempSummonType uiType)
 {
     Position pos;
-    obj->GetRandomNearPosition(pos,  fRadius);
+    obj->GetRandomNearPosition(pos, fRadius);
+    return me->SummonCreature(uiEntry, pos, uiType, uiDespawntime);
+}
+
+inline Creature *CreatureAI::DoSummonFlyer(uint32 uiEntry, WorldObject *obj, float _fZ, float fRadius, uint32 uiDespawntime, TempSummonType uiType)
+{
+    Position pos;
+    obj->GetRandomNearPosition(pos, fRadius);
     pos.m_positionZ += _fZ;
-    return me->SummonCreature(uiEntry,  pos,  uiType,  uiDespawntime);
+    return me->SummonCreature(uiEntry, pos, uiType, uiDespawntime);
 }
 
 #endif

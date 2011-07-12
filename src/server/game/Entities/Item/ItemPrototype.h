@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef _ITEMPROTOTYPE_H
@@ -64,9 +64,9 @@ enum ItemModType
     ITEM_MOD_EXPERTISE_RATING         = 37, 
     ITEM_MOD_ATTACK_POWER             = 38, 
     ITEM_MOD_RANGED_ATTACK_POWER      = 39, 
-    //ITEM_MOD_FERAL_ATTACK_POWER       = 40,  not in 3.3
-    ITEM_MOD_SPELL_HEALING_DONE       = 41,                  // deprecated
-    ITEM_MOD_SPELL_DAMAGE_DONE        = 42,                  // deprecated
+    //ITEM_MOD_FERAL_ATTACK_POWER       = 40, not in 3.3
+    ITEM_MOD_SPELL_HEALING_DONE       = 41,                 // deprecated
+    ITEM_MOD_SPELL_DAMAGE_DONE        = 42,                 // deprecated
     ITEM_MOD_MANA_REGENERATION        = 43, 
     ITEM_MOD_ARMOR_PENETRATION_RATING = 44, 
     ITEM_MOD_SPELL_POWER              = 45, 
@@ -87,7 +87,7 @@ enum ItemModType
 
 enum ItemSpelltriggerType
 {
-    ITEM_SPELLTRIGGER_ON_USE          = 0,                   // use after equip cooldown
+    ITEM_SPELLTRIGGER_ON_USE          = 0,                  // use after equip cooldown
     ITEM_SPELLTRIGGER_ON_EQUIP        = 1, 
     ITEM_SPELLTRIGGER_CHANCE_ON_HIT   = 2, 
     ITEM_SPELLTRIGGER_SOULSTONE       = 4, 
@@ -97,7 +97,7 @@ enum ItemSpelltriggerType
      * other hand the item is destroyed if the aura is removed ("removed on
      * death" of spell 57348 makes me think so)
      */
-    ITEM_SPELLTRIGGER_ON_NO_DELAY_USE = 5,                   // no equip cooldown
+    ITEM_SPELLTRIGGER_ON_NO_DELAY_USE = 5,                  // no equip cooldown
     ITEM_SPELLTRIGGER_LEARN_SPELL_ID  = 6                   // used in item_template.spell_2 with spell_id with SPELL_GENERIC_LEARN in spell_1
 };
 
@@ -117,42 +117,42 @@ enum ItemBondingType
 
 /* TODO
     // need to know cases when using item is not allowed in shapeshift
-    ITEM_PROTO_FLAG_USABLE_WHEN_SHAPESHIFTED    = 0x00800000,  // Item can be used in shapeshift forms
+    ITEM_PROTO_FLAG_USABLE_WHEN_SHAPESHIFTED    = 0x00800000, // Item can be used in shapeshift forms
 */
 
 enum ItemProtoFlags
 {
-    ITEM_PROTO_FLAG_UNK1                        = 0x00000001,  // ?
-    ITEM_PROTO_FLAG_CONJURED                    = 0x00000002,  // Conjured item
-    ITEM_PROTO_FLAG_OPENABLE                    = 0x00000004,  // Item can be right clicked to open for loot
-    ITEM_PROTO_FLAG_HEROIC                      = 0x00000008,  // Makes green "Heroic" text appear on item
-    ITEM_PROTO_FLAG_DEPRECATED                  = 0x00000010,  // Cannot equip or use
-    ITEM_PROTO_FLAG_INDESTRUCTIBLE              = 0x00000020,  // Item can not be destroyed,  except by using spell (item can be reagent for spell)
-    ITEM_PROTO_FLAG_UNK2                        = 0x00000040,  // ?
-    ITEM_PROTO_FLAG_NO_EQUIP_COOLDOWN           = 0x00000080,  // No default 30 seconds cooldown when equipped
-    ITEM_PROTO_FLAG_UNK3                        = 0x00000100,  // ?
-    ITEM_PROTO_FLAG_WRAPPER                     = 0x00000200,  // Item can wrap other items
-    ITEM_PROTO_FLAG_UNK4                        = 0x00000400,  // ?
-    ITEM_PROTO_FLAG_PARTY_LOOT                  = 0x00000800,  // Looting this item does not remove it from available loot
-    ITEM_PROTO_FLAG_REFUNDABLE                  = 0x00001000,  // Item can be returned to vendor for its original cost (extended cost)
-    ITEM_PROTO_FLAG_CHARTER                     = 0x00002000,  // Item is guild or arena charter
-    ITEM_PROTO_FLAG_UNK5                        = 0x00004000,  // Only readable items have this (but not all)
-    ITEM_PROTO_FLAG_UNK6                        = 0x00008000,  // ?
-    ITEM_PROTO_FLAG_UNK7                        = 0x00010000,  // ?
-    ITEM_PROTO_FLAG_UNK8                        = 0x00020000,  // ?
-    ITEM_PROTO_FLAG_PROSPECTABLE                = 0x00040000,  // Item can be prospected
-    ITEM_PROTO_FLAG_UNIQUE_EQUIPPED             = 0x00080000,  // You can only equip one of these
-    ITEM_PROTO_FLAG_UNK9                        = 0x00100000,  // ?
-    ITEM_PROTO_FLAG_USEABLE_IN_ARENA            = 0x00200000,  // Item can be used during arena match
-    ITEM_PROTO_FLAG_THROWABLE                   = 0x00400000,  // Some Thrown weapons have it (and only Thrown) but not all
-    ITEM_PROTO_FLAG_USABLE_WHEN_SHAPESHIFTED    = 0x00800000,  // Item can be used in shapeshift forms
-    ITEM_PROTO_FLAG_UNK10                       = 0x01000000,  // ?
-    ITEM_PROTO_FLAG_SMART_LOOT                  = 0x02000000,  // Profession recipes: can only be looted if you meet requirements and don't already know it
-    ITEM_PROTO_FLAG_NOT_USEABLE_IN_ARENA        = 0x04000000,  // Item cannot be used in arena
-    ITEM_PROTO_FLAG_BIND_TO_ACCOUNT             = 0x08000000,  // Item binds to account and can be sent only to your own characters
-    ITEM_PROTO_FLAG_TRIGGERED_CAST              = 0x10000000,  // Spell is cast with triggered flag
-    ITEM_PROTO_FLAG_MILLABLE                    = 0x20000000,  // Item can be milled
-    ITEM_PROTO_FLAG_UNK11                       = 0x40000000,  // ?
+    ITEM_PROTO_FLAG_UNK1                        = 0x00000001, // ?
+    ITEM_PROTO_FLAG_CONJURED                    = 0x00000002, // Conjured item
+    ITEM_PROTO_FLAG_OPENABLE                    = 0x00000004, // Item can be right clicked to open for loot
+    ITEM_PROTO_FLAG_HEROIC                      = 0x00000008, // Makes green "Heroic" text appear on item
+    ITEM_PROTO_FLAG_DEPRECATED                  = 0x00000010, // Cannot equip or use
+    ITEM_PROTO_FLAG_INDESTRUCTIBLE              = 0x00000020, // Item can not be destroyed, except by using spell (item can be reagent for spell)
+    ITEM_PROTO_FLAG_UNK2                        = 0x00000040, // ?
+    ITEM_PROTO_FLAG_NO_EQUIP_COOLDOWN           = 0x00000080, // No default 30 seconds cooldown when equipped
+    ITEM_PROTO_FLAG_UNK3                        = 0x00000100, // ?
+    ITEM_PROTO_FLAG_WRAPPER                     = 0x00000200, // Item can wrap other items
+    ITEM_PROTO_FLAG_UNK4                        = 0x00000400, // ?
+    ITEM_PROTO_FLAG_PARTY_LOOT                  = 0x00000800, // Looting this item does not remove it from available loot
+    ITEM_PROTO_FLAG_REFUNDABLE                  = 0x00001000, // Item can be returned to vendor for its original cost (extended cost)
+    ITEM_PROTO_FLAG_CHARTER                     = 0x00002000, // Item is guild or arena charter
+    ITEM_PROTO_FLAG_UNK5                        = 0x00004000, // Only readable items have this (but not all)
+    ITEM_PROTO_FLAG_UNK6                        = 0x00008000, // ?
+    ITEM_PROTO_FLAG_UNK7                        = 0x00010000, // ?
+    ITEM_PROTO_FLAG_UNK8                        = 0x00020000, // ?
+    ITEM_PROTO_FLAG_PROSPECTABLE                = 0x00040000, // Item can be prospected
+    ITEM_PROTO_FLAG_UNIQUE_EQUIPPED             = 0x00080000, // You can only equip one of these
+    ITEM_PROTO_FLAG_UNK9                        = 0x00100000, // ?
+    ITEM_PROTO_FLAG_USEABLE_IN_ARENA            = 0x00200000, // Item can be used during arena match
+    ITEM_PROTO_FLAG_THROWABLE                   = 0x00400000, // Some Thrown weapons have it (and only Thrown) but not all
+    ITEM_PROTO_FLAG_USABLE_WHEN_SHAPESHIFTED    = 0x00800000, // Item can be used in shapeshift forms
+    ITEM_PROTO_FLAG_UNK10                       = 0x01000000, // ?
+    ITEM_PROTO_FLAG_SMART_LOOT                  = 0x02000000, // Profession recipes: can only be looted if you meet requirements and don't already know it
+    ITEM_PROTO_FLAG_NOT_USEABLE_IN_ARENA        = 0x04000000, // Item cannot be used in arena
+    ITEM_PROTO_FLAG_BIND_TO_ACCOUNT             = 0x08000000, // Item binds to account and can be sent only to your own characters
+    ITEM_PROTO_FLAG_TRIGGERED_CAST              = 0x10000000, // Spell is cast with triggered flag
+    ITEM_PROTO_FLAG_MILLABLE                    = 0x20000000, // Item can be milled
+    ITEM_PROTO_FLAG_UNK11                       = 0x40000000, // ?
     ITEM_PROTO_FLAG_UNK12                       = 0x80000000  // ?
 };
 
@@ -161,38 +161,38 @@ enum ItemProtoFlags
 
 enum ItemFieldFlags
 {
-    ITEM_FLAG_SOULBOUND     = 0x00000001,  // Item is soulbound and cannot be traded <<--
-    ITEM_FLAG_UNK1          = 0x00000002,  // ?
-    ITEM_FLAG_UNLOCKED      = 0x00000004,  // Item had lock but can be opened now
-    ITEM_FLAG_WRAPPED       = 0x00000008,  // Item is wrapped and contains another item
-    ITEM_FLAG_UNK2          = 0x00000010,  // ?
-    ITEM_FLAG_UNK3          = 0x00000020,  // ?
-    ITEM_FLAG_UNK4          = 0x00000040,  // ?
-    ITEM_FLAG_UNK5          = 0x00000080,  // ?
-    ITEM_FLAG_BOP_TRADEABLE = 0x00000100,  // Allows trading soulbound items
-    ITEM_FLAG_READABLE      = 0x00000200,  // Opens text page when right clicked
-    ITEM_FLAG_UNK6          = 0x00000400,  // ?
-    ITEM_FLAG_UNK7          = 0x00000800,  // ?
-    ITEM_FLAG_REFUNDABLE    = 0x00001000,  // Item can be returned to vendor for its original cost (extended cost)
-    ITEM_FLAG_UNK8          = 0x00002000,  // ?
-    ITEM_FLAG_UNK9          = 0x00004000,  // ?
-    ITEM_FLAG_UNK10         = 0x00008000,  // ?
-    ITEM_FLAG_UNK11         = 0x00010000,  // ?
-    ITEM_FLAG_UNK12         = 0x00020000,  // ?
-    ITEM_FLAG_UNK13         = 0x00040000,  // ?
-    ITEM_FLAG_UNK14         = 0x00080000,  // ?
-    ITEM_FLAG_UNK15         = 0x00100000,  // ?
-    ITEM_FLAG_UNK16         = 0x00200000,  // ?
-    ITEM_FLAG_UNK17         = 0x00400000,  // ?
-    ITEM_FLAG_UNK18         = 0x00800000,  // ?
-    ITEM_FLAG_UNK19         = 0x01000000,  // ?
-    ITEM_FLAG_UNK20         = 0x02000000,  // ?
-    ITEM_FLAG_UNK21         = 0x04000000,  // ?
-    ITEM_FLAG_UNK22         = 0x08000000,  // ?
-    ITEM_FLAG_UNK23         = 0x10000000,  // ?
-    ITEM_FLAG_UNK24         = 0x20000000,  // ?
-    ITEM_FLAG_UNK25         = 0x40000000,  // ?
-    ITEM_FLAG_UNK26         = 0x80000000,  // ?
+    ITEM_FLAG_SOULBOUND     = 0x00000001, // Item is soulbound and cannot be traded <<--
+    ITEM_FLAG_UNK1          = 0x00000002, // ?
+    ITEM_FLAG_UNLOCKED      = 0x00000004, // Item had lock but can be opened now
+    ITEM_FLAG_WRAPPED       = 0x00000008, // Item is wrapped and contains another item
+    ITEM_FLAG_UNK2          = 0x00000010, // ?
+    ITEM_FLAG_UNK3          = 0x00000020, // ?
+    ITEM_FLAG_UNK4          = 0x00000040, // ?
+    ITEM_FLAG_UNK5          = 0x00000080, // ?
+    ITEM_FLAG_BOP_TRADEABLE = 0x00000100, // Allows trading soulbound items
+    ITEM_FLAG_READABLE      = 0x00000200, // Opens text page when right clicked
+    ITEM_FLAG_UNK6          = 0x00000400, // ?
+    ITEM_FLAG_UNK7          = 0x00000800, // ?
+    ITEM_FLAG_REFUNDABLE    = 0x00001000, // Item can be returned to vendor for its original cost (extended cost)
+    ITEM_FLAG_UNK8          = 0x00002000, // ?
+    ITEM_FLAG_UNK9          = 0x00004000, // ?
+    ITEM_FLAG_UNK10         = 0x00008000, // ?
+    ITEM_FLAG_UNK11         = 0x00010000, // ?
+    ITEM_FLAG_UNK12         = 0x00020000, // ?
+    ITEM_FLAG_UNK13         = 0x00040000, // ?
+    ITEM_FLAG_UNK14         = 0x00080000, // ?
+    ITEM_FLAG_UNK15         = 0x00100000, // ?
+    ITEM_FLAG_UNK16         = 0x00200000, // ?
+    ITEM_FLAG_UNK17         = 0x00400000, // ?
+    ITEM_FLAG_UNK18         = 0x00800000, // ?
+    ITEM_FLAG_UNK19         = 0x01000000, // ?
+    ITEM_FLAG_UNK20         = 0x02000000, // ?
+    ITEM_FLAG_UNK21         = 0x04000000, // ?
+    ITEM_FLAG_UNK22         = 0x08000000, // ?
+    ITEM_FLAG_UNK23         = 0x10000000, // ?
+    ITEM_FLAG_UNK24         = 0x20000000, // ?
+    ITEM_FLAG_UNK25         = 0x40000000, // ?
+    ITEM_FLAG_UNK26         = 0x80000000, // ?
 
     ITEM_FLAG_MAIL_TEXT_MASK = ITEM_FLAG_READABLE | ITEM_FLAG_UNK13 | ITEM_FLAG_UNK14, 
 };
@@ -201,9 +201,9 @@ enum ItemFlagsExtra
 {
     ITEM_FLAGS_EXTRA_HORDE_ONLY              = 0x00000001, 
     ITEM_FLAGS_EXTRA_ALLIANCE_ONLY           = 0x00000002, 
-    ITEM_FLAGS_EXTRA_EXT_COST_REQUIRES_GOLD  = 0x00000004,  // when item uses extended cost,  gold is also required
+    ITEM_FLAGS_EXTRA_EXT_COST_REQUIRES_GOLD  = 0x00000004, // when item uses extended cost, gold is also required
     ITEM_FLAGS_EXTRA_NEED_ROLL_DISABLED      = 0x00000100, 
-    ITEM_FLAGS_EXTRA_CASTER_WEAPON           = 0x00000200,  // uses caster specific dbc file for DPS calculations
+    ITEM_FLAGS_EXTRA_CASTER_WEAPON           = 0x00000200, // uses caster specific dbc file for DPS calculations
 };
 
 enum BAG_FAMILY_MASK
@@ -404,8 +404,8 @@ enum ItemSubclassReagent
 
 enum ItemSubclassProjectile
 {
-    ITEM_SUBCLASS_WAND                          = 0,         // ABS
-    ITEM_SUBCLASS_BOLT                          = 1,         // ABS
+    ITEM_SUBCLASS_WAND                          = 0,        // ABS
+    ITEM_SUBCLASS_BOLT                          = 1,        // ABS
     ITEM_SUBCLASS_ARROW                         = 2, 
     ITEM_SUBCLASS_BULLET                        = 3, 
     ITEM_SUBCLASS_THROWN                        = 4         // ABS
@@ -469,8 +469,8 @@ enum ItemSubclassMoney
 
 enum ItemSubclassQuiver
 {
-    ITEM_SUBCLASS_QUIVER0                       = 0,         // ABS
-    ITEM_SUBCLASS_QUIVER1                       = 1,         // ABS
+    ITEM_SUBCLASS_QUIVER0                       = 0,        // ABS
+    ITEM_SUBCLASS_QUIVER1                       = 1,        // ABS
     ITEM_SUBCLASS_QUIVER                        = 2, 
     ITEM_SUBCLASS_AMMO_POUCH                    = 3
 };
@@ -552,7 +552,7 @@ const uint32 MaxItemSubclassValues[MAX_ITEM_CLASS] =
     MAX_ITEM_SUBCLASS_GLYPH
 };
 
-inline uint8 ItemSubClassToDurabilityMultiplierId(uint32 ItemClass,  uint32 ItemSubClass)
+inline uint8 ItemSubClassToDurabilityMultiplierId(uint32 ItemClass, uint32 ItemSubClass)
 {
     switch(ItemClass)
     {
@@ -562,7 +562,7 @@ inline uint8 ItemSubClassToDurabilityMultiplierId(uint32 ItemClass,  uint32 Item
     return 0;
 }
 
-// GCC have alternative #pragma pack(N) syntax and old gcc version not support pack(push, N),  also any gcc version not support it at some platform
+// GCC have alternative #pragma pack(N) syntax and old gcc version not support pack(push, N), also any gcc version not support it at some platform
 #if defined(__GNUC__)
 #pragma pack(1)
 #else
@@ -630,7 +630,7 @@ struct ItemPrototype
     uint32 RequiredReputationFaction;                       // id from Faction.dbc
     uint32 RequiredReputationRank;
     int32  MaxCount;                                        // <= 0: no limit
-    int32  Stackable;                                       // 0: not allowed,  -1: put in player coin info tab and don't limit stacking (so 1 slot)
+    int32  Stackable;                                       // 0: not allowed, -1: put in player coin info tab and don't limit stacking (so 1 slot)
     uint32 ContainerSlots;
     _ItemStat ItemStat[MAX_ITEM_PROTO_STATS];
     uint32 ScalingStatDistribution;                         // id from ScalingStatDistribution.dbc
@@ -662,7 +662,7 @@ struct ItemPrototype
     uint32 GemProperties;                                   // id from GemProperties.dbc
     int32 RequiredDisenchantSkill;
     float  ArmorDamageModifier;
-    int32  Duration;                                        // negative = realtime,  positive = ingame time
+    int32  Duration;                                        // negative = realtime, positive = ingame time
     uint32 ItemLimitCategory;                               // id from ItemLimitCategory.dbc
     uint32 HolidayId;                                       // id from Holidays.dbc
     uint32 ScriptId;
@@ -763,7 +763,7 @@ struct ItemSetNameLocale
     StringVector Name;
 };
 
-// GCC have alternative #pragma pack() syntax and old gcc version not support pack(pop),  also any gcc version not support it at some platform
+// GCC have alternative #pragma pack() syntax and old gcc version not support pack(pop), also any gcc version not support it at some platform
 #if defined(__GNUC__)
 #pragma pack()
 #else

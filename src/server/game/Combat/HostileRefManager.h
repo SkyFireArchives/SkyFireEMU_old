@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef _HOSTILEREFMANAGER
@@ -33,7 +33,7 @@ struct SpellEntry;
 
 //=================================================
 
-class HostileRefManager : public RefManager<Unit,  ThreatManager>
+class HostileRefManager : public RefManager<Unit, ThreatManager>
 {
     private:
         Unit *iOwner;
@@ -46,9 +46,9 @@ class HostileRefManager : public RefManager<Unit,  ThreatManager>
         // send threat to all my hateres for the pVictim
         // The pVictim is hated than by them as well
         // use for buffs and healing threat functionality
-        void threatAssist(Unit *pVictim,  float fThreat,  SpellEntry const *threatSpell = 0,  bool pSingleTarget = false);
+        void threatAssist(Unit *pVictim, float fThreat, SpellEntry const *threatSpell = 0, bool pSingleTarget = false);
 
-        void addTempThreat(float fThreat,  bool apply);
+        void addTempThreat(float fThreat, bool apply);
 
         void addThreatPercent(int32 iPercent);
 
@@ -60,16 +60,16 @@ class HostileRefManager : public RefManager<Unit,  ThreatManager>
         void deleteReferencesForFaction(uint32 faction);
 
         void UpdateVisibility();
-        HostileReference* getFirst() { return ((HostileReference*) RefManager<Unit,  ThreatManager>::getFirst()); }
+        HostileReference* getFirst() { return ((HostileReference*) RefManager<Unit, ThreatManager>::getFirst()); }
 
         void updateThreatTables();
 
         void setOnlineOfflineState(bool bIsOnline);
 
-        // set state for one reference,  defined by Unit
-        void setOnlineOfflineState(Unit *pCreature,  bool bIsOnline);
+        // set state for one reference, defined by Unit
+        void setOnlineOfflineState(Unit *pCreature, bool bIsOnline);
 
-        // delete one reference,  defined by Unit
+        // delete one reference, defined by Unit
         void deleteReference(Unit *pCreature);
 };
 //=================================================

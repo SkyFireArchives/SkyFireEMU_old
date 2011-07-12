@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -41,7 +41,7 @@ TotemAI::Permissible(const Creature *creature)
     return PERMIT_BASE_NO;
 }
 
-TotemAI::TotemAI(Creature *c) : CreatureAI(c),  i_victimGuid(0)
+TotemAI::TotemAI(Creature *c) : CreatureAI(c), i_victimGuid(0)
 {
     ASSERT(c->isTotem());
 }
@@ -77,17 +77,17 @@ TotemAI::UpdateAI(const uint32 /*diff*/)
     // SPELLMOD_RANGE not applied in this place just because not existence range mods for attacking totems
 
     // pointer to appropriate target if found any
-    Unit* victim = i_victimGuid ? ObjectAccessor::GetUnit(*me,  i_victimGuid) : NULL;
+    Unit* victim = i_victimGuid ? ObjectAccessor::GetUnit(*me, i_victimGuid) : NULL;
 
-    // Search victim if no,  not attackable,  or out of range,  or friendly (possible in case duel end)
+    // Search victim if no, not attackable, or out of range, or friendly (possible in case duel end)
     if (!victim ||
-        !victim->isTargetableForAttack() || !me->IsWithinDistInMap(victim,  max_range) ||
+        !victim->isTargetableForAttack() || !me->IsWithinDistInMap(victim, max_range) ||
         me->IsFriendlyTo(victim) || !me->canSeeOrDetect(victim))
     {
         victim = NULL;
-        Trinity::NearestAttackableUnitInObjectRangeCheck u_check(me,  me,  max_range);
-        Trinity::UnitLastSearcher<Trinity::NearestAttackableUnitInObjectRangeCheck> checker(me,  victim,  u_check);
-        me->VisitNearbyObject(max_range,  checker);
+        Trinity::NearestAttackableUnitInObjectRangeCheck u_check(me, me, max_range);
+        Trinity::UnitLastSearcher<Trinity::NearestAttackableUnitInObjectRangeCheck> checker(me, victim, u_check);
+        me->VisitNearbyObject(max_range, checker);
     }
 
     // If have target
@@ -98,7 +98,7 @@ TotemAI::UpdateAI(const uint32 /*diff*/)
 
         // attack
         me->SetInFront(victim);                         // client change orientation by self
-        me->CastSpell(victim,  me->ToTotem()->GetSpell(),  false);
+        me->CastSpell(victim, me->ToTotem()->GetSpell(), false);
     }
     else
         i_victimGuid = 0;
@@ -110,7 +110,7 @@ TotemAI::AttackStart(Unit *)
     // Sentry totem sends ping on attack
     if (me->GetEntry() == SENTRY_TOTEM_ENTRY && me->GetOwner()->GetTypeId() == TYPEID_PLAYER)
     {
-        WorldPacket data(MSG_MINIMAP_PING,  (8+4+4));
+        WorldPacket data(MSG_MINIMAP_PING, (8+4+4));
         data << me->GetGUID();
         data << me->GetPositionX();
         data << me->GetPositionY();

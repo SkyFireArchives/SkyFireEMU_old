@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITYCORE_PET_H
@@ -81,7 +81,7 @@ enum PetTalk
 
 enum PetNameInvalidReason
 {
-    // custom,  not send
+    // custom, not send
     PET_NAME_SUCCESS                                        = 0, 
 
     PET_NAME_INVALID                                        = 1, 
@@ -99,7 +99,7 @@ enum PetNameInvalidReason
     PET_NAME_DECLENSION_DOESNT_MATCH_BASE_NAME              = 16
 };
 
-typedef UNORDERED_MAP<uint32,  PetSpell> PetSpellMap;
+typedef UNORDERED_MAP<uint32, PetSpell> PetSpellMap;
 typedef std::vector<uint32> AutoSpellList;
 
 #define HAPPINESS_LEVEL_SIZE        333000
@@ -115,7 +115,7 @@ class Player;
 class Pet : public Guardian
 {
     public:
-        explicit Pet(Player *owner,  PetType type = MAX_PET_TYPE);
+        explicit Pet(Player *owner, PetType type = MAX_PET_TYPE);
         virtual ~Pet();
 
         void AddToWorld();
@@ -128,14 +128,14 @@ class Pet : public Guardian
 
         bool IsPermanentPetFor(Player* owner);              // pet have tab in character windows and set UNIT_FIELD_PETNUMBER
 
-        bool Create (uint32 guidlow,  Map *map,  uint32 phaseMask,  uint32 Entry,  uint32 pet_number);
+        bool Create (uint32 guidlow, Map *map, uint32 phaseMask, uint32 Entry, uint32 pet_number);
         bool CreateBaseAtCreature(Creature* creature);
         bool CreateBaseAtCreatureInfo(CreatureInfo const* cinfo, Unit * owner);
-        bool CreateBaseAtTamed(CreatureInfo const * cinfo,  Map * map,  uint32 phaseMask);
-        bool LoadPetFromDB(Player* owner, uint32 petentry = 0, uint32 petnumber = 0,  bool current = false,  PetSlot slotID = PET_SLOT_UNK_SLOT);
+        bool CreateBaseAtTamed(CreatureInfo const * cinfo, Map * map, uint32 phaseMask);
+        bool LoadPetFromDB(Player* owner, uint32 petentry = 0, uint32 petnumber = 0, bool current = false, PetSlot slotID = PET_SLOT_UNK_SLOT);
         bool isBeingLoaded() const { return m_loading;}
         void SavePetToDB(PetSlot mode);
-        void Remove(PetSlot mode,  bool returnreagent = false);
+        void Remove(PetSlot mode, bool returnreagent = false);
         static void DeleteFromDB(uint32 guidlow);
 
         void setDeathState(DeathState s);                   // overwrite virtual Creature::setDeathState and Unit::setDeathState
@@ -171,7 +171,7 @@ class Pet : public Guardian
         */
 
         bool CanTakeMoreActiveSpells(uint32 SpellIconID);
-        void ToggleAutocast(uint32 spellid,  bool apply);
+        void ToggleAutocast(uint32 spellid, bool apply);
 
         bool HasSpell(uint32 spell) const;
 
@@ -187,12 +187,12 @@ class Pet : public Guardian
         void _LoadSpells();
         void _SaveSpells(SQLTransaction& trans);
 
-        bool addSpell(uint32 spell_id, ActiveStates active = ACT_DECIDE,  PetSpellState state = PETSPELL_NEW,  PetSpellType type = PETSPELL_NORMAL);
+        bool addSpell(uint32 spell_id, ActiveStates active = ACT_DECIDE, PetSpellState state = PETSPELL_NEW, PetSpellType type = PETSPELL_NORMAL);
         bool learnSpell(uint32 spell_id);
         void learnSpellHighRank(uint32 spellid);
         void InitLevelupSpellsForLevel();
-        bool unlearnSpell(uint32 spell_id,  bool learn_prev,  bool clear_ab = true);
-        bool removeSpell(uint32 spell_id,  bool learn_prev,  bool clear_ab = true);
+        bool unlearnSpell(uint32 spell_id, bool learn_prev, bool clear_ab = true);
+        bool removeSpell(uint32 spell_id, bool learn_prev, bool clear_ab = true);
         void CleanupActionBar();
 
         PetSpellMap     m_spells;
@@ -201,13 +201,13 @@ class Pet : public Guardian
         void InitPetCreateSpells();
 
         bool resetTalents(bool no_cost = false);
-        static void resetTalentsForAllPetsOf(Player* owner,  Pet* online_pet = NULL);
+        static void resetTalentsForAllPetsOf(Player* owner, Pet* online_pet = NULL);
         uint32 resetTalentsCost() const;
         void InitTalentForLevel();
 
         uint8 GetMaxTalentPointsForLevel(uint8 level);
-        uint8 GetFreeTalentPoints() { return GetByteValue(UNIT_FIELD_BYTES_1,  1); }
-        void SetFreeTalentPoints(uint8 points) { SetByteValue(UNIT_FIELD_BYTES_1,  1,  points); }
+        uint8 GetFreeTalentPoints() { return GetByteValue(UNIT_FIELD_BYTES_1, 1); }
+        void SetFreeTalentPoints(uint8 points) { SetByteValue(UNIT_FIELD_BYTES_1, 1, points); }
 
         uint32  m_resetTalentsCost;
         time_t  m_resetTalentsTime;
@@ -236,7 +236,7 @@ class Pet : public Guardian
         DeclinedName *m_declinedname;
 
     private:
-        void SaveToDB(uint32,  uint8)                        // overwrited of Creature::SaveToDB     - don't must be called
+        void SaveToDB(uint32, uint8)                        // overwrited of Creature::SaveToDB     - don't must be called
         {
             ASSERT(false);
         }

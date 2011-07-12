@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITYCORE_CORPSE_H
@@ -50,7 +50,7 @@ enum CorpseFlags
     CORPSE_FLAG_LOOTABLE    = 0x20
 };
 
-class Corpse : public WorldObject,  public GridObject<Corpse>
+class Corpse : public WorldObject, public GridObject<Corpse>
 {
     public:
         explicit Corpse(CorpseType type = CORPSE_BONES);
@@ -59,11 +59,11 @@ class Corpse : public WorldObject,  public GridObject<Corpse>
         void AddToWorld();
         void RemoveFromWorld();
 
-        bool Create(uint32 guidlow,  Map *map);
-        bool Create(uint32 guidlow,  Player *owner);
+        bool Create(uint32 guidlow, Map *map);
+        bool Create(uint32 guidlow, Player *owner);
 
         void SaveToDB();
-        bool LoadFromDB(uint32 guid,  Field *fields);
+        bool LoadFromDB(uint32 guid, Field *fields);
 
         void DeleteBonesFromWorld();
         void DeleteFromDB(SQLTransaction& trans);
@@ -81,11 +81,11 @@ class Corpse : public WorldObject,  public GridObject<Corpse>
         Player* lootRecipient;
         bool lootForBody;
 
-        void Say(int32 textId,  uint32 language,  uint64 TargetGuid) { MonsterSay(textId,  language,  TargetGuid); }
-        void Yell(int32 textId,  uint32 language,  uint64 TargetGuid) { MonsterYell(textId,  language,  TargetGuid); }
-        void TextEmote(int32 textId,  uint64 TargetGuid) { MonsterTextEmote(textId,  TargetGuid); }
-        void Whisper(int32 textId,  uint64 receiver) { MonsterWhisper(textId,  receiver); }
-        void YellToZone(int32 textId,  uint32 language,  uint64 TargetGuid) { MonsterYellToZone(textId,  language,  TargetGuid); }
+        void Say(int32 textId, uint32 language, uint64 TargetGuid) { MonsterSay(textId, language, TargetGuid); }
+        void Yell(int32 textId, uint32 language, uint64 TargetGuid) { MonsterYell(textId, language, TargetGuid); }
+        void TextEmote(int32 textId, uint64 TargetGuid) { MonsterTextEmote(textId, TargetGuid); }
+        void Whisper(int32 textId, uint64 receiver) { MonsterWhisper(textId, receiver); }
+        void YellToZone(int32 textId, uint32 language, uint64 TargetGuid) { MonsterYellToZone(textId, language, TargetGuid); }
 
         bool IsExpired(time_t t) const;
 

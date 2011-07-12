@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -27,7 +27,7 @@
 
 int AggressorAI::Permissible(const Creature *creature)
 {
-    // have some hostile factions,  it will be selected by IsHostileTo check at MoveInLineOfSight
+    // have some hostile factions, it will be selected by IsHostileTo check at MoveInLineOfSight
     if (!creature->isCivilian() && !creature->IsNeutralToAll())
         return PERMIT_BASE_PROACTIVE;
 
@@ -86,7 +86,7 @@ void CombatAI::JustDied(Unit *killer)
 {
     for (SpellVct::iterator i = spells.begin(); i != spells.end(); ++i)
         if (AISpellInfo[*i].condition == AICOND_DIE)
-            me->CastSpell(killer,  *i,  true);
+            me->CastSpell(killer, *i, true);
 }
 
 void CombatAI::EnterCombat(Unit *who)
@@ -94,9 +94,9 @@ void CombatAI::EnterCombat(Unit *who)
     for (SpellVct::iterator i = spells.begin(); i != spells.end(); ++i)
     {
         if (AISpellInfo[*i].condition == AICOND_AGGRO)
-            me->CastSpell(who,  *i,  false);
+            me->CastSpell(who, *i, false);
         else if (AISpellInfo[*i].condition == AICOND_COMBAT)
-            events.ScheduleEvent(*i,  AISpellInfo[*i].cooldown + rand()%AISpellInfo[*i].cooldown);
+            events.ScheduleEvent(*i, AISpellInfo[*i].cooldown + rand()%AISpellInfo[*i].cooldown);
     }
 }
 
@@ -113,7 +113,7 @@ void CombatAI::UpdateAI(const uint32 diff)
     if (uint32 spellId = events.ExecuteEvent())
     {
         DoCast(spellId);
-        events.ScheduleEvent(spellId,  AISpellInfo[spellId].cooldown + rand()%AISpellInfo[spellId].cooldown);
+        events.ScheduleEvent(spellId, AISpellInfo[spellId].cooldown + rand()%AISpellInfo[spellId].cooldown);
     }
     else
         DoMeleeAttackIfReady();
@@ -142,10 +142,10 @@ void CasterAI::EnterCombat(Unit *who)
 
     uint32 spell = rand()%spells.size();
     uint32 count = 0;
-    for (SpellVct::iterator itr = spells.begin(); itr != spells.end(); ++itr,  ++count)
+    for (SpellVct::iterator itr = spells.begin(); itr != spells.end(); ++itr, ++count)
     {
         if (AISpellInfo[*itr].condition == AICOND_AGGRO)
-            me->CastSpell(who,  *itr,  false);
+            me->CastSpell(who, *itr, false);
         else if (AISpellInfo[*itr].condition == AICOND_COMBAT)
         {
             uint32 cooldown = GetAISpellInfo(*itr)->realCooldown;
@@ -154,7 +154,7 @@ void CasterAI::EnterCombat(Unit *who)
                 DoCast(spells[spell]);
                 cooldown += me->GetCurrentSpellCastTime(*itr);
             }
-            events.ScheduleEvent(*itr,  cooldown);
+            events.ScheduleEvent(*itr, cooldown);
         }
     }
 }
@@ -173,7 +173,7 @@ void CasterAI::UpdateAI(const uint32 diff)
     {
         DoCast(spellId);
         uint32 casttime = me->GetCurrentSpellCastTime(spellId);
-        events.ScheduleEvent(spellId,  (casttime ? casttime : 500) + GetAISpellInfo(spellId)->realCooldown);
+        events.ScheduleEvent(spellId, (casttime ? casttime : 500) + GetAISpellInfo(spellId)->realCooldown);
     }
 }
 
@@ -184,12 +184,12 @@ void CasterAI::UpdateAI(const uint32 diff)
 ArchorAI::ArchorAI(Creature *c) : CreatureAI(c)
 {
     if (!me->m_spells[0])
-        sLog->outError("ArchorAI set for creature (entry = %u) with spell1=0. AI will do nothing",  me->GetEntry());
+        sLog->outError("ArchorAI set for creature (entry = %u) with spell1=0. AI will do nothing", me->GetEntry());
 
-    m_minRange = GetSpellMinRange(me->m_spells[0],  false);
+    m_minRange = GetSpellMinRange(me->m_spells[0], false);
     if (!m_minRange)
         m_minRange = MELEE_RANGE;
-    me->m_CombatDistance = GetSpellMaxRange(me->m_spells[0],  false);
+    me->m_CombatDistance = GetSpellMaxRange(me->m_spells[0], false);
     me->m_SightDistance = me->m_CombatDistance;
 }
 
@@ -198,15 +198,15 @@ void ArchorAI::AttackStart(Unit *who)
     if (!who)
         return;
 
-    if (me->IsWithinCombatRange(who,  m_minRange))
+    if (me->IsWithinCombatRange(who, m_minRange))
     {
-        if (me->Attack(who,  true) && !who->IsFlying())
+        if (me->Attack(who, true) && !who->IsFlying())
             me->GetMotionMaster()->MoveChase(who);
     }
     else
     {
-        if (me->Attack(who,  false) && !who->IsFlying())
-            me->GetMotionMaster()->MoveChase(who,  me->m_CombatDistance);
+        if (me->Attack(who, false) && !who->IsFlying())
+            me->GetMotionMaster()->MoveChase(who, me->m_CombatDistance);
     }
 
     if (who->IsFlying())
@@ -218,7 +218,7 @@ void ArchorAI::UpdateAI(const uint32 /*diff*/)
     if (!UpdateVictim())
         return;
 
-    if (!me->IsWithinCombatRange(me->getVictim(),  m_minRange))
+    if (!me->IsWithinCombatRange(me->getVictim(), m_minRange))
         DoSpellAttackIfReady(me->m_spells[0]);
     else
         DoMeleeAttackIfReady();
@@ -231,18 +231,18 @@ void ArchorAI::UpdateAI(const uint32 /*diff*/)
 TurretAI::TurretAI(Creature *c) : CreatureAI(c)
 {
     if (!me->m_spells[0])
-        sLog->outError("TurretAI set for creature (entry = %u) with spell1=0. AI will do nothing",  me->GetEntry());
+        sLog->outError("TurretAI set for creature (entry = %u) with spell1=0. AI will do nothing", me->GetEntry());
 
-    m_minRange = GetSpellMinRange(me->m_spells[0],  false);
-    me->m_CombatDistance = GetSpellMaxRange(me->m_spells[0],  false);
+    m_minRange = GetSpellMinRange(me->m_spells[0], false);
+    me->m_CombatDistance = GetSpellMaxRange(me->m_spells[0], false);
     me->m_SightDistance = me->m_CombatDistance;
 }
 
 bool TurretAI::CanAIAttack(const Unit * /*who*/) const
 {
     // TODO: use one function to replace it
-    if (!me->IsWithinCombatRange(me->getVictim(),  me->m_CombatDistance)
-        || (m_minRange && me->IsWithinCombatRange(me->getVictim(),  m_minRange)))
+    if (!me->IsWithinCombatRange(me->getVictim(), me->m_CombatDistance)
+        || (m_minRange && me->IsWithinCombatRange(me->getVictim(), m_minRange)))
         return false;
     return true;
 }
@@ -250,7 +250,7 @@ bool TurretAI::CanAIAttack(const Unit * /*who*/) const
 void TurretAI::AttackStart(Unit *who)
 {
     if (who)
-        me->Attack(who,  false);
+        me->Attack(who, false);
 }
 
 void TurretAI::UpdateAI(const uint32 /*diff*/)
@@ -268,11 +268,11 @@ void TurretAI::UpdateAI(const uint32 /*diff*/)
 AOEAI::AOEAI(Creature *c) : CreatureAI(c)
 {
     if (!me->m_spells[0])
-        sLog->outError("AOEAI set for creature (entry = %u) with spell1=0. AI will do nothing",  me->GetEntry());
+        sLog->outError("AOEAI set for creature (entry = %u) with spell1=0. AI will do nothing", me->GetEntry());
 
     me->SetVisible(true);//visible to see all spell anims
-    me->SetFlag(UNIT_FIELD_FLAGS,  UNIT_FLAG_NOT_SELECTABLE);//can't be targeted
-    me->SetFlag(UNIT_FIELD_FLAGS,  UNIT_FLAG_NOT_ATTACKABLE_1);//can't be damaged
+    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);//can't be targeted
+    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_1);//can't be damaged
     me->SetDisplayId(11686);//invisible model, around a size of a player
 }
 
@@ -288,14 +288,14 @@ void AOEAI::AttackStart(Unit * /*who*/)
 void AOEAI::UpdateAI(const uint32 /*diff*/)
 {
     if (!me->HasAura(me->m_spells[0]))
-        me->CastSpell(me,  me->m_spells[0], false);
+        me->CastSpell(me, me->m_spells[0], false);
 }
 
 //////////////
 //VehicleAI
 //////////////
 
-VehicleAI::VehicleAI(Creature *c) : CreatureAI(c),  m_vehicle(c->GetVehicleKit()),  m_IsVehicleInUse(false),  m_ConditionsTimer(VEHICLE_CONDITION_CHECK_TIME)
+VehicleAI::VehicleAI(Creature *c) : CreatureAI(c), m_vehicle(c->GetVehicleKit()), m_IsVehicleInUse(false), m_ConditionsTimer(VEHICLE_CONDITION_CHECK_TIME)
 {
     LoadConditions();
     m_DoDismiss = false;
@@ -331,8 +331,8 @@ void VehicleAI::OnCharmed(bool apply)
     if (m_IsVehicleInUse && !apply && !conditions.empty())//was used and has conditions
     {
         m_DoDismiss = true;//needs reset
-        me->RemoveFlag(UNIT_NPC_FLAGS,  UNIT_NPC_FLAG_PLAYER_VEHICLE);
-        me->RemoveFlag(UNIT_NPC_FLAGS,  UNIT_NPC_FLAG_SPELLCLICK);
+        me->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_PLAYER_VEHICLE);
+        me->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPELLCLICK);
     }
     else if (apply)
         m_DoDismiss = false;//in use again
@@ -342,10 +342,10 @@ void VehicleAI::OnCharmed(bool apply)
 
 void VehicleAI::LoadConditions()
 {
-    conditions = sConditionMgr->GetConditionsForNotGroupedEntry(CONDITION_SOURCE_TYPE_CREATURE_TEMPLATE_VEHICLE,  me->GetEntry());
+    conditions = sConditionMgr->GetConditionsForNotGroupedEntry(CONDITION_SOURCE_TYPE_CREATURE_TEMPLATE_VEHICLE, me->GetEntry());
     if (!conditions.empty())
     {
-        sLog->outDebug("VehicleAI::LoadConditions: loaded %u conditions",  uint32(conditions.size()));
+        sLog->outDebug("VehicleAI::LoadConditions: loaded %u conditions", uint32(conditions.size()));
     }
 }
 
@@ -360,7 +360,7 @@ void VehicleAI::CheckConditions(const uint32 diff)
                 {
                     if (Player* plr = passenger->ToPlayer())
                     {
-                        if (!sConditionMgr->IsPlayerMeetToConditions(plr,  conditions))
+                        if (!sConditionMgr->IsPlayerMeetToConditions(plr, conditions))
                         {
                             plr->ExitVehicle();
                             return;//check other pessanger in next tick

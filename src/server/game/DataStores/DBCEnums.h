@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,15 +16,15 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef DBCENUMS_H
 #define DBCENUMS_H
 
-// Client expected level limitation,  like as used in DBC item max levels for "until max player level"
-// use as default max player level,  must be fit max level for used client
+// Client expected level limitation, like as used in DBC item max levels for "until max player level"
+// use as default max player level, must be fit max level for used client
 // also see MAX_LEVEL and STRONG_MAX_LEVEL define
 #define DEFAULT_MAX_LEVEL 85
 
@@ -61,22 +61,22 @@ enum AchievementFaction
 
 enum AchievementFlags
 {
-    ACHIEVEMENT_FLAG_COUNTER           = 0x00000001,         // Just count statistic (never stop and complete)
-    ACHIEVEMENT_FLAG_HIDDEN            = 0x00000002,         // Not sent to client - internal use only
-    ACHIEVEMENT_FLAG_STORE_MAX_VALUE   = 0x00000004,         // Store only max value? used only in "Reach level xx"
-    ACHIEVEMENT_FLAG_SUMM              = 0x00000008,         // Use summ criteria value from all reqirements (and calculate max value)
-    ACHIEVEMENT_FLAG_MAX_USED          = 0x00000010,         // Show max criteria (and calculate max value ??)
-    ACHIEVEMENT_FLAG_REQ_COUNT         = 0x00000020,         // Use not zero req count (and calculate max value)
-    ACHIEVEMENT_FLAG_AVERAGE           = 0x00000040,         // Show as average value (value / time_in_days) depend from other flag (by def use last criteria value)
-    ACHIEVEMENT_FLAG_BAR               = 0x00000080,         // Show as progress bar (value / max vale) depend from other flag (by def use last criteria value)
-    ACHIEVEMENT_FLAG_REALM_FIRST_REACH = 0x00000100,         //
-    ACHIEVEMENT_FLAG_REALM_FIRST_KILL  = 0x00000200,         //
-    ACHIEVEMENT_FLAG_UNK0              = 0x00000400,         //
-    ACHIEVEMENT_FLAG_UNK1              = 0x00000800,         //
-    ACHIEVEMENT_FLAG_UNK2              = 0x00001000,         // 4.0.x
-    ACHIEVEMENT_FLAG_UNK3              = 0x00002000,         // 4.0.x
-    ACHIEVEMENT_FLAG_GUILD_ACHIEVEMENT = 0x00004000,         //
-    ACHIEVEMENT_FLAG_UNK4              = 0x00008000,         // Guild related
+    ACHIEVEMENT_FLAG_COUNTER           = 0x00000001,        // Just count statistic (never stop and complete)
+    ACHIEVEMENT_FLAG_HIDDEN            = 0x00000002,        // Not sent to client - internal use only
+    ACHIEVEMENT_FLAG_STORE_MAX_VALUE   = 0x00000004,        // Store only max value? used only in "Reach level xx"
+    ACHIEVEMENT_FLAG_SUMM              = 0x00000008,        // Use summ criteria value from all reqirements (and calculate max value)
+    ACHIEVEMENT_FLAG_MAX_USED          = 0x00000010,        // Show max criteria (and calculate max value ??)
+    ACHIEVEMENT_FLAG_REQ_COUNT         = 0x00000020,        // Use not zero req count (and calculate max value)
+    ACHIEVEMENT_FLAG_AVERAGE           = 0x00000040,        // Show as average value (value / time_in_days) depend from other flag (by def use last criteria value)
+    ACHIEVEMENT_FLAG_BAR               = 0x00000080,        // Show as progress bar (value / max vale) depend from other flag (by def use last criteria value)
+    ACHIEVEMENT_FLAG_REALM_FIRST_REACH = 0x00000100,        //
+    ACHIEVEMENT_FLAG_REALM_FIRST_KILL  = 0x00000200,        //
+    ACHIEVEMENT_FLAG_UNK0              = 0x00000400,        //
+    ACHIEVEMENT_FLAG_UNK1              = 0x00000800,        //
+    ACHIEVEMENT_FLAG_UNK2              = 0x00001000,        // 4.0.x
+    ACHIEVEMENT_FLAG_UNK3              = 0x00002000,        // 4.0.x
+    ACHIEVEMENT_FLAG_GUILD_ACHIEVEMENT = 0x00004000,        //
+    ACHIEVEMENT_FLAG_UNK4              = 0x00008000,        // Guild related
 };
 
 #define MAX_CRITERIA_REQUIREMENTS 2
@@ -84,33 +84,33 @@ enum AchievementFlags
 enum AchievementCriteriaCondition
 {
     ACHIEVEMENT_CRITERIA_CONDITION_NONE         = 0, 
-    ACHIEVEMENT_CRITERIA_CONDITION_NO_DEATH     = 1,     // reset progress on death
-    ACHIEVEMENT_CRITERIA_CONDITION_UNK1         = 2,     // only used in "Complete a daily quest every day for five consecutive days"
-    ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP       = 3,     // requires you to be on specific map,  reset at change
-    ACHIEVEMENT_CRITERIA_CONDITION_NO_LOSE      = 4,     // only used in "Win 10 arenas without losing"
-    ACHIEVEMENT_CRITERIA_CONDITION_UNK2         = 9,     // unk
-    ACHIEVEMENT_CRITERIA_CONDITION_NOT_IN_GROUP = 10,    // requires the player not to be in group
-    ACHIEVEMENT_CRITERIA_CONDITION_UNK3         = 13,    // unk
+    ACHIEVEMENT_CRITERIA_CONDITION_NO_DEATH     = 1,    // reset progress on death
+    ACHIEVEMENT_CRITERIA_CONDITION_UNK1         = 2,    // only used in "Complete a daily quest every day for five consecutive days"
+    ACHIEVEMENT_CRITERIA_CONDITION_BG_MAP       = 3,    // requires you to be on specific map, reset at change
+    ACHIEVEMENT_CRITERIA_CONDITION_NO_LOSE      = 4,    // only used in "Win 10 arenas without losing"
+    ACHIEVEMENT_CRITERIA_CONDITION_UNK2         = 9,    // unk
+    ACHIEVEMENT_CRITERIA_CONDITION_NOT_IN_GROUP = 10,   // requires the player not to be in group
+    ACHIEVEMENT_CRITERIA_CONDITION_UNK3         = 13,   // unk
 };
 
 enum AchievementCriteriaCompletionFlags
 {
-    ACHIEVEMENT_CRITERIA_FLAG_SHOW_PROGRESS_BAR = 0x00000001,          // Show progress as bar
-    ACHIEVEMENT_CRITERIA_FLAG_HIDE_CRITERIA     = 0x00000002,          // Not show criteria in client
-    ACHIEVEMENT_CRITERIA_FLAG_UNK3              = 0x00000004,          // BG related??
-    ACHIEVEMENT_CRITERIA_FLAG_UNK4              = 0x00000008,          //
-    ACHIEVEMENT_CRITERIA_FLAG_UNK5              = 0x00000010,          // not used
-    ACHIEVEMENT_CRITERIA_FLAG_MONEY_COUNTER     = 0x00000020,          // Displays counter as money
+    ACHIEVEMENT_CRITERIA_FLAG_SHOW_PROGRESS_BAR = 0x00000001,         // Show progress as bar
+    ACHIEVEMENT_CRITERIA_FLAG_HIDE_CRITERIA     = 0x00000002,         // Not show criteria in client
+    ACHIEVEMENT_CRITERIA_FLAG_UNK3              = 0x00000004,         // BG related??
+    ACHIEVEMENT_CRITERIA_FLAG_UNK4              = 0x00000008,         //
+    ACHIEVEMENT_CRITERIA_FLAG_UNK5              = 0x00000010,         // not used
+    ACHIEVEMENT_CRITERIA_FLAG_MONEY_COUNTER     = 0x00000020,         // Displays counter as money
 };
 
 enum AchievementCriteriaTimedTypes
 {
-    ACHIEVEMENT_TIMED_TYPE_EVENT            = 1,     // Timer is started by internal event with id in timerStartEvent
-    ACHIEVEMENT_TIMED_TYPE_QUEST            = 2,     // Timer is started by acceting quest with entry in timerStartEvent
-    ACHIEVEMENT_TIMED_TYPE_SPELL_CASTER     = 5,     // Timer is started by casting a spell with entry in timerStartEvent
-    ACHIEVEMENT_TIMED_TYPE_SPELL_TARGET     = 6,     // Timer is started by being target of spell with entry in timerStartEvent
-    ACHIEVEMENT_TIMED_TYPE_CREATURE         = 7,     // Timer is started by killing creature with entry in timerStartEvent
-    ACHIEVEMENT_TIMED_TYPE_ITEM             = 9,     // Timer is started by using item with entry in timerStartEvent
+    ACHIEVEMENT_TIMED_TYPE_EVENT            = 1,    // Timer is started by internal event with id in timerStartEvent
+    ACHIEVEMENT_TIMED_TYPE_QUEST            = 2,    // Timer is started by acceting quest with entry in timerStartEvent
+    ACHIEVEMENT_TIMED_TYPE_SPELL_CASTER     = 5,    // Timer is started by casting a spell with entry in timerStartEvent
+    ACHIEVEMENT_TIMED_TYPE_SPELL_TARGET     = 6,    // Timer is started by being target of spell with entry in timerStartEvent
+    ACHIEVEMENT_TIMED_TYPE_CREATURE         = 7,    // Timer is started by killing creature with entry in timerStartEvent
+    ACHIEVEMENT_TIMED_TYPE_ITEM             = 9,    // Timer is started by using item with entry in timerStartEvent
 
     ACHIEVEMENT_TIMED_TYPE_MAX, 
 };
@@ -159,7 +159,7 @@ enum AchievementCriteriaTypes
     ACHIEVEMENT_CRITERIA_TYPE_BUY_BANK_SLOT= 45, 
     ACHIEVEMENT_CRITERIA_TYPE_GAIN_REPUTATION= 46, 
     ACHIEVEMENT_CRITERIA_TYPE_GAIN_EXALTED_REPUTATION= 47, 
-    // noted: rewarded as soon as the player payed,  not at taking place at the seat
+    // noted: rewarded as soon as the player payed, not at taking place at the seat
     ACHIEVEMENT_CRITERIA_TYPE_VISIT_BARBER_SHOP= 48, 
     ACHIEVEMENT_CRITERIA_TYPE_EQUIP_EPIC_ITEM = 49, 
     // TODO: itemlevel is mentioned in text but not present in dbc
@@ -169,7 +169,7 @@ enum AchievementCriteriaTypes
     ACHIEVEMENT_CRITERIA_TYPE_HK_RACE = 53, 
     ACHIEVEMENT_CRITERIA_TYPE_DO_EMOTE = 54, 
     ACHIEVEMENT_CRITERIA_TYPE_HEALING_DONE = 55, 
-    // TODO: in some cases map not present,  and in some cases need do without die
+    // TODO: in some cases map not present, and in some cases need do without die
     ACHIEVEMENT_CRITERIA_TYPE_GET_KILLING_BLOWS = 56, 
     ACHIEVEMENT_CRITERIA_TYPE_EQUIP_ITEM = 57, 
     ACHIEVEMENT_CRITERIA_TYPE_MONEY_FROM_VENDORS = 59, 
@@ -189,7 +189,7 @@ enum AchievementCriteriaTypes
     ACHIEVEMENT_CRITERIA_TYPE_LEARN_SKILLLINE_SPELLS= 75, 
     ACHIEVEMENT_CRITERIA_TYPE_WIN_DUEL = 76, 
     ACHIEVEMENT_CRITERIA_TYPE_LOSE_DUEL = 77, 
-    // TODO: creature type (demon,  undead etc.) is not stored in dbc
+    // TODO: creature type (demon, undead etc.) is not stored in dbc
     ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE_TYPE = 78, 
     ACHIEVEMENT_CRITERIA_TYPE_GOLD_EARNED_BY_AUCTIONS= 80, 
     ACHIEVEMENT_CRITERIA_TYPE_CREATE_AUCTION= 82, 
@@ -275,34 +275,34 @@ enum AchievementCriteriaMoreReqType
 
 enum AreaFlags
 {
-    AREA_FLAG_SNOW             = 0x00000001,                 // snow (only Dun Morogh,  Naxxramas,  Razorfen Downs and Winterspring)
-    AREA_FLAG_UNK1             = 0x00000002,                 // may be necropolis?
-    AREA_FLAG_UNK2             = 0x00000004,                 // Only used for areas on map 571 (development before)
-    AREA_FLAG_SLAVE_CAPITAL    = 0x00000008,                 // city and city subsones
-    AREA_FLAG_UNK3             = 0x00000010,                 // can't find common meaning
-    AREA_FLAG_SLAVE_CAPITAL2   = 0x00000020,                 // slave capital city flag?
-    AREA_FLAG_UNK4             = 0x00000040,                 // many zones have this flag
-    AREA_FLAG_ARENA            = 0x00000080,                 // arena,  both instanced and world arenas
-    AREA_FLAG_CAPITAL          = 0x00000100,                 // main capital city flag
-    AREA_FLAG_CITY             = 0x00000200,                 // only for one zone named "City" (where it located?)
-    AREA_FLAG_OUTLAND          = 0x00000400,                 // expansion zones? (only Eye of the Storm not have this flag,  but have 0x00004000 flag)
-    AREA_FLAG_SANCTUARY        = 0x00000800,                 // sanctuary area (PvP disabled)
-    AREA_FLAG_NEED_FLY         = 0x00001000,                 // only Netherwing Ledge,  Socrethar's Seat,  Tempest Keep,  The Arcatraz,  The Botanica,  The Mechanar,  Sorrow Wing Point,  Dragonspine Ridge,  Netherwing Mines,  Dragonmaw Base Camp,  Dragonmaw Skyway
-    AREA_FLAG_UNUSED1          = 0x00002000,                 // not used now (no area/zones with this flag set in 3.0.3)
-    AREA_FLAG_OUTLAND2         = 0x00004000,                 // expansion zones? (only Circle of Blood Arena not have this flag,  but have 0x00000400 flag)
-    AREA_FLAG_PVP              = 0x00008000,                 // pvp objective area? (Death's Door also has this flag although it's no pvp object area)
-    AREA_FLAG_ARENA_INSTANCE   = 0x00010000,                 // used by instanced arenas only
-    AREA_FLAG_UNUSED2          = 0x00020000,                 // not used now (no area/zones with this flag set in 3.0.3)
-    AREA_FLAG_UNK5             = 0x00040000,                 // only used for Amani Pass,  Hatchet Hills
-    AREA_FLAG_UNK6             = 0x00080000,                 // Valgarde and Acherus: The Ebon Hold
-    AREA_FLAG_LOWLEVEL         = 0x00100000,                 // used for some starting areas with area_level <= 15
-    AREA_FLAG_TOWN             = 0x00200000,                 // small towns with Inn
-    AREA_FLAG_UNK7             = 0x00400000,                 // Warsong Hold,  Acherus: The Ebon Hold,  New Agamand Inn,  Vengeance Landing Inn
-    AREA_FLAG_UNK8             = 0x00800000,                 // Westguard Inn,  Acherus: The Ebon Hold,  Valgarde
-    AREA_FLAG_OUTDOOR_PVP      = 0x01000000,                 // Wintergrasp and it's subzones
-    AREA_FLAG_INSIDE           = 0x02000000,                 // used for determinating spell related inside/outside questions in Map::IsOutdoors
-    AREA_FLAG_OUTSIDE          = 0x04000000,                 // used for determinating spell related inside/outside questions in Map::IsOutdoors
-    AREA_FLAG_OUTDOOR_PVP2     = 0x08000000,                 // Wintergrasp and it's subzones
+    AREA_FLAG_SNOW             = 0x00000001,                // snow (only Dun Morogh, Naxxramas, Razorfen Downs and Winterspring)
+    AREA_FLAG_UNK1             = 0x00000002,                // may be necropolis?
+    AREA_FLAG_UNK2             = 0x00000004,                // Only used for areas on map 571 (development before)
+    AREA_FLAG_SLAVE_CAPITAL    = 0x00000008,                // city and city subsones
+    AREA_FLAG_UNK3             = 0x00000010,                // can't find common meaning
+    AREA_FLAG_SLAVE_CAPITAL2   = 0x00000020,                // slave capital city flag?
+    AREA_FLAG_UNK4             = 0x00000040,                // many zones have this flag
+    AREA_FLAG_ARENA            = 0x00000080,                // arena, both instanced and world arenas
+    AREA_FLAG_CAPITAL          = 0x00000100,                // main capital city flag
+    AREA_FLAG_CITY             = 0x00000200,                // only for one zone named "City" (where it located?)
+    AREA_FLAG_OUTLAND          = 0x00000400,                // expansion zones? (only Eye of the Storm not have this flag, but have 0x00004000 flag)
+    AREA_FLAG_SANCTUARY        = 0x00000800,                // sanctuary area (PvP disabled)
+    AREA_FLAG_NEED_FLY         = 0x00001000,                // only Netherwing Ledge, Socrethar's Seat, Tempest Keep, The Arcatraz, The Botanica, The Mechanar, Sorrow Wing Point, Dragonspine Ridge, Netherwing Mines, Dragonmaw Base Camp, Dragonmaw Skyway
+    AREA_FLAG_UNUSED1          = 0x00002000,                // not used now (no area/zones with this flag set in 3.0.3)
+    AREA_FLAG_OUTLAND2         = 0x00004000,                // expansion zones? (only Circle of Blood Arena not have this flag, but have 0x00000400 flag)
+    AREA_FLAG_PVP              = 0x00008000,                // pvp objective area? (Death's Door also has this flag although it's no pvp object area)
+    AREA_FLAG_ARENA_INSTANCE   = 0x00010000,                // used by instanced arenas only
+    AREA_FLAG_UNUSED2          = 0x00020000,                // not used now (no area/zones with this flag set in 3.0.3)
+    AREA_FLAG_UNK5             = 0x00040000,                // only used for Amani Pass, Hatchet Hills
+    AREA_FLAG_UNK6             = 0x00080000,                // Valgarde and Acherus: The Ebon Hold
+    AREA_FLAG_LOWLEVEL         = 0x00100000,                // used for some starting areas with area_level <= 15
+    AREA_FLAG_TOWN             = 0x00200000,                // small towns with Inn
+    AREA_FLAG_UNK7             = 0x00400000,                // Warsong Hold, Acherus: The Ebon Hold, New Agamand Inn, Vengeance Landing Inn
+    AREA_FLAG_UNK8             = 0x00800000,                // Westguard Inn, Acherus: The Ebon Hold, Valgarde
+    AREA_FLAG_OUTDOOR_PVP      = 0x01000000,                // Wintergrasp and it's subzones
+    AREA_FLAG_INSIDE           = 0x02000000,                // used for determinating spell related inside/outside questions in Map::IsOutdoors
+    AREA_FLAG_OUTSIDE          = 0x04000000,                // used for determinating spell related inside/outside questions in Map::IsOutdoors
+    AREA_FLAG_OUTDOOR_PVP2     = 0x08000000,                // Wintergrasp and it's subzones
     AREA_FLAG_NO_FLY_ZONE      = 0x20000000                 // Marks zones where you cannot fly
 };
 
@@ -345,25 +345,25 @@ enum SpawnMask
 
 enum FactionTemplateFlags
 {
-    FACTION_TEMPLATE_FLAG_PVP               = 0x00000800,    // flagged for PvP
-    FACTION_TEMPLATE_FLAG_CONTESTED_GUARD   = 0x00001000,    // faction will attack players that were involved in PvP combats
+    FACTION_TEMPLATE_FLAG_PVP               = 0x00000800,   // flagged for PvP
+    FACTION_TEMPLATE_FLAG_CONTESTED_GUARD   = 0x00001000,   // faction will attack players that were involved in PvP combats
 };
 
 enum FactionMasks
 {
-    FACTION_MASK_PLAYER   = 1,                               // any player
-    FACTION_MASK_ALLIANCE = 2,                               // player or creature from alliance team
-    FACTION_MASK_HORDE    = 4,                               // player or creature from horde team
+    FACTION_MASK_PLAYER   = 1,                              // any player
+    FACTION_MASK_ALLIANCE = 2,                              // player or creature from alliance team
+    FACTION_MASK_HORDE    = 4,                              // player or creature from horde team
     FACTION_MASK_MONSTER  = 8                               // aggressive creature from monster team
     // if none flags set then non-aggressive creature
 };
 
 enum MapTypes                                               // Lua_IsInInstance
 {
-    MAP_COMMON          = 0,                                 // none
-    MAP_INSTANCE        = 1,                                 // party
-    MAP_RAID            = 2,                                 // raid
-    MAP_BATTLEGROUND    = 3,                                 // pvp
+    MAP_COMMON          = 0,                                // none
+    MAP_INSTANCE        = 1,                                // party
+    MAP_RAID            = 2,                                // raid
+    MAP_BATTLEGROUND    = 3,                                // pvp
     MAP_ARENA           = 4                                 // arena
 };
 
@@ -388,8 +388,8 @@ enum ItemEnchantmentType
 
 enum ItemLimitCategoryMode
 {
-    ITEM_LIMIT_CATEGORY_MODE_HAVE  = 0,                       // limit applied to amount items in inventory/bank
-    ITEM_LIMIT_CATEGORY_MODE_EQUIP = 1,                       // limit applied to amount equipped items (including used gems)
+    ITEM_LIMIT_CATEGORY_MODE_HAVE  = 0,                      // limit applied to amount items in inventory/bank
+    ITEM_LIMIT_CATEGORY_MODE_EQUIP = 1,                      // limit applied to amount equipped items (including used gems)
 };
 
 enum TotemCategoryType
@@ -403,51 +403,51 @@ enum TotemCategoryType
     TOTEM_CATEGORY_TYPE_SPANNER = 24
 };
 
-// SummonProperties.dbc,  col 1
+// SummonProperties.dbc, col 1
 enum SummonPropGroup
 {
-    SUMMON_PROP_GROUP_UNKNOWN1       = 0,                    // 1160 spells in 3.0.3
-    SUMMON_PROP_GROUP_UNKNOWN2       = 1,                    // 861 spells in 3.0.3
-    SUMMON_PROP_GROUP_PETS           = 2,                    // 52 spells in 3.0.3,  pets mostly
-    SUMMON_PROP_GROUP_CONTROLLABLE   = 3,                    // 13 spells in 3.0.3,  mostly controllable
-    SUMMON_PROP_GROUP_UNKNOWN3       = 4                    // 86 spells in 3.0.3,  taxi/mounts
+    SUMMON_PROP_GROUP_UNKNOWN1       = 0,                   // 1160 spells in 3.0.3
+    SUMMON_PROP_GROUP_UNKNOWN2       = 1,                   // 861 spells in 3.0.3
+    SUMMON_PROP_GROUP_PETS           = 2,                   // 52 spells in 3.0.3, pets mostly
+    SUMMON_PROP_GROUP_CONTROLLABLE   = 3,                   // 13 spells in 3.0.3, mostly controllable
+    SUMMON_PROP_GROUP_UNKNOWN3       = 4                    // 86 spells in 3.0.3, taxi/mounts
 };
 
-// SummonProperties.dbc,  col 3
+// SummonProperties.dbc, col 3
 enum SummonPropType
 {
-    SUMMON_PROP_TYPE_UNKNOWN         = 0,                    // different summons,  1330 spells in 3.0.3
-    SUMMON_PROP_TYPE_SUMMON          = 1,                    // generic summons,  49 spells in 3.0.3
-    SUMMON_PROP_TYPE_GUARDIAN        = 2,                    // summon guardian,  393 spells in 3.0.3
-    SUMMON_PROP_TYPE_ARMY            = 3,                    // summon army,  5 spells in 3.0.3
-    SUMMON_PROP_TYPE_TOTEM           = 4,                    // summon totem,  169 spells in 3.0.3
-    SUMMON_PROP_TYPE_CRITTER         = 5,                    // critter/minipet,  195 spells in 3.0.3
-    SUMMON_PROP_TYPE_DK              = 6,                    // summon DRW/Ghoul,  2 spells in 3.0.3
-    SUMMON_PROP_TYPE_BOMB            = 7,                    // summon bot/bomb,  4 spells in 3.0.3
-    SUMMON_PROP_TYPE_PHASING         = 8,                    // something todo with DK prequest line,  2 spells in 3.0.3
-    SUMMON_PROP_TYPE_SIEGE_VEH       = 9,                    // summon different vehicles,  14 spells in 3.0.3
-    SUMMON_PROP_TYPE_DRAKE_VEH       = 10,                   // summon drake (vehicle),  3 spells
-    SUMMON_PROP_TYPE_LIGHTWELL       = 11                   // summon lightwell,  6 spells in 3.0.3
+    SUMMON_PROP_TYPE_UNKNOWN         = 0,                   // different summons, 1330 spells in 3.0.3
+    SUMMON_PROP_TYPE_SUMMON          = 1,                   // generic summons, 49 spells in 3.0.3
+    SUMMON_PROP_TYPE_GUARDIAN        = 2,                   // summon guardian, 393 spells in 3.0.3
+    SUMMON_PROP_TYPE_ARMY            = 3,                   // summon army, 5 spells in 3.0.3
+    SUMMON_PROP_TYPE_TOTEM           = 4,                   // summon totem, 169 spells in 3.0.3
+    SUMMON_PROP_TYPE_CRITTER         = 5,                   // critter/minipet, 195 spells in 3.0.3
+    SUMMON_PROP_TYPE_DK              = 6,                   // summon DRW/Ghoul, 2 spells in 3.0.3
+    SUMMON_PROP_TYPE_BOMB            = 7,                   // summon bot/bomb, 4 spells in 3.0.3
+    SUMMON_PROP_TYPE_PHASING         = 8,                   // something todo with DK prequest line, 2 spells in 3.0.3
+    SUMMON_PROP_TYPE_SIEGE_VEH       = 9,                   // summon different vehicles, 14 spells in 3.0.3
+    SUMMON_PROP_TYPE_DRAKE_VEH       = 10,                  // summon drake (vehicle), 3 spells
+    SUMMON_PROP_TYPE_LIGHTWELL       = 11                   // summon lightwell, 6 spells in 3.0.3
 };
 
-// SummonProperties.dbc,  col 5
+// SummonProperties.dbc, col 5
 enum SummonPropFlags
 {
-    SUMMON_PROP_FLAG_NONE            = 0x0000,               // 1342 spells in 3.0.3
-    SUMMON_PROP_FLAG_UNK1            = 0x0001,               // 75 spells in 3.0.3,  something unfriendly
-    SUMMON_PROP_FLAG_UNK2            = 0x0002,               // 616 spells in 3.0.3,  something friendly
-    SUMMON_PROP_FLAG_UNK3            = 0x0004,               // 22 spells in 3.0.3,  no idea...
-    SUMMON_PROP_FLAG_UNK4            = 0x0008,               // 49 spells in 3.0.3,  some mounts
-    SUMMON_PROP_FLAG_UNK5            = 0x0010,               // 25 spells in 3.0.3,  quest related?
-    SUMMON_PROP_FLAG_UNK6            = 0x0020,               // 0 spells in 3.0.3,  unused
-    SUMMON_PROP_FLAG_UNK7            = 0x0040,               // 12 spells in 3.0.3,  no idea
-    SUMMON_PROP_FLAG_UNK8            = 0x0080,               // 4 spells in 3.0.3,  no idea
-    SUMMON_PROP_FLAG_UNK9            = 0x0100,               // 51 spells in 3.0.3,  no idea,  many quest related
-    SUMMON_PROP_FLAG_UNK10           = 0x0200,               // 51 spells in 3.0.3,  something defensive
-    SUMMON_PROP_FLAG_UNK11           = 0x0400,               // 3 spells,  requires something near?
-    SUMMON_PROP_FLAG_UNK12           = 0x0800,               // 30 spells in 3.0.3,  no idea
-    SUMMON_PROP_FLAG_UNK13           = 0x1000,               // 8 spells in 3.0.3,  siege vehicle
-    SUMMON_PROP_FLAG_UNK14           = 0x2000,               // 2 spells in 3.0.3,  escort?
+    SUMMON_PROP_FLAG_NONE            = 0x0000,              // 1342 spells in 3.0.3
+    SUMMON_PROP_FLAG_UNK1            = 0x0001,              // 75 spells in 3.0.3, something unfriendly
+    SUMMON_PROP_FLAG_UNK2            = 0x0002,              // 616 spells in 3.0.3, something friendly
+    SUMMON_PROP_FLAG_UNK3            = 0x0004,              // 22 spells in 3.0.3, no idea...
+    SUMMON_PROP_FLAG_UNK4            = 0x0008,              // 49 spells in 3.0.3, some mounts
+    SUMMON_PROP_FLAG_UNK5            = 0x0010,              // 25 spells in 3.0.3, quest related?
+    SUMMON_PROP_FLAG_UNK6            = 0x0020,              // 0 spells in 3.0.3, unused
+    SUMMON_PROP_FLAG_UNK7            = 0x0040,              // 12 spells in 3.0.3, no idea
+    SUMMON_PROP_FLAG_UNK8            = 0x0080,              // 4 spells in 3.0.3, no idea
+    SUMMON_PROP_FLAG_UNK9            = 0x0100,              // 51 spells in 3.0.3, no idea, many quest related
+    SUMMON_PROP_FLAG_UNK10           = 0x0200,              // 51 spells in 3.0.3, something defensive
+    SUMMON_PROP_FLAG_UNK11           = 0x0400,              // 3 spells, requires something near?
+    SUMMON_PROP_FLAG_UNK12           = 0x0800,              // 30 spells in 3.0.3, no idea
+    SUMMON_PROP_FLAG_UNK13           = 0x1000,              // 8 spells in 3.0.3, siege vehicle
+    SUMMON_PROP_FLAG_UNK14           = 0x2000,              // 2 spells in 3.0.3, escort?
 };
 
 enum CurrencyTypes

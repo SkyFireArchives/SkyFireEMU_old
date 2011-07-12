@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef _THREATMANAGER
@@ -45,14 +45,14 @@ struct SpellEntry;
 class ThreatCalcHelper
 {
     public:
-        static float calcThreat(Unit* pHatedUnit,  Unit* pHatingUnit,  float fThreat,  SpellSchoolMask schoolMask = SPELL_SCHOOL_MASK_NORMAL,  SpellEntry const *threatSpell = NULL);
+        static float calcThreat(Unit* pHatedUnit, Unit* pHatingUnit, float fThreat, SpellSchoolMask schoolMask = SPELL_SCHOOL_MASK_NORMAL, SpellEntry const *threatSpell = NULL);
 };
 
 //==============================================================
-class HostileReference : public Reference<Unit,  ThreatManager>
+class HostileReference : public Reference<Unit, ThreatManager>
 {
     public:
-        HostileReference(Unit* pUnit,  ThreatManager *pThreatManager,  float fThreat);
+        HostileReference(Unit* pUnit, ThreatManager *pThreatManager, float fThreat);
 
         //=================================================
         void addThreat(float fModThreat);
@@ -62,7 +62,7 @@ class HostileReference : public Reference<Unit,  ThreatManager>
         void addThreatPercent(int32 pPercent)
         {
             float tmpThreat = iThreat;
-            AddPctN(tmpThreat,  pPercent);
+            AddPctN(tmpThreat, pPercent);
             addThreat(tmpThreat - iThreat);
         }
 
@@ -70,8 +70,8 @@ class HostileReference : public Reference<Unit,  ThreatManager>
 
         bool isOnline() const { return iOnline; }
 
-        // The Unit might be in water and the creature can not enter the water,  but has range attack
-        // in this case online = true,  but accessible = false
+        // The Unit might be in water and the creature can not enter the water, but has range attack
+        // in this case online = true, but accessible = false
         bool isAccessible() const { return iAccessible; }
 
         // used for temporary setting a threat and reducting it later again.
@@ -100,7 +100,7 @@ class HostileReference : public Reference<Unit,  ThreatManager>
         float getTempThreatModifier() { return iTempThreatModifier; }
 
         //=================================================
-        // check,  if source can reach target and set the status
+        // check, if source can reach target and set the status
         void updateOnlineStatus();
 
         void setOnlineOfflineState(bool pIsOnline);
@@ -121,20 +121,20 @@ class HostileReference : public Reference<Unit,  ThreatManager>
 
         //=================================================
 
-        HostileReference* next() { return ((HostileReference*) Reference<Unit,  ThreatManager>::next()); }
+        HostileReference* next() { return ((HostileReference*) Reference<Unit, ThreatManager>::next()); }
 
         //=================================================
 
         // Tell our refTo (target) object that we have a link
         void targetObjectBuildLink();
 
-        // Tell our refTo (taget) object,  that the link is cut
+        // Tell our refTo (taget) object, that the link is cut
         void targetObjectDestroyLink();
 
-        // Tell our refFrom (source) object,  that the link is cut (Target destroyed)
+        // Tell our refFrom (source) object, that the link is cut (Target destroyed)
         void sourceObjectDestroyLink();
     private:
-        // Inform the source,  that the status of that reference was changed
+        // Inform the source, that the status of that reference was changed
         void fireStatusChanged(ThreatRefStatusChangeEvent& pThreatRefStatusChangeEvent);
 
         Unit* getSourceUnit();
@@ -166,11 +166,11 @@ class ThreatContainer
         ThreatContainer() { iDirty = false; }
         ~ThreatContainer() { clearReferences(); }
 
-        HostileReference* addThreat(Unit* pVictim,  float fThreat);
+        HostileReference* addThreat(Unit* pVictim, float fThreat);
 
-        void modifyThreatPercent(Unit *pVictim,  int32 iPercent);
+        void modifyThreatPercent(Unit *pVictim, int32 iPercent);
 
-        HostileReference* selectNextVictim(Creature* pAttacker,  HostileReference* pCurrentVictim);
+        HostileReference* selectNextVictim(Creature* pAttacker, HostileReference* pCurrentVictim);
 
         void setDirty(bool pDirty) { iDirty = pDirty; }
 
@@ -198,10 +198,10 @@ class ThreatManager
 
         void clearReferences();
 
-        void addThreat(Unit* pVictim,  float fThreat,  SpellSchoolMask schoolMask = SPELL_SCHOOL_MASK_NORMAL,  SpellEntry const *threatSpell = NULL);
-        void modifyThreatPercent(Unit *pVictim,  int32 iPercent);
+        void addThreat(Unit* pVictim, float fThreat, SpellSchoolMask schoolMask = SPELL_SCHOOL_MASK_NORMAL, SpellEntry const *threatSpell = NULL);
+        void modifyThreatPercent(Unit *pVictim, int32 iPercent);
 
-        float getThreat(Unit *pVictim,  bool pAlsoSearchOfflineList = false);
+        float getThreat(Unit *pVictim, bool pAlsoSearchOfflineList = false);
 
         bool isThreatListEmpty() { return iThreatContainer.empty(); }
 
@@ -251,7 +251,7 @@ class ThreatManager
         ThreatContainer& getOnlineContainer() { return iThreatContainer; }
         ThreatContainer& getOfflineContainer() { return iThreatOfflineContainer; }
     private:
-        void _addThreat(Unit *pVictim,  float fThreat);
+        void _addThreat(Unit *pVictim, float fThreat);
 
         HostileReference* iCurrentVictim;
         Unit* iOwner;
@@ -269,7 +269,7 @@ namespace Trinity
     {
         public:
             ThreatOrderPred(bool ascending = false) : m_ascending(ascending) {}
-            bool operator() (const HostileReference *a,  const HostileReference *b) const
+            bool operator() (const HostileReference *a, const HostileReference *b) const
             {
                 return m_ascending ? a->getThreat() < b->getThreat() : a->getThreat() > b->getThreat();
             }

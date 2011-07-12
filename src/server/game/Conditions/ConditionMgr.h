@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_CONDITIONMGR_H
@@ -31,37 +31,37 @@ class LootTemplate;
 
 enum ConditionType
 {                                                           // value1           value2      value3
-    CONDITION_NONE                  = 0,                     // 0                0           0                  always true
-    CONDITION_AURA                  = 1,                     // spell_id         effindex    use target?        true if player (or target,  if value3) has aura of spell_id with effect effindex
-    CONDITION_ITEM                  = 2,                     // item_id          count       +referenceID       true if has #count of item_ids
-    CONDITION_ITEM_EQUIPPED         = 3,                     // item_id          0           +referenceID       true if has item_id equipped
-    CONDITION_ZONEID                = 4,                     // zone_id          0           +referenceID       true if in zone_id
-    CONDITION_REPUTATION_RANK       = 5,                     // faction_id       min_rank    +referenceID       true if has min_rank for faction_id
-    CONDITION_TEAM                  = 6,                     // player_team      0,           +referenceID       469 - Alliance,  67 - Horde)
-    CONDITION_SKILL                 = 7,                     // skill_id         skill_value +referenceID       true if has skill_value for skill_id
-    CONDITION_QUESTREWARDED         = 8,                     // quest_id         0           +referenceID       true if quest_id was rewarded before
-    CONDITION_QUESTTAKEN            = 9,                     // quest_id         0,           +referenceID       true while quest active
-    CONDITION_DRUNKENSTATE          = 10,                    // DrunkenState     0,           +referenceID       true if player is drunk enough
-    CONDITION_NO_AURA               = 11,                    // spell_id         effindex    +referenceID       true if does not have aura of spell_id with effect effindex
-    CONDITION_ACTIVE_EVENT          = 12,                    // event_id         0           +referenceID       true if event is active
-    CONDITION_INSTANCE_DATA         = 13,                    // entry            data        +referenceID       true if data is set in current instance
-    CONDITION_QUEST_NONE            = 14,                    // quest_id         0           +referenceID       true if doesn't have quest saved
-    CONDITION_CLASS                 = 15,                    // class            0           +referenceID       true if player's class is equal to class
-    CONDITION_RACE                  = 16,                    // race             0           +referenceID       true if player's race is equal to race
-    CONDITION_ACHIEVEMENT           = 17,                    // achievement_id   0           +referenceID       true if achievement is complete
-    CONDITION_SPELL_SCRIPT_TARGET   = 18,                    // SpellScriptTargetType,  TargetEntry,  0
-    CONDITION_CREATURE_TARGET       = 19,                    // creature entry   0           +referenceID       true if current target is creature with value1 entry
-    CONDITION_TARGET_HEALTH_BELOW_PCT = 20,                  // 0-100            0           +referenceID       true if target's health is below value1 percent,  false if over or no target
-    CONDITION_TARGET_RANGE          = 21,                    // minDistance      maxDist     +referenceID       true if target is closer then minDist and further then maxDist or if max is 0 then max dist is infinit
-    CONDITION_MAPID                 = 22,                    // map_id           0           +referenceID       true if in map_id
-    CONDITION_AREAID                = 23,                    // area_id          0           +referenceID       true if in area_id
-    CONDITION_ITEM_TARGET           = 24,                    // ItemRequiredTargetType,   TargetEntry,     0
-    CONDITION_SPELL                 = 25,                    // spell_id         0           +referenceID       true if knows spell
-    CONDITION_NOITEM                = 26,                    // item_id          bank        +referenceID       true if player does not have any of the item (if 'bank' is set it searches in bank slots too)
-    CONDITION_LEVEL                 = 27,                    // level            opt         +referenceID       true if player's level is equal to param1 (param2 can modify the statement)
-    CONDITION_QUEST_COMPLETE        = 28,                    // quest_id         0           +referenceID       true if player has quest_id with all objectives complete,  but not yet rewarded
-    CONDITION_NEAR_CREATURE         = 29,                    // creature entry   distance    +referenceID       true if there is a creature of entry in range
-    CONDITION_NEAR_GAMEOBJECT       = 30,                    // gameobject entry distance    +referenceID       true if there is a gameobject of entry in range
+    CONDITION_NONE                  = 0,                    // 0                0           0                  always true
+    CONDITION_AURA                  = 1,                    // spell_id         effindex    use target?        true if player (or target, if value3) has aura of spell_id with effect effindex
+    CONDITION_ITEM                  = 2,                    // item_id          count       +referenceID       true if has #count of item_ids
+    CONDITION_ITEM_EQUIPPED         = 3,                    // item_id          0           +referenceID       true if has item_id equipped
+    CONDITION_ZONEID                = 4,                    // zone_id          0           +referenceID       true if in zone_id
+    CONDITION_REPUTATION_RANK       = 5,                    // faction_id       min_rank    +referenceID       true if has min_rank for faction_id
+    CONDITION_TEAM                  = 6,                    // player_team      0,          +referenceID       469 - Alliance, 67 - Horde)
+    CONDITION_SKILL                 = 7,                    // skill_id         skill_value +referenceID       true if has skill_value for skill_id
+    CONDITION_QUESTREWARDED         = 8,                    // quest_id         0           +referenceID       true if quest_id was rewarded before
+    CONDITION_QUESTTAKEN            = 9,                    // quest_id         0,          +referenceID       true while quest active
+    CONDITION_DRUNKENSTATE          = 10,                   // DrunkenState     0,          +referenceID       true if player is drunk enough
+    CONDITION_NO_AURA               = 11,                   // spell_id         effindex    +referenceID       true if does not have aura of spell_id with effect effindex
+    CONDITION_ACTIVE_EVENT          = 12,                   // event_id         0           +referenceID       true if event is active
+    CONDITION_INSTANCE_DATA         = 13,                   // entry            data        +referenceID       true if data is set in current instance
+    CONDITION_QUEST_NONE            = 14,                   // quest_id         0           +referenceID       true if doesn't have quest saved
+    CONDITION_CLASS                 = 15,                   // class            0           +referenceID       true if player's class is equal to class
+    CONDITION_RACE                  = 16,                   // race             0           +referenceID       true if player's race is equal to race
+    CONDITION_ACHIEVEMENT           = 17,                   // achievement_id   0           +referenceID       true if achievement is complete
+    CONDITION_SPELL_SCRIPT_TARGET   = 18,                   // SpellScriptTargetType, TargetEntry, 0
+    CONDITION_CREATURE_TARGET       = 19,                   // creature entry   0           +referenceID       true if current target is creature with value1 entry
+    CONDITION_TARGET_HEALTH_BELOW_PCT = 20,                 // 0-100            0           +referenceID       true if target's health is below value1 percent, false if over or no target
+    CONDITION_TARGET_RANGE          = 21,                   // minDistance      maxDist     +referenceID       true if target is closer then minDist and further then maxDist or if max is 0 then max dist is infinit
+    CONDITION_MAPID                 = 22,                   // map_id           0           +referenceID       true if in map_id
+    CONDITION_AREAID                = 23,                   // area_id          0           +referenceID       true if in area_id
+    CONDITION_ITEM_TARGET           = 24,                   // ItemRequiredTargetType,  TargetEntry,    0
+    CONDITION_SPELL                 = 25,                   // spell_id         0           +referenceID       true if knows spell
+    CONDITION_NOITEM                = 26,                   // item_id          bank        +referenceID       true if player does not have any of the item (if 'bank' is set it searches in bank slots too)
+    CONDITION_LEVEL                 = 27,                   // level            opt         +referenceID       true if player's level is equal to param1 (param2 can modify the statement)
+    CONDITION_QUEST_COMPLETE        = 28,                   // quest_id         0           +referenceID       true if player has quest_id with all objectives complete, but not yet rewarded
+    CONDITION_NEAR_CREATURE         = 29,                   // creature entry   distance    +referenceID       true if there is a creature of entry in range
+    CONDITION_NEAR_GAMEOBJECT       = 30,                   // gameobject entry distance    +referenceID       true if there is a gameobject of entry in range
     CONDITION_MAX                   = 31                    // MAX
 };
 
@@ -131,20 +131,20 @@ struct Condition
         mScriptId           = 0;
     }
 
-    bool Meets(Player * player,  Unit* invoker = NULL);
+    bool Meets(Player * player, Unit* invoker = NULL);
     bool isLoaded() const { return mConditionType > CONDITION_NONE || mReferenceId; }
 };
 
 typedef std::list<Condition*> ConditionList;
-typedef std::map<uint32,  ConditionList > ConditionTypeMap;
-typedef std::map<ConditionSourceType,  ConditionTypeMap > ConditionMap;
-typedef std::map<uint32,  ConditionTypeMap > VehicleSpellConditionMap;
+typedef std::map<uint32, ConditionList > ConditionTypeMap;
+typedef std::map<ConditionSourceType, ConditionTypeMap > ConditionMap;
+typedef std::map<uint32, ConditionTypeMap > VehicleSpellConditionMap;
 
-typedef std::map<uint32,  ConditionList > ConditionReferenceMap;//only used for references
+typedef std::map<uint32, ConditionList > ConditionReferenceMap;//only used for references
 
 class ConditionMgr
 {
-    friend class ACE_Singleton<ConditionMgr,  ACE_Null_Mutex>;
+    friend class ACE_Singleton<ConditionMgr, ACE_Null_Mutex>;
     ConditionMgr();
     ~ConditionMgr();
 
@@ -154,9 +154,9 @@ class ConditionMgr
         bool isConditionTypeValid(Condition* cond);
         ConditionList GetConditionReferences(uint32 refId);
 
-        bool IsPlayerMeetToConditions(Player* player,  ConditionList conditions,  Unit* invoker = NULL);
-        ConditionList GetConditionsForNotGroupedEntry(ConditionSourceType sType,  uint32 uEntry);
-        ConditionList GetConditionsForVehicleSpell(uint32 creatureID,  uint32 spellID);
+        bool IsPlayerMeetToConditions(Player* player, ConditionList conditions, Unit* invoker = NULL);
+        ConditionList GetConditionsForNotGroupedEntry(ConditionSourceType sType, uint32 uEntry);
+        ConditionList GetConditionsForVehicleSpell(uint32 creatureID, uint32 spellID);
 
     protected:
 
@@ -167,10 +167,10 @@ class ConditionMgr
     private:
 
         bool isSourceTypeValid(Condition* cond);
-        bool addToLootTemplate(Condition* cond,  LootTemplate* loot);
+        bool addToLootTemplate(Condition* cond, LootTemplate* loot);
         bool addToGossipMenus(Condition* cond);
         bool addToGossipMenuItems(Condition* cond);
-        bool IsPlayerMeetToConditionList(Player* player, const ConditionList& conditions,  Unit* invoker = NULL);
+        bool IsPlayerMeetToConditionList(Player* player, const ConditionList& conditions, Unit* invoker = NULL);
 
         bool isGroupable(ConditionSourceType sourceType) const
         {
@@ -195,6 +195,6 @@ class ConditionMgr
         std::list<Condition*> m_AllocatedMemory; // some garbage collection :)
 };
 
-#define sConditionMgr ACE_Singleton<ConditionMgr,  ACE_Null_Mutex>::instance()
+#define sConditionMgr ACE_Singleton<ConditionMgr, ACE_Null_Mutex>::instance()
 
 #endif

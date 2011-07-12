@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef _ADDONMGR_H
@@ -32,7 +32,7 @@ class WorldSession;
 
 struct AddonInfo
 {
-    AddonInfo(const std::string& name,  uint8 enabled,  uint32 crc,  uint8 state,  bool crcOrPubKey)
+    AddonInfo(const std::string& name, uint8 enabled, uint32 crc, uint8 state, bool crcOrPubKey)
     {
         Name = name;
         Enabled = enabled;
@@ -50,7 +50,7 @@ struct AddonInfo
 
 struct SavedAddon
 {
-    SavedAddon(const std::string& name,  uint32 crc)
+    SavedAddon(const std::string& name, uint32 crc)
     {
         Name = name;
         CRC = crc;
@@ -70,7 +70,7 @@ typedef std::list<SavedAddon> SavedAddonsList;
 
 class AddonMgr
 {
-    friend class ACE_Singleton<AddonMgr,  ACE_Null_Mutex>;
+    friend class ACE_Singleton<AddonMgr, ACE_Null_Mutex>;
     AddonMgr();
     ~AddonMgr();
 
@@ -86,7 +86,7 @@ class AddonMgr
         SavedAddonsList m_knownAddons;                           // Known addons.
 };
 
-#define sAddonMgr ACE_Singleton<AddonMgr,  ACE_Null_Mutex>::instance()
+#define sAddonMgr ACE_Singleton<AddonMgr, ACE_Null_Mutex>::instance()
 
 #endif
 

@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef _FORMATIONS_H
@@ -37,16 +37,16 @@ struct FormationInfo
 
 class CreatureGroupManager
 {
-    friend class ACE_Singleton<CreatureGroupManager,  ACE_Null_Mutex>;
+    friend class ACE_Singleton<CreatureGroupManager, ACE_Null_Mutex>;
     public:
-        void AddCreatureToGroup(uint32 group_id,  Creature *creature);
-        void RemoveCreatureFromGroup(CreatureGroup *group,  Creature *creature);
+        void AddCreatureToGroup(uint32 group_id, Creature *creature);
+        void RemoveCreatureFromGroup(CreatureGroup *group, Creature *creature);
         void LoadCreatureFormations();
 };
 
-#define formation_mgr ACE_Singleton<CreatureGroupManager,  ACE_Null_Mutex>::instance()
+#define formation_mgr ACE_Singleton<CreatureGroupManager, ACE_Null_Mutex>::instance()
 
-typedef UNORDERED_MAP<uint32/*memberDBGUID*/,  FormationInfo*>   CreatureGroupInfoType;
+typedef UNORDERED_MAP<uint32/*memberDBGUID*/, FormationInfo*>   CreatureGroupInfoType;
 
 extern CreatureGroupInfoType    CreatureGroupMap;
 
@@ -54,7 +54,7 @@ class CreatureGroup
 {
     private:
         Creature *m_leader; //Important do not forget sometimes to work with pointers instead synonims :D:D
-        typedef std::map<Creature*,  FormationInfo*>  CreatureGroupMemberType;
+        typedef std::map<Creature*, FormationInfo*>  CreatureGroupMemberType;
         CreatureGroupMemberType m_members;
 
         uint32 m_groupID;
@@ -62,7 +62,7 @@ class CreatureGroup
 
     public:
         //Group cannot be created empty
-        explicit CreatureGroup(uint32 id) : m_leader(NULL),  m_groupID(id),  m_Formed(false) {}
+        explicit CreatureGroup(uint32 id) : m_leader(NULL), m_groupID(id), m_Formed(false) {}
         ~CreatureGroup() { sLog->outDebug("Destroying group"); }
 
         Creature* getLeader() const { return m_leader; }
@@ -74,8 +74,8 @@ class CreatureGroup
         void RemoveMember(Creature *member);
         void FormationReset(bool dismiss);
 
-        void LeaderMoveTo(float x,  float y,  float z);
-        void MemberAttackStart(Creature* member,  Unit *target);
+        void LeaderMoveTo(float x, float y, float z);
+        void MemberAttackStart(Creature* member, Unit *target);
 };
 
 #endif

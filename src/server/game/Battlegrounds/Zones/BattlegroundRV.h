@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef __BATTLEGROUNDRV_H
@@ -74,15 +74,15 @@ enum BattlegroundRVObjects
     BG_RV_OBJECT_TYPE_ELEVATOR_1                 = 194582, 
     BG_RV_OBJECT_TYPE_ELEVATOR_2                 = 194586, 
 /*
-    BG_RV_OBJECT_TYPE_PILAR_COLLISION_1          = 194580,  // axe
-    BG_RV_OBJECT_TYPE_PILAR_COLLISION_2          = 194579,  // arena
-    BG_RV_OBJECT_TYPE_PILAR_COLLISION_3          = 194581,  // lightning
-    BG_RV_OBJECT_TYPE_PILAR_COLLISION_4          = 194578,  // ivory
+    BG_RV_OBJECT_TYPE_PILAR_COLLISION_1          = 194580, // axe
+    BG_RV_OBJECT_TYPE_PILAR_COLLISION_2          = 194579, // arena
+    BG_RV_OBJECT_TYPE_PILAR_COLLISION_3          = 194581, // lightning
+    BG_RV_OBJECT_TYPE_PILAR_COLLISION_4          = 194578, // ivory
 */
-    BG_RV_OBJECT_TYPE_PILAR_1                    = 194583,  // axe
-    BG_RV_OBJECT_TYPE_PILAR_2                    = 194584,  // arena
-    BG_RV_OBJECT_TYPE_PILAR_3                    = 194585,  // lightning
-    BG_RV_OBJECT_TYPE_PILAR_4                    = 194587,  // ivory
+    BG_RV_OBJECT_TYPE_PILAR_1                    = 194583, // axe
+    BG_RV_OBJECT_TYPE_PILAR_2                    = 194584, // arena
+    BG_RV_OBJECT_TYPE_PILAR_3                    = 194585, // lightning
+    BG_RV_OBJECT_TYPE_PILAR_4                    = 194587, // ivory
 };
 
 enum BattlegroundRVData
@@ -123,10 +123,10 @@ class BattlegroundRV : public Battleground
         virtual void Reset();
         virtual void FillInitialWorldStates(WorldPacket &d);
 
-        void RemovePlayer(Player *plr,  uint64 guid);
-        void HandleAreaTrigger(Player *Source,  uint32 Trigger);
+        void RemovePlayer(Player *plr, uint64 guid);
+        void HandleAreaTrigger(Player *Source, uint32 Trigger);
         bool SetupBattleground();
-        void HandleKillPlayer(Player* player,  Player *killer);
+        void HandleKillPlayer(Player* player, Player *killer);
         bool HandlePlayerUnderMap(Player * plr);
 
     private:

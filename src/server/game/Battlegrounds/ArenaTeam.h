@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITYCORE_ARENATEAM_H
@@ -62,11 +62,11 @@ enum ArenaTeamCommandErrors
 
 enum ArenaTeamEvents
 {
-    ERR_ARENA_TEAM_JOIN_SS                  = 4,             // player name + arena team name
-    ERR_ARENA_TEAM_LEAVE_SS                 = 5,             // player name + arena team name
-    ERR_ARENA_TEAM_REMOVE_SSS               = 6,             // player name + arena team name + captain name
-    ERR_ARENA_TEAM_LEADER_IS_SS             = 7,             // player name + arena team name
-    ERR_ARENA_TEAM_LEADER_CHANGED_SSS       = 8,             // old captain + new captain + arena team name
+    ERR_ARENA_TEAM_JOIN_SS                  = 4,            // player name + arena team name
+    ERR_ARENA_TEAM_LEAVE_SS                 = 5,            // player name + arena team name
+    ERR_ARENA_TEAM_REMOVE_SSS               = 6,            // player name + arena team name + captain name
+    ERR_ARENA_TEAM_LEADER_IS_SS             = 7,            // player name + arena team name
+    ERR_ARENA_TEAM_LEADER_CHANGED_SSS       = 8,            // old captain + new captain + arena team name
     ERR_ARENA_TEAM_DISBANDED_S              = 9             // captain name + arena team name
 };
 
@@ -97,8 +97,8 @@ struct ArenaTeamMember
     uint16 PersonalRating;
     uint16 MatchMakerRating;
 
-    void ModifyPersonalRating(Player* plr,  int32 mod,  uint32 slot);
-    void ModifyMatchmakerRating(int32 mod,  uint32 slot);
+    void ModifyPersonalRating(Player* plr, int32 mod, uint32 slot);
+    void ModifyMatchmakerRating(int32 mod, uint32 slot);
 };
 
 struct ArenaTeamStats
@@ -119,7 +119,7 @@ class ArenaTeam
         ArenaTeam();
         ~ArenaTeam();
 
-        bool Create(uint32 captainGuid,  uint8 type,  std::string teamName,  uint32 backgroundColor,  uint8 emblemStyle,  uint32 emblemColor,  uint8 borderStyle,  uint32 borderColor);
+        bool Create(uint32 captainGuid, uint8 type, std::string teamName, uint32 backgroundColor, uint8 emblemStyle, uint32 emblemColor, uint8 borderStyle, uint32 borderColor);
         void Disband(WorldSession* session);
 
         typedef std::list<ArenaTeamMember> MemberList;
@@ -138,9 +138,9 @@ class ArenaTeam
         void SetCaptain(const uint64& guid);
         bool AddMember(const uint64& PlayerGuid);
 
-        // Shouldn't be const uint64& ed,  because than can reference guid from members on Disband
+        // Shouldn't be const uint64& ed, because than can reference guid from members on Disband
         // and this method removes given record from list. So invalid reference can happen.
-        void DelMember(uint64 guid,  bool cleanDb);
+        void DelMember(uint64 guid, bool cleanDb);
 
         size_t GetMembersSize() const         { return Members.size(); }
         bool   Empty() const                  { return Members.empty(); }
@@ -159,25 +159,25 @@ class ArenaTeam
         void SaveToDB();
 
         void BroadcastPacket(WorldPacket* packet);
-        void BroadcastEvent(ArenaTeamEvents event,  uint64 guid,  uint8 strCount,  std::string str1,  std::string str2,  std::string str3);
+        void BroadcastEvent(ArenaTeamEvents event, uint64 guid, uint8 strCount, std::string str1, std::string str2, std::string str3);
         void NotifyStatsChanged();
 
         void Roster(WorldSession* session);
         void Query(WorldSession* session);
         void SendStats(WorldSession* session);
-        void Inspect(WorldSession* session,  uint64 guid);
+        void Inspect(WorldSession* session, uint64 guid);
 
         uint32 GetPoints(uint32 MemberRating);
-        int32  GetRatingMod(uint32 ownRating,  uint32 opponentRating,  bool won,  bool calculating_mmr = false);
-        int32  GetPersonalRatingMod(int32 base_rating,  uint32 ownRating,  uint32 opponentRating);
-        float  GetChanceAgainst(uint32 ownRating,  uint32 opponentRating);
+        int32  GetRatingMod(uint32 ownRating, uint32 opponentRating, bool won, bool calculating_mmr = false);
+        int32  GetPersonalRatingMod(int32 base_rating, uint32 ownRating, uint32 opponentRating);
+        float  GetChanceAgainst(uint32 ownRating, uint32 opponentRating);
         int32  WonAgainst(uint32 againstRating);
-        void   MemberWon(Player* plr,  uint32 againstMatchmakerRating,  int32 teamratingchange = 12);
+        void   MemberWon(Player* plr, uint32 againstMatchmakerRating, int32 teamratingchange = 12);
         int32  LostAgainst(uint32 againstRating);
-        void   MemberLost(Player* plr,  uint32 againstMatchmakerRating,  int32 teamratingchange = -12);
-        void   OfflineMemberLost(uint64 guid,  uint32 againstMatchmakerRating,  int32 teamratingchange = -12);
+        void   MemberLost(Player* plr, uint32 againstMatchmakerRating, int32 teamratingchange = -12);
+        void   OfflineMemberLost(uint64 guid, uint32 againstMatchmakerRating, int32 teamratingchange = -12);
 
-        void UpdateArenaPointsHelper(std::map<uint32,  uint32> & PlayerPoints);
+        void UpdateArenaPointsHelper(std::map<uint32, uint32> & PlayerPoints);
 
         void FinishWeek();
         void FinishGame(int32 mod);

@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -59,7 +59,7 @@ void npc_escortAI::AttackStart(Unit* pWho)
     if (!pWho)
         return;
 
-    if (me->Attack(pWho,  true))
+    if (me->Attack(pWho, true))
     {
         if (me->GetMotionMaster()->GetCurrentMovementGeneratorType() == POINT_MOTION_TYPE)
             me->GetMotionMaster()->MovementExpired();
@@ -88,7 +88,7 @@ bool npc_escortAI::AssistPlayerInCombat(Unit* pWho)
         return false;
 
     //too far away and no free sight?
-    if (me->IsWithinDistInMap(pWho,  GetMaxPlayerDistance()) && me->IsWithinLOSInMap(pWho))
+    if (me->IsWithinDistInMap(pWho, GetMaxPlayerDistance()) && me->IsWithinLOSInMap(pWho))
     {
         //already fighting someone?
         if (!me->getVictim())
@@ -99,7 +99,7 @@ bool npc_escortAI::AssistPlayerInCombat(Unit* pWho)
         else
         {
             pWho->SetInCombatWith(me);
-            me->AddThreat(pWho,  0.0f);
+            me->AddThreat(pWho, 0.0f);
             return true;
         }
     }
@@ -120,7 +120,7 @@ void npc_escortAI::MoveInLineOfSight(Unit* pWho)
         if (me->IsHostileTo(pWho))
         {
             float fAttackRadius = me->GetAttackDistance(pWho);
-            if (me->IsWithinDistInMap(pWho,  fAttackRadius) && me->IsWithinLOSInMap(pWho))
+            if (me->IsWithinDistInMap(pWho, fAttackRadius) && me->IsWithinLOSInMap(pWho))
             {
                 if (!me->getVictim())
                 {
@@ -130,7 +130,7 @@ void npc_escortAI::MoveInLineOfSight(Unit* pWho)
                 else if (me->GetMap()->IsDungeon())
                 {
                     pWho->SetInCombatWith(me);
-                    me->AddThreat(pWho,  0.0f);
+                    me->AddThreat(pWho, 0.0f);
                 }
             }
         }
@@ -170,7 +170,7 @@ void npc_escortAI::JustRespawned()
     if (!IsCombatMovement())
         SetCombatMovement(true);
 
-    //add a small delay before going to first waypoint,  normal in near all cases
+    //add a small delay before going to first waypoint, normal in near all cases
     m_uiWPWaitTimer = 2500;
 
     if (me->getFaction() != me->GetCreatureInfo()->faction_A)
@@ -181,9 +181,9 @@ void npc_escortAI::JustRespawned()
 
 void npc_escortAI::ReturnToLastPoint()
 {
-    float x,  y,  z,  o;
-    me->GetHomePosition(x,  y,  z,  o);
-    me->GetMotionMaster()->MovePoint(POINT_LAST_POINT,  x,  y,  z);
+    float x, y, z, o;
+    me->GetHomePosition(x, y, z, o);
+    me->GetMotionMaster()->MovePoint(POINT_LAST_POINT, x, y, z);
 }
 
 void npc_escortAI::EnterEvadeMode()
@@ -197,7 +197,7 @@ void npc_escortAI::EnterEvadeMode()
     {
         AddEscortState(STATE_ESCORT_RETURNING);
         ReturnToLastPoint();
-        sLog->outDebug("TSCR: EscortAI (script: %s,  creature entry: %u) has left combat and is now returning to last point");
+        sLog->outDebug("TSCR: EscortAI (script: %s, creature entry: %u) has left combat and is now returning to last point");
     }
     else
     {
@@ -216,7 +216,7 @@ bool npc_escortAI::IsPlayerOrGroupInRange()
             {
                 Player* pMember = pRef->getSource();
 
-                if (pMember && me->IsWithinDistInMap(pMember,  GetMaxPlayerDistance()))
+                if (pMember && me->IsWithinDistInMap(pMember, GetMaxPlayerDistance()))
                 {
                     return true;
                     break;
@@ -225,7 +225,7 @@ bool npc_escortAI::IsPlayerOrGroupInRange()
         }
         else
         {
-            if (me->IsWithinDistInMap(pPlayer,  GetMaxPlayerDistance()))
+            if (me->IsWithinDistInMap(pPlayer, GetMaxPlayerDistance()))
                 return true;
         }
     }
@@ -248,14 +248,14 @@ void npc_escortAI::UpdateAI(const uint32 uiDiff)
 
                     if (m_bCanReturnToStart)
                     {
-                        float fRetX,  fRetY,  fRetZ;
-                        me->GetRespawnCoord(fRetX,  fRetY,  fRetZ);
+                        float fRetX, fRetY, fRetZ;
+                        me->GetRespawnCoord(fRetX, fRetY, fRetZ);
 
-                        me->GetMotionMaster()->MovePoint(POINT_HOME,  fRetX,  fRetY,  fRetZ);
+                        me->GetMotionMaster()->MovePoint(POINT_HOME, fRetX, fRetY, fRetZ);
 
                         m_uiWPWaitTimer = 0;
 
-                        sLog->outDebug("TSCR: EscortAI are returning home to spawn location: %u,  %f,  %f,  %f",  POINT_HOME,  fRetX,  fRetY,  fRetZ);
+                        sLog->outDebug("TSCR: EscortAI are returning home to spawn location: %u, %f, %f, %f", POINT_HOME, fRetX, fRetY, fRetZ);
                         return;
                     }
 
@@ -279,8 +279,8 @@ void npc_escortAI::UpdateAI(const uint32 uiDiff)
 
             if (!HasEscortState(STATE_ESCORT_PAUSED))
             {
-                me->GetMotionMaster()->MovePoint(CurrentWP->id,  CurrentWP->x,  CurrentWP->y,  CurrentWP->z);
-                sLog->outDebug("TSCR: EscortAI start waypoint %u (%f,  %f,  %f).",  CurrentWP->id,  CurrentWP->x,  CurrentWP->y,  CurrentWP->z);
+                me->GetMotionMaster()->MovePoint(CurrentWP->id, CurrentWP->x, CurrentWP->y, CurrentWP->z);
+                sLog->outDebug("TSCR: EscortAI start waypoint %u (%f, %f, %f).", CurrentWP->id, CurrentWP->x, CurrentWP->y, CurrentWP->z);
 
                 WaypointStart(CurrentWP->id);
 
@@ -328,12 +328,12 @@ void npc_escortAI::UpdateEscortAI(const uint32 /*uiDiff*/)
     DoMeleeAttackIfReady();
 }
 
-void npc_escortAI::MovementInform(uint32 uiMoveType,  uint32 uiPointId)
+void npc_escortAI::MovementInform(uint32 uiMoveType, uint32 uiPointId)
 {
     if (uiMoveType != POINT_MOTION_TYPE || !HasEscortState(STATE_ESCORT_ESCORTING))
         return;
 
-    //Combat start position reached,  continue waypoint movement
+    //Combat start position reached, continue waypoint movement
     if (uiPointId == POINT_LAST_POINT)
     {
         sLog->outDebug("TSCR: EscortAI has returned to original position before combat");
@@ -360,11 +360,11 @@ void npc_escortAI::MovementInform(uint32 uiMoveType,  uint32 uiPointId)
         //Make sure that we are still on the right waypoint
         if (CurrentWP->id != uiPointId)
         {
-            sLog->outError("TSCR ERROR: EscortAI reached waypoint out of order %u,  expected %u,  creature entry %u",  uiPointId,  CurrentWP->id,  me->GetEntry());
+            sLog->outError("TSCR ERROR: EscortAI reached waypoint out of order %u, expected %u, creature entry %u", uiPointId, CurrentWP->id, me->GetEntry());
             return;
         }
 
-        sLog->outDebug("TSCR: EscortAI Waypoint %u reached",  CurrentWP->id);
+        sLog->outDebug("TSCR: EscortAI Waypoint %u reached", CurrentWP->id);
 
         //Call WP function
         WaypointReached(CurrentWP->id);
@@ -378,25 +378,25 @@ void npc_escortAI::MovementInform(uint32 uiMoveType,  uint32 uiPointId)
 /*
 void npc_escortAI::OnPossess(bool apply)
 {
-    // We got possessed in the middle of being escorted,  store the point
+    // We got possessed in the middle of being escorted, store the point
     // where we left off to come back to when possess is removed
     if (HasEscortState(STATE_ESCORT_ESCORTING))
     {
         if (apply)
-            me->GetPosition(LastPos.x,  LastPos.y,  LastPos.z);
+            me->GetPosition(LastPos.x, LastPos.y, LastPos.z);
         else
         {
             Returning = true;
             me->GetMotionMaster()->MovementExpired();
-            me->GetMotionMaster()->MovePoint(WP_LAST_POINT,  LastPos.x,  LastPos.y,  LastPos.z);
+            me->GetMotionMaster()->MovePoint(WP_LAST_POINT, LastPos.x, LastPos.y, LastPos.z);
         }
     }
 }
 */
 
-void npc_escortAI::AddWaypoint(uint32 id,  float x,  float y,  float z,  uint32 WaitTimeMs)
+void npc_escortAI::AddWaypoint(uint32 id, float x, float y, float z, uint32 WaitTimeMs)
 {
-    Escort_Waypoint t(id,  x,  y,  z,  WaitTimeMs);
+    Escort_Waypoint t(id, x, y, z, WaitTimeMs);
 
     WaypointList.push_back(t);
 
@@ -423,7 +423,7 @@ void npc_escortAI::FillPointMovementListForCreature()
 
     for (itr = pPointsEntries.begin(); itr != pPointsEntries.end(); ++itr)
     {
-        Escort_Waypoint pPoint(itr->uiPointId,  itr->fX,  itr->fY,  itr->fZ,  itr->uiWaitTime);
+        Escort_Waypoint pPoint(itr->uiPointId, itr->fX, itr->fY, itr->fZ, itr->uiWaitTime);
         WaypointList.push_back(pPoint);
     }
 }
@@ -435,34 +435,34 @@ void npc_escortAI::SetRun(bool bRun)
         if (!m_bIsRunning)
             me->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
         else
-            sLog->outDebug("TSCR: EscortAI attempt to set run mode,  but is already running.");
+            sLog->outDebug("TSCR: EscortAI attempt to set run mode, but is already running.");
     }
     else
     {
         if (m_bIsRunning)
             me->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
         else
-            sLog->outDebug("TSCR: EscortAI attempt to set walk mode,  but is already walking.");
+            sLog->outDebug("TSCR: EscortAI attempt to set walk mode, but is already walking.");
     }
     m_bIsRunning = bRun;
 }
 
 //TODO: get rid of this many variables passed in function.
-void npc_escortAI::Start(bool bIsActiveAttacker,  bool bRun,  uint64 uiPlayerGUID,  const Quest* pQuest,  bool bInstantRespawn,  bool bCanLoopPath)
+void npc_escortAI::Start(bool bIsActiveAttacker, bool bRun, uint64 uiPlayerGUID, const Quest* pQuest, bool bInstantRespawn, bool bCanLoopPath)
 {
     if (me->getVictim())
     {
-        sLog->outError("TSCR ERROR: EscortAI (script: %s,  creature entry: %u) attempts to Start while in combat",  me->GetScriptName().c_str(),  me->GetEntry());
+        sLog->outError("TSCR ERROR: EscortAI (script: %s, creature entry: %u) attempts to Start while in combat", me->GetScriptName().c_str(), me->GetEntry());
         return;
     }
 
     if (HasEscortState(STATE_ESCORT_ESCORTING))
     {
-        sLog->outError("TSCR: EscortAI (script: %s,  creature entry: %u) attempts to Start while already escorting",  me->GetScriptName().c_str(),  me->GetEntry());
+        sLog->outError("TSCR: EscortAI (script: %s, creature entry: %u) attempts to Start while already escorting", me->GetScriptName().c_str(), me->GetEntry());
         return;
     }
 
-    if (!ScriptWP) // sd2 never adds wp in script,  but tc does
+    if (!ScriptWP) // sd2 never adds wp in script, but tc does
     {
         if (!WaypointList.empty())
             WaypointList.clear();
@@ -471,8 +471,8 @@ void npc_escortAI::Start(bool bIsActiveAttacker,  bool bRun,  uint64 uiPlayerGUI
 
     if (WaypointList.empty())
     {
-        sLog->outErrorDb("TSCR: EscortAI (script: %s,  creature entry: %u) starts with 0 waypoints (possible missing entry in script_waypoint. Quest: %u).",  
-            me->GetScriptName().c_str(),  me->GetEntry(),  pQuest ? pQuest->GetQuestId() : 0);
+        sLog->outErrorDb("TSCR: EscortAI (script: %s, creature entry: %u) starts with 0 waypoints (possible missing entry in script_waypoint. Quest: %u).", 
+            me->GetScriptName().c_str(), me->GetEntry(), pQuest ? pQuest->GetQuestId() : 0);
         return;
     }
 
@@ -493,13 +493,13 @@ void npc_escortAI::Start(bool bIsActiveAttacker,  bool bRun,  uint64 uiPlayerGUI
     {
         me->GetMotionMaster()->MovementExpired();
         me->GetMotionMaster()->MoveIdle();
-        sLog->outDebug("TSCR: EscortAI start with WAYPOINT_MOTION_TYPE,  changed to MoveIdle.");
+        sLog->outDebug("TSCR: EscortAI start with WAYPOINT_MOTION_TYPE, changed to MoveIdle.");
     }
 
     //disable npcflags
-    me->SetUInt32Value(UNIT_NPC_FLAGS,  UNIT_NPC_FLAG_NONE);
+    me->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
 
-    sLog->outDebug("TSCR: EscortAI started with " UI64FMTD " waypoints. ActiveAttacker = %d,  Run = %d,  PlayerGUID = " UI64FMTD "",  uint64(WaypointList.size()),  m_bIsActiveAttacker,  m_bIsRunning,  m_uiPlayerGUID);
+    sLog->outDebug("TSCR: EscortAI started with " UI64FMTD " waypoints. ActiveAttacker = %d, Run = %d, PlayerGUID = " UI64FMTD "", uint64(WaypointList.size()), m_bIsActiveAttacker, m_bIsRunning, m_uiPlayerGUID);
 
     CurrentWP = WaypointList.begin();
 
