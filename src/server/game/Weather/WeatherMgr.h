@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /// \addtogroup world
@@ -35,7 +35,7 @@
 
 class WeatherMgr
 {
-    friend class ACE_Singleton<WeatherMgr,  ACE_Null_Mutex>;
+    friend class ACE_Singleton<WeatherMgr, ACE_Null_Mutex>;
     WeatherMgr() {}
     ~WeatherMgr();
 
@@ -58,8 +58,8 @@ class WeatherMgr
 
         void Update(uint32 diff);
 
-        typedef UNORDERED_MAP<uint32,  Weather*> WeatherMap;
-        typedef UNORDERED_MAP<uint32,  WeatherData> WeatherZoneMap;
+        typedef UNORDERED_MAP<uint32, Weather*> WeatherMap;
+        typedef UNORDERED_MAP<uint32, WeatherData> WeatherZoneMap;
 
     private:
 
@@ -67,6 +67,6 @@ class WeatherMgr
         WeatherZoneMap mWeatherZoneMap;
 };
 
-#define sWeatherMgr ACE_Singleton<WeatherMgr,  ACE_Null_Mutex>::instance()
+#define sWeatherMgr ACE_Singleton<WeatherMgr, ACE_Null_Mutex>::instance()
 
 #endif

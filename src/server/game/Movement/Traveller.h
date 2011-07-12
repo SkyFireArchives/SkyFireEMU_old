@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_TRAVELLER_H
@@ -53,16 +53,16 @@ struct Traveller
     T& GetTraveller(void) { return i_traveller; }
 
     float Speed(void) { ASSERT(false); return 0.0f; }
-    float GetMoveDestinationTo(float x,  float y,  float z);
-    uint32 GetTotalTrevelTimeTo(float x,  float y,  float z);
+    float GetMoveDestinationTo(float x, float y, float z);
+    uint32 GetTotalTrevelTimeTo(float x, float y, float z);
 
-    void Relocation(float x,  float y,  float z,  float orientation) {}
-    void Relocation(float x,  float y,  float z) { Relocation(x,  y,  z,  i_traveller.GetOrientation()); }
-    void MoveTo(float x,  float y,  float z,  uint32 t) {}
+    void Relocation(float x, float y, float z, float orientation) {}
+    void Relocation(float x, float y, float z) { Relocation(x, y, z, i_traveller.GetOrientation()); }
+    void MoveTo(float x, float y, float z, uint32 t) {}
 };
 
 template<class T>
-inline uint32 Traveller<T>::GetTotalTrevelTimeTo(float x,  float y,  float z)
+inline uint32 Traveller<T>::GetTotalTrevelTimeTo(float x, float y, float z)
 {
     float dist = GetMoveDestinationTo(x, y, z);
     float speed = Speed();
@@ -88,13 +88,13 @@ inline float Traveller<Creature>::Speed()
 }
 
 template<>
-inline void Traveller<Creature>::Relocation(float x,  float y,  float z,  float orientation)
+inline void Traveller<Creature>::Relocation(float x, float y, float z, float orientation)
 {
-    i_traveller.SetPosition(x,  y,  z,  orientation);
+    i_traveller.SetPosition(x, y, z, orientation);
 }
 
 template<>
-inline float Traveller<Creature>::GetMoveDestinationTo(float x,  float y,  float z)
+inline float Traveller<Creature>::GetMoveDestinationTo(float x, float y, float z)
 {
     float dx = x - GetPositionX();
     float dy = y - GetPositionY();
@@ -107,10 +107,10 @@ inline float Traveller<Creature>::GetMoveDestinationTo(float x,  float y,  float
 }
 
 template<>
-inline void Traveller<Creature>::MoveTo(float x,  float y,  float z,  uint32 t)
+inline void Traveller<Creature>::MoveTo(float x, float y, float z, uint32 t)
 {
-    //i_traveller.AI_SendMoveToPacket(x,  y,  z,  t,  i_traveller.GetUnitMovementFlags(),  0);
-    i_traveller.SendMonsterMove(x,  y,  z,  t);
+    //i_traveller.AI_SendMoveToPacket(x, y, z, t, i_traveller.GetUnitMovementFlags(), 0);
+    i_traveller.SendMonsterMove(x, y, z, t);
 }
 
 // specialization for players
@@ -126,7 +126,7 @@ inline float Traveller<Player>::Speed()
 }
 
 template<>
-inline float Traveller<Player>::GetMoveDestinationTo(float x,  float y,  float z)
+inline float Traveller<Player>::GetMoveDestinationTo(float x, float y, float z)
 {
     float dx = x - GetPositionX();
     float dy = y - GetPositionY();
@@ -139,16 +139,16 @@ inline float Traveller<Player>::GetMoveDestinationTo(float x,  float y,  float z
 }
 
 template<>
-inline void Traveller<Player>::Relocation(float x,  float y,  float z,  float orientation)
+inline void Traveller<Player>::Relocation(float x, float y, float z, float orientation)
 {
-    i_traveller.SetPosition(x,  y,  z,  orientation);
+    i_traveller.SetPosition(x, y, z, orientation);
 }
 
 template<>
-inline void Traveller<Player>::MoveTo(float x,  float y,  float z,  uint32 t)
+inline void Traveller<Player>::MoveTo(float x, float y, float z, uint32 t)
 {
-    //Only send MOVEMENTFLAG_WALKING,  client has strange issues with other move flags
-    i_traveller.SendMonsterMove(x,  y,  z,  t);
+    //Only send MOVEMENTFLAG_WALKING, client has strange issues with other move flags
+    i_traveller.SendMonsterMove(x, y, z, t);
 }
 
 typedef Traveller<Creature> CreatureTraveller;

@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef _TICKETMGR_H
@@ -67,8 +67,8 @@ enum GMTicketEscalationStatus
 // from blizzard lua
 enum GMTicketOpenedByGMStatus
 {
-    GMTICKET_OPENEDBYGM_STATUS_NOT_OPENED = 0,       // ticket has never been opened by a gm
-    GMTICKET_OPENEDBYGM_STATUS_OPENED = 1,           // ticket has been opened by a gm
+    GMTICKET_OPENEDBYGM_STATUS_NOT_OPENED = 0,      // ticket has never been opened by a gm
+    GMTICKET_OPENEDBYGM_STATUS_OPENED = 1,          // ticket has been opened by a gm
 };
 
 enum LagReportType
@@ -93,7 +93,7 @@ struct GM_Ticket
     std::string message;
     uint64 createtime;
     uint64 timestamp;
-    int64 closed; // 0 = Open,  -1 = Console,  playerGuid = player abandoned ticket,  other = GM who closed it.
+    int64 closed; // 0 = Open, -1 = Console, playerGuid = player abandoned ticket, other = GM who closed it.
     uint64 assignedToGM;
     std::string comment;
     bool completed;
@@ -106,7 +106,7 @@ typedef std::list<GM_Ticket*> GmTicketList;
 class TicketMgr
 {
     TicketMgr();
-    friend class ACE_Singleton<TicketMgr,  ACE_Null_Mutex>;
+    friend class ACE_Singleton<TicketMgr, ACE_Null_Mutex>;
 
 public:
     void LoadGMTickets();
@@ -130,10 +130,10 @@ public:
         return NULL;
     }
 
-    void AddOrUpdateGMTicket(GM_Ticket &ticket,  bool create = false);
+    void AddOrUpdateGMTicket(GM_Ticket &ticket, bool create = false);
     void _AddOrUpdateGMTicket(GM_Ticket &ticket);
-    void RemoveGMTicket(uint64 ticketGuid,  int64 source = -1,  bool permanently = false);
-    void RemoveGMTicket(GM_Ticket *ticket,  int64 source = -1,  bool permanently = false);
+    void RemoveGMTicket(uint64 ticketGuid, int64 source = -1, bool permanently = false);
+    void RemoveGMTicket(GM_Ticket *ticket, int64 source = -1, bool permanently = false);
     uint64 GenerateGMTicketId();
     bool GetStatus() const { return status; }
     void SetStatus(bool newStatus) { status = newStatus; }
@@ -168,6 +168,6 @@ protected:
     time_t lastChange;
 };
 
-#define sTicketMgr ACE_Singleton<TicketMgr,  ACE_Null_Mutex>::instance()
+#define sTicketMgr ACE_Singleton<TicketMgr, ACE_Null_Mutex>::instance()
 
 #endif // _TICKETMGR_H

@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_GRIDLOADER_H
@@ -51,7 +51,7 @@ class GridLoader
         /** Loads the grid
          */
         template<class LOADER>
-            void Load(Grid<ACTIVE_OBJECT, WORLD_OBJECT_TYPES,  GRID_OBJECT_TYPES> &grid,  LOADER &loader)
+            void Load(Grid<ACTIVE_OBJECT, WORLD_OBJECT_TYPES, GRID_OBJECT_TYPES> &grid, LOADER &loader)
         {
             grid.LockGrid();
             loader.Load(grid);
@@ -61,7 +61,7 @@ class GridLoader
         /** Stop the grid
          */
         template<class STOPER>
-            void Stop(Grid<ACTIVE_OBJECT, WORLD_OBJECT_TYPES,  GRID_OBJECT_TYPES> &grid,  STOPER &stoper)
+            void Stop(Grid<ACTIVE_OBJECT, WORLD_OBJECT_TYPES, GRID_OBJECT_TYPES> &grid, STOPER &stoper)
         {
             grid.LockGrid();
             stoper.Stop(grid);
@@ -70,7 +70,7 @@ class GridLoader
         /** Unloads the grid
          */
         template<class UNLOADER>
-            void Unload(Grid<ACTIVE_OBJECT, WORLD_OBJECT_TYPES,  GRID_OBJECT_TYPES> &grid,  UNLOADER &unloader)
+            void Unload(Grid<ACTIVE_OBJECT, WORLD_OBJECT_TYPES, GRID_OBJECT_TYPES> &grid, UNLOADER &unloader)
         {
             grid.LockGrid();
             unloader.Unload(grid);

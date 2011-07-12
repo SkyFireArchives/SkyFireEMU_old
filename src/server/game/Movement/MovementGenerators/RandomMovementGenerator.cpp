@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -35,12 +35,12 @@
 
 template<>
 bool
-RandomMovementGenerator<Creature>::GetDestination(float &x,  float &y,  float &z) const
+RandomMovementGenerator<Creature>::GetDestination(float &x, float &y, float &z) const
 {
     if (i_destinationHolder.HasArrived())
         return false;
 
-    i_destinationHolder.GetDestination(x,  y,  z);
+    i_destinationHolder.GetDestination(x, y, z);
     return true;
 }
 
@@ -54,7 +54,7 @@ RandomMovementGenerator<Creature>::_setRandomLocation(Creature &creature)
 {
     float X, Y, Z, z, nx, ny, nz, ori, dist;
 
-    creature.GetHomePosition(X,  Y,  Z,  ori);
+    creature.GetHomePosition(X, Y, Z, ori);
 
     z = creature.GetPositionZ();
     Map const* map = creature.GetBaseMap();
@@ -90,10 +90,10 @@ RandomMovementGenerator<Creature>::_setRandomLocation(Creature &creature)
         {
             const float distanceZ = (float)(rand_norm()) * sqrtf(dist)/2; // Limit height change
             nz = Z + distanceZ;
-            float tz = map->GetHeight(nx,  ny,  nz-2.0f,  false); // Map check only,  vmap needed here but need to alter vmaps checks for height.
-            float wz = map->GetWaterLevel(nx,  ny);
+            float tz = map->GetHeight(nx, ny, nz-2.0f, false); // Map check only, vmap needed here but need to alter vmaps checks for height.
+            float wz = map->GetWaterLevel(nx, ny);
             if (tz >= nz || wz >= nz)
-                continue; // Problem here,  we must fly above the ground and water,  not under. Let's try on next tick
+                continue; // Problem here, we must fly above the ground and water, not under. Let's try on next tick
         }
         //else if (is_water_ok) // 3D system under water and above ground (swimming mode)
         else // 2D only
@@ -101,7 +101,7 @@ RandomMovementGenerator<Creature>::_setRandomLocation(Creature &creature)
             dist = dist >= 100.0f ? 10.0f : sqrtf(dist); // 10.0 is the max that vmap high can check (MAX_CAN_FALL_DISTANCE)
 
             // The fastest way to get an accurate result 90% of the time.
-            // Better result can be obtained like 99% accuracy with a ray light,  but the cost is too high and the code is too long.
+            // Better result can be obtained like 99% accuracy with a ray light, but the cost is too high and the code is too long.
             nz = map->GetHeight(nx, ny, Z+dist-2.0f, false); // Map check
             if (fabs(nz-Z)>dist)
             {
@@ -119,7 +119,7 @@ RandomMovementGenerator<Creature>::_setRandomLocation(Creature &creature)
 
     Traveller<Creature> traveller(creature);
     creature.SetOrientation(creature.GetAngle(nx, ny));
-    i_destinationHolder.SetDestination(traveller,  nx,  ny,  nz);
+    i_destinationHolder.SetDestination(traveller, nx, ny, nz);
     creature.AddUnitState(UNIT_STAT_ROAMING);
     if (is_air_ok)
     {
@@ -135,7 +135,7 @@ RandomMovementGenerator<Creature>::_setRandomLocation(Creature &creature)
     //Call for creature group update
     if (creature.GetFormation() && creature.GetFormation()->getLeader() == &creature)
     {
-        creature.GetFormation()->LeaderMoveTo(nx,  ny,  nz);
+        creature.GetFormation()->LeaderMoveTo(nx, ny, nz);
     }
 }
 
@@ -167,7 +167,7 @@ RandomMovementGenerator<Creature>::Finalize(Creature & /*creature*/){}
 
 template<>
 bool
-RandomMovementGenerator<Creature>::Update(Creature &creature,  const uint32 &diff)
+RandomMovementGenerator<Creature>::Update(Creature &creature, const uint32 &diff)
 {
     if (creature.HasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED | UNIT_STAT_DISTRACTED))
     {
@@ -186,7 +186,7 @@ RandomMovementGenerator<Creature>::Update(Creature &creature,  const uint32 &dif
 
     CreatureTraveller traveller(creature);
 
-    if (i_destinationHolder.UpdateTraveller(traveller,  diff,  true))
+    if (i_destinationHolder.UpdateTraveller(traveller, diff, true))
     {
         if (i_nextMoveTime.Passed())
         {

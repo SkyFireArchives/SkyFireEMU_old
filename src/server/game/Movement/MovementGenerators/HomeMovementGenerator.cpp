@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -31,8 +31,8 @@
 void
 HomeMovementGenerator<Creature>::Initialize(Creature & owner)
 {
-    float x,  y,  z;
-    owner.GetHomePosition(x,  y,  z,  ori);
+    float x, y, z;
+    owner.GetHomePosition(x, y, z, ori);
     owner.RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
     owner.AddUnitState(UNIT_STAT_EVADE);
     _setTargetLocation(owner);
@@ -58,21 +58,21 @@ HomeMovementGenerator<Creature>::_setTargetLocation(Creature & owner)
     if (owner.HasUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED | UNIT_STAT_DISTRACTED))
         return;
 
-    float x,  y,  z;
-    owner.GetHomePosition(x,  y,  z,  ori);
+    float x, y, z;
+    owner.GetHomePosition(x, y, z, ori);
 
     CreatureTraveller traveller(owner);
 
-    uint32 travel_time = i_destinationHolder.SetDestination(traveller,  x,  y,  z);
+    uint32 travel_time = i_destinationHolder.SetDestination(traveller, x, y, z);
     modifyTravelTime(travel_time);
     owner.ClearUnitState(UNIT_STAT_ALL_STATE & ~UNIT_STAT_EVADE);
 }
 
 bool
-HomeMovementGenerator<Creature>::Update(Creature &owner,  const uint32& time_diff)
+HomeMovementGenerator<Creature>::Update(Creature &owner, const uint32& time_diff)
 {
     CreatureTraveller traveller(owner);
-    i_destinationHolder.UpdateTraveller(traveller,  time_diff);
+    i_destinationHolder.UpdateTraveller(traveller, time_diff);
 
     if (time_diff > i_travel_timer)
     {
@@ -85,7 +85,7 @@ HomeMovementGenerator<Creature>::Update(Creature &owner,  const uint32& time_dif
             owner.SetOrientation(ori);
             WorldPacket packet;
             owner.BuildHeartBeatMsg(&packet);
-            owner.SendMessageToSet(&packet,  false);
+            owner.SendMessageToSet(&packet, false);
         }
 
         owner.ClearUnitState(UNIT_STAT_EVADE);

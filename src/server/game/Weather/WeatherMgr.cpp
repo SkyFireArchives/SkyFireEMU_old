@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -64,7 +64,7 @@ Weather* WeatherMgr::AddWeather(uint32 zone_id)
 {
     WeatherData const* weatherChances = GetWeatherChances(zone_id);
 
-    // zone not have weather,  ignore
+    // zone not have weather, ignore
     if (!weatherChances)
         return NULL;
 
@@ -82,7 +82,7 @@ void WeatherMgr::LoadWeatherData()
     uint32 count = 0;
 
     //                                                0     1                   2                   3                    4                   5                   6                    7                 8                 9                  10                  11                  12                                13
-    QueryResult result = WorldDatabase.Query("SELECT zone,  spring_rain_chance,  spring_snow_chance,  spring_storm_chance,  summer_rain_chance,  summer_snow_chance,  summer_storm_chance,  fall_rain_chance,  fall_snow_chance,  fall_storm_chance,  winter_rain_chance,  winter_snow_chance,  winter_storm_chance,  ScriptName FROM game_weather");
+    QueryResult result = WorldDatabase.Query("SELECT zone, spring_rain_chance, spring_snow_chance, spring_storm_chance, summer_rain_chance, summer_snow_chance, summer_storm_chance, fall_rain_chance, fall_snow_chance, fall_storm_chance, winter_rain_chance, winter_snow_chance, winter_storm_chance, ScriptName FROM game_weather");
 
     if (!result)
     {
@@ -130,14 +130,14 @@ void WeatherMgr::LoadWeatherData()
     }
     while (result->NextRow());
 
-    sLog->outString(">> Loaded %u weather definitions in %u ms",  count,  GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString(">> Loaded %u weather definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 
 void WeatherMgr::Update(uint32 diff)
 {
     ///- Send an update signal to Weather objects
-    WeatherMap::iterator itr,  next;
+    WeatherMap::iterator itr, next;
     for (itr = m_weathers.begin(); itr != m_weathers.end(); itr = next)
     {
         next = itr;

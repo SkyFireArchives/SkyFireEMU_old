@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -53,27 +53,27 @@ void WorldLog::Initialize()
             logsDir.append("/");
     }
 
-    std::string logname = sConfig->GetStringDefault("WorldLogFile",  "");
+    std::string logname = sConfig->GetStringDefault("WorldLogFile", "");
     if (!logname.empty())
     {
-        i_file = fopen((logsDir+logname).c_str(),  "w");
+        i_file = fopen((logsDir+logname).c_str(), "w");
     }
 
-    m_dbWorld = sConfig->GetBoolDefault("LogDB.World",  false); // can be VERY heavy if enabled
+    m_dbWorld = sConfig->GetBoolDefault("LogDB.World", false); // can be VERY heavy if enabled
 }
 
-void WorldLog::outTimestampLog(char const *fmt,  ...)
+void WorldLog::outTimestampLog(char const *fmt, ...)
 {
     if (LogWorld())
     {
-        ACE_GUARD(ACE_Thread_Mutex,  Guard,  Lock);
+        ACE_GUARD(ACE_Thread_Mutex, Guard, Lock);
         ASSERT(i_file);
 
         Log::outTimestamp(i_file);
         va_list args;
-        va_start(args,  fmt);
-        vfprintf(i_file,  fmt,  args);
-        //fprintf(i_file,  "\n");
+        va_start(args, fmt);
+        vfprintf(i_file, fmt, args);
+        //fprintf(i_file, "\n");
         va_end(args);
 
         fflush(i_file);
@@ -82,25 +82,25 @@ void WorldLog::outTimestampLog(char const *fmt,  ...)
     if (sLog->GetLogDB() && m_dbWorld)
     {
         va_list ap2;
-        va_start(ap2,  fmt);
+        va_start(ap2, fmt);
         char nnew_str[MAX_QUERY_LEN];
-        vsnprintf(nnew_str,  MAX_QUERY_LEN,  fmt,  ap2);
-        sLog->outDB(LOG_TYPE_WORLD,  nnew_str);
+        vsnprintf(nnew_str, MAX_QUERY_LEN, fmt, ap2);
+        sLog->outDB(LOG_TYPE_WORLD, nnew_str);
         va_end(ap2);
     }
 }
 
-void WorldLog::outLog(char const *fmt,  ...)
+void WorldLog::outLog(char const *fmt, ...)
 {
     if (LogWorld())
     {
-        ACE_GUARD(ACE_Thread_Mutex,  Guard,  Lock);
+        ACE_GUARD(ACE_Thread_Mutex, Guard, Lock);
         ASSERT(i_file);
 
         va_list args;
-        va_start(args,  fmt);
-        vfprintf(i_file,  fmt,  args);
-        //fprintf(i_file,  "\n");
+        va_start(args, fmt);
+        vfprintf(i_file, fmt, args);
+        //fprintf(i_file, "\n");
         va_end(args);
 
         fflush(i_file);
@@ -109,10 +109,10 @@ void WorldLog::outLog(char const *fmt,  ...)
     if (sLog->GetLogDB() && m_dbWorld)
     {
         va_list ap2;
-        va_start(ap2,  fmt);
+        va_start(ap2, fmt);
         char nnew_str[MAX_QUERY_LEN];
-        vsnprintf(nnew_str,  MAX_QUERY_LEN,  fmt,  ap2);
-        sLog->outDB(LOG_TYPE_WORLD,  nnew_str);
+        vsnprintf(nnew_str, MAX_QUERY_LEN, fmt, ap2);
+        sLog->outDB(LOG_TYPE_WORLD, nnew_str);
         va_end(ap2);
     }
 }

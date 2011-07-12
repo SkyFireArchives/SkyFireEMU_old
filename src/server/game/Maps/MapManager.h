@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_MAPMANAGER_H
@@ -36,32 +36,32 @@ struct TransportCreatureProto;
 
 class MapManager
 {
-    friend class ACE_Singleton<MapManager,  ACE_Thread_Mutex>;
-    typedef UNORDERED_MAP<uint32,  Map*> MapMapType;
+    friend class ACE_Singleton<MapManager, ACE_Thread_Mutex>;
+    typedef UNORDERED_MAP<uint32, Map*> MapMapType;
     typedef std::vector<bool> InstanceIds;
 
     public:
 
-        Map* CreateMap(uint32,  const WorldObject* obj,  uint32 instanceId);
+        Map* CreateMap(uint32, const WorldObject* obj, uint32 instanceId);
         Map const* CreateBaseMap(uint32 id) const { return const_cast<MapManager*>(this)->_createBaseMap(id); }
-        Map* FindMap(uint32 mapid,  uint32 instanceId = 0) const;
+        Map* FindMap(uint32 mapid, uint32 instanceId = 0) const;
 
-        uint16 GetAreaFlag(uint32 mapid,  float x,  float y,  float z) const
+        uint16 GetAreaFlag(uint32 mapid, float x, float y, float z) const
         {
             Map const* m = CreateBaseMap(mapid);
-            return m->GetAreaFlag(x,  y,  z);
+            return m->GetAreaFlag(x, y, z);
         }
-        uint32 GetAreaId(uint32 mapid,  float x,  float y,  float z) const
+        uint32 GetAreaId(uint32 mapid, float x, float y, float z) const
         {
-            return Map::GetAreaIdByAreaFlag(GetAreaFlag(mapid,  x,  y,  z),  mapid);
+            return Map::GetAreaIdByAreaFlag(GetAreaFlag(mapid, x, y, z), mapid);
         }
-        uint32 GetZoneId(uint32 mapid,  float x,  float y,  float z) const
+        uint32 GetZoneId(uint32 mapid, float x, float y, float z) const
         {
-            return Map::GetZoneIdByAreaFlag(GetAreaFlag(mapid,  x,  y,  z),  mapid);
+            return Map::GetZoneIdByAreaFlag(GetAreaFlag(mapid, x, y, z), mapid);
         }
-        void GetZoneAndAreaId(uint32& zoneid,  uint32& areaid,  uint32 mapid,  float x,  float y,  float z)
+        void GetZoneAndAreaId(uint32& zoneid, uint32& areaid, uint32 mapid, float x, float y, float z)
         {
-            Map::GetZoneAndAreaIdByAreaFlag(zoneid,  areaid,  GetAreaFlag(mapid,  x,  y,  z),  mapid);
+            Map::GetZoneAndAreaIdByAreaFlag(zoneid, areaid, GetAreaFlag(mapid, x, y, z), mapid);
         }
 
         void Initialize(void);
@@ -84,30 +84,30 @@ class MapManager
             i_timer.Reset();
         }
 
-        //void LoadGrid(int mapid,  int instId,  float x,  float y,  const WorldObject* obj,  bool no_unload = false);
+        //void LoadGrid(int mapid, int instId, float x, float y, const WorldObject* obj, bool no_unload = false);
         void UnloadAll();
 
-        static bool ExistMapAndVMap(uint32 mapid,  float x,  float y);
-        static bool IsValidMAP(uint32 mapid,  bool startUp);
+        static bool ExistMapAndVMap(uint32 mapid, float x, float y);
+        static bool IsValidMAP(uint32 mapid, bool startUp);
 
-        static bool IsValidMapCoord(uint32 mapid,  float x,  float y)
+        static bool IsValidMapCoord(uint32 mapid, float x, float y)
         {
-            return IsValidMAP(mapid,  false) && Trinity::IsValidMapCoord(x,  y);
+            return IsValidMAP(mapid, false) && Trinity::IsValidMapCoord(x, y);
         }
 
-        static bool IsValidMapCoord(uint32 mapid,  float x,  float y,  float z)
+        static bool IsValidMapCoord(uint32 mapid, float x, float y, float z)
         {
-            return IsValidMAP(mapid,  false) && Trinity::IsValidMapCoord(x,  y,  z);
+            return IsValidMAP(mapid, false) && Trinity::IsValidMapCoord(x, y, z);
         }
 
-        static bool IsValidMapCoord(uint32 mapid,  float x,  float y,  float z,  float o)
+        static bool IsValidMapCoord(uint32 mapid, float x, float y, float z, float o)
         {
-            return IsValidMAP(mapid,  false) && Trinity::IsValidMapCoord(x,  y,  z,  o);
+            return IsValidMAP(mapid, false) && Trinity::IsValidMapCoord(x, y, z, o);
         }
 
         static bool IsValidMapCoord(WorldLocation const& loc)
         {
-            return IsValidMapCoord(loc.GetMapId(),  loc.GetPositionX(),  loc.GetPositionY(),  loc.GetPositionZ(),  loc.GetOrientation());
+            return IsValidMapCoord(loc.GetMapId(), loc.GetPositionX(), loc.GetPositionY(), loc.GetPositionZ(), loc.GetOrientation());
         }
 
         // modulos a radian orientation to the range of 0..2PI
@@ -118,11 +118,11 @@ class MapManager
             if (o < 0)
             {
                 float mod = o *-1;
-                mod = fmod(mod,  2.0f * static_cast<float>(M_PI));
+                mod = fmod(mod, 2.0f * static_cast<float>(M_PI));
                 mod = -mod + 2.0f * static_cast<float>(M_PI);
                 return mod;
             }
-            return fmod(o,  2.0f * static_cast<float>(M_PI));
+            return fmod(o, 2.0f * static_cast<float>(M_PI));
         }
 
         void DoDelayedMovesAndRemoves();
@@ -133,10 +133,10 @@ class MapManager
         typedef std::set<Transport *> TransportSet;
         TransportSet m_Transports;
 
-        typedef std::map<uint32,  TransportSet> TransportMap;
+        typedef std::map<uint32, TransportSet> TransportMap;
         TransportMap m_TransportsByMap;
 
-        bool CanPlayerEnter(uint32 mapid,  Player* player,  bool loginCheck = false);
+        bool CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck = false);
         void InitializeVisibilityDistanceInfo();
 
         /* statistics */
@@ -153,7 +153,7 @@ class MapManager
         void SetNextInstanceId(uint32 nextInstanceId) { _nextInstanceId = nextInstanceId; };
 
     private:
-        // debugging code,  should be deleted some day
+        // debugging code, should be deleted some day
         void checkAndCorrectGridStatesArray();              // just for debugging to find some memory overwrites
         GridState* i_GridStates[MAX_GRID_STATE];            // shadow entries to the global array in Map.cpp
         int i_GridStateErrorCount;
@@ -180,5 +180,5 @@ class MapManager
         uint32 _nextInstanceId;
         MapUpdater m_updater;
 };
-#define sMapMgr ACE_Singleton<MapManager,  ACE_Thread_Mutex>::instance()
+#define sMapMgr ACE_Singleton<MapManager, ACE_Thread_Mutex>::instance()
 #endif

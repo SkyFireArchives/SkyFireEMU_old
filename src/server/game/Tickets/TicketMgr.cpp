@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -56,8 +56,8 @@ void TicketMgr::LoadGMTickets()
     m_GMticketid = 0;
     m_openTickets = 0;
 
-    QueryResult result = CharacterDatabase.Query("SELECT guid,  playerGuid,  name,  message,  createtime,  map,  posX,  posY,  posZ,  timestamp,  closed, "
-                                                 "assignedto,  comment,  completed,  escalated,  viewed FROM gm_tickets");
+    QueryResult result = CharacterDatabase.Query("SELECT guid, playerGuid, name, message, createtime, map, posX, posY, posZ, timestamp, closed, "
+                                                 "assignedto, comment, completed, escalated, viewed FROM gm_tickets");
 
     if (!result)
     {
@@ -106,7 +106,7 @@ void TicketMgr::LoadGMTickets()
         m_GMticketid = fields[0].GetUInt64();
     }
 
-    sLog->outString(">> Loaded %u GM tickets in %u ms",  count,  GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString(">> Loaded %u GM tickets in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 
@@ -124,11 +124,11 @@ void TicketMgr::LoadGMSurveys()
     else
         m_GMSurveyID = 0;
 
-    sLog->outString(">> Loaded GM Survey count from database in %u ms",  GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString(">> Loaded GM Survey count from database in %u ms", GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 
-void TicketMgr::AddOrUpdateGMTicket(GM_Ticket &ticket,  bool create)
+void TicketMgr::AddOrUpdateGMTicket(GM_Ticket &ticket, bool create)
 {
     if (create)
     {
@@ -142,27 +142,27 @@ void TicketMgr::AddOrUpdateGMTicket(GM_Ticket &ticket,  bool create)
 
 void TicketMgr::_AddOrUpdateGMTicket(GM_Ticket &ticket)
 {
-    std::string msg(ticket.message),  name(ticket.name),  comment(ticket.comment);
+    std::string msg(ticket.message), name(ticket.name), comment(ticket.comment);
     CharacterDatabase.EscapeString(msg);
     CharacterDatabase.EscapeString(name);
     CharacterDatabase.EscapeString(comment);
     std::ostringstream ss;
-    ss << "REPLACE INTO gm_tickets (guid,  playerGuid,  name,  message,  createtime,  map,  posX,  posY,  posZ,  timestamp,  closed,  assignedto,  comment,  completed,  escalated,  viewed) VALUES (";
-    ss << ticket.guid << ",  ";
-    ss << ticket.playerGuid << ",  '";
-    ss << name << "',  '";
-    ss << msg << "',  " ;
-    ss << ticket.createtime << ",  ";
-    ss << ticket.map << ",  ";
-    ss << ticket.pos_x << ",  ";
-    ss << ticket.pos_y << ",  ";
-    ss << ticket.pos_z << ",  ";
-    ss << ticket.timestamp << ",  ";
-    ss << ticket.closed << ",  ";
-    ss << ticket.assignedToGM << ",  '";
-    ss << comment << "',  ";
-    ss << (ticket.completed ? 1 : 0) << ",  ";
-    ss << uint32(ticket.escalated) << ",  ";
+    ss << "REPLACE INTO gm_tickets (guid, playerGuid, name, message, createtime, map, posX, posY, posZ, timestamp, closed, assignedto, comment, completed, escalated, viewed) VALUES (";
+    ss << ticket.guid << ", ";
+    ss << ticket.playerGuid << ", '";
+    ss << name << "', '";
+    ss << msg << "', " ;
+    ss << ticket.createtime << ", ";
+    ss << ticket.map << ", ";
+    ss << ticket.pos_x << ", ";
+    ss << ticket.pos_y << ", ";
+    ss << ticket.pos_z << ", ";
+    ss << ticket.timestamp << ", ";
+    ss << ticket.closed << ", ";
+    ss << ticket.assignedToGM << ", '";
+    ss << comment << "', ";
+    ss << (ticket.completed ? 1 : 0) << ", ";
+    ss << uint32(ticket.escalated) << ", ";
     ss << (ticket.viewed ? 1 : 0) << ");";
 
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
@@ -170,14 +170,14 @@ void TicketMgr::_AddOrUpdateGMTicket(GM_Ticket &ticket)
     CharacterDatabase.CommitTransaction(trans);
 }
 
-void TicketMgr::RemoveGMTicket(GM_Ticket *ticket,  int64 source,  bool permanently)
+void TicketMgr::RemoveGMTicket(GM_Ticket *ticket, int64 source, bool permanently)
 {
     for (GmTicketList::iterator i = m_GMTicketList.begin(); i != m_GMTicketList.end(); ++i)
         if ((*i)->guid == ticket->guid)
         {
             if (permanently)
             {
-                CharacterDatabase.PExecute("DELETE FROM gm_tickets WHERE guid = '%u'",  ticket->guid);
+                CharacterDatabase.PExecute("DELETE FROM gm_tickets WHERE guid = '%u'", ticket->guid);
                 i = m_GMTicketList.erase(i);
                 ticket = NULL;
                 return;
@@ -191,9 +191,9 @@ void TicketMgr::RemoveGMTicket(GM_Ticket *ticket,  int64 source,  bool permanent
         }
 }
 
-void TicketMgr::RemoveGMTicket(uint64 ticketGuid,  int64 source,  bool permanently)
+void TicketMgr::RemoveGMTicket(uint64 ticketGuid, int64 source, bool permanently)
 {
     GM_Ticket *ticket = GetGMTicket(ticketGuid);
     ASSERT(ticket); // hmm
-    RemoveGMTicket(ticket,  source,  permanently);
+    RemoveGMTicket(ticket, source, permanently);
 }

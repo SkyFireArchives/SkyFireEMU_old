@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_DESTINATIONHOLDERIMP_H
@@ -30,10 +30,10 @@
 
 template<typename TRAVELLER>
 void
-DestinationHolder<TRAVELLER>::_findOffSetPoint(float x1,  float y1,  float x2,  float y2,  float offset,  float &x,  float &y)
+DestinationHolder<TRAVELLER>::_findOffSetPoint(float x1, float y1, float x2, float y2, float offset, float &x, float &y)
 {
-    /* given the point (x1,  y1) and (x2,  y2).. need to find the point (x, y) on the same line
-     * such that the distance from (x,  y) to (x2,  y2) is offset.
+    /* given the point (x1, y1) and (x2, y2).. need to find the point (x, y) on the same line
+     * such that the distance from (x, y) to (x2, y2) is offset.
      * Let the distance of p1 to p2 = d.. then the ratio of offset/d = (x2-x)/(x2-x1)
      * hence x = x2 - (offset/d)*(x2-x1)
      * like wise offset/d = (y2-y)/(y2-y1);
@@ -57,7 +57,7 @@ DestinationHolder<TRAVELLER>::_findOffSetPoint(float x1,  float y1,  float x2,  
         {
             distance_d = ::sqrt(distance_d);                // starting distance
             double distance_ratio = (double)(distance_d - offset)/(double)distance_d;
-            // line above has revised formula which is more correct,  I think
+            // line above has revised formula which is more correct, I think
             x = (float)(x1 + (distance_ratio*x_diff));
             y = (float)(y1 + (distance_ratio*y_diff));
         }
@@ -66,19 +66,19 @@ DestinationHolder<TRAVELLER>::_findOffSetPoint(float x1,  float y1,  float x2,  
 
 template<typename TRAVELLER>
 uint32
-DestinationHolder<TRAVELLER>::SetDestination(TRAVELLER &traveller,  float dest_x,  float dest_y,  float dest_z,  bool sendMove)
+DestinationHolder<TRAVELLER>::SetDestination(TRAVELLER &traveller, float dest_x, float dest_y, float dest_z, bool sendMove)
 {
     i_destSet = true;
     i_destX = dest_x;
     i_destY = dest_y;
     i_destZ = dest_z;
 
-    return StartTravel(traveller,  sendMove);
+    return StartTravel(traveller, sendMove);
 }
 
 template<typename TRAVELLER>
 uint32
-DestinationHolder<TRAVELLER>::StartTravel(TRAVELLER &traveller,  bool sendMove)
+DestinationHolder<TRAVELLER>::StartTravel(TRAVELLER &traveller, bool sendMove)
 {
     if (!i_destSet) return 0;
 
@@ -89,13 +89,13 @@ DestinationHolder<TRAVELLER>::StartTravel(TRAVELLER &traveller,  bool sendMove)
     i_totalTravelTime = traveller.GetTotalTrevelTimeTo(i_destX, i_destY, i_destZ);
     i_timeElapsed = 0;
     if (sendMove)
-        traveller.MoveTo(i_destX,  i_destY,  i_destZ,  i_totalTravelTime);
+        traveller.MoveTo(i_destX, i_destY, i_destZ, i_totalTravelTime);
     return i_totalTravelTime;
 }
 
 template<typename TRAVELLER>
 bool
-DestinationHolder<TRAVELLER>::UpdateTraveller(TRAVELLER &traveller,  uint32 diff,  bool micro_movement)
+DestinationHolder<TRAVELLER>::UpdateTraveller(TRAVELLER &traveller, uint32 diff, bool micro_movement)
 {
     i_timeElapsed += diff;
 
@@ -108,20 +108,20 @@ DestinationHolder<TRAVELLER>::UpdateTraveller(TRAVELLER &traveller,  uint32 diff
 
     if (!i_destSet) return true;
 
-    float x,  y,  z;
+    float x, y, z;
     if (!micro_movement)
-        GetLocationNowNoMicroMovement(x,  y,  z);
+        GetLocationNowNoMicroMovement(x, y, z);
     else
     {
         if (!traveller.GetTraveller().HasUnitState(UNIT_STAT_MOVING | UNIT_STAT_IN_FLIGHT))
             return true;
 
         if (traveller.GetTraveller().HasUnitState(UNIT_STAT_IN_FLIGHT))
-            GetLocationNow(traveller.GetTraveller().GetBaseMap() , x,  y,  z,  true);                  // Should reposition Object with right Coord,  so I can bypass some Grid Relocation
+            GetLocationNow(traveller.GetTraveller().GetBaseMap() , x, y, z, true);                  // Should reposition Object with right Coord, so I can bypass some Grid Relocation
         else
-            GetLocationNow(traveller.GetTraveller().GetBaseMap(),  x,  y,  z,  false);
+            GetLocationNow(traveller.GetTraveller().GetBaseMap(), x, y, z, false);
 
-        // Change movement computation to micro movement based on last tick coords,  this makes system work
+        // Change movement computation to micro movement based on last tick coords, this makes system work
         // even on multiple floors zones without hugh vmaps usage ;)
 
         // Take care of underrun of uint32
@@ -138,8 +138,8 @@ DestinationHolder<TRAVELLER>::UpdateTraveller(TRAVELLER &traveller,  uint32 diff
 
     if (traveller.GetTraveller().GetPositionX() != x || traveller.GetTraveller().GetPositionY() != y || traveller.GetTraveller().GetPositionZ() != z)
     {
-        float ori = traveller.GetTraveller().GetAngle(x,  y);
-        traveller.Relocation(x,  y,  z,  ori);
+        float ori = traveller.GetTraveller().GetAngle(x, y);
+        traveller.Relocation(x, y, z, ori);
     }
 
     return true;
@@ -147,7 +147,7 @@ DestinationHolder<TRAVELLER>::UpdateTraveller(TRAVELLER &traveller,  uint32 diff
 
 template<typename TRAVELLER>
 void
-DestinationHolder<TRAVELLER>::GetLocationNow(const Map * map,  float &x,  float &y,  float &z,  bool is3D) const
+DestinationHolder<TRAVELLER>::GetLocationNow(const Map * map, float &x, float &y, float &z, bool is3D) const
 {
     if (HasArrived())
     {
@@ -191,14 +191,14 @@ DestinationHolder<TRAVELLER>::GetDistance3dFromDestSq(const WorldObject &obj) co
 
 template<typename TRAVELLER>
 float
-DestinationHolder<TRAVELLER>::GetDestinationDiff(float x,  float y,  float z) const
+DestinationHolder<TRAVELLER>::GetDestinationDiff(float x, float y, float z) const
 {
     return sqrt(((x-i_destX)*(x-i_destX)) + ((y-i_destY)*(y-i_destY)) + ((z-i_destZ)*(z-i_destZ)));
 }
 
 template<typename TRAVELLER>
 void
-DestinationHolder<TRAVELLER>::GetLocationNowNoMicroMovement(float &x,  float &y,  float &z) const
+DestinationHolder<TRAVELLER>::GetLocationNowNoMicroMovement(float &x, float &y, float &z) const
 {
     if (HasArrived())
     {

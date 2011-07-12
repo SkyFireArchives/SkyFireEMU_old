@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -46,7 +46,7 @@ VisibleNotifier::SendToSelf()
             {
                 vis_guids.erase((*itr)->GetGUID());
 
-                i_player.UpdateVisibilityOf((*itr),  i_data,  i_visibleNow);
+                i_player.UpdateVisibilityOf((*itr), i_data, i_visibleNow);
 
                 if (!(*itr)->isNeedNotify(NOTIFY_VISIBILITY_CHANGED))
                     (*itr)->UpdateVisibilityOf(&i_player);
@@ -116,13 +116,13 @@ VisibleChangesNotifier::Visit(DynamicObjectMapType &m)
                     caster->UpdateVisibilityOf(&i_object);
 }
 
-inline void CreatureUnitRelocationWorker(Creature* c,  Unit* u)
+inline void CreatureUnitRelocationWorker(Creature* c, Unit* u)
 {
     if (!u->isAlive() || !c->isAlive() || c == u || u->isInFlight())
         return;
 
     if (c->HasReactState(REACT_AGGRESSIVE) && !c->HasUnitState(UNIT_STAT_SIGHTLESS))
-        if (c->IsAIEnabled && c->canSeeOrDetect(u,  false,  true))
+        if (c->IsAIEnabled && c->canSeeOrDetect(u, false, true))
             c->AI()->MoveInLineOfSight_Safe(u);
 }
 
@@ -156,7 +156,7 @@ void PlayerRelocationNotifier::Visit(CreatureMapType &m)
         i_player.UpdateVisibilityOf(c, i_data, i_visibleNow);
 
         if (relocated_for_ai && !c->isNeedNotify(NOTIFY_VISIBILITY_CHANGED))
-            CreatureUnitRelocationWorker(c,  &i_player);
+            CreatureUnitRelocationWorker(c, &i_player);
     }
 }
 
@@ -169,7 +169,7 @@ void CreatureRelocationNotifier::Visit(PlayerMapType &m)
         if (!pl->m_seer->isNeedNotify(NOTIFY_VISIBILITY_CHANGED))
             pl->UpdateVisibilityOf(&i_creature);
 
-        CreatureUnitRelocationWorker(&i_creature,  pl);
+        CreatureUnitRelocationWorker(&i_creature, pl);
     }
 }
 
@@ -181,10 +181,10 @@ void CreatureRelocationNotifier::Visit(CreatureMapType &m)
     for (CreatureMapType::iterator iter=m.begin(); iter != m.end(); ++iter)
     {
         Creature* c = iter->getSource();
-        CreatureUnitRelocationWorker(&i_creature,  c);
+        CreatureUnitRelocationWorker(&i_creature, c);
 
         if (!c->isNeedNotify(NOTIFY_VISIBILITY_CHANGED))
-            CreatureUnitRelocationWorker(c,  &i_creature);
+            CreatureUnitRelocationWorker(c, &i_creature);
     }
 }
 
@@ -198,11 +198,11 @@ void DelayedUnitRelocation::Visit(CreatureMapType &m)
 
         CreatureRelocationNotifier relocate(*unit);
 
-        TypeContainerVisitor<CreatureRelocationNotifier,  WorldTypeMapContainer > c2world_relocation(relocate);
-        TypeContainerVisitor<CreatureRelocationNotifier,  GridTypeMapContainer >  c2grid_relocation(relocate);
+        TypeContainerVisitor<CreatureRelocationNotifier, WorldTypeMapContainer > c2world_relocation(relocate);
+        TypeContainerVisitor<CreatureRelocationNotifier, GridTypeMapContainer >  c2grid_relocation(relocate);
 
-        cell.Visit(p,  c2world_relocation,  i_map,  *unit,  i_radius);
-        cell.Visit(p,  c2grid_relocation,  i_map,  *unit,  i_radius);
+        cell.Visit(p, c2world_relocation, i_map, *unit, i_radius);
+        cell.Visit(p, c2grid_relocation, i_map, *unit, i_radius);
     }
 }
 
@@ -219,16 +219,16 @@ void DelayedUnitRelocation::Visit(PlayerMapType &m)
         if (player != viewPoint && !viewPoint->IsPositionValid())
             continue;
 
-        CellPair pair2(Trinity::ComputeCellPair(viewPoint->GetPositionX(),  viewPoint->GetPositionY()));
+        CellPair pair2(Trinity::ComputeCellPair(viewPoint->GetPositionX(), viewPoint->GetPositionY()));
         Cell cell2(pair2);
-        //cell.SetNoCreate(); need load cells around viewPoint or player,  that's why its commented
+        //cell.SetNoCreate(); need load cells around viewPoint or player, that's why its commented
 
         PlayerRelocationNotifier relocate(*player);
-        TypeContainerVisitor<PlayerRelocationNotifier,  WorldTypeMapContainer > c2world_relocation(relocate);
-        TypeContainerVisitor<PlayerRelocationNotifier,  GridTypeMapContainer >  c2grid_relocation(relocate);
+        TypeContainerVisitor<PlayerRelocationNotifier, WorldTypeMapContainer > c2world_relocation(relocate);
+        TypeContainerVisitor<PlayerRelocationNotifier, GridTypeMapContainer >  c2grid_relocation(relocate);
 
-        cell2.Visit(pair2,  c2world_relocation,  i_map,  *viewPoint,  i_radius);
-        cell2.Visit(pair2,  c2grid_relocation,  i_map,  *viewPoint,  i_radius);
+        cell2.Visit(pair2, c2world_relocation, i_map, *viewPoint, i_radius);
+        cell2.Visit(pair2, c2grid_relocation, i_map, *viewPoint, i_radius);
 
         relocate.SendToSelf();
     }
@@ -239,9 +239,9 @@ void AIRelocationNotifier::Visit(CreatureMapType &m)
     for (CreatureMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
         Creature *c = iter->getSource();
-        CreatureUnitRelocationWorker(c,  &i_unit);
+        CreatureUnitRelocationWorker(c, &i_unit);
         if (isCreature)
-            CreatureUnitRelocationWorker((Creature*)&i_unit,  c);
+            CreatureUnitRelocationWorker((Creature*)&i_unit, c);
     }
 }
 
@@ -346,7 +346,7 @@ bool CannibalizeObjectCheck::operator()(Corpse* u)
     if (!owner || i_funit->IsFriendlyTo(owner))
         return false;
 
-    if (i_funit->IsWithinDistInMap(u,  i_range))
+    if (i_funit->IsWithinDistInMap(u, i_range))
         return true;
 
     return false;
@@ -363,7 +363,7 @@ bool CarrionFeederObjectCheck::operator()(Corpse* u)
     if (!owner || i_funit->IsFriendlyTo(owner))
         return false;
 
-    if (i_funit->IsWithinDistInMap(u,  i_range))
+    if (i_funit->IsWithinDistInMap(u, i_range))
         return true;
 
     return false;

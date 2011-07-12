@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef __TRINITY_LANGUAGE_H
@@ -47,8 +47,8 @@ enum SkyFireStrings
     LANG_GMS_ON_SRV                     = 16, 
     LANG_GMS_NOT_LOGGED                 = 17, 
     LANG_YOU_IN_FLIGHT                  = 18, 
-    //LANG_YOU_IN_BATTLEGROUND            = 19,  not used
-    //LANG_TARGET_IN_FLIGHT               = 20,  not used
+    //LANG_YOU_IN_BATTLEGROUND            = 19, not used
+    //LANG_TARGET_IN_FLIGHT               = 20, not used
     LANG_CHAR_IN_FLIGHT                 = 21, 
     LANG_CHAR_NON_MOUNTED               = 22, 
     LANG_YOU_IN_COMBAT                  = 23, 
@@ -120,7 +120,7 @@ enum SkyFireStrings
     LANG_YOU_CHANGE_ENERGY              = 122, 
     LANG_YOURS_ENERGY_CHANGED           = 123, 
 
-    LANG_CURRENT_ENERGY                 = 124,               //log
+    LANG_CURRENT_ENERGY                 = 124,              //log
     LANG_YOU_CHANGE_RAGE                = 125, 
     LANG_YOURS_RAGE_CHANGED             = 126, 
     LANG_YOU_CHANGE_LVL                 = 127, 
@@ -160,7 +160,7 @@ enum SkyFireStrings
     LANG_YOURS_MONEY_GIVEN              = 158, 
     LANG_YOU_HEAR_SOUND                 = 159, 
 
-    LANG_NEW_MONEY                      = 160,               // Log
+    LANG_NEW_MONEY                      = 160,              // Log
 
     LANG_REMOVE_BIT                     = 161, 
     LANG_SET_BIT                        = 162, 
@@ -272,7 +272,7 @@ enum SkyFireStrings
     LANG_COMMAND_ADDVENDORITEMITEMS     = 280, 
     LANG_COMMAND_KICKSELF               = 281, 
     LANG_COMMAND_KICKMESSAGE            = 282, 
-    //                                    283,  not used
+    //                                    283, not used
     LANG_COMMAND_WHISPERACCEPTING       = 284, 
     LANG_COMMAND_WHISPERON              = 285, 
     LANG_COMMAND_WHISPEROFF             = 286, 
@@ -453,8 +453,8 @@ enum SkyFireStrings
     LANG_REMOVEALL_COOLDOWN             = 492, 
     LANG_REMOVE_COOLDOWN                = 493, 
 
-    LANG_ADDITEM                        = 494,               //log
-    LANG_ADDITEMSET                     = 495,               //log
+    LANG_ADDITEM                        = 494,              //log
+    LANG_ADDITEMSET                     = 495,              //log
     LANG_REMOVEITEM                     = 496, 
     LANG_ITEM_CANNOT_CREATE             = 497, 
     LANG_INSERT_GUILD_NAME              = 498, 
@@ -487,7 +487,7 @@ enum SkyFireStrings
 
     LANG_GAMEOBJECT_NOT_EXIST           = 522, 
 
-    LANG_GAMEOBJECT_CURRENT             = 523,               //log
+    LANG_GAMEOBJECT_CURRENT             = 523,              //log
     LANG_GAMEOBJECT_DETAIL              = 524, 
     LANG_GAMEOBJECT_ADD                 = 525, 
 
@@ -535,17 +535,17 @@ enum SkyFireStrings
     LANG_UPDATE                         = 562, 
     LANG_UPDATE_CHANGE                  = 563, 
     LANG_TOO_BIG_INDEX                  = 564, 
-    LANG_SET_UINT                       = 565,               //log
+    LANG_SET_UINT                       = 565,              //log
     LANG_SET_UINT_FIELD                 = 566, 
-    LANG_SET_FLOAT                      = 567,               //log
+    LANG_SET_FLOAT                      = 567,              //log
     LANG_SET_FLOAT_FIELD                = 568, 
-    LANG_GET_UINT                       = 569,               //log
+    LANG_GET_UINT                       = 569,              //log
     LANG_GET_UINT_FIELD                 = 570, 
-    LANG_GET_FLOAT                      = 571,               //log
+    LANG_GET_FLOAT                      = 571,              //log
     LANG_GET_FLOAT_FIELD                = 572, 
-    LANG_SET_32BIT                      = 573,               //log
+    LANG_SET_32BIT                      = 573,              //log
     LANG_SET_32BIT_FIELD                = 574, 
-    LANG_CHANGE_32BIT                   = 575,               //log
+    LANG_CHANGE_32BIT                   = 575,              //log
     LANG_CHANGE_32BIT_FIELD             = 576, 
 
     LANG_INVISIBLE_INVISIBLE              = 577, 
@@ -575,7 +575,7 @@ enum SkyFireStrings
     LANG_GMLIST                         = 597, 
     LANG_GMLIST_HEADER                  = 598, 
     LANG_GMLIST_EMPTY                   = 599, 
-    // End Level 3 list,  continued at 1100
+    // End Level 3 list, continued at 1100
 
     // Battleground
     LANG_BG_A_WINS                      = 600, 
@@ -661,31 +661,31 @@ enum SkyFireStrings
     LANG_BG_QUEUE_ANNOUNCE_SELF         = 711, 
     LANG_BG_QUEUE_ANNOUNCE_WORLD        = 712, 
     LANG_YOUR_ARENA_LEVEL_REQ_ERROR     = 713, 
-//                                      = 714,  not used
+//                                      = 714, not used
     LANG_YOUR_BG_LEVEL_REQ_ERROR        = 715, 
-//                                      = 716,  not used
+//                                      = 716, not used
     LANG_BG_STARTED_ANNOUNCE_WORLD      = 717, 
     LANG_ARENA_QUEUE_ANNOUNCE_WORLD_JOIN= 718, 
     LANG_ARENA_QUEUE_ANNOUNCE_WORLD_EXIT= 719, 
 
-    LANG_BG_GROUP_TOO_LARGE             = 720,               // "Your group is too large for this battleground. Please regroup to join."
-    LANG_ARENA_GROUP_TOO_LARGE          = 721,               // "Your group is too large for this arena. Please regroup to join."
-    LANG_ARENA_YOUR_TEAM_ONLY           = 722,               // "Your group has members not in your arena team. Please regroup to join."
-    LANG_ARENA_NOT_ENOUGH_PLAYERS       = 723,               // "Your group does not have enough players to join this match."
-    LANG_ARENA_GOLD_WINS                = 724,               // "The Gold Team wins!"
-    LANG_ARENA_GREEN_WINS               = 725,               // "The Green Team wins!"
-//                                      = 726,  not used
-    LANG_BG_GROUP_OFFLINE_MEMBER        = 727,               // "Your group has an offline member. Please remove him before joining."
-    LANG_BG_GROUP_MIXED_FACTION         = 728,               // "Your group has players from the opposing faction. You can't join the battleground as a group."
-    LANG_BG_GROUP_MIXED_LEVELS          = 729,               // "Your group has players from different battleground brakets. You can't join as group."
-    LANG_BG_GROUP_MEMBER_ALREADY_IN_QUEUE = 730,             // "Someone in your party is already in this battleground queue. (S)he must leave it before joining as group."
-    LANG_BG_GROUP_MEMBER_DESERTER       = 731,               // "Someone in your party is Deserter. You can't join as group."
-    LANG_BG_GROUP_MEMBER_NO_FREE_QUEUE_SLOTS = 732,          // "Someone in your party is already in three battleground queues. You cannot join as group."
+    LANG_BG_GROUP_TOO_LARGE             = 720,              // "Your group is too large for this battleground. Please regroup to join."
+    LANG_ARENA_GROUP_TOO_LARGE          = 721,              // "Your group is too large for this arena. Please regroup to join."
+    LANG_ARENA_YOUR_TEAM_ONLY           = 722,              // "Your group has members not in your arena team. Please regroup to join."
+    LANG_ARENA_NOT_ENOUGH_PLAYERS       = 723,              // "Your group does not have enough players to join this match."
+    LANG_ARENA_GOLD_WINS                = 724,              // "The Gold Team wins!"
+    LANG_ARENA_GREEN_WINS               = 725,              // "The Green Team wins!"
+//                                      = 726, not used
+    LANG_BG_GROUP_OFFLINE_MEMBER        = 727,              // "Your group has an offline member. Please remove him before joining."
+    LANG_BG_GROUP_MIXED_FACTION         = 728,              // "Your group has players from the opposing faction. You can't join the battleground as a group."
+    LANG_BG_GROUP_MIXED_LEVELS          = 729,              // "Your group has players from different battleground brakets. You can't join as group."
+    LANG_BG_GROUP_MEMBER_ALREADY_IN_QUEUE = 730,            // "Someone in your party is already in this battleground queue. (S)he must leave it before joining as group."
+    LANG_BG_GROUP_MEMBER_DESERTER       = 731,              // "Someone in your party is Deserter. You can't join as group."
+    LANG_BG_GROUP_MEMBER_NO_FREE_QUEUE_SLOTS = 732,         // "Someone in your party is already in three battleground queues. You cannot join as group."
 
-    LANG_CANNOT_TELE_TO_BG              = 733,               // "You cannot teleport to a battleground or arena map."
-    LANG_CANNOT_SUMMON_TO_BG            = 734,               // "You cannot summon players to a battleground or arena map."
-    LANG_CANNOT_GO_TO_BG_GM             = 735,               // "You must be in GM mode to teleport to a player in a battleground."
-    LANG_CANNOT_GO_TO_BG_FROM_BG        = 736,               // "You cannot teleport to a battleground from another battleground. Please leave the current battleground first."
+    LANG_CANNOT_TELE_TO_BG              = 733,              // "You cannot teleport to a battleground or arena map."
+    LANG_CANNOT_SUMMON_TO_BG            = 734,              // "You cannot summon players to a battleground or arena map."
+    LANG_CANNOT_GO_TO_BG_GM             = 735,              // "You must be in GM mode to teleport to a player in a battleground."
+    LANG_CANNOT_GO_TO_BG_FROM_BG        = 736,              // "You cannot teleport to a battleground from another battleground. Please leave the current battleground first."
     LANG_DEBUG_ARENA_ON                 = 737, 
     LANG_DEBUG_ARENA_OFF                = 738, 
     LANG_DEBUG_BG_ON                    = 739, 
@@ -698,15 +698,15 @@ enum SkyFireStrings
     LANG_DIST_ARENA_POINTS_END          = 746, 
     LANG_BG_DISABLED                    = 747, 
     LANG_ARENA_DISABLED                 = 748, 
-//                                      = 749,  not used
-    LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING = 750,        // "Not enough players. This game will close in %u mins."
-    LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING_SECS = 751,   // "Not enough players. This game will close in %u seconds."
-//                                      = 752,  not used
-//  LANG_BG_WS_START_TWO_MINUTES        = 753,  - defined above
-//  LANG_BG_AB_START_TWO_MINUTES        = 754,  - defined above
-//  LANG_BG_EY_START_TWO_MINUTES        = 755,  - defined above
+//                                      = 749, not used
+    LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING = 750,       // "Not enough players. This game will close in %u mins."
+    LANG_BATTLEGROUND_PREMATURE_FINISH_WARNING_SECS = 751,  // "Not enough players. This game will close in %u seconds."
+//                                      = 752, not used
+//  LANG_BG_WS_START_TWO_MINUTES        = 753, - defined above
+//  LANG_BG_AB_START_TWO_MINUTES        = 754, - defined above
+//  LANG_BG_EY_START_TWO_MINUTES        = 755, - defined above
 
-    // Room for BG/ARENA                = 773-784,  788-799 not used
+    // Room for BG/ARENA                = 773-784, 788-799 not used
     LANG_ARENA_TESTING                  = 785, 
     LANG_AUTO_ANN                       = 786, 
     LANG_ANNOUNCE_COLOR                 = 787, 
@@ -993,7 +993,7 @@ enum SkyFireStrings
     LANG_GM_NOTIFY                       = 6614, 
     LANG_GM_ANNOUNCE_COLOR               = 6615, 
 
-    LANG_GM_SILENCE                      = 6616,               // "Silence is ON for %s" - Spell 1852
+    LANG_GM_SILENCE                      = 6616,              // "Silence is ON for %s" - Spell 1852
 
     LANG_WORLD_CLOSED                    = 7523, 
     LANG_WORLD_OPENED                    = 7524, 

@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -41,7 +41,7 @@ void WorldSession::SendNameQueryOpcode(Player *p)
     if (!p)
         return;
                                                             // guess size
-    WorldPacket data(SMSG_NAME_QUERY_RESPONSE,  (8+1+1+1+1+1+10));
+    WorldPacket data(SMSG_NAME_QUERY_RESPONSE, (8+1+1+1+1+1+10));
     data.append(p->GetPackGUID());                          // player guid
     data << uint8(0);                                       // added in 3.1
     data << p->GetName();                                   // played name
@@ -68,21 +68,21 @@ void WorldSession::SendNameQueryOpcodeFromDB(uint64 guid)
             !sWorld->getBoolConfig(CONFIG_DECLINED_NAMES_USED) ?
         //   ------- Query Without Declined Names --------
         //          0     1     2     3       4
-            "SELECT guid,  name,  race,  gender,  class "
+            "SELECT guid, name, race, gender, class "
             "FROM characters WHERE guid = '%u'"
             :
         //   --------- Query With Declined Names ---------
         //          0                1     2     3       4
-            "SELECT characters.guid,  name,  race,  gender,  class,  "
+            "SELECT characters.guid, name, race, gender, class, "
         //   5         6       7           8             9
-            "genitive,  dative,  accusative,  instrumental,  prepositional "
+            "genitive, dative, accusative, instrumental, prepositional "
             "FROM characters LEFT JOIN character_declinedname ON characters.guid = character_declinedname.guid WHERE characters.guid = '%u'", 
             GUID_LOPART(guid)
         );
 
     m_nameQueryCallbacks.insert(lFutureResult);
 
-// CharacterDatabase.AsyncPQuery(&WorldSession::SendNameQueryOpcodeFromDBCallBack,  GetAccountId(), 
+// CharacterDatabase.AsyncPQuery(&WorldSession::SendNameQueryOpcodeFromDBCallBack, GetAccountId(), 
 }
 
 void WorldSession::SendNameQueryOpcodeFromDBCallBack(QueryResult result)
@@ -93,7 +93,7 @@ void WorldSession::SendNameQueryOpcodeFromDBCallBack(QueryResult result)
     Field *fields = result->Fetch();
     uint32 guid      = fields[0].GetUInt32();
     std::string name = fields[1].GetString();
-    uint8 pRace = 0,  pGender = 0,  pClass = 0;
+    uint8 pRace = 0, pGender = 0, pClass = 0;
     if (name == "")
         name         = GetSkyFireString(LANG_NON_EXIST_CHARACTER);
     else
@@ -103,8 +103,8 @@ void WorldSession::SendNameQueryOpcodeFromDBCallBack(QueryResult result)
         pClass       = fields[4].GetUInt8();
     }
                                                             // guess size
-    WorldPacket data(SMSG_NAME_QUERY_RESPONSE,  (8+1+1+1+1+1+1+10));
-    data.appendPackGUID(MAKE_NEW_GUID(guid,  0,  HIGHGUID_PLAYER));
+    WorldPacket data(SMSG_NAME_QUERY_RESPONSE, (8+1+1+1+1+1+1+10));
+    data.appendPackGUID(MAKE_NEW_GUID(guid, 0, HIGHGUID_PLAYER));
     data << uint8(0);                                       // added in 3.1
     data << name;
     data << uint8(0);                                       // realm name for cross realm BG usage
@@ -112,7 +112,7 @@ void WorldSession::SendNameQueryOpcodeFromDBCallBack(QueryResult result)
     data << uint8(pGender);                                 // gender
     data << uint8(pClass);                                  // class
 
-    // if the first declined name field (5) is empty,  the rest must be too
+    // if the first declined name field (5) is empty, the rest must be too
     if (sWorld->getBoolConfig(CONFIG_DECLINED_NAMES_USED) && fields[5].GetString() != "")
     {
         data << uint8(1);                                   // is declined
@@ -146,7 +146,7 @@ void WorldSession::HandleQueryTimeOpcode(WorldPacket & /*recv_data*/)
 
 void WorldSession::SendQueryTimeResponse()
 {
-    WorldPacket data(SMSG_QUERY_TIME_RESPONSE,  4+4);
+    WorldPacket data(SMSG_QUERY_TIME_RESPONSE, 4+4);
     data << uint32(time(NULL));
     data << uint32(sWorld->GetNextDailyQuestsResetTime() - time(NULL));
     SendPacket(&data);
@@ -164,7 +164,7 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket & recv_data)
     if (ci)
     {
 
-        std::string Name,  SubName;
+        std::string Name, SubName;
         Name = ci->Name;
         SubName = ci->SubName;
 
@@ -173,22 +173,22 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket & recv_data)
         {
             if (CreatureLocale const *cl = sObjectMgr->GetCreatureLocale(entry))
             {
-                sObjectMgr->GetLocaleString(cl->Name,  loc_idx,  Name);
-                sObjectMgr->GetLocaleString(cl->SubName,  loc_idx,  SubName);
+                sObjectMgr->GetLocaleString(cl->Name, loc_idx, Name);
+                sObjectMgr->GetLocaleString(cl->SubName, loc_idx, SubName);
             }
         }
-        sLog->outDetail("WORLD: CMSG_CREATURE_QUERY '%s' - Entry: %u.",  ci->Name,  entry);
+        sLog->outDetail("WORLD: CMSG_CREATURE_QUERY '%s' - Entry: %u.", ci->Name, entry);
                                                             // guess size
-        WorldPacket data(SMSG_CREATURE_QUERY_RESPONSE,  100);
+        WorldPacket data(SMSG_CREATURE_QUERY_RESPONSE, 100);
         data << uint32(entry);                              // creature entry
         data << Name;
-        data << uint8(0) << uint8(0) << uint8(0);           // name2,  name3,  name4,  always empty
+        data << uint8(0) << uint8(0) << uint8(0);           // name2, name3, name4, always empty
         data << SubName;
-        data << ci->IconName;                               // "Directions" for guard,  string for Icons 2.3.0
+        data << ci->IconName;                               // "Directions" for guard, string for Icons 2.3.0
         data << uint32(ci->type_flags);                     // flags
         data << uint32(ci->type);                           // CreatureType.dbc
         data << uint32(ci->family);                         // CreatureFamily.dbc
-        data << uint32(ci->rank);                           // Creature Rank (elite,  boss,  etc)
+        data << uint32(ci->rank);                           // Creature Rank (elite, boss, etc)
         data << uint32(ci->KillCredit[0]);                  // kill credit
         data << uint32(ci->KillCredit[1]);                  // kill credit
         data << uint32(ci->Modelid1);                       // Modelid1
@@ -199,7 +199,7 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket & recv_data)
         data << float(ci->ModMana);                         // dmg/mana modifier
         data << uint8(ci->RacialLeader);
         for (uint32 i = 0; i < MAX_CREATURE_QUEST_ITEMS; ++i)
-            data << uint32(ci->questItems[i]);              // itemId[6],  quest drop
+            data << uint32(ci->questItems[i]);              // itemId[6], quest drop
         data << uint32(ci->movementId);                     // CreatureMovementInfo.dbc
         data << uint32(ci->expansion);                      // client will not allow interaction if this value is not in line with its stored exp
         SendPacket(&data);
@@ -207,9 +207,9 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket & recv_data)
     }
     else
     {
-        sLog->outDebug("WORLD: CMSG_CREATURE_QUERY - NO CREATURE INFO! (GUID: %u,  ENTRY: %u)", 
-            GUID_LOPART(guid),  entry);
-        WorldPacket data(SMSG_CREATURE_QUERY_RESPONSE,  4);
+        sLog->outDebug("WORLD: CMSG_CREATURE_QUERY - NO CREATURE INFO! (GUID: %u, ENTRY: %u)", 
+            GUID_LOPART(guid), entry);
+        WorldPacket data(SMSG_CREATURE_QUERY_RESPONSE, 4);
         data << uint32(entry | 0x80000000);
         SendPacket(&data);
         sLog->outDebug("WORLD: Sent SMSG_CREATURE_QUERY_RESPONSE");
@@ -240,33 +240,33 @@ void WorldSession::HandleGameObjectQueryOpcode(WorldPacket & recv_data)
         {
             if (GameObjectLocale const *gl = sObjectMgr->GetGameObjectLocale(entryID))
             {
-                sObjectMgr->GetLocaleString(gl->Name,  loc_idx,  Name);
-                sObjectMgr->GetLocaleString(gl->CastBarCaption,  loc_idx,  CastBarCaption);
+                sObjectMgr->GetLocaleString(gl->Name, loc_idx, Name);
+                sObjectMgr->GetLocaleString(gl->CastBarCaption, loc_idx, CastBarCaption);
             }
         }
-        sLog->outDetail("WORLD: CMSG_GAMEOBJECT_QUERY '%s' - Entry: %u. ",  info->name,  entryID);
-        WorldPacket data (SMSG_GAMEOBJECT_QUERY_RESPONSE,  150);
+        sLog->outDetail("WORLD: CMSG_GAMEOBJECT_QUERY '%s' - Entry: %u. ", info->name, entryID);
+        WorldPacket data (SMSG_GAMEOBJECT_QUERY_RESPONSE, 150);
         data << uint32(entryID);
         data << uint32(info->type);
         data << uint32(info->displayId);
         data << Name;
-        data << uint8(0) << uint8(0) << uint8(0);           // name2,  name3,  name4
-        data << IconName;                                   // 2.0.3,  string. Icon name to use instead of default icon for go's (ex: "Attack" makes sword)
-        data << CastBarCaption;                             // 2.0.3,  string. Text will appear in Cast Bar when using GO (ex: "Collecting")
-        data << info->unk1;                                 // 2.0.3,  string
-        data.append(info->raw.data,  32);
+        data << uint8(0) << uint8(0) << uint8(0);           // name2, name3, name4
+        data << IconName;                                   // 2.0.3, string. Icon name to use instead of default icon for go's (ex: "Attack" makes sword)
+        data << CastBarCaption;                             // 2.0.3, string. Text will appear in Cast Bar when using GO (ex: "Collecting")
+        data << info->unk1;                                 // 2.0.3, string
+        data.append(info->raw.data, 32);
         data << float(info->size);                          // go size
         for (uint32 i = 0; i < MAX_GAMEOBJECT_QUEST_ITEMS; ++i)
-            data << uint32(info->questItems[i]);            // itemId[6],  quest drop
+            data << uint32(info->questItems[i]);            // itemId[6], quest drop
         data << uint32(0);                                  // go expansion field - TODO: add to database
         SendPacket(&data);
         sLog->outDebug("WORLD: Sent SMSG_GAMEOBJECT_QUERY_RESPONSE");
     }
     else
     {
-        sLog->outDebug("WORLD: CMSG_GAMEOBJECT_QUERY - Missing gameobject info for (GUID: %u,  ENTRY: %u)", 
-            GUID_LOPART(guid),  entryID);
-        WorldPacket data (SMSG_GAMEOBJECT_QUERY_RESPONSE,  4);
+        sLog->outDebug("WORLD: CMSG_GAMEOBJECT_QUERY - Missing gameobject info for (GUID: %u, ENTRY: %u)", 
+            GUID_LOPART(guid), entryID);
+        WorldPacket data (SMSG_GAMEOBJECT_QUERY_RESPONSE, 4);
         data << uint32(entryID | 0x80000000);
         SendPacket(&data);
         sLog->outDebug("WORLD: Sent SMSG_GAMEOBJECT_QUERY_RESPONSE");
@@ -281,7 +281,7 @@ void WorldSession::HandleCorpseQueryOpcode(WorldPacket & /*recv_data*/)
 
     if (!corpse)
     {
-        WorldPacket data(MSG_CORPSE_QUERY,  1);
+        WorldPacket data(MSG_CORPSE_QUERY, 1);
         data << uint8(0);                                   // corpse not found
         SendPacket(&data);
         return;
@@ -307,13 +307,13 @@ void WorldSession::HandleCorpseQueryOpcode(WorldPacket & /*recv_data*/)
                     mapid = corpseMapEntry->entrance_map;
                     x = corpseMapEntry->entrance_x;
                     y = corpseMapEntry->entrance_y;
-                    z = entranceMap->GetHeight(x,  y,  MAX_HEIGHT);
+                    z = entranceMap->GetHeight(x, y, MAX_HEIGHT);
                 }
             }
         }
     }
 
-    WorldPacket data(MSG_CORPSE_QUERY,  1+(6*4));
+    WorldPacket data(MSG_CORPSE_QUERY, 1+(6*4));
     data << uint8(1);                                       // corpse found
     data << int32(mapid);
     data << float(x);
@@ -330,14 +330,14 @@ void WorldSession::HandleNpcTextQueryOpcode(WorldPacket & recv_data)
     uint64 guid;
 
     recv_data >> textID;
-    sLog->outDetail("WORLD: CMSG_NPC_TEXT_QUERY ID '%u'",  textID);
+    sLog->outDetail("WORLD: CMSG_NPC_TEXT_QUERY ID '%u'", textID);
 
     recv_data >> guid;
-    GetPlayer()->SetUInt64Value(UNIT_FIELD_TARGET,  guid);
+    GetPlayer()->SetUInt64Value(UNIT_FIELD_TARGET, guid);
 
     GossipText const* pGossip = sObjectMgr->GetGossipText(textID);
 
-    WorldPacket data(SMSG_NPC_TEXT_UPDATE,  100);          // guess size
+    WorldPacket data(SMSG_NPC_TEXT_UPDATE, 100);          // guess size
     data << textID;
 
     if (!pGossip)
@@ -358,7 +358,7 @@ void WorldSession::HandleNpcTextQueryOpcode(WorldPacket & recv_data)
     }
     else
     {
-        std::string Text_0[MAX_LOCALES],  Text_1[MAX_LOCALES];
+        std::string Text_0[MAX_LOCALES], Text_1[MAX_LOCALES];
         for (int i = 0; i < MAX_GOSSIP_TEXT_OPTIONS; ++i)
         {
             Text_0[i]=pGossip->Options[i].Text_0;
@@ -372,8 +372,8 @@ void WorldSession::HandleNpcTextQueryOpcode(WorldPacket & recv_data)
             {
                 for (int i = 0; i < MAX_LOCALES; ++i)
                 {
-                    sObjectMgr->GetLocaleString(nl->Text_0[i],  loc_idx,  Text_0[i]);
-                    sObjectMgr->GetLocaleString(nl->Text_1[i],  loc_idx,  Text_1[i]);
+                    sObjectMgr->GetLocaleString(nl->Text_0[i], loc_idx, Text_0[i]);
+                    sObjectMgr->GetLocaleString(nl->Text_1[i], loc_idx, Text_1[i]);
                 }
             }
         }
@@ -420,7 +420,7 @@ void WorldSession::HandlePageTextQueryOpcode(WorldPacket & recv_data)
     {
         PageText const *pPage = sPageTextStore.LookupEntry<PageText>(pageID);
                                                             // guess size
-        WorldPacket data(SMSG_PAGE_TEXT_QUERY_RESPONSE,  50);
+        WorldPacket data(SMSG_PAGE_TEXT_QUERY_RESPONSE, 50);
         data << pageID;
 
         if (!pPage)
@@ -436,7 +436,7 @@ void WorldSession::HandlePageTextQueryOpcode(WorldPacket & recv_data)
             int loc_idx = GetSessionDbLocaleIndex();
             if (loc_idx >= 0)
                 if (PageTextLocale const *pl = sObjectMgr->GetPageTextLocale(pageID))
-                    sObjectMgr->GetLocaleString(pl->Text,  loc_idx,  Text);
+                    sObjectMgr->GetLocaleString(pl->Text, loc_idx, Text);
 
             data << Text;
             data << uint32(pPage->Next_Page);
@@ -455,7 +455,7 @@ void WorldSession::HandleCorpseMapPositionQuery(WorldPacket & recv_data)
     uint32 unk;
     recv_data >> unk;
 
-    WorldPacket data(SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE,  4+4+4+4);
+    WorldPacket data(SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE, 4+4+4+4);
     data << float(0);
     data << float(0);
     data << float(0);
@@ -466,12 +466,12 @@ void WorldSession::HandleCorpseMapPositionQuery(WorldPacket & recv_data)
 void WorldSession::HandleQuestPOIQuery(WorldPacket& recv_data)
 {
     uint32 count;
-    recv_data >> count; // quest count,  max=25
+    recv_data >> count; // quest count, max=25
 
     if (count >= MAX_QUEST_LOG_SIZE)
         return;
 
-    WorldPacket data(SMSG_QUEST_POI_QUERY_RESPONSE,  4+(4+4)*count);
+    WorldPacket data(SMSG_QUEST_POI_QUERY_RESPONSE, 4+(4+4)*count);
     data << uint32(count); // count
 
     for (uint32 i = 0; i < count; ++i)

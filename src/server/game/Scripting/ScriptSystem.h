@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef SC_SYSTEM_H
@@ -28,7 +28,7 @@
 #define TEXT_SOURCE_RANGE -1000000                          //the amount of entries each text source has available
 
 //TODO: find better namings and definitions.
-//N=Neutral,  A=Alliance,  H=Horde.
+//N=Neutral, A=Alliance, H=Horde.
 //NEUTRAL or FRIEND = Hostility to player surroundings (not a good definition)
 //ACTIVE or PASSIVE = Hostility to environment surroundings.
 enum eEscortFaction
@@ -71,14 +71,14 @@ struct StringTextData
 
 class SystemMgr
 {
-        friend class ACE_Singleton<SystemMgr,  ACE_Null_Mutex>;
+        friend class ACE_Singleton<SystemMgr, ACE_Null_Mutex>;
         SystemMgr() {}
         ~SystemMgr() {}
 
     public:
         //Maps and lists
-        typedef UNORDERED_MAP<int32,  StringTextData> TextDataMap;
-        typedef UNORDERED_MAP<uint32,  std::vector<ScriptPointMove> > PointMoveMap;
+        typedef UNORDERED_MAP<int32, StringTextData> TextDataMap;
+        typedef UNORDERED_MAP<uint32, std::vector<ScriptPointMove> > PointMoveMap;
 
         //Database
         void LoadVersion();
@@ -115,6 +115,6 @@ class SystemMgr
         PointMoveMap    m_mPointMoveMap;                    //coordinates for waypoints
 };
 
-#define sScriptSystemMgr ACE_Singleton<SystemMgr,  ACE_Null_Mutex>::instance()
+#define sScriptSystemMgr ACE_Singleton<SystemMgr, ACE_Null_Mutex>::instance()
 
 #endif

@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_CONFUSEDGENERATOR_H
@@ -31,7 +31,7 @@
 
 template<class T>
 class ConfusedMovementGenerator
-: public MovementGeneratorMedium< T,  ConfusedMovementGenerator<T> >
+: public MovementGeneratorMedium< T, ConfusedMovementGenerator<T> >
 {
     public:
         explicit ConfusedMovementGenerator() : i_nextMoveTime(0) {}
@@ -39,9 +39,9 @@ class ConfusedMovementGenerator
         void Initialize(T &);
         void Finalize(T &);
         void Reset(T &);
-        bool Update(T &,  const uint32 &);
+        bool Update(T &, const uint32 &);
 
-        bool GetDestination(float &x,  float &y,  float &z) const
+        bool GetDestination(float &x, float &y, float &z) const
         {
             if (i_destinationHolder.HasArrived()) return false;
             i_destinationHolder.GetDestination(x, y, z);
@@ -50,7 +50,7 @@ class ConfusedMovementGenerator
 
         MovementGeneratorType GetMovementGeneratorType() { return CONFUSED_MOTION_TYPE; }
     private:
-        void _InitSpecific(T &,  bool &,  bool &);
+        void _InitSpecific(T &, bool &, bool &);
         TimeTracker i_nextMoveTime;
         float i_waypoints[MAX_CONF_WAYPOINTS+1][3];
         DestinationHolder< Traveller<T> > i_destinationHolder;

@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef _INSTANCESAVEMGR_H
@@ -53,7 +53,7 @@ class InstanceSave
            - any new instance is being generated
            - the first time a player bound to InstanceId logs in
            - when a group bound to the instance is loaded */
-        InstanceSave(uint16 MapId,  uint32 InstanceId,  Difficulty difficulty,  time_t resetTime,  bool canReset);
+        InstanceSave(uint16 MapId, uint32 InstanceId, Difficulty difficulty, time_t resetTime, bool canReset);
 
         /* Unloaded when m_playerList and m_groupList become empty
            or when the instance is reset */
@@ -116,17 +116,17 @@ class InstanceSave
         bool m_canReset;
 };
 
-typedef UNORDERED_MAP<uint32 /*PAIR32(map,  difficulty)*/,  time_t /*resetTime*/> ResetTimeByMapDifficultyMap;
+typedef UNORDERED_MAP<uint32 /*PAIR32(map, difficulty)*/, time_t /*resetTime*/> ResetTimeByMapDifficultyMap;
 
 class InstanceSaveManager
 {
-    friend class ACE_Singleton<InstanceSaveManager,  ACE_Thread_Mutex>;
+    friend class ACE_Singleton<InstanceSaveManager, ACE_Thread_Mutex>;
     friend class InstanceSave;
         InstanceSaveManager() : lock_instLists(false) {};
         ~InstanceSaveManager();
 
     public:
-        typedef UNORDERED_MAP<uint32 /*InstanceId*/,  InstanceSave*> InstanceSaveHashMap;
+        typedef UNORDERED_MAP<uint32 /*InstanceId*/, InstanceSave*> InstanceSaveHashMap;
 
         /* resetTime is a global propery of each (raid/heroic) map
            all instances of that map reset at the same time */
@@ -137,34 +137,34 @@ class InstanceSaveManager
             uint16 mapid;
             uint16 instanceId;
 
-            InstResetEvent() : type(0),  difficulty(DUNGEON_DIFFICULTY_NORMAL),  mapid(0),  instanceId(0) {}
-            InstResetEvent(uint8 t,  uint32 _mapid,  Difficulty d,  uint16 _instanceid)
-                : type(t),  difficulty(d),  mapid(_mapid),  instanceId(_instanceid) {}
+            InstResetEvent() : type(0), difficulty(DUNGEON_DIFFICULTY_NORMAL), mapid(0), instanceId(0) {}
+            InstResetEvent(uint8 t, uint32 _mapid, Difficulty d, uint16 _instanceid)
+                : type(t), difficulty(d), mapid(_mapid), instanceId(_instanceid) {}
             bool operator == (const InstResetEvent& e) { return e.instanceId == instanceId; }
         };
-        typedef std::multimap<time_t /*resetTime*/,  InstResetEvent> ResetTimeQueue;
+        typedef std::multimap<time_t /*resetTime*/, InstResetEvent> ResetTimeQueue;
 
         void LoadInstances();
 
         void LoadResetTimes();
-        time_t GetResetTimeFor(uint32 mapid,  Difficulty d) const
+        time_t GetResetTimeFor(uint32 mapid, Difficulty d) const
         {
-            ResetTimeByMapDifficultyMap::const_iterator itr  = m_resetTimeByMapDifficulty.find(MAKE_PAIR32(mapid,  d));
+            ResetTimeByMapDifficultyMap::const_iterator itr  = m_resetTimeByMapDifficulty.find(MAKE_PAIR32(mapid, d));
             return itr != m_resetTimeByMapDifficulty.end() ? itr->second : 0;
         }
-        void SetResetTimeFor(uint32 mapid,  Difficulty d,  time_t t)
+        void SetResetTimeFor(uint32 mapid, Difficulty d, time_t t)
         {
-            m_resetTimeByMapDifficulty[MAKE_PAIR32(mapid,  d)] = t;
+            m_resetTimeByMapDifficulty[MAKE_PAIR32(mapid, d)] = t;
         }
         ResetTimeByMapDifficultyMap const& GetResetTimeMap() const
         {
             return m_resetTimeByMapDifficulty;
         }
-        void ScheduleReset(bool add,  time_t time,  InstResetEvent event);
+        void ScheduleReset(bool add, time_t time, InstResetEvent event);
 
         void Update();
 
-        InstanceSave* AddInstanceSave(uint32 mapId,  uint32 instanceId,  Difficulty difficulty,  time_t resetTime,  bool canReset,  bool load = false);
+        InstanceSave* AddInstanceSave(uint32 mapId, uint32 instanceId, Difficulty difficulty, time_t resetTime, bool canReset, bool load = false);
         void RemoveInstanceSave(uint32 InstanceId);
         static void DeleteInstanceFromDB(uint32 instanceid);
 
@@ -180,8 +180,8 @@ class InstanceSaveManager
 
     private:
 
-        void _ResetOrWarnAll(uint32 mapid,  Difficulty difficulty,  bool warn,  time_t resetTime);
-        void _ResetInstance(uint32 mapid,  uint32 instanceId);
+        void _ResetOrWarnAll(uint32 mapid, Difficulty difficulty, bool warn, time_t resetTime);
+        void _ResetInstance(uint32 mapid, uint32 instanceId);
         void _ResetSave(InstanceSaveHashMap::iterator &itr);
         // used during global instance resets
         bool lock_instLists;
@@ -192,5 +192,5 @@ class InstanceSaveManager
         ResetTimeQueue m_resetTimeQueue;
 };
 
-#define sInstanceSaveMgr ACE_Singleton<InstanceSaveManager,  ACE_Thread_Mutex>::instance()
+#define sInstanceSaveMgr ACE_Singleton<InstanceSaveManager, ACE_Thread_Mutex>::instance()
 #endif

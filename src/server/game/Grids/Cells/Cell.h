@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_CELL_H
@@ -49,11 +49,11 @@ enum District
 
 struct CellArea
 {
-    CellArea() : right_offset(0),  left_offset(0),  upper_offset(0),  lower_offset(0) {}
-    CellArea(int right,  int left,  int upper,  int lower) : right_offset(right),  left_offset(left),  upper_offset(upper),  lower_offset(lower) {}
+    CellArea() : right_offset(0), left_offset(0), upper_offset(0), lower_offset(0) {}
+    CellArea(int right, int left, int upper, int lower) : right_offset(right), left_offset(left), upper_offset(upper), lower_offset(lower) {}
     bool operator!() const { return !right_offset && !left_offset && !upper_offset && !lower_offset; }
 
-    void ResizeBorders(CellPair& begin_cell,  CellPair& end_cell) const
+    void ResizeBorders(CellPair& begin_cell, CellPair& end_cell) const
     {
         begin_cell << left_offset;
         begin_cell -= lower_offset;
@@ -77,9 +77,9 @@ struct Cell
     {
         data.Part.reserved = 0;
         cell.data.Part.reserved = 0;
-        uint32 x,  y,  old_x,  old_y;
-        Compute(x,  y);
-        cell.Compute(old_x,  old_y);
+        uint32 x, y, old_x, old_y;
+        Compute(x, y);
+        cell.Compute(old_x, old_y);
 
         if (std::abs(int(x-old_x)) > 1 || std::abs(int(y-old_y)) > 1)
         {
@@ -110,7 +110,7 @@ struct Cell
         }
     }
 
-    void Compute(uint32 &x,  uint32 &y) const
+    void Compute(uint32 &x, uint32 &y) const
     {
         x = data.Part.grid_x*MAX_NUMBER_OF_CELLS + data.Part.cell_x;
         y = data.Part.grid_y*MAX_NUMBER_OF_CELLS + data.Part.cell_y;
@@ -164,15 +164,15 @@ struct Cell
         uint32 All;
     } data;
 
-    template<class T,  class CONTAINER> void Visit(const CellPair&,  TypeContainerVisitor<T,  CONTAINER> &visitor,  Map &) const;
-    template<class T,  class CONTAINER> void Visit(const CellPair&,  TypeContainerVisitor<T,  CONTAINER> &visitor,  Map &,  const WorldObject&,  float) const;
-    template<class T,  class CONTAINER> void Visit(const CellPair&,  TypeContainerVisitor<T,  CONTAINER> &visitor,  Map &,  float,  float,  float) const;
+    template<class T, class CONTAINER> void Visit(const CellPair&, TypeContainerVisitor<T, CONTAINER> &visitor, Map &) const;
+    template<class T, class CONTAINER> void Visit(const CellPair&, TypeContainerVisitor<T, CONTAINER> &visitor, Map &, const WorldObject&, float) const;
+    template<class T, class CONTAINER> void Visit(const CellPair&, TypeContainerVisitor<T, CONTAINER> &visitor, Map &, float, float, float) const;
 
-    static CellArea CalculateCellArea(const WorldObject &obj,  float radius);
-    static CellArea CalculateCellArea(float x,  float y,  float radius);
+    static CellArea CalculateCellArea(const WorldObject &obj, float radius);
+    static CellArea CalculateCellArea(float x, float y, float radius);
 
 private:
-    template<class T,  class CONTAINER> void VisitCircle(TypeContainerVisitor<T,  CONTAINER> &,  Map &,  const CellPair&,  const CellPair&) const;
+    template<class T, class CONTAINER> void VisitCircle(TypeContainerVisitor<T, CONTAINER> &, Map &, const CellPair&, const CellPair&) const;
 };
 
 #endif

@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRANSPORTS_H
@@ -32,11 +32,11 @@
 class Transport : public GameObject
 {
     public:
-        Transport(uint32 period,  uint32 script);
+        Transport(uint32 period, uint32 script);
         ~Transport();
 
-        bool Create(uint32 guidlow,  uint32 entry,  uint32 mapid,  float x,  float y,  float z,  float ang,  uint32 animprogress,  uint32 dynflags);
-        bool GenerateWaypoints(uint32 pathid,  std::set<uint32> &mapids);
+        bool Create(uint32 guidlow, uint32 entry, uint32 mapid, float x, float y, float z, float ang, uint32 animprogress, uint32 dynflags);
+        bool GenerateWaypoints(uint32 pathid, std::set<uint32> &mapids);
         void Update(uint32 p_time);
         bool AddPassenger(Player* passenger);
         bool RemovePassenger(Player* passenger);
@@ -48,7 +48,7 @@ class Transport : public GameObject
 
         typedef std::set<Creature*> CreatureSet;
         CreatureSet m_NPCPassengerSet;
-        uint32 AddNPCPassenger(uint32 tguid,  uint32 entry,  float x,  float y,  float z,  float o,  uint32 anim=0);
+        uint32 AddNPCPassenger(uint32 tguid, uint32 entry, float x, float y, float z, float o, uint32 anim=0);
         void UpdatePosition(MovementInfo *mi);
         void UpdateNPCPositions();
         void BuildStartMovePacket(Map const *targetMap);
@@ -57,11 +57,11 @@ class Transport : public GameObject
     private:
         struct WayPoint
         {
-            WayPoint() : mapid(0),  x(0),  y(0),  z(0),  teleport(false),  id(0) {}
-            WayPoint(uint32 _mapid,  float _x,  float _y,  float _z,  bool _teleport,  uint32 _id = 0, 
-                uint32 _arrivalEventID = 0,  uint32 _departureEventID = 0)
-                : mapid(_mapid),  x(_x),  y(_y),  z(_z),  teleport(_teleport),  id(_id), 
-                arrivalEventID(_arrivalEventID),  departureEventID(_departureEventID)
+            WayPoint() : mapid(0), x(0), y(0), z(0), teleport(false), id(0) {}
+            WayPoint(uint32 _mapid, float _x, float _y, float _z, bool _teleport, uint32 _id = 0, 
+                uint32 _arrivalEventID = 0, uint32 _departureEventID = 0)
+                : mapid(_mapid), x(_x), y(_y), z(_z), teleport(_teleport), id(_id), 
+                arrivalEventID(_arrivalEventID), departureEventID(_departureEventID)
             {
             }
             uint32 mapid;
@@ -74,7 +74,7 @@ class Transport : public GameObject
             uint32 departureEventID;
         };
 
-        typedef std::map<uint32,  WayPoint> WayPointMap;
+        typedef std::map<uint32, WayPoint> WayPointMap;
 
         WayPointMap::const_iterator m_curr;
         WayPointMap::const_iterator m_next;
@@ -91,9 +91,9 @@ class Transport : public GameObject
         uint32 m_nextNodeTime;
 
     private:
-        void TeleportTransport(uint32 newMapid,  float x,  float y,  float z);
+        void TeleportTransport(uint32 newMapid, float x, float y, float z);
         void UpdateForMap(Map const* map);
-        void DoEventIfAny(WayPointMap::value_type const& node,  bool departure);
+        void DoEventIfAny(WayPointMap::value_type const& node, bool departure);
         WayPointMap::const_iterator GetNextWayPoint();
 };
 #endif

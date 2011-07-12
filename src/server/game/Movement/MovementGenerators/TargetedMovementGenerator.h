@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_TARGETEDMOVEMENTGENERATOR_H
@@ -31,7 +31,7 @@
 class TargetedMovementGeneratorBase
 {
     public:
-        TargetedMovementGeneratorBase(Unit &target) { i_target.link(&target,  this); }
+        TargetedMovementGeneratorBase(Unit &target) { i_target.link(&target, this); }
         void stopFollowing() { }
     protected:
         FollowerReference i_target;
@@ -39,23 +39,23 @@ class TargetedMovementGeneratorBase
 
 template<class T>
 class TargetedMovementGenerator
-: public MovementGeneratorMedium< T,  TargetedMovementGenerator<T> >,  public TargetedMovementGeneratorBase
+: public MovementGeneratorMedium< T, TargetedMovementGenerator<T> >, public TargetedMovementGeneratorBase
 {
     public:
-        TargetedMovementGenerator(Unit &target,  float offset = 0,  float angle = 0);
+        TargetedMovementGenerator(Unit &target, float offset = 0, float angle = 0);
         ~TargetedMovementGenerator() {}
 
         void Initialize(T &);
         void Finalize(T &);
         void Reset(T &);
-        bool Update(T &,  const uint32 &);
+        bool Update(T &, const uint32 &);
         MovementGeneratorType GetMovementGeneratorType() { return TARGETED_MOTION_TYPE; }
 
         void MovementInform(T &);
 
         Unit* GetTarget() const;
 
-        bool GetDestination(float &x,  float &y,  float &z) const
+        bool GetDestination(float &x, float &y, float &z) const
         {
             if (i_destinationHolder.HasArrived() || !i_destinationHolder.HasDestination()) return false;
             i_destinationHolder.GetDestination(x, y, z);
@@ -71,7 +71,7 @@ class TargetedMovementGenerator
         float i_angle;
         DestinationHolder< Traveller<T> > i_destinationHolder;
         bool i_recalculateTravel;
-        float i_targetX,  i_targetY,  i_targetZ;
+        float i_targetX, i_targetY, i_targetZ;
 };
 #endif
 

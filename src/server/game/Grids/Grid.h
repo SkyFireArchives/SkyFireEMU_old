@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_GRID_H
@@ -28,10 +28,10 @@
   Grid is a logical segment of the game world represented inside TrinIty.
   Grid is bind at compile time to a particular type of object which
   we call it the object of interested.  There are many types of loader, 
-  specially,  dynamic loader,  static loader,  or on-demand loader.  There's
+  specially, dynamic loader, static loader, or on-demand loader.  There's
   a subtle difference between dynamic loader and on-demand loader but
   this is implementation specific to the loader class.  From the
-  Grid's perspective,  the loader meets its API requirement is suffice.
+  Grid's perspective, the loader meets its API requirement is suffice.
 */
 
 #include "Define.h"
@@ -39,7 +39,7 @@
 #include "TypeContainerVisitor.h"
 
 // forward declaration
-template<class A,  class T,  class O> class GridLoader;
+template<class A, class T, class O> class GridLoader;
 
 template
 <
@@ -50,7 +50,7 @@ class GRID_OBJECT_TYPES
 class Grid
 {
     // allows the GridLoader to access its internals
-    template<class A,  class T,  class O> friend class GridLoader;
+    template<class A, class T, class O> friend class GridLoader;
     public:
 
         /** destructor to clean up its resources. This includes unloading the
@@ -88,14 +88,14 @@ class Grid
 
         /** Grid visitor for grid objects
          */
-        template<class T> void Visit(TypeContainerVisitor<T,  TypeMapContainer<GRID_OBJECT_TYPES> > &visitor)
+        template<class T> void Visit(TypeContainerVisitor<T, TypeMapContainer<GRID_OBJECT_TYPES> > &visitor)
         {
             visitor.Visit(i_container);
         }
 
         /** Grid visitor for world objects
          */
-        template<class T> void Visit(TypeContainerVisitor<T,  TypeMapContainer<WORLD_OBJECT_TYPES> > &visitor)
+        template<class T> void Visit(TypeContainerVisitor<T, TypeMapContainer<WORLD_OBJECT_TYPES> > &visitor)
         {
             visitor.Visit(i_objects);
         }

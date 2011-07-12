@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /// \addtogroup world The World
@@ -319,7 +319,7 @@ enum WorldIntConfigs
     CONFIG_PERSISTENT_CHARACTER_CLEAN_FLAGS, 
     CONFIG_MAX_INSTANCES_PER_HOUR, 
     CONFIG_GUILD_ADVANCEMENT_MAX_LEVEL, 
-    CONFIG_IGNORING_MAPS_VERSION,    
+    CONFIG_IGNORING_MAPS_VERSION,   
     INT_CONFIG_VALUE_COUNT
 };
 
@@ -406,7 +406,7 @@ enum BillingPlanFlags
     SESSION_ENABLE_CAIS     = 0x80, 
 };
 
-/// Type of server,  this is values from second column of Cfg_Configs.dbc
+/// Type of server, this is values from second column of Cfg_Configs.dbc
 enum RealmType
 {
     REALM_TYPE_NORMAL = 0, 
@@ -414,98 +414,98 @@ enum RealmType
     REALM_TYPE_NORMAL2 = 4, 
     REALM_TYPE_RP = 6, 
     REALM_TYPE_RPPVP = 8, 
-    REALM_TYPE_FFA_PVP = 16                                 // custom,  free for all pvp mode like arena PvP in all zones except rest activated places and sanctuaries
+    REALM_TYPE_FFA_PVP = 16                                 // custom, free for all pvp mode like arena PvP in all zones except rest activated places and sanctuaries
                                                             // replaced by REALM_PVP in realm list
 };
 
 enum RealmZone
 {
-    REALM_ZONE_UNKNOWN       = 0,                            // any language
-    REALM_ZONE_DEVELOPMENT   = 1,                            // any language
-    REALM_ZONE_UNITED_STATES = 2,                            // extended-Latin
-    REALM_ZONE_OCEANIC       = 3,                            // extended-Latin
-    REALM_ZONE_LATIN_AMERICA = 4,                            // extended-Latin
-    REALM_ZONE_TOURNAMENT_5  = 5,                            // basic-Latin at create,  any at login
-    REALM_ZONE_KOREA         = 6,                            // East-Asian
-    REALM_ZONE_TOURNAMENT_7  = 7,                            // basic-Latin at create,  any at login
-    REALM_ZONE_ENGLISH       = 8,                            // extended-Latin
-    REALM_ZONE_GERMAN        = 9,                            // extended-Latin
-    REALM_ZONE_FRENCH        = 10,                           // extended-Latin
-    REALM_ZONE_SPANISH       = 11,                           // extended-Latin
-    REALM_ZONE_RUSSIAN       = 12,                           // Cyrillic
-    REALM_ZONE_TOURNAMENT_13 = 13,                           // basic-Latin at create,  any at login
-    REALM_ZONE_TAIWAN        = 14,                           // East-Asian
-    REALM_ZONE_TOURNAMENT_15 = 15,                           // basic-Latin at create,  any at login
-    REALM_ZONE_CHINA         = 16,                           // East-Asian
-    REALM_ZONE_CN1           = 17,                           // basic-Latin at create,  any at login
-    REALM_ZONE_CN2           = 18,                           // basic-Latin at create,  any at login
-    REALM_ZONE_CN3           = 19,                           // basic-Latin at create,  any at login
-    REALM_ZONE_CN4           = 20,                           // basic-Latin at create,  any at login
-    REALM_ZONE_CN5           = 21,                           // basic-Latin at create,  any at login
-    REALM_ZONE_CN6           = 22,                           // basic-Latin at create,  any at login
-    REALM_ZONE_CN7           = 23,                           // basic-Latin at create,  any at login
-    REALM_ZONE_CN8           = 24,                           // basic-Latin at create,  any at login
-    REALM_ZONE_TOURNAMENT_25 = 25,                           // basic-Latin at create,  any at login
-    REALM_ZONE_TEST_SERVER   = 26,                           // any language
-    REALM_ZONE_TOURNAMENT_27 = 27,                           // basic-Latin at create,  any at login
-    REALM_ZONE_QA_SERVER     = 28,                           // any language
-    REALM_ZONE_CN9           = 29,                           // basic-Latin at create,  any at login
-    REALM_ZONE_TEST_SERVER_2 = 30,                           // any language
-    REALM_ZONE_CN10          = 31,                           // basic-Latin at create,  any at login
+    REALM_ZONE_UNKNOWN       = 0,                           // any language
+    REALM_ZONE_DEVELOPMENT   = 1,                           // any language
+    REALM_ZONE_UNITED_STATES = 2,                           // extended-Latin
+    REALM_ZONE_OCEANIC       = 3,                           // extended-Latin
+    REALM_ZONE_LATIN_AMERICA = 4,                           // extended-Latin
+    REALM_ZONE_TOURNAMENT_5  = 5,                           // basic-Latin at create, any at login
+    REALM_ZONE_KOREA         = 6,                           // East-Asian
+    REALM_ZONE_TOURNAMENT_7  = 7,                           // basic-Latin at create, any at login
+    REALM_ZONE_ENGLISH       = 8,                           // extended-Latin
+    REALM_ZONE_GERMAN        = 9,                           // extended-Latin
+    REALM_ZONE_FRENCH        = 10,                          // extended-Latin
+    REALM_ZONE_SPANISH       = 11,                          // extended-Latin
+    REALM_ZONE_RUSSIAN       = 12,                          // Cyrillic
+    REALM_ZONE_TOURNAMENT_13 = 13,                          // basic-Latin at create, any at login
+    REALM_ZONE_TAIWAN        = 14,                          // East-Asian
+    REALM_ZONE_TOURNAMENT_15 = 15,                          // basic-Latin at create, any at login
+    REALM_ZONE_CHINA         = 16,                          // East-Asian
+    REALM_ZONE_CN1           = 17,                          // basic-Latin at create, any at login
+    REALM_ZONE_CN2           = 18,                          // basic-Latin at create, any at login
+    REALM_ZONE_CN3           = 19,                          // basic-Latin at create, any at login
+    REALM_ZONE_CN4           = 20,                          // basic-Latin at create, any at login
+    REALM_ZONE_CN5           = 21,                          // basic-Latin at create, any at login
+    REALM_ZONE_CN6           = 22,                          // basic-Latin at create, any at login
+    REALM_ZONE_CN7           = 23,                          // basic-Latin at create, any at login
+    REALM_ZONE_CN8           = 24,                          // basic-Latin at create, any at login
+    REALM_ZONE_TOURNAMENT_25 = 25,                          // basic-Latin at create, any at login
+    REALM_ZONE_TEST_SERVER   = 26,                          // any language
+    REALM_ZONE_TOURNAMENT_27 = 27,                          // basic-Latin at create, any at login
+    REALM_ZONE_QA_SERVER     = 28,                          // any language
+    REALM_ZONE_CN9           = 29,                          // basic-Latin at create, any at login
+    REALM_ZONE_TEST_SERVER_2 = 30,                          // any language
+    REALM_ZONE_CN10          = 31,                          // basic-Latin at create, any at login
     REALM_ZONE_CTC           = 32, 
     REALM_ZONE_CNC           = 33, 
-    REALM_ZONE_CN1_4         = 34,                           // basic-Latin at create,  any at login
-    REALM_ZONE_CN2_6_9       = 35,                           // basic-Latin at create,  any at login
-    REALM_ZONE_CN3_7         = 36,                           // basic-Latin at create,  any at login
-    REALM_ZONE_CN5_8         = 37                           // basic-Latin at create,  any at login
+    REALM_ZONE_CN1_4         = 34,                          // basic-Latin at create, any at login
+    REALM_ZONE_CN2_6_9       = 35,                          // basic-Latin at create, any at login
+    REALM_ZONE_CN3_7         = 36,                          // basic-Latin at create, any at login
+    REALM_ZONE_CN5_8         = 37                           // basic-Latin at create, any at login
 };
 
 enum WorldStates
 {
-    WS_WEEKLY_QUEST_RESET_TIME = 20002,                       // Next weekly reset time
+    WS_WEEKLY_QUEST_RESET_TIME = 20002,                      // Next weekly reset time
     WS_BG_DAILY_RESET_TIME     = 20003                       // Next daily BG reset time
 };
 
 // DB scripting commands
 enum ScriptCommands
 {
-    SCRIPT_COMMAND_TALK                  = 0,                 // source/target = Creature,  target = any,  datalong = talk type (0=say,  1=whisper,  2=yell,  3=emote text,  4=boss emote text),  datalong2 & 1 = player talk (instead of creature),  dataint = string_id
-    SCRIPT_COMMAND_EMOTE                 = 1,                 // source/target = Creature,  datalong = emote id,  datalong2 = 0: set emote state; > 0: play emote state
-    SCRIPT_COMMAND_FIELD_SET             = 2,                 // source/target = Creature,  datalong = field id,  datalog2 = value
-    SCRIPT_COMMAND_MOVE_TO               = 3,                 // source/target = Creature,  datalong2 = time to reach,  x/y/z = destination
-    SCRIPT_COMMAND_FLAG_SET              = 4,                 // source/target = Creature,  datalong = field id,  datalog2 = bitmask
-    SCRIPT_COMMAND_FLAG_REMOVE           = 5,                 // source/target = Creature,  datalong = field id,  datalog2 = bitmask
-    SCRIPT_COMMAND_TELEPORT_TO           = 6,                 // source/target = Creature/Player (see datalong2),  datalong = map_id,  datalong2 = 0: Player; 1: Creature,  x/y/z = destination,  o = orientation
-    SCRIPT_COMMAND_QUEST_EXPLORED        = 7,                 // target/source = Player,  target/source = GO/Creature,  datalong = quest id,  datalong2 = distance or 0
-    SCRIPT_COMMAND_KILL_CREDIT           = 8,                 // target/source = Player,  datalong = creature entry,  datalong2 = 0: personal credit,  1: group credit
-    SCRIPT_COMMAND_RESPAWN_GAMEOBJECT    = 9,                 // source = WorldObject (summoner),  datalong = GO guid,  datalong2 = despawn delay
-    SCRIPT_COMMAND_TEMP_SUMMON_CREATURE  = 10,                // source = WorldObject (summoner),  datalong = creature entry,  datalong2 = despawn delay,  x/y/z = summon position,  o = orientation
-    SCRIPT_COMMAND_OPEN_DOOR             = 11,                // source = Unit,  datalong = GO guid,  datalong2 = reset delay (min 15)
-    SCRIPT_COMMAND_CLOSE_DOOR            = 12,                // source = Unit,  datalong = GO guid,  datalong2 = reset delay (min 15)
-    SCRIPT_COMMAND_ACTIVATE_OBJECT       = 13,                // source = Unit,  target = GO
-    SCRIPT_COMMAND_REMOVE_AURA           = 14,                // source (datalong2 != 0) or target (datalong2 == 0) = Unit,  datalong = spell id
-    SCRIPT_COMMAND_CAST_SPELL            = 15,                // source and/or target = Unit,  datalong2 = cast direction (0: s->t 1: s->s 2: t->t 3: t->s 4: s->creature with dataint entry),  dataint & 1 = triggered flag
-    SCRIPT_COMMAND_PLAY_SOUND            = 16,                // source = WorldObject,  target = none/Player,  datalong = sound id,  datalong2 (bitmask: 0/1=anyone/player,  0/2=without/with distance dependency,  so 1|2 = 3 is target with distance dependency)
-    SCRIPT_COMMAND_CREATE_ITEM           = 17,                // target/source = Player,  datalong = item entry,  datalong2 = amount
-    SCRIPT_COMMAND_DESPAWN_SELF          = 18,                // target/source = Creature,  datalong = despawn delay
+    SCRIPT_COMMAND_TALK                  = 0,                // source/target = Creature, target = any, datalong = talk type (0=say, 1=whisper, 2=yell, 3=emote text, 4=boss emote text), datalong2 & 1 = player talk (instead of creature), dataint = string_id
+    SCRIPT_COMMAND_EMOTE                 = 1,                // source/target = Creature, datalong = emote id, datalong2 = 0: set emote state; > 0: play emote state
+    SCRIPT_COMMAND_FIELD_SET             = 2,                // source/target = Creature, datalong = field id, datalog2 = value
+    SCRIPT_COMMAND_MOVE_TO               = 3,                // source/target = Creature, datalong2 = time to reach, x/y/z = destination
+    SCRIPT_COMMAND_FLAG_SET              = 4,                // source/target = Creature, datalong = field id, datalog2 = bitmask
+    SCRIPT_COMMAND_FLAG_REMOVE           = 5,                // source/target = Creature, datalong = field id, datalog2 = bitmask
+    SCRIPT_COMMAND_TELEPORT_TO           = 6,                // source/target = Creature/Player (see datalong2), datalong = map_id, datalong2 = 0: Player; 1: Creature, x/y/z = destination, o = orientation
+    SCRIPT_COMMAND_QUEST_EXPLORED        = 7,                // target/source = Player, target/source = GO/Creature, datalong = quest id, datalong2 = distance or 0
+    SCRIPT_COMMAND_KILL_CREDIT           = 8,                // target/source = Player, datalong = creature entry, datalong2 = 0: personal credit, 1: group credit
+    SCRIPT_COMMAND_RESPAWN_GAMEOBJECT    = 9,                // source = WorldObject (summoner), datalong = GO guid, datalong2 = despawn delay
+    SCRIPT_COMMAND_TEMP_SUMMON_CREATURE  = 10,               // source = WorldObject (summoner), datalong = creature entry, datalong2 = despawn delay, x/y/z = summon position, o = orientation
+    SCRIPT_COMMAND_OPEN_DOOR             = 11,               // source = Unit, datalong = GO guid, datalong2 = reset delay (min 15)
+    SCRIPT_COMMAND_CLOSE_DOOR            = 12,               // source = Unit, datalong = GO guid, datalong2 = reset delay (min 15)
+    SCRIPT_COMMAND_ACTIVATE_OBJECT       = 13,               // source = Unit, target = GO
+    SCRIPT_COMMAND_REMOVE_AURA           = 14,               // source (datalong2 != 0) or target (datalong2 == 0) = Unit, datalong = spell id
+    SCRIPT_COMMAND_CAST_SPELL            = 15,               // source and/or target = Unit, datalong2 = cast direction (0: s->t 1: s->s 2: t->t 3: t->s 4: s->creature with dataint entry), dataint & 1 = triggered flag
+    SCRIPT_COMMAND_PLAY_SOUND            = 16,               // source = WorldObject, target = none/Player, datalong = sound id, datalong2 (bitmask: 0/1=anyone/player, 0/2=without/with distance dependency, so 1|2 = 3 is target with distance dependency)
+    SCRIPT_COMMAND_CREATE_ITEM           = 17,               // target/source = Player, datalong = item entry, datalong2 = amount
+    SCRIPT_COMMAND_DESPAWN_SELF          = 18,               // target/source = Creature, datalong = despawn delay
 
-    SCRIPT_COMMAND_LOAD_PATH             = 20,                // source = Unit,  datalong = path id,  datalong2 = is repeatable
-    SCRIPT_COMMAND_CALLSCRIPT_TO_UNIT    = 21,                // source = WorldObject (if present used as a search center),  datalong = script id,  datalong2 = unit lowguid,  dataint = script table to use (see ScriptsType)
-    SCRIPT_COMMAND_KILL                  = 22,                // source/target = Creature,  dataint = remove corpse attribute
+    SCRIPT_COMMAND_LOAD_PATH             = 20,               // source = Unit, datalong = path id, datalong2 = is repeatable
+    SCRIPT_COMMAND_CALLSCRIPT_TO_UNIT    = 21,               // source = WorldObject (if present used as a search center), datalong = script id, datalong2 = unit lowguid, dataint = script table to use (see ScriptsType)
+    SCRIPT_COMMAND_KILL                  = 22,               // source/target = Creature, dataint = remove corpse attribute
 
     // TrinityCore only
-    SCRIPT_COMMAND_ORIENTATION           = 30,                // source = Unit,  target (datalong > 0) = Unit,  datalong = > 0 turn source to face target,  o = orientation
-    SCRIPT_COMMAND_EQUIP                 = 31,                // soucre = Creature,  datalong = equipment id
-    SCRIPT_COMMAND_MODEL                 = 32,                // source = Creature,  datalong = model id
-    SCRIPT_COMMAND_CLOSE_GOSSIP          = 33,                // source = Player
-    SCRIPT_COMMAND_PLAYMOVIE             = 34                // source = Player,  datalong = movie id
+    SCRIPT_COMMAND_ORIENTATION           = 30,               // source = Unit, target (datalong > 0) = Unit, datalong = > 0 turn source to face target, o = orientation
+    SCRIPT_COMMAND_EQUIP                 = 31,               // soucre = Creature, datalong = equipment id
+    SCRIPT_COMMAND_MODEL                 = 32,               // source = Creature, datalong = model id
+    SCRIPT_COMMAND_CLOSE_GOSSIP          = 33,               // source = Player
+    SCRIPT_COMMAND_PLAYMOVIE             = 34                // source = Player, datalong = movie id
 };
 
 /// Storage class for commands issued for delayed execution
 struct CliCommandHolder
 {
-    typedef void Print(void*,  const char*);
-    typedef void CommandFinished(void*,  bool success);
+    typedef void Print(void*, const char*);
+    typedef void CommandFinished(void*, bool success);
 
     void* m_callbackArg;
     char *m_command;
@@ -513,18 +513,18 @@ struct CliCommandHolder
 
     CommandFinished* m_commandFinished;
 
-    CliCommandHolder(void* callbackArg,  const char *command,  Print* zprint,  CommandFinished* commandFinished)
-        : m_callbackArg(callbackArg),  m_print(zprint),  m_commandFinished(commandFinished)
+    CliCommandHolder(void* callbackArg, const char *command, Print* zprint, CommandFinished* commandFinished)
+        : m_callbackArg(callbackArg), m_print(zprint), m_commandFinished(commandFinished)
     {
         size_t len = strlen(command)+1;
         m_command = new char[len];
-        memcpy(m_command,  command,  len);
+        memcpy(m_command, command, len);
     }
 
     ~CliCommandHolder() { delete[] m_command; }
 };
 
-typedef UNORDERED_MAP<uint32,  WorldSession*> SessionMap;
+typedef UNORDERED_MAP<uint32, WorldSession*> SessionMap;
 
 /// The World
 class World
@@ -555,7 +555,7 @@ class World
         inline void IncreasePlayerCount()
         {
             m_PlayerCount++;
-            m_MaxPlayerCount = std::max(m_MaxPlayerCount,  m_PlayerCount);
+            m_MaxPlayerCount = std::max(m_MaxPlayerCount, m_PlayerCount);
         }
         inline void DecreasePlayerCount() { m_PlayerCount--; }
 
@@ -601,7 +601,7 @@ class World
 
         LocaleConstant GetDefaultDbcLocale() const { return m_defaultDbcLocale; }
 
-        /// Get the path where data (dbc,  maps) are stored on disk
+        /// Get the path where data (dbc, maps) are stored on disk
         std::string GetDataPath() const { return m_dataPath; }
 
         /// When server started?
@@ -629,20 +629,20 @@ class World
         void SetInitialWorldSettings();
         void LoadConfigSettings(bool reload = false);
 
-        void SendWorldText(int32 string_id,  ...);
-        void SendGlobalText(const char* text,  WorldSession *self);
-        void SendGMText(int32 string_id,  ...);
-        void SendGlobalMessage(WorldPacket *packet,  WorldSession *self = 0,  uint32 team = 0);
-        void SendGlobalGMMessage(WorldPacket *packet,  WorldSession *self = 0,  uint32 team = 0);
-        void SendZoneMessage(uint32 zone,  WorldPacket *packet,  WorldSession *self = 0,  uint32 team = 0);
-        void SendZoneText(uint32 zone,  const char *text,  WorldSession *self = 0,  uint32 team = 0);
-        void SendServerMessage(ServerMessageType type,  const char *text = "",  Player* player = NULL);
+        void SendWorldText(int32 string_id, ...);
+        void SendGlobalText(const char* text, WorldSession *self);
+        void SendGMText(int32 string_id, ...);
+        void SendGlobalMessage(WorldPacket *packet, WorldSession *self = 0, uint32 team = 0);
+        void SendGlobalGMMessage(WorldPacket *packet, WorldSession *self = 0, uint32 team = 0);
+        void SendZoneMessage(uint32 zone, WorldPacket *packet, WorldSession *self = 0, uint32 team = 0);
+        void SendZoneText(uint32 zone, const char *text, WorldSession *self = 0, uint32 team = 0);
+        void SendServerMessage(ServerMessageType type, const char *text = "", Player* player = NULL);
 
         /// Are we in the middle of a shutdown?
         bool IsShutdowning() const { return m_ShutdownTimer > 0; }
-        void ShutdownServ(uint32 time,  uint32 options,  uint8 exitcode);
+        void ShutdownServ(uint32 time, uint32 options, uint8 exitcode);
         void ShutdownCancel();
-        void ShutdownMsg(bool show = false,  Player* player = NULL);
+        void ShutdownMsg(bool show = false, Player* player = NULL);
         static uint8 GetExitCode() { return m_ExitCode; }
         static void StopNow(uint8 exitcode) { m_stopEvent = true; m_ExitCode = exitcode; }
         static bool IsStopped() { return m_stopEvent; }
@@ -656,7 +656,7 @@ class World
         float getRate(Rates rate) const { return rate_values[rate]; }
 
         /// Set a server configuration element (see #WorldConfigs)
-        void setBoolConfig(WorldBoolConfigs index,  bool value)
+        void setBoolConfig(WorldBoolConfigs index, bool value)
         {
             if (index < BOOL_CONFIG_VALUE_COUNT)
                 m_bool_configs[index] = value;
@@ -669,7 +669,7 @@ class World
         }
 
         /// Set a server configuration element (see #WorldConfigs)
-        void setFloatConfig(WorldFloatConfigs index,  float value)
+        void setFloatConfig(WorldFloatConfigs index, float value)
         {
             if (index < FLOAT_CONFIG_VALUE_COUNT)
                 m_float_configs[index] = value;
@@ -694,7 +694,7 @@ class World
             return index < INT_CONFIG_VALUE_COUNT ? m_int_configs[index] : 0;
         }
 
-        void setWorldState(uint32 index,  uint64 value);
+        void setWorldState(uint32 index, uint64 value);
         uint64 getWorldState(uint32 index) const;
         void LoadWorldStates();
 
@@ -704,9 +704,9 @@ class World
 
         void KickAll();
         void KickAllLess(AccountTypes sec);
-        BanReturn BanAccount(BanMode mode,  std::string nameOrIP,  std::string duration,  std::string reason,  std::string author);
-        bool RemoveBanAccount(BanMode mode,  std::string nameOrIP);
-        BanReturn BanCharacter(std::string name,  std::string duration,  std::string reason,  std::string author);
+        BanReturn BanAccount(BanMode mode, std::string nameOrIP, std::string duration, std::string reason, std::string author);
+        bool RemoveBanAccount(BanMode mode, std::string nameOrIP);
+        BanReturn BanCharacter(std::string name, std::string duration, std::string reason, std::string author);
         bool RemoveBanCharacter(std::string name);
 
         uint32 IncreaseScheduledScriptsCount() { return (uint32)++m_scheduledScripts; }
@@ -737,7 +737,7 @@ class World
         char const* GetDBVersion() const { return m_DBVersion.c_str(); }
         char const* GetCreatureAIVersion() const { return m_CreatureAIVersion.c_str(); }
 
-        void RecordTimeDiff(const char * text,  ...);
+        void RecordTimeDiff(const char * text, ...);
 
         void LoadAutobroadcasts();
 
@@ -756,7 +756,7 @@ class World
     protected:
         void _UpdateGameTime();
         // callback for UpdateRealmCharacters
-        void _UpdateRealmCharCount(QueryResult resultCharCount,  uint32 accountId);
+        void _UpdateRealmCharCount(QueryResult resultCharCount, uint32 accountId);
 
         void InitDailyQuestResetTime();
         void InitWeeklyQuestResetTime();
@@ -775,20 +775,20 @@ class World
         bool m_isClosed;
 
         //atomic op counter for active scripts amount
-        ACE_Atomic_Op<ACE_Thread_Mutex,  long> m_scheduledScripts;
+        ACE_Atomic_Op<ACE_Thread_Mutex, long> m_scheduledScripts;
 
         time_t m_startTime;
         time_t m_gameTime;
         IntervalTimer m_timers[WUPDATE_COUNT];
         time_t mail_timer;
         time_t mail_timer_expires;
-        uint32 m_updateTime,  m_updateTimeSum;
+        uint32 m_updateTime, m_updateTimeSum;
         uint32 m_updateTimeCount;
         uint32 m_currentTime;
 
-        //typedef UNORDERED_MAP<uint32,  WorldSession*> SessionMap;
+        //typedef UNORDERED_MAP<uint32, WorldSession*> SessionMap;
         SessionMap m_sessions;
-        typedef UNORDERED_MAP<uint32,  time_t> DisconnectMap;
+        typedef UNORDERED_MAP<uint32, time_t> DisconnectMap;
         DisconnectMap m_disconnects;
         uint32 m_maxActiveSessionCount;
         uint32 m_maxQueuedSessionCount;
@@ -834,7 +834,7 @@ class World
 
         //sessions that are added async
         void AddSession_(WorldSession* s);
-        ACE_Based::LockedQueue<WorldSession*,  ACE_Thread_Mutex> addSessQueue;
+        ACE_Based::LockedQueue<WorldSession*, ACE_Thread_Mutex> addSessQueue;
 
         //used versions
         std::string m_DBVersion;
@@ -844,11 +844,11 @@ class World
 
     private:
         void ProcessQueryCallbacks();
-        QueryCallback<QueryResult,  uint32> m_realmCharCallback;
+        QueryCallback<QueryResult, uint32> m_realmCharCallback;
 };
 
 extern uint32 realmID;
 
-#define sWorld ACE_Singleton<World,  ACE_Null_Mutex>::instance()
+#define sWorld ACE_Singleton<World, ACE_Null_Mutex>::instance()
 #endif
 /// @}

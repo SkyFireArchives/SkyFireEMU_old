@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_MAIL_H
@@ -31,26 +31,26 @@ class Item;
 class Object;
 class Player;
 
-#define MAIL_BODY_ITEM_TEMPLATE 8383                        // - plain letter,  A Dusty Unsent Letter: 889
+#define MAIL_BODY_ITEM_TEMPLATE 8383                        // - plain letter, A Dusty Unsent Letter: 889
 #define MAX_MAIL_ITEMS 12
 
 enum MailMessageType
 {
     MAIL_NORMAL         = 0, 
     MAIL_AUCTION        = 2, 
-    MAIL_CREATURE       = 3,                                 // client send CMSG_CREATURE_QUERY on this mailmessagetype
-    MAIL_GAMEOBJECT     = 4,                                 // client send CMSG_GAMEOBJECT_QUERY on this mailmessagetype
-    MAIL_ITEM           = 5,                                 // client send CMSG_ITEM_QUERY on this mailmessagetype
+    MAIL_CREATURE       = 3,                                // client send CMSG_CREATURE_QUERY on this mailmessagetype
+    MAIL_GAMEOBJECT     = 4,                                // client send CMSG_GAMEOBJECT_QUERY on this mailmessagetype
+    MAIL_ITEM           = 5,                                // client send CMSG_ITEM_QUERY on this mailmessagetype
 };
 
 enum MailCheckMask
 {
     MAIL_CHECK_MASK_NONE        = 0x00, 
     MAIL_CHECK_MASK_READ        = 0x01, 
-    MAIL_CHECK_MASK_RETURNED    = 0x02,                      /// This mail was returned. Do not allow returning mail back again.
-    MAIL_CHECK_MASK_COPIED      = 0x04,                      /// This mail was copied. Do not allow making a copy of items in mail.
+    MAIL_CHECK_MASK_RETURNED    = 0x02,                     /// This mail was returned. Do not allow returning mail back again.
+    MAIL_CHECK_MASK_COPIED      = 0x04,                     /// This mail was copied. Do not allow making a copy of items in mail.
     MAIL_CHECK_MASK_COD_PAYMENT = 0x08, 
-    MAIL_CHECK_MASK_HAS_BODY    = 0x10,                      /// This mail has body text.
+    MAIL_CHECK_MASK_HAS_BODY    = 0x10,                     /// This mail has body text.
 };
 
 // gathered from Stationery.dbc
@@ -85,20 +85,20 @@ enum MailAuctionAnswers
 enum MailShowFlags
 {
     MAIL_SHOW_UNK0    = 0x0001, 
-    MAIL_SHOW_DELETE  = 0x0002,                              // forced show delete button instead return button
-    MAIL_SHOW_AUCTION = 0x0004,                              // from old comment
-    MAIL_SHOW_UNK2    = 0x0008,                              // unknown,  COD will be shown even without that flag
+    MAIL_SHOW_DELETE  = 0x0002,                             // forced show delete button instead return button
+    MAIL_SHOW_AUCTION = 0x0004,                             // from old comment
+    MAIL_SHOW_UNK2    = 0x0008,                             // unknown, COD will be shown even without that flag
     MAIL_SHOW_RETURN  = 0x0010, 
 };
 
 class MailSender
 {
     public:                                                 // Constructors
-        MailSender(MailMessageType messageType,  uint32 sender_guidlow_or_entry,  MailStationery stationery = MAIL_STATIONERY_DEFAULT)
-            : m_messageType(messageType),  m_senderId(sender_guidlow_or_entry),  m_stationery(stationery)
+        MailSender(MailMessageType messageType, uint32 sender_guidlow_or_entry, MailStationery stationery = MAIL_STATIONERY_DEFAULT)
+            : m_messageType(messageType), m_senderId(sender_guidlow_or_entry), m_stationery(stationery)
         {
         }
-        MailSender(Object* sender,  MailStationery stationery = MAIL_STATIONERY_DEFAULT);
+        MailSender(Object* sender, MailStationery stationery = MAIL_STATIONERY_DEFAULT);
         MailSender(AuctionEntry* sender);
         MailSender(Player* sender);
     public:                                                 // Accessors
@@ -114,7 +114,7 @@ class MailSender
 class MailReceiver
 {
     public:                                                 // Constructors
-        explicit MailReceiver(uint32 receiver_lowguid) : m_receiver(NULL),  m_receiver_lowguid(receiver_lowguid) {}
+        explicit MailReceiver(uint32 receiver_lowguid) : m_receiver(NULL), m_receiver_lowguid(receiver_lowguid) {}
         MailReceiver(Player* receiver);
         MailReceiver(Player* receiver, uint64 receiver_lowguid);
     public:                                                 // Accessors
@@ -127,14 +127,14 @@ class MailReceiver
 
 class MailDraft
 {
-    typedef std::map<uint32,  Item*> MailItemMap;
+    typedef std::map<uint32, Item*> MailItemMap;
 
     public:                                                 // Constructors
-        explicit MailDraft(uint16 mailTemplateId,  bool need_items = true)
-            : m_mailTemplateId(mailTemplateId),  m_mailTemplateItemsNeed(need_items),  m_money(0),  m_COD(0)
+        explicit MailDraft(uint16 mailTemplateId, bool need_items = true)
+            : m_mailTemplateId(mailTemplateId), m_mailTemplateItemsNeed(need_items), m_money(0), m_COD(0)
         {}
-        MailDraft(std::string subject,  std::string body)
-            : m_mailTemplateId(0),  m_mailTemplateItemsNeed(false),  m_subject(subject),  m_body(body),  m_money(0),  m_COD(0) {}
+        MailDraft(std::string subject, std::string body)
+            : m_mailTemplateId(0), m_mailTemplateItemsNeed(false), m_subject(subject), m_body(body), m_money(0), m_COD(0) {}
     public:                                                 // Accessors
         uint16 GetMailTemplateId() const { return m_mailTemplateId; }
         std::string const& GetSubject() const { return m_subject; }
@@ -148,19 +148,19 @@ class MailDraft
         MailDraft& AddCOD(uint64 COD) { m_COD = COD; return *this; }
 
     public:                                                 // finishers
-        void SendReturnToSender(uint32 sender_acc,  uint32 sender_guid,  uint32 receiver_guid,  SQLTransaction& trans);
-        void SendMailTo(SQLTransaction& trans,  MailReceiver const& receiver,  MailSender const& sender,  MailCheckMask checked = MAIL_CHECK_MASK_NONE,  uint32 deliver_delay = 0);
+        void SendReturnToSender(uint32 sender_acc, uint32 sender_guid, uint32 receiver_guid, SQLTransaction& trans);
+        void SendMailTo(SQLTransaction& trans, MailReceiver const& receiver, MailSender const& sender, MailCheckMask checked = MAIL_CHECK_MASK_NONE, uint32 deliver_delay = 0);
 
     private:
-        void deleteIncludedItems(SQLTransaction& trans,  bool inDB = false);
-        void prepareItems(Player* receiver,  SQLTransaction& trans);                // called from SendMailTo for generate mailTemplateBase items
+        void deleteIncludedItems(SQLTransaction& trans, bool inDB = false);
+        void prepareItems(Player* receiver, SQLTransaction& trans);                // called from SendMailTo for generate mailTemplateBase items
 
         uint16      m_mailTemplateId;
         bool        m_mailTemplateItemsNeed;
         std::string m_subject;
         std::string m_body;
 
-        MailItemMap m_items;                                // Keep the items in a map to avoid duplicate guids (which can happen),  store only low part of guid
+        MailItemMap m_items;                                // Keep the items in a map to avoid duplicate guids (which can happen), store only low part of guid
 
         uint64 m_money;
         uint64 m_COD;
@@ -192,7 +192,7 @@ struct Mail
     uint32 checked;
     MailState state;
 
-    void AddItem(uint32 itemGuidLow,  uint32 item_template)
+    void AddItem(uint32 itemGuidLow, uint32 item_template)
     {
         MailItemInfo mii;
         mii.item_guid = itemGuidLow;

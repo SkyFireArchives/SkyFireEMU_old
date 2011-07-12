@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -59,23 +59,23 @@ void CharacterDatabaseCleaner::CleanDatabase()
     if (flags & CLEANING_FLAG_QUESTSTATUS)
         CleanCharacterQuestStatus();
 
-    // NOTE: In order to have persistentFlags be set in worldstates for the next cleanup,  
+    // NOTE: In order to have persistentFlags be set in worldstates for the next cleanup, 
     // you need to define them at least once in worldstates.
     flags &= sWorld->getIntConfig(CONFIG_PERSISTENT_CHARACTER_CLEAN_FLAGS);
-    CharacterDatabase.DirectPExecute("UPDATE worldstates SET value = %u WHERE entry = 20004",  flags);
+    CharacterDatabase.DirectPExecute("UPDATE worldstates SET value = %u WHERE entry = 20004", flags);
 
     sWorld->SetCleaningFlags(flags);
 
-    sLog->outString(">> Cleaned character database in %u ms",  GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString(">> Cleaned character database in %u ms", GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 
-void CharacterDatabaseCleaner::CheckUnique(const char* column,  const char* table,  bool (*check)(uint32))
+void CharacterDatabaseCleaner::CheckUnique(const char* column, const char* table, bool (*check)(uint32))
 {
-    QueryResult result = CharacterDatabase.PQuery("SELECT DISTINCT %s FROM %s",  column,  table);
+    QueryResult result = CharacterDatabase.PQuery("SELECT DISTINCT %s FROM %s", column, table);
     if (!result)
     {
-        sLog->outString("Table %s is empty.",  table);
+        sLog->outString("Table %s is empty.", table);
         return;
     }
 
@@ -117,7 +117,7 @@ bool CharacterDatabaseCleaner::AchievementProgressCheck(uint32 criteria)
 
 void CharacterDatabaseCleaner::CleanCharacterAchievementProgress()
 {
-    CheckUnique("criteria",  "character_achievement_progress",  &AchievementProgressCheck);
+    CheckUnique("criteria", "character_achievement_progress", &AchievementProgressCheck);
 }
 
 bool CharacterDatabaseCleaner::SkillCheck(uint32 skill)
@@ -127,7 +127,7 @@ bool CharacterDatabaseCleaner::SkillCheck(uint32 skill)
 
 void CharacterDatabaseCleaner::CleanCharacterSkills()
 {
-    CheckUnique("skill",  "character_skills",  &SkillCheck);
+    CheckUnique("skill", "character_skills", &SkillCheck);
 }
 
 bool CharacterDatabaseCleaner::SpellCheck(uint32 spell_id)
@@ -137,7 +137,7 @@ bool CharacterDatabaseCleaner::SpellCheck(uint32 spell_id)
 
 void CharacterDatabaseCleaner::CleanCharacterSpell()
 {
-    CheckUnique("spell",  "character_spell",  &SpellCheck);
+    CheckUnique("spell", "character_spell", &SpellCheck);
 }
 
 bool CharacterDatabaseCleaner::TalentCheck(uint32 talent_id)
@@ -151,8 +151,8 @@ bool CharacterDatabaseCleaner::TalentCheck(uint32 talent_id)
 
 void CharacterDatabaseCleaner::CleanCharacterTalent()
 {
-    CharacterDatabase.DirectPExecute("DELETE FROM character_talent WHERE spec > %u",  MAX_TALENT_SPECS);
-    CheckUnique("spell",  "character_talent",  &TalentCheck);
+    CharacterDatabase.DirectPExecute("DELETE FROM character_talent WHERE spec > %u", MAX_TALENT_SPECS);
+    CheckUnique("spell", "character_talent", &TalentCheck);
 }
 
 void CharacterDatabaseCleaner::CleanCharacterQuestStatus()

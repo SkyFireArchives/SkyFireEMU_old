@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #ifndef TRINITY_HOMEMOVEMENTGENERATOR_H
@@ -34,7 +34,7 @@ class HomeMovementGenerator;
 
 template <>
 class HomeMovementGenerator<Creature>
-: public MovementGeneratorMedium< Creature,  HomeMovementGenerator<Creature> >
+: public MovementGeneratorMedium< Creature, HomeMovementGenerator<Creature> >
 {
     public:
 
@@ -44,11 +44,11 @@ class HomeMovementGenerator<Creature>
         void Initialize(Creature &);
         void Finalize(Creature &);
         void Reset(Creature &);
-        bool Update(Creature &,  const uint32 &);
+        bool Update(Creature &, const uint32 &);
         void modifyTravelTime(uint32 travel_time) { i_travel_timer = travel_time; }
         MovementGeneratorType GetMovementGeneratorType() { return HOME_MOTION_TYPE; }
 
-        bool GetDestination(float& x,  float& y,  float& z) const { i_destinationHolder.GetDestination(x, y, z); return true; }
+        bool GetDestination(float& x, float& y, float& z) const { i_destinationHolder.GetDestination(x, y, z); return true; }
 
     private:
         void _setTargetLocation(Creature &);

@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -25,9 +25,9 @@
 #include "WorldSession.h"
 #include "WorldPacket.h"
 
-void WorldSession::SendAuthResponse(uint8 code,  bool shortForm,  uint32 queuePos)
+void WorldSession::SendAuthResponse(uint8 code, bool shortForm, uint32 queuePos)
 {
-    WorldPacket packet(SMSG_AUTH_RESPONSE,  1 + 4 + 1 + 4 + 2 + 1 + (shortForm ? 0 : (4 + 1)));
+    WorldPacket packet(SMSG_AUTH_RESPONSE, 1 + 4 + 1 + 4 + 2 + 1 + (shortForm ? 0 : (4 + 1)));
     packet << uint8(code);
     packet << uint32(0);                                        // BillingTimeRemaining
     packet << uint8(0);                                         // BillingPlanFlags
@@ -46,7 +46,7 @@ void WorldSession::SendAuthResponse(uint8 code,  bool shortForm,  uint32 queuePo
 
 void WorldSession::SendClientCacheVersion(uint32 version)
 {
-    WorldPacket data(SMSG_CLIENTCACHE_VERSION,  4);
+    WorldPacket data(SMSG_CLIENTCACHE_VERSION, 4);
     data << uint32(version);
     SendPacket(&data);
 }

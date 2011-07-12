@@ -7,7 +7,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License,  or
+ * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, 
@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not,  write to the Free Software
- * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -38,14 +38,14 @@ struct SkillDiscoveryEntry
     float   chance;                                         // chance
 
     SkillDiscoveryEntry()
-        : spellId(0),  reqSkillValue(0),  chance(0) {}
+        : spellId(0), reqSkillValue(0), chance(0) {}
 
-    SkillDiscoveryEntry(uint32 _spellId,  uint32 req_skill_val,  float _chance)
-        : spellId(_spellId),  reqSkillValue(req_skill_val),  chance(_chance) {}
+    SkillDiscoveryEntry(uint32 _spellId, uint32 req_skill_val, float _chance)
+        : spellId(_spellId), reqSkillValue(req_skill_val), chance(_chance) {}
 };
 
 typedef std::list<SkillDiscoveryEntry> SkillDiscoveryList;
-typedef UNORDERED_MAP<int32,  SkillDiscoveryList> SkillDiscoveryMap;
+typedef UNORDERED_MAP<int32, SkillDiscoveryList> SkillDiscoveryMap;
 
 static SkillDiscoveryMap SkillDiscoveryStore;
 
@@ -56,7 +56,7 @@ void LoadSkillDiscoveryTable()
     SkillDiscoveryStore.clear();                            // need for reload
 
     //                                                0        1         2              3
-    QueryResult result = WorldDatabase.Query("SELECT spellId,  reqSpell,  reqSkillValue,  chance FROM skill_discovery_template");
+    QueryResult result = WorldDatabase.Query("SELECT spellId, reqSpell, reqSkillValue, chance FROM skill_discovery_template");
 
     if (!result)
     {
@@ -114,7 +114,7 @@ void LoadSkillDiscoveryTable()
                 continue;
             }
 
-            SkillDiscoveryStore[reqSkillOrSpell].push_back(SkillDiscoveryEntry(spellId,  reqSkillValue,  chance));
+            SkillDiscoveryStore[reqSkillOrSpell].push_back(SkillDiscoveryEntry(spellId, reqSkillValue, chance));
         }
         else if (reqSkillOrSpell == 0)                      // skill case
         {
@@ -127,7 +127,7 @@ void LoadSkillDiscoveryTable()
             }
 
             for (SkillLineAbilityMap::const_iterator _spell_idx = bounds.first; _spell_idx != bounds.second; ++_spell_idx)
-                SkillDiscoveryStore[-int32(_spell_idx->second->skillId)].push_back(SkillDiscoveryEntry(spellId,  reqSkillValue,  chance));
+                SkillDiscoveryStore[-int32(_spell_idx->second->skillId)].push_back(SkillDiscoveryEntry(spellId, reqSkillValue, chance));
         }
         else
         {
@@ -157,11 +157,11 @@ void LoadSkillDiscoveryTable()
             sLog->outErrorDb("Spell (ID: %u) is 100%% chance random discovery ability but not have data in `skill_discovery_template` table", spell_id);
     }
 
-    sLog->outString(">> Loaded %u skill discovery definitions in %u ms",  count,  GetMSTimeDiffToNow(oldMSTime));
+    sLog->outString(">> Loaded %u skill discovery definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 
-uint32 GetExplicitDiscoverySpell(uint32 spellId,  Player* player)
+uint32 GetExplicitDiscoverySpell(uint32 spellId, Player* player)
 {
     // explicit discovery spell chances (always success if case exist)
     // in this case we have both skill and spell
@@ -198,7 +198,7 @@ uint32 GetExplicitDiscoverySpell(uint32 spellId,  Player* player)
     return 0;
 }
 
-uint32 GetSkillDiscoverySpell(uint32 skillId,  uint32 spellId,  Player* player)
+uint32 GetSkillDiscoverySpell(uint32 skillId, uint32 spellId, Player* player)
 {
     uint32 skillvalue = skillId ? player->GetSkillValue(skillId) : 0;
 
