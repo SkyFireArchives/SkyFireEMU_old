@@ -23,6 +23,6 @@ UPDATE emuopcodes SET number = 45795 WHERE name = "SMSG_CHARACTER_LOGIN_FAILED" 
 
 UPDATE emuopcodes SET number = 29435 WHERE name = "CMSG_CAST_SPELL" and version = @ver;
 UPDATE emuopcodes SET number = 48874 WHERE name = "CMSG_CANCEL_AURA" and version = @ver;
-UPDATE emuopcodes SET number = 22965 WHERE name = "CMSG_MESSAGECHAT_SAY" and version = @ver
+UPDATE emuopcodes SET number = 22965 WHERE name = "CMSG_MESSAGECHAT_SAY" and version = @ver;
 UPDATE emuopcodes SET number = 61990 WHERE name = "CMSG_READY_FOR_ACCOUNT_DATA_TIMES" and version = @ver;
 UPDATE emuopcodes SET number = 4241 WHERE name = "CMSG_CHAR_ENUM" and version = @ver;
