@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef TRINITY_GRIDNOTIFIERSIMPL_H
@@ -39,7 +39,7 @@ Trinity::VisibleNotifier::Visit(GridRefManager<T> &m)
     for (typename GridRefManager<T>::iterator iter = m.begin(); iter != m.end(); ++iter)
     {
         vis_guids.erase(iter->getSource()->GetGUID());
-        i_player.UpdateVisibilityOf(iter->getSource(),i_data,i_visibleNow);
+        i_player.UpdateVisibilityOf(iter->getSource(), i_data, i_visibleNow);
     }
 }
 
@@ -416,9 +416,9 @@ void Trinity::LocalizedPacketDo<Builder>::operator()(Player* p)
         if (i_data_cache.size() < cache_idx+1)
             i_data_cache.resize(cache_idx+1);
 
-        data = new WorldPacket(SMSG_MESSAGECHAT, 200);
+        data = new WorldPacket(SMSG_MESSAGECHAT,  200);
 
-        i_builder(*data,loc_idx);
+        i_builder(*data, loc_idx);
 
         i_data_cache[cache_idx] = data;
     }
@@ -443,7 +443,7 @@ void Trinity::LocalizedPacketListDo<Builder>::operator()(Player* p)
 
         data_list = &i_data_cache[cache_idx];
 
-        i_builder(*data_list,loc_idx);
+        i_builder(*data_list, loc_idx);
     }
     else
         data_list = &i_data_cache[cache_idx];

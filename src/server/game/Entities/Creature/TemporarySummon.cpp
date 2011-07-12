@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -27,9 +27,9 @@
 #include "ObjectMgr.h"
 #include "TemporarySummon.h"
 
-TempSummon::TempSummon(SummonPropertiesEntry const *properties, Unit *owner) :
-Creature(), m_Properties(properties), m_type(TEMPSUMMON_MANUAL_DESPAWN),
-m_timer(0), m_lifetime(0)
+TempSummon::TempSummon(SummonPropertiesEntry const *properties,  Unit *owner) :
+Creature(),  m_Properties(properties),  m_type(TEMPSUMMON_MANUAL_DESPAWN), 
+m_timer(0),  m_lifetime(0)
 {
     m_summonerGUID = owner ? owner->GetGUID() : 0;
     m_unitTypeMask |= UNIT_MASK_SUMMON;
@@ -37,7 +37,7 @@ m_timer(0), m_lifetime(0)
 
 Unit* TempSummon::GetSummoner() const
 {
-    return m_summonerGUID ? ObjectAccessor::GetUnit(*this, m_summonerGUID) : NULL;
+    return m_summonerGUID ? ObjectAccessor::GetUnit(*this,  m_summonerGUID) : NULL;
 }
 
 void TempSummon::Update(uint32 diff)
@@ -98,7 +98,7 @@ void TempSummon::Update(uint32 diff)
         }
         case TEMPSUMMON_CORPSE_DESPAWN:
         {
-            // if m_deathState is DEAD, CORPSE was skipped
+            // if m_deathState is DEAD,  CORPSE was skipped
             if (m_deathState == CORPSE || m_deathState == DEAD)
             {
                 UnSummon();
@@ -118,7 +118,7 @@ void TempSummon::Update(uint32 diff)
         }
         case TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN:
         {
-            // if m_deathState is DEAD, CORPSE was skipped
+            // if m_deathState is DEAD,  CORPSE was skipped
             if (m_deathState == CORPSE || m_deathState == DEAD)
             {
                 UnSummon();
@@ -141,7 +141,7 @@ void TempSummon::Update(uint32 diff)
         }
         case TEMPSUMMON_TIMED_OR_DEAD_DESPAWN:
         {
-            // if m_deathState is DEAD, CORPSE was skipped
+            // if m_deathState is DEAD,  CORPSE was skipped
             if (m_deathState == DEAD)
             {
                 UnSummon();
@@ -164,7 +164,7 @@ void TempSummon::Update(uint32 diff)
         }
         default:
             UnSummon();
-            sLog->outError("Temporary summoned creature (entry: %u) have unknown type %u of ",GetEntry(),m_type);
+            sLog->outError("Temporary summoned creature (entry: %u) have unknown type %u of ", GetEntry(), m_type);
             break;
     }
 }
@@ -234,7 +234,7 @@ void TempSummon::UnSummon()
     //ASSERT(!isPet());
     if (isPet())
     {
-        if(((Pet*)this)->getPetType() == HUNTER_PET)
+        if (((Pet*)this)->getPetType() == HUNTER_PET)
             ((Pet*)this)->Remove(PET_SLOT_ACTUAL_PET_SLOT);
         else
             ((Pet*)this)->Remove(PET_SLOT_OTHER_PET);
@@ -261,7 +261,7 @@ void TempSummon::RemoveFromWorld()
                     owner->m_SummonSlot[slot] = 0;
 
     //if (GetOwnerGUID())
-    //    sLog->outError("Unit %u has owner guid when removed from world", GetEntry());
+    //    sLog->outError("Unit %u has owner guid when removed from world",  GetEntry());
 
     Creature::RemoveFromWorld();
 }
@@ -270,8 +270,8 @@ void TempSummon::SaveToDB()
 {
 }
 
-Minion::Minion(SummonPropertiesEntry const *properties, Unit *owner) : TempSummon(properties, owner)
-, m_owner(owner)
+Minion::Minion(SummonPropertiesEntry const *properties,  Unit *owner) : TempSummon(properties,  owner)
+,  m_owner(owner)
 {
     ASSERT(m_owner);
     m_unitTypeMask |= UNIT_MASK_MINION;
@@ -287,7 +287,7 @@ void Minion::InitStats(uint32 duration)
     SetCreatorGUID(m_owner->GetGUID());
     setFaction(m_owner->getFaction());
 
-    m_owner->SetMinion(this, true, PET_SLOT_UNK_SLOT);
+    m_owner->SetMinion(this,  true,  PET_SLOT_UNK_SLOT);
 }
 
 void Minion::RemoveFromWorld()
@@ -295,7 +295,7 @@ void Minion::RemoveFromWorld()
     if (!IsInWorld())
         return;
 
-    m_owner->SetMinion(this, false, PET_SLOT_UNK_SLOT);
+    m_owner->SetMinion(this,  false,  PET_SLOT_UNK_SLOT);
     TempSummon::RemoveFromWorld();
 }
 
@@ -304,10 +304,10 @@ bool Minion::IsGuardianPet() const
     return isPet() || (m_Properties && m_Properties->Category == SUMMON_CATEGORY_PET);
 }
 
-Guardian::Guardian(SummonPropertiesEntry const *properties, Unit *owner) : Minion(properties, owner)
-, m_bonusSpellDamage(0)
+Guardian::Guardian(SummonPropertiesEntry const *properties,  Unit *owner) : Minion(properties,  owner)
+,  m_bonusSpellDamage(0)
 {
-    memset(m_statFromOwner, 0, sizeof(float)*MAX_STATS);
+    memset(m_statFromOwner,  0,  sizeof(float)*MAX_STATS);
     m_unitTypeMask |= UNIT_MASK_GUARDIAN;
     if (properties && properties->Type == SUMMON_TYPE_PET)
     {
@@ -338,7 +338,7 @@ void Guardian::InitSummon()
         m_owner->ToPlayer()->CharmSpellInitialize();
 }
 
-Puppet::Puppet(SummonPropertiesEntry const *properties, Unit *owner) : Minion(properties, owner)
+Puppet::Puppet(SummonPropertiesEntry const *properties,  Unit *owner) : Minion(properties,  owner)
 {
     ASSERT(owner->GetTypeId() == TYPEID_PLAYER);
     m_owner = (Player*)owner;
@@ -355,7 +355,7 @@ void Puppet::InitStats(uint32 duration)
 void Puppet::InitSummon()
 {
     Minion::InitSummon();
-    if (!SetCharmedBy(m_owner, CHARM_TYPE_POSSESS))
+    if (!SetCharmedBy(m_owner,  CHARM_TYPE_POSSESS))
         ASSERT(false);
 }
 

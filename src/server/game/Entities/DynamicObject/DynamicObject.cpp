@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -87,31 +87,31 @@ void DynamicObject::RemoveFromWorld()
     }
 }
 
-bool DynamicObject::Create(uint32 guidlow, Unit *caster, uint32 spellId, const Position &pos, float radius, bool active)
+bool DynamicObject::Create(uint32 guidlow,  Unit *caster,  uint32 spellId,  const Position &pos,  float radius,  bool active)
 {
     SetMap(caster->GetMap());
     Relocate(pos);
     if (!IsPositionValid())
     {
-        sLog->outError("DynamicObject (spell %u) not created. Suggested coordinates isn't valid (X: %f Y: %f)",spellId,GetPositionX(),GetPositionY());
+        sLog->outError("DynamicObject (spell %u) not created. Suggested coordinates isn't valid (X: %f Y: %f)", spellId, GetPositionX(), GetPositionY());
         return false;
     }
 
-    WorldObject::_Create(guidlow, HIGHGUID_DYNAMICOBJECT, caster->GetPhaseMask());
+    WorldObject::_Create(guidlow,  HIGHGUID_DYNAMICOBJECT,  caster->GetPhaseMask());
 
     SetEntry(spellId);
-    SetFloatValue(OBJECT_FIELD_SCALE_X, 1);
-    SetUInt64Value(DYNAMICOBJECT_CASTER, caster->GetGUID());
+    SetFloatValue(OBJECT_FIELD_SCALE_X,  1);
+    SetUInt64Value(DYNAMICOBJECT_CASTER,  caster->GetGUID());
 
     // The lower word of DYNAMICOBJECT_BYTES must be 0x0001. This value means that the visual radius will be overriden
     // by client for most of the "ground patch" visual effect spells and a few "skyfall" ones like Hurricane.
-    // If any other value is used, the client will _always_ use the radius provided in DYNAMICOBJECT_RADIUS, but
-    // precompensation is necessary (eg radius *= 2) for many spells. Anyway, blizz sends 0x0001 for all the spells
+    // If any other value is used,  the client will _always_ use the radius provided in DYNAMICOBJECT_RADIUS,  but
+    // precompensation is necessary (eg radius *= 2) for many spells. Anyway,  blizz sends 0x0001 for all the spells
     // I saw sniffed...
-    SetUInt32Value(DYNAMICOBJECT_BYTES, 0x00000001);
-    SetUInt32Value(DYNAMICOBJECT_SPELLID, spellId);
-    SetFloatValue(DYNAMICOBJECT_RADIUS, radius);
-    SetUInt32Value(DYNAMICOBJECT_CASTTIME, getMSTime());
+    SetUInt32Value(DYNAMICOBJECT_BYTES,  0x00000001);
+    SetUInt32Value(DYNAMICOBJECT_SPELLID,  spellId);
+    SetFloatValue(DYNAMICOBJECT_RADIUS,  radius);
+    SetUInt32Value(DYNAMICOBJECT_CASTTIME,  getMSTime());
 
     m_isWorldObject = active;
     return true;
@@ -128,7 +128,7 @@ void DynamicObject::Update(uint32 p_time)
     if (m_aura)
     {
         if (!m_aura->IsRemoved())
-            m_aura->UpdateOwner(p_time, this);
+            m_aura->UpdateOwner(p_time,  this);
 
         // m_aura may be set to null in Unit::UpdateOwner call
         if (m_aura && (m_aura->IsRemoved() || m_aura->IsExpired()))
@@ -145,7 +145,7 @@ void DynamicObject::Update(uint32 p_time)
     if (expired)
         Remove();
     else
-        sScriptMgr->OnDynamicObjectUpdate(this, p_time);
+        sScriptMgr->OnDynamicObjectUpdate(this,  p_time);
 }
 
 void DynamicObject::Remove()
@@ -198,7 +198,7 @@ void DynamicObject::SetCasterViewpoint()
 {
     if (Player * caster = m_caster->ToPlayer())
     {
-        caster->SetViewpoint(this, true);
+        caster->SetViewpoint(this,  true);
         m_isViewpoint = true;
     }
 }
@@ -207,7 +207,7 @@ void DynamicObject::RemoveCasterViewpoint()
 {
     if (Player * caster = m_caster->ToPlayer())
     {
-        caster->SetViewpoint(this, false);
+        caster->SetViewpoint(this,  false);
         m_isViewpoint = false;
     }
 }
@@ -215,7 +215,7 @@ void DynamicObject::RemoveCasterViewpoint()
 void DynamicObject::BindToCaster()
 {
     ASSERT(!m_caster);
-    m_caster = ObjectAccessor::GetUnit(*this, GetCasterGUID());
+    m_caster = ObjectAccessor::GetUnit(*this,  GetCasterGUID());
     ASSERT(m_caster);
     ASSERT(m_caster->GetMap() == GetMap());
     m_caster->_RegisterDynObject(this);

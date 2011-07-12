@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef _AUCTION_HOUSE_MGR_H
@@ -37,17 +37,17 @@ class WorldPacket;
 
 enum AuctionError
 {
-    AUCTION_OK = 0,
-    AUCTION_INTERNAL_ERROR = 2,
-    AUCTION_NOT_ENOUGHT_MONEY = 3,
-    AUCTION_ITEM_NOT_FOUND = 4,
+    AUCTION_OK = 0, 
+    AUCTION_INTERNAL_ERROR = 2, 
+    AUCTION_NOT_ENOUGHT_MONEY = 3, 
+    AUCTION_ITEM_NOT_FOUND = 4, 
     CANNOT_BID_YOUR_AUCTION_ERROR = 10
 };
 
 enum AuctionAction
 {
-    AUCTION_SELL_ITEM = 0,
-    AUCTION_CANCEL = 1,
+    AUCTION_SELL_ITEM = 0, 
+    AUCTION_CANCEL = 1, 
     AUCTION_PLACE_BID = 2
 };
 
@@ -90,7 +90,7 @@ public:
             delete itr->second;
     }
 
-    typedef std::map<uint32, AuctionEntry*> AuctionEntryMap;
+    typedef std::map<uint32,  AuctionEntry*> AuctionEntryMap;
 
     uint32 Getcount() { return AuctionsMap.size(); }
 
@@ -105,16 +105,16 @@ public:
 
     void AddAuction(AuctionEntry *auction);
 
-    bool RemoveAuction(AuctionEntry *auction, uint32 item_template);
+    bool RemoveAuction(AuctionEntry *auction,  uint32 item_template);
 
     void Update();
 
-    void BuildListBidderItems(WorldPacket& data, Player* player, uint32& count, uint32& totalcount);
-    void BuildListOwnerItems(WorldPacket& data, Player* player, uint32& count, uint32& totalcount);
-    void BuildListAuctionItems(WorldPacket& data, Player* player,
-        std::wstring const& searchedname, uint32 listfrom, uint8 levelmin, uint8 levelmax, uint8 usable,
-        uint32 inventoryType, uint32 itemClass, uint32 itemSubClass, uint32 quality,
-        uint32& count, uint32& totalcount);
+    void BuildListBidderItems(WorldPacket& data,  Player* player,  uint32& count,  uint32& totalcount);
+    void BuildListOwnerItems(WorldPacket& data,  Player* player,  uint32& count,  uint32& totalcount);
+    void BuildListAuctionItems(WorldPacket& data,  Player* player, 
+        std::wstring const& searchedname,  uint32 listfrom,  uint8 levelmin,  uint8 levelmax,  uint8 usable, 
+        uint32 inventoryType,  uint32 itemClass,  uint32 itemSubClass,  uint32 quality, 
+        uint32& count,  uint32& totalcount);
 
 private:
     AuctionEntryMap AuctionsMap;
@@ -125,13 +125,13 @@ private:
 
 class AuctionHouseMgr
 {
-    friend class ACE_Singleton<AuctionHouseMgr, ACE_Null_Mutex>;
+    friend class ACE_Singleton<AuctionHouseMgr,  ACE_Null_Mutex>;
     AuctionHouseMgr();
     ~AuctionHouseMgr();
 
 public:
 
-    typedef UNORDERED_MAP<uint32, Item*> ItemMap;
+    typedef UNORDERED_MAP<uint32,  Item*> ItemMap;
 
     AuctionHouseObject* GetAuctionsMap(uint32 factionTemplateId);
     AuctionHouseObject* GetBidsMap(uint32 factionTemplateId);
@@ -146,20 +146,20 @@ public:
     }
 
     //auction messages
-    void SendAuctionWonMail(AuctionEntry * auction, SQLTransaction& trans);
-    void SendAuctionSalePendingMail(AuctionEntry * auction, SQLTransaction& trans);
-    void SendAuctionSuccessfulMail(AuctionEntry * auction, SQLTransaction& trans);
-    void SendAuctionExpiredMail(AuctionEntry * auction, SQLTransaction& trans);
-    void SendAuctionRemovedMail(AuctionEntry * auction, SQLTransaction& trans);
-    void SendAuctionOutbiddedMail(AuctionEntry * auction, uint64 newPrice, Player* newBidder, SQLTransaction& trans);
-    void SendAuctionCancelledToBidderMail(AuctionEntry* auction, SQLTransaction& trans);
+    void SendAuctionWonMail(AuctionEntry * auction,  SQLTransaction& trans);
+    void SendAuctionSalePendingMail(AuctionEntry * auction,  SQLTransaction& trans);
+    void SendAuctionSuccessfulMail(AuctionEntry * auction,  SQLTransaction& trans);
+    void SendAuctionExpiredMail(AuctionEntry * auction,  SQLTransaction& trans);
+    void SendAuctionRemovedMail(AuctionEntry * auction,  SQLTransaction& trans);
+    void SendAuctionOutbiddedMail(AuctionEntry * auction,  uint64 newPrice,  Player* newBidder,  SQLTransaction& trans);
+    void SendAuctionCancelledToBidderMail(AuctionEntry* auction,  SQLTransaction& trans);
 
-    static uint32 GetAuctionDeposit(AuctionHouseEntry const* entry, uint32 time, Item *pItem, uint32 count);
+    static uint32 GetAuctionDeposit(AuctionHouseEntry const* entry,  uint32 time,  Item *pItem,  uint32 count);
     static AuctionHouseEntry const* GetAuctionHouseEntry(uint32 factionTemplateId);
 
 public:
 
-    //load first auction items, because of check if item exists, when loading
+    //load first auction items,  because of check if item exists,  when loading
     void LoadAuctionItems();
     void LoadAuctions();
 
@@ -177,6 +177,6 @@ private:
     ItemMap mAitems;
 };
 
-#define sAuctionMgr ACE_Singleton<AuctionHouseMgr, ACE_Null_Mutex>::instance()
+#define sAuctionMgr ACE_Singleton<AuctionHouseMgr,  ACE_Null_Mutex>::instance()
 
 #endif

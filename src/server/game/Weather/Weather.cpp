@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -35,14 +35,14 @@
 #include "ScriptMgr.h"
 
 /// Create the Weather object
-Weather::Weather(uint32 zone, WeatherData const* weatherChances)
-    : m_zone(zone), m_weatherChances(weatherChances)
+Weather::Weather(uint32 zone,  WeatherData const* weatherChances)
+    : m_zone(zone),  m_weatherChances(weatherChances)
 {
     m_timer.SetInterval(sWorld->getIntConfig(CONFIG_INTERVAL_CHANGEWEATHER));
     m_type = WEATHER_TYPE_FINE;
     m_grade = 0;
 
-    sLog->outDetail("WORLD: Starting weather system for zone %u (change every %u minutes).", m_zone, (uint32)(m_timer.GetInterval() / (MINUTE*IN_MILLISECONDS)));
+    sLog->outDetail("WORLD: Starting weather system for zone %u (change every %u minutes).",  m_zone,  (uint32)(m_timer.GetInterval() / (MINUTE*IN_MILLISECONDS)));
 }
 
 /// Launch a weather update
@@ -53,7 +53,7 @@ bool Weather::Update(uint32 diff)
     else
         m_timer.SetCurrent(0);
 
-    ///- If the timer has passed, ReGenerate the weather
+    ///- If the timer has passed,  ReGenerate the weather
     if (m_timer.Passed())
     {
         m_timer.Reset();
@@ -66,7 +66,7 @@ bool Weather::Update(uint32 diff)
         }
     }
 
-    sScriptMgr->OnWeatherUpdate(this, diff);
+    sScriptMgr->OnWeatherUpdate(this,  diff);
     return true;
 }
 
@@ -85,7 +85,7 @@ bool Weather::ReGenerate()
     ///- 30% - weather gets better (if not fine) or change weather type
     ///- 30% - weather worsens (if not fine)
     ///- 10% - radical change (if not fine)
-    uint32 u = urand(0, 99);
+    uint32 u = urand(0,  99);
 
     if (u < 30)
         return false;
@@ -100,9 +100,9 @@ bool Weather::ReGenerate()
     struct tm * ltime = localtime(&gtime);
     uint32 season = ((ltime->tm_yday - 78 + 365)/91)%4;
 
-    static char const* seasonName[WEATHER_SEASONS] = { "spring", "summer", "fall", "winter" };
+    static char const* seasonName[WEATHER_SEASONS] = { "spring",  "summer",  "fall",  "winter" };
 
-    sLog->outDetail("Generating a change in %s weather for zone %u.", seasonName[season], m_zone);
+    sLog->outDetail("Generating a change in %s weather for zone %u.",  seasonName[season],  m_zone);
 
     if ((u < 60) && (m_grade < 0.33333334f))                // Get fair
     {
@@ -127,7 +127,7 @@ bool Weather::ReGenerate()
         /// Radical change:
         ///- if light -> heavy
         ///- if medium -> change weather type
-        ///- if heavy -> 50% light, 50% change weather type
+        ///- if heavy -> 50% light,  50% change weather type
 
         if (m_grade < 0.33333334f)
         {
@@ -138,8 +138,8 @@ bool Weather::ReGenerate()
         {
             if (m_grade > 0.6666667f)
             {
-                                                            // Severe change, but how severe?
-                uint32 rnd = urand(0,99);
+                                                            // Severe change,  but how severe?
+                uint32 rnd = urand(0, 99);
                 if (rnd < 50)
                 {
                     m_grade -= 0.6666667f;
@@ -151,12 +151,12 @@ bool Weather::ReGenerate()
         }
     }
 
-    // At this point, only weather that isn't doing anything remains but that have weather data
+    // At this point,  only weather that isn't doing anything remains but that have weather data
     uint32 chance1 =          m_weatherChances->data[season].rainChance;
     uint32 chance2 = chance1+ m_weatherChances->data[season].snowChance;
     uint32 chance3 = chance2+ m_weatherChances->data[season].stormChance;
 
-    uint32 rnd = urand(0, 99);
+    uint32 rnd = urand(0,  99);
     if (rnd <= chance1)
         m_type = WEATHER_TYPE_RAIN;
     else if (rnd <= chance2)
@@ -182,8 +182,8 @@ bool Weather::ReGenerate()
     }
     else
     {
-        // Severe change, but how severe?
-        rnd = urand(0, 99);
+        // Severe change,  but how severe?
+        rnd = urand(0,  99);
         if (rnd < 50)
             m_grade = (float)rand_norm() * 0.3333f + 0.3334f;
         else
@@ -196,7 +196,7 @@ bool Weather::ReGenerate()
 
 void Weather::SendWeatherUpdateToPlayer(Player *player)
 {
-    WorldPacket data(SMSG_WEATHER, (4+4+4));
+    WorldPacket data(SMSG_WEATHER,  (4+4+4));
 
     data << uint32(GetWeatherState()) << (float)m_grade << uint8(0);
     player->GetSession()->SendPacket(&data);
@@ -204,7 +204,7 @@ void Weather::SendWeatherUpdateToPlayer(Player *player)
 
 void Weather::SendFineWeatherUpdateToPlayer(Player *player)
 {
-    WorldPacket data(SMSG_WEATHER, (4+4+4));
+    WorldPacket data(SMSG_WEATHER,  (4+4+4));
 
     data << (uint32)WEATHER_STATE_FINE << (float)0.0f << uint8(0);
     player->GetSession()->SendPacket(&data);
@@ -225,9 +225,9 @@ bool Weather::UpdateWeather()
 
     WeatherState state = GetWeatherState();
 
-    WorldPacket data(SMSG_WEATHER, (4+4+4));
+    WorldPacket data(SMSG_WEATHER,  (4+4+4));
     data << uint32(state) << (float)m_grade << uint8(0);
-    player->SendMessageToSet(&data, true);
+    player->SendMessageToSet(&data,  true);
 
     ///- Log the event
     char const* wthstr;
@@ -271,14 +271,14 @@ bool Weather::UpdateWeather()
             wthstr = "fine";
             break;
     }
-    sLog->outDetail("Change the weather of zone %u to %s.", m_zone, wthstr);
+    sLog->outDetail("Change the weather of zone %u to %s.",  m_zone,  wthstr);
 
-    sScriptMgr->OnWeatherChange(this, state, m_grade);
+    sScriptMgr->OnWeatherChange(this,  state,  m_grade);
     return true;
 }
 
 /// Set the weather
-void Weather::SetWeather(WeatherType type, float grade)
+void Weather::SetWeather(WeatherType type,  float grade)
 {
     if (m_type == type && m_grade == grade)
         return;

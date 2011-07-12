@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef TRINITY_POOLHANDLER_H
@@ -38,7 +38,7 @@ struct PoolObject
 {
     uint32  guid;
     float   chance;
-    PoolObject(uint32 _guid, float _chance): guid(_guid), chance(fabs(_chance)) {}
+    PoolObject(uint32 _guid,  float _chance): guid(_guid),  chance(fabs(_chance)) {}
 };
 
 class Pool                                                  // for Pool of Pool case
@@ -46,7 +46,7 @@ class Pool                                                  // for Pool of Pool 
 };
 
 typedef std::set<uint32> ActivePoolObjects;
-typedef std::map<uint32,uint32> ActivePoolPools;
+typedef std::map<uint32, uint32> ActivePoolPools;
 
 class ActivePoolData
 {
@@ -57,10 +57,10 @@ class ActivePoolData
         uint32 GetActiveObjectCount(uint32 pool_id) const;
 
         template<typename T>
-        void ActivateObject(uint32 db_guid_or_pool_id, uint32 pool_id);
+        void ActivateObject(uint32 db_guid_or_pool_id,  uint32 pool_id);
 
         template<typename T>
-        void RemoveObject(uint32 db_guid_or_pool_id, uint32 pool_id);
+        void RemoveObject(uint32 db_guid_or_pool_id,  uint32 pool_id);
 
         ActivePoolObjects GetActiveQuests() const { return mActiveQuests; } // a copy of the set
     private:
@@ -79,12 +79,12 @@ class PoolGroup
         void SetPoolId(uint32 pool_id) { poolId = pool_id; }
         ~PoolGroup() {};
         bool isEmpty() const { return ExplicitlyChanced.empty() && EqualChanced.empty(); }
-        void AddEntry(PoolObject& poolitem, uint32 maxentries);
+        void AddEntry(PoolObject& poolitem,  uint32 maxentries);
         bool CheckPool() const;
-        PoolObject* RollOne(ActivePoolData& spawns, uint32 triggerFrom);
-        void DespawnObject(ActivePoolData& spawns, uint32 guid=0);
+        PoolObject* RollOne(ActivePoolData& spawns,  uint32 triggerFrom);
+        void DespawnObject(ActivePoolData& spawns,  uint32 guid=0);
         void Despawn1Object(uint32 guid);
-        void SpawnObject(ActivePoolData& spawns, uint32 limit, uint32 triggerFrom);
+        void SpawnObject(ActivePoolData& spawns,  uint32 limit,  uint32 triggerFrom);
 
         void Spawn1Object(PoolObject* obj);
         void ReSpawn1Object(PoolObject* obj);
@@ -102,13 +102,13 @@ class PoolGroup
         PoolObjectList EqualChanced;
 };
 
-typedef std::multimap<uint32, uint32> PooledQuestRelation;
-typedef std::pair<PooledQuestRelation::const_iterator, PooledQuestRelation::const_iterator> PooledQuestRelationBounds;
-typedef std::pair<PooledQuestRelation::iterator, PooledQuestRelation::iterator> PooledQuestRelationBoundsNC;
+typedef std::multimap<uint32,  uint32> PooledQuestRelation;
+typedef std::pair<PooledQuestRelation::const_iterator,  PooledQuestRelation::const_iterator> PooledQuestRelationBounds;
+typedef std::pair<PooledQuestRelation::iterator,  PooledQuestRelation::iterator> PooledQuestRelationBoundsNC;
 
 class PoolMgr
 {
-    friend class ACE_Singleton<PoolMgr, ACE_Null_Mutex>;
+    friend class ACE_Singleton<PoolMgr,  ACE_Null_Mutex>;
     PoolMgr();
     ~PoolMgr() {};
 
@@ -131,7 +131,7 @@ class PoolMgr
         void DespawnPool(uint32 pool_id);
 
         template<typename T>
-        void UpdatePool(uint32 pool_id, uint32 db_guid_or_pool_id);
+        void UpdatePool(uint32 pool_id,  uint32 db_guid_or_pool_id);
 
         void ChangeDailyQuests();
         void ChangeWeeklyQuests();
@@ -140,7 +140,7 @@ class PoolMgr
         PooledQuestRelation mQuestGORelation;
     protected:
         template<typename T>
-        void SpawnPool(uint32 pool_id, uint32 db_guid_or_pool_id);
+        void SpawnPool(uint32 pool_id,  uint32 db_guid_or_pool_id);
 
         uint32 max_pool_id;
         typedef std::vector<PoolTemplateData>       PoolTemplateDataMap;
@@ -148,8 +148,8 @@ class PoolMgr
         typedef std::vector<PoolGroup<GameObject> > PoolGroupGameObjectMap;
         typedef std::vector<PoolGroup<Pool> >       PoolGroupPoolMap;
         typedef std::vector<PoolGroup<Quest> >      PoolGroupQuestMap;
-        typedef std::pair<uint32, uint32>           SearchPair;
-        typedef std::map<uint32, uint32>            SearchMap;
+        typedef std::pair<uint32,  uint32>           SearchPair;
+        typedef std::map<uint32,  uint32>            SearchMap;
 
         PoolTemplateDataMap    mPoolTemplate;
         PoolGroupCreatureMap   mPoolCreatureGroups;
@@ -165,7 +165,7 @@ class PoolMgr
         ActivePoolData mSpawnedData;
 };
 
-#define sPoolMgr ACE_Singleton<PoolMgr, ACE_Null_Mutex>::instance()
+#define sPoolMgr ACE_Singleton<PoolMgr,  ACE_Null_Mutex>::instance()
 
 // Method that tell if the creature is part of a pool and return the pool id if yes
 template<>

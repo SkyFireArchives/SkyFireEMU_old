@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef TRINITY_FORMULAS_H
@@ -31,16 +31,16 @@ namespace Trinity
 {
     namespace Honor
     {
-        inline float hk_honor_at_level_f(uint8 level, float multiplier = 1.0f)
+        inline float hk_honor_at_level_f(uint8 level,  float multiplier = 1.0f)
         {
             float honor = multiplier * level * 1.55f;
-            sScriptMgr->OnHonorCalculation(honor, level, multiplier);
+            sScriptMgr->OnHonorCalculation(honor,  level,  multiplier);
             return honor;
         }
 
-        inline uint32 hk_honor_at_level(uint8 level, float multiplier = 1.0f)
+        inline uint32 hk_honor_at_level(uint8 level,  float multiplier = 1.0f)
         {
-            return uint32(ceil(hk_honor_at_level_f(level, multiplier)));
+            return uint32(ceil(hk_honor_at_level_f(level,  multiplier)));
         }
     }
     namespace XP
@@ -58,11 +58,11 @@ namespace Trinity
             else
                 level = pl_level - 9;
 
-            sScriptMgr->OnGrayLevelCalculation(level, pl_level);
+            sScriptMgr->OnGrayLevelCalculation(level,  pl_level);
             return level;
         }
 
-        inline XPColorChar GetColorCode(uint8 pl_level, uint8 mob_level)
+        inline XPColorChar GetColorCode(uint8 pl_level,  uint8 mob_level)
         {
             XPColorChar color;
 
@@ -77,7 +77,7 @@ namespace Trinity
             else
                 color = XP_GRAY;
 
-            sScriptMgr->OnColorCodeCalculation(color, pl_level, mob_level);
+            sScriptMgr->OnColorCodeCalculation(color,  pl_level,  mob_level);
             return color;
         }
 
@@ -110,11 +110,11 @@ namespace Trinity
             else
                 diff = 17;
 
-            sScriptMgr->OnZeroDifferenceCalculation(diff, pl_level);
+            sScriptMgr->OnZeroDifferenceCalculation(diff,  pl_level);
             return diff;
         }
 
-        inline uint32 BaseGain(uint8 pl_level, uint8 mob_level, ContentLevels content)
+        inline uint32 BaseGain(uint8 pl_level,  uint8 mob_level,  ContentLevels content)
         {
             uint32 baseGain;
             uint32 nBaseExp;
@@ -134,7 +134,7 @@ namespace Trinity
                     nBaseExp = 1878;
                     break;
                 default:
-                    sLog->outError("BaseGain: Unsupported content level %u",content);
+                    sLog->outError("BaseGain: Unsupported content level %u", content);
                     nBaseExp = 45;
                     break;
             }
@@ -159,11 +159,11 @@ namespace Trinity
                     baseGain = 0;
             }
 
-            sScriptMgr->OnBaseGainCalculation(baseGain, pl_level, mob_level, content);
+            sScriptMgr->OnBaseGainCalculation(baseGain,  pl_level,  mob_level,  content);
             return baseGain;
         }
 
-        inline uint32 Gain(Player *pl, Unit *u)
+        inline uint32 Gain(Player *pl,  Unit *u)
         {
             uint32 gain;
 
@@ -174,7 +174,7 @@ namespace Trinity
                 gain = 0;
             else
             {
-                gain = BaseGain(pl->getLevel(), u->getLevel(), GetContentLevelsForMapAndZone(u->GetMapId(), u->GetZoneId()));
+                gain = BaseGain(pl->getLevel(),  u->getLevel(),  GetContentLevelsForMapAndZone(u->GetMapId(),  u->GetZoneId()));
 
                 if (gain != 0 && u->GetTypeId() == TYPEID_UNIT && ((Creature*)u)->isElite())
                 {
@@ -188,11 +188,11 @@ namespace Trinity
                 gain = uint32(gain * sWorld->getRate(RATE_XP_KILL));
             }
 
-            sScriptMgr->OnGainCalculation(gain, pl, u);
+            sScriptMgr->OnGainCalculation(gain,  pl,  u);
             return gain;
         }
 
-        inline float xp_in_group_rate(uint32 count, bool isRaid)
+        inline float xp_in_group_rate(uint32 count,  bool isRaid)
         {
             float rate;
 
@@ -222,7 +222,7 @@ namespace Trinity
                 }
             }
 
-            sScriptMgr->OnGroupRateCalculation(rate, count, isRaid);
+            sScriptMgr->OnGroupRateCalculation(rate,  count,  isRaid);
             return rate;
         }
     }

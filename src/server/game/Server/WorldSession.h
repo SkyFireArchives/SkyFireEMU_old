@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 /// \addtogroup u2w
@@ -63,14 +63,14 @@ struct LfgUpdateData;
 
 enum AccountDataType
 {
-    GLOBAL_CONFIG_CACHE             = 0,                    // 0x01 g
-    PER_CHARACTER_CONFIG_CACHE      = 1,                    // 0x02 p
-    GLOBAL_BINDINGS_CACHE           = 2,                    // 0x04 g
-    PER_CHARACTER_BINDINGS_CACHE    = 3,                    // 0x08 p
-    GLOBAL_MACROS_CACHE             = 4,                    // 0x10 g
-    PER_CHARACTER_MACROS_CACHE      = 5,                    // 0x20 p
-    PER_CHARACTER_LAYOUT_CACHE      = 6,                    // 0x40 p
-    PER_CHARACTER_CHAT_CACHE        = 7,                    // 0x80 p
+    GLOBAL_CONFIG_CACHE             = 0,                     // 0x01 g
+    PER_CHARACTER_CONFIG_CACHE      = 1,                     // 0x02 p
+    GLOBAL_BINDINGS_CACHE           = 2,                     // 0x04 g
+    PER_CHARACTER_BINDINGS_CACHE    = 3,                     // 0x08 p
+    GLOBAL_MACROS_CACHE             = 4,                     // 0x10 g
+    PER_CHARACTER_MACROS_CACHE      = 5,                     // 0x20 p
+    PER_CHARACTER_LAYOUT_CACHE      = 6,                     // 0x40 p
+    PER_CHARACTER_CHAT_CACHE        = 7,                     // 0x80 p
 };
 
 #define NUM_ACCOUNT_DATA_TYPES        8
@@ -80,7 +80,7 @@ enum AccountDataType
 
 struct AccountData
 {
-    AccountData() : Time(0), Data("") {}
+    AccountData() : Time(0),  Data("") {}
 
     time_t Time;
     std::string Data;
@@ -88,58 +88,58 @@ struct AccountData
 
 enum PartyOperation
 {
-    PARTY_OP_INVITE = 0,
-    PARTY_OP_UNINVITE = 1,
-    PARTY_OP_LEAVE = 2,
+    PARTY_OP_INVITE = 0, 
+    PARTY_OP_UNINVITE = 1, 
+    PARTY_OP_LEAVE = 2, 
     PARTY_OP_SWAP = 4
 };
 
 enum PartyResult
 {
-    ERR_PARTY_RESULT_OK                 = 0,
-    ERR_BAD_PLAYER_NAME_S               = 1,
-    ERR_TARGET_NOT_IN_GROUP_S           = 2,
-    ERR_TARGET_NOT_IN_INSTANCE_S        = 3,
-    ERR_GROUP_FULL                      = 4,
-    ERR_ALREADY_IN_GROUP_S              = 5,
-    ERR_NOT_IN_GROUP                    = 6,
-    ERR_NOT_LEADER                      = 7,
-    ERR_PLAYER_WRONG_FACTION            = 8,
-    ERR_IGNORING_YOU_S                  = 9,
-    ERR_LFG_PENDING                     = 12,
-    ERR_INVITE_RESTRICTED               = 13,
-    ERR_GROUP_SWAP_FAILED               = 14,               // if (PartyOperation == PARTY_OP_SWAP) ERR_GROUP_SWAP_FAILED else ERR_INVITE_IN_COMBAT
-    ERR_INVITE_UNKNOWN_REALM            = 15,
-    ERR_INVITE_NO_PARTY_SERVER          = 16,
-    ERR_INVITE_PARTY_BUSY               = 17,
-    ERR_PARTY_TARGET_AMBIGUOUS          = 18,
-    ERR_PARTY_LFG_INVITE_RAID_LOCKED    = 19,
-    ERR_PARTY_LFG_BOOT_LIMIT            = 20,
-    ERR_PARTY_LFG_BOOT_COOLDOWN_S       = 21,
-    ERR_PARTY_LFG_BOOT_IN_PROGRESS      = 22,
-    ERR_PARTY_LFG_BOOT_TOO_FEW_PLAYERS  = 23,
-    ERR_PARTY_LFG_BOOT_NOT_ELIGIBLE_S   = 24,
-    ERR_RAID_DISALLOWED_BY_LEVEL        = 25,
-    ERR_PARTY_LFG_BOOT_IN_COMBAT        = 26,
-    ERR_VOTE_KICK_REASON_NEEDED         = 27,
-    ERR_PARTY_LFG_BOOT_DUNGEON_COMPLETE = 28,
-    ERR_PARTY_LFG_BOOT_LOOT_ROLLS       = 29,
+    ERR_PARTY_RESULT_OK                 = 0, 
+    ERR_BAD_PLAYER_NAME_S               = 1, 
+    ERR_TARGET_NOT_IN_GROUP_S           = 2, 
+    ERR_TARGET_NOT_IN_INSTANCE_S        = 3, 
+    ERR_GROUP_FULL                      = 4, 
+    ERR_ALREADY_IN_GROUP_S              = 5, 
+    ERR_NOT_IN_GROUP                    = 6, 
+    ERR_NOT_LEADER                      = 7, 
+    ERR_PLAYER_WRONG_FACTION            = 8, 
+    ERR_IGNORING_YOU_S                  = 9, 
+    ERR_LFG_PENDING                     = 12, 
+    ERR_INVITE_RESTRICTED               = 13, 
+    ERR_GROUP_SWAP_FAILED               = 14,                // if (PartyOperation == PARTY_OP_SWAP) ERR_GROUP_SWAP_FAILED else ERR_INVITE_IN_COMBAT
+    ERR_INVITE_UNKNOWN_REALM            = 15, 
+    ERR_INVITE_NO_PARTY_SERVER          = 16, 
+    ERR_INVITE_PARTY_BUSY               = 17, 
+    ERR_PARTY_TARGET_AMBIGUOUS          = 18, 
+    ERR_PARTY_LFG_INVITE_RAID_LOCKED    = 19, 
+    ERR_PARTY_LFG_BOOT_LIMIT            = 20, 
+    ERR_PARTY_LFG_BOOT_COOLDOWN_S       = 21, 
+    ERR_PARTY_LFG_BOOT_IN_PROGRESS      = 22, 
+    ERR_PARTY_LFG_BOOT_TOO_FEW_PLAYERS  = 23, 
+    ERR_PARTY_LFG_BOOT_NOT_ELIGIBLE_S   = 24, 
+    ERR_RAID_DISALLOWED_BY_LEVEL        = 25, 
+    ERR_PARTY_LFG_BOOT_IN_COMBAT        = 26, 
+    ERR_VOTE_KICK_REASON_NEEDED         = 27, 
+    ERR_PARTY_LFG_BOOT_DUNGEON_COMPLETE = 28, 
+    ERR_PARTY_LFG_BOOT_LOOT_ROLLS       = 29, 
     ERR_PARTY_LFG_TELEPORT_IN_COMBAT    = 30
 };
 
 enum ChatRestrictionType
 {
-    ERR_CHAT_RESTRICTED = 0,
-    ERR_CHAT_THROTTLED  = 1,
-    ERR_USER_SQUELCHED  = 2,
+    ERR_CHAT_RESTRICTED = 0, 
+    ERR_CHAT_THROTTLED  = 1, 
+    ERR_USER_SQUELCHED  = 2, 
     ERR_YELL_RESTRICTED = 3
 };
 
 enum CharterTypes
 {
-    GUILD_CHARTER_TYPE                            = 9,
-    ARENA_TEAM_CHARTER_2v2_TYPE                   = 2,
-    ARENA_TEAM_CHARTER_3v3_TYPE                   = 3,
+    GUILD_CHARTER_TYPE                            = 9, 
+    ARENA_TEAM_CHARTER_2v2_TYPE                   = 2, 
+    ARENA_TEAM_CHARTER_3v3_TYPE                   = 3, 
     ARENA_TEAM_CHARTER_5v5_TYPE                   = 5
 };
 
@@ -185,31 +185,31 @@ class WorldSession
 {
     friend class CharacterHandler;
     public:
-        WorldSession(uint32 id, WorldSocket *sock, AccountTypes sec, uint8 expansion, time_t mute_time, LocaleConstant locale, uint32 recruiter);
+        WorldSession(uint32 id,  WorldSocket *sock,  AccountTypes sec,  uint8 expansion,  time_t mute_time,  LocaleConstant locale,  uint32 recruiter);
         ~WorldSession();
 
         bool PlayerLoading() const { return m_playerLoading; }
         bool PlayerLogout() const { return m_playerLogout; }
         bool PlayerLogoutWithSave() const { return m_playerLogout && m_playerSave; }
 
-        void SizeError(WorldPacket const& packet, uint32 size) const;
+        void SizeError(WorldPacket const& packet,  uint32 size) const;
 
         void ReadAddonsInfo(WorldPacket &data);
         void SendAddonsInfo();
 
-        void ReadMovementInfo(WorldPacket &data, MovementInfo *mi);
-        void WriteMovementInfo(WorldPacket *data, MovementInfo *mi);
+        void ReadMovementInfo(WorldPacket &data,  MovementInfo *mi);
+        void WriteMovementInfo(WorldPacket *data,  MovementInfo *mi);
 
         void SendPacket(WorldPacket const* packet);
-        void SendNotification(const char *format,...) ATTR_PRINTF(2,3);
-        void SendNotification(uint32 string_id,...);
-        void SendPetNameInvalid(uint32 error, const std::string& name, DeclinedName *declinedName);
-        void SendPartyResult(PartyOperation operation, const std::string& member, PartyResult res, uint32 val = 0);
-        void SendAreaTriggerMessage(const char* Text, ...) ATTR_PRINTF(2,3);
-        void SendSetPhaseShift(uint32 phaseShift, uint32 MapID = 0);
+        void SendNotification(const char *format, ...) ATTR_PRINTF(2, 3);
+        void SendNotification(uint32 string_id, ...);
+        void SendPetNameInvalid(uint32 error,  const std::string& name,  DeclinedName *declinedName);
+        void SendPartyResult(PartyOperation operation,  const std::string& member,  PartyResult res,  uint32 val = 0);
+        void SendAreaTriggerMessage(const char* Text,  ...) ATTR_PRINTF(2, 3);
+        void SendSetPhaseShift(uint32 phaseShift,  uint32 MapID = 0);
         void SendQueryTimeResponse();
 
-        void SendAuthResponse(uint8 code, bool shortForm, uint32 queuePos = 0);
+        void SendAuthResponse(uint8 code,  bool shortForm,  uint32 queuePos = 0);
         void SendClientCacheVersion(uint32 version);
 
         AccountTypes GetSecurity() const { return _security; }
@@ -244,18 +244,18 @@ class WorldSession
         void HandleMoveToGraveyard(WorldPacket &recv_data);
 
         void QueuePacket(WorldPacket* new_packet);
-        bool Update(uint32 diff, PacketFilter& updater);
+        bool Update(uint32 diff,  PacketFilter& updater);
 
         /// Handle the authentication waiting queue (to be completed)
         void SendAuthWaitQue(uint32 position);
 
-        //void SendTestCreatureQueryOpcode(uint32 entry, uint64 guid, uint32 testvalue);
+        //void SendTestCreatureQueryOpcode(uint32 entry,  uint64 guid,  uint32 testvalue);
         void SendNameQueryOpcode(Player* p);
         void SendNameQueryOpcodeFromDB(uint64 guid);
         void SendNameQueryOpcodeFromDBCallBack(QueryResult result);
 
         void SendTrainerList(uint64 guid);
-        void SendTrainerList(uint64 guid, const std::string& strTitle);
+        void SendTrainerList(uint64 guid,  const std::string& strTitle);
         void SendListInventory(uint64 guid);
         void SendShowBank(uint64 guid);
         void SendTabardVendorActivate(uint64 guid);
@@ -264,7 +264,7 @@ class WorldSession
 
         void SendAttackStop(Unit const* enemy);
 
-        void SendBattlegGroundList(uint64 guid, BattlegroundTypeId bgTypeId = BATTLEGROUND_RB);
+        void SendBattlegGroundList(uint64 guid,  BattlegroundTypeId bgTypeId = BATTLEGROUND_RB);
 
         void SendTradeStatus(TradeStatus status);
         void SendUpdateTrade(bool trader_data = true);
@@ -273,21 +273,21 @@ class WorldSession
         void SendPetitionQueryOpcode(uint64 petitionguid);
 
         // Spell
-        void HandleClientCastFlags(WorldPacket& recvPacket, uint8 castFlags, SpellCastTargets & targets);
+        void HandleClientCastFlags(WorldPacket& recvPacket,  uint8 castFlags,  SpellCastTargets & targets);
 
         // Pet
-        void SendPetNameQuery(uint64 guid, uint32 petnumber);
+        void SendPetNameQuery(uint64 guid,  uint32 petnumber);
         void SendStablePet(uint64 guid);
-        void SendStablePetCallback(QueryResult result, uint64 guid);
+        void SendStablePetCallback(QueryResult result,  uint64 guid);
         void SendStableResult(uint8 guid);
         bool CheckStableMaster(uint64 guid);
 
         // Account Data
         AccountData *GetAccountData(AccountDataType type) { return &m_accountData[type]; }
-        void SetAccountData(AccountDataType type, time_t time_, std::string data);
+        void SetAccountData(AccountDataType type,  time_t time_,  std::string data);
         void SendAccountDataTimes(uint32 mask);
         void LoadGlobalAccountData();
-        void LoadAccountData(PreparedQueryResult result, uint32 mask);
+        void LoadAccountData(PreparedQueryResult result,  uint32 mask);
         void LoadTutorialsData();
         void SendTutorialsData();
         void SaveTutorialsData(SQLTransaction& trans);
@@ -296,7 +296,7 @@ class WorldSession
             return m_Tutorials[intId];
         }
 
-        void SetTutorialInt(uint32 intId, uint32 value)
+        void SetTutorialInt(uint32 intId,  uint32 value)
         {
             if (m_Tutorials[intId] != value)
             {
@@ -305,30 +305,30 @@ class WorldSession
             }
         }
         //used with item_page table
-        bool SendItemInfo(uint32 itemid, WorldPacket data);
+        bool SendItemInfo(uint32 itemid,  WorldPacket data);
         //auction
-        void SendAuctionHello(uint64 guid, Creature * unit);
-        void SendAuctionCommandResult(uint32 auctionId, uint32 Action, uint32 ErrorCode, uint32 bidError = 0);
-        void SendAuctionBidderNotification(uint32 location, uint32 auctionId, uint64 bidder, uint32 bidSum, uint32 diff, uint32 item_template);
+        void SendAuctionHello(uint64 guid,  Creature * unit);
+        void SendAuctionCommandResult(uint32 auctionId,  uint32 Action,  uint32 ErrorCode,  uint32 bidError = 0);
+        void SendAuctionBidderNotification(uint32 location,  uint32 auctionId,  uint64 bidder,  uint32 bidSum,  uint32 diff,  uint32 item_template);
         void SendAuctionOwnerNotification(AuctionEntry * auction);
 
         //Item Enchantment
-        void SendEnchantmentLog(uint64 Target, uint64 Caster,uint32 ItemID,uint32 SpellID);
-        void SendItemEnchantTimeUpdate(uint64 Playerguid, uint64 Itemguid,uint32 slot,uint32 Duration);
+        void SendEnchantmentLog(uint64 Target,  uint64 Caster, uint32 ItemID, uint32 SpellID);
+        void SendItemEnchantTimeUpdate(uint64 Playerguid,  uint64 Itemguid, uint32 slot, uint32 Duration);
 
         //Taxi
         void SendTaxiStatus(uint64 guid);
         void SendTaxiMenu(Creature* unit);
-        void SendDoFlight(uint32 mountDisplayId, uint32 path, uint32 pathNode = 0);
+        void SendDoFlight(uint32 mountDisplayId,  uint32 path,  uint32 pathNode = 0);
         bool SendLearnNewTaxiNode(Creature* unit);
         void SendDiscoverNewTaxiNode(uint32 nodeid);
 
         // Guild/Arena Team
-        void SendArenaTeamCommandResult(uint32 team_action, const std::string& team, const std::string& player, uint32 error_id);
+        void SendArenaTeamCommandResult(uint32 team_action,  const std::string& team,  const std::string& player,  uint32 error_id);
         void SendNotInArenaTeamPacket(uint8 type);
         void SendPetitionShowList(uint64 guid);
 
-        void BuildPartyMemberStatsChangedPacket(Player *player, WorldPacket *data);
+        void BuildPartyMemberStatsChangedPacket(Player *player,  WorldPacket *data);
 
         void DoLootRelease(uint64 lguid);
 
@@ -342,7 +342,7 @@ class WorldSession
 
         uint32 GetLatency() const { return m_latency; }
         void SetLatency(uint32 latency) { m_latency = latency; }
-        uint32 getDialogStatus(Player *pPlayer, Object* questgiver, uint32 defstatus);
+        uint32 getDialogStatus(Player *pPlayer,  Object* questgiver,  uint32 defstatus);
 
         time_t m_timeOutTime;
         void UpdateTimeOutTime(uint32 diff)
@@ -370,7 +370,7 @@ class WorldSession
 
         void Handle_NULL(WorldPacket& recvPacket);          // not used
         void Handle_EarlyProccess(WorldPacket& recvPacket);// just mark packets processed in WorldSocket::OnRead
-        void Handle_ServerSide(WorldPacket& recvPacket);    // sever side only, can't be accepted from client
+        void Handle_ServerSide(WorldPacket& recvPacket);    // sever side only,  can't be accepted from client
         void Handle_Deprecated(WorldPacket& recvPacket);    // never used anymore by client
 
         void HandleCharEnumOpcode(WorldPacket& recvPacket);
@@ -437,7 +437,7 @@ class WorldSession
         void HandleGMTicketDeleteOpcode(WorldPacket& recvPacket);
         void HandleGMTicketGetTicketOpcode(WorldPacket& recvPacket);
         void HandleGMTicketSystemStatusOpcode(WorldPacket& recvPacket);
-        void SendGMTicketGetTicket(uint32 status, char const* text, GM_Ticket *ticket = NULL);
+        void SendGMTicketGetTicket(uint32 status,  char const* text,  GM_Ticket *ticket = NULL);
         void SendGMTicketResponse(GM_Ticket *ticket);
         void HandleGMSurveySubmit(WorldPacket& recvPacket);
         void HandleReportLag(WorldPacket& recvPacket);
@@ -452,7 +452,7 @@ class WorldSession
         void HandleEmoteOpcode(WorldPacket& recvPacket);
         void HandleContactListOpcode(WorldPacket& recvPacket);
         void HandleAddFriendOpcode(WorldPacket& recvPacket);
-        void HandleAddFriendOpcodeCallBack(QueryResult result, std::string friendNote);
+        void HandleAddFriendOpcodeCallBack(QueryResult result,  std::string friendNote);
         void HandleDelFriendOpcode(WorldPacket& recvPacket);
         void HandleAddIgnoreOpcode(WorldPacket& recvPacket);
         void HandleAddIgnoreOpcodeCallBack(QueryResult result);
@@ -577,7 +577,7 @@ class WorldSession
         void HandleListStabledPetsOpcode(WorldPacket& recvPacket);
         void HandleStableRevivePet(WorldPacket& recvPacket);
         void HandleStableChangeSlot(WorldPacket& recvPacket);
-        void HandleStableChangeSlotCallback(QueryResult result, uint8 slot);
+        void HandleStableChangeSlotCallback(QueryResult result,  uint8 slot);
 
         void HandleDuelAcceptedOpcode(WorldPacket& recvPacket);
         void HandleDuelCancelledOpcode(WorldPacket& recvPacket);
@@ -667,7 +667,7 @@ class WorldSession
         void HandlePushQuestToParty(WorldPacket& recvPacket);
         void HandleQuestPushResult(WorldPacket& recvPacket);
 
-        bool processChatmessageFurtherAfterSecurityChecks(std::string&, uint32);
+        bool processChatmessageFurtherAfterSecurityChecks(std::string&,  uint32);
         void HandleMessagechatOpcode(WorldPacket& recvPacket);
         void SendPlayerNotFoundNotice(std::string name);
         void SendPlayerAmbiguousNotice(std::string name);
@@ -715,7 +715,7 @@ class WorldSession
         //Pet
         void HandlePetAction(WorldPacket & recv_data);
         void HandlePetStopAttack(WorldPacket& recv_data);
-        void HandlePetActionHelper(Unit *pet, uint64 guid1, uint16 spellid, uint16 flag, uint64 guid2);
+        void HandlePetActionHelper(Unit *pet,  uint64 guid1,  uint16 spellid,  uint16 flag,  uint64 guid2);
         void HandlePetNameQuery(WorldPacket & recv_data);
         void HandlePetSetAction(WorldPacket & recv_data);
         void HandlePetAbandon(WorldPacket & recv_data);
@@ -730,7 +730,7 @@ class WorldSession
         void HandleSetActionBarToggles(WorldPacket& recv_data);
 
         void HandleCharRenameOpcode(WorldPacket& recv_data);
-        void HandleChangePlayerNameOpcodeCallBack(QueryResult result, std::string newname);
+        void HandleChangePlayerNameOpcodeCallBack(QueryResult result,  std::string newname);
         void HandleSetPlayerDeclinedNames(WorldPacket& recv_data);
 
         void HandleTotemDestroyed(WorldPacket& recv_data);
@@ -778,14 +778,14 @@ class WorldSession
 
         void SendLfgUpdatePlayer(const LfgUpdateData& updateData);
         void SendLfgUpdateParty(const LfgUpdateData& updateData);
-        void SendLfgRoleChosen(uint64 guid, uint8 roles);
+        void SendLfgRoleChosen(uint64 guid,  uint8 roles);
         void SendLfgRoleCheckUpdate(const LfgRoleCheck *pRoleCheck);
         void SendLfgUpdateSearch(bool update);
         void SendLfgJoinResult(const LfgJoinResultData& joinData);
-        void SendLfgQueueStatus(uint32 dungeon, int32 waitTime, int32 avgWaitTime, int32 waitTimeTanks, int32 waitTimeHealer, int32 waitTimeDps, uint32 queuedTime, uint8 tanks, uint8 healers, uint8 dps);
-        void SendLfgPlayerReward(uint32 rdungeonEntry, uint32 sdungeonEntry, uint8 done, const LfgReward *reward, const Quest *qRew);
+        void SendLfgQueueStatus(uint32 dungeon,  int32 waitTime,  int32 avgWaitTime,  int32 waitTimeTanks,  int32 waitTimeHealer,  int32 waitTimeDps,  uint32 queuedTime,  uint8 tanks,  uint8 healers,  uint8 dps);
+        void SendLfgPlayerReward(uint32 rdungeonEntry,  uint32 sdungeonEntry,  uint8 done,  const LfgReward *reward,  const Quest *qRew);
         void SendLfgBootPlayer(const LfgPlayerBoot *pBoot);
-        void SendLfgUpdateProposal(uint32 proposalId, const LfgProposal *pProp);
+        void SendLfgUpdateProposal(uint32 proposalId,  const LfgProposal *pProp);
         void SendLfgDisabled();
         void SendLfgOfferContinue(uint32 dungeonEntry);
         void SendLfgTeleportError(uint8 err);
@@ -878,18 +878,18 @@ class WorldSession
         ACE_Future_Set<QueryResult> m_nameQueryCallbacks;
         QueryResultFuture m_charEnumCallback;
         QueryResultFuture m_addIgnoreCallback;
-        QueryCallback<QueryResult, std::string> m_charRenameCallback;
-        QueryCallback<QueryResult, std::string> m_addFriendCallback;
-        QueryCallback<QueryResult, uint32> m_stableChangeSlotCallback;
-        QueryCallback<QueryResult, uint64> m_sendStabledPetCallback;
+        QueryCallback<QueryResult,  std::string> m_charRenameCallback;
+        QueryCallback<QueryResult,  std::string> m_addFriendCallback;
+        QueryCallback<QueryResult,  uint32> m_stableChangeSlotCallback;
+        QueryCallback<QueryResult,  uint64> m_sendStabledPetCallback;
         QueryResultHolderFuture m_charLoginCallback;
 
     private:
         // private trade methods
-        void moveItems(Item* myItems[], Item* hisItems[]);
+        void moveItems(Item* myItems[],  Item* hisItems[]);
 
         // logging helper
-        void LogUnexpectedOpcode(WorldPacket *packet, const char* status, const char *reason);
+        void LogUnexpectedOpcode(WorldPacket *packet,  const char* status,  const char *reason);
         void LogUnprocessedTail(WorldPacket *packet);
 
         bool CharCanLogin(uint32 lowGUID)
@@ -921,7 +921,7 @@ class WorldSession
         bool   m_TutorialsChanged;
         AddonsList m_addonsList;
         uint32 recruiterId;
-        ACE_Based::LockedQueue<WorldPacket*, ACE_Thread_Mutex> _recvQueue;
+        ACE_Based::LockedQueue<WorldPacket*,  ACE_Thread_Mutex> _recvQueue;
 };
 #endif
 /// @}

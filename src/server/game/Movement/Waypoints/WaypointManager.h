@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef TRINITY_WAYPOINTMANAGER_H
@@ -30,7 +30,7 @@
 struct WaypointData
 {
     uint32 id;
-    float x, y, z;
+    float x,  y,  z;
     bool run;
     uint32 delay;
     uint32 event_id;
@@ -38,17 +38,17 @@ struct WaypointData
 };
 
 typedef std::vector<WaypointData*> WaypointPath;
-typedef UNORDERED_MAP<uint32, WaypointPath> WaypointPathContainer;
+typedef UNORDERED_MAP<uint32,  WaypointPath> WaypointPathContainer;
 
 class WaypointMgr
 {
-        friend class ACE_Singleton<WaypointMgr, ACE_Null_Mutex>;
+        friend class ACE_Singleton<WaypointMgr,  ACE_Null_Mutex>;
 
     public:
         // Attempts to reload a single path from database
         void ReloadPath(uint32 id);
 
-        // Loads all paths from database, should only run on startup
+        // Loads all paths from database,  should only run on startup
         void Load();
 
         // Returns the path from a given id
@@ -69,6 +69,6 @@ class WaypointMgr
         WaypointPathContainer _waypointStore;
 };
 
-#define sWaypointMgr ACE_Singleton<WaypointMgr, ACE_Null_Mutex>::instance()
+#define sWaypointMgr ACE_Singleton<WaypointMgr,  ACE_Null_Mutex>::instance()
 
 #endif

@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -47,7 +47,7 @@ class ObjectGridRespawnMover
 void
 ObjectGridRespawnMover::Move(GridType &grid)
 {
-    TypeContainerVisitor<ObjectGridRespawnMover, GridTypeMapContainer > mover(*this);
+    TypeContainerVisitor<ObjectGridRespawnMover,  GridTypeMapContainer > mover(*this);
     grid.Visit(mover);
 }
 
@@ -66,9 +66,9 @@ ObjectGridRespawnMover::Visit(CreatureMapType &m)
 
         Cell const& cur_cell  = c->GetCurrentCell();
 
-        float resp_x, resp_y, resp_z;
-        c->GetRespawnCoord(resp_x, resp_y, resp_z);
-        CellPair resp_val = Trinity::ComputeCellPair(resp_x, resp_y);
+        float resp_x,  resp_y,  resp_z;
+        c->GetRespawnCoord(resp_x,  resp_y,  resp_z);
+        CellPair resp_val = Trinity::ComputeCellPair(resp_x,  resp_y);
         Cell resp_cell(resp_val);
 
         if (cur_cell.DiffGrid(resp_cell))
@@ -84,7 +84,7 @@ class ObjectWorldLoader
 {
     public:
         explicit ObjectWorldLoader(ObjectGridLoader& gloader)
-            : i_cell(gloader.i_cell), i_grid(gloader.i_grid), i_map(gloader.i_map), i_corpses (0)
+            : i_cell(gloader.i_cell),  i_grid(gloader.i_grid),  i_map(gloader.i_map),  i_corpses (0)
             {}
 
         void Visit(CorpseMapType &m);
@@ -99,11 +99,11 @@ class ObjectWorldLoader
         uint32 i_corpses;
 };
 
-template<class T> void AddUnitState(T* /*obj*/, CellPair const& /*cell_pair*/)
+template<class T> void AddUnitState(T* /*obj*/,  CellPair const& /*cell_pair*/)
 {
 }
 
-template<> void AddUnitState(Creature *obj, CellPair const& cell_pair)
+template<> void AddUnitState(Creature *obj,  CellPair const& cell_pair)
 {
     Cell cell(cell_pair);
 
@@ -111,10 +111,10 @@ template<> void AddUnitState(Creature *obj, CellPair const& cell_pair)
 }
 
 template <class T>
-void AddObjectHelper(CellPair &cell, GridRefManager<T> &m, uint32 &count, Map* map, T *obj)
+void AddObjectHelper(CellPair &cell,  GridRefManager<T> &m,  uint32 &count,  Map* map,  T *obj)
 {
-    obj->GetGridRef().link(&m, obj);
-    AddUnitState(obj, cell);
+    obj->GetGridRef().link(&m,  obj);
+    AddUnitState(obj,  cell);
     obj->AddToWorld();
     if (obj->isActiveObject())
         map->AddToActive(obj);
@@ -123,24 +123,24 @@ void AddObjectHelper(CellPair &cell, GridRefManager<T> &m, uint32 &count, Map* m
 }
 
 template <class T>
-void LoadHelper(CellGuidSet const& guid_set, CellPair &cell, GridRefManager<T> &m, uint32 &count, Map* map)
+void LoadHelper(CellGuidSet const& guid_set,  CellPair &cell,  GridRefManager<T> &m,  uint32 &count,  Map* map)
 {
     for (CellGuidSet::const_iterator i_guid = guid_set.begin(); i_guid != guid_set.end(); ++i_guid)
     {
         T* obj = new T;
         uint32 guid = *i_guid;
-        //sLog->outString("DEBUG: LoadHelper from table: %s for (guid: %u) Loading", table, guid);
-        if (!obj->LoadFromDB(guid, map))
+        //sLog->outString("DEBUG: LoadHelper from table: %s for (guid: %u) Loading",  table,  guid);
+        if (!obj->LoadFromDB(guid,  map))
         {
             delete obj;
             continue;
         }
 
-        AddObjectHelper(cell, m, count, map, obj);
+        AddObjectHelper(cell,  m,  count,  map,  obj);
     }
 }
 
-void LoadHelper(CellCorpseSet const& cell_corpses, CellPair &cell, CorpseMapType &m, uint32 &count, Map* map)
+void LoadHelper(CellCorpseSet const& cell_corpses,  CellPair &cell,  CorpseMapType &m,  uint32 &count,  Map* map)
 {
     if (cell_corpses.empty())
         return;
@@ -162,7 +162,7 @@ void LoadHelper(CellCorpseSet const& cell_corpses, CellPair &cell, CorpseMapType
         // in that case map == currMap
         obj->SetMap(map);
 
-        AddObjectHelper(cell, m, count, map, obj);
+        AddObjectHelper(cell,  m,  count,  map,  obj);
     }
 }
 
@@ -171,12 +171,12 @@ ObjectGridLoader::Visit(GameObjectMapType &m)
 {
     uint32 x = (i_cell.GridX()*MAX_NUMBER_OF_CELLS) + i_cell.CellX();
     uint32 y = (i_cell.GridY()*MAX_NUMBER_OF_CELLS) + i_cell.CellY();
-    CellPair cell_pair(x, y);
+    CellPair cell_pair(x,  y);
     uint32 cell_id = (cell_pair.y_coord*TOTAL_NUMBER_OF_CELLS_PER_MAP) + cell_pair.x_coord;
 
-    CellObjectGuids const& cell_guids = sObjectMgr->GetCellObjectGuids(i_map->GetId(), i_map->GetSpawnMode(), cell_id);
+    CellObjectGuids const& cell_guids = sObjectMgr->GetCellObjectGuids(i_map->GetId(),  i_map->GetSpawnMode(),  cell_id);
 
-    LoadHelper(cell_guids.gameobjects, cell_pair, m, i_gameObjects, i_map);
+    LoadHelper(cell_guids.gameobjects,  cell_pair,  m,  i_gameObjects,  i_map);
 }
 
 void
@@ -184,12 +184,12 @@ ObjectGridLoader::Visit(CreatureMapType &m)
 {
     uint32 x = (i_cell.GridX()*MAX_NUMBER_OF_CELLS) + i_cell.CellX();
     uint32 y = (i_cell.GridY()*MAX_NUMBER_OF_CELLS) + i_cell.CellY();
-    CellPair cell_pair(x, y);
+    CellPair cell_pair(x,  y);
     uint32 cell_id = (cell_pair.y_coord*TOTAL_NUMBER_OF_CELLS_PER_MAP) + cell_pair.x_coord;
 
-    CellObjectGuids const& cell_guids = sObjectMgr->GetCellObjectGuids(i_map->GetId(), i_map->GetSpawnMode(), cell_id);
+    CellObjectGuids const& cell_guids = sObjectMgr->GetCellObjectGuids(i_map->GetId(),  i_map->GetSpawnMode(),  cell_id);
 
-    LoadHelper(cell_guids.creatures, cell_pair, m, i_creatures, i_map);
+    LoadHelper(cell_guids.creatures,  cell_pair,  m,  i_creatures,  i_map);
 }
 
 void
@@ -197,25 +197,25 @@ ObjectWorldLoader::Visit(CorpseMapType &m)
 {
     uint32 x = (i_cell.GridX()*MAX_NUMBER_OF_CELLS) + i_cell.CellX();
     uint32 y = (i_cell.GridY()*MAX_NUMBER_OF_CELLS) + i_cell.CellY();
-    CellPair cell_pair(x, y);
+    CellPair cell_pair(x,  y);
     uint32 cell_id = (cell_pair.y_coord*TOTAL_NUMBER_OF_CELLS_PER_MAP) + cell_pair.x_coord;
 
     // corpses are always added to spawn mode 0 and they are spawned by their instance id
-    CellObjectGuids const& cell_guids = sObjectMgr->GetCellObjectGuids(i_map->GetId(), 0, cell_id);
-    LoadHelper(cell_guids.corpses, cell_pair, m, i_corpses, i_map);
+    CellObjectGuids const& cell_guids = sObjectMgr->GetCellObjectGuids(i_map->GetId(),  0,  cell_id);
+    LoadHelper(cell_guids.corpses,  cell_pair,  m,  i_corpses,  i_map);
 }
 
 void
 ObjectGridLoader::Load(GridType &grid)
 {
     {
-        TypeContainerVisitor<ObjectGridLoader, GridTypeMapContainer > loader(*this);
+        TypeContainerVisitor<ObjectGridLoader,  GridTypeMapContainer > loader(*this);
         grid.Visit(loader);
     }
 
     {
         ObjectWorldLoader wloader(*this);
-        TypeContainerVisitor<ObjectWorldLoader, WorldTypeMapContainer > loader(wloader);
+        TypeContainerVisitor<ObjectWorldLoader,  WorldTypeMapContainer > loader(wloader);
         grid.Visit(loader);
         i_corpses = wloader.i_corpses;
     }
@@ -231,11 +231,11 @@ void ObjectGridLoader::LoadN(void)
         for (unsigned int y=0; y < MAX_NUMBER_OF_CELLS; ++y)
         {
             i_cell.data.Part.cell_y = y;
-            GridLoader<Player, AllWorldObjectTypes, AllGridObjectTypes> loader;
-            loader.Load(i_grid(x, y), *this);
+            GridLoader<Player,  AllWorldObjectTypes,  AllGridObjectTypes> loader;
+            loader.Load(i_grid(x,  y),  *this);
         }
     }
-    sLog->outDebug("%u GameObjects, %u Creatures, and %u Corpses/Bones loaded for grid %u on map %u", i_gameObjects, i_creatures, i_corpses, i_grid.GetGridId(), i_map->GetId());
+    sLog->outDebug("%u GameObjects,  %u Creatures,  and %u Corpses/Bones loaded for grid %u on map %u",  i_gameObjects,  i_creatures,  i_corpses,  i_grid.GetGridId(),  i_map->GetId());
 }
 
 void ObjectGridUnloader::MoveToRespawnN()
@@ -245,7 +245,7 @@ void ObjectGridUnloader::MoveToRespawnN()
         for (unsigned int y=0; y < MAX_NUMBER_OF_CELLS; ++y)
         {
             ObjectGridRespawnMover mover;
-            mover.Move(i_grid(x, y));
+            mover.Move(i_grid(x,  y));
         }
     }
 }
@@ -253,7 +253,7 @@ void ObjectGridUnloader::MoveToRespawnN()
 void
 ObjectGridUnloader::Unload(GridType &grid)
 {
-    TypeContainerVisitor<ObjectGridUnloader, GridTypeMapContainer > unloader(*this);
+    TypeContainerVisitor<ObjectGridUnloader,  GridTypeMapContainer > unloader(*this);
     grid.Visit(unloader);
 }
 
@@ -275,7 +275,7 @@ ObjectGridUnloader::Visit(GridRefManager<T> &m)
 void
 ObjectGridStoper::Stop(GridType &grid)
 {
-    TypeContainerVisitor<ObjectGridStoper, GridTypeMapContainer > stoper(*this);
+    TypeContainerVisitor<ObjectGridStoper,  GridTypeMapContainer > stoper(*this);
     grid.Visit(stoper);
 }
 
@@ -298,7 +298,7 @@ ObjectGridStoper::Visit(CreatureMapType &m)
 void
 ObjectGridCleaner::Stop(GridType &grid)
 {
-    TypeContainerVisitor<ObjectGridCleaner, GridTypeMapContainer > stoper(*this);
+    TypeContainerVisitor<ObjectGridCleaner,  GridTypeMapContainer > stoper(*this);
     grid.Visit(stoper);
 }
 

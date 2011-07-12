@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -40,7 +40,7 @@
 #include "WorldPacket.h"
 #include "Group.h"
 
-extern GridState* si_GridStates[];                          // debugging code, should be deleted some day
+extern GridState* si_GridStates[];                          // debugging code,  should be deleted some day
 
 MapManager::MapManager()
 {
@@ -56,7 +56,7 @@ void MapManager::Initialize()
 {
     Map::InitStateMachine();
 
-    // debugging code, should be deleted some day
+    // debugging code,  should be deleted some day
     {
         for (uint8 i = 0; i < MAX_GRID_STATE; ++i)
              i_GridStates[i] = si_GridStates[i];
@@ -75,7 +75,7 @@ void MapManager::InitializeVisibilityDistanceInfo()
         (*iter).second->InitVisibilityDistance();
 }
 
-// debugging code, should be deleted some day
+// debugging code,  should be deleted some day
 void MapManager::checkAndCorrectGridStatesArray()
 {
     bool ok = true;
@@ -83,7 +83,7 @@ void MapManager::checkAndCorrectGridStatesArray()
     {
         if (i_GridStates[i] != si_GridStates[i])
         {
-            sLog->outError("MapManager::checkGridStates(), GridState: si_GridStates is currupt !!!");
+            sLog->outError("MapManager::checkGridStates(),  GridState: si_GridStates is currupt !!!");
             ok = false;
             si_GridStates[i] = i_GridStates[i];
         }
@@ -106,16 +106,16 @@ Map* MapManager::_createBaseMap(uint32 id)
 
     if (m == NULL)
     {
-        ACE_GUARD_RETURN(ACE_Thread_Mutex, Guard, Lock, NULL);
+        ACE_GUARD_RETURN(ACE_Thread_Mutex,  Guard,  Lock,  NULL);
 
         const MapEntry* entry = sMapStore.LookupEntry(id);
         if (entry && entry->Instanceable())
         {
-            m = new MapInstanced(id, i_gridCleanUpDelay);
+            m = new MapInstanced(id,  i_gridCleanUpDelay);
         }
         else
         {
-            m = new Map(id, i_gridCleanUpDelay, 0, REGULAR_DIFFICULTY);
+            m = new Map(id,  i_gridCleanUpDelay,  0,  REGULAR_DIFFICULTY);
         }
         i_maps[id] = m;
     }
@@ -124,18 +124,18 @@ Map* MapManager::_createBaseMap(uint32 id)
     return m;
 }
 
-Map* MapManager::CreateMap(uint32 id, const WorldObject* obj, uint32 /*instanceId*/)
+Map* MapManager::CreateMap(uint32 id,  const WorldObject* obj,  uint32 /*instanceId*/)
 {
     ASSERT(obj);
-    //if (!obj->IsInWorld()) sLog->outError("GetMap: called for map %d with object (typeid %d, guid %d, mapid %d, instanceid %d) who is not in world!", id, obj->GetTypeId(), obj->GetGUIDLow(), obj->GetMapId(), obj->GetInstanceId());
+    //if (!obj->IsInWorld()) sLog->outError("GetMap: called for map %d with object (typeid %d,  guid %d,  mapid %d,  instanceid %d) who is not in world!",  id,  obj->GetTypeId(),  obj->GetGUIDLow(),  obj->GetMapId(),  obj->GetInstanceId());
     Map *m = _createBaseMap(id);
 
-    if (m && (obj->GetTypeId() == TYPEID_PLAYER) && m->Instanceable()) m = ((MapInstanced*)m)->CreateInstance(id, (Player*)obj);
+    if (m && (obj->GetTypeId() == TYPEID_PLAYER) && m->Instanceable()) m = ((MapInstanced*)m)->CreateInstance(id,  (Player*)obj);
 
     return m;
 }
 
-Map* MapManager::FindMap(uint32 mapid, uint32 instanceId) const
+Map* MapManager::FindMap(uint32 mapid,  uint32 instanceId) const
 {
     Map *map = _findMap(mapid);
     if (!map)
@@ -147,7 +147,7 @@ Map* MapManager::FindMap(uint32 mapid, uint32 instanceId) const
     return ((MapInstanced*)map)->FindMap(instanceId);
 }
 
-bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
+bool MapManager::CanPlayerEnter(uint32 mapid,  Player* player,  bool loginCheck)
 {
     MapEntry const* entry = sMapStore.LookupEntry(mapid);
     if (!entry)
@@ -162,17 +162,17 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
 
     Difficulty targetDifficulty = player->GetDifficulty(entry->IsRaid());
     //The player has a heroic mode and tries to enter into instance which has no a heroic mode
-    MapDifficulty const* mapDiff = GetMapDifficultyData(entry->MapID, targetDifficulty);
+    MapDifficulty const* mapDiff = GetMapDifficultyData(entry->MapID,  targetDifficulty);
     if (!mapDiff)
     {
         // Send aborted message for dungeons
         if (entry->IsNonRaidDungeon())
         {
-            player->SendTransferAborted(mapid, TRANSFER_ABORT_DIFFICULTY, player->GetDungeonDifficulty());
+            player->SendTransferAborted(mapid,  TRANSFER_ABORT_DIFFICULTY,  player->GetDungeonDifficulty());
             return false;
         }
         else    // attempt to downscale
-            mapDiff = GetDownscaledMapDifficultyData(entry->MapID, targetDifficulty);
+            mapDiff = GetDownscaledMapDifficultyData(entry->MapID,  targetDifficulty);
     }
 
     //Bypass checks for GMs
@@ -187,10 +187,10 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
         // can only enter in a raid group
         if ((!group || !group->isRaidGroup()) && !sWorld->getBoolConfig(CONFIG_INSTANCE_IGNORE_RAID))
         {
-            // probably there must be special opcode, because client has this string constant in GlobalStrings.lua
+            // probably there must be special opcode,  because client has this string constant in GlobalStrings.lua
             // TODO: this is not a good place to send the message
-            player->GetSession()->SendAreaTriggerMessage(player->GetSession()->GetSkyFireString(LANG_INSTANCE_RAID_GROUP_ONLY), mapName);
-            sLog->outDebug("MAP: Player '%s' must be in a raid group to enter instance '%s'", player->GetName(), mapName);
+            player->GetSession()->SendAreaTriggerMessage(player->GetSession()->GetSkyFireString(LANG_INSTANCE_RAID_GROUP_ONLY),  mapName);
+            sLog->outDebug("MAP: Player '%s' must be in a raid group to enter instance '%s'",  player->GetName(),  mapName);
             return false;
         }
     }
@@ -214,13 +214,13 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
             {
                 WorldPacket data(SMSG_CORPSE_NOT_IN_INSTANCE);
                 player->GetSession()->SendPacket(&data);
-                sLog->outDebug("MAP: Player '%s' does not have a corpse in instance '%s' and cannot enter.", player->GetName(), mapName);
+                sLog->outDebug("MAP: Player '%s' does not have a corpse in instance '%s' and cannot enter.",  player->GetName(),  mapName);
                 return false;
             }
-            sLog->outDebug("MAP: Player '%s' has corpse in instance '%s' and can enter.", player->GetName(), mapName);
+            sLog->outDebug("MAP: Player '%s' has corpse in instance '%s' and can enter.",  player->GetName(),  mapName);
         }
         else
-            sLog->outDebug("Map::CanPlayerEnter - player '%s' is dead but does not have a corpse!", player->GetName());
+            sLog->outDebug("Map::CanPlayerEnter - player '%s' is dead but does not have a corpse!",  player->GetName());
     }
 
     //Get instance where player's group is bound & its map
@@ -228,13 +228,13 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
     {
         InstanceGroupBind* boundInstance = group->GetBoundInstance(entry);
         if (boundInstance && boundInstance->save)
-            if (Map* boundMap = sMapMgr->FindMap(mapid, boundInstance->save->GetInstanceId()))
+            if (Map* boundMap = sMapMgr->FindMap(mapid,  boundInstance->save->GetInstanceId()))
                 if (!loginCheck && !boundMap->CanEnter(player))
                     return false;
             /*
                 This check has to be moved to InstanceMap::CanEnter()
                 // Player permanently bounded to different instance than groups one
-                InstancePlayerBind* playerBoundedInstance = player->GetBoundInstance(mapid, player->GetDifficulty(entry->IsRaid()));
+                InstancePlayerBind* playerBoundedInstance = player->GetBoundInstance(mapid,  player->GetDifficulty(entry->IsRaid()));
                 if (playerBoundedInstance && playerBoundedInstance->perm && playerBoundedInstance->save &&
                     boundedInstance->save->GetInstanceId() != playerBoundedInstance->save->GetInstanceId())
                 {
@@ -247,19 +247,19 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
     if (entry->IsDungeon() && (!player->GetGroup() || (player->GetGroup() && !player->GetGroup()->isLFGGroup())))
     {
         uint32 instaceIdToCheck = 0;
-        if (InstanceSave* save = player->GetInstanceSave(mapid, entry->IsRaid()))
+        if (InstanceSave* save = player->GetInstanceSave(mapid,  entry->IsRaid()))
             instaceIdToCheck = save->GetInstanceId();
 
         // instanceId can never be 0 - will not be found
         if (!player->CheckInstanceCount(instaceIdToCheck))
         {
-            player->SendTransferAborted(mapid, TRANSFER_ABORT_TOO_MANY_INSTANCES);
+            player->SendTransferAborted(mapid,  TRANSFER_ABORT_TOO_MANY_INSTANCES);
             return false;
         }
     }
 
     //Other requirements
-    return player->Satisfy(sObjectMgr->GetAccessRequirement(mapid, targetDifficulty), mapid, true);
+    return player->Satisfy(sObjectMgr->GetAccessRequirement(mapid,  targetDifficulty),  mapid,  true);
 }
 
 void MapManager::Update(uint32 diff)
@@ -272,7 +272,7 @@ void MapManager::Update(uint32 diff)
     for (; iter != i_maps.end(); ++iter)
     {
         if (m_updater.activated())
-            m_updater.schedule_update(*iter->second, uint32(i_timer.GetCurrent()));
+            m_updater.schedule_update(*iter->second,  uint32(i_timer.GetCurrent()));
         else
             iter->second->Update(uint32(i_timer.GetCurrent()));
     }
@@ -293,17 +293,17 @@ void MapManager::DoDelayedMovesAndRemoves()
 {
 }
 
-bool MapManager::ExistMapAndVMap(uint32 mapid, float x, float y)
+bool MapManager::ExistMapAndVMap(uint32 mapid,  float x,  float y)
 {
-    GridPair p = Trinity::ComputeGridPair(x, y);
+    GridPair p = Trinity::ComputeGridPair(x,  y);
 
     int gx=63-p.x_coord;
     int gy=63-p.y_coord;
 
-    return Map::ExistMap(mapid, gx, gy) && Map::ExistVMap(mapid, gx, gy);
+    return Map::ExistMap(mapid,  gx,  gy) && Map::ExistVMap(mapid,  gx,  gy);
 }
 
-bool MapManager::IsValidMAP(uint32 mapid, bool startUp)
+bool MapManager::IsValidMAP(uint32 mapid,  bool startUp)
 {
     MapEntry const* mEntry = sMapStore.LookupEntry(mapid);
 
@@ -338,7 +338,7 @@ void MapManager::UnloadAll()
 
 uint32 MapManager::GetNumInstances()
 {
-    ACE_GUARD_RETURN(ACE_Thread_Mutex, Guard, Lock, 0);
+    ACE_GUARD_RETURN(ACE_Thread_Mutex,  Guard,  Lock,  0);
 
     uint32 ret = 0;
     for (MapMapType::iterator itr = i_maps.begin(); itr != i_maps.end(); ++itr)
@@ -355,7 +355,7 @@ uint32 MapManager::GetNumInstances()
 
 uint32 MapManager::GetNumPlayersInInstances()
 {
-    ACE_GUARD_RETURN(ACE_Thread_Mutex, Guard, Lock, 0);
+    ACE_GUARD_RETURN(ACE_Thread_Mutex,  Guard,  Lock,  0);
 
     uint32 ret = 0;
     for (MapMapType::iterator itr = i_maps.begin(); itr != i_maps.end(); ++itr)
@@ -407,7 +407,7 @@ uint32 MapManager::GenerateInstanceId()
 
     if (newInstanceId == _nextInstanceId)
     {
-        sLog->outError("Instance ID overflow!! Can't continue, shutting down server. ");
+        sLog->outError("Instance ID overflow!! Can't continue,  shutting down server. ");
         World::StopNow(ERROR_EXIT_CODE);
     }
 
@@ -430,7 +430,7 @@ uint32 MapManager::GenerateInstanceId()
 
 void MapManager::FreeInstanceId(uint32 instanceId)
 {
-    // If freed instance id is lower than the next id available for new instances, use the freed one instead
+    // If freed instance id is lower than the next id available for new instances,  use the freed one instead
     if (instanceId < _nextInstanceId)
         SetNextInstanceId(instanceId);
 

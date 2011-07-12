@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -30,13 +30,13 @@
 #include "World.h"
 #include "zlib.h"
 
-UpdateData::UpdateData() : m_map(0), m_blockCount(0)
+UpdateData::UpdateData() : m_map(0),  m_blockCount(0)
 {
 }
 
 void UpdateData::AddOutOfRangeGUID(std::set<uint64>& guids)
 {
-    m_outOfRangeGUIDs.insert(guids.begin(),guids.end());
+    m_outOfRangeGUIDs.insert(guids.begin(), guids.end());
 }
 
 void UpdateData::AddOutOfRangeGUID(const uint64 &guid)
@@ -50,7 +50,7 @@ void UpdateData::AddUpdateBlock(const ByteBuffer &block)
     ++m_blockCount;
 }
 
-void UpdateData::Compress(void* dst, uint32 *dst_size, void* src, int src_size)
+void UpdateData::Compress(void* dst,  uint32 *dst_size,  void* src,  int src_size)
 {
     z_stream c_stream;
 
@@ -59,10 +59,10 @@ void UpdateData::Compress(void* dst, uint32 *dst_size, void* src, int src_size)
     c_stream.opaque = (voidpf)0;
 
     // default Z_BEST_SPEED (1)
-    int z_res = deflateInit(&c_stream, sWorld->getIntConfig(CONFIG_COMPRESSION));
+    int z_res = deflateInit(&c_stream,  sWorld->getIntConfig(CONFIG_COMPRESSION));
     if (z_res != Z_OK)
     {
-        sLog->outError("Can't compress update packet (zlib: deflateInit) Error code: %i (%s)",z_res,zError(z_res));
+        sLog->outError("Can't compress update packet (zlib: deflateInit) Error code: %i (%s)", z_res, zError(z_res));
         *dst_size = 0;
         return;
     }
@@ -72,10 +72,10 @@ void UpdateData::Compress(void* dst, uint32 *dst_size, void* src, int src_size)
     c_stream.next_in = (Bytef*)src;
     c_stream.avail_in = (uInt)src_size;
 
-    z_res = deflate(&c_stream, Z_NO_FLUSH);
+    z_res = deflate(&c_stream,  Z_NO_FLUSH);
     if (z_res != Z_OK)
     {
-        sLog->outError("Can't compress update packet (zlib: deflate) Error code: %i (%s)",z_res,zError(z_res));
+        sLog->outError("Can't compress update packet (zlib: deflate) Error code: %i (%s)", z_res, zError(z_res));
         *dst_size = 0;
         return;
     }
@@ -87,10 +87,10 @@ void UpdateData::Compress(void* dst, uint32 *dst_size, void* src, int src_size)
         return;
     }
 
-    z_res = deflate(&c_stream, Z_FINISH);
+    z_res = deflate(&c_stream,  Z_FINISH);
     if (z_res != Z_STREAM_END)
     {
-        sLog->outError("Can't compress update packet (zlib: deflate should report Z_STREAM_END instead %i (%s)",z_res,zError(z_res));
+        sLog->outError("Can't compress update packet (zlib: deflate should report Z_STREAM_END instead %i (%s)", z_res, zError(z_res));
         *dst_size = 0;
         return;
     }
@@ -98,7 +98,7 @@ void UpdateData::Compress(void* dst, uint32 *dst_size, void* src, int src_size)
     z_res = deflateEnd(&c_stream);
     if (z_res != Z_OK)
     {
-        sLog->outError("Can't compress update packet (zlib: deflateEnd) Error code: %i (%s)",z_res,zError(z_res));
+        sLog->outError("Can't compress update packet (zlib: deflateEnd) Error code: %i (%s)", z_res, zError(z_res));
         *dst_size = 0;
         return;
     }
@@ -135,8 +135,8 @@ bool UpdateData::BuildPacket(WorldPacket *packet)
         uint32 destsize = compressBound(pSize);
         packet->resize(destsize + sizeof(uint32));
 
-        packet->put<uint32>(0, pSize);
-        Compress(const_cast<uint8*>(packet->contents()) + sizeof(uint32), &destsize, (void*)buf.contents(), pSize);
+        packet->put<uint32>(0,  pSize);
+        Compress(const_cast<uint8*>(packet->contents()) + sizeof(uint32),  &destsize,  (void*)buf.contents(),  pSize);
         if (destsize == 0)
             return false;
 

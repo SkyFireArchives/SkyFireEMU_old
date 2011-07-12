@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -34,12 +34,12 @@ void PointMovementGenerator<T>::Initialize(T &unit)
 {
     unit.StopMoving();
     Traveller<T> traveller(unit);
-    // knockback effect has UNIT_STAT_JUMPING set,so if here we disable sentmonstermove there will be creature position sync problem between client and server
-    i_destinationHolder.SetDestination(traveller,i_x,i_y,i_z, true /* !unit.HasUnitState(UNIT_STAT_JUMPING)*/);
+    // knockback effect has UNIT_STAT_JUMPING set, so if here we disable sentmonstermove there will be creature position sync problem between client and server
+    i_destinationHolder.SetDestination(traveller, i_x, i_y, i_z,  true /* !unit.HasUnitState(UNIT_STAT_JUMPING)*/);
 }
 
 template<class T>
-bool PointMovementGenerator<T>::Update(T &unit, const uint32 &diff)
+bool PointMovementGenerator<T>::Update(T &unit,  const uint32 &diff)
 {
     if (!&unit)
         return false;
@@ -54,7 +54,7 @@ bool PointMovementGenerator<T>::Update(T &unit, const uint32 &diff)
 
     Traveller<T> traveller(unit);
 
-    i_destinationHolder.UpdateTraveller(traveller, diff);
+    i_destinationHolder.UpdateTraveller(traveller,  diff);
 
     if (i_destinationHolder.HasArrived())
     {
@@ -87,16 +87,16 @@ template <> void PointMovementGenerator<Creature>::MovementInform(Creature &unit
         unit.setDeathState(JUST_DIED);
         unit.SetFlying(true);
     }
-    unit.AI()->MovementInform(POINT_MOTION_TYPE, id);
+    unit.AI()->MovementInform(POINT_MOTION_TYPE,  id);
 }
 
 template void PointMovementGenerator<Player>::Initialize(Player&);
-template bool PointMovementGenerator<Player>::Update(Player &, const uint32 &diff);
+template bool PointMovementGenerator<Player>::Update(Player &,  const uint32 &diff);
 template void PointMovementGenerator<Player>::MovementInform(Player&);
 template void PointMovementGenerator<Player>::Finalize(Player&);
 
 template void PointMovementGenerator<Creature>::Initialize(Creature&);
-template bool PointMovementGenerator<Creature>::Update(Creature&, const uint32 &diff);
+template bool PointMovementGenerator<Creature>::Update(Creature&,  const uint32 &diff);
 template void PointMovementGenerator<Creature>::Finalize(Creature&);
 
 void AssistanceMovementGenerator::Finalize(Unit &unit)

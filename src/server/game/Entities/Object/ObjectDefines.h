@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef TRINITY_OBJECTDEFINES_H
@@ -26,30 +26,30 @@
 #include "Define.h"
 
 // used for creating values for respawn for example
-#define MAKE_PAIR64(l, h)  uint64(uint32(l) | (uint64(h) << 32))
+#define MAKE_PAIR64(l,  h)  uint64(uint32(l) | (uint64(h) << 32))
 #define PAIR64_HIPART(x)   (uint32)((uint64(x) >> 32) & UI64LIT(0x00000000FFFFFFFF))
 #define PAIR64_LOPART(x)   (uint32)(uint64(x)         & UI64LIT(0x00000000FFFFFFFF))
 
-#define MAKE_PAIR16(l, h)  uint16(uint8(l) | (uint16(h) << 8))
-#define MAKE_PAIR32(l, h)  uint32(uint16(l) | (uint32(h) << 16))
+#define MAKE_PAIR16(l,  h)  uint16(uint8(l) | (uint16(h) << 8))
+#define MAKE_PAIR32(l,  h)  uint32(uint16(l) | (uint32(h) << 16))
 #define PAIR32_HIPART(x)   (uint16)((uint32(x) >> 16) & 0x0000FFFF)
 #define PAIR32_LOPART(x)   (uint16)(uint32(x)         & 0x0000FFFF)
 
 enum HighGuid
 {
-    HIGHGUID_ITEM           = 0x4000,                       // blizz 4000
-    HIGHGUID_CONTAINER      = 0x4000,                       // blizz 4000
-    HIGHGUID_PLAYER         = 0x0000,                       // blizz 0000
-    HIGHGUID_GAMEOBJECT     = 0xF110,                       // blizz F110
-    HIGHGUID_TRANSPORT      = 0xF120,                       // blizz F120 (for GAMEOBJECT_TYPE_TRANSPORT)
-    HIGHGUID_UNIT           = 0xF130,                       // blizz F130
-    HIGHGUID_PET            = 0xF140,                       // blizz F140
-    HIGHGUID_VEHICLE        = 0xF150,                       // blizz F550
-    HIGHGUID_DYNAMICOBJECT  = 0xF100,                       // blizz F100
-    HIGHGUID_CORPSE         = 0xF101,                       // blizz F100
-    HIGHGUID_MO_TRANSPORT   = 0x1FC0,                       // blizz 1FC0 (for GAMEOBJECT_TYPE_MO_TRANSPORT)
-    HIGHGUID_GROUP          = 0x1F50,
-    HIGHGUID_GUILD          = 0x1FF6,
+    HIGHGUID_ITEM           = 0x4000,                        // blizz 4000
+    HIGHGUID_CONTAINER      = 0x4000,                        // blizz 4000
+    HIGHGUID_PLAYER         = 0x0000,                        // blizz 0000
+    HIGHGUID_GAMEOBJECT     = 0xF110,                        // blizz F110
+    HIGHGUID_TRANSPORT      = 0xF120,                        // blizz F120 (for GAMEOBJECT_TYPE_TRANSPORT)
+    HIGHGUID_UNIT           = 0xF130,                        // blizz F130
+    HIGHGUID_PET            = 0xF140,                        // blizz F140
+    HIGHGUID_VEHICLE        = 0xF150,                        // blizz F550
+    HIGHGUID_DYNAMICOBJECT  = 0xF100,                        // blizz F100
+    HIGHGUID_CORPSE         = 0xF101,                        // blizz F100
+    HIGHGUID_MO_TRANSPORT   = 0x1FC0,                        // blizz 1FC0 (for GAMEOBJECT_TYPE_MO_TRANSPORT)
+    HIGHGUID_GROUP          = 0x1F50, 
+    HIGHGUID_GUILD          = 0x1FF6, 
 };
 
 #define IS_EMPTY_GUID(Guid)          (Guid == 0)
@@ -74,7 +74,7 @@ enum HighGuid
 // l - OBJECT_FIELD_GUID
 // e - OBJECT_FIELD_ENTRY for GO (except GAMEOBJECT_TYPE_MO_TRANSPORT) and creatures or UNIT_FIELD_PETNUMBER for pets
 // h - OBJECT_FIELD_GUID + 1
-#define MAKE_NEW_GUID(l, e, h)   uint64(uint64(l) | (uint64(e) << 24) | (uint64(h) << 48))
+#define MAKE_NEW_GUID(l,  e,  h)   uint64(uint64(l) | (uint64(e) << 24) | (uint64(h) << 48))
 
 #define GUID_HIPART(x)   (uint32)((uint64(x) >> 48) & 0x0000FFFF)
 

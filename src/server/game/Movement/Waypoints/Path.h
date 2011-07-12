@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef TRINITYCORE_PATH_H
@@ -28,9 +28,9 @@
 
 struct SimplePathNode
 {
-    float x, y, z;
+    float x,  y,  z;
 };
-template<typename PathElem, typename PathNode = PathElem>
+template<typename PathElem,  typename PathNode = PathElem>
 
 class Path
 {
@@ -41,7 +41,7 @@ class Path
         void clear() { i_nodes.clear(); }
         void erase(uint32 idx) { i_nodes.erase(i_nodes.begin()+idx); }
 
-        float GetTotalLength(uint32 start, uint32 end) const
+        float GetTotalLength(uint32 start,  uint32 end) const
         {
             float len = 0.0f;
             for (uint32 idx=start+1; idx < end; ++idx)
@@ -56,11 +56,11 @@ class Path
             return len;
         }
 
-        float GetTotalLength() const { return GetTotalLength(0,size()); }
+        float GetTotalLength() const { return GetTotalLength(0, size()); }
 
-        float GetPassedLength(uint32 curnode, float x, float y, float z)
+        float GetPassedLength(uint32 curnode,  float x,  float y,  float z)
         {
-            float len = GetTotalLength(0,curnode);
+            float len = GetTotalLength(0, curnode);
 
             if (curnode > 0)
             {
@@ -77,7 +77,7 @@ class Path
         PathNode& operator[](size_t idx) { return i_nodes[idx]; }
         PathNode const& operator[](size_t idx) const { return i_nodes[idx]; }
 
-        void set(size_t idx, PathElem elem) { i_nodes[idx] = elem; }
+        void set(size_t idx,  PathElem elem) { i_nodes[idx] = elem; }
 
     protected:
         std::vector<PathElem> i_nodes;

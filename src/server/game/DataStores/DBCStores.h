@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef TRINITY_DBCSTORES_H
@@ -35,41 +35,41 @@ SimpleFactionsList const* GetFactionTeamList(uint32 faction);
 const char* GetPetName(uint32 petfamily);
 uint32 GetTalentSpellCost(uint32 spellId);
 TalentSpellPos const* GetTalentSpellPos(uint32 spellId);
-SpellEffectEntry const* GetSpellEffectEntry(uint32 spellId, uint32 effect);
+SpellEffectEntry const* GetSpellEffectEntry(uint32 spellId,  uint32 effect);
 
 int32 GetAreaFlagByAreaID(uint32 area_id);                  // -1 if not found
 AreaTableEntry const* GetAreaEntryByAreaID(uint32 area_id);
-AreaTableEntry const* GetAreaEntryByAreaFlagAndMap(uint32 area_flag,uint32 map_id);
+AreaTableEntry const* GetAreaEntryByAreaFlagAndMap(uint32 area_flag, uint32 map_id);
 uint32 GetAreaFlagByMapId(uint32 mapid);
 
-WMOAreaTableEntry const* GetWMOAreaTableEntryByTripple(int32 rootid, int32 adtid, int32 groupid);
+WMOAreaTableEntry const* GetWMOAreaTableEntryByTripple(int32 rootid,  int32 adtid,  int32 groupid);
 
-uint32 GetVirtualMapForMapAndZone(uint32 mapid, uint32 zoneId);
+uint32 GetVirtualMapForMapAndZone(uint32 mapid,  uint32 zoneId);
 
-float GetGtSpellScalingValue(int8 class_, uint8 level);
+float GetGtSpellScalingValue(int8 class_,  uint8 level);
 
 enum ContentLevels
 {
-    CONTENT_1_60 = 0,
-    CONTENT_61_70,
-    CONTENT_71_80,
+    CONTENT_1_60 = 0, 
+    CONTENT_61_70, 
+    CONTENT_71_80, 
     CONTENT_81_85
 };
-ContentLevels GetContentLevelsForMapAndZone(uint32 mapid, uint32 zoneId);
+ContentLevels GetContentLevelsForMapAndZone(uint32 mapid,  uint32 zoneId);
 
-bool IsTotemCategoryCompatiableWith(uint32 itemTotemCategoryId, uint32 requiredTotemCategoryId);
+bool IsTotemCategoryCompatiableWith(uint32 itemTotemCategoryId,  uint32 requiredTotemCategoryId);
 
-void Zone2MapCoordinates(float &x, float &y, uint32 zone);
-void Map2ZoneCoordinates(float &x, float &y, uint32 zone);
+void Zone2MapCoordinates(float &x,  float &y,  uint32 zone);
+void Map2ZoneCoordinates(float &x,  float &y,  uint32 zone);
 
-typedef std::map<uint32/*pair32(map,diff)*/,MapDifficulty> MapDifficultyMap;
-MapDifficulty const* GetMapDifficultyData(uint32 mapId, Difficulty difficulty);
-MapDifficulty const* GetDownscaledMapDifficultyData(uint32 mapId, Difficulty &difficulty);
+typedef std::map<uint32/*pair32(map, diff)*/, MapDifficulty> MapDifficultyMap;
+MapDifficulty const* GetMapDifficultyData(uint32 mapId,  Difficulty difficulty);
+MapDifficulty const* GetDownscaledMapDifficultyData(uint32 mapId,  Difficulty &difficulty);
 
 uint32 const* /*[MAX_TALENT_TABS]*/ GetTalentTabPages(uint8 cls);
 
-PvPDifficultyEntry const* GetBattlegroundBracketByLevel(uint32 mapid, uint32 level);
-PvPDifficultyEntry const* GetBattlegroundBracketById(uint32 mapid, BattlegroundBracketId id);
+PvPDifficultyEntry const* GetBattlegroundBracketByLevel(uint32 mapid,  uint32 level);
+PvPDifficultyEntry const* GetBattlegroundBracketById(uint32 mapid,  BattlegroundBracketId id);
 
 extern DBCStorage <AchievementEntry>             sAchievementStore;
 extern DBCStorage <AchievementCriteriaEntry>     sAchievementCriteriaStore;

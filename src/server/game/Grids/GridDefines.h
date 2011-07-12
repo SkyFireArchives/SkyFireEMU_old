@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef TRINITY_GRIDDEFINES_H
@@ -60,8 +60,8 @@ class Player;
 #define MAP_HALFSIZE            (MAP_SIZE/2)
 
 // Creature used instead pet to simplify *::Visit templates (not required duplicate code for Creature->Pet case)
-typedef TYPELIST_4(Player, Creature/*pets*/, Corpse/*resurrectable*/, DynamicObject/*farsight target*/) AllWorldObjectTypes;
-typedef TYPELIST_4(GameObject, Creature/*except pets*/, DynamicObject, Corpse/*Bones*/) AllGridObjectTypes;
+typedef TYPELIST_4(Player,  Creature/*pets*/,  Corpse/*resurrectable*/,  DynamicObject/*farsight target*/) AllWorldObjectTypes;
+typedef TYPELIST_4(GameObject,  Creature/*except pets*/,  DynamicObject,  Corpse/*Bones*/) AllGridObjectTypes;
 
 typedef GridRefManager<Corpse>          CorpseMapType;
 typedef GridRefManager<Creature>        CreatureMapType;
@@ -69,8 +69,8 @@ typedef GridRefManager<DynamicObject>   DynamicObjectMapType;
 typedef GridRefManager<GameObject>      GameObjectMapType;
 typedef GridRefManager<Player>          PlayerMapType;
 
-typedef Grid<Player, AllWorldObjectTypes,AllGridObjectTypes> GridType;
-typedef NGrid<MAX_NUMBER_OF_CELLS, Player, AllWorldObjectTypes, AllGridObjectTypes> NGridType;
+typedef Grid<Player,  AllWorldObjectTypes, AllGridObjectTypes> GridType;
+typedef NGrid<MAX_NUMBER_OF_CELLS,  Player,  AllWorldObjectTypes,  AllGridObjectTypes> NGridType;
 
 typedef TypeMapContainer<AllGridObjectTypes> GridTypeMapContainer;
 typedef TypeMapContainer<AllWorldObjectTypes> WorldTypeMapContainer;
@@ -78,8 +78,8 @@ typedef TypeMapContainer<AllWorldObjectTypes> WorldTypeMapContainer;
 template<const unsigned int LIMIT>
 struct CoordPair
 {
-    CoordPair(uint32 x=0, uint32 y=0) : x_coord(x), y_coord(y) {}
-    CoordPair(const CoordPair<LIMIT> &obj) : x_coord(obj.x_coord), y_coord(obj.y_coord) {}
+    CoordPair(uint32 x=0,  uint32 y=0) : x_coord(x),  y_coord(y) {}
+    CoordPair(const CoordPair<LIMIT> &obj) : x_coord(obj.x_coord),  y_coord(obj.y_coord) {}
     bool operator == (const CoordPair<LIMIT> &obj) const { return (obj.x_coord == x_coord && obj.y_coord == y_coord); }
     bool operator != (const CoordPair<LIMIT> &obj) const { return !operator == (obj); }
     CoordPair<LIMIT>& operator=(const CoordPair<LIMIT> &obj)
@@ -130,8 +130,8 @@ typedef CoordPair<TOTAL_NUMBER_OF_CELLS_PER_MAP> CellPair;
 
 namespace Trinity
 {
-    template<class RET_TYPE, int CENTER_VAL>
-        inline RET_TYPE Compute(float x, float y, float center_offset, float size)
+    template<class RET_TYPE,  int CENTER_VAL>
+        inline RET_TYPE Compute(float x,  float y,  float center_offset,  float size)
     {
         // calculate and store temporary values in double format for having same result as same mySQL calculations
         double x_offset = (double(x) - center_offset)/size;
@@ -139,20 +139,20 @@ namespace Trinity
 
         int x_val = int(x_offset+CENTER_VAL + 0.5);
         int y_val = int(y_offset+CENTER_VAL + 0.5);
-        return RET_TYPE(x_val, y_val);
+        return RET_TYPE(x_val,  y_val);
     }
 
-    inline GridPair ComputeGridPair(float x, float y)
+    inline GridPair ComputeGridPair(float x,  float y)
     {
-        return Compute<GridPair, CENTER_GRID_ID>(x, y, CENTER_GRID_OFFSET, SIZE_OF_GRIDS);
+        return Compute<GridPair,  CENTER_GRID_ID>(x,  y,  CENTER_GRID_OFFSET,  SIZE_OF_GRIDS);
     }
 
-    inline CellPair ComputeCellPair(float x, float y)
+    inline CellPair ComputeCellPair(float x,  float y)
     {
-        return Compute<CellPair, CENTER_GRID_CELL_ID>(x, y, CENTER_GRID_CELL_OFFSET, SIZE_OF_GRID_CELL);
+        return Compute<CellPair,  CENTER_GRID_CELL_ID>(x,  y,  CENTER_GRID_CELL_OFFSET,  SIZE_OF_GRID_CELL);
     }
 
-    inline CellPair ComputeCellPair(float x, float y, float &x_off, float &y_off)
+    inline CellPair ComputeCellPair(float x,  float y,  float &x_off,  float &y_off)
     {
         double x_offset = (double(x) - CENTER_GRID_CELL_OFFSET)/SIZE_OF_GRID_CELL;
         double y_offset = (double(y) - CENTER_GRID_CELL_OFFSET)/SIZE_OF_GRID_CELL;
@@ -161,7 +161,7 @@ namespace Trinity
         int y_val = int(y_offset + CENTER_GRID_CELL_ID + 0.5);
         x_off = (float(x_offset) - x_val + CENTER_GRID_CELL_ID) * SIZE_OF_GRID_CELL;
         y_off = (float(y_offset) - y_val + CENTER_GRID_CELL_ID) * SIZE_OF_GRID_CELL;
-        return CellPair(x_val, y_val);
+        return CellPair(x_val,  y_val);
     }
 
     inline void NormalizeMapCoord(float &c)
@@ -177,19 +177,19 @@ namespace Trinity
         return finite(c) && (std::fabs(c) <= MAP_HALFSIZE - 0.5);
     }
 
-    inline bool IsValidMapCoord(float x, float y)
+    inline bool IsValidMapCoord(float x,  float y)
     {
         return IsValidMapCoord(x) && IsValidMapCoord(y);
     }
 
-    inline bool IsValidMapCoord(float x, float y, float z)
+    inline bool IsValidMapCoord(float x,  float y,  float z)
     {
-        return IsValidMapCoord(x,y) && finite(z);
+        return IsValidMapCoord(x, y) && finite(z);
     }
 
-    inline bool IsValidMapCoord(float x, float y, float z, float o)
+    inline bool IsValidMapCoord(float x,  float y,  float z,  float o)
     {
-        return IsValidMapCoord(x,y,z) && finite(o);
+        return IsValidMapCoord(x, y, z) && finite(o);
     }
 }
 #endif

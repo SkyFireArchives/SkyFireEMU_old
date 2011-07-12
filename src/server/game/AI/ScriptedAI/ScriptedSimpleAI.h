@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef SC_SIMPLEAI_H
@@ -25,16 +25,16 @@
 
 enum CastTarget
 {
-    CAST_SELF = 0,                  //Self cast
-    CAST_HOSTILE_TARGET,            //Our current target (ie: highest aggro)
-    CAST_HOSTILE_SECOND_AGGRO,      //Second highest aggro (generaly used for cleaves and some special attacks)
-    CAST_HOSTILE_LAST_AGGRO,        //Dead last on aggro (no idea what this could be used for)
-    CAST_HOSTILE_RANDOM,            //Just any random target on our threat list
-    CAST_FRIENDLY_RANDOM,           //NOT YET IMPLEMENTED
+    CAST_SELF = 0,                   //Self cast
+    CAST_HOSTILE_TARGET,             //Our current target (ie: highest aggro)
+    CAST_HOSTILE_SECOND_AGGRO,       //Second highest aggro (generaly used for cleaves and some special attacks)
+    CAST_HOSTILE_LAST_AGGRO,         //Dead last on aggro (no idea what this could be used for)
+    CAST_HOSTILE_RANDOM,             //Just any random target on our threat list
+    CAST_FRIENDLY_RANDOM,            //NOT YET IMPLEMENTED
 
     //Special cases
-    CAST_KILLEDUNIT_VICTIM,         //Only works within KilledUnit function
-    CAST_JUSTDIED_KILLER,           //Only works within JustDied function
+    CAST_KILLEDUNIT_VICTIM,          //Only works within KilledUnit function
+    CAST_JUSTDIED_KILLER,            //Only works within JustDied function
 };
 
 #define MAX_SIMPLEAI_SPELLS 10
@@ -49,7 +49,7 @@ struct SimpleAI : public ScriptedAI
 
     void KilledUnit(Unit * /*victim*/);
 
-    void DamageTaken(Unit *killer, uint32 &damage);
+    void DamageTaken(Unit *killer,  uint32 &damage);
 
     void UpdateAI(const uint32 diff);
 

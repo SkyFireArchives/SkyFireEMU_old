@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -36,7 +36,7 @@ void WorldSession::HandleCalendarGetCalendar(WorldPacket & /*recv_data*/)
 
     time_t cur_time = time(NULL);
 
-    WorldPacket data(SMSG_CALENDAR_SEND_CALENDAR,4+4*0+4+4*0+4+4);
+    WorldPacket data(SMSG_CALENDAR_SEND_CALENDAR, 4+4*0+4+4*0+4+4);
 
     data << uint32(0);                                      // invite count
     /*
@@ -44,7 +44,7 @@ void WorldSession::HandleCalendarGetCalendar(WorldPacket & /*recv_data*/)
     {
         uint64 inviteId;
         uint64 unkGuid0;
-        uint8 unk1, unk2, unk3;
+        uint8 unk1,  unk2,  unk3;
         uint64 creatorGuid;
     }
     */
@@ -86,7 +86,7 @@ void WorldSession::HandleCalendarGetCalendar(WorldPacket & /*recv_data*/)
         }
     }
 
-    data.put<uint32>(p_counter, counter);
+    data.put<uint32>(p_counter,  counter);
 
     data << uint32(1135753200);                             // unk (28.12.2005 12:00)
 
@@ -108,13 +108,13 @@ void WorldSession::HandleCalendarGetCalendar(WorldPacket & /*recv_data*/)
         ++counter;
     }
 
-    data.put<uint32>(p_counter, counter);
+    data.put<uint32>(p_counter,  counter);
 
     data << uint32(0);                                      // holiday count?
     /*
     for (;;)
     {
-        uint32 unk5, unk6, unk7, unk8, unk9;
+        uint32 unk5,  unk6,  unk7,  unk8,  unk9;
         for (uint32 j = 0; j < 26; ++j)
         {
             uint32 unk10;
@@ -165,12 +165,12 @@ void WorldSession::HandleCalendarAddEvent(WorldPacket &recv_data)
     recv_data.hexlike();
     recv_data.rpos(recv_data.wpos());                       // set to end to avoid warnings spam
 
-    //std::string unk1, unk2;
+    //std::string unk1,  unk2;
     //recv_data >> (std::string)unk1;
     //recv_data >> (std::string)unk2;
 
-    //uint8   unk3, unk4;
-    //uint32  unk5, unk6, unk7, unk8, unk9, count = 0;
+    //uint8   unk3,  unk4;
+    //uint32  unk5,  unk6,  unk7,  unk8,  unk9,  count = 0;
     //recv_data >> (uint8)unk3;
     //recv_data >> (uint8)unk4;
     //recv_data >> (uint32)unk5;
@@ -183,7 +183,7 @@ void WorldSession::HandleCalendarAddEvent(WorldPacket &recv_data)
     //    recv_data >> (uint32)count;
     //    if (count)
     //    {
-    //        uint8 unk12,unk13;
+    //        uint8 unk12, unk13;
     //        uint64 guid;
     //        for (int i=0; i<count; i++)
     //        {
@@ -317,7 +317,7 @@ void WorldSession::HandleCalendarGetNumPending(WorldPacket & /*recv_data*/)
 {
     sLog->outDebug("WORLD: CMSG_CALENDAR_GET_NUM_PENDING");  // empty
 
-    WorldPacket data(SMSG_CALENDAR_SEND_NUM_PENDING, 4);
-    data << uint32(0);                                      // 0 - no pending invites, 1 - some pending invites
+    WorldPacket data(SMSG_CALENDAR_SEND_NUM_PENDING,  4);
+    data << uint32(0);                                      // 0 - no pending invites,  1 - some pending invites
     SendPacket(&data);
 }

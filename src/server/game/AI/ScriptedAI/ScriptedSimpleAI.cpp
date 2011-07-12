@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -59,7 +59,7 @@ SimpleAI::SimpleAI(Creature *c) : ScriptedAI(c)
     Kill_Spell = 0;
     Kill_Target_Type = 0;
 
-    memset(Spell,0,sizeof(Spell));
+    memset(Spell, 0, sizeof(Spell));
 
     EnterEvadeMode();
 }
@@ -102,28 +102,28 @@ void SimpleAI::EnterCombat(Unit *who)
                 Spell_Timer[9] = Spell[9].First_Cast;
             else Spell_Timer[9] = 1000;
 
-            uint8 random_text = urand(0,2);
+            uint8 random_text = urand(0, 2);
 
             //Random text
             if (Aggro_TextId[random_text])
-                DoScriptText(Aggro_TextId[random_text], me, who);
+                DoScriptText(Aggro_TextId[random_text],  me,  who);
 
             //Random sound
             if (Aggro_Sound[random_text])
-                DoPlaySoundToSet(me, Aggro_Sound[random_text]);
+                DoPlaySoundToSet(me,  Aggro_Sound[random_text]);
 }
 
 void SimpleAI::KilledUnit(Unit *victim)
 {
-    uint8 random_text = urand(0,2);
+    uint8 random_text = urand(0, 2);
 
     //Random yell
     if (Kill_TextId[random_text])
-        DoScriptText(Kill_TextId[random_text], me, victim);
+        DoScriptText(Kill_TextId[random_text],  me,  victim);
 
     //Random sound
     if (Kill_Sound[random_text])
-        DoPlaySoundToSet(me, Kill_Sound[random_text]);
+        DoPlaySoundToSet(me,  Kill_Sound[random_text]);
 
     if (!Kill_Spell)
         return;
@@ -139,39 +139,39 @@ void SimpleAI::KilledUnit(Unit *victim)
         pTarget = me->getVictim();
         break;
     case CAST_HOSTILE_SECOND_AGGRO:
-        pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO,1);
+        pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 1);
         break;
     case CAST_HOSTILE_LAST_AGGRO:
-        pTarget = SelectUnit(SELECT_TARGET_BOTTOMAGGRO,0);
+        pTarget = SelectUnit(SELECT_TARGET_BOTTOMAGGRO, 0);
         break;
     case CAST_HOSTILE_RANDOM:
-        pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+        pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
         break;
     case CAST_KILLEDUNIT_VICTIM:
         pTarget = victim;
         break;
     }
 
-    //Target is ok, cast a spell on it
+    //Target is ok,  cast a spell on it
     if (pTarget)
-        DoCast(pTarget, Kill_Spell);
+        DoCast(pTarget,  Kill_Spell);
 }
 
-void SimpleAI::DamageTaken(Unit *killer, uint32 &damage)
+void SimpleAI::DamageTaken(Unit *killer,  uint32 &damage)
 {
     //Return if damage taken won't kill us
     if (me->GetHealth() > damage)
         return;
 
-    uint8 random_text = urand(0,2);
+    uint8 random_text = urand(0, 2);
 
     //Random yell
     if (Death_TextId[random_text])
-        DoScriptText(Death_TextId[random_text], me, killer);
+        DoScriptText(Death_TextId[random_text],  me,  killer);
 
     //Random sound
     if (Death_Sound[random_text])
-        DoPlaySoundToSet(me, Death_Sound[random_text]);
+        DoPlaySoundToSet(me,  Death_Sound[random_text]);
 
     if (!Death_Spell)
         return;
@@ -187,22 +187,22 @@ void SimpleAI::DamageTaken(Unit *killer, uint32 &damage)
         pTarget = me->getVictim();
         break;
     case CAST_HOSTILE_SECOND_AGGRO:
-        pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO,1);
+        pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 1);
         break;
     case CAST_HOSTILE_LAST_AGGRO:
-        pTarget = SelectUnit(SELECT_TARGET_BOTTOMAGGRO,0);
+        pTarget = SelectUnit(SELECT_TARGET_BOTTOMAGGRO, 0);
         break;
     case CAST_HOSTILE_RANDOM:
-        pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+        pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
         break;
     case CAST_JUSTDIED_KILLER:
         pTarget = killer;
         break;
     }
 
-    //Target is ok, cast a spell on it
+    //Target is ok,  cast a spell on it
     if (pTarget)
-        DoCast(pTarget, Death_Spell);
+        DoCast(pTarget,  Death_Spell);
 }
 
 void SimpleAI::UpdateAI(const uint32 diff)
@@ -238,35 +238,35 @@ void SimpleAI::UpdateAI(const uint32 diff)
                     pTarget = me->getVictim();
                     break;
                 case CAST_HOSTILE_SECOND_AGGRO:
-                    pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO,1);
+                    pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 1);
                     break;
                 case CAST_HOSTILE_LAST_AGGRO:
-                    pTarget = SelectUnit(SELECT_TARGET_BOTTOMAGGRO,0);
+                    pTarget = SelectUnit(SELECT_TARGET_BOTTOMAGGRO, 0);
                     break;
                 case CAST_HOSTILE_RANDOM:
-                    pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                    pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                     break;
                 }
 
-                //Target is ok, cast a spell on it and then do our random yell
+                //Target is ok,  cast a spell on it and then do our random yell
                 if (pTarget)
                 {
                     if (me->IsNonMeleeSpellCasted(false))
                         me->InterruptNonMeleeSpells(false);
 
-                    DoCast(pTarget, Spell[i].Spell_Id);
+                    DoCast(pTarget,  Spell[i].Spell_Id);
 
                     //Yell and sound use the same number so that you can make
                     //the Creature yell with the correct sound effect attached
-                    uint8 random_text = urand(0,2);
+                    uint8 random_text = urand(0, 2);
 
                     //Random yell
                     if (Spell[i].TextId[random_text])
-                        DoScriptText(Spell[i].TextId[random_text], me, pTarget);
+                        DoScriptText(Spell[i].TextId[random_text],  me,  pTarget);
 
                     //Random sound
                     if (Spell[i].Text_Sound[random_text])
-                        DoPlaySoundToSet(me, Spell[i].Text_Sound[random_text]);
+                        DoPlaySoundToSet(me,  Spell[i].Text_Sound[random_text]);
                 }
 
             }

@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -36,15 +36,15 @@
 
 bool ChatHandler::HandleHelpCommand(const char* args)
 {
-    char* cmd = strtok((char*)args, " ");
+    char* cmd = strtok((char*)args,  " ");
     if (!cmd)
     {
-        ShowHelpForCommand(getCommandTable(), "help");
-        ShowHelpForCommand(getCommandTable(), "");
+        ShowHelpForCommand(getCommandTable(),  "help");
+        ShowHelpForCommand(getCommandTable(),  "");
     }
     else
     {
-        if (!ShowHelpForCommand(getCommandTable(), cmd))
+        if (!ShowHelpForCommand(getCommandTable(),  cmd))
             SendSysMessage(LANG_NO_HELP_CMD);
     }
 
@@ -53,7 +53,7 @@ bool ChatHandler::HandleHelpCommand(const char* args)
 
 bool ChatHandler::HandleCommandsCommand(const char* /*args*/)
 {
-    ShowHelpForCommand(getCommandTable(), "");
+    ShowHelpForCommand(getCommandTable(),  "");
     return true;
 }
 
@@ -75,15 +75,15 @@ bool ChatHandler::HandleStartCommand(const char* /*args*/)
         return false;
     }
 
-    if ((chr->isDead()) || (chr->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_GHOST)))
+    if ((chr->isDead()) || (chr->HasFlag(PLAYER_FLAGS,  PLAYER_FLAGS_GHOST)))
     {
-    // if player is dead and stuck, send ghost to graveyard
+    // if player is dead and stuck,  send ghost to graveyard
     chr->RepopAtGraveyard();
     return true;
     }
 
     // cast spell Stuck
-    chr->CastSpell(chr, 7355, false);
+    chr->CastSpell(chr,  7355,  false);
     return true;
 }
 
@@ -99,17 +99,17 @@ bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
     //uint32 updateTime = sWorld->GetUpdateTime();
 
     PSendSysMessage(_FULLVERSION);
-    PSendSysMessage(LANG_CONNECTED_PLAYERS, PlayersNum, MaxPlayersNum);
-    PSendSysMessage(LANG_CONNECTED_USERS, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);
-    PSendSysMessage(LANG_UPTIME, uptime.c_str());
-    //PSendSysMessage("Update time diff: %u.", updateTime); // This is useless
+    PSendSysMessage(LANG_CONNECTED_PLAYERS,  PlayersNum,  MaxPlayersNum);
+    PSendSysMessage(LANG_CONNECTED_USERS,  activeClientsNum,  maxActiveClientsNum,  queuedClientsNum,  maxQueuedClientsNum);
+    PSendSysMessage(LANG_UPTIME,  uptime.c_str());
+    //PSendSysMessage("Update time diff: %u.",  updateTime); // This is useless
 
     return true;
 }
 
 bool ChatHandler::HandleDismountCommand(const char* /*args*/)
 {
-    //If player is not mounted, so go out :)
+    //If player is not mounted,  so go out :)
     if (!m_session->GetPlayer()->IsMounted())
     {
         SendSysMessage(LANG_CHAR_NON_MOUNTED);
@@ -153,7 +153,7 @@ bool ChatHandler::HandleGMListIngameCommand(const char* /*args*/)
 {
     bool first = true;
 
-    ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, *HashMapHolder<Player>::GetLock(), true);
+    ACE_GUARD_RETURN(ACE_Thread_Mutex,  guard,  *HashMapHolder<Player>::GetLock(),  true);
     HashMapHolder<Player>::MapType &m = sObjectAccessor->GetPlayers();
     for (HashMapHolder<Player>::MapType::const_iterator itr = m.begin(); itr != m.end(); ++itr)
     {
@@ -180,7 +180,7 @@ bool ChatHandler::HandleGMListIngameCommand(const char* /*args*/)
 /// Display the 'Message of the day' for the realm
 bool ChatHandler::HandleServerMotdCommand(const char* /*args*/)
 {
-    PSendSysMessage(LANG_MOTD_CURRENT, sWorld->GetMotd());
+    PSendSysMessage(LANG_MOTD_CURRENT,  sWorld->GetMotd());
     return true;
 }
 

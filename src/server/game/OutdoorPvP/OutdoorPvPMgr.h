@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef OUTDOOR_PVP_MGR_H_
@@ -55,38 +55,38 @@ class OutdoorPvPMgr
         void InitOutdoorPvP();
 
         // called when a player enters an outdoor pvp area
-        void HandlePlayerEnterZone(Player * plr, uint32 areaflag);
+        void HandlePlayerEnterZone(Player * plr,  uint32 areaflag);
 
         // called when player leaves an outdoor pvp area
-        void HandlePlayerLeaveZone(Player * plr, uint32 areaflag);
+        void HandlePlayerLeaveZone(Player * plr,  uint32 areaflag);
 
         // called when player resurrects
-        void HandlePlayerResurrects(Player * plr, uint32 areaflag);
+        void HandlePlayerResurrects(Player * plr,  uint32 areaflag);
 
         // return assigned outdoor pvp
         OutdoorPvP * GetOutdoorPvPToZoneId(uint32 zoneid);
 
         // handle custom (non-exist in dbc) spell if registered
-        bool HandleCustomSpell(Player * plr, uint32 spellId, GameObject* go);
+        bool HandleCustomSpell(Player * plr,  uint32 spellId,  GameObject* go);
 
         // handle custom go if registered
-        bool HandleOpenGo(Player * plr, uint64 guid);
+        bool HandleOpenGo(Player * plr,  uint64 guid);
 
         ZoneScript * GetZoneScript(uint32 zoneId);
 
-        void AddZone(uint32 zoneid, OutdoorPvP * handle);
+        void AddZone(uint32 zoneid,  OutdoorPvP * handle);
 
         void Update(uint32 diff);
 
-        void HandleGossipOption(Player * player, uint64 guid, uint32 gossipid);
+        void HandleGossipOption(Player * player,  uint64 guid,  uint32 gossipid);
 
-        bool CanTalkTo(Player * player, Creature * creature, GossipMenuItems gso);
+        bool CanTalkTo(Player * player,  Creature * creature,  GossipMenuItems gso);
 
-        void HandleDropFlag(Player * plr, uint32 spellId);
+        void HandleDropFlag(Player * plr,  uint32 spellId);
 
         typedef std::vector<OutdoorPvP*> OutdoorPvPSet;
-        typedef std::map<uint32 /* zoneid */, OutdoorPvP*> OutdoorPvPMap;
-        typedef std::map<OutdoorPvPTypes, OutdoorPvPData*> OutdoorPvPDataMap;
+        typedef std::map<uint32 /* zoneid */,  OutdoorPvP*> OutdoorPvPMap;
+        typedef std::map<OutdoorPvPTypes,  OutdoorPvPData*> OutdoorPvPDataMap;
 
     private:
 
@@ -105,6 +105,6 @@ class OutdoorPvPMgr
         uint32 m_UpdateTimer;
 };
 
-#define sOutdoorPvPMgr ACE_Singleton<OutdoorPvPMgr, ACE_Null_Mutex>::instance()
+#define sOutdoorPvPMgr ACE_Singleton<OutdoorPvPMgr,  ACE_Null_Mutex>::instance()
 
 #endif /*OUTDOOR_PVP_MGR_H_*/

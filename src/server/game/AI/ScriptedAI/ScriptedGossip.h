@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #ifndef SC_GOSSIP_H
@@ -94,75 +94,75 @@
 enum eTradeskill
 {
 // Skill defines
-    TRADESKILL_ALCHEMY                  = 1,
-    TRADESKILL_BLACKSMITHING            = 2,
-    TRADESKILL_COOKING                  = 3,
-    TRADESKILL_ENCHANTING               = 4,
-    TRADESKILL_ENGINEERING              = 5,
-    TRADESKILL_FIRSTAID                 = 6,
-    TRADESKILL_HERBALISM                = 7,
-    TRADESKILL_LEATHERWORKING           = 8,
-    TRADESKILL_POISONS                  = 9,
-    TRADESKILL_TAILORING                = 10,
-    TRADESKILL_MINING                   = 11,
-    TRADESKILL_FISHING                  = 12,
-    TRADESKILL_SKINNING                 = 13,
-    TRADESKILL_JEWLCRAFTING             = 14,
-    TRADESKILL_INSCRIPTION              = 15,
-    TRADESKILL_ARCHAEOLOGY              = 16,
+    TRADESKILL_ALCHEMY                  = 1, 
+    TRADESKILL_BLACKSMITHING            = 2, 
+    TRADESKILL_COOKING                  = 3, 
+    TRADESKILL_ENCHANTING               = 4, 
+    TRADESKILL_ENGINEERING              = 5, 
+    TRADESKILL_FIRSTAID                 = 6, 
+    TRADESKILL_HERBALISM                = 7, 
+    TRADESKILL_LEATHERWORKING           = 8, 
+    TRADESKILL_POISONS                  = 9, 
+    TRADESKILL_TAILORING                = 10, 
+    TRADESKILL_MINING                   = 11, 
+    TRADESKILL_FISHING                  = 12, 
+    TRADESKILL_SKINNING                 = 13, 
+    TRADESKILL_JEWLCRAFTING             = 14, 
+    TRADESKILL_INSCRIPTION              = 15, 
+    TRADESKILL_ARCHAEOLOGY              = 16, 
 
-    TRADESKILL_LEVEL_NONE                                      = 0,
-    TRADESKILL_LEVEL_APPRENTICE                                = 1,
-    TRADESKILL_LEVEL_JOURNEYMAN                                = 2,
-    TRADESKILL_LEVEL_EXPERT                                    = 3,
-    TRADESKILL_LEVEL_ARTISAN                                   = 4,
-    TRADESKILL_LEVEL_MASTER                                    = 5,
-    TRADESKILL_LEVEL_GRAND_MASTER                              = 6,
-    TRADESKILL_LEVEL_PROFESSIONAL_ILLUSTRIOUS_GRAND_MASTER     = 7,
+    TRADESKILL_LEVEL_NONE                                      = 0, 
+    TRADESKILL_LEVEL_APPRENTICE                                = 1, 
+    TRADESKILL_LEVEL_JOURNEYMAN                                = 2, 
+    TRADESKILL_LEVEL_EXPERT                                    = 3, 
+    TRADESKILL_LEVEL_ARTISAN                                   = 4, 
+    TRADESKILL_LEVEL_MASTER                                    = 5, 
+    TRADESKILL_LEVEL_GRAND_MASTER                              = 6, 
+    TRADESKILL_LEVEL_PROFESSIONAL_ILLUSTRIOUS_GRAND_MASTER     = 7, 
 
 // Gossip defines
-    GOSSIP_ACTION_TRADE                 = 1,
-    GOSSIP_ACTION_TRAIN                 = 2,
-    GOSSIP_ACTION_TAXI                  = 3,
-    GOSSIP_ACTION_GUILD                 = 4,
-    GOSSIP_ACTION_BATTLE                = 5,
-    GOSSIP_ACTION_BANK                  = 6,
-    GOSSIP_ACTION_INN                   = 7,
-    GOSSIP_ACTION_HEAL                  = 8,
-    GOSSIP_ACTION_TABARD                = 9,
-    GOSSIP_ACTION_AUCTION               = 10,
-    GOSSIP_ACTION_INN_INFO              = 11,
-    GOSSIP_ACTION_UNLEARN               = 12,
-    GOSSIP_ACTION_INFO_DEF              = 1000,
+    GOSSIP_ACTION_TRADE                 = 1, 
+    GOSSIP_ACTION_TRAIN                 = 2, 
+    GOSSIP_ACTION_TAXI                  = 3, 
+    GOSSIP_ACTION_GUILD                 = 4, 
+    GOSSIP_ACTION_BATTLE                = 5, 
+    GOSSIP_ACTION_BANK                  = 6, 
+    GOSSIP_ACTION_INN                   = 7, 
+    GOSSIP_ACTION_HEAL                  = 8, 
+    GOSSIP_ACTION_TABARD                = 9, 
+    GOSSIP_ACTION_AUCTION               = 10, 
+    GOSSIP_ACTION_INN_INFO              = 11, 
+    GOSSIP_ACTION_UNLEARN               = 12, 
+    GOSSIP_ACTION_INFO_DEF              = 1000, 
 
-    GOSSIP_SENDER_MAIN                  = 1,
-    GOSSIP_SENDER_INN_INFO              = 2,
-    GOSSIP_SENDER_INFO                  = 3,
-    GOSSIP_SENDER_SEC_PROFTRAIN         = 4,
-    GOSSIP_SENDER_SEC_CLASSTRAIN        = 5,
-    GOSSIP_SENDER_SEC_BATTLEINFO        = 6,
-    GOSSIP_SENDER_SEC_BANK              = 7,
-    GOSSIP_SENDER_SEC_INN               = 8,
-    GOSSIP_SENDER_SEC_MAILBOX           = 9,
+    GOSSIP_SENDER_MAIN                  = 1, 
+    GOSSIP_SENDER_INN_INFO              = 2, 
+    GOSSIP_SENDER_INFO                  = 3, 
+    GOSSIP_SENDER_SEC_PROFTRAIN         = 4, 
+    GOSSIP_SENDER_SEC_CLASSTRAIN        = 5, 
+    GOSSIP_SENDER_SEC_BATTLEINFO        = 6, 
+    GOSSIP_SENDER_SEC_BANK              = 7, 
+    GOSSIP_SENDER_SEC_INN               = 8, 
+    GOSSIP_SENDER_SEC_MAILBOX           = 9, 
     GOSSIP_SENDER_SEC_STABLEMASTER      = 10
 };
 
-extern uint32 GetSkillLevel(Player *player,uint32 skill);
+extern uint32 GetSkillLevel(Player *player, uint32 skill);
 
 // Defined fuctions to use with player.
 
-// This fuction add's a menu item,
+// This fuction add's a menu item, 
 // a - Icon Id
 // b - Text
 // c - Sender(this is to identify the current Menu with this item)
 // d - Action (identifys this Menu Item)
 // e - Text to be displayed in pop up box
 // f - Money value in pop up box
-#define ADD_GOSSIP_ITEM(a,b,c,d)   PlayerTalkClass->GetGossipMenu().AddMenuItem(a,b,c,d,"",0)
-#define ADD_GOSSIP_ITEM_EXTENDED(a,b,c,d,e,f,g)   PlayerTalkClass->GetGossipMenu().AddMenuItem(a,b,c,d,e,f,g)
+#define ADD_GOSSIP_ITEM(a, b, c, d)   PlayerTalkClass->GetGossipMenu().AddMenuItem(a, b, c, d, "", 0)
+#define ADD_GOSSIP_ITEM_EXTENDED(a, b, c, d, e, f, g)   PlayerTalkClass->GetGossipMenu().AddMenuItem(a, b, c, d, e, f, g)
 
-// This fuction Sends the current menu to show to client, a - NPCTEXTID(uint32) , b - npc guid(uint64)
-#define SEND_GOSSIP_MENU(a,b)      PlayerTalkClass->SendGossipMenu(a,b)
+// This fuction Sends the current menu to show to client,  a - NPCTEXTID(uint32) ,  b - npc guid(uint64)
+#define SEND_GOSSIP_MENU(a, b)      PlayerTalkClass->SendGossipMenu(a, b)
 
 // This fuction shows POI(point of interest) to client.
 // a - position X
@@ -171,7 +171,7 @@ extern uint32 GetSkillLevel(Player *player,uint32 skill);
 // d - Flags
 // e - Data
 // f - Location Name
-#define SEND_POI(a,b,c,d,e,f)      PlayerTalkClass->SendPointOfInterest(a,b,c,d,e,f)
+#define SEND_POI(a, b, c, d, e, f)      PlayerTalkClass->SendPointOfInterest(a, b, c, d, e, f)
 
 // Closes the Menu
 #define CLOSE_GOSSIP_MENU()        PlayerTalkClass->CloseGossip()
@@ -180,16 +180,16 @@ extern uint32 GetSkillLevel(Player *player,uint32 skill);
 // a - quest object
 // b - npc guid(uint64)
 // c - Activate accept(bool)
-#define SEND_QUEST_DETAILS(a,b,c)  PlayerTalkClass->SendQuestDetails(a,b,c)
+#define SEND_QUEST_DETAILS(a, b, c)  PlayerTalkClass->SendQuestDetails(a, b, c)
 
 // Fuction to tell to client the requested items to complete quest
 // a - quest object
 // b - npc guid(uint64)
 // c - Iscompletable(bool)
 // d - close at cancel(bool) - in case single incomplite ques
-#define SEND_REQUESTEDITEMS(a,b,c,d) PlayerTalkClass->SendRequestedItems(a,b,c,d)
+#define SEND_REQUESTEDITEMS(a, b, c, d) PlayerTalkClass->SendRequestedItems(a, b, c, d)
 
-// Fuctions to send NPC lists, a - is always the npc guid(uint64)
+// Fuctions to send NPC lists,  a - is always the npc guid(uint64)
 #define SEND_VENDORLIST(a)         GetSession()->SendListInventory(a)
 #define SEND_TRAINERLIST(a)        GetSession()->SendTrainerList(a)
 
@@ -202,6 +202,6 @@ extern uint32 GetSkillLevel(Player *player,uint32 skill);
 
 // defined fuctions to use with Creature
 
-#define QUEST_DIALOG_STATUS(a,b,c)   GetSession()->getDialogStatus(a,b,c)
+#define QUEST_DIALOG_STATUS(a, b, c)   GetSession()->getDialogStatus(a, b, c)
 #endif
 

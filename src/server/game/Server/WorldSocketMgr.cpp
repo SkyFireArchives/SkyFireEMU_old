@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -52,8 +52,8 @@
 #include "ScriptMgr.h"
 
 /**
-* This is a helper class to WorldSocketMgr ,that manages
-* network threads, and assigning connections from acceptor thread
+* This is a helper class to WorldSocketMgr , that manages
+* network threads,  and assigning connections from acceptor thread
 * to other network threads
 */
 class ReactorRunnable : protected ACE_Task_Base
@@ -61,8 +61,8 @@ class ReactorRunnable : protected ACE_Task_Base
     public:
 
         ReactorRunnable() :
-            m_Reactor(0),
-            m_Connections(0),
+            m_Reactor(0), 
+            m_Connections(0), 
             m_ThreadId(-1)
         {
             ACE_Reactor_Impl* imp = 0;
@@ -81,7 +81,7 @@ class ReactorRunnable : protected ACE_Task_Base
 
             #endif
 
-            m_Reactor = new ACE_Reactor (imp, 1);
+            m_Reactor = new ACE_Reactor (imp,  1);
         }
 
         virtual ~ReactorRunnable()
@@ -114,7 +114,7 @@ class ReactorRunnable : protected ACE_Task_Base
 
         int AddSocket (WorldSocket* sock)
         {
-            ACE_GUARD_RETURN (ACE_Thread_Mutex, Guard, m_NewSockets_Lock, -1);
+            ACE_GUARD_RETURN (ACE_Thread_Mutex,  Guard,  m_NewSockets_Lock,  -1);
 
             ++m_Connections;
             sock->AddReference();
@@ -135,7 +135,7 @@ class ReactorRunnable : protected ACE_Task_Base
 
         void AddNewSockets()
         {
-            ACE_GUARD (ACE_Thread_Mutex, Guard, m_NewSockets_Lock);
+            ACE_GUARD (ACE_Thread_Mutex,  Guard,  m_NewSockets_Lock);
 
             if (m_NewSockets.empty())
                 return;
@@ -146,7 +146,7 @@ class ReactorRunnable : protected ACE_Task_Base
 
                 if (sock->IsClosed())
                 {
-                    sScriptMgr->OnSocketClose(sock, true);
+                    sScriptMgr->OnSocketClose(sock,  true);
 
                     sock->RemoveReference();
                     --m_Connections;
@@ -164,13 +164,13 @@ class ReactorRunnable : protected ACE_Task_Base
 
             ACE_ASSERT (m_Reactor);
 
-            SocketSet::iterator i, t;
+            SocketSet::iterator i,  t;
 
             while (!m_Reactor->reactor_event_loop_done())
             {
                 // dont be too smart to move this outside the loop
                 // the run_reactor_event_loop will modify interval
-                ACE_Time_Value interval (0, 10000);
+                ACE_Time_Value interval (0,  10000);
 
                 if (m_Reactor->run_reactor_event_loop (interval) == -1)
                     break;
@@ -186,7 +186,7 @@ class ReactorRunnable : protected ACE_Task_Base
 
                         (*t)->CloseSocket();
 
-                        sScriptMgr->OnSocketClose((*t), false);
+                        sScriptMgr->OnSocketClose((*t),  false);
 
                         (*t)->RemoveReference();
                         --m_Connections;
@@ -203,7 +203,7 @@ class ReactorRunnable : protected ACE_Task_Base
         }
 
     private:
-        typedef ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> AtomicInt;
+        typedef ACE_Atomic_Op<ACE_SYNCH_MUTEX,  long> AtomicInt;
         typedef std::set<WorldSocket*> SocketSet;
 
         ACE_Reactor* m_Reactor;
@@ -217,11 +217,11 @@ class ReactorRunnable : protected ACE_Task_Base
 };
 
 WorldSocketMgr::WorldSocketMgr() :
-    m_NetThreads(0),
-    m_NetThreadsCount(0),
-    m_SockOutKBuff(-1),
-    m_SockOutUBuff(65536),
-    m_UseNoDelay(true),
+    m_NetThreads(0), 
+    m_NetThreadsCount(0), 
+    m_SockOutKBuff(-1), 
+    m_SockOutUBuff(65536), 
+    m_UseNoDelay(true), 
     m_Acceptor (0)
 {
     InitOpcodeTable();
@@ -234,11 +234,11 @@ WorldSocketMgr::~WorldSocketMgr()
 }
 
 int
-WorldSocketMgr::StartReactiveIO (ACE_UINT16 port, const char* address)
+WorldSocketMgr::StartReactiveIO (ACE_UINT16 port,  const char* address)
 {
-    m_UseNoDelay = sConfig->GetBoolDefault ("Network.TcpNodelay", true);
+    m_UseNoDelay = sConfig->GetBoolDefault ("Network.TcpNodelay",  true);
 
-    int num_threads = sConfig->GetIntDefault ("Network.Threads", 1);
+    int num_threads = sConfig->GetIntDefault ("Network.Threads",  1);
 
     if (num_threads <= 0)
     {
@@ -250,12 +250,12 @@ WorldSocketMgr::StartReactiveIO (ACE_UINT16 port, const char* address)
 
     m_NetThreads = new ReactorRunnable[m_NetThreadsCount];
 
-    sLog->outBasic ("Max allowed socket connections %d", ACE::max_handles());
+    sLog->outBasic ("Max allowed socket connections %d",  ACE::max_handles());
 
     // -1 means use default
-    m_SockOutKBuff = sConfig->GetIntDefault ("Network.OutKBuff", -1);
+    m_SockOutKBuff = sConfig->GetIntDefault ("Network.OutKBuff",  -1);
 
-    m_SockOutUBuff = sConfig->GetIntDefault ("Network.OutUBuff", 65536);
+    m_SockOutUBuff = sConfig->GetIntDefault ("Network.OutUBuff",  65536);
 
     if (m_SockOutUBuff <= 0)
     {
@@ -266,11 +266,11 @@ WorldSocketMgr::StartReactiveIO (ACE_UINT16 port, const char* address)
     WorldSocket::Acceptor *acc = new WorldSocket::Acceptor;
     m_Acceptor = acc;
 
-    ACE_INET_Addr listen_addr (port, address);
+    ACE_INET_Addr listen_addr (port,  address);
 
-    if (acc->open(listen_addr, m_NetThreads[0].GetReactor(), ACE_NONBLOCK) == -1)
+    if (acc->open(listen_addr,  m_NetThreads[0].GetReactor(),  ACE_NONBLOCK) == -1)
     {
-        sLog->outError ("Failed to open acceptor ,check if the port is free");
+        sLog->outError ("Failed to open acceptor , check if the port is free");
         return -1;
     }
 
@@ -281,12 +281,12 @@ WorldSocketMgr::StartReactiveIO (ACE_UINT16 port, const char* address)
 }
 
 int
-WorldSocketMgr::StartNetwork (ACE_UINT16 port, const char* address)
+WorldSocketMgr::StartNetwork (ACE_UINT16 port,  const char* address)
 {
     if (!sLog->IsOutDebug())
-        ACE_Log_Msg::instance()->priority_mask (LM_ERROR, ACE_Log_Msg::PROCESS);
+        ACE_Log_Msg::instance()->priority_mask (LM_ERROR,  ACE_Log_Msg::PROCESS);
 
-    if (StartReactiveIO(port, address) == -1)
+    if (StartReactiveIO(port,  address) == -1)
         return -1;
 
     sScriptMgr->OnNetworkStart();
@@ -332,9 +332,9 @@ WorldSocketMgr::OnSocketOpen (WorldSocket* sock)
     // set some options here
     if (m_SockOutKBuff >= 0)
     {
-        if (sock->peer().set_option (SOL_SOCKET,
-            SO_SNDBUF,
-            (void*) & m_SockOutKBuff,
+        if (sock->peer().set_option (SOL_SOCKET, 
+            SO_SNDBUF, 
+            (void*) & m_SockOutKBuff, 
             sizeof (int)) == -1 && errno != ENOTSUP)
         {
             sLog->outError ("WorldSocketMgr::OnSocketOpen set_option SO_SNDBUF");
@@ -347,12 +347,12 @@ WorldSocketMgr::OnSocketOpen (WorldSocket* sock)
     // Set TCP_NODELAY.
     if (m_UseNoDelay)
     {
-        if (sock->peer().set_option (ACE_IPPROTO_TCP,
-            TCP_NODELAY,
-            (void*)&ndoption,
+        if (sock->peer().set_option (ACE_IPPROTO_TCP, 
+            TCP_NODELAY, 
+            (void*)&ndoption, 
             sizeof (int)) == -1)
         {
-            sLog->outError ("WorldSocketMgr::OnSocketOpen: peer().set_option TCP_NODELAY errno = %s", ACE_OS::strerror (errno));
+            sLog->outError ("WorldSocketMgr::OnSocketOpen: peer().set_option TCP_NODELAY errno = %s",  ACE_OS::strerror (errno));
             return -1;
         }
     }

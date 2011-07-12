@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -29,7 +29,7 @@
 #include "ObjectMgr.h"
 #include "SpellMgr.h"
 
-Totem::Totem(SummonPropertiesEntry const *properties, Unit *owner) : Minion(properties, owner)
+Totem::Totem(SummonPropertiesEntry const *properties,  Unit *owner) : Minion(properties,  owner)
 {
     m_unitTypeMask |= UNIT_MASK_TOTEM;
     m_duration = 0;
@@ -62,7 +62,7 @@ void Totem::InitStats(uint32 duration)
     CreatureInfo const *cinfo = GetCreatureInfo();
     if (m_owner->GetTypeId() == TYPEID_PLAYER && cinfo)
     {
-        uint32 display_id = sObjectMgr->ChooseDisplayId(m_owner->ToPlayer()->GetTeam(), cinfo);
+        uint32 display_id = sObjectMgr->ChooseDisplayId(m_owner->ToPlayer()->GetTeam(),  cinfo);
         CreatureModelInfo const *minfo = sObjectMgr->GetCreatureModelRandomGender(display_id);
         if (minfo)
             display_id = minfo->modelid;
@@ -121,11 +121,11 @@ void Totem::InitStats(uint32 duration)
 void Totem::InitSummon()
 {
     if (m_type == TOTEM_PASSIVE)
-        CastSpell(this, GetSpell(), true);
+        CastSpell(this,  GetSpell(),  true);
 
     // Some totems can have both instant effect and passive spell
     if (GetSpell(1))
-        CastSpell(this, GetSpell(1), true);
+        CastSpell(this,  GetSpell(1),  true);
 }
 
 void Totem::UnSummon()
@@ -157,7 +157,7 @@ void Totem::UnSummon()
             for (GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
             {
                 Player* Target = itr->getSource();
-                if (Target && pGroup->SameSubGroup((Player*)m_owner, Target))
+                if (Target && pGroup->SameSubGroup((Player*)m_owner,  Target))
                     Target->RemoveAurasDueToSpell(GetSpell());
             }
         }
@@ -166,7 +166,7 @@ void Totem::UnSummon()
     AddObjectToRemoveList();
 }
 
-bool Totem::IsImmunedToSpellEffect(SpellEntry const* spellInfo, uint32 index) const
+bool Totem::IsImmunedToSpellEffect(SpellEntry const* spellInfo,  uint32 index) const
 {
     // TODO: possibly all negative auras immune?
     if (GetEntry() == 5925)
@@ -181,5 +181,5 @@ bool Totem::IsImmunedToSpellEffect(SpellEntry const* spellInfo, uint32 index) co
         default:
             break;
     }
-    return Creature::IsImmunedToSpellEffect(spellInfo, index);
+    return Creature::IsImmunedToSpellEffect(spellInfo,  index);
 }

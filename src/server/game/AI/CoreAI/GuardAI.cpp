@@ -7,17 +7,17 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 2 of the License,  or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * along with this program; if not,  write to the Free Software
+ * Foundation,  Inc.,  59 Temple Place,  Suite 330,  Boston,  MA 02111-1307 USA
  */
 
 #include "gamePCH.h"
@@ -36,7 +36,7 @@ int GuardAI::Permissible(const Creature* creature)
     return PERMIT_BASE_NO;
 }
 
-GuardAI::GuardAI(Creature* creature) : ScriptedAI(creature), i_victimGuid(0), i_state(STATE_NORMAL), i_tracker(TIME_INTERVAL_LOOK)
+GuardAI::GuardAI(Creature* creature) : ScriptedAI(creature),  i_victimGuid(0),  i_state(STATE_NORMAL),  i_tracker(TIME_INTERVAL_LOOK)
 {
 }
 
@@ -48,7 +48,7 @@ bool GuardAI::CanSeeAlways(WorldObject const* obj)
     std::list<HostileReference *> t_list = me->getThreatManager().getThreatList();
     for (std::list<HostileReference *>::const_iterator itr = t_list.begin(); itr!= t_list.end(); ++itr)
     {
-        if (Unit* unit = Unit::GetUnit(*me, (*itr)->getUnitGuid()))
+        if (Unit* unit = Unit::GetUnit(*me,  (*itr)->getUnitGuid()))
             if (unit == obj)
                 return true;
     }
@@ -67,7 +67,7 @@ void GuardAI::MoveInLineOfSight(Unit* unit)
         unit->isInAccessiblePlaceFor(me))
     {
         float attackRadius = me->GetAttackDistance(unit);
-        if (me->IsWithinDistInMap(unit, attackRadius))
+        if (me->IsWithinDistInMap(unit,  attackRadius))
         {
             //Need add code to let guard support player
             AttackStart(unit);
@@ -80,7 +80,7 @@ void GuardAI::EnterEvadeMode()
 {
     if (!me->isAlive())
     {
-        sLog->outStaticDebug("Creature stopped attacking because he is dead [guid=%u]", me->GetGUIDLow());
+        sLog->outStaticDebug("Creature stopped attacking because he is dead [guid=%u]",  me->GetGUIDLow());
         me->GetMotionMaster()->MoveIdle();
 
         i_state = STATE_NORMAL;
@@ -91,27 +91,27 @@ void GuardAI::EnterEvadeMode()
         return;
     }
 
-    Unit* victim = ObjectAccessor::GetUnit(*me, i_victimGuid);
+    Unit* victim = ObjectAccessor::GetUnit(*me,  i_victimGuid);
 
     if (!victim)
     {
-        sLog->outStaticDebug("Creature stopped attacking because victim does not exist [guid=%u]", me->GetGUIDLow());
+        sLog->outStaticDebug("Creature stopped attacking because victim does not exist [guid=%u]",  me->GetGUIDLow());
     }
     else if (!victim ->isAlive())
     {
-        sLog->outStaticDebug("Creature stopped attacking because victim is dead [guid=%u]", me->GetGUIDLow());
+        sLog->outStaticDebug("Creature stopped attacking because victim is dead [guid=%u]",  me->GetGUIDLow());
     }
     else if (victim ->HasStealthAura())
     {
-        sLog->outStaticDebug("Creature stopped attacking because victim is using stealth [guid=%u]", me->GetGUIDLow());
+        sLog->outStaticDebug("Creature stopped attacking because victim is using stealth [guid=%u]",  me->GetGUIDLow());
     }
     else if (victim ->isInFlight())
     {
-        sLog->outStaticDebug("Creature stopped attacking because victim is flying away [guid=%u]", me->GetGUIDLow());
+        sLog->outStaticDebug("Creature stopped attacking because victim is flying away [guid=%u]",  me->GetGUIDLow());
     }
     else
     {
-        sLog->outStaticDebug("Creature stopped attacking because victim outran him [guid=%u]", me->GetGUIDLow());
+        sLog->outStaticDebug("Creature stopped attacking because victim outran him [guid=%u]",  me->GetGUIDLow());
     }
 
     me->RemoveAllAuras();
@@ -120,7 +120,7 @@ void GuardAI::EnterEvadeMode()
     me->CombatStop(true);
     i_state = STATE_NORMAL;
 
-    // Remove TargetedMovementGenerator from MotionMaster stack list, and add HomeMovementGenerator instead
+    // Remove TargetedMovementGenerator from MotionMaster stack list,  and add HomeMovementGenerator instead
     if (me->GetMotionMaster()->GetCurrentMovementGeneratorType() == TARGETED_MOTION_TYPE)
         me->GetMotionMaster()->MoveTargetedHome();
 }
