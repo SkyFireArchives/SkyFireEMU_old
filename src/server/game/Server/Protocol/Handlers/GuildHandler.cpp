@@ -57,7 +57,7 @@ inline Guild* _GetPlayerGuild(WorldSession* session, bool sendError = false)
 // Cata Status: Done
 void WorldSession::HandleGuildQueryOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_QUERY");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_QUERY");
 
     uint64 guildId;
     uint64 player; //4.0.6a
@@ -74,7 +74,7 @@ void WorldSession::HandleGuildQueryOpcode(WorldPacket& recvPacket)
 // Cata status: Not used.
 void WorldSession::HandleGuildCreateOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_CREATE");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_CREATE");
 
     std::string name;
     recvPacket >> name;
@@ -94,7 +94,7 @@ void WorldSession::HandleGuildCreateOpcode(WorldPacket& recvPacket)
 // However, until guild leveling system finds some use in emulating, those aren't needed
 void WorldSession::HandleGuildInviteOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_INVITE");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_INVITE");
 
     std::string invitedName;
     recvPacket >> invitedName;
@@ -107,7 +107,7 @@ void WorldSession::HandleGuildInviteOpcode(WorldPacket& recvPacket)
 // Cata Status: Done
 void WorldSession::HandleGuildRemoveOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_REMOVE");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_REMOVE");
 
     uint64 guid;
     recvPacket >> guid; // target
@@ -120,7 +120,7 @@ void WorldSession::HandleGuildRemoveOpcode(WorldPacket& recvPacket)
 // Cata Status: Done
 void WorldSession::HandleGuildAcceptOpcode(WorldPacket& recvPacket)
 {   
-    sLog->outDebug("WORLD: Received CMSG_GUILD_ACCEPT");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_ACCEPT");
     recvPacket.read_skip<uint64>();
 
     // Player cannot be in guild
@@ -133,7 +133,7 @@ void WorldSession::HandleGuildAcceptOpcode(WorldPacket& recvPacket)
 // Cata Status: Done
 void WorldSession::HandleGuildDeclineOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_DECLINE");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_DECLINE");
     recvPacket.read_skip<uint64>();
 
     GetPlayer()->SetGuildIdInvited(0);
@@ -143,7 +143,7 @@ void WorldSession::HandleGuildDeclineOpcode(WorldPacket& recvPacket)
 // Cata Status: Done
 void WorldSession::HandleGuildInfoOpcode(WorldPacket& /*recvPacket*/)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_INFO");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_INFO");
 
     if (Guild* pGuild = _GetPlayerGuild(this, true))
         pGuild->SendInfo(this);
@@ -152,7 +152,7 @@ void WorldSession::HandleGuildInfoOpcode(WorldPacket& /*recvPacket*/)
 // CATA Status: Done
 void WorldSession::HandleGuildRosterOpcode(WorldPacket& /*recvPacket*/)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_ROSTER");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_ROSTER");
 
     if (Guild* pGuild = _GetPlayerGuild(this))
         pGuild->HandleRoster(this);
@@ -162,7 +162,7 @@ void WorldSession::HandleGuildRosterOpcode(WorldPacket& /*recvPacket*/)
 // TODO!!! The update is improper. Shouldn't re-send the roster - it causes visual sprinkles
 void WorldSession::HandleGuildPromoteOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_PROMOTE");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_PROMOTE");
 
     uint64 guid;
     recvPacket >> guid; // target guid
@@ -176,7 +176,7 @@ void WorldSession::HandleGuildPromoteOpcode(WorldPacket& recvPacket)
 // TODO!!! The update is improper. Shouldn't re-send the roster - it causes visual sprinkles
 void WorldSession::HandleGuildDemoteOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_DEMOTE");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_DEMOTE");
 
     uint64 guid;
     recvPacket >> guid; // target guid
@@ -189,7 +189,7 @@ void WorldSession::HandleGuildDemoteOpcode(WorldPacket& recvPacket)
 // Cata Status: Done
 void WorldSession::HandleGuildLeaveOpcode(WorldPacket& /*recvPacket*/)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_LEAVE");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_LEAVE");
 
     if (Guild* pGuild = _GetPlayerGuild(this, true))
         pGuild->HandleLeaveMember(this);
@@ -198,7 +198,7 @@ void WorldSession::HandleGuildLeaveOpcode(WorldPacket& /*recvPacket*/)
 // Cata Status: Done
 void WorldSession::HandleGuildDisbandOpcode(WorldPacket& /*recvPacket*/)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_DISBAND");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_DISBAND");
 
     if (Guild* pGuild = _GetPlayerGuild(this, true))
         pGuild->HandleDisband(this);
@@ -207,7 +207,7 @@ void WorldSession::HandleGuildDisbandOpcode(WorldPacket& /*recvPacket*/)
 // Cata Status: Done
 void WorldSession::HandleGuildLeaderOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_LEADER");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_LEADER");
 
     std::string name;
     recvPacket.read_skip<uint64>(); // guild GUID
@@ -222,7 +222,7 @@ void WorldSession::HandleGuildLeaderOpcode(WorldPacket& recvPacket)
 // Cata Status: Done
 void WorldSession::HandleGuildChangeInfoTextOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_INFO_TEXT");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_INFO_TEXT");
 
     recvPacket.read_skip<uint64>(); // issuer's guid
     recvPacket.read_skip<uint64>(); // guild's guid
@@ -236,7 +236,7 @@ void WorldSession::HandleGuildChangeInfoTextOpcode(WorldPacket& recvPacket)
 // Cata Status: Done
 void WorldSession::HandleGuildMOTDOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_MOTD");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_MOTD");
 
     recvPacket.read_skip<uint64>();
     recvPacket.read_skip<uint64>();
@@ -312,7 +312,7 @@ void WorldSession::HandleGuildRewardsOpcode(WorldPacket& recvPacket)
 // Cata Status: Done
 void WorldSession::HandleGuildSetNoteOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_SET_NOTE");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_SET_NOTE");
 
     uint8 ispublic;
     uint64 guid;
@@ -363,7 +363,7 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
     std::string rankName;
     recvPacket >> rankName;
 
-    sLog->outDebug("WORLD: Received CMSG_GUILD_RANK");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_RANK");
 
     if (GetPlayer()->GetGUID() != playerGuid)
     {
@@ -407,7 +407,7 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
 // TODO: The structure is completely ignored atm
 void WorldSession::HandleGuildAddRankOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_ADD_RANK");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_ADD_RANK");
 
     //std::string rankName;
     //recvPacket >> rankName;
@@ -419,7 +419,7 @@ void WorldSession::HandleGuildAddRankOpcode(WorldPacket& recvPacket)
 // Cata Status: Done
 void WorldSession::HandleGuildDelRankOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received CMSG_GUILD_DEL_RANK");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_DEL_RANK");
     uint32 rankid;
     recvPacket >> rankid;
 
@@ -431,7 +431,7 @@ void WorldSession::HandleGuildDelRankOpcode(WorldPacket& recvPacket)
 // TODO!!! Doesn't update tabard, guild tab until relog
 void WorldSession::HandleSaveGuildEmblemOpcode(WorldPacket& recvPacket)
 {
-    sLog->outDebug("WORLD: Received MSG_SAVE_GUILD_EMBLEM");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received MSG_SAVE_GUILD_EMBLEM");
 
     uint64 vendorGuid;
     recvPacket >> vendorGuid;
@@ -455,14 +455,14 @@ void WorldSession::HandleSaveGuildEmblemOpcode(WorldPacket& recvPacket)
     {
         // "That's not an emblem vendor!"
         Guild::SendSaveEmblemResult(this, ERR_GUILDEMBLEM_INVALIDVENDOR);
-        sLog->outDebug("WORLD: HandleSaveGuildEmblemOpcode - Unit (GUID: %u) not found or you can't interact with him.", GUID_LOPART(vendorGuid));
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: HandleSaveGuildEmblemOpcode - Unit (GUID: %u) not found or you can't interact with him.", GUID_LOPART(vendorGuid));
     }
 }
 
 // Cata Status: Done
 void WorldSession::HandleGuildEventLogQueryOpcode(WorldPacket& /* recvPacket */)
 {
-    sLog->outDebug("WORLD: Received (MSG_GUILD_EVENT_LOG_QUERY)");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received (MSG_GUILD_EVENT_LOG_QUERY)");
 
     if (Guild* pGuild = _GetPlayerGuild(this))
         pGuild->SendEventLog(this);
@@ -471,7 +471,7 @@ void WorldSession::HandleGuildEventLogQueryOpcode(WorldPacket& /* recvPacket */)
 // Cata Status: Done
 void WorldSession::HandleGuildBankMoneyWithdrawn(WorldPacket & /* recv_data */)
 {
-    sLog->outDebug("WORLD: Received (MSG_GUILD_BANK_MONEY_WITHDRAWN)");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received (MSG_GUILD_BANK_MONEY_WITHDRAWN)");
 
     if (Guild* pGuild = _GetPlayerGuild(this))
         pGuild->SendMoneyInfo(this);
@@ -480,7 +480,7 @@ void WorldSession::HandleGuildBankMoneyWithdrawn(WorldPacket & /* recv_data */)
 // Cata Status: Done
 void WorldSession::HandleGuildPermissions(WorldPacket& /* recv_data */)
 {
-    sLog->outDebug("WORLD: Received (MSG_GUILD_PERMISSIONS)");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received (MSG_GUILD_PERMISSIONS)");
 
     if (Guild* pGuild = _GetPlayerGuild(this))
         pGuild->SendPermissions(this);
@@ -490,7 +490,7 @@ void WorldSession::HandleGuildPermissions(WorldPacket& /* recv_data */)
 // Cata Status: Done
 void WorldSession::HandleGuildBankerActivate(WorldPacket & recv_data)
 {
-    sLog->outDebug("WORLD: Received (CMSG_GUILD_BANKER_ACTIVATE)");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received (CMSG_GUILD_BANKER_ACTIVATE)");
 
     uint64 GoGuid;
     recv_data >> GoGuid;
@@ -511,7 +511,7 @@ void WorldSession::HandleGuildBankerActivate(WorldPacket & recv_data)
 // Cata Status: Done
 void WorldSession::HandleGuildBankQueryTab(WorldPacket & recv_data)
 {
-    sLog->outDebug("WORLD: Received (CMSG_GUILD_BANK_QUERY_TAB)");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received (CMSG_GUILD_BANK_QUERY_TAB)");
 
     uint64 GoGuid;
     recv_data >> GoGuid;
@@ -530,7 +530,7 @@ void WorldSession::HandleGuildBankQueryTab(WorldPacket & recv_data)
 // Cata Status: Done
 void WorldSession::HandleGuildBankDepositMoney(WorldPacket & recv_data)
 {
-    sLog->outDebug("WORLD: Received (CMSG_GUILD_BANK_DEPOSIT_MONEY)");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received (CMSG_GUILD_BANK_DEPOSIT_MONEY)");
 
     uint64 GoGuid;
     recv_data >> GoGuid;
@@ -547,7 +547,7 @@ void WorldSession::HandleGuildBankDepositMoney(WorldPacket & recv_data)
 // Cata Status: Done
 void WorldSession::HandleGuildBankWithdrawMoney(WorldPacket & recv_data)
 {
-    sLog->outDebug("WORLD: Received (CMSG_GUILD_BANK_WITHDRAW_MONEY)");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received (CMSG_GUILD_BANK_WITHDRAW_MONEY)");
 
     uint64 GoGuid;
     recv_data >> GoGuid;
@@ -564,7 +564,7 @@ void WorldSession::HandleGuildBankWithdrawMoney(WorldPacket & recv_data)
 // Cata Status: Done
 void WorldSession::HandleGuildBankSwapItems(WorldPacket & recv_data)
 {
-    sLog->outDebug("WORLD: Received (CMSG_GUILD_BANK_SWAP_ITEMS)");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received (CMSG_GUILD_BANK_SWAP_ITEMS)");
 
     uint64 GoGuid;
     recv_data >> GoGuid;
@@ -646,7 +646,7 @@ void WorldSession::HandleGuildBankSwapItems(WorldPacket & recv_data)
 // Cata Status: Done
 void WorldSession::HandleGuildBankBuyTab(WorldPacket & recv_data)
 {
-    sLog->outDebug("WORLD: Received (CMSG_GUILD_BANK_BUY_TAB)");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received (CMSG_GUILD_BANK_BUY_TAB)");
 
     uint64 GoGuid;
     recv_data >> GoGuid;
@@ -662,7 +662,7 @@ void WorldSession::HandleGuildBankBuyTab(WorldPacket & recv_data)
 // Cata Status: Done
 void WorldSession::HandleGuildBankUpdateTab(WorldPacket & recv_data)
 {
-    sLog->outDebug("WORLD: Received (CMSG_GUILD_BANK_UPDATE_TAB)");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received (CMSG_GUILD_BANK_UPDATE_TAB)");
 
     uint64 GoGuid;
     recv_data >> GoGuid;
@@ -685,7 +685,7 @@ void WorldSession::HandleGuildBankUpdateTab(WorldPacket & recv_data)
 // Cata Status: Done
 void WorldSession::HandleGuildBankLogQuery(WorldPacket & recv_data)
 {
-    sLog->outDebug("WORLD: Received (MSG_GUILD_BANK_LOG_QUERY)");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received (MSG_GUILD_BANK_LOG_QUERY)");
 
     uint8 tabId;
     recv_data >> tabId;
@@ -697,7 +697,7 @@ void WorldSession::HandleGuildBankLogQuery(WorldPacket & recv_data)
 // Cata Status: Done
 void WorldSession::HandleQueryGuildBankTabText(WorldPacket &recv_data)
 {
-    sLog->outDebug("WORLD: Received MSG_QUERY_GUILD_BANK_TEXT");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received MSG_QUERY_GUILD_BANK_TEXT");
 
     uint8 tabId;
     recv_data >> tabId;
@@ -709,7 +709,7 @@ void WorldSession::HandleQueryGuildBankTabText(WorldPacket &recv_data)
 // Cata Status: Done
 void WorldSession::HandleSetGuildBankTabText(WorldPacket &recv_data)
 {
-    sLog->outDebug("WORLD: Received CMSG_SET_GUILD_BANK_TEXT");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_SET_GUILD_BANK_TEXT");
 
     uint8 tabId;
     recv_data >> tabId;

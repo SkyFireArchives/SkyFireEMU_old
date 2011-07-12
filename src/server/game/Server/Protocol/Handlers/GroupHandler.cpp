@@ -614,7 +614,7 @@ void WorldSession::HandleGroupAssistantLeaderOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandlePartyAssignmentOpcode(WorldPacket & recv_data)
 {
-    sLog->outDebug("MSG_PARTY_ASSIGNMENT");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "MSG_PARTY_ASSIGNMENT");
 
     Group *group = GetPlayer()->GetGroup();
     if (!group)
@@ -869,7 +869,7 @@ void WorldSession::BuildPartyMemberStatsChangedPacket(Player *player, WorldPacke
 /*this procedure handles clients CMSG_REQUEST_PARTY_MEMBER_STATS request*/
 void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
 {
-    sLog->outDebug("WORLD: Received CMSG_REQUEST_PARTY_MEMBER_STATS");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_REQUEST_PARTY_MEMBER_STATS");
     uint64 Guid;
     recv_data >> Guid;
 
@@ -980,7 +980,7 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
 
 void WorldSession::HandleOptOutOfLootOpcode(WorldPacket & recv_data)
 {
-    sLog->outDebug("WORLD: Received CMSG_OPT_OUT_OF_LOOT");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_OPT_OUT_OF_LOOT");
 
     uint32 passOnLoot;
     recv_data >> passOnLoot; // 1 always pass, 0 do not pass
@@ -1006,23 +1006,23 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
     Player * plr = sObjectMgr->GetPlayer(guid);
     if (!plr)
     {
-        sLog->outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Player not found", guid);
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_GROUP_SET_ROLES [" UI64FMTD "] Player not found", guid);
         return;
     }
     
     Group* grp = plr->GetGroup();
     if (!grp)
     {
-        sLog->outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Not in group", plr->GetGUID());
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_GROUP_SET_ROLES [" UI64FMTD "] Not in group", plr->GetGUID());
         return;
     }
     else if (grp != GetPlayer()->GetGroup())
     {
-        sLog->outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "]  and [" UI64FMTD "] Not in group same group", plr->GetGUID(), GetPlayer()->GetGUID());
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_GROUP_SET_ROLES [" UI64FMTD "]  and [" UI64FMTD "] Not in group same group", plr->GetGUID(), GetPlayer()->GetGUID());
         return;
     }
     else
-        sLog->outDebug("CMSG_GROUP_SET_ROLES [" UI64FMTD "] Roles: %u", plr->GetGUID(), roles);
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_GROUP_SET_ROLES [" UI64FMTD "] Roles: %u", plr->GetGUID(), roles);
     
     plr->SetRoles(roles);
     if (grp->isLFGGroup())

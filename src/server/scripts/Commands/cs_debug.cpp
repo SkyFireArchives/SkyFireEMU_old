@@ -399,12 +399,12 @@ class debug_commandscript : public CommandScript
                 }
                 else
                 {
-                    sLog->outDebug("Sending opcode: unknown type '%s'", type.c_str());
+                    sLog->outDebug(LOG_FILTER_NETWORKIO, "Sending opcode: unknown type '%s'", type.c_str());
                     break;
                 }
             }
             ifs.close();
-            sLog->outDebug("Sending opcode %u", data.GetOpcode());
+            sLog->outDebug(LOG_FILTER_NETWORKIO, "Sending opcode %u", data.GetOpcode());
             data.hexlike();
             player->GetSession()->SendPacket(&data);
             handler->PSendSysMessage(LANG_COMMAND_OPCODESENT, data.GetOpcode(), unit->GetName());
@@ -1061,14 +1061,14 @@ class debug_commandscript : public CommandScript
             if (isint32)
             {
                 iValue = (uint32)atoi(py);
-                sLog->outDebug(handler->GetSkyFireString(LANG_SET_UINT), GUID_LOPART(guid), Opcode, iValue);
+                sLog->outDebug(LOG_FILTER_NETWORKIO, handler->GetSkyFireString(LANG_SET_UINT), GUID_LOPART(guid), Opcode, iValue);
                 target->SetUInt32Value(Opcode , iValue);
                 handler->PSendSysMessage(LANG_SET_UINT_FIELD, GUID_LOPART(guid), Opcode,iValue);
             }
             else
             {
                 fValue = (float)atof(py);
-                sLog->outDebug(handler->GetSkyFireString(LANG_SET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
+                sLog->outDebug(LOG_FILTER_NETWORKIO, handler->GetSkyFireString(LANG_SET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
                 target->SetFloatValue(Opcode , fValue);
                 handler->PSendSysMessage(LANG_SET_FLOAT_FIELD, GUID_LOPART(guid), Opcode,fValue);
             }
@@ -1112,13 +1112,13 @@ class debug_commandscript : public CommandScript
             if (isint32)
             {
                 iValue = target->GetUInt32Value(Opcode);
-                sLog->outDebug(handler->GetSkyFireString(LANG_GET_UINT), GUID_LOPART(guid), Opcode, iValue);
+                sLog->outDebug(LOG_FILTER_NETWORKIO, handler->GetSkyFireString(LANG_GET_UINT), GUID_LOPART(guid), Opcode, iValue);
                 handler->PSendSysMessage(LANG_GET_UINT_FIELD, GUID_LOPART(guid), Opcode,    iValue);
             }
             else
             {
                 fValue = target->GetFloatValue(Opcode);
-                sLog->outDebug(handler->GetSkyFireString(LANG_GET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
+                sLog->outDebug(LOG_FILTER_NETWORKIO, handler->GetSkyFireString(LANG_GET_FLOAT), GUID_LOPART(guid), Opcode, fValue);
                 handler->PSendSysMessage(LANG_GET_FLOAT_FIELD, GUID_LOPART(guid), Opcode, fValue);
             }
 
@@ -1145,7 +1145,7 @@ class debug_commandscript : public CommandScript
                 return false;
             }
 
-            sLog->outDebug(handler->GetSkyFireString(LANG_CHANGE_32BIT), Opcode, Value);
+            sLog->outDebug(LOG_FILTER_NETWORKIO, handler->GetSkyFireString(LANG_CHANGE_32BIT), Opcode, Value);
 
             int CurrentValue = (int)handler->GetSession()->GetPlayer()->GetUInt32Value(Opcode);
 
@@ -1231,7 +1231,7 @@ class debug_commandscript : public CommandScript
             if (Value > 32)                                         //uint32 = 32 bits
                 return false;
 
-            sLog->outDebug(handler->GetSkyFireString(LANG_SET_32BIT), Opcode, Value);
+            sLog->outDebug(LOG_FILTER_NETWORKIO, handler->GetSkyFireString(LANG_SET_32BIT), Opcode, Value);
 
             uint32 iValue = Value ? 1 << (Value - 1) : 0;
             target->SetUInt32Value(Opcode ,  iValue);

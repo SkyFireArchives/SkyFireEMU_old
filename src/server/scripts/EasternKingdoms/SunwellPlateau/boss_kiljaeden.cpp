@@ -1429,7 +1429,7 @@ public:
                     DoMeleeAttackIfReady();
                     break;
                 }
-                sLog->outDebug("Sinister-Timer");
+                sLog->outDebug(LOG_FILTER_NONE, "Sinister-Timer");
                 for (uint8 i = 0; i < 3; ++i)
                     uiTimer[i] -= diff;
             }

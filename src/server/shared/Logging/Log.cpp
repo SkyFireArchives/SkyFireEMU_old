@@ -1,23 +1,19 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
  *
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "Common.h"
@@ -33,7 +29,7 @@ extern LoginDatabaseWorkerPool LoginDatabase;
 
 Log::Log() :
     raLogfile(NULL), logfile(NULL), gmLogfile(NULL), charLogfile(NULL),
-    dberLogfile(NULL), chatLogfile(NULL), arenaLogFile(NULL), sqlLogFile(NULL),
+    dberLogfile(NULL), chatLogfile(NULL), arenaLogFile(NULL), sqlLogFile(NULL), sqlDevLogFile(NULL),
     m_gmlog_per_account(false), m_enableLogDBLater(false),
     m_enableLogDB(false), m_colored(false)
 {
@@ -42,11 +38,11 @@ Log::Log() :
 
 Log::~Log()
 {
-    if ( logfile != NULL )
+    if( logfile != NULL )
         fclose(logfile);
     logfile = NULL;
 
-    if ( gmLogfile != NULL )
+    if( gmLogfile != NULL )
         fclose(gmLogfile);
     gmLogfile = NULL;
 
@@ -54,7 +50,7 @@ Log::~Log()
         fclose(charLogfile);
     charLogfile = NULL;
 
-    if ( dberLogfile != NULL )
+    if( dberLogfile != NULL )
         fclose(dberLogfile);
     dberLogfile = NULL;
 
@@ -73,6 +69,10 @@ Log::~Log()
     if (sqlLogFile != NULL)
         fclose(sqlLogFile);
     sqlLogFile = NULL;
+
+    if (sqlDevLogFile != NULL)
+        fclose(sqlDevLogFile);
+    sqlDevLogFile = NULL;
 }
 
 void Log::SetLogLevel(char *Level)
@@ -82,7 +82,7 @@ void Log::SetLogLevel(char *Level)
         NewLevel = 0;
     m_logLevel = NewLevel;
 
-    outString( "LogLevel is %u",m_logLevel );
+    outString( "LogLevel is %u", m_logLevel );
 }
 
 void Log::SetLogFileLevel(char *Level)
@@ -92,7 +92,7 @@ void Log::SetLogFileLevel(char *Level)
         NewLevel = 0;
     m_logFileLevel = NewLevel;
 
-    outString( "LogFileLevel is %u",m_logFileLevel );
+    outString( "LogFileLevel is %u", m_logFileLevel );
 }
 
 void Log::SetDBLogLevel(char *Level)
@@ -102,7 +102,7 @@ void Log::SetDBLogLevel(char *Level)
         NewLevel = 0;
     m_dbLogLevel = NewLevel;
 
-    outString( "DBLogLevel is %u",m_dbLogLevel );
+    outString( "DBLogLevel is %u", m_dbLogLevel );
 }
 
 void Log::Initialize()
@@ -117,7 +117,7 @@ void Log::Initialize()
     SetRealmID(0);
 
     /// Common log files data
-    m_logsDir = sConfig->GetStringDefault("LogsDir","");
+    m_logsDir = sConfig->GetStringDefault("LogsDir", "");
     if (!m_logsDir.empty())
         if ((m_logsDir.at(m_logsDir.length() - 1) != '/') && (m_logsDir.at(m_logsDir.length() - 1) != '\\'))
             m_logsDir.append("/");
@@ -125,33 +125,33 @@ void Log::Initialize()
     m_logsTimestamp = "_" + GetTimestampStr();
 
     /// Open specific log files
-    logfile = openLogFile("LogFile","LogTimestamp","w");
+    logfile = openLogFile("LogFile", "LogTimestamp", "w");
     InitColors(sConfig->GetStringDefault("LogColors", ""));
 
-    m_gmlog_per_account = sConfig->GetBoolDefault("GmLogPerAccount",false);
-    if (!m_gmlog_per_account)
-        gmLogfile = openLogFile("GMLogFile","GmLogTimestamp","a");
+    m_gmlog_per_account = sConfig->GetBoolDefault("GmLogPerAccount", false);
+    if(!m_gmlog_per_account)
+        gmLogfile = openLogFile("GMLogFile", "GmLogTimestamp", "a");
     else
     {
         // GM log settings for per account case
         m_gmlog_filename_format = sConfig->GetStringDefault("GMLogFile", "");
-        if (!m_gmlog_filename_format.empty())
+        if(!m_gmlog_filename_format.empty())
         {
-            bool m_gmlog_timestamp = sConfig->GetBoolDefault("GmLogTimestamp",false);
+            bool m_gmlog_timestamp = sConfig->GetBoolDefault("GmLogTimestamp", false);
 
             size_t dot_pos = m_gmlog_filename_format.find_last_of(".");
-            if (dot_pos!=m_gmlog_filename_format.npos)
+            if(dot_pos!=m_gmlog_filename_format.npos)
             {
-                if (m_gmlog_timestamp)
+                if(m_gmlog_timestamp)
                     m_gmlog_filename_format.insert(dot_pos, m_logsTimestamp);
 
-                m_gmlog_filename_format.insert(dot_pos,"_#%u");
+                m_gmlog_filename_format.insert(dot_pos, "_#%u");
             }
             else
             {
                 m_gmlog_filename_format += "_#%u";
 
-                if (m_gmlog_timestamp)
+                if(m_gmlog_timestamp)
                     m_gmlog_filename_format += m_logsTimestamp;
             }
 
@@ -163,8 +163,9 @@ void Log::Initialize()
     dberLogfile = openLogFile("DBErrorLogFile", NULL, "a");
     raLogfile = openLogFile("RaLogFile", NULL, "a");
     chatLogfile = openLogFile("ChatLogFile", "ChatLogTimestamp", "a");
-    arenaLogFile = openLogFile("ArenaLogFile", NULL,"a");
+    arenaLogFile = openLogFile("ArenaLogFile", NULL, "a");
     sqlLogFile = openLogFile("SQLDriverLogFile", NULL, "a");
+    sqlDevLogFile = openLogFile("SQLDeveloperLogFile", NULL, "a");
 
     // Main log file settings
     m_logLevel     = sConfig->GetIntDefault("LogLevel", LOGL_NORMAL);
@@ -172,16 +173,7 @@ void Log::Initialize()
     m_dbLogLevel   = sConfig->GetIntDefault("DBLogLevel", LOGL_NORMAL);
     m_sqlDriverQueryLogging  = sConfig->GetBoolDefault("SQLDriverQueryLogging", false);
 
-    m_logFilter = 0;
-
-    if (sConfig->GetBoolDefault("LogFilter_TransportMoves", true))
-        m_logFilter |= LOG_FILTER_TRANSPORT_MOVES;
-    if (sConfig->GetBoolDefault("LogFilter_CreatureMoves", true))
-        m_logFilter |= LOG_FILTER_CREATURE_MOVES;
-    if (sConfig->GetBoolDefault("LogFilter_VisibilityChanges", true))
-        m_logFilter |= LOG_FILTER_VISIBILITY_CHANGES;
-    if (sConfig->GetBoolDefault("LogFilter_AchievementUpdates", true))
-        m_logFilter |= LOG_FILTER_ACHIEVEMENT_UPDATES;
+    m_DebugLogMask = DebugLogFilters(sConfig->GetIntDefault("DebugLogMask", LOG_FILTER_NONE));
 
     // Char log settings
     m_charLog_Dump = sConfig->GetBoolDefault("CharLogDump", false);
@@ -198,13 +190,13 @@ void Log::Initialize()
 FILE* Log::openLogFile(char const* configFileName, char const* configTimeStampFlag, char const* mode)
 {
     std::string logfn=sConfig->GetStringDefault(configFileName, "");
-    if (logfn.empty())
+    if(logfn.empty())
         return NULL;
 
-    if (configTimeStampFlag && sConfig->GetBoolDefault(configTimeStampFlag, false))
+    if(configTimeStampFlag && sConfig->GetBoolDefault(configTimeStampFlag, false))
     {
         size_t dot_pos = logfn.find_last_of(".");
-        if (dot_pos!=logfn.npos)
+        if(dot_pos!=logfn.npos)
             logfn.insert(dot_pos, m_logsTimestamp);
         else
             logfn += m_logsTimestamp;
@@ -215,11 +207,11 @@ FILE* Log::openLogFile(char const* configFileName, char const* configTimeStampFl
 
 FILE* Log::openGmlogPerAccount(uint32 account)
 {
-    if (m_gmlog_filename_format.empty())
+    if(m_gmlog_filename_format.empty())
         return NULL;
 
     char namebuf[TRINITY_PATH_MAX];
-    snprintf(namebuf, TRINITY_PATH_MAX, m_gmlog_filename_format.c_str(),account);
+    snprintf(namebuf, TRINITY_PATH_MAX, m_gmlog_filename_format.c_str(), account);
     return fopen(namebuf, "a");
 }
 
@@ -233,12 +225,12 @@ void Log::outTimestamp(FILE* file)
     //       HH     hour (2 digits 00-23)
     //       MM     minutes (2 digits 00-59)
     //       SS     seconds (2 digits 00-59)
-    fprintf(file,"%-4d-%02d-%02d %02d:%02d:%02d ",aTm->tm_year+1900, aTm->tm_mon+1, aTm->tm_mday, aTm->tm_hour, aTm->tm_min, aTm->tm_sec);
+    fprintf(file, "%-4d-%02d-%02d %02d:%02d:%02d ", aTm->tm_year+1900, aTm->tm_mon+1, aTm->tm_mday, aTm->tm_hour, aTm->tm_min, aTm->tm_sec);
 }
 
 void Log::InitColors(const std::string& str)
 {
-    if (str.empty())
+    if(str.empty())
     {
         m_colored = false;
         return;
@@ -252,10 +244,10 @@ void Log::InitColors(const std::string& str)
     {
         ss >> color[i];
 
-        if (!ss)
+        if(!ss)
             return;
 
-        if (color[i] < 0 || color[i] >= Colors)
+        if(color[i] < 0 || color[i] >= Colors)
             return;
     }
 
@@ -275,20 +267,20 @@ void Log::SetColor(bool stdout_stream, ColorTypes color)
         FOREGROUND_GREEN,                                   // GREEN
         FOREGROUND_RED | FOREGROUND_GREEN,                  // BROWN
         FOREGROUND_BLUE,                                    // BLUE
-        FOREGROUND_RED |                    FOREGROUND_BLUE,// MAGENTA
+        FOREGROUND_RED |                    FOREGROUND_BLUE, // MAGENTA
         FOREGROUND_GREEN | FOREGROUND_BLUE,                 // CYAN
-        FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE,// WHITE
+        FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE, // WHITE
                                                             // YELLOW
-        FOREGROUND_RED | FOREGROUND_GREEN |                   FOREGROUND_INTENSITY, 
+        FOREGROUND_RED | FOREGROUND_GREEN |                   FOREGROUND_INTENSITY,
                                                             // RED_BOLD
-        FOREGROUND_RED |                                      FOREGROUND_INTENSITY, 
+        FOREGROUND_RED |                                      FOREGROUND_INTENSITY,
                                                             // GREEN_BOLD
-        FOREGROUND_GREEN |                   FOREGROUND_INTENSITY, 
+        FOREGROUND_GREEN |                   FOREGROUND_INTENSITY,
         FOREGROUND_BLUE | FOREGROUND_INTENSITY,             // BLUE_BOLD
                                                             // MAGENTA_BOLD
-        FOREGROUND_RED |                    FOREGROUND_BLUE | FOREGROUND_INTENSITY, 
+        FOREGROUND_RED |                    FOREGROUND_BLUE | FOREGROUND_INTENSITY,
                                                             // CYAN_BOLD
-        FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY, 
+        FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY,
                                                             // WHITE_BOLD
         FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY
     };
@@ -298,21 +290,21 @@ void Log::SetColor(bool stdout_stream, ColorTypes color)
     #else
     enum ANSITextAttr
     {
-        TA_NORMAL=0, 
-        TA_BOLD=1, 
-        TA_BLINK=5, 
+        TA_NORMAL=0,
+        TA_BOLD=1,
+        TA_BLINK=5,
         TA_REVERSE=7
     };
 
     enum ANSIFgTextAttr
     {
-        FG_BLACK=30, FG_RED,  FG_GREEN, FG_BROWN, FG_BLUE, 
+        FG_BLACK=30, FG_RED,  FG_GREEN, FG_BROWN, FG_BLUE,
         FG_MAGENTA,  FG_CYAN, FG_WHITE, FG_YELLOW
     };
 
     enum ANSIBgTextAttr
     {
-        BG_BLACK=40, BG_RED,  BG_GREEN, BG_BROWN, BG_BLUE, 
+        BG_BLACK=40, BG_RED,  BG_GREEN, BG_BROWN, BG_BLUE,
         BG_MAGENTA,  BG_CYAN, BG_WHITE
     };
 
@@ -360,7 +352,7 @@ std::string Log::GetTimestampStr()
     //       MM     minutes (2 digits 00-59)
     //       SS     seconds (2 digits 00-59)
     char buf[20];
-    snprintf(buf, 20,"%04d-%02d-%02d_%02d-%02d-%02d",aTm->tm_year+1900, aTm->tm_mon+1, aTm->tm_mday, aTm->tm_hour, aTm->tm_min, aTm->tm_sec);
+    snprintf(buf, 20, "%04d-%02d-%02d_%02d-%02d-%02d", aTm->tm_year+1900, aTm->tm_mon+1, aTm->tm_mday, aTm->tm_hour, aTm->tm_min, aTm->tm_sec);
     return std::string(buf);
 }
 
@@ -411,7 +403,7 @@ void Log::outString(const char * str, ...)
         ResetColor(true);
 
     printf("\n");
-    if (logfile)
+    if(logfile)
     {
         outTimestamp(logfile);
         va_start(ap, str);
@@ -714,7 +706,7 @@ void Log::outDebugInLine(const char * str, ...)
         vutf8printf(stdout, str, &ap);
         va_end(ap);
 
-        //if (m_colored)
+        //if(m_colored)
         //    ResetColor(true);
 
         if (logfile)
@@ -727,8 +719,37 @@ void Log::outDebugInLine(const char * str, ...)
     }
 }
 
-void Log::outDebug(const char * str, ...)
+void Log::outSQLDev(const char* str, ...)
 {
+    if (!str)
+        return;
+
+    va_list ap;
+    va_start(ap, str);
+    vutf8printf(stdout, str, &ap);
+    va_end(ap);
+
+    printf("\n");
+
+    if (sqlDevLogFile)
+    {
+        va_list ap;
+        va_start(ap, str);
+        vfprintf(sqlDevLogFile, str, ap);
+        va_end(ap);
+
+        fprintf(sqlDevLogFile, "\n");
+        fflush(sqlDevLogFile);
+    }
+
+    fflush(stdout);
+}
+
+void Log::outDebug(DebugLogFilters f, const char * str, ...)
+{
+    if (!(m_DebugLogMask & f))
+        return;
+
     if (!str)
         return;
 
@@ -742,7 +763,7 @@ void Log::outDebug(const char * str, ...)
         va_end(ap2);
     }
 
-    if ( m_logLevel > LOGL_DETAIL )
+    if( m_logLevel > LOGL_DETAIL )
     {
         if (m_colored)
             SetColor(true, m_colors[LOGL_DEBUG]);
@@ -752,7 +773,7 @@ void Log::outDebug(const char * str, ...)
         vutf8printf(stdout, str, &ap);
         va_end(ap);
 
-        if (m_colored)
+        if(m_colored)
             ResetColor(true);
 
         printf( "\n" );
@@ -787,7 +808,7 @@ void Log::outStaticDebug(const char * str, ...)
         va_end(ap2);
     }
 
-    if ( m_logLevel > LOGL_DETAIL )
+    if( m_logLevel > LOGL_DETAIL )
     {
         if (m_colored)
             SetColor(true, m_colors[LOGL_DEBUG]);
@@ -797,7 +818,7 @@ void Log::outStaticDebug(const char * str, ...)
         vutf8printf(stdout, str, &ap);
         va_end(ap);
 
-        if (m_colored)
+        if(m_colored)
             ResetColor(true);
 
         printf( "\n" );

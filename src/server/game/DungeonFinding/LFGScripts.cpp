@@ -41,7 +41,7 @@ void LFGScripts::OnAddMember(Group* group, uint64 guid)
     if (!gguid)
         return;
 
-    sLog->outDebug("LFGScripts::OnAddMember [" UI64FMTD "]: added [" UI64FMTD "]", gguid, guid);
+    sLog->outDebug(LOG_FILTER_LFG, "LFGScripts::OnAddMember [" UI64FMTD "]: added [" UI64FMTD "]", gguid, guid);
     LfgUpdateData updateData = LfgUpdateData(LFG_UPDATETYPE_CLEAR_LOCK_LIST);
     for (GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
     {
@@ -67,7 +67,7 @@ void LFGScripts::OnRemoveMember(Group* group, uint64 guid, RemoveMethod& method,
     if (!gguid || method == GROUP_REMOVEMETHOD_DEFAULT)
         return;
 
-    sLog->outDebug("LFGScripts::OnRemoveMember [" UI64FMTD "]: remove [" UI64FMTD "] Method: %d Kicker: [" UI64FMTD "] Reason: %s", gguid, guid, method, kicker, (reason ? reason : ""));
+    sLog->outDebug(LOG_FILTER_LFG, "LFGScripts::OnRemoveMember [" UI64FMTD "]: remove [" UI64FMTD "] Method: %d Kicker: [" UI64FMTD "] Reason: %s", gguid, guid, method, kicker, (reason ? reason : ""));
     if (sLFGMgr->GetState(gguid) == LFG_STATE_QUEUED)
     {
         // TODO - Do not remove, just remove the one leaving and rejoin queue with all other data
@@ -110,7 +110,7 @@ void LFGScripts::OnRemoveMember(Group* group, uint64 guid, RemoveMethod& method,
 void LFGScripts::OnDisband(Group* group)
 {
     uint64 gguid = group->GetGUID();
-    sLog->outDebug("LFGScripts::OnDisband [" UI64FMTD "]", gguid);
+    sLog->outDebug(LOG_FILTER_LFG, "LFGScripts::OnDisband [" UI64FMTD "]", gguid);
 
     sLFGMgr->RemoveGroupData(gguid);
 }
@@ -121,7 +121,7 @@ void LFGScripts::OnChangeLeader(Group* group, uint64 newLeaderGuid, uint64 oldLe
     if (!gguid)
         return;
 
-    sLog->outDebug("LFGScripts::OnChangeLeader [" UI64FMTD "]: old [" UI64FMTD "] new [" UI64FMTD "]", gguid, newLeaderGuid, oldLeaderGuid);
+    sLog->outDebug(LOG_FILTER_LFG, "LFGScripts::OnChangeLeader [" UI64FMTD "]: old [" UI64FMTD "] new [" UI64FMTD "]", gguid, newLeaderGuid, oldLeaderGuid);
     Player *plr = sObjectMgr->GetPlayer(newLeaderGuid);
 
     LfgUpdateData updateData = LfgUpdateData(LFG_UPDATETYPE_LEADER);
@@ -143,7 +143,7 @@ void LFGScripts::OnInviteMember(Group* group, uint64 guid)
     if (!gguid)
         return;
 
-    sLog->outDebug("LFGScripts::OnInviteMember [" UI64FMTD "]: invite [" UI64FMTD "] leader [" UI64FMTD "]", gguid, guid, group->GetLeaderGUID());
+    sLog->outDebug(LOG_FILTER_LFG, "LFGScripts::OnInviteMember [" UI64FMTD "]: invite [" UI64FMTD "] leader [" UI64FMTD "]", gguid, guid, group->GetLeaderGUID());
     sLFGMgr->Leave(NULL, group);
 }
 

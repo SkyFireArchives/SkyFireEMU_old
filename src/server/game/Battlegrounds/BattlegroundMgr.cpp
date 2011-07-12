@@ -150,7 +150,7 @@ void BattlegroundMgr::Update(uint32 diff)
         if (m_NextRatingDiscardUpdate < diff)
         {
             // forced update for rated arenas (scan all, but skipped non rated)
-            sLog->outDebug("BattlegroundMgr: UPDATING ARENA QUEUES");
+            sLog->outDebug(LOG_FILTER_BATTLEGROUND, "BattlegroundMgr: UPDATING ARENA QUEUES");
             for (int qtype = BATTLEGROUND_QUEUE_2v2; qtype <= BATTLEGROUND_QUEUE_5v5; ++qtype)
                 for (int bracket = BG_BRACKET_ID_FIRST; bracket < MAX_BATTLEGROUND_BRACKETS; ++bracket)
                     m_BattlegroundQueues[qtype].Update(
@@ -315,7 +315,7 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
             *data << uint32(pointsLost);        // Rating Lost
             *data << uint32(pointsGained);      // Rating gained
             *data << uint32(MatchmakerRating);  // Matchmaking Value
-            sLog->outDebug("rating change: %d", bg->m_ArenaTeamRatingChanges[i]);
+            sLog->outDebug(LOG_FILTER_BATTLEGROUND, "rating change: %d", bg->m_ArenaTeamRatingChanges[i]);
         }
     }
 
@@ -492,7 +492,7 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
                 data->put(extraFields, 0);                                                     // count of next fields
                 break;
             default:
-                sLog->outDebug("Unhandled MSG_PVP_LOG_DATA for BG id %u", bg->GetTypeID());
+                sLog->outDebug(LOG_FILTER_NETWORKIO, "Unhandled MSG_PVP_LOG_DATA for BG id %u", bg->GetTypeID());
                 data->put(extraFields, 0);                                                     // count of next fields
                 break;
         }
@@ -925,15 +925,15 @@ void BattlegroundMgr::InitAutomaticArenaPointDistribution()
 
     time_t wstime = time_t(sWorld->getWorldState(WS_ARENA_DISTRIBUTION_TIME));
     time_t curtime = time(NULL);
-    sLog->outDebug("Initializing Automatic Arena Point Distribution");
+    sLog->outDebug(LOG_FILTER_BATTLEGROUND, "Initializing Automatic Arena Point Distribution");
     if (wstime < curtime)
     {
         m_NextAutoDistributionTime = curtime;           // reset will be called in the next update
-        sLog->outDebug("Battleground: Next arena point distribution time in the past, reseting it now.");
+        sLog->outDebug(LOG_FILTER_BATTLEGROUND, "Battleground: Next arena point distribution time in the past, reseting it now.");
     }
     else
         m_NextAutoDistributionTime = wstime;
-    sLog->outDebug("Automatic Arena Point Distribution initialized.");
+    sLog->outDebug(LOG_FILTER_BATTLEGROUND, "Automatic Arena Point Distribution initialized.");
 }
 
 void BattlegroundMgr::DistributeArenaPoints()
