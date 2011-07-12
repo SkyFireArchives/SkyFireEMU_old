@@ -26,3 +26,14 @@ UPDATE emuopcodes SET number = 48874 WHERE name = "CMSG_CANCEL_AURA" and version
 UPDATE emuopcodes SET number = 22965 WHERE name = "CMSG_MESSAGECHAT_SAY" and version = @ver;
 UPDATE emuopcodes SET number = 61990 WHERE name = "CMSG_READY_FOR_ACCOUNT_DATA_TIMES" and version = @ver;
 UPDATE emuopcodes SET number = 4241 WHERE name = "CMSG_CHAR_ENUM" and version = @ver;
+
+UPDATE emuopcodes SET number = 45734 WHERE name = "CMSG_LOGOUT_REQUEST" and version = @ver;
+UPDATE emuopcodes SET number = 6369 WHERE name = "MSG_MOVE_START_FORWARD" and version = @ver;
+UPDATE emuopcodes SET number = 10467 WHERE name = "MSG_MOVE_SET_WALK_MODE" and version = @ver;
+UPDATE emuopcodes SET number = 10346 WHERE name = "MSG_MOVE_STOP" and version = @ver;
+UPDATE emuopcodes SET number = 2147 WHERE name = "MSG_MOVE_START_BACKWARD" and version = @ver;
+UPDATE emuopcodes SET number = 2122 WHERE name = "MSG_MOVE_START_TURN_LEFT" and version = @ver;
+UPDATE emuopcodes SET number = 14434 WHERE name = "MSG_MOVE_START_STRAFE_LEFT" and version = @ver;
+UPDATE emuopcodes SET number = 35040 WHERE name = "MSG_MOVE_START_TURN_RIGHT" and version = @ver;
+UPDATE emuopcodes SET number = 14442 WHERE name = "MSG_MOVE_JUMP" and version = @ver;
+UPDATE emuopcodes SET number = 35041 WHERE name = "MSG_MOVE_FALL_LAND" and version = @ver;
