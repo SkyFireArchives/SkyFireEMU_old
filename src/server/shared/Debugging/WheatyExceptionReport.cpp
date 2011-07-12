@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -51,11 +51,11 @@ inline LPTSTR ErrorMessage(DWORD dw)
     LPVOID lpMsgBuf;
     FormatMessage(
         FORMAT_MESSAGE_ALLOCATE_BUFFER |
-        FORMAT_MESSAGE_FROM_SYSTEM,
-        NULL,
-        dw,
+        FORMAT_MESSAGE_FROM_SYSTEM, 
+        NULL, 
+        dw, 
         MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-        (LPTSTR) &lpMsgBuf,
+        (LPTSTR) &lpMsgBuf, 
         0, NULL);
     return (LPTSTR)lpMsgBuf;
 }
@@ -123,20 +123,20 @@ PEXCEPTION_POINTERS pExceptionInfo)
     sprintf(m_szLogFileName, "%s\\%s_%s_[%u-%u_%u-%u-%u].txt",
         crash_folder_path, _HASH, pos, systime.wDay, systime.wMonth, systime.wHour, systime.wMinute, systime.wSecond);
 
-    m_hDumpFile = CreateFile(m_szDumpFileName,
-        GENERIC_WRITE,
-        0,
-        0,
-        OPEN_ALWAYS,
-        FILE_FLAG_WRITE_THROUGH,
+    m_hDumpFile = CreateFile(m_szDumpFileName, 
+        GENERIC_WRITE, 
+        0, 
+        0, 
+        OPEN_ALWAYS, 
+        FILE_FLAG_WRITE_THROUGH, 
         0);
 
-    m_hReportFile = CreateFile(m_szLogFileName,
-        GENERIC_WRITE,
-        0,
-        0,
-        OPEN_ALWAYS,
-        FILE_FLAG_WRITE_THROUGH,
+    m_hReportFile = CreateFile(m_szLogFileName, 
+        GENERIC_WRITE, 
+        0, 
+        0, 
+        OPEN_ALWAYS, 
+        FILE_FLAG_WRITE_THROUGH, 
         0);
 
     if (m_hDumpFile)
@@ -181,7 +181,7 @@ BOOL WheatyExceptionReport::_GetProcessorName(TCHAR* sProcessorName, DWORD maxco
         return FALSE;
     TCHAR szTmp[2048];
     DWORD cntBytes = sizeof(szTmp);
-    lRet = ::RegQueryValueEx(hKey, _T("ProcessorNameString"), NULL, NULL,
+    lRet = ::RegQueryValueEx(hKey, _T("ProcessorNameString"), NULL, NULL, 
         (LPBYTE)szTmp, &cntBytes);
     if (lRet != ERROR_SUCCESS)
         return FALSE;
@@ -396,7 +396,7 @@ void WheatyExceptionReport::printTracesForAllThreads()
   // Fill in the size of the structure before using it.
   te32.dwSize = sizeof(THREADENTRY32);
 
-  // Retrieve information about the first thread,
+  // Retrieve information about the first thread, 
   // and exit if unsuccessful
   if (!Thread32First(hThreadSnap, &te32))
   {
@@ -405,7 +405,7 @@ void WheatyExceptionReport::printTracesForAllThreads()
     return;
   }
 
-  // Now walk the thread list of the system,
+  // Now walk the thread list of the system, 
   // and display information about each thread
   // associated with the specified process
   do
@@ -414,7 +414,7 @@ void WheatyExceptionReport::printTracesForAllThreads()
     {
         CONTEXT context;
         context.ContextFlags = 0xffffffff;
-        HANDLE threadHandle = OpenThread(THREAD_GET_CONTEXT | THREAD_QUERY_INFORMATION,false, te32.th32ThreadID);
+        HANDLE threadHandle = OpenThread(THREAD_GET_CONTEXT | THREAD_QUERY_INFORMATION, false, te32.th32ThreadID);
         if (threadHandle && GetThreadContext(threadHandle, &context))
         {
             WriteStackDetails(&context, false, threadHandle);
@@ -446,26 +446,26 @@ PEXCEPTION_POINTERS pExceptionInfo)
     // First print information about the type of fault
     _tprintf(_T("\r\n//=====================================================\r\n"));
     _tprintf(_T("Exception code: %08X %s\r\n"),
-        pExceptionRecord->ExceptionCode,
+        pExceptionRecord->ExceptionCode, 
         GetExceptionString(pExceptionRecord->ExceptionCode));
 
     // Now print information about where the fault occured
     TCHAR szFaultingModule[MAX_PATH];
     DWORD section;
     DWORD_PTR offset;
-    GetLogicalAddress(pExceptionRecord->ExceptionAddress,
-        szFaultingModule,
+    GetLogicalAddress(pExceptionRecord->ExceptionAddress, 
+        szFaultingModule, 
         sizeof(szFaultingModule),
         section, offset);
 
 #ifdef _M_IX86
     _tprintf(_T("Fault address:  %08X %02X:%08X %s\r\n"),
-        pExceptionRecord->ExceptionAddress,
+        pExceptionRecord->ExceptionAddress, 
         section, offset, szFaultingModule);
 #endif
 #ifdef _M_X64
     _tprintf(_T("Fault address:  %016I64X %02X:%016I64X %s\r\n"),
-        pExceptionRecord->ExceptionAddress,
+        pExceptionRecord->ExceptionAddress, 
         section, offset, szFaultingModule);
 #endif
 
@@ -476,7 +476,7 @@ PEXCEPTION_POINTERS pExceptionInfo)
     _tprintf(_T("\r\nRegisters:\r\n"));
 
     _tprintf(_T("EAX:%08X\r\nEBX:%08X\r\nECX:%08X\r\nEDX:%08X\r\nESI:%08X\r\nEDI:%08X\r\n")
-        ,pCtx->Eax, pCtx->Ebx, pCtx->Ecx, pCtx->Edx,
+        , pCtx->Eax, pCtx->Ebx, pCtx->Ecx, pCtx->Edx, 
         pCtx->Esi, pCtx->Edi);
 
     _tprintf(_T("CS:EIP:%04X:%08X\r\n"), pCtx->SegCs, pCtx->Eip);
@@ -491,8 +491,8 @@ PEXCEPTION_POINTERS pExceptionInfo)
     _tprintf(_T("\r\nRegisters:\r\n"));
     _tprintf(_T("RAX:%016I64X\r\nRBX:%016I64X\r\nRCX:%016I64X\r\nRDX:%016I64X\r\nRSI:%016I64X\r\nRDI:%016I64X\r\n")
         _T("R8: %016I64X\r\nR9: %016I64X\r\nR10:%016I64X\r\nR11:%016I64X\r\nR12:%016I64X\r\nR13:%016I64X\r\nR14:%016I64X\r\nR15:%016I64X\r\n")
-        ,pCtx->Rax, pCtx->Rbx, pCtx->Rcx, pCtx->Rdx,
-        pCtx->Rsi, pCtx->Rdi ,pCtx->R9,pCtx->R10,pCtx->R11,pCtx->R12,pCtx->R13,pCtx->R14,pCtx->R15);
+        , pCtx->Rax, pCtx->Rbx, pCtx->Rcx, pCtx->Rdx, 
+        pCtx->Rsi, pCtx->Rdi , pCtx->R9, pCtx->R10, pCtx->R11, pCtx->R12, pCtx->R13, pCtx->R14, pCtx->R15);
     _tprintf(_T("CS:RIP:%04X:%016I64X\r\n"), pCtx->SegCs, pCtx->Rip);
     _tprintf(_T("SS:RSP:%04X:%016X  RBP:%08X\r\n"),
         pCtx->SegSs, pCtx->Rsp, pCtx->Rbp);
@@ -575,7 +575,7 @@ LPTSTR WheatyExceptionReport::GetExceptionString(DWORD dwCode)
 
     static TCHAR szBuffer[512] = { 0 };
 
-    FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_HMODULE,
+    FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_HMODULE, 
         GetModuleHandle(_T("NTDLL.DLL")),
         dwCode, 0, szBuffer, sizeof(szBuffer), 0);
 
@@ -625,7 +625,7 @@ PVOID addr, PTSTR szModule, DWORD len, DWORD& section, DWORD_PTR& offset)
         // Is the address in this section???
         if ((rva >= sectionStart) && (rva <= sectionEnd))
         {
-            // Yes, address is in the section.  Calculate section and offset,
+            // Yes, address is in the section.  Calculate section and offset, 
             // and store in the "section" & "offset" params, which were
             // passed by reference.
             section = i+1;
@@ -652,7 +652,7 @@ struct CSymbolInfoPackage : public SYMBOL_INFO_PACKAGE
 // Walks the stack, and writes the results to the report file
 //============================================================
 void WheatyExceptionReport::WriteStackDetails(
-PCONTEXT pContext,
+PCONTEXT pContext, 
 bool bWriteVariables, HANDLE pThreadHandle)                                      // true if local/params should be output
 {
     _tprintf(_T("\r\nCall stack:\r\n"));
@@ -691,14 +691,14 @@ bool bWriteVariables, HANDLE pThreadHandle)                                     
     while (1)
     {
         // Get the next stack frame
-        if (! StackWalk64(dwMachineType,
-            m_hProcess,
+        if (! StackWalk64(dwMachineType, 
+            m_hProcess, 
             pThreadHandle != NULL ? pThreadHandle : GetCurrentThread(),
-            &sf,
-            pContext,
-            0,
-            SymFunctionTableAccess64,
-            SymGetModuleBase64,
+            &sf, 
+            pContext, 
+            0, 
+            SymFunctionTableAccess64, 
+            SymGetModuleBase64, 
             0))
             break;
         if (0 == sf.AddrFrame.Offset)                     // Basic sanity check to make sure
@@ -710,7 +710,7 @@ bool bWriteVariables, HANDLE pThreadHandle)                                     
         _tprintf(_T("%016I64X  %016I64X  "), sf.AddrPC.Offset, sf.AddrFrame.Offset);
 #endif
 
-        DWORD64 symDisplacement = 0;                        // Displacement of the input address,
+        DWORD64 symDisplacement = 0;                        // Displacement of the input address, 
         // relative to the start of the symbol
 
         // Get the name of the function for this stack frame entry
@@ -730,7 +730,7 @@ bool bWriteVariables, HANDLE pThreadHandle)                                     
             DWORD section = 0;
             DWORD_PTR offset = 0;
 
-            GetLogicalAddress((PVOID)sf.AddrPC.Offset,
+            GetLogicalAddress((PVOID)sf.AddrPC.Offset, 
                 szModule, sizeof(szModule), section, offset);
 #ifdef _M_IX86
             _tprintf(_T("%04X:%08X %s"), section, offset, szModule);
@@ -743,10 +743,10 @@ bool bWriteVariables, HANDLE pThreadHandle)                                     
         // Get the source line for this stack frame entry
         IMAGEHLP_LINE64 lineInfo = { sizeof(IMAGEHLP_LINE) };
         DWORD dwLineDisplacement;
-        if (SymGetLineFromAddr64(m_hProcess, sf.AddrPC.Offset,
+        if (SymGetLineFromAddr64(m_hProcess, sf.AddrPC.Offset, 
             &dwLineDisplacement, &lineInfo))
         {
-            _tprintf(_T("  %s line %u"),lineInfo.FileName,lineInfo.LineNumber);
+            _tprintf(_T("  %s line %u"),lineInfo.FileName, lineInfo.LineNumber);
         }
 
         _tprintf(_T("\r\n"));
@@ -774,8 +774,8 @@ bool bWriteVariables, HANDLE pThreadHandle)                                     
 
 BOOL CALLBACK
 WheatyExceptionReport::EnumerateSymbolsCallback(
-PSYMBOL_INFO  pSymInfo,
-ULONG         SymbolSize,
+PSYMBOL_INFO  pSymInfo, 
+ULONG         SymbolSize, 
 PVOID         UserContext)
 {
 
@@ -783,7 +783,7 @@ PVOID         UserContext)
 
     __try
     {
-        if (FormatSymbolValue(pSymInfo, (STACKFRAME*)UserContext,
+        if (FormatSymbolValue(pSymInfo, (STACKFRAME*)UserContext, 
             szBuffer, sizeof(szBuffer)))
             _tprintf(_T("\t%s\r\n"), szBuffer);
     }
@@ -801,9 +801,9 @@ PVOID         UserContext)
 // values.
 //////////////////////////////////////////////////////////////////////////////
 bool WheatyExceptionReport::FormatSymbolValue(
-PSYMBOL_INFO pSym,
-STACKFRAME * sf,
-char * pszBuffer,
+PSYMBOL_INFO pSym, 
+STACKFRAME * sf, 
+char * pszBuffer, 
 unsigned cbBuffer)
 {
     char * pszCurrBuffer = pszBuffer;
@@ -842,7 +842,7 @@ unsigned cbBuffer)
     // Determine if the variable is a user defined type (UDT).  IF so, bHandled
     // will return true.
     bool bHandled;
-    pszCurrBuffer = DumpTypeIndex(pszCurrBuffer,pSym->ModBase, pSym->TypeIndex,
+    pszCurrBuffer = DumpTypeIndex(pszCurrBuffer, pSym->ModBase, pSym->TypeIndex, 
         0, pVariable, bHandled, pSym->Name);
 
     if (!bHandled)
@@ -856,7 +856,7 @@ unsigned cbBuffer)
         // Emit the variable name
         pszCurrBuffer += sprintf(pszCurrBuffer, "\'%s\'", pSym->Name);
 
-        pszCurrBuffer = FormatOutputValue(pszCurrBuffer, basicType, pSym->Size,
+        pszCurrBuffer = FormatOutputValue(pszCurrBuffer, basicType, pSym->Size, 
             (PVOID)pVariable);
     }
 
@@ -869,12 +869,12 @@ unsigned cbBuffer)
 // bHandled = false, so that FormatSymbolValue() will format them.
 //////////////////////////////////////////////////////////////////////////////
 char * WheatyExceptionReport::DumpTypeIndex(
-char * pszCurrBuffer,
-DWORD64 modBase,
-DWORD dwTypeIndex,
-unsigned nestingLevel,
-DWORD_PTR offset,
-bool & bHandled,
+char * pszCurrBuffer, 
+DWORD64 modBase, 
+DWORD dwTypeIndex, 
+unsigned nestingLevel, 
+DWORD_PTR offset, 
+bool & bHandled, 
 char* Name)
 {
     bHandled = false;
@@ -882,7 +882,7 @@ char* Name)
     // Get the name of the symbol.  This will either be a Type name (if a UDT),
     // or the structure member name.
     WCHAR * pwszTypeName;
-    if (SymGetTypeInfo(m_hProcess, modBase, dwTypeIndex, TI_GET_SYMNAME,
+    if (SymGetTypeInfo(m_hProcess, modBase, dwTypeIndex, TI_GET_SYMNAME, 
         &pwszTypeName))
     {
         pszCurrBuffer += sprintf(pszCurrBuffer, " %ls", pwszTypeName);
@@ -891,7 +891,7 @@ char* Name)
 
     // Determine how many children this type has.
     DWORD dwChildrenCount = 0;
-    SymGetTypeInfo(m_hProcess, modBase, dwTypeIndex, TI_GET_CHILDRENCOUNT,
+    SymGetTypeInfo(m_hProcess, modBase, dwTypeIndex, TI_GET_CHILDRENCOUNT, 
         &dwChildrenCount);
 
     if (!dwChildrenCount)                                 // If no children, we're done
@@ -910,7 +910,7 @@ char* Name)
     children.Start= 0;
 
     // Get the array of TypeIds, one for each child type
-    if (!SymGetTypeInfo(m_hProcess, modBase, dwTypeIndex, TI_FINDCHILDREN,
+    if (!SymGetTypeInfo(m_hProcess, modBase, dwTypeIndex, TI_FINDCHILDREN, 
         &children))
     {
         return pszCurrBuffer;
@@ -931,8 +931,8 @@ char* Name)
         BasicType basicType = GetBasicType(children.ChildId[i], modBase);
         pszCurrBuffer += sprintf(pszCurrBuffer, rgBaseType[basicType]);
 
-        pszCurrBuffer = DumpTypeIndex(pszCurrBuffer, modBase,
-            children.ChildId[i], nestingLevel+1,
+        pszCurrBuffer = DumpTypeIndex(pszCurrBuffer, modBase, 
+            children.ChildId[i], nestingLevel+1, 
             offset, bHandled2, ""/*Name */);
 
         // If the child wasn't a UDT, format it appropriately
@@ -963,7 +963,7 @@ char* Name)
             // Emit the variable name
             //          pszCurrBuffer += sprintf(pszCurrBuffer, "\'%s\'", Name);
 
-            pszCurrBuffer = FormatOutputValue(pszCurrBuffer, basicType,
+            pszCurrBuffer = FormatOutputValue(pszCurrBuffer, basicType, 
                 length, (PVOID)dwFinalOffset);
 
             pszCurrBuffer += sprintf(pszCurrBuffer, "\r\n");
@@ -974,9 +974,9 @@ char* Name)
     return pszCurrBuffer;
 }
 
-char * WheatyExceptionReport::FormatOutputValue(char * pszCurrBuffer,
-BasicType basicType,
-DWORD64 length,
+char * WheatyExceptionReport::FormatOutputValue(char * pszCurrBuffer, 
+BasicType basicType, 
+DWORD64 length, 
 PVOID pAddress)
 {
     // Format appropriately (assuming it's a 1, 2, or 4 bytes (!!!)
@@ -1023,7 +1023,7 @@ BasicType
 WheatyExceptionReport::GetBasicType(DWORD typeIndex, DWORD64 modBase)
 {
     BasicType basicType;
-    if (SymGetTypeInfo(m_hProcess, modBase, typeIndex,
+    if (SymGetTypeInfo(m_hProcess, modBase, typeIndex, 
         TI_GET_BASETYPE, &basicType))
     {
         return basicType;
@@ -1032,9 +1032,9 @@ WheatyExceptionReport::GetBasicType(DWORD typeIndex, DWORD64 modBase)
     // Get the real "TypeId" of the child.  We need this for the
     // SymGetTypeInfo(TI_GET_TYPEID) call below.
     DWORD typeId;
-    if (SymGetTypeInfo(m_hProcess,modBase, typeIndex, TI_GET_TYPEID, &typeId))
+    if (SymGetTypeInfo(m_hProcess, modBase, typeIndex, TI_GET_TYPEID, &typeId))
     {
-        if (SymGetTypeInfo(m_hProcess, modBase, typeId, TI_GET_BASETYPE,
+        if (SymGetTypeInfo(m_hProcess, modBase, typeId, TI_GET_BASETYPE, 
             &basicType))
         {
             return basicType;

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -50,9 +50,9 @@ class ObjectRegistry
         bool InsertItem(T *obj, Key key, bool override = false)
         {
             typename RegistryMapType::iterator iter = i_registeredObjects.find(key);
-            if( iter != i_registeredObjects.end() )
+            if ( iter != i_registeredObjects.end() )
             {
-                if( !override )
+                if ( !override )
                     return false;
                 delete iter->second;
                 i_registeredObjects.erase(iter);
@@ -66,9 +66,9 @@ class ObjectRegistry
         void RemoveItem(Key key, bool delete_object = true)
         {
             typename RegistryMapType::iterator iter = i_registeredObjects.find(key);
-            if( iter != i_registeredObjects.end() )
+            if ( iter != i_registeredObjects.end() )
             {
-                if( delete_object )
+                if ( delete_object )
                     delete iter->second;
                 i_registeredObjects.erase(iter);
             }

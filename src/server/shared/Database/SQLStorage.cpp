@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -54,7 +54,7 @@ void SQLStorage::Free ()
         if (dst_format[x]==FT_STRING)
         {
             for (uint32 y=0; y<MaxEntry; y++)
-                if(pIndex[y])
+                if (pIndex[y])
                     delete [] *(char**)((char*)(pIndex[y])+offset);
 
             offset += sizeof(char*);

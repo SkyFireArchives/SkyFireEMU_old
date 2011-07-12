@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,7 +34,7 @@ void SQLStorageLoaderBase<T>::convert(uint32 /*field_pos*/, S src, D& dst)
 template<class T>
 void SQLStorageLoaderBase<T>::convert_str_to_str(uint32 /*field_pos*/, char* src, char*& dst)
 {
-    if(!src)
+    if (!src)
     {
         dst = new char[1];
         *dst = 0;
@@ -136,7 +136,7 @@ void SQLStorageLoaderBase<T>::Load(SQLStorage& store)
     maxi = result->Fetch()[0].GetUInt32()+1;
 
     result = WorldDatabase.PQuery("SELECT COUNT(*) FROM %s", store.table);
-    if(result)
+    if (result)
     {
         fields = result->Fetch();
         store.RecordCount = fields[0].GetUInt32();
@@ -146,7 +146,7 @@ void SQLStorageLoaderBase<T>::Load(SQLStorage& store)
 
     result = WorldDatabase.PQuery("SELECT * FROM %s", store.table);
 
-    if(!result)
+    if (!result)
     {
         sLog->outError("%s table is empty!\n", store.table);
         store.RecordCount = 0;
@@ -156,7 +156,7 @@ void SQLStorageLoaderBase<T>::Load(SQLStorage& store)
     uint32 recordsize = 0;
     uint32 offset = 0;
 
-    if(store.iNumFields != result->GetFieldCount())
+    if (store.iNumFields != result->GetFieldCount())
     {
         store.RecordCount = 0;
 		sLog->outError("Error loading table %s, probably table format was updated (there should be %u fields in sql).\n", store.table, store.iNumFields);
@@ -168,7 +168,7 @@ void SQLStorageLoaderBase<T>::Load(SQLStorage& store)
     uint32 bo=0;
     uint32 bb=0;
     for (uint32 x=0; x< store.iNumFields; x++)
-        if(store.dst_format[x]==FT_STRING)
+        if (store.dst_format[x]==FT_STRING)
             ++sc;
         else if (store.dst_format[x]==FT_LOGIC)
             ++bo;
@@ -177,7 +177,7 @@ void SQLStorageLoaderBase<T>::Load(SQLStorage& store)
     recordsize=(store.iNumFields-sc-bo-bb)*4+sc*sizeof(char*)+bo*sizeof(bool)+bb*sizeof(char);
 
     char** newIndex=new char*[maxi];
-    memset(newIndex,0,maxi*sizeof(char*));
+    memset(newIndex, 0, maxi*sizeof(char*));
 
     char * _data= new char[store.RecordCount *recordsize];
     uint32 count=0;

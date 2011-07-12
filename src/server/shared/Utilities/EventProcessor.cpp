@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -75,17 +75,17 @@ void EventProcessor::KillAllEvents(bool force)
 
         i_old->second->to_Abort = true;
         i_old->second->Abort(m_time);
-        if(force || i_old->second->IsDeletable())
+        if (force || i_old->second->IsDeletable())
         {
             delete i_old->second;
 
-            if(!force)                                      // need per-element cleanup
+            if (!force)                                      // need per-element cleanup
                 m_events.erase (i_old);
         }
     }
 
     // fast clear event list (in force case)
-    if(force)
+    if (force)
         m_events.clear();
 }
 

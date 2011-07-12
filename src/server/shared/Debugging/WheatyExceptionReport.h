@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -36,43 +36,43 @@
 
 enum BasicType                                              // Stolen from CVCONST.H in the DIA 2.0 SDK
 {
-    btNoType = 0,
-    btVoid = 1,
-    btChar = 2,
-    btWChar = 3,
-    btInt = 6,
-    btUInt = 7,
-    btFloat = 8,
-    btBCD = 9,
-    btBool = 10,
-    btLong = 13,
-    btULong = 14,
-    btCurrency = 25,
-    btDate = 26,
-    btVariant = 27,
-    btComplex = 28,
-    btBit = 29,
-    btBSTR = 30,
+    btNoType = 0, 
+    btVoid = 1, 
+    btChar = 2, 
+    btWChar = 3, 
+    btInt = 6, 
+    btUInt = 7, 
+    btFloat = 8, 
+    btBCD = 9, 
+    btBool = 10, 
+    btLong = 13, 
+    btULong = 14, 
+    btCurrency = 25, 
+    btDate = 26, 
+    btVariant = 27, 
+    btComplex = 28, 
+    btBit = 29, 
+    btBSTR = 30, 
     btHresult = 31
 };
 
 const char* const rgBaseType[] =
 {
-    " <user defined> ",                                     // btNoType = 0,
-    " void ",                                               // btVoid = 1,
-    " char* ",                                              // btChar = 2,
-    " wchar_t* ",                                           // btWChar = 3,
+    " <user defined> ",                                    // btNoType = 0, 
+    " void ",                                              // btVoid = 1, 
+    " char* ",                                             // btChar = 2, 
+    " wchar_t* ",                                          // btWChar = 3, 
     " signed char ",
     " unsigned char ",
-    " int ",                                                // btInt = 6,
-    " unsigned int ",                                       // btUInt = 7,
-    " float ",                                              // btFloat = 8,
-    " <BCD> ",                                              // btBCD = 9,
-    " bool ",                                               // btBool = 10,
+    " int ",                                               // btInt = 6, 
+    " unsigned int ",                                      // btUInt = 7, 
+    " float ",                                             // btFloat = 8, 
+    " <BCD> ",                                             // btBCD = 9, 
+    " bool ",                                              // btBool = 10, 
     " short ",
     " unsigned short ",
-    " long ",                                               // btLong = 13,
-    " unsigned long ",                                      // btULong = 14,
+    " long ",                                              // btLong = 13, 
+    " unsigned long ",                                     // btULong = 14, 
     " __int8 ",
     " __int16 ",
     " __int32 ",
@@ -83,12 +83,12 @@ const char* const rgBaseType[] =
     " unsigned __int32 ",
     " unsigned __int64 ",
     " unsigned __int128 ",
-    " <currency> ",                                         // btCurrency = 25,
-    " <date> ",                                             // btDate = 26,
-    " VARIANT ",                                            // btVariant = 27,
-    " <complex> ",                                          // btComplex = 28,
-    " <bit> ",                                              // btBit = 29,
-    " BSTR ",                                               // btBSTR = 30,
+    " <currency> ",                                        // btCurrency = 25, 
+    " <date> ",                                            // btDate = 26, 
+    " VARIANT ",                                           // btVariant = 27, 
+    " <complex> ",                                         // btComplex = 28, 
+    " <bit> ",                                             // btBit = 29, 
+    " BSTR ",                                              // btBSTR = 30, 
     " HRESULT "                                             // btHresult = 31
 };
 
@@ -113,12 +113,12 @@ class WheatyExceptionReport
 
         // Helper functions
         static LPTSTR GetExceptionString(DWORD dwCode);
-        static BOOL GetLogicalAddress(PVOID addr, PTSTR szModule, DWORD len,
+        static BOOL GetLogicalAddress(PVOID addr, PTSTR szModule, DWORD len, 
             DWORD& section, DWORD_PTR& offset);
 
         static void WriteStackDetails(PCONTEXT pContext, bool bWriteVariables, HANDLE pThreadHandle);
 
-        static BOOL CALLBACK EnumerateSymbolsCallback(PSYMBOL_INFO,ULONG, PVOID);
+        static BOOL CALLBACK EnumerateSymbolsCallback(PSYMBOL_INFO, ULONG, PVOID);
 
         static bool FormatSymbolValue(PSYMBOL_INFO, STACKFRAME *, char * pszBuffer, unsigned cbBuffer);
 

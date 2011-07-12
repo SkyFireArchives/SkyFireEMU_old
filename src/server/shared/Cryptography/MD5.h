@@ -5,7 +5,7 @@
   warranty.  In no event will the authors be held liable for any damages
   arising from the use of this software.
 
-  Permission is granted to anyone to use this software for any purpose,
+  Permission is granted to anyone to use this software for any purpose, 
   including commercial applications, and to alter it and redistribute it
   freely, subject to the following restrictions:
 
@@ -21,7 +21,7 @@ L. Peter Deutsch
 ghost@aladdin.com
 
 */
-/* $Id: md5.h,v 1.4 2002/04/13 19:20:28 lpd Exp $ */
+/* $Id: md5.h, v 1.4 2002/04/13 19:20:28 lpd Exp $ */
 /*
   Independent implementation of MD5 (RFC 1321).
 

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -30,33 +30,33 @@ class Config;
 
 enum LogFilters
 {
-    LOG_FILTER_TRANSPORT_MOVES     = 1,
-    LOG_FILTER_CREATURE_MOVES      = 2,
-    LOG_FILTER_VISIBILITY_CHANGES  = 4,
+    LOG_FILTER_TRANSPORT_MOVES     = 1, 
+    LOG_FILTER_CREATURE_MOVES      = 2, 
+    LOG_FILTER_VISIBILITY_CHANGES  = 4, 
     LOG_FILTER_ACHIEVEMENT_UPDATES = 8
 };
 
 enum LogTypes
 {
-    LOG_TYPE_STRING = 0,
-    LOG_TYPE_ERROR  = 1,
-    LOG_TYPE_BASIC  = 2,
-    LOG_TYPE_DETAIL = 3,
-    LOG_TYPE_DEBUG  = 4,
-    LOG_TYPE_CHAR   = 5,
-    LOG_TYPE_WORLD  = 6,
-    LOG_TYPE_RA     = 7,
-    LOG_TYPE_GM     = 8,
-    LOG_TYPE_CRASH  = 9,
-    LOG_TYPE_CHAT   = 10,
+    LOG_TYPE_STRING = 0, 
+    LOG_TYPE_ERROR  = 1, 
+    LOG_TYPE_BASIC  = 2, 
+    LOG_TYPE_DETAIL = 3, 
+    LOG_TYPE_DEBUG  = 4, 
+    LOG_TYPE_CHAR   = 5, 
+    LOG_TYPE_WORLD  = 6, 
+    LOG_TYPE_RA     = 7, 
+    LOG_TYPE_GM     = 8, 
+    LOG_TYPE_CRASH  = 9, 
+    LOG_TYPE_CHAT   = 10, 
     MAX_LOG_TYPES
 };
 
 enum LogLevel
 {
-    LOGL_NORMAL = 0,
-    LOGL_BASIC,
-    LOGL_DETAIL,
+    LOGL_NORMAL = 0, 
+    LOGL_BASIC, 
+    LOGL_DETAIL, 
     LOGL_DEBUG
 };
 
@@ -64,20 +64,20 @@ const int LogLevels = int(LOGL_DEBUG)+1;
 
 enum ColorTypes
 {
-    BLACK,
-    RED,
-    GREEN,
-    BROWN,
-    BLUE,
-    MAGENTA,
-    CYAN,
-    GREY,
-    YELLOW,
-    LRED,
-    LGREEN,
-    LBLUE,
-    LMAGENTA,
-    LCYAN,
+    BLACK, 
+    RED, 
+    GREEN, 
+    BROWN, 
+    BLUE, 
+    MAGENTA, 
+    CYAN, 
+    GREY, 
+    YELLOW, 
+    LRED, 
+    LGREEN, 
+    LBLUE, 
+    LMAGENTA, 
+    LCYAN, 
     WHITE
 };
 
@@ -97,23 +97,23 @@ class Log
         void ResetColor(bool stdout_stream);
 
         void outDB( LogTypes type, const char * str );
-        void outString( const char * str, ... )                 ATTR_PRINTF(2,3);
+        void outString( const char * str, ... )                 ATTR_PRINTF(2, 3);
         void outString( );
-        void outStringInLine( const char * str, ... )           ATTR_PRINTF(2,3);
-        void outError( const char * err, ... )                  ATTR_PRINTF(2,3);
-        void outCrash( const char * err, ... )                  ATTR_PRINTF(2,3);
-        void outBasic( const char * str, ... )                  ATTR_PRINTF(2,3);
-        void outDetail( const char * str, ... )                 ATTR_PRINTF(2,3);
-        void outDebug( const char * str, ... )                  ATTR_PRINTF(2,3);
-        void outStaticDebug( const char * str, ... )            ATTR_PRINTF(2,3);
-        void outDebugInLine( const char * str, ... )            ATTR_PRINTF(2,3);
-        void outErrorDb( const char * str, ... )                ATTR_PRINTF(2,3);
-        void outChar( const char * str, ... )                   ATTR_PRINTF(2,3);
-        void outCommand( uint32 account, const char * str, ...) ATTR_PRINTF(3,4);
-        void outRemote( const char * str, ... )                 ATTR_PRINTF(2,3);
-        void outChat( const char * str, ... )                   ATTR_PRINTF(2,3);
-        void outArena( const char * str, ... )                  ATTR_PRINTF(2,3);
-        void outSQLDriver( const char* str, ... )               ATTR_PRINTF(2,3);
+        void outStringInLine( const char * str, ... )           ATTR_PRINTF(2, 3);
+        void outError( const char * err, ... )                  ATTR_PRINTF(2, 3);
+        void outCrash( const char * err, ... )                  ATTR_PRINTF(2, 3);
+        void outBasic( const char * str, ... )                  ATTR_PRINTF(2, 3);
+        void outDetail( const char * str, ... )                 ATTR_PRINTF(2, 3);
+        void outDebug( const char * str, ... )                  ATTR_PRINTF(2, 3);
+        void outStaticDebug( const char * str, ... )            ATTR_PRINTF(2, 3);
+        void outDebugInLine( const char * str, ... )            ATTR_PRINTF(2, 3);
+        void outErrorDb( const char * str, ... )                ATTR_PRINTF(2, 3);
+        void outChar( const char * str, ... )                   ATTR_PRINTF(2, 3);
+        void outCommand( uint32 account, const char * str, ...) ATTR_PRINTF(3, 4);
+        void outRemote( const char * str, ... )                 ATTR_PRINTF(2, 3);
+        void outChat( const char * str, ... )                   ATTR_PRINTF(2, 3);
+        void outArena( const char * str, ... )                  ATTR_PRINTF(2, 3);
+        void outSQLDriver( const char* str, ... )               ATTR_PRINTF(2, 3);
         void outCharDump( const char * str, uint32 account_id, uint32 guid, const char * name );
 
         static void outTimestamp(FILE* file);
@@ -135,7 +135,7 @@ class Log
         void SetLogDBLater(bool value) { m_enableLogDBLater = value; }
         bool GetSQLDriverQueryLogging() const { return m_sqlDriverQueryLogging; }
     private:
-        FILE* openLogFile(char const* configFileName,char const* configTimeStampFlag, char const* mode);
+        FILE* openLogFile(char const* configFileName, char const* configTimeStampFlag, char const* mode);
         FILE* openGmlogPerAccount(uint32 account);
 
         FILE* raLogfile;

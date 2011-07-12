@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -189,7 +189,7 @@ DB2FileLoader::Record DB2FileLoader::getRecord(size_t id)
     return Record(*this, data + id*recordSize);
 }
 
-uint32 DB2FileLoader::GetFormatRecordSize(const char * format,int32* index_pos)
+uint32 DB2FileLoader::GetFormatRecordSize(const char * format, int32* index_pos)
 {
     uint32 recordsize = 0;
     int32 i = -1;
@@ -236,10 +236,10 @@ uint32 DB2FileLoader::GetFormatStringsFields(const char * format)
 char* DB2FileLoader::AutoProduceData(const char* format, uint32& records, char**& indexTable)
 {
     /*
-    format STRING, NA, FLOAT,NA,INT <=>
+    format STRING, NA, FLOAT, NA, INT <=>
     struct{
-    char* field0,
-    float field1,
+    char* field0, 
+    float field1, 
     int field2
     }entry;
 

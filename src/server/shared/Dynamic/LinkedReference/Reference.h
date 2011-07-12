@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -49,9 +49,9 @@ template <class TO, class FROM> class Reference : public LinkedListElement
         void link(TO* toObj, FROM* fromObj)
         {
             assert(fromObj);                                // fromObj MUST not be NULL
-            if(isValid())
+            if (isValid())
                 unlink();
-            if(toObj != NULL)
+            if (toObj != NULL)
             {
                 iRefTo = toObj;
                 iRefFrom = fromObj;
@@ -63,7 +63,7 @@ template <class TO, class FROM> class Reference : public LinkedListElement
         // Tell our refTo object, that the link is cut
         void unlink()
         {
-            if(isValid())
+            if (isValid())
             {
                 targetObjectDestroyLink();
             }
@@ -86,15 +86,15 @@ template <class TO, class FROM> class Reference : public LinkedListElement
             return iRefTo != NULL;
         }
 
-        Reference<TO,FROM>       * next()       { return((Reference<TO,FROM>       *) LinkedListElement::next()); }
-        Reference<TO,FROM> const * next() const { return((Reference<TO,FROM> const *) LinkedListElement::next()); }
-        Reference<TO,FROM>       * prev()       { return((Reference<TO,FROM>       *) LinkedListElement::prev()); }
-        Reference<TO,FROM> const * prev() const { return((Reference<TO,FROM> const *) LinkedListElement::prev()); }
+        Reference<TO, FROM>       * next()       { return((Reference<TO, FROM>       *) LinkedListElement::next()); }
+        Reference<TO, FROM> const * next() const { return((Reference<TO, FROM> const *) LinkedListElement::next()); }
+        Reference<TO, FROM>       * prev()       { return((Reference<TO, FROM>       *) LinkedListElement::prev()); }
+        Reference<TO, FROM> const * prev() const { return((Reference<TO, FROM> const *) LinkedListElement::prev()); }
 
-        Reference<TO,FROM>       * nocheck_next()       { return((Reference<TO,FROM>       *) LinkedListElement::nocheck_next()); }
-        Reference<TO,FROM> const * nocheck_next() const { return((Reference<TO,FROM> const *) LinkedListElement::nocheck_next()); }
-        Reference<TO,FROM>       * nocheck_prev()       { return((Reference<TO,FROM>       *) LinkedListElement::nocheck_prev()); }
-        Reference<TO,FROM> const * nocheck_prev() const { return((Reference<TO,FROM> const *) LinkedListElement::nocheck_prev()); }
+        Reference<TO, FROM>       * nocheck_next()       { return((Reference<TO, FROM>       *) LinkedListElement::nocheck_next()); }
+        Reference<TO, FROM> const * nocheck_next() const { return((Reference<TO, FROM> const *) LinkedListElement::nocheck_next()); }
+        Reference<TO, FROM>       * nocheck_prev()       { return((Reference<TO, FROM>       *) LinkedListElement::nocheck_prev()); }
+        Reference<TO, FROM> const * nocheck_prev() const { return((Reference<TO, FROM> const *) LinkedListElement::nocheck_prev()); }
 
         TO* operator ->() const { return iRefTo; }
         TO* getTarget() const { return iRefTo; }
