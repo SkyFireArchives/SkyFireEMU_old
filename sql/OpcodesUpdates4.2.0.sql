@@ -37,3 +37,17 @@ UPDATE emuopcodes SET number = 14434 WHERE name = "MSG_MOVE_START_STRAFE_LEFT" a
 UPDATE emuopcodes SET number = 35040 WHERE name = "MSG_MOVE_START_TURN_RIGHT" and version = @ver;
 UPDATE emuopcodes SET number = 14442 WHERE name = "MSG_MOVE_JUMP" and version = @ver;
 UPDATE emuopcodes SET number = 35041 WHERE name = "MSG_MOVE_FALL_LAND" and version = @ver;
+
+UPDATE emuopcodes SET number = 46706 "CMSG_REQUEST_RAID_INFO" and version = @ver;
+UPDATE emuopcodes SET number = 15087 "CMSG_NPC_TEXT_QUERY" and version = @ver;
+UPDATE emuopcodes SET number = 32310 "CMSG_PETITION_QUERY" and version = @ver;
+UPDATE emuopcodes SET number = 42687 "CMSG_DANCE_QUERY" and version = @ver;
+UPDATE emuopcodes SET number = 63022 "CMSG_ARENA_TEAM_QUERY" and version = @ver;
+UPDATE emuopcodes SET number = 29286 "CMSG_NAME_QUERY" and version = @ver;
+UPDATE emuopcodes SET number = 48702 "CMSG_PET_NAME_QUERY" and version = @ver;
+UPDATE emuopcodes SET number = 41578 "CMSG_GUILD_QUERY" and version = @ver;
+UPDATE emuopcodes SET number = 62207 "CMSG_PAGE_TEXT_QUERY" and version = @ver;
+UPDATE emuopcodes SET number = 11006 "CMSG_QUEST_QUERY" and version = @ver;
+UPDATE emuopcodes SET number = 15102 "CMSG_GAMEOBJECT_QUERY" and version = @ver;
+UPDATE emuopcodes SET number = 42594 "CMSG_CREATURE_QUERY" and version = @ver;
+UPDATE emuopcodes SET number = 32503 "CMSG_ITEM_NAME_QUERY" and version = @ver;
