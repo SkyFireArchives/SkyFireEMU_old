@@ -563,7 +563,11 @@ class Spell
         void SetMagnetingAura(Aura* aura) { m_magnetingAura = aura; }
 
     protected:
-        void SendLoot(uint64 guid, LootType loottype);
+        bool HasGlobalCooldown();
+        void TriggerGlobalCooldown();
+        void CancelGlobalCooldown();        
+		
+		void SendLoot(uint64 guid, LootType loottype);
 
         Unit* const m_caster;
 
