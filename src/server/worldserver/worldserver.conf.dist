@@ -1544,6 +1544,14 @@ AllowTwoSide.Trade = 0
 TalentsInspecting = 1
 
 #
+#   DB2.EnforceItemAttributes
+#        Disallow overriding item attributes stored in DB2 files with values from the database
+#        Default: 0 - Off, Use DB values
+#                 1 - On, Enforce DB2 Values (default)
+
+DB2.EnforceItemAttributes = 1
+
+#
 ###################################################################################################
 
 ###################################################################################################

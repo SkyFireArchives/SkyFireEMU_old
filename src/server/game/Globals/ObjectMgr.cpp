@@ -2182,6 +2182,7 @@ void ObjectMgr::LoadItemPrototypes()
     sLog->outString();
 
     // check data correctness
+    bool enforceDBCAttributes = sWorld->getBoolConfig(CONFIG_DBC_ENFORCE_ITEM_ATTRIBUTES);
     for (uint32 i = 1; i < sItemStorage.MaxEntry; ++i)
     {
         ItemPrototype const* proto = sItemStorage.LookupEntry<ItemPrototype >(i);
@@ -2195,43 +2196,60 @@ void ObjectMgr::LoadItemPrototypes()
             if (proto->Class != db2item->Class)
             {
                 sLog->outErrorDb("Item (Entry: %u) does not have a correct class %u, must be %u .", i, proto->Class, db2item->Class);
-            }
+                if (enforceDBCAttributes)
+                    const_cast<ItemPrototype*>(proto)->Class = db2item->Class;
+                // It safe let use Class from DB              
+			}
 
             if (proto->SubClass != db2item->SubClass)
             {
-                sLog->outErrorDb("Item (Entry: %u) not correct (Class: %u, Sub: %u) pair, must be (Class: %u, Sub: %u) (still using DB value).", i, proto->Class, proto->SubClass, db2item->Class, db2item->SubClass);
-                // It safe let use Subclass from DB
+                sLog->outErrorDb("Item (Entry: %u) does not have a correct (Class: %u, Sub: %u) pair,, must be (Class: %u, Sub: %u).", i, proto->Class , proto->SubClass, db2item->Class, db2item->SubClass);
+                if (enforceDBCAttributes)
+                    const_cast<ItemPrototype*>(proto)->Class = db2item->Class, db2item->SubClass;
+                // It safe let use Subclass from DB           
             }
-
-            if (proto->Unk0 != db2item->Unk0)
+			
+			if (proto->Unk0 != db2item->Unk0)    
             {
-                sLog->outErrorDb("Item (Entry: %u) does not have a correct Unk0 (%i) , must be %i (still using DB value).", i, proto->Unk0, db2item->Unk0);
+                sLog->outErrorDb("Item (Entry: %u) does not have a correct Unk0 (%i) , must be %i .", i, proto->Unk0, db2item->Unk0);
+                if (enforceDBCAttributes)
+                    const_cast<ItemPrototype*>(proto)->Unk0 = db2item->Unk0;
                 // It is safe to use Unk0 from DB
             }
-
-            if (proto->Material != db2item->Material)
+        
+		    if (proto->Material != db2item->Material)
             {
-                sLog->outErrorDb("Item (Entry: %u) does not have a correct material (%i), must be %i (still using DB value).", i, proto->Material, db2item->Material);
+                sLog->outErrorDb("Item (Entry: %u) does not have a correct material (%i), must be %i .", i, proto->Material, db2item->Material);
+                if (enforceDBCAttributes)
+                    const_cast<ItemPrototype*>(proto)->Material = db2item->Material;
                 // It is safe to use Material from DB
             }
-
-            if (proto->InventoryType != db2item->InventoryType)
+            
+			if (proto->InventoryType != db2item->InventoryType)
             {
-                sLog->outErrorDb("Item (Entry: %u) does not have a correct inventory type (%u), must be %u (still using DB value).", i, proto->InventoryType, db2item->InventoryType);
+                sLog->outErrorDb("Item (Entry: %u) does not have a correct inventory type (%u), must be %u .", i, proto->InventoryType, db2item->InventoryType);
+                if (enforceDBCAttributes)    
+                    const_cast<ItemPrototype*>(proto)->InventoryType = db2item->InventoryType;
                 // It is safe to use InventoryType from DB
             }
 
             if (proto->DisplayInfoID != db2item->DisplayId)
             {
-                sLog->outErrorDb("Item (Entry: %u) does not have a correct display id (%u), must be %u (using it).", i, proto->DisplayInfoID, db2item->DisplayId);
-                const_cast<ItemPrototype*>(proto)->DisplayInfoID = db2item->DisplayId;
+                sLog->outErrorDb("Item (Entry: %u) does not have a correct display id (%u), must be %u .", i, proto->DisplayInfoID, db2item->DisplayId);
+                if (enforceDBCAttributes)
+                    const_cast<ItemPrototype*>(proto)->DisplayInfoID = db2item->DisplayId;
+                // It is safe to use DisplayId from DB
             }
-            if (proto->Sheath != db2item->Sheath)
+            
+			if (proto->Sheath != db2item->Sheath)
             {
-                sLog->outErrorDb("Item (Entry: %u) does not have a correct sheathid (%u), must be %u  (using it).", i, proto->Sheath, db2item->Sheath);
-                const_cast<ItemPrototype*>(proto)->Sheath = db2item->Sheath;
+                sLog->outErrorDb("Item (Entry: %u) does not have a correct sheathid (%u), must be %u .", i, proto->Sheath, db2item->Sheath);
+                if (enforceDBCAttributes)
+                    const_cast<ItemPrototype*>(proto)->Sheath = db2item->Sheath;       
+                // It is safe to use Sheath from DB
             }
-        }
+
+		}
         else
             sLog->outErrorDb("Item (Entry: %u) does not exist in item.db2! (not correct id?).", i);
 
