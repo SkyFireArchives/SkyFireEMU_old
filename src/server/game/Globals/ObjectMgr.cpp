@@ -4055,9 +4055,9 @@ void ObjectMgr::LoadGroups()
     // Delete all members that does not exist
     CharacterDatabase.Execute(CharacterDatabase.GetPreparedStatement(CHAR_DEL_NONEXISTENT_CHARACTER_GROUP_MEMBERS));
     // Delete all groups whose leader does not exist
-    CharacterDatabase.Execute(CharacterDatabase.GetPreparedStatement(CHAR_DEL_LEADERLESS_GROUPS));
+    CharacterDatabase.DirectExecute(CharacterDatabase.GetPreparedStatement(CHAR_DEL_LEADERLESS_GROUPS));
     // Delete all groups with less than 2 members
-    CharacterDatabase.Execute(CharacterDatabase.GetPreparedStatement(CHAR_DEL_TINY_GROUPS));
+    CharacterDatabase.DirectExecute(CharacterDatabase.GetPreparedStatement(CHAR_DEL_TINY_GROUPS));
     // Delete all rows from group_member or group_instance with no group
     CharacterDatabase.Execute(CharacterDatabase.GetPreparedStatement(CHAR_DEL_NONEXISTENT_GROUP_MEMBERS));
     CharacterDatabase.Execute(CharacterDatabase.GetPreparedStatement(CHAR_DEL_NONEXISTENT_GROUP_INSTANCES));
