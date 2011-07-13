@@ -1041,16 +1041,16 @@ SkipCinematics = 0
 #        Description: Maximum level that can be reached by players.
 #        Important:   Levels beyond 100 are not recommended at all.
 #        Range:       1-255
-#        Default:     80
+#        Default:     85
 
-MaxPlayerLevel = 80
+MaxPlayerLevel = 85
 
 #
 #    MinDualSpecLevel
 #        Description: Level requirement for Dual Talent Specialization
-#        Default:     40
+#        Default:     30
 
-MinDualSpecLevel = 40
+MinDualSpecLevel = 30
 
 #
 #    StartPlayerLevel
@@ -1110,7 +1110,7 @@ StartArenaPoints = 0
 #        Max conquest points that player can have, multiplied by 100.
 #        Default: 400000
 
-MaxConquestPoints = 4000
+MaxConquestPoints = 400000
 
 #
 #    StartConquestPoints
@@ -1124,7 +1124,7 @@ StartConquestPoints = 0
 #        Max justice points that player can have, multiplied by 100.
 #        Default: 400000
 
-MaxJusticePoints = 4000
+MaxJusticePoints = 400000
 
 #    StartJusticePoints
 #        Amount of justice points that new players will start with
@@ -1398,7 +1398,7 @@ BeepAtStart = 1
 #        Example:     "Welcome to John\'s Server@This server runs on Trinity Core."
 #        Default:     "Welcome to a Trinity Core server."
 
-Motd = "Welcome to a SkyFire Core server."
+Motd = "Welcome to a SkyFire server."
 
 #
 #    Server.LoginInfo
