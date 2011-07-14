@@ -21409,11 +21409,11 @@ void Player::UpdateTriggerVisibility()
             if (!obj || !obj->isTrigger())
                 continue;
 
-            //obj->BuildCreateUpdateBlockForPlayer(&udata,this);
+            obj->BuildCreateUpdateBlockForPlayer(&udata,this);
         }
     }
-    //udata.BuildPacket(&packet);
-    //GetSession()->SendPacket(&packet);
+    udata.BuildPacket(&packet);
+    GetSession()->SendPacket(&packet);
 }
 
 void Player::SendInitialVisiblePackets(Unit* target)
@@ -21453,8 +21453,8 @@ void Player::UpdateVisibilityOf(T* target, UpdateData& data, std::set<Unit*>& vi
             //if (target->isType(TYPEMASK_UNIT) && ((Unit*)target)->m_Vehicle)
             //    UpdateVisibilityOf(((Unit*)target)->m_Vehicle, data, visibleNow);
 
-            //target->BuildCreateUpdateBlockForPlayer(&data, this);
-            //UpdateVisibilityOf_helper(m_clientGUIDs,target,visibleNow);
+            target->BuildCreateUpdateBlockForPlayer(&data, this);
+            UpdateVisibilityOf_helper(m_clientGUIDs,target,visibleNow);
 
             #ifdef TRINITY_DEBUG
             if ((sLog->GetLogFilter() & LOG_FILTER_VISIBILITY_CHANGES) == 0)
@@ -22289,13 +22289,13 @@ void Player::UpdateForQuestWorldObjects()
             for (SpellClickInfoMap::const_iterator _itr = clickPair.first; _itr != clickPair.second; ++_itr)
                 if (_itr->second.questStart || _itr->second.questEnd)
                 {
-                   // obj->BuildCreateUpdateBlockForPlayer(&udata,this);
+                    obj->BuildCreateUpdateBlockForPlayer(&udata,this);
                     break;
                 }
         }
     }
-    //udata.BuildPacket(&packet);
-    //GetSession()->SendPacket(&packet);
+    udata.BuildPacket(&packet);
+    GetSession()->SendPacket(&packet);
 }
 
 void Player::SummonIfPossible(bool agree)

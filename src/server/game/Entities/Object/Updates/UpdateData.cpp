@@ -113,7 +113,7 @@ bool UpdateData::BuildPacket(WorldPacket *packet)
     ByteBuffer buf(2 + 4 + (m_outOfRangeGUIDs.empty() ? 0 : 1 + 4 + 9 * m_outOfRangeGUIDs.size()) + m_data.wpos());
 
     buf << uint16(m_map);
-    /*buf << uint32(!m_outOfRangeGUIDs.empty() ? m_blockCount + 1 : m_blockCount);
+    buf << uint32(!m_outOfRangeGUIDs.empty() ? m_blockCount + 1 : m_blockCount);
 
     if (!m_outOfRangeGUIDs.empty())
     {
@@ -124,9 +124,7 @@ bool UpdateData::BuildPacket(WorldPacket *packet)
         {
             buf.appendPackGUID(*i);
         }
-    }*/
-
-    buf << uint32(m_blockCount);
+    }
 
     buf.append(m_data);
 

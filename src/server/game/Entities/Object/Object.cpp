@@ -248,9 +248,9 @@ void Object::SendUpdateToPlayer(Player* player)
     upd.m_map = uint16(player->GetMapId());
     WorldPacket packet;
 
-    //BuildCreateUpdateBlockForPlayer(&upd, player);
-   // upd.BuildPacket(&packet);
-    //player->GetSession()->SendPacket(&packet);
+    BuildCreateUpdateBlockForPlayer(&upd, player);
+    upd.BuildPacket(&packet);
+    player->GetSession()->SendPacket(&packet);
 }
 
 void Object::BuildValuesUpdateBlockForPlayer(UpdateData *data, Player *target) const

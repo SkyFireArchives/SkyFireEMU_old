@@ -1878,16 +1878,16 @@ void Map::SendInitSelf(Player * player)
     UpdateData data;
     data.m_map = GetEntry()->MapID;
 
-    /*// attach to player data current transport data
+    /// attach to player data current transport data
     if (Transport* transport = player->GetTransport())
     {
         transport->BuildCreateUpdateBlockForPlayer(&data, player);
-    }*/
+    }
 
     // build data for self presence in world at own client (one time for map)
     player->BuildCreateUpdateBlockForPlayer(&data, player);
 
-    /*// build other passengers at transport also (they always visible and marked as visible and will not send at visibility update at add to map
+    // build other passengers at transport also (they always visible and marked as visible and will not send at visibility update at add to map
     if (Transport* transport = player->GetTransport())
     {
         for (Transport::PlayerSet::const_iterator itr = transport->GetPassengers().begin(); itr != transport->GetPassengers().end(); ++itr)
@@ -1897,7 +1897,7 @@ void Map::SendInitSelf(Player * player)
                 (*itr)->BuildCreateUpdateBlockForPlayer(&data, player);
             }
         }
-    }*/
+    }
 
     WorldPacket packet;
     data.BuildPacket(&packet);
@@ -1917,18 +1917,18 @@ void Map::SendInitTransports(Player * player)
 
     MapManager::TransportSet& tset = tmap[player->GetMapId()];
 
-   /* for (MapManager::TransportSet::const_iterator i = tset.begin(); i != tset.end(); ++i)
+    for (MapManager::TransportSet::const_iterator i = tset.begin(); i != tset.end(); ++i)
     {
         // send data for current transport in other place
         if ((*i) != player->GetTransport() && (*i)->GetMapId() == GetId())
         {
             (*i)->BuildCreateUpdateBlockForPlayer(&transData, player);
         }
-    }*/
+    }
 
     WorldPacket packet;
     transData.BuildPacket(&packet);
-    //player->GetSession()->SendPacket(&packet);
+    player->GetSession()->SendPacket(&packet);
 }
 
 void Map::SendRemoveTransports(Player * player)

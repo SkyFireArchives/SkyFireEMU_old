@@ -606,10 +606,10 @@ void Transport::UpdateForMap(Map const* targetMap)
             {
                 UpdateData transData;
                 transData.m_map = uint16(GetMapId());
-                //BuildCreateUpdateBlockForPlayer(&transData, itr->getSource());
+                BuildCreateUpdateBlockForPlayer(&transData, itr->getSource());
                 WorldPacket packet;
                 transData.BuildPacket(&packet);
-                //itr->getSource()->SendDirectMessage(&packet);
+                itr->getSource()->SendDirectMessage(&packet);
             }
         }
     }
@@ -617,14 +617,13 @@ void Transport::UpdateForMap(Map const* targetMap)
     {
         UpdateData transData;
         transData.m_map = uint16(GetMapId());
-        //BuildOutOfRangeUpdateBlock(&transData);
+        BuildOutOfRangeUpdateBlock(&transData);
         WorldPacket out_packet;
         transData.BuildPacket(&out_packet);
 
         for (Map::PlayerList::const_iterator itr = pl.begin(); itr != pl.end(); ++itr)
             if (this != itr->getSource()->GetTransport())
-                //itr->getSource()->SendDirectMessage(&out_packet);
-                ;
+                itr->getSource()->SendDirectMessage(&out_packet);
     }
 }
 

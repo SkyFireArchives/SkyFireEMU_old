@@ -15,10 +15,10 @@ UPDATE emuopcodes SET number = 48891 WHERE name = "SMSG_AUTH_RESPONSE" and versi
 UPDATE emuopcodes SET number = 27310 WHERE name = "SMSG_ADDON_INFO" and version = @ver;
 UPDATE emuopcodes SET number = 41527 WHERE name = "SMSG_CLIENTCACHE_VERSION" and version = @ver;
 UPDATE emuopcodes SET number = 25274 WHERE name = "SMSG_LOGOUT_RESPONSE" and version = @ver;
-UPDATE emuopcodes SET number = 16122 WHERE name = "SMSG_CHAR_CREATE" and version = @ver;
+UPDATE emuopcodes SET number = 15926 WHERE name = "SMSG_CHAR_CREATE" and version = @ver;
 UPDATE emuopcodes SET number = 41599 WHERE name = "SMSG_LOGOUT_COMPLETE" and version = @ver;
 UPDATE emuopcodes SET number = 43575 WHERE name = "SMSG_LOGOUT_CANCEL_ACK" and version = @ver;
-UPDATE emuopcodes SET number = 15926 WHERE name = "SMSG_CHAR_DELETE" and version = @ver;
+UPDATE emuopcodes SET number = 16122 WHERE name = "SMSG_CHAR_DELETE" and version = @ver;
 UPDATE emuopcodes SET number = 45795 WHERE name = "SMSG_CHARACTER_LOGIN_FAILED" and version = @ver;
 
 UPDATE emuopcodes SET number = 29435 WHERE name = "CMSG_CAST_SPELL" and version = @ver;
@@ -37,6 +37,7 @@ UPDATE emuopcodes SET number = 14434 WHERE name = "MSG_MOVE_START_STRAFE_LEFT" a
 UPDATE emuopcodes SET number = 35040 WHERE name = "MSG_MOVE_START_TURN_RIGHT" and version = @ver;
 UPDATE emuopcodes SET number = 14442 WHERE name = "MSG_MOVE_JUMP" and version = @ver;
 UPDATE emuopcodes SET number = 35041 WHERE name = "MSG_MOVE_FALL_LAND" and version = @ver;
+UPDATE emuopcodes SET number = 21313 WHERE name = "MSG_MOVE_SET_PITCH" and version = @ver;
 
 UPDATE emuopcodes SET number = 46706 WHERE name = "CMSG_REQUEST_RAID_INFO" and version = @ver;
 UPDATE emuopcodes SET number = 15087 WHERE name = "CMSG_NPC_TEXT_QUERY" and version = @ver;
