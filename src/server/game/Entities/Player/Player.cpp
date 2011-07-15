@@ -4836,29 +4836,28 @@ void Player::SetMovement(PlayerMovementType pType)
         case MOVE_ROOT:
         {
             //sLog->outError("MOVE ROOT");
-            data.Initialize(SMSG_FORCE_MOVE_ROOT,   GetPackGUID().size()+4); break;                  
+            data.Initialize(SMSG_FORCE_MOVE_ROOT,   GetPackGUID().size()); break;                  
             break;
         }
         case MOVE_UNROOT: 
         {
             //sLog->outError("MOVE UNROOT");
-            data.Initialize(SMSG_FORCE_MOVE_UNROOT, GetPackGUID().size()+4); break;
+            data.Initialize(SMSG_FORCE_MOVE_UNROOT, GetPackGUID().size()); break;
             break;
         }
         case MOVE_WATER_WALK:
         {
             //sLog->outError("MOVE WATER WALK");
             WorldPacket movewaterwalk(SMSG_MULTIPLE_PACKETS, 14);
-            movewaterwalk << uint16(SMSG_MOVE_WATER_WALK);
+            movewaterwalk << uint16(SMSG_SPLINE_MOVE_WATER_WALK);
             movewaterwalk.append(GetPackGUID());
-            movewaterwalk << uint32(0);                                      // unknown
             SendMessageToSet(&movewaterwalk, true);
             break;
         }
         case MOVE_LAND_WALK:
         {
             // sLog->outError("MOVE LAND WALK");
-            data.Initialize(SMSG_MOVE_LAND_WALK,    GetPackGUID().size()+4); break;                  
+            data.Initialize(SMSG_SPLINE_MOVE_LAND_WALK,    GetPackGUID().size()); break;                  
             break;
         }
         default:
@@ -4868,7 +4867,6 @@ void Player::SetMovement(PlayerMovementType pType)
         }
     }
     data.append(GetPackGUID());
-    data << uint32(0);
     GetSession()->SendPacket(&data);
 }
 
