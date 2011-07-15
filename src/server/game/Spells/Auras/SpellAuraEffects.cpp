@@ -1739,27 +1739,39 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
 
                 int32 addition = int32(float(damage * GetTotalTicks()) * ((6-float(2*(GetTickNumber()-1)))/100));
 
-                    // Item - Druid T10 Restoration 2P Bonus
-                    if (AuraEffect * aurEff = caster->GetAuraEffect(70658, 0))
-                        addition += abs(int32((addition * aurEff->GetAmount()) / 50));
+                // Item - Druid T10 Restoration 2P Bonus
+                if (AuraEffect * aurEff = caster->GetAuraEffect(70658, 0))
+                    addition += abs(int32((addition * aurEff->GetAmount()) / 50));
 
-                    damage += addition;
+                damage += addition;
             }
-
-            if (m_spellProto->Id == 774)
+            switch (m_spellProto->Id)
             {
-                float bonus = 1.0f;
-                if (caster->HasAura(78784)) // Blessing of the Grove rank 1
-                    bonus += 0.02f;
-                if (caster->HasAura(78785)) // Blessing of the Grove rank 2
-                    bonus += 0.04f;
-                if (caster->HasAura(17111)) // Improved Rejuvenation rank 1
-                    bonus += 0.05f;
-                if (caster->HasAura(17112)) // Improved Rejuvenation rank 2
-                    bonus += 0.1f;
-                if (caster->HasAura(17113)) // Improved Rejuvenation rank 3
-                    bonus += 0.15f;
-                damage = int32 (damage * bonus);
+                case 774:
+                {
+                    float bonus = 1.0f;
+                    if (caster->HasAura(78784)) // Blessing of the Grove rank 1
+                        bonus += 0.02f;
+                    if (caster->HasAura(78785)) // Blessing of the Grove rank 2
+                        bonus += 0.04f;
+                    if (caster->HasAura(17111)) // Improved Rejuvenation rank 1
+                        bonus += 0.05f;
+                    if (caster->HasAura(17112)) // Improved Rejuvenation rank 2
+                        bonus += 0.1f;
+                    if (caster->HasAura(17113)) // Improved Rejuvenation rank 3
+                        bonus += 0.15f;
+                    damage = int32 (damage * bonus);
+                    break;
+                 }
+                 case 29841: // Second Wind r1
+                    damage = int32(caster->GetMaxHealth() * 0.002f);
+                    break;
+                 case 29842: // Second Wind r2
+                 case 42771: // Second Wind r2
+                    damage = int32(caster->GetMaxHealth() * 0.005f);
+                    break;
+                default:
+                    break;
             }
 
             bool crit = IsPeriodicTickCrit(target, caster);
