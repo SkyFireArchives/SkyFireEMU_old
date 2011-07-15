@@ -1471,6 +1471,10 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
                         damage += (damage+1)/2;           // +1 prevent 0.5 damage possible lost at 1..4 ticks
                     // 5..8 ticks have normal tick damage
                 }
+                // Explosive Shot
+                if (GetSpellProto()->Id == 53301)
+                    damage = int32(damage + (0.232f * GetBase()->GetCaster()->GetTotalAttackPowerValue(RANGED_ATTACK)));
+
                 // There is a Chance to make a Soul Shard when Drain soul does damage
                 if (GetSpellProto()->SpellFamilyName == SPELLFAMILY_WARLOCK && (GetSpellProto()->SpellFamilyFlags[0] & 0x00004000))
                 {
