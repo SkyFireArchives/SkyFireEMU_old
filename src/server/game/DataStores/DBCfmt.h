@@ -80,7 +80,6 @@ const char ItemBagFamilyfmt[]="nx";
 //const char ItemDisplayTemplateEntryfmt[]="nxxxxxxxxxxixxxxxxxxxxx";
 //const char ItemCondExtCostsEntryfmt[]="xiii";
 const char ItemDamagefmt[]="nfffffffi";
-const char ItemExtendedCostEntryfmt[]="nxxiiiiiiiiiiiixiiiiiiiiiixxxxx";
 const char ItemLimitCategoryEntryfmt[]="nxii";
 const char ItemRandomPropertiesfmt[]="nxiiiiis";
 const char ItemRandomSuffixfmt[]="nsxiiiiiiiiii";

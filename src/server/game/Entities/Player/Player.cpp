@@ -78,6 +78,10 @@
 #include "CharacterDatabaseCleaner.h"
 #include "InstanceScript.h"
 #include <cmath>
+#include "DB2Store.h"
+#include "DB2Structure.h"
+#include "DB2Stores.h"
+#include "DB2Structure.h"
 
 #define ZONE_UPDATE_INTERVAL (1*IN_MILLISECONDS)
 
