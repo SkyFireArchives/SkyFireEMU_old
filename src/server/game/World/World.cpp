@@ -1526,7 +1526,7 @@ void World::SetInitialWorldSettings()
 
     sLog->outString("Loading Skill Fishing base level requirements...");
     sObjectMgr->LoadFishingBaseSkillLevel();
-
+   /*
     sLog->outString("Loading Achievements...");
     sAchievementMgr->LoadAchievementReferenceList();
     sLog->outString("Loading Achievement Criteria Lists...");
@@ -1539,7 +1539,7 @@ void World::SetInitialWorldSettings()
     sAchievementMgr->LoadRewardLocales();
     sLog->outString("Loading Completed Achievements...");
     sAchievementMgr->LoadCompletedAchievements();
-
+   */
     ///- Load dynamic data tables from the database
     sLog->outString("Loading Item Auctions...");
     sAuctionMgr->LoadAuctionItems();
