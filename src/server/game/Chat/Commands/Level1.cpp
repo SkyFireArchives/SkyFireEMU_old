@@ -778,11 +778,27 @@ bool ChatHandler::HandleModifyHPCommand(const char* args)
     int32 hp = atoi((char*)args);
     int32 hpm = atoi((char*)args);
 
-    if (hp < 1 || hpm < 1 || hpm < hp)
+    if(hpm < hp)
+    {
+        hpm = hp;
+    }
+
+    if (hp < 1)
     {
         SendSysMessage(LANG_BAD_VALUE);
         SetSentErrorMessage(true);
         return false;
+    }
+
+    if(m_session->GetSecurity() >= SEC_ADMINISTRATOR)   // admins can set HP of any unit
+    {
+        Unit *unit = getSelectedUnit();
+        if(!unit)
+            return false;
+        
+        unit->SetMaxHealth(hpm);
+        unit->SetHealth(hp);
+        return true;
     }
 
     Player *chr = getSelectedPlayer();

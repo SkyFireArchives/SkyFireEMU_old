@@ -494,6 +494,7 @@ struct MovementInfo
     Position t_pos;
     uint32  t_time;
     uint32  t_time2;
+    uint32  t_time3;
     int8    t_seat;
     // swimming/flying
     float   pitch;
@@ -510,7 +511,7 @@ struct MovementInfo
         guid = 0;
         flags = 0;
         flags2 = 0;
-        time = t_time = t_time2 = fallTime = 0;
+        time = t_time = t_time2 = t_time3 = fallTime = 0;
         splineElevation = 0;
         pitch = j_zspeed = j_sinAngle = j_cosAngle = j_xyspeed = 0.0f;
         t_guid = 0;

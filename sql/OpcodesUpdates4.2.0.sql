@@ -29,7 +29,7 @@ UPDATE emuopcodes SET number = 4241 WHERE name = "CMSG_CHAR_ENUM" and version = 
 
 UPDATE emuopcodes SET number = 45734 WHERE name = "CMSG_LOGOUT_REQUEST" and version = @ver;
 UPDATE emuopcodes SET number = 6369 WHERE name = "MSG_MOVE_START_FORWARD" and version = @ver;
-UPDATE emuopcodes SET number = 10467 WHERE name = "MSG_MOVE_SET_WALK_MODE" and version = @ver;
+UPDATE emuopcodes SET number = 0 WHERE name = "MSG_MOVE_SET_WALK_MODE" and version = @ver;
 UPDATE emuopcodes SET number = 10346 WHERE name = "MSG_MOVE_STOP" and version = @ver;
 UPDATE emuopcodes SET number = 2147 WHERE name = "MSG_MOVE_START_BACKWARD" and version = @ver;
 UPDATE emuopcodes SET number = 2122 WHERE name = "MSG_MOVE_START_TURN_LEFT" and version = @ver;
@@ -37,7 +37,7 @@ UPDATE emuopcodes SET number = 14434 WHERE name = "MSG_MOVE_START_STRAFE_LEFT" a
 UPDATE emuopcodes SET number = 35040 WHERE name = "MSG_MOVE_START_TURN_RIGHT" and version = @ver;
 UPDATE emuopcodes SET number = 14442 WHERE name = "MSG_MOVE_JUMP" and version = @ver;
 UPDATE emuopcodes SET number = 35041 WHERE name = "MSG_MOVE_FALL_LAND" and version = @ver;
-UPDATE emuopcodes SET number = 21313 WHERE name = "MSG_MOVE_SET_PITCH" and version = @ver;
+UPDATE emuopcodes SET number = 0 WHERE name = "MSG_MOVE_SET_PITCH" and version = @ver;
 
 UPDATE emuopcodes SET number = 46706 WHERE name = "CMSG_REQUEST_RAID_INFO" and version = @ver;
 UPDATE emuopcodes SET number = 15087 WHERE name = "CMSG_NPC_TEXT_QUERY" and version = @ver;
@@ -198,7 +198,6 @@ UPDATE emuopcodes SET number = 9762 WHERE name = "SMSG_PLAY_SOUND" and version =
 UPDATE emuopcodes SET number = 26155 WHERE name = "SMSG_PVP_CREDIT" and version = @ver;
 UPDATE emuopcodes SET number = 16098 WHERE name = "SMSG_SET_FORCED_REACTIONS" and version = @ver;
 UPDATE emuopcodes SET number = 65066 WHERE name = "SMSG_WEATHER" and version = @ver;
-UPDATE emuopcodes SET number = 2823 WHERE name = "SMSG_BATTLEFIELD_STATUS" and version = @ver;
 UPDATE emuopcodes SET number = 2855 WHERE name = "SMSG_ITEM_REPLACED_MULTIPLE" and version = @ver;
 UPDATE emuopcodes SET number = 3088 WHERE name = "SMSG_RESUME_COMMS" and version = @ver;
 UPDATE emuopcodes SET number = 3845 WHERE name = "SMSG_GUILD_RANKS" and version = @ver;
@@ -255,3 +254,10 @@ UPDATE emuopcodes SET number = 61047 WHERE name = "SMSG_SEND_ALL_COMBAT_LOG" and
 UPDATE emuopcodes SET number = 63045 WHERE name = "SMSG_COMPRESSED_CHAR_ENUM" and version = @ver;
 UPDATE emuopcodes SET number = 63078 WHERE name = "SMSG_VOICE_SESSION_ROSTER_REPLACE" and version = @ver;
 UPDATE emuopcodes SET number = 64107 WHERE name = "SMSG_SET_VEHICLE_REC_ID" and version = @ver;
+
+UPDATE emuopcodes SET number = 10467 WHERE name = "MSG_MOVE_HEARTBEAT" and version = @ver;
+UPDATE emuopcodes SET number = 0 WHERE name = "MSG_MOVE_TIME_SKIPPED" and version = @ver;
+UPDATE emuopcodes SET number = 47171 WHERE name = "MSG_MOVE_START_STRAFE_RIGHT" and version = @ver;
+UPDATE emuopcodes SET number = 43232 WHERE name = "MSG_MOVE_STOP_STRAFE" and version = @ver;
+-- New 4.2.0 opcode that is sent by the server for movements of other players
+replace into `emuopcodes`(`version`,`name`,`number`,`type`) values ( '14333','SMSG_PLAYER_MOVE','21313','smsg');
