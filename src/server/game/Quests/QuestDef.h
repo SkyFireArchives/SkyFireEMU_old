@@ -250,6 +250,8 @@ class Quest
         uint32 GetRewHonorAddition() const { return RewHonorAddition; }
         float GetRewHonorMultiplier() const { return RewHonorMultiplier; }
         uint32 GetRewMoneyMaxLevel() const { return RewMoneyMaxLevel; }
+        uint32 GetRewCurrencyId(uint32 n) const { return RewCurrencyId[n]; }
+        uint32 GetRewCurrencyCount(uint32 n) const { return RewCurrencyCount[n]; }
                                                             // use in XP calculation at client
         uint32 GetRewSpell() const { return RewSpell; }
         int32  GetRewSpellCast() const { return RewSpellCast; }
