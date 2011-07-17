@@ -1717,6 +1717,7 @@ Rate.Auction.Time = 1
 Rate.Auction.Deposit = 1
 Rate.Auction.Cut = 1
 Rate.Honor = 1
+Rate.ConquestPointsWeekLimit = 1
 Rate.Mining.Amount = 1
 Rate.Mining.Next   = 1
 Rate.Talent = 1

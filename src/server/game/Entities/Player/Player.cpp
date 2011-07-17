@@ -11013,32 +11013,29 @@ void Player::ModifyCurrency(uint32 id, int32 count)
         oldWeekCount = itr->second.weekCount;
     }
 
-    int32 newTotalCount = int32(oldTotalCount) + count;
+    int32 newTotalCount = oldTotalCount + count;
     if (newTotalCount < 0)
         newTotalCount = 0;
 
-    int32 newWeekCount = int32(oldWeekCount) + (count > 0 ? count : 0);
+    int32 newWeekCount = oldWeekCount + (count > 0 ? count : 0);
     if (newWeekCount < 0)
         newWeekCount = 0;
 
-    if (currency->TotalCap && int32(currency->TotalCap) < newTotalCount)
+    uint32 totalCap = _GetCurrencyTotalCap(currency);
+    if (totalCap && int32(totalCap) < newTotalCount)
     {
-        int32 delta = newTotalCount - int32(currency->TotalCap);
-        newTotalCount = int32(currency->TotalCap);
+        int32 delta = newTotalCount - totalCap;
+        newTotalCount = totalCap;
         newWeekCount -= delta;
     }
 
-    // TODO: fix conquest points
     uint32 weekCap = _GetCurrencyWeekCap(currency);
-    if (weekCap && int32(weekCap) < newTotalCount)
+    if (weekCap && int32(weekCap) < newWeekCount)
     {
-        int32 delta = newWeekCount - int32(weekCap);
-        newWeekCount = int32(weekCap);
+        int32 delta = newWeekCount - weekCap;
+        newWeekCount = weekCap;
         newTotalCount -= delta;
     }
-
-    // if we change total, we must change week
-    //ASSERT(((newTotalCount-oldTotalCount) != 0) == ((newWeekCount-oldWeekCount) != 0));
 
     if (newTotalCount != oldTotalCount)
     {
@@ -11071,12 +11068,8 @@ uint32 Player::_GetCurrencyWeekCap(const CurrencyTypesEntry* currency) const
     switch (currency->ID)
     {
     case CURRENCY_TYPE_CONQUEST_POINTS:
-        {
-            int32 conquestcap = sWorld->getIntConfig(CONFIG_MAX_CONQUEST_POINTS) * PLAYER_CURRENCY_PRECISION;
-            if (conquestcap > 0)
-                cap = conquestcap;
-            break;
-        }
+        cap = uint32(1343 * PLAYER_CURRENCY_PRECISION * sWorld->getRate(RATE_CONQUEST_POINTS_WEEK_LIMIT)); // todo: (1.4326 * (1511.26 / (1 + 1639.28 / exp(0.00412 * rating))) + 850.15)
+        break;
     case CURRENCY_TYPE_HONOR_POINTS:
         {
             uint32 honorcap = sWorld->getIntConfig(CONFIG_MAX_HONOR_POINTS) * PLAYER_CURRENCY_PRECISION;
@@ -11092,12 +11085,32 @@ uint32 Player::_GetCurrencyWeekCap(const CurrencyTypesEntry* currency) const
             break;
         }
     }
+
     if (cap != currency->WeekCap && IsInWorld() && !GetSession()->PlayerLoading())
     {
         WorldPacket packet(SMSG_UPDATE_CURRENCY_WEEK_LIMIT, 8);
         packet << uint32(cap / PLAYER_CURRENCY_PRECISION);
         packet << uint32(currency->ID);
         GetSession()->SendPacket(&packet);
+    }
+
+    return cap;
+}
+
+uint32 Player::_GetCurrencyTotalCap(const CurrencyTypesEntry* currency) const
+{
+    uint32 cap = currency->TotalCap;
+    switch (currency->ID)
+    {
+    case CURRENCY_TYPE_CONQUEST_POINTS:
+        cap = sWorld->getIntConfig(CONFIG_MAX_CONQUEST_POINTS) * PLAYER_CURRENCY_PRECISION;
+        break;
+    case CURRENCY_TYPE_HONOR_POINTS:
+        cap = sWorld->getIntConfig(CONFIG_MAX_HONOR_POINTS) * PLAYER_CURRENCY_PRECISION;
+        break;
+    case CURRENCY_TYPE_JUSTICE_POINTS:
+        cap = sWorld->getIntConfig(CONFIG_MAX_JUSTICE_POINTS) * PLAYER_CURRENCY_PRECISION;
+        break;
     }
 
     return cap;
@@ -17907,13 +17920,22 @@ void Player::_LoadCurrency(PreparedQueryResult result)
                 continue;
             }
 
-            uint32 weekCap = _GetCurrencyWeekCap(entry);
+            uint32 weekCap  = _GetCurrencyWeekCap(entry);
+            uint32 totalCap = _GetCurrencyTotalCap(entry);
 
             PlayerCurrency cur;
 
             cur.state = PLAYERCURRENCY_UNCHANGED;
-            cur.totalCount = totalCount > entry->TotalCap ? entry->TotalCap : totalCount;
-            cur.weekCount = weekCount > weekCap ? weekCap : weekCount;
+
+            if (totalCap == 0) // unlimited, don't check
+                cur.totalCount = totalCount;
+            else
+                cur.totalCount = totalCount > totalCap ? totalCap : totalCount;
+
+            if (weekCap == 0)
+                cur.weekCount = weekCount;
+            else
+                cur.weekCount = weekCount > weekCap ? weekCap : weekCount;
 
             m_currencies[currency_id] = cur;
         }
