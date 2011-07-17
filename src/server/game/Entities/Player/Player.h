@@ -2691,6 +2691,7 @@ class Player : public Unit, public GridObject<Player>
         uint32 m_currentBuybackSlot;
         PlayerCurrenciesMap m_currencies;
         uint32 _GetCurrencyWeekCap(const CurrencyTypesEntry* currency) const;
+        uint32 _GetCurrencyTotalCap(const CurrencyTypesEntry* currency) const;
 
         std::vector<Item*> m_itemUpdateQueue;
         bool m_itemUpdateQueueBlocked;
