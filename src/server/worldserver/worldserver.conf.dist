@@ -1896,6 +1896,7 @@ Arena.ArenaSeason.InProgress = 1
 Arena.ArenaStartRating = 0
 Arena.ArenaStartPersonalRating = 0
 Arena.ArenaStartMatchmakerRating = 1500
+Arena.ConquestPointsReward = 135
 
 ###############################################################################
 # NETWORK CONFIG

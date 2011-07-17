@@ -1070,6 +1070,7 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_ARENA_START_RATING]                         = sConfig->GetIntDefault ("Arena.ArenaStartRating", 0);
     m_int_configs[CONFIG_ARENA_START_PERSONAL_RATING]                = sConfig->GetIntDefault ("Arena.ArenaStartPersonalRating", 1000);
     m_int_configs[CONFIG_ARENA_START_MATCHMAKER_RATING]              = sConfig->GetIntDefault ("Arena.ArenaStartMatchmakerRating", 1500);
+    m_int_configs[CONFIG_ARENA_CONQUEST_POINTS_REWARD]               = sConfig->GetIntDefault ("Arena.ConquestPointsReward", 135);
     m_bool_configs[CONFIG_ARENA_SEASON_IN_PROGRESS]                  = sConfig->GetBoolDefault("Arena.ArenaSeason.InProgress", true);
     m_bool_configs[CONFIG_ARENA_LOG_EXTENDED_INFO]                   = sConfig->GetBoolDefault("ArenaLog.ExtendedInfo", false);
 
