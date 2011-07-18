@@ -11070,13 +11070,6 @@ uint32 Player::_GetCurrencyWeekCap(const CurrencyTypesEntry* currency) const
     case CURRENCY_TYPE_CONQUEST_POINTS:
         cap = uint32(1343 * PLAYER_CURRENCY_PRECISION * sWorld->getRate(RATE_CONQUEST_POINTS_WEEK_LIMIT)); // todo: (1.4326 * (1511.26 / (1 + 1639.28 / exp(0.00412 * rating))) + 850.15)
         break;
-    case CURRENCY_TYPE_HONOR_POINTS:
-        {
-            uint32 honorcap = sWorld->getIntConfig(CONFIG_MAX_HONOR_POINTS) * PLAYER_CURRENCY_PRECISION;
-            if (honorcap > 0)
-                cap = honorcap;
-            break;
-        }
     case CURRENCY_TYPE_JUSTICE_POINTS:
         {
             uint32 justicecap = sWorld->getIntConfig(CONFIG_MAX_JUSTICE_POINTS) * PLAYER_CURRENCY_PRECISION;
@@ -22088,9 +22081,14 @@ void Player::ResetWeeklyQuestStatus()
     m_weeklyquests.clear();
     // DB data deleted in caller
     m_WeeklyQuestChanged = false;
+}
 
+void Player::ResetCurrencyWeekCap()
+{
     for (PlayerCurrenciesMap::iterator itr = m_currencies.begin(); itr != m_currencies.end(); ++itr)
-        itr->second.weekCount = 0;                  // no need to change state here as sWorld resets currencies in DB
+        itr->second.weekCount = 0;
+    SendCurrencies();
+
 }
 
 Battleground* Player::GetBattleground() const
