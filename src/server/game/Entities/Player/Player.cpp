@@ -22088,9 +22088,14 @@ void Player::ResetWeeklyQuestStatus()
     m_weeklyquests.clear();
     // DB data deleted in caller
     m_WeeklyQuestChanged = false;
+}
 
+void Player::ResetCurrencyWeekCap()
+{
     for (PlayerCurrenciesMap::iterator itr = m_currencies.begin(); itr != m_currencies.end(); ++itr)
-        itr->second.weekCount = 0;                  // no need to change state here as sWorld resets currencies in DB
+        itr->second.weekCount = 0;
+    SendCurrencies();
+
 }
 
 Battleground* Player::GetBattleground() const
