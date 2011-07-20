@@ -795,6 +795,7 @@ void Battleground::EndBattleground(uint32 winner)
                 winner_arena_team->MemberWon(plr,loser_matchmaker_rating, winner_change);
 
                 plr->ModifyCurrency(CURRENCY_TYPE_CONQUEST_POINTS, sWorld->getIntConfig(CONFIG_ARENA_CONQUEST_POINTS_REWARD) * PLAYER_CURRENCY_PRECISION);
+                plr->UpdateMaxWeekRating(CP_SOURCE_ARENA, winner_arena_team->GetSlot());
             }
             else
             {

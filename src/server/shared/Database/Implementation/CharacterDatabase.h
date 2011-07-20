@@ -230,6 +230,7 @@ enum CharacterDatabaseStatements
     
     // Currency
     CHAR_LOAD_PLAYER_CURRENCY,
+    CHAR_LOAD_PLAYER_CP_WEEK_CAP, // conquest points
 
     // Character battleground data
     CHAR_RESET_PLAYERS_BGDATA,

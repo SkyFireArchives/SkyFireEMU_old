@@ -263,6 +263,7 @@ void CharacterDatabaseConnection::DoPrepareStatements()
 	
      // Currency
     PREPARE_STATEMENT(CHAR_LOAD_PLAYER_CURRENCY, "SELECT currency, count, thisweek FROM character_currency WHERE guid = ?", CONNECTION_ASYNC);
+    PREPARE_STATEMENT(CHAR_LOAD_PLAYER_CP_WEEK_CAP, "SELECT source, maxWeekRating, weekCap FROM character_cp_weekcap WHERE guid = ?", CONNECTION_ASYNC);
 
     // Character battleground data
     PREPARE_STATEMENT(CHAR_ADD_PLAYER_BGDATA, "INSERT INTO character_battleground_data (guid, instanceId, team, joinX, joinY, joinZ, joinO, joinMapId, taxiStart, taxiEnd, mountSpell) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", CONNECTION_ASYNC);
