@@ -739,22 +739,6 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             pVictim->ToPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_TOTAL_DAMAGE_RECEIVED, damage);
 
-        // Blood Craze
-        if (pVictim->GetTypeId() == TYPEID_PLAYER)
-        {
-            if (pVictim->HasAura(16487)) // Rank 1
-                if (roll_chance_f(10.0f))
-                    pVictim->CastSpell(pVictim, 16488, true);
-
-            if (pVictim->HasAura(16489)) // Rank 2
-                if (roll_chance_f(10.0f))
-                    pVictim->CastSpell(pVictim, 16490, true);
-
-            if (pVictim->HasAura(16492)) // Rank 3
-                if (roll_chance_f(10.0f))
-                    pVictim->CastSpell(pVictim, 16491, true);
-        }
-
         // Brain Freeze
         if (GetTypeId() == TYPEID_PLAYER)
         {
