@@ -585,6 +585,13 @@ struct AreaTriggerEntry
     float   box_orientation;                                // 12       m_box_yaw
 };
 
+struct PhaseEntry
+{
+    uint32    ID;                                           // 0
+    DBCString Name;                                         // 1
+    uint32    phaseShift;                                   // 2
+};
+
 struct ArmorLocationEntry
 {
   uint32    InventoryType;                                  // 0
