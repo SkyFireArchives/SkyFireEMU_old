@@ -1224,7 +1224,7 @@ class SmartAIMgr
             else
             {
                 if(entry > 0)//first search is for guid (negative), do not drop error if not found
-                    sLog->outDebug("SmartAIMgr::GetScript: Could not load Script for Entry %d ScriptType %u.", entry, uint32(type));
+                    sLog->outDebug(LOG_FILTER_TSCR, "SmartAIMgr::GetScript: Could not load Script for Entry %d ScriptType %u.", entry, uint32(type));
                 return temp;
             }
         }

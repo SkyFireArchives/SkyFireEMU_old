@@ -222,12 +222,12 @@ void BattlegroundTP::RespawnFlag(uint32 Team, bool captured)
 {
     if (Team == ALLIANCE)
     {
-        sLog->outDebug("Respawn Alliance flag");
+        sLog->outDebug(LOG_FILTER_BATTLEGROUND, "Respawn Alliance flag");
         m_FlagState[BG_TEAM_ALLIANCE] = BG_TP_FLAG_STATE_ON_BASE;
     }
     else
     {
-        sLog->outDebug("Respawn Horde flag");
+        sLog->outDebug(LOG_FILTER_BATTLEGROUND, "Respawn Horde flag");
         m_FlagState[BG_TEAM_HORDE] = BG_TP_FLAG_STATE_ON_BASE;
     }
 
@@ -706,7 +706,7 @@ bool BattlegroundTP::SetupBattleground()
         return false;
     }
 
-    sLog->outDebug("BatteGroundTP: BG objects and spirit guides spawned");
+    sLog->outDebug(LOG_FILTER_BATTLEGROUND, "BatteGroundTP: BG objects and spirit guides spawned");
 
     return true;
 }

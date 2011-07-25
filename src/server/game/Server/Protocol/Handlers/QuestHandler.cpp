@@ -59,7 +59,7 @@ void WorldSession::HandleQuestgiverStatusQueryOpcode(WorldPacket & recv_data)
     {
         case TYPEID_UNIT:
         {
-            sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_STATUS_QUERY for npc, guid = %u",uint32(GUID_LOPART(guid)));
+            sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_STATUS_QUERY for npc, guid = %u",uint32(GUID_LOPART(guid)));
             Creature* cr_questgiver=questgiver->ToCreature();
             if (!cr_questgiver->IsHostileTo(_player))       // do not show quest status to enemies
             {
@@ -71,7 +71,7 @@ void WorldSession::HandleQuestgiverStatusQueryOpcode(WorldPacket & recv_data)
         }
         case TYPEID_GAMEOBJECT:
         {
-            sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_STATUS_QUERY for GameObject guid = %u",uint32(GUID_LOPART(guid)));
+            sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_STATUS_QUERY for GameObject guid = %u",uint32(GUID_LOPART(guid)));
             GameObject* go_questgiver=(GameObject*)questgiver;
             questStatus = sScriptMgr->GetDialogStatus(_player, go_questgiver);
             if (questStatus > 6)
@@ -92,12 +92,12 @@ void WorldSession::HandleQuestgiverHelloOpcode(WorldPacket & recv_data)
     uint64 guid;
     recv_data >> guid;
 
-    sLog->outDebug ("WORLD: Received CMSG_QUESTGIVER_HELLO npc = %u", GUID_LOPART(guid));
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_HELLO npc = %u", GUID_LOPART(guid));
 
     Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(guid,UNIT_NPC_FLAG_NONE);
     if (!pCreature)
     {
-        sLog->outDebug ("WORLD: HandleQuestgiverHelloOpcode - Unit (GUID: %u) not found or you can't interact with him.",
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: HandleQuestgiverHelloOpcode - Unit (GUID: %u) not found or you can't interact with him.",
             GUID_LOPART(guid));
         return;
     }
@@ -127,7 +127,7 @@ void WorldSession::HandleQuestgiverAcceptQuestOpcode(WorldPacket & recv_data)
     if (!GetPlayer()->isAlive())
         return;
 
-    sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_ACCEPT_QUEST npc = %u, quest = %u, unk1 = %u", uint32(GUID_LOPART(guid)), quest, unk1);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_ACCEPT_QUEST npc = %u, quest = %u, unk1 = %u", uint32(GUID_LOPART(guid)), quest, unk1);
 
     Object* pObject = ObjectAccessor::GetObjectByTypeMask(*_player, guid,TYPEMASK_UNIT|TYPEMASK_GAMEOBJECT|TYPEMASK_ITEM|TYPEMASK_PLAYER);
 
@@ -247,7 +247,7 @@ void WorldSession::HandleQuestgiverQueryQuestOpcode(WorldPacket & recv_data)
     uint32 quest;
     uint8 unk1;
     recv_data >> guid >> quest >> unk1;
-    sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_QUERY_QUEST npc = %u, quest = %u, unk1 = %u", uint32(GUID_LOPART(guid)), quest, unk1);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_QUERY_QUEST npc = %u, quest = %u, unk1 = %u", uint32(GUID_LOPART(guid)), quest, unk1);
 
     // Verify that the guid is valid and is a questgiver or involved in the requested quest
     Object* pObject = ObjectAccessor::GetObjectByTypeMask(*_player, guid,TYPEMASK_UNIT|TYPEMASK_GAMEOBJECT|TYPEMASK_ITEM|TYPEMASK_PLAYER);
@@ -285,7 +285,7 @@ void WorldSession::HandleQuestQueryOpcode(WorldPacket & recv_data)
 
     uint32 quest;
     recv_data >> quest;
-    sLog->outDebug("WORLD: Received CMSG_QUEST_QUERY quest = %u",quest);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUEST_QUERY quest = %u",quest);
 
     Quest const *pQuest = sObjectMgr->GetQuestTemplate(quest);
     if (pQuest)
@@ -309,7 +309,7 @@ void WorldSession::HandleQuestgiverChooseRewardOpcode(WorldPacket & recv_data)
     if (!GetPlayer()->isAlive())
         return;
 
-    sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_CHOOSE_REWARD npc = %u, quest = %u, reward = %u",uint32(GUID_LOPART(guid)),quest,reward);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_CHOOSE_REWARD npc = %u, quest = %u, reward = %u",uint32(GUID_LOPART(guid)),quest,reward);
 
     Object* pObject = ObjectAccessor::GetObjectByTypeMask(*_player, guid,TYPEMASK_UNIT|TYPEMASK_GAMEOBJECT|TYPEMASK_PLAYER);
     if (!pObject)
@@ -368,7 +368,7 @@ void WorldSession::HandleQuestgiverRequestRewardOpcode(WorldPacket & recv_data)
     if (!GetPlayer()->isAlive())
         return;
 
-    sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_REQUEST_REWARD npc = %u, quest = %u",uint32(GUID_LOPART(guid)),quest);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_REQUEST_REWARD npc = %u, quest = %u",uint32(GUID_LOPART(guid)),quest);
 
     Object* pObject = ObjectAccessor::GetObjectByTypeMask(*_player, guid,TYPEMASK_UNIT|TYPEMASK_GAMEOBJECT|TYPEMASK_PLAYER);
 
@@ -390,7 +390,7 @@ void WorldSession::HandleQuestgiverRequestRewardOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandleQuestgiverCancel(WorldPacket& /*recv_data*/)
 {
-    sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_CANCEL");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_CANCEL");
 
     _player->PlayerTalkClass->CloseGossip();
 }
@@ -403,7 +403,7 @@ void WorldSession::HandleQuestLogSwapQuest(WorldPacket& recv_data)
     if (slot1 == slot2 || slot1 >= MAX_QUEST_LOG_SIZE || slot2 >= MAX_QUEST_LOG_SIZE)
         return;
 
-    sLog->outDebug("WORLD: Received CMSG_QUESTLOG_SWAP_QUEST slot 1 = %u, slot 2 = %u", slot1, slot2);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTLOG_SWAP_QUEST slot 1 = %u, slot 2 = %u", slot1, slot2);
 
     GetPlayer()->SwapQuestSlot(slot1,slot2);
 }
@@ -413,7 +413,7 @@ void WorldSession::HandleQuestLogRemoveQuest(WorldPacket& recv_data)
     uint8 slot;
     recv_data >> slot;
 
-    sLog->outDebug("WORLD: Received CMSG_QUESTLOG_REMOVE_QUEST slot = %u",slot);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTLOG_REMOVE_QUEST slot = %u",slot);
 
     if (slot < MAX_QUEST_LOG_SIZE)
     {
@@ -446,7 +446,7 @@ void WorldSession::HandleQuestConfirmAccept(WorldPacket& recv_data)
     uint32 quest;
     recv_data >> quest;
 
-    sLog->outDebug("WORLD: Received CMSG_QUEST_CONFIRM_ACCEPT quest = %u", quest);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUEST_CONFIRM_ACCEPT quest = %u", quest);
 
     if (const Quest* pQuest = sObjectMgr->GetQuestTemplate(quest))
     {
@@ -488,7 +488,7 @@ void WorldSession::HandleQuestgiverCompleteQuest(WorldPacket& recv_data)
     if (!_player->isAlive())
         return;
 
-    sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_COMPLETE_QUEST npc = %u, quest = %u, unk = %u",uint32(GUID_LOPART(guid)), quest, unk);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_COMPLETE_QUEST npc = %u, quest = %u, unk = %u",uint32(GUID_LOPART(guid)), quest, unk);
 
     Quest const *pQuest = sObjectMgr->GetQuestTemplate(quest);
     if (pQuest)
@@ -524,7 +524,7 @@ void WorldSession::HandleQuestgiverCompleteQuest(WorldPacket& recv_data)
 
 void WorldSession::HandleQuestgiverQuestAutoLaunch(WorldPacket& /*recvPacket*/)
 {
-    sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_QUEST_AUTOLAUNCH");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_QUEST_AUTOLAUNCH");
 }
 
 void WorldSession::HandlePushQuestToParty(WorldPacket& recvPacket)
@@ -532,7 +532,7 @@ void WorldSession::HandlePushQuestToParty(WorldPacket& recvPacket)
     uint32 questId;
     recvPacket >> questId;
 
-    sLog->outDebug("WORLD: Received CMSG_PUSHQUESTTOPARTY quest = %u", questId);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_PUSHQUESTTOPARTY quest = %u", questId);
 
     if (Quest const *pQuest = sObjectMgr->GetQuestTemplate(questId))
     {
@@ -591,7 +591,7 @@ void WorldSession::HandleQuestPushResult(WorldPacket& recvPacket)
     uint8 msg;
     recvPacket >> guid >> QuestID >> msg;
 
-    sLog->outDebug("WORLD: Received MSG_QUEST_PUSH_RESULT");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received MSG_QUEST_PUSH_RESULT");
 
     if (_player->GetDivider() != 0)
     {
@@ -707,7 +707,7 @@ uint32 WorldSession::getDialogStatus(Player *pPlayer, Object* questgiver, uint32
 
 void WorldSession::HandleQuestgiverStatusMultipleQuery(WorldPacket& /*recvPacket*/)
 {
-    sLog->outDebug("WORLD: Received CMSG_QUESTGIVER_STATUS_MULTIPLE_QUERY");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_STATUS_MULTIPLE_QUERY");
 
     uint32 count = 0;
 

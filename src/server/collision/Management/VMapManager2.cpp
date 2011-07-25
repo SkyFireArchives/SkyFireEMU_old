@@ -114,7 +114,7 @@ namespace VMAP
                 ss2 >> map_num;
                 if (map_num >= 0)
                 {
-                    sLog->outDebug("Ignoring Map %i for VMaps", map_num);
+                    sLog->outDebug(LOG_FILTER_MAPS, "Ignoring Map %i for VMaps", map_num);
                     iIgnoreMapIds[map_num] = true;
                     // unload map in case it is loaded
                     unloadMap(map_num);
@@ -309,7 +309,7 @@ namespace VMAP
                 delete worldmodel;
                 return NULL;
             }
-            sLog->outDebug("VMapManager2: loading file '%s%s'", basepath.c_str(), filename.c_str());
+            sLog->outDebug(LOG_FILTER_MAPS, "VMapManager2: loading file '%s%s'", basepath.c_str(), filename.c_str());
             model = iLoadedModelFiles.insert(std::pair<std::string, ManagedModel>(filename, ManagedModel())).first;
             model->second.setModel(worldmodel);
         }
@@ -327,7 +327,7 @@ namespace VMAP
         }
         if( model->second.decRefCount() == 0)
         {
-            sLog->outDebug("VMapManager2: unloading file '%s'", filename.c_str());
+            sLog->outDebug(LOG_FILTER_MAPS, "VMapManager2: unloading file '%s'", filename.c_str());
             delete model->second.getModel();
             iLoadedModelFiles.erase(model);
         }

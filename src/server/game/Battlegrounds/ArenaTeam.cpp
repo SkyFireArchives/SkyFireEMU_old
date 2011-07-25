@@ -403,7 +403,7 @@ void ArenaTeam::Roster(WorldSession* session)
     }
 
     session->SendPacket(&data);
-    sLog->outDebug("WORLD: Sent SMSG_ARENA_TEAM_ROSTER");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Sent SMSG_ARENA_TEAM_ROSTER");
 }
 
 void ArenaTeam::Query(WorldSession* session)
@@ -418,7 +418,7 @@ void ArenaTeam::Query(WorldSession* session)
     data << uint32(BorderStyle);                          // border style
     data << uint32(BorderColor);                          // border color
     session->SendPacket(&data);
-    sLog->outDebug("WORLD: Sent SMSG_ARENA_TEAM_QUERY_RESPONSE");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Sent SMSG_ARENA_TEAM_QUERY_RESPONSE");
 }
 
 void ArenaTeam::SendStats(WorldSession* session)
@@ -520,7 +520,7 @@ void ArenaTeam::BroadcastEvent(ArenaTeamEvents event, uint64 guid, uint8 strCoun
 
     BroadcastPacket(&data);
 
-    sLog->outDebug("WORLD: Sent SMSG_ARENA_TEAM_EVENT");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Sent SMSG_ARENA_TEAM_EVENT");
 }
 
 uint8 ArenaTeam::GetSlotByType(uint32 type)

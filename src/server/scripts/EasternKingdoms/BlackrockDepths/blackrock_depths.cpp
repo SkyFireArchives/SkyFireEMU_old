@@ -245,7 +245,7 @@ public:
                 if (pInstance)
                 {
                     pInstance->SetData(TYPE_RING_OF_LAW,DONE);
-                    sLog->outDebug("TSCR: npc_grimstone: event reached end and set complete.");
+                    sLog->outDebug(LOG_FILTER_TSCR, "TSCR: npc_grimstone: event reached end and set complete.");
                 }
                 break;
             }

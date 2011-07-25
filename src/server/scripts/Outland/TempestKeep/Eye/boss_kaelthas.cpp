@@ -791,7 +791,7 @@ class boss_kaelthas : public CreatureScript
                                 if (me->getThreatManager().getThreatList().size() >= 2)
                                     for (uint32 i = 0; i < 3; ++i)
                                 {
-                                    sLog->outDebug("SD2: Kael'Thas mind control not supported.");
+                                    sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Kael'Thas mind control not supported.");
                                     //DoCast(pUnit, SPELL_MIND_CONTROL);
                                 }
 

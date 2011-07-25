@@ -157,7 +157,7 @@ void PlayerSocial::SendSocialList(Player* plr, uint32 mask)
     data.put<uint32>(countPos, count);
 
     plr->GetSession()->SendPacket(&data);
-    sLog->outDebug("WORLD: Sent SMSG_CONTACT_LIST");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Sent SMSG_CONTACT_LIST");
 }
 
 bool PlayerSocial::HasFriend(uint32 friend_guid)

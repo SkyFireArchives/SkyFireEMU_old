@@ -52,7 +52,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
    if (_player->GetGuildId())
        return;
 
-    sLog->outDebug("Received opcode CMSG_PETITION_BUY");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Received opcode CMSG_PETITION_BUY");
     recv_data.hexlike();
 
     uint64 guidNPC;
@@ -82,13 +82,13 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
     recv_data >> clientIndex;                               // index
     recv_data.read_skip<uint32>();                          // 0
 
-    sLog->outDebug("Petitioner with GUID %u tried sell petition: name %s", GUID_LOPART(guidNPC), name.c_str());
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Petitioner with GUID %u tried sell petition: name %s", GUID_LOPART(guidNPC), name.c_str());
 
     // prevent cheating
     Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(guidNPC,UNIT_NPC_FLAG_PETITIONER);
     if (!pCreature)
     {
-        sLog->outDebug("WORLD: HandlePetitionBuyOpcode - Unit (GUID: %u) not found or you can't interact with him.", GUID_LOPART(guidNPC));
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: HandlePetitionBuyOpcode - Unit (GUID: %u) not found or you can't interact with him.", GUID_LOPART(guidNPC));
         return;
     }
     if (!pCreature->isTabardDesigner())
@@ -163,7 +163,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
     // delete petitions with the same guid as this one
     ssInvalidPetitionGUIDs << "'" << charter->GetGUIDLow() << "'";
 
-    sLog->outDebug("Invalid petition GUIDs: %s", ssInvalidPetitionGUIDs.str().c_str());
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Invalid petition GUIDs: %s", ssInvalidPetitionGUIDs.str().c_str());
     CharacterDatabase.EscapeString(name);
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     trans->PAppend("DELETE FROM petition WHERE petitionguid IN (%s)",  ssInvalidPetitionGUIDs.str().c_str());
@@ -178,7 +178,7 @@ void WorldSession::HandlePetitionShowSignOpcode(WorldPacket & recv_data)
     if (_player->GetGuildId())
         return;
 
-    sLog->outDebug("Received opcode CMSG_PETITION_SHOW_SIGNATURES");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Received opcode CMSG_PETITION_SHOW_SIGNATURES");
 
     uint8 signs = 0;
     uint64 petitionguid;
@@ -193,7 +193,7 @@ void WorldSession::HandlePetitionShowSignOpcode(WorldPacket & recv_data)
     if (result)
         signs = uint8(result->GetRowCount());
 
-    sLog->outDebug("CMSG_PETITION_SHOW_SIGNATURES petition entry: '%u'", petitionguid_low);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_PETITION_SHOW_SIGNATURES petition entry: '%u'", petitionguid_low);
 
     WorldPacket data(SMSG_PETITION_SHOW_SIGNATURES, (8+8+4+1+signs*12));
     data << uint64(petitionguid);                           // petition guid
@@ -216,14 +216,14 @@ void WorldSession::HandlePetitionShowSignOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandlePetitionQueryOpcode(WorldPacket & recv_data)
 {
-    sLog->outDebug("Received opcode CMSG_PETITION_QUERY");   // ok
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Received opcode CMSG_PETITION_QUERY");   // ok
     //recv_data.hexlike();
 
     uint32 guildguid;
     uint64 petitionguid;
     recv_data >> guildguid;                                 // in Trinity always same as GUID_LOPART(petitionguid)
     recv_data >> petitionguid;                              // petition guid
-    sLog->outDebug("CMSG_PETITION_QUERY Petition GUID %u Guild GUID %u", GUID_LOPART(petitionguid), guildguid);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_PETITION_QUERY Petition GUID %u Guild GUID %u", GUID_LOPART(petitionguid), guildguid);
 
     SendPetitionQueryOpcode(petitionguid);
 }
@@ -248,7 +248,7 @@ void WorldSession::SendPetitionQueryOpcode(uint64 petitionguid)
     }
     else
     {
-        sLog->outDebug("CMSG_PETITION_QUERY failed for petition (GUID: %u)", GUID_LOPART(petitionguid));
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_PETITION_QUERY failed for petition (GUID: %u)", GUID_LOPART(petitionguid));
         return;
     }
 
@@ -283,7 +283,7 @@ void WorldSession::SendPetitionQueryOpcode(uint64 petitionguid)
 
 void WorldSession::HandlePetitionRenameOpcode(WorldPacket & recv_data)
 {
-    sLog->outDebug("Received opcode MSG_PETITION_RENAME");   // ok
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Received opcode MSG_PETITION_RENAME");   // ok
     //recv_data.hexlike();
 
     uint64 petitionguid;
@@ -312,7 +312,7 @@ void WorldSession::HandlePetitionRenameOpcode(WorldPacket & recv_data)
     CharacterDatabase.PExecute("UPDATE petition SET name = '%s' WHERE petitionguid = '%u'",
         db_newname.c_str(), GUID_LOPART(petitionguid));
 
-    sLog->outDebug("Petition (GUID: %u) renamed to '%s'", GUID_LOPART(petitionguid), newname.c_str());
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Petition (GUID: %u) renamed to '%s'", GUID_LOPART(petitionguid), newname.c_str());
     WorldPacket data(MSG_PETITION_RENAME, (8+newname.size()+1));
     data << uint64(petitionguid);
     data << newname;
@@ -321,7 +321,7 @@ void WorldSession::HandlePetitionRenameOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandlePetitionSignOpcode(WorldPacket & recv_data)
 {
-    sLog->outDebug("Received opcode CMSG_PETITION_SIGN");    // ok
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Received opcode CMSG_PETITION_SIGN");    // ok
     //recv_data.hexlike();
 
     Field *fields;
@@ -392,7 +392,7 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket & recv_data)
 
     CharacterDatabase.PExecute("INSERT INTO petition_sign (ownerguid,petitionguid, playerguid, player_account) VALUES ('%u', '%u', '%u','%u')", GUID_LOPART(ownerguid),GUID_LOPART(petitionguid), plguidlo,GetAccountId());
 
-    sLog->outDebug("PETITION SIGN: GUID %u by player: %s (GUID: %u Account: %u)", GUID_LOPART(petitionguid), _player->GetName(),plguidlo,GetAccountId());
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "PETITION SIGN: GUID %u by player: %s (GUID: %u Account: %u)", GUID_LOPART(petitionguid), _player->GetName(),plguidlo,GetAccountId());
 
     WorldPacket data(SMSG_PETITION_SIGN_RESULTS, (8+8+4));
     data << uint64(petitionguid);
@@ -409,13 +409,13 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandlePetitionDeclineOpcode(WorldPacket & recv_data)
 {
-    sLog->outDebug("Received opcode MSG_PETITION_DECLINE");  // ok
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Received opcode MSG_PETITION_DECLINE");  // ok
     //recv_data.hexlike();
 
     uint64 petitionguid;
     uint64 ownerguid;
     recv_data >> petitionguid;                              // petition guid
-    sLog->outDebug("Petition %u declined by %u", GUID_LOPART(petitionguid), _player->GetGUIDLow());
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Petition %u declined by %u", GUID_LOPART(petitionguid), _player->GetGUIDLow());
 
     QueryResult result = CharacterDatabase.PQuery("SELECT ownerguid FROM petition WHERE petitionguid = '%u'", GUID_LOPART(petitionguid));
     if (!result)
@@ -435,7 +435,7 @@ void WorldSession::HandlePetitionDeclineOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandleOfferPetitionOpcode(WorldPacket & recv_data)
 {
-    sLog->outDebug("Received opcode CMSG_OFFER_PETITION");   // ok
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Received opcode CMSG_OFFER_PETITION");   // ok
     //recv_data.hexlike();
 
     uint8 signs = 0;
@@ -494,7 +494,7 @@ void WorldSession::HandleOfferPetitionOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
 {
-    sLog->outDebug("Received opcode CMSG_TURN_IN_PETITION"); // ok
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Received opcode CMSG_TURN_IN_PETITION"); // ok
 
     WorldPacket data;
     uint64 petitionguid;
@@ -504,7 +504,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
 
     recv_data >> petitionguid;
 
-    sLog->outDebug("Petition %u turned in by %u", GUID_LOPART(petitionguid), _player->GetGUIDLow());
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Petition %u turned in by %u", GUID_LOPART(petitionguid), _player->GetGUIDLow());
 
     // data
     QueryResult result = CharacterDatabase.PQuery("SELECT ownerguid, name FROM petition WHERE petitionguid = '%u'", GUID_LOPART(petitionguid));
@@ -585,7 +585,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
     CharacterDatabase.CommitTransaction(trans);
 
     // created
-    sLog->outDebug("TURN IN PETITION GUID %u", GUID_LOPART(petitionguid));
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "TURN IN PETITION GUID %u", GUID_LOPART(petitionguid));
 
     data.Initialize(SMSG_TURN_IN_PETITION_RESULTS, 4);
     data << (uint32)PETITION_TURN_OK;
@@ -594,7 +594,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandlePetitionShowListOpcode(WorldPacket & recv_data)
 {
-    sLog->outDebug("Received CMSG_PETITION_SHOWLIST");       // ok
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Received CMSG_PETITION_SHOWLIST");       // ok
     //recv_data.hexlike();
 
     uint64 guid;
@@ -608,7 +608,7 @@ void WorldSession::SendPetitionShowList(uint64 guid)
     Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(guid, UNIT_NPC_FLAG_PETITIONER);
     if (!pCreature)
     {
-        sLog->outDebug("WORLD: HandlePetitionShowListOpcode - Unit (GUID: %u) not found or you can't interact with him.", uint32(GUID_LOPART(guid)));
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: HandlePetitionShowListOpcode - Unit (GUID: %u) not found or you can't interact with him.", uint32(GUID_LOPART(guid)));
         return;
     }
 
@@ -628,5 +628,5 @@ void WorldSession::SendPetitionShowList(uint64 guid)
     data << uint32(9);                                  // required signs?
 
     SendPacket(&data);
-    sLog->outDebug("Sent SMSG_PETITION_SHOWLIST");
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Sent SMSG_PETITION_SHOWLIST");
 }

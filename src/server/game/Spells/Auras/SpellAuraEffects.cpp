@@ -1654,7 +1654,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
                 break;
 
             caster->ModifyHealth(-(int32)damage);
-            sLog->outDebug("PeriodicTick: donator %u target %u damage %u.", target->GetEntry(), target->GetEntry(), damage);
+            sLog->outDebug(LOG_FILTER_SPELLS_AURAS, "PeriodicTick: donator %u target %u damage %u.", target->GetEntry(), target->GetEntry(), damage);
 
             float gainMultiplier = SpellMgr::CalculateSpellEffectValueMultiplier(GetSpellProto(), GetEffIndex(), caster);
 
@@ -2681,14 +2681,14 @@ void AuraEffect::TriggerSpell(Unit *target, Unit *caster) const
     {
         Unit *triggerCaster = GetTriggeredSpellCaster(triggeredSpellInfo, caster, triggerTarget);
         triggerCaster->CastSpell(triggerTarget, triggeredSpellInfo, true, 0, this);
-        sLog->outDebug("AuraEffect::TriggerSpell: Spell %u Trigger %u", GetId(), triggeredSpellInfo->Id);
+        sLog->outDebug(LOG_FILTER_SPELLS_AURAS, "AuraEffect::TriggerSpell: Spell %u Trigger %u", GetId(), triggeredSpellInfo->Id);
     }
     else
     {
         Creature* c = triggerTarget->ToCreature();
         if (!c || (c && !sScriptMgr->OnDummyEffect(caster, GetId(), SpellEffIndex(GetEffIndex()), triggerTarget->ToCreature())) ||
             (c && !c->AI()->sOnDummyEffect(caster, GetId(), SpellEffIndex(GetEffIndex()))))
-            sLog->outError("AuraEffect::TriggerSpell: Spell %u has value 0 in EffectTriggered[%d] and is therefor not handled. Define as custom case?",GetId(),GetEffIndex());
+            sLog->outDebug(LOG_FILTER_SPELLS_AURAS, "AuraEffect::TriggerSpell: Spell %u has value 0 in EffectTriggered[%d] and is therefor not handled. Define as custom case?",GetId(),GetEffIndex());
     }
 }
 
@@ -5819,7 +5819,7 @@ void AuraEffect::HandleModDamagePercentDone(AuraApplication const *aurApp, uint8
 
     Unit *target = aurApp->GetTarget();
 
-    sLog->outDebug("AURA MOD DAMAGE type:%u negative:%u", GetMiscValue(), GetAmount() > 0);
+    sLog->outDebug(LOG_FILTER_SPELLS_AURAS, "AURA MOD DAMAGE type:%u negative:%u", GetMiscValue(), GetAmount() > 0);
 
     // apply item specific bonuses for already equipped weapon
     if (target->GetTypeId() == TYPEID_PLAYER)
