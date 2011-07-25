@@ -44,9 +44,9 @@
 
 #ifdef _WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "SkyFireAuth";
-char serviceLongName[] = "SkyFireAuth service";
-char serviceDescription[] = "Cataclysm Server";
+char serviceName[] = "authserver";
+char serviceLongName[] = "SkyFireEMU Auth service";
+char serviceDescription[] = "SkyFireEMU World of Warcraft emulator world auth service";
 /*
  * -1 - not in service mode
  *  0 - stopped
@@ -168,8 +168,14 @@ extern int main(int argc, char **argv)
     sLog->Initialize();
 
     sLog->outString("%s (realm-daemon)", _FULLVERSION);
+	sLog->outString("   ______  __  __  __  __  ______ __  ______  ______ ");  
+    sLog->outString("  /\\  ___\\/\\ \\/ / /\\ \\_\\ \\/\\  ___/\\ \\/\\  == \\/\\  ___\\ ");  
+    sLog->outString("  \\ \\___  \\ \\  _'-\\ \\____ \\ \\  __\\ \\ \\ \\  __<\\ \\  __\\ ");  
+    sLog->outString("   \\/\\_____\\ \\_\\ \\_\\/\\_____\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_____\\ ");
+    sLog->outString("    \\/_____/\\/_/\\/_/\\/_____/\\/_/   \\/_/\\/_/ /_/\\/_____/ ");
+    sLog->outString("  Project SkyFireEmu 2011(c) Open-sourced Game Emulation ");                                                   
+    sLog->outString("           <http://www.projectskyfire.org/> ");
     sLog->outString("<Ctrl-C> to stop.\n");
-    sLog->outString("Using configuration file %s.", cfg_file);
 
     sLog->outDetail("%s (Library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
 
