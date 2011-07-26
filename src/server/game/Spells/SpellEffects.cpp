@@ -512,7 +512,11 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                    damage = uint32(damage * (m_caster->GetTotalAttackPowerValue(BASE_ATTACK)) / 100);
                // Victory Rush
                else if (m_spellInfo->SpellFamilyFlags[1] & 0x100)
+               {
                    damage = uint32(damage * m_caster->GetTotalAttackPowerValue(BASE_ATTACK) / 100);
+                   m_caster->RemoveAurasDueToSpell(32216); // Victorious
+               }
+
                // Cleave
                else if (m_spellInfo->Id == 845)
                    damage = uint32(6+ m_caster->GetTotalAttackPowerValue(BASE_ATTACK)* 0.45);

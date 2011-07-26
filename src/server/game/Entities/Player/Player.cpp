@@ -10971,7 +10971,7 @@ void Player::SendCurrencies() const
         packet << uint32(itr->second.weekCount / PLAYER_CURRENCY_PRECISION);
         packet << uint8(0);                     // unknown
         packet << uint32(entry->ID);
-        packet << uint32(sWorld->GetNextWeeklyQuestsResetTime() - 1*WEEK);
+        packet << uint32(sWorld->GetNextCurrencyResetTime() - WEEK);
         packet << uint32(_GetCurrencyWeekCap(entry) / PLAYER_CURRENCY_PRECISION);
         packet << uint32(itr->second.totalCount / PLAYER_CURRENCY_PRECISION);
     }
@@ -19048,9 +19048,9 @@ void Player::_SaveCurrency()
 
 void Player::_SaveConquestPointsWeekCap()
 {
+    CharacterDatabase.PExecute("DELETE FROM character_cp_weekcap WHERE guid = '%u'", GetGUIDLow());
     for (uint8 source=0; source < CP_SOURCE_MAX; source++)
     {
-        CharacterDatabase.PExecute("DELETE FROM character_cp_weekcap WHERE guid = '%u'", GetGUIDLow());
         CharacterDatabase.PExecute("INSERT INTO character_cp_weekcap (guid, source, maxWeekRating, weekCap) VALUES ('%u','%u','%u','%u')",
             GetGUIDLow(), source, m_maxWeekRating[source], m_conquestPointsWeekCap[source] );
     }
