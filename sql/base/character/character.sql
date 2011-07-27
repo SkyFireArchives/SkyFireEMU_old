@@ -376,6 +376,22 @@ CREATE TABLE `character_currency` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `character_cp_weekcap`
+--
+
+DROP TABLE IF EXISTS `character_cp_weekcap`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `character_cp_weekcap` (
+  `guid` int(10) unsigned NOT NULL default '0',
+  `source` tinyint(3) unsigned NOT NULL default '0',
+  `maxWeekRating` smallint(5) unsigned NOT NULL default '0',
+  `weekCap` smallint(5) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`guid`,`source`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `character_declinedname`
 --
 
