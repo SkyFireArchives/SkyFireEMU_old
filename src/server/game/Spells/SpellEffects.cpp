@@ -2798,7 +2798,7 @@ void Spell::SpellDamageHeal(SpellEffIndex effIndex)
                     {
                         int32 bp0 = int32(m_caster->ToPlayer()->GetHealingDoneInPastSecs(15) * (12.0f + (1.5f * m_caster->ToPlayer()->GetMasteryPoints())) /100);
                         m_caster->CastCustomSpell(m_caster, 86273, &bp0, NULL, NULL, true);
-
+                        caster->ToPlayer()->ResetHealingDoneInPastSecs(15);
                     }
                 }
             }

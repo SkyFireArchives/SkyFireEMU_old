@@ -25338,7 +25338,7 @@ void Player::RemoveOrAddMasterySpells()
             if (!HasAura(76595))
                 AddAura(76595, this);
 
-        if (GetTalentBranchSpec(GetActiveSpec()) == BS_PALADIN_HOLY)
+        if (GetTalentBranchSpec(GetActiveSpec()) == BS_PALADIN_PROTECTION)
             if (!HasAura(76671))
                 AddAura(76671, this);
 
