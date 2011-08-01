@@ -9887,7 +9887,7 @@ void Unit::SetMinion(Minion *minion, bool apply, PetSlot slot)
                 this->ToPlayer()->SendCooldownEvent(spellInfo);
         }
 
-        //if (minion->HasUnitTypeMask(UNIT_MASK_GUARDIAN))       ý
+        //if (minion->HasUnitTypeMask(UNIT_MASK_GUARDIAN))
         {
             if (RemoveUInt64Value(UNIT_FIELD_SUMMON, minion->GetGUID()))
             {
