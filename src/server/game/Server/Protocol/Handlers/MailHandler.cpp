@@ -630,6 +630,14 @@ void WorldSession::HandleGetMailList(WorldPacket & recv_data)
                 data << uint32((item ? item->GetEnchantmentDuration((EnchantmentSlot)j) : 0));
                 data << uint32((item ? item->GetEnchantmentCharges((EnchantmentSlot)j) : 0));
             }
+            
+			for (uint8 j = 0; j < 2; ++j)
+            {
+                data << uint32(0);
+                data << uint32(0);
+                data << uint32(0);
+            }
+
             // can be negative
             data << int32((item ? item->GetItemRandomPropertyId() : 0));
             // unk
