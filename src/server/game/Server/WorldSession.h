@@ -307,10 +307,10 @@ class WorldSession
         //used with item_page table
         bool SendItemInfo(uint32 itemid, WorldPacket data);
         //auction
-        void SendAuctionHello(uint64 guid, Creature * unit);
-        void SendAuctionCommandResult(uint32 auctionId, uint32 Action, uint32 ErrorCode, uint32 bidError = 0);
-        void SendAuctionBidderNotification(uint32 location, uint32 auctionId, uint64 bidder, uint32 bidSum, uint32 diff, uint32 item_template);
-        void SendAuctionOwnerNotification(AuctionEntry * auction);
+		void SendAuctionHello(uint64 guid, Creature * unit);
+		void SendAuctionCommandResult(uint32 auctionId, uint32 Action, uint32 ErrorCode, uint64 bidError = 0);
+		void SendAuctionBidderNotification(uint32 location, uint32 auctionId, uint64 bidder, uint32 bidSum, uint32 diff, uint32 item_template);
+		void SendAuctionOwnerNotification(AuctionEntry * auction);
 
         //Item Enchantment
         void SendEnchantmentLog(uint64 Target, uint64 Caster,uint32 ItemID,uint32 SpellID);
@@ -601,6 +601,7 @@ class WorldSession
         void HandleAuctionListOwnerItems(WorldPacket & recv_data);
         void HandleAuctionPlaceBid(WorldPacket & recv_data);
         void HandleAuctionListPendingSales(WorldPacket & recv_data);
+        void SendAuctionRemovedNotification(AuctionEntry* auction);
 
         void HandleGetMailList(WorldPacket & recv_data);
         void HandleSendMail(WorldPacket & recv_data);

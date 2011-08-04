@@ -150,6 +150,7 @@ public:
     void SendAuctionSalePendingMail(AuctionEntry * auction, SQLTransaction& trans);
     void SendAuctionSuccessfulMail(AuctionEntry * auction, SQLTransaction& trans);
     void SendAuctionExpiredMail(AuctionEntry * auction, SQLTransaction& trans);
+
     void SendAuctionRemovedMail(AuctionEntry * auction, SQLTransaction& trans);
     void SendAuctionOutbiddedMail(AuctionEntry * auction, uint64 newPrice, Player* newBidder, SQLTransaction& trans);
     void SendAuctionCancelledToBidderMail(AuctionEntry* auction, SQLTransaction& trans);
