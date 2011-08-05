@@ -2920,6 +2920,18 @@ void Player::GiveLevel(uint8 level)
         CharacterDatabase.CommitTransaction(trans);
     }
 
+    if (getRace()==RACE_WORGEN && getLevel()>19 && getClass() != CLASS_DEATH_KNIGHT)
+    {
+        if (!HasSpell(87840))
+            learnSpell(87840, false);
+
+        if (!HasSpell(33388))
+            learnSpell(33388, false);
+    }
+
+    if (getClass()==CLASS_ROGUE && getLevel()>2 && !HasSpell(79327))
+        learnSpell(79327, false);
+
     GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_REACH_LEVEL);
 }
 
@@ -20127,6 +20139,9 @@ bool Player::ActivateTaxiPathTo(std::vector<uint32> const& nodes, Creature* npc 
     {
         RemoveAurasByType(SPELL_AURA_MOUNTED);
 
+        if (HasAura(87840))
+            RemoveAurasDueToSpell(87840);
+
         if (IsInDisallowedMountForm())
             RemoveAurasByType(SPELL_AURA_MOD_SHAPESHIFT);
 
@@ -25245,6 +25260,39 @@ void Player::SendClearFocus(Unit* target)
     WorldPacket data(SMSG_BREAK_TARGET, target->GetPackGUID().size());
     data.append(target->GetPackGUID());
     GetSession()->SendPacket(&data);
+}
+
+uint32 Player::GetMountCapabilityIndex(uint32 amount)
+{
+    const MountTypeEntry *type = sMountTypeStore.LookupEntry(amount);
+    if(!type)
+        return 0;
+
+    uint32 plrskill = GetSkillValue(SKILL_RIDING);
+    uint32 map = GetVirtualMapForMapAndZone(GetMapId(), GetZoneId());
+    uint32 maxSkill = 0;
+    uint32 index = 0;
+
+    for(int i = 0; i < MAX_MOUNT_TYPE_COLUMN; i++)
+    {
+        const MountCapabilityEntry *cap = sMountCapabilityStore.LookupEntry(type->capabilities[i]);
+        if(!cap)
+            continue;
+
+        if(cap->map != -1 && cap->map != map)
+            continue;
+
+        if(cap->reqSkillLevel > plrskill || cap->reqSkillLevel <= maxSkill)
+            continue;
+
+        if(cap->reqSpell && !HasSpell(cap->reqSpell))
+            continue;
+
+        maxSkill = cap->reqSkillLevel;
+        index = type->capabilities[i];
+    }
+
+    return index;
 }
 
 void Player::SetInGuild(uint32 GuildId)

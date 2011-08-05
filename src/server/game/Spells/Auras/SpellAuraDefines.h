@@ -34,7 +34,7 @@ enum AURA_FLAGS
     AFLAG_CASTER            = 0x08,
     AFLAG_POSITIVE          = 0x10,
     AFLAG_DURATION          = 0x20,
-    AFLAG_UNK2              = 0x40,
+    AFLAG_BASEPOINT         = 0x40,
     AFLAG_NEGATIVE          = 0x80
 };
 

@@ -884,6 +884,10 @@ void Unit::CastSpell(Unit* Victim, uint32 spellId, bool triggered, Item *castIte
 {
     SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellId);
 
+    if (GetTypeId() == TYPEID_PLAYER)
+        if (ToPlayer()->HasAura(87840))
+            ToPlayer()->RemoveAurasDueToSpell(87840);
+
     if (!spellInfo)
     {
         sLog->outError("CastSpell: unknown spell id %i by caster: %s %u)", spellId,(GetTypeId() == TYPEID_PLAYER ? "player (GUID:" : "creature (Entry:"),(GetTypeId() == TYPEID_PLAYER ? GetGUIDLow() : GetEntry()));
@@ -16970,6 +16974,9 @@ void Unit::EnterVehicle(Vehicle *vehicle, int8 seatId, bool byAura)
         plr->StopCastingBindSight();
         Unmount();
         RemoveAurasByType(SPELL_AURA_MOUNTED);
+
+        if (plr->HasAura(87840))
+            plr->RemoveAurasDueToSpell(87840);
 
         // drop flag at invisible in bg
         if (Battleground *bg = plr->GetBattleground())

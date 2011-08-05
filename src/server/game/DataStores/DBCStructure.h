@@ -2004,6 +2004,7 @@ struct SpellEntry
     uint32 GetInterruptFlags() const;
     uint32 GetTargetCreatureType() const;
     int32 GetEffectMiscValue(uint32 index) const;
+	int32 GetEffectMiscValueB(uint32 index) const;
     uint32 GetStances() const;
     uint32 GetStancesNot() const;
     uint32 GetProcFlags() const;

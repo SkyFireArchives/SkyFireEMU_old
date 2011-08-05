@@ -477,6 +477,12 @@ int32 SpellEntry::GetEffectMiscValue(uint32 index) const
     return effect ? effect->EffectMiscValue : 0;
 }
 
+int32 SpellEntry::GetEffectMiscValueB(uint32 index) const
+{
+	SpellEffectEntry const* effect = GetSpellEffect(index);
+	return effect ? effect->EffectMiscValueB : 0;
+}
+
 uint32 SpellEntry::GetStances() const
 {
     SpellShapeshiftEntry const* ss = GetSpellShapeshift();

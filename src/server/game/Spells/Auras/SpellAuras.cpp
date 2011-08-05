@@ -202,8 +202,28 @@ void AuraApplication::ClientUpdate(bool remove)
     Aura const * aura = GetBase();
     data << uint32(aura->GetId());
     uint32 flags = m_flags;
+    
     if (aura->GetMaxDuration() > 0 && !(aura->GetSpellProto()->AttributesEx5 & SPELL_ATTR5_HIDE_DURATION))
         flags |= AFLAG_DURATION;
+
+	int idx = aura->GetSpellProto()->GetEffectMiscValueB(0);
+	if (aura->GetCasterGUID() == GetTarget()->GetGUID())
+	{
+		if (m_target->GetTypeId() == TYPEID_PLAYER)
+		{
+			idx = m_target->ToPlayer()->GetMountCapabilityIndex(idx);
+			if (idx)
+				flags |= AFLAG_BASEPOINT;
+		}
+
+        if (aura->GetSpellProto()->Id == 87840)
+		{
+			idx = m_target->ToPlayer()->GetMountCapabilityIndex(230);
+			if (idx)
+				flags |= AFLAG_BASEPOINT;
+		}
+	}
+
     data << uint8(flags);
     data << uint8(aura->GetCasterLevel());
     data << uint8(aura->GetStackAmount() > 1 ? aura->GetStackAmount() : (aura->GetCharges()) ? aura->GetCharges() : 1);
@@ -217,8 +237,10 @@ void AuraApplication::ClientUpdate(bool remove)
         data << uint32(aura->GetDuration());
     }
 
-    if (flags & AFLAG_UNK2)
-        sLog->outError("Unhandled flag in AuraApplication::ClientUpdate. Will result in the aura being handled incorrectly on client side.");
+    if (flags & AFLAG_BASEPOINT)
+        for (int i = 0; i < 3; ++i)
+            if(flags & (1 << i))
+                data << uint32(idx);
 
     m_target->SendMessageToSet(&data, true);
 }

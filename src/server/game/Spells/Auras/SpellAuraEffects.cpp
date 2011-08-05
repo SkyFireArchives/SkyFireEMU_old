@@ -3639,6 +3639,10 @@ void AuraEffect::HandleAuraTransform(AuraApplication const *aurApp, uint8 mode, 
             //dismount polymorphed target (after patch 2.4.2)
             if (target->IsMounted())
                 target->RemoveAurasByType(SPELL_AURA_MOUNTED);
+
+            if (target->HasAura(87840))
+                target->RemoveAurasDueToSpell(87840);
+
         }
     }
     else
@@ -4095,42 +4099,65 @@ void AuraEffect::HandleAuraMounted(AuraApplication const *aurApp, uint8 mode, bo
                 creatureEntry = 15665;
         }
 
-        CreatureInfo const* ci = ObjectMgr::GetCreatureTemplate(creatureEntry);
-        if (!ci)
-        {
-            sLog->outErrorDb("AuraMounted: `creature_template`='%u' not found in database (only need it modelid)",GetMiscValue());
-            return;
+		if (aurApp->GetBase()->GetId() == 87840)
+		{
+			plr->setInWorgenForm(UNIT_FLAG2_WORGEN_TRANSFORM3);
+			target->SetDisplayId(plr->getGender() == GENDER_FEMALE ? 29423 : 29422);
+			target->Mount(plr->getGender() == GENDER_FEMALE ? 29423 : 29422, 0, GetMiscValue());
+		}
+		else
+		{
+            CreatureInfo const* ci = ObjectMgr::GetCreatureTemplate(creatureEntry);
+            if (!ci)
+            {
+                sLog->outErrorDb("AuraMounted: `creature_template`='%u' not found in database (only need it modelid)",GetMiscValue());
+                return;
+            }
+
+            uint32 team = 0;
+            if (target->GetTypeId() == TYPEID_PLAYER)
+                team = target->ToPlayer()->GetTeam();
+
+            uint32 display_id = sObjectMgr->ChooseDisplayId(team,ci);
+            CreatureModelInfo const *minfo = sObjectMgr->GetCreatureModelRandomGender(display_id);
+            if (minfo)
+                display_id = minfo->modelid;
+
+            //some spell has one aura of mount and one of vehicle
+            for (uint32 i = 0; i < MAX_SPELL_EFFECTS; ++i)
+                if (GetSpellProto()->Effect[i] == SPELL_EFFECT_SUMMON
+                    && GetSpellProto()->EffectMiscValue[i] == GetMiscValue())
+                    display_id = 0;
+
+            target->Mount(display_id, ci->VehicleId, GetMiscValue());
         }
-
-        uint32 team = 0;
-        if (target->GetTypeId() == TYPEID_PLAYER)
-            team = target->ToPlayer()->GetTeam();
-
-        uint32 display_id = sObjectMgr->ChooseDisplayId(team,ci);
-        CreatureModelInfo const *minfo = sObjectMgr->GetCreatureModelRandomGender(display_id);
-        if (minfo)
-            display_id = minfo->modelid;
-
-        //some spell has one aura of mount and one of vehicle
-        for (uint32 i = 0; i < MAX_SPELL_EFFECTS; ++i)
-            if (GetSpellProto()->Effect[i] == SPELL_EFFECT_SUMMON && GetSpellProto()->EffectMiscValue[i] == GetMiscValue())
-                display_id = 0;
-
-        target->Mount(display_id, ci->VehicleId, GetMiscValue());
 
         if(plr)
             plr->CastSpell(plr, spellId, true);
+
+        //const_cast<ItemPrototype*>(proto)->Class = db2item->Class;
+        const_cast<SpellEntry*>(GetSpellProto())->EffectBasePoints[1] = spellId;
     }
     else
     {
+        target->DeMorph();
         target->Unmount();
         if(plr)
             plr->RemoveAurasDueToSpell(spellId);
         //some mounts like Headless Horseman's Mount or broom stick are skill based spell
-        // need to remove ALL arura related to mounts, this will stop client crash with broom stick
+        // need to remove ALL aura related to mounts, this will stop client crash with broom stick
         // and never endless flying after using Headless Horseman's Mount
         if (mode & AURA_EFFECT_HANDLE_REAL)
             target->RemoveAurasByType(SPELL_AURA_MOUNTED);
+
+        WorldPacket data(12);
+        data.SetOpcode(SMSG_MOVE_UNSET_CAN_FLY);
+        data.append(target->GetPackGUID());
+        data << uint32(0);                                      // unknown
+        target->SendMessageToSet(&data, true);
+
+        target->SetSpeed(MOVE_RUN, 1,   true);
+        target->SetSpeed(MOVE_FLIGHT, 1,true);
     }
 }
 

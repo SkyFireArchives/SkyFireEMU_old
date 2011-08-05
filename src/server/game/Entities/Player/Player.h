@@ -2436,6 +2436,7 @@ class Player : public Unit, public GridObject<Player>
         void SendCinematicStart(uint32 CinematicSequenceId);
         void SendMovieStart(uint32 MovieId);
         void SendClearFocus(Unit* target);
+		uint32 GetMountCapabilityIndex(uint32 amount);
 
         //Worgen Transformations
         bool isInWorgenForm();

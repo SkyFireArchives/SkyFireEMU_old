@@ -174,6 +174,9 @@ void WorldSession::HandleMoveWorldportAckOpcode()
     if (!allowMount)
         _player->RemoveAurasByType(SPELL_AURA_MOUNTED);
 
+    if (_player->HasAura(87840))
+        _player->RemoveAurasDueToSpell(87840);
+
     // update zone immediately, otherwise leave channel will cause crash in mtmap
     uint32 newzone, newarea;
     GetPlayer()->GetZoneAndAreaId(newzone, newarea);
