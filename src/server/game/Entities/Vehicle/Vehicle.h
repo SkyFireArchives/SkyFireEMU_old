@@ -57,7 +57,7 @@ enum VehicleSeatFlags
     VEHICLE_SEAT_FLAG_UNK11                      = 0x00000400,           // needed for CGCamera__SyncFreeLookFacing
     VEHICLE_SEAT_FLAG_CAN_CONTROL                = 0x00000800,           // Lua_UnitInVehicleControlSeat
     VEHICLE_SEAT_FLAG_CAN_ATTACK                 = 0x00004000,           // Can attack, cast spells and use items from vehicle?
-    VEHICLE_SEAT_FLAG_USABLE                     = 0x02000000,           // Lua_CanExitVehicle
+    VEHICLE_SEAT_FLAG_CAN_ENTER_OR_EXIT          = 0x02000000,           // Lua_CanExitVehicle - can enter and exit at free will
     VEHICLE_SEAT_FLAG_CAN_SWITCH                 = 0x04000000,           // Lua_CanSwitchVehicleSeats
     VEHICLE_SEAT_FLAG_CAN_CAST                   = 0x20000000,           // Lua_UnitHasVehicleUI
 };
@@ -109,7 +109,8 @@ typedef std::map<int8, VehicleSeat> SeatMap;
 class Vehicle
 {
     friend class Unit;
-    public:
+    friend class WorldSession;    
+	public:
         explicit Vehicle(Unit *unit, VehicleEntry const *vehInfo);
         virtual ~Vehicle();
 
@@ -138,7 +139,8 @@ class Vehicle
 
     protected:
         uint16 GetExtraMovementFlagsForBase() const;
-
+        VehicleSeatEntry const* GetSeatForPassenger(Unit* passenger);
+ 
     protected:
         Unit *me;
         VehicleEntry const *m_vehicleInfo;
