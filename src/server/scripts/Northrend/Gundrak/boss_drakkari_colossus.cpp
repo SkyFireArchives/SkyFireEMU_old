@@ -99,36 +99,51 @@ class boss_drakkari_colossus : public CreatureScript
 
             void Reset()
             {
-                if (GetData(DATA_INTRO_DONE))
+                _Reset();
+                
+				if (GetData(DATA_INTRO_DONE))
                 {
                     me->SetReactState(REACT_AGGRESSIVE);
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
                     me->RemoveAura(SPELL_FREEZE_ANIM);
                 }
 
-                events.Reset();
+                //events.Reset(); -> done in _Reset();
                 events.ScheduleEvent(EVENT_MIGHTY_BLOW, urand(10000, 30000));
 
                 phase = COLOSSUS_PHASE_NORMAL;
 
-                instance->SetBossState(DATA_DRAKKARI_COLOSSUS_EVENT, NOT_STARTED);
+
+                // Note: This should not be called, but before use SetBossState function we should use BossAI
+                //        in all the bosses of the instance
+                instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, NOT_STARTED);
             }
 
             void EnterCombat(Unit* /*who*/)
             {
-                instance->SetBossState(DATA_DRAKKARI_COLOSSUS_EVENT, IN_PROGRESS);
+                _EnterCombat();               
 
                 me->RemoveAura(SPELL_FREEZE_ANIM);
-            }
+
+                // Note: This should not be called, but before use SetBossState function we should use BossAI
+                //        in all the bosses of the instance
+                instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, IN_PROGRESS);            
+			}
 
             void JustDied(Unit* /*killer*/)
             {
-                instance->SetBossState(DATA_DRAKKARI_COLOSSUS_EVENT, DONE);
+                // Note: This should not be called, but before use SetBossState function we should use BossAI
+                //        in all the bosses of the instance
+                instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, FAIL);
             }
 
             void JustReachedHome()
             {
-                instance->SetBossState(DATA_DRAKKARI_COLOSSUS_EVENT, FAIL);
+                _JustDied();
+
+                // Note: This should not be called, but before use SetBossState function we should use BossAI
+                //        in all the bosses of the instance
+                instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, DONE);
             }
 
             void DoAction(const int32 action)
@@ -310,7 +325,8 @@ class boss_drakkari_elemental : public CreatureScript
                         if (instance)
                         {
                             if (Creature* colossus = Unit::GetCreature(*me, instance->GetData64(DATA_DRAKKARI_COLOSSUS)))
-                                DoCast(colossus, SPELL_MERGE);
+                                // what if the elemental is more than 80 yards from drakkari colossus ?
+                                DoCast(colossus,SPELL_MERGE,true);
                         }
                         break;
                 }
@@ -324,9 +340,24 @@ class boss_drakkari_elemental : public CreatureScript
                     {
                         if (colossus->AI()->GetData(DATA_COLOSSUS_PHASE) ==  COLOSSUS_PHASE_FIRST_ELEMENTAL_SUMMON)
                         {
-                            DoAction(ACTION_RETURN_TO_COLOSSUS);
                             damage = 0;
-                        }
+
+                            // to prevent spell spaming
+                            if (me->HasUnitState(UNIT_STAT_CHARGING))
+                                return;
+
+                            // not sure about this, the idea of this code is to prevent bug the elemental 
+                            // if it is not in a acceptable distance to cast the charge spell.
+                            /*if (me->GetDistance(colossus) > 80.0f)
+                            {
+                                if (me->GetMotionMaster()->GetCurrentMovementGeneratorType() == POINT_MOTION_TYPE)
+                                    return;
+
+                                me->GetMotionMaster()->MovePoint(0,colossus->GetPositionX(),colossus->GetPositionY(),colossus->GetPositionZ());
+                                return;
+                            }*/
+                            DoAction(ACTION_RETURN_TO_COLOSSUS);                        
+						}
                     }
                 }
             }
@@ -343,7 +374,6 @@ class boss_drakkari_elemental : public CreatureScript
                     if (Creature* colossus = target->ToCreature())
                     {
                         colossus->AI()->DoAction(ACTION_UNFREEZE_COLOSSUS);
-
                         me->DespawnOrUnsummon();
                     }
                 }
