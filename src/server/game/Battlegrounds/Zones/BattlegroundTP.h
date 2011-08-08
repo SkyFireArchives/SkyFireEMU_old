@@ -47,12 +47,12 @@ enum BG_TP_Sound
 
 enum BG_TP_SpellId
 {
-    BG_TP_SPELL_HORDE_FLAG            = 23333,
-    BG_TP_SPELL_HORDE_FLAG_DROPPED    = 23334,
-    BG_TP_SPELL_HORDE_FLAG_PICKED     = 61266,    // fake spell, does not exist but used as timer start event
-    BG_TP_SPELL_ALLIANCE_FLAG         = 23335,
-    BG_TP_SPELL_ALLIANCE_FLAG_DROPPED = 23336,
-    BG_TP_SPELL_ALLIANCE_FLAG_PICKED  = 61265,    // fake spell, does not exist but used as timer start event
+    BG_TP_SPELL_HORDE_FLAG				= 23333,
+    BG_TP_SPELL_HORDE_FLAG_DROPPED		= 23334,
+    BG_TP_SPELL_HORDE_FLAG_PICKED		= 61266,    // fake spell, does not exist but used as timer start event
+    BG_TP_SPELL_ALLIANCE_FLAG			= 23335,
+    BG_TP_SPELL_ALLIANCE_FLAG_DROPPED	= 23336,
+    BG_TP_SPELL_ALLIANCE_FLAG_PICKED	= 61265,    // fake spell, does not exist but used as timer start event
     BG_TP_SPELL_FOCUSED_ASSAULT         = 46392,
     BG_TP_SPELL_BRUTAL_ASSAULT          = 46393
 };
@@ -75,36 +75,28 @@ enum BG_TP_ObjectTypes
     BG_TP_OBJECT_DOOR_A_1       = 0,
     BG_TP_OBJECT_DOOR_A_2       = 1,
     BG_TP_OBJECT_DOOR_A_3       = 2,
-    BG_TP_OBJECT_DOOR_A_4       = 3,
-    BG_TP_OBJECT_DOOR_A_5       = 4,
-    BG_TP_OBJECT_DOOR_A_6       = 5,
-    BG_TP_OBJECT_DOOR_H_1       = 6,
-    BG_TP_OBJECT_DOOR_H_2       = 7,
-    BG_TP_OBJECT_DOOR_H_3       = 8,
-    BG_TP_OBJECT_DOOR_H_4       = 9,
-    BG_TP_OBJECT_A_FLAG         = 10,
-    BG_TP_OBJECT_H_FLAG         = 11,
-    BG_TP_OBJECT_SPEEDBUFF_1    = 12,
-    BG_TP_OBJECT_SPEEDBUFF_2    = 13,
-    BG_TP_OBJECT_REGENBUFF_1    = 14,
-    BG_TP_OBJECT_REGENBUFF_2    = 15,
-    BG_TP_OBJECT_BERSERKBUFF_1  = 16,
-    BG_TP_OBJECT_BERSERKBUFF_2  = 17,
-    BG_TP_OBJECT_MAX            = 18
+    BG_TP_OBJECT_DOOR_H_1       = 3,
+    BG_TP_OBJECT_DOOR_H_2       = 4,
+    BG_TP_OBJECT_DOOR_H_3       = 5,
+    BG_TP_OBJECT_A_FLAG         = 6,
+    BG_TP_OBJECT_H_FLAG         = 7,
+    BG_TP_OBJECT_SPEEDBUFF_1    = 8,
+    BG_TP_OBJECT_SPEEDBUFF_2    = 9,
+    BG_TP_OBJECT_REGENBUFF_1    = 10,
+    BG_TP_OBJECT_REGENBUFF_2    = 11,
+    BG_TP_OBJECT_BERSERKBUFF_1  = 12,
+    BG_TP_OBJECT_BERSERKBUFF_2  = 13,
+    BG_TP_OBJECT_MAX            = 14
 };
 
 enum BG_TP_ObjectEntry
 {
-    BG_OBJECT_DOOR_A_1_TP_ENTRY          = 179918,
-    BG_OBJECT_DOOR_A_2_TP_ENTRY          = 179919,
-    BG_OBJECT_DOOR_A_3_TP_ENTRY          = 179920,
-    BG_OBJECT_DOOR_A_4_TP_ENTRY          = 179921,
-    BG_OBJECT_DOOR_A_5_TP_ENTRY          = 180322,
-    BG_OBJECT_DOOR_A_6_TP_ENTRY          = 180322,
-    BG_OBJECT_DOOR_H_1_TP_ENTRY          = 179916,
-    BG_OBJECT_DOOR_H_2_TP_ENTRY          = 179917,
-    BG_OBJECT_DOOR_H_3_TP_ENTRY          = 180322,
-    BG_OBJECT_DOOR_H_4_TP_ENTRY          = 180322,
+    BG_OBJECT_DOOR_A_1_TP_ENTRY          = 402191,
+    BG_OBJECT_DOOR_A_2_TP_ENTRY          = 402190,
+    BG_OBJECT_DOOR_A_3_TP_ENTRY          = 402189,
+    BG_OBJECT_DOOR_H_1_TP_ENTRY          = 402364,
+    BG_OBJECT_DOOR_H_2_TP_ENTRY          = 402365,
+    BG_OBJECT_DOOR_H_3_TP_ENTRY          = 402366,
     BG_OBJECT_A_FLAG_TP_ENTRY            = 179830,
     BG_OBJECT_H_FLAG_TP_ENTRY            = 179831,
     BG_OBJECT_A_FLAG_GROUND_TP_ENTRY     = 179785,

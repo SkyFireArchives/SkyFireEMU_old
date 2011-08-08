@@ -1,0 +1,4 @@
+This repository will no longer be updated. The address has changed. You can merge the new repository into your existing repo.
+We changed over to an organization now. This was the only way it could be done. Yes it's kinda stupid but it's the way GitHub does it.
+The new address is https://github.com/ProjectSkyfire/SkyFireEMU 
+Checkout is now git@github.com:ProjectSkyfire/SkyFireEMU.git

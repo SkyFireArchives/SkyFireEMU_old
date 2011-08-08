@@ -3934,6 +3934,10 @@ void Spell::finish(bool ok)
                 if (m_caster->HasAura(88688)) // Surge of Light 
                     m_caster->RemoveAura(88688);
                 break;
+			case 23922: // Shield Slam
+				if (m_caster->HasAura(50227)) // Sword and Board
+					m_caster->RemoveAura(50227);
+				break;
             case 85673: // Word of Glory
             case 53600: // Shield of the Righteous
             case 85256: // Templar's Verdict
