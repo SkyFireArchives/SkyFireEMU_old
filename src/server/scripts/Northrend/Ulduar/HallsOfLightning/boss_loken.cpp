@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,29 +34,29 @@ EndScriptData */
 
 enum eEnums
 {
-    ACHIEV_TIMELY_DEATH_START_EVENT               = 20384, 
+    ACHIEV_TIMELY_DEATH_START_EVENT               = 20384,
 
-    SAY_AGGRO                                     = -1602018, 
-    SAY_INTRO_1                                   = -1602019, 
-    SAY_INTRO_2                                   = -1602020, 
-    SAY_SLAY_1                                    = -1602021, 
-    SAY_SLAY_2                                    = -1602022, 
-    SAY_SLAY_3                                    = -1602023, 
-    SAY_DEATH                                     = -1602024, 
-    SAY_NOVA_1                                    = -1602025, 
-    SAY_NOVA_2                                    = -1602026, 
-    SAY_NOVA_3                                    = -1602027, 
-    SAY_75HEALTH                                  = -1602028, 
-    SAY_50HEALTH                                  = -1602029, 
-    SAY_25HEALTH                                  = -1602030, 
-    EMOTE_NOVA                                    = -1602031, 
+    SAY_AGGRO                                     = -1602018,
+    SAY_INTRO_1                                   = -1602019,
+    SAY_INTRO_2                                   = -1602020,
+    SAY_SLAY_1                                    = -1602021,
+    SAY_SLAY_2                                    = -1602022,
+    SAY_SLAY_3                                    = -1602023,
+    SAY_DEATH                                     = -1602024,
+    SAY_NOVA_1                                    = -1602025,
+    SAY_NOVA_2                                    = -1602026,
+    SAY_NOVA_3                                    = -1602027,
+    SAY_75HEALTH                                  = -1602028,
+    SAY_50HEALTH                                  = -1602029,
+    SAY_25HEALTH                                  = -1602030,
+    EMOTE_NOVA                                    = -1602031,
 
-    SPELL_ARC_LIGHTNING                           = 52921, 
-    SPELL_LIGHTNING_NOVA_N                        = 52960, 
-    SPELL_LIGHTNING_NOVA_H                        = 59835, 
+    SPELL_ARC_LIGHTNING                           = 52921,
+    SPELL_LIGHTNING_NOVA_N                        = 52960,
+    SPELL_LIGHTNING_NOVA_H                        = 59835,
 
-    SPELL_PULSING_SHOCKWAVE_N                     = 52961, 
-    SPELL_PULSING_SHOCKWAVE_H                     = 59836, 
+    SPELL_PULSING_SHOCKWAVE_N                     = 52961,
+    SPELL_PULSING_SHOCKWAVE_H                     = 59836,
     SPELL_PULSING_SHOCKWAVE_AURA                  = 59414
 };
 
@@ -223,9 +223,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_loken()
 {

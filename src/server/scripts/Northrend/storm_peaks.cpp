@@ -27,7 +27,7 @@
 
 enum eAgnetta
 {
-    QUEST_ITS_THAT_YOUR_GOBLIN      = 12969, 
+    QUEST_ITS_THAT_YOUR_GOBLIN      = 12969,
     FACTION_HOSTILE_AT1             = 45
 };
 
@@ -95,7 +95,6 @@ public:
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature)
     {
-
         if (pPlayer->GetQuestStatus(QUEST_MISSING_SCOUTS) == QUEST_STATUS_INCOMPLETE)
         {
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
@@ -139,11 +138,11 @@ public:
 
 enum eThorim
 {
-    QUEST_SIBLING_RIVALRY = 13064, 
-    NPC_THORIM = 29445, 
-    GOSSIP_TEXTID_THORIM1 = 13799, 
-    GOSSIP_TEXTID_THORIM2 = 13801, 
-    GOSSIP_TEXTID_THORIM3 = 13802, 
+    QUEST_SIBLING_RIVALRY = 13064,
+    NPC_THORIM = 29445,
+    GOSSIP_TEXTID_THORIM1 = 13799,
+    GOSSIP_TEXTID_THORIM2 = 13801,
+    GOSSIP_TEXTID_THORIM3 = 13802,
     GOSSIP_TEXTID_THORIM4 = 13803
 };
 
@@ -219,7 +218,6 @@ public:
                     pGO->SetGoState(GO_STATE_READY);
             }
         }
-
     };
 
     CreatureAI *GetAI(Creature *creature) const
@@ -236,10 +234,10 @@ public:
 
 enum eVictoriousChallenger
 {
-    QUEST_TAKING_ALL_CHALLENGERS    = 12971, 
-    QUEST_DEFENDING_YOUR_TITLE      = 13423, 
+    QUEST_TAKING_ALL_CHALLENGERS    = 12971,
+    QUEST_DEFENDING_YOUR_TITLE      = 13423,
 
-    SPELL_SUNDER_ARMOR              = 11971, 
+    SPELL_SUNDER_ARMOR              = 11971,
     SPELL_REND_VC                   = 11977
 };
 
@@ -288,7 +286,6 @@ public:
         {
             me->RestoreFaction();
         }
-
     };
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature)
@@ -336,10 +333,10 @@ public:
 
 enum eLokliraCrone
 {
-    QUEST_HYLDSMEET     = 12970, 
+    QUEST_HYLDSMEET     = 12970,
 
-    GOSSIP_TEXTID_LOK1  = 13778, 
-    GOSSIP_TEXTID_LOK2  = 13779, 
+    GOSSIP_TEXTID_LOK1  = 13778,
+    GOSSIP_TEXTID_LOK2  = 13779,
     GOSSIP_TEXTID_LOK3  = 13780
 };
 
@@ -394,8 +391,8 @@ public:
 
 enum eInjuredGoblin
 {
-    QUEST_BITTER_DEPARTURE     = 12832, 
-    SAY_QUEST_ACCEPT           =  -1800042, 
+    QUEST_BITTER_DEPARTURE     = 12832,
+    SAY_QUEST_ACCEPT           =  -1800042,
     SAY_END_WP_REACHED         =  -1800043
 };
 
@@ -540,7 +537,7 @@ public:
 
 enum brunhildar {
     NPC_QUEST_GIVER            = 29592,
-    
+
     SPELL_ICE_PRISON           = 54894,
     SPELL_KILL_CREDIT_PRISONER = 55144,
     SPELL_KILL_CREDIT_DRAKE    = 55143,
@@ -548,7 +545,7 @@ enum brunhildar {
     SPELL_ICE_LANCE            = 55046
 };
 
-class npc_brunnhildar_prisoner : public CreatureScript 
+class npc_brunnhildar_prisoner : public CreatureScript
 {
 public:
     npc_brunnhildar_prisoner() : CreatureScript("npc_brunnhildar_prisoner") { }
@@ -625,7 +622,7 @@ public:
 
                     // drake is empty now, deliver credit for drake and despawn him
                     if (drake->GetVehicleKit()->HasEmptySeat(1) &&
-                        drake->GetVehicleKit()->HasEmptySeat(2) && 
+                        drake->GetVehicleKit()->HasEmptySeat(2) &&
                         drake->GetVehicleKit()->HasEmptySeat(3))
                     {
                         // not working rider->CastSpell(rider, SPELL_KILL_CREDIT_DRAKE, true);
@@ -645,7 +642,7 @@ public:
 
             if (spell->Id != SPELL_ICE_LANCE)
                 return;
-    
+
             me->RemoveAura(SPELL_ICE_PRISON);
             enter_timer = 500;
 

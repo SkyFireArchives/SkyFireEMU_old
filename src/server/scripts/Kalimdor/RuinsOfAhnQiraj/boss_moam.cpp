@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,15 +34,15 @@ EndScriptData */
 
 enum Emotes
 {
-    EMOTE_AGGRO             = -1509000, 
+    EMOTE_AGGRO             = -1509000,
     EMOTE_MANA_FULL         = -1509001
 };
 
 enum Spells
 {
-    SPELL_TRAMPLE           = 15550, 
+    SPELL_TRAMPLE           = 15550,
     SPELL_DRAINMANA         = 27256,    //Doesn't exist ?
-    SPELL_ARCANEERUPTION    = 25672, 
+    SPELL_ARCANEERUPTION    = 25672,
     SPELL_SUMMONMANA        = 25681,    //Summon Mana fiend. It only summons one so exec it three times
     SPELL_GRDRSLEEP         = 24360     //Greater Dreamless Sleep
 };
@@ -54,7 +54,7 @@ enum Creatures
 
 enum CombatPhase
 {
-    NORMAL, 
+    NORMAL,
     STONE
 };
 
@@ -163,9 +163,7 @@ public:
             }
         }
     };
-
 };
-
 
 void AddSC_boss_moam()
 {

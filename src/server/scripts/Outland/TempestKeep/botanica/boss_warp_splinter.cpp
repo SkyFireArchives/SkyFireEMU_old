@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,36 +33,36 @@ EndScriptData */
 
 enum eSays
 {
-    SAY_AGGRO          = -1553007, 
-    SAY_SLAY_1         = -1553008, 
-    SAY_SLAY_2         = -1553009, 
-    SAY_SUMMON_1       = -1553010, 
-    SAY_SUMMON_2       = -1553011, 
-    SAY_DEATH          = -1553012, 
+    SAY_AGGRO          = -1553007,
+    SAY_SLAY_1         = -1553008,
+    SAY_SLAY_2         = -1553009,
+    SAY_SUMMON_1       = -1553010,
+    SAY_SUMMON_2       = -1553011,
+    SAY_DEATH          = -1553012,
 };
 
 enum eSpells
 {
-    WAR_STOMP          = 34716, 
+    WAR_STOMP          = 34716,
     SUMMON_TREANTS     = 34727, // DBC: 34727, 34731, 34733, 34734, 34736, 34739, 34741 (with Ancestral Life spell 34742)   // won't work (guardian summon)
-    ARCANE_VOLLEY      = 36705, 
-    ARCANE_VOLLEY_H    = 39133, 
-    SPELL_HEAL_FATHER  = 6262, 
+    ARCANE_VOLLEY      = 36705,
+    ARCANE_VOLLEY_H    = 39133,
+    SPELL_HEAL_FATHER  = 6262,
 };
 
 enum eOthers
 {
-    CREATURE_TREANT    = 19949, 
+    CREATURE_TREANT    = 19949,
     TREANT_SPAWN_DIST  = 50, //50 yards from Warp Splinter's spawn point
 };
 
 float treant_pos[6][3] =
 {
-    {24.301233f, 427.221100f, -27.060635f}, 
-    {16.795492f, 359.678802f, -27.355425f}, 
-    {53.493484f, 345.381470f, -26.196192f}, 
-    {61.867096f, 439.362732f, -25.921030f}, 
-    {109.861877f, 423.201630f, -27.356019f}, 
+    {24.301233f, 427.221100f, -27.060635f},
+    {16.795492f, 359.678802f, -27.355425f},
+    {53.493484f, 345.381470f, -26.196192f},
+    {61.867096f, 439.362732f, -25.921030f},
+    {109.861877f, 423.201630f, -27.356019f},
     {106.780159f, 355.582581f, -27.593357f}
 };
 
@@ -243,4 +243,3 @@ void AddSC_boss_warp_splinter()
     new boss_warp_splinter();
     new mob_warp_splinter_treant();
 }
-

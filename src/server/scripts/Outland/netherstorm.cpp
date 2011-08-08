@@ -41,26 +41,26 @@ EndContentData */
 //used by 20209, 20417, 20418, 20440, signed for 20209
 enum eManaforgeConsoleData
 {
-    EMOTE_START                 = -1000211, 
-    EMOTE_60                    = -1000212, 
-    EMOTE_30                    = -1000213, 
-    EMOTE_10                    = -1000214, 
-    EMOTE_COMPLETE              = -1000215, 
-    EMOTE_ABORT                 = -1000216, 
+    EMOTE_START                 = -1000211,
+    EMOTE_60                    = -1000212,
+    EMOTE_30                    = -1000213,
+    EMOTE_10                    = -1000214,
+    EMOTE_COMPLETE              = -1000215,
+    EMOTE_ABORT                 = -1000216,
 
-    ENTRY_BNAAR_C_CONSOLE       = 20209, 
-    ENTRY_CORUU_C_CONSOLE       = 20417, 
-    ENTRY_DURO_C_CONSOLE        = 20418, 
-    ENTRY_ARA_C_CONSOLE         = 20440, 
+    ENTRY_BNAAR_C_CONSOLE       = 20209,
+    ENTRY_CORUU_C_CONSOLE       = 20417,
+    ENTRY_DURO_C_CONSOLE        = 20418,
+    ENTRY_ARA_C_CONSOLE         = 20440,
 
-    ENTRY_SUNFURY_TECH          = 20218, 
-    ENTRY_SUNFURY_PROT          = 20436, 
+    ENTRY_SUNFURY_TECH          = 20218,
+    ENTRY_SUNFURY_PROT          = 20436,
 
-    ENTRY_ARA_TECH              = 20438, 
-    ENTRY_ARA_ENGI              = 20439, 
-    ENTRY_ARA_GORKLONN          = 20460, 
+    ENTRY_ARA_TECH              = 20438,
+    ENTRY_ARA_ENGI              = 20439,
+    ENTRY_ARA_GORKLONN          = 20460,
 
-    SPELL_DISABLE_VISUAL        = 35031, 
+    SPELL_DISABLE_VISUAL        = 35031,
     SPELL_INTERRUPT_1           = 35016,                       //ACID mobs should cast this
     SPELL_INTERRUPT_2           = 35176,                       //ACID mobs should cast this (Manaforge Ara-version)
 };
@@ -294,7 +294,6 @@ public:
             }
         }
     };
-
 };
 
 /*######
@@ -349,7 +348,6 @@ public:
         }
         return true;
     }
-
 };
 
 /*######
@@ -359,20 +357,20 @@ public:
 // The Speech of Dawnforge, Ardonis & Pathaleon
 enum eCommanderDawnforgeData
 {
-    SAY_COMMANDER_DAWNFORGE_1       = -1000128, 
-    SAY_ARCANIST_ARDONIS_1          = -1000129, 
-    SAY_COMMANDER_DAWNFORGE_2       = -1000130, 
-    SAY_PATHALEON_CULATOR_IMAGE_1   = -1000131, 
-    SAY_COMMANDER_DAWNFORGE_3       = -1000132, 
-    SAY_PATHALEON_CULATOR_IMAGE_2   = -1000133, 
-    SAY_PATHALEON_CULATOR_IMAGE_2_1 = -1000134, 
-    SAY_PATHALEON_CULATOR_IMAGE_2_2 = -1000135, 
-    SAY_COMMANDER_DAWNFORGE_4       = -1000136, 
-    SAY_ARCANIST_ARDONIS_2          = -1000136, 
-    SAY_COMMANDER_DAWNFORGE_5       = -1000137, 
+    SAY_COMMANDER_DAWNFORGE_1       = -1000128,
+    SAY_ARCANIST_ARDONIS_1          = -1000129,
+    SAY_COMMANDER_DAWNFORGE_2       = -1000130,
+    SAY_PATHALEON_CULATOR_IMAGE_1   = -1000131,
+    SAY_COMMANDER_DAWNFORGE_3       = -1000132,
+    SAY_PATHALEON_CULATOR_IMAGE_2   = -1000133,
+    SAY_PATHALEON_CULATOR_IMAGE_2_1 = -1000134,
+    SAY_PATHALEON_CULATOR_IMAGE_2_2 = -1000135,
+    SAY_COMMANDER_DAWNFORGE_4       = -1000136,
+    SAY_ARCANIST_ARDONIS_2          = -1000136,
+    SAY_COMMANDER_DAWNFORGE_5       = -1000137,
 
-    QUEST_INFO_GATHERING            = 10198, 
-    SPELL_SUNFURY_DISGUISE          = 34603, 
+    QUEST_INFO_GATHERING            = 10198,
+    SPELL_SUNFURY_DISGUISE          = 34603,
 };
 
 // Entries of Arcanist Ardonis, Commander Dawnforge, Pathaleon the Curators Image
@@ -632,9 +630,7 @@ public:
             }
          }
     };
-
 };
-
 
 class at_commander_dawnforge : public AreaTriggerScript
 {
@@ -659,7 +655,6 @@ public:
         }
         return false;
     }
-
 };
 
 /*######
@@ -667,12 +662,12 @@ public:
 ######*/
 enum eProfessorDabiriData
 {
-    SPELL_PHASE_DISTRUPTOR  = 35780, 
+    SPELL_PHASE_DISTRUPTOR  = 35780,
 
-    WHISPER_DABIRI          = -1000522, 
+    WHISPER_DABIRI          = -1000522,
 
-    QUEST_DIMENSIUS         = 10439, 
-    QUEST_ON_NETHERY_WINGS  = 10438, 
+    QUEST_DIMENSIUS         = 10439,
+    QUEST_ON_NETHERY_WINGS  = 10438,
 };
 
 #define GOSSIP_ITEM "I need a new phase distruptor, Professor"
@@ -714,10 +709,7 @@ public:
 
         return true;
     }
-
 };
-
-
 
 /*######
 ## mob_phase_hunter
@@ -725,19 +717,19 @@ public:
 
 enum ePhaseHunterData
 {
-    QUEST_RECHARGING_THE_BATTERIES  = 10190, 
+    QUEST_RECHARGING_THE_BATTERIES  = 10190,
 
-    NPC_PHASE_HUNTER_ENTRY          = 18879, 
-    NPC_DRAINED_PHASE_HUNTER_ENTRY  = 19595, 
+    NPC_PHASE_HUNTER_ENTRY          = 18879,
+    NPC_DRAINED_PHASE_HUNTER_ENTRY  = 19595,
 
-    EMOTE_WEAK                      = -1000303, 
+    EMOTE_WEAK                      = -1000303,
 
     // Spells
-    SPELL_RECHARGING_BATTERY        = 34219, 
-    SPELL_PHASE_SLIP                = 36574, 
-    SPELL_MANA_BURN                 = 13321, 
-    SPELL_MATERIALIZE               = 34804, 
-    SPELL_DE_MATERIALIZE            = 34814, 
+    SPELL_RECHARGING_BATTERY        = 34219,
+    SPELL_PHASE_SLIP                = 36574,
+    SPELL_MANA_BURN                 = 13321,
+    SPELL_MATERIALIZE               = 34804,
+    SPELL_DE_MATERIALIZE            = 34814,
 };
 
 class mob_phase_hunter : public CreatureScript
@@ -853,21 +845,19 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*######
 ## npc_bessy
 ######*/
 enum eBessyData
 {
-    Q_ALMABTRIEB    = 10337, 
-    N_THADELL       = 20464, 
-    SPAWN_FIRST     = 20512, 
-    SPAWN_SECOND    = 19881, 
-    SAY_THADELL_1   = -1000524, 
-    SAY_THADELL_2   = -1000525, 
+    Q_ALMABTRIEB    = 10337,
+    N_THADELL       = 20464,
+    SPAWN_FIRST     = 20512,
+    SPAWN_SECOND    = 19881,
+    SAY_THADELL_1   = -1000524,
+    SAY_THADELL_2   = -1000525,
 };
 
 class npc_bessy : public CreatureScript
@@ -893,7 +883,6 @@ public:
 
     struct npc_bessyAI : public npc_escortAI
     {
-
         npc_bessyAI(Creature *c) : npc_escortAI(c) {}
 
         void JustDied(Unit* /*killer*/)
@@ -942,9 +931,7 @@ public:
         {
             me->RestoreFaction();
         }
-
     };
-
 };
 
 /*######
@@ -953,7 +940,7 @@ public:
 
 enum
 {
-    QUEST_MARK_V_IS_ALIVE = 10191, 
+    QUEST_MARK_V_IS_ALIVE = 10191,
     GO_DRAENEI_MACHINE = 183771
 };
 
@@ -1051,7 +1038,6 @@ public:
         return true;
     }
 };
-
 
 void AddSC_netherstorm()
 {

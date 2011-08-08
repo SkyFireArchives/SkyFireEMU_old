@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,60 +28,60 @@
 /*** Encounters ***/
 enum Data
 {
-    DATA_KALECGOS_EVENT, 
-    DATA_BRUTALLUS_EVENT, 
-    DATA_FELMYST_EVENT, 
-    DATA_EREDAR_TWINS_EVENT, 
-    DATA_MURU_EVENT, 
-    DATA_KILJAEDEN_EVENT, 
+    DATA_KALECGOS_EVENT,
+    DATA_BRUTALLUS_EVENT,
+    DATA_FELMYST_EVENT,
+    DATA_EREDAR_TWINS_EVENT,
+    DATA_MURU_EVENT,
+    DATA_KILJAEDEN_EVENT,
 };
 
 enum Data64
 {
     /*** Creatures ***/
-    DATA_KALECGOS_DRAGON, 
-    DATA_KALECGOS_HUMAN, 
-    DATA_SATHROVARR, 
-    DATA_BRUTALLUS, 
-    DATA_MADRIGOSA, 
-    DATA_FELMYST, 
-    DATA_ALYTHESS, 
-    DATA_SACROLASH, 
-    DATA_MURU, 
-    DATA_KILJAEDEN, 
-    DATA_KILJAEDEN_CONTROLLER, 
-    DATA_ANVEENA, 
-    DATA_KALECGOS_KJ, 
+    DATA_KALECGOS_DRAGON,
+    DATA_KALECGOS_HUMAN,
+    DATA_SATHROVARR,
+    DATA_BRUTALLUS,
+    DATA_MADRIGOSA,
+    DATA_FELMYST,
+    DATA_ALYTHESS,
+    DATA_SACROLASH,
+    DATA_MURU,
+    DATA_KILJAEDEN,
+    DATA_KILJAEDEN_CONTROLLER,
+    DATA_ANVEENA,
+    DATA_KALECGOS_KJ,
 
     /*** GameObjects ***/
-    DATA_GO_FORCEFIELD, 
-    DATA_ORB_OF_THE_BLUE_DRAGONFLIGHT_1, 
-    DATA_ORB_OF_THE_BLUE_DRAGONFLIGHT_2, 
-    DATA_ORB_OF_THE_BLUE_DRAGONFLIGHT_3, 
-    DATA_ORB_OF_THE_BLUE_DRAGONFLIGHT_4, 
+    DATA_GO_FORCEFIELD,
+    DATA_ORB_OF_THE_BLUE_DRAGONFLIGHT_1,
+    DATA_ORB_OF_THE_BLUE_DRAGONFLIGHT_2,
+    DATA_ORB_OF_THE_BLUE_DRAGONFLIGHT_3,
+    DATA_ORB_OF_THE_BLUE_DRAGONFLIGHT_4,
 
     /*** Misc ***/
-    DATA_PLAYER_GUID, 
+    DATA_PLAYER_GUID,
 };
 
 enum Creatures
 {
-    BOSS_MURU                                     = 25741, 
-    BOSS_ENTROPIUS                                = 25840, 
-    MOB_KALECGOS                                  = 24850, 
-    MOB_KALEC                                     = 24891, 
-    MOB_SATHROVARR                                = 24892, 
+    BOSS_MURU                                     = 25741,
+    BOSS_ENTROPIUS                                = 25840,
+    MOB_KALECGOS                                  = 24850,
+    MOB_KALEC                                     = 24891,
+    MOB_SATHROVARR                                = 24892,
 
-    MOB_DEAD                                      = 25268, 
-    MOB_FLIGHT_LEFT                               = 25357, 
-    MOB_FLIGHT_RIGHT                              = 25358, 
-    MOB_DEATH_CLOUD                               = 25703, 
-    MOB_VAPOR                                     = 25265, 
-    MOB_VAPOR_TRAIL                               = 25267, 
+    MOB_DEAD                                      = 25268,
+    MOB_FLIGHT_LEFT                               = 25357,
+    MOB_FLIGHT_RIGHT                              = 25358,
+    MOB_DEATH_CLOUD                               = 25703,
+    MOB_VAPOR                                     = 25265,
+    MOB_VAPOR_TRAIL                               = 25267,
 
-    MOB_GRAND_WARLOCK_ALYTHESS                    = 25166, 
-    MOB_SHADOW_IMAGE                              = 25214, 
-    MOB_LADY_SACROLASH                            = 25165, 
+    MOB_GRAND_WARLOCK_ALYTHESS                    = 25166,
+    MOB_SHADOW_IMAGE                              = 25214,
+    MOB_LADY_SACROLASH                            = 25165,
 
     CREATURE_ANVEENA                              = 26046, // Embodiment of the Sunwell
     CREATURE_KALECGOS                             = 25319, // Helps the raid throughout the fight
@@ -95,21 +95,21 @@ enum Creatures
     CREATURE_THE_CORE_OF_ENTROPIUS                = 26262, // Used in the ending cinematic?
     CREATURE_POWER_OF_THE_BLUE_DRAGONFLIGHT       = 25653, // NPC that players possess when using the Orb of the Blue Dragonflight
     CREATURE_SPIKE_TARGET1                        = 30598, // Should summon these under Shadow Spike Channel on targets place
-    CREATURE_SPIKE_TARGET2                        = 30614, 
+    CREATURE_SPIKE_TARGET2                        = 30614,
     CREATURE_SINISTER_REFLECTION                  = 25708, // Sinister Relection spawnd on Phase swichtes
 
-    CREATURE_DARKNESS                             = 25879, 
-    CREATURE_DARK_FIENDS                          = 25744, 
-    CREATURE_BERSERKER                            = 25798, 
-    CREATURE_FURY_MAGE                            = 25799, 
-    CREATURE_VOID_SENTINEL                        = 25772, 
-    CREATURE_VOID_SPAWN                           = 25824, 
-    CREATURE_BLACK_HOLE                           = 25855, 
+    CREATURE_DARKNESS                             = 25879,
+    CREATURE_DARK_FIENDS                          = 25744,
+    CREATURE_BERSERKER                            = 25798,
+    CREATURE_FURY_MAGE                            = 25799,
+    CREATURE_VOID_SENTINEL                        = 25772,
+    CREATURE_VOID_SPAWN                           = 25824,
+    CREATURE_BLACK_HOLE                           = 25855,
 };
 
 enum GameObjects
 {
-    GAMEOBJECT_ORB_OF_THE_BLUE_DRAGONFLIGHT       = 188415, 
+    GAMEOBJECT_ORB_OF_THE_BLUE_DRAGONFLIGHT       = 188415,
 };
 
 #endif

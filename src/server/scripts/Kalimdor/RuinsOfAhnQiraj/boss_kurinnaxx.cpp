@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,11 +34,11 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_MORTALWOUND            = 25646, 
-    SPELL_SANDTRAP               = 25656, 
-    SPELL_ENRAGE                 = 28798, 
-    SPELL_SUMMON_PLAYER          = 26446, 
-    SPELL_TRASH                  =  3391, 
+    SPELL_MORTALWOUND            = 25646,
+    SPELL_SANDTRAP               = 25656,
+    SPELL_ENRAGE                 = 28798,
+    SPELL_SUMMON_PLAYER          = 26446,
+    SPELL_TRASH                  =  3391,
     SPELL_WIDE_SLASH             = 25814
 };
 
@@ -145,7 +145,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_boss_kurinnaxx()

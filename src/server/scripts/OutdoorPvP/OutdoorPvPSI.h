@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -29,9 +29,9 @@
 
 enum OutdoorPvPSISpells
 {
-    SI_SILITHYST_FLAG_GO_SPELL = 29518, 
-    SI_SILITHYST_FLAG = 29519, 
-    SI_TRACES_OF_SILITHYST = 29534, 
+    SI_SILITHYST_FLAG_GO_SPELL = 29518,
+    SI_SILITHYST_FLAG = 29519,
+    SI_TRACES_OF_SILITHYST = 29534,
     SI_CENARION_FAVOR = 30754
 };
 
@@ -53,8 +53,8 @@ const uint32 SI_SILITHYST_MOUND = 181597;
 
 enum SI_WorldStates
 {
-    SI_GATHERED_A = 2313, 
-    SI_GATHERED_H = 2314, 
+    SI_GATHERED_A = 2313,
+    SI_GATHERED_H = 2314,
     SI_SILITHYST_MAX = 2317
 };
 

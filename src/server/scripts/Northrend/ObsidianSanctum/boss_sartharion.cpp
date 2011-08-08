@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -30,26 +30,26 @@
 enum eEnums
 {
     //Sartharion Yell
-    SAY_SARTHARION_AGGRO                        = -1615018, 
-    SAY_SARTHARION_BERSERK                      = -1615019, 
-    SAY_SARTHARION_BREATH                       = -1615020, 
-    SAY_SARTHARION_CALL_SHADRON                 = -1615021, 
-    SAY_SARTHARION_CALL_TENEBRON                = -1615022, 
-    SAY_SARTHARION_CALL_VESPERON                = -1615023, 
-    SAY_SARTHARION_DEATH                        = -1615024, 
-    SAY_SARTHARION_SPECIAL_1                    = -1615025, 
-    SAY_SARTHARION_SPECIAL_2                    = -1615026, 
-    SAY_SARTHARION_SPECIAL_3                    = -1615027, 
-    SAY_SARTHARION_SPECIAL_4                    = -1615028, 
-    SAY_SARTHARION_SLAY_1                       = -1615029, 
-    SAY_SARTHARION_SLAY_2                       = -1615030, 
-    SAY_SARTHARION_SLAY_3                       = -1615031, 
+    SAY_SARTHARION_AGGRO                        = -1615018,
+    SAY_SARTHARION_BERSERK                      = -1615019,
+    SAY_SARTHARION_BREATH                       = -1615020,
+    SAY_SARTHARION_CALL_SHADRON                 = -1615021,
+    SAY_SARTHARION_CALL_TENEBRON                = -1615022,
+    SAY_SARTHARION_CALL_VESPERON                = -1615023,
+    SAY_SARTHARION_DEATH                        = -1615024,
+    SAY_SARTHARION_SPECIAL_1                    = -1615025,
+    SAY_SARTHARION_SPECIAL_2                    = -1615026,
+    SAY_SARTHARION_SPECIAL_3                    = -1615027,
+    SAY_SARTHARION_SPECIAL_4                    = -1615028,
+    SAY_SARTHARION_SLAY_1                       = -1615029,
+    SAY_SARTHARION_SLAY_2                       = -1615030,
+    SAY_SARTHARION_SLAY_3                       = -1615031,
 
-    WHISPER_LAVA_CHURN                          = -1615032, 
+    WHISPER_LAVA_CHURN                          = -1615032,
 
-    WHISPER_SHADRON_DICIPLE                     = -1615008, 
-    WHISPER_VESPERON_DICIPLE                    = -1615041, 
-    WHISPER_HATCH_EGGS                          = -1615017, 
+    WHISPER_SHADRON_DICIPLE                     = -1615008,
+    WHISPER_VESPERON_DICIPLE                    = -1615041,
+    WHISPER_HATCH_EGGS                          = -1615017,
     WHISPER_OPEN_PORTAL                         = -1615042, // whisper, shared by two dragons
 
     //Sartharion Spells
@@ -61,8 +61,8 @@ enum eEnums
     SPELL_TAIL_LASH_H                           = 58957,    // A sweeping tail strike hits all enemies behind the caster, inflicting 4375 to 5625 damage and stunning them for 2 sec.
     SPELL_WILL_OF_SARTHARION                    = 61254,    // Sartharion's presence bolsters the resolve of the Twilight Drakes, increasing their total health by 25%. This effect also increases Sartharion's health by 25%.
     SPELL_LAVA_STRIKE                           = 57571,    // (Real spell casted should be 57578) 57571 then trigger visual missile, then summon Lava Blaze on impact(spell 57572)
-    SPELL_TWILIGHT_REVENGE                      = 60639, 
-    NPC_FIRE_CYCLONE                            = 30648, 
+    SPELL_TWILIGHT_REVENGE                      = 60639,
+    NPC_FIRE_CYCLONE                            = 30648,
 
     SPELL_PYROBUFFET                            = 56916,    // currently used for hard enrage after 15 minutes
     SPELL_PYROBUFFET_RANGE                      = 58907,    // possibly used when player get too far away from dummy creatures (2x Creature entry 30494)
@@ -96,7 +96,7 @@ enum eEnums
     SPELL_GIFT_OF_TWILIGTH_SHA                  = 57835,    // TARGET_SCRIPT shadron
     SPELL_GIFT_OF_TWILIGTH_SAR                  = 58766,    // TARGET_SCRIPT sartharion
     SPELL_VOID_BLAST                            = 57581,    // Twilight Fissure
-    SPELL_VOID_BLAST_H                          = 59128, 
+    SPELL_VOID_BLAST_H                          = 59128,
 
     //Tenebron
     //in the portal spawns 6 eggs, if not killed in time (approx. 20s)  they will hatch,  whelps can cast 60708
@@ -105,17 +105,17 @@ enum eEnums
     SPELL_SUMMON_TWILIGHT_WHELP                 = 58035,    // doesn't work, will spawn NPC_TWILIGHT_WHELP
     SPELL_SUMMON_SARTHARION_TWILIGHT_WHELP      = 58826,    // doesn't work, will spawn NPC_SHARTHARION_TWILIGHT_WHELP
 
-    SPELL_HATCH_EGGS_H                          = 59189, 
-    SPELL_HATCH_EGGS                            = 58542, 
-    SPELL_HATCH_EGGS_EFFECT_H                   = 59190, 
-    SPELL_HATCH_EGGS_EFFECT                     = 58685, 
-    NPC_TWILIHT_WHELP                           = 31214, 
-    NPC_TWILIGHT_EGG                            = 30882, 
-    NPC_SARTHARION_TWILIGHT_EGG                 = 31204, 
+    SPELL_HATCH_EGGS_H                          = 59189,
+    SPELL_HATCH_EGGS                            = 58542,
+    SPELL_HATCH_EGGS_EFFECT_H                   = 59190,
+    SPELL_HATCH_EGGS_EFFECT                     = 58685,
+    NPC_TWILIHT_WHELP                           = 31214,
+    NPC_TWILIGHT_EGG                            = 30882,
+    NPC_SARTHARION_TWILIGHT_EGG                 = 31204,
 
     //Whelps
-    NPC_TWILIGHT_WHELP                          = 30890, 
-    NPC_SHARTHARION_TWILIGHT_WHELP              = 31214, 
+    NPC_TWILIGHT_WHELP                          = 30890,
+    NPC_SHARTHARION_TWILIGHT_WHELP              = 31214,
     SPELL_FADE_ARMOR                            = 60708,    // Reduces the armor of an enemy by 1500 for 15s
 
     //flame tsunami
@@ -123,7 +123,7 @@ enum eEnums
     SPELL_FLAME_TSUNAMI_LEAP                    = 60241,    // SPELL_EFFECT_138 some leap effect, causing caster to move in direction
 
     SPELL_FLAME_TSUNAMI_DMG_AURA                = 57491,    // periodic damage, npc has this aura
-    SPELL_FLAME_TSUNAMI_BUFF                    = 60430, 
+    SPELL_FLAME_TSUNAMI_BUFF                    = 60430,
 
     NPC_FLAME_TSUNAMI                           = 30616,    // for the flame waves
     NPC_LAVA_BLAZE                              = 30643,    // adds spawning from flame strike
@@ -134,15 +134,15 @@ enum eEnums
     NPC_SAFE_AREA                               = 30494,    // safe zone npc for Pyrobuffet
 
     //using these custom points for dragons start and end
-    POINT_ID_INIT                               = 100, 
-    POINT_ID_LAND                               = 200, 
+    POINT_ID_INIT                               = 100,
+    POINT_ID_LAND                               = 200,
 
     //Achievements
-    ACHIEV_TWILIGHT_ASSIST                      = 2049, 
-    H_ACHIEV_TWILIGHT_ASSIST                    = 2052, 
-    ACHIEV_TWILIGHT_DUO                         = 2050, 
-    H_ACHIEV_TWILIGHT_DUO                       = 2053, 
-    ACHIEV_TWILIGHT_ZONE                        = 2051, 
+    ACHIEV_TWILIGHT_ASSIST                      = 2049,
+    H_ACHIEV_TWILIGHT_ASSIST                    = 2052,
+    ACHIEV_TWILIGHT_DUO                         = 2050,
+    H_ACHIEV_TWILIGHT_DUO                       = 2053,
+    ACHIEV_TWILIGHT_ZONE                        = 2051,
     H_ACHIEV_TWILIGHT_ZONE                      = 2054
 };
 
@@ -171,13 +171,13 @@ Waypoint m_aTene[]=
 
 Waypoint m_aShad[]=
 {
-    {3293.238f, 472.223f, 106.968f}, 
+    {3293.238f, 472.223f, 106.968f},
     {3271.669f, 526.907f, 61.931f}
 };
 
 Waypoint m_aVesp[]=
 {
-    {3193.310f, 472.861f, 102.697f}, 
+    {3193.310f, 472.861f, 102.697f},
     {3227.268f, 533.238f, 59.995f}
 };
 
@@ -185,11 +185,11 @@ Waypoint m_aVesp[]=
 //points around raid "isle", counter clockwise. should probably be adjusted to be more alike
 Waypoint m_aDragonCommon[MAX_WAYPOINT]=
 {
-    {3214.012f, 468.932f, 98.652f}, 
-    {3244.950f, 468.427f, 98.652f}, 
-    {3283.520f, 496.869f, 98.652f}, 
-    {3287.316f, 555.875f, 98.652f}, 
-    {3250.479f, 585.827f, 98.652f}, 
+    {3214.012f, 468.932f, 98.652f},
+    {3244.950f, 468.427f, 98.652f},
+    {3283.520f, 496.869f, 98.652f},
+    {3287.316f, 555.875f, 98.652f},
+    {3250.479f, 585.827f, 98.652f},
     {3209.969f, 566.523f, 98.652f}
 };
 
@@ -210,20 +210,20 @@ static Location AcolyteofVesperon = { 3145.68f, 520.71f, 89.7f };
 static Location AcolyteofVesperon2 = { 3246.57f, 551.263f, 58.6164f };
 Locations TwilightEggs[] =
 {
-    {3219.28f, 669.121f , 88.5549f}, 
-    {3221.55f, 682.852f , 90.5361f}, 
-    {3239.77f, 685.94f , 90.3168f}, 
-    {3250.33f, 669.749f , 88.7637f}, 
-    {3246.6f, 642.365f , 84.8752f}, 
+    {3219.28f, 669.121f , 88.5549f},
+    {3221.55f, 682.852f , 90.5361f},
+    {3239.77f, 685.94f , 90.3168f},
+    {3250.33f, 669.749f , 88.7637f},
+    {3246.6f, 642.365f , 84.8752f},
     {3233.68f, 653.117f , 85.7051f}
 };
 Locations TwilightEggsSarth[] =
 {
-    {3252.73f, 515.762f , 58.5501f}, 
-    {3256.56f, 521.119f , 58.6061f}, 
-    {3255.63f, 527.513f , 58.7568f}, 
-    {3264.90f, 525.865f , 58.6436f}, 
-    {3264.26f, 516.364f , 58.8011f}, 
+    {3252.73f, 515.762f , 58.5501f},
+    {3256.56f, 521.119f , 58.6061f},
+    {3255.63f, 527.513f , 58.7568f},
+    {3264.90f, 525.865f , 58.6436f},
+    {3264.26f, 516.364f , 58.8011f},
     {3257.54f, 502.285f , 58.2077f}
 };
 
@@ -717,42 +717,41 @@ public:
             EnterEvadeIfOutOfCombatArea(uiDiff);
         }
     };
-
 };
 
 enum TeneText
 {
-    SAY_TENEBRON_AGGRO                      = -1615009, 
-    SAY_TENEBRON_SLAY_1                     = -1615010, 
-    SAY_TENEBRON_SLAY_2                     = -1615011, 
-    SAY_TENEBRON_DEATH                      = -1615012, 
-    SAY_TENEBRON_BREATH                     = -1615013, 
-    SAY_TENEBRON_RESPOND                    = -1615014, 
-    SAY_TENEBRON_SPECIAL_1                  = -1615015, 
+    SAY_TENEBRON_AGGRO                      = -1615009,
+    SAY_TENEBRON_SLAY_1                     = -1615010,
+    SAY_TENEBRON_SLAY_2                     = -1615011,
+    SAY_TENEBRON_DEATH                      = -1615012,
+    SAY_TENEBRON_BREATH                     = -1615013,
+    SAY_TENEBRON_RESPOND                    = -1615014,
+    SAY_TENEBRON_SPECIAL_1                  = -1615015,
     SAY_TENEBRON_SPECIAL_2                  = -1615016
 };
 
 enum ShadText
 {
-    SAY_SHADRON_AGGRO                       = -1615000, 
-    SAY_SHADRON_SLAY_1                      = -1615001, 
-    SAY_SHADRON_SLAY_2                      = -1615002, 
-    SAY_SHADRON_DEATH                       = -1615003, 
-    SAY_SHADRON_BREATH                      = -1615004, 
-    SAY_SHADRON_RESPOND                     = -1615005, 
-    SAY_SHADRON_SPECIAL_1                   = -1615006, 
+    SAY_SHADRON_AGGRO                       = -1615000,
+    SAY_SHADRON_SLAY_1                      = -1615001,
+    SAY_SHADRON_SLAY_2                      = -1615002,
+    SAY_SHADRON_DEATH                       = -1615003,
+    SAY_SHADRON_BREATH                      = -1615004,
+    SAY_SHADRON_RESPOND                     = -1615005,
+    SAY_SHADRON_SPECIAL_1                   = -1615006,
     SAY_SHADRON_SPECIAL_2                   = -1615007
 };
 
 enum VespText
 {
-    SAY_VESPERON_AGGRO                      = -1615033, 
-    SAY_VESPERON_SLAY_1                     = -1615034, 
-    SAY_VESPERON_SLAY_2                     = -1615035, 
-    SAY_VESPERON_DEATH                      = -1615036, 
-    SAY_VESPERON_BREATH                     = -1615037, 
-    SAY_VESPERON_RESPOND                    = -1615038, 
-    SAY_VESPERON_SPECIAL_1                  = -1615039, 
+    SAY_VESPERON_AGGRO                      = -1615033,
+    SAY_VESPERON_SLAY_1                     = -1615034,
+    SAY_VESPERON_SLAY_2                     = -1615035,
+    SAY_VESPERON_DEATH                      = -1615036,
+    SAY_VESPERON_BREATH                     = -1615037,
+    SAY_VESPERON_RESPOND                    = -1615038,
+    SAY_VESPERON_SPECIAL_1                  = -1615039,
     SAY_VESPERON_SPECIAL_2                  = -1615040
 };
 
@@ -997,7 +996,7 @@ struct dummy_dragonAI : public ScriptedAI
             if (m_uiMoveNextTimer <= uiDiff)
             {
                 if (m_uiWaypointId < MAX_WAYPOINT)
-                    me->GetMotionMaster()->MovePoint(m_uiWaypointId, 
+                    me->GetMotionMaster()->MovePoint(m_uiWaypointId,
                         m_aDragonCommon[m_uiWaypointId].m_fX, m_aDragonCommon[m_uiWaypointId].m_fY, m_aDragonCommon[m_uiWaypointId].m_fZ);
 
 //                debug_log("dummy_dragonAI: %s moving to point %u", me->GetName(), m_uiWaypointId);
@@ -1098,7 +1097,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*######
@@ -1205,7 +1203,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*######
@@ -1301,7 +1298,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*######
@@ -1411,7 +1407,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*######
@@ -1506,7 +1501,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*######
@@ -1578,7 +1572,6 @@ public:
         void AttackStart(Unit* /*pWho*/) {}
         void MoveInLineOfSight(Unit* /*pWho*/) {}
     };
-
 };
 
 /*######
@@ -1632,7 +1625,6 @@ public:
             }else TsunamiBuff_timer -= diff;
         }
     };
-
 };
 
 // Twilight Fissure
@@ -1678,7 +1670,6 @@ public:
             } else VoidBlast_Timer -= diff;
         }
     };
-
 };
 
 /*######
@@ -1729,7 +1720,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class PyrobuffetTargetSelector

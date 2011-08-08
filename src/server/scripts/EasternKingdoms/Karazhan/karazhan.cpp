@@ -60,25 +60,25 @@ struct Dialogue
 
 static Dialogue OzDialogue[]=
 {
-    {-1532103, 6000}, 
-    {-1532104, 18000}, 
-    {-1532105, 9000}, 
+    {-1532103, 6000},
+    {-1532104, 18000},
+    {-1532105, 9000},
     {-1532106, 15000}
 };
 
 static Dialogue HoodDialogue[]=
 {
-    {-1532107, 6000}, 
-    {-1532108, 10000}, 
-    {-1532109, 14000}, 
+    {-1532107, 6000},
+    {-1532108, 10000},
+    {-1532109, 14000},
     {-1532110, 15000}
 };
 
 static Dialogue RAJDialogue[]=
 {
-    {-1532111, 5000}, 
-    {-1532112, 7000}, 
-    {-1532113, 14000}, 
+    {-1532111, 5000},
+    {-1532112, 7000},
+    {-1532113, 14000},
     {-1532114, 14000}
 };
 
@@ -173,8 +173,8 @@ public:
                     TalkCount = 0;
                     SetEscortPaused(true);
 
-                    if (Creature* pSpotlight = me->SummonCreature(CREATURE_SPOTLIGHT, 
-                        me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0.0f, 
+                    if (Creature* pSpotlight = me->SummonCreature(CREATURE_SPOTLIGHT,
+                        me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0.0f,
                         TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000))
                     {
                         pSpotlight->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -319,7 +319,6 @@ public:
                         WipeTimer = 15000;
                     } else WipeTimer -= diff;
                 }
-
             }
         }
     };
@@ -395,10 +394,7 @@ public:
     {
         return new npc_barnesAI(pCreature);
     }
-
 };
-
-
 
 /*###
 # npc_berthold
@@ -438,9 +434,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 /*###
 # npc_image_of_medivh
@@ -614,12 +608,10 @@ public:
                 return 5000;
             default : return 9999999;
             }
-
         }
 
         void UpdateAI(const uint32 diff)
         {
-
             if (YellTimer <= diff)
             {
                 if (EventStarted)
@@ -646,9 +638,7 @@ public:
             }
         }
     };
-
 };
-
 
 void AddSC_karazhan()
 {

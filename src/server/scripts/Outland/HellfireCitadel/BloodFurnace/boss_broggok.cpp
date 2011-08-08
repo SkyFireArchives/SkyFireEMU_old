@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,11 +34,11 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO               = -1542008, 
+    SAY_AGGRO               = -1542008,
 
-    SPELL_SLIME_SPRAY       = 30913, 
-    SPELL_POISON_CLOUD      = 30916, 
-    SPELL_POISON_BOLT       = 30917, 
+    SPELL_SLIME_SPRAY       = 30913,
+    SPELL_POISON_CLOUD      = 30916,
+    SPELL_POISON_BOLT       = 30917,
 
     SPELL_POISON            = 30914
 };
@@ -136,7 +136,6 @@ class boss_broggok : public CreatureScript
                     pInstance->SetData(TYPE_BROGGOK_EVENT, DONE);
                 }
             }
-
         };
 
         CreatureAI* GetAI(Creature* Creature) const

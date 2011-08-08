@@ -27,14 +27,14 @@
 
 enum WarlockSpells
 {
-    WARLOCK_DEMONIC_EMPOWERMENT_SUCCUBUS    = 54435, 
-    WARLOCK_DEMONIC_EMPOWERMENT_VOIDWALKER  = 54443, 
-    WARLOCK_DEMONIC_EMPOWERMENT_FELGUARD    = 54508, 
-    WARLOCK_DEMONIC_EMPOWERMENT_FELHUNTER   = 54509, 
-    WARLOCK_DEMONIC_EMPOWERMENT_IMP         = 54444, 
-    //WARLOCK_IMPROVED_HEALTHSTONE_R1         = 18692, 
-    //WARLOCK_IMPROVED_HEALTHSTONE_R2         = 18693, 
-    WARLOCK_FELHUNTER_SHADOWBITE_R1         = 54049, 
+    WARLOCK_DEMONIC_EMPOWERMENT_SUCCUBUS    = 54435,
+    WARLOCK_DEMONIC_EMPOWERMENT_VOIDWALKER  = 54443,
+    WARLOCK_DEMONIC_EMPOWERMENT_FELGUARD    = 54508,
+    WARLOCK_DEMONIC_EMPOWERMENT_FELHUNTER   = 54509,
+    WARLOCK_DEMONIC_EMPOWERMENT_IMP         = 54444,
+    //WARLOCK_IMPROVED_HEALTHSTONE_R1         = 18692,
+    //WARLOCK_IMPROVED_HEALTHSTONE_R2         = 18693,
+    WARLOCK_FELHUNTER_SHADOWBITE_R1         = 54049,
 };
 
 // 47193 Demonic Empowerment
@@ -206,7 +206,6 @@ public:
     {36892, 36893, 36894}               // Fel Healthstone
 };*/
 
-
 //27285 Seed of Corruption
 class spell_warl_seed_of_corruption : public SpellScriptLoader
 {
@@ -271,7 +270,6 @@ public:
             // break if pet has no owner and/or owner is not a player
             Unit *owner = caster->GetOwner();
             if (!(owner && (owner->GetTypeId() == TYPEID_PLAYER))) { return; };
-            
 
             /*int32 amount;
             // rank 1 - 4%
@@ -279,7 +277,7 @@ public:
 
             /*// rank 2 - 8%
             if (owner->HasAura(WARLOCK_IMPROVED_FELHUNTER_R2)) { amount = 9; };*/
-            
+
             // Finally return the Mana to our Caster
             /*if (AuraEffect * aurEff = owner->GetAuraEffect(SPELL_AURA_ADD_FLAT_MODIFIER, SPELLFAMILY_WARLOCK, 214, 0))
                 caster->CastCustomSpell(caster, WARLOCK_IMPROVED_FELHUNTER_EFFECT, &amount, NULL, NULL, true, NULL, aurEff, caster->GetGUID());*/

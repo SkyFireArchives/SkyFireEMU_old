@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -53,26 +53,26 @@ enum eSpells
 
 static float waypoint[6][3] =
 {
-    {340.15f, 58.65f, 17.71f}, 
-    {388.09f, 31.54f, 20.18f}, 
-    {388.18f, -32.85f, 20.18f}, 
-    {340.29f, -60.19f, 17.72f}, 
+    {340.15f, 58.65f, 17.71f},
+    {388.09f, 31.54f, 20.18f},
+    {388.18f, -32.85f, 20.18f},
+    {340.29f, -60.19f, 17.72f},
     {332.0f, 0.01f, 39.0f}, // better not use the same xy coord
     {331.0f, 0.01f, -2.39f}
 };
 
 enum WaitEventType
 {
-    WE_NONE     = 0, 
-    WE_DUMMY    = 1, 
-    WE_PLATFORM = 2, 
-    WE_QUILL    = 3, 
-    WE_DIE      = 4, 
-    WE_REVIVE   = 5, 
-    WE_CHARGE   = 6, 
-    WE_METEOR   = 7, 
-    WE_DIVE     = 8, 
-    WE_LAND     = 9, 
+    WE_NONE     = 0,
+    WE_DUMMY    = 1,
+    WE_PLATFORM = 2,
+    WE_QUILL    = 3,
+    WE_DIE      = 4,
+    WE_REVIVE   = 5,
+    WE_CHARGE   = 6,
+    WE_METEOR   = 7,
+    WE_DIVE     = 8,
+    WE_LAND     = 9,
     WE_SUMMON   = 10
 };
 
@@ -238,7 +238,6 @@ class boss_alar : public CreatureScript
                     }
                     else
                         ForceTimer -= diff;
-
                 }
                 if (WaitEvent)
                 {
@@ -532,7 +531,6 @@ class mob_ember_of_alar : public CreatureScript
 
                 DoMeleeAttackIfReady();
             }
-
         };
 
         CreatureAI* GetAI(Creature* Creature) const
@@ -572,4 +570,3 @@ void AddSC_boss_alar()
     new mob_ember_of_alar();
     new mob_flame_patch_alar();
 }
-

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,94 +35,94 @@ EndScriptData */
 enum eSpells
 {
     // Any boss
-    SPELL_SUPERCHARGE           = 61920, 
+    SPELL_SUPERCHARGE           = 61920,
     SPELL_BERSERK               = 47008,   // Hard enrage, don't know the correct ID.
 
     // Steelbreaker
-    SPELL_HIGH_VOLTAGE         = 61890, 
-    SPELL_HIGH_VOLTAGE_H       = 63498, 
-    SPELL_FUSION_PUNCH         = 61903, 
-    SPELL_FUSION_PUNCH_H       = 63493, 
-    SPELL_STATIC_DISRUPTION    = 44008, 
-    SPELL_STATIC_DISRUPTION_H  = 63494, 
-    SPELL_OVERWHELMING_POWER_H = 61888, 
-    SPELL_OVERWHELMING_POWER   = 64637, 
-    SPELL_ELECTRICAL_CHARGE    = 61902, 
+    SPELL_HIGH_VOLTAGE         = 61890,
+    SPELL_HIGH_VOLTAGE_H       = 63498,
+    SPELL_FUSION_PUNCH         = 61903,
+    SPELL_FUSION_PUNCH_H       = 63493,
+    SPELL_STATIC_DISRUPTION    = 44008,
+    SPELL_STATIC_DISRUPTION_H  = 63494,
+    SPELL_OVERWHELMING_POWER_H = 61888,
+    SPELL_OVERWHELMING_POWER   = 64637,
+    SPELL_ELECTRICAL_CHARGE    = 61902,
 
     // Runemaster Molgeim
-    SPELL_SHIELD_OF_RUNES      = 62274, 
-    SPELL_SHIELD_OF_RUNES_H    = 63489, 
-    SPELL_SUMMON_RUNE_OF_POWER = 63513, 
-    SPELL_RUNE_OF_POWER        = 61974, 
-    SPELL_RUNE_OF_DEATH        = 62269, 
+    SPELL_SHIELD_OF_RUNES      = 62274,
+    SPELL_SHIELD_OF_RUNES_H    = 63489,
+    SPELL_SUMMON_RUNE_OF_POWER = 63513,
+    SPELL_RUNE_OF_POWER        = 61974,
+    SPELL_RUNE_OF_DEATH        = 62269,
     SPELL_RUNE_OF_SUMMONING     = 62273,    // This is the spell that summons the rune
     SPELL_RUNE_OF_SUMMONING_VIS = 62019,    // Visual
     SPELL_RUNE_OF_SUMMONING_SUMMON = 62020, // Spell that summons
-    SPELL_LIGHTNING_ELEMENTAL_PASSIVE = 62052, 
-    SPELL_LIGHTNING_ELEMENTAL_PASSIVE_H = 63492, 
+    SPELL_LIGHTNING_ELEMENTAL_PASSIVE = 62052,
+    SPELL_LIGHTNING_ELEMENTAL_PASSIVE_H = 63492,
 
     // Stormcaller Brundir
-    SPELL_CHAIN_LIGHTNING_N    = 61879, 
-    SPELL_CHAIN_LIGHTNING_H    = 63479, 
-    SPELL_OVERLOAD             = 61869, 
-    SPELL_OVERLOAD_H           = 63481, 
-    SPELL_LIGHTNING_WHIRL      = 61915, 
-    SPELL_LIGHTNING_WHIRL_H    = 63483, 
-    SPELL_LIGHTNING_TENDRILS   = 61887, 
-    SPELL_LIGHTNING_TENDRILS_H = 63486, 
-    SPELL_STORMSHIELD          = 64187, 
+    SPELL_CHAIN_LIGHTNING_N    = 61879,
+    SPELL_CHAIN_LIGHTNING_H    = 63479,
+    SPELL_OVERLOAD             = 61869,
+    SPELL_OVERLOAD_H           = 63481,
+    SPELL_LIGHTNING_WHIRL      = 61915,
+    SPELL_LIGHTNING_WHIRL_H    = 63483,
+    SPELL_LIGHTNING_TENDRILS   = 61887,
+    SPELL_LIGHTNING_TENDRILS_H = 63486,
+    SPELL_STORMSHIELD          = 64187,
 };
 
 enum Events
 {
-    EVENT_NONE, 
-    EVENT_UPDATEPHASE, 
-    EVENT_ENRAGE, 
+    EVENT_NONE,
+    EVENT_UPDATEPHASE,
+    EVENT_ENRAGE,
     // Steelbreaker
-    EVENT_FUSION_PUNCH, 
-    EVENT_STATIC_DISRUPTION, 
-    EVENT_OVERWHELMING_POWER, 
+    EVENT_FUSION_PUNCH,
+    EVENT_STATIC_DISRUPTION,
+    EVENT_OVERWHELMING_POWER,
     // Molgeim
-    EVENT_RUNE_OF_POWER, 
-    EVENT_SHIELD_OF_RUNES, 
-    EVENT_RUNE_OF_DEATH, 
-    EVENT_RUNE_OF_SUMMONING, 
-    EVENT_LIGHTNING_BLAST, 
+    EVENT_RUNE_OF_POWER,
+    EVENT_SHIELD_OF_RUNES,
+    EVENT_RUNE_OF_DEATH,
+    EVENT_RUNE_OF_SUMMONING,
+    EVENT_LIGHTNING_BLAST,
     // Brundir
-    EVENT_CHAIN_LIGHTNING, 
-    EVENT_OVERLOAD, 
-    EVENT_LIGHTNING_WHIRL, 
-    EVENT_LIGHTNING_TENDRILS, 
-    EVENT_STORMSHIELD, 
+    EVENT_CHAIN_LIGHTNING,
+    EVENT_OVERLOAD,
+    EVENT_LIGHTNING_WHIRL,
+    EVENT_LIGHTNING_TENDRILS,
+    EVENT_STORMSHIELD,
 };
 
 enum Yells
 {
-    SAY_STEELBREAKER_AGGRO                      = -1603020, 
-    SAY_STEELBREAKER_SLAY_1                     = -1603021, 
-    SAY_STEELBREAKER_SLAY_2                     = -1603022, 
-    SAY_STEELBREAKER_POWER                      = -1603023, 
-    SAY_STEELBREAKER_DEATH_1                    = -1603024, 
-    SAY_STEELBREAKER_DEATH_2                    = -1603025, 
-    SAY_STEELBREAKER_BERSERK                    = -1603026, 
+    SAY_STEELBREAKER_AGGRO                      = -1603020,
+    SAY_STEELBREAKER_SLAY_1                     = -1603021,
+    SAY_STEELBREAKER_SLAY_2                     = -1603022,
+    SAY_STEELBREAKER_POWER                      = -1603023,
+    SAY_STEELBREAKER_DEATH_1                    = -1603024,
+    SAY_STEELBREAKER_DEATH_2                    = -1603025,
+    SAY_STEELBREAKER_BERSERK                    = -1603026,
 
-    SAY_MOLGEIM_AGGRO                           = -1603030, 
-    SAY_MOLGEIM_SLAY_1                          = -1603031, 
-    SAY_MOLGEIM_SLAY_2                          = -1603032, 
-    SAY_MOLGEIM_RUNE_DEATH                      = -1603033, 
-    SAY_MOLGEIM_SUMMON                          = -1603034, 
-    SAY_MOLGEIM_DEATH_1                         = -1603035, 
-    SAY_MOLGEIM_DEATH_2                         = -1603036, 
-    SAY_MOLGEIM_BERSERK                         = -1603037, 
+    SAY_MOLGEIM_AGGRO                           = -1603030,
+    SAY_MOLGEIM_SLAY_1                          = -1603031,
+    SAY_MOLGEIM_SLAY_2                          = -1603032,
+    SAY_MOLGEIM_RUNE_DEATH                      = -1603033,
+    SAY_MOLGEIM_SUMMON                          = -1603034,
+    SAY_MOLGEIM_DEATH_1                         = -1603035,
+    SAY_MOLGEIM_DEATH_2                         = -1603036,
+    SAY_MOLGEIM_BERSERK                         = -1603037,
 
-    SAY_BRUNDIR_AGGRO                           = -1603040, 
-    SAY_BRUNDIR_SLAY_1                          = -1603041, 
-    SAY_BRUNDIR_SLAY_2                          = -1603042, 
-    SAY_BRUNDIR_SPECIAL                         = -1603043, 
-    SAY_BRUNDIR_FLIGHT                          = -1603044, 
-    SAY_BRUNDIR_DEATH_1                         = -1603045, 
-    SAY_BRUNDIR_DEATH_2                         = -1603046, 
-    SAY_BRUNDIR_BERSERK                         = -1603047, 
+    SAY_BRUNDIR_AGGRO                           = -1603040,
+    SAY_BRUNDIR_SLAY_1                          = -1603041,
+    SAY_BRUNDIR_SLAY_2                          = -1603042,
+    SAY_BRUNDIR_SPECIAL                         = -1603043,
+    SAY_BRUNDIR_FLIGHT                          = -1603044,
+    SAY_BRUNDIR_DEATH_1                         = -1603045,
+    SAY_BRUNDIR_DEATH_2                         = -1603046,
+    SAY_BRUNDIR_BERSERK                         = -1603047,
 };
 
 bool IsEncounterComplete(InstanceScript* pInstance, Creature* me)
@@ -170,7 +170,7 @@ void StartEncounter(InstanceScript* pInstance, Creature* me, Unit* /*target*/)
 {
     if (pInstance->GetBossState(TYPE_ASSEMBLY) == IN_PROGRESS)
         return;     // Prevent recursive calls
-    
+
     pInstance->SetBossState(TYPE_ASSEMBLY, IN_PROGRESS);
 
     for (uint8 i = 0; i < 3; ++i)
@@ -180,7 +180,7 @@ void StartEncounter(InstanceScript* pInstance, Creature* me, Unit* /*target*/)
             continue;
 
         if (Creature *boss = Unit::GetCreature(*me, guid))
-                boss->SetInCombatWithZone();          
+                boss->SetInCombatWithZone();
     }
 }
 
@@ -342,7 +342,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class boss_runemaster_molgeim : public CreatureScript
@@ -561,7 +560,7 @@ public:
         {
             me->AddAura(SPELL_RUNE_OF_SUMMONING_VIS, me);
             summonCount = 0;
-            summonTimer = 2000;                         
+            summonTimer = 2000;
         }
 
         uint32 summonCount;
@@ -645,7 +644,6 @@ public:
                         events.RescheduleEvent(EVENT_LIGHTNING_TENDRILS, urand(40000, 80000));
                     }
                 break;
-
             }
         }
 
@@ -735,7 +733,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_boss_assembly_of_iron()

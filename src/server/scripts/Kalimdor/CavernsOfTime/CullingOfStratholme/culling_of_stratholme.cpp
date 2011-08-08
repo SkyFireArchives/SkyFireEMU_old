@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -91,52 +91,52 @@ enum Says
 
 enum NPCs
 {
-    NPC_INFINITE_ADVERSARY                     = 27742, 
-    NPC_INFINITE_HUNTER                        = 27743, 
-    NPC_INFINITE_AGENT                         = 27744, 
-    NPC_TIME_RIFT                              = 28409, 
-    NPC_ZOMBIE                                 = 27737, 
-    NPC_GHOUL                                  = 28249, 
-    NPC_NECROMANCER                            = 28200, 
-    NPC_STALKER                                = 28199, 
-    NPC_FIEND                                  = 27734, 
-    NPC_GOLEM                                  = 28201, 
-    NPC_EGHOUL                                 = 27729, 
-    NPC_CONSTRUCT                              = 27736, 
+    NPC_INFINITE_ADVERSARY                     = 27742,
+    NPC_INFINITE_HUNTER                        = 27743,
+    NPC_INFINITE_AGENT                         = 27744,
+    NPC_TIME_RIFT                              = 28409,
+    NPC_ZOMBIE                                 = 27737,
+    NPC_GHOUL                                  = 28249,
+    NPC_NECROMANCER                            = 28200,
+    NPC_STALKER                                = 28199,
+    NPC_FIEND                                  = 27734,
+    NPC_GOLEM                                  = 28201,
+    NPC_EGHOUL                                 = 27729,
+    NPC_CONSTRUCT                              = 27736,
 
-    NPC_INVIS_TARGET                           = 20562, 
+    NPC_INVIS_TARGET                           = 20562,
 
-    NPC_KNIGHT_ESCORT                          = 27745, 
-    NPC_PRIEST_ESCORT                          = 27747, 
-    NPC_CITY_MAN                               = 28167, 
-    NPC_CITY_MAN2                              = 28169, 
-    NPC_CITY_MAN3                              = 31126, 
-    NPC_CITY_MAN4                              = 31127, 
+    NPC_KNIGHT_ESCORT                          = 27745,
+    NPC_PRIEST_ESCORT                          = 27747,
+    NPC_CITY_MAN                               = 28167,
+    NPC_CITY_MAN2                              = 28169,
+    NPC_CITY_MAN3                              = 31126,
+    NPC_CITY_MAN4                              = 31127,
 };
 
 enum Spells
 {
-    SPELL_FEAR                                 = 39176, 
-    SPELL_ARTHAS_AURA                          = 52442, 
-    SPELL_EXORCISM_N                           = 52445, 
-    SPELL_EXORCISM_H                           = 58822, 
-    SPELL_HOLY_LIGHT                           = 52444, 
+    SPELL_FEAR                                 = 39176,
+    SPELL_ARTHAS_AURA                          = 52442,
+    SPELL_EXORCISM_N                           = 52445,
+    SPELL_EXORCISM_H                           = 58822,
+    SPELL_HOLY_LIGHT                           = 52444,
 };
 
 enum GossipMenuArthas
 {
-   GOSSIP_MENU_ARTHAS_1                        = 100001, 
-   GOSSIP_MENU_ARTHAS_2                        = 100002, 
-   GOSSIP_MENU_ARTHAS_3                        = 100003, 
-   GOSSIP_MENU_ARTHAS_4                        = 100004, 
+   GOSSIP_MENU_ARTHAS_1                        = 100001,
+   GOSSIP_MENU_ARTHAS_2                        = 100002,
+   GOSSIP_MENU_ARTHAS_3                        = 100003,
+   GOSSIP_MENU_ARTHAS_4                        = 100004,
    GOSSIP_MENU_ARTHAS_5                        = 100005
 };
 
 enum
 {
-    ENCOUNTER_WAVES_NUMBER                      = 8, 
-    ENCOUNTER_WAVES_MAX_SPAWNS                  = 5, 
-    ENCOUNTER_DRACONIAN_NUMBER                  = 4, 
+    ENCOUNTER_WAVES_NUMBER                      = 8,
+    ENCOUNTER_WAVES_MAX_SPAWNS                  = 5,
+    ENCOUNTER_DRACONIAN_NUMBER                  = 4,
     ENCOUNTER_CHRONO_SPAWNS                     = 19
 };
 
@@ -144,59 +144,59 @@ enum
 float WavesLocations[ENCOUNTER_WAVES_NUMBER][ENCOUNTER_WAVES_MAX_SPAWNS][5]=
 {
     {
-        {NPC_ZOMBIE, 2164.698975f, 1255.392944f, 135.040878f, 0.490202f}, 
-        {NPC_ZOMBIE, 2183.501465f, 1263.079102f, 134.859055f, 3.169981f}, 
-        {NPC_GHOUL, 2177.512939f, 1247.313843f, 135.846695f, 1.696574f}, 
-        {NPC_GHOUL, 2171.991943f, 1246.615845f, 135.745026f, 1.696574f}, 
+        {NPC_ZOMBIE, 2164.698975f, 1255.392944f, 135.040878f, 0.490202f},
+        {NPC_ZOMBIE, 2183.501465f, 1263.079102f, 134.859055f, 3.169981f},
+        {NPC_GHOUL, 2177.512939f, 1247.313843f, 135.846695f, 1.696574f},
+        {NPC_GHOUL, 2171.991943f, 1246.615845f, 135.745026f, 1.696574f},
         {0, 0, 0, 0, 0}
-    }, 
+    },
     {
-        {NPC_GHOUL, 2254.434326f, 1163.427612f, 138.055038f, 2.077358f}, 
-        {NPC_GHOUL, 2254.703613f, 1158.867798f, 138.212234f, 2.345532f}, 
-        {NPC_GHOUL, 2257.615723f, 1162.310913f, 138.091202f, 2.077358f}, 
-        {NPC_NECROMANCER, 2258.258057f, 1157.250732f, 138.272873f, 2.387766f}, 
+        {NPC_GHOUL, 2254.434326f, 1163.427612f, 138.055038f, 2.077358f},
+        {NPC_GHOUL, 2254.703613f, 1158.867798f, 138.212234f, 2.345532f},
+        {NPC_GHOUL, 2257.615723f, 1162.310913f, 138.091202f, 2.077358f},
+        {NPC_NECROMANCER, 2258.258057f, 1157.250732f, 138.272873f, 2.387766f},
         {0, 0, 0, 0, 0}
-    }, 
+    },
     {
-        {NPC_STALKER, 2348.120117f, 1202.302490f, 130.491104f, 4.698538f}, 
-        {NPC_GHOUL, 2352.863525f, 1207.819092f, 130.424271f, 4.949865f}, 
-        {NPC_GHOUL, 2343.593750f, 1207.915039f, 130.781311f, 4.321547f}, 
-        {NPC_NECROMANCER, 2348.257324f, 1212.202515f, 130.670135f, 4.450352f}, 
+        {NPC_STALKER, 2348.120117f, 1202.302490f, 130.491104f, 4.698538f},
+        {NPC_GHOUL, 2352.863525f, 1207.819092f, 130.424271f, 4.949865f},
+        {NPC_GHOUL, 2343.593750f, 1207.915039f, 130.781311f, 4.321547f},
+        {NPC_NECROMANCER, 2348.257324f, 1212.202515f, 130.670135f, 4.450352f},
         {0, 0, 0, 0, 0}
-    }, 
+    },
     {
-        {NPC_STALKER, 2139.825195f, 1356.277100f, 132.199615f, 5.820131f}, 
-        {NPC_GHOUL, 2137.073486f, 1362.464844f, 132.271637f, 5.820131f}, 
-        {NPC_GHOUL, 2134.075684f, 1354.148071f, 131.885864f, 5.820131f}, 
-        {NPC_NECROMANCER, 2133.302246f, 1358.907837f, 132.037689f, 5.820131f}, 
+        {NPC_STALKER, 2139.825195f, 1356.277100f, 132.199615f, 5.820131f},
+        {NPC_GHOUL, 2137.073486f, 1362.464844f, 132.271637f, 5.820131f},
+        {NPC_GHOUL, 2134.075684f, 1354.148071f, 131.885864f, 5.820131f},
+        {NPC_NECROMANCER, 2133.302246f, 1358.907837f, 132.037689f, 5.820131f},
         {0, 0, 0, 0, 0}
-    }, 
+    },
     {
-        {NPC_NECROMANCER, 2264.013428f, 1174.055908f, 138.093094f, 2.860481f}, 
-        {NPC_GHOUL, 2264.207764f, 1170.892700f, 138.034973f, 2.860481f}, 
-        {NPC_GHOUL, 2266.948975f, 1176.898926f, 137.976929f, 2.860481f}, 
-        {NPC_STALKER, 2269.215576f, 1170.109253f, 137.742691f, 2.860481f}, 
+        {NPC_NECROMANCER, 2264.013428f, 1174.055908f, 138.093094f, 2.860481f},
+        {NPC_GHOUL, 2264.207764f, 1170.892700f, 138.034973f, 2.860481f},
+        {NPC_GHOUL, 2266.948975f, 1176.898926f, 137.976929f, 2.860481f},
+        {NPC_STALKER, 2269.215576f, 1170.109253f, 137.742691f, 2.860481f},
         {NPC_FIEND, 2273.106689f, 1176.101074f, 137.880508f, 2.860481f}
-    }, 
+    },
     {
-        {NPC_GOLEM, 2349.701660f, 1188.436646f, 130.428864f, 3.908642f}, 
-        {NPC_GHOUL, 2349.909180f, 1194.582642f, 130.417816f, 3.577001f}, 
-        {NPC_EGHOUL, 2354.662598f, 1185.692017f, 130.552032f, 3.577001f}, 
-        {NPC_EGHOUL, 2354.716797f, 1191.614380f, 130.539810f, 3.577001f}, 
+        {NPC_GOLEM, 2349.701660f, 1188.436646f, 130.428864f, 3.908642f},
+        {NPC_GHOUL, 2349.909180f, 1194.582642f, 130.417816f, 3.577001f},
+        {NPC_EGHOUL, 2354.662598f, 1185.692017f, 130.552032f, 3.577001f},
+        {NPC_EGHOUL, 2354.716797f, 1191.614380f, 130.539810f, 3.577001f},
         {0, 0, 0, 0, 0}
-    }, 
+    },
     {
-        {NPC_CONSTRUCT, 2145.212891f, 1355.288086f, 132.288773f, 6.004838f}, 
-        {NPC_NECROMANCER, 2137.078613f, 1357.612671f, 132.173340f, 6.004838f}, 
-        {NPC_EGHOUL, 2139.402100f, 1352.541626f, 132.127518f, 5.812850f}, 
-        {NPC_EGHOUL, 2142.408447f, 1360.760620f, 132.321564f, 5.812850f}, 
+        {NPC_CONSTRUCT, 2145.212891f, 1355.288086f, 132.288773f, 6.004838f},
+        {NPC_NECROMANCER, 2137.078613f, 1357.612671f, 132.173340f, 6.004838f},
+        {NPC_EGHOUL, 2139.402100f, 1352.541626f, 132.127518f, 5.812850f},
+        {NPC_EGHOUL, 2142.408447f, 1360.760620f, 132.321564f, 5.812850f},
         {0, 0, 0, 0, 0}
-    }, 
+    },
     {
-        {NPC_GHOUL, 2172.686279f, 1259.618164f, 134.391754f, 1.865499f}, 
-        {NPC_FIEND, 2177.649170f, 1256.061157f, 135.096512f, 1.849572f}, 
-        {NPC_CONSTRUCT, 2170.782959f, 1253.594849f, 134.973022f, 1.849572f}, 
-        {NPC_NECROMANCER, 2175.595703f, 1249.041992f, 135.603531f, 1.849572f}, 
+        {NPC_GHOUL, 2172.686279f, 1259.618164f, 134.391754f, 1.865499f},
+        {NPC_FIEND, 2177.649170f, 1256.061157f, 135.096512f, 1.849572f},
+        {NPC_CONSTRUCT, 2170.782959f, 1253.594849f, 134.973022f, 1.849572f},
+        {NPC_NECROMANCER, 2175.595703f, 1249.041992f, 135.603531f, 1.849572f},
         {0, 0, 0, 0, 0}
     }
 };
@@ -204,24 +204,24 @@ float WavesLocations[ENCOUNTER_WAVES_NUMBER][ENCOUNTER_WAVES_MAX_SPAWNS][5]=
 // Locations for rifts to spawn and draconians to go
 float RiftAndSpawnsLocations[ENCOUNTER_CHRONO_SPAWNS][5]=
 {
-    {NPC_TIME_RIFT, 2431.790039f, 1190.670044f, 148.076004f, 0.187923f}, 
-    {NPC_INFINITE_ADVERSARY, 2433.857910f, 1185.612061f, 148.075974f, 4.566168f}, 
-    {NPC_INFINITE_ADVERSARY, 2437.577881f, 1188.241089f, 148.075974f, 0.196999f}, 
-    {NPC_INFINITE_AGENT, 2437.165527f, 1192.294922f, 148.075974f, 0.169247f}, 
-    {NPC_INFINITE_HUNTER, 2434.989990f, 1197.679565f, 148.075974f, 0.715971f}, 
-    {NPC_TIME_RIFT, 2403.954834f, 1178.815430f, 148.075943f, 4.966126f}, 
-    {NPC_INFINITE_AGENT, 2403.676758f, 1171.495850f, 148.075607f, 4.902797f}, 
-    {NPC_INFINITE_HUNTER, 2407.691162f, 1172.162720f, 148.075607f, 4.963010f}, 
-    {NPC_TIME_RIFT, 2414.217041f, 1133.446167f, 148.076050f, 1.706972f}, 
-    {NPC_INFINITE_ADVERSARY, 2416.024658f, 1139.456177f, 148.076431f, 1.752129f}, 
-    {NPC_INFINITE_HUNTER, 2410.866699f, 1139.680542f, 148.076431f, 1.752129f}, 
-    {NPC_TIME_RIFT, 2433.081543f, 1099.869751f, 148.076157f, 1.809509f}, 
-    {NPC_INFINITE_ADVERSARY, 2426.947998f, 1107.471680f, 148.076019f, 1.877580f}, 
-    {NPC_INFINITE_HUNTER, 2432.944580f, 1108.896362f, 148.208160f, 2.199241f}, 
-    {NPC_TIME_RIFT, 2444.077637f, 1114.366089f, 148.076157f, 3.049565f}, 
-    {NPC_INFINITE_ADVERSARY, 2438.190674f, 1118.368164f, 148.076172f, 3.139232f}, 
-    {NPC_INFINITE_AGENT, 2435.861328f, 1113.402954f, 148.169327f, 2.390271f}, 
-    {NPC_TIME_RIFT, 2463.131592f, 1115.391724f, 152.473129f, 3.409651f}, 
+    {NPC_TIME_RIFT, 2431.790039f, 1190.670044f, 148.076004f, 0.187923f},
+    {NPC_INFINITE_ADVERSARY, 2433.857910f, 1185.612061f, 148.075974f, 4.566168f},
+    {NPC_INFINITE_ADVERSARY, 2437.577881f, 1188.241089f, 148.075974f, 0.196999f},
+    {NPC_INFINITE_AGENT, 2437.165527f, 1192.294922f, 148.075974f, 0.169247f},
+    {NPC_INFINITE_HUNTER, 2434.989990f, 1197.679565f, 148.075974f, 0.715971f},
+    {NPC_TIME_RIFT, 2403.954834f, 1178.815430f, 148.075943f, 4.966126f},
+    {NPC_INFINITE_AGENT, 2403.676758f, 1171.495850f, 148.075607f, 4.902797f},
+    {NPC_INFINITE_HUNTER, 2407.691162f, 1172.162720f, 148.075607f, 4.963010f},
+    {NPC_TIME_RIFT, 2414.217041f, 1133.446167f, 148.076050f, 1.706972f},
+    {NPC_INFINITE_ADVERSARY, 2416.024658f, 1139.456177f, 148.076431f, 1.752129f},
+    {NPC_INFINITE_HUNTER, 2410.866699f, 1139.680542f, 148.076431f, 1.752129f},
+    {NPC_TIME_RIFT, 2433.081543f, 1099.869751f, 148.076157f, 1.809509f},
+    {NPC_INFINITE_ADVERSARY, 2426.947998f, 1107.471680f, 148.076019f, 1.877580f},
+    {NPC_INFINITE_HUNTER, 2432.944580f, 1108.896362f, 148.208160f, 2.199241f},
+    {NPC_TIME_RIFT, 2444.077637f, 1114.366089f, 148.076157f, 3.049565f},
+    {NPC_INFINITE_ADVERSARY, 2438.190674f, 1118.368164f, 148.076172f, 3.139232f},
+    {NPC_INFINITE_AGENT, 2435.861328f, 1113.402954f, 148.169327f, 2.390271f},
+    {NPC_TIME_RIFT, 2463.131592f, 1115.391724f, 152.473129f, 3.409651f},
     {NPC_EPOCH, 2451.809326f, 1112.901245f, 149.220459f, 3.363617f}
 };
 
@@ -1101,7 +1101,6 @@ public:
                                         pEpoch->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                                         pEpoch->SetReactState(REACT_AGGRESSIVE);
                                     }
-
                                 }
                             JumpToNextStep(1000);
                             break;
@@ -1206,7 +1205,6 @@ public:
                 DoCast(me, SPELL_HOLY_LIGHT);
         }
     };
-
 };
 
 void AddSC_culling_of_stratholme()

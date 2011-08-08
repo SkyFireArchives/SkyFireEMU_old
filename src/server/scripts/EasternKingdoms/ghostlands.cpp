@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -75,9 +75,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_budd_nedreck
@@ -112,9 +110,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 /*######
 ## npc_rathis_tomber
@@ -147,9 +143,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_ranger_lilatha
@@ -157,18 +151,18 @@ public:
 
 enum eEnums
 {
-    SAY_START           = -1000140, 
-    SAY_PROGRESS1       = -1000141, 
-    SAY_PROGRESS2       = -1000142, 
-    SAY_PROGRESS3       = -1000143, 
-    SAY_END1            = -1000144, 
-    SAY_END2            = -1000145, 
-    SAY_CAPTAIN_ANSWER      = -1000146, 
+    SAY_START           = -1000140,
+    SAY_PROGRESS1       = -1000141,
+    SAY_PROGRESS2       = -1000142,
+    SAY_PROGRESS3       = -1000143,
+    SAY_END1            = -1000144,
+    SAY_END2            = -1000145,
+    SAY_CAPTAIN_ANSWER      = -1000146,
 
-    QUEST_ESCAPE_FROM_THE_CATACOMBS     = 9212, 
-    GO_CAGE             = 181152, 
-    NPC_CAPTAIN_HELIOS  = 16220, 
-    FACTION_SMOON_E     = 1603, 
+    QUEST_ESCAPE_FROM_THE_CATACOMBS     = 9212,
+    GO_CAGE             = 181152,
+    NPC_CAPTAIN_HELIOS  = 16220,
+    FACTION_SMOON_E     = 1603,
 };
 
 class npc_ranger_lilatha : public CreatureScript
@@ -259,53 +253,47 @@ public:
     {
         return new npc_ranger_lilathaAI(pCreature);
     }
-
 };
 /*######
 ## npc_captive
 ######*/
- 
+
 enum eCaptive
 {
-    MOB1        =16208, 
-    MOB2        =16206, 
+    MOB1        =16208,
+    MOB2        =16206,
     MOB3        =16209
 };
- 
+
 #define GOSSIP_HELLO_CAPTIVE1   "<Use Renzithen's Restorative Draught on Enith!>"
 #define GOSSIP_HELLO_CAPTIVE2   "<Use Renzithen's Restorative Draught on Varnis!>"
 #define GOSSIP_HELLO_CAPTIVE3   "<Use Renzithen's Restorative Draught on Vedoran!>"
- 
- 
+
 class npc_captive : public CreatureScript
 {
 public:
     npc_captive() : CreatureScript("npc_captive") { }
- 
+
     bool OnGossipHello(Player* pPlayer, Creature* pCreature)
     {
-        
- 
         if (pPlayer->GetQuestStatus(9164) == QUEST_STATUS_INCOMPLETE && pCreature->GetEntry() == MOB1)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HELLO_CAPTIVE1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-        
-        
+
         if (pPlayer->GetQuestStatus(9164) == QUEST_STATUS_INCOMPLETE && pCreature->GetEntry() == MOB2)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HELLO_CAPTIVE2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
- 
- 
+
         if (pPlayer->GetQuestStatus(9164) == QUEST_STATUS_INCOMPLETE && pCreature->GetEntry() == MOB3)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HELLO_CAPTIVE3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
- 
+
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
- 
+
         return true;
     }
- 
+
     bool OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
     {
         pPlayer->PlayerTalkClass->ClearMenus();
-        
+
         if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
         {
             pPlayer->CLOSE_GOSSIP_MENU();
@@ -314,9 +302,8 @@ public:
             pCreature->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
             pCreature->GetMotionMaster()->MovePoint(0, 6640.259f, -6343.529f, 8.944f);
             pCreature->ForcedDespawn(5000);
- 
-        }       
- 
+        }
+
         if (uiAction == GOSSIP_ACTION_INFO_DEF + 2)
         {
             pPlayer->CLOSE_GOSSIP_MENU();
@@ -325,9 +312,8 @@ public:
             pCreature->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
             pCreature->GetMotionMaster()->MovePoint(0, 6437.597f, -6618.529f, 107.436f);
             pCreature->ForcedDespawn(5000);
- 
         }
- 
+
         if (uiAction == GOSSIP_ACTION_INFO_DEF + 3)
         {
             pPlayer->CLOSE_GOSSIP_MENU();
@@ -336,9 +322,7 @@ public:
             pCreature->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
             pCreature->GetMotionMaster()->MovePoint(0, 6306.514f, -6363.729f, 78.024f);
             pCreature->ForcedDespawn(5000);
- 
         }return true;
-        
     }
 };
 

@@ -55,19 +55,18 @@ public:
             uiForgemasterThrongus = 0;
             uiDrahgaShadowburner = 0;
             uiErudax = 0;
-                        
+
             for(uint8 i=0 ; i<ENCOUNTERS; ++i)
                 uiEncounter[i] = NOT_STARTED;
- 
         }
-    
+
         bool IsEncounterInProgress() const
         {
             for(uint8 i=0; i < ENCOUNTERS; ++i)
             {
                 if (uiEncounter[i] == IN_PROGRESS)
                     return true;
-            }            
+            }
             return false;
         }
 
@@ -94,7 +93,7 @@ public:
         {
             switch(identifier)
             {
-                case DATA_GENERAL_UMBRISS: 
+                case DATA_GENERAL_UMBRISS:
                     return uiGeneralUmbriss;
                 case DATA_FORGEMASTER_THRONGUS:
                     return uiForgemasterThrongus;
@@ -179,7 +178,7 @@ public:
                 uiEncounter[1] = data1;
                 uiEncounter[2] = data2;
                 uiEncounter[3] = data3;
-       
+
                 for(uint8 i=0; i < ENCOUNTERS; ++i)
                     if (uiEncounter[i] == IN_PROGRESS)
                         uiEncounter[i] = NOT_STARTED;
@@ -188,7 +187,6 @@ public:
 
             OUT_LOAD_INST_DATA_COMPLETE;
         }
-
     };
 };
 

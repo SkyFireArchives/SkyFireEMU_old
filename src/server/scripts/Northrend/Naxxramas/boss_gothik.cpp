@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,73 +27,73 @@
 
 enum Yells
 {
-    SAY_SPEECH                  = -1533040, 
-    SAY_KILL                    = -1533041, 
-    SAY_DEATH                   = -1533042, 
+    SAY_SPEECH                  = -1533040,
+    SAY_KILL                    = -1533041,
+    SAY_DEATH                   = -1533042,
     SAY_TELEPORT                = -1533043
 };
 //Gothik
 enum Spells
 {
-    SPELL_HARVEST_SOUL          = 28679, 
-    SPELL_SHADOW_BOLT           = 29317, 
-    H_SPELL_SHADOW_BOLT         = 56405, 
-    SPELL_INFORM_LIVE_TRAINEE   = 27892, 
-    SPELL_INFORM_LIVE_KNIGHT    = 27928, 
-    SPELL_INFORM_LIVE_RIDER     = 27935, 
-    SPELL_INFORM_DEAD_TRAINEE   = 27915, 
-    SPELL_INFORM_DEAD_KNIGHT    = 27931, 
+    SPELL_HARVEST_SOUL          = 28679,
+    SPELL_SHADOW_BOLT           = 29317,
+    H_SPELL_SHADOW_BOLT         = 56405,
+    SPELL_INFORM_LIVE_TRAINEE   = 27892,
+    SPELL_INFORM_LIVE_KNIGHT    = 27928,
+    SPELL_INFORM_LIVE_RIDER     = 27935,
+    SPELL_INFORM_DEAD_TRAINEE   = 27915,
+    SPELL_INFORM_DEAD_KNIGHT    = 27931,
     SPELL_INFORM_DEAD_RIDER     = 27937
 };
 enum Creatures
 {
-    MOB_LIVE_TRAINEE    = 16124, 
-    MOB_LIVE_KNIGHT     = 16125, 
-    MOB_LIVE_RIDER      = 16126, 
-    MOB_DEAD_TRAINEE    = 16127, 
-    MOB_DEAD_KNIGHT     = 16148, 
-    MOB_DEAD_RIDER      = 16150, 
+    MOB_LIVE_TRAINEE    = 16124,
+    MOB_LIVE_KNIGHT     = 16125,
+    MOB_LIVE_RIDER      = 16126,
+    MOB_DEAD_TRAINEE    = 16127,
+    MOB_DEAD_KNIGHT     = 16148,
+    MOB_DEAD_RIDER      = 16150,
     MOB_DEAD_HORSE      = 16149
 };
 
 struct Waves { uint32 entry, time, mode; };
-// wave setups are not the same in heroic and normal difficulty, 
+// wave setups are not the same in heroic and normal difficulty,
 // mode is 0 only normal, 1 both and 2 only heroic
 // but this is handled in DoGothikSummon function
 const Waves waves[] =
 {
-    {MOB_LIVE_TRAINEE, 20000, 1}, 
-    {MOB_LIVE_TRAINEE, 20000, 1}, 
-    {MOB_LIVE_TRAINEE, 10000, 1}, 
-    {MOB_LIVE_KNIGHT, 10000, 1}, 
-    {MOB_LIVE_TRAINEE, 15000, 1}, 
-    {MOB_LIVE_KNIGHT, 5000, 1}, 
-    {MOB_LIVE_TRAINEE, 20000, 1}, 
-    {MOB_LIVE_TRAINEE, 0, 1}, 
-    {MOB_LIVE_KNIGHT, 10000, 1}, 
-    {MOB_LIVE_TRAINEE, 10000, 2}, 
-    {MOB_LIVE_RIDER, 10000, 0}, 
-    {MOB_LIVE_RIDER, 5000, 2}, 
-    {MOB_LIVE_TRAINEE, 5000, 0}, 
-    {MOB_LIVE_TRAINEE, 15000, 2}, 
-    {MOB_LIVE_KNIGHT, 15000, 0}, 
-    {MOB_LIVE_TRAINEE, 0, 0}, 
-    {MOB_LIVE_RIDER, 10000, 1}, 
-    {MOB_LIVE_KNIGHT, 10000, 1}, 
-    {MOB_LIVE_TRAINEE, 10000, 0}, 
-    {MOB_LIVE_RIDER, 10000, 2}, 
-    {MOB_LIVE_TRAINEE, 0, 2}, 
-    {MOB_LIVE_RIDER, 5000, 1}, 
-    {MOB_LIVE_TRAINEE, 0, 2}, 
-    {MOB_LIVE_KNIGHT, 5000, 1}, 
-    {MOB_LIVE_RIDER, 0, 2}, 
-    {MOB_LIVE_TRAINEE, 20000, 1}, 
-    {MOB_LIVE_RIDER, 0, 1}, 
-    {MOB_LIVE_KNIGHT, 0, 1}, 
-    {MOB_LIVE_TRAINEE, 25000, 2}, 
-    {MOB_LIVE_TRAINEE, 15000, 0}, 
-    {MOB_LIVE_TRAINEE, 25000, 0}, 
-    {0, 0, 1}, 
+    {MOB_LIVE_TRAINEE, 20000, 1},
+    {MOB_LIVE_TRAINEE, 20000, 1},
+    {MOB_LIVE_TRAINEE, 10000, 1},
+    {MOB_LIVE_KNIGHT, 10000, 1},
+    {MOB_LIVE_TRAINEE, 15000, 1},
+    {MOB_LIVE_KNIGHT, 5000, 1},
+    {MOB_LIVE_TRAINEE, 20000, 1},
+    {MOB_LIVE_TRAINEE, 0, 1},
+    {MOB_LIVE_KNIGHT, 10000, 1},
+    {MOB_LIVE_TRAINEE, 10000, 2},
+    {MOB_LIVE_RIDER, 10000, 0},
+    {MOB_LIVE_RIDER, 5000, 2},
+    {MOB_LIVE_TRAINEE, 5000, 0},
+    {MOB_LIVE_TRAINEE, 15000, 2},
+    {MOB_LIVE_KNIGHT, 15000, 0},
+    {MOB_LIVE_TRAINEE, 0, 0},
+    {MOB_LIVE_RIDER, 10000, 1},
+    {MOB_LIVE_KNIGHT, 10000, 1},
+    {MOB_LIVE_TRAINEE, 10000, 0},
+    {MOB_LIVE_RIDER, 10000, 2},
+    {MOB_LIVE_TRAINEE, 0, 2},
+    {MOB_LIVE_RIDER, 5000, 1},
+    {MOB_LIVE_TRAINEE, 0, 2},
+    {MOB_LIVE_KNIGHT, 5000, 1},
+    {MOB_LIVE_RIDER, 0, 2},
+    {MOB_LIVE_TRAINEE, 20000, 1},
+    {MOB_LIVE_RIDER, 0, 1},
+    {MOB_LIVE_KNIGHT, 0, 1},
+    {MOB_LIVE_TRAINEE, 25000, 2},
+    {MOB_LIVE_TRAINEE, 15000, 0},
+    {MOB_LIVE_TRAINEE, 25000, 0},
+    {0, 0, 1},
 };
 
 #define POS_Y_GATE  -3360.78f
@@ -106,35 +106,35 @@ const Waves waves[] =
 
 enum Events
 {
-    EVENT_NONE, 
-    EVENT_SUMMON, 
-    EVENT_HARVEST, 
-    EVENT_BOLT, 
+    EVENT_NONE,
+    EVENT_SUMMON,
+    EVENT_HARVEST,
+    EVENT_BOLT,
     EVENT_TELEPORT
 };
 enum Pos
 {
-   POS_LIVE = 6, 
+   POS_LIVE = 6,
    POS_DEAD = 5
 };
 
 const Position PosSummonLive[POS_LIVE] =
 {
-    {2669.7f, -3428.76f, 268.56f, 1.6f}, 
-    {2692.1f, -3428.76f, 268.56f, 1.6f}, 
-    {2714.4f, -3428.76f, 268.56f, 1.6f}, 
-    {2669.7f, -3431.67f, 268.56f, 1.6f}, 
-    {2692.1f, -3431.67f, 268.56f, 1.6f}, 
-    {2714.4f, -3431.67f, 268.56f, 1.6f}, 
+    {2669.7f, -3428.76f, 268.56f, 1.6f},
+    {2692.1f, -3428.76f, 268.56f, 1.6f},
+    {2714.4f, -3428.76f, 268.56f, 1.6f},
+    {2669.7f, -3431.67f, 268.56f, 1.6f},
+    {2692.1f, -3431.67f, 268.56f, 1.6f},
+    {2714.4f, -3431.67f, 268.56f, 1.6f},
 };
 
 const Position PosSummonDead[POS_DEAD] =
 {
-    {2725.1f, -3310.0f, 268.85f, 3.4f}, 
-    {2699.3f, -3322.8f, 268.60f, 3.3f}, 
-    {2733.1f, -3348.5f, 268.84f, 3.1f}, 
-    {2682.8f, -3304.2f, 268.85f, 3.9f}, 
-    {2664.8f, -3340.7f, 268.23f, 3.7f}, 
+    {2725.1f, -3310.0f, 268.85f, 3.4f},
+    {2699.3f, -3322.8f, 268.60f, 3.3f},
+    {2733.1f, -3348.5f, 268.84f, 3.1f},
+    {2682.8f, -3304.2f, 268.85f, 3.9f},
+    {2664.8f, -3340.7f, 268.23f, 3.7f},
 };
 
 const float PosGroundLiveSide[4] = {2691.2f, -3387.0f, 267.68f, 1.52f};
@@ -464,7 +464,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_gothik_minion : public CreatureScript
@@ -555,10 +554,7 @@ public:
             CombatAI::UpdateAI(diff);
         }
     };
-
 };
-
-
 
 void AddSC_boss_gothik()
 {

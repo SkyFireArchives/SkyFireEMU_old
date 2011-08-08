@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,62 +27,62 @@
 
 enum eYells
 {
-    SAY_AGGRO                                    = -1603290, 
-    SAY_SLAY_1                                   = -1603291, 
-    SAY_SLAY_2                                   = -1603292, 
-    SAY_SURGE_OF_DARKNESS                        = -1603293, 
-    SAY_DEATH                                    = -1603294, 
-    SAY_BERSERK                                  = -1603295, 
-    SAY_HARDMODE                                 = -1603296, 
+    SAY_AGGRO                                    = -1603290,
+    SAY_SLAY_1                                   = -1603291,
+    SAY_SLAY_2                                   = -1603292,
+    SAY_SURGE_OF_DARKNESS                        = -1603293,
+    SAY_DEATH                                    = -1603294,
+    SAY_BERSERK                                  = -1603295,
+    SAY_HARDMODE                                 = -1603296,
 };
 
 enum eEmotes
 {
-    EMOTE_VAPORS                                 = -1603289, 
-    EMOTE_ANIMUS                                 = -1603297, 
-    EMOTE_BARRIER                                = -1603298, 
-    EMOTE_SURGE_OF_DARKNESS                      = -1603299, 
+    EMOTE_VAPORS                                 = -1603289,
+    EMOTE_ANIMUS                                 = -1603297,
+    EMOTE_BARRIER                                = -1603298,
+    EMOTE_SURGE_OF_DARKNESS                      = -1603299,
 };
 
 enum eSpells
 {
-    SPELL_AURA_OF_DESPAIR                        = 62692, 
-    SPELL_MARK_OF_THE_FACELESS                   = 63276, 
-    SPELL_SARONITE_BARRIER                       = 63364, 
-    SPELL_SEARING_FLAMES                         = 62661, 
-    SPELL_SHADOW_CRASH                           = 62660, 
-    SPELL_SHADOW_CRASH_HIT                       = 62659, 
-    SPELL_SURGE_OF_DARKNESS                      = 62662, 
-    SPELL_SARONITE_VAPORS                        = 63323, 
-    SPELL_SUMMON_SARONITE_VAPORS                 = 63081, 
-    SPELL_PROFOUND_OF_DARKNESS                   = 63420, 
-    SPELL_BERSERK                                = 26662, 
+    SPELL_AURA_OF_DESPAIR                        = 62692,
+    SPELL_MARK_OF_THE_FACELESS                   = 63276,
+    SPELL_SARONITE_BARRIER                       = 63364,
+    SPELL_SEARING_FLAMES                         = 62661,
+    SPELL_SHADOW_CRASH                           = 62660,
+    SPELL_SHADOW_CRASH_HIT                       = 62659,
+    SPELL_SURGE_OF_DARKNESS                      = 62662,
+    SPELL_SARONITE_VAPORS                        = 63323,
+    SPELL_SUMMON_SARONITE_VAPORS                 = 63081,
+    SPELL_PROFOUND_OF_DARKNESS                   = 63420,
+    SPELL_BERSERK                                = 26662,
 
-    SPELL_SUMMON_SARONITE_ANIMUS                 = 63145, 
-    SPELL_VISUAL_SARONITE_ANIMUS                 = 63319, 
-    SPELL_PROFOUND_DARKNESS                      = 63420, 
+    SPELL_SUMMON_SARONITE_ANIMUS                 = 63145,
+    SPELL_VISUAL_SARONITE_ANIMUS                 = 63319,
+    SPELL_PROFOUND_DARKNESS                      = 63420,
 
-    SPELL_CORRUPTED_RAGE                         = 68415, 
-    SPELL_SHAMANTIC_RAGE                         = 30823, 
+    SPELL_CORRUPTED_RAGE                         = 68415,
+    SPELL_SHAMANTIC_RAGE                         = 30823,
 };
 
 enum eActions
 {
-    ACTION_VAPORS_SPAWN, 
-    ACTION_VAPORS_DIE, 
-    ACTION_ANIMUS_DIE, 
+    ACTION_VAPORS_SPAWN,
+    ACTION_VAPORS_DIE,
+    ACTION_ANIMUS_DIE,
 };
 
 enum eEvents
 {
-    EVENT_SHADOW_CRASH                           = 1, 
-    EVENT_SEARING_FLAMES                         = 2, 
-    EVENT_SURGE_OF_DARKNESS                      = 3, 
-    EVENT_MARK_OF_THE_FACELESS                   = 4, 
-    EVENT_SARONITE_VAPORS                        = 5, 
-    EVENT_BERSERK                                = 6, 
+    EVENT_SHADOW_CRASH                           = 1,
+    EVENT_SEARING_FLAMES                         = 2,
+    EVENT_SURGE_OF_DARKNESS                      = 3,
+    EVENT_MARK_OF_THE_FACELESS                   = 4,
+    EVENT_SARONITE_VAPORS                        = 5,
+    EVENT_BERSERK                                = 6,
 };
- 
+
 #define ACHIEVEMENT_SMELL_SARONITE               RAID_MODE(3181, 3188)
 #define ACHIEVEMENT_SHADOWDODGER                 RAID_MODE(2996, 2997)
 
@@ -125,7 +125,7 @@ public:
         void EnterCombat(Unit * /*pWho*/)
         {
             _EnterCombat();
-            
+
             DoScriptText(SAY_AGGRO, me);
             DoCast(me, SPELL_AURA_OF_DESPAIR);
             CheckShamanisticRage();
@@ -164,12 +164,12 @@ public:
                         break;
                     case EVENT_MARK_OF_THE_FACELESS:
                         Unit* pTarget;
-                        /*  He will not cast this on players within 15 yards of him. 
-                            However, if there are not at least 9 people outside of 15 yards 
+                        /*  He will not cast this on players within 15 yards of him.
+                            However, if there are not at least 9 people outside of 15 yards
                             he will start casting it on players inside 15 yards melee and tank included.
                         */
                         if (!(pTarget = CheckPlayersInRange(RAID_MODE(4, 9), 15.0f, 50.f)))
-                            pTarget = SelectTarget(SELECT_TARGET_RANDOM); 
+                            pTarget = SelectTarget(SELECT_TARGET_RANDOM);
                         DoCast(pTarget, SPELL_MARK_OF_THE_FACELESS);
                         events.ScheduleEvent(EVENT_MARK_OF_THE_FACELESS, urand(35000, 45000));
                         break;
@@ -182,7 +182,7 @@ public:
                     case EVENT_SARONITE_VAPORS:
                         DoCast(SPELL_SUMMON_SARONITE_VAPORS);
                         events.ScheduleEvent(EVENT_SARONITE_VAPORS, urand(30000, 35000));
-                        
+
                         if (++uiVaporCount == 6 && bSmellSaronite)
                         {
                             DoScriptText(SAY_HARDMODE, me);
@@ -219,7 +219,7 @@ public:
         void JustDied(Unit * /*pWho*/)
         {
             _JustDied();
-            
+
             DoScriptText(SAY_DEATH, me);
 
             if (instance)
@@ -344,7 +344,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-            
+
             if (uiProfoundOfDarknessTimer <= uiDiff)
             {
                 DoCastAOE(SPELL_PROFOUND_DARKNESS);
@@ -352,7 +352,7 @@ public:
             }
             else
                 uiProfoundOfDarknessTimer -= uiDiff;
-            
+
             DoMeleeAttackIfReady();
         }
     };
@@ -408,7 +408,7 @@ public:
                 me->RemoveAllAuras();
                 DoCast(me, SPELL_SARONITE_VAPORS);
                 me->DespawnOrUnsummon(30000);
-                
+
                 if (Creature * pVezax = me->GetCreature(*me, pInstance ? pInstance->GetData64(TYPE_VEZAX) : 0))
                     pVezax->AI()->DoAction(ACTION_VAPORS_DIE);
             }

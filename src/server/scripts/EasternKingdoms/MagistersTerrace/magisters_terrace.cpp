@@ -35,8 +35,8 @@ EndContentData */
 
 enum eEnums
 {
-    SPELL_TRANSFORM_TO_KAEL     = 44670, 
-    SPELL_ORB_KILL_CREDIT       = 46307, 
+    SPELL_TRANSFORM_TO_KAEL     = 44670,
+    SPELL_ORB_KILL_CREDIT       = 46307,
     NPC_KAEL                    = 24848,                    //human form entry
     POINT_ID_LAND               = 1
 };
@@ -168,11 +168,7 @@ public:
             }
         }
     };
-
 };
-
-
-
 
 void AddSC_magisters_terrace()
 {

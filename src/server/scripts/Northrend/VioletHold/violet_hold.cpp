@@ -26,86 +26,86 @@
 
 enum PortalCreatures
 {
-    CREATURE_AZURE_INVADER_1          = 30661, 
-    CREATURE_AZURE_INVADER_2          = 30961, 
-    CREATURE_AZURE_SPELLBREAKER_1     = 30662, 
-    CREATURE_AZURE_SPELLBREAKER_2     = 30962, 
-    CREATURE_AZURE_BINDER_1           = 30663, 
-    CREATURE_AZURE_BINDER_2           = 30918, 
-    CREATURE_AZURE_MAGE_SLAYER_1      = 30664, 
-    CREATURE_AZURE_MAGE_SLAYER_2      = 30963, 
-    CREATURE_AZURE_CAPTAIN            = 30666, 
-    CREATURE_AZURE_SORCEROR           = 30667, 
-    CREATURE_AZURE_RAIDER             = 30668, 
+    CREATURE_AZURE_INVADER_1          = 30661,
+    CREATURE_AZURE_INVADER_2          = 30961,
+    CREATURE_AZURE_SPELLBREAKER_1     = 30662,
+    CREATURE_AZURE_SPELLBREAKER_2     = 30962,
+    CREATURE_AZURE_BINDER_1           = 30663,
+    CREATURE_AZURE_BINDER_2           = 30918,
+    CREATURE_AZURE_MAGE_SLAYER_1      = 30664,
+    CREATURE_AZURE_MAGE_SLAYER_2      = 30963,
+    CREATURE_AZURE_CAPTAIN            = 30666,
+    CREATURE_AZURE_SORCEROR           = 30667,
+    CREATURE_AZURE_RAIDER             = 30668,
     CREATURE_AZURE_STALKER            = 32191
 };
 
 enum AzureInvaderSpells
 {
-    SPELL_CLEAVE                = 15496, 
-    SPELL_IMPALE                = 58459, 
-    H_SPELL_IMPALE              = 59256, 
-    SPELL_BRUTAL_STRIKE         = 58460, 
+    SPELL_CLEAVE                = 15496,
+    SPELL_IMPALE                = 58459,
+    H_SPELL_IMPALE              = 59256,
+    SPELL_BRUTAL_STRIKE         = 58460,
     SPELL_SUNDER_ARMOR          = 58461
 };
 
 enum AzureSellbreakerSpells
 {
-    SPELL_ARCANE_BLAST          = 58462, 
-    H_SPELL_ARCANE_BLAST        = 59257, 
-    SPELL_SLOW                  = 25603, 
-    SPELL_CHAINS_OF_ICE         = 58464, 
-    SPELL_CONE_OF_COLD          = 58463, 
+    SPELL_ARCANE_BLAST          = 58462,
+    H_SPELL_ARCANE_BLAST        = 59257,
+    SPELL_SLOW                  = 25603,
+    SPELL_CHAINS_OF_ICE         = 58464,
+    SPELL_CONE_OF_COLD          = 58463,
     H_SPELL_CONE_OF_COLD        = 59258
 };
 
 enum AzureBinderSpells
 {
-    SPELL_ARCANE_BARRAGE        = 58456, 
-    H_SPELL_ARCANE_BARRAGE      = 59248, 
-    SPELL_ARCANE_EXPLOSION      = 58455, 
-    H_SPELL_ARCANE_EXPLOSION    = 59245, 
-    SPELL_FROST_NOVA            = 58458, 
-    H_SPELL_FROST_NOVA          = 59253, 
-    SPELL_FROSTBOLT             = 58457, 
-    H_SPELL_FROSTBOLT           = 59251, 
+    SPELL_ARCANE_BARRAGE        = 58456,
+    H_SPELL_ARCANE_BARRAGE      = 59248,
+    SPELL_ARCANE_EXPLOSION      = 58455,
+    H_SPELL_ARCANE_EXPLOSION    = 59245,
+    SPELL_FROST_NOVA            = 58458,
+    H_SPELL_FROST_NOVA          = 59253,
+    SPELL_FROSTBOLT             = 58457,
+    H_SPELL_FROSTBOLT           = 59251,
 };
 
 enum AzureMageSlayerSpells
 {
-    SPELL_ARCANE_EMPOWERMENT    = 58469, 
+    SPELL_ARCANE_EMPOWERMENT    = 58469,
     SPELL_SPELL_LOCK            = 30849
 };
 
 enum AzureCaptainSpells
 {
-    SPELL_MORTAL_STRIKE         = 32736, 
+    SPELL_MORTAL_STRIKE         = 32736,
     SPELL_WHIRLWIND_OF_STEEL    = 41057
 };
 
 enum AzureSorcerorSpells
 {
-    SPELL_ARCANE_STREAM         = 60181, 
-    H_SPELL_ARCANE_STREAM       = 60204, 
-    SPELL_MANA_DETONATION       = 60182, 
+    SPELL_ARCANE_STREAM         = 60181,
+    H_SPELL_ARCANE_STREAM       = 60204,
+    SPELL_MANA_DETONATION       = 60182,
     H_SPELL_MANA_DETONATION     = 60205
 };
 
 enum AzureRaiderSpells
 {
-    SPELL_CONCUSSION_BLOW       = 52719, 
+    SPELL_CONCUSSION_BLOW       = 52719,
     SPELL_MAGIC_REFLECTION      = 60158
 };
 
 enum AzureStalkerSpells
 {
-    SPELL_BACKSTAB              = 58471, 
+    SPELL_BACKSTAB              = 58471,
     SPELL_TACTICAL_BLINK        = 58470
 };
 
 enum AzureSaboteurSpells
 {
-    SABOTEUR_SHIELD_DISRUPTION        = 58291, 
+    SABOTEUR_SHIELD_DISRUPTION        = 58291,
     SABOTEUR_SHIELD_EFFECT            = 45775
 };
 
@@ -116,7 +116,7 @@ enum TrashDoorSpell
 
 enum Spells
 {
-    SPELL_PORTAL_CHANNEL              = 58012, 
+    SPELL_PORTAL_CHANNEL              = 58012,
     SPELL_CRYSTALL_ACTIVATION         = 57804
 };
 
@@ -127,104 +127,104 @@ enum eSinclari
 
 float FirstPortalWPs [6][3] =
 {
-    {1877.670288f, 842.280273f, 43.333591f}, 
-    {1877.338867f, 834.615356f, 38.762287f}, 
-    {1872.161011f, 823.854309f, 38.645401f}, 
-    {1864.860474f, 815.787170f, 38.784843f}, 
-    {1858.953735f, 810.048950f, 44.008759f}, 
+    {1877.670288f, 842.280273f, 43.333591f},
+    {1877.338867f, 834.615356f, 38.762287f},
+    {1872.161011f, 823.854309f, 38.645401f},
+    {1864.860474f, 815.787170f, 38.784843f},
+    {1858.953735f, 810.048950f, 44.008759f},
     {1843.707153f, 805.807739f, 44.135197f}
     //{1825.736084f, 807.305847f, 44.363785f}
 };
 
 float SecondPortalFirstWPs [9][3] =
 {
-    {1902.561401f, 853.334656f, 47.106117f}, 
-    {1895.486084f, 855.376404f, 44.334591f}, 
-    {1882.805176f, 854.993286f, 43.333591f}, 
-    {1877.670288f, 842.280273f, 43.333591f}, 
-    {1877.338867f, 834.615356f, 38.762287f}, 
-    {1872.161011f, 823.854309f, 38.645401f}, 
-    {1864.860474f, 815.787170f, 38.784843f}, 
-    {1858.953735f, 810.048950f, 44.008759f}, 
+    {1902.561401f, 853.334656f, 47.106117f},
+    {1895.486084f, 855.376404f, 44.334591f},
+    {1882.805176f, 854.993286f, 43.333591f},
+    {1877.670288f, 842.280273f, 43.333591f},
+    {1877.338867f, 834.615356f, 38.762287f},
+    {1872.161011f, 823.854309f, 38.645401f},
+    {1864.860474f, 815.787170f, 38.784843f},
+    {1858.953735f, 810.048950f, 44.008759f},
     {1843.707153f, 805.807739f, 44.135197f}
     //{1825.736084f, 807.305847f, 44.363785f}
 };
 
 float SecondPortalSecondWPs [8][3] =
 {
-    {1929.392212f, 837.614990f, 47.136166f}, 
-    {1928.290649f, 824.750427f, 45.474411f}, 
-    {1915.544922f, 826.919373f, 38.642811f}, 
-    {1900.933960f, 818.855652f, 38.801647f}, 
-    {1886.810547f, 813.536621f, 38.490490f}, 
-    {1869.079712f, 808.701538f, 38.689003f}, 
-    {1860.843384f, 806.645020f, 44.008789f}, 
+    {1929.392212f, 837.614990f, 47.136166f},
+    {1928.290649f, 824.750427f, 45.474411f},
+    {1915.544922f, 826.919373f, 38.642811f},
+    {1900.933960f, 818.855652f, 38.801647f},
+    {1886.810547f, 813.536621f, 38.490490f},
+    {1869.079712f, 808.701538f, 38.689003f},
+    {1860.843384f, 806.645020f, 44.008789f},
     {1843.707153f, 805.807739f, 44.135197f}
     //{1825.736084f, 807.305847f, 44.363785f}
 };
 
 float ThirdPortalWPs [8][3] =
 {
-    {1934.049438f, 815.778503f, 52.408699f}, 
-    {1928.290649f, 824.750427f, 45.474411f}, 
-    {1915.544922f, 826.919373f, 38.642811f}, 
-    {1900.933960f, 818.855652f, 38.801647f}, 
-    {1886.810547f, 813.536621f, 38.490490f}, 
-    {1869.079712f, 808.701538f, 38.689003f}, 
-    {1860.843384f, 806.645020f, 44.008789f}, 
+    {1934.049438f, 815.778503f, 52.408699f},
+    {1928.290649f, 824.750427f, 45.474411f},
+    {1915.544922f, 826.919373f, 38.642811f},
+    {1900.933960f, 818.855652f, 38.801647f},
+    {1886.810547f, 813.536621f, 38.490490f},
+    {1869.079712f, 808.701538f, 38.689003f},
+    {1860.843384f, 806.645020f, 44.008789f},
     {1843.707153f, 805.807739f, 44.135197f}
     //{1825.736084f, 807.305847f, 44.363785f}
 };
 
 float FourthPortalWPs [9][3] =
 {
-    {1921.658447f, 761.657043f, 50.866741f}, 
-    {1910.559814f, 755.780457f, 47.701447f}, 
-    {1896.664673f, 752.920898f, 47.667004f}, 
-    {1887.398804f, 763.633240f, 47.666851f}, 
-    {1879.020386f, 775.396973f, 38.705990f}, 
-    {1872.439087f, 782.568604f, 38.808292f}, 
-    {1863.573364f, 791.173584f, 38.743660f}, 
-    {1857.811890f, 796.765564f, 43.950329f}, 
+    {1921.658447f, 761.657043f, 50.866741f},
+    {1910.559814f, 755.780457f, 47.701447f},
+    {1896.664673f, 752.920898f, 47.667004f},
+    {1887.398804f, 763.633240f, 47.666851f},
+    {1879.020386f, 775.396973f, 38.705990f},
+    {1872.439087f, 782.568604f, 38.808292f},
+    {1863.573364f, 791.173584f, 38.743660f},
+    {1857.811890f, 796.765564f, 43.950329f},
     {1845.577759f, 800.681152f, 44.104248f}
     //{1827.100342f, 801.605957f, 44.363358f}
 };
 
 float FifthPortalWPs [6][3] =
 {
-    {1887.398804f, 763.633240f, 47.666851f}, 
-    {1879.020386f, 775.396973f, 38.705990f}, 
-    {1872.439087f, 782.568604f, 38.808292f}, 
-    {1863.573364f, 791.173584f, 38.743660f}, 
-    {1857.811890f, 796.765564f, 43.950329f}, 
+    {1887.398804f, 763.633240f, 47.666851f},
+    {1879.020386f, 775.396973f, 38.705990f},
+    {1872.439087f, 782.568604f, 38.808292f},
+    {1863.573364f, 791.173584f, 38.743660f},
+    {1857.811890f, 796.765564f, 43.950329f},
     {1845.577759f, 800.681152f, 44.104248f}
     //{1827.100342f, 801.605957f, 44.363358f}
 };
 
 float SixthPoralWPs [4][3] =
 {
-    {1888.861084f, 805.074768f, 38.375790f}, 
-    {1869.793823f, 804.135804f, 38.647018f}, 
-    {1861.541504f, 804.149780f, 43.968292f}, 
+    {1888.861084f, 805.074768f, 38.375790f},
+    {1869.793823f, 804.135804f, 38.647018f},
+    {1861.541504f, 804.149780f, 43.968292f},
     {1843.567017f, 804.288208f, 44.139091f}
     //{1826.889648f, 803.929993f, 44.363239f}
 };
 
 const float SaboteurFinalPos1[3][3] =
 {
-    {1892.502319f, 777.410767f, 38.630402f}, 
-    {1891.165161f, 762.969421f, 47.666920f}, 
+    {1892.502319f, 777.410767f, 38.630402f},
+    {1891.165161f, 762.969421f, 47.666920f},
     {1893.168091f, 740.919189f, 47.666920f}
 };
 const float SaboteurFinalPos2[3][3] =
 {
-    {1882.242676f, 834.818726f, 38.646786f}, 
-    {1879.220825f, 842.224854f, 43.333641f}, 
+    {1882.242676f, 834.818726f, 38.646786f},
+    {1879.220825f, 842.224854f, 43.333641f},
     {1873.842896f, 863.892456f, 43.333641f}
 };
 const float SaboteurFinalPos3[2][3] =
 {
-    {1904.298340f, 792.400391f, 38.646782f}, 
+    {1904.298340f, 792.400391f, 38.646782f},
     {1935.716919f, 758.437073f, 30.627895f}
 };
 const float SaboteurFinalPos4[3] =
@@ -237,10 +237,10 @@ const float SaboteurFinalPos5[3] =
 };
 const float SaboteurFinalPos6[5][3] =
 {
-    {1911.437012f, 821.289246f, 38.684128f}, 
-    {1920.734009f, 822.978027f, 41.525414f}, 
-    {1928.262939f, 830.836609f, 44.668266f}, 
-    {1929.338989f, 837.593933f, 47.137596f}, 
+    {1911.437012f, 821.289246f, 38.684128f},
+    {1920.734009f, 822.978027f, 41.525414f},
+    {1928.262939f, 830.836609f, 44.668266f},
+    {1929.338989f, 837.593933f, 47.137596f},
     {1931.063354f, 848.468445f, 47.190434f}
  };
 
@@ -411,11 +411,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
-
 
 class mob_azure_saboteur : public CreatureScript
 {
@@ -538,9 +534,7 @@ public:
             pInstance->SetData(DATA_START_BOSS_ENCOUNTER, 1);
         }
     };
-
 };
-
 
 class npc_teleportation_portal_vh : public CreatureScript
 {
@@ -674,7 +668,6 @@ public:
                 pInstance->SetData64(DATA_DEL_TRASH_MOB, pSummoned->GetGUID());
         }
     };
-
 };
 
 struct violet_hold_trashAI : public npc_escortAI
@@ -797,7 +790,6 @@ struct violet_hold_trashAI : public npc_escortAI
         if (pInstance)
             pInstance->SetData(DATA_NPC_PRESENCE_AT_DOOR_ADD, 1);
     }
-
 };
 
 class mob_azure_invader : public CreatureScript
@@ -875,7 +867,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_azure_binder : public CreatureScript
@@ -953,7 +944,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_azure_mage_slayer : public CreatureScript
@@ -1013,7 +1003,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_azure_raider : public CreatureScript
@@ -1065,7 +1054,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_azure_stalker : public CreatureScript
@@ -1129,7 +1117,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_azure_spellbreaker : public CreatureScript
@@ -1260,7 +1247,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_azure_sorceror : public CreatureScript
@@ -1317,7 +1303,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_violet_hold()

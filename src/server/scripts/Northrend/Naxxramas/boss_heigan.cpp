@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -36,17 +36,17 @@
 
 enum Events
 {
-    EVENT_NONE, 
-    EVENT_DISRUPT, 
-    EVENT_FEVER, 
-    EVENT_ERUPT, 
-    EVENT_PHASE, 
+    EVENT_NONE,
+    EVENT_DISRUPT,
+    EVENT_FEVER,
+    EVENT_ERUPT,
+    EVENT_PHASE,
 };
 
 enum Phases
 {
-    PHASE_FIGHT = 1, 
-    PHASE_DANCE, 
+    PHASE_FIGHT = 1,
+    PHASE_DANCE,
 };
 
 class boss_heigan : public CreatureScript
@@ -153,9 +153,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_heigan()
 {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,32 +28,32 @@
 enum Events
 {
     // Koralon
-    EVENT_BURNING_BREATH    = 1, 
-    EVENT_BURNING_FURY      = 2, 
-    EVENT_FLAME_CINDER_A    = 3, 
-    EVENT_METEOR_FISTS_A    = 4, 
-    EVENT_METEOR_FISTS_B    = 5, 
+    EVENT_BURNING_BREATH    = 1,
+    EVENT_BURNING_FURY      = 2,
+    EVENT_FLAME_CINDER_A    = 3,
+    EVENT_METEOR_FISTS_A    = 4,
+    EVENT_METEOR_FISTS_B    = 5,
 
     // Flame Warder
-    EVENT_FW_LAVA_BIRST     = 6, 
-    EVENT_FW_METEOR_FISTS_A = 7, 
-    EVENT_FW_METEOR_FISTS_B = 8, 
+    EVENT_FW_LAVA_BIRST     = 6,
+    EVENT_FW_METEOR_FISTS_A = 7,
+    EVENT_FW_METEOR_FISTS_B = 8,
 };
 
 enum Spells
 {
     // Spells Koralon
-    SPELL_BURNING_BREATH                        = 66665, 
-    SPELL_BURNING_FURY                          = 66721, 
-    SPELL_FLAME_CINDER_A                        = 66684, 
+    SPELL_BURNING_BREATH                        = 66665,
+    SPELL_BURNING_FURY                          = 66721,
+    SPELL_FLAME_CINDER_A                        = 66684,
     SPELL_FLAME_CINDER_B                        = 66681, // don't know the real relation to SPELL_FLAME_CINDER_A atm.
-    SPELL_METEOR_FISTS_A                        = 66725, 
-    SPELL_METEOR_FISTS_B                        = 67333, 
+    SPELL_METEOR_FISTS_A                        = 66725,
+    SPELL_METEOR_FISTS_B                        = 67333,
 
     // Spells Flame Warder
-    SPELL_FW_LAVA_BIRST                         = 66813, 
-    SPELL_FW_METEOR_FISTS_A                     = 66808, 
-    SPELL_FW_METEOR_FISTS_B                     = 67331, 
+    SPELL_FW_LAVA_BIRST                         = 66813,
+    SPELL_FW_METEOR_FISTS_A                     = 66808,
+    SPELL_FW_METEOR_FISTS_B                     = 67331,
 };
 
 class boss_koralon : public CreatureScript

@@ -39,12 +39,12 @@ EndContentData */
 
 enum eRainspeaker
 {
-    SAY_START_IRO                       = -1571000, 
-    SAY_QUEST_ACCEPT_IRO                = -1571001, 
-    SAY_END_IRO                         = -1571002, 
+    SAY_START_IRO                       = -1571000,
+    SAY_QUEST_ACCEPT_IRO                = -1571001,
+    SAY_END_IRO                         = -1571002,
 
-    QUEST_FORTUNATE_MISUNDERSTANDINGS   = 12570, 
-    FACTION_ESCORTEE_A                  = 774, 
+    QUEST_FORTUNATE_MISUNDERSTANDINGS   = 12570,
+    FACTION_ESCORTEE_A                  = 774,
     FACTION_ESCORTEE_H                  = 775
 };
 
@@ -176,12 +176,12 @@ public:
 
 enum eVekjik
 {
-    GOSSIP_TEXTID_VEKJIK1       = 13137, 
-    GOSSIP_TEXTID_VEKJIK2       = 13138, 
+    GOSSIP_TEXTID_VEKJIK1       = 13137,
+    GOSSIP_TEXTID_VEKJIK2       = 13138,
 
-    SAY_TEXTID_VEKJIK1          = -1000208, 
+    SAY_TEXTID_VEKJIK1          = -1000208,
 
-    SPELL_FREANZYHEARTS_FURY    = 51469, 
+    SPELL_FREANZYHEARTS_FURY    = 51469,
 
     QUEST_MAKING_PEACE          = 12573
 };
@@ -238,12 +238,12 @@ public:
 
 enum eFreya
 {
-    QUEST_FREYA_PACT         = 12621, 
+    QUEST_FREYA_PACT         = 12621,
 
-    SPELL_FREYA_CONVERSATION = 52045, 
+    SPELL_FREYA_CONVERSATION = 52045,
 
-    GOSSIP_TEXTID_AVATAR1    = 13303, 
-    GOSSIP_TEXTID_AVATAR2    = 13304, 
+    GOSSIP_TEXTID_AVATAR1    = 13303,
+    GOSSIP_TEXTID_AVATAR2    = 13304,
     GOSSIP_TEXTID_AVATAR3    = 13305
 };
 
@@ -331,16 +331,16 @@ public:
 
 enum eEnums
 {
-    SPELL_EXPLODE_CRYSTAL       = 62487, 
-    SPELL_FLAMES                = 64561, 
+    SPELL_EXPLODE_CRYSTAL       = 62487,
+    SPELL_FLAMES                = 64561,
 
-    SAY_WP_7                    = -1800047, 
-    SAY_WP_6                    = -1800048, 
-    SAY_WP_5                    = -1800049, 
-    SAY_WP_4                    = -1800050, 
-    SAY_WP_3                    = -1800051, 
-    SAY_WP_2                    = -1800052, 
-    SAY_WP_1                    = -1800053, 
+    SAY_WP_7                    = -1800047,
+    SAY_WP_6                    = -1800048,
+    SAY_WP_5                    = -1800049,
+    SAY_WP_4                    = -1800050,
+    SAY_WP_3                    = -1800051,
+    SAY_WP_2                    = -1800052,
+    SAY_WP_1                    = -1800053,
 
     QUEST_DISASTER              = 12688
 };
@@ -599,19 +599,19 @@ public:
 
 enum eAdventurousDwarf
 {
-    QUEST_12634         = 12634, 
+    QUEST_12634         = 12634,
 
-    ITEM_BANANAS        = 38653, 
-    ITEM_PAPAYA         = 38655, 
-    ITEM_ORANGE         = 38656, 
+    ITEM_BANANAS        = 38653,
+    ITEM_PAPAYA         = 38655,
+    ITEM_ORANGE         = 38656,
 
-    SPELL_ADD_ORANGE    = 52073, 
-    SPELL_ADD_BANANAS   = 52074, 
-    SPELL_ADD_PAPAYA    = 52076, 
+    SPELL_ADD_ORANGE    = 52073,
+    SPELL_ADD_BANANAS   = 52074,
+    SPELL_ADD_PAPAYA    = 52076,
 
-    GOSSIP_MENU_DWARF   = 13307, 
+    GOSSIP_MENU_DWARF   = 13307,
 
-    SAY_DWARF_OUCH      = -1571042, 
+    SAY_DWARF_OUCH      = -1571042,
     SAY_DWARF_HELP      = -1571043
 };
 
@@ -654,7 +654,7 @@ public:
             case GOSSIP_ACTION_INFO_DEF + 2: spellId = SPELL_ADD_BANANAS;    break;
             case GOSSIP_ACTION_INFO_DEF + 3: spellId = SPELL_ADD_PAPAYA;     break;
         }
-        if (spellId) 
+        if (spellId)
             pPlayer->CastSpell(pPlayer, spellId, true);
         DoScriptText(SAY_DWARF_HELP, pCreature);
         pCreature->ForcedDespawn();

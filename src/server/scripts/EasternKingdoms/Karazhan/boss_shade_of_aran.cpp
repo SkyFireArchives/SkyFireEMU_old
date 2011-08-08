@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -82,9 +82,9 @@ EndScriptData */
 
 enum SuperSpell
 {
-    SUPER_FLAME = 0, 
-    SUPER_BLIZZARD, 
-    SUPER_AE, 
+    SUPER_FLAME = 0,
+    SUPER_BLIZZARD,
+    SUPER_AE,
 };
 
 class boss_shade_of_aran : public CreatureScript
@@ -514,7 +514,6 @@ public:
             }
         }
     };
-
 };
 
 class mob_aran_elemental : public CreatureScript
@@ -552,7 +551,6 @@ public:
             } else CastTimer -= diff;
         }
     };
-
 };
 
 // CONVERT TO ACID
@@ -576,7 +574,6 @@ public:
 
         return ai;
     }
-
 };
 
 void AddSC_boss_shade_of_aran()

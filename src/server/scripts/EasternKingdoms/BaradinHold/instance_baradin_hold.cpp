@@ -24,12 +24,12 @@ class instance_baradin_hold: public InstanceMapScript
 {
 public:
     instance_baradin_hold() : InstanceMapScript("instance_baradin_hold", 757) { }
-    
+
     InstanceScript* GetInstanceScript(InstanceMap *map) const
     {
         return new instance_baradin_hold_InstanceMapScript(map);
     }
-    
+
     struct instance_baradin_hold_InstanceMapScript: public InstanceScript
     {
         instance_baradin_hold_InstanceMapScript(InstanceMap *map) : InstanceScript(map) { }
@@ -38,14 +38,13 @@ public:
 
         uint64 uiArgaloth;
         uint64 uiOccuthar;
- 
+
         void Initialize()
         {
             uiArgaloth = 0;
             uiOccuthar = 0;
             for(uint8 i=0; i < ENCOUNTERS; ++i)
                 uiEncounter[i] = NOT_STARTED;
-            
         }
 
         bool IsEncounterInProgress() const
@@ -134,7 +133,7 @@ public:
             {
                 uiEncounter[0] = data0;
                 uiEncounter[1] = data1;
-                       
+
                 for(uint8 i=0; i < ENCOUNTERS; ++i)
                     if (uiEncounter[i] == IN_PROGRESS)
                         uiEncounter[i] = NOT_STARTED;

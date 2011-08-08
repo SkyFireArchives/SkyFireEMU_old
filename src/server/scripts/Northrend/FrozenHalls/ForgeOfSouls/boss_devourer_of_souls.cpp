@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,62 +33,62 @@
 
 enum Yells
 {
-    SAY_FACE_ANGER_AGGRO                          = -1632010, 
-    SAY_FACE_DESIRE_AGGRO                         = -1632011, 
-    SAY_FACE_ANGER_SLAY_1                         = -1632012, 
-    SAY_FACE_SORROW_SLAY_1                        = -1632013, 
-    SAY_FACE_DESIRE_SLAY_1                        = -1632014, 
-    SAY_FACE_ANGER_SLAY_2                         = -1632015, 
-    SAY_FACE_SORROW_SLAY_2                        = -1632016, 
-    SAY_FACE_DESIRE_SLAY_2                        = -1632017, 
-    SAY_FACE_SORROW_DEATH                         = -1632019, 
-    SAY_FACE_DESIRE_DEATH                         = -1632020, 
-    EMOTE_MIRRORED_SOUL                           = -1632021, 
-    EMOTE_UNLEASH_SOUL                            = -1632022, 
-    SAY_FACE_ANGER_UNLEASH_SOUL                   = -1632023, 
-    SAY_FACE_SORROW_UNLEASH_SOUL                  = -1632024, 
-    SAY_FACE_DESIRE_UNLEASH_SOUL                  = -1632025, 
-    EMOTE_WAILING_SOUL                            = -1632026, 
-    SAY_FACE_ANGER_WAILING_SOUL                   = -1632027, 
-    SAY_FACE_DESIRE_WAILING_SOUL                  = -1632028, 
+    SAY_FACE_ANGER_AGGRO                          = -1632010,
+    SAY_FACE_DESIRE_AGGRO                         = -1632011,
+    SAY_FACE_ANGER_SLAY_1                         = -1632012,
+    SAY_FACE_SORROW_SLAY_1                        = -1632013,
+    SAY_FACE_DESIRE_SLAY_1                        = -1632014,
+    SAY_FACE_ANGER_SLAY_2                         = -1632015,
+    SAY_FACE_SORROW_SLAY_2                        = -1632016,
+    SAY_FACE_DESIRE_SLAY_2                        = -1632017,
+    SAY_FACE_SORROW_DEATH                         = -1632019,
+    SAY_FACE_DESIRE_DEATH                         = -1632020,
+    EMOTE_MIRRORED_SOUL                           = -1632021,
+    EMOTE_UNLEASH_SOUL                            = -1632022,
+    SAY_FACE_ANGER_UNLEASH_SOUL                   = -1632023,
+    SAY_FACE_SORROW_UNLEASH_SOUL                  = -1632024,
+    SAY_FACE_DESIRE_UNLEASH_SOUL                  = -1632025,
+    EMOTE_WAILING_SOUL                            = -1632026,
+    SAY_FACE_ANGER_WAILING_SOUL                   = -1632027,
+    SAY_FACE_DESIRE_WAILING_SOUL                  = -1632028,
 
-    SAY_JAINA_OUTRO                               = -1632029, 
-    SAY_SYLVANAS_OUTRO                            = -1632030, 
+    SAY_JAINA_OUTRO                               = -1632029,
+    SAY_SYLVANAS_OUTRO                            = -1632030,
 };
 
 enum Spells
 {
-    SPELL_PHANTOM_BLAST                           = 68982, 
-    H_SPELL_PHANTOM_BLAST                         = 70322, 
-    SPELL_MIRRORED_SOUL                           = 69051, 
-    SPELL_WELL_OF_SOULS                           = 68820, 
-    SPELL_WELL_OF_SOULS_VIS                       = 68854, 
-    SPELL_UNLEASHED_SOULS                         = 68939, 
+    SPELL_PHANTOM_BLAST                           = 68982,
+    H_SPELL_PHANTOM_BLAST                         = 70322,
+    SPELL_MIRRORED_SOUL                           = 69051,
+    SPELL_WELL_OF_SOULS                           = 68820,
+    SPELL_WELL_OF_SOULS_VIS                       = 68854,
+    SPELL_UNLEASHED_SOULS                         = 68939,
     SPELL_WAILING_SOULS_STARTING                  = 68912,  // Initial spell cast at begining of wailing souls phase
     SPELL_WAILING_SOULS_BEAM                      = 68875,  // the beam visual
     SPELL_WAILING_SOULS                           = 68873,  // the actual spell
-    H_SPELL_WAILING_SOULS                         = 70324, 
-//    68871, 68873, 68875, 68876, 68899, 68912, 70324, 
+    H_SPELL_WAILING_SOULS                         = 70324,
+//    68871, 68873, 68875, 68876, 68899, 68912, 70324,
 // 68899 trigger 68871
 };
 
 enum Events
 {
-    EVENT_PHANTOM_BLAST         = 1, 
-    EVENT_MIRRORED_SOUL         = 2, 
-    EVENT_WELL_OF_SOULS         = 3, 
-    EVENT_UNLEASHED_SOULS       = 4, 
-    EVENT_WAILING_SOULS         = 5, 
-    EVENT_WAILING_SOULS_TICK    = 6, 
-    EVENT_FACE_ANGER            = 7, 
+    EVENT_PHANTOM_BLAST         = 1,
+    EVENT_MIRRORED_SOUL         = 2,
+    EVENT_WELL_OF_SOULS         = 3,
+    EVENT_UNLEASHED_SOULS       = 4,
+    EVENT_WAILING_SOULS         = 5,
+    EVENT_WAILING_SOULS_TICK    = 6,
+    EVENT_FACE_ANGER            = 7,
 };
 
 enum eEnum
 {
-    ACHIEV_THREE_FACED          = 4523, 
-    DISPLAY_ANGER               = 30148, 
-    DISPLAY_SORROW              = 30149, 
-    DISPLAY_DESIRE              = 30150, 
+    ACHIEV_THREE_FACED          = 4523,
+    DISPLAY_ANGER               = 30148,
+    DISPLAY_SORROW              = 30149,
+    DISPLAY_DESIRE              = 30150,
 };
 
 struct outroPosition
@@ -97,28 +97,28 @@ struct outroPosition
     Position movePosition;
 } outroPositions[] =
 {
-    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5590.47f, 2427.79f, 705.935f, 0.802851f } }, 
-    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5593.59f, 2428.34f, 705.935f, 0.977384f } }, 
-    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5600.81f, 2429.31f, 705.935f, 0.890118f } }, 
-    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5600.81f, 2421.12f, 705.935f, 0.890118f } }, 
-    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5601.43f, 2426.53f, 705.935f, 0.890118f } }, 
-    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5601.55f, 2418.36f, 705.935f, 1.15192f } }, 
-    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5598, 2429.14f, 705.935f, 1.0472f } }, 
-    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5594.04f, 2424.87f, 705.935f, 1.15192f } }, 
-    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5597.89f, 2421.54f, 705.935f, 0.610865f } }, 
-    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5598.57f, 2434.62f, 705.935f, 1.13446f } }, 
-    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5585.46f, 2417.99f, 705.935f, 1.06465f } }, 
-    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5605.81f, 2428.42f, 705.935f, 0.820305f } }, 
-    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5591.61f, 2412.66f, 705.935f, 0.925025f } }, 
-    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5593.9f, 2410.64f, 705.935f, 0.872665f } }, 
-    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5586.76f, 2416.73f, 705.935f, 0.942478f } }, 
-    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_3_HORDE }, { 5592.23f, 2419.14f, 705.935f, 0.855211f } }, 
-    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_3_HORDE }, { 5594.61f, 2416.87f, 705.935f, 0.907571f } }, 
-    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_3_HORDE }, { 5589.77f, 2421.03f, 705.935f, 0.855211f } }, 
+    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5590.47f, 2427.79f, 705.935f, 0.802851f } },
+    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5593.59f, 2428.34f, 705.935f, 0.977384f } },
+    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5600.81f, 2429.31f, 705.935f, 0.890118f } },
+    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5600.81f, 2421.12f, 705.935f, 0.890118f } },
+    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5601.43f, 2426.53f, 705.935f, 0.890118f } },
+    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5601.55f, 2418.36f, 705.935f, 1.15192f } },
+    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5598, 2429.14f, 705.935f, 1.0472f } },
+    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5594.04f, 2424.87f, 705.935f, 1.15192f } },
+    { { NPC_CHAMPION_1_ALLIANCE, NPC_CHAMPION_1_HORDE }, { 5597.89f, 2421.54f, 705.935f, 0.610865f } },
+    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5598.57f, 2434.62f, 705.935f, 1.13446f } },
+    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5585.46f, 2417.99f, 705.935f, 1.06465f } },
+    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5605.81f, 2428.42f, 705.935f, 0.820305f } },
+    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5591.61f, 2412.66f, 705.935f, 0.925025f } },
+    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5593.9f, 2410.64f, 705.935f, 0.872665f } },
+    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_2_HORDE }, { 5586.76f, 2416.73f, 705.935f, 0.942478f } },
+    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_3_HORDE }, { 5592.23f, 2419.14f, 705.935f, 0.855211f } },
+    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_3_HORDE }, { 5594.61f, 2416.87f, 705.935f, 0.907571f } },
+    { { NPC_CHAMPION_2_ALLIANCE, NPC_CHAMPION_3_HORDE }, { 5589.77f, 2421.03f, 705.935f, 0.855211f } },
 
-    { { NPC_KORELN, NPC_LORALEN }, { 5602.58f, 2435.95f, 705.935f, 0.959931f } }, 
-    { { NPC_ELANDRA, NPC_KALIRA }, { 5606.13f, 2433.16f, 705.935f, 0.785398f } }, 
-    { { NPC_JAINA_PART2, NPC_SYLVANAS_PART2 }, { 5606.12f, 2436.6f, 705.935f, 0.890118f } }, 
+    { { NPC_KORELN, NPC_LORALEN }, { 5602.58f, 2435.95f, 705.935f, 0.959931f } },
+    { { NPC_ELANDRA, NPC_KALIRA }, { 5606.13f, 2433.16f, 705.935f, 0.785398f } },
+    { { NPC_JAINA_PART2, NPC_SYLVANAS_PART2 }, { 5606.12f, 2436.6f, 705.935f, 0.890118f } },
 
     { { 0, 0 }, { 0.0f, 0.0f, 0.0f, 0.0f } }
 };

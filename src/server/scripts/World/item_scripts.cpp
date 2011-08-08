@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -293,31 +293,31 @@ public:
 
 enum ePileFakeFur
 {
-    GO_CARIBOU_TRAP_1                                      = 187982, 
-    GO_CARIBOU_TRAP_2                                      = 187995, 
-    GO_CARIBOU_TRAP_3                                      = 187996, 
-    GO_CARIBOU_TRAP_4                                      = 187997, 
-    GO_CARIBOU_TRAP_5                                      = 187998, 
-    GO_CARIBOU_TRAP_6                                      = 187999, 
-    GO_CARIBOU_TRAP_7                                      = 188000, 
-    GO_CARIBOU_TRAP_8                                      = 188001, 
-    GO_CARIBOU_TRAP_9                                      = 188002, 
-    GO_CARIBOU_TRAP_10                                     = 188003, 
-    GO_CARIBOU_TRAP_11                                     = 188004, 
-    GO_CARIBOU_TRAP_12                                     = 188005, 
-    GO_CARIBOU_TRAP_13                                     = 188006, 
-    GO_CARIBOU_TRAP_14                                     = 188007, 
-    GO_CARIBOU_TRAP_15                                     = 188008, 
-    GO_HIGH_QUALITY_FUR                                    = 187983, 
+    GO_CARIBOU_TRAP_1                                      = 187982,
+    GO_CARIBOU_TRAP_2                                      = 187995,
+    GO_CARIBOU_TRAP_3                                      = 187996,
+    GO_CARIBOU_TRAP_4                                      = 187997,
+    GO_CARIBOU_TRAP_5                                      = 187998,
+    GO_CARIBOU_TRAP_6                                      = 187999,
+    GO_CARIBOU_TRAP_7                                      = 188000,
+    GO_CARIBOU_TRAP_8                                      = 188001,
+    GO_CARIBOU_TRAP_9                                      = 188002,
+    GO_CARIBOU_TRAP_10                                     = 188003,
+    GO_CARIBOU_TRAP_11                                     = 188004,
+    GO_CARIBOU_TRAP_12                                     = 188005,
+    GO_CARIBOU_TRAP_13                                     = 188006,
+    GO_CARIBOU_TRAP_14                                     = 188007,
+    GO_CARIBOU_TRAP_15                                     = 188008,
+    GO_HIGH_QUALITY_FUR                                    = 187983,
     NPC_NESINGWARY_TRAPPER                                 = 25835
 };
 
 #define CaribouTrapsNum 15
 const uint32 CaribouTraps[CaribouTrapsNum] =
 {
-    GO_CARIBOU_TRAP_1, GO_CARIBOU_TRAP_2, GO_CARIBOU_TRAP_3, GO_CARIBOU_TRAP_4, GO_CARIBOU_TRAP_5, 
-    GO_CARIBOU_TRAP_6, GO_CARIBOU_TRAP_7, GO_CARIBOU_TRAP_8, GO_CARIBOU_TRAP_9, GO_CARIBOU_TRAP_10, 
-    GO_CARIBOU_TRAP_11, GO_CARIBOU_TRAP_12, GO_CARIBOU_TRAP_13, GO_CARIBOU_TRAP_14, GO_CARIBOU_TRAP_15, 
+    GO_CARIBOU_TRAP_1, GO_CARIBOU_TRAP_2, GO_CARIBOU_TRAP_3, GO_CARIBOU_TRAP_4, GO_CARIBOU_TRAP_5,
+    GO_CARIBOU_TRAP_6, GO_CARIBOU_TRAP_7, GO_CARIBOU_TRAP_8, GO_CARIBOU_TRAP_9, GO_CARIBOU_TRAP_10,
+    GO_CARIBOU_TRAP_11, GO_CARIBOU_TRAP_12, GO_CARIBOU_TRAP_13, GO_CARIBOU_TRAP_14, GO_CARIBOU_TRAP_15,
 };
 
 class item_pile_fake_furs : public ItemScript
@@ -360,8 +360,8 @@ public:
 
 enum ePetrovClusterBombs
 {
-    SPELL_PETROV_BOMB           = 42406, 
-    AREA_ID_SHATTERED_STRAITS   = 4064, 
+    SPELL_PETROV_BOMB           = 42406,
+    AREA_ID_SHATTERED_STRAITS   = 4064,
     ZONE_ID_HOWLING             = 495
 };
 
@@ -395,39 +395,39 @@ public:
 ######*/
 enum eHelpThemselves
 {
-    QUEST_CANNOT_HELP_THEMSELVES                  =  11876, 
-    NPC_TRAPPED_MAMMOTH_CALF                      =  25850, 
-    GO_MAMMOTH_TRAP_1                             = 188022, 
-    GO_MAMMOTH_TRAP_2                             = 188024, 
-    GO_MAMMOTH_TRAP_3                             = 188025, 
-    GO_MAMMOTH_TRAP_4                             = 188026, 
-    GO_MAMMOTH_TRAP_5                             = 188027, 
-    GO_MAMMOTH_TRAP_6                             = 188028, 
-    GO_MAMMOTH_TRAP_7                             = 188029, 
-    GO_MAMMOTH_TRAP_8                             = 188030, 
-    GO_MAMMOTH_TRAP_9                             = 188031, 
-    GO_MAMMOTH_TRAP_10                            = 188032, 
-    GO_MAMMOTH_TRAP_11                            = 188033, 
-    GO_MAMMOTH_TRAP_12                            = 188034, 
-    GO_MAMMOTH_TRAP_13                            = 188035, 
-    GO_MAMMOTH_TRAP_14                            = 188036, 
-    GO_MAMMOTH_TRAP_15                            = 188037, 
-    GO_MAMMOTH_TRAP_16                            = 188038, 
-    GO_MAMMOTH_TRAP_17                            = 188039, 
-    GO_MAMMOTH_TRAP_18                            = 188040, 
-    GO_MAMMOTH_TRAP_19                            = 188041, 
-    GO_MAMMOTH_TRAP_20                            = 188042, 
-    GO_MAMMOTH_TRAP_21                            = 188043, 
-    GO_MAMMOTH_TRAP_22                            = 188044, 
+    QUEST_CANNOT_HELP_THEMSELVES                  =  11876,
+    NPC_TRAPPED_MAMMOTH_CALF                      =  25850,
+    GO_MAMMOTH_TRAP_1                             = 188022,
+    GO_MAMMOTH_TRAP_2                             = 188024,
+    GO_MAMMOTH_TRAP_3                             = 188025,
+    GO_MAMMOTH_TRAP_4                             = 188026,
+    GO_MAMMOTH_TRAP_5                             = 188027,
+    GO_MAMMOTH_TRAP_6                             = 188028,
+    GO_MAMMOTH_TRAP_7                             = 188029,
+    GO_MAMMOTH_TRAP_8                             = 188030,
+    GO_MAMMOTH_TRAP_9                             = 188031,
+    GO_MAMMOTH_TRAP_10                            = 188032,
+    GO_MAMMOTH_TRAP_11                            = 188033,
+    GO_MAMMOTH_TRAP_12                            = 188034,
+    GO_MAMMOTH_TRAP_13                            = 188035,
+    GO_MAMMOTH_TRAP_14                            = 188036,
+    GO_MAMMOTH_TRAP_15                            = 188037,
+    GO_MAMMOTH_TRAP_16                            = 188038,
+    GO_MAMMOTH_TRAP_17                            = 188039,
+    GO_MAMMOTH_TRAP_18                            = 188040,
+    GO_MAMMOTH_TRAP_19                            = 188041,
+    GO_MAMMOTH_TRAP_20                            = 188042,
+    GO_MAMMOTH_TRAP_21                            = 188043,
+    GO_MAMMOTH_TRAP_22                            = 188044,
 };
 
 #define MammothTrapsNum 22
 const uint32 MammothTraps[MammothTrapsNum] =
 {
-    GO_MAMMOTH_TRAP_1, GO_MAMMOTH_TRAP_2, GO_MAMMOTH_TRAP_3, GO_MAMMOTH_TRAP_4, GO_MAMMOTH_TRAP_5, 
-    GO_MAMMOTH_TRAP_6, GO_MAMMOTH_TRAP_7, GO_MAMMOTH_TRAP_8, GO_MAMMOTH_TRAP_9, GO_MAMMOTH_TRAP_10, 
-    GO_MAMMOTH_TRAP_11, GO_MAMMOTH_TRAP_12, GO_MAMMOTH_TRAP_13, GO_MAMMOTH_TRAP_14, GO_MAMMOTH_TRAP_15, 
-    GO_MAMMOTH_TRAP_16, GO_MAMMOTH_TRAP_17, GO_MAMMOTH_TRAP_18, GO_MAMMOTH_TRAP_19, GO_MAMMOTH_TRAP_20, 
+    GO_MAMMOTH_TRAP_1, GO_MAMMOTH_TRAP_2, GO_MAMMOTH_TRAP_3, GO_MAMMOTH_TRAP_4, GO_MAMMOTH_TRAP_5,
+    GO_MAMMOTH_TRAP_6, GO_MAMMOTH_TRAP_7, GO_MAMMOTH_TRAP_8, GO_MAMMOTH_TRAP_9, GO_MAMMOTH_TRAP_10,
+    GO_MAMMOTH_TRAP_11, GO_MAMMOTH_TRAP_12, GO_MAMMOTH_TRAP_13, GO_MAMMOTH_TRAP_14, GO_MAMMOTH_TRAP_15,
+    GO_MAMMOTH_TRAP_16, GO_MAMMOTH_TRAP_17, GO_MAMMOTH_TRAP_18, GO_MAMMOTH_TRAP_19, GO_MAMMOTH_TRAP_20,
     GO_MAMMOTH_TRAP_21, GO_MAMMOTH_TRAP_22
 };
 
@@ -464,7 +464,7 @@ public:
 
 enum TheEmissary
 {
-    QUEST_THE_EMISSARY      =   11626, 
+    QUEST_THE_EMISSARY      =   11626,
     NPC_LEVIROTH            =   26452
 };
 
@@ -491,7 +491,7 @@ public:
 
 enum eCapturedFrog
 {
-    QUEST_THE_PERFECT_SPIES      = 25444, 
+    QUEST_THE_PERFECT_SPIES      = 25444,
     NPC_VANIRAS_SENTRY_TOTEM     = 40187
 };
 
@@ -530,11 +530,11 @@ public:
 
         if (pPlayer->FindNearestCreature(42704, 15))
             {
-                pPlayer->CastSpell(pPlayer, 79513, true, NULL); 
+                pPlayer->CastSpell(pPlayer, 79513, true, NULL);
                 pPlayer->KilledMonsterCredit(42704, 0);
                 return true;
             }
-        return false;   
+        return false;
     }
 };
 

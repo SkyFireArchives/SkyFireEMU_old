@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,23 +28,23 @@
 
 enum Yells
 {
-    SAY_AGGRO           = -1632001, 
-    SAY_SLAY_1          = -1632002, 
-    SAY_SLAY_2          = -1632003, 
-    SAY_DEATH           = -1632004, 
-    SAY_SOUL_STORM      = -1632005, 
-    SAY_CORRUPT_SOUL    = -1632006, 
+    SAY_AGGRO           = -1632001,
+    SAY_SLAY_1          = -1632002,
+    SAY_SLAY_2          = -1632003,
+    SAY_DEATH           = -1632004,
+    SAY_SOUL_STORM      = -1632005,
+    SAY_CORRUPT_SOUL    = -1632006,
 };
 
 enum Spells
 {
-    SPELL_MAGIC_S_BANE          = 68793, 
-    SPELL_SHADOW_BOLT           = 70043, 
-    SPELL_CORRUPT_SOUL          = 68839, 
-    SPELL_CONSUME_SOUL          = 68861, 
-    SPELL_TELEPORT              = 68988, 
-    SPELL_FEAR                  = 68950, 
-    SPELL_SOULSTORM             = 68872, 
+    SPELL_MAGIC_S_BANE          = 68793,
+    SPELL_SHADOW_BOLT           = 70043,
+    SPELL_CORRUPT_SOUL          = 68839,
+    SPELL_CONSUME_SOUL          = 68861,
+    SPELL_TELEPORT              = 68988,
+    SPELL_FEAR                  = 68950,
+    SPELL_SOULSTORM             = 68872,
     SPELL_SOULSTORM_CHANNEL     = 69008,    // pre-fight
     SPELL_SOULSTORM_VISUAL      = 68870,    // pre-cast soulstorm
     SPELL_PURPLE_BANISH_VISUAL  = 68862     // Used by Soul Fragment (Aura)
@@ -52,16 +52,16 @@ enum Spells
 
 enum Events
 {
-    EVENT_MAGIC_BANE    = 1, 
-    EVENT_SHADOW_BOLT   = 2, 
-    EVENT_CORRUPT_SOUL  = 3, 
-    EVENT_SOULSTORM     = 4, 
-    EVENT_FEAR          = 5, 
+    EVENT_MAGIC_BANE    = 1,
+    EVENT_SHADOW_BOLT   = 2,
+    EVENT_CORRUPT_SOUL  = 3,
+    EVENT_SOULSTORM     = 4,
+    EVENT_FEAR          = 5,
 };
 
 enum CombatPhases
 {
-    PHASE_1 = 1, 
+    PHASE_1 = 1,
     PHASE_2 = 2
 };
 

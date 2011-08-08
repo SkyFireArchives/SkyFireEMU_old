@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,95 +28,95 @@
 enum Spells
 {
     //Spiteful Apparition
-    SPELL_SPITE                                 = 68895, 
-    H_SPELL_SPITE                               = 70212, 
+    SPELL_SPITE                                 = 68895,
+    H_SPELL_SPITE                               = 70212,
 
     //Spectral Warden
-    SPELL_VEIL_OF_SHADOWS                       = 69633, 
-    SPELL_WAIL_OF_SOULS                         = 69148, 
-    H_SPELL_WAIL_OF_SOULS                       = 70210, 
+    SPELL_VEIL_OF_SHADOWS                       = 69633,
+    SPELL_WAIL_OF_SOULS                         = 69148,
+    H_SPELL_WAIL_OF_SOULS                       = 70210,
 
     //Soulguard Watchman
-    SPELL_SHROUD_OF_RUNES                       = 69056, 
-    SPELL_UNHOLY_RAGE                           = 69053, 
+    SPELL_SHROUD_OF_RUNES                       = 69056,
+    SPELL_UNHOLY_RAGE                           = 69053,
 
     //Soulguard Reaper
-    SPELL_FROST_NOVA                            = 69060, 
-    H_SPELL_FROST_NOVA                          = 70209, 
-    SPELL_SHADOW_LANCE                          = 69058, 
+    SPELL_FROST_NOVA                            = 69060,
+    H_SPELL_FROST_NOVA                          = 70209,
+    SPELL_SHADOW_LANCE                          = 69058,
 
     //Soulguard Bonecaster
-    SPELL_BONE_VOLLEY                           = 69080, 
-    H_SPELL_BONE_VOLLEY                         = 70206, 
-    SPELL_RAISE_DEAD                            = 69562, 
-    SPELL_SHIELD_OF_BONES                       = 69069, 
-    H_SPELL_SHIELD_OF_BONES                     = 70207, 
+    SPELL_BONE_VOLLEY                           = 69080,
+    H_SPELL_BONE_VOLLEY                         = 70206,
+    SPELL_RAISE_DEAD                            = 69562,
+    SPELL_SHIELD_OF_BONES                       = 69069,
+    H_SPELL_SHIELD_OF_BONES                     = 70207,
 
     //Soulguard Animator
     // Raise dead 69562
-    SPELL_SHADOW_BOLT                           = 69068, 
-    H_SPELL_SHADOW_BOLT                         = 70208, 
-    SPELL_SOUL_SICKNESS                         = 69131, 
-    SPELL_SOUL_SIPHON                           = 69128, 
+    SPELL_SHADOW_BOLT                           = 69068,
+    H_SPELL_SHADOW_BOLT                         = 70208,
+    SPELL_SOUL_SICKNESS                         = 69131,
+    SPELL_SOUL_SIPHON                           = 69128,
 
     //Soulguard Adept
     //Raise dead 69562
     //Shadow Bolt 69068/70208
-    SPELL_DRAIN_LIFE                            = 69066, 
-    H_SPELL_DRAIN_LIFE                          = 70213, 
-    SPELL_SHADOW_MEND                           = 69564, 
-    H_SPELL_SHADOW_MEND                         = 70205, 
+    SPELL_DRAIN_LIFE                            = 69066,
+    H_SPELL_DRAIN_LIFE                          = 70213,
+    SPELL_SHADOW_MEND                           = 69564,
+    H_SPELL_SHADOW_MEND                         = 70205,
 
     //Soul Horror
-    SPELL_SOUL_STRIKE                           = 69088, 
-    H_SPELL_SOUL_STRIKE                         = 70211, 
+    SPELL_SOUL_STRIKE                           = 69088,
+    H_SPELL_SOUL_STRIKE                         = 70211,
 };
 
 enum Events
 {
-    EVENT_NONE, 
+    EVENT_NONE,
 
     // Jaina/Sylvanas Intro
-    EVENT_INTRO_1, 
-    EVENT_INTRO_2, 
-    EVENT_INTRO_3, 
-    EVENT_INTRO_4, 
-    EVENT_INTRO_5, 
-    EVENT_INTRO_6, 
-    EVENT_INTRO_7, 
-    EVENT_INTRO_8, 
+    EVENT_INTRO_1,
+    EVENT_INTRO_2,
+    EVENT_INTRO_3,
+    EVENT_INTRO_4,
+    EVENT_INTRO_5,
+    EVENT_INTRO_6,
+    EVENT_INTRO_7,
+    EVENT_INTRO_8,
 
     //Spiteful Apparition
-    EVENT_SPITE, 
+    EVENT_SPITE,
 
     //Spectral Warden
-    EVENT_VEIL_OF_SHADOWS, 
-    EVENT_WAIL_OF_SOULS, 
+    EVENT_VEIL_OF_SHADOWS,
+    EVENT_WAIL_OF_SOULS,
 
     //Soulguard Watchman
-    EVENT_SHROUD_OF_RUNES, 
-    EVENT_UNHOLY_RAGE, 
+    EVENT_SHROUD_OF_RUNES,
+    EVENT_UNHOLY_RAGE,
 
     //Soulguard Reaper
-    EVENT_FROST_NOVA, 
-    EVENT_SHADOW_LANCE, 
+    EVENT_FROST_NOVA,
+    EVENT_SHADOW_LANCE,
 
     //Soulguard Bonecaster
-    EVENT_BONE_VOLLEY, 
-    EVENT_RAISE_DEAD, 
-    EVENT_SHIELD_OF_BONES, 
+    EVENT_BONE_VOLLEY,
+    EVENT_RAISE_DEAD,
+    EVENT_SHIELD_OF_BONES,
 
     //Soulguard Animator
-    EVENT_SHADOW_BOLT, 
-    EVENT_SOUL_SICKNESS, 
-    EVENT_SOUL_SIPHON, 
+    EVENT_SHADOW_BOLT,
+    EVENT_SOUL_SICKNESS,
+    EVENT_SOUL_SIPHON,
 
     //Soulguard Adept
-    EVENT_DRAIN_LIFE, 
-    EVENT_SHADOW_MEND, 
+    EVENT_DRAIN_LIFE,
+    EVENT_SHADOW_MEND,
 
     //Soul Horror
-    EVENT_SOUL_STRIKE, 
+    EVENT_SOUL_STRIKE,
 };
 
 /****************************************SYLVANAS************************************/
@@ -125,33 +125,33 @@ enum Events
 
 enum Yells
 {
-    SAY_JAINA_INTRO_1                           = -1632040, 
-    SAY_JAINA_INTRO_2                           = -1632041, 
-    SAY_JAINA_INTRO_3                           = -1632042, 
-    SAY_JAINA_INTRO_4                           = -1632043, 
-    SAY_JAINA_INTRO_5                           = -1632044, 
-    SAY_JAINA_INTRO_6                           = -1632045, 
-    SAY_JAINA_INTRO_7                           = -1632046, 
-    SAY_JAINA_INTRO_8                           = -1632047, 
+    SAY_JAINA_INTRO_1                           = -1632040,
+    SAY_JAINA_INTRO_2                           = -1632041,
+    SAY_JAINA_INTRO_3                           = -1632042,
+    SAY_JAINA_INTRO_4                           = -1632043,
+    SAY_JAINA_INTRO_5                           = -1632044,
+    SAY_JAINA_INTRO_6                           = -1632045,
+    SAY_JAINA_INTRO_7                           = -1632046,
+    SAY_JAINA_INTRO_8                           = -1632047,
 
-    SAY_SYLVANAS_INTRO_1                        = -1632050, 
-    SAY_SYLVANAS_INTRO_2                        = -1632051, 
-    SAY_SYLVANAS_INTRO_3                        = -1632052, 
-    SAY_SYLVANAS_INTRO_4                        = -1632053, 
-    SAY_SYLVANAS_INTRO_5                        = -1632054, 
-    SAY_SYLVANAS_INTRO_6                        = -1632055, 
+    SAY_SYLVANAS_INTRO_1                        = -1632050,
+    SAY_SYLVANAS_INTRO_2                        = -1632051,
+    SAY_SYLVANAS_INTRO_3                        = -1632052,
+    SAY_SYLVANAS_INTRO_4                        = -1632053,
+    SAY_SYLVANAS_INTRO_5                        = -1632054,
+    SAY_SYLVANAS_INTRO_6                        = -1632055,
 };
 
 enum eSylvanas
 {
-    GOSSIP_SPEECHINTRO                           = 13525, 
-    ACTION_INTRO, 
+    GOSSIP_SPEECHINTRO                           = 13525,
+    ACTION_INTRO,
 };
 
 enum Phase
 {
-    PHASE_NORMAL, 
-    PHASE_INTRO, 
+    PHASE_NORMAL,
+    PHASE_INTRO,
 };
 
 class npc_sylvanas_fos : public CreatureScript

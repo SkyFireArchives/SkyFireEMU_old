@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -42,11 +42,11 @@ EndContentData */
 ######*/
 enum Entries
 {
-    NPC_APOTHECARY_HANES         = 23784, 
-    FACTION_ESCORTEE_A           = 774, 
-    FACTION_ESCORTEE_H           = 775, 
-    NPC_HANES_FIRE_TRIGGER       = 23968, 
-    QUEST_TRAIL_OF_FIRE          = 11241, 
+    NPC_APOTHECARY_HANES         = 23784,
+    FACTION_ESCORTEE_A           = 774,
+    FACTION_ESCORTEE_H           = 775,
+    NPC_HANES_FIRE_TRIGGER       = 23968,
+    QUEST_TRAIL_OF_FIRE          = 11241,
     SPELL_COSMETIC_LOW_POLY_FIRE = 56274
 };
 
@@ -233,12 +233,12 @@ public:
 
 enum eRazael
 {
-    QUEST_REPORTS_FROM_THE_FIELD = 11221, 
-    NPC_RAZAEL = 23998, 
-    NPC_LYANA = 23778, 
-    GOSSIP_TEXTID_RAZAEL1 = 11562, 
-    GOSSIP_TEXTID_RAZAEL2 = 11564, 
-    GOSSIP_TEXTID_LYANA1 = 11586, 
+    QUEST_REPORTS_FROM_THE_FIELD = 11221,
+    NPC_RAZAEL = 23998,
+    NPC_LYANA = 23778,
+    GOSSIP_TEXTID_RAZAEL1 = 11562,
+    GOSSIP_TEXTID_RAZAEL2 = 11564,
+    GOSSIP_TEXTID_LYANA1 = 11586,
     GOSSIP_TEXTID_LYANA2 = 11588
 };
 
@@ -303,10 +303,10 @@ public:
 
 enum eMcGoyver
 {
-    QUEST_WE_CAN_REBUILD_IT             = 11483, 
+    QUEST_WE_CAN_REBUILD_IT             = 11483,
 
-    SPELL_CREATURE_DARK_IRON_INGOTS     = 44512, 
-    SPELL_TAXI_EXPLORERS_LEAGUE         = 44280, 
+    SPELL_CREATURE_DARK_IRON_INGOTS     = 44512,
+    SPELL_TAXI_EXPLORERS_LEAGUE         = 44280,
 
     GOSSIP_TEXTID_MCGOYVER              = 12193
 };
@@ -350,26 +350,26 @@ public:
 
 enum eDaegarnn
 {
-    QUEST_DEFEAT_AT_RING            = 11300, 
+    QUEST_DEFEAT_AT_RING            = 11300,
 
-    NPC_FIRJUS                      = 24213, 
-    NPC_JLARBORN                    = 24215, 
-    NPC_YOROS                       = 24214, 
-    NPC_OLUF                        = 23931, 
+    NPC_FIRJUS                      = 24213,
+    NPC_JLARBORN                    = 24215,
+    NPC_YOROS                       = 24214,
+    NPC_OLUF                        = 23931,
 
     NPC_PRISONER_1                  = 24253,  // looks the same but has different abilities
-    NPC_PRISONER_2                  = 24254, 
-    NPC_PRISONER_3                  = 24255, 
+    NPC_PRISONER_2                  = 24254,
+    NPC_PRISONER_3                  = 24255,
 };
 
 static float afSummon[] = {838.81f, -4678.06f, -94.182f};
-static float afCenter[] = {801.88f, -4721.87f, -96.143f}; 
+static float afCenter[] = {801.88f, -4721.87f, -96.143f};
 
 class npc_daegarn : public CreatureScript
 {
 public:
     npc_daegarn() : CreatureScript("npc_daegarn") { }
-        
+
     bool OnQuestAccept(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
     {
         if (pQuest->GetQuestId() == QUEST_DEFEAT_AT_RING)
@@ -380,10 +380,10 @@ public:
 
         return true;
     }
-        
+
     // TODO: make prisoners help (unclear if summoned or using npc's from surrounding cages (summon inside small cages?))
-    struct npc_daegarnAI : public ScriptedAI 
-    {  
+    struct npc_daegarnAI : public ScriptedAI
+    {
         npc_daegarnAI(Creature *pCreature) : ScriptedAI(pCreature) { }
 
         bool bEventInProgress;

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,47 +33,47 @@ EndScriptData */
 
 enum eSpells
 {
-    SPELL_FIREBALL                = 34653, 
-    SPELL_FIREBALL_H              = 36920, 
-    SPELL_CONE_OF_FIRE            = 30926, 
-    SPELL_CONE_OF_FIRE_H          = 36921, 
-    SPELL_SUMMON_LIQUID_FIRE      = 23971, 
-    SPELL_SUMMON_LIQUID_FIRE_H    = 30928, 
-    SPELL_BELLOWING_ROAR          = 39427, 
-    SPELL_REVENGE                 = 19130, 
-    SPELL_REVENGE_H               = 40392, 
-    SPELL_KIDNEY_SHOT             = 30621, 
-    SPELL_FIRE_NOVA_VISUAL        = 19823, 
+    SPELL_FIREBALL                = 34653,
+    SPELL_FIREBALL_H              = 36920,
+    SPELL_CONE_OF_FIRE            = 30926,
+    SPELL_CONE_OF_FIRE_H          = 36921,
+    SPELL_SUMMON_LIQUID_FIRE      = 23971,
+    SPELL_SUMMON_LIQUID_FIRE_H    = 30928,
+    SPELL_BELLOWING_ROAR          = 39427,
+    SPELL_REVENGE                 = 19130,
+    SPELL_REVENGE_H               = 40392,
+    SPELL_KIDNEY_SHOT             = 30621,
+    SPELL_FIRE_NOVA_VISUAL        = 19823,
 };
 
 enum eUnits
 {
-    ENTRY_HELLFIRE_SENTRY             = 17517, 
-    ENTRY_VAZRUDEN_HERALD             = 17307, 
-    ENTRY_VAZRUDEN                    = 17537, 
-    ENTRY_NAZAN                       = 17536, 
-    ENTRY_LIQUID_FIRE                 = 22515, 
-    ENTRY_REINFORCED_FEL_IRON_CHEST   = 185168, 
-    ENTRY_REINFORCED_FEL_IRON_CHEST_H = 185169, 
+    ENTRY_HELLFIRE_SENTRY             = 17517,
+    ENTRY_VAZRUDEN_HERALD             = 17307,
+    ENTRY_VAZRUDEN                    = 17537,
+    ENTRY_NAZAN                       = 17536,
+    ENTRY_LIQUID_FIRE                 = 22515,
+    ENTRY_REINFORCED_FEL_IRON_CHEST   = 185168,
+    ENTRY_REINFORCED_FEL_IRON_CHEST_H = 185169,
 };
 
 enum eSays
 {
-    SAY_INTRO                     = -1543017, 
-    SAY_WIPE                      = -1543018, 
-    SAY_AGGRO_1                   = -1543019, 
-    SAY_AGGRO_2                   = -1543020, 
-    SAY_AGGRO_3                   = -1543021, 
-    SAY_KILL_1                    = -1543022, 
-    SAY_KILL_2                    = -1543023, 
-    SAY_DIE                       = -1543024, 
-    EMOTE                         = -1543025, 
+    SAY_INTRO                     = -1543017,
+    SAY_WIPE                      = -1543018,
+    SAY_AGGRO_1                   = -1543019,
+    SAY_AGGRO_2                   = -1543020,
+    SAY_AGGRO_3                   = -1543021,
+    SAY_KILL_1                    = -1543022,
+    SAY_KILL_2                    = -1543023,
+    SAY_DIE                       = -1543024,
+    EMOTE                         = -1543025,
 };
 
 const float VazrudenMiddle[3] = {-1406.5f, 1746.5f, 81.2f};
 const float VazrudenRing[2][3] =
 {
-    {-1430, 1705, 112}, 
+    {-1430, 1705, 112},
     {-1377, 1760, 112}
 };
 
@@ -521,4 +521,3 @@ void AddSC_boss_vazruden_the_herald()
     new boss_nazan();
     new mob_hellfire_sentry();
 }
-

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -49,36 +49,36 @@ enum mograine
     ENCOUNTER_WARRIOR_NUMBER          = 2,  // how many of warrior
 #endif
     ENCOUNTER_TOTAL_DAWN              = 300,  // Total number
-    ENCOUNTER_TOTAL_SCOURGE           = 10000, 
+    ENCOUNTER_TOTAL_SCOURGE           = 10000,
 
-    WORLD_STATE_REMAINS               = 3592, 
-    WORLD_STATE_COUNTDOWN             = 3603, 
-    WORLD_STATE_EVENT_BEGIN           = 3605, 
+    WORLD_STATE_REMAINS               = 3592,
+    WORLD_STATE_COUNTDOWN             = 3603,
+    WORLD_STATE_EVENT_BEGIN           = 3605,
 
     SAY_LIGHT_OF_DAWN01               = -1609201, // pre text
-    SAY_LIGHT_OF_DAWN02               = -1609202, 
-    SAY_LIGHT_OF_DAWN03               = -1609203, 
+    SAY_LIGHT_OF_DAWN02               = -1609202,
+    SAY_LIGHT_OF_DAWN03               = -1609203,
     SAY_LIGHT_OF_DAWN04               = -1609204, // intro
-    SAY_LIGHT_OF_DAWN05               = -1609205, 
-    SAY_LIGHT_OF_DAWN06               = -1609206, 
+    SAY_LIGHT_OF_DAWN05               = -1609205,
+    SAY_LIGHT_OF_DAWN06               = -1609206,
     SAY_LIGHT_OF_DAWN07               = -1609207, // During the fight - Korfax, Champion of the Light
     SAY_LIGHT_OF_DAWN08               = -1609208, // Lord Maxwell Tyrosus
     SAY_LIGHT_OF_DAWN09               = -1609209, // Highlord Darion Mograine
-    SAY_LIGHT_OF_DAWN10               = -1609210, 
-    SAY_LIGHT_OF_DAWN11               = -1609211, 
-    SAY_LIGHT_OF_DAWN12               = -1609212, 
-    SAY_LIGHT_OF_DAWN13               = -1609213, 
-    SAY_LIGHT_OF_DAWN14               = -1609214, 
-    SAY_LIGHT_OF_DAWN15               = -1609215, 
-    SAY_LIGHT_OF_DAWN16               = -1609216, 
-    SAY_LIGHT_OF_DAWN17               = -1609217, 
-    SAY_LIGHT_OF_DAWN18               = -1609218, 
-    SAY_LIGHT_OF_DAWN19               = -1609219, 
-    SAY_LIGHT_OF_DAWN20               = -1609220, 
-    SAY_LIGHT_OF_DAWN21               = -1609221, 
-    SAY_LIGHT_OF_DAWN22               = -1609222, 
-    SAY_LIGHT_OF_DAWN23               = -1609223, 
-    SAY_LIGHT_OF_DAWN24               = -1609224, 
+    SAY_LIGHT_OF_DAWN10               = -1609210,
+    SAY_LIGHT_OF_DAWN11               = -1609211,
+    SAY_LIGHT_OF_DAWN12               = -1609212,
+    SAY_LIGHT_OF_DAWN13               = -1609213,
+    SAY_LIGHT_OF_DAWN14               = -1609214,
+    SAY_LIGHT_OF_DAWN15               = -1609215,
+    SAY_LIGHT_OF_DAWN16               = -1609216,
+    SAY_LIGHT_OF_DAWN17               = -1609217,
+    SAY_LIGHT_OF_DAWN18               = -1609218,
+    SAY_LIGHT_OF_DAWN19               = -1609219,
+    SAY_LIGHT_OF_DAWN20               = -1609220,
+    SAY_LIGHT_OF_DAWN21               = -1609221,
+    SAY_LIGHT_OF_DAWN22               = -1609222,
+    SAY_LIGHT_OF_DAWN23               = -1609223,
+    SAY_LIGHT_OF_DAWN24               = -1609224,
     SAY_LIGHT_OF_DAWN25               = -1609225, // After the fight
     SAY_LIGHT_OF_DAWN26               = -1609226, // Highlord Tirion Fordring
     SAY_LIGHT_OF_DAWN27               = -1609227, // Highlord Darion Mograine
@@ -125,73 +125,73 @@ enum mograine
     SAY_LIGHT_OF_DAWN68               = -1609268, // Highlord Darion Mograine
 
     EMOTE_LIGHT_OF_DAWN01             = -1609269,  // Emotes
-    EMOTE_LIGHT_OF_DAWN02             = -1609270, 
-    EMOTE_LIGHT_OF_DAWN03             = -1609271, 
-    EMOTE_LIGHT_OF_DAWN04             = -1609272, 
-    EMOTE_LIGHT_OF_DAWN05             = -1609273, 
-    EMOTE_LIGHT_OF_DAWN06             = -1609274, 
-    EMOTE_LIGHT_OF_DAWN07             = -1609275, 
-    EMOTE_LIGHT_OF_DAWN08             = -1609276, 
-    EMOTE_LIGHT_OF_DAWN09             = -1609277, 
-    EMOTE_LIGHT_OF_DAWN10             = -1609278, 
-    EMOTE_LIGHT_OF_DAWN11             = -1609279, 
-    EMOTE_LIGHT_OF_DAWN12             = -1609280, 
-    EMOTE_LIGHT_OF_DAWN13             = -1609281, 
-    EMOTE_LIGHT_OF_DAWN14             = -1609282, 
-    EMOTE_LIGHT_OF_DAWN15             = -1609283, 
-    EMOTE_LIGHT_OF_DAWN16             = -1609284, 
-    EMOTE_LIGHT_OF_DAWN17             = -1609285, 
-    EMOTE_LIGHT_OF_DAWN18             = -1609286, 
+    EMOTE_LIGHT_OF_DAWN02             = -1609270,
+    EMOTE_LIGHT_OF_DAWN03             = -1609271,
+    EMOTE_LIGHT_OF_DAWN04             = -1609272,
+    EMOTE_LIGHT_OF_DAWN05             = -1609273,
+    EMOTE_LIGHT_OF_DAWN06             = -1609274,
+    EMOTE_LIGHT_OF_DAWN07             = -1609275,
+    EMOTE_LIGHT_OF_DAWN08             = -1609276,
+    EMOTE_LIGHT_OF_DAWN09             = -1609277,
+    EMOTE_LIGHT_OF_DAWN10             = -1609278,
+    EMOTE_LIGHT_OF_DAWN11             = -1609279,
+    EMOTE_LIGHT_OF_DAWN12             = -1609280,
+    EMOTE_LIGHT_OF_DAWN13             = -1609281,
+    EMOTE_LIGHT_OF_DAWN14             = -1609282,
+    EMOTE_LIGHT_OF_DAWN15             = -1609283,
+    EMOTE_LIGHT_OF_DAWN16             = -1609284,
+    EMOTE_LIGHT_OF_DAWN17             = -1609285,
+    EMOTE_LIGHT_OF_DAWN18             = -1609286,
 
-    GO_LIGHT_OF_DAWN                  = 191330, 
+    GO_LIGHT_OF_DAWN                  = 191330,
     SPELL_THE_LIGHT_OF_DAWN_Q         = 53606, // quest credit
 
     // ---- Dark Knight npc --------------------
     // Highlord Darion Mograine
-    NPC_HIGHLORD_DARION_MOGRAINE      = 29173, 
-    SPELL_ANTI_MAGIC_ZONE1            = 52893, 
-    SPELL_DEATH_STRIKE                = 53639, 
-    SPELL_DEATH_EMBRACE               = 53635, 
-    SPELL_ICY_TOUCH1                  = 49723, 
-    SPELL_THE_LIGHT_OF_DAWN           = 53658, 
+    NPC_HIGHLORD_DARION_MOGRAINE      = 29173,
+    SPELL_ANTI_MAGIC_ZONE1            = 52893,
+    SPELL_DEATH_STRIKE                = 53639,
+    SPELL_DEATH_EMBRACE               = 53635,
+    SPELL_ICY_TOUCH1                  = 49723,
+    SPELL_THE_LIGHT_OF_DAWN           = 53658,
     SPELL_THE_MIGHT_OF_MOGRAINE       = 53642, // on players when begins
-    SPELL_UNHOLY_BLIGHT               = 53640, 
-    SPELL_ALEXANDROS_MOGRAINE_SPAWN   = 53667, 
-    SPELL_MOGRAINE_CHARGE             = 53679, 
-    SPELL_ASHBRINGER                  = 53701, 
+    SPELL_UNHOLY_BLIGHT               = 53640,
+    SPELL_ALEXANDROS_MOGRAINE_SPAWN   = 53667,
+    SPELL_MOGRAINE_CHARGE             = 53679,
+    SPELL_ASHBRINGER                  = 53701,
 
     // Koltira Deathweaver & Orbaz Bloodbane are using the same abilities
-    NPC_KOLTIRA_DEATHWEAVER           = 29199, 
+    NPC_KOLTIRA_DEATHWEAVER           = 29199,
     NPC_ORBAZ_BLOODBANE               = 29204, // this guy fleed
     NPC_THASSARIAN                    = 29200, // he also does SPELL_THE_LIGHT_OF_DAWN 53658
-    SPELL_BLOOD_STRIKE1               = 52374, 
-    SPELL_DEATH_GRIP                  = 49576, 
-    SPELL_ICY_TOUCH2                  = 52372, 
-    SPELL_PLAGUE_STRIKE1              = 50668, 
+    SPELL_BLOOD_STRIKE1               = 52374,
+    SPELL_DEATH_GRIP                  = 49576,
+    SPELL_ICY_TOUCH2                  = 52372,
+    SPELL_PLAGUE_STRIKE1              = 50668,
     // all do SPELL_HERO_AGGRO_AURA    53627
 
     // Lich King
     NPC_THE_LICH_KING                 = 29183, // show up at end
-    SPELL_APOCALYPSE                  = 53210, 
-    SPELL_TELEPORT_VISUAL             = 52233, 
+    SPELL_APOCALYPSE                  = 53210,
+    SPELL_TELEPORT_VISUAL             = 52233,
     SPELL_SOUL_FEAST_ALEX             = 53677, // on Alexandros
     SPELL_SOUL_FEAST_TIRION           = 53685, // on Tirion
     SPELL_ICEBOUND_VISAGE             = 53274, // not sure what is it for
-    SPELL_REBUKE                      = 53680, 
+    SPELL_REBUKE                      = 53680,
 
     // others
-    NPC_RAMPAGING_ABOMINATION         = 29186, 
-    SPELL_CLEAVE1                     = 53633, 
-    SPELL_SCOURGE_HOOK                = 50335, 
-    SPELL_SCOURGE_AGGRO_AURA          = 53624, 
+    NPC_RAMPAGING_ABOMINATION         = 29186,
+    SPELL_CLEAVE1                     = 53633,
+    SPELL_SCOURGE_HOOK                = 50335,
+    SPELL_SCOURGE_AGGRO_AURA          = 53624,
 
     NPC_FLESH_BEHEMOTH                = 29190, // giant guy
-    SPELL_STOMP                       = 53634, 
-    SPELL_THUNDERCLAP                 = 36706, 
-    SPELL_HERO_AGGRO_AURA             = 53627, 
+    SPELL_STOMP                       = 53634,
+    SPELL_THUNDERCLAP                 = 36706,
+    SPELL_HERO_AGGRO_AURA             = 53627,
 
     NPC_ACHERUS_GHOUL                 = 29219, // just ghoul....
-    SPELL_GHOULPLOSION                = 53632, 
+    SPELL_GHOULPLOSION                = 53632,
 
     NPC_WARRIOR_OF_THE_FROZEN_WASTES  = 29206, // use SPELL_CLEAVE 53631
 
@@ -200,39 +200,39 @@ enum mograine
 
     // ---- Dawn npc --------------------
     // Highlord Tirion Fordring
-    NPC_HIGHLORD_TIRION_FORDRING      = 29175, 
-    EQUIP_HIGHLORD_TIRION_FORDRING    = 13262, 
-    SPELL_LAY_ON_HANDS                = 53778, 
-    SPELL_REBIRTH_OF_THE_ASHBRINGER   = 53702, 
-    SPELL_TIRION_CHARGE               = 53705, 
-    SPELL_TIRION_CHARGE_VISUAL        = 53706, 
+    NPC_HIGHLORD_TIRION_FORDRING      = 29175,
+    EQUIP_HIGHLORD_TIRION_FORDRING    = 13262,
+    SPELL_LAY_ON_HANDS                = 53778,
+    SPELL_REBIRTH_OF_THE_ASHBRINGER   = 53702,
+    SPELL_TIRION_CHARGE               = 53705,
+    SPELL_TIRION_CHARGE_VISUAL        = 53706,
 
     // others
-    NPC_KORFAX_CHAMPION_OF_THE_LIGHT  = 29176, 
-    SPELL_CLEAVE                      = 53631, 
-    SPELL_HEROIC_LEAP                 = 53625, 
+    NPC_KORFAX_CHAMPION_OF_THE_LIGHT  = 29176,
+    SPELL_CLEAVE                      = 53631,
+    SPELL_HEROIC_LEAP                 = 53625,
 
-    NPC_LORD_MAXWELL_TYROSUS          = 29178, 
-    NPC_LEONID_BARTHALOMEW_THE_REVERED = 29179, 
-    NPC_DUKE_NICHOLAS_ZVERENHOFF      = 29180, 
+    NPC_LORD_MAXWELL_TYROSUS          = 29178,
+    NPC_LEONID_BARTHALOMEW_THE_REVERED = 29179,
+    NPC_DUKE_NICHOLAS_ZVERENHOFF      = 29180,
 
-    NPC_COMMANDER_ELIGOR_DAWNBRINGER  = 29177, 
-    SPELL_HOLY_LIGHT2                 = 37979, 
+    NPC_COMMANDER_ELIGOR_DAWNBRINGER  = 29177,
+    SPELL_HOLY_LIGHT2                 = 37979,
 
-    NPC_RAYNE                         = 29181, 
-    SPELL_REJUVENATION                = 20664, 
-    SPELL_STARFALL                    = 20678, 
-    SPELL_TRANQUILITY                 = 25817, 
-    SPELL_WRATH                       = 21807, 
+    NPC_RAYNE                         = 29181,
+    SPELL_REJUVENATION                = 20664,
+    SPELL_STARFALL                    = 20678,
+    SPELL_TRANQUILITY                 = 25817,
+    SPELL_WRATH                       = 21807,
 
     NPC_DEFENDER_OF_THE_LIGHT         = 29174, // also does SPELL_HEROIC_LEAP 53625
-    SPELL_HOLY_LIGHT1                 = 29427, 
-    SPELL_HOLY_STRIKE                 = 53643, 
-    SPELL_HOLY_WRATH                  = 53638, 
-    SPELL_UPPERCUT                    = 53629, 
+    SPELL_HOLY_LIGHT1                 = 29427,
+    SPELL_HOLY_STRIKE                 = 53643,
+    SPELL_HOLY_WRATH                  = 53638,
+    SPELL_UPPERCUT                    = 53629,
 
-    NPC_RIMBLAT_EARTHSHATTER          = 29182, 
-    SPELL_CHAIN_HEAL                  = 33642, 
+    NPC_RIMBLAT_EARTHSHATTER          = 29182,
+    SPELL_CHAIN_HEAL                  = 33642,
     SPELL_THUNDER                     = 53630
 };
 
@@ -264,8 +264,8 @@ static Location LightofDawnLoc[]=
     {2270.286f, -5287.73f, 82.262f, 0},      // 4 Tirion relocate
     {2269.511f, -5288.289f, 82.225f, 0},     // 5 Tirion forward
     {2262.277f, -5293.477f, 82.167f, 0},     // 6 Tirion runs to Darion
-    {2270.286f, -5287.73f, 82.262f, 0}, 
-    {2269.511f, -5288.289f, 82.225f, 0}, 
+    {2270.286f, -5287.73f, 82.262f, 0},
+    {2269.511f, -5288.289f, 82.225f, 0},
     {2273.205f, -5288.848f, 82.617f, 0},     // 9 Korfax loc1
     {2274.739f, -5287.926f, 82.684f, 0},     // 10 Korfax loc2
     {2253.673f, -5318.004f, 81.724f, 0},     // 11 Korfax kicked
@@ -1005,8 +1005,8 @@ public:
 
                         case 42: // Maxwell yells for attack
                             {
-                                float fLichPositionX = 0, 
-                                      fLichPositionY = 0, 
+                                float fLichPositionX = 0,
+                                      fLichPositionY = 0,
                                       fLichPositionZ = 0;
                                 if (Creature* pTemp = Unit::GetCreature(*me, uiLichKingGUID))
                                 {
@@ -1349,7 +1349,6 @@ public:
                             me->ForcedDespawn();
                             break;
                     }
-
                 } else uiPhase_timer -= diff;
             }
 
@@ -1388,11 +1387,11 @@ public:
 
                 if (uiFight_speech <= diff)
                 {
-                    DoScriptText(RAND(SAY_LIGHT_OF_DAWN09, SAY_LIGHT_OF_DAWN10, SAY_LIGHT_OF_DAWN11, 
-                                      SAY_LIGHT_OF_DAWN12, SAY_LIGHT_OF_DAWN13, SAY_LIGHT_OF_DAWN14, 
-                                      SAY_LIGHT_OF_DAWN15, SAY_LIGHT_OF_DAWN16, SAY_LIGHT_OF_DAWN17, 
-                                      SAY_LIGHT_OF_DAWN18, SAY_LIGHT_OF_DAWN19, SAY_LIGHT_OF_DAWN20, 
-                                      SAY_LIGHT_OF_DAWN21, SAY_LIGHT_OF_DAWN22, SAY_LIGHT_OF_DAWN23, 
+                    DoScriptText(RAND(SAY_LIGHT_OF_DAWN09, SAY_LIGHT_OF_DAWN10, SAY_LIGHT_OF_DAWN11,
+                                      SAY_LIGHT_OF_DAWN12, SAY_LIGHT_OF_DAWN13, SAY_LIGHT_OF_DAWN14,
+                                      SAY_LIGHT_OF_DAWN15, SAY_LIGHT_OF_DAWN16, SAY_LIGHT_OF_DAWN17,
+                                      SAY_LIGHT_OF_DAWN18, SAY_LIGHT_OF_DAWN19, SAY_LIGHT_OF_DAWN20,
+                                      SAY_LIGHT_OF_DAWN21, SAY_LIGHT_OF_DAWN22, SAY_LIGHT_OF_DAWN23,
                                       SAY_LIGHT_OF_DAWN24), me);
                     uiFight_speech = 15000 + rand()%5000;
                 } else uiFight_speech -= diff;
@@ -1525,7 +1524,6 @@ public:
                         DoScriptText(SAY_LIGHT_OF_DAWN26, pTemp);
 
                     SetHoldState(false);
-
                 } else uiFight_duration -= diff;
 
                 DoMeleeAttackIfReady();
@@ -1667,10 +1665,7 @@ public:
                 }
         }
     };
-
 };
-
-
 
 /*######
 ## npc the lich king in dawn of light
@@ -1693,10 +1688,7 @@ public:
         void UpdateAI(const uint32 /*diff*/) {}
         void JustDied(Unit* /*killer*/) {}
     };
-
 };
-
-
 
 void AddSC_the_scarlet_enclave_c5()
 {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,17 +34,17 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_ENTER               = -1269000, 
-    SAY_AGGRO               = -1269001, 
-    SAY_BANISH              = -1269002, 
-    SAY_SLAY1               = -1269003, 
-    SAY_SLAY2               = -1269004, 
-    SAY_DEATH               = -1269005, 
+    SAY_ENTER               = -1269000,
+    SAY_AGGRO               = -1269001,
+    SAY_BANISH              = -1269002,
+    SAY_SLAY1               = -1269003,
+    SAY_SLAY2               = -1269004,
+    SAY_DEATH               = -1269005,
 
-    SPELL_HASTE             = 31458, 
-    SPELL_MORTAL_WOUND      = 31464, 
-    SPELL_WING_BUFFET       = 31475, 
-    H_SPELL_WING_BUFFET     = 38593, 
+    SPELL_HASTE             = 31458,
+    SPELL_MORTAL_WOUND      = 31464,
+    SPELL_WING_BUFFET       = 31475,
+    H_SPELL_WING_BUFFET     = 38593,
     SPELL_REFLECT           = 38592                       //Not Implemented (Heroic mod)
 };
 
@@ -153,9 +153,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_temporus()
 {

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -25,41 +25,41 @@
 
 enum Spells
 {
-	SPELL_DUST_FLAIL		 = 81642, 
-	SPELL_SCENT_OF_BLOOD	 = 81690, 
-	H_SPELL_SCENT_OF_BLOOD	 = 89998, 
-	SPELL_VENOMOUS_RAGE		 = 81706, 
-	SPELL_VISCOUS_POISON	 = 81630, 
-	H_SPELL_VISCOUS_POISON	 = 90004, 
+	SPELL_DUST_FLAIL		 = 81642,
+	SPELL_SCENT_OF_BLOOD	 = 81690,
+	H_SPELL_SCENT_OF_BLOOD	 = 89998,
+	SPELL_VENOMOUS_RAGE		 = 81706,
+	SPELL_VISCOUS_POISON	 = 81630,
+	H_SPELL_VISCOUS_POISON	 = 90004,
 };
 
 enum Events
 {
-    EVENT_DUST_FLAIL         = 1, 
-    EVENT_SCENT_OF_BLOOD     = 2, 
-    EVENT_VENOMOUS_RAGE      = 3, 
-    EVENT_VISCOUS_POISON     = 4, 
+    EVENT_DUST_FLAIL         = 1,
+    EVENT_SCENT_OF_BLOOD     = 2,
+    EVENT_VENOMOUS_RAGE      = 3,
+    EVENT_VISCOUS_POISON     = 4,
 };
 
 enum SummonIds
 {
-    NPC_FRENZIED_CROCOLISK   = 43658, 
+    NPC_FRENZIED_CROCOLISK   = 43658,
 };
 
 const Position SummonLocations[4] =
 {
     //Frenzied Crocolisks
-    {-11033.29f, -1674.57f, -0.56f, 1.09f}, 
-    {-11029.84f, -1673.09f, -0.37f, 2.33f}, 
-    {-11007.25f, -1666.37f, -0.23f, 2.46f}, 
-    {-11006.83f, -1666.85f, -0.25f, 2.23f}, 
+    {-11033.29f, -1674.57f, -0.56f, 1.09f},
+    {-11029.84f, -1673.09f, -0.37f, 2.33f},
+    {-11007.25f, -1666.37f, -0.23f, 2.46f},
+    {-11006.83f, -1666.85f, -0.25f, 2.23f},
 };
 
 class boss_lockmaw : public CreatureScript
 {
     public:
         boss_lockmaw() : CreatureScript("boss_lockmaw") {}
-	
+
         CreatureAI* GetAI(Creature* pCreature) const
         {
            return new boss_lockmawAI(pCreature);
@@ -75,18 +75,18 @@ class boss_lockmaw : public CreatureScript
             EventMap events;
             SummonList Summons;
             bool check_in;
-			
+
             void Reset ()
 			{
                 events.Reset();
                 Summons.DespawnAll();
-                                
+
                 if (pInstance && (pInstance->GetData(DATA_LOCKMAW_EVENT) != DONE && !check_in))
                     pInstance->SetData(DATA_LOCKMAW_EVENT, NOT_STARTED);
-                
+
                 check_in = false;
 			}
-			
+
             void JustDied(Unit* /*Kill*/)
             {
                 Summons.DespawnAll();
@@ -98,7 +98,7 @@ class boss_lockmaw : public CreatureScript
             {
 				if (pInstance)
                     pInstance->SetData(DATA_LOCKMAW_EVENT, IN_PROGRESS);
-                
+
                 DoZoneInCombat();
 			}
 
@@ -106,7 +106,7 @@ class boss_lockmaw : public CreatureScript
             {
                 if (!UpdateVictim())  /* No target to kill */
                     return;
-								
+
 				events.Update(uiDiff);
 
                 if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -130,7 +130,7 @@ class boss_lockmaw : public CreatureScript
                                 DoCast(me->getVictim(), SPELL_SCENT_OF_BLOOD);
                                 for(uint8 i=0; i<4; i++)
                                 {
-                                  Creature* Crocolisk = me->SummonCreature(NPC_FRENZIED_CROCOLISK, SummonLocations[i], TEMPSUMMON_CORPSE_DESPAWN); 
+                                  Creature* Crocolisk = me->SummonCreature(NPC_FRENZIED_CROCOLISK, SummonLocations[i], TEMPSUMMON_CORPSE_DESPAWN);
                                   Crocolisk->AddThreat(me->getVictim(), 0.0f);
                                   DoZoneInCombat(Crocolisk);
                                 }
@@ -145,11 +145,10 @@ class boss_lockmaw : public CreatureScript
                             break;
                     }
             }
-                					
+
             DoMeleeAttackIfReady();
         }
     };
-            
 };
 
 void AddSC_boss_lockmaw()

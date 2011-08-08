@@ -31,7 +31,7 @@ class instance_the_vortex_pinnacle : public InstanceMapScript
 {
 public:
     instance_the_vortex_pinnacle() : InstanceMapScript("instance_the_vortex_pinnacle", 657) { }
-    
+
     InstanceScript* GetInstanceScript(InstanceMap* map) const
     {
         return new instance_the_vortex_pinnacle_InstanceMapScript(map);
@@ -82,7 +82,6 @@ public:
                     uiAsaad = pCreature->GetGUID();
                     break;
             }
-            
         }
 
 	    uint64 GetData64(uint32 identifier)
@@ -113,7 +112,7 @@ public:
                     uiEncounter[2] = data;
                     break;
             }
-         
+
          if (data == DONE)
              SaveToDB();
         }
@@ -128,7 +127,7 @@ public:
                     return uiEncounter[1];
                 case DATA_ASAAD:
                     return uiEncounter[2];
-            }   
+            }
             return 0;
         }
 
@@ -138,7 +137,7 @@ public:
 
             std::string str_data;
             std::ostringstream saveStream;
-            saveStream << "V P" << uiEncounter[0] << " " << uiEncounter[1]  << " " << uiEncounter[2]; 
+            saveStream << "V P" << uiEncounter[0] << " " << uiEncounter[1]  << " " << uiEncounter[2];
             str_data = saveStream.str();
 
             OUT_SAVE_INST_DATA_COMPLETE;
@@ -166,7 +165,7 @@ public:
                 uiEncounter[0] = data0;
                 uiEncounter[1] = data1;
                 uiEncounter[2] = data2;
-                
+
                 for(uint8 i=0; i < ENCOUNTERS; ++i)
                     if (uiEncounter[i] == IN_PROGRESS)
                         uiEncounter[i] = NOT_STARTED;
@@ -175,7 +174,6 @@ public:
 
             OUT_LOAD_INST_DATA_COMPLETE;
         }
-
     };
 };
 

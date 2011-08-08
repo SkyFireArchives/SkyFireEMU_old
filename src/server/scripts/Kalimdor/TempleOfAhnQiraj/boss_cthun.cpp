@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -66,92 +66,92 @@ EndScriptData */
 
 enum Phases
 {
-    PHASE_NOT_STARTED                           = 0, 
+    PHASE_NOT_STARTED                           = 0,
 
     // Main Phase 1 - EYE
-    PHASE_EYE_GREEN_BEAM                        = 1, 
-    PHASE_EYE_RED_BEAM                          = 2, 
+    PHASE_EYE_GREEN_BEAM                        = 1,
+    PHASE_EYE_RED_BEAM                          = 2,
 
     // Main Phase 2 - CTHUN
-    PHASE_CTHUN_TRANSITION                      = 3, 
-    PHASE_CTHUN_STOMACH                         = 4, 
-    PHASE_CTHUN_WEAK                            = 5, 
+    PHASE_CTHUN_TRANSITION                      = 3,
+    PHASE_CTHUN_STOMACH                         = 4,
+    PHASE_CTHUN_WEAK                            = 5,
 
-    PHASE_CTHUN_DONE                            = 6, 
+    PHASE_CTHUN_DONE                            = 6,
 };
 
 enum Creatures
 {
-    MOB_CTHUN_PORTAL                            = 15896, 
+    MOB_CTHUN_PORTAL                            = 15896,
 
     //***** Main Phase 1 ********
-    BOSS_EYE_OF_CTHUN                           = 15589, 
-    MOB_CLAW_TENTACLE                           = 15725, 
-    MOB_EYE_TENTACLE                            = 15726, 
-    MOB_SMALL_PORTAL                            = 15904, 
+    BOSS_EYE_OF_CTHUN                           = 15589,
+    MOB_CLAW_TENTACLE                           = 15725,
+    MOB_EYE_TENTACLE                            = 15726,
+    MOB_SMALL_PORTAL                            = 15904,
 
     //***** Main Phase 2 ********
-    MOB_BODY_OF_CTHUN                           = 15809, 
-    MOB_GIANT_CLAW_TENTACLE                     = 15728, 
-    MOB_GIANT_EYE_TENTACLE                      = 15334, 
-    MOB_FLESH_TENTACLE                          = 15802, 
-    MOB_GIANT_PORTAL                            = 15910, 
+    MOB_BODY_OF_CTHUN                           = 15809,
+    MOB_GIANT_CLAW_TENTACLE                     = 15728,
+    MOB_GIANT_EYE_TENTACLE                      = 15334,
+    MOB_FLESH_TENTACLE                          = 15802,
+    MOB_GIANT_PORTAL                            = 15910,
 };
 
 enum Spells
 {
     //***** Main Phase 1 ********
     //Eye Spells
-    SPELL_FREEZE_ANIM                           = 16245, 
-    SPELL_GREEN_BEAM                            = 26134, 
-    SPELL_DARK_GLARE                            = 26029, 
+    SPELL_FREEZE_ANIM                           = 16245,
+    SPELL_GREEN_BEAM                            = 26134,
+    SPELL_DARK_GLARE                            = 26029,
     SPELL_RED_COLORATION                        = 22518,        //Probably not the right spell but looks similar
 
     //Eye Tentacles Spells
-    SPELL_MIND_FLAY                             = 26143, 
+    SPELL_MIND_FLAY                             = 26143,
 
     //Claw Tentacles Spells
-    SPELL_GROUND_RUPTURE                        = 26139, 
-    SPELL_HAMSTRING                             = 26141, 
+    SPELL_GROUND_RUPTURE                        = 26139,
+    SPELL_HAMSTRING                             = 26141,
 
     //***** Main Phase 2 ******
     //Body spells
     //#define SPELL_CARAPACE_CTHUN                26156   //Was removed from client dbcs
-    SPELL_TRANSFORM                             = 26232, 
+    SPELL_TRANSFORM                             = 26232,
     SPELL_PURPLE_COLORATION                     = 22581,     //Probably not the right spell but looks similar
 
     //Eye Tentacles Spells
     //SAME AS PHASE1
 
     //Giant Claw Tentacles
-    SPELL_MASSIVE_GROUND_RUPTURE                = 26100, 
+    SPELL_MASSIVE_GROUND_RUPTURE                = 26100,
 
     //Also casts Hamstring
-    SPELL_THRASH                                = 3391, 
+    SPELL_THRASH                                = 3391,
 
     //Giant Eye Tentacles
     //CHAIN CASTS "SPELL_GREEN_BEAM"
 
     //Stomach Spells
-    SPELL_MOUTH_TENTACLE                        = 26332, 
-    SPELL_EXIT_STOMACH_KNOCKBACK                = 25383, 
-    SPELL_DIGESTIVE_ACID                        = 26476, 
+    SPELL_MOUTH_TENTACLE                        = 26332,
+    SPELL_EXIT_STOMACH_KNOCKBACK                = 25383,
+    SPELL_DIGESTIVE_ACID                        = 26476,
 };
 
 enum Actions
 {
-    ACTION_FLESH_TENTACLE_KILLED                = 1, 
+    ACTION_FLESH_TENTACLE_KILLED                = 1,
 };
 
 enum Yells
 {
     //Text emote
-    EMOTE_WEAKENED                              = -1531011, 
+    EMOTE_WEAKENED                              = -1531011,
 
     //****** Out of Combat ******
     // Random Wispers - No txt only sound
     // The random sound is chosen by the client.
-    RANDOM_SOUND_WHISPER                        = 8663, 
+    RANDOM_SOUND_WHISPER                        = 8663,
 };
 
 //Stomach Teleport positions
@@ -163,8 +163,8 @@ enum Yells
 //Flesh tentacle positions
 const Position FleshTentaclePos[2] =
 {
-    { -8571.0f, 1990.0f, -98.0f, 1.22f}, 
-    { -8525.0f, 1994.0f, -98.0f, 2.12f}, 
+    { -8571.0f, 1990.0f, -98.0f, 1.22f},
+    { -8525.0f, 1994.0f, -98.0f, 2.12f},
 };
 
 //Kick out position
@@ -471,7 +471,6 @@ public:
             }
         }
     };
-
 };
 
 class boss_cthun : public CreatureScript
@@ -930,7 +929,6 @@ public:
             }
         }
     };
-
 };
 
 class mob_eye_tentacle : public CreatureScript
@@ -1003,7 +1001,6 @@ public:
             } else MindflayTimer -= diff;
         }
     };
-
 };
 
 class mob_claw_tentacle : public CreatureScript
@@ -1113,7 +1110,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_giant_claw_tentacle : public CreatureScript
@@ -1232,7 +1228,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_giant_eye_tentacle : public CreatureScript
@@ -1296,7 +1291,6 @@ public:
             } else BeamTimer -= diff;
         }
     };
-
 };
 
 class mob_giant_flesh_tentacle : public CreatureScript
@@ -1324,16 +1318,9 @@ public:
                         pSummoner->AI()->DoAction(ACTION_FLESH_TENTACLE_KILLED);
         }
     };
-
 };
 
 //GetAIs
-
-
-
-
-
-
 
 void AddSC_boss_cthun()
 {

@@ -32,8 +32,8 @@ EndContentData */
 
 enum eSpells
 {
-    SPELL_COUNTERCHARGE    = 35035, 
-    SPELL_KNOCKAWAY        = 22893, 
+    SPELL_COUNTERCHARGE    = 35035,
+    SPELL_KNOCKAWAY        = 22893,
 };
 
 class mob_crystalcore_devastator : public CreatureScript
@@ -108,4 +108,3 @@ void AddSC_the_eye()
 {
     new mob_crystalcore_devastator();
 }
-

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,38 +27,38 @@
 
 enum eData64
 {
-    DATA_ONYXIA_GUID, 
+    DATA_ONYXIA_GUID,
     DATA_FLOOR_ERUPTION_GUID
 };
 
 enum eInstanceData
 {
-    DATA_ONYXIA, 
-    MAX_ENCOUNTER, 
+    DATA_ONYXIA,
+    MAX_ENCOUNTER,
 
-    DATA_ONYXIA_PHASE, 
-    DATA_SHE_DEEP_BREATH_MORE, 
+    DATA_ONYXIA_PHASE,
+    DATA_SHE_DEEP_BREATH_MORE,
     DATA_MANY_WHELPS_COUNT
 };
 
 enum eCreatures
 {
-    NPC_WHELP = 11262, 
-    NPC_LAIRGUARD = 36561, 
+    NPC_WHELP = 11262,
+    NPC_LAIRGUARD = 36561,
 
     NPC_ONYXIA = 10184
 };
 
 enum eOnyxiaPhases
 {
-    PHASE_START = 1, 
-    PHASE_BREATH = 2, 
+    PHASE_START = 1,
+    PHASE_BREATH = 2,
     PHASE_END = 3
 };
 
 enum eGameObjects
 {
-    GO_WHELP_SPAWNER = 176510, 
+    GO_WHELP_SPAWNER = 176510,
     GO_WHELP_EGG = 176511
 };
 

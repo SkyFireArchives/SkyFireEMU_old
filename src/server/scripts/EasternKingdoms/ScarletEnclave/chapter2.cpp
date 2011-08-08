@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -29,25 +29,25 @@
 // texts signed for creature 28939 but used for 28939, 28940, 28610
 enum win_friends
 {
-    SAY_PERSUADE1                     = -1609501, 
-    SAY_PERSUADE2                     = -1609502, 
-    SAY_PERSUADE3                     = -1609503, 
-    SAY_PERSUADE4                     = -1609504, 
-    SAY_PERSUADE5                     = -1609505, 
-    SAY_PERSUADE6                     = -1609506, 
-    SAY_PERSUADE7                     = -1609507, 
-    SAY_CRUSADER1                     = -1609508, 
-    SAY_CRUSADER2                     = -1609509, 
-    SAY_CRUSADER3                     = -1609510, 
-    SAY_CRUSADER4                     = -1609511, 
-    SAY_CRUSADER5                     = -1609512, 
-    SAY_CRUSADER6                     = -1609513, 
-    SAY_PERSUADED1                    = -1609514, 
-    SAY_PERSUADED2                    = -1609515, 
-    SAY_PERSUADED3                    = -1609516, 
-    SAY_PERSUADED4                    = -1609517, 
-    SAY_PERSUADED5                    = -1609518, 
-    SAY_PERSUADED6                    = -1609519, 
+    SAY_PERSUADE1                     = -1609501,
+    SAY_PERSUADE2                     = -1609502,
+    SAY_PERSUADE3                     = -1609503,
+    SAY_PERSUADE4                     = -1609504,
+    SAY_PERSUADE5                     = -1609505,
+    SAY_PERSUADE6                     = -1609506,
+    SAY_PERSUADE7                     = -1609507,
+    SAY_CRUSADER1                     = -1609508,
+    SAY_CRUSADER2                     = -1609509,
+    SAY_CRUSADER3                     = -1609510,
+    SAY_CRUSADER4                     = -1609511,
+    SAY_CRUSADER5                     = -1609512,
+    SAY_CRUSADER6                     = -1609513,
+    SAY_PERSUADED1                    = -1609514,
+    SAY_PERSUADED2                    = -1609515,
+    SAY_PERSUADED3                    = -1609516,
+    SAY_PERSUADED4                    = -1609517,
+    SAY_PERSUADED5                    = -1609518,
+    SAY_PERSUADED6                    = -1609519,
     SPELL_PERSUASIVE_STRIKE           = 52781
 };
 
@@ -93,11 +93,11 @@ public:
                     me->SetReactState(REACT_PASSIVE);
                     DoCastAOE(58111, true);
 
-                    DoScriptText(RAND(SAY_PERSUADE1, SAY_PERSUADE2, SAY_PERSUADE3, 
-                                      SAY_PERSUADE4, SAY_PERSUADE5, SAY_PERSUADE6, 
+                    DoScriptText(RAND(SAY_PERSUADE1, SAY_PERSUADE2, SAY_PERSUADE3,
+                                      SAY_PERSUADE4, SAY_PERSUADE5, SAY_PERSUADE6,
                                       SAY_PERSUADE7), caster);
 
-                    DoScriptText(RAND(SAY_CRUSADER1, SAY_CRUSADER2, SAY_CRUSADER3, 
+                    DoScriptText(RAND(SAY_CRUSADER1, SAY_CRUSADER2, SAY_CRUSADER3,
                                       SAY_CRUSADER4, SAY_CRUSADER5, SAY_CRUSADER6), me);
                 }
             }
@@ -145,9 +145,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*######
 ## npc_koltira_deathweaver
@@ -155,28 +153,28 @@ public:
 
 enum eKoltira
 {
-    SAY_BREAKOUT1                   = -1609561, 
-    SAY_BREAKOUT2                   = -1609562, 
-    SAY_BREAKOUT3                   = -1609563, 
-    SAY_BREAKOUT4                   = -1609564, 
-    SAY_BREAKOUT5                   = -1609565, 
-    SAY_BREAKOUT6                   = -1609566, 
-    SAY_BREAKOUT7                   = -1609567, 
-    SAY_BREAKOUT8                   = -1609568, 
-    SAY_BREAKOUT9                   = -1609569, 
-    SAY_BREAKOUT10                  = -1609570, 
+    SAY_BREAKOUT1                   = -1609561,
+    SAY_BREAKOUT2                   = -1609562,
+    SAY_BREAKOUT3                   = -1609563,
+    SAY_BREAKOUT4                   = -1609564,
+    SAY_BREAKOUT5                   = -1609565,
+    SAY_BREAKOUT6                   = -1609566,
+    SAY_BREAKOUT7                   = -1609567,
+    SAY_BREAKOUT8                   = -1609568,
+    SAY_BREAKOUT9                   = -1609569,
+    SAY_BREAKOUT10                  = -1609570,
 
-    SPELL_KOLTIRA_TRANSFORM         = 52899, 
-    SPELL_ANTI_MAGIC_ZONE           = 52894, 
+    SPELL_KOLTIRA_TRANSFORM         = 52899,
+    SPELL_ANTI_MAGIC_ZONE           = 52894,
 
-    QUEST_BREAKOUT                  = 12727, 
+    QUEST_BREAKOUT                  = 12727,
 
-    NPC_CRIMSON_ACOLYTE             = 29007, 
-    NPC_HIGH_INQUISITOR_VALROTH     = 29001, 
-    NPC_KOLTIRA_ALT                 = 28447, 
+    NPC_CRIMSON_ACOLYTE             = 29007,
+    NPC_HIGH_INQUISITOR_VALROTH     = 29001,
+    NPC_KOLTIRA_ALT                 = 28447,
 
     //not sure about this id
-    //NPC_DEATH_KNIGHT_MOUNT          = 29201, 
+    //NPC_DEATH_KNIGHT_MOUNT          = 29201,
     MODEL_DEATH_KNIGHT_MOUNT        = 25278
 };
 
@@ -346,18 +344,15 @@ public:
             }
         }
     };
-
 };
-
-
 
 //Scarlet courier
 enum ScarletCourierEnum
 {
-    SAY_TREE1                          = -1609531, 
-    SAY_TREE2                          = -1609532, 
-    SPELL_SHOOT                        = 52818, 
-    GO_INCONSPICUOUS_TREE              = 191144, 
+    SAY_TREE1                          = -1609531,
+    SAY_TREE2                          = -1609532,
+    SPELL_SHOOT                        = 52818,
+    GO_INCONSPICUOUS_TREE              = 191144,
     NPC_SCARLET_COURIER                = 29076
 };
 
@@ -436,23 +431,21 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 //Koltira & Valroth- Breakout
 
 enum valroth
 {
-    SAY_VALROTH1                      = -1609581, 
-    SAY_VALROTH2                      = -1609582, 
-    SAY_VALROTH3                      = -1609583, 
-    SAY_VALROTH4                      = -1609584, 
-    SAY_VALROTH5                      = -1609585, 
-    SAY_VALROTH6                      = -1609586, 
-    SPELL_RENEW                       = 38210, 
-    SPELL_INQUISITOR_PENANCE          = 52922, 
-    SPELL_VALROTH_SMITE               = 52926, 
+    SAY_VALROTH1                      = -1609581,
+    SAY_VALROTH2                      = -1609582,
+    SAY_VALROTH3                      = -1609583,
+    SAY_VALROTH4                      = -1609584,
+    SAY_VALROTH5                      = -1609585,
+    SAY_VALROTH6                      = -1609586,
+    SPELL_RENEW                       = 38210,
+    SPELL_INQUISITOR_PENANCE          = 52922,
+    SPELL_VALROTH_SMITE               = 52926,
     SPELL_SUMMON_VALROTH_REMAINS      = 52929
 };
 
@@ -525,9 +518,7 @@ public:
             killer->CastSpell(me, SPELL_SUMMON_VALROTH_REMAINS, true);
         }
     };
-
 };
-
 
 /*######
 ## npc_a_special_surprise
@@ -537,68 +528,68 @@ public:
 enum SpecialSurprise
 {
     SAY_EXEC_START_1            = -1609025,                 // speech for all
-    SAY_EXEC_START_2            = -1609026, 
-    SAY_EXEC_START_3            = -1609027, 
+    SAY_EXEC_START_2            = -1609026,
+    SAY_EXEC_START_3            = -1609027,
 	SAY_EXEC_START_4			= -1609079, 					// Cataclysm: Goblin
-    SAY_EXEC_PROG_1             = -1609028, 
-    SAY_EXEC_PROG_2             = -1609029, 
-    SAY_EXEC_PROG_3             = -1609030, 
-    SAY_EXEC_PROG_4             = -1609031, 
-    SAY_EXEC_PROG_5             = -1609032, 
-    SAY_EXEC_PROG_6             = -1609033, 
-    SAY_EXEC_PROG_7             = -1609034, 
+    SAY_EXEC_PROG_1             = -1609028,
+    SAY_EXEC_PROG_2             = -1609029,
+    SAY_EXEC_PROG_3             = -1609030,
+    SAY_EXEC_PROG_4             = -1609031,
+    SAY_EXEC_PROG_5             = -1609032,
+    SAY_EXEC_PROG_6             = -1609033,
+    SAY_EXEC_PROG_7             = -1609034,
 	SAY_EXEC_PROG_8				= -1609080, 					// Cataclysm: Goblin
-    SAY_EXEC_NAME_1             = -1609035, 
-    SAY_EXEC_NAME_2             = -1609036, 
-    SAY_EXEC_RECOG_1            = -1609037, 
-    SAY_EXEC_RECOG_2            = -1609038, 
-    SAY_EXEC_RECOG_3            = -1609039, 
-    SAY_EXEC_RECOG_4            = -1609040, 
-    SAY_EXEC_RECOG_5            = -1609041, 
-    SAY_EXEC_RECOG_6            = -1609042, 
-    SAY_EXEC_NOREM_1            = -1609043, 
-    SAY_EXEC_NOREM_2            = -1609044, 
-    SAY_EXEC_NOREM_3            = -1609045, 
-    SAY_EXEC_NOREM_4            = -1609046, 
-    SAY_EXEC_NOREM_5            = -1609047, 
-    SAY_EXEC_NOREM_6            = -1609048, 
-    SAY_EXEC_NOREM_7            = -1609049, 
-    SAY_EXEC_NOREM_8            = -1609050, 
-    SAY_EXEC_NOREM_9            = -1609051, 
+    SAY_EXEC_NAME_1             = -1609035,
+    SAY_EXEC_NAME_2             = -1609036,
+    SAY_EXEC_RECOG_1            = -1609037,
+    SAY_EXEC_RECOG_2            = -1609038,
+    SAY_EXEC_RECOG_3            = -1609039,
+    SAY_EXEC_RECOG_4            = -1609040,
+    SAY_EXEC_RECOG_5            = -1609041,
+    SAY_EXEC_RECOG_6            = -1609042,
+    SAY_EXEC_NOREM_1            = -1609043,
+    SAY_EXEC_NOREM_2            = -1609044,
+    SAY_EXEC_NOREM_3            = -1609045,
+    SAY_EXEC_NOREM_4            = -1609046,
+    SAY_EXEC_NOREM_5            = -1609047,
+    SAY_EXEC_NOREM_6            = -1609048,
+    SAY_EXEC_NOREM_7            = -1609049,
+    SAY_EXEC_NOREM_8            = -1609050,
+    SAY_EXEC_NOREM_9            = -1609051,
 	SAY_EXEC_NOREM_10			= -1609081, 					// Cataclysm: Goblin
 	SAY_EXEC_NOREM_11			= -1609085, 					// Cataclysm: Worgen
-    SAY_EXEC_THINK_1            = -1609052, 
-    SAY_EXEC_THINK_2            = -1609053, 
-    SAY_EXEC_THINK_3            = -1609054, 
-    SAY_EXEC_THINK_4            = -1609055, 
-    SAY_EXEC_THINK_5            = -1609056, 
-    SAY_EXEC_THINK_6            = -1609057, 
-    SAY_EXEC_THINK_7            = -1609058, 
-    SAY_EXEC_THINK_8            = -1609059, 
-    SAY_EXEC_THINK_9            = -1609060, 
-    SAY_EXEC_THINK_10           = -1609061, 
+    SAY_EXEC_THINK_1            = -1609052,
+    SAY_EXEC_THINK_2            = -1609053,
+    SAY_EXEC_THINK_3            = -1609054,
+    SAY_EXEC_THINK_4            = -1609055,
+    SAY_EXEC_THINK_5            = -1609056,
+    SAY_EXEC_THINK_6            = -1609057,
+    SAY_EXEC_THINK_7            = -1609058,
+    SAY_EXEC_THINK_8            = -1609059,
+    SAY_EXEC_THINK_9            = -1609060,
+    SAY_EXEC_THINK_10           = -1609061,
 	SAY_EXEC_THINK_11			= -1609082, 					// Cataclysm: Goblin
 	SAY_EXEC_THINK_12			= -1609086, 					// Cataclysm: Worgen
-    SAY_EXEC_LISTEN_1           = -1609062, 
-    SAY_EXEC_LISTEN_2           = -1609063, 
-    SAY_EXEC_LISTEN_3           = -1609064, 
-    SAY_EXEC_LISTEN_4           = -1609065, 
+    SAY_EXEC_LISTEN_1           = -1609062,
+    SAY_EXEC_LISTEN_2           = -1609063,
+    SAY_EXEC_LISTEN_3           = -1609064,
+    SAY_EXEC_LISTEN_4           = -1609065,
 	SAY_EXEC_LISTEN_5			= -1609083, 					// Cataclysm: Goblin
-    SAY_PLAGUEFIST              = -1609066, 
-    SAY_EXEC_TIME_1             = -1609067, 
-    SAY_EXEC_TIME_2             = -1609068, 
-    SAY_EXEC_TIME_3             = -1609069, 
-    SAY_EXEC_TIME_4             = -1609070, 
-    SAY_EXEC_TIME_5             = -1609071, 
-    SAY_EXEC_TIME_6             = -1609072, 
-    SAY_EXEC_TIME_7             = -1609073, 
-    SAY_EXEC_TIME_8             = -1609074, 
-    SAY_EXEC_TIME_9             = -1609075, 
-    SAY_EXEC_TIME_10            = -1609076, 
+    SAY_PLAGUEFIST              = -1609066,
+    SAY_EXEC_TIME_1             = -1609067,
+    SAY_EXEC_TIME_2             = -1609068,
+    SAY_EXEC_TIME_3             = -1609069,
+    SAY_EXEC_TIME_4             = -1609070,
+    SAY_EXEC_TIME_5             = -1609071,
+    SAY_EXEC_TIME_6             = -1609072,
+    SAY_EXEC_TIME_7             = -1609073,
+    SAY_EXEC_TIME_8             = -1609074,
+    SAY_EXEC_TIME_9             = -1609075,
+    SAY_EXEC_TIME_10            = -1609076,
 	SAY_EXEC_TIME_11			= -1609084, 					// Cataclysm: Goblin
-	SAY_EXEC_TIME_12			= -1609087, 
-    SAY_EXEC_WAITING            = -1609077, 
-    EMOTE_DIES                  = -1609078, 
+	SAY_EXEC_TIME_12			= -1609087,
+    SAY_EXEC_WAITING            = -1609077,
+    EMOTE_DIES                  = -1609078,
 
     NPC_PLAGUEFIST              = 29053
 };
@@ -1002,7 +993,7 @@ public:
                                 case 2: DoScriptText(SAY_EXEC_PROG_1, me, pPlayer); break;
                                 case 3: DoScriptText(SAY_EXEC_NAME_1, me, pPlayer); break;
                                 case 4: DoScriptText(SAY_EXEC_RECOG_1, me, pPlayer); break;
-                                case 5: DoScriptText(SAY_EXEC_NOREM_11, me, pPlayer); break;		// SQL Part Implemented in Cataclysm 
+                                case 5: DoScriptText(SAY_EXEC_NOREM_11, me, pPlayer); break;		// SQL Part Implemented in Cataclysm
                                 case 6: DoScriptText(SAY_EXEC_THINK_12, me, pPlayer); break;		// SQL Part Implemented in Cataclysm
                                 case 7: DoScriptText(SAY_EXEC_LISTEN_1, me, pPlayer); break;
                                 case 8:
@@ -1030,7 +1021,7 @@ public:
                                 case 2: DoScriptText(SAY_EXEC_PROG_8, me, pPlayer); break;			// SQL Part Implemented in Cataclysm
                                 case 3: DoScriptText(SAY_EXEC_NAME_1, me, pPlayer); break;			// SQL Part Implemented in Cataclysm
                                 case 4: DoScriptText(SAY_EXEC_RECOG_1, me, pPlayer); break;
-                                case 5: DoScriptText(SAY_EXEC_NOREM_11, me, pPlayer); break;		// SQL Part Implemented in Cataclysm 
+                                case 5: DoScriptText(SAY_EXEC_NOREM_11, me, pPlayer); break;		// SQL Part Implemented in Cataclysm
                                 case 6: DoScriptText(SAY_EXEC_THINK_11, me, pPlayer); break;		// SQL Part Implemented in Cataclysm
                                 case 7: DoScriptText(SAY_EXEC_LISTEN_5, me, pPlayer); break;		// SQL Part Implemented in Cataclysm
                                 case 8:
@@ -1064,9 +1055,7 @@ public:
             }
         }
     };
-
 };
-
 
 void AddSC_the_scarlet_enclave_c2()
 {

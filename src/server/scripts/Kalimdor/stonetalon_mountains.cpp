@@ -53,7 +53,6 @@ public:
         {
             pPlayer->CLOSE_GOSSIP_MENU();
             pCreature->CastSpell(pPlayer, 6766, false);
-
         }
         if (uiAction == GOSSIP_ACTION_INFO_DEF+2)
         {
@@ -83,9 +82,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_kaya_flathoof
@@ -93,15 +90,15 @@ public:
 
 enum eKaya
 {
-    FACTION_ESCORTEE_H          = 775, 
+    FACTION_ESCORTEE_H          = 775,
 
-    NPC_GRIMTOTEM_RUFFIAN       = 11910, 
-    NPC_GRIMTOTEM_BRUTE         = 11912, 
-    NPC_GRIMTOTEM_SORCERER      = 11913, 
+    NPC_GRIMTOTEM_RUFFIAN       = 11910,
+    NPC_GRIMTOTEM_BRUTE         = 11912,
+    NPC_GRIMTOTEM_SORCERER      = 11913,
 
-    SAY_START                   = -1000357, 
-    SAY_AMBUSH                  = -1000358, 
-    SAY_END                     = -1000359, 
+    SAY_START                   = -1000357,
+    SAY_AMBUSH                  = -1000358,
+    SAY_END                     = -1000359,
 
     QUEST_PROTECT_KAYA          = 6523
 };
@@ -164,9 +161,7 @@ public:
     {
         return new npc_kaya_flathoofAI(pCreature);
     }
-
 };
-
 
 /*######
 ## AddSC

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -48,85 +48,85 @@ enum Yells
     SAY_TAUNT4                                             = -1533093, //not used
     SAY_SUMMON_MINIONS                                     = -1533105, //start of phase 1
     SAY_AGGRO_1                                            = -1533094, //start of phase 2
-    SAY_AGGRO_2                                            = -1533095, 
-    SAY_AGGRO_3                                            = -1533096, 
-    SAY_SLAY_1                                             = -1533097, 
-    SAY_SLAY_2                                             = -1533098, 
-    SAY_DEATH                                              = -1533099, 
-    SAY_CHAIN_1                                            = -1533100, 
-    SAY_CHAIN_2                                            = -1533101, 
-    SAY_FROST_BLAST                                        = -1533102, 
-    SAY_SPECIAL_1                                          = -1533106, 
-    SAY_SPECIAL_2                                          = -1533107, 
-    SAY_SPECIAL_3                                          = -1533108, 
+    SAY_AGGRO_2                                            = -1533095,
+    SAY_AGGRO_3                                            = -1533096,
+    SAY_SLAY_1                                             = -1533097,
+    SAY_SLAY_2                                             = -1533098,
+    SAY_DEATH                                              = -1533099,
+    SAY_CHAIN_1                                            = -1533100,
+    SAY_CHAIN_2                                            = -1533101,
+    SAY_FROST_BLAST                                        = -1533102,
+    SAY_SPECIAL_1                                          = -1533106,
+    SAY_SPECIAL_2                                          = -1533107,
+    SAY_SPECIAL_3                                          = -1533108,
     SAY_REQUEST_AID                                        = -1533103, //start of phase 3
     SAY_ANSWER_REQUEST                                     = -1533104  //lich king answer
 };
 enum Event
 {
-    EVENT_NONE, 
-    EVENT_BOLT, 
-    EVENT_NOVA, 
-    EVENT_CHAIN, 
-    EVENT_CHAINED_SPELL, 
-    EVENT_DETONATE, 
-    EVENT_FISSURE, 
-    EVENT_BLAST, 
+    EVENT_NONE,
+    EVENT_BOLT,
+    EVENT_NOVA,
+    EVENT_CHAIN,
+    EVENT_CHAINED_SPELL,
+    EVENT_DETONATE,
+    EVENT_FISSURE,
+    EVENT_BLAST,
 
-    EVENT_WASTE, 
-    EVENT_ABOMIN, 
-    EVENT_WEAVER, 
-    EVENT_ICECROWN, 
-    EVENT_TRIGGER, 
+    EVENT_WASTE,
+    EVENT_ABOMIN,
+    EVENT_WEAVER,
+    EVENT_ICECROWN,
+    EVENT_TRIGGER,
 
-    EVENT_PHASE, 
+    EVENT_PHASE,
 };
 
 enum Spells
 {
-    SPELL_FROST_BOLT                                       = 28478, 
-    H_SPELL_FROST_BOLT                                     = 55802, 
-    SPELL_FROST_BOLT_AOE                                   = 28479, 
-    H_SPELL_FROST_BOLT_AOE                                 = 55807, 
-    SPELL_SHADOW_FISURE                                    = 27810, 
-    SPELL_VOID_BLAST                                       = 27812, 
-    SPELL_MANA_DETONATION                                  = 27819, 
-    SPELL_FROST_BLAST                                      = 27808, 
+    SPELL_FROST_BOLT                                       = 28478,
+    H_SPELL_FROST_BOLT                                     = 55802,
+    SPELL_FROST_BOLT_AOE                                   = 28479,
+    H_SPELL_FROST_BOLT_AOE                                 = 55807,
+    SPELL_SHADOW_FISURE                                    = 27810,
+    SPELL_VOID_BLAST                                       = 27812,
+    SPELL_MANA_DETONATION                                  = 27819,
+    SPELL_FROST_BLAST                                      = 27808,
     SPELL_CHAINS_OF_KELTHUZAD                              = 28410, //28408 script effect
-    SPELL_KELTHUZAD_CHANNEL                                = 29423, 
-    SPELL_BERSERK                                          = 28498, 
+    SPELL_KELTHUZAD_CHANNEL                                = 29423,
+    SPELL_BERSERK                                          = 28498,
 
     //spells for chained
     //warlock
-    SPELL_CURSE_OF_AGONY                                   = 47864, 
-    SPELL_SHADOW_BOLT                                      = 47809, 
+    SPELL_CURSE_OF_AGONY                                   = 47864,
+    SPELL_SHADOW_BOLT                                      = 47809,
     //shaman
-    SPELL_EARTH_SHOCK                                      = 49231, 
-    SPELL_HEALING_WAVE                                     = 49273, 
+    SPELL_EARTH_SHOCK                                      = 49231,
+    SPELL_HEALING_WAVE                                     = 49273,
     //mage
-    SPELL_FROST_FIREBOLT                                   = 47610, 
-    SPELL_ARCANE_MISSILES                                  = 42846, 
+    SPELL_FROST_FIREBOLT                                   = 47610,
+    SPELL_ARCANE_MISSILES                                  = 42846,
     //rogue
-    SPELL_HEMORRHAGE                                       = 48660, 
-    SPELL_MUTILATE                                         = 48666, 
+    SPELL_HEMORRHAGE                                       = 48660,
+    SPELL_MUTILATE                                         = 48666,
     //paladin
-    SPELL_HOLY_SHOCK                                       = 48825, 
-    SPELL_HAMMER_OF_JUSTICE                                = 10308, 
+    SPELL_HOLY_SHOCK                                       = 48825,
+    SPELL_HAMMER_OF_JUSTICE                                = 10308,
     //priest
-    SPELL_VAMPIRIC_TOUCH                                   = 48160, 
-    SPELL_RENEW                                            = 48068, 
+    SPELL_VAMPIRIC_TOUCH                                   = 48160,
+    SPELL_RENEW                                            = 48068,
     //hunter
-    SPELL_MULTI_SHOT                                       = 49048, 
-    SPELL_VOLLEY                                           = 58434, 
+    SPELL_MULTI_SHOT                                       = 49048,
+    SPELL_VOLLEY                                           = 58434,
     //warrior
-    SPELL_BLADESTORM                                       = 46924, 
-    SPELL_CLEAVE                                           = 47520, 
+    SPELL_BLADESTORM                                       = 46924,
+    SPELL_CLEAVE                                           = 47520,
     //druid
-    SPELL_MOONFIRE                                         = 48463, 
-    SPELL_LIFEBLOOM                                        = 48451, 
+    SPELL_MOONFIRE                                         = 48463,
+    SPELL_LIFEBLOOM                                        = 48451,
     //death knight
-    SPELL_PLAGUE_STRIKE                                    = 49921, 
-    SPELL_HOWLING_BLAST                                    = 51411, 
+    SPELL_PLAGUE_STRIKE                                    = 49921,
+    SPELL_HOWLING_BLAST                                    = 51411,
 };
 
 enum Creatures
@@ -158,95 +158,95 @@ const Position Pos[12] =
 #define MAX_ABOMINATIONS                        21
 const Position PosAbominations[MAX_ABOMINATIONS] =
 {
-    {3755.52f, -5155.22f, 143.480f, 2.0f}, 
-    {3744.35f, -5164.03f, 143.590f, 2.00f}, 
-    {3749.28f, -5159.04f, 143.190f, 2.0f}, 
-    {3774.47f, -5076.28f, 143.528f, 2.15912f}, 
-    {3765.94f, -5074.15f, 143.186f, 3.77233f}, 
-    {3763.15f, -5063.36f, 143.694f, 3.77233f}, 
-    {3737.81f, -5045.69f, 143.709f, 4.9033f}, 
-    {3728.13f, -5045.01f, 143.355f, 1.45069f}, 
-    {3721.56f, -5048.35f, 143.542f, 1.45069f}, 
-    {3689.55f, -5049.66f, 143.637f, 5.2104f}, 
-    {3681.71f, -5053.03f, 143.242f, 2.47957f}, 
-    {3677.64f, -5061.44f, 143.358f, 2.47957f}, 
-    {3654.2f, -5090.87f, 143.469f, 1.0313f}, 
-    {3650.39f, -5097.45f, 143.496f, 2.5047f}, 
-    {3658.7f, -5103.59f, 143.607f, 3.3278f}, 
-    {3659.02f, -5133.97f, 143.624f, 3.84538f}, 
-    {3666.33f, -5139.34f, 143.183f, 3.84538f}, 
-    {3669.74f, -5149.63f, 143.678f, 0.528643f}, 
-    {3695.53f, -5169.53f, 143.671f, 2.11908f}, 
-    {3701.98f, -5166.51f, 143.395f, 1.24257f}, 
-    {3709.62f, -5169.15f, 143.576f, 5.97695f}, 
+    {3755.52f, -5155.22f, 143.480f, 2.0f},
+    {3744.35f, -5164.03f, 143.590f, 2.00f},
+    {3749.28f, -5159.04f, 143.190f, 2.0f},
+    {3774.47f, -5076.28f, 143.528f, 2.15912f},
+    {3765.94f, -5074.15f, 143.186f, 3.77233f},
+    {3763.15f, -5063.36f, 143.694f, 3.77233f},
+    {3737.81f, -5045.69f, 143.709f, 4.9033f},
+    {3728.13f, -5045.01f, 143.355f, 1.45069f},
+    {3721.56f, -5048.35f, 143.542f, 1.45069f},
+    {3689.55f, -5049.66f, 143.637f, 5.2104f},
+    {3681.71f, -5053.03f, 143.242f, 2.47957f},
+    {3677.64f, -5061.44f, 143.358f, 2.47957f},
+    {3654.2f, -5090.87f, 143.469f, 1.0313f},
+    {3650.39f, -5097.45f, 143.496f, 2.5047f},
+    {3658.7f, -5103.59f, 143.607f, 3.3278f},
+    {3659.02f, -5133.97f, 143.624f, 3.84538f},
+    {3666.33f, -5139.34f, 143.183f, 3.84538f},
+    {3669.74f, -5149.63f, 143.678f, 0.528643f},
+    {3695.53f, -5169.53f, 143.671f, 2.11908f},
+    {3701.98f, -5166.51f, 143.395f, 1.24257f},
+    {3709.62f, -5169.15f, 143.576f, 5.97695f},
 };
 
 //Soldiers of the Frozen Wastes
 #define MAX_WASTES                              49
 const Position PosWastes[MAX_WASTES] =
 {
-    {3754.41f, -5147.24f, 143.204f, 2.0f}, 
-    {3754.68f, -5156.17f, 143.418f, 2.0f}, 
-    {3757.91f, -5160.12f, 143.503f, 2.0f}, 
-    {3752.67f, -5164.6f, 143.395f, 2.0f}, 
-    {3745.42f, -5164.47f, 143.565f, 2.74587f}, 
-    {3741.2f, -5155.92f, 143.17f, 5.29134f}, 
-    {3746.57f, -5148.82f, 143.176f, 5.07772f}, 
-    {3778.14f, -5070.1f, 143.568f, 3.16208f}, 
-    {3775.09f, -5078.97f, 143.65f, 2.81022f}, 
-    {3773.54f, -5083.47f, 143.758f, 3.21549f}, 
-    {3765, -5078.29f, 143.176f, 4.36688f}, 
-    {3766.94f, -5072.63f, 143.184f, 5.27951f}, 
-    {3762.68f, -5064.94f, 143.635f, 3.95297f}, 
-    {3769.9f, -5059.94f, 143.74f, 3.36549f}, 
-    {3736.33f, -5042.18f, 143.643f, 5.9471f}, 
-    {3727.51f, -5040.58f, 143.502f, 0.871859f}, 
-    {3719.89f, -5049.64f, 143.58f, 4.75172f}, 
-    {3720.69f, -5044.43f, 143.662f, 1.87245f}, 
-    {3725.69f, -5048.99f, 143.363f, 2.48271f}, 
-    {3732.33f, -5054.01f, 143.44f, 3.59405f}, 
-    {3738.09f, -5051.06f, 143.718f, 4.70931f}, 
-    {3682.76f, -5063.5f, 143.175f, 0.636238f}, 
-    {3686.7f, -5060.58f, 143.18f, 0.636238f}, 
-    {3682.45f, -5057.21f, 143.184f, 5.61252f}, 
-    {3677.57f, -5053.34f, 143.369f, 1.52531f}, 
-    {3677.3f, -5062.26f, 143.369f, 2.73482f}, 
-    {3691.21f, -5053.02f, 143.421f, 5.93218f}, 
-    {3685.22f, -5053.34f, 143.314f, 4.70303f}, 
-    {3652.11f, -5088.47f, 143.555f, 0.793317f}, 
-    {3648.23f, -5093.21f, 143.311f, 1.18837f}, 
-    {3648.14f, -5100.11f, 143.632f, 2.12221f}, 
-    {3653.88f, -5099.7f, 143.558f, 3.04348f}, 
-    {3661.23f, -5100.33f, 143.42f, 4.08335f}, 
-    {3663.49f, -5092.77f, 143.346f, 4.47134f}, 
-    {3661.85f, -5087.99f, 143.571f, 1.0148f}, 
-    {3664.56f, -5149.01f, 143.532f, 0.0762528f}, 
-    {3665.01f, -5142.04f, 143.201f, 1.72009f}, 
-    {3671.15f, -5142.92f, 143.174f, 4.81535f}, 
-    {3670.18f, -5134.38f, 143.177f, 5.37534f}, 
-    {3664.33f, -5131.69f, 143.262f, 5.39576f}, 
-    {3658.21f, -5133.63f, 143.662f, 1.3863f}, 
-    {3659.7f, -5144.49f, 143.363f, 2.32328f}, 
-    {3705.71f, -5179.63f, 143.746f, 1.06743f}, 
-    {3696.77f, -5177.45f, 143.759f, 5.36748f}, 
-    {3700.97f, -5173.13f, 143.52f, 3.26575f}, 
-    {3708.53f, -5172.19f, 143.573f, 3.26575f}, 
-    {3712.49f, -5167.62f, 143.657f, 5.63295f}, 
-    {3704.89f, -5161.84f, 143.239f, 5.63295f}, 
-    {3695.66f, -5164.63f, 143.674f, 1.54416f}, 
+    {3754.41f, -5147.24f, 143.204f, 2.0f},
+    {3754.68f, -5156.17f, 143.418f, 2.0f},
+    {3757.91f, -5160.12f, 143.503f, 2.0f},
+    {3752.67f, -5164.6f, 143.395f, 2.0f},
+    {3745.42f, -5164.47f, 143.565f, 2.74587f},
+    {3741.2f, -5155.92f, 143.17f, 5.29134f},
+    {3746.57f, -5148.82f, 143.176f, 5.07772f},
+    {3778.14f, -5070.1f, 143.568f, 3.16208f},
+    {3775.09f, -5078.97f, 143.65f, 2.81022f},
+    {3773.54f, -5083.47f, 143.758f, 3.21549f},
+    {3765, -5078.29f, 143.176f, 4.36688f},
+    {3766.94f, -5072.63f, 143.184f, 5.27951f},
+    {3762.68f, -5064.94f, 143.635f, 3.95297f},
+    {3769.9f, -5059.94f, 143.74f, 3.36549f},
+    {3736.33f, -5042.18f, 143.643f, 5.9471f},
+    {3727.51f, -5040.58f, 143.502f, 0.871859f},
+    {3719.89f, -5049.64f, 143.58f, 4.75172f},
+    {3720.69f, -5044.43f, 143.662f, 1.87245f},
+    {3725.69f, -5048.99f, 143.363f, 2.48271f},
+    {3732.33f, -5054.01f, 143.44f, 3.59405f},
+    {3738.09f, -5051.06f, 143.718f, 4.70931f},
+    {3682.76f, -5063.5f, 143.175f, 0.636238f},
+    {3686.7f, -5060.58f, 143.18f, 0.636238f},
+    {3682.45f, -5057.21f, 143.184f, 5.61252f},
+    {3677.57f, -5053.34f, 143.369f, 1.52531f},
+    {3677.3f, -5062.26f, 143.369f, 2.73482f},
+    {3691.21f, -5053.02f, 143.421f, 5.93218f},
+    {3685.22f, -5053.34f, 143.314f, 4.70303f},
+    {3652.11f, -5088.47f, 143.555f, 0.793317f},
+    {3648.23f, -5093.21f, 143.311f, 1.18837f},
+    {3648.14f, -5100.11f, 143.632f, 2.12221f},
+    {3653.88f, -5099.7f, 143.558f, 3.04348f},
+    {3661.23f, -5100.33f, 143.42f, 4.08335f},
+    {3663.49f, -5092.77f, 143.346f, 4.47134f},
+    {3661.85f, -5087.99f, 143.571f, 1.0148f},
+    {3664.56f, -5149.01f, 143.532f, 0.0762528f},
+    {3665.01f, -5142.04f, 143.201f, 1.72009f},
+    {3671.15f, -5142.92f, 143.174f, 4.81535f},
+    {3670.18f, -5134.38f, 143.177f, 5.37534f},
+    {3664.33f, -5131.69f, 143.262f, 5.39576f},
+    {3658.21f, -5133.63f, 143.662f, 1.3863f},
+    {3659.7f, -5144.49f, 143.363f, 2.32328f},
+    {3705.71f, -5179.63f, 143.746f, 1.06743f},
+    {3696.77f, -5177.45f, 143.759f, 5.36748f},
+    {3700.97f, -5173.13f, 143.52f, 3.26575f},
+    {3708.53f, -5172.19f, 143.573f, 3.26575f},
+    {3712.49f, -5167.62f, 143.657f, 5.63295f},
+    {3704.89f, -5161.84f, 143.239f, 5.63295f},
+    {3695.66f, -5164.63f, 143.674f, 1.54416f},
 };
 
 //Soul Weavers
 #define MAX_WEAVERS                             7
 const Position PosWeavers[MAX_WEAVERS] =
 {
-    {3752.45f, -5168.35f, 143.562f, 1.6094f}, 
-    {3772.2f, -5070.04f, 143.329f, 1.93686f}, 
-    {3732.28f, -5032.88f, 143.771f, 3.08355f}, 
-    {3689.05f, -5055.7f, 143.172f, 6.09554f}, 
-    {3649.45f, -5093.17f, 143.299f, 2.51805f}, 
-    {3659.7f, -5144.49f, 143.363f, 4.08806f}, 
-    {3704.71f, -5175.96f, 143.597f, 3.36549f}, 
+    {3752.45f, -5168.35f, 143.562f, 1.6094f},
+    {3772.2f, -5070.04f, 143.329f, 1.93686f},
+    {3732.28f, -5032.88f, 143.771f, 3.08355f},
+    {3689.05f, -5055.7f, 143.172f, 6.09554f},
+    {3649.45f, -5093.17f, 143.299f, 2.51805f},
+    {3659.7f, -5144.49f, 143.363f, 4.08806f},
+    {3704.71f, -5175.96f, 143.597f, 3.36549f},
 };
 
 // predicate function to select not charmed target
@@ -648,7 +648,6 @@ public:
     {
         return new boss_kelthuzadAI (pCreature);
     }
-
 };
 
 class at_kelthuzad_center : public AreaTriggerScript
@@ -712,7 +711,6 @@ public:
 
         return true;
     }
-
 };
 
 void AddSC_boss_kelthuzad()

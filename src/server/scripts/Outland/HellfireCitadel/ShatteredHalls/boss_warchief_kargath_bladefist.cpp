@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -37,26 +37,26 @@ EndContentData */
 
 enum eSays
 {
-    SAY_AGGRO1                     = -1540042, 
-    SAY_AGGRO2                     = -1540043, 
-    SAY_AGGRO3                     = -1540044, 
-    SAY_SLAY1                      = -1540045, 
-    SAY_SLAY2                      = -1540046, 
-    SAY_DEATH                      = -1540047, 
+    SAY_AGGRO1                     = -1540042,
+    SAY_AGGRO2                     = -1540043,
+    SAY_AGGRO3                     = -1540044,
+    SAY_SLAY1                      = -1540045,
+    SAY_SLAY2                      = -1540046,
+    SAY_DEATH                      = -1540047,
 };
 
 enum eSpells
 {
-     SPELL_BLADE_DANCE              = 30739, 
-     H_SPELL_CHARGE                 = 25821, 
+     SPELL_BLADE_DANCE              = 30739,
+     H_SPELL_CHARGE                 = 25821,
 };
 
 enum eCreatures
 {
-    MOB_SHATTERED_ASSASSIN         = 17695, 
-    MOB_HEARTHEN_GUARD             = 17621, 
-    MOB_SHARPSHOOTER_GUARD         = 17622, 
-    MOB_REAVER_GUARD               = 17623, 
+    MOB_SHATTERED_ASSASSIN         = 17695,
+    MOB_HEARTHEN_GUARD             = 17621,
+    MOB_SHARPSHOOTER_GUARD         = 17622,
+    MOB_REAVER_GUARD               = 17623,
 };
 
 #define TARGET_NUM                      5
@@ -334,4 +334,3 @@ void AddSC_boss_warchief_kargath_bladefist()
 {
     new boss_warchief_kargath_bladefist();
 }
-

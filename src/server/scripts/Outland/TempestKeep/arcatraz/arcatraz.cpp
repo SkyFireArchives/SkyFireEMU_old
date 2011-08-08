@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -44,32 +44,32 @@ EndContentData */
 
 enum eMillhouseSays
 {
-    SAY_INTRO_1                = -1552010, 
-    SAY_INTRO_2                = -1552011, 
-    SAY_WATER                  = -1552012, 
-    SAY_BUFFS                  = -1552013, 
-    SAY_DRINK                  = -1552014, 
-    SAY_READY                  = -1552015, 
-    SAY_KILL_1                 = -1552016, 
-    SAY_KILL_2                 = -1552017, 
-    SAY_PYRO                   = -1552018, 
-    SAY_ICEBLOCK               = -1552019, 
-    SAY_LOWHP                  = -1552020, 
-    SAY_DEATH                  = -1552021, 
-    SAY_COMPLETE               = -1552022, 
+    SAY_INTRO_1                = -1552010,
+    SAY_INTRO_2                = -1552011,
+    SAY_WATER                  = -1552012,
+    SAY_BUFFS                  = -1552013,
+    SAY_DRINK                  = -1552014,
+    SAY_READY                  = -1552015,
+    SAY_KILL_1                 = -1552016,
+    SAY_KILL_2                 = -1552017,
+    SAY_PYRO                   = -1552018,
+    SAY_ICEBLOCK               = -1552019,
+    SAY_LOWHP                  = -1552020,
+    SAY_DEATH                  = -1552021,
+    SAY_COMPLETE               = -1552022,
 };
 
 enum eMillhouseSpells
 {
-    SPELL_CONJURE_WATER        = 36879, 
-    SPELL_ARCANE_INTELLECT     = 36880, 
-    SPELL_ICE_ARMOR            = 36881, 
-    SPELL_ARCANE_MISSILES      = 33833, 
-    SPELL_CONE_OF_COLD         = 12611, 
-    SPELL_FIRE_BLAST           = 13341, 
-    SPELL_FIREBALL             = 14034, 
-    SPELL_FROSTBOLT            = 15497, 
-    SPELL_PYROBLAST            = 33975, 
+    SPELL_CONJURE_WATER        = 36879,
+    SPELL_ARCANE_INTELLECT     = 36880,
+    SPELL_ICE_ARMOR            = 36881,
+    SPELL_ARCANE_MISSILES      = 33833,
+    SPELL_CONE_OF_COLD         = 12611,
+    SPELL_FIRE_BLAST           = 13341,
+    SPELL_FIREBALL             = 14034,
+    SPELL_FROSTBOLT            = 15497,
+    SPELL_PYROBLAST            = 33975,
 };
 
 class npc_millhouse_manastorm : public CreatureScript
@@ -238,42 +238,42 @@ class npc_millhouse_manastorm : public CreatureScript
 
 enum eWardenSays
 {
-    YELL_INTRO1         = -1552023, 
-    YELL_INTRO2         = -1552024, 
-    YELL_RELEASE1       = -1552025, 
-    YELL_RELEASE2A      = -1552026, 
-    YELL_RELEASE2B      = -1552027, 
-    YELL_RELEASE3       = -1552028, 
-    YELL_RELEASE4       = -1552029, 
-    YELL_WELCOME        = -1552030, 
+    YELL_INTRO1         = -1552023,
+    YELL_INTRO2         = -1552024,
+    YELL_RELEASE1       = -1552025,
+    YELL_RELEASE2A      = -1552026,
+    YELL_RELEASE2B      = -1552027,
+    YELL_RELEASE3       = -1552028,
+    YELL_RELEASE4       = -1552029,
+    YELL_WELCOME        = -1552030,
 };
 
 enum eWardenUnits
 {
     //phase 2(acid mobs)
-    ENTRY_TRICKSTER    = 20905, 
-    ENTRY_PH_HUNTER    = 20906, 
+    ENTRY_TRICKSTER    = 20905,
+    ENTRY_PH_HUNTER    = 20906,
     //phase 3
-    ENTRY_MILLHOUSE    = 20977, 
+    ENTRY_MILLHOUSE    = 20977,
     //phase 4(acid mobs)
-    ENTRY_AKKIRIS      = 20908, 
-    ENTRY_SULFURON     = 20909, 
+    ENTRY_AKKIRIS      = 20908,
+    ENTRY_SULFURON     = 20909,
     //phase 5(acid mobs)
-    ENTRY_TW_DRAK      = 20910, 
-    ENTRY_BL_DRAK      = 20911, 
+    ENTRY_TW_DRAK      = 20910,
+    ENTRY_BL_DRAK      = 20911,
     //phase 6
-    ENTRY_SKYRISS      = 20912, 
+    ENTRY_SKYRISS      = 20912,
 };
 
 enum eWardenSpells
 {
     //TARGET_SCRIPT
-    SPELL_TARGET_ALPHA  = 36856, 
-    SPELL_TARGET_BETA   = 36854, 
-    SPELL_TARGET_DELTA  = 36857, 
-    SPELL_TARGET_GAMMA  = 36858, 
-    SPELL_TARGET_OMEGA  = 36852, 
-    SPELL_BUBBLE_VISUAL = 36849, 
+    SPELL_TARGET_ALPHA  = 36856,
+    SPELL_TARGET_BETA   = 36854,
+    SPELL_TARGET_DELTA  = 36857,
+    SPELL_TARGET_GAMMA  = 36858,
+    SPELL_TARGET_OMEGA  = 36852,
+    SPELL_BUBBLE_VISUAL = 36849,
 };
 
 class npc_warden_mellichar : public CreatureScript
@@ -567,4 +567,3 @@ void AddSC_arcatraz()
     new npc_warden_mellichar();
     new mob_zerekethvoidzone();
 }
-

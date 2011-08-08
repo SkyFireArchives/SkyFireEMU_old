@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -43,18 +43,18 @@ EndContentData */
 
 enum eOOX
 {
-    SAY_OOX_START           = -1000287, 
-    SAY_OOX_AGGRO1          = -1000288, 
-    SAY_OOX_AGGRO2          = -1000289, 
-    SAY_OOX_AMBUSH          = -1000290, 
-    SAY_OOX_END             = -1000292, 
+    SAY_OOX_START           = -1000287,
+    SAY_OOX_AGGRO1          = -1000288,
+    SAY_OOX_AGGRO2          = -1000289,
+    SAY_OOX_AMBUSH          = -1000290,
+    SAY_OOX_END             = -1000292,
 
-    QUEST_RESQUE_OOX_09     = 836, 
+    QUEST_RESQUE_OOX_09     = 836,
 
-    NPC_MARAUDING_OWL       = 7808, 
-    NPC_VILE_AMBUSHER       = 7809, 
+    NPC_MARAUDING_OWL       = 7808,
+    NPC_VILE_AMBUSHER       = 7809,
 
-    FACTION_ESCORTEE_A      = 774, 
+    FACTION_ESCORTEE_A      = 774,
     FACTION_ESCORTEE_H      = 775
 };
 
@@ -152,10 +152,7 @@ public:
             pSummoned->GetMotionMaster()->MovePoint(0, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ());
         }
     };
-
 };
-
-
 
 /*######
 ## npc_rinji
@@ -164,16 +161,16 @@ public:
 enum eRinji
 {
     SAY_RIN_FREE            = -1000403, //from here
-    SAY_RIN_BY_OUTRUNNER    = -1000404, 
-    SAY_RIN_HELP_1          = -1000405, 
+    SAY_RIN_BY_OUTRUNNER    = -1000404,
+    SAY_RIN_HELP_1          = -1000405,
     SAY_RIN_HELP_2          = -1000406, //to here, are used also by 6182 but this is wrong...
-    SAY_RIN_COMPLETE        = -1000407, 
-    SAY_RIN_PROGRESS_1      = -1000408, 
-    SAY_RIN_PROGRESS_2      = -1000409, 
+    SAY_RIN_COMPLETE        = -1000407,
+    SAY_RIN_PROGRESS_1      = -1000408,
+    SAY_RIN_PROGRESS_2      = -1000409,
 
-    QUEST_RINJI_TRAPPED     = 2742, 
-    NPC_RANGER              = 2694, 
-    NPC_OUTRUNNER           = 2691, 
+    QUEST_RINJI_TRAPPED     = 2742,
+    NPC_RANGER              = 2694,
+    NPC_OUTRUNNER           = 2691,
     GO_RINJI_CAGE           = 142036
 };
 
@@ -184,13 +181,13 @@ struct Location
 
 Location m_afAmbushSpawn[] =
 {
-    {191.296204f, -2839.329346f, 107.388f}, 
+    {191.296204f, -2839.329346f, 107.388f},
     {70.972466f,  -2848.674805f, 109.459f}
 };
 
 Location m_afAmbushMoveTo[] =
 {
-    {166.630386f, -2824.780273f, 108.153f}, 
+    {166.630386f, -2824.780273f, 108.153f},
     {70.886589f,  -2874.335449f, 116.675f}
 };
 
@@ -267,14 +264,14 @@ public:
             if (!bFirst)
                 m_iSpawnId = 1;
 
-            me->SummonCreature(NPC_RANGER, 
-                m_afAmbushSpawn[m_iSpawnId].m_fX, m_afAmbushSpawn[m_iSpawnId].m_fY, m_afAmbushSpawn[m_iSpawnId].m_fZ, 0.0f, 
+            me->SummonCreature(NPC_RANGER,
+                m_afAmbushSpawn[m_iSpawnId].m_fX, m_afAmbushSpawn[m_iSpawnId].m_fY, m_afAmbushSpawn[m_iSpawnId].m_fZ, 0.0f,
                 TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
 
             for (int i = 0; i < 2; ++i)
             {
-                me->SummonCreature(NPC_OUTRUNNER, 
-                    m_afAmbushSpawn[m_iSpawnId].m_fX, m_afAmbushSpawn[m_iSpawnId].m_fY, m_afAmbushSpawn[m_iSpawnId].m_fZ, 0.0f, 
+                me->SummonCreature(NPC_OUTRUNNER,
+                    m_afAmbushSpawn[m_iSpawnId].m_fX, m_afAmbushSpawn[m_iSpawnId].m_fY, m_afAmbushSpawn[m_iSpawnId].m_fZ, 0.0f,
                     TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
             }
         }
@@ -353,10 +350,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
 
 void AddSC_hinterlands()
 {

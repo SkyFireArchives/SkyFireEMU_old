@@ -37,20 +37,20 @@ EndContentData */
 
 enum blyAndCrewFactions
 {
-    FACTION_HOSTILE           = 14, 
+    FACTION_HOSTILE           = 14,
     FACTION_FRIENDLY          = 35,  //while in cages (so the trolls won't attack them while they're caged)
     FACTION_FREED             = 250  //after release (so they'll be hostile towards trolls)
 };
 
 enum blySays
 {
-    SAY_1 = -1209002, 
+    SAY_1 = -1209002,
     SAY_2 = -1209003
 };
 
 enum blySpells
 {
-    SPELL_SHIELD_BASH          = 11972, 
+    SPELL_SHIELD_BASH          = 11972,
     SPELL_REVENGE              = 12170
 };
 
@@ -192,11 +192,7 @@ public:
                    crew->setFaction(FACTION_HOSTILE);
         }
     };
-
 };
-
-
-
 
 /*######
 +## go_troll_cage
@@ -233,7 +229,6 @@ public:
         }
         return false;
     }
-
 };
 
 /*######
@@ -242,15 +237,15 @@ public:
 
 enum weegliSpells
 {
-    SPELL_BOMB                 = 8858, 
-    SPELL_GOBLIN_LAND_MINE     = 21688, 
-    SPELL_SHOOT                = 6660, 
+    SPELL_BOMB                 = 8858,
+    SPELL_GOBLIN_LAND_MINE     = 21688,
+    SPELL_SHOOT                = 6660,
     SPELL_WEEGLIS_BARREL       = 10772
 };
 
 enum weegliSays
 {
-    SAY_WEEGLI_OHNO = -1209000, 
+    SAY_WEEGLI_OHNO = -1209000,
     SAY_WEEGLI_OK_I_GO = -1209001
 };
 
@@ -393,10 +388,7 @@ public:
             }
         }
     };
-
 };
-
-
 
 /*######
 ## go_shallow_grave
@@ -404,9 +396,9 @@ public:
 
 enum
 {
-    ZOMBIE = 7286, 
-    DEAD_HERO = 7276, 
-    ZOMBIE_CHANCE = 65, 
+    ZOMBIE = 7286,
+    DEAD_HERO = 7276,
+    ZOMBIE_CHANCE = 65,
     DEAD_HERO_CHANCE = 10
 };
 
@@ -430,7 +422,6 @@ public:
         pGo->AddUse();
         return false;
     }
-
 };
 
 /*######
@@ -439,7 +430,7 @@ public:
 
 enum zumrahConsts
 {
-    ZUMRAH_ID = 7271, 
+    ZUMRAH_ID = 7271,
     ZUMRAH_HOSTILE_FACTION = 37
 };
 
@@ -458,7 +449,6 @@ public:
         pZumrah->setFaction(ZUMRAH_HOSTILE_FACTION);
         return true;
     }
-
 };
 
 void AddSC_zulfarrak()

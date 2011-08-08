@@ -16,7 +16,6 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "ScriptPCH.h"
 #include "ScriptedEscortAI.h"
 
@@ -26,16 +25,16 @@
 
 enum Galen
 {
-    QUEST_GALENS_ESCAPE     = 1393, 
+    QUEST_GALENS_ESCAPE     = 1393,
 
-    GO_GALENS_CAGE          = 37118, 
+    GO_GALENS_CAGE          = 37118,
 
-    SAY_PERIODIC            = -1000500, 
-    SAY_QUEST_ACCEPTED      = -1000501, 
-    SAY_ATTACKED_1          = -1000502, 
-    SAY_ATTACKED_2          = -1000503, 
-    SAY_QUEST_COMPLETE      = -1000504, 
-    EMOTE_WHISPER           = -1000505, 
+    SAY_PERIODIC            = -1000500,
+    SAY_QUEST_ACCEPTED      = -1000501,
+    SAY_ATTACKED_1          = -1000502,
+    SAY_ATTACKED_2          = -1000503,
+    SAY_QUEST_COMPLETE      = -1000504,
+    EMOTE_WHISPER           = -1000505,
     EMOTE_DISAPPEAR         = -1000506
 };
 

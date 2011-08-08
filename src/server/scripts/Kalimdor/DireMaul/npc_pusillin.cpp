@@ -21,29 +21,27 @@
 
 enum pus
 {
-    SAY_1   = -1901000, 
-    SAY_2   = -1901001,                     
-    SAY_3   = -1901002, 
-    SAY_4   = -1901003, 
-    SAY_5   = -1901004, 
+    SAY_1   = -1901000,
+    SAY_2   = -1901001,
+    SAY_3   = -1901002,
+    SAY_4   = -1901003,
+    SAY_5   = -1901004,
 
     NPC_IMP = 13276
 };
 
 enum eSpells
 {
-    SPELL_BLAST_WAVE            = 17145, 
-    SPELL_FIRE_BLAST            = 14145, 
-    SPELL_FIREBALL              = 15228, 
+    SPELL_BLAST_WAVE            = 17145,
+    SPELL_FIRE_BLAST            = 14145,
+    SPELL_FIREBALL              = 15228,
     SPELL_RUNN                  = 22735
 };
-
 
 const Position SpawnPosition1 = {23.019f, -703.442f, -12.642f, 3.23f};
 const Position SpawnPosition2 = {22.646f, -691.948f, -12.642f, 4.13f};
 const Position SpawnPosition3 = {12.277f, -676.333f, -12.642f, 4.97f};
 const Position SpawnPosition4 = {24.416f, -680.573f, -12.642f, 4.31f};
-
 
 #define GOSSIP_HELLO "Game? Are your crazy?"
 #define Gossip_2 "Why you little..."
@@ -80,12 +78,12 @@ public:
             uiSpiritOfRunnTimer = urand(5000, 7000);
             buffed=false;
         }
-        
+
         void SetHoldState(bool bOnHold)
         {
             SetEscortPaused(bOnHold);
         }
-        
+
         void WaypointReached(uint32 uiPointId)
         {
             switch(uiPointId)
@@ -116,9 +114,8 @@ public:
 
         void UpdateAI(const uint32 uiDiff)
         {
-                
             npc_escortAI::UpdateAI(uiDiff);
-                
+
             if (uiPhase)
             {
                 switch(uiPhase)
@@ -127,7 +124,7 @@ public:
                     DoScriptText(SAY_1, me);
                     uiPhase=0;
                     break;
-                case 2:   
+                case 2:
                     DoScriptText(SAY_2, me);
                     uiPhase=0;
                     break;
@@ -179,14 +176,12 @@ public:
                                 }
                             break;
                         }
-
                     }
                     uiPhase=6;
                     break;
                 }
-  
             }
-    
+
             if (uiPhase==6)
             {
                 if (!UpdateVictim())
@@ -218,13 +213,13 @@ public:
                     DoCast(me, SPELL_RUNN);
                     buffed = true;
                 }
-                else uiSpiritOfRunnTimer -= uiDiff;         
+                else uiSpiritOfRunnTimer -= uiDiff;
 
                 DoMeleeAttackIfReady();
             }
         }
     };
-        
+
     CreatureAI* GetAI(Creature* pCreature) const
     {
         return new npc_pusillinAI(pCreature);
@@ -233,7 +228,7 @@ public:
     bool OnGossipHello(Player* pPlayer, Creature* pCreature)
     {
         npc_pusillinAI* pAI = CAST_AI(npc_pusillinAI, pCreature->AI());
-        
+
         switch (pAI->uiGossipStep)
         {
         case 0:
@@ -257,7 +252,7 @@ public:
             pPlayer->SEND_GOSSIP_MENU(6881, pCreature->GetGUID());
             break;
         }
-        
+
         return true;
     }
 
@@ -280,19 +275,19 @@ public:
             pAI->uiPhase = 2;
             pAI->SetHoldState(false);
         }
-        
+
         if (uiAction == GOSSIP_ACTION_INFO_DEF+3)
         {
             pAI->uiPhase = 3;
             pAI->SetHoldState(false);
         }
-        
+
         if (uiAction == GOSSIP_ACTION_INFO_DEF+4)
         {
             pAI->uiPhase = 4;
             pAI->SetHoldState(false);
         }
-        
+
         if (uiAction == GOSSIP_ACTION_INFO_DEF+5)
         {
             pAI->uiPhase = 5;
@@ -305,7 +300,6 @@ public:
         return true;
     }
 };
-
 
 void AddSC_npc_pusillin()
 {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -120,7 +120,6 @@ public:
 
         void SetTeronGUID(uint64 guid){ TeronGUID = guid; }
     };
-
 };
 
 class mob_shadowy_construct : public CreatureScript
@@ -210,7 +209,6 @@ public:
             } else CheckTeronTimer -= diff;
         }
     };
-
 };
 
 class boss_teron_gorefiend : public CreatureScript
@@ -357,7 +355,7 @@ public:
                 if (control)
                 {
                     CAST_PLR(Ghost)->Possess(control);
-                    Ghost->DealDamage(Ghost, Ghost->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, 
+                    Ghost->DealDamage(Ghost, Ghost->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL,
                 false);
                 }*/
                 for (uint8 i = 0; i < 4; ++i)
@@ -513,11 +511,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
-
 
 void AddSC_boss_teron_gorefiend()
 {

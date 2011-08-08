@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,13 +33,13 @@ EndScriptData */
 
 enum eSpels
 {
-    SPELL_TRASH             = 3391, 
-    SPELL_SMITE_STOMP       = 6432, 
-    SPELL_SMITE_SLAM        = 6435, 
-    SPELL_NIMBLE_REFLEXES   = 6264, 
+    SPELL_TRASH             = 3391,
+    SPELL_SMITE_STOMP       = 6432,
+    SPELL_SMITE_SLAM        = 6435,
+    SPELL_NIMBLE_REFLEXES   = 6264,
 
-    EQUIP_SWORD             = 5191, 
-    EQUIP_MACE              = 7230, 
+    EQUIP_SWORD             = 5191,
+    EQUIP_MACE              = 7230,
 
     SAY_AGGRO               = -1036001
 };
@@ -165,7 +165,6 @@ public:
                             me->GetMotionMaster()->MoveChase(me->getVictim(), me->m_CombatDistance);
                             uiPhase = 0;
                             break;
-
                     }
                 } else uiTimer -= uiDiff;
             }
@@ -181,9 +180,7 @@ public:
             uiTimer = 1500;
             uiPhase = 1;
         }
-
     };
-
 };
 
 void AddSC_boss_mr_smite()

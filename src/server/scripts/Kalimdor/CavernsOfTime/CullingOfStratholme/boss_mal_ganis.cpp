@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -36,38 +36,38 @@ Script Data End */
 enum Spells
 {
     SPELL_CARRION_SWARM                         = 52720, //A cresting wave of chaotic magic splashes over enemies in front of the caster, dealing 3230 to 3570 Shadow damage and 380 to 420 Shadow damage every 3 sec. for 15 sec.
-    H_SPELL_CARRION_SWARM                       = 58852, 
+    H_SPELL_CARRION_SWARM                       = 58852,
     SPELL_MIND_BLAST                            = 52722, //Inflicts 4163 to 4837 Shadow damage to an enemy.
-    H_SPELL_MIND_BLAST                          = 58850, 
+    H_SPELL_MIND_BLAST                          = 58850,
     SPELL_SLEEP                                 = 52721, //Puts an enemy to sleep for up to 10 sec. Any damage caused will awaken the target.
-    H_SPELL_SLEEP                               = 58849, 
+    H_SPELL_SLEEP                               = 58849,
     SPELL_VAMPIRIC_TOUCH                        = 52723 //Heals the caster for half the damage dealt by a melee attack.
 };
 
 enum Yells
 {
-    SAY_INTRO_1                                 = -1595009, 
-    SAY_INTRO_2                                 = -1595010, 
-    SAY_AGGRO                                   = -1595011, 
-    SAY_KILL_1                                  = -1595012, 
-    SAY_KILL_2                                  = -1595013, 
-    SAY_KILL_3                                  = -1595014, 
-    SAY_SLAY_1                                  = -1595015, 
-    SAY_SLAY_2                                  = -1595016, 
-    SAY_SLAY_3                                  = -1595017, 
-    SAY_SLAY_4                                  = -1595018, 
-    SAY_SLEEP_1                                 = -1595019, 
-    SAY_SLEEP_2                                 = -1595020, 
-    SAY_30HEALTH                                = -1595021, 
-    SAY_15HEALTH                                = -1595022, 
-    SAY_ESCAPE_SPEECH_1                         = -1595023, 
-    SAY_ESCAPE_SPEECH_2                         = -1595024, 
-    SAY_OUTRO                                   = -1595025, 
+    SAY_INTRO_1                                 = -1595009,
+    SAY_INTRO_2                                 = -1595010,
+    SAY_AGGRO                                   = -1595011,
+    SAY_KILL_1                                  = -1595012,
+    SAY_KILL_2                                  = -1595013,
+    SAY_KILL_3                                  = -1595014,
+    SAY_SLAY_1                                  = -1595015,
+    SAY_SLAY_2                                  = -1595016,
+    SAY_SLAY_3                                  = -1595017,
+    SAY_SLAY_4                                  = -1595018,
+    SAY_SLEEP_1                                 = -1595019,
+    SAY_SLEEP_2                                 = -1595020,
+    SAY_30HEALTH                                = -1595021,
+    SAY_15HEALTH                                = -1595022,
+    SAY_ESCAPE_SPEECH_1                         = -1595023,
+    SAY_ESCAPE_SPEECH_2                         = -1595024,
+    SAY_OUTRO                                   = -1595025,
 };
 
 enum CombatPhases
 {
-    COMBAT, 
+    COMBAT,
     OUTRO
 };
 
@@ -231,7 +231,6 @@ public:
                                 me->SetVisible(false);
                                 me->Kill(me);
                                 break;
-
                         }
                     } else uiOutroTimer -= diff;
                     break;
@@ -258,9 +257,7 @@ public:
             DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3, SAY_SLAY_4), me);
         }
     };
-
 };
-
 
 void AddSC_boss_mal_ganis()
 {

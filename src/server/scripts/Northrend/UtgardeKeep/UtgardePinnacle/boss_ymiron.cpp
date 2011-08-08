@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,54 +35,54 @@ Script Data End */
 
 enum Spells
 {
-    SPELL_BANE                                = 48294, 
-    H_SPELL_BANE                              = 59301, 
-    SPELL_DARK_SLASH                          = 48292, 
-    SPELL_FETID_ROT                           = 48291, 
-    H_SPELL_FETID_ROT                         = 59300, 
-    SPELL_SCREAMS_OF_THE_DEAD                 = 51750, 
-    SPELL_SPIRIT_BURST                        = 48529, 
-    H_SPELL_SPIRIT_BURST                      = 59305, 
-    SPELL_SPIRIT_STRIKE                       = 48423, 
-    H_SPELL_SPIRIT_STRIKE                     = 59304, 
-    SPELL_ANCESTORS_VENGEANCE                 = 16939, 
+    SPELL_BANE                                = 48294,
+    H_SPELL_BANE                              = 59301,
+    SPELL_DARK_SLASH                          = 48292,
+    SPELL_FETID_ROT                           = 48291,
+    H_SPELL_FETID_ROT                         = 59300,
+    SPELL_SCREAMS_OF_THE_DEAD                 = 51750,
+    SPELL_SPIRIT_BURST                        = 48529,
+    H_SPELL_SPIRIT_BURST                      = 59305,
+    SPELL_SPIRIT_STRIKE                       = 48423,
+    H_SPELL_SPIRIT_STRIKE                     = 59304,
+    SPELL_ANCESTORS_VENGEANCE                 = 16939,
 
-    SPELL_SUMMON_AVENGING_SPIRIT              = 48592, 
-    SPELL_SUMMON_SPIRIT_FOUNT                 = 48386, 
+    SPELL_SUMMON_AVENGING_SPIRIT              = 48592,
+    SPELL_SUMMON_SPIRIT_FOUNT                 = 48386,
 
-    SPELL_CHANNEL_SPIRIT_TO_YMIRON            = 48316, 
-    SPELL_CHANNEL_YMIRON_TO_SPIRIT            = 48307, 
+    SPELL_CHANNEL_SPIRIT_TO_YMIRON            = 48316,
+    SPELL_CHANNEL_YMIRON_TO_SPIRIT            = 48307,
 
-    SPELL_SPIRIT_FOUNT                        = 48380, 
+    SPELL_SPIRIT_FOUNT                        = 48380,
     H_SPELL_SPIRIT_FOUNT                      = 59320
 };
 
 //not in db
 enum Yells
 {
-    SAY_AGGRO                               = -1575028, 
-    SAY_SLAY_1                              = -1575029, 
-    SAY_SLAY_2                              = -1575030, 
-    SAY_SLAY_3                              = -1575031, 
-    SAY_SLAY_4                              = -1575032, 
-    SAY_DEATH                               = -1575033, 
-    SAY_SUMMON_BJORN                        = -1575034, 
-    SAY_SUMMON_HALDOR                       = -1575035, 
-    SAY_SUMMON_RANULF                       = -1575036, 
+    SAY_AGGRO                               = -1575028,
+    SAY_SLAY_1                              = -1575029,
+    SAY_SLAY_2                              = -1575030,
+    SAY_SLAY_3                              = -1575031,
+    SAY_SLAY_4                              = -1575032,
+    SAY_DEATH                               = -1575033,
+    SAY_SUMMON_BJORN                        = -1575034,
+    SAY_SUMMON_HALDOR                       = -1575035,
+    SAY_SUMMON_RANULF                       = -1575036,
     SAY_SUMMON_TORGYN                       = -1575037
 };
 
 enum Creatures
 {
-    CREATURE_BJORN                          = 27303, 
-    CREATURE_BJORN_VISUAL                   = 27304, 
-    CREATURE_HALDOR                         = 27307, 
-    CREATURE_HALDOR_VISUAL                  = 27310, 
-    CREATURE_RANULF                         = 27308, 
-    CREATURE_RANULF_VISUAL                  = 27311, 
-    CREATURE_TORGYN                         = 27309, 
-    CREATURE_TORGYN_VISUAL                  = 27312, 
-    CREATURE_SPIRIT_FOUNT                   = 27339, 
+    CREATURE_BJORN                          = 27303,
+    CREATURE_BJORN_VISUAL                   = 27304,
+    CREATURE_HALDOR                         = 27307,
+    CREATURE_HALDOR_VISUAL                  = 27310,
+    CREATURE_RANULF                         = 27308,
+    CREATURE_RANULF_VISUAL                  = 27311,
+    CREATURE_TORGYN                         = 27309,
+    CREATURE_TORGYN_VISUAL                  = 27312,
+    CREATURE_SPIRIT_FOUNT                   = 27339,
     CREATURE_AVENGING_SPIRIT                = 27386
 };
 
@@ -95,9 +95,9 @@ struct ActiveBoatStruct
 
 static ActiveBoatStruct ActiveBot[4] =
 {
-    {CREATURE_BJORN_VISUAL,  SAY_SUMMON_BJORN,  404.379f, -335.335f, 104.756f, 413.594f, -335.408f, 107.995f, 3.157f}, 
-    {CREATURE_HALDOR_VISUAL, SAY_SUMMON_HALDOR, 380.813f, -335.069f, 104.756f, 369.994f, -334.771f, 107.995f, 6.232f}, 
-    {CREATURE_RANULF_VISUAL, SAY_SUMMON_RANULF, 381.546f, -314.362f, 104.756f, 370.841f, -314.426f, 107.995f, 6.232f}, 
+    {CREATURE_BJORN_VISUAL,  SAY_SUMMON_BJORN,  404.379f, -335.335f, 104.756f, 413.594f, -335.408f, 107.995f, 3.157f},
+    {CREATURE_HALDOR_VISUAL, SAY_SUMMON_HALDOR, 380.813f, -335.069f, 104.756f, 369.994f, -334.771f, 107.995f, 6.232f},
+    {CREATURE_RANULF_VISUAL, SAY_SUMMON_RANULF, 381.546f, -314.362f, 104.756f, 370.841f, -314.426f, 107.995f, 6.232f},
     {CREATURE_TORGYN_VISUAL, SAY_SUMMON_TORGYN, 404.310f, -314.761f, 104.756f, 413.992f, -314.703f, 107.995f, 3.157f}
 };
 
@@ -379,7 +379,6 @@ public:
             m_uiCreatureGUID = 0;
         }
     };
-
 };
 
 void AddSC_boss_ymiron()

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,31 +26,31 @@
 
 enum Spells
 {
-    SPELL_CHARGE                                  = 22911, 
-    SPELL_CLEAVE                                  = 40504, 
-    SPELL_DEMORALIZING_SHOUT                      = 23511, 
-    SPELL_ENRAGE                                  = 8599, 
-    SPELL_WHIRLWIND1                              = 15589, 
-    SPELL_WHIRLWIND2                              = 13736, 
-    SPELL_NORTH_MARSHAL                           = 45828, 
-    SPELL_SOUTH_MARSHAL                           = 45829, 
-    SPELL_STONEHEARTH_MARSHAL                     = 45830, 
-    SPELL_ICEWING_MARSHAL                         = 45831, 
-    SPELL_ICEBLOOD_WARMASTER                      = 45822, 
-    SPELL_TOWER_POINT_WARMASTER                   = 45823, 
-    SPELL_WEST_FROSTWOLF_WARMASTER                = 45824, 
+    SPELL_CHARGE                                  = 22911,
+    SPELL_CLEAVE                                  = 40504,
+    SPELL_DEMORALIZING_SHOUT                      = 23511,
+    SPELL_ENRAGE                                  = 8599,
+    SPELL_WHIRLWIND1                              = 15589,
+    SPELL_WHIRLWIND2                              = 13736,
+    SPELL_NORTH_MARSHAL                           = 45828,
+    SPELL_SOUTH_MARSHAL                           = 45829,
+    SPELL_STONEHEARTH_MARSHAL                     = 45830,
+    SPELL_ICEWING_MARSHAL                         = 45831,
+    SPELL_ICEBLOOD_WARMASTER                      = 45822,
+    SPELL_TOWER_POINT_WARMASTER                   = 45823,
+    SPELL_WEST_FROSTWOLF_WARMASTER                = 45824,
     SPELL_EAST_FROSTWOLF_WARMASTER                = 45826
 };
 
 enum Creatures
 {
-    NPC_NORTH_MARSHAL                             = 14762, 
-    NPC_SOUTH_MARSHAL                             = 14763, 
-    NPC_ICEWING_MARSHAL                           = 14764, 
-    NPC_STONEHEARTH_MARSHAL                       = 14765, 
-    NPC_EAST_FROSTWOLF_WARMASTER                  = 14772, 
-    NPC_ICEBLOOD_WARMASTER                        = 14773, 
-    NPC_TOWER_POINT_WARMASTER                     = 14776, 
+    NPC_NORTH_MARSHAL                             = 14762,
+    NPC_SOUTH_MARSHAL                             = 14763,
+    NPC_ICEWING_MARSHAL                           = 14764,
+    NPC_STONEHEARTH_MARSHAL                       = 14765,
+    NPC_EAST_FROSTWOLF_WARMASTER                  = 14772,
+    NPC_ICEBLOOD_WARMASTER                        = 14773,
+    NPC_TOWER_POINT_WARMASTER                     = 14776,
     NPC_WEST_FROSTWOLF_WARMASTER                  = 14777
 };
 
@@ -168,7 +168,6 @@ class mob_av_marshal_or_warmaster : public CreatureScript
                     DoCast(me->getVictim(), SPELL_ENRAGE);
                     uiEnrageTimer = urand(10*IN_MILLISECONDS, 30*IN_MILLISECONDS);
                 }else uiEnrageTimer -= diff;
-
 
                 // check if creature is not outside of building
                 if (uiResetTimer <= diff)

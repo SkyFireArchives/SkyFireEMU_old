@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,44 +39,44 @@ EndScriptData */
 enum Yells
 {
     // These are used throughout Sunwell and Magisters(?). Players can hear this while running through the instances.
-    SAY_KJ_OFFCOMBAT1                           = -1580066, 
-    SAY_KJ_OFFCOMBAT2                           = -1580067, 
-    SAY_KJ_OFFCOMBAT3                           = -1580068, 
-    SAY_KJ_OFFCOMBAT4                           = -1580069, 
-    SAY_KJ_OFFCOMBAT5                           = -1580070, 
+    SAY_KJ_OFFCOMBAT1                           = -1580066,
+    SAY_KJ_OFFCOMBAT2                           = -1580067,
+    SAY_KJ_OFFCOMBAT3                           = -1580068,
+    SAY_KJ_OFFCOMBAT4                           = -1580069,
+    SAY_KJ_OFFCOMBAT5                           = -1580070,
 
     // Encounter speech and sounds
-    SAY_KJ_EMERGE                               = -1580071, 
-    SAY_KJ_SLAY1                                = -1580072, 
-    SAY_KJ_SLAY2                                = -1580073, 
-    SAY_KJ_REFLECTION1                          = -1580074, 
-    SAY_KJ_REFLECTION2                          = -1580075, 
-    SAY_KJ_DARKNESS1                            = -1580076, 
-    SAY_KJ_DARKNESS2                            = -1580077, 
-    SAY_KJ_DARKNESS3                            = -1580078, 
-    SAY_KJ_PHASE3                               = -1580079, 
-    SAY_KJ_PHASE4                               = -1580080, 
-    SAY_KJ_PHASE5                               = -1580081, 
-    SAY_KJ_DEATH                                = -1580093, 
-    EMOTE_KJ_DARKNESS                           = -1580094, 
+    SAY_KJ_EMERGE                               = -1580071,
+    SAY_KJ_SLAY1                                = -1580072,
+    SAY_KJ_SLAY2                                = -1580073,
+    SAY_KJ_REFLECTION1                          = -1580074,
+    SAY_KJ_REFLECTION2                          = -1580075,
+    SAY_KJ_DARKNESS1                            = -1580076,
+    SAY_KJ_DARKNESS2                            = -1580077,
+    SAY_KJ_DARKNESS3                            = -1580078,
+    SAY_KJ_PHASE3                               = -1580079,
+    SAY_KJ_PHASE4                               = -1580080,
+    SAY_KJ_PHASE5                               = -1580081,
+    SAY_KJ_DEATH                                = -1580093,
+    EMOTE_KJ_DARKNESS                           = -1580094,
 
     /*** Kalecgos - Anveena speech at the beginning of Phase 5; Anveena's sacrifice ***/
-    SAY_KALECGOS_AWAKEN                         = -1580082, 
-    SAY_ANVEENA_IMPRISONED                      = -1580083, 
-    SAY_KALECGOS_LETGO                          = -1580084, 
-    SAY_ANVEENA_LOST                            = -1580085, 
-    SAY_KALECGOS_FOCUS                          = -1580086, 
-    SAY_ANVEENA_KALEC                           = -1580087, 
-    SAY_KALECGOS_FATE                           = -1580088, 
-    SAY_ANVEENA_GOODBYE                         = -1580089, 
-    SAY_KALECGOS_GOODBYE                        = -1580090, 
-    SAY_KALECGOS_ENCOURAGE                      = -1580091, 
+    SAY_KALECGOS_AWAKEN                         = -1580082,
+    SAY_ANVEENA_IMPRISONED                      = -1580083,
+    SAY_KALECGOS_LETGO                          = -1580084,
+    SAY_ANVEENA_LOST                            = -1580085,
+    SAY_KALECGOS_FOCUS                          = -1580086,
+    SAY_ANVEENA_KALEC                           = -1580087,
+    SAY_KALECGOS_FATE                           = -1580088,
+    SAY_ANVEENA_GOODBYE                         = -1580089,
+    SAY_KALECGOS_GOODBYE                        = -1580090,
+    SAY_KALECGOS_ENCOURAGE                      = -1580091,
 
     /*** Kalecgos says throughout the fight ***/
-    SAY_KALECGOS_JOIN                           = -1580092, 
-    SAY_KALEC_ORB_READY1                        = -1580095, 
-    SAY_KALEC_ORB_READY2                        = -1580096, 
-    SAY_KALEC_ORB_READY3                        = -1580097, 
+    SAY_KALECGOS_JOIN                           = -1580092,
+    SAY_KALEC_ORB_READY1                        = -1580095,
+    SAY_KALEC_ORB_READY2                        = -1580096,
+    SAY_KALEC_ORB_READY3                        = -1580097,
     SAY_KALEC_ORB_READY4                        = -1580098
 };
 
@@ -96,7 +96,7 @@ enum Spells
     SPELL_TRANS                                 = 23188, // Surprisingly, this seems to be the right spell.. (Where is it used?)
     SPELL_REBIRTH                               = 44200, // Emerge from the Sunwell
     SPELL_SOUL_FLAY                             = 45442, // 9k Shadow damage over 3 seconds. Spammed throughout all the fight.
-    SPELL_SOUL_FLAY_SLOW                        = 47106, 
+    SPELL_SOUL_FLAY_SLOW                        = 47106,
     SPELL_LEGION_LIGHTNING                      = 45664, // Chain Lightning, 4 targets, ~3k Shadow damage, 1.5fk mana burn
     SPELL_FIRE_BLOOM                            = 45641, // Places a debuff on 5 raid members, which causes them to deal 2k Fire damage to nearby allies and selves. MIGHT NOT WORK
     SPELL_DESTROY_ALL_DRAKES                    = 46707, // when he use it?
@@ -111,7 +111,7 @@ enum Spells
     SPELL_SHADOW_SPIKE                          = 46680, // Bombard random raid members with Shadow Spikes (Very similar to Void Reaver orbs)
     SPELL_FLAME_DART                            = 45737, // Bombards the raid with flames every 3(?) seconds
     SPELL_DARKNESS_OF_A_THOUSAND_SOULS          = 46605, // Begins a 8-second channeling, after which he will deal 50'000 damage to the raid
-    SPELL_DARKNESS_OF_A_THOUSAND_SOULS_DAMAGE   = 45657, 
+    SPELL_DARKNESS_OF_A_THOUSAND_SOULS_DAMAGE   = 45657,
 
     /* Armageddon spells wrong visual */
     SPELL_ARMAGEDDON_TRIGGER                    = 45909, // Meteor spell trigger missile should cast Creature on himself
@@ -130,28 +130,28 @@ enum Spells
     SPELL_SACRIFICE_OF_ANVEENA                  = 46474, // This is cast on Kil'Jaeden when Anveena sacrifices herself into the Sunwell
 
     /* Sinister Reflection Spells */
-    SPELL_SR_CURSE_OF_AGONY                     = 46190, 
-    SPELL_SR_SHADOW_BOLT                        = 47076, 
+    SPELL_SR_CURSE_OF_AGONY                     = 46190,
+    SPELL_SR_SHADOW_BOLT                        = 47076,
 
-    SPELL_SR_EARTH_SHOCK                        = 47071, 
+    SPELL_SR_EARTH_SHOCK                        = 47071,
 
-    SPELL_SR_FIREBALL                           = 47074, 
+    SPELL_SR_FIREBALL                           = 47074,
 
-    SPELL_SR_HEMORRHAGE                         = 45897, 
+    SPELL_SR_HEMORRHAGE                         = 45897,
 
-    SPELL_SR_HOLY_SHOCK                         = 38921, 
-    SPELL_SR_HAMMER_OF_JUSTICE                  = 37369, 
+    SPELL_SR_HOLY_SHOCK                         = 38921,
+    SPELL_SR_HAMMER_OF_JUSTICE                  = 37369,
 
-    SPELL_SR_HOLY_SMITE                         = 47077, 
-    SPELL_SR_RENEW                              = 47079, 
+    SPELL_SR_HOLY_SMITE                         = 47077,
+    SPELL_SR_RENEW                              = 47079,
 
-    SPELL_SR_SHOOT                              = 16496, 
-    SPELL_SR_MULTI_SHOT                         = 48098, 
-    SPELL_SR_WING_CLIP                          = 40652, 
+    SPELL_SR_SHOOT                              = 16496,
+    SPELL_SR_MULTI_SHOT                         = 48098,
+    SPELL_SR_WING_CLIP                          = 40652,
 
-    SPELL_SR_WHIRLWIND                          = 17207, 
+    SPELL_SR_WHIRLWIND                          = 17207,
 
-    SPELL_SR_MOONFIRE                           = 47072, 
+    SPELL_SR_MOONFIRE                           = 47072,
     //SPELL_SR_PLAGU STRIKE                       = 58843, Dk Spell!
 
     /*** Other Spells (used by players, etc) ***/
@@ -179,19 +179,19 @@ enum Phase
 //Timers
 enum KilJaedenTimers
 {
-    TIMER_SPEECH           = 0, 
+    TIMER_SPEECH           = 0,
 
     //Phase 2 Timer
-    TIMER_SOUL_FLAY        = 1, 
-    TIMER_LEGION_LIGHTNING = 2, 
-    TIMER_FIRE_BLOOM       = 3, 
-    TIMER_SUMMON_SHILEDORB = 4, 
+    TIMER_SOUL_FLAY        = 1,
+    TIMER_LEGION_LIGHTNING = 2,
+    TIMER_FIRE_BLOOM       = 3,
+    TIMER_SUMMON_SHILEDORB = 4,
 
     //Phase 3 Timer
-    TIMER_SHADOW_SPIKE     = 5, 
-    TIMER_FLAME_DART       = 6, 
-    TIMER_DARKNESS         = 7, 
-    TIMER_ORBS_EMPOWER     = 8, 
+    TIMER_SHADOW_SPIKE     = 5,
+    TIMER_FLAME_DART       = 6,
+    TIMER_DARKNESS         = 7,
+    TIMER_ORBS_EMPOWER     = 8,
 
     //Phase 4 Timer
     TIMER_ARMAGEDDON       = 9
@@ -200,9 +200,9 @@ enum KilJaedenTimers
 // Locations of the Hand of Deceiver adds
 Position DeceiverLocations[3]=
 {
-    {1682.045f, 631.299f, 5.936f, 0.0f}, 
-    {1684.099f, 618.848f, 0.589f, 0.0f}, 
-    {1694.170f, 612.272f, 1.416f, 0.0f}, 
+    {1682.045f, 631.299f, 5.936f, 0.0f},
+    {1684.099f, 618.848f, 0.589f, 0.0f},
+    {1694.170f, 612.272f, 1.416f, 0.0f},
 };
 
 // Locations, where Shield Orbs will spawn
@@ -224,25 +224,25 @@ struct Speech
 static Speech Speeches[]=
 {
     //Kil Phase 1 -> Phase 2
-    {SAY_KJ_EMERGE,             DATA_KILJAEDEN,     0}, 
-    {SAY_KALECGOS_JOIN,         DATA_KALECGOS_KJ,   26000}, 
+    {SAY_KJ_EMERGE,             DATA_KILJAEDEN,     0},
+    {SAY_KALECGOS_JOIN,         DATA_KALECGOS_KJ,   26000},
     //Kil Phase 2 -> Phase 3
-    {SAY_KALECGOS_AWAKEN,       DATA_KALECGOS_KJ,   10000}, 
-    {SAY_ANVEENA_IMPRISONED,    DATA_ANVEENA,       5000}, 
-    {SAY_KJ_PHASE3,             DATA_KILJAEDEN,     5000}, 
+    {SAY_KALECGOS_AWAKEN,       DATA_KALECGOS_KJ,   10000},
+    {SAY_ANVEENA_IMPRISONED,    DATA_ANVEENA,       5000},
+    {SAY_KJ_PHASE3,             DATA_KILJAEDEN,     5000},
     //Kil Phase 3 -> Phase 4
-    {SAY_KALECGOS_LETGO,        DATA_KALECGOS_KJ,   10000}, 
-    {SAY_ANVEENA_LOST,          DATA_ANVEENA,       8000}, 
-    {SAY_KJ_PHASE4,             DATA_KILJAEDEN,     7000}, 
+    {SAY_KALECGOS_LETGO,        DATA_KALECGOS_KJ,   10000},
+    {SAY_ANVEENA_LOST,          DATA_ANVEENA,       8000},
+    {SAY_KJ_PHASE4,             DATA_KILJAEDEN,     7000},
     //Kil Phase 4 -> Phase 5
-    {SAY_KALECGOS_FOCUS,        DATA_KALECGOS_KJ,   4000}, 
-    {SAY_ANVEENA_KALEC,         DATA_ANVEENA,       11000}, 
-    {SAY_KALECGOS_FATE,         DATA_KALECGOS_KJ,   2000}, 
-    {SAY_ANVEENA_GOODBYE,       DATA_ANVEENA,       6000}, 
-    {SAY_KJ_PHASE5,             DATA_KILJAEDEN,     5500}, 
+    {SAY_KALECGOS_FOCUS,        DATA_KALECGOS_KJ,   4000},
+    {SAY_ANVEENA_KALEC,         DATA_ANVEENA,       11000},
+    {SAY_KALECGOS_FATE,         DATA_KALECGOS_KJ,   2000},
+    {SAY_ANVEENA_GOODBYE,       DATA_ANVEENA,       6000},
+    {SAY_KJ_PHASE5,             DATA_KILJAEDEN,     5500},
 
     // use in End sequence?
-    {SAY_KALECGOS_GOODBYE,      DATA_KALECGOS_KJ,   12000}, 
+    {SAY_KALECGOS_GOODBYE,      DATA_KALECGOS_KJ,   12000},
 };
 
 //AI for Kalecgos
@@ -373,7 +373,6 @@ public:
             }
         }
     };
-
 };
 
 class go_orb_of_the_blue_flight : public GameObjectScript
@@ -397,7 +396,6 @@ public:
         }
         return true;
     }
-
 };
 
 //AI for Kil'jaeden Event Controller
@@ -497,9 +495,7 @@ public:
             }
         }
     };
-
 };
-
 
 //AI for Kil'jaeden
 class boss_kiljaeden : public CreatureScript
@@ -686,7 +682,6 @@ public:
                 }
             }
         }
-
 
         void UpdateAI(const uint32 diff)
         {
@@ -911,9 +906,7 @@ public:
             }
         }
     };
-
 };
-
 
 //AI for Hand of the Deceiver
 class mob_hand_of_the_deceiver : public CreatureScript
@@ -1013,9 +1006,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 //AI for Felfire Portal
 class mob_felfire_portal : public CreatureScript
@@ -1059,9 +1050,7 @@ public:
             } else uiSpawnFiendTimer -= diff;
         }
     };
-
 };
-
 
 //AI for Felfire Fiend
 class mob_volatile_felfire_fiend : public CreatureScript
@@ -1118,9 +1107,7 @@ public:
             }
         }
     };
-
 };
-
 
 //AI for Armageddon target
 class mob_armageddon : public CreatureScript
@@ -1174,9 +1161,7 @@ public:
             } else uiTimer -=diff;
         }
     };
-
 };
-
 
 //AI for Shield Orbs
 class mob_shield_orb : public CreatureScript
@@ -1263,9 +1248,7 @@ public:
             bPointReached = true;
         }
     };
-
 };
-
 
 //AI for Sinister Reflection
 class mob_sinster_reflection : public CreatureScript
@@ -1434,9 +1417,7 @@ public:
                     uiTimer[i] -= diff;
             }
     };
-
 };
-
 
 void AddSC_boss_kiljaeden()
 {

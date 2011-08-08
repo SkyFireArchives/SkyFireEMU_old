@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -36,16 +36,16 @@
 
 enum Creatures
 {
-    NPC_TROLLGORE                                 = 26630, 
-    NPC_NOVOS                                     = 26631, 
-    NPC_KING_DRED                                 = 27483, 
+    NPC_TROLLGORE                                 = 26630,
+    NPC_NOVOS                                     = 26631,
+    NPC_KING_DRED                                 = 27483,
     NPC_THARON_JA                                 = 26632
 };
 enum GameObjects
 {
-    GO_NOVOS_CRYSTAL_1                            = 189299, 
-    GO_NOVOS_CRYSTAL_2                            = 189300, 
-    GO_NOVOS_CRYSTAL_3                            = 189301, 
+    GO_NOVOS_CRYSTAL_1                            = 189299,
+    GO_NOVOS_CRYSTAL_2                            = 189300,
+    GO_NOVOS_CRYSTAL_3                            = 189301,
     GO_NOVOS_CRYSTAL_4                            = 189302
 };
 

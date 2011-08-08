@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,13 +35,13 @@
 
 enum eDeathKnightSpells
 {
-    SPELL_SOUL_PRISON_CHAIN_SELF    = 54612, 
-    SPELL_SOUL_PRISON_CHAIN         = 54613, 
-    SPELL_DK_INITIATE_VISUAL        = 51519, 
+    SPELL_SOUL_PRISON_CHAIN_SELF    = 54612,
+    SPELL_SOUL_PRISON_CHAIN         = 54613,
+    SPELL_DK_INITIATE_VISUAL        = 51519,
 
-    SPELL_ICY_TOUCH                 = 52372, 
-    SPELL_PLAGUE_STRIKE             = 52373, 
-    SPELL_BLOOD_STRIKE              = 52374, 
+    SPELL_ICY_TOUCH                 = 52372,
+    SPELL_PLAGUE_STRIKE             = 52373,
+    SPELL_BLOOD_STRIKE              = 52374,
     SPELL_DEATH_COIL                = 52375
 };
 
@@ -53,48 +53,48 @@ enum eDeathKnightSpells
 //used by 29519, 29520, 29565, 29566, 29567 but signed for 29519
 int32 say_event_start[8] =
 {
-    -1609000, -1609001, -1609002, -1609003, 
+    -1609000, -1609001, -1609002, -1609003,
     -1609004, -1609005, -1609006, -1609007
 };
 
 int32 say_event_attack[9] =
 {
-    -1609008, -1609009, -1609010, -1609011, -1609012, 
+    -1609008, -1609009, -1609010, -1609011, -1609012,
     -1609013, -1609014, -1609015, -1609016
 };
 
 uint32 acherus_soul_prison[12] =
 {
-    191577, 
-    191580, 
-    191581, 
-    191582, 
-    191583, 
-    191584, 
-    191585, 
-    191586, 
-    191587, 
-    191588, 
-    191589, 
+    191577,
+    191580,
+    191581,
+    191582,
+    191583,
+    191584,
+    191585,
+    191586,
+    191587,
+    191588,
+    191589,
     191590
 };
 
 uint32 acherus_unworthy_initiate[5] =
 {
-    29519, 
-    29520, 
-    29565, 
-    29566, 
+    29519,
+    29520,
+    29565,
+    29566,
     29567
 };
 
 enum UnworthyInitiatePhase
 {
-    PHASE_CHAINED, 
-    PHASE_TO_EQUIP, 
-    PHASE_EQUIPING, 
-    PHASE_TO_ATTACK, 
-    PHASE_ATTACKING, 
+    PHASE_CHAINED,
+    PHASE_TO_EQUIP,
+    PHASE_EQUIPING,
+    PHASE_TO_ATTACK,
+    PHASE_ATTACKING,
 };
 
 class npc_unworthy_initiate : public CreatureScript
@@ -288,7 +288,6 @@ public:
     };
 };
 
-
 class npc_unworthy_initiate_anchor : public CreatureScript
 {
 public:
@@ -313,11 +312,7 @@ public:
 
         uint64 GetGUID(int32 /*id*/) { return prisonerGUID; }
     };
-
 };
-
-
-
 
 class go_acherus_soul_prison : public GameObjectScript
 {
@@ -333,7 +328,6 @@ public:
 
         return false;
     }
-
 };
 
 /*######
@@ -342,14 +336,14 @@ public:
 
 enum EyeOfAcherus
 {
-    DISPLAYID_EYE_HUGE      = 26320, 
-    DISPLAYID_EYE_SMALL     = 25499, 
+    DISPLAYID_EYE_HUGE      = 26320,
+    DISPLAYID_EYE_SMALL     = 25499,
 
-    SPELL_EYE_PHASEMASK     = 70889, 
-    SPELL_EYE_VISUAL        = 51892, 
-    SPELL_EYE_FL_BOOST_RUN  = 51923, 
-    SPELL_EYE_FL_BOOST_FLY  = 51890, 
-    SPELL_EYE_CONTROL       = 51852, 
+    SPELL_EYE_PHASEMASK     = 70889,
+    SPELL_EYE_VISUAL        = 51892,
+    SPELL_EYE_FL_BOOST_RUN  = 51923,
+    SPELL_EYE_FL_BOOST_FLY  = 51890,
+    SPELL_EYE_CONTROL       = 51852,
 };
 //#define SAY_EYE_LAUNCHED          "Eye of Acherus is launched towards its destination."
 //#define SAY_EYE_UNDER_CONTROL     "You are now in control of the eye."
@@ -357,13 +351,13 @@ enum EyeOfAcherus
 // for some reason yells aren't working correctly yet.
 enum YELLS
 {
-    SAY_EYE_LAUNCHED            = -1666451, 
+    SAY_EYE_LAUNCHED            = -1666451,
     SAY_EYE_UNDER_CONTROL       = -1666452
 };
 
 static Position Center[]=
 {
-    {2346.550049f, -5694.430176f, 426.029999f, 0.0f}, 
+    {2346.550049f, -5694.430176f, 426.029999f, 0.0f},
 };
 
 class npc_eye_of_acherus : public CreatureScript
@@ -462,22 +456,22 @@ public:
 
 enum eDuelEnums
 {
-    SAY_DUEL_A                  = -1609080, 
-    SAY_DUEL_B                  = -1609081, 
-    SAY_DUEL_C                  = -1609082, 
-    SAY_DUEL_D                  = -1609083, 
-    SAY_DUEL_E                  = -1609084, 
-    SAY_DUEL_F                  = -1609085, 
-    SAY_DUEL_G                  = -1609086, 
-    SAY_DUEL_H                  = -1609087, 
-    SAY_DUEL_I                  = -1609088, 
+    SAY_DUEL_A                  = -1609080,
+    SAY_DUEL_B                  = -1609081,
+    SAY_DUEL_C                  = -1609082,
+    SAY_DUEL_D                  = -1609083,
+    SAY_DUEL_E                  = -1609084,
+    SAY_DUEL_F                  = -1609085,
+    SAY_DUEL_G                  = -1609086,
+    SAY_DUEL_H                  = -1609087,
+    SAY_DUEL_I                  = -1609088,
 
-    SPELL_DUEL                  = 52996, 
-    //SPELL_DUEL_TRIGGERED        = 52990, 
-    SPELL_DUEL_VICTORY          = 52994, 
-    SPELL_DUEL_FLAG             = 52991, 
+    SPELL_DUEL                  = 52996,
+    //SPELL_DUEL_TRIGGERED        = 52990,
+    SPELL_DUEL_VICTORY          = 52994,
+    SPELL_DUEL_FLAG             = 52991,
 
-    QUEST_DEATH_CHALLENGE       = 12733, 
+    QUEST_DEATH_CHALLENGE       = 12733,
     FACTION_HOSTILE             = 2068
 };
 
@@ -638,11 +632,7 @@ public:
             CombatAI::UpdateAI(uiDiff);
         }
     };
-
 };
-
-
-
 
 /*######
 ## npc_dark_rider_of_acherus
@@ -710,7 +700,6 @@ public:
                         break;
                 }
             } else PhaseTimer -= diff;
-
         }
 
         void InitDespawnHorse(Unit *who)
@@ -725,11 +714,8 @@ public:
             me->SetUInt64Value(UNIT_FIELD_TARGET, TargetGUID);
             Intro = true;
         }
-
     };
-
 };
-
 
 /*######
 ## npc_salanar_the_horseman
@@ -737,10 +723,10 @@ public:
 
 enum eSalanar
 {
-    REALM_OF_SHADOWS            = 52693, 
-    EFFECT_STOLEN_HORSE         = 52263, 
-    DELIVER_STOLEN_HORSE        = 52264, 
-    CALL_DARK_RIDER             = 52266, 
+    REALM_OF_SHADOWS            = 52693,
+    EFFECT_STOLEN_HORSE         = 52263,
+    DELIVER_STOLEN_HORSE        = 52264,
+    CALL_DARK_RIDER             = 52266,
     SPELL_EFFECT_OVERTAKE       = 52349
 };
 
@@ -803,9 +789,7 @@ public:
             }
         }
     };
-
 };
-
 
 /*######
 ## npc_ros_dark_rider
@@ -853,15 +837,13 @@ public:
             }
         }
     };
-
 };
-
 
 // correct way: 52312 52314 52555 ...
 enum SG
 {
-    GHOULS = 28845, 
-    GHOSTS = 28846, 
+    GHOULS = 28845,
+    GHOSTS = 28846,
 };
 class npc_dkc1_gothik : public CreatureScript
 {
@@ -902,9 +884,7 @@ public:
             }
         }
     };
-
 };
-
 
 class npc_scarlet_ghoul : public CreatureScript
 {
@@ -986,9 +966,7 @@ public:
             }
         }
     };
-
 };
-
 
 /*####
 ## npc_scarlet_miner_cart
@@ -1043,9 +1021,7 @@ public:
                     miner->DisappearAndDie();
         }
     };
-
 };
-
 
 /*####
 ## npc_scarlet_miner
@@ -1178,9 +1154,7 @@ public:
             npc_escortAI::UpdateAI(diff);
         }
     };
-
 };
-
 
 /*######
 ## go_inconspicuous_mine_car
@@ -1213,7 +1187,6 @@ public:
         }
         return true;
     }
-
 };
 
 // npc 28912 quest 17217 boss 29001 mob 29007 go 191092

@@ -24,13 +24,13 @@
 
 enum eDrakuruShackles
 {
-    SPELL_LEFT_CHAIN           = 59951, 
-    SPELL_RIGHT_CHAIN          = 59952, 
-    SPELL_UNLOCK_SHACKLE       = 55083, 
-    SPELL_FREE_RAGECLAW        = 55223, 
+    SPELL_LEFT_CHAIN           = 59951,
+    SPELL_RIGHT_CHAIN          = 59952,
+    SPELL_UNLOCK_SHACKLE       = 55083,
+    SPELL_FREE_RAGECLAW        = 55223,
 
-    NPC_RAGECLAW               = 29686, 
-    QUEST_TROLLS_IS_GONE_CRAZY = 12861, 
+    NPC_RAGECLAW               = 29686,
+    QUEST_TROLLS_IS_GONE_CRAZY = 12861,
 };
 
 class npc_drakuru_shackles : public CreatureScript
@@ -52,7 +52,7 @@ public:
             float x, y, z;
             me->GetClosePoint(x, y, z, me->GetObjectSize() / 3, 0.1f);
 
-            if (Unit* summon = me->SummonCreature(NPC_RAGECLAW, x, y, z, 
+            if (Unit* summon = me->SummonCreature(NPC_RAGECLAW, x, y, z,
                 0, TEMPSUMMON_DEAD_DESPAWN, 1000))
             {
                 RageclawGUID = summon->GetGUID();
@@ -102,7 +102,6 @@ public:
         }
     };
 
-
     CreatureAI *GetAI(Creature *creature) const
     {
         return new npc_drakuru_shacklesAI(creature);
@@ -115,7 +114,7 @@ public:
 
 enum eRageclaw
 {
-    SPELL_UNSHACKLED           = 55085, 
+    SPELL_UNSHACKLED           = 55085,
     SPELL_KNEEL                = 39656
 };
 
@@ -199,7 +198,7 @@ public:
 
 enum eGymer
 {
-    QUEST_STORM_KING_VENGEANCE    = 12919, 
+    QUEST_STORM_KING_VENGEANCE    = 12919,
     SPELL_GYMER                   = 55568
 };
 
@@ -243,34 +242,34 @@ public:
 
 enum eGurgthock
 {
-    QUEST_AMPHITHEATER_ANGUISH_TUSKARRMAGEDDON    = 12935, 
-    QUEST_AMPHITHEATER_ANGUISH_KORRAK_BLOODRAGER  = 12936, 
-    QUEST_AMPHITHEATER_ANGUISH_YGGDRAS_2          = 12954, 
-    QUEST_AMPHITHEATER_ANGUISH_YGGDRAS_1          = 12932, 
-    QUEST_AMPHITHEATER_ANGUISH_MAGNATAUR          = 12933, 
-    QUEST_AMPHITHEATER_ANGUISH_FROM_BEYOND        = 12934, 
+    QUEST_AMPHITHEATER_ANGUISH_TUSKARRMAGEDDON    = 12935,
+    QUEST_AMPHITHEATER_ANGUISH_KORRAK_BLOODRAGER  = 12936,
+    QUEST_AMPHITHEATER_ANGUISH_YGGDRAS_2          = 12954,
+    QUEST_AMPHITHEATER_ANGUISH_YGGDRAS_1          = 12932,
+    QUEST_AMPHITHEATER_ANGUISH_MAGNATAUR          = 12933,
+    QUEST_AMPHITHEATER_ANGUISH_FROM_BEYOND        = 12934,
 
-    NPC_ORINOKO_TUSKBREAKER                       = 30020, 
-    NPC_KORRAK_BLOODRAGER                         = 30023, 
-    NPC_YGGDRAS                                   = 30014, 
-    NPC_STINKBEARD                                = 30017, 
+    NPC_ORINOKO_TUSKBREAKER                       = 30020,
+    NPC_KORRAK_BLOODRAGER                         = 30023,
+    NPC_YGGDRAS                                   = 30014,
+    NPC_STINKBEARD                                = 30017,
     NPC_AZ_BARIN                                  = 30026, // air
     NPC_DUKE_SINGEN                               = 30019, // fire
     NPC_ERATHIUS                                  = 30025, // earth
     NPC_GARGORAL                                  = 30024, // water
-    NPC_FIEND_WATER                               = 30044, 
-    NPC_FIEND_AIR                                 = 30045, 
-    NPC_FIEND_FIRE                                = 30042, 
-    NPC_FIEND_EARTH                               = 30043, 
+    NPC_FIEND_WATER                               = 30044,
+    NPC_FIEND_AIR                                 = 30045,
+    NPC_FIEND_FIRE                                = 30042,
+    NPC_FIEND_EARTH                               = 30043,
 
-    SAY_QUEST_ACCEPT_TUSKARRMAGEDON               = -1571031, 
-    SAY_QUEST_ACCEPT_KORRAK_1                     = -1571033, 
-    SAY_QUEST_ACCEPT_KORRAK_2                     = -1571034, 
-    SAY_QUEST_ACCEPT_MAGNATAUR                    = -1571035, 
+    SAY_QUEST_ACCEPT_TUSKARRMAGEDON               = -1571031,
+    SAY_QUEST_ACCEPT_KORRAK_1                     = -1571033,
+    SAY_QUEST_ACCEPT_KORRAK_2                     = -1571034,
+    SAY_QUEST_ACCEPT_MAGNATAUR                    = -1571035,
 
-    EMOTE_YGGDRAS_SPAWN                           = -1571039, 
-    SAY_STINKBEARD_SPAWN                          = -1571040, 
-    SAY_GURGTHOCK_ELEMENTAL_SPAWN                 = -1571041, 
+    EMOTE_YGGDRAS_SPAWN                           = -1571039,
+    SAY_STINKBEARD_SPAWN                          = -1571040,
+    SAY_GURGTHOCK_ELEMENTAL_SPAWN                 = -1571041,
 
     SPELL_CRASHING_WAVE                           = 55909, // water
     SPELL_SHOCKWAVE                               = 55918, // earth
@@ -293,10 +292,10 @@ struct BossAndAdd
 
 static BossAndAdd Boss[]=
 {
-    {NPC_GARGORAL, NPC_FIEND_WATER, SPELL_CRASHING_WAVE, SPELL_ORB_OF_WATER}, 
-    {NPC_AZ_BARIN, NPC_FIEND_AIR, SPELL_BLAST_OF_AIR, SPELL_ORB_OF_STORMS}, 
-    {NPC_DUKE_SINGEN, NPC_FIEND_FIRE, SPELL_MAGMA_WAVE, SPELL_ORB_OF_FLAME}, 
-    {NPC_ERATHIUS, NPC_FIEND_EARTH, SPELL_SHOCKWAVE, SPELL_BOULDER}, 
+    {NPC_GARGORAL, NPC_FIEND_WATER, SPELL_CRASHING_WAVE, SPELL_ORB_OF_WATER},
+    {NPC_AZ_BARIN, NPC_FIEND_AIR, SPELL_BLAST_OF_AIR, SPELL_ORB_OF_STORMS},
+    {NPC_DUKE_SINGEN, NPC_FIEND_FIRE, SPELL_MAGMA_WAVE, SPELL_ORB_OF_FLAME},
+    {NPC_ERATHIUS, NPC_FIEND_EARTH, SPELL_SHOCKWAVE, SPELL_BOULDER},
 };
 
 const Position SpawnPosition[] =
@@ -309,20 +308,20 @@ const Position SpawnPosition[] =
 const Position AddSpawnPosition[] =
 {
     {5722.487f, -3010.75f, 312.751648f, 0.478f}, // caster location
-    {5724.983f, -2969.89551f, 286.359619f, 0.478f}, 
-    {5733.76025f, -3000.34644f, 286.359619f, 0.478f}, 
+    {5724.983f, -2969.89551f, 286.359619f, 0.478f},
+    {5733.76025f, -3000.34644f, 286.359619f, 0.478f},
     {5739.8125f, -2981.524f, 290.7671f, 0.478f}, // caster location
-    {5742.101f, -2950.75586f, 286.2643f, 5.21f}, 
+    {5742.101f, -2950.75586f, 286.2643f, 5.21f},
     {5743.305f, -3011.29736f, 290.7671f, 0.478f}, // caster location
-    {5744.417f, -3025.528f, 286.35965f, 0.478f}, 
-    {5763.189f, -3029.67529f, 290.7671f, 0.478f}, 
-    {5769.401f, -2935.121f, 286.335754f, 5.21f}, 
-    {5793.061f, -2934.593f, 286.359619f, 3.53f}, 
+    {5744.417f, -3025.528f, 286.35965f, 0.478f},
+    {5763.189f, -3029.67529f, 290.7671f, 0.478f},
+    {5769.401f, -2935.121f, 286.335754f, 5.21f},
+    {5793.061f, -2934.593f, 286.359619f, 3.53f},
     {5797.32129f, -2955.26855f, 290.7671f, 3.53f}, // caster location
-    {5813.94531f, -2956.74683f, 286.359619f, 3.53f}, 
+    {5813.94531f, -2956.74683f, 286.359619f, 3.53f},
     {5816.85547f, -2974.476f, 290.7671f, 3.53f}, // caster location
     {5820.30859f, -3002.83716f, 290.7671f, 3.53f}, // caster location
-    {5828.50244f, -2981.737f, 286.359619f, 3.53f}, 
+    {5828.50244f, -2981.737f, 286.359619f, 3.53f},
     {5828.899f, -2960.15479f, 312.751648f, 3.53f}, // caster location
 };
 
@@ -567,13 +566,13 @@ public:
 
 enum eOrinokoTuskbreaker
 {
-    SPELL_BATTLE_SHOUT      = 32064, 
-    SPELL_FISHY_SCENT       = 55937, 
-    SPELL_IMPALE            = 55929, 
-    SPELL_SUMMON_WHISKER    = 55946, 
+    SPELL_BATTLE_SHOUT      = 32064,
+    SPELL_FISHY_SCENT       = 55937,
+    SPELL_IMPALE            = 55929,
+    SPELL_SUMMON_WHISKER    = 55946,
 
-    NPC_WHISKER             = 30113, 
-    NPC_HUNGRY_PENGUIN      = 30110, 
+    NPC_WHISKER             = 30113,
+    NPC_HUNGRY_PENGUIN      = 30110,
 
     SAY_CALL_FOR_HELP       = -1571032
 };
@@ -693,7 +692,6 @@ public:
 
             if (pKiller->GetTypeId() == TYPEID_PLAYER)
                 pKiller->GetCharmerOrOwnerPlayerOrPlayerItself()->GroupEventHappens(QUEST_AMPHITHEATER_ANGUISH_TUSKARRMAGEDDON, pKiller);
-
         }
     };
 
@@ -709,9 +707,9 @@ public:
 
 enum eKorrakBloodrager
 {
-    SPELL_GROW     = 55948, 
-    SPELL_CHARGE   = 24193, 
-    SPELL_UPPERCUT = 30471, 
+    SPELL_GROW     = 55948,
+    SPELL_CHARGE   = 24193,
+    SPELL_UPPERCUT = 30471,
     SPELL_ENRAGE   = 42745
 };
 
@@ -807,8 +805,8 @@ public:
 
 enum eYggdras
 {
-    SPELL_CLEAVE            = 40504, 
-    SPELL_CORRODE_FLESH     = 57076, 
+    SPELL_CLEAVE            = 40504,
+    SPELL_CORRODE_FLESH     = 57076,
     SPELL_JORMUNGAR_SPAWN   = 55859
 };
 
@@ -876,7 +874,6 @@ public:
                 pSummoner->MonsterYell(sText.c_str(), LANG_UNIVERSAL, 0);
             }
 
-
             if (Player* pPlayer = pKiller->GetCharmerOrOwnerPlayerOrPlayerItself())
             {
                 pPlayer->GroupEventHappens(QUEST_AMPHITHEATER_ANGUISH_YGGDRAS_1, pKiller);
@@ -900,10 +897,10 @@ public:
 
 enum eStinkbeard
 {
-    SPELL_ENRAGE_STINKBEARD = 50420, 
-    SPELL_KNOCK_AWAY        = 31389, 
-    SPELL_STINKY_BEARD      = 55867, 
-    SPELL_THUNDERBLADE      = 55866, 
+    SPELL_ENRAGE_STINKBEARD = 50420,
+    SPELL_KNOCK_AWAY        = 31389,
+    SPELL_STINKY_BEARD      = 55867,
+    SPELL_THUNDERBLADE      = 55866,
     SPELL_THUNDERCLAP       = 15588
 };
 
@@ -1082,7 +1079,6 @@ public:
                     SummonList.push_back(pSummon->GetGUID());
                 }
             }
-
         }
 
         void EnterCombat(Unit* pUnit)
@@ -1211,7 +1207,6 @@ public:
         {
             if (uiData == 1)
                 uiSpell = Boss[uiValue].uiAddSpell;
-
         }
 
         void UpdateAI(const uint32 uiDiff)
@@ -1225,7 +1220,6 @@ public:
                 {
                     DoCast(me, uiSpell); // this spell is not supported ... YET!
                     uiMissleTimer = urand(2000, 7000);
-
                 } else uiMissleTimer -= uiDiff;
             }
 
@@ -1279,14 +1273,14 @@ public:
 
 enum eCrusade_recruit
 {
-    SPELL_QUEST_CREDIT                            = 50633, 
+    SPELL_QUEST_CREDIT                            = 50633,
 
-    QUEST_TROLL_PATROL_INTESTINAL_FORTITUDE       = 12509, 
+    QUEST_TROLL_PATROL_INTESTINAL_FORTITUDE       = 12509,
 
-    GOSSIP_CRUSADE_TEXT                           = 13069, 
+    GOSSIP_CRUSADE_TEXT                           = 13069,
 
-    SAY_RECRUIT_1                                 = -1571036, 
-    SAY_RECRUIT_2                                 = -1571037, 
+    SAY_RECRUIT_1                                 = -1571036,
+    SAY_RECRUIT_2                                 = -1571037,
     SAY_RECRUIT_3                                 = -1571038
 };
 
@@ -1392,7 +1386,7 @@ public:
 
 enum eScourgeEnclosure
 {
-    QUEST_OUR_ONLY_HOPE                           = 12916, 
+    QUEST_OUR_ONLY_HOPE                           = 12916,
     NPC_GYMER_DUMMY                               = 29928   //from quest template
 };
 

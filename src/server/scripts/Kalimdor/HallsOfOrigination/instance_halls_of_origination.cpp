@@ -43,7 +43,7 @@ public:
     struct instance_halls_of_origination_InstanceMapScript: public InstanceScript
     {
         instance_halls_of_origination_InstanceMapScript(InstanceMap *map) : InstanceScript(map) { }
-        
+
         uint32 uiEncounter[ENCOUNTERS];
 
         uint64 uiTempleGuardianAnhuur;
@@ -55,7 +55,7 @@ public:
         uint64 uiRajh;
         uint64 OriginationElevatorGUID;
         uint64 uiTeamInInstance;
-      
+
         void Initialize()
         {
             uiTempleGuardianAnhuur = 0;
@@ -78,7 +78,6 @@ public:
                 if (uiEncounter[i] == IN_PROGRESS)
                     return true;
             }
-
 
             return false;
         }
@@ -172,7 +171,7 @@ public:
                     uiEncounter[6] = data;
                     break;
             }
-         
+
          if (data == DONE)
              SaveToDB();
         }
@@ -205,7 +204,7 @@ public:
 
             std::string str_data;
             std::ostringstream saveStream;
-            saveStream << "H O" << uiEncounter[0] << " " << uiEncounter[1]  << " " << uiEncounter[2]  << " " << uiEncounter[3] << " " << uiEncounter[4] << " " << uiEncounter[5] << " " << uiEncounter[6]; 
+            saveStream << "H O" << uiEncounter[0] << " " << uiEncounter[1]  << " " << uiEncounter[2]  << " " << uiEncounter[3] << " " << uiEncounter[4] << " " << uiEncounter[5] << " " << uiEncounter[6];
             str_data = saveStream.str();
 
             OUT_SAVE_INST_DATA_COMPLETE;
@@ -246,7 +245,6 @@ public:
 
             OUT_LOAD_INST_DATA_COMPLETE;
         }
-
     };
 };
 

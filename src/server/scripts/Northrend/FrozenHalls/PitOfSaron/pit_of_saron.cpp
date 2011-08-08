@@ -84,68 +84,68 @@
 /****************************************EVENTS************************************/
 enum eEvents
 {
-    EVENT_NONE, 
+    EVENT_NONE,
 
     // Ymirjar Wrathbringer
-    EVENT_BLIGHT, 
+    EVENT_BLIGHT,
 
     // Ymirjar Skycaller
-    EVENT_FROSTBLADE, 
-    EVENT_GLACIAL_STRIKE, 
+    EVENT_FROSTBLADE,
+    EVENT_GLACIAL_STRIKE,
 
     // Ymirjar Flamebearer
-    EVENT_FIREBALL, 
-    EVENT_HELLFIRE, 
-    EVENT_TACTICAL_BLINK, 
+    EVENT_FIREBALL,
+    EVENT_HELLFIRE,
+    EVENT_TACTICAL_BLINK,
 
     //Ymirjar Deathbringer
-    EVENT_EMPOWERED_SHADOW_BOLT, 
-    EVENT_SUMMON_UNDEAD, 
+    EVENT_EMPOWERED_SHADOW_BOLT,
+    EVENT_SUMMON_UNDEAD,
 
     //Wrathbone Laborer
-    EVENT_BLINDING_DIRT, 
-    EVENT_PUNCTURE_WOUND, 
-    EVENT_SHOVELLED, 
+    EVENT_BLINDING_DIRT,
+    EVENT_PUNCTURE_WOUND,
+    EVENT_SHOVELLED,
 
     //Wrathbone Coldwraith
-    EVENT_FREEZING_CIRCLE, 
-    EVENT_FROSTBOLT, 
+    EVENT_FREEZING_CIRCLE,
+    EVENT_FROSTBOLT,
 
     //Stonespine Gargoyle
-    EVENT_GARGOYLE_STRIKE, 
-    EVENT_STONEFORM, 
+    EVENT_GARGOYLE_STRIKE,
+    EVENT_STONEFORM,
 
     //Plagueborn Horror
-    EVENT_BLIGHT_BOMB, 
-    EVENT_PUSTULANT_FLESH, 
-    EVENT_TOXIC_WASTE, 
+    EVENT_BLIGHT_BOMB,
+    EVENT_PUSTULANT_FLESH,
+    EVENT_TOXIC_WASTE,
 
     //Iceborn Proto-Drake
-    EVENT_FROST_BREATH, 
+    EVENT_FROST_BREATH,
 
     //Hungering Ghoul
-    EVENT_DEVOUR_FLESH, 
+    EVENT_DEVOUR_FLESH,
 
     //Fallen Warrior
-    EVENT_ARCING_SLICE, 
-    EVENT_DEMORALIZING_SHOUT, 
-    EVENT_SHIELD_BLOCK, 
+    EVENT_ARCING_SLICE,
+    EVENT_DEMORALIZING_SHOUT,
+    EVENT_SHIELD_BLOCK,
 
     //Deathwhisper Torturer
-    EVENT_BLACK_BRAND, 
-    EVENT_CURSE_OF_AGONY, 
+    EVENT_BLACK_BRAND,
+    EVENT_CURSE_OF_AGONY,
 
     //Deathwhisper Shadowcaster
-    EVENT_SHADOW_BOLT, 
+    EVENT_SHADOW_BOLT,
 
     //Deathwhisper Necrolyte
-    EVENT_CONVERSION_BEAM, 
-    EVENT_SHADOW_BOLT_2, 
+    EVENT_CONVERSION_BEAM,
+    EVENT_SHADOW_BOLT_2,
 
-    EVENT_SHADOW_BOLT_3, 
+    EVENT_SHADOW_BOLT_3,
 
     //Geist Ambusher
-    EVENT_LEAPING_FACE_MAUL, 
+    EVENT_LEAPING_FACE_MAUL,
 };
 
 /****************************************AI****************************************/
@@ -204,7 +204,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_ymirjar_skycaller : public CreatureScript
@@ -265,7 +264,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_ymirjar_flamebearer : public CreatureScript
@@ -334,7 +332,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_ymirjar_deathbringer : public CreatureScript
@@ -391,7 +388,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_wrathbone_laborer : public CreatureScript
@@ -459,7 +455,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_wrathbone_coldwraith : public CreatureScript
@@ -522,7 +517,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_stonespine_gargoyle : public CreatureScript
@@ -583,7 +577,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_plagueborn_horror : public CreatureScript
@@ -650,7 +643,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_iceborn_protodrake : public CreatureScript
@@ -706,7 +698,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_hungering_ghoul : public CreatureScript
@@ -762,7 +753,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_fallen_warrior : public CreatureScript
@@ -828,7 +818,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_deathwhisper_torturer : public CreatureScript
@@ -891,7 +880,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_deathwhisper_shadowcaster : public CreatureScript
@@ -948,7 +936,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_deathwhisper_necrolyte : public CreatureScript
@@ -1011,7 +998,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_wrathbone_sorcerer : public CreatureScript
@@ -1068,7 +1054,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_geist_ambusher : public CreatureScript
@@ -1127,7 +1112,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_pit_of_saron()

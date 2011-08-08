@@ -72,9 +72,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(4513, pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 /*######
 ## npc_shenthul
@@ -169,10 +167,7 @@ public:
             }
         }
     };
-
 };
-
-
 
 /*######
 ## npc_thrall_warchief
@@ -286,10 +281,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
 
 void AddSC_orgrimmar()
 {

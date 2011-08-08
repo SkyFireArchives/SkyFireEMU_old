@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,37 +35,37 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                   = -1568000, 
-    SAY_FIRE_BOMBS              = -1568001, 
-    SAY_SUMMON_HATCHER          = -1568002, 
-    SAY_ALL_EGGS                = -1568003, 
-    SAY_BERSERK                 = -1568004, 
-    SAY_SLAY_1                  = -1568005, 
-    SAY_SLAY_2                  = -1568006, 
-    SAY_DEATH                   = -1568007, 
-    SAY_EVENT_STRANGERS         = -1568008, 
-    SAY_EVENT_FRIENDS           = -1568009, 
+    SAY_AGGRO                   = -1568000,
+    SAY_FIRE_BOMBS              = -1568001,
+    SAY_SUMMON_HATCHER          = -1568002,
+    SAY_ALL_EGGS                = -1568003,
+    SAY_BERSERK                 = -1568004,
+    SAY_SLAY_1                  = -1568005,
+    SAY_SLAY_2                  = -1568006,
+    SAY_DEATH                   = -1568007,
+    SAY_EVENT_STRANGERS         = -1568008,
+    SAY_EVENT_FRIENDS           = -1568009,
 
 // Jan'alai
-    SPELL_FLAME_BREATH          = 43140, 
-    SPELL_FIRE_WALL             = 43113, 
-    SPELL_ENRAGE                = 44779, 
-    SPELL_SUMMON_PLAYERS        = 43097, 
+    SPELL_FLAME_BREATH          = 43140,
+    SPELL_FIRE_WALL             = 43113,
+    SPELL_ENRAGE                = 44779,
+    SPELL_SUMMON_PLAYERS        = 43097,
     SPELL_TELE_TO_CENTER        = 43098, // coord
-    SPELL_HATCH_ALL             = 43144, 
-    SPELL_BERSERK               = 45078, 
+    SPELL_HATCH_ALL             = 43144,
+    SPELL_BERSERK               = 45078,
 
 // -- Fire Bob Spells
     SPELL_FIRE_BOMB_CHANNEL     = 42621, // last forever
     SPELL_FIRE_BOMB_THROW       = 42628, // throw visual
     SPELL_FIRE_BOMB_DUMMY       = 42629, // bomb visual
-    SPELL_FIRE_BOMB_DAMAGE      = 42630, 
+    SPELL_FIRE_BOMB_DAMAGE      = 42630,
 
 // --Summons
-    MOB_AMANI_HATCHER           = 23818, 
+    MOB_AMANI_HATCHER           = 23818,
     MOB_HATCHLING               = 23598,   // 42493
-    MOB_EGG                     = 23817, 
-    MOB_FIRE_BOMB               = 23920, 
+    MOB_EGG                     = 23817,
+    MOB_FIRE_BOMB               = 23920,
 
 // -- Hatcher Spells
     SPELL_HATCH_EGG             = 43734,   // 42471
@@ -84,26 +84,26 @@ float JanalainPos[1][3] =
 
 float FireWallCoords[4][4] =
 {
-    {-10.13f, 1149.27f, 19, 3.1415f}, 
-    {-33.93f, 1123.90f, 19, 0.5f*3.1415f}, 
-    {-54.80f, 1150.08f, 19, 0}, 
+    {-10.13f, 1149.27f, 19, 3.1415f},
+    {-33.93f, 1123.90f, 19, 0.5f*3.1415f},
+    {-54.80f, 1150.08f, 19, 0},
     {-33.93f, 1175.68f, 19, 1.5f*3.1415f}
 };
 
 float hatcherway[2][5][3] =
 {
     {
-        {-87.46f, 1170.09f, 6}, 
-        {-74.41f, 1154.75f, 6}, 
-        {-52.74f, 1153.32f, 19}, 
-        {-33.37f, 1172.46f, 19}, 
+        {-87.46f, 1170.09f, 6},
+        {-74.41f, 1154.75f, 6},
+        {-52.74f, 1153.32f, 19},
+        {-33.37f, 1172.46f, 19},
         {-33.09f, 1203.87f, 19}
-    }, 
+    },
     {
-        {-86.57f, 1132.85f, 6}, 
-        {-73.94f, 1146.00f, 6}, 
-        {-52.29f, 1146.51f, 19}, 
-        {-33.57f, 1125.72f, 19}, 
+        {-86.57f, 1132.85f, 6},
+        {-73.94f, 1146.00f, 6},
+        {-52.29f, 1146.51f, 19},
+        {-33.57f, 1125.72f, 19},
         {-34.29f, 1095.22f, 19}
     }
 };
@@ -445,7 +445,6 @@ class boss_janalai : public CreatureScript
             }
         };
 
-
         CreatureAI* GetAI(Creature* creature) const
         {
             return new boss_janalaiAI(creature);
@@ -609,7 +608,6 @@ class mob_janalai_hatcher : public CreatureScript
                         }
                         else
                             me->DisappearAndDie();
-
                     } else WaitTimer -= diff;
                 }
             }
@@ -712,7 +710,6 @@ public:
             }
         }
     };
-
 };
 
 void AddSC_boss_janalai()
@@ -723,4 +720,3 @@ void AddSC_boss_janalai()
     new mob_janalai_hatchling();
     new mob_janalai_egg();
 }
-

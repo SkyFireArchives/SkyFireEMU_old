@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -95,26 +95,26 @@ struct Locations
 
 static Locations FlightPoint[]=
 {
-    {1754.00f, 1346.00f, 17.50f}, 
-    {1765.00f, 1347.00f, 19.00f}, 
-    {1784.00f, 1346.80f, 25.40f}, 
-    {1803.30f, 1347.60f, 33.00f}, 
-    {1824.00f, 1350.00f, 42.60f}, 
-    {1838.80f, 1353.20f, 49.80f}, 
-    {1852.00f, 1357.60f, 55.70f}, 
-    {1861.30f, 1364.00f, 59.40f}, 
-    {1866.30f, 1374.80f, 61.70f}, 
-    {1864.00f, 1387.30f, 63.20f}, 
-    {1854.80f, 1399.40f, 64.10f}, 
-    {1844.00f, 1406.90f, 64.10f}, 
-    {1824.30f, 1411.40f, 63.30f}, 
-    {1801.00f, 1412.30f, 60.40f}, 
-    {1782.00f, 1410.10f, 55.50f}, 
-    {1770.50f, 1405.20f, 50.30f}, 
-    {1765.20f, 1400.70f, 46.60f}, 
-    {1761.40f, 1393.40f, 41.70f}, 
-    {1759.10f, 1386.70f, 36.60f}, 
-    {1757.80f, 1378.20f, 29.00f}, 
+    {1754.00f, 1346.00f, 17.50f},
+    {1765.00f, 1347.00f, 19.00f},
+    {1784.00f, 1346.80f, 25.40f},
+    {1803.30f, 1347.60f, 33.00f},
+    {1824.00f, 1350.00f, 42.60f},
+    {1838.80f, 1353.20f, 49.80f},
+    {1852.00f, 1357.60f, 55.70f},
+    {1861.30f, 1364.00f, 59.40f},
+    {1866.30f, 1374.80f, 61.70f},
+    {1864.00f, 1387.30f, 63.20f},
+    {1854.80f, 1399.40f, 64.10f},
+    {1844.00f, 1406.90f, 64.10f},
+    {1824.30f, 1411.40f, 63.30f},
+    {1801.00f, 1412.30f, 60.40f},
+    {1782.00f, 1410.10f, 55.50f},
+    {1770.50f, 1405.20f, 50.30f},
+    {1765.20f, 1400.70f, 46.60f},
+    {1761.40f, 1393.40f, 41.70f},
+    {1759.10f, 1386.70f, 36.60f},
+    {1757.80f, 1378.20f, 29.00f},
     {1758.00f, 1367.00f, 19.51f}
 };
 
@@ -126,9 +126,9 @@ static Locations Spawn[]=
 
 static const char* Text[]=
 {
-    "Horseman rise...", 
-    "Your time is nigh...", 
-    "You felt death once...", 
+    "Horseman rise...",
+    "Your time is nigh...",
+    "You felt death once...",
     "Now, know demise!"
 };
 
@@ -218,7 +218,6 @@ public:
             }
         }
     };
-
 };
 
 class mob_head : public CreatureScript
@@ -357,7 +356,6 @@ public:
             }
         }
     };
-
 };
 
 class boss_headless_horseman : public CreatureScript
@@ -746,10 +744,7 @@ public:
             }
         }
     };
-
 };
-
-
 
 class mob_pulsing_pumpkin : public CreatureScript
 {
@@ -830,7 +825,6 @@ public:
                 DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class go_loosely_turned_soil : public GameObjectScript
@@ -863,7 +857,6 @@ public:
         //}
         return true;
     }
-
 };
 
 void mob_head::mob_headAI::Disappear()

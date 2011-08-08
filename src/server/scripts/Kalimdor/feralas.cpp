@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -67,9 +67,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(2433, pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 /*######
 ## npc_oox22fe
@@ -78,21 +76,21 @@ public:
 enum eOOX
 {
     //signed for 7806
-    SAY_OOX_START           = -1000287, 
-    SAY_OOX_AGGRO1          = -1000288, 
-    SAY_OOX_AGGRO2          = -1000289, 
-    SAY_OOX_AMBUSH          = -1000290, 
-    SAY_OOX_END             = -1000292, 
+    SAY_OOX_START           = -1000287,
+    SAY_OOX_AGGRO1          = -1000288,
+    SAY_OOX_AGGRO2          = -1000289,
+    SAY_OOX_AMBUSH          = -1000290,
+    SAY_OOX_END             = -1000292,
 
-    NPC_YETI                = 7848, 
-    NPC_GORILLA             = 5260, 
-    NPC_WOODPAW_REAVER      = 5255, 
-    NPC_WOODPAW_BRUTE       = 5253, 
-    NPC_WOODPAW_ALPHA       = 5258, 
-    NPC_WOODPAW_MYSTIC      = 5254, 
+    NPC_YETI                = 7848,
+    NPC_GORILLA             = 5260,
+    NPC_WOODPAW_REAVER      = 5255,
+    NPC_WOODPAW_BRUTE       = 5253,
+    NPC_WOODPAW_ALPHA       = 5258,
+    NPC_WOODPAW_MYSTIC      = 5254,
 
-    QUEST_RESCUE_OOX22FE    = 2767, 
-    FACTION_ESCORTEE_A      = 774, 
+    QUEST_RESCUE_OOX22FE    = 2767,
+    FACTION_ESCORTEE_A      = 774,
     FACTION_ESCORTEE_H      = 775
 };
 
@@ -117,7 +115,6 @@ public:
 
             if (npc_escortAI* pEscortAI = CAST_AI(npc_oox22fe::npc_oox22feAI, pCreature->AI()))
                 pEscortAI->Start(true, false, pPlayer->GetGUID());
-
         }
         return true;
     }
@@ -186,10 +183,7 @@ public:
             summoned->AI()->AttackStart(me);
         }
     };
-
 };
-
-
 
 /*######
 ## npc_screecher_spirit
@@ -208,7 +202,6 @@ public:
 
         return true;
     }
-
 };
 
 /*######

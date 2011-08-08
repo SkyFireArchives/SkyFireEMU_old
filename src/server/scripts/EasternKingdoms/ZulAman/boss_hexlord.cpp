@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -122,11 +122,11 @@ static uint32 AddEntryList[8]=
 
 enum AbilityTarget
 {
-    ABILITY_TARGET_SELF = 0, 
-    ABILITY_TARGET_VICTIM = 1, 
-    ABILITY_TARGET_ENEMY = 2, 
-    ABILITY_TARGET_HEAL = 3, 
-    ABILITY_TARGET_BUFF = 4, 
+    ABILITY_TARGET_SELF = 0,
+    ABILITY_TARGET_VICTIM = 1,
+    ABILITY_TARGET_ENEMY = 2,
+    ABILITY_TARGET_HEAL = 3,
+    ABILITY_TARGET_BUFF = 4,
     ABILITY_TARGET_SPECIAL = 5
 };
 
@@ -140,44 +140,44 @@ struct PlayerAbilityStruct
 static PlayerAbilityStruct PlayerAbility[][3] =
 {
     // 1 warrior
-    {{SPELL_WR_SPELL_REFLECT, ABILITY_TARGET_SELF, 10000}, 
-    {SPELL_WR_WHIRLWIND, ABILITY_TARGET_SELF, 10000}, 
-    {SPELL_WR_MORTAL_STRIKE, ABILITY_TARGET_VICTIM, 6000}}, 
+    {{SPELL_WR_SPELL_REFLECT, ABILITY_TARGET_SELF, 10000},
+    {SPELL_WR_WHIRLWIND, ABILITY_TARGET_SELF, 10000},
+    {SPELL_WR_MORTAL_STRIKE, ABILITY_TARGET_VICTIM, 6000}},
     // 2 paladin
-    {{SPELL_PA_CONSECRATION, ABILITY_TARGET_SELF, 10000}, 
-    {SPELL_PA_HOLY_LIGHT, ABILITY_TARGET_HEAL, 10000}, 
-    {SPELL_PA_AVENGING_WRATH, ABILITY_TARGET_SELF, 10000}}, 
+    {{SPELL_PA_CONSECRATION, ABILITY_TARGET_SELF, 10000},
+    {SPELL_PA_HOLY_LIGHT, ABILITY_TARGET_HEAL, 10000},
+    {SPELL_PA_AVENGING_WRATH, ABILITY_TARGET_SELF, 10000}},
     // 3 hunter
-    {{SPELL_HU_EXPLOSIVE_TRAP, ABILITY_TARGET_SELF, 10000}, 
-    {SPELL_HU_FREEZING_TRAP, ABILITY_TARGET_SELF, 10000}, 
-    {SPELL_HU_SNAKE_TRAP, ABILITY_TARGET_SELF, 10000}}, 
+    {{SPELL_HU_EXPLOSIVE_TRAP, ABILITY_TARGET_SELF, 10000},
+    {SPELL_HU_FREEZING_TRAP, ABILITY_TARGET_SELF, 10000},
+    {SPELL_HU_SNAKE_TRAP, ABILITY_TARGET_SELF, 10000}},
     // 4 rogue
-    {{SPELL_RO_WOUND_POISON, ABILITY_TARGET_VICTIM, 3000}, 
-    {SPELL_RO_SLICE_DICE, ABILITY_TARGET_SELF, 10000}, 
-    {SPELL_RO_BLIND, ABILITY_TARGET_ENEMY, 10000}}, 
+    {{SPELL_RO_WOUND_POISON, ABILITY_TARGET_VICTIM, 3000},
+    {SPELL_RO_SLICE_DICE, ABILITY_TARGET_SELF, 10000},
+    {SPELL_RO_BLIND, ABILITY_TARGET_ENEMY, 10000}},
     // 5 priest
-    {{SPELL_PR_PAIN_SUPP, ABILITY_TARGET_HEAL, 10000}, 
-    {SPELL_PR_HEAL, ABILITY_TARGET_HEAL, 10000}, 
-    {SPELL_PR_PSYCHIC_SCREAM, ABILITY_TARGET_SELF, 10000}}, 
+    {{SPELL_PR_PAIN_SUPP, ABILITY_TARGET_HEAL, 10000},
+    {SPELL_PR_HEAL, ABILITY_TARGET_HEAL, 10000},
+    {SPELL_PR_PSYCHIC_SCREAM, ABILITY_TARGET_SELF, 10000}},
     // 5* shadow priest
-    {{SPELL_PR_MIND_CONTROL, ABILITY_TARGET_ENEMY, 15000}, 
-    {SPELL_PR_MIND_BLAST, ABILITY_TARGET_ENEMY, 5000}, 
-    {SPELL_PR_SW_DEATH, ABILITY_TARGET_ENEMY, 10000}}, 
+    {{SPELL_PR_MIND_CONTROL, ABILITY_TARGET_ENEMY, 15000},
+    {SPELL_PR_MIND_BLAST, ABILITY_TARGET_ENEMY, 5000},
+    {SPELL_PR_SW_DEATH, ABILITY_TARGET_ENEMY, 10000}},
     // 7 shaman
-    {{SPELL_SH_FIRE_NOVA, ABILITY_TARGET_SELF, 10000}, 
-    {SPELL_SH_HEALING_WAVE, ABILITY_TARGET_HEAL, 10000}, 
-    {SPELL_SH_CHAIN_LIGHT, ABILITY_TARGET_ENEMY, 8000}}, 
+    {{SPELL_SH_FIRE_NOVA, ABILITY_TARGET_SELF, 10000},
+    {SPELL_SH_HEALING_WAVE, ABILITY_TARGET_HEAL, 10000},
+    {SPELL_SH_CHAIN_LIGHT, ABILITY_TARGET_ENEMY, 8000}},
     // 8 mage
-    {{SPELL_MG_FIREBALL, ABILITY_TARGET_ENEMY, 5000}, 
-    {SPELL_MG_FROSTBOLT, ABILITY_TARGET_ENEMY, 5000}, 
-    {SPELL_MG_ICE_LANCE, ABILITY_TARGET_SPECIAL, 2000}}, 
+    {{SPELL_MG_FIREBALL, ABILITY_TARGET_ENEMY, 5000},
+    {SPELL_MG_FROSTBOLT, ABILITY_TARGET_ENEMY, 5000},
+    {SPELL_MG_ICE_LANCE, ABILITY_TARGET_SPECIAL, 2000}},
     // 9 warlock
-    {{SPELL_WL_CURSE_OF_DOOM, ABILITY_TARGET_ENEMY, 10000}, 
-    {SPELL_WL_RAIN_OF_FIRE, ABILITY_TARGET_ENEMY, 10000}, 
-    {SPELL_WL_UNSTABLE_AFFL, ABILITY_TARGET_ENEMY, 10000}}, 
+    {{SPELL_WL_CURSE_OF_DOOM, ABILITY_TARGET_ENEMY, 10000},
+    {SPELL_WL_RAIN_OF_FIRE, ABILITY_TARGET_ENEMY, 10000},
+    {SPELL_WL_UNSTABLE_AFFL, ABILITY_TARGET_ENEMY, 10000}},
     // 11 druid
-    {{SPELL_DR_LIFEBLOOM, ABILITY_TARGET_HEAL, 10000}, 
-    {SPELL_DR_THORNS, ABILITY_TARGET_SELF, 10000}, 
+    {{SPELL_DR_LIFEBLOOM, ABILITY_TARGET_HEAL, 10000},
+    {SPELL_DR_THORNS, ABILITY_TARGET_SELF, 10000},
     {SPELL_DR_MOONFIRE, ABILITY_TARGET_ENEMY, 8000}}
 };
 
@@ -493,7 +493,6 @@ class boss_thurg : public CreatureScript
 
         struct boss_thurgAI : public boss_hexlord_addAI
         {
-
             boss_thurgAI(Creature *c) : boss_hexlord_addAI(c) {}
 
             uint32 bloodlust_timer;
@@ -708,7 +707,6 @@ class boss_lord_raadan : public CreatureScript
                 thunderclap_timer = 13000;
 
                 boss_hexlord_addAI::Reset();
-
             }
             void UpdateAI(const uint32 diff)
             {
@@ -861,7 +859,6 @@ class boss_fenstalker : public CreatureScript
             {
                 volatileinf_timer = 15000;
                 boss_hexlord_addAI::Reset();
-
             }
             void UpdateAI(const uint32 diff)
             {
@@ -910,7 +907,6 @@ class boss_koragg : public CreatureScript
                 coldstare_timer = 15000;
                 mightyblow_timer = 10000;
                 boss_hexlord_addAI::Reset();
-
             }
             void UpdateAI(const uint32 diff)
             {
@@ -951,4 +947,3 @@ void AddSC_boss_hex_lord_malacrass()
     new boss_koragg();
     new boss_alyson_antille();
 }
-

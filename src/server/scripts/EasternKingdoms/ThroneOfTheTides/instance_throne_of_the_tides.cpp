@@ -49,7 +49,7 @@ public:
         uint64 uiErunakStonespeaker;
         uint64 uiMindbenderGhrusha;
         uint64 uiOzumat;
-        
+
         void Initialize()
         {
             uiLadyNazjar = 0;
@@ -68,7 +68,7 @@ public:
             {
                 if (uiEncounter[i] == IN_PROGRESS)
                     return true;
-            }            
+            }
             return false;
         }
 
@@ -98,7 +98,7 @@ public:
         {
             switch(identifier)
             {
-                case DATA_LADY_NAZJAR: 
+                case DATA_LADY_NAZJAR:
                     return uiLadyNazjar;
                 case DATA_COMMANDER_ULTHOK:
                     return uiCommanderUlthok;
@@ -200,7 +200,6 @@ public:
 
             OUT_LOAD_INST_DATA_COMPLETE;
         }
-
     };
 };
 

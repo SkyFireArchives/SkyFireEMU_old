@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -124,10 +124,7 @@ public:
 
         return ai;
     }
-
 };
-
-
 
 class npc_thrall : public CreatureScript
 {
@@ -204,10 +201,7 @@ public:
 
         return ai;
     }
-
 };
-
-
 
 class npc_tyrande_whisperwind : public CreatureScript
 {
@@ -252,10 +246,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(907, pCreature->GetGUID());
         return true;
     }
-
 };
-
-
 
 void AddSC_hyjal()
 {

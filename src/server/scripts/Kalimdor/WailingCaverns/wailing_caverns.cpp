@@ -37,37 +37,37 @@ EndContentData */
 enum eEnums
 {
     //say
-    SAY_MAKE_PREPARATIONS         = -1043001, 
-    SAY_TEMPLE_OF_PROMISE         = -1043002, 
-    SAY_MUST_CONTINUE             = -1043003, 
-    SAY_BANISH_THE_SPIRITS        = -1043004, 
-    SAY_CAVERNS_PURIFIED          = -1043005, 
-    SAY_BEYOND_THIS_CORRIDOR      = -1043006, 
-    SAY_EMERALD_DREAM             = -1043007, 
-    SAY_MUTANUS_THE_DEVOURER      = -1043012, 
-    SAY_NARALEX_AWAKES            = -1043014, 
-    SAY_THANK_YOU                 = -1043015, 
-    SAY_FAREWELL                  = -1043016, 
-    SAY_ATTACKED                  = -1043017, 
+    SAY_MAKE_PREPARATIONS         = -1043001,
+    SAY_TEMPLE_OF_PROMISE         = -1043002,
+    SAY_MUST_CONTINUE             = -1043003,
+    SAY_BANISH_THE_SPIRITS        = -1043004,
+    SAY_CAVERNS_PURIFIED          = -1043005,
+    SAY_BEYOND_THIS_CORRIDOR      = -1043006,
+    SAY_EMERALD_DREAM             = -1043007,
+    SAY_MUTANUS_THE_DEVOURER      = -1043012,
+    SAY_NARALEX_AWAKES            = -1043014,
+    SAY_THANK_YOU                 = -1043015,
+    SAY_FAREWELL                  = -1043016,
+    SAY_ATTACKED                  = -1043017,
     //yell
-    SAY_AT_LAST                   = -1043000, 
-    SAY_I_AM_AWAKE                = -1043013, 
+    SAY_AT_LAST                   = -1043000,
+    SAY_I_AM_AWAKE                = -1043013,
     //emote
-    EMOTE_AWAKENING_RITUAL        = -1043008, 
-    EMOTE_TROUBLED_SLEEP          = -1043009, 
-    EMOTE_WRITHE_IN_AGONY         = -1043010, 
-    EMOTE_HORRENDOUS_VISION       = -1043011, 
+    EMOTE_AWAKENING_RITUAL        = -1043008,
+    EMOTE_TROUBLED_SLEEP          = -1043009,
+    EMOTE_WRITHE_IN_AGONY         = -1043010,
+    EMOTE_HORRENDOUS_VISION       = -1043011,
     //spell
-    SPELL_MARK_OF_THE_WILD_RANK_2 = 5232, 
-    SPELL_SERPENTINE_CLEANSING    = 6270, 
-    SPELL_NARALEXS_AWAKENING      = 6271, 
-    SPELL_FLIGHT_FORM             = 33943, 
+    SPELL_MARK_OF_THE_WILD_RANK_2 = 5232,
+    SPELL_SERPENTINE_CLEANSING    = 6270,
+    SPELL_NARALEXS_AWAKENING      = 6271,
+    SPELL_FLIGHT_FORM             = 33943,
     //npc entry
-    NPC_DEVIATE_RAVAGER           = 3636, 
-    NPC_DEVIATE_VIPER             = 5755, 
-    NPC_DEVIATE_MOCCASIN          = 5762, 
-    NPC_NIGHTMARE_ECTOPLASM       = 5763, 
-    NPC_MUTANUS_THE_DEVOURER      = 3654, 
+    NPC_DEVIATE_RAVAGER           = 3636,
+    NPC_DEVIATE_VIPER             = 5755,
+    NPC_DEVIATE_MOCCASIN          = 5762,
+    NPC_NIGHTMARE_ECTOPLASM       = 5763,
+    NPC_MUTANUS_THE_DEVOURER      = 3654,
 };
 
 #define GOSSIP_ID_START_1       698  //Naralex sleeps again!
@@ -185,7 +185,6 @@ public:
 
         void Reset()
         {
-
         }
 
         void EnterCombat(Unit* who)
@@ -390,11 +389,7 @@ public:
             } else eventTimer -= diff;
         }
     };
-
 };
-
-
-
 
 void AddSC_wailing_caverns()
 {

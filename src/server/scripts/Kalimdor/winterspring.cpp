@@ -93,9 +93,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_rivern_frostwind
@@ -127,9 +125,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_witch_doctor_mauari
@@ -168,9 +164,7 @@ public:
 
         return true;
     }
-
 };
-
 
 void AddSC_winterspring()
 {

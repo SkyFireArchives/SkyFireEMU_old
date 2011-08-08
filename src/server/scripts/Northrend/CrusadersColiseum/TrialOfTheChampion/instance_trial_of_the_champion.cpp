@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -29,11 +29,11 @@
 
 enum eEnums
 {
-    SPELL_DEATH_RESPITE     = 67745, 
-    
-    SAY_BLACK_KNIGHT_1                        = -1999928, 
-    SAY_BLACK_KNIGHT_2                        = -1999929, 
-    SAY_START_1                               = -1999927, 
+    SPELL_DEATH_RESPITE     = 67745,
+
+    SAY_BLACK_KNIGHT_1                        = -1999928,
+    SAY_BLACK_KNIGHT_2                        = -1999929,
+    SAY_START_1                               = -1999927,
     SAY_START_2                               = -1999950
 };
 class instance_trial_of_the_champion : public InstanceMapScript
@@ -45,7 +45,7 @@ public:
     {
         return new instance_trial_of_the_champion_InstanceMapScript(pMap);
     }
-    
+
     struct instance_trial_of_the_champion_InstanceMapScript : public InstanceScript
     {
         instance_trial_of_the_champion_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {}
@@ -164,15 +164,15 @@ public:
                 case VEHICLE_DARKSPEAR_RAPTOR:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_DARNASSIA_NIGHTSABER, ALLIANCE);
-                    break;    
+                    break;
                 case VEHICLE_FORSAKE_WARHORSE:
                     if (TeamInInstance == HORDE)
                         creature->UpdateEntry(VEHICLE_IRONFORGE_RAM, ALLIANCE);
-                    break;    
+                    break;
                 case NPC_RISEN_JAEREN:
                     if (TeamInInstance == ALLIANCE)
                         creature->UpdateEntry(NPC_RISEN_ARELAS, HORDE);
-                    break;    
+                    break;
                 // Coliseum Announcer || Just NPC_JAEREN must be spawned.
                 case NPC_JAEREN:
                     uiAnnouncerGUID = creature->GetGUID();
@@ -182,7 +182,7 @@ public:
                 case NPC_JAEREN_AN:
                     if (TeamInInstance == ALLIANCE)
                         creature->UpdateEntry(NPC_ARELAS_AN, ALLIANCE);
-                    break;                
+                    break;
                 case VEHICLE_ARGENT_WARHORSE:
                 case VEHICLE_ARGENT_BATTLEWORG:
                     VehicleList.push_back(creature->GetGUID());
@@ -254,14 +254,12 @@ public:
                         pBlackKnight->SetReactState(REACT_DEFENSIVE);
                         pBlackKnight->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                     }
-                
                 }else if (uiData == IN_PROGRESS)
                 {
                     if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
                     {
                         DoScriptText(SAY_BLACK_KNIGHT_1, pBlackKnight);
                     }
-                
                 }else if (uiData == DONE)
                 {
                     if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
@@ -280,9 +278,8 @@ public:
                 {
                     if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
                     {
-                        pBlackKnight->SetOrientation(4.714f);                        
+                        pBlackKnight->SetOrientation(4.714f);
                     }
-                
                 }else if (uiData == IN_PROGRESS)
                 {
                     if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
@@ -293,7 +290,6 @@ public:
                             pAnnouncer->setDeathState(JUST_DIED);
                         }
                     }
-                
                 }else if (uiData == DONE)
                 {
                     if (Creature* pBlackKnight =  instance->GetCreature(uiBlackKnightGUID))
@@ -307,12 +303,12 @@ public:
                             pAnnouncer->DisappearAndDie();
                             if (Creature* pGhoul = pAnnouncer->SummonCreature(NPC_RISEN_JAEREN, pAnnouncer->GetPositionX(), pAnnouncer->GetPositionY(), pAnnouncer->GetPositionZ(), pAnnouncer->GetOrientation()))
                             {
-                                pGhoul->setFaction(14);                            
+                                pGhoul->setFaction(14);
                                 AggroAllPlayers(pGhoul);
                             }
-                        }                        
+                        }
                     }
-                }                
+                }
                 break;
             case DATA_MOVEMENT_DONE:
                 uiMovementDone = uiData;
@@ -333,7 +329,7 @@ public:
                 {
                     ++uiGrandChampionsDeaths;
                     if (uiGrandChampionsDeaths == 3)
-                    {        
+                    {
                         if (Creature* pAnnouncer =  instance->GetCreature(uiAnnouncerGUID))
                         {
                             DoScriptText(SAY_START_1, pAnnouncer);
@@ -373,7 +369,7 @@ public:
                     for(std::list<uint64>::const_iterator itr = VehicleList.begin(); itr != VehicleList.end(); ++itr)
                         if (Creature* pSummon = instance->GetCreature(*itr))
                             pSummon->RemoveFromWorld();
-                }else if (uiData == DONE)                
+                }else if (uiData == DONE)
                 if (Creature* pAnnouncer = instance->GetCreature(uiAnnouncerGUID))
                 {
                      DoScriptText(SAY_START_1, pAnnouncer);
@@ -390,7 +386,7 @@ public:
                     for(std::list<uint64>::const_iterator itr = VehicleList.begin(); itr != VehicleList.end(); ++itr)
                         if (Creature* pSummon = instance->GetCreature(*itr))
                             pSummon->RemoveFromWorld();
-                }else if (uiData == DONE)                
+                }else if (uiData == DONE)
                 if (Creature* pAnnouncer = instance->GetCreature(uiAnnouncerGUID))
                 {
                      DoScriptText(SAY_START_1, pAnnouncer);
@@ -413,7 +409,7 @@ public:
             case BOSS_ARGENT_CHALLENGE_E: return m_auiEncounter[1];
             case BOSS_ARGENT_CHALLENGE_P: return m_auiEncounter[2];
             case BOSS_BLACK_KNIGHT: return m_auiEncounter[3];
-            
+
             case DATA_KNIGHT: return uiBlackKnightEvent2;
             case DATA_BLACK_KNIGHT: return uiBlackKnightEvent;
             case DATA_MOVEMENT_DONE: return uiMovementDone;
@@ -482,17 +478,13 @@ public:
                 return;
             }
 
-
             OUT_LOAD_INST_DATA(in);
-
 
             char dataHead1, dataHead2;
             uint16 data0, data1, data2, data3, data4, data5;
 
-
             std::istringstream loadStream(in);
             loadStream >> dataHead1 >> dataHead2 >> data0 >> data1 >> data2 >> data3 >> data4 >> data5;
-
 
             if (dataHead1 == 'T' && dataHead2 == 'C')
             {
@@ -501,22 +493,18 @@ public:
                 m_auiEncounter[2] = data2;
                 m_auiEncounter[3] = data3;
 
-
                 for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                     if (m_auiEncounter[i] == IN_PROGRESS)
                         m_auiEncounter[i] = NOT_STARTED;
-
 
                 uiGrandChampionsDeaths = data4;
                 uiMovementDone = data5;
             } else OUT_LOAD_INST_DATA_FAIL;
 
-
             OUT_LOAD_INST_DATA_COMPLETE;
         }
     };
 };
-
 
 void AddSC_instance_trial_of_the_champion()
 {

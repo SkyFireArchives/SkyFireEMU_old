@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -99,11 +99,11 @@ struct Position2d
 
 static Position2d Coords[]=
 {
-    {450.4f, 212.3f}, 
-    {542.1f, 212.3f}, 
-    {542.1f, 168.3f}, 
-    {542.1f, 137.4f}, 
-    {450.4f, 137.4f}, 
+    {450.4f, 212.3f},
+    {542.1f, 212.3f},
+    {542.1f, 168.3f},
+    {542.1f, 137.4f},
+    {450.4f, 137.4f},
     {450.4f, 168.3f}
 };
 
@@ -133,7 +133,6 @@ public:
 
         void JustDied(Unit * /*killer*/);
     };
-
 };
 
 class boss_reliquary_of_souls : public CreatureScript
@@ -361,7 +360,6 @@ public:
             } else Timer -= diff;
         }
     };
-
 };
 
 void npc_enslaved_soul::npc_enslaved_soulAI::JustDied(Unit * /*killer*/)
@@ -495,7 +493,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class boss_essence_of_desire : public CreatureScript
@@ -598,7 +595,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class boss_essence_of_anger : public CreatureScript
@@ -699,15 +695,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
-
-
-
-
-
 
 void AddSC_boss_reliquary_of_souls()
 {

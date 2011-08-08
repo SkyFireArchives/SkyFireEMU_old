@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -45,27 +45,27 @@ EndContentData */
 
 enum eKerlonian
 {
-    SAY_KER_START               = -1000434, 
+    SAY_KER_START               = -1000434,
 
-    EMOTE_KER_SLEEP_1           = -1000435, 
-    EMOTE_KER_SLEEP_2           = -1000436, 
-    EMOTE_KER_SLEEP_3           = -1000437, 
+    EMOTE_KER_SLEEP_1           = -1000435,
+    EMOTE_KER_SLEEP_2           = -1000436,
+    EMOTE_KER_SLEEP_3           = -1000437,
 
-    SAY_KER_SLEEP_1             = -1000438, 
-    SAY_KER_SLEEP_2             = -1000439, 
-    SAY_KER_SLEEP_3             = -1000440, 
-    SAY_KER_SLEEP_4             = -1000441, 
+    SAY_KER_SLEEP_1             = -1000438,
+    SAY_KER_SLEEP_2             = -1000439,
+    SAY_KER_SLEEP_3             = -1000440,
+    SAY_KER_SLEEP_4             = -1000441,
 
-    EMOTE_KER_AWAKEN            = -1000445, 
+    EMOTE_KER_AWAKEN            = -1000445,
 
-    SAY_KER_ALERT_1             = -1000442, 
-    SAY_KER_ALERT_2             = -1000443, 
+    SAY_KER_ALERT_1             = -1000442,
+    SAY_KER_ALERT_2             = -1000443,
 
-    SAY_KER_END                 = -1000444, 
+    SAY_KER_END                 = -1000444,
 
-    SPELL_SLEEP_VISUAL          = 25148, 
-    SPELL_AWAKEN                = 17536, 
-    QUEST_SLEEPER_AWAKENED      = 5321, 
+    SPELL_SLEEP_VISUAL          = 25148,
+    SPELL_AWAKEN                = 17536,
+    QUEST_SLEEPER_AWAKENED      = 5321,
     NPC_LILADRIS                = 11219,                    //attackers entries unknown
     FACTION_KER_ESCORTEE        = 113
 };
@@ -180,10 +180,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
 
 /*####
 # npc_prospector_remtravel
@@ -191,24 +188,24 @@ public:
 
 enum eRemtravel
 {
-    SAY_REM_START               = -1000327, 
-    SAY_REM_AGGRO               = -1000328, 
-    SAY_REM_RAMP1_1             = -1000329, 
-    SAY_REM_RAMP1_2             = -1000330, 
-    SAY_REM_BOOK                = -1000331, 
-    SAY_REM_TENT1_1             = -1000332, 
-    SAY_REM_TENT1_2             = -1000333, 
-    SAY_REM_MOSS                = -1000334, 
-    EMOTE_REM_MOSS              = -1000335, 
-    SAY_REM_MOSS_PROGRESS       = -1000336, 
-    SAY_REM_PROGRESS            = -1000337, 
-    SAY_REM_REMEMBER            = -1000338, 
-    EMOTE_REM_END               = -1000339, 
+    SAY_REM_START               = -1000327,
+    SAY_REM_AGGRO               = -1000328,
+    SAY_REM_RAMP1_1             = -1000329,
+    SAY_REM_RAMP1_2             = -1000330,
+    SAY_REM_BOOK                = -1000331,
+    SAY_REM_TENT1_1             = -1000332,
+    SAY_REM_TENT1_2             = -1000333,
+    SAY_REM_MOSS                = -1000334,
+    EMOTE_REM_MOSS              = -1000335,
+    SAY_REM_MOSS_PROGRESS       = -1000336,
+    SAY_REM_PROGRESS            = -1000337,
+    SAY_REM_REMEMBER            = -1000338,
+    EMOTE_REM_END               = -1000339,
 
-    FACTION_ESCORTEE            = 10, 
-    QUEST_ABSENT_MINDED_PT2     = 731, 
-    NPC_GRAVEL_SCOUT            = 2158, 
-    NPC_GRAVEL_BONE             = 2159, 
+    FACTION_ESCORTEE            = 10,
+    QUEST_ABSENT_MINDED_PT2     = 731,
+    NPC_GRAVEL_SCOUT            = 2158,
+    NPC_GRAVEL_BONE             = 2159,
     NPC_GRAVEL_GEO              = 2160
 };
 
@@ -316,10 +313,7 @@ public:
             //pSummoned->AI()->AttackStart(me);
         }
     };
-
 };
-
-
 
 /*####
 # npc_threshwackonator
@@ -329,8 +323,8 @@ enum eThreshwackonator
 {
     EMOTE_START             = -1000325, //signed for 4966
     SAY_AT_CLOSE            = -1000326, //signed for 4966
-    QUEST_GYROMAST_REV      = 2078, 
-    NPC_GELKAK              = 6667, 
+    QUEST_GYROMAST_REV      = 2078,
+    NPC_GELKAK              = 6667,
     FACTION_HOSTILE         = 14
 };
 
@@ -357,7 +351,6 @@ public:
 
         return true;
     }
-
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature)
     {
@@ -403,11 +396,7 @@ public:
             SetFollowComplete();
         }
     };
-
 };
-
-
-
 
 void AddSC_darkshore()
 {

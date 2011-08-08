@@ -67,7 +67,7 @@ struct SpawnAssociation
 
 enum eEnums
 {
-    SPELL_GUARDS_MARK               = 38067, 
+    SPELL_GUARDS_MARK               = 38067,
     AURA_DURATION_TIME_LEFT         = 5000
 };
 
@@ -254,7 +254,6 @@ public:
         }
     };
 
-
     CreatureAI *GetAI(Creature *creature) const
     {
         return new npc_air_force_botsAI(creature);
@@ -267,10 +266,10 @@ public:
 
 enum
 {
-    QUEST_BODY_HEART_A      = 6001, 
-    QUEST_BODY_HEART_H      = 6002, 
+    QUEST_BODY_HEART_A      = 6001,
+    QUEST_BODY_HEART_H      = 6002,
 
-    TEXT_ID_DEFAULT         = 4714, 
+    TEXT_ID_DEFAULT         = 4714,
     TEXT_ID_PROGRESS        = 4715
 };
 
@@ -478,7 +477,6 @@ public:
         return new npc_dancing_flamesAI(creature);
     }
 };
-
 
 /*######
 ## Triage quest
@@ -865,32 +863,32 @@ void npc_doctor::npc_doctorAI::UpdateAI(const uint32 diff)
 
 enum eGarments
 {
-    SPELL_LESSER_HEAL_R2    = 2052, 
-    SPELL_FORTITUDE_R1      = 1243, 
+    SPELL_LESSER_HEAL_R2    = 2052,
+    SPELL_FORTITUDE_R1      = 1243,
 
-    QUEST_MOON              = 5621, 
-    QUEST_LIGHT_1           = 5624, 
-    QUEST_LIGHT_2           = 5625, 
-    QUEST_SPIRIT            = 5648, 
-    QUEST_DARKNESS          = 5650, 
+    QUEST_MOON              = 5621,
+    QUEST_LIGHT_1           = 5624,
+    QUEST_LIGHT_2           = 5625,
+    QUEST_SPIRIT            = 5648,
+    QUEST_DARKNESS          = 5650,
 
-    ENTRY_SHAYA             = 12429, 
-    ENTRY_ROBERTS           = 12423, 
-    ENTRY_DOLF              = 12427, 
-    ENTRY_KORJA             = 12430, 
-    ENTRY_DG_KEL            = 12428, 
+    ENTRY_SHAYA             = 12429,
+    ENTRY_ROBERTS           = 12423,
+    ENTRY_DOLF              = 12427,
+    ENTRY_KORJA             = 12430,
+    ENTRY_DG_KEL            = 12428,
 
     //used by 12429, 12423, 12427, 12430, 12428, but signed for 12429
-    SAY_COMMON_HEALED       = -1000164, 
-    SAY_DG_KEL_THANKS       = -1000165, 
-    SAY_DG_KEL_GOODBYE      = -1000166, 
-    SAY_ROBERTS_THANKS      = -1000167, 
-    SAY_ROBERTS_GOODBYE     = -1000168, 
-    SAY_KORJA_THANKS        = -1000169, 
-    SAY_KORJA_GOODBYE       = -1000170, 
-    SAY_DOLF_THANKS         = -1000171, 
-    SAY_DOLF_GOODBYE        = -1000172, 
-    SAY_SHAYA_THANKS        = -1000173, 
+    SAY_COMMON_HEALED       = -1000164,
+    SAY_DG_KEL_THANKS       = -1000165,
+    SAY_DG_KEL_GOODBYE      = -1000166,
+    SAY_ROBERTS_THANKS      = -1000167,
+    SAY_ROBERTS_GOODBYE     = -1000168,
+    SAY_KORJA_THANKS        = -1000169,
+    SAY_KORJA_GOODBYE       = -1000170,
+    SAY_DOLF_THANKS         = -1000171,
+    SAY_DOLF_GOODBYE        = -1000172,
+    SAY_SHAYA_THANKS        = -1000173,
     SAY_SHAYA_GOODBYE       = -1000174, //signed for 21469
 };
 
@@ -1125,10 +1123,10 @@ public:
 
 enum eKingdomDalaran
 {
-    SPELL_TELEPORT_DALARAN  = 53360, 
-    ITEM_KT_SIGNET          = 39740, 
-    QUEST_MAGICAL_KINGDOM_A = 12794, 
-    QUEST_MAGICAL_KINGDOM_H = 12791, 
+    SPELL_TELEPORT_DALARAN  = 53360,
+    ITEM_KT_SIGNET          = 39740,
+    QUEST_MAGICAL_KINGDOM_A = 12794,
+    QUEST_MAGICAL_KINGDOM_H = 12791,
     QUEST_MAGICAL_KINGDOM_N = 12796
 };
 
@@ -1524,7 +1522,6 @@ public:
             else
                 me->SetReactState(REACT_AGGRESSIVE);
         }
-
     };
 
     CreatureAI *GetAI(Creature *creature) const
@@ -1884,7 +1881,6 @@ public:
             }
         }
 
-
         void UpdateAI(const uint32 diff)
         {
             if (!UpdateVictim())
@@ -2030,8 +2026,8 @@ public:
 
 enum eTrainingDummy
 {
-    NPC_ADVANCED_TARGET_DUMMY                  = 2674, 
-    NPC_TARGET_DUMMY                           = 2673, 
+    NPC_ADVANCED_TARGET_DUMMY                  = 2674,
+    NPC_TARGET_DUMMY                           = 2673,
     NPC_CATACLYSM_TARGET_DUMMY                 = 44548
 };
 
@@ -2095,7 +2091,7 @@ public:
                 me->SetControlled(true, UNIT_STAT_STUNNED);//disable rotate
 
             if (uiEntry != NPC_CATACLYSM_TARGET_DUMMY)
-            {            
+            {
                 if (uiEntry != NPC_ADVANCED_TARGET_DUMMY && uiEntry != NPC_TARGET_DUMMY)
                 {
                     if (uiResetTimer <= uiDiff)
@@ -2175,10 +2171,10 @@ public:
 
 enum eWormhole
 {
-    SPELL_HOWLING_FJORD         = 67838, 
-    SPELL_SHOLAZAR_BASIN        = 67835, 
-    SPELL_ICECROWN              = 67836, 
-    SPELL_STORM_PEAKS           = 67837, 
+    SPELL_HOWLING_FJORD         = 67838,
+    SPELL_SHOLAZAR_BASIN        = 67835,
+    SPELL_ICECROWN              = 67836,
+    SPELL_STORM_PEAKS           = 67837,
 
     TEXT_WORMHOLE               = 907
 };
@@ -2247,9 +2243,9 @@ public:
 
 enum ePetTrainer
 {
-    TEXT_ISHUNTER               = 5838, 
-    TEXT_NOTHUNTER              = 5839, 
-    TEXT_PETINFO                = 13474, 
+    TEXT_ISHUNTER               = 5838,
+    TEXT_NOTHUNTER              = 5839,
+    TEXT_PETINFO                = 13474,
     TEXT_CONFIRM                = 7722
 };
 
@@ -2311,27 +2307,27 @@ public:
 
 enum eLockSmith
 {
-    QUEST_HOW_TO_BRAKE_IN_TO_THE_ARCATRAZ = 10704, 
-    QUEST_DARK_IRON_LEGACY                = 3802, 
-    QUEST_THE_KEY_TO_SCHOLOMANCE_A        = 5505, 
-    QUEST_THE_KEY_TO_SCHOLOMANCE_H        = 5511, 
-    QUEST_HOTTER_THAN_HELL_A              = 10758, 
-    QUEST_HOTTER_THAN_HELL_H              = 10764, 
-    QUEST_RETURN_TO_KHAGDAR               = 9837, 
-    QUEST_CONTAINMENT                     = 13159, 
+    QUEST_HOW_TO_BRAKE_IN_TO_THE_ARCATRAZ = 10704,
+    QUEST_DARK_IRON_LEGACY                = 3802,
+    QUEST_THE_KEY_TO_SCHOLOMANCE_A        = 5505,
+    QUEST_THE_KEY_TO_SCHOLOMANCE_H        = 5511,
+    QUEST_HOTTER_THAN_HELL_A              = 10758,
+    QUEST_HOTTER_THAN_HELL_H              = 10764,
+    QUEST_RETURN_TO_KHAGDAR               = 9837,
+    QUEST_CONTAINMENT                     = 13159,
 
-    ITEM_ARCATRAZ_KEY                     = 31084, 
-    ITEM_SHADOWFORGE_KEY                  = 11000, 
-    ITEM_SKELETON_KEY                     = 13704, 
-    ITEM_SHATTERED_HALLS_KEY              = 28395, 
-    ITEM_THE_MASTERS_KEY                  = 24490, 
-    ITEM_VIOLET_HOLD_KEY                  = 42482, 
+    ITEM_ARCATRAZ_KEY                     = 31084,
+    ITEM_SHADOWFORGE_KEY                  = 11000,
+    ITEM_SKELETON_KEY                     = 13704,
+    ITEM_SHATTERED_HALLS_KEY              = 28395,
+    ITEM_THE_MASTERS_KEY                  = 24490,
+    ITEM_VIOLET_HOLD_KEY                  = 42482,
 
-    SPELL_ARCATRAZ_KEY                    = 54881, 
-    SPELL_SHADOWFORGE_KEY                 = 54882, 
-    SPELL_SKELETON_KEY                    = 54883, 
-    SPELL_SHATTERED_HALLS_KEY             = 54884, 
-    SPELL_THE_MASTERS_KEY                 = 54885, 
+    SPELL_ARCATRAZ_KEY                    = 54881,
+    SPELL_SHADOWFORGE_KEY                 = 54882,
+    SPELL_SKELETON_KEY                    = 54883,
+    SPELL_SHATTERED_HALLS_KEY             = 54884,
+    SPELL_THE_MASTERS_KEY                 = 54885,
     SPELL_VIOLET_HOLD_KEY                 = 67253
 };
 
@@ -2420,38 +2416,38 @@ public:
 
 enum
 {
-    QUEST_TRUE_MASTERS_OF_LIGHT = 9737, 
-    QUEST_THE_UNWRITTEN_PROPHECY = 9762, 
-    QUEST_INTO_THE_BREACH = 10259, 
-    QUEST_BATTLE_OF_THE_CRIMSON_WATCH = 10781, 
-    QUEST_SHARDS_OF_AHUNE = 11972, 
+    QUEST_TRUE_MASTERS_OF_LIGHT = 9737,
+    QUEST_THE_UNWRITTEN_PROPHECY = 9762,
+    QUEST_INTO_THE_BREACH = 10259,
+    QUEST_BATTLE_OF_THE_CRIMSON_WATCH = 10781,
+    QUEST_SHARDS_OF_AHUNE = 11972,
 
-    ACHIEVEMENT_EXPLORE_NORTHREND = 45, 
-    ACHIEVEMENT_TWENTYFIVE_TABARDS = 1021, 
-    ACHIEVEMENT_THE_LOREMASTER_A = 1681, 
-    ACHIEVEMENT_THE_LOREMASTER_H = 1682, 
+    ACHIEVEMENT_EXPLORE_NORTHREND = 45,
+    ACHIEVEMENT_TWENTYFIVE_TABARDS = 1021,
+    ACHIEVEMENT_THE_LOREMASTER_A = 1681,
+    ACHIEVEMENT_THE_LOREMASTER_H = 1682,
 
-    ITEM_TABARD_OF_THE_HAND = 24344, 
-    ITEM_TABARD_OF_THE_BLOOD_KNIGHT = 25549, 
-    ITEM_TABARD_OF_THE_PROTECTOR = 28788, 
-    ITEM_OFFERING_OF_THE_SHATAR = 31408, 
-    ITEM_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI = 31404, 
-    ITEM_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI = 31405, 
-    ITEM_TABARD_OF_THE_SUMMER_SKIES = 35279, 
-    ITEM_TABARD_OF_THE_SUMMER_FLAMES = 35280, 
-    ITEM_TABARD_OF_THE_ACHIEVER = 40643, 
-    ITEM_LOREMASTERS_COLORS = 43300, 
-    ITEM_TABARD_OF_THE_EXPLORER = 43348, 
+    ITEM_TABARD_OF_THE_HAND = 24344,
+    ITEM_TABARD_OF_THE_BLOOD_KNIGHT = 25549,
+    ITEM_TABARD_OF_THE_PROTECTOR = 28788,
+    ITEM_OFFERING_OF_THE_SHATAR = 31408,
+    ITEM_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI = 31404,
+    ITEM_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI = 31405,
+    ITEM_TABARD_OF_THE_SUMMER_SKIES = 35279,
+    ITEM_TABARD_OF_THE_SUMMER_FLAMES = 35280,
+    ITEM_TABARD_OF_THE_ACHIEVER = 40643,
+    ITEM_LOREMASTERS_COLORS = 43300,
+    ITEM_TABARD_OF_THE_EXPLORER = 43348,
 
-    SPELL_TABARD_OF_THE_BLOOD_KNIGHT = 54974, 
-    SPELL_TABARD_OF_THE_HAND = 54976, 
-    SPELL_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI = 54977, 
-    SPELL_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI = 54982, 
-    SPELL_TABARD_OF_THE_ACHIEVER = 55006, 
-    SPELL_TABARD_OF_THE_PROTECTOR = 55008, 
-    SPELL_LOREMASTERS_COLORS = 58194, 
-    SPELL_TABARD_OF_THE_EXPLORER = 58224, 
-    SPELL_TABARD_OF_SUMMER_SKIES = 62768, 
+    SPELL_TABARD_OF_THE_BLOOD_KNIGHT = 54974,
+    SPELL_TABARD_OF_THE_HAND = 54976,
+    SPELL_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI = 54977,
+    SPELL_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI = 54982,
+    SPELL_TABARD_OF_THE_ACHIEVER = 55006,
+    SPELL_TABARD_OF_THE_PROTECTOR = 55008,
+    SPELL_LOREMASTERS_COLORS = 58194,
+    SPELL_TABARD_OF_THE_EXPLORER = 58224,
+    SPELL_TABARD_OF_SUMMER_SKIES = 62768,
     SPELL_TABARD_OF_SUMMER_FLAMES = 62769
 };
 
@@ -2645,11 +2641,11 @@ public:
 
 enum eSpringRabbit
 {
-    NPC_SPRING_RABBIT = 32791, 
-    NPC_SPRING_RABBIT_BABBY = 32793, 
-    SPELL_SPRING_RABBIT_IN_LOVE = 61728, 
-    SPELL_SPRING_RABBIT_JUMP = 61724, 
-    SPELL_SPRING_RABBIT_FLING = 61875, 
+    NPC_SPRING_RABBIT = 32791,
+    NPC_SPRING_RABBIT_BABBY = 32793,
+    SPELL_SPRING_RABBIT_IN_LOVE = 61728,
+    SPELL_SPRING_RABBIT_JUMP = 61724,
+    SPELL_SPRING_RABBIT_FLING = 61875,
 };
 
 class npc_spring_rabbit : public CreatureScript
@@ -2698,7 +2694,7 @@ public:
                         }
                     }
                 }
-  
+
                 DoCast(me, SPELL_SPRING_RABBIT_JUMP);
 
                 uiCheckTimer = urand(5000, 8000);
@@ -2812,10 +2808,10 @@ public:
     struct npc_power_word_barrierAI : public ScriptedAI
     {
         npc_power_word_barrierAI(Creature *pCreature) : ScriptedAI(pCreature) {}
-        
+
         bool checker;
         uint32 cron; // Duration
-        
+
         void Reset()
         {
             checker = false;
@@ -2834,7 +2830,7 @@ public:
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         }
-                
+
         void BarrierChecker(Unit *who)
         {
 			if (who->isAlive() && !who->HasAura(81782))
@@ -2843,7 +2839,6 @@ public:
 			}
 			if (who->isAlive() && who->HasAura(81782))
 			{
-			
 			    if (AuraEffect const* aur = who->GetAuraEffect(81782, 0))
                     aur->GetBase()->SetDuration(GetSpellMaxDuration(aur->GetSpellProto()), true);
             }
@@ -2868,7 +2863,7 @@ public:
            std::list<Unit*> targets;
             Trinity::AnyFriendlyUnitInObjectRangeCheck u_check(me, me, 7.0f);
             Trinity::UnitListSearcher<Trinity::AnyFriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
-            
+
             me->VisitNearbyObject(7.0f, searcher);
             for (std::list<Unit*>::const_iterator iter = targets.begin(); iter != targets.end(); ++iter)
                 BarrierChecker(*iter);
@@ -2887,7 +2882,7 @@ public:
 
 enum eFlameOrb
 {
-    SPELL_FLAME_ORB_DAMAGE          = 86719, 
+    SPELL_FLAME_ORB_DAMAGE          = 86719,
     FLAME_ORB_DISTANCE              = 120
 };
 
@@ -2898,7 +2893,7 @@ public:
 
     struct npc_flame_orbAI : public ScriptedAI
     {
-        npc_flame_orbAI(Creature *c) : ScriptedAI(c) 
+        npc_flame_orbAI(Creature *c) : ScriptedAI(c)
         {
             x = me->GetPositionX();
             y = me->GetPositionY();
@@ -2910,7 +2905,7 @@ public:
             newy = me->GetPositionY() + FLAME_ORB_DISTANCE/2 * sin(angle);
             CombatCheck = false;
         }
-        
+
         float x, y, z, o, newx, newy, angle;
         bool CombatCheck;
         uint32 uiDespawnTimer;
@@ -2923,7 +2918,7 @@ public:
             uiDespawnTimer = 15*IN_MILLISECONDS;
             CombatCheck = true;
         }
-        
+
         void Reset()
         {
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE|UNIT_FLAG_NON_ATTACKABLE);
@@ -3004,6 +2999,4 @@ void AddSC_npcs_special()
     new npc_ring_of_frost;
     new npc_flame_orb;
     new npc_power_word_barrier;
-
 }
-

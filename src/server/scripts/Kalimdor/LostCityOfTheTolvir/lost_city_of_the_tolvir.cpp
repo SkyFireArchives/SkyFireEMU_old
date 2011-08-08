@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -21,145 +21,145 @@
 enum Spells
 {
     // Blaze of Heavens
-    SPELL_BLAZE                 = 48906, 
+    SPELL_BLAZE                 = 48906,
 
     // Harbinger of Death
-    SPELL_SOUL_SEVER            = 82255, 
-    SPELL_WAIL_DARKNESS         = 82533, 
-    H_SPELL_WAIL_DARKNESS       = 90038, 
+    SPELL_SOUL_SEVER            = 82255,
+    SPELL_WAIL_DARKNESS         = 82533,
+    H_SPELL_WAIL_DARKNESS       = 90038,
 
     // Minion of Siamat
-    SPELL_CHAIN_LIGHTNING       = 44704, 
-    H_SPELL_CHAIN_LIGHTNING     = 90027, 
+    SPELL_CHAIN_LIGHTNING       = 44704,
+    H_SPELL_CHAIN_LIGHTNING     = 90027,
 
     // Neferset Darkcaster
-    SPELL_HEX                   = 82760, 
-    SPELL_METEOR                = 84032, 
-    H_SPELL_METEOR              = 90023, 
-    SPELL_SHADOW_BOLT           = 82765,               
-    H_SPELL_SHADOW_BOLT         = 90036, 
+    SPELL_HEX                   = 82760,
+    SPELL_METEOR                = 84032,
+    H_SPELL_METEOR              = 90023,
+    SPELL_SHADOW_BOLT           = 82765,
+    H_SPELL_SHADOW_BOLT         = 90036,
 
     // Neferset Plaguebringer
-    SPELL_DISEASE_BREATH        = 73976,         
-    H_SPELL_DISEASE_BREATH      = 90005, 
-    SPELL_INFECTIOUS_PLAGUE     = 82768, 
+    SPELL_DISEASE_BREATH        = 73976,
+    H_SPELL_DISEASE_BREATH      = 90005,
+    SPELL_INFECTIOUS_PLAGUE     = 82768,
 
     // Neferset Theurgist
-    SPELL_MIXTURE = 82759, 
-    SPELL_RITUAL_BLOODLETTING   = 82753, 
-    H_SPELL_RITUAL_BLOODLETTING = 89993, 
-    SPELL_VICIOUS_LEECHES       = 82757, 
+    SPELL_MIXTURE = 82759,
+    SPELL_RITUAL_BLOODLETTING   = 82753,
+    H_SPELL_RITUAL_BLOODLETTING = 89993,
+    SPELL_VICIOUS_LEECHES       = 82757,
 
     // Neferset Torturer
-    SPELL_BRANDED_TONGUE        = 82744,    
-    H_SPELL_BRANDED_TONGUE      = 90037, 
-    SPELL_SERUM_TORMENT         = 82750,            
-    H_SPELL_SERUM_TORMENT       = 89994, 
- 
+    SPELL_BRANDED_TONGUE        = 82744,
+    H_SPELL_BRANDED_TONGUE      = 90037,
+    SPELL_SERUM_TORMENT         = 82750,
+    H_SPELL_SERUM_TORMENT       = 89994,
+
     // Oathsworn Axemaster
-    SPELL_SKULL_CRUSH           = 44922, 
-    SPELL_SLAM                  = 82763, 
+    SPELL_SKULL_CRUSH           = 44922,
+    SPELL_SLAM                  = 82763,
 
     // Oathsworn Captain
-    SPELL_SKULL_CRACK           = 82670, 
+    SPELL_SKULL_CRACK           = 82670,
 
     // Oathsworn Myrmidon
-    SPELL_BLADED_SHIELD         = 82671, 
-    H_SPELL_BLADED_SHIELD       = 95184, 
-    SPELL_RESISTANCE            = 82673, 
+    SPELL_BLADED_SHIELD         = 82671,
+    H_SPELL_BLADED_SHIELD       = 95184,
+    SPELL_RESISTANCE            = 82673,
 
     // Oathsworn Pathfinder
-    SPELL_CALL_FALCON           = 82792, 
-    SPELL_SHOOT                 = 83877, 
-    SPELL_WING_CLIP             = 82764, 
+    SPELL_CALL_FALCON           = 82792,
+    SPELL_SHOOT                 = 83877,
+    SPELL_WING_CLIP             = 82764,
 
     // Oathsworn Scorpid Keeper
-    SPELL_BLINK                 = 84123, 
-    SPELL_CALL_SCORPID          = 84126, 
-    SPELL_EVASION               = 84122, 
+    SPELL_BLINK                 = 84123,
+    SPELL_CALL_SCORPID          = 84126,
+    SPELL_EVASION               = 84122,
 
     // Oathsworn Skinner
-    SPELL_FAN_KNIVES            = 82789, 
-    H_SPELL_FAN_KNIVES          = 90034, 
-    SPELL_SPINAL_PIERCE         = 84031, 
+    SPELL_FAN_KNIVES            = 82789,
+    H_SPELL_FAN_KNIVES          = 90034,
+    SPELL_SPINAL_PIERCE         = 84031,
 
     // Oathsworn Tamer
-    SPELL_FERAL_LINK            = 84230, 
+    SPELL_FERAL_LINK            = 84230,
 
     // Wanderer
-    SPELL_CALL_CROCO            = 82791, 
-    SPELL_FORKED_SHOT           = 82794, 
-    H_SPELL_FORKED_SHOT         = 89992, 
+    SPELL_CALL_CROCO            = 82791,
+    SPELL_FORKED_SHOT           = 82794,
+    H_SPELL_FORKED_SHOT         = 89992,
 
     // Pygmy Brute
-    SPELL_IMPALE                = 83783, 
-    H_SPELL_IMPALE              = 89990, 
-    SPELL_SHOCKWAVE             = 83785,                
-    H_SPELL_SHOCKWAVE           = 90024, 
+    SPELL_IMPALE                = 83783,
+    H_SPELL_IMPALE              = 89990,
+    SPELL_SHOCKWAVE             = 83785,
+    H_SPELL_SHOCKWAVE           = 90024,
 
     // Pygmy Fire Breather
-    SPELL_DRAGON_BREATH         = 83776,  
-    H_SPELL_DRAGON_BREATH       = 90026, 
-    SPELL_FIRE_BLAST            = 83778, 
-    H_SPELL_FIREBLAST           = 90025, 
+    SPELL_DRAGON_BREATH         = 83776,
+    H_SPELL_DRAGON_BREATH       = 90026,
+    SPELL_FIRE_BLAST            = 83778,
+    H_SPELL_FIREBLAST           = 90025,
 
-    // Pygmy Scout                    
-    SPELL_TOXIC_DART            = 83780, 
-    H_SPELL_TOXIC_DART          = 89991, 
+    // Pygmy Scout
+    SPELL_TOXIC_DART            = 83780,
+    H_SPELL_TOXIC_DART          = 89991,
 
     // Servent of Siamat
-    SPELL_LIGHTNING_NOVA        = 84544,            
-    H_SPELL_LIGHTNING_NOVA      = 90015, 
-    SPELL_THUNDER_CRASH         = 84521, 
+    SPELL_LIGHTNING_NOVA        = 84544,
+    H_SPELL_LIGHTNING_NOVA      = 90015,
+    SPELL_THUNDER_CRASH         = 84521,
 };
 
 enum eEvents
 {
-    EVENT_NONE, 
-    EVENT_BLAZE, 
-    EVENT_SOUL_SEVER, 
-    EVENT_WAIL_DARKNESS, 
-    EVENT_CHAIN_LIGHTNING, 
-    EVENT_HEX, 
-    EVENT_METEOR, 
-    EVENT_SHADOW_BOLT, 
-    EVENT_DISEASE_BREATH, 
-    EVENT_INFECTIOUS_PLAGUE, 
-    EVENT_MIXTURE, 
-    EVENT_RITUAL_BLOODLETTING, 
-    EVENT_VICIOUS_LEECHES, 
-    EVENT_BRANDED_TONGUE, 
-    EVENT_SERUM_TORMENT, 
-    EVENT_SKULL_CRUSH, 
-    EVENT_SLAM, 
-    EVENT_SKULL_CRACK, 
-    EVENT_BLADED_SHIELD, 
-    EVENT_RESISTANCE, 
-    EVENT_CALL_FALCON, 
-    EVENT_SHOOT, 
-    EVENT_WING_CLIP, 
-    EVENT_BLINK, 
-    EVENT_CALL_SCORPID, 
-    EVENT_EVASION, 
-    EVENT_FAN_KNIVES, 
-    EVENT_SPINAL_PIERCE, 
-    EVENT_FERAL_LINK, 
-    EVENT_CALL_CROCO, 
-    EVENT_FORKED_SHOT, 
-    EVENT_IMPALE, 
-    EVENT_SHOCKWAVE, 
-    EVENT_DRAGON_BREATH, 
-    EVENT_FIRE_BLAST, 
-    EVENT_TOXIC_DART, 
-    EVENT_LIGHTNING_NOVA, 
-    EVENT_THUNDER_CRASH, 
+    EVENT_NONE,
+    EVENT_BLAZE,
+    EVENT_SOUL_SEVER,
+    EVENT_WAIL_DARKNESS,
+    EVENT_CHAIN_LIGHTNING,
+    EVENT_HEX,
+    EVENT_METEOR,
+    EVENT_SHADOW_BOLT,
+    EVENT_DISEASE_BREATH,
+    EVENT_INFECTIOUS_PLAGUE,
+    EVENT_MIXTURE,
+    EVENT_RITUAL_BLOODLETTING,
+    EVENT_VICIOUS_LEECHES,
+    EVENT_BRANDED_TONGUE,
+    EVENT_SERUM_TORMENT,
+    EVENT_SKULL_CRUSH,
+    EVENT_SLAM,
+    EVENT_SKULL_CRACK,
+    EVENT_BLADED_SHIELD,
+    EVENT_RESISTANCE,
+    EVENT_CALL_FALCON,
+    EVENT_SHOOT,
+    EVENT_WING_CLIP,
+    EVENT_BLINK,
+    EVENT_CALL_SCORPID,
+    EVENT_EVASION,
+    EVENT_FAN_KNIVES,
+    EVENT_SPINAL_PIERCE,
+    EVENT_FERAL_LINK,
+    EVENT_CALL_CROCO,
+    EVENT_FORKED_SHOT,
+    EVENT_IMPALE,
+    EVENT_SHOCKWAVE,
+    EVENT_DRAGON_BREATH,
+    EVENT_FIRE_BLAST,
+    EVENT_TOXIC_DART,
+    EVENT_LIGHTNING_NOVA,
+    EVENT_THUNDER_CRASH,
 };
 
 class npc_neferset_darkcaster : public CreatureScript
 {
 public:
     npc_neferset_darkcaster() : CreatureScript("npc_neferset_darkcaster") { }
-    
+
     CreatureAI* GetAI(Creature* pCreature) const
     {
         return new npc_neferset_darkcasterAI(pCreature);
@@ -172,7 +172,7 @@ public:
         }
 
         EventMap events;
-        
+
         void Reset()
         {
             events.Reset();
@@ -184,7 +184,7 @@ public:
             events.ScheduleEvent(EVENT_METEOR, 5000);
             events.ScheduleEvent(EVENT_SHADOW_BOLT, 6000);
         }
-        
+
         void UpdateAI(const uint32 diff)
         {
             if (!UpdateVictim())
@@ -255,7 +255,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-         
+
             events.Update(diff);
 
             if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -276,7 +276,7 @@ public:
                         return;
                 }
             }
-            
+
             DoMeleeAttackIfReady();
         }
     };
@@ -286,7 +286,7 @@ class npc_neferset_theurgist : public CreatureScript
 {
 public:
     npc_neferset_theurgist() : CreatureScript("npc_neferset_theurgist"){ }
-    
+
     CreatureAI* GetAI(Creature* pCreature) const
     {
         return new npc_neferset_theurgistAI(pCreature);
@@ -352,7 +352,7 @@ class npc_neferset_torturer : public CreatureScript
 {
 public:
     npc_neferset_torturer() : CreatureScript("npc_neferset_torturer"){ }
-    
+
     CreatureAI* GetAI(Creature* pCreature) const
     {
         return new npc_neferset_torturerAI(pCreature);
@@ -396,7 +396,7 @@ public:
                             DoCast(pTarget, SPELL_BRANDED_TONGUE);
                         events.RescheduleEvent(EVENT_BRANDED_TONGUE, 3000);
                         return;
-                    case EVENT_SERUM_TORMENT:   
+                    case EVENT_SERUM_TORMENT:
                         DoCast(me->getVictim(), SPELL_SERUM_TORMENT);
                         events.RescheduleEvent(EVENT_SERUM_TORMENT, 2000);
                         return;
@@ -407,7 +407,7 @@ public:
         }
     };
 };
- 
+
 class npc_oathsworn_axemaster : public CreatureScript
 {
 public:
@@ -441,7 +441,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-         
+
             events.Update(diff);
 
             if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -461,7 +461,7 @@ public:
                         return;
                 }
             }
-            
+
             DoMeleeAttackIfReady();
         }
     };
@@ -487,7 +487,7 @@ public:
 
         void Reset()
         {
-            events.Reset();                              
+            events.Reset();
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -499,7 +499,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-         
+
             events.Update(diff);
 
             if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -515,7 +515,7 @@ public:
                         return;
                 }
             }
-            
+
             DoMeleeAttackIfReady();
         }
     };
@@ -554,7 +554,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-         
+
             events.Update(diff);
 
             if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -574,7 +574,7 @@ public:
                         return;
                 }
             }
-            
+
             DoMeleeAttackIfReady();
         }
     };
@@ -614,7 +614,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-         
+
             events.Update(diff);
 
             if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -639,7 +639,7 @@ public:
                         return;
                  }
             }
-            
+
             DoMeleeAttackIfReady();
         }
     };
@@ -665,7 +665,7 @@ public:
 
         void Reset()
         {
-            events.Reset();                              
+            events.Reset();
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -678,7 +678,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-         
+
             events.Update(diff);
 
             if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -698,7 +698,7 @@ public:
                         return;
                 }
             }
-            
+
             DoMeleeAttackIfReady();
         }
     };
@@ -724,7 +724,7 @@ public:
 
         void Reset()
         {
-            events.Reset();                              
+            events.Reset();
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -737,7 +737,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-         
+
             events.Update(diff);
 
             if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -757,7 +757,7 @@ public:
                         return;
                 }
             }
-            
+
             DoMeleeAttackIfReady();
         }
     };
@@ -783,7 +783,7 @@ public:
 
         void Reset()
         {
-            events.Reset();                              
+            events.Reset();
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -796,7 +796,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-         
+
             events.Update(diff);
 
             if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -816,7 +816,7 @@ public:
                         return;
                 }
             }
-            
+
             DoMeleeAttackIfReady();
         }
     };
@@ -842,7 +842,7 @@ public:
 
         void Reset()
         {
-            events.Reset();                              
+            events.Reset();
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -855,7 +855,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-         
+
             events.Update(diff);
 
             if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -876,7 +876,7 @@ public:
                         return;
                 }
             }
-            
+
             DoMeleeAttackIfReady();
         }
     };
@@ -902,7 +902,7 @@ public:
 
         void Reset()
         {
-            events.Reset();                              
+            events.Reset();
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -914,7 +914,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-         
+
             events.Update(diff);
 
             if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -930,7 +930,7 @@ public:
                         return;
                 }
             }
-            
+
             DoMeleeAttackIfReady();
         }
     };

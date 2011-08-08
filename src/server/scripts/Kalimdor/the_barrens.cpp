@@ -19,7 +19,7 @@
 /* ScriptData
 SDName: The_Barrens
 SD%Complete: 90
-SDComment: Quest support: 863, 898, 1719, 2458, 4921, 6981, 
+SDComment: Quest support: 863, 898, 1719, 2458, 4921, 6981,
 SDCategory: Barrens
 EndScriptData */
 
@@ -70,9 +70,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(3557, pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 /*######
 # npc_gilthares
@@ -80,20 +78,20 @@ public:
 
 enum eGilthares
 {
-    SAY_GIL_START               = -1000370, 
-    SAY_GIL_AT_LAST             = -1000371, 
-    SAY_GIL_PROCEED             = -1000372, 
-    SAY_GIL_FREEBOOTERS         = -1000373, 
-    SAY_GIL_AGGRO_1             = -1000374, 
-    SAY_GIL_AGGRO_2             = -1000375, 
-    SAY_GIL_AGGRO_3             = -1000376, 
-    SAY_GIL_AGGRO_4             = -1000377, 
-    SAY_GIL_ALMOST              = -1000378, 
-    SAY_GIL_SWEET               = -1000379, 
-    SAY_GIL_FREED               = -1000380, 
+    SAY_GIL_START               = -1000370,
+    SAY_GIL_AT_LAST             = -1000371,
+    SAY_GIL_PROCEED             = -1000372,
+    SAY_GIL_FREEBOOTERS         = -1000373,
+    SAY_GIL_AGGRO_1             = -1000374,
+    SAY_GIL_AGGRO_2             = -1000375,
+    SAY_GIL_AGGRO_3             = -1000376,
+    SAY_GIL_AGGRO_4             = -1000377,
+    SAY_GIL_ALMOST              = -1000378,
+    SAY_GIL_SWEET               = -1000379,
+    SAY_GIL_FREED               = -1000380,
 
-    QUEST_FREE_FROM_HOLD        = 898, 
-    AREA_MERCHANT_COAST         = 391, 
+    QUEST_FREE_FROM_HOLD        = 898,
+    AREA_MERCHANT_COAST         = 391,
     FACTION_ESCORTEE            = 232                       //guessed, possible not needed for this quest
 };
 
@@ -173,10 +171,7 @@ public:
             }
         }
     };
-
 };
-
-
 
 /*######
 ## npc_sputtervalve
@@ -211,9 +206,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 /*######
 ## npc_taskmaster_fizzule
@@ -221,9 +214,9 @@ public:
 
 enum eEnums
 {
-    FACTION_FRIENDLY_F  = 35, 
-    SPELL_FLARE         = 10113, 
-    SPELL_FOLLY         = 10137, 
+    FACTION_FRIENDLY_F  = 35,
+    SPELL_FLARE         = 10113,
+    SPELL_FOLLY         = 10137,
 };
 
 class npc_taskmaster_fizzule : public CreatureScript
@@ -313,9 +306,7 @@ public:
             }
         }
     };
-
 };
-
 
 /*#####
 ## npc_twiggy_flathead
@@ -323,23 +314,23 @@ public:
 
 enum eTwiggyFlathead
 {
-    NPC_BIG_WILL                = 6238, 
-    NPC_AFFRAY_CHALLENGER       = 6240, 
+    NPC_BIG_WILL                = 6238,
+    NPC_AFFRAY_CHALLENGER       = 6240,
 
-    SAY_BIG_WILL_READY          = -1000123, 
-    SAY_TWIGGY_FLATHEAD_BEGIN   = -1000124, 
-    SAY_TWIGGY_FLATHEAD_FRAY    = -1000125, 
-    SAY_TWIGGY_FLATHEAD_DOWN    = -1000126, 
-    SAY_TWIGGY_FLATHEAD_OVER    = -1000127, 
+    SAY_BIG_WILL_READY          = -1000123,
+    SAY_TWIGGY_FLATHEAD_BEGIN   = -1000124,
+    SAY_TWIGGY_FLATHEAD_FRAY    = -1000125,
+    SAY_TWIGGY_FLATHEAD_DOWN    = -1000126,
+    SAY_TWIGGY_FLATHEAD_OVER    = -1000127,
 };
 
 float AffrayChallengerLoc[6][4]=
 {
-    {-1683.0f, -4326.0f, 2.79f, 0.0f}, 
-    {-1682.0f, -4329.0f, 2.79f, 0.0f}, 
-    {-1683.0f, -4330.0f, 2.79f, 0.0f}, 
-    {-1680.0f, -4334.0f, 2.79f, 1.49f}, 
-    {-1674.0f, -4326.0f, 2.79f, 3.49f}, 
+    {-1683.0f, -4326.0f, 2.79f, 0.0f},
+    {-1682.0f, -4329.0f, 2.79f, 0.0f},
+    {-1683.0f, -4330.0f, 2.79f, 0.0f},
+    {-1680.0f, -4334.0f, 2.79f, 1.49f},
+    {-1674.0f, -4326.0f, 2.79f, 3.49f},
     {-1677.0f, -4334.0f, 2.79f, 1.66f}
 };
 
@@ -540,9 +531,7 @@ public:
             }
         }
     };
-
 };
-
 
 /*#####
 ## npc_wizzlecrank_shredder
@@ -550,19 +539,19 @@ public:
 
 enum eEnums_Wizzlecrank
 {
-    SAY_START           = -1000298, 
-    SAY_STARTUP1        = -1000299, 
-    SAY_STARTUP2        = -1000300, 
-    SAY_MERCENARY       = -1000301, 
-    SAY_PROGRESS_1      = -1000302, 
-    SAY_PROGRESS_2      = -1000303, 
-    SAY_PROGRESS_3      = -1000304, 
-    SAY_END             = -1000305, 
+    SAY_START           = -1000298,
+    SAY_STARTUP1        = -1000299,
+    SAY_STARTUP2        = -1000300,
+    SAY_MERCENARY       = -1000301,
+    SAY_PROGRESS_1      = -1000302,
+    SAY_PROGRESS_2      = -1000303,
+    SAY_PROGRESS_3      = -1000304,
+    SAY_END             = -1000305,
 
-    QUEST_ESCAPE        = 863, 
-    FACTION_RATCHET     = 637, 
-    NPC_PILOT_WIZZ      = 3451, 
-    NPC_MERCENARY       = 3282, 
+    QUEST_ESCAPE        = 863,
+    FACTION_RATCHET     = 637,
+    NPC_PILOT_WIZZ      = 3451,
+    NPC_MERCENARY       = 3282,
 };
 
 class npc_wizzlecrank_shredder : public CreatureScript
@@ -709,9 +698,7 @@ public:
     {
         return new npc_wizzlecrank_shredderAI(pCreature);
     }
-
 };
-
 
 void AddSC_the_barrens()
 {

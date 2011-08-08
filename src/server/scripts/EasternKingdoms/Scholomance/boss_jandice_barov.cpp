@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -108,7 +108,6 @@ public:
             //Illusion_Timer
             if (!Invisible && Illusion_Timer <= diff)
             {
-
                 //Interrupt any spell casting
                 me->InterruptNonMeleeSpells(false);
                 me->setFaction(35);
@@ -154,7 +153,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 // Illusion of Jandice Barov Script
@@ -204,10 +202,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
 
 void AddSC_boss_jandicebarov()
 {

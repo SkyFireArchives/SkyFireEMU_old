@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,33 +39,33 @@ struct Speech
 
 static Speech LackeyDeath[]=
 {
-    {-1585013}, 
-    {-1585014}, 
-    {-1585015}, 
-    {-1585016}, 
+    {-1585013},
+    {-1585014},
+    {-1585015},
+    {-1585016},
 };
 
 static Speech PlayerDeath[]=
 {
-    {-1585017}, 
-    {-1585018}, 
-    {-1585019}, 
-    {-1585020}, 
-    {-1585021}, 
+    {-1585017},
+    {-1585018},
+    {-1585019},
+    {-1585020},
+    {-1585021},
 };
 
 enum eEnums
 {
-    SAY_AGGRO               = -1585012, 
-    SAY_DEATH               = -1585022, 
+    SAY_AGGRO               = -1585012,
+    SAY_DEATH               = -1585022,
 
-    SPELL_DISPEL_MAGIC      = 27609, 
-    SPELL_FLASH_HEAL        = 17843, 
-    SPELL_SW_PAIN_NORMAL    = 14032, 
-    SPELL_SW_PAIN_HEROIC    = 15654, 
-    SPELL_SHIELD            = 44291, 
-    SPELL_RENEW_NORMAL      = 44174, 
-    SPELL_RENEW_HEROIC      = 46192, 
+    SPELL_DISPEL_MAGIC      = 27609,
+    SPELL_FLASH_HEAL        = 17843,
+    SPELL_SW_PAIN_NORMAL    = 14032,
+    SPELL_SW_PAIN_HEROIC    = 15654,
+    SPELL_SHIELD            = 44291,
+    SPELL_RENEW_NORMAL      = 44174,
+    SPELL_RENEW_HEROIC      = 46192,
 
     MAX_ACTIVE_LACKEY       = 4
 };
@@ -75,10 +75,10 @@ const float fZLocation = -19.921f;
 
 float LackeyLocations[4][2]=
 {
-    {123.77f, 17.6007f}, 
-    {131.731f, 15.0827f}, 
-    {121.563f, 15.6213f}, 
-    {129.988f, 17.2355f}, 
+    {123.77f, 17.6007f},
+    {131.731f, 15.0827f},
+    {121.563f, 15.6213f},
+    {129.988f, 17.2355f},
 };
 
 const uint32 m_auiAddEntries[] =
@@ -335,9 +335,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 enum eHealingPotion
 {
@@ -480,11 +478,11 @@ struct boss_priestess_lackey_commonAI : public ScriptedAI
 
 enum eRogueSpells
 {
-    SPELL_KIDNEY_SHOT       = 27615, 
-    SPELL_GOUGE             = 12540, 
-    SPELL_KICK              = 27613, 
-    SPELL_VANISH            = 44290, 
-    SPELL_BACKSTAB          = 15657, 
+    SPELL_KIDNEY_SHOT       = 27615,
+    SPELL_GOUGE             = 12540,
+    SPELL_KICK              = 27613,
+    SPELL_VANISH            = 44290,
+    SPELL_BACKSTAB          = 15657,
     SPELL_EVISCERATE        = 27611
 };
 
@@ -579,18 +577,16 @@ public:
                 DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 enum eWarlockSpells
 {
-    SPELL_IMMOLATE              = 44267, 
-    SPELL_SHADOW_BOLT           = 12471, 
-    SPELL_SEED_OF_CORRUPTION    = 44141, 
-    SPELL_CURSE_OF_AGONY        = 14875, 
-    SPELL_FEAR                  = 38595, 
-    SPELL_IMP_FIREBALL          = 44164, 
+    SPELL_IMMOLATE              = 44267,
+    SPELL_SHADOW_BOLT           = 12471,
+    SPELL_SEED_OF_CORRUPTION    = 44141,
+    SPELL_CURSE_OF_AGONY        = 14875,
+    SPELL_FEAR                  = 38595,
+    SPELL_IMP_FIREBALL          = 44164,
     SPELL_SUMMON_IMP            = 44163
 };
 
@@ -677,12 +673,11 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 enum eKickDown
 {
-    SPELL_KNOCKDOWN     = 11428, 
+    SPELL_KNOCKDOWN     = 11428,
     SPELL_SNAP_KICK     = 46182
 };
 
@@ -734,17 +729,16 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 enum eMageSpells
 {
-    SPELL_POLYMORPH         = 13323, 
-    SPELL_ICE_BLOCK         = 27619, 
-    SPELL_BLIZZARD          = 44178, 
-    SPELL_ICE_LANCE         = 46194, 
-    SPELL_CONE_OF_COLD      = 38384, 
-    SPELL_FROSTBOLT         = 15043, 
+    SPELL_POLYMORPH         = 13323,
+    SPELL_ICE_BLOCK         = 27619,
+    SPELL_BLIZZARD          = 44178,
+    SPELL_ICE_LANCE         = 46194,
+    SPELL_CONE_OF_COLD      = 38384,
+    SPELL_FROSTBOLT         = 15043,
     SPELL_BLINK             = 14514
 };
 
@@ -865,17 +859,16 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 enum eWarriorSpells
 {
-    SPELL_INTERCEPT_STUN        = 27577, 
-    SPELL_DISARM                = 27581, 
-    SPELL_PIERCING_HOWL         = 23600, 
-    SPELL_FRIGHTENING_SHOUT     = 19134, 
-    SPELL_HAMSTRING             = 27584, 
-    SPELL_BATTLE_SHOUT          = 27578, 
+    SPELL_INTERCEPT_STUN        = 27577,
+    SPELL_DISARM                = 27581,
+    SPELL_PIERCING_HOWL         = 23600,
+    SPELL_FRIGHTENING_SHOUT     = 19134,
+    SPELL_HAMSTRING             = 27584,
+    SPELL_BATTLE_SHOUT          = 27578,
     SPELL_MORTAL_STRIKE         = 44268
 };
 
@@ -985,17 +978,16 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 enum eHunterSpells
 {
-    SPELL_AIMED_SHOT            = 44271, 
-    SPELL_SHOOT                 = 15620, 
-    SPELL_CONCUSSIVE_SHOT       = 27634, 
-    SPELL_MULTI_SHOT            = 31942, 
-    SPELL_WING_CLIP             = 44286, 
-    SPELL_FREEZING_TRAP         = 44136, 
+    SPELL_AIMED_SHOT            = 44271,
+    SPELL_SHOOT                 = 15620,
+    SPELL_CONCUSSIVE_SHOT       = 27634,
+    SPELL_MULTI_SHOT            = 31942,
+    SPELL_WING_CLIP             = 44286,
+    SPELL_FREEZING_TRAP         = 44136,
 
     NPC_SLIVER                  = 24552
 };
@@ -1106,17 +1098,16 @@ public:
             }
         }
     };
-
 };
 
 enum Spells
 {
-    SPELL_WINDFURY_TOTEM        = 27621, 
-    SPELL_WAR_STOMP             = 46026, 
-    SPELL_PURGE                 = 27626, 
-    SPELL_LESSER_HEALING_WAVE   = 44256, 
-    SPELL_FROST_SHOCK           = 21401, 
-    SPELL_FIRE_NOVA_TOTEM       = 44257, 
+    SPELL_WINDFURY_TOTEM        = 27621,
+    SPELL_WAR_STOMP             = 46026,
+    SPELL_PURGE                 = 27626,
+    SPELL_LESSER_HEALING_WAVE   = 44256,
+    SPELL_FROST_SHOCK           = 21401,
+    SPELL_FIRE_NOVA_TOTEM       = 44257,
     SPELL_EARTHBIND_TOTEM       = 15786
 };
 
@@ -1206,16 +1197,15 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 enum eEngineerSpells
 {
-    SPELL_GOBLIN_DRAGON_GUN     = 44272, 
-    SPELL_ROCKET_LAUNCH         = 44137, 
-    SPELL_RECOMBOBULATE         = 44274, 
-    SPELL_HIGH_EXPLOSIVE_SHEEP  = 44276, 
-    SPELL_FEL_IRON_BOMB         = 46024, 
+    SPELL_GOBLIN_DRAGON_GUN     = 44272,
+    SPELL_ROCKET_LAUNCH         = 44137,
+    SPELL_RECOMBOBULATE         = 44274,
+    SPELL_HIGH_EXPLOSIVE_SHEEP  = 44276,
+    SPELL_FEL_IRON_BOMB         = 46024,
     SPELL_SHEEP_EXPLOSION       = 44279
 };
 
@@ -1301,7 +1291,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*

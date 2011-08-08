@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -228,7 +228,7 @@ struct boss_twinemperorsAI : public ScriptedAI
             float other_o = pOtherBoss->GetOrientation();
 
             Map *thismap = me->GetMap();
-            thismap->CreatureRelocation(pOtherBoss, me->GetPositionX(), 
+            thismap->CreatureRelocation(pOtherBoss, me->GetPositionX(),
                 me->GetPositionY(),    me->GetPositionZ(), me->GetOrientation());
             thismap->CreatureRelocation(me, other_x, other_y, other_z, other_o);
 
@@ -472,7 +472,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class boss_veklor : public CreatureScript
@@ -598,10 +597,7 @@ public:
             }
         }
     };
-
 };
-
-
 
 void AddSC_boss_twinemperors()
 {

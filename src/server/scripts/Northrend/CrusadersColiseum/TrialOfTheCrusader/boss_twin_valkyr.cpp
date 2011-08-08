@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,75 +39,74 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_AGGRO           = -1649040, 
-    SAY_DEATH           = -1649041, 
-    SAY_BERSERK         = -1649042, 
-    EMOTE_SHIELD        = -1649043, 
-    SAY_SHIELD          = -1649044, 
-    SAY_KILL1           = -1649045, 
-    SAY_KILL2           = -1649046, 
-    EMOTE_LIGHT_VORTEX  = -1649047, 
-    SAY_LIGHT_VORTEX    = -1649048, 
-    EMOTE_DARK_VORTEX   = -1649049, 
-    SAY_DARK_VORTEX     = -1649050, 
+    SAY_AGGRO           = -1649040,
+    SAY_DEATH           = -1649041,
+    SAY_BERSERK         = -1649042,
+    EMOTE_SHIELD        = -1649043,
+    SAY_SHIELD          = -1649044,
+    SAY_KILL1           = -1649045,
+    SAY_KILL2           = -1649046,
+    EMOTE_LIGHT_VORTEX  = -1649047,
+    SAY_LIGHT_VORTEX    = -1649048,
+    EMOTE_DARK_VORTEX   = -1649049,
+    SAY_DARK_VORTEX     = -1649050,
 };
 
 enum Equipment
 {
-    EQUIP_MAIN_1         = 49303, 
-    EQUIP_OFFHAND_1      = 47146, 
-    EQUIP_RANGED_1       = 47267, 
-    EQUIP_MAIN_2         = 45990, 
-    EQUIP_OFFHAND_2      = 47470, 
-    EQUIP_RANGED_2       = 47267, 
-    EQUIP_DONE           = EQUIP_NO_CHANGE, 
+    EQUIP_MAIN_1         = 49303,
+    EQUIP_OFFHAND_1      = 47146,
+    EQUIP_RANGED_1       = 47267,
+    EQUIP_MAIN_2         = 45990,
+    EQUIP_OFFHAND_2      = 47470,
+    EQUIP_RANGED_2       = 47267,
+    EQUIP_DONE           = EQUIP_NO_CHANGE,
 };
 
 enum Summons
 {
-    NPC_DARK_ESSENCE     = 34567, 
-    NPC_LIGHT_ESSENCE    = 34568, 
+    NPC_DARK_ESSENCE     = 34567,
+    NPC_LIGHT_ESSENCE    = 34568,
 
-    NPC_UNLEASHED_DARK   = 34628, 
-    NPC_UNLEASHED_LIGHT  = 34630, 
+    NPC_UNLEASHED_DARK   = 34628,
+    NPC_UNLEASHED_LIGHT  = 34630,
 };
 
 enum BossSpells
 {
-    SPELL_LIGHT_TWIN_SPIKE      = 66075, 
-    SPELL_LIGHT_SURGE           = 65766, 
-    SPELL_LIGHT_SHIELD          = 65858, 
-    SPELL_LIGHT_TWIN_PACT       = 65876, 
-    SPELL_LIGHT_VORTEX          = 66046, 
-    SPELL_LIGHT_TOUCH           = 67297, 
+    SPELL_LIGHT_TWIN_SPIKE      = 66075,
+    SPELL_LIGHT_SURGE           = 65766,
+    SPELL_LIGHT_SHIELD          = 65858,
+    SPELL_LIGHT_TWIN_PACT       = 65876,
+    SPELL_LIGHT_VORTEX          = 66046,
+    SPELL_LIGHT_TOUCH           = 67297,
 
-    SPELL_DARK_TWIN_SPIKE       = 66069, 
-    SPELL_DARK_SURGE            = 65768, 
-    SPELL_DARK_SHIELD           = 65874, 
-    SPELL_DARK_TWIN_PACT        = 65875, 
-    SPELL_DARK_VORTEX           = 66058, 
-    SPELL_DARK_TOUCH            = 67282, 
+    SPELL_DARK_TWIN_SPIKE       = 66069,
+    SPELL_DARK_SURGE            = 65768,
+    SPELL_DARK_SHIELD           = 65874,
+    SPELL_DARK_TWIN_PACT        = 65875,
+    SPELL_DARK_VORTEX           = 66058,
+    SPELL_DARK_TOUCH            = 67282,
 
-    SPELL_TWIN_POWER            = 65916, 
-    SPELL_LIGHT_ESSENCE         = 65686, 
-    SPELL_DARK_ESSENCE          = 65684, 
-    SPELL_BERSERK               = 64238, 
-    SPELL_NONE                  = 0, 
+    SPELL_TWIN_POWER            = 65916,
+    SPELL_LIGHT_ESSENCE         = 65686,
+    SPELL_DARK_ESSENCE          = 65684,
+    SPELL_BERSERK               = 64238,
+    SPELL_NONE                  = 0,
 
-    SPELL_EMPOWERED_DARK        = 67215, 
-    SPELL_EMPOWERED_LIGHT       = 67218, 
+    SPELL_EMPOWERED_DARK        = 67215,
+    SPELL_EMPOWERED_LIGHT       = 67218,
 
-    SPELL_UNLEASHED_DARK        = 65808, 
-    SPELL_UNLEASHED_LIGHT       = 65795, 
+    SPELL_UNLEASHED_DARK        = 65808,
+    SPELL_UNLEASHED_LIGHT       = 65795,
     //PowerUp 67604
 };
 
 enum Actions
 {
-    ACTION_VORTEX, 
+    ACTION_VORTEX,
     ACTION_PACT
 };
-
 
 /*######
 ## boss_twin_base
@@ -483,9 +482,7 @@ public:
             }
         }
     };
-
 };
-
 
 /*######
 ## boss_eydis
@@ -531,9 +528,7 @@ public:
             EssenceLocation[1] = TwinValkyrsLoc[1];
         }
     };
-
 };
-
 
 class mob_essence_of_twin : public CreatureScript
 {
@@ -559,7 +554,6 @@ public:
         return true;
     }
 };
-
 
 struct mob_unleashed_ballAI : public ScriptedAI
 {
@@ -640,9 +634,7 @@ public:
             else m_uiRangeCheckTimer -= uiDiff;
         }
     };
-
 };
-
 
 class mob_unleashed_light : public CreatureScript
 {
@@ -674,9 +666,7 @@ public:
             else m_uiRangeCheckTimer -= uiDiff;
         }
     };
-
 };
-
 
 void AddSC_boss_twin_valkyr()
 {

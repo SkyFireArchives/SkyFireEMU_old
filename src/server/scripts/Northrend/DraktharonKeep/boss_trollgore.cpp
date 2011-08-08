@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,22 +31,22 @@
 
 enum Spells
 {
-    SPELL_INFECTED_WOUND                          = 49637, 
-    SPELL_CRUSH                                   = 49639, 
-    SPELL_CORPSE_EXPLODE                          = 49555, 
-    SPELL_CONSUME                                 = 49380, 
-    SPELL_CONSUME_AURA                            = 49381, 
+    SPELL_INFECTED_WOUND                          = 49637,
+    SPELL_CRUSH                                   = 49639,
+    SPELL_CORPSE_EXPLODE                          = 49555,
+    SPELL_CONSUME                                 = 49380,
+    SPELL_CONSUME_AURA                            = 49381,
     //Heroic spells
-    H_SPELL_CORPSE_EXPLODE                        = 59807, 
-    H_SPELL_CONSUME                               = 59803, 
-    H_SPELL_CONSUME_AURA                          = 59805, 
+    H_SPELL_CORPSE_EXPLODE                        = 59807,
+    H_SPELL_CONSUME                               = 59803,
+    H_SPELL_CONSUME_AURA                          = 59805,
 };
 enum Yells
 {
-    SAY_AGGRO                                     = -1600006, 
-    SAY_KILL                                      = -1600007, 
-    SAY_CONSUME                                   = -1600008, 
-    SAY_EXPLODE                                   = -1600009, 
+    SAY_AGGRO                                     = -1600006,
+    SAY_KILL                                      = -1600007,
+    SAY_CONSUME                                   = -1600008,
+    SAY_EXPLODE                                   = -1600009,
     SAY_DEATH                                     = -1600010
 };
 enum Achievements
@@ -55,7 +55,7 @@ enum Achievements
 };
 enum Creatures
 {
-    NPC_DRAKKARI_INVADER_1                        = 27753, 
+    NPC_DRAKKARI_INVADER_1                        = 27753,
     NPC_DRAKKARI_INVADER_2                        = 27709
 };
 

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,23 +39,22 @@ EndContentData */
 enum eDyingKodo
 {
     // signed for 9999
-    SAY_SMEED_HOME_1                = -1000348, 
-    SAY_SMEED_HOME_2                = -1000349, 
-    SAY_SMEED_HOME_3                = -1000350, 
+    SAY_SMEED_HOME_1                = -1000348,
+    SAY_SMEED_HOME_2                = -1000349,
+    SAY_SMEED_HOME_3                = -1000350,
 
-    QUEST_KODO                      = 5561, 
+    QUEST_KODO                      = 5561,
 
-    NPC_SMEED                       = 11596, 
-    NPC_AGED_KODO                   = 4700, 
-    NPC_DYING_KODO                  = 4701, 
-    NPC_ANCIENT_KODO                = 4702, 
-    NPC_TAMED_KODO                  = 11627, 
+    NPC_SMEED                       = 11596,
+    NPC_AGED_KODO                   = 4700,
+    NPC_DYING_KODO                  = 4701,
+    NPC_ANCIENT_KODO                = 4702,
+    NPC_TAMED_KODO                  = 11627,
 
-    SPELL_KODO_KOMBO_ITEM           = 18153, 
+    SPELL_KODO_KOMBO_ITEM           = 18153,
     SPELL_KODO_KOMBO_PLAYER_BUFF    = 18172,                //spells here have unclear function, but using them at least for visual parts and checks
-    SPELL_KODO_KOMBO_DESPAWN_BUFF   = 18377, 
+    SPELL_KODO_KOMBO_DESPAWN_BUFF   = 18377,
     SPELL_KODO_KOMBO_GOSSIP         = 18362
-
 };
 
 class npc_aged_dying_ancient_kodo : public CreatureScript
@@ -170,11 +169,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
-
 
 /*######
 ## go_iruxos. Quest 5381
@@ -192,7 +187,6 @@ public:
 
             return true;
     }
-
 };
 
 /*######
@@ -263,10 +257,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
 
 void AddSC_desolace()
 {

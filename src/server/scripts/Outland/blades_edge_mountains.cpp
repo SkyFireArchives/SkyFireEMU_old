@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -78,7 +78,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*######
@@ -93,16 +92,16 @@ enum eNetherdrake
     SAY_NIHIL_4                 = -1000172, //signed for 20021, used by 20021, 21817, 21820, 21821, 21823
     SAY_NIHIL_INTERRUPT         = -1000173, //signed for 20021, used by 20021, 21817, 21820, 21821, 21823
 
-    ENTRY_WHELP                 = 20021, 
-    ENTRY_PROTO                 = 21821, 
-    ENTRY_ADOLE                 = 21817, 
-    ENTRY_MATUR                 = 21820, 
-    ENTRY_NIHIL                 = 21823, 
+    ENTRY_WHELP                 = 20021,
+    ENTRY_PROTO                 = 21821,
+    ENTRY_ADOLE                 = 21817,
+    ENTRY_MATUR                 = 21820,
+    ENTRY_NIHIL                 = 21823,
 
-    SPELL_T_PHASE_MODULATOR     = 37573, 
+    SPELL_T_PHASE_MODULATOR     = 37573,
 
-    SPELL_ARCANE_BLAST          = 38881, 
-    SPELL_MANA_BURN             = 38884, 
+    SPELL_ARCANE_BLAST          = 38881,
+    SPELL_MANA_BURN             = 38884,
     SPELL_INTANGIBLE_PRESENCE   = 36513
 };
 
@@ -258,9 +257,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*######
 ## npc_daranelle
@@ -268,7 +265,7 @@ public:
 
 enum eDaranelle
 {
-    SAY_SPELL_INFLUENCE     = -1000174, 
+    SAY_SPELL_INFLUENCE     = -1000174,
     SPELL_LASHHAN_CHANNEL   = 36904
 };
 
@@ -305,9 +302,7 @@ public:
             ScriptedAI::MoveInLineOfSight(who);
         }
     };
-
 };
-
 
 /*######
 ## npc_overseer_nuaar
@@ -340,9 +335,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_saikkal_the_elder
@@ -382,9 +375,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## go_legion_obelisk
@@ -432,19 +423,16 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_bloodmaul_brutebane
 ######*/
 
-
 enum eBloodmaul
 {
-    NPC_OGRE_BRUTE        = 19995, 
-    NPC_QUEST_CREDIT      = 21241, 
+    NPC_OGRE_BRUTE        = 19995,
+    NPC_QUEST_CREDIT      = 21241,
     GO_KEG                = 184315
 };
 
@@ -478,9 +466,7 @@ public:
 
         void UpdateAI(const uint32 /*uiDiff*/) {}
     };
-
 };
-
 
 /*######
 ## npc_ogre_brute
@@ -541,9 +527,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*######
 ## AddSC

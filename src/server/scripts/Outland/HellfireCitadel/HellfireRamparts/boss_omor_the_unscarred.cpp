@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,26 +33,26 @@ EndScriptData */
 
 enum eSays
 {
-    SAY_AGGRO_1                = -1543009, 
-    SAY_AGGRO_2                = -1543010, 
-    SAY_AGGRO_3                = -1543011, 
-    SAY_SUMMON                 = -1543012, 
-    SAY_CURSE                  = -1543013, 
-    SAY_KILL_1                 = -1543014, 
-    SAY_DIE                    = -1543015, 
-    SAY_WIPE                   = -1543016, 
+    SAY_AGGRO_1                = -1543009,
+    SAY_AGGRO_2                = -1543010,
+    SAY_AGGRO_3                = -1543011,
+    SAY_SUMMON                 = -1543012,
+    SAY_CURSE                  = -1543013,
+    SAY_KILL_1                 = -1543014,
+    SAY_DIE                    = -1543015,
+    SAY_WIPE                   = -1543016,
 };
 
 enum eSpells
 {
-    SPELL_ORBITAL_STRIKE       = 30637, 
-    SPELL_SHADOW_WHIP          = 30638, 
-    SPELL_TREACHEROUS_AURA     = 30695, 
-    H_SPELL_BANE_OF_TREACHERY  = 37566, 
-    SPELL_DEMONIC_SHIELD       = 31901, 
-    SPELL_SHADOW_BOLT          = 30686, 
-    H_SPELL_SHADOW_BOLT        = 39297, 
-    SPELL_SUMMON_FIENDISH_HOUND= 30707, 
+    SPELL_ORBITAL_STRIKE       = 30637,
+    SPELL_SHADOW_WHIP          = 30638,
+    SPELL_TREACHEROUS_AURA     = 30695,
+    H_SPELL_BANE_OF_TREACHERY  = 37566,
+    SPELL_DEMONIC_SHIELD       = 31901,
+    SPELL_SHADOW_BOLT          = 30686,
+    H_SPELL_SHADOW_BOLT        = 39297,
+    SPELL_SUMMON_FIENDISH_HOUND= 30707,
 };
 
 class boss_omor_the_unscarred : public CreatureScript
@@ -235,4 +235,3 @@ void AddSC_boss_omor_the_unscarred()
 {
     new boss_omor_the_unscarred();
 }
-

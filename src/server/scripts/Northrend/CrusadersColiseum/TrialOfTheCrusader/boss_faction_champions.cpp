@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -38,22 +38,22 @@ EndScriptData */
 
 enum eYell
 {
-    SAY_GARROSH_KILL_ALLIANCE_PLAYER4 = -1649118, 
-    SAY_VARIAN_KILL_HORDE_PLAYER4     = -1649123, 
+    SAY_GARROSH_KILL_ALLIANCE_PLAYER4 = -1649118,
+    SAY_VARIAN_KILL_HORDE_PLAYER4     = -1649123,
 };
 
 enum eAIs
 {
-    AI_MELEE    = 0, 
-    AI_RANGED   = 1, 
-    AI_HEALER   = 2, 
-    AI_PET      = 3, 
+    AI_MELEE    = 0,
+    AI_RANGED   = 1,
+    AI_HEALER   = 2,
+    AI_PET      = 3,
 };
 
 enum eSpells
 {
-    SPELL_ANTI_AOE      = 68595, 
-    SPELL_PVP_TRINKET   = 65547, 
+    SPELL_ANTI_AOE      = 68595,
+    SPELL_PVP_TRINKET   = 65547,
 };
 
 class boss_toc_champion_controller : public CreatureScript
@@ -236,9 +236,7 @@ public:
             }
         }
     };
-
 };
-
 
 struct boss_faction_championsAI : public ScriptedAI
 {
@@ -444,13 +442,13 @@ struct boss_faction_championsAI : public ScriptedAI
 ********************************************************************/
 enum eDruidSpells
 {
-    SPELL_LIFEBLOOM         = 66093, 
-    SPELL_NOURISH           = 66066, 
-    SPELL_REGROWTH          = 66067, 
-    SPELL_REJUVENATION      = 66065, 
-    SPELL_TRANQUILITY       = 66086, 
+    SPELL_LIFEBLOOM         = 66093,
+    SPELL_NOURISH           = 66066,
+    SPELL_REGROWTH          = 66067,
+    SPELL_REJUVENATION      = 66065,
+    SPELL_TRANQUILITY       = 66086,
     SPELL_BARKSKIN          = 65860, //1 min cd
-    SPELL_THORNS            = 66068, 
+    SPELL_THORNS            = 66068,
     SPELL_NATURE_GRASP      = 66071, //1 min cd, self buff
 };
 
@@ -533,21 +531,20 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum eShamanSpells
 {
-    SPELL_HEALING_WAVE          = 66055, 
-    SPELL_RIPTIDE               = 66053, 
+    SPELL_HEALING_WAVE          = 66055,
+    SPELL_RIPTIDE               = 66053,
     SPELL_SPIRIT_CLEANSE        = 66056, //friendly only
-    SPELL_HEROISM               = 65983, 
-    SPELL_BLOODLUST             = 65980, 
-    SPELL_HEX                   = 66054, 
-    SPELL_EARTH_SHIELD          = 66063, 
-    SPELL_EARTH_SHOCK           = 65973, 
-    AURA_EXHAUSTION             = 57723, 
-    AURA_SATED                  = 57724, 
+    SPELL_HEROISM               = 65983,
+    SPELL_BLOODLUST             = 65980,
+    SPELL_HEX                   = 66054,
+    SPELL_EARTH_SHIELD          = 66063,
+    SPELL_EARTH_SHOCK           = 65973,
+    AURA_EXHAUSTION             = 57723,
+    AURA_SATED                  = 57724,
 };
 
 class mob_toc_shaman : public CreatureScript
@@ -628,19 +625,18 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum ePaladinSpells
 {
     SPELL_HAND_OF_FREEDOM     = 68757, //25 sec cd
     SPELL_BUBBLE              = 66010, //5 min cd
-    SPELL_CLEANSE             = 66116, 
-    SPELL_FLASH_OF_LIGHT      = 66113, 
-    SPELL_HOLY_LIGHT          = 66112, 
-    SPELL_HOLY_SHOCK          = 66114, 
-    SPELL_HAND_OF_PROTECTION  = 66009, 
-    SPELL_HAMMER_OF_JUSTICE   = 66613, 
+    SPELL_CLEANSE             = 66116,
+    SPELL_FLASH_OF_LIGHT      = 66113,
+    SPELL_HOLY_LIGHT          = 66112,
+    SPELL_HOLY_SHOCK          = 66114,
+    SPELL_HAND_OF_PROTECTION  = 66009,
+    SPELL_HAMMER_OF_JUSTICE   = 66613,
 };
 
 class mob_toc_paladin : public CreatureScript
@@ -737,17 +733,16 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum ePriestSpells
 {
-    SPELL_RENEW             = 66177, 
-    SPELL_SHIELD            = 66099, 
-    SPELL_FLASH_HEAL        = 66104, 
-    SPELL_DISPEL            = 65546, 
-    SPELL_PSYCHIC_SCREAM    = 65543, 
-    SPELL_MANA_BURN         = 66100, 
+    SPELL_RENEW             = 66177,
+    SPELL_SHIELD            = 66099,
+    SPELL_FLASH_HEAL        = 66104,
+    SPELL_DISPEL            = 65546,
+    SPELL_PSYCHIC_SCREAM    = 65543,
+    SPELL_MANA_BURN         = 66100,
 };
 
 class mob_toc_priest : public CreatureScript
@@ -813,7 +808,6 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 /********************************************************************
@@ -821,14 +815,14 @@ public:
 ********************************************************************/
 enum eShadowPriestSpells
 {
-    SPELL_SILENCE           = 65542, 
-    SPELL_VAMPIRIC_TOUCH    = 65490, 
-    SPELL_SW_PAIN           = 65541, 
-    SPELL_MIND_FLAY         = 65488, 
-    SPELL_MIND_BLAST        = 65492, 
-    SPELL_HORROR            = 65545, 
-    SPELL_DISPERSION        = 65544, 
-    SPELL_SHADOWFORM        = 16592, 
+    SPELL_SILENCE           = 65542,
+    SPELL_VAMPIRIC_TOUCH    = 65490,
+    SPELL_SW_PAIN           = 65541,
+    SPELL_MIND_FLAY         = 65488,
+    SPELL_MIND_BLAST        = 65492,
+    SPELL_HORROR            = 65545,
+    SPELL_DISPERSION        = 65544,
+    SPELL_SHADOWFORM        = 16592,
 };
 
 class mob_toc_shadow_priest : public CreatureScript
@@ -927,20 +921,19 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum eWarlockSpells
 {
-    SPELL_HELLFIRE              = 65816, 
-    SPELL_CORRUPTION            = 65810, 
-    SPELL_CURSE_OF_AGONY        = 65814, 
-    SPELL_CURSE_OF_EXHAUSTION   = 65815, 
+    SPELL_HELLFIRE              = 65816,
+    SPELL_CORRUPTION            = 65810,
+    SPELL_CURSE_OF_AGONY        = 65814,
+    SPELL_CURSE_OF_EXHAUSTION   = 65815,
     SPELL_FEAR                  = 65809, //8s
-    SPELL_SEARING_PAIN          = 65819, 
-    SPELL_SHADOW_BOLT           = 65821, 
-    SPELL_UNSTABLE_AFFLICTION   = 65812, 
-    SPELL_SUMMON_FELHUNTER      = 67514, 
+    SPELL_SEARING_PAIN          = 65819,
+    SPELL_SHADOW_BOLT           = 65821,
+    SPELL_UNSTABLE_AFFLICTION   = 65812,
+    SPELL_SUMMON_FELHUNTER      = 67514,
     H_SPELL_UNSTABLE_AFFLICTION  = 68155, //15s
 };
 
@@ -1035,18 +1028,17 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum eMageSpells
 {
     SPELL_ARCANE_BARRAGE    = 65799, //3s
-    SPELL_ARCANE_BLAST      = 65791, 
-    SPELL_ARCANE_EXPLOSION  = 65800, 
+    SPELL_ARCANE_BLAST      = 65791,
+    SPELL_ARCANE_EXPLOSION  = 65800,
     SPELL_BLINK             = 65793, //15s
     SPELL_COUNTERSPELL      = 65790, //24s
     SPELL_FROST_NOVA        = 65792, //25s
-    SPELL_FROSTBOLT         = 65807, 
+    SPELL_FROSTBOLT         = 65807,
     SPELL_ICE_BLOCK         = 65802, //5min
     SPELL_POLYMORPH         = 65801, //15s
 };
@@ -1137,21 +1129,20 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum eHunterSpells
 {
-    SPELL_AIMED_SHOT        = 65883, 
+    SPELL_AIMED_SHOT        = 65883,
     SPELL_DETERRENCE        = 65871, //90s
     SPELL_DISENGAGE         = 65869, //30s
-    SPELL_EXPLOSIVE_SHOT    = 65866, 
+    SPELL_EXPLOSIVE_SHOT    = 65866,
     SPELL_FROST_TRAP        = 65880, //30s
     SPELL_SHOOT             = 65868, //1.7s
     SPELL_STEADY_SHOT       = 65867, //3s
     SPELL_WING_CLIP         = 66207, //6s
     SPELL_WYVERN_STING      = 65877, //60s
-    SPELL_CALL_PET          = 67777, 
+    SPELL_CALL_PET          = 67777,
 };
 
 class mob_toc_hunter : public CreatureScript
@@ -1255,19 +1246,18 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum eBoomkinSpells
 {
     SPELL_CYCLONE           = 65859, //6s
     SPELL_ENTANGLING_ROOTS  = 65857, //10s
-    SPELL_FAERIE_FIRE       = 65863, 
+    SPELL_FAERIE_FIRE       = 65863,
     SPELL_FORCE_OF_NATURE   = 65861, //180s
-    SPELL_INSECT_SWARM      = 65855, 
+    SPELL_INSECT_SWARM      = 65855,
     SPELL_MOONFIRE          = 65856, //5s
-    SPELL_STARFIRE          = 65854, 
-    SPELL_WRATH             = 65862, 
+    SPELL_STARFIRE          = 65854,
+    SPELL_WRATH             = 65862,
 };
 
 class mob_toc_boomkin : public CreatureScript
@@ -1355,7 +1345,6 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 /********************************************************************
@@ -1363,15 +1352,15 @@ public:
 ********************************************************************/
 enum eWarriorSpells
 {
-    SPELL_BLADESTORM            = 65947, 
-    SPELL_INTIMIDATING_SHOUT    = 65930, 
-    SPELL_MORTAL_STRIKE         = 65926, 
-    SPELL_CHARGE                = 68764, 
-    SPELL_DISARM                = 65935, 
-    SPELL_OVERPOWER             = 65924, 
-    SPELL_SUNDER_ARMOR          = 65936, 
-    SPELL_SHATTERING_THROW      = 65940, 
-    SPELL_RETALIATION           = 65932, 
+    SPELL_BLADESTORM            = 65947,
+    SPELL_INTIMIDATING_SHOUT    = 65930,
+    SPELL_MORTAL_STRIKE         = 65926,
+    SPELL_CHARGE                = 68764,
+    SPELL_DISARM                = 65935,
+    SPELL_OVERPOWER             = 65924,
+    SPELL_SUNDER_ARMOR          = 65936,
+    SPELL_SHATTERING_THROW      = 65940,
+    SPELL_RETALIATION           = 65932,
 };
 
 class mob_toc_warrior : public CreatureScript
@@ -1474,7 +1463,6 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum eDeathKnightSpells
@@ -1576,7 +1564,6 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum eRogueSpells
@@ -1586,8 +1573,8 @@ enum eRogueSpells
     SPELL_CLOAK                 = 65961, //90sec
     SPELL_BLADE_FLURRY          = 65956, //2min
     SPELL_SHADOWSTEP            = 66178, //30sec
-    SPELL_HEMORRHAGE            = 65954, 
-    SPELL_EVISCERATE            = 65957, 
+    SPELL_HEMORRHAGE            = 65954,
+    SPELL_EVISCERATE            = 65957,
 };
 
 class mob_toc_rogue : public CreatureScript
@@ -1679,14 +1666,13 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum eEnhShamanSpells
 {
-    SPELL_EARTH_SHOCK_ENH   = 65973, 
-    SPELL_LAVA_LASH         = 65974, 
-    SPELL_STORMSTRIKE       = 65970, 
+    SPELL_EARTH_SHOCK_ENH   = 65973,
+    SPELL_LAVA_LASH         = 65974,
+    SPELL_STORMSTRIKE       = 65970,
 };
 
 class mob_toc_enh_shaman : public CreatureScript
@@ -1807,7 +1793,6 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum eRetroPaladinSpells
@@ -1907,13 +1892,12 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum eWarlockPetSpells
 {
-    SPELL_DEVOUR_MAGIC  = 67518, 
-    SPELL_SPELL_LOCK  = 67519, 
+    SPELL_DEVOUR_MAGIC  = 67518,
+    SPELL_SPELL_LOCK  = 67519,
 };
 
 class mob_toc_pet_warlock : public CreatureScript
@@ -1959,12 +1943,11 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 enum eHunterPetSpells
 {
-    SPELL_CLAW  = 67793, 
+    SPELL_CLAW  = 67793,
 };
 
 class mob_toc_pet_hunter : public CreatureScript
@@ -2002,7 +1985,6 @@ public:
             boss_faction_championsAI::UpdateAI(uiDiff);
         }
     };
-
 };
 
 /*========================================================*/

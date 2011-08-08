@@ -137,8 +137,8 @@ public:
 
 enum eCooshhooosh
 {
-    SPELL_LIGHTNING_BOLT    = 9532, 
-    QUEST_CRACK_SKULLS      = 10009, 
+    SPELL_LIGHTNING_BOLT    = 9532,
+    QUEST_CRACK_SKULLS      = 10009,
     FACTION_HOSTILE_CO      = 45
 };
 
@@ -301,14 +301,14 @@ public:
 
 enum eKayra
 {
-    SAY_START           = -1000343, 
-    SAY_AMBUSH1         = -1000344, 
-    SAY_PROGRESS        = -1000345, 
-    SAY_AMBUSH2         = -1000346, 
-    SAY_NEAR_END        = -1000347, 
+    SAY_START           = -1000343,
+    SAY_AMBUSH1         = -1000344,
+    SAY_PROGRESS        = -1000345,
+    SAY_AMBUSH2         = -1000346,
+    SAY_NEAR_END        = -1000347,
     SAY_END             = -1000348, //this is signed for 10646
 
-    QUEST_ESCAPE_FROM   = 9752, 
+    QUEST_ESCAPE_FROM   = 9752,
     NPC_SLAVEBINDER     = 18042
 };
 

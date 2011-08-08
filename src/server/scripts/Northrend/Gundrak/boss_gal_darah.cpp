@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,50 +28,50 @@
 //Spells
 enum Spells
 {
-    SPELL_ENRAGE                                  = 55285, 
-    H_SPELL_ENRAGE                                = 59828, 
-    SPELL_IMPALING_CHARGE                         = 54956, 
-    H_SPELL_IMPALING_CHARGE                       = 59827, 
-    SPELL_STOMP                                   = 55292, 
-    H_SPELL_STOMP                                 = 59829, 
-    SPELL_PUNCTURE                                = 55276, 
-    H_SPELL_PUNCTURE                              = 59826, 
-    SPELL_STAMPEDE                                = 55218, 
-    SPELL_WHIRLING_SLASH                          = 55250, 
-    H_SPELL_WHIRLING_SLASH                        = 59824, 
+    SPELL_ENRAGE                                  = 55285,
+    H_SPELL_ENRAGE                                = 59828,
+    SPELL_IMPALING_CHARGE                         = 54956,
+    H_SPELL_IMPALING_CHARGE                       = 59827,
+    SPELL_STOMP                                   = 55292,
+    H_SPELL_STOMP                                 = 59829,
+    SPELL_PUNCTURE                                = 55276,
+    H_SPELL_PUNCTURE                              = 59826,
+    SPELL_STAMPEDE                                = 55218,
+    SPELL_WHIRLING_SLASH                          = 55250,
+    H_SPELL_WHIRLING_SLASH                        = 59824,
     SPELL_ECK_RESIDUE                             = 55817
 };
 
 //Yells
 enum Yells
 {
-    SAY_AGGRO                                     = -1604000, 
-    SAY_SLAY_1                                    = -1604001, 
-    SAY_SLAY_2                                    = -1604002, 
-    SAY_SLAY_3                                    = -1604003, 
-    SAY_DEATH                                     = -1604004, 
-    SAY_SUMMON_RHINO_1                            = -1604005, 
-    SAY_SUMMON_RHINO_2                            = -1604006, 
-    SAY_SUMMON_RHINO_3                            = -1604007, 
+    SAY_AGGRO                                     = -1604000,
+    SAY_SLAY_1                                    = -1604001,
+    SAY_SLAY_2                                    = -1604002,
+    SAY_SLAY_3                                    = -1604003,
+    SAY_DEATH                                     = -1604004,
+    SAY_SUMMON_RHINO_1                            = -1604005,
+    SAY_SUMMON_RHINO_2                            = -1604006,
+    SAY_SUMMON_RHINO_3                            = -1604007,
     SAY_TRANSFORM_1                               = -1604008,  //Phase change
     SAY_TRANSFORM_2                               = -1604009
 };
 
 enum Achievements
 {
-    ACHIEV_WHAT_THE_ECK                           = 1864, 
+    ACHIEV_WHAT_THE_ECK                           = 1864,
     ACHIEV_SHARE_THE_LOVE                         = 2152
 };
 
 enum Displays
 {
-    DISPLAY_RHINO                                 = 26265, 
+    DISPLAY_RHINO                                 = 26265,
     DISPLAY_TROLL                                 = 27061
 };
 
 enum CombatPhase
 {
-    TROLL, 
+    TROLL,
     RHINO
 };
 
@@ -289,7 +289,6 @@ public:
             DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
     };
-
 };
 
 void AddSC_boss_gal_darah()

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,7 +27,7 @@
 
 enum eData
 {
-    BOSS_TUTEN_KASH, 
+    BOSS_TUTEN_KASH,
     DATA_GONG_WAVES
 };
 
@@ -43,8 +43,8 @@ enum eGameObject
 
 enum eCreature
 {
-    CREATURE_TOMB_FIEND                         = 7349, 
-    CREATURE_TOMB_REAVER                        = 7351, 
+    CREATURE_TOMB_FIEND                         = 7349,
+    CREATURE_TOMB_REAVER                        = 7351,
     CREATURE_TUTEN_KASH                         = 7355
 };
 

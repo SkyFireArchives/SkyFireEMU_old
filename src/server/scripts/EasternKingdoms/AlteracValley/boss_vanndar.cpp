@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,23 +26,23 @@
 
 enum Yells
 {
-    YELL_AGGRO                                    = -1810008, 
-    YELL_EVADE                                    = -1810009, 
-    YELL_RESPAWN1                                 = -1810010, 
-    YELL_RESPAWN2                                 = -1810011, 
-    YELL_RANDOM1                                  = -1810012, 
-    YELL_RANDOM2                                  = -1810013, 
-    YELL_RANDOM3                                  = -1810014, 
-    YELL_RANDOM4                                  = -1810015, 
-    YELL_RANDOM5                                  = -1810016, 
-    YELL_RANDOM6                                  = -1810017, 
+    YELL_AGGRO                                    = -1810008,
+    YELL_EVADE                                    = -1810009,
+    YELL_RESPAWN1                                 = -1810010,
+    YELL_RESPAWN2                                 = -1810011,
+    YELL_RANDOM1                                  = -1810012,
+    YELL_RANDOM2                                  = -1810013,
+    YELL_RANDOM3                                  = -1810014,
+    YELL_RANDOM4                                  = -1810015,
+    YELL_RANDOM5                                  = -1810016,
+    YELL_RANDOM6                                  = -1810017,
     YELL_RANDOM7                                  = -1810018
 };
 
 enum Spells
 {
-    SPELL_AVATAR                                  = 19135, 
-    SPELL_THUNDERCLAP                             = 15588, 
+    SPELL_AVATAR                                  = 19135,
+    SPELL_THUNDERCLAP                             = 15588,
     SPELL_STORMBOLT                               = 20685 // not sure
 };
 

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,40 +27,40 @@
 
 enum Yells
 {
-    SAY_GREET       = -1533009, 
-    SAY_AGGRO_1     = -1533010, 
-    SAY_AGGRO_2     = -1533011, 
-    SAY_AGGRO_3     = -1533012, 
-    SAY_AGGRO_4     = -1533013, 
-    SAY_SLAY_1      = -1533014, 
-    SAY_SLAY_2      = -1533015, 
+    SAY_GREET       = -1533009,
+    SAY_AGGRO_1     = -1533010,
+    SAY_AGGRO_2     = -1533011,
+    SAY_AGGRO_3     = -1533012,
+    SAY_AGGRO_4     = -1533013,
+    SAY_SLAY_1      = -1533014,
+    SAY_SLAY_2      = -1533015,
     SAY_DEATH       = -1533016
 };
 //#define SOUND_RANDOM_AGGRO  8955                            //soundId containing the 4 aggro sounds, we not using this
 
 enum Spells
 {
-    SPELL_POISON_BOLT_VOLLEY    = 28796, 
-    H_SPELL_POISON_BOLT_VOLLEY  = 54098, 
-    SPELL_RAIN_OF_FIRE          = 28794, 
-    H_SPELL_RAIN_OF_FIRE        = 54099, 
-    SPELL_FRENZY                = 28798, 
-    H_SPELL_FRENZY              = 54100, 
-    SPELL_WIDOWS_EMBRACE        = 28732, 
+    SPELL_POISON_BOLT_VOLLEY    = 28796,
+    H_SPELL_POISON_BOLT_VOLLEY  = 54098,
+    SPELL_RAIN_OF_FIRE          = 28794,
+    H_SPELL_RAIN_OF_FIRE        = 54099,
+    SPELL_FRENZY                = 28798,
+    H_SPELL_FRENZY              = 54100,
+    SPELL_WIDOWS_EMBRACE        = 28732,
     H_SPELL_WIDOWS_EMBRACE      = 54097
 };
 
 enum Events
 {
-    EVENT_NONE, 
-    EVENT_POISON, 
-    EVENT_FIRE, 
+    EVENT_NONE,
+    EVENT_POISON,
+    EVENT_FIRE,
     EVENT_FRENZY
 };
 
 enum Achievements
 {
-    ACHIEVEMENT_MOMMA_SAID_KNOCK_YOU_OUT_10 = 1997, 
+    ACHIEVEMENT_MOMMA_SAID_KNOCK_YOU_OUT_10 = 1997,
     ACHIEVEMENT_MOMMA_SAID_KNOCK_YOU_OUT_25 = 2140
 };
 
@@ -181,9 +181,7 @@ public:
             }
         }
     };
-
 };
-
 
 class mob_faerlina_add : public CreatureScript
 {
@@ -221,9 +219,7 @@ public:
             }
         }
     };
-
 };
-
 
 void AddSC_boss_faerlina()
 {

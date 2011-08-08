@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,49 +31,49 @@ enum eSpells
 {
     //Vehicle
 
-    SPELL_SHIELD_BREAKER            = 68504, 
-    SPELL_SHIELD                    = 62544, 
+    SPELL_SHIELD_BREAKER            = 68504,
+    SPELL_SHIELD                    = 62544,
 
     // Marshal Jacob Alerius && Mokra the Skullcrusher || Warrior
-    SPELL_MORTAL_STRIKE             = 68783, 
-    SPELL_MORTAL_STRIKE_H           = 68784, 
-    SPELL_BLADESTORM                = 63784, 
-    SPELL_INTERCEPT                 = 67540, 
+    SPELL_MORTAL_STRIKE             = 68783,
+    SPELL_MORTAL_STRIKE_H           = 68784,
+    SPELL_BLADESTORM                = 63784,
+    SPELL_INTERCEPT                 = 67540,
     SPELL_ROLLING_THROW             = 47115, //not implemented in the AI yet...
 
     // Ambrose Boltspark && Eressea Dawnsinger || Mage
-    SPELL_FIREBALL                  = 66042, 
-    SPELL_FIREBALL_H                = 68310, 
-    SPELL_BLAST_WAVE                = 66044, 
-    SPELL_BLAST_WAVE_H              = 68312, 
-    SPELL_HASTE                     = 66045, 
-    SPELL_POLYMORPH                 = 66043, 
-    SPELL_POLYMORPH_H               = 68311, 
+    SPELL_FIREBALL                  = 66042,
+    SPELL_FIREBALL_H                = 68310,
+    SPELL_BLAST_WAVE                = 66044,
+    SPELL_BLAST_WAVE_H              = 68312,
+    SPELL_HASTE                     = 66045,
+    SPELL_POLYMORPH                 = 66043,
+    SPELL_POLYMORPH_H               = 68311,
 
     // Colosos && Runok Wildmane || Shaman
-    SPELL_CHAIN_LIGHTNING           = 67529, 
-    SPELL_CHAIN_LIGHTNING_H         = 68319, 
-    SPELL_EARTH_SHIELD              = 67530, 
-    SPELL_HEALING_WAVE              = 67528, 
-    SPELL_HEALING_WAVE_H            = 68318, 
-    SPELL_HEX_OF_MENDING            = 67534, 
+    SPELL_CHAIN_LIGHTNING           = 67529,
+    SPELL_CHAIN_LIGHTNING_H         = 68319,
+    SPELL_EARTH_SHIELD              = 67530,
+    SPELL_HEALING_WAVE              = 67528,
+    SPELL_HEALING_WAVE_H            = 68318,
+    SPELL_HEX_OF_MENDING            = 67534,
 
     // Jaelyne Evensong && Zul'tore || Hunter
     SPELL_DISENGAGE                 = 68340, //not implemented in the AI yet...
-    SPELL_LIGHTNING_ARROWS          = 66083, 
-    SPELL_MULTI_SHOT                = 49047, 
-    SPELL_SHOOT                     = 65868, 
-    SPELL_SHOOT_H                   = 67988, 
+    SPELL_LIGHTNING_ARROWS          = 66083,
+    SPELL_MULTI_SHOT                = 49047,
+    SPELL_SHOOT                     = 65868,
+    SPELL_SHOOT_H                   = 67988,
 
     // Lana Stouthammer Evensong && Deathstalker Visceri || Rouge
-    SPELL_EVISCERATE                = 67709, 
-    SPELL_EVISCERATE_H              = 68317, 
-    SPELL_FAN_OF_KNIVES             = 67706, 
+    SPELL_EVISCERATE                = 67709,
+    SPELL_EVISCERATE_H              = 68317,
+    SPELL_FAN_OF_KNIVES             = 67706,
     SPELL_POISON_BOTTLE             = 67701
 };
 enum eEnums
 {
-    SAY_START_1                      = -1999939, 
+    SAY_START_1                      = -1999939,
     SAY_START_2                      = -1999937
 };
 
@@ -90,8 +90,8 @@ struct Point
 
 const Point MovementPoint[] =
 {
-  {746.84f, 623.15f, 411.41f}, 
-  {747.96f, 620.29f, 411.09f}, 
+  {746.84f, 623.15f, 411.41f},
+  {747.96f, 620.29f, 411.09f},
   {750.23f, 618.35f, 411.09f}
 };
 */
@@ -291,7 +291,6 @@ public:
     };
 };
 
-
 // Marshal Jacob Alerius && Mokra the Skullcrusher || Warrior
 class boss_warrior_toc5 : public CreatureScript
 {
@@ -302,10 +301,9 @@ public:
     {
         return new boss_warrior_toc5AI(pCreature);
     }
-    
+
     struct boss_warrior_toc5AI : public ScriptedAI
     {
-
         boss_warrior_toc5AI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             pInstance = pCreature->GetInstanceScript();
@@ -427,11 +425,9 @@ public:
                  DoScriptText(SAY_START_1, me);
             if (pInstance)
                 pInstance->SetData(BOSS_GRAND_CHAMPIONS, DONE);
-
         }
     };
 };
-
 
 // Ambrose Boltspark && Eressea Dawnsinger || Mage
 class boss_mage_toc5 : public CreatureScript
@@ -443,10 +439,9 @@ public:
     {
         return new boss_mage_toc5AI(pCreature);
     }
-    
+
     struct boss_mage_toc5AI : public ScriptedAI
     {
-
         boss_mage_toc5AI(Creature* pCreature) : ScriptedAI(pCreature)
         {
             pInstance = pCreature->GetInstanceScript();
@@ -564,11 +559,9 @@ public:
                  DoScriptText(SAY_START_1, me);
             if (pInstance)
                 pInstance->SetData(BOSS_GRAND_CHAMPIONS, DONE);
-
         }
     };
 };
-
 
 // Colosos && Runok Wildmane || Shaman
 class boss_shaman_toc5 : public CreatureScript
@@ -715,11 +708,9 @@ public:
                  DoScriptText(SAY_START_1, me);
             if (pInstance)
                 pInstance->SetData(BOSS_GRAND_CHAMPIONS, DONE);
-
         }
     };
 };
-
 
 // Jaelyne Evensong && Zul'tore || Hunter
 class boss_hunter_toc5 : public CreatureScript
@@ -839,7 +830,6 @@ public:
                     DoCast(pTarget, SPELL_LIGHTNING_ARROWS);
 
                 uiLightningArrowsTimer = 15000;
-
             } else uiLightningArrowsTimer -= uiDiff;
 
             if (uiShootTimer <= uiDiff)
@@ -889,12 +879,9 @@ public:
              DoScriptText(SAY_START_1, me);
             if (pInstance)
                 pInstance->SetData(BOSS_GRAND_CHAMPIONS, DONE);
-
         }
-
     };
 };
-
 
 // Lana Stouthammer Evensong && Deathstalker Visceri || Rouge
 class boss_rouge_toc5 : public CreatureScript
@@ -1016,11 +1003,9 @@ public:
              DoScriptText(SAY_START_1, me);
             if (pInstance)
                 pInstance->SetData(BOSS_GRAND_CHAMPIONS, DONE);
-
         }
     };
 };
-
 
 void AddSC_boss_grand_champions()
 {

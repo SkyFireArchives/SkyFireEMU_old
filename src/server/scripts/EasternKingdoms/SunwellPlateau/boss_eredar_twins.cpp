@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,60 +34,60 @@ EndScriptData */
 enum Quotes
 {
     //Alytesh
-    YELL_CANFLAGRATION          =   -1580044, 
-    YELL_SISTER_SACROLASH_DEAD  =   -1580045, 
-    YELL_ALY_KILL_1             =   -1580046, 
-    YELL_ALY_KILL_2             =   -1580047, 
-    YELL_ALY_DEAD               =   -1580048, 
-    YELL_BERSERK                =   -1580049, 
+    YELL_CANFLAGRATION          =   -1580044,
+    YELL_SISTER_SACROLASH_DEAD  =   -1580045,
+    YELL_ALY_KILL_1             =   -1580046,
+    YELL_ALY_KILL_2             =   -1580047,
+    YELL_ALY_DEAD               =   -1580048,
+    YELL_BERSERK                =   -1580049,
 
     //Sacrolash
-    YELL_SHADOW_NOVA            =   -1580050, 
-    YELL_SISTER_ALYTHESS_DEAD   =   -1580051, 
-    YELL_SAC_KILL_1             =   -1580052, 
-    YELL_SAC_KILL_2             =   -1580053, 
-    SAY_SAC_DEAD                =   -1580054, 
-    YELL_ENRAGE                 =   -1580055, 
+    YELL_SHADOW_NOVA            =   -1580050,
+    YELL_SISTER_ALYTHESS_DEAD   =   -1580051,
+    YELL_SAC_KILL_1             =   -1580052,
+    YELL_SAC_KILL_2             =   -1580053,
+    SAY_SAC_DEAD                =   -1580054,
+    YELL_ENRAGE                 =   -1580055,
 
     //Intro
-    YELL_INTRO_SAC_1            =   -1580056, 
-    YELL_INTRO_ALY_2            =   -1580057, 
-    YELL_INTRO_SAC_3            =   -1580058, 
-    YELL_INTRO_ALY_4            =   -1580059, 
-    YELL_INTRO_SAC_5            =   -1580060, 
-    YELL_INTRO_ALY_6            =   -1580061, 
-    YELL_INTRO_SAC_7            =   -1580062, 
-    YELL_INTRO_ALY_8            =   -1580063, 
+    YELL_INTRO_SAC_1            =   -1580056,
+    YELL_INTRO_ALY_2            =   -1580057,
+    YELL_INTRO_SAC_3            =   -1580058,
+    YELL_INTRO_ALY_4            =   -1580059,
+    YELL_INTRO_SAC_5            =   -1580060,
+    YELL_INTRO_ALY_6            =   -1580061,
+    YELL_INTRO_SAC_7            =   -1580062,
+    YELL_INTRO_ALY_8            =   -1580063,
 
     //Emote
-    EMOTE_SHADOW_NOVA           =   -1580064, 
+    EMOTE_SHADOW_NOVA           =   -1580064,
     EMOTE_CONFLAGRATION         =   -1580065
 };
 
 enum Spells
 {
     //Lady Sacrolash spells
-    SPELL_DARK_TOUCHED      =   45347, 
+    SPELL_DARK_TOUCHED      =   45347,
     SPELL_SHADOW_BLADES     =   45248, //10 secs
-    SPELL_DARK_STRIKE       =   45271, 
+    SPELL_DARK_STRIKE       =   45271,
     SPELL_SHADOW_NOVA       =   45329, //30-35 secs
     SPELL_CONFOUNDING_BLOW  =   45256, //25 secs
 
     //Shadow Image spells
-    SPELL_SHADOW_FURY       =   45270, 
-    SPELL_IMAGE_VISUAL      =   45263, 
+    SPELL_SHADOW_FURY       =   45270,
+    SPELL_IMAGE_VISUAL      =   45263,
 
     //Misc spells
-    SPELL_ENRAGE            =   46587, 
-    SPELL_EMPOWER           =   45366, 
-    SPELL_DARK_FLAME        =   45345, 
+    SPELL_ENRAGE            =   46587,
+    SPELL_EMPOWER           =   45366,
+    SPELL_DARK_FLAME        =   45345,
 
     //Grand Warlock Alythess spells
     SPELL_PYROGENICS        =   45230, //15secs
-    SPELL_FLAME_TOUCHED     =   45348, 
+    SPELL_FLAME_TOUCHED     =   45348,
     SPELL_CONFLAGRATION     =   45342, //30-35 secs
     SPELL_BLAZE             =   45235, //on main target every 3 secs
-    SPELL_FLAME_SEAR        =   46771, 
+    SPELL_FLAME_SEAR        =   46771,
     SPELL_BLAZE_SUMMON      =   45236, //187366 GO
     SPELL_BLAZE_BURN        =   45246
 };
@@ -347,9 +347,7 @@ public:
             }
         }
     };
-
 };
-
 
 class boss_alythess : public CreatureScript
 {
@@ -447,7 +445,6 @@ public:
 
             if (who->isTargetableForAttack() && who->isInAccessiblePlaceFor(me) && me->IsHostileTo(who))
             {
-
                 float attackRadius = me->GetAttackDistance(who);
                 if (me->IsWithinDistInMap(who, attackRadius) && me->GetDistanceZ(who) <= CREATURE_Z_ATTACK_RANGE && me->IsWithinLOSInMap(who))
                 {
@@ -488,7 +485,6 @@ public:
         {
             switch(spell->Id)
             {
-
             case SPELL_BLAZE:
                 pTarget->CastSpell(pTarget, SPELL_BLAZE_SUMMON, true);
             case SPELL_CONFLAGRATION:
@@ -678,9 +674,7 @@ public:
             } else EnrageTimer -= diff;
         }
     };
-
 };
-
 
 class mob_shadow_image : public CreatureScript
 {
@@ -714,7 +708,6 @@ public:
         {
             switch(spell->Id)
             {
-
             case SPELL_SHADOW_FURY:
             case SPELL_DARK_STRIKE:
                 if (!pTarget->HasAura(SPELL_DARK_FLAME))
@@ -761,9 +754,7 @@ public:
             } else DarkstrikeTimer -= diff;
         }
     };
-
 };
-
 
 void AddSC_boss_eredar_twins()
 {

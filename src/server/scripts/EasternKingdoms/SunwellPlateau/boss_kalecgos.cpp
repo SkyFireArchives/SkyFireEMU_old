@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,59 +35,59 @@ EndScriptData */
 enum Yells
 {
     //Kalecgos dragon form
-    SAY_EVIL_AGGRO                               = -1580000, 
-    SAY_EVIL_SPELL1                              = -1580001, 
-    SAY_EVIL_SPELL2                              = -1580002, 
-    SAY_EVIL_SLAY1                               = -1580003, 
-    SAY_EVIL_SLAY2                               = -1580004, 
-    SAY_EVIL_ENRAGE                              = -1580005, 
+    SAY_EVIL_AGGRO                               = -1580000,
+    SAY_EVIL_SPELL1                              = -1580001,
+    SAY_EVIL_SPELL2                              = -1580002,
+    SAY_EVIL_SLAY1                               = -1580003,
+    SAY_EVIL_SLAY2                               = -1580004,
+    SAY_EVIL_ENRAGE                              = -1580005,
 
     //Kalecgos humanoid form
-    SAY_GOOD_AGGRO                               = -1580006, 
-    SAY_GOOD_NEAR_DEATH                          = -1580007, 
-    SAY_GOOD_NEAR_DEATH2                         = -1580008, 
-    SAY_GOOD_PLRWIN                              = -1580009, 
+    SAY_GOOD_AGGRO                               = -1580006,
+    SAY_GOOD_NEAR_DEATH                          = -1580007,
+    SAY_GOOD_NEAR_DEATH2                         = -1580008,
+    SAY_GOOD_PLRWIN                              = -1580009,
 
     //Sathrovarr
-    SAY_SATH_AGGRO                               = -1580010, 
-    SAY_SATH_DEATH                               = -1580011, 
-    SAY_SATH_SPELL1                              = -1580012, 
-    SAY_SATH_SPELL2                              = -1580013, 
-    SAY_SATH_SLAY1                               = -1580014, 
-    SAY_SATH_SLAY2                               = -1580015, 
-    SAY_SATH_ENRAGE                              = -1580016, 
+    SAY_SATH_AGGRO                               = -1580010,
+    SAY_SATH_DEATH                               = -1580011,
+    SAY_SATH_SPELL1                              = -1580012,
+    SAY_SATH_SPELL2                              = -1580013,
+    SAY_SATH_SLAY1                               = -1580014,
+    SAY_SATH_SLAY2                               = -1580015,
+    SAY_SATH_ENRAGE                              = -1580016,
 };
 
 enum Spells
 {
-    AURA_SUNWELL_RADIANCE                        = 45769, 
-    AURA_SPECTRAL_EXHAUSTION                     = 44867, 
-    AURA_SPECTRAL_REALM                          = 46021, 
-    AURA_SPECTRAL_INVISIBILITY                   = 44801, 
-    AURA_DEMONIC_VISUAL                          = 44800, 
+    AURA_SUNWELL_RADIANCE                        = 45769,
+    AURA_SPECTRAL_EXHAUSTION                     = 44867,
+    AURA_SPECTRAL_REALM                          = 46021,
+    AURA_SPECTRAL_INVISIBILITY                   = 44801,
+    AURA_DEMONIC_VISUAL                          = 44800,
 
-    SPELL_SPECTRAL_BLAST                         = 44869, 
-    SPELL_TELEPORT_SPECTRAL                      = 46019, 
-    SPELL_ARCANE_BUFFET                          = 45018, 
-    SPELL_FROST_BREATH                           = 44799, 
-    SPELL_TAIL_LASH                              = 45122, 
+    SPELL_SPECTRAL_BLAST                         = 44869,
+    SPELL_TELEPORT_SPECTRAL                      = 46019,
+    SPELL_ARCANE_BUFFET                          = 45018,
+    SPELL_FROST_BREATH                           = 44799,
+    SPELL_TAIL_LASH                              = 45122,
 
-    SPELL_BANISH                                 = 44836, 
-    SPELL_TRANSFORM_KALEC                        = 44670, 
-    SPELL_ENRAGE                                 = 44807, 
+    SPELL_BANISH                                 = 44836,
+    SPELL_TRANSFORM_KALEC                        = 44670,
+    SPELL_ENRAGE                                 = 44807,
 
-    SPELL_CORRUPTION_STRIKE                      = 45029, 
-    SPELL_AGONY_CURSE                            = 45032, 
-    SPELL_SHADOW_BOLT                            = 45031, 
+    SPELL_CORRUPTION_STRIKE                      = 45029,
+    SPELL_AGONY_CURSE                            = 45032,
+    SPELL_SHADOW_BOLT                            = 45031,
 
-    SPELL_HEROIC_STRIKE                          = 45026, 
+    SPELL_HEROIC_STRIKE                          = 45026,
     SPELL_REVITALIZE                             = 45027
 };
 
 enum SWPActions
 {
-    DO_ENRAGE                                    =  1, 
-    DO_BANISH                                    =  2, 
+    DO_ENRAGE                                    =  1,
+    DO_BANISH                                    =  2,
 };
 
 #define GO_FAILED   "You are unable to use this currently."
@@ -439,7 +439,6 @@ public:
             }
         }
     };
-
 };
 
 class boss_kalec : public CreatureScript
@@ -541,7 +540,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class kalecgos_teleporter : public GameObjectScript
@@ -569,7 +567,6 @@ public:
             pPlayer->CastSpell(pPlayer, SPELL_TELEPORT_SPECTRAL, true);
         return true;
     }
-
 };
 
 class boss_sathrovarr : public CreatureScript
@@ -805,9 +802,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_kalecgos()
 {

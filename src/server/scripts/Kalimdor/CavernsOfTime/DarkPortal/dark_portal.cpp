@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -240,9 +240,7 @@ public:
             //DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 struct Wave
 {
@@ -251,8 +249,8 @@ struct Wave
 
 static Wave PortalWaves[]=
 {
-    { {C_ASSAS, C_WHELP, C_CHRON, 0} }, 
-    { {C_EXECU, C_CHRON, C_WHELP, C_ASSAS} }, 
+    { {C_ASSAS, C_WHELP, C_CHRON, 0} },
+    { {C_EXECU, C_CHRON, C_WHELP, C_ASSAS} },
     { {C_EXECU, C_VANQU, C_CHRON, C_ASSAS} }
 };
 
@@ -282,7 +280,6 @@ public:
 
         void Reset()
         {
-
             TimeRiftWave_Timer = 15000;
             mRiftWaveCount = 0;
 
@@ -296,7 +293,6 @@ public:
             else if (mPortalCount > 12)
                 mWaveId = 2;
             else mWaveId = 1;
-
         }
         void EnterCombat(Unit * /*who*/) {}
 
@@ -363,9 +359,7 @@ public:
                 pInstance->SetData(TYPE_RIFT, SPECIAL);
         }
     };
-
 };
-
 
 #define SAY_SAAT_WELCOME        -1269019
 
@@ -410,9 +404,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(10002, pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 void AddSC_dark_portal()
 {

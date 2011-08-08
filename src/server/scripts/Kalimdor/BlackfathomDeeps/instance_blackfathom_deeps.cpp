@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -42,18 +42,18 @@ EndScriptData */
 
 const Position LorgusPosition[4] =
 {
-    { -458.500610f, -38.343079f, -33.474445f, 0.0f }, 
-    { -469.423615f, -88.400513f, -39.265102f, 0.0f }, 
-    { -622.354980f, -10.350100f, -22.777000f, 0.0f }, 
+    { -458.500610f, -38.343079f, -33.474445f, 0.0f },
+    { -469.423615f, -88.400513f, -39.265102f, 0.0f },
+    { -622.354980f, -10.350100f, -22.777000f, 0.0f },
     { -759.640564f,  16.658913f, -29.159529f, 0.0f }
 };
 
 const Position SpawnsLocation[] =
 {
-    {-775.431f, -153.853f, -25.871f, 3.207f}, 
-    {-775.404f, -174.132f, -25.871f, 3.185f}, 
-    {-862.430f, -154.937f, -25.871f, 0.060f}, 
-    {-862.193f, -174.251f, -25.871f, 6.182f}, 
+    {-775.431f, -153.853f, -25.871f, 3.207f},
+    {-775.404f, -174.132f, -25.871f, 3.185f},
+    {-862.430f, -154.937f, -25.871f, 0.060f},
+    {-862.193f, -174.251f, -25.871f, 6.182f},
     {-863.895f, -458.899f, -33.891f, 5.637f}
 };
 
@@ -261,9 +261,7 @@ public:
             return 0;
         }
     };
-
 };
-
 
 void AddSC_instance_blackfathom_deeps()
 {

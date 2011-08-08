@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -48,14 +48,14 @@ EndContentData */
 
 enum eAeranas
 {
-    SAY_SUMMON              = -1000138, 
-    SAY_FREE                = -1000139, 
+    SAY_SUMMON              = -1000138,
+    SAY_FREE                = -1000139,
 
-    FACTION_HOSTILE         = 16, 
-    FACTION_FRIENDLY        = 35, 
+    FACTION_HOSTILE         = 16,
+    FACTION_FRIENDLY        = 35,
 
-    SPELL_ENVELOPING_WINDS  = 15535, 
-    SPELL_SHOCK             = 12553, 
+    SPELL_ENVELOPING_WINDS  = 15535,
+    SPELL_SHOCK             = 12553,
 
     C_AERANAS               = 17085
 };
@@ -130,9 +130,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*######
 ## npc_ancestral_wolf
@@ -140,11 +138,11 @@ public:
 
 enum eAncestralWolf
 {
-    EMOTE_WOLF_LIFT_HEAD            = -1000496, 
-    EMOTE_WOLF_HOWL                 = -1000497, 
-    SAY_WOLF_WELCOME                = -1000498, 
+    EMOTE_WOLF_LIFT_HEAD            = -1000496,
+    EMOTE_WOLF_HOWL                 = -1000497,
+    SAY_WOLF_WELCOME                = -1000498,
 
-    SPELL_ANCESTRAL_WOLF_BUFF       = 29981, 
+    SPELL_ANCESTRAL_WOLF_BUFF       = 29981,
 
     NPC_RYGA                        = 17123
 };
@@ -205,9 +203,7 @@ public:
             }
         }
     };
-
 };
-
 
 /*######
 ## go_haaleshi_altar
@@ -223,7 +219,6 @@ public:
         pGo->SummonCreature(C_AERANAS, -1321.79f, 4043.80f, 116.24f, 1.25f, TEMPSUMMON_TIMED_DESPAWN, 180000);
         return false;
     }
-
 };
 
 /*######
@@ -260,9 +255,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 /*######
 ## npc_tracy_proudwell
@@ -274,7 +267,7 @@ public:
 
 enum eTracy
 {
-    GOSSIP_TEXTID_TRACY_PROUDWELL1       = 10689, 
+    GOSSIP_TEXTID_TRACY_PROUDWELL1       = 10689,
     QUEST_DIGGING_FOR_PRAYER_BEADS       = 10916
 };
 
@@ -317,9 +310,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 /*######
 ## npc_trollbane
@@ -331,8 +322,8 @@ public:
 
 enum eTrollbane
 {
-    GOSSIP_TEXTID_TROLLBANE1        = 9932, 
-    GOSSIP_TEXTID_TROLLBANE2        = 9933, 
+    GOSSIP_TEXTID_TROLLBANE1        = 9932,
+    GOSSIP_TEXTID_TROLLBANE2        = 9933,
     GOSSIP_TEXTID_TROLLBANE3        = 8772
 };
 
@@ -371,9 +362,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 /*######
 ## npc_wounded_blood_elf
@@ -381,12 +370,12 @@ public:
 
 enum eWoundedBloodElf
 {
-    SAY_ELF_START               = -1000117, 
-    SAY_ELF_SUMMON1             = -1000118, 
-    SAY_ELF_RESTING             = -1000119, 
-    SAY_ELF_SUMMON2             = -1000120, 
-    SAY_ELF_COMPLETE            = -1000121, 
-    SAY_ELF_AGGRO               = -1000122, 
+    SAY_ELF_START               = -1000117,
+    SAY_ELF_SUMMON1             = -1000118,
+    SAY_ELF_RESTING             = -1000119,
+    SAY_ELF_SUMMON2             = -1000120,
+    SAY_ELF_COMPLETE            = -1000121,
+    SAY_ELF_AGGRO               = -1000122,
 
     QUEST_ROAD_TO_FALCON_WATCH  = 9375
 };
@@ -467,10 +456,7 @@ public:
             summoned->AI()->AttackStart(me);
         }
     };
-
 };
-
-
 
 /*######
 ## npc_fel_guard_hound
@@ -478,7 +464,7 @@ public:
 
 enum eFelGuard
 {
-    SPELL_SUMMON_POO                              = 37688, 
+    SPELL_SUMMON_POO                              = 37688,
 
     NPC_DERANGED_HELBOAR                          = 16863
 };
@@ -542,9 +528,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_hellfire_peninsula()
 {

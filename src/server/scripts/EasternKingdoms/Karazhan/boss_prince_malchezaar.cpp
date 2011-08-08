@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -55,23 +55,23 @@ struct InfernalPoint
 
 static InfernalPoint InfernalPoints[] =
 {
-    {-10922.8f, -1985.2f}, 
-    {-10916.2f, -1996.2f}, 
-    {-10932.2f, -2008.1f}, 
-    {-10948.8f, -2022.1f}, 
-    {-10958.7f, -1997.7f}, 
-    {-10971.5f, -1997.5f}, 
-    {-10990.8f, -1995.1f}, 
-    {-10989.8f, -1976.5f}, 
-    {-10971.6f, -1973.0f}, 
-    {-10955.5f, -1974.0f}, 
-    {-10939.6f, -1969.8f}, 
-    {-10958.0f, -1952.2f}, 
-    {-10941.7f, -1954.8f}, 
-    {-10943.1f, -1988.5f}, 
-    {-10948.8f, -2005.1f}, 
-    {-10984.0f, -2019.3f}, 
-    {-10932.8f, -1979.6f}, 
+    {-10922.8f, -1985.2f},
+    {-10916.2f, -1996.2f},
+    {-10932.2f, -2008.1f},
+    {-10948.8f, -2022.1f},
+    {-10958.7f, -1997.7f},
+    {-10971.5f, -1997.5f},
+    {-10990.8f, -1995.1f},
+    {-10989.8f, -1976.5f},
+    {-10971.6f, -1973.0f},
+    {-10955.5f, -1974.0f},
+    {-10939.6f, -1969.8f},
+    {-10958.0f, -1952.2f},
+    {-10941.7f, -1954.8f},
+    {-10943.1f, -1988.5f},
+    {-10948.8f, -2005.1f},
+    {-10984.0f, -2019.3f},
+    {-10932.8f, -1979.6f},
     {-10935.7f, -1996.0f}
 };
 
@@ -114,7 +114,7 @@ public:
 
     struct netherspite_infernalAI : public ScriptedAI
     {
-        netherspite_infernalAI(Creature *c) : ScriptedAI(c) , 
+        netherspite_infernalAI(Creature *c) : ScriptedAI(c) ,
             HellfireTimer(0), CleanupTimer(0), malchezaar(0), point(NULL) {}
 
         uint32 HellfireTimer;
@@ -174,7 +174,6 @@ public:
 
         void Cleanup();
     };
-
 };
 
 class boss_malchezaar : public CreatureScript
@@ -484,14 +483,12 @@ public:
                 {
                     DoCast(me->getVictim(), SPELL_SUNDER_ARMOR);
                     SunderArmorTimer = urand(10000, 18000);
-
                 } else SunderArmorTimer -= diff;
 
                 if (Cleave_Timer <= diff)
                 {
                     DoCast(me->getVictim(), SPELL_CLEAVE);
                     Cleave_Timer = urand(6000, 12000);
-
                 } else Cleave_Timer -= diff;
             }
             else
@@ -603,7 +600,6 @@ public:
             positions.push_back(point);
         }
     };
-
 };
 
 void netherspite_infernal::netherspite_infernalAI::Cleanup()

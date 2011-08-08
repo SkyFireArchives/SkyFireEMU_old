@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -32,79 +32,79 @@
 enum ScriptTexts
 {
     // Festergut
-    SAY_FESTERGUT_GASEOUS_BLIGHT    = 0, 
-    SAY_FESTERGUT_DEATH             = 1, 
+    SAY_FESTERGUT_GASEOUS_BLIGHT    = 0,
+    SAY_FESTERGUT_DEATH             = 1,
 
     // Rotface
-    SAY_ROTFACE_OOZE_FLOOD          = 2, 
-    SAY_ROTFACE_DEATH               = 3, 
+    SAY_ROTFACE_OOZE_FLOOD          = 2,
+    SAY_ROTFACE_DEATH               = 3,
 
     // Professor Putricide
-    SAY_AGGRO                       = 4, 
-    EMOTE_UNSTABLE_EXPERIMENT       = 5, 
-    SAY_PHASE_TRANSITION_HEROIC     = 6, 
-    SAY_TRANSFORM_1                 = 7, 
+    SAY_AGGRO                       = 4,
+    EMOTE_UNSTABLE_EXPERIMENT       = 5,
+    SAY_PHASE_TRANSITION_HEROIC     = 6,
+    SAY_TRANSFORM_1                 = 7,
     SAY_TRANSFORM_2                 = 8,    // always used for phase2 change, DO NOT GROUP WITH SAY_TRANSFORM_1
-    EMOTE_MALLEABLE_GOO             = 9, 
-    EMOTE_CHOKING_GAS_BOMB          = 10, 
-    SAY_KILL                        = 11, 
-    SAY_BERSERK                     = 12, 
-    SAY_DEATH                       = 13, 
+    EMOTE_MALLEABLE_GOO             = 9,
+    EMOTE_CHOKING_GAS_BOMB          = 10,
+    SAY_KILL                        = 11,
+    SAY_BERSERK                     = 12,
+    SAY_DEATH                       = 13,
 };
 
 enum Spells
 {
     // Festergut
-    SPELL_RELEASE_GAS_VISUAL            = 69125, 
-    SPELL_GASEOUS_BLIGHT_LARGE          = 69157, 
-    SPELL_GASEOUS_BLIGHT_MEDIUM         = 69162, 
-    SPELL_GASEOUS_BLIGHT_SMALL          = 69164, 
-    SPELL_MALLABLE_GOO_H                = 70852, 
+    SPELL_RELEASE_GAS_VISUAL            = 69125,
+    SPELL_GASEOUS_BLIGHT_LARGE          = 69157,
+    SPELL_GASEOUS_BLIGHT_MEDIUM         = 69162,
+    SPELL_GASEOUS_BLIGHT_SMALL          = 69164,
+    SPELL_MALLABLE_GOO_H                = 70852,
 
     // Rotface
-    SPELL_VILE_GAS_H                    = 69240, 
+    SPELL_VILE_GAS_H                    = 69240,
 
     // Professor Putricide
-    SPELL_SLIME_PUDDLE_TRIGGER          = 70341, 
-    SPELL_MALLEABLE_GOO                 = 70852, 
-    SPELL_UNSTABLE_EXPERIMENT           = 70351, 
+    SPELL_SLIME_PUDDLE_TRIGGER          = 70341,
+    SPELL_MALLEABLE_GOO                 = 70852,
+    SPELL_UNSTABLE_EXPERIMENT           = 70351,
     SPELL_TEAR_GAS                      = 71617,    // phase transition
-    SPELL_CREATE_CONCOCTION             = 71621, 
-    SPELL_GUZZLE_POTIONS                = 71893, 
+    SPELL_CREATE_CONCOCTION             = 71621,
+    SPELL_GUZZLE_POTIONS                = 71893,
     SPELL_OOZE_TANK_PROTECTION          = 71770,    // protects the tank
-    SPELL_CHOKING_GAS_BOMB              = 71255, 
-    SPELL_OOZE_VARIABLE                 = 70352, 
-    SPELL_GAS_VARIABLE                  = 70353, 
-    SPELL_UNBOUND_PLAGUE                = 70911, 
-    SPELL_UNBOUND_PLAGUE_SEARCHER       = 70917, 
-    SPELL_PLAGUE_SICKNESS               = 70953, 
-    SPELL_UNBOUND_PLAGUE_PROTECTION     = 70955, 
-    SPELL_MUTATED_PLAGUE                = 72451, 
+    SPELL_CHOKING_GAS_BOMB              = 71255,
+    SPELL_OOZE_VARIABLE                 = 70352,
+    SPELL_GAS_VARIABLE                  = 70353,
+    SPELL_UNBOUND_PLAGUE                = 70911,
+    SPELL_UNBOUND_PLAGUE_SEARCHER       = 70917,
+    SPELL_PLAGUE_SICKNESS               = 70953,
+    SPELL_UNBOUND_PLAGUE_PROTECTION     = 70955,
+    SPELL_MUTATED_PLAGUE                = 72451,
 
     // Slime Puddle
-    SPELL_GROW_STACKER                  = 70345, 
-    SPELL_SLIME_PUDDLE_AURA             = 70343, 
+    SPELL_GROW_STACKER                  = 70345,
+    SPELL_SLIME_PUDDLE_AURA             = 70343,
 
     // Gas Cloud
-    SPELL_GASEOUS_BLOAT_PROC            = 70215, 
-    SPELL_GASEOUS_BLOAT                 = 70672, 
-    SPELL_GASEOUS_BLOAT_PROTECTION      = 70812, 
+    SPELL_GASEOUS_BLOAT_PROC            = 70215,
+    SPELL_GASEOUS_BLOAT                 = 70672,
+    SPELL_GASEOUS_BLOAT_PROTECTION      = 70812,
 
     // Volatile Ooze
-    SPELL_OOZE_ERUPTION                 = 70492, 
-    SPELL_VOLATILE_OOZE_ADHESIVE        = 70447, 
-    SPELL_OOZE_ERUPTION_SEARCH_PERIODIC = 70457, 
-    SPELL_VOLATILE_OOZE_PROTECTION      = 70530, 
+    SPELL_OOZE_ERUPTION                 = 70492,
+    SPELL_VOLATILE_OOZE_ADHESIVE        = 70447,
+    SPELL_OOZE_ERUPTION_SEARCH_PERIODIC = 70457,
+    SPELL_VOLATILE_OOZE_PROTECTION      = 70530,
 
     // Choking Gas Bomb
-    SPELL_CHOKING_GAS_BOMB_PERIODIC     = 71259, 
-    SPELL_CHOKING_GAS_EXPLOSION_TRIGGER = 71280, 
+    SPELL_CHOKING_GAS_BOMB_PERIODIC     = 71259,
+    SPELL_CHOKING_GAS_EXPLOSION_TRIGGER = 71280,
 
     // Mutated Abomination vehicle
-    SPELL_ABOMINATION_VEHICLE_POWER_DRAIN = 70385, 
-    SPELL_MUTATED_TRANSFORMATION          = 70311, 
-    SPELL_MUTATED_TRANSFORMATION_DAMAGE   = 70405, 
-    SPELL_MUTATED_TRANSFORMATION_NAME     = 72401, 
+    SPELL_ABOMINATION_VEHICLE_POWER_DRAIN = 70385,
+    SPELL_MUTATED_TRANSFORMATION          = 70311,
+    SPELL_MUTATED_TRANSFORMATION_DAMAGE   = 70405,
+    SPELL_MUTATED_TRANSFORMATION_NAME     = 72401,
 };
 
 #define SPELL_GASEOUS_BLOAT_HELPER RAID_MODE<uint32>(70672, 72455, 72832, 72833)
@@ -112,45 +112,45 @@ enum Spells
 enum Events
 {
     // Festergut
-    EVENT_FESTERGUT_DIES        = 1, 
-    EVENT_FESTERGUT_GOO         = 2, 
+    EVENT_FESTERGUT_DIES        = 1,
+    EVENT_FESTERGUT_GOO         = 2,
 
     // Rotface
-    EVENT_ROTFACE_DIES          = 3, 
-    EVENT_ROTFACE_VILE_GAS      = 4, 
-    EVENT_ROTFACE_OOZE_FLOOD    = 5, 
+    EVENT_ROTFACE_DIES          = 3,
+    EVENT_ROTFACE_VILE_GAS      = 4,
+    EVENT_ROTFACE_OOZE_FLOOD    = 5,
 
     // Professor Putricide
     EVENT_BERSERK               = 6,    // all phases
     EVENT_SLIME_PUDDLE          = 7,    // all phases
     EVENT_UNSTABLE_EXPERIMENT   = 8,    // P1 && P2
     EVENT_TEAR_GAS              = 9,    // phase transition not heroic
-    EVENT_RESUME_ATTACK         = 10, 
-    EVENT_MALLEABLE_GOO         = 11, 
-    EVENT_CHOKING_GAS_BOMB      = 12, 
-    EVENT_UNBOUND_PLAGUE        = 13, 
-    EVENT_MUTATED_PLAGUE        = 14, 
-    EVENT_PHASE_TRANSITION      = 15, 
+    EVENT_RESUME_ATTACK         = 10,
+    EVENT_MALLEABLE_GOO         = 11,
+    EVENT_CHOKING_GAS_BOMB      = 12,
+    EVENT_UNBOUND_PLAGUE        = 13,
+    EVENT_MUTATED_PLAGUE        = 14,
+    EVENT_PHASE_TRANSITION      = 15,
 };
 
 enum Phases
 {
-    PHASE_NONE          = 0, 
-    PHASE_FESTERGUT     = 1, 
-    PHASE_ROTFACE       = 2, 
-    PHASE_COMBAT_1      = 4, 
-    PHASE_COMBAT_2      = 5, 
-    PHASE_COMBAT_3      = 6, 
+    PHASE_NONE          = 0,
+    PHASE_FESTERGUT     = 1,
+    PHASE_ROTFACE       = 2,
+    PHASE_COMBAT_1      = 4,
+    PHASE_COMBAT_2      = 5,
+    PHASE_COMBAT_3      = 6,
 
-    PHASE_MASK_COMBAT   = (1 << PHASE_COMBAT_1) | (1 << PHASE_COMBAT_2) | (1 << PHASE_COMBAT_3), 
-    PHASE_MASK_NOT_SELF = (1 << PHASE_FESTERGUT) | (1 << PHASE_ROTFACE), 
+    PHASE_MASK_COMBAT   = (1 << PHASE_COMBAT_1) | (1 << PHASE_COMBAT_2) | (1 << PHASE_COMBAT_3),
+    PHASE_MASK_NOT_SELF = (1 << PHASE_FESTERGUT) | (1 << PHASE_ROTFACE),
 };
 
 enum Points
 {
-    POINT_FESTERGUT = 366260, 
-    POINT_ROTFACE   = 366270, 
-    POINT_TABLE     = 366780, 
+    POINT_FESTERGUT = 366260,
+    POINT_ROTFACE   = 366270,
+    POINT_TABLE     = 366780,
 };
 
 static const Position festergutWatchPos = {4324.820f, 3166.03f, 389.3831f, 3.316126f}; //emote 432 (release gas)
@@ -184,7 +184,7 @@ class boss_professor_putricide : public CreatureScript
 
         struct boss_professor_putricideAI : public BossAI
         {
-            boss_professor_putricideAI(Creature* creature) : BossAI(creature, DATA_PROFESSOR_PUTRICIDE), 
+            boss_professor_putricideAI(Creature* creature) : BossAI(creature, DATA_PROFESSOR_PUTRICIDE),
                 baseSpeed(creature->GetSpeedRate(MOVE_RUN)), experimentState(EXPERIMENT_STATE_OOZE)
             {
                 phase = PHASE_NONE;

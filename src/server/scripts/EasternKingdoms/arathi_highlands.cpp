@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -42,18 +42,18 @@ EndContentData */
 
 enum eEnums
 {
-    SAY_PROGRESS_1      = -1000264, 
-    SAY_PROGRESS_2      = -1000265, 
-    SAY_PROGRESS_3      = -1000266, 
-    EMOTE_PROGRESS_4    = -1000267, 
-    SAY_AGGRO           = -1000268, 
-    SAY_PROGRESS_5      = -1000269, 
-    SAY_PROGRESS_6      = -1000270, 
-    SAY_PROGRESS_7      = -1000271, 
-    EMOTE_PROGRESS_8    = -1000272, 
-    SAY_PROGRESS_9      = -1000273, 
+    SAY_PROGRESS_1      = -1000264,
+    SAY_PROGRESS_2      = -1000265,
+    SAY_PROGRESS_3      = -1000266,
+    EMOTE_PROGRESS_4    = -1000267,
+    SAY_AGGRO           = -1000268,
+    SAY_PROGRESS_5      = -1000269,
+    SAY_PROGRESS_6      = -1000270,
+    SAY_PROGRESS_7      = -1000271,
+    EMOTE_PROGRESS_8    = -1000272,
+    SAY_PROGRESS_9      = -1000273,
 
-    QUEST_SUNKEN_TREASURE   = 665, 
+    QUEST_SUNKEN_TREASURE   = 665,
     MOB_VENGEFUL_SURGE      = 2776
 };
 

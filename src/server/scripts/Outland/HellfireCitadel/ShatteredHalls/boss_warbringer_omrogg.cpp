@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,18 +39,18 @@ EndContentData */
 
 enum eEnums
 {
-    YELL_DIE_L                  = -1540039, 
-    YELL_DIE_R                  = -1540040, 
-    EMOTE_ENRAGE                = -1540041, 
+    YELL_DIE_L                  = -1540039,
+    YELL_DIE_R                  = -1540040,
+    EMOTE_ENRAGE                = -1540041,
 
-    SPELL_BLAST_WAVE            = 30600, 
-    SPELL_FEAR                  = 30584, 
-    SPELL_THUNDERCLAP           = 30633, 
+    SPELL_BLAST_WAVE            = 30600,
+    SPELL_FEAR                  = 30584,
+    SPELL_THUNDERCLAP           = 30633,
 
-    SPELL_BURNING_MAUL          = 30598, 
-    H_SPELL_BURNING_MAUL        = 36056, 
+    SPELL_BURNING_MAUL          = 30598,
+    H_SPELL_BURNING_MAUL        = 36056,
 
-    NPC_LEFT_HEAD               = 19523, 
+    NPC_LEFT_HEAD               = 19523,
     NPC_RIGHT_HEAD              = 19524
 };
 
@@ -62,49 +62,49 @@ struct Yell
 
 static Yell GoCombat[]=
 {
-    {-1540018, NPC_LEFT_HEAD}, 
-    {-1540019, NPC_LEFT_HEAD}, 
-    {-1540020, NPC_LEFT_HEAD}, 
+    {-1540018, NPC_LEFT_HEAD},
+    {-1540019, NPC_LEFT_HEAD},
+    {-1540020, NPC_LEFT_HEAD},
 };
 static Yell GoCombatDelay[]=
 {
-    {-1540021, NPC_RIGHT_HEAD}, 
-    {-1540022, NPC_RIGHT_HEAD}, 
-    {-1540023, NPC_RIGHT_HEAD}, 
+    {-1540021, NPC_RIGHT_HEAD},
+    {-1540022, NPC_RIGHT_HEAD},
+    {-1540023, NPC_RIGHT_HEAD},
 };
 
 static Yell Threat[]=
 {
-    {-1540024, NPC_LEFT_HEAD}, 
-    {-1540025, NPC_RIGHT_HEAD}, 
-    {-1540026, NPC_LEFT_HEAD}, 
-    {-1540027, NPC_LEFT_HEAD}, 
+    {-1540024, NPC_LEFT_HEAD},
+    {-1540025, NPC_RIGHT_HEAD},
+    {-1540026, NPC_LEFT_HEAD},
+    {-1540027, NPC_LEFT_HEAD},
 };
 static Yell ThreatDelay1[]=
 {
-    {-1540028, NPC_RIGHT_HEAD}, 
-    {-1540029, NPC_LEFT_HEAD}, 
-    {-1540030, NPC_RIGHT_HEAD}, 
-    {-1540031, NPC_RIGHT_HEAD}, 
+    {-1540028, NPC_RIGHT_HEAD},
+    {-1540029, NPC_LEFT_HEAD},
+    {-1540030, NPC_RIGHT_HEAD},
+    {-1540031, NPC_RIGHT_HEAD},
 };
 static Yell ThreatDelay2[]=
 {
-    {-1540032, NPC_LEFT_HEAD}, 
-    {-1540033, NPC_RIGHT_HEAD}, 
-    {-1540034, NPC_LEFT_HEAD}, 
-    {-1540035, NPC_LEFT_HEAD}, 
+    {-1540032, NPC_LEFT_HEAD},
+    {-1540033, NPC_RIGHT_HEAD},
+    {-1540034, NPC_LEFT_HEAD},
+    {-1540035, NPC_LEFT_HEAD},
 };
 
 static Yell Killing[]=
 {
-    {-1540036, NPC_LEFT_HEAD}, 
-    {-1540037, NPC_RIGHT_HEAD}, 
+    {-1540036, NPC_LEFT_HEAD},
+    {-1540037, NPC_RIGHT_HEAD},
 };
 
 static Yell KillingDelay[]=
 {
-    {-1540038, NPC_RIGHT_HEAD}, 
-    {-1000000, NPC_LEFT_HEAD}, 
+    {-1540038, NPC_RIGHT_HEAD},
+    {-1000000, NPC_LEFT_HEAD},
 };
 
 class mob_omrogg_heads : public CreatureScript
@@ -430,4 +430,3 @@ void AddSC_boss_warbringer_omrogg()
     new boss_warbringer_omrogg();
     new mob_omrogg_heads();
 }
-

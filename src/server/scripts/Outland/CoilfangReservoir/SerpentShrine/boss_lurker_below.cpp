@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -322,7 +322,6 @@ public:
                     return;
 
                 DoMeleeAttackIfReady();
-
             }else//submerged
             {
                 if (PhaseTimer <= diff)
@@ -391,7 +390,6 @@ public:
 
         return ai;
     }
-
 };
 
 class mob_coilfang_ambusher : public CreatureScript
@@ -420,12 +418,10 @@ public:
         {
             MultiShotTimer = 10000;
             ShootBowTimer = 4000;
-
         }
 
         void EnterCombat(Unit * /*who*/)
         {
-
         }
 
         void MoveInLineOfSight(Unit *who)
@@ -461,7 +457,6 @@ public:
             } else ShootBowTimer -= diff;
         }
     };
-
 };
 
 void AddSC_boss_the_lurker_below()

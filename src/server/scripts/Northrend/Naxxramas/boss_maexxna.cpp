@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,40 +27,40 @@
 
 enum Spells
 {
-    SPELL_WEB_WRAP              = 28622, 
-    SPELL_WEB_SPRAY_10          = 29484, 
-    SPELL_WEB_SPRAY_25          = 54125, 
-    SPELL_POISON_SHOCK_10       = 28741, 
-    SPELL_POISON_SHOCK_25       = 54122, 
-    SPELL_NECROTIC_POISON_10    = 28776, 
-    SPELL_NECROTIC_POISON_25    = 54121, 
-    SPELL_FRENZY_10             = 54123, 
-    SPELL_FRENZY_25             = 54124, 
+    SPELL_WEB_WRAP              = 28622,
+    SPELL_WEB_SPRAY_10          = 29484,
+    SPELL_WEB_SPRAY_25          = 54125,
+    SPELL_POISON_SHOCK_10       = 28741,
+    SPELL_POISON_SHOCK_25       = 54122,
+    SPELL_NECROTIC_POISON_10    = 28776,
+    SPELL_NECROTIC_POISON_25    = 54121,
+    SPELL_FRENZY_10             = 54123,
+    SPELL_FRENZY_25             = 54124,
 };
 
 enum Creatures
 {
-    MOB_WEB_WRAP                = 16486, 
-    MOB_SPIDERLING              = 17055, 
+    MOB_WEB_WRAP                = 16486,
+    MOB_SPIDERLING              = 17055,
 };
 
 #define MAX_POS_WRAP            3
 const Position PosWrap[MAX_POS_WRAP] =
 {
-    {3546.796f, -3869.082f, 296.450f, 0.0f}, 
-    {3531.271f, -3847.424f, 299.450f, 0.0f}, 
-    {3497.067f, -3843.384f, 302.384f, 0.0f}, 
+    {3546.796f, -3869.082f, 296.450f, 0.0f},
+    {3531.271f, -3847.424f, 299.450f, 0.0f},
+    {3497.067f, -3843.384f, 302.384f, 0.0f},
 };
 
 enum Events
 {
-    EVENT_NONE, 
-    EVENT_SPRAY, 
-    EVENT_SHOCK, 
-    EVENT_POISON, 
-    EVENT_WRAP, 
-    EVENT_SUMMON, 
-    EVENT_FRENZY, 
+    EVENT_NONE,
+    EVENT_SPRAY,
+    EVENT_SHOCK,
+    EVENT_POISON,
+    EVENT_WRAP,
+    EVENT_SUMMON,
+    EVENT_FRENZY,
 };
 
 class boss_maexxna : public CreatureScript
@@ -153,7 +153,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_webwrap : public CreatureScript
@@ -187,10 +186,7 @@ public:
                     victim->RemoveAurasDueToSpell(me->m_spells[0], me->GetGUID());
         }
     };
-
 };
-
-
 
 void AddSC_boss_maexxna()
 {

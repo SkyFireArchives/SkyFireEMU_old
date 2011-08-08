@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,14 +26,14 @@
 #define DEF_SERPENT_SHRINE_H
 enum LurkerEventState
 {
-    LURKER_NOT_STARTED = 0, 
-    LURKER_FISHING     = 1, 
+    LURKER_NOT_STARTED = 0,
+    LURKER_FISHING     = 1,
     LURKER_HOOKED      = 2
 };
 enum WaterEventState
 {
-    WATERSTATE_NONE     = 0, 
-    WATERSTATE_FRENZY   = 1, 
+    WATERSTATE_NONE     = 0,
+    WATERSTATE_FRENZY   = 1,
     WATERSTATE_SCALDING = 2
 };
 #define DATA_CANSTARTPHASE3 1
@@ -62,4 +62,3 @@ enum WaterEventState
 #define DATA_WATER 24
 #define DATA_TRASH 25
 #endif
-

@@ -20,8 +20,8 @@
 
 uint32 entry_search[3] =
 {
-    186609, 
-    186610, 
+    186609,
+    186610,
     186611
 };
 
@@ -127,7 +127,6 @@ public:
                     {
                         near_f = i + 1;
                         diff = me->GetDistance2d(temp);
-
                     }
                 }
             }
@@ -152,9 +151,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_utgarde_keep()
 {

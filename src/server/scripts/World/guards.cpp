@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -25,7 +25,7 @@
 /* ScriptData
 SDName: Guards
 SD%Complete: 100
-SDComment: 
+SDComment:
 SDCategory: Guards
 EndScriptData */
 
@@ -40,15 +40,15 @@ EndContentData */
 
 enum GuardGeneric
 {
-    GENERIC_CREATURE_COOLDOWN       = 5000, 
-    
-    SAY_GUARD_SIL_AGGRO1            = -1070001, 
-    SAY_GUARD_SIL_AGGRO2            = -1070002, 
-    SAY_GUARD_SIL_AGGRO3            = -1070003, 
+    GENERIC_CREATURE_COOLDOWN       = 5000,
 
-    NPC_CENARION_HOLD_INFANTRY      = 15184, 
-    NPC_STORMWIND_CITY_GUARD        = 68, 
-    NPC_STORMWIND_CITY_PATROLLER    = 1976, 
+    SAY_GUARD_SIL_AGGRO1            = -1070001,
+    SAY_GUARD_SIL_AGGRO2            = -1070002,
+    SAY_GUARD_SIL_AGGRO3            = -1070003,
+
+    NPC_CENARION_HOLD_INFANTRY      = 15184,
+    NPC_STORMWIND_CITY_GUARD        = 68,
+    NPC_STORMWIND_CITY_PATROLLER    = 1976,
     NPC_ORGRIMMAR_GRUNT             = 3296
 };
 
@@ -124,9 +124,9 @@ public:
                         info = SelectSpell(me, 0, 0, SELECT_TARGET_ANY_FRIEND, 0, 0, 0, 0, SELECT_EFFECT_HEALING);
 
                     //No healing spell available, select a hostile spell
-                    if (info) 
+                    if (info)
                         healing = true;
-                    else 
+                    else
                         info = SelectSpell(me->getVictim(), 0, 0, SELECT_TARGET_ANY_ENEMY, 0, 0, 0, 0, SELECT_EFFECT_DONTCARE);
 
                     //20% chance to replace our white hit with a spell
@@ -135,13 +135,13 @@ public:
                         //Cast the spell
                         if (healing)
                             DoCast(me, info->Id);
-                        else 
+                        else
                             DoCast(me->getVictim(), info->Id);
 
                         //Set our global cooldown
                         globalCooldown = GENERIC_CREATURE_COOLDOWN;
                     }
-                    else 
+                    else
                         me->AttackerStateUpdate(me->getVictim());
 
                     me->resetAttackTimer();
@@ -160,7 +160,7 @@ public:
                         info = SelectSpell(me, 0, 0, SELECT_TARGET_ANY_FRIEND, 0, 0, 0, 0, SELECT_EFFECT_HEALING);
 
                     //No healing spell available, See if we can cast a ranged spell (Range must be greater than ATTACK_DISTANCE)
-                    if (info) 
+                    if (info)
                         healing = true;
                     else
                         info = SelectSpell(me->getVictim(), 0, 0, SELECT_TARGET_ANY_ENEMY, 0, 0, NOMINAL_MELEE_RANGE, 0, SELECT_EFFECT_DONTCARE);
@@ -176,14 +176,13 @@ public:
                         }
 
                         //Cast spell
-                        if (healing) 
+                        if (healing)
                             DoCast(me, info->Id);
-                        else 
+                        else
                             DoCast(me->getVictim(), info->Id);
 
                         //Set our global cooldown
                         globalCooldown = GENERIC_CREATURE_COOLDOWN;
-
                     }                                               //If no spells available and we arn't moving run to target
                     else if (me->GetMotionMaster()->GetCurrentMovementGeneratorType() != TARGETED_MOTION_TYPE)
                     {
@@ -210,7 +209,7 @@ public:
                 case TEXTEMOTE_CHICKEN: me->HandleEmoteCommand(EMOTE_ONESHOT_POINT);  break;
             }
         }
-        
+
         void ReceiveEmote(Player* player, uint32 textEmote)
         {
             switch(me->GetEntry())
@@ -242,9 +241,9 @@ public:
 
 enum GuardShattrath
 {
-    SPELL_BANISHED_SHATTRATH_A = 36642, 
-    SPELL_BANISHED_SHATTRATH_S = 36671, 
-    SPELL_BANISH_TELEPORT      = 36643, 
+    SPELL_BANISHED_SHATTRATH_A = 36642,
+    SPELL_BANISHED_SHATTRATH_S = 36671,
+    SPELL_BANISH_TELEPORT      = 36643,
     SPELL_EXILE                = 39533
 };
 

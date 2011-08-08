@@ -77,9 +77,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_lothos_riftwaker
@@ -116,9 +114,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_zamael_lunthistle
@@ -166,9 +162,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ##

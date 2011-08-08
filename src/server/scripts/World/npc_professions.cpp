@@ -27,7 +27,7 @@ EndScriptData */
 
 /*
 A few notes for future developement:
-- A full implementation of gossip for GO's is required. They must have the same scripting capabilities as creatures. Basically, 
+- A full implementation of gossip for GO's is required. They must have the same scripting capabilities as creatures. Basically,
 there is no difference here (except that default text is chosen with `gameobject_template`.`data3` (for GO type2, different dataN for a few others)
 - It's possible blacksmithing still require some tweaks and adjustments due to the way we _have_ to use reputation.
 */
@@ -818,19 +818,19 @@ public:
 
 enum eEngineeringTrinkets
 {
-    NPC_ZAP                     = 14742, 
-    NPC_JHORDY                  = 14743, 
-    NPC_KABLAM                  = 21493, 
-    NPC_SMILES                  = 21494, 
+    NPC_ZAP                     = 14742,
+    NPC_JHORDY                  = 14743,
+    NPC_KABLAM                  = 21493,
+    NPC_SMILES                  = 21494,
 
-    SPELL_LEARN_TO_EVERLOOK     = 23490, 
-    SPELL_LEARN_TO_GADGET       = 23491, 
-    SPELL_LEARN_TO_AREA52       = 36956, 
-    SPELL_LEARN_TO_TOSHLEY      = 36957, 
+    SPELL_LEARN_TO_EVERLOOK     = 23490,
+    SPELL_LEARN_TO_GADGET       = 23491,
+    SPELL_LEARN_TO_AREA52       = 36956,
+    SPELL_LEARN_TO_TOSHLEY      = 36957,
 
-    SPELL_TO_EVERLOOK           = 23486, 
-    SPELL_TO_GADGET             = 23489, 
-    SPELL_TO_AREA52             = 36954, 
+    SPELL_TO_EVERLOOK           = 23486,
+    SPELL_TO_GADGET             = 23489,
+    SPELL_TO_AREA52             = 36954,
     SPELL_TO_TOSHLEY            = 36955
 };
 

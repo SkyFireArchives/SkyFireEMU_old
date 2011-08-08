@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -49,13 +49,13 @@ EndScriptData */
 
 enum eSpells
 {
-    SPELL_GROUND_TREMOR              = 6524, 
-    SPELL_ARCHAEDAS_AWAKEN           = 10347, 
-    SPELL_BOSS_OBJECT_VISUAL         = 11206, 
-    SPELL_BOSS_AGGRO                 = 10340, 
-    SPELL_SUB_BOSS_AGGRO             = 11568, 
-    SPELL_AWAKEN_VAULT_WALKER        = 10258, 
-    SPELL_AWAKEN_EARTHEN_GUARDIAN    = 10252, 
+    SPELL_GROUND_TREMOR              = 6524,
+    SPELL_ARCHAEDAS_AWAKEN           = 10347,
+    SPELL_BOSS_OBJECT_VISUAL         = 11206,
+    SPELL_BOSS_AGGRO                 = 10340,
+    SPELL_SUB_BOSS_AGGRO             = 11568,
+    SPELL_AWAKEN_VAULT_WALKER        = 10258,
+    SPELL_AWAKEN_EARTHEN_GUARDIAN    = 10252,
 };
 
 class boss_archaedas : public CreatureScript
@@ -157,7 +157,7 @@ class boss_archaedas : public CreatureScript
                     return;
 
                 // wake a wall minion
-                if (uiWallMinionTimer <= uiDiff) 
+                if (uiWallMinionTimer <= uiDiff)
                 {
                     pInstance->SetData (DATA_MINIONS, IN_PROGRESS);
 
@@ -165,7 +165,7 @@ class boss_archaedas : public CreatureScript
                 } else uiWallMinionTimer -= uiDiff;
 
                 //If we are <66 summon the guardians
-                if (!bGuardiansAwake && !HealthAbovePct(66)) 
+                if (!bGuardiansAwake && !HealthAbovePct(66))
                 {
                     ActivateMinion(pInstance->GetData64(5), true);   // EarthenGuardian1
                     ActivateMinion(pInstance->GetData64(6), true);   // EarthenGuardian2
@@ -202,7 +202,7 @@ class boss_archaedas : public CreatureScript
                 DoMeleeAttackIfReady();
             }
 
-            void JustDied (Unit * /*pKiller*/) 
+            void JustDied (Unit * /*pKiller*/)
             {
                 if (pInstance)
                 {
@@ -454,4 +454,3 @@ void AddSC_boss_archaedas()
     new go_altar_of_archaedas();
     new go_altar_of_the_keepers();
 }
-

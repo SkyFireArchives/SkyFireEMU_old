@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -75,12 +75,12 @@ struct Locations
 
 static Locations TeleportPoint[]=
 {
-    {959.996f, 212.576f, 193.843f}, 
-    {932.537f, 231.813f, 193.838f}, 
-    {958.675f, 254.767f, 193.822f}, 
-    {946.955f, 201.316f, 192.535f}, 
-    {944.294f, 149.676f, 197.551f}, 
-    {930.548f, 284.888f, 193.367f}, 
+    {959.996f, 212.576f, 193.843f},
+    {932.537f, 231.813f, 193.838f},
+    {958.675f, 254.767f, 193.822f},
+    {946.955f, 201.316f, 192.535f},
+    {944.294f, 149.676f, 197.551f},
+    {930.548f, 284.888f, 193.367f},
     {965.997f, 278.398f, 195.777f}
 };
 
@@ -222,7 +222,6 @@ public:
                 if (BeamCount > 3)
                     while (CurrentBeam == Beam)
                         CurrentBeam = rand()%3;
-
             } else BeamTimer -= diff;
 
             // Random Prismatic Shield every 15 seconds.
@@ -305,9 +304,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_mother_shahraz()
 {

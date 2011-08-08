@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -37,18 +37,18 @@ enum eEnums
     SAY_SUMMONSHADE         = -1000400, //signed for 20021
 
     //Spells of Taerar
-    SPELL_SLEEP             = 24777, 
-    SPELL_NOXIOUSBREATH     = 24818, 
-    SPELL_TAILSWEEP         = 15847, 
-    SPELL_ARCANEBLAST       = 24857, 
-    SPELL_BELLOWINGROAR     = 22686, 
+    SPELL_SLEEP             = 24777,
+    SPELL_NOXIOUSBREATH     = 24818,
+    SPELL_TAILSWEEP         = 15847,
+    SPELL_ARCANEBLAST       = 24857,
+    SPELL_BELLOWINGROAR     = 22686,
 
-    SPELL_SUMMONSHADE_1     = 24841, 
-    SPELL_SUMMONSHADE_2     = 24842, 
-    SPELL_SUMMONSHADE_3     = 24843, 
+    SPELL_SUMMONSHADE_1     = 24841,
+    SPELL_SUMMONSHADE_2     = 24842,
+    SPELL_SUMMONSHADE_3     = 24843,
 
     //Spells of Shades of Taerar
-    SPELL_POSIONCLOUD       = 24840, 
+    SPELL_POSIONCLOUD       = 24840,
     SPELL_POSIONBREATH      = 20667
 };
 
@@ -258,4 +258,3 @@ void AddSC_boss_taerar()
     new boss_taerar;
     new boss_shadeoftaerar;
 }
-

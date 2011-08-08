@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,38 +27,38 @@
 
 enum Spells
 {
-    SPELL_ARCANE_BLAST                            = 49198, 
-    H_SPELL_ARCANE_BLAST                          = 59909, 
-    SPELL_ARCANE_FIELD                            = 47346, 
-    SPELL_BLIZZARD                                = 49034, 
-    H_SPELL_BLIZZARD                              = 59854, 
-    SPELL_FROSTBOLT                               = 49037, 
-    H_SPELL_FROSTBOLT                             = 59855, 
-    SPELL_WRATH_OF_MISERY                         = 50089, 
-    H_SPELL_WRATH_OF_MISERY                       = 59856, 
+    SPELL_ARCANE_BLAST                            = 49198,
+    H_SPELL_ARCANE_BLAST                          = 59909,
+    SPELL_ARCANE_FIELD                            = 47346,
+    SPELL_BLIZZARD                                = 49034,
+    H_SPELL_BLIZZARD                              = 59854,
+    SPELL_FROSTBOLT                               = 49037,
+    H_SPELL_FROSTBOLT                             = 59855,
+    SPELL_WRATH_OF_MISERY                         = 50089,
+    H_SPELL_WRATH_OF_MISERY                       = 59856,
     SPELL_SUMMON_MINIONS                          = 59910 //Summons an army of Fetid Troll Corpses to assist the caster.
 };
 //not in db
 enum Yells
 {
-    SAY_AGGRO                                     = -1600000, 
-    SAY_KILL                                      = -1600001, 
-    SAY_DEATH                                     = -1600002, 
-    SAY_NECRO_ADD                                 = -1600003, 
-    SAY_REUBBLE_1                                 = -1600004, 
+    SAY_AGGRO                                     = -1600000,
+    SAY_KILL                                      = -1600001,
+    SAY_DEATH                                     = -1600002,
+    SAY_NECRO_ADD                                 = -1600003,
+    SAY_REUBBLE_1                                 = -1600004,
     SAY_REUBBLE_2                                 = -1600005
 };
 enum Creatures
 {
-    CREATURE_RISEN_SHADOWCASTER                   = 27600, 
-    CREATURE_FETID_TROLL_CORPSE                   = 27598, 
-    CREATURE_HULKING_CORPSE                       = 27597, 
+    CREATURE_RISEN_SHADOWCASTER                   = 27600,
+    CREATURE_FETID_TROLL_CORPSE                   = 27598,
+    CREATURE_HULKING_CORPSE                       = 27597,
     CREATURE_CRYSTAL_HANDLER                      = 26627
 };
 enum CombatPhase
 {
-    IDLE, 
-    PHASE_1, 
+    IDLE,
+    PHASE_1,
     PHASE_2
 };
 enum Achievements
@@ -182,7 +182,7 @@ public:
                     if (uiTimer <= diff)
                     {
                         if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                            DoCast(pTarget, DUNGEON_MODE(RAND(SPELL_ARCANE_BLAST, SPELL_BLIZZARD, SPELL_FROSTBOLT, SPELL_WRATH_OF_MISERY), 
+                            DoCast(pTarget, DUNGEON_MODE(RAND(SPELL_ARCANE_BLAST, SPELL_BLIZZARD, SPELL_FROSTBOLT, SPELL_WRATH_OF_MISERY),
                                                          RAND(H_SPELL_ARCANE_BLAST, H_SPELL_BLIZZARD, H_SPELL_FROSTBOLT, H_SPELL_WRATH_OF_MISERY)));
                         uiTimer = urand(1*IN_MILLISECONDS, 3*IN_MILLISECONDS);
                     } else uiTimer -= diff;
@@ -253,7 +253,7 @@ public:
 
 enum CrystalHandlerSpells
 {
-    SPELL_FLASH_OF_DARKNESS                       = 49668, 
+    SPELL_FLASH_OF_DARKNESS                       = 49668,
     H_SPELL_FLASH_OF_DARKNESS                     = 59004
 };
 

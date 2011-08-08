@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,48 +27,48 @@
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1603180, 
-    SAY_AGGRO_WITH_ELDER                        = -1603181, 
-    SAY_SLAY_1                                  = -1603182, 
-    SAY_SLAY_2                                  = -1603183, 
-    SAY_DEATH                                   = -1603184, 
-    SAY_BERSERK                                 = -1603185, 
-    SAY_SUMMON_CONSERVATOR                      = -1603186, 
-    SAY_SUMMON_TRIO                             = -1603187, 
-    SAY_SUMMON_LASHERS                          = -1603188, 
-    SAY_YS_HELP                                 = -1603189, 
+    SAY_AGGRO                                   = -1603180,
+    SAY_AGGRO_WITH_ELDER                        = -1603181,
+    SAY_SLAY_1                                  = -1603182,
+    SAY_SLAY_2                                  = -1603183,
+    SAY_DEATH                                   = -1603184,
+    SAY_BERSERK                                 = -1603185,
+    SAY_SUMMON_CONSERVATOR                      = -1603186,
+    SAY_SUMMON_TRIO                             = -1603187,
+    SAY_SUMMON_LASHERS                          = -1603188,
+    SAY_YS_HELP                                 = -1603189,
 
     // Elder Brightleaf
-    SAY_BRIGHTLEAF_AGGRO                        = -1603190, 
-    SAY_BRIGHTLEAF_SLAY_1                       = -1603191, 
-    SAY_BRIGHTLEAF_SLAY_2                       = -1603192, 
-    SAY_BRIGHTLEAF_DEATH                        = -1603193, 
+    SAY_BRIGHTLEAF_AGGRO                        = -1603190,
+    SAY_BRIGHTLEAF_SLAY_1                       = -1603191,
+    SAY_BRIGHTLEAF_SLAY_2                       = -1603192,
+    SAY_BRIGHTLEAF_DEATH                        = -1603193,
 
     // Elder Ironbranch
-    SAY_IRONBRANCH_AGGRO                        = -1603194, 
-    SAY_IRONBRANCH_SLAY_1                       = -1603195, 
-    SAY_IRONBRANCH_SLAY_2                       = -1603196, 
-    SAY_IRONBRANCH_DEATH                        = -1603197, 
+    SAY_IRONBRANCH_AGGRO                        = -1603194,
+    SAY_IRONBRANCH_SLAY_1                       = -1603195,
+    SAY_IRONBRANCH_SLAY_2                       = -1603196,
+    SAY_IRONBRANCH_DEATH                        = -1603197,
 
     // Elder Stonebark
-    SAY_STONEBARK_AGGRO                         = -1603198, 
-    SAY_STONEBARK_SLAY_1                        = -1603199, 
-    SAY_STONEBARK_SLAY_2                        = -1603200, 
-    SAY_STONEBARK_DEATH                         = -1603201, 
+    SAY_STONEBARK_AGGRO                         = -1603198,
+    SAY_STONEBARK_SLAY_1                        = -1603199,
+    SAY_STONEBARK_SLAY_2                        = -1603200,
+    SAY_STONEBARK_DEATH                         = -1603201,
 };
 
 enum
 {
     // Con-speed-atory timed achievement.
     // TODO Should be started when 1st trash is killed.
-    ACHIEV_CON_SPEED_ATORY_START_EVENT            = 21597, 
-    SPELL_ACHIEVEMENT_CHECK                       = 65074, 
+    ACHIEV_CON_SPEED_ATORY_START_EVENT            = 21597,
+    SPELL_ACHIEVEMENT_CHECK                       = 65074,
 
     // Lumberjacked timed achievement.
     // TODO should be started when 1st elder is killed.
     // Spell should be casted when 3rd elder is killed.
-    ACHIEV_LUMBERJACKED                           = 21686, 
-    SPELL_LUMBERJACKED_ACHIEVEMENT_CHECK          = 65296, 
+    ACHIEV_LUMBERJACKED                           = 21686,
+    SPELL_LUMBERJACKED_ACHIEVEMENT_CHECK          = 65296,
 };
 
 class boss_freya : public CreatureScript
@@ -125,14 +125,13 @@ public:
             EnterEvadeIfOutOfCombatArea(diff);
         }
     };
-
 };
 
 enum eSpells
 {
-    SPELL_ATTUNED_TO_NATURE_2_DOSE_REDUCTION     = 62524, 
-    SPELL_ATTUNED_TO_NATURE_10_DOSE_REDUCTION    = 62525, 
-    SPELL_ATTUNED_TO_NATURE_25_DOSE_REDUCTION    = 62521, 
+    SPELL_ATTUNED_TO_NATURE_2_DOSE_REDUCTION     = 62524,
+    SPELL_ATTUNED_TO_NATURE_10_DOSE_REDUCTION    = 62525,
+    SPELL_ATTUNED_TO_NATURE_25_DOSE_REDUCTION    = 62521,
 };
 
 class spell_attuned_to_nature_dose_reduction : public SpellScriptLoader

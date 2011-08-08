@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,45 +35,45 @@
 
 float HordeWPs[8][3]=//basic waypoints from spawn to leader
 {
-    {5492.91f,    -2404.61f,    1462.63f}, 
-    {5531.76f,    -2460.87f,    1469.55f}, 
-    {5554.58f,    -2514.66f,    1476.12f}, 
-    {5554.16f,    -2567.23f,    1479.90f}, 
-    {5540.67f,    -2625.99f,    1480.89f}, 
+    {5492.91f,    -2404.61f,    1462.63f},
+    {5531.76f,    -2460.87f,    1469.55f},
+    {5554.58f,    -2514.66f,    1476.12f},
+    {5554.16f,    -2567.23f,    1479.90f},
+    {5540.67f,    -2625.99f,    1480.89f},
     {5508.16f,    -2659.20f,    1480.15f}, //random rush starts from here
-    {5489.62f,    -2704.05f,    1482.18f}, 
+    {5489.62f,    -2704.05f,    1482.18f},
     {5457.04f,    -2726.26f,    1485.10f}
 };
 float AllianceWPs[8][3]=//basic waypoints from spawn to leader
 {
-    {4896.08f,    -1576.35f,    1333.65f}, 
-    {4898.68f,    -1615.02f,    1329.48f}, 
-    {4907.12f,    -1667.08f,    1321.00f}, 
-    {4963.18f,    -1699.35f,    1340.51f}, 
+    {4896.08f,    -1576.35f,    1333.65f},
+    {4898.68f,    -1615.02f,    1329.48f},
+    {4907.12f,    -1667.08f,    1321.00f},
+    {4963.18f,    -1699.35f,    1340.51f},
     {4989.16f,    -1716.67f,    1335.74f}, //first WP in the base, after the gate
-    {5026.27f,    -1736.89f,    1323.02f}, 
-    {5037.77f,    -1770.56f,    1324.36f}, 
+    {5026.27f,    -1736.89f,    1323.02f},
+    {5037.77f,    -1770.56f,    1324.36f},
     {5067.23f,    -1789.95f,    1321.17f}
 };
 
 float FrostWyrmWPs[3][3]=//waypoints for the frost wyrms in horde base
 {
-    {5580.82f,    -2628.83f,    1528.28f}, 
-    {5550.90f,    -2667.16f,    1505.45f}, 
+    {5580.82f,    -2628.83f,    1528.28f},
+    {5550.90f,    -2667.16f,    1505.45f},
     {5459.64f,    -2725.91f,    1484.83f}
 };
 
 float GargoyleWPs[3][3]=//waypoints for the gargoyles in horde base
 {
-    {5533.66f,    -2634.32f,    1495.33f}, 
-    {5517.88f,    -2712.05f,    1490.54f}, 
+    {5533.66f,    -2634.32f,    1495.33f},
+    {5517.88f,    -2712.05f,    1490.54f},
     {5459.64f,    -2725.91f,    1484.83f}
 };
 
 float FlyPathWPs[3][3]=//waypoints for the gargoyls and frost wyrms in horde base in wave 1/3
 {
-    {5531.96f, -2772.83f, 1516.68f}, 
-    {5498.32f, -2734.84f, 1497.01f}, 
+    {5531.96f, -2772.83f, 1516.68f},
+    {5498.32f, -2734.84f, 1497.01f},
     {5456.67f, -2725.48f, 1493.08f}
 };
 
@@ -134,30 +134,29 @@ float AllianceOverrunWP[55][3]=//waypoints in the alliance base used in the end 
     {5180.41f, -2121.87f, 1292.62f}, //52 garg target3
     {5088.68f, -2432.04f, 1441.73f}, //53 garg target4
     {5111.26f, -2454.73f, 1449.63f}//54 garg target5
-
 };
 
 float HordeOverrunWP[21][3]=//waypoints in the horde base used in the end in the cleaning wave
 {
     {5490.72f, -2702.94f, 1482.14f}, //0 start
-    {5469.77f, -2741.34f, 1486.95f}, 
-    {5439.47f, -2771.02f, 1494.59f}, 
-    {5408.85f, -2811.92f, 1505.68f}, 
-    {5423.87f, -2857.80f, 1515.55f}, 
-    {5428.19f, -2898.15f, 1524.61f}, 
-    {5394.59f, -2930.05f, 1528.23f}, 
-    {5351.11f, -2935.80f, 1532.24f}, 
-    {5312.37f, -2959.06f, 1536.21f}, 
-    {5264.93f, -2989.80f, 1545.70f}, 
-    {5256.63f, -3056.16f, 1559.24f}, 
-    {5267.32f, -3119.55f, 1575.36f}, 
-    {5305.61f, -3139.88f, 1586.38f}, 
-    {5330.56f, -3135.37f, 1588.58f}, 
-    {5365.87f, -3139.78f, 1583.96f}, 
+    {5469.77f, -2741.34f, 1486.95f},
+    {5439.47f, -2771.02f, 1494.59f},
+    {5408.85f, -2811.92f, 1505.68f},
+    {5423.87f, -2857.80f, 1515.55f},
+    {5428.19f, -2898.15f, 1524.61f},
+    {5394.59f, -2930.05f, 1528.23f},
+    {5351.11f, -2935.80f, 1532.24f},
+    {5312.37f, -2959.06f, 1536.21f},
+    {5264.93f, -2989.80f, 1545.70f},
+    {5256.63f, -3056.16f, 1559.24f},
+    {5267.32f, -3119.55f, 1575.36f},
+    {5305.61f, -3139.88f, 1586.38f},
+    {5330.56f, -3135.37f, 1588.58f},
+    {5365.87f, -3139.78f, 1583.96f},
     {5389.39f, -3163.57f, 1582.57f}, //15 end
     {5500.86f, -2669.89f, 1481.04f}, //16 start
-    {5472.08f, -2715.14f, 1483.55f}, 
-    {5450.11f, -2721.47f, 1485.61f}, 
+    {5472.08f, -2715.14f, 1483.55f},
+    {5450.11f, -2721.47f, 1485.61f},
     {5433.25f, -2712.93f, 1493.02f}, //19 end 1
     {5429.91f, -2718.44f, 1493.42f}//20 end 2
 };
@@ -630,9 +629,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 #define SPELL_FRENZY 31540
 
@@ -692,7 +689,6 @@ public:
                     me->setDeathState(DEAD);
                     me->RemoveCorpse();
                 }
-
             }
         }
 
@@ -737,9 +733,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 #define SPELL_RAISE_DEAD_1 31617
 #define SPELL_RAISE_DEAD_2 31624
@@ -860,9 +854,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 #define SPELL_BANSHEE_CURSE 31651
 #define SPELL_BANSHEE_WAIL 38183
@@ -968,9 +960,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 #define SPELL_WEB 28991
 
@@ -1047,7 +1037,6 @@ public:
                             Start(false, true);
                             SetDespawnAtEnd(false);
                         }
-
                     }
                 }
             }
@@ -1061,9 +1050,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 #define SPELL_MANA_BURN 31729
 
@@ -1140,7 +1127,6 @@ public:
                             Start(false, true);
                             SetDespawnAtEnd(false);
                         }
-
                     }
                 }
             }
@@ -1154,9 +1140,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 #define SPELL_FROST_BREATH 31688
 
@@ -1272,9 +1256,7 @@ public:
             } else FrostBreathTimer -= diff;
         }
     };
-
 };
-
 
 #define SPELL_GARGOYLE_STRIKE 31664
 
@@ -1413,9 +1395,7 @@ public:
             } else StrikeTimer -= diff;
         }
     };
-
 };
-
 
 #define SPELL_EXPLODING_SHOT 7896
 
@@ -1483,7 +1463,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_hyjal_trash()

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -42,88 +42,88 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_INTRO               = -1649055, 
-    SAY_AGGRO               = -1649056, 
-    SAY_KILL1               = -1649057, 
-    SAY_KILL2               = -1649058, 
-    SAY_DEATH               = -1649059, 
-    EMOTE_SPIKE             = -1649060, 
-    SAY_BURROWER            = -1649061, 
-    EMOTE_LEECHING_SWARM    = -1649062, 
-    SAY_LEECHING_SWARM      = -1649063, 
+    SAY_INTRO               = -1649055,
+    SAY_AGGRO               = -1649056,
+    SAY_KILL1               = -1649057,
+    SAY_KILL2               = -1649058,
+    SAY_DEATH               = -1649059,
+    EMOTE_SPIKE             = -1649060,
+    SAY_BURROWER            = -1649061,
+    EMOTE_LEECHING_SWARM    = -1649062,
+    SAY_LEECHING_SWARM      = -1649063,
 };
 
 enum Summons
 {
-    NPC_FROST_SPHERE     = 34606, 
-    NPC_BURROW           = 34862, 
-    NPC_BURROWER         = 34607, 
-    NPC_SCARAB           = 34605, 
-    NPC_SPIKE            = 34660, 
+    NPC_FROST_SPHERE     = 34606,
+    NPC_BURROW           = 34862,
+    NPC_BURROWER         = 34607,
+    NPC_SCARAB           = 34605,
+    NPC_SPIKE            = 34660,
 };
 
 enum BossSpells
 {
-    SPELL_FREEZE_SLASH      = 66012, 
-    SPELL_PENETRATING_COLD  = 66013, 
-    SPELL_LEECHING_SWARM    = 66118, 
-    SPELL_LEECHING_HEAL     = 66125, 
-    SPELL_LEECHING_DAMAGE   = 66240, 
-    SPELL_MARK              = 67574, 
-    SPELL_SPIKE_CALL        = 66169, 
-    SPELL_SUBMERGE_ANUBARAK = 65981, 
-    SPELL_CLEAR_ALL_DEBUFFS = 34098, 
-    SPELL_EMERGE_ANUBARAK   = 65982, 
-    SPELL_SUMMON_BEATLES    = 66339, 
-    SPELL_SUMMON_BURROWER   = 66332, 
+    SPELL_FREEZE_SLASH      = 66012,
+    SPELL_PENETRATING_COLD  = 66013,
+    SPELL_LEECHING_SWARM    = 66118,
+    SPELL_LEECHING_HEAL     = 66125,
+    SPELL_LEECHING_DAMAGE   = 66240,
+    SPELL_MARK              = 67574,
+    SPELL_SPIKE_CALL        = 66169,
+    SPELL_SUBMERGE_ANUBARAK = 65981,
+    SPELL_CLEAR_ALL_DEBUFFS = 34098,
+    SPELL_EMERGE_ANUBARAK   = 65982,
+    SPELL_SUMMON_BEATLES    = 66339,
+    SPELL_SUMMON_BURROWER   = 66332,
 
     // Burrow
-    SPELL_CHURNING_GROUND   = 66969, 
+    SPELL_CHURNING_GROUND   = 66969,
 
     // Scarab
-    SPELL_DETERMINATION     = 66092, 
+    SPELL_DETERMINATION     = 66092,
     SPELL_ACID_MANDIBLE     = 65774, //Passive - Triggered
 
     // Burrower
-    SPELL_SPIDER_FRENZY     = 66128, 
+    SPELL_SPIDER_FRENZY     = 66128,
     SPELL_EXPOSE_WEAKNESS   = 67720, //Passive - Triggered
-    SPELL_SHADOW_STRIKE     = 66134, 
-    SPELL_SUBMERGE_EFFECT   = 53421, 
-    SPELL_EMERGE_EFFECT     = 66947, 
+    SPELL_SHADOW_STRIKE     = 66134,
+    SPELL_SUBMERGE_EFFECT   = 53421,
+    SPELL_EMERGE_EFFECT     = 66947,
 
-    SUMMON_SCARAB           = NPC_SCARAB, 
-    SUMMON_FROSTSPHERE      = NPC_FROST_SPHERE, 
-    SPELL_BERSERK           = 26662, 
+    SUMMON_SCARAB           = NPC_SCARAB,
+    SUMMON_FROSTSPHERE      = NPC_FROST_SPHERE,
+    SPELL_BERSERK           = 26662,
 
     //Frost Sphere
-    SPELL_FROST_SPHERE      = 67539, 
-    SPELL_PERMAFROST        = 66193, 
-    SPELL_PERMAFROST_VISUAL = 65882, 
+    SPELL_FROST_SPHERE      = 67539,
+    SPELL_PERMAFROST        = 66193,
+    SPELL_PERMAFROST_VISUAL = 65882,
 
     //Spike
-    SPELL_SUMMON_SPIKE      = 66169, 
-    SPELL_SPIKE_SPEED1      = 65920, 
-    SPELL_SPIKE_TRAIL       = 65921, 
-    SPELL_SPIKE_SPEED2      = 65922, 
-    SPELL_SPIKE_SPEED3      = 65923, 
-    SPELL_SPIKE_FAIL        = 66181, 
-    SPELL_SPIKE_TELE        = 66170, 
+    SPELL_SUMMON_SPIKE      = 66169,
+    SPELL_SPIKE_SPEED1      = 65920,
+    SPELL_SPIKE_TRAIL       = 65921,
+    SPELL_SPIKE_SPEED2      = 65922,
+    SPELL_SPIKE_SPEED3      = 65923,
+    SPELL_SPIKE_FAIL        = 66181,
+    SPELL_SPIKE_TELE        = 66170,
 };
 
 enum SummonActions
 {
-    ACTION_SHADOW_STRIKE, 
-    ACTION_SCARAB_SUBMERGE, 
+    ACTION_SHADOW_STRIKE,
+    ACTION_SCARAB_SUBMERGE,
 };
 
 const Position SphereSpawn[6] =
 {
-    { 786.6439f, 108.2498f, 155.6701f, 0 }, 
-    { 806.8429f, 150.5902f, 155.6701f, 0 }, 
-    { 759.1386f, 163.9654f, 155.6701f, 0 }, 
-    { 744.3701f, 119.5211f, 155.6701f, 0 }, 
-    { 710.0211f, 120.8152f, 155.6701f, 0 }, 
-    { 706.6383f, 161.5266f, 155.6701f, 0 }, 
+    { 786.6439f, 108.2498f, 155.6701f, 0 },
+    { 806.8429f, 150.5902f, 155.6701f, 0 },
+    { 759.1386f, 163.9654f, 155.6701f, 0 },
+    { 744.3701f, 119.5211f, 155.6701f, 0 },
+    { 710.0211f, 120.8152f, 155.6701f, 0 },
+    { 706.6383f, 161.5266f, 155.6701f, 0 },
 };
 
 class boss_anubarak_trial : public CreatureScript
@@ -410,9 +410,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 class mob_swarm_scarab : public CreatureScript
 {
@@ -478,9 +476,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 class mob_nerubian_burrower : public CreatureScript
 {
@@ -556,9 +552,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 class mob_frost_sphere : public CreatureScript
 {
@@ -637,9 +631,7 @@ public:
             }
         }
     };
-
 };
-
 
 class mob_anubarak_spike : public CreatureScript
 {
@@ -722,7 +714,6 @@ public:
             }
         }
     };
-
 };
 
 void AddSC_boss_anubarak_trial()

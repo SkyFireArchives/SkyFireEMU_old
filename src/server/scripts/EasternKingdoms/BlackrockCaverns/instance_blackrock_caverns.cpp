@@ -41,7 +41,7 @@ public:
     struct instance_blackrock_cavernsInstanceMapScript : public InstanceScript
     {
         instance_blackrock_cavernsInstanceMapScript(InstanceMap* map) : InstanceScript(map) { }
-        
+
         uint32 uiEncounter[ENCOUNTERS];
 
         uint64 uiRomoggBonecrusher;
@@ -199,7 +199,6 @@ public:
 
             OUT_LOAD_INST_DATA_COMPLETE;
         }
-
     };
 };
 

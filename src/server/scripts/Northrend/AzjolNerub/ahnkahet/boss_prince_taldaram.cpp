@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,27 +28,27 @@
 enum Spells
 {
     SPELL_BLOODTHIRST                             = 55968, //Trigger Spell + add aura
-    SPELL_CONJURE_FLAME_SPHERE                    = 55931, 
+    SPELL_CONJURE_FLAME_SPHERE                    = 55931,
     SPELL_FLAME_SPHERE_SUMMON_1                   = 55895, // 1x 30106
     H_SPELL_FLAME_SPHERE_SUMMON_1                 = 59511, // 1x 31686
     H_SPELL_FLAME_SPHERE_SUMMON_2                 = 59512, // 1x 31687
-    SPELL_FLAME_SPHERE_SPAWN_EFFECT               = 55891, 
-    SPELL_FLAME_SPHERE_VISUAL                     = 55928, 
-    SPELL_FLAME_SPHERE_PERIODIC                   = 55926, 
-    H_SPELL_FLAME_SPHERE_PERIODIC                 = 59508, 
-    SPELL_FLAME_SPHERE_DEATH_EFFECT               = 55947, 
-    SPELL_BEAM_VISUAL                             = 60342, 
-    SPELL_EMBRACE_OF_THE_VAMPYR                   = 55959, 
-    H_SPELL_EMBRACE_OF_THE_VAMPYR                 = 59513, 
-    SPELL_VANISH                                  = 55964, 
-    CREATURE_FLAME_SPHERE                         = 30106, 
-    H_CREATURE_FLAME_SPHERE_1                     = 31686, 
+    SPELL_FLAME_SPHERE_SPAWN_EFFECT               = 55891,
+    SPELL_FLAME_SPHERE_VISUAL                     = 55928,
+    SPELL_FLAME_SPHERE_PERIODIC                   = 55926,
+    H_SPELL_FLAME_SPHERE_PERIODIC                 = 59508,
+    SPELL_FLAME_SPHERE_DEATH_EFFECT               = 55947,
+    SPELL_BEAM_VISUAL                             = 60342,
+    SPELL_EMBRACE_OF_THE_VAMPYR                   = 55959,
+    H_SPELL_EMBRACE_OF_THE_VAMPYR                 = 59513,
+    SPELL_VANISH                                  = 55964,
+    CREATURE_FLAME_SPHERE                         = 30106,
+    H_CREATURE_FLAME_SPHERE_1                     = 31686,
     H_CREATURE_FLAME_SPHERE_2                     = 31687
 };
 enum Misc
 {
-    DATA_EMBRACE_DMG                              = 20000, 
-    H_DATA_EMBRACE_DMG                            = 40000, 
+    DATA_EMBRACE_DMG                              = 20000,
+    H_DATA_EMBRACE_DMG                            = 40000,
     DATA_SPHERE_DISTANCE                          =    15
 };
 #define DATA_SPHERE_ANGLE_OFFSET            0.7f
@@ -56,26 +56,26 @@ enum Misc
 
 enum Yells
 {
-    SAY_AGGRO                                     = -1619021, 
-    SAY_SLAY_1                                    = -1619022, 
-    SAY_SLAY_2                                    = -1619023, 
-    SAY_DEATH                                     = -1619024, 
-    SAY_FEED_1                                    = -1619025, 
-    SAY_FEED_2                                    = -1619026, 
-    SAY_VANISH_1                                  = -1619027, 
+    SAY_AGGRO                                     = -1619021,
+    SAY_SLAY_1                                    = -1619022,
+    SAY_SLAY_2                                    = -1619023,
+    SAY_DEATH                                     = -1619024,
+    SAY_FEED_1                                    = -1619025,
+    SAY_FEED_2                                    = -1619026,
+    SAY_VANISH_1                                  = -1619027,
     SAY_VANISH_2                                  = -1619028
 };
 enum CombatPhase
 {
-    NORMAL, 
-    CASTING_FLAME_SPHERES, 
-    JUST_VANISHED, 
-    VANISHED, 
+    NORMAL,
+    CASTING_FLAME_SPHERES,
+    JUST_VANISHED,
+    VANISHED,
     FEEDING
 };
 enum GameObjects
 {
-    GO_SPHERE1                                    = 193093, 
+    GO_SPHERE1                                    = 193093,
     GO_SPHERE2                                    = 193094
 };
 
@@ -239,7 +239,6 @@ public:
                                 uiPhaseTimer = 500;
                                 if (Unit* pEmbraceTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                                     uiEmbraceTarget = pEmbraceTarget->GetGUID();
-
                             }
                             uiVanishTimer = urand(25*IN_MILLISECONDS, 35*IN_MILLISECONDS);
                         } else uiVanishTimer -= diff;

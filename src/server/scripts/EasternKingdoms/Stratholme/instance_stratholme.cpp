@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -235,8 +235,8 @@ public:
                 case DONE:
                     Encounter[0] = data;
                     if (Creature* pYsidaT = instance->GetCreature(ysidaTriggerGUID))
-                        pYsidaT->SummonCreature(C_YSIDA, 
-                        pYsidaT->GetPositionX(), pYsidaT->GetPositionY(), pYsidaT->GetPositionZ(), pYsidaT->GetOrientation(), 
+                        pYsidaT->SummonCreature(C_YSIDA,
+                        pYsidaT->GetPositionX(), pYsidaT->GetPositionY(), pYsidaT->GetPositionZ(), pYsidaT->GetOrientation(),
                         TEMPSUMMON_TIMED_DESPAWN, 1800000);
                     BaronRun_Timer = 0;
                     break;
@@ -459,9 +459,7 @@ public:
             }
         }
     };
-
 };
-
 
 void AddSC_instance_stratholme()
 {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,27 +35,27 @@ Script Data End */
 
 enum Spells
 {
-    SPELL_ARCING_SMASH                          = 48260, 
-    SPELL_IMPALE                                = 48261, 
-    H_SPELL_IMPALE                              = 59268, 
-    SPELL_WITHERING_ROAR                        = 48256, 
-    H_SPELL_WITHERING_ROAR                      = 59267, 
+    SPELL_ARCING_SMASH                          = 48260,
+    SPELL_IMPALE                                = 48261,
+    H_SPELL_IMPALE                              = 59268,
+    SPELL_WITHERING_ROAR                        = 48256,
+    H_SPELL_WITHERING_ROAR                      = 59267,
     SPELL_FREEZE                                = 16245
 };
 
 //Orb spells
 enum OrbSpells
 {
-    SPELL_ORB_VISUAL                            = 48044, 
+    SPELL_ORB_VISUAL                            = 48044,
     SPELL_ORB_CHANNEL                           = 48048
 };
 
 //not in db
 enum Yells
 {
-    SAY_AGGRO                                = -1575000, 
-    SAY_SLAY_1                               = -1575001, 
-    SAY_SLAY_2                               = -1575002, 
+    SAY_AGGRO                                = -1575000,
+    SAY_SLAY_1                               = -1575001,
+    SAY_SLAY_2                               = -1575002,
     SAY_DEATH                                = -1575003
 };
 
@@ -71,21 +71,21 @@ struct Locations
 
 struct Locations moveLocs[]=
 {
-    {261.6f, -449.3f, 109.5f}, 
-    {263.3f, -454.0f, 109.5f}, 
-    {291.5f, -450.4f, 109.5f}, 
-    {291.5f, -454.0f, 109.5f}, 
-    {310.0f, -453.4f, 109.5f}, 
+    {261.6f, -449.3f, 109.5f},
+    {263.3f, -454.0f, 109.5f},
+    {291.5f, -450.4f, 109.5f},
+    {291.5f, -454.0f, 109.5f},
+    {310.0f, -453.4f, 109.5f},
     {238.6f, -460.7f, 109.5f}
 };
 
 enum Phase
 {
-    PHASE_FRENZIED_WORGEN, 
-    PHASE_RAVENOUS_FURLBORG, 
-    PHASE_MASSIVE_JORMUNGAR, 
-    PHASE_FEROCIOUS_RHINO, 
-    PHASE_GORTOK_PALEHOOF, 
+    PHASE_FRENZIED_WORGEN,
+    PHASE_RAVENOUS_FURLBORG,
+    PHASE_MASSIVE_JORMUNGAR,
+    PHASE_FEROCIOUS_RHINO,
+    PHASE_GORTOK_PALEHOOF,
     PHASE_NONE
 };
 
@@ -280,16 +280,14 @@ public:
             DoCast(me, SPELL_FREEZE);
         }
     };
-
 };
-
 
 //ravenous furbolg's spells
 enum RavenousSpells
 {
-    SPELL_CHAIN_LIGHTING                        = 48140, 
-    H_SPELL_CHAIN_LIGHTING                      = 59273, 
-    SPELL_CRAZED                                = 48139, 
+    SPELL_CHAIN_LIGHTING                        = 48140,
+    H_SPELL_CHAIN_LIGHTING                      = 59273,
+    SPELL_CRAZED                                = 48139,
     SPELL_TERRIFYING_ROAR                       = 48144
 };
 
@@ -394,16 +392,14 @@ public:
             DoCast(me, SPELL_FREEZE);
         }
     };
-
 };
-
 
 //frenzied worgen's spells
 enum FrenziedSpells
 {
-    SPELL_MORTAL_WOUND                          = 48137, 
-    H_SPELL_MORTAL_WOUND                        = 59265, 
-    SPELL_ENRAGE_1                              = 48138, 
+    SPELL_MORTAL_WOUND                          = 48137,
+    H_SPELL_MORTAL_WOUND                        = 59265,
+    SPELL_ENRAGE_1                              = 48138,
     SPELL_ENRAGE_2                              = 48142
 };
 
@@ -510,17 +506,15 @@ public:
             DoCast(me, SPELL_FREEZE);
         }
     };
-
 };
-
 
 //ferocious rhino's spells
 enum FerociousSpells
 {
-    SPELL_GORE                                  = 48130, 
-    H_SPELL_GORE                                = 59264, 
-    SPELL_GRIEVOUS_WOUND                        = 48105, 
-    H_SPELL_GRIEVOUS_WOUND                      = 59263, 
+    SPELL_GORE                                  = 48130,
+    H_SPELL_GORE                                = 59264,
+    SPELL_GRIEVOUS_WOUND                        = 48105,
+    H_SPELL_GRIEVOUS_WOUND                      = 59263,
     SPELL_STOMP                                 = 48131
 };
 
@@ -626,17 +620,15 @@ public:
             DoCast(me, SPELL_FREEZE);
         }
     };
-
 };
-
 
 //massive jormungar's spells
 enum MassiveSpells
 {
-    SPELL_ACID_SPIT                             = 48132, 
-    SPELL_ACID_SPLATTER                         = 48136, 
-    H_SPELL_ACID_SPLATTER                       = 59272, 
-    SPELL_POISON_BREATH                         = 48133, 
+    SPELL_ACID_SPIT                             = 48132,
+    SPELL_ACID_SPLATTER                         = 48136,
+    H_SPELL_ACID_SPLATTER                       = 59272,
+    SPELL_POISON_BREATH                         = 48133,
     H_SPELL_POISON_BREATH                       = 59271
 };
 
@@ -748,7 +740,6 @@ public:
             DoCast(me, SPELL_FREEZE);
         }
     };
-
 };
 
 class mob_palehoof_orb : public CreatureScript
@@ -808,7 +799,6 @@ public:
                         pNext->SetStandState(UNIT_STAND_STATE_STAND);
                         pNext->SetInCombatWithZone();
                         pNext->Attack(pNext->SelectNearestTarget(100), true);
-
                    }
                    currentPhase = PHASE_NONE;
                 }
@@ -837,7 +827,6 @@ public:
             SummonTimer = 5000;
         }
     };
-
 };
 
 class go_palehoof_sphere : public GameObjectScript
@@ -859,7 +848,6 @@ public:
         }
         return true;
     }
-
 };
 
 void AddSC_boss_palehoof()

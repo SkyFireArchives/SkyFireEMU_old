@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -77,9 +77,9 @@ EndScriptData */
 /** Locations **/
 float KaelLocations[3][2]=
 {
-    {148.744659f, 181.377426f}, 
-    {140.823883f, 195.403046f}, 
-    {156.574188f, 195.650482f}, 
+    {148.744659f, 181.377426f},
+    {140.823883f, 195.403046f},
+    {156.574188f, 195.650482f},
 };
 
 #define LOCATION_Z                  -16.727455f
@@ -311,7 +311,6 @@ public:
 
                     if (PhoenixTimer <= diff)
                     {
-
                         Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
 
                         uint8 random = urand(1, 2);
@@ -415,7 +414,6 @@ public:
                                         Orb->AddThreat(pTarget, 1000000.0f);
                                         Orb->AI()->AttackStart(pTarget);
                                     }
-
                                 }
 
                                 DoCast(me, SPELL_GRAVITY_LAPSE_CHANNEL);
@@ -436,7 +434,6 @@ public:
             }
         }
     };
-
 };
 
 class mob_felkael_flamestrike : public CreatureScript
@@ -478,7 +475,6 @@ public:
             } else FlameStrikeTimer -= diff;
         }
     };
-
 };
 
 class mob_felkael_phoenix : public CreatureScript
@@ -527,7 +523,6 @@ public:
             {
                 damage = 0;
                 return;
-
             }
             //Don't really die in all phases of Kael'Thas
             if (pInstance && pInstance->GetData(DATA_KAELTHAS_EVENT) == 0)
@@ -549,9 +544,7 @@ public:
                 me->GetMotionMaster()->Clear();
                 me->GetMotionMaster()->MoveIdle();
                 me->SetStandState(UNIT_STAND_STATE_DEAD);
-
            }
-
         }
 
         void JustDied(Unit* /*slayer*/)
@@ -561,7 +554,6 @@ public:
 
         void UpdateAI(const uint32 diff)
         {
-
             //If we are fake death, we cast revbirth and after that we kill the phoenix to spawn the egg.
             if (FakeDeath)
             {
@@ -573,7 +565,6 @@ public:
 
                 if (Rebirth)
                 {
-
                     if (Death_Timer <= diff)
                     {
                         me->SummonCreature(CREATURE_PHOENIX_EGG, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 45000);
@@ -581,7 +572,6 @@ public:
                         Rebirth = false;
                     } else Death_Timer -= diff;
                 }
-
             }
 
             if (!UpdateVictim())
@@ -598,7 +588,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_felkael_phoenix_egg : public CreatureScript
@@ -632,10 +621,8 @@ public:
                 me->SummonCreature(CREATURE_PHOENIX, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
                 me->Kill(me);
             } else HatchTimer -= diff;
-
         }
     };
-
 };
 
 class mob_arcane_sphere : public CreatureScript
@@ -692,13 +679,7 @@ public:
             } else ChangeTargetTimer -= diff;
         }
     };
-
 };
-
-
-
-
-
 
 void AddSC_boss_felblood_kaelthas()
 {

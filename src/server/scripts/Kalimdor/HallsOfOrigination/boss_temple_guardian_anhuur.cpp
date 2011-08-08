@@ -15,7 +15,6 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include"ScriptPCH.h"
 #include"WorldPacket.h"
 #include"halls_of_origination.h"
@@ -26,40 +25,40 @@
 
 enum ScriptTexts
 {
-    SAY_AGGRO                = 0, 
-    SAY_BEACON               = 1, 
-    SAY_KILL_1               = 2, 
-    SAY_KILL_2               = 3, 
-    SAY_DEATH                = 4, 
+    SAY_AGGRO                = 0,
+    SAY_BEACON               = 1,
+    SAY_KILL_1               = 2,
+    SAY_KILL_2               = 3,
+    SAY_DEATH                = 4,
 };
 
 enum Spells
 {
-    SPELL_DIVINE_RECKONING   = 75592, 
-    H_SPELL_DIVINE_RECKONING = 94949, 
-    SPELL_REVERBERATING_HYMN = 75322, 
-    SPELL_SHIELD_OF_LIGHT    = 74938, 
+    SPELL_DIVINE_RECKONING   = 75592,
+    H_SPELL_DIVINE_RECKONING = 94949,
+    SPELL_REVERBERATING_HYMN = 75322,
+    SPELL_SHIELD_OF_LIGHT    = 74938,
 };
 
 enum Events
 {
-    EVENT_DIVINE_RECKONING   = 1, 
-    EVENT_REVERBERATING_HYMN = 2, 
-    EVENT_SHIELD_OF_LIGHT    = 3, 
+    EVENT_DIVINE_RECKONING   = 1,
+    EVENT_REVERBERATING_HYMN = 2,
+    EVENT_SHIELD_OF_LIGHT    = 3,
 };
 
 enum BossPhases
 {   //Don't use phase conditionals for the moment
-    PHASE_1 = 1, 
-    PHASE_2 = 2, 
-    PHASE_3 = 3, 
+    PHASE_1 = 1,
+    PHASE_2 = 2,
+    PHASE_3 = 3,
 };
 
 class boss_temple_guardian_anhuur : public CreatureScript
 {
     public:
         boss_temple_guardian_anhuur() : CreatureScript("boss_temple_guardian_anhuur") { }
-        
+
         CreatureAI* GetAI(Creature* pCreature) const
         {
             return new boss_temple_guardian_anhuurAI(pCreature);
@@ -78,10 +77,10 @@ class boss_temple_guardian_anhuur : public CreatureScript
             void Reset()
             {
                 events.Reset();
-                
+
                 if (pInstance && (pInstance->GetData(DATA_TEMPLE_GUARDIAN_ANHUUR_EVENT) != DONE && !check_in))
                     pInstance->SetData(DATA_TEMPLE_GUARDIAN_ANHUUR_EVENT, NOT_STARTED);
-                
+
                 check_in = false;
             }
 
@@ -102,20 +101,19 @@ class boss_temple_guardian_anhuur : public CreatureScript
                 DoScriptText(SAY_AGGRO, me);
 				if (pInstance)
                     pInstance->SetData(DATA_TEMPLE_GUARDIAN_ANHUUR_EVENT, IN_PROGRESS);
-                
+
                 DoZoneInCombat();
             }
 
             void DamageTaken(Unit* /*attacker*/, uint32& damage)
             {
-                if (!HealthAbovePct(66) && HealthAbovePct(33)) // Need to add teleportation location with phase swap 
+                if (!HealthAbovePct(66) && HealthAbovePct(33)) // Need to add teleportation location with phase swap
                 {
-                    
                     DoCast(me, SPELL_SHIELD_OF_LIGHT);
                     events.ScheduleEvent(EVENT_REVERBERATING_HYMN, 3000);
                 }
-                
-                if (!HealthAbovePct(33)) // Need to add teleportation location with phase swap 
+
+                if (!HealthAbovePct(33)) // Need to add teleportation location with phase swap
                 {
                     DoCast(me, SPELL_SHIELD_OF_LIGHT);
                     events.ScheduleEvent(EVENT_REVERBERATING_HYMN, 1000);
@@ -128,7 +126,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
                     return;
 
                 events.Update(uiDiff);
-                
+
                 while(uint32 eventId = events.ExecuteEvent())
                 {
                     switch(eventId)
@@ -151,9 +149,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
                 }
             DoMeleeAttackIfReady();
             }
-
          };
-
 };
 
 void AddSC_boss_temple_guardian_anhuur()

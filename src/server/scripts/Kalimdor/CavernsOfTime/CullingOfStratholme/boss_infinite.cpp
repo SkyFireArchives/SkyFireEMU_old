@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,17 +27,16 @@
 
 enum Spells
 {
-    SPELL_CORRUPTING_BLIGHT                     = 60588, 
+    SPELL_CORRUPTING_BLIGHT                     = 60588,
     SPELL_VOID_STRIKE                           = 60590
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1595045, 
-    SAY_FAIL                                    = -1595046, 
+    SAY_AGGRO                                   = -1595045,
+    SAY_FAIL                                    = -1595046,
     SAY_DEATH                                   = -1595047
 };
-
 
 class boss_infinite_corruptor : public CreatureScript
 {
@@ -87,9 +86,7 @@ public:
                 pInstance->SetData(DATA_INFINITE_EVENT, DONE);
         }
     };
-
 };
-
 
 void AddSC_boss_infinite_corruptor()
 {

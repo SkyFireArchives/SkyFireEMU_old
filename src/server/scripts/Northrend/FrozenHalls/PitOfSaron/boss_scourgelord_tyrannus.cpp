@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,59 +33,59 @@
 
 enum Yells
 {
-    SAY_AMBUSH_1                                = -1658050, 
-    SAY_AMBUSH_2                                = -1658051, 
-    SAY_GAUNTLET_START                          = -1658052, 
-    SAY_INTRO_1                                 = -1658053, 
-    SAY_INTRO_2                                 = -1658054, 
+    SAY_AMBUSH_1                                = -1658050,
+    SAY_AMBUSH_2                                = -1658051,
+    SAY_GAUNTLET_START                          = -1658052,
+    SAY_INTRO_1                                 = -1658053,
+    SAY_INTRO_2                                 = -1658054,
 
-    SAY_AGGRO                                   = -1658055, 
-    SAY_SLAY_1                                  = -1658056, 
-    SAY_SLAY_2                                  = -1658057, 
-    SAY_DEATH                                   = -1658058, 
-    SAY_MARK_RIMEFANG_1                         = -1658059, 
-    SAY_MARK_RIMEFANG_2                         = -1658060, 
-    SAY_DARK_MIGHT_1                            = -1658061, 
-    SAY_DARK_MIGHT_2                            = -1658062, 
+    SAY_AGGRO                                   = -1658055,
+    SAY_SLAY_1                                  = -1658056,
+    SAY_SLAY_2                                  = -1658057,
+    SAY_DEATH                                   = -1658058,
+    SAY_MARK_RIMEFANG_1                         = -1658059,
+    SAY_MARK_RIMEFANG_2                         = -1658060,
+    SAY_DARK_MIGHT_1                            = -1658061,
+    SAY_DARK_MIGHT_2                            = -1658062,
 
-    SAY_GORKUN_OUTRO_1                          = -1658063, 
-    SAY_GORKUN_OUTRO_2                          = -1658064, 
-    SAY_JAYNA_OUTRO_3                           = -1658065, 
-    SAY_SYLVANAS_OUTRO_3                        = -1658066, 
-    SAY_JAYNA_OUTRO_4                           = -1658067, 
-    SAY_SYLVANAS_OUTRO_4                        = -1658068, 
-    SAY_JAYNA_OUTRO_5                           = -1658069, 
+    SAY_GORKUN_OUTRO_1                          = -1658063,
+    SAY_GORKUN_OUTRO_2                          = -1658064,
+    SAY_JAYNA_OUTRO_3                           = -1658065,
+    SAY_SYLVANAS_OUTRO_3                        = -1658066,
+    SAY_JAYNA_OUTRO_4                           = -1658067,
+    SAY_SYLVANAS_OUTRO_4                        = -1658068,
+    SAY_JAYNA_OUTRO_5                           = -1658069,
 };
 
 enum Spells
 {
-    SPELL_FORCEFUL_SMASH                        = 69155, 
-    H_SPELL_FORCEFUL_SMASH                      = 69627, 
-    SPELL_OVERLORDS_BRAND                       = 69172, 
-    SPELL_OVERLORD_BRAND_DAMAGE                 = 69189, 
-    SPELL_OVERLORD_BRAND_HEAL                   = 69190, 
-    SPELL_DARK_MIGHT                            = 69167, 
-    H_SPELL_DARK_MIGHT                          = 69629, 
-    SPELL_HOARFROST                             = 69246, 
-    SPELL_MARK_OF_RIMEFANG                      = 69275, 
-    SPELL_ICY_BLAST                             = 69233, 
-    H_SPELL_ICY_BLAST                           = 69646, 
-    SPELL_ICY_BLAST_2                           = 69238, 
-    H_SPELL_ICY_BLAST_2                         = 69628, 
+    SPELL_FORCEFUL_SMASH                        = 69155,
+    H_SPELL_FORCEFUL_SMASH                      = 69627,
+    SPELL_OVERLORDS_BRAND                       = 69172,
+    SPELL_OVERLORD_BRAND_DAMAGE                 = 69189,
+    SPELL_OVERLORD_BRAND_HEAL                   = 69190,
+    SPELL_DARK_MIGHT                            = 69167,
+    H_SPELL_DARK_MIGHT                          = 69629,
+    SPELL_HOARFROST                             = 69246,
+    SPELL_MARK_OF_RIMEFANG                      = 69275,
+    SPELL_ICY_BLAST                             = 69233,
+    H_SPELL_ICY_BLAST                           = 69646,
+    SPELL_ICY_BLAST_2                           = 69238,
+    H_SPELL_ICY_BLAST_2                         = 69628,
 };
 
 enum Events
 {
-    EVENT_NONE, 
-    EVENT_FORCEFUL_SMASH, 
-    EVENT_OVERLORDS_BRAND, 
-    EVENT_DARK_MIGHT, 
+    EVENT_NONE,
+    EVENT_FORCEFUL_SMASH,
+    EVENT_OVERLORDS_BRAND,
+    EVENT_DARK_MIGHT,
 
     // Rimefang
-    EVENT_MARK_OF_RIMEFANG, 
-    EVENT_HOARFROST, 
-    EVENT_ICY_BLAST, 
-    EVENT_ICY_BLAST_2, 
+    EVENT_MARK_OF_RIMEFANG,
+    EVENT_HOARFROST,
+    EVENT_ICY_BLAST,
+    EVENT_ICY_BLAST_2,
 };
 
 enum Misc
@@ -197,7 +197,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class boss_rimefang : public CreatureScript
@@ -280,7 +279,6 @@ public:
             }
         }
     };
-
 };
 
 class player_overlord_brandAI : public PlayerAI

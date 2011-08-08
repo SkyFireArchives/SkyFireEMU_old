@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,37 +39,37 @@ EndContentData */
 
 enum eKelidan
 {
-    SAY_WAKE                    = -1542000, 
-    SAY_ADD_AGGRO_1             = -1542001, 
-    SAY_ADD_AGGRO_2             = -1542002, 
-    SAY_ADD_AGGRO_3             = -1542003, 
-    SAY_KILL_1                  = -1542004, 
-    SAY_KILL_2                  = -1542005, 
-    SAY_NOVA                    = -1542006, 
-    SAY_DIE                     = -1542007, 
+    SAY_WAKE                    = -1542000,
+    SAY_ADD_AGGRO_1             = -1542001,
+    SAY_ADD_AGGRO_2             = -1542002,
+    SAY_ADD_AGGRO_3             = -1542003,
+    SAY_KILL_1                  = -1542004,
+    SAY_KILL_2                  = -1542005,
+    SAY_NOVA                    = -1542006,
+    SAY_DIE                     = -1542007,
 
-    SPELL_CORRUPTION            = 30938, 
-    SPELL_EVOCATION             = 30935, 
+    SPELL_CORRUPTION            = 30938,
+    SPELL_EVOCATION             = 30935,
 
-    SPELL_FIRE_NOVA             = 33132, 
-    H_SPELL_FIRE_NOVA           = 37371, 
+    SPELL_FIRE_NOVA             = 33132,
+    H_SPELL_FIRE_NOVA           = 37371,
 
-    SPELL_SHADOW_BOLT_VOLLEY    = 28599, 
-    H_SPELL_SHADOW_BOLT_VOLLEY  = 40070, 
+    SPELL_SHADOW_BOLT_VOLLEY    = 28599,
+    H_SPELL_SHADOW_BOLT_VOLLEY  = 40070,
 
-    SPELL_BURNING_NOVA          = 30940, 
-    SPELL_VORTEX                = 37370, 
+    SPELL_BURNING_NOVA          = 30940,
+    SPELL_VORTEX                = 37370,
 
-    ENTRY_KELIDAN               = 17377, 
+    ENTRY_KELIDAN               = 17377,
     ENTRY_CHANNELER             = 17653
 };
 
 const float ShadowmoonChannelers[5][4]=
 {
-    {302.0f, -87.0f, -24.4f, 0.157f}, 
-    {321.0f, -63.5f, -24.6f, 4.887f}, 
-    {346.0f, -74.5f, -24.6f, 3.595f}, 
-    {344.0f, -103.5f, -24.5f, 2.356f}, 
+    {302.0f, -87.0f, -24.4f, 0.157f},
+    {321.0f, -63.5f, -24.6f, 4.887f},
+    {346.0f, -74.5f, -24.6f, 3.595f},
+    {344.0f, -103.5f, -24.5f, 2.356f},
     {316.0f, -109.0f, -24.6f, 1.257f}
 };
 
@@ -271,7 +271,6 @@ class boss_kelidan_the_breaker : public CreatureScript
 
                 DoMeleeAttackIfReady();
             }
-
         };
 
         CreatureAI* GetAI(Creature* Creature) const
@@ -286,10 +285,10 @@ class boss_kelidan_the_breaker : public CreatureScript
 
 enum eShadowmoon
 {
-    SPELL_SHADOW_BOLT       = 12739, 
-    H_SPELL_SHADOW_BOLT     = 15472, 
+    SPELL_SHADOW_BOLT       = 12739,
+    H_SPELL_SHADOW_BOLT     = 15472,
 
-    SPELL_MARK_OF_SHADOW    = 30937, 
+    SPELL_MARK_OF_SHADOW    = 30937,
     SPELL_CHANNELING        = 39123
 };
 
@@ -388,4 +387,3 @@ void AddSC_boss_kelidan_the_breaker()
     new boss_kelidan_the_breaker();
     new mob_shadowmoon_channeler();
 }
-

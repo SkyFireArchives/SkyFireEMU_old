@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -72,7 +72,6 @@ public:
         }
         return false;
     }
-
 };
 
 /*######
@@ -81,8 +80,8 @@ public:
 
 enum eGrimstone
 {
-    NPC_GRIMSTONE                                          = 10096, 
-    NPC_THELDREN                                           = 16059, 
+    NPC_GRIMSTONE                                          = 10096,
+    NPC_THELDREN                                           = 16059,
 
     //4 or 6 in total? 1+2+1 / 2+2+2 / 3+3. Depending on this, code should be changed.
     MAX_MOB_AMOUNT                                         = 4
@@ -127,7 +126,6 @@ public:
         }
         return false;
     }
-
 };
 
 /*######
@@ -136,11 +134,11 @@ public:
 
 enum GrimstoneTexts
 {
-    SCRIPT_TEXT1                                           = -1000000, 
-    SCRIPT_TEXT2                                           = -1000001, 
-    SCRIPT_TEXT3                                           = -1000002, 
-    SCRIPT_TEXT4                                           = -1000003, 
-    SCRIPT_TEXT5                                           = -1000004, 
+    SCRIPT_TEXT1                                           = -1000000,
+    SCRIPT_TEXT2                                           = -1000001,
+    SCRIPT_TEXT3                                           = -1000002,
+    SCRIPT_TEXT4                                           = -1000003,
+    SCRIPT_TEXT5                                           = -1000004,
     SCRIPT_TEXT6                                           = -1000005
 };
 
@@ -371,9 +369,7 @@ public:
                 npc_escortAI::UpdateAI(diff);
            }
     };
-
 };
-
 
 /*######
 ## mob_phalanx
@@ -381,8 +377,8 @@ public:
 
 enum PhalanxSpells
 {
-    SPELL_THUNDERCLAP                                      = 8732, 
-    SPELL_FIREBALLVOLLEY                                   = 22425, 
+    SPELL_THUNDERCLAP                                      = 8732,
+    SPELL_FIREBALLVOLLEY                                   = 22425,
     SPELL_MIGHTYBLOW                                       = 14099
 };
 
@@ -444,7 +440,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*######
@@ -453,7 +448,7 @@ public:
 
 enum KharamQuests
 {
-    QUEST_4001                                             = 4001, 
+    QUEST_4001                                             = 4001,
     QUEST_4342                                             = 4342
 };
 
@@ -541,9 +536,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_lokhtos_darkbargainer
@@ -551,7 +544,7 @@ public:
 
 enum LokhtosItems
 {
-    ITEM_THRORIUM_BROTHERHOOD_CONTRACT                     = 18628, 
+    ITEM_THRORIUM_BROTHERHOOD_CONTRACT                     = 18628,
     ITEM_SULFURON_INGOT                                    = 17203
 };
 
@@ -609,9 +602,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_dughal_stormwing
@@ -716,7 +707,6 @@ public:
             npc_escortAI::UpdateAI(diff);
         }
     };
-
 };
 
  */
@@ -780,7 +770,6 @@ public:
                     pInstance->SetData(DATA_QUEST_JAIL_BREAK, ENCOUNTER_STATE_IN_PROGRESS);
                     pCreature->setFaction(11);
             }
-
             }
         return false;
     }
@@ -884,7 +873,6 @@ public:
             npc_escortAI::UpdateAI(diff);
         }
     };
-
 };
 
   */
@@ -1105,7 +1093,6 @@ public:
             npc_escortAI::UpdateAI(diff);
         }
     };
-
 };
 */
 /*######
@@ -1207,10 +1194,7 @@ public:
             npc_escortAI::UpdateAI(diff);
         }
     };
-
 };
-
-
 
 */
 
@@ -1363,7 +1347,6 @@ public:
             npc_escortAI::UpdateAI(diff);
         }
     };
-
 };
 
 /*######

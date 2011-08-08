@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,8 +34,8 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_SMELT_DARK_IRON                                  = 14891, 
-    SPELL_LEARN_SMELT                                      = 14894, 
+    SPELL_SMELT_DARK_IRON                                  = 14891,
+    SPELL_LEARN_SMELT                                      = 14894,
 };
 
 enum Quests
@@ -98,16 +98,14 @@ public:
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 enum DoomrelSpells
 {
-    SPELL_SHADOWBOLTVOLLEY                                 = 15245, 
-    SPELL_IMMOLATE                                         = 12742, 
-    SPELL_CURSEOFWEAKNESS                                  = 12493, 
-    SPELL_DEMONARMOR                                       = 13787, 
+    SPELL_SHADOWBOLTVOLLEY                                 = 15245,
+    SPELL_IMMOLATE                                         = 12742,
+    SPELL_CURSEOFWEAKNESS                                  = 12493,
+    SPELL_DEMONARMOR                                       = 13787,
     SPELL_SUMMON_VOIDWALKERS                               = 15092
 };
 
@@ -259,7 +257,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_boss_tomb_of_seven()

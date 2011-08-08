@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,46 +35,46 @@ EndScriptData */
 enum Yells
 {
     //Yells Ingvar
-    YELL_AGGRO_1                                = -1574005, 
-    YELL_AGGRO_2                                = -1574006, 
+    YELL_AGGRO_1                                = -1574005,
+    YELL_AGGRO_2                                = -1574006,
 
-    YELL_DEAD_1                                 = -1574007, 
-    YELL_DEAD_2                                 = -1574008, 
+    YELL_DEAD_1                                 = -1574007,
+    YELL_DEAD_2                                 = -1574008,
 
-    YELL_KILL_1                                 = -1574009, 
-    YELL_KILL_2                                 = -1574010, 
+    YELL_KILL_1                                 = -1574009,
+    YELL_KILL_2                                 = -1574010,
 };
 
 enum Creatures
 {
-    MOB_INGVAR_HUMAN                            = 23954, 
-    MOB_ANNHYLDE_THE_CALLER                     = 24068, 
-    MOB_INGVAR_UNDEAD                           = 23980, 
+    MOB_INGVAR_HUMAN                            = 23954,
+    MOB_ANNHYLDE_THE_CALLER                     = 24068,
+    MOB_INGVAR_UNDEAD                           = 23980,
 };
 
 enum Spells
 {
     //Ingvar Spells human form
-    SPELL_CLEAVE                                = 42724, 
-    SPELL_SMASH                                 = 42669, 
-    H_SPELL_SMASH                               = 59706, 
-    SPELL_STAGGERING_ROAR                       = 42708, 
-    H_SPELL_STAGGERING_ROAR                     = 59708, 
-    SPELL_ENRAGE                                = 42705, 
-    H_SPELL_ENRAGE                              = 59707, 
+    SPELL_CLEAVE                                = 42724,
+    SPELL_SMASH                                 = 42669,
+    H_SPELL_SMASH                               = 59706,
+    SPELL_STAGGERING_ROAR                       = 42708,
+    H_SPELL_STAGGERING_ROAR                     = 59708,
+    SPELL_ENRAGE                                = 42705,
+    H_SPELL_ENRAGE                              = 59707,
 
-    SPELL_INGVAR_FEIGN_DEATH                    = 42795, 
-    SPELL_SUMMON_BANSHEE                        = 42912, 
+    SPELL_INGVAR_FEIGN_DEATH                    = 42795,
+    SPELL_SUMMON_BANSHEE                        = 42912,
     SPELL_SCOURG_RESURRECTION                   = 42863, // Spawn resurrect effect around Ingvar
 
     //Ingvar Spells undead form
-    SPELL_DARK_SMASH                            = 42723, 
-    SPELL_DREADFUL_ROAR                         = 42729, 
-    H_SPELL_DREADFUL_ROAR                       = 59734, 
-    SPELL_WOE_STRIKE                            = 42730, 
-    H_SPELL_WOE_STRIKE                          = 59735, 
+    SPELL_DARK_SMASH                            = 42723,
+    SPELL_DREADFUL_ROAR                         = 42729,
+    H_SPELL_DREADFUL_ROAR                       = 59734,
+    SPELL_WOE_STRIKE                            = 42730,
+    H_SPELL_WOE_STRIKE                          = 59735,
 
-    ENTRY_THROW_TARGET                          = 23996, 
+    ENTRY_THROW_TARGET                          = 23996,
     SPELL_SHADOW_AXE_SUMMON                     = 42749
 };
 
@@ -278,14 +278,12 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 enum eSpells
 {
 //we don't have that text in db so comment it until we get this text
-//    YELL_RESSURECT                      = -1574025, 
+//    YELL_RESSURECT                      = -1574025,
 
 //Spells for Annhylde
     SPELL_SCOURG_RESURRECTION_HEAL              = 42704, //Heal Max + DummyAura
@@ -401,10 +399,9 @@ public:
     };
 };
 
-
 enum eShadowAxe
 {
-    SPELL_SHADOW_AXE_DAMAGE                     = 42750, 
+    SPELL_SHADOW_AXE_DAMAGE                     = 42750,
     H_SPELL_SHADOW_AXE_DAMAGE                   = 59719
 };
 
@@ -451,9 +448,7 @@ public:
             } else uiDespawnTimer -= diff;
         }
     };
-
 };
-
 
 void AddSC_boss_ingvar_the_plunderer()
 {

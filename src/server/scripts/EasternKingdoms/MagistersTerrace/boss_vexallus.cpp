@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,24 +34,24 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                       = -1585007, 
-    SAY_ENERGY                      = -1585008, 
-    SAY_OVERLOAD                    = -1585009, 
-    SAY_KILL                        = -1585010, 
-    EMOTE_DISCHARGE_ENERGY          = -1585011, 
+    SAY_AGGRO                       = -1585007,
+    SAY_ENERGY                      = -1585008,
+    SAY_OVERLOAD                    = -1585009,
+    SAY_KILL                        = -1585010,
+    EMOTE_DISCHARGE_ENERGY          = -1585011,
 
     //is this text for real?
     //#define SAY_DEATH             "What...happen...ed."
 
     //Pure energy spell info
-    SPELL_ENERGY_BOLT               = 46156, 
-    SPELL_ENERGY_FEEDBACK           = 44335, 
+    SPELL_ENERGY_BOLT               = 46156,
+    SPELL_ENERGY_FEEDBACK           = 44335,
 
     //Vexallus spell info
-    SPELL_CHAIN_LIGHTNING           = 44318, 
+    SPELL_CHAIN_LIGHTNING           = 44318,
     SPELL_H_CHAIN_LIGHTNING         = 46380,                //heroic spell
-    SPELL_OVERLOAD                  = 44353, 
-    SPELL_ARCANE_SHOCK              = 44319, 
+    SPELL_OVERLOAD                  = 44353,
+    SPELL_ARCANE_SHOCK              = 44319,
     SPELL_H_ARCANE_SHOCK            = 46381,                //heroic spell
 
     SPELL_SUMMON_PURE_ENERGY        = 44322,                //mod scale -10
@@ -59,9 +59,9 @@ enum eEnums
     H_SPELL_SUMMON_PURE_ENERGY2     = 46159,                //mod scale -5
 
     //Creatures
-    NPC_PURE_ENERGY                 = 24745, 
+    NPC_PURE_ENERGY                 = 24745,
 
-    INTERVAL_MODIFIER               = 15, 
+    INTERVAL_MODIFIER               = 15,
     INTERVAL_SWITCH                 = 6
 };
 
@@ -197,9 +197,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 class mob_pure_energy : public CreatureScript
 {
@@ -230,9 +228,7 @@ public:
         void MoveInLineOfSight(Unit * /*who*/) {}
         void AttackStart(Unit * /*who*/) {}
     };
-
 };
-
 
 void AddSC_boss_vexallus()
 {

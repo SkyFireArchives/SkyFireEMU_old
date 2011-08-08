@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,10 +33,10 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_SHADOWBOLT                                       = 17228, 
-    SPELL_CURSEOFTONGUES                                   = 15470, 
-    SPELL_CURSEOFWEAKNESS                                  = 17227, 
-    SPELL_DEMONARMOR                                       = 11735, 
+    SPELL_SHADOWBOLT                                       = 17228,
+    SPELL_CURSEOFTONGUES                                   = 15470,
+    SPELL_CURSEOFWEAKNESS                                  = 17227,
+    SPELL_DEMONARMOR                                       = 11735,
     SPELL_ENVELOPINGWEB                                    = 15471
 };
 
@@ -119,7 +119,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_boss_anubshiah()

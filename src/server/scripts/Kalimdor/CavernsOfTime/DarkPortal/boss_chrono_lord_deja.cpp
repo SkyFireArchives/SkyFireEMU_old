@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,18 +34,18 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_ENTER                   = -1269006, 
-    SAY_AGGRO                   = -1269007, 
-    SAY_BANISH                  = -1269008, 
-    SAY_SLAY1                   = -1269009, 
-    SAY_SLAY2                   = -1269010, 
-    SAY_DEATH                   = -1269011, 
+    SAY_ENTER                   = -1269006,
+    SAY_AGGRO                   = -1269007,
+    SAY_BANISH                  = -1269008,
+    SAY_SLAY1                   = -1269009,
+    SAY_SLAY2                   = -1269010,
+    SAY_DEATH                   = -1269011,
 
-    SPELL_ARCANE_BLAST          = 31457, 
-    H_SPELL_ARCANE_BLAST        = 38538, 
-    SPELL_ARCANE_DISCHARGE      = 31472, 
-    H_SPELL_ARCANE_DISCHARGE    = 38539, 
-    SPELL_TIME_LAPSE            = 31467, 
+    SPELL_ARCANE_BLAST          = 31457,
+    H_SPELL_ARCANE_BLAST        = 38538,
+    SPELL_ARCANE_DISCHARGE      = 31472,
+    H_SPELL_ARCANE_DISCHARGE    = 38539,
+    SPELL_TIME_LAPSE            = 31467,
     SPELL_ATTRACTION            = 38540                       //Not Implemented (Heroic mode)
 };
 
@@ -155,9 +155,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_chrono_lord_deja()
 {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -217,7 +217,7 @@ class achievement_bg_ic_mowed_down : public AchievementCriteriaScript
 //
 //        enum AchievementData
 //        {
-//            SPELL_CARRYING_SEAFORIUM = 52418,            
+//            SPELL_CARRYING_SEAFORIUM = 52418,
 //        };
 //
 //        bool OnCheck(Player* /*source*/, Unit* target)

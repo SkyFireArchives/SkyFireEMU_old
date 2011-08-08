@@ -26,9 +26,9 @@
 
 enum PriestSpells
 {
-    PRIEST_SPELL_PENANCE_R1                      = 47540, 
-    PRIEST_SPELL_PENANCE_R1_DAMAGE               = 47758, 
-    PRIEST_SPELL_PENANCE_R1_HEAL                 = 47757, 
+    PRIEST_SPELL_PENANCE_R1                      = 47540,
+    PRIEST_SPELL_PENANCE_R1_DAMAGE               = 47758,
+    PRIEST_SPELL_PENANCE_R1_HEAL                 = 47757,
 };
 
 // Guardian Spirit
@@ -45,7 +45,7 @@ public:
 
         enum Spell
         {
-            PRI_SPELL_GUARDIAN_SPIRIT_HEAL = 48153, 
+            PRI_SPELL_GUARDIAN_SPIRIT_HEAL = 48153,
         };
 
         bool Validate(SpellEntry const * /*spellEntry*/)
@@ -220,8 +220,8 @@ public:
 
         enum Spells
         {
-            SPELL_PRI_REFLECTIVE_SHIELD_TRIGGERED = 33619, 
-            SPELL_PRI_REFLECTIVE_SHIELD_R1 = 33201, 
+            SPELL_PRI_REFLECTIVE_SHIELD_TRIGGERED = 33619,
+            SPELL_PRI_REFLECTIVE_SHIELD_R1 = 33201,
         };
 
         bool Validate(SpellEntry const * /*spellEntry*/)

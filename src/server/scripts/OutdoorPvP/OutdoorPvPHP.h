@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,17 +33,17 @@ const uint32 OutdoorPvPHPBuffZones[OutdoorPvPHPBuffZonesNum] = { 3483, 3563, 356
 
 enum OutdoorPvPHPSpells
 {
-    AlliancePlayerKillReward = 32155, 
-    HordePlayerKillReward = 32158, 
-    AllianceBuff = 32071, 
+    AlliancePlayerKillReward = 32155,
+    HordePlayerKillReward = 32158,
+    AllianceBuff = 32071,
     HordeBuff = 32049
 };
 
 enum OutdoorPvPHPTowerType
 {
-    HP_TOWER_BROKEN_HILL = 0, 
-    HP_TOWER_OVERLOOK = 1, 
-    HP_TOWER_STADIUM = 2, 
+    HP_TOWER_BROKEN_HILL = 0,
+    HP_TOWER_OVERLOOK = 1,
+    HP_TOWER_STADIUM = 2,
     HP_TOWER_NUM = 3
 };
 
@@ -55,14 +55,14 @@ const uint32 HP_CapturePointEvent_Leave[HP_TOWER_NUM] = {11403, 11395, 11387};
 
 enum OutdoorPvPHPWorldStates
 {
-    HP_UI_TOWER_DISPLAY_A = 0x9ba, 
-    HP_UI_TOWER_DISPLAY_H = 0x9b9, 
+    HP_UI_TOWER_DISPLAY_A = 0x9ba,
+    HP_UI_TOWER_DISPLAY_H = 0x9b9,
 
-    HP_UI_TOWER_COUNT_H = 0x9ae, 
-    HP_UI_TOWER_COUNT_A = 0x9ac, 
+    HP_UI_TOWER_COUNT_H = 0x9ae,
+    HP_UI_TOWER_COUNT_A = 0x9ac,
 
-    HP_UI_TOWER_SLIDER_N = 2475, 
-    HP_UI_TOWER_SLIDER_POS = 2474, 
+    HP_UI_TOWER_SLIDER_N = 2475,
+    HP_UI_TOWER_SLIDER_POS = 2474,
     HP_UI_TOWER_SLIDER_DISPLAY = 2473
 };
 

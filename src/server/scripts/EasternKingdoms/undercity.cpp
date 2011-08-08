@@ -48,10 +48,10 @@ EndContentData */
 
 float HighborneLoc[4][3]=
 {
-    {1285.41f, 312.47f, 0.51f}, 
-    {1286.96f, 310.40f, 1.00f}, 
-    {1289.66f, 309.66f, 1.52f}, 
-    {1292.51f, 310.50f, 1.99f}, 
+    {1285.41f, 312.47f, 0.51f},
+    {1286.96f, 310.40f, 1.00f},
+    {1289.66f, 309.66f, 1.52f},
+    {1292.51f, 310.50f, 1.99f},
 };
 
 #define HIGHBORNE_LOC_Y             -61.00f
@@ -139,9 +139,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*######
 ## npc_highborne_lamenter
@@ -198,7 +196,6 @@ public:
             }
         }
     };
-
 };
 
 /*######
@@ -249,9 +246,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## AddSC

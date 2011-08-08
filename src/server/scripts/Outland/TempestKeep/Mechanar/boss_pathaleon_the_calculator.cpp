@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,31 +33,31 @@ EndScriptData */
 
 enum eSays
 {
-    SAY_AGGRO                      = -1554020, 
-    SAY_DOMINATION_1               = -1554021, 
-    SAY_DOMINATION_2               = -1554022, 
-    SAY_SUMMON                     = -1554023, 
-    SAY_ENRAGE                     = -1554024, 
-    SAY_SLAY_1                     = -1554025, 
-    SAY_SLAY_2                     = -1554026, 
-    SAY_DEATH                      = -1554027, 
+    SAY_AGGRO                      = -1554020,
+    SAY_DOMINATION_1               = -1554021,
+    SAY_DOMINATION_2               = -1554022,
+    SAY_SUMMON                     = -1554023,
+    SAY_ENRAGE                     = -1554024,
+    SAY_SLAY_1                     = -1554025,
+    SAY_SLAY_2                     = -1554026,
+    SAY_DEATH                      = -1554027,
 };
 // Spells to be casted
 enum eSpells
 {
-    SPELL_MANA_TAP                 = 36021, 
-    SPELL_ARCANE_TORRENT           = 36022, 
-    SPELL_DOMINATION               = 35280, 
-    H_SPELL_ARCANE_EXPLOSION       = 15453, 
-    SPELL_FRENZY                   = 36992, 
+    SPELL_MANA_TAP                 = 36021,
+    SPELL_ARCANE_TORRENT           = 36022,
+    SPELL_DOMINATION               = 35280,
+    H_SPELL_ARCANE_EXPLOSION       = 15453,
+    SPELL_FRENZY                   = 36992,
     //Spells work, but not implemented
-    SPELL_SUMMON_NETHER_WRAITH_1   = 35285, 
-    SPELL_SUMMON_NETHER_WRAITH_2   = 35286, 
-    SPELL_SUMMON_NETHER_WRAITH_3   = 35287, 
-    SPELL_SUMMON_NETHER_WRAITH_4   = 35288, 
+    SPELL_SUMMON_NETHER_WRAITH_1   = 35285,
+    SPELL_SUMMON_NETHER_WRAITH_2   = 35286,
+    SPELL_SUMMON_NETHER_WRAITH_3   = 35287,
+    SPELL_SUMMON_NETHER_WRAITH_4   = 35288,
     // Add Spells
-    SPELL_DETONATION               = 35058, 
-    SPELL_ARCANE_MISSILES          = 35034, 
+    SPELL_DETONATION               = 35058,
+    SPELL_ARCANE_MISSILES          = 35034,
 };
 
 class boss_pathaleon_the_calculator : public CreatureScript
@@ -191,7 +191,6 @@ class boss_pathaleon_the_calculator : public CreatureScript
                     DoCast(me, SPELL_FRENZY);
                     DoScriptText(SAY_ENRAGE, me);
                     Enraged = true;
-
                 }
 
                 DoMeleeAttackIfReady();
@@ -284,4 +283,3 @@ void AddSC_boss_pathaleon_the_calculator()
     new boss_pathaleon_the_calculator();
     new mob_nether_wraith();
 }
-

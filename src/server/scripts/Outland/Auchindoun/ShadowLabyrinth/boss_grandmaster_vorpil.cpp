@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -61,10 +61,10 @@ float VorpilPosition[3] = {-252.8820f, -264.3030f, 17.1f};
 
 float VoidPortalCoords[5][3] =
 {
-    {-283.5894f, -239.5718f, 12.7f}, 
-    {-306.5853f, -258.4539f, 12.7f}, 
-    {-295.8789f, -269.0899f, 12.7f}, 
-    {-209.3401f, -262.7564f, 17.1f}, 
+    {-283.5894f, -239.5718f, 12.7f},
+    {-306.5853f, -258.4539f, 12.7f},
+    {-295.8789f, -269.0899f, 12.7f},
+    {-209.3401f, -262.7564f, 17.1f},
     {-261.4533f, -297.3298f, 17.1f}
 };
 
@@ -138,7 +138,6 @@ public:
             } else move -= diff;
         }
     };
-
 };
 
 class boss_grandmaster_vorpil : public CreatureScript
@@ -318,7 +317,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_boss_grandmaster_vorpil()

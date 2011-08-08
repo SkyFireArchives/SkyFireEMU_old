@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -50,28 +50,28 @@
 
 enum Phases
 {
-    PHASE_NULL = 0, 
-    PHASE_BIRTH, 
-    PHASE_GROUND, 
-    PHASE_FLIGHT, 
+    PHASE_NULL = 0,
+    PHASE_BIRTH,
+    PHASE_GROUND,
+    PHASE_FLIGHT,
 };
 
 enum Events
 {
-    EVENT_NONE, 
-    EVENT_BERSERK, 
-    EVENT_CLEAVE, 
-    EVENT_TAIL, 
-    EVENT_DRAIN, 
-    EVENT_BLIZZARD, 
-    EVENT_FLIGHT, 
-    EVENT_LIFTOFF, 
-    EVENT_ICEBOLT, 
-    EVENT_BREATH, 
-    EVENT_EXPLOSION, 
-    EVENT_LAND, 
-    EVENT_GROUND, 
-    EVENT_BIRTH, 
+    EVENT_NONE,
+    EVENT_BERSERK,
+    EVENT_CLEAVE,
+    EVENT_TAIL,
+    EVENT_DRAIN,
+    EVENT_BLIZZARD,
+    EVENT_FLIGHT,
+    EVENT_LIFTOFF,
+    EVENT_ICEBOLT,
+    EVENT_BREATH,
+    EVENT_EXPLOSION,
+    EVENT_LAND,
+    EVENT_GROUND,
+    EVENT_BIRTH,
 };
 
 typedef std::map<uint64, uint64> IceBlockMap;
@@ -401,9 +401,7 @@ public:
                 (*itr)->ApplySpellImmune(0, IMMUNITY_ID, SPELL_FROST_EXPLOSION, false);
         }
     };
-
 };
-
 
 void AddSC_boss_sapphiron()
 {

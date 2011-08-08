@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,27 +34,27 @@ EndScriptData */
 
 enum eSays
 {
-    SAY_AGGRO                      = -1554013, 
-    SAY_SUMMON                     = -1554014, 
-    SAY_DRAGONS_BREATH_1           = -1554015, 
-    SAY_DRAGONS_BREATH_2           = -1554016, 
-    SAY_SLAY1                      = -1554017, 
-    SAY_SLAY2                      = -1554018, 
-    SAY_DEATH                      = -1554019, 
+    SAY_AGGRO                      = -1554013,
+    SAY_SUMMON                     = -1554014,
+    SAY_DRAGONS_BREATH_1           = -1554015,
+    SAY_DRAGONS_BREATH_2           = -1554016,
+    SAY_SLAY1                      = -1554017,
+    SAY_SLAY2                      = -1554018,
+    SAY_DEATH                      = -1554019,
 };
 
 enum eSpells
 {
-    SPELL_SUMMON_RAGIN_FLAMES      = 35275, 
-    SPELL_FROST_ATTACK             = 35263, 
-    SPELL_ARCANE_BLAST             = 35314, 
-    SPELL_DRAGONS_BREATH           = 35250, 
-    SPELL_KNOCKBACK                = 37317, 
-    SPELL_SOLARBURN                = 35267, 
-    H_SPELL_SUMMON_RAGIN_FLAMES    = 39084, 
-    SPELL_INFERNO                  = 35268, 
-    H_SPELL_INFERNO                = 39346, 
-    SPELL_FIRE_TAIL                = 35278, 
+    SPELL_SUMMON_RAGIN_FLAMES      = 35275,
+    SPELL_FROST_ATTACK             = 35263,
+    SPELL_ARCANE_BLAST             = 35314,
+    SPELL_DRAGONS_BREATH           = 35250,
+    SPELL_KNOCKBACK                = 37317,
+    SPELL_SOLARBURN                = 35267,
+    H_SPELL_SUMMON_RAGIN_FLAMES    = 39084,
+    SPELL_INFERNO                  = 35268,
+    H_SPELL_INFERNO                = 39346,
+    SPELL_FIRE_TAIL                = 35278,
 };
 
 class boss_nethermancer_sepethrea : public CreatureScript
@@ -119,7 +119,6 @@ class boss_nethermancer_sepethrea : public CreatureScript
                 //Return since we have no target
                 if (!UpdateVictim())
                     return;
-
 
                 //Frost Attack
                 if (frost_attack_Timer <= diff)
@@ -260,7 +259,6 @@ class mob_ragin_flames : public CreatureScript
 
                     DoMeleeAttackIfReady();
                 }
-
             };
             CreatureAI* GetAI(Creature* creature) const
             {
@@ -272,4 +270,3 @@ void AddSC_boss_nethermancer_sepethrea()
     new boss_nethermancer_sepethrea();
     new mob_ragin_flames();
 }
-

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,9 +39,9 @@ enum Factions
 
 enum Sounds
 {
-    SOUND_CANNONFIRE                                     = 1400, 
-    SOUND_DESTROYDOOR                                    = 3079, 
-    SOUND_MR_SMITE_ALARM1                                = 5775, 
+    SOUND_CANNONFIRE                                     = 1400,
+    SOUND_DESTROYDOOR                                    = 3079,
+    SOUND_MR_SMITE_ALARM1                                = 5775,
     SOUND_MR_SMITE_ALARM2                                = 5777
 };
 
@@ -50,7 +50,7 @@ enum Sounds
 
 enum Misc
 {
-    DATA_CANNON_BLAST_TIMER                                = 3000, 
+    DATA_CANNON_BLAST_TIMER                                = 3000,
     DATA_PIRATES_DELAY_TIMER                               = 1000
 };
 
@@ -119,7 +119,7 @@ class instance_deadmines : public InstanceMapScript
                     if (ServerAllowsTwoSideGroups())
                         pCreature->setFaction(FACTION_HOSTILE_FOR_ALL);
                     if (TeamInInstance == ALLIANCE)
-                        pCreature->UpdateEntry(491, ALLIANCE); // Quartermaster Lewis <Quartermaster> 
+                        pCreature->UpdateEntry(491, ALLIANCE); // Quartermaster Lewis <Quartermaster>
                     break;
                 }
                 case 46890: // Shattered Hand Assassin
@@ -129,7 +129,7 @@ class instance_deadmines : public InstanceMapScript
                     if (TeamInInstance == ALLIANCE)
                         pCreature->UpdateEntry(1, ALLIANCE); // GM WAYPOINT
                     break;
-                }                
+                }
                 case 46903: // Mayhem Reaper Prototype
                 {
                     if (ServerAllowsTwoSideGroups())
@@ -180,8 +180,7 @@ class instance_deadmines : public InstanceMapScript
                    break;
                }
             }
-        
-            }                                                
+            }
             virtual void Update(uint32 diff)
             {
                 if (!IronCladDoorGUID || !DefiasCannonGUID || !DoorLeverGUID)

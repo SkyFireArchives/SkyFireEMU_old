@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -32,13 +32,13 @@
 enum eSpells
 {
     SPELL_BELLOWING_ROAR                          = 22686, // fears the group, can be resisted/dispelled
-    SPELL_GRIEVOUS_BITE                           = 48920, 
+    SPELL_GRIEVOUS_BITE                           = 48920,
     SPELL_MANGLING_SLASH                          = 48873, //casted on the current tank, adds debuf
-    SPELL_FEARSOME_ROAR                           = 48849, 
+    SPELL_FEARSOME_ROAR                           = 48849,
     H_SPELL_FEARSOME_ROAR                         = 59422, //Not stacking, debuff
     SPELL_PIERCING_SLASH                          = 48878, //debuff -->Armor reduced by 75%
     SPELL_RAPTOR_CALL                             = 59416, //dummy
-    SPELL_GUT_RIP                                 = 49710, 
+    SPELL_GUT_RIP                                 = 49710,
     SPELL_REND                                    = 13738
 };
 
@@ -49,7 +49,7 @@ enum eArchivements
 
 enum Creatures
 {
-    NPC_RAPTOR_1                                  = 26641, 
+    NPC_RAPTOR_1                                  = 26641,
     NPC_RAPTOR_2                                  = 26628
 };
 

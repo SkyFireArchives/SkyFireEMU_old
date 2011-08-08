@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -29,50 +29,50 @@
 
 enum Spells
 {
-    SPELL_ASCEND                    = 64487, 
-    SPELL_BERSERK                   = 47008, 
-    SPELL_BIG_BANG                  = 64443, 
-    H_SPELL_BIG_BANG                = 64584, 
-    SPELL_COSMIC_SMASH              = 62301, 
-    H_SPELL_COSMIC_SMASH            = 64598, 
-    SPELL_PHASE_PUNCH               = 64412, 
-    SPELL_QUANTUM_STRIKE            = 64395, 
-    H_SPELL_QUANTUM_STRIKE          = 64592, 
-    SPELL_BLACK_HOLE_EXPLOSION      = 64122, 
-    SPELL_ARCANE_BARAGE             = 64599, 
+    SPELL_ASCEND                    = 64487,
+    SPELL_BERSERK                   = 47008,
+    SPELL_BIG_BANG                  = 64443,
+    H_SPELL_BIG_BANG                = 64584,
+    SPELL_COSMIC_SMASH              = 62301,
+    H_SPELL_COSMIC_SMASH            = 64598,
+    SPELL_PHASE_PUNCH               = 64412,
+    SPELL_QUANTUM_STRIKE            = 64395,
+    H_SPELL_QUANTUM_STRIKE          = 64592,
+    SPELL_BLACK_HOLE_EXPLOSION      = 64122,
+    SPELL_ARCANE_BARAGE             = 64599,
     H_SPELL_ARCANE_BARAGE           = 64607
 };
 
 enum Creatures
 {
-    CREATURE_COLLAPSING_STAR        = 32955, 
-    CREATURE_BLACK_HOLE             = 32953, 
-    CREATURE_LIVING_CONSTELLATION   = 33052, 
+    CREATURE_COLLAPSING_STAR        = 32955,
+    CREATURE_BLACK_HOLE             = 32953,
+    CREATURE_LIVING_CONSTELLATION   = 33052,
     CREATURE_DARK_MATTER            = 33089
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1603000, 
-    SAY_SLAY_1                                  = -1603001, 
-    SAY_SLAY_2                                  = -1603002, 
-    SAY_ENGADED_FOR_FIRTS_TIME                  = -1603003, 
-    SAY_PHASE_2                                 = -1603004, 
-    SAY_SUMMON_COLLAPSING_STAR                  = -1603005, 
-    SAY_DEATH_1                                 = -1603006, 
-    SAY_DEATH_2                                 = -1603007, 
-    SAY_DEATH_3                                 = -1603008, 
-    SAY_DEATH_4                                 = -1603009, 
-    SAY_DEATH_5                                 = -1603010, 
-    SAY_BERSERK                                 = -1603011, 
-    SAY_BIG_BANG_1                              = -1603012, 
-    SAY_BIG_BANG_2                              = -1603013, 
-    SAY_TIMER_1                                 = -1603014, 
-    SAY_TIMER_2                                 = -1603015, 
-    SAY_TIMER_3                                 = -1603016, 
-    SAY_SUMMON_1                                = -1603017, 
-    SAY_SUMMON_2                                = -1603018, 
-    SAY_SUMMON_3                                = -1603019, 
+    SAY_AGGRO                                   = -1603000,
+    SAY_SLAY_1                                  = -1603001,
+    SAY_SLAY_2                                  = -1603002,
+    SAY_ENGADED_FOR_FIRTS_TIME                  = -1603003,
+    SAY_PHASE_2                                 = -1603004,
+    SAY_SUMMON_COLLAPSING_STAR                  = -1603005,
+    SAY_DEATH_1                                 = -1603006,
+    SAY_DEATH_2                                 = -1603007,
+    SAY_DEATH_3                                 = -1603008,
+    SAY_DEATH_4                                 = -1603009,
+    SAY_DEATH_5                                 = -1603010,
+    SAY_BERSERK                                 = -1603011,
+    SAY_BIG_BANG_1                              = -1603012,
+    SAY_BIG_BANG_2                              = -1603013,
+    SAY_TIMER_1                                 = -1603014,
+    SAY_TIMER_2                                 = -1603015,
+    SAY_TIMER_3                                 = -1603016,
+    SAY_SUMMON_1                                = -1603017,
+    SAY_SUMMON_2                                = -1603018,
+    SAY_SUMMON_3                                = -1603019,
 };
 
 class boss_algalon : public CreatureScript
@@ -330,7 +330,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 //Collapsing Star
@@ -372,7 +371,6 @@ public:
             } else BlackHoleExplosion_Timer -= diff;
         }
     };
-
 };
 
 void AddSC_boss_Algalon()

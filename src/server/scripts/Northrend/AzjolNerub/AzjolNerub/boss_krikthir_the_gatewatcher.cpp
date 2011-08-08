@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,54 +31,54 @@
 
 enum Spells
 {
-    SPELL_MIND_FLAY                               = 52586, 
-    H_SPELL_MIND_FLAY                             = 59367, 
-    SPELL_CURSE_OF_FATIGUE                        = 52592, 
-    H_SPELL_CURSE_OF_FATIGUE                      = 59368, 
+    SPELL_MIND_FLAY                               = 52586,
+    H_SPELL_MIND_FLAY                             = 59367,
+    SPELL_CURSE_OF_FATIGUE                        = 52592,
+    H_SPELL_CURSE_OF_FATIGUE                      = 59368,
     SPELL_FRENZY                                  = 28747, //maybe 53361
     SPELL_SUMMON_SKITTERING_SWARMER               = 52438, //AOE Effect 140, maybe 52439
     SPELL_SUMMON_SKITTERING_SWARMER_1             = 52439, //Summon 3x 28735
-    H_SPELL_ACID_SPLASH                           = 59363, 
-    SPELL_ACID_SPLASH                             = 52446, 
+    H_SPELL_ACID_SPLASH                           = 59363,
+    SPELL_ACID_SPLASH                             = 52446,
     SPELL_CHARGE                                  = 16979, //maybe is another spell
-    SPELL_BACKSTAB                                = 52540, 
-    SPELL_SHADOW_BOLT                             = 52534, 
-    H_SPELL_SHADOW_BOLT                           = 59357, 
-    SPELL_SHADOW_NOVA                             = 52535, 
-    H_SPELL_SHADOW_NOVA                           = 59358, 
-    SPELL_STRIKE                                  = 52532, 
-    SPELL_CLEAVE                                  = 49806, 
-    SPELL_ENRAGE                                  = 52470, 
-    SPELL_INFECTED_BITE                           = 52469, 
-    H_SPELL_INFECTED_BITE                         = 59364, 
+    SPELL_BACKSTAB                                = 52540,
+    SPELL_SHADOW_BOLT                             = 52534,
+    H_SPELL_SHADOW_BOLT                           = 59357,
+    SPELL_SHADOW_NOVA                             = 52535,
+    H_SPELL_SHADOW_NOVA                           = 59358,
+    SPELL_STRIKE                                  = 52532,
+    SPELL_CLEAVE                                  = 49806,
+    SPELL_ENRAGE                                  = 52470,
+    SPELL_INFECTED_BITE                           = 52469,
+    H_SPELL_INFECTED_BITE                         = 59364,
     SPELL_WEB_WRAP                                = 52086, //the spell is not working properly
-    SPELL_BLINDING_WEBS                           = 52524, 
-    H_SPELL_BLINDING_WEBS                         = 59365, 
-    SPELL_POSION_SPRAY                            = 52493, 
+    SPELL_BLINDING_WEBS                           = 52524,
+    H_SPELL_BLINDING_WEBS                         = 59365,
+    SPELL_POSION_SPRAY                            = 52493,
     H_SPELL_POSION_SPRAY                          = 59366
 };
 
 enum Mobs
 {
-    MOB_SKITTERING_SWARMER                        = 28735, 
-    MOB_SKITTERING_SWARMER_CONTROLLER             = 32593, 
+    MOB_SKITTERING_SWARMER                        = 28735,
+    MOB_SKITTERING_SWARMER_CONTROLLER             = 32593,
     MOB_SKITTERING_INFECTIOR                      = 28736
 };
 
 enum Yells
 {
-    SAY_AGGRO                                     = -1601011, 
-    SAY_SLAY_1                                    = -1601012, 
-    SAY_SLAY_2                                    = -1601013, 
-    SAY_DEATH                                     = -1601014, 
+    SAY_AGGRO                                     = -1601011,
+    SAY_SLAY_1                                    = -1601012,
+    SAY_SLAY_2                                    = -1601013,
+    SAY_DEATH                                     = -1601014,
     //Not in db
-    SAY_SEND_GROUP_1                              = -1601020, 
-    SAY_SEND_GROUP_2                              = -1601021, 
-    SAY_SEND_GROUP_3                              = -1601022, 
-    SAY_SWARM_1                                   = -1601015, 
-    SAY_SWARM_2                                   = -1601016, 
-    SAY_PREFIGHT_1                                = -1601017, 
-    SAY_PREFIGHT_2                                = -1601018, 
+    SAY_SEND_GROUP_1                              = -1601020,
+    SAY_SEND_GROUP_2                              = -1601021,
+    SAY_SEND_GROUP_3                              = -1601022,
+    SAY_SWARM_1                                   = -1601015,
+    SAY_SWARM_2                                   = -1601016,
+    SAY_PREFIGHT_1                                = -1601017,
+    SAY_PREFIGHT_2                                = -1601018,
     SAY_PREFIGHT_3                                = -1601019
 };
 
@@ -89,13 +89,13 @@ enum Misc
 
 const Position SpawnPoint[] =
 {
-    { 566.164f, 682.087f, 769.079f, 2.21657f  }, 
-    { 529.042f, 706.941f, 777.298f, 1.0821f   }, 
-    { 489.975f, 671.239f, 772.131f, 0.261799f }, 
-    { 488.556f, 692.95f,  771.764f, 4.88692f  }, 
-    { 553.34f,  640.387f, 777.419f, 1.20428f  }, 
-    { 517.486f, 706.398f, 777.335f, 5.35816f  }, 
-    { 504.01f,  637.693f, 777.479f, 0.506145f }, 
+    { 566.164f, 682.087f, 769.079f, 2.21657f  },
+    { 529.042f, 706.941f, 777.298f, 1.0821f   },
+    { 489.975f, 671.239f, 772.131f, 0.261799f },
+    { 488.556f, 692.95f,  771.764f, 4.88692f  },
+    { 553.34f,  640.387f, 777.419f, 1.20428f  },
+    { 517.486f, 706.398f, 777.335f, 5.35816f  },
+    { 504.01f,  637.693f, 777.479f, 0.506145f },
     { 552.625f, 706.408f, 777.177f, 3.4383f   }
 };
 
@@ -299,7 +299,6 @@ public:
             } else uiBackstabTimer -= diff;
 
             DoMeleeAttackIfReady();
-
         }
     };
 
@@ -551,7 +550,6 @@ public:
             } else uiPoisonSprayTimer -= diff;
 
             DoMeleeAttackIfReady();
-
         }
     };
 

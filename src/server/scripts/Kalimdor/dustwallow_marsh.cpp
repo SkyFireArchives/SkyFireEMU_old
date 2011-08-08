@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -48,14 +48,14 @@ EndContentData */
 
 enum eHuskSpirit
 {
-    QUEST_WHATS_HAUNTING_WITCH_HILL     = 11180, 
+    QUEST_WHATS_HAUNTING_WITCH_HILL     = 11180,
 
-    SPELL_SUMMON_RESTLESS_APPARITION    = 42511, 
+    SPELL_SUMMON_RESTLESS_APPARITION    = 42511,
     SPELL_CONSUME_FLESH                 = 37933,               //Risen Husk
     SPELL_INTANGIBLE_PRESENCE           = 43127,               //Risen Spirit
 
-    NPC_RISEN_HUSK                      = 23555, 
-    NPC_RISEN_SPIRIT                    = 23554, 
+    NPC_RISEN_HUSK                      = 23555,
+    NPC_RISEN_SPIRIT                    = 23554,
     NPC_RESTLESS_APPARITION             = 23861
 };
 
@@ -120,9 +120,7 @@ public:
                 }
         }
     };
-
 };
-
 
 /*######
 ## npc_restless_apparition
@@ -130,8 +128,8 @@ public:
 
 enum eRestlessApparition
 {
-    SAY_RESTLESS_1      = -1000469, 
-    SAY_RESTLESS_2      = -1000470, 
+    SAY_RESTLESS_1      = -1000469,
+    SAY_RESTLESS_2      = -1000470,
     SAY_RESTLESS_3      = -1000471
 };
 
@@ -154,7 +152,6 @@ public:
             DoScriptText(RAND(SAY_RESTLESS_1, SAY_RESTLESS_2, SAY_RESTLESS_3), me);
         }
     };
-
 };
 
 /*######
@@ -163,13 +160,13 @@ public:
 
 enum eDeserter
 {
-    QUEST_TRAITORS_AMONG_US                      = 11126, 
-    NPC_THERAMORE_DESERTER                       = 23602, 
+    QUEST_TRAITORS_AMONG_US                      = 11126,
+    NPC_THERAMORE_DESERTER                       = 23602,
 };
 
 const Position DeserterDisappearPos = {-3609.03f, -4332.91f, 9.39354f, 3.73862f};
 
-#define GOSSIP_ITEM_DESERTER "Your propaganda wont`t work on me. Spout your treasonous filth elsewhere traitor!" 
+#define GOSSIP_ITEM_DESERTER "Your propaganda wont`t work on me. Spout your treasonous filth elsewhere traitor!"
 
 class npc_deserter_agitator : public CreatureScript
 {
@@ -180,7 +177,7 @@ public:
     {
         if (pPlayer->GetQuestStatus(QUEST_TRAITORS_AMONG_US) == QUEST_STATUS_INCOMPLETE)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_DESERTER, GOSSIP_SENDER_MAIN, GOSSIP_SENDER_INFO);
-            
+
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
 
         return true;
@@ -189,7 +186,7 @@ public:
     bool OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
     {
         pPlayer->PlayerTalkClass->ClearMenus();
-        
+
         if (uiAction == GOSSIP_SENDER_INFO)
         {
             pPlayer->CLOSE_GOSSIP_MENU();
@@ -249,22 +246,22 @@ public:
 
 enum eTheramoreGuard
 {
-    SAY_QUEST1                                   = -1000641, 
-    SAY_QUEST2                                   = -1000642, 
-    SAY_QUEST3                                   = -1000643, 
-    SAY_QUEST4                                   = -1000644, 
-    SAY_QUEST5                                   = -1000645, 
-    SAY_QUEST6                                   = -1000646, 
-    SAY_QUEST7                                   = -1000647, 
-    SAY_QUEST8                                   = -1000648, 
-    SAY_QUEST9                                   = -1000649, 
+    SAY_QUEST1                                   = -1000641,
+    SAY_QUEST2                                   = -1000642,
+    SAY_QUEST3                                   = -1000643,
+    SAY_QUEST4                                   = -1000644,
+    SAY_QUEST5                                   = -1000645,
+    SAY_QUEST6                                   = -1000646,
+    SAY_QUEST7                                   = -1000647,
+    SAY_QUEST8                                   = -1000648,
+    SAY_QUEST9                                   = -1000649,
 
-    QUEST_DISCREDITING_THE_DESERTERS             = 11133, 
+    QUEST_DISCREDITING_THE_DESERTERS             = 11133,
 
-    NPC_THERAMORE_GUARD                          = 4979, 
+    NPC_THERAMORE_GUARD                          = 4979,
 
-    SPELL_DOCTORED_LEAFLET                       = 42725, 
-    SPELL_PROPAGANDIZED                          = 42246, 
+    SPELL_DOCTORED_LEAFLET                       = 42725,
+    SPELL_PROPAGANDIZED                          = 42246,
 };
 
 #define GOSSIP_ITEM_THERAMORE_GUARD "You look like an intelligent person. Why don't you read one of these leaflets and give it some thought?"
@@ -278,7 +275,7 @@ public:
     {
         if (pPlayer->GetQuestStatus(QUEST_DISCREDITING_THE_DESERTERS) == QUEST_STATUS_INCOMPLETE)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_THERAMORE_GUARD, GOSSIP_SENDER_MAIN, GOSSIP_SENDER_INFO);
-            
+
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
 
         return true;
@@ -287,7 +284,7 @@ public:
     bool OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
     {
         pPlayer->PlayerTalkClass->ClearMenus();
-        
+
         if (uiAction == GOSSIP_SENDER_INFO)
         {
             pPlayer->CLOSE_GOSSIP_MENU();
@@ -355,7 +352,7 @@ public:
 
 enum eLadyJaina
 {
-    QUEST_JAINAS_AUTOGRAPH = 558, 
+    QUEST_JAINAS_AUTOGRAPH = 558,
     SPELL_JAINAS_AUTOGRAPH = 23122
 };
 
@@ -389,9 +386,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_nat_pagle
@@ -431,9 +426,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_private_hendel
@@ -444,11 +437,11 @@ enum eHendel
     // looks like all this text ids are wrong.
     SAY_PROGRESS_1_TER          = -1000411, // signed for 3568
     SAY_PROGRESS_2_HEN          = -1000412, // signed for 3568
-    SAY_PROGRESS_3_TER          = -1000413, 
-    SAY_PROGRESS_4_TER          = -1000414, 
-    EMOTE_SURRENDER             = -1000415, 
+    SAY_PROGRESS_3_TER          = -1000413,
+    SAY_PROGRESS_4_TER          = -1000414,
+    EMOTE_SURRENDER             = -1000415,
 
-    QUEST_MISSING_DIPLO_PT16    = 1324, 
+    QUEST_MISSING_DIPLO_PT16    = 1324,
     FACTION_HOSTILE             = 168,                      //guessed, may be different
 
     NPC_SENTRY                  = 5184,                     //helps hendel
@@ -509,10 +502,7 @@ public:
             }
         }
     };
-
 };
-
-
 
 /*######
 ## npc_zelfrax
@@ -522,7 +512,7 @@ const Position MovePosition = {-2967.030f, -3872.1799f, 35.620f, 0.0f};
 
 enum eZelfrax
 {
-    SAY_ZELFRAX     = -1000472, 
+    SAY_ZELFRAX     = -1000472,
     SAY_ZELFRAX_2   = -1000473
 };
 
@@ -588,7 +578,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /////////////////////
@@ -597,17 +586,17 @@ public:
 
 enum eStinky
 {
-    QUEST_STINKYS_ESCAPE_H                       = 1270, 
-    QUEST_STINKYS_ESCAPE_A                       = 1222, 
-    SAY_QUEST_ACCEPTED                           = -1000507, 
-    SAY_STAY_1                                   = -1000508, 
-    SAY_STAY_2                                   = -1000509, 
-    SAY_STAY_3                                   = -1000510, 
-    SAY_STAY_4                                   = -1000511, 
-    SAY_STAY_5                                   = -1000512, 
-    SAY_STAY_6                                   = -1000513, 
-    SAY_QUEST_COMPLETE                           = -1000514, 
-    SAY_ATTACKED_1                               = -1000515, 
+    QUEST_STINKYS_ESCAPE_H                       = 1270,
+    QUEST_STINKYS_ESCAPE_A                       = 1222,
+    SAY_QUEST_ACCEPTED                           = -1000507,
+    SAY_STAY_1                                   = -1000508,
+    SAY_STAY_2                                   = -1000509,
+    SAY_STAY_3                                   = -1000510,
+    SAY_STAY_4                                   = -1000511,
+    SAY_STAY_5                                   = -1000512,
+    SAY_STAY_6                                   = -1000513,
+    SAY_QUEST_COMPLETE                           = -1000514,
+    SAY_ATTACKED_1                               = -1000515,
     EMOTE_DISAPPEAR                              = -1000516
 };
 
@@ -639,7 +628,6 @@ public:
     struct npc_stinkyAI : public npc_escortAI
     {
        npc_stinkyAI(Creature* pCreature) : npc_escortAI(pCreature) { }
-
 
         void WaypointReached(uint32 i)
         {
@@ -683,7 +671,6 @@ public:
             case 39:
                 DoScriptText(EMOTE_DISAPPEAR, me);
                 break;
-
             }
         }
 
@@ -717,7 +704,6 @@ public:
         }
     };
 };
-
 
 void AddSC_dustwallow_marsh()
 {

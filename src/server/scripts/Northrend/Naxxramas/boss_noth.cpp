@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -51,23 +51,23 @@
 
 const float SummonPos[MAX_SUMMON_POS][4] =
 {
-    {2728.12f, -3544.43f, 261.91f, 6.04f}, 
-    {2729.05f, -3544.47f, 261.91f, 5.58f}, 
-    {2728.24f, -3465.08f, 264.20f, 3.56f}, 
-    {2704.11f, -3456.81f, 265.53f, 4.51f}, 
-    {2663.56f, -3464.43f, 262.66f, 5.20f}, 
+    {2728.12f, -3544.43f, 261.91f, 6.04f},
+    {2729.05f, -3544.47f, 261.91f, 5.58f},
+    {2728.24f, -3465.08f, 264.20f, 3.56f},
+    {2704.11f, -3456.81f, 265.53f, 4.51f},
+    {2663.56f, -3464.43f, 262.66f, 5.20f},
 };
 
 enum Events
 {
-    EVENT_NONE, 
-    EVENT_BERSERK, 
-    EVENT_CURSE, 
-    EVENT_BLINK, 
-    EVENT_WARRIOR, 
-    EVENT_BALCONY, 
-    EVENT_WAVE, 
-    EVENT_GROUND, 
+    EVENT_NONE,
+    EVENT_BERSERK,
+    EVENT_CURSE,
+    EVENT_BLINK,
+    EVENT_WARRIOR,
+    EVENT_BALCONY,
+    EVENT_WAVE,
+    EVENT_GROUND,
 };
 
 class boss_noth : public CreatureScript
@@ -144,7 +144,7 @@ public:
             for (uint32 i = 0; i < num; ++i)
             {
                 uint32 pos = rand()%MAX_SUMMON_POS;
-                me->SummonCreature(entry, SummonPos[pos][0], SummonPos[pos][1], SummonPos[pos][2], 
+                me->SummonCreature(entry, SummonPos[pos][0], SummonPos[pos][1], SummonPos[pos][2],
                     SummonPos[pos][3], TEMPSUMMON_CORPSE_DESPAWN, 60000);
             }
         }
@@ -216,9 +216,7 @@ public:
                 DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_noth()
 {

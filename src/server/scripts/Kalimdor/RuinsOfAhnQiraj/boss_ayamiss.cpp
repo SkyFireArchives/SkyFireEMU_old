@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,7 +39,7 @@ make him fly from 70-100%
 
 enum Spells
 {
-    SPELL_STINGERSPRAY                 = 25749, 
+    SPELL_STINGERSPRAY                 = 25749,
     SPELL_POISONSTINGER                = 25748,  //only used in phase1
     SPELL_SUMMONSWARMER                = 25844,  //might be 25708
     SPELL_PARALYZE                     = 23414   //doesnt work correct (core)
@@ -127,7 +127,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_boss_ayamiss()

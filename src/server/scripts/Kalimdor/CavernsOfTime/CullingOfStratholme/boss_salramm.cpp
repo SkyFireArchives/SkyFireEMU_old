@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,29 +35,29 @@ Script Data End */
 
 enum Spells
 {
-    SPELL_CURSE_OF_TWISTED_FLESH                = 58845, 
-    SPELL_EXPLODE_GHOUL                         = 52480, 
-    H_SPELL_EXPLODE_GHOUL                       = 58825, 
-    SPELL_SHADOW_BOLT                           = 57725, 
-    H_SPELL_SHADOW_BOLT                         = 58828, 
-    SPELL_STEAL_FLESH                           = 52708, 
+    SPELL_CURSE_OF_TWISTED_FLESH                = 58845,
+    SPELL_EXPLODE_GHOUL                         = 52480,
+    H_SPELL_EXPLODE_GHOUL                       = 58825,
+    SPELL_SHADOW_BOLT                           = 57725,
+    H_SPELL_SHADOW_BOLT                         = 58828,
+    SPELL_STEAL_FLESH                           = 52708,
     SPELL_SUMMON_GHOULS                         = 52451
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1595032, 
-    SAY_SPAWN                                   = -1595033, 
-    SAY_SLAY_1                                  = -1595034, 
-    SAY_SLAY_2                                  = -1595035, 
-    SAY_SLAY_3                                  = -1595036, 
-    SAY_DEATH                                   = -1595037, 
-    SAY_EXPLODE_GHOUL_1                         = -1595038, 
-    SAY_EXPLODE_GHOUL_2                         = -1595039, 
-    SAY_STEAL_FLESH_1                           = -1595040, 
-    SAY_STEAL_FLESH_2                           = -1595041, 
-    SAY_STEAL_FLESH_3                           = -1595042, 
-    SAY_SUMMON_GHOULS_1                         = -1595043, 
+    SAY_AGGRO                                   = -1595032,
+    SAY_SPAWN                                   = -1595033,
+    SAY_SLAY_1                                  = -1595034,
+    SAY_SLAY_2                                  = -1595035,
+    SAY_SLAY_3                                  = -1595036,
+    SAY_DEATH                                   = -1595037,
+    SAY_EXPLODE_GHOUL_1                         = -1595038,
+    SAY_EXPLODE_GHOUL_2                         = -1595039,
+    SAY_STEAL_FLESH_1                           = -1595040,
+    SAY_STEAL_FLESH_2                           = -1595041,
+    SAY_STEAL_FLESH_3                           = -1595042,
+    SAY_SUMMON_GHOULS_1                         = -1595043,
     SAY_SUMMON_GHOULS_2                         = -1595044
 };
 
@@ -166,9 +166,7 @@ public:
             DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
     };
-
 };
-
 
 void AddSC_boss_salramm()
 {

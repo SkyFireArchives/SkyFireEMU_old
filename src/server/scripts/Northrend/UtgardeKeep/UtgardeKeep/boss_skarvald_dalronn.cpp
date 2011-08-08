@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,32 +35,32 @@ EndScriptData */
 enum eEnums
 {
     //signed for 24200, but used by 24200, 27390
-    YELL_SKARVALD_AGGRO                         = -1574011, 
-    YELL_SKARVALD_DAL_DIED                      = -1574012, 
-    YELL_SKARVALD_SKA_DIEDFIRST                 = -1574013, 
-    YELL_SKARVALD_KILL                          = -1574014, 
-    YELL_SKARVALD_DAL_DIEDFIRST                 = -1574015, 
+    YELL_SKARVALD_AGGRO                         = -1574011,
+    YELL_SKARVALD_DAL_DIED                      = -1574012,
+    YELL_SKARVALD_SKA_DIEDFIRST                 = -1574013,
+    YELL_SKARVALD_KILL                          = -1574014,
+    YELL_SKARVALD_DAL_DIEDFIRST                 = -1574015,
 
     //signed for 24201, but used by 24201, 27389
-    YELL_DALRONN_AGGRO                          = -1574016, 
-    YELL_DALRONN_SKA_DIED                       = -1574017, 
-    YELL_DALRONN_DAL_DIEDFIRST                  = -1574018, 
-    YELL_DALRONN_KILL                           = -1574019, 
-    YELL_DALRONN_SKA_DIEDFIRST                  = -1574020, 
+    YELL_DALRONN_AGGRO                          = -1574016,
+    YELL_DALRONN_SKA_DIED                       = -1574017,
+    YELL_DALRONN_DAL_DIEDFIRST                  = -1574018,
+    YELL_DALRONN_KILL                           = -1574019,
+    YELL_DALRONN_SKA_DIEDFIRST                  = -1574020,
 
 //Spells of Skarvald and his Ghost
-    MOB_SKARVALD_THE_CONSTRUCTOR                = 24200, 
-    SPELL_CHARGE                                = 43651, 
-    SPELL_STONE_STRIKE                          = 48583, 
-    SPELL_SUMMON_SKARVALD_GHOST                 = 48613, 
-    MOB_SKARVALD_GHOST                          = 27390, 
+    MOB_SKARVALD_THE_CONSTRUCTOR                = 24200,
+    SPELL_CHARGE                                = 43651,
+    SPELL_STONE_STRIKE                          = 48583,
+    SPELL_SUMMON_SKARVALD_GHOST                 = 48613,
+    MOB_SKARVALD_GHOST                          = 27390,
 //Spells of Dalronn and his Ghost
-    MOB_DALRONN_THE_CONTROLLER                  = 24201, 
-    SPELL_SHADOW_BOLT                           = 43649, 
-    H_SPELL_SHADOW_BOLT                         = 59575, 
-    H_SPELL_SUMMON_SKELETONS                    = 52611, 
-    SPELL_DEBILITATE                            = 43650, 
-    SPELL_SUMMON_DALRONN_GHOST                  = 48612, 
+    MOB_DALRONN_THE_CONTROLLER                  = 24201,
+    SPELL_SHADOW_BOLT                           = 43649,
+    H_SPELL_SHADOW_BOLT                         = 59575,
+    H_SPELL_SUMMON_SKELETONS                    = 52611,
+    SPELL_DEBILITATE                            = 43650,
+    SPELL_SUMMON_DALRONN_GHOST                  = 48612,
     MOB_DALRONN_GHOST                           = 27389
 };
 
@@ -215,9 +215,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 class boss_dalronn_the_controller : public CreatureScript
 {
@@ -403,9 +401,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_skarvald_dalronn()
 {

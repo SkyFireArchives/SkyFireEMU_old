@@ -36,7 +36,7 @@ private:
 
 public:
     spell_generic_quest_update_entry_SpellScript(uint32 spellEffect, uint8 effIndex, uint32 originalEntry, uint32 newEntry, bool shouldAttack, uint32 despawnTime = 0) :
-        SpellScript(), _spellEffect(spellEffect), _effIndex(effIndex), _originalEntry(originalEntry), 
+        SpellScript(), _spellEffect(spellEffect), _effIndex(effIndex), _originalEntry(originalEntry),
         _newEntry(newEntry), _shouldAttack(shouldAttack), _despawnTime(despawnTime) { }
 
     void HandleDummy(SpellEffIndex /*effIndex*/)
@@ -63,8 +63,8 @@ public:
 // 8913 Sacred Cleansing
 enum eQuest55Data
 {
-    NPC_MORBENT             = 1200, 
-    NPC_WEAKENED_MORBENT    = 24782, 
+    NPC_MORBENT             = 1200,
+    NPC_WEAKENED_MORBENT    = 24782,
 };
 
 class spell_q55_sacred_cleansing : public SpellScriptLoader
@@ -82,7 +82,7 @@ public:
 // 17271 Test Fetid Skull
 enum eQuest5206Data
 {
-    SPELL_CREATE_RESONATING_SKULL = 17269, 
+    SPELL_CREATE_RESONATING_SKULL = 17269,
     SPELL_CREATE_BONE_DUST = 17270
 };
 
@@ -130,10 +130,10 @@ public:
 // 19512 Apply Salve
 enum eQuests6124_6129Data
 {
-    NPC_SICKLY_GAZELLE  = 12296, 
-    NPC_CURED_GAZELLE   = 12297, 
-    NPC_SICKLY_DEER     = 12298, 
-    NPC_CURED_DEER      = 12299, 
+    NPC_SICKLY_GAZELLE  = 12296,
+    NPC_CURED_GAZELLE   = 12297,
+    NPC_SICKLY_DEER     = 12298,
+    NPC_CURED_DEER      = 12299,
     DESPAWN_TIME        = 30000
 };
 
@@ -187,8 +187,8 @@ public:
 // 34665 Administer Antidote
 enum eQuest10255Data
 {
-    NPC_HELBOAR     = 16880, 
-    NPC_DREADTUSK   = 16992, 
+    NPC_HELBOAR     = 16880,
+    NPC_DREADTUSK   = 16992,
 };
 
 class spell_q10255_administer_antidote : public SpellScriptLoader
@@ -206,7 +206,7 @@ public:
 // http://www.wowhead.com/quest=11399 Bring Down Those Shields (H)
 enum eQuest11396_11399Data
 {
-    SPELL_FORCE_SHIELD_ARCANE_PURPLE_X3 = 43874, 
+    SPELL_FORCE_SHIELD_ARCANE_PURPLE_X3 = 43874,
     SPELL_SCOURGING_CRYSTAL_CONTROLLER = 43878
 };
 
@@ -236,7 +236,6 @@ public:
             OnEffectApply += AuraEffectApplyFn(spell_q11396_11399_force_shield_arcane_purple_x3_AuraScript::HandleEffectApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
             OnEffectRemove += AuraEffectRemoveFn(spell_q11396_11399_force_shield_arcane_purple_x3_AuraScript::HandleEffectRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
         }
-
     };
 
     AuraScript* GetAuraScript() const
@@ -323,7 +322,7 @@ public:
 // 44936 Quest - Fel Siphon Dummy
 enum eQuest11515Data
 {
-    NPC_FELBLOOD_INITIATE   = 24918, 
+    NPC_FELBLOOD_INITIATE   = 24918,
     NPC_EMACIATED_FELBLOOD  = 24955
 };
 
@@ -395,16 +394,16 @@ public:
 // 46023 The Ultrasonic Screwdriver
 enum eQuest11730Data
 {
-    SPELL_SUMMON_SCAVENGEBOT_004A8  = 46063, 
-    SPELL_SUMMON_SENTRYBOT_57K      = 46068, 
-    SPELL_SUMMON_DEFENDOTANK_66D    = 46058, 
-    SPELL_SUMMON_SCAVENGEBOT_005B6  = 46066, 
-    SPELL_SUMMON_55D_COLLECTATRON   = 46034, 
-    SPELL_ROBOT_KILL_CREDIT         = 46027, 
-    NPC_SCAVENGEBOT_004A8           = 25752, 
-    NPC_SENTRYBOT_57K               = 25753, 
-    NPC_DEFENDOTANK_66D             = 25758, 
-    NPC_SCAVENGEBOT_005B6           = 25792, 
+    SPELL_SUMMON_SCAVENGEBOT_004A8  = 46063,
+    SPELL_SUMMON_SENTRYBOT_57K      = 46068,
+    SPELL_SUMMON_DEFENDOTANK_66D    = 46058,
+    SPELL_SUMMON_SCAVENGEBOT_005B6  = 46066,
+    SPELL_SUMMON_55D_COLLECTATRON   = 46034,
+    SPELL_ROBOT_KILL_CREDIT         = 46027,
+    NPC_SCAVENGEBOT_004A8           = 25752,
+    NPC_SENTRYBOT_57K               = 25753,
+    NPC_DEFENDOTANK_66D             = 25758,
+    NPC_SCAVENGEBOT_005B6           = 25792,
     NPC_55D_COLLECTATRON            = 25793
 };
 
@@ -479,14 +478,14 @@ public:
 // 49587 Seeds of Nature's Wrath
 enum eQuest12459Data
 {
-    NPC_REANIMATED_FROSTWYRM        = 26841, 
-    NPC_WEAK_REANIMATED_FROSTWYRM   = 27821, 
+    NPC_REANIMATED_FROSTWYRM        = 26841,
+    NPC_WEAK_REANIMATED_FROSTWYRM   = 27821,
 
-    NPC_TURGID                      = 27808, 
-    NPC_WEAK_TURGID                 = 27809, 
+    NPC_TURGID                      = 27808,
+    NPC_WEAK_TURGID                 = 27809,
 
-    NPC_DEATHGAZE                   = 27122, 
-    NPC_WEAK_DEATHGAZE              = 27807, 
+    NPC_DEATHGAZE                   = 27122,
+    NPC_WEAK_DEATHGAZE              = 27807,
 };
 
 class spell_q12459_seeds_of_natures_wrath : public SpellScriptLoader
@@ -530,9 +529,9 @@ public:
 // 51840 Despawn Fruit Tosser
 enum eQuest12634Data
 {
-    SPELL_BANANAS_FALL_TO_GROUND    = 51836, 
-    SPELL_ORANGE_FALLS_TO_GROUND    = 51837, 
-    SPELL_PAPAYA_FALLS_TO_GROUND    = 51839, 
+    SPELL_BANANAS_FALL_TO_GROUND    = 51836,
+    SPELL_ORANGE_FALLS_TO_GROUND    = 51837,
+    SPELL_PAPAYA_FALLS_TO_GROUND    = 51839,
     SPELL_SUMMON_ADVENTUROUS_DWARF  = 52070
 };
 
@@ -623,8 +622,8 @@ public:
 // 55804 Healing Finished
 enum eQuest12937Data
 {
-    SPELL_TRIGGER_AID_OF_THE_EARTHEN    = 55809, 
-    NPC_FALLEN_EARTHEN_DEFENDER         = 30035, 
+    SPELL_TRIGGER_AID_OF_THE_EARTHEN    = 55809,
+    NPC_FALLEN_EARTHEN_DEFENDER         = 30035,
 };
 
 class spell_q12937_relief_for_the_fallen : public SpellScriptLoader

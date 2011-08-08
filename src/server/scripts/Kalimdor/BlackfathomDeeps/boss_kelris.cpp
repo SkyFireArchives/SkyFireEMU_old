@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,15 +27,15 @@
 
 enum Spells
 {
-    SPELL_MIND_BLAST                                       = 15587, 
-    SPELL_SLEEP                                            = 8399, 
+    SPELL_MIND_BLAST                                       = 15587,
+    SPELL_SLEEP                                            = 8399,
 };
 
 //Id's from ACID
 enum Yells
 {
-    SAY_AGGRO                                              = -1048002, 
-    SAY_SLEEP                                              = -1048001, 
+    SAY_AGGRO                                              = -1048002,
+    SAY_SLEEP                                              = -1048001,
     SAY_DEATH                                              = -1048000
 };
 
@@ -107,9 +107,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_kelris()
 {

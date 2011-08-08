@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,27 +35,27 @@ EndScriptData */
 enum eEnums
 {
     //Mograine says
-    SAY_MO_AGGRO                 = -1189005, 
-    SAY_MO_KILL                  = -1189006, 
-    SAY_MO_RESSURECTED           = -1189007, 
+    SAY_MO_AGGRO                 = -1189005,
+    SAY_MO_KILL                  = -1189006,
+    SAY_MO_RESSURECTED           = -1189007,
 
     //Whitemane says
-    SAY_WH_INTRO                 = -1189008, 
-    SAY_WH_KILL                  = -1189009, 
-    SAY_WH_RESSURECT             = -1189010, 
+    SAY_WH_INTRO                 = -1189008,
+    SAY_WH_KILL                  = -1189009,
+    SAY_WH_RESSURECT             = -1189010,
 
     //Mograine Spells
-    SPELL_CRUSADERSTRIKE         = 14518, 
-    SPELL_HAMMEROFJUSTICE        = 5589, 
-    SPELL_LAYONHANDS             = 9257, 
-    SPELL_RETRIBUTIONAURA        = 8990, 
+    SPELL_CRUSADERSTRIKE         = 14518,
+    SPELL_HAMMEROFJUSTICE        = 5589,
+    SPELL_LAYONHANDS             = 9257,
+    SPELL_RETRIBUTIONAURA        = 8990,
 
     //Whitemanes Spells
-    SPELL_DEEPSLEEP              = 9256, 
-    SPELL_SCARLETRESURRECTION    = 9232, 
-    SPELL_DOMINATEMIND           = 14515, 
-    SPELL_HOLYSMITE              = 9481, 
-    SPELL_HEAL                   = 12039, 
+    SPELL_DEEPSLEEP              = 9256,
+    SPELL_SCARLETRESURRECTION    = 9232,
+    SPELL_DOMINATEMIND           = 14515,
+    SPELL_HOLYSMITE              = 9481,
+    SPELL_HEAL                   = 12039,
     SPELL_POWERWORDSHIELD        = 22187
 };
 
@@ -221,7 +221,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class boss_high_inquisitor_whitemane : public CreatureScript
@@ -361,10 +360,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
 
 void AddSC_boss_mograine_and_whitemane()
 {

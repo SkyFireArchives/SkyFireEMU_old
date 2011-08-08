@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,15 +26,15 @@
 
 enum Spells
 {
-    SPELL_ARCANE_EXPLOSION                        = 46608, 
-    SPELL_CONE_OF_COLD                            = 38384, 
-    SPELL_FIREBALL                                = 46988, 
+    SPELL_ARCANE_EXPLOSION                        = 46608,
+    SPELL_CONE_OF_COLD                            = 38384,
+    SPELL_FIREBALL                                = 46988,
     SPELL_FROSTBOLT                               = 46987
 };
 
 enum Yells
 {
-    YELL_AGGRO                                    = -2100019, 
+    YELL_AGGRO                                    = -2100019,
     YELL_EVADE                                    = -2100020
 };
 
@@ -185,7 +185,6 @@ public:
                 DoCast(me->getVictim(), SPELL_FROSTBOLT);
                 uiFrostboltTimer = urand(4*IN_MILLISECONDS, 12*IN_MILLISECONDS);
             } else uiFrostboltTimer -= diff;
-
 
             // check if creature is not outside of building
             if (uiResetTimer < diff)

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -41,78 +41,78 @@ EndScriptData */
 enum Yells
 {
     //Gormok
-    SAY_SNOBOLLED        = -1649000, 
+    SAY_SNOBOLLED        = -1649000,
     //Acidmaw & Dreadscale
-    SAY_SUBMERGE         = -1649010, 
-    SAY_EMERGE           = -1649011, 
-    SAY_BERSERK          = -1649012, 
+    SAY_SUBMERGE         = -1649010,
+    SAY_EMERGE           = -1649011,
+    SAY_BERSERK          = -1649012,
     //Icehowl
-    SAY_TRAMPLE_STARE    = -1649020, 
-    SAY_TRAMPLE_FAIL     = -1649021, 
-    SAY_TRAMPLE_START    = -1649022, 
+    SAY_TRAMPLE_STARE    = -1649020,
+    SAY_TRAMPLE_FAIL     = -1649021,
+    SAY_TRAMPLE_START    = -1649022,
 };
 
 enum Equipment
 {
-    EQUIP_MAIN           = 50760, 
-    EQUIP_OFFHAND        = 48040, 
-    EQUIP_RANGED         = 47267, 
-    EQUIP_DONE           = EQUIP_NO_CHANGE, 
+    EQUIP_MAIN           = 50760,
+    EQUIP_OFFHAND        = 48040,
+    EQUIP_RANGED         = 47267,
+    EQUIP_DONE           = EQUIP_NO_CHANGE,
 };
 
 enum Model
 {
-    MODEL_ACIDMAW_STATIONARY     = 29815, 
-    MODEL_ACIDMAW_MOBILE         = 29816, 
-    MODEL_DREADSCALE_STATIONARY  = 26935, 
-    MODEL_DREADSCALE_MOBILE      = 24564, 
+    MODEL_ACIDMAW_STATIONARY     = 29815,
+    MODEL_ACIDMAW_MOBILE         = 29816,
+    MODEL_DREADSCALE_STATIONARY  = 26935,
+    MODEL_DREADSCALE_MOBILE      = 24564,
 };
 
 enum Summons
 {
-    NPC_SNOBOLD_VASSAL   = 34800, 
-    NPC_SLIME_POOL       = 35176, 
+    NPC_SNOBOLD_VASSAL   = 34800,
+    NPC_SLIME_POOL       = 35176,
 };
 
 enum BossSpells
 {
     //Gormok
-    SPELL_IMPALE            = 66331, 
-    SPELL_STAGGERING_STOMP  = 67648, 
-    SPELL_RISING_ANGER      = 66636, 
+    SPELL_IMPALE            = 66331,
+    SPELL_STAGGERING_STOMP  = 67648,
+    SPELL_RISING_ANGER      = 66636,
     //Snobold
-    SPELL_SNOBOLLED         = 66406, 
-    SPELL_BATTER            = 66408, 
-    SPELL_FIRE_BOMB         = 66313, 
-    SPELL_FIRE_BOMB_1       = 66317, 
-    SPELL_FIRE_BOMB_DOT     = 66318, 
-    SPELL_HEAD_CRACK        = 66407, 
+    SPELL_SNOBOLLED         = 66406,
+    SPELL_BATTER            = 66408,
+    SPELL_FIRE_BOMB         = 66313,
+    SPELL_FIRE_BOMB_1       = 66317,
+    SPELL_FIRE_BOMB_DOT     = 66318,
+    SPELL_HEAD_CRACK        = 66407,
 
     //Acidmaw & Dreadscale
-    SPELL_ACID_SPIT         = 66880, 
-    SPELL_PARALYTIC_SPRAY   = 66901, 
-    SPELL_ACID_SPEW         = 66819, 
-    SPELL_PARALYTIC_BITE    = 66824, 
-    SPELL_SWEEP_0           = 66794, 
-    SUMMON_SLIME_POOL       = 66883, 
-    SPELL_FIRE_SPIT         = 66796, 
-    SPELL_MOLTEN_SPEW       = 66821, 
-    SPELL_BURNING_BITE      = 66879, 
-    SPELL_BURNING_SPRAY     = 66902, 
-    SPELL_SWEEP_1           = 67646, 
-    SPELL_EMERGE_0          = 66947, 
-    SPELL_SUBMERGE_0        = 53421, 
-    SPELL_ENRAGE            = 68335, 
+    SPELL_ACID_SPIT         = 66880,
+    SPELL_PARALYTIC_SPRAY   = 66901,
+    SPELL_ACID_SPEW         = 66819,
+    SPELL_PARALYTIC_BITE    = 66824,
+    SPELL_SWEEP_0           = 66794,
+    SUMMON_SLIME_POOL       = 66883,
+    SPELL_FIRE_SPIT         = 66796,
+    SPELL_MOLTEN_SPEW       = 66821,
+    SPELL_BURNING_BITE      = 66879,
+    SPELL_BURNING_SPRAY     = 66902,
+    SPELL_SWEEP_1           = 67646,
+    SPELL_EMERGE_0          = 66947,
+    SPELL_SUBMERGE_0        = 53421,
+    SPELL_ENRAGE            = 68335,
     SPELL_SLIME_POOL_EFFECT = 66882, //In 60s it diameter grows from 10y to 40y (r=r+0.25 per second)
 
     //Icehowl
-    SPELL_FEROCIOUS_BUTT    = 66770, 
-    SPELL_MASSIVE_CRASH     = 66683, 
-    SPELL_WHIRL             = 67345, 
-    SPELL_ARCTIC_BREATH     = 66689, 
-    SPELL_TRAMPLE           = 66734, 
-    SPELL_FROTHING_RAGE     = 66759, 
-    SPELL_STAGGERED_DAZE    = 66758, 
+    SPELL_FEROCIOUS_BUTT    = 66770,
+    SPELL_MASSIVE_CRASH     = 66683,
+    SPELL_WHIRL             = 67345,
+    SPELL_ARCTIC_BREATH     = 66689,
+    SPELL_TRAMPLE           = 66734,
+    SPELL_FROTHING_RAGE     = 66759,
+    SPELL_STAGGERED_DAZE    = 66758,
 };
 
 class boss_gormok : public CreatureScript
@@ -228,9 +228,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 class mob_snobold_vassal : public CreatureScript
 {
@@ -361,9 +359,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 struct boss_jormungarAI : public ScriptedAI
 {
@@ -570,7 +566,6 @@ struct boss_jormungarAI : public ScriptedAI
     }
 };
 
-
 class boss_acidmaw : public CreatureScript
 {
     public:
@@ -583,7 +578,7 @@ class boss_acidmaw : public CreatureScript
 
     struct boss_acidmawAI : public boss_jormungarAI
     {
-        boss_acidmawAI(Creature* pCreature) : boss_jormungarAI(pCreature) { 
+        boss_acidmawAI(Creature* pCreature) : boss_jormungarAI(pCreature) {
         me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
@@ -603,9 +598,7 @@ class boss_acidmaw : public CreatureScript
             m_uiStage = 2;
         }
     };
-
 };
-
 
 class boss_dreadscale : public CreatureScript
 {
@@ -619,11 +612,11 @@ public:
 
     struct boss_dreadscaleAI : public boss_jormungarAI
     {
-        boss_dreadscaleAI(Creature* pCreature) : boss_jormungarAI(pCreature) { 
+        boss_dreadscaleAI(Creature* pCreature) : boss_jormungarAI(pCreature) {
         me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-        
+
         void Reset()
         {
             boss_jormungarAI::Reset();
@@ -639,9 +632,7 @@ public:
             m_uiStage = 0;
         }
     };
-
 };
-
 
 class mob_slime_pool : public CreatureScript
 {
@@ -675,7 +666,6 @@ public:
             }
         }
     };
-
 };
 
 class boss_icehowl : public CreatureScript
@@ -861,9 +851,9 @@ public:
                             m_fTrampleTargetX = pTarget->GetPositionX();
                             m_fTrampleTargetY = pTarget->GetPositionY();
                             m_fTrampleTargetZ = pTarget->GetPositionZ();
-                            me->GetMotionMaster()->MoveJump(2*me->GetPositionX()-m_fTrampleTargetX, 
-                                2*me->GetPositionY()-m_fTrampleTargetY, 
-                                me->GetPositionZ(), 
+                            me->GetMotionMaster()->MoveJump(2*me->GetPositionX()-m_fTrampleTargetX,
+                                2*me->GetPositionY()-m_fTrampleTargetY,
+                                me->GetPositionZ(),
                                 10.0f, 20.0f); // 2: Hop Backwards
                             m_uiStage = 7; //Invalid (Do nothing more than move)
                         } else m_uiStage = 6;
@@ -914,13 +904,12 @@ public:
             }
         }
     };
-
 };
 
 // 66313 Snobold Fire Bomb
 enum FireBombNPC
 {
-    NPC_FIRE_BOMB = 34854, 
+    NPC_FIRE_BOMB = 34854,
 };
 
 class spell_gen_fire_bomb : public SpellScriptLoader

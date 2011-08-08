@@ -82,7 +82,6 @@ public:
             return;
         }
     };
-
 };
 
 /*######
@@ -240,11 +239,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
-
 
 /*####
 # mob_sunspring_villager - should be done with ACID
@@ -281,7 +276,6 @@ public:
             }
         }
     };
-
 };
 
 /*######
@@ -381,10 +375,7 @@ public:
 
         return true;
     }
-
 };
-
-
 
 /*######
 ## npc_greatmother_geyah
@@ -494,9 +485,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_lantresor_of_the_blade
@@ -572,9 +561,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*#####
 ## npc_maghar_captive
@@ -582,24 +569,24 @@ public:
 
 enum eMagharCaptive
 {
-    SAY_MAG_START               = -1000482, 
-    SAY_MAG_NO_ESCAPE           = -1000483, 
-    SAY_MAG_MORE                = -1000484, 
-    SAY_MAG_MORE_REPLY          = -1000485, 
-    SAY_MAG_LIGHTNING           = -1000486, 
-    SAY_MAG_SHOCK               = -1000487, 
-    SAY_MAG_COMPLETE            = -1000488, 
+    SAY_MAG_START               = -1000482,
+    SAY_MAG_NO_ESCAPE           = -1000483,
+    SAY_MAG_MORE                = -1000484,
+    SAY_MAG_MORE_REPLY          = -1000485,
+    SAY_MAG_LIGHTNING           = -1000486,
+    SAY_MAG_SHOCK               = -1000487,
+    SAY_MAG_COMPLETE            = -1000488,
 
-    SPELL_CHAIN_LIGHTNING       = 16006, 
-    SPELL_EARTHBIND_TOTEM       = 15786, 
-    SPELL_FROST_SHOCK           = 12548, 
-    SPELL_HEALING_WAVE          = 12491, 
+    SPELL_CHAIN_LIGHTNING       = 16006,
+    SPELL_EARTHBIND_TOTEM       = 15786,
+    SPELL_FROST_SHOCK           = 12548,
+    SPELL_HEALING_WAVE          = 12491,
 
-    QUEST_TOTEM_KARDASH_H       = 9868, 
+    QUEST_TOTEM_KARDASH_H       = 9868,
 
-    NPC_MURK_RAIDER             = 18203, 
-    NPC_MURK_BRUTE              = 18211, 
-    NPC_MURK_SCAVENGER          = 18207, 
+    NPC_MURK_RAIDER             = 18203,
+    NPC_MURK_BRUTE              = 18211,
+    NPC_MURK_SCAVENGER          = 18207,
     NPC_MURK_PUTRIFIER          = 18202
 };
 
@@ -694,7 +681,6 @@ public:
             pSummoned->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
             pSummoned->GetMotionMaster()->MovePoint(0, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ());
             pSummoned->AI()->AttackStart(me);
-
         }
 
         void SpellHitTarget(Unit* /*pTarget*/, const SpellEntry* pSpell)
@@ -744,10 +730,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
 
 /*######
 ## npc_creditmarker_visist_with_ancestors
@@ -791,9 +774,7 @@ public:
             }
         }
     };
-
 };
-
 
 /*######
 ## mob_sparrowhawk
@@ -814,7 +795,6 @@ public:
 
     struct mob_sparrowhawkAI : public ScriptedAI
     {
-
         mob_sparrowhawkAI(Creature *c) : ScriptedAI(c) {}
 
         uint32 Check_Timer;
@@ -901,9 +881,7 @@ public:
             return;
         }
     };
-
 };
-
 
 /*####
 #

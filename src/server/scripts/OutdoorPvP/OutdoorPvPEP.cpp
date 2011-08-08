@@ -6,7 +6,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -245,7 +245,6 @@ void OPvPCapturePointEP_NPT::ChangeState()
     // complete quest objective
     if (m_TowerState == EP_TS_A || m_TowerState == EP_TS_H)
         SendObjectiveComplete(EP_NPT_CM, 0);
-
 }
 
 void OPvPCapturePointEP_NPT::SendChangePhase()
@@ -576,7 +575,7 @@ void OPvPCapturePointEP_PWT::SummonFlightMaster(uint32 team)
         AddCreature(EP_PWT_FLIGHTMASTER, EP_PWT_FlightMaster.entry, team, EP_PWT_FlightMaster.map, EP_PWT_FlightMaster.x, EP_PWT_FlightMaster.y, EP_PWT_FlightMaster.z, EP_PWT_FlightMaster.o);
         /*
         // sky - we need update gso code
-        
+
         Creature * c = HashMapHolder<Creature>::Find(m_Creatures[EP_PWT_FLIGHTMASTER]);
         //Spawn flight master as friendly to capturing team
         c->SetUInt32Value(GAMEOBJECT_FACTION, (team == ALLIANCE ? 55 : 68));

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,9 +28,9 @@
 enum Spells
 {
     //Spells
-    SPELL_SPARK                                   = 47751, 
-    H_SPELL_SPARK                                 = 57062, 
-    SPELL_RIFT_SHIELD                             = 47748, 
+    SPELL_SPARK                                   = 47751,
+    H_SPELL_SPARK                                 = 57062,
+    SPELL_RIFT_SHIELD                             = 47748,
     SPELL_CHARGE_RIFT                             = 47747, //Works wrong (affect players, not rifts)
     SPELL_CREATE_RIFT                             = 47743, //Don't work, using WA
     SPELL_ARCANE_ATTRACTION                       = 57063, //No idea, when it's used
@@ -38,15 +38,15 @@ enum Spells
 
 enum Adds
 {
-    MOB_CRAZED_MANA_WRAITH                        = 26746, 
+    MOB_CRAZED_MANA_WRAITH                        = 26746,
     MOB_CHAOTIC_RIFT                              = 26918
 };
 enum Yells
 {
     //Yell
-    SAY_AGGRO                                     = -1576010, 
-    SAY_DEATH                                     = -1576011, 
-    SAY_RIFT                                      = -1576012, 
+    SAY_AGGRO                                     = -1576010,
+    SAY_DEATH                                     = -1576011,
+    SAY_RIFT                                      = -1576012,
     SAY_SHIELD                                    = -1576013
 };
 
@@ -57,11 +57,11 @@ enum Achievs
 
 const Position RiftLocation[6] =
 {
-    {652.64f, -273.70f, -8.75f, 0.0f}, 
-    {634.45f, -265.94f, -8.44f, 0.0f}, 
-    {620.73f, -281.17f, -9.02f, 0.0f}, 
-    {626.10f, -304.67f, -9.44f, 0.0f}, 
-    {639.87f, -314.11f, -9.49f, 0.0f}, 
+    {652.64f, -273.70f, -8.75f, 0.0f},
+    {634.45f, -265.94f, -8.44f, 0.0f},
+    {620.73f, -281.17f, -9.02f, 0.0f},
+    {626.10f, -304.67f, -9.44f, 0.0f},
+    {639.87f, -314.11f, -9.49f, 0.0f},
     {651.72f, -297.44f, -9.37f, 0.0f}
 };
 
@@ -168,7 +168,6 @@ public:
                 }
             }
 
-
             if (uiSparkTimer <= diff)
             {
                 if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
@@ -179,14 +178,12 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 enum RiftSpells
 {
-    SPELL_CHAOTIC_ENERGY_BURST                    = 47688, 
-    SPELL_CHARGED_CHAOTIC_ENERGY_BURST            = 47737, 
+    SPELL_CHAOTIC_ENERGY_BURST                    = 47688,
+    SPELL_CHARGED_CHAOTIC_ENERGY_BURST            = 47737,
     SPELL_ARCANEFORM                              = 48019 //Chaotic Rift visual
 };
 
@@ -260,9 +257,7 @@ public:
             } else uiSummonCrazedManaWraithTimer -= diff;
         }
     };
-
 };
-
 
 void AddSC_boss_anomalus()
 {

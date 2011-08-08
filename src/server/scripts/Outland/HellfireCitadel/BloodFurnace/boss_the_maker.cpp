@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,16 +34,16 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO_1                 = -1542009, 
-    SAY_AGGRO_2                 = -1542010, 
-    SAY_AGGRO_3                 = -1542011, 
-    SAY_KILL_1                  = -1542012, 
-    SAY_KILL_2                  = -1542013, 
-    SAY_DIE                     = -1542014, 
+    SAY_AGGRO_1                 = -1542009,
+    SAY_AGGRO_2                 = -1542010,
+    SAY_AGGRO_3                 = -1542011,
+    SAY_KILL_1                  = -1542012,
+    SAY_KILL_2                  = -1542013,
+    SAY_DIE                     = -1542014,
 
     SPELL_ACID_SPRAY            = 38153,                    // heroic 38973 ??? 38153
-    SPELL_EXPLODING_BREAKER     = 30925, 
-    SPELL_KNOCKDOWN             = 20276, 
+    SPELL_EXPLODING_BREAKER     = 30925,
+    SPELL_KNOCKDOWN             = 20276,
     SPELL_DOMINATION            = 25772                     // ???
 };
 
@@ -110,7 +110,6 @@ class boss_the_maker : public CreatureScript
                 pInstance->SetData(TYPE_THE_MAKER_EVENT, DONE);
                 pInstance->HandleGameObject(pInstance->GetData64(DATA_DOOR2), true);
                 pInstance->HandleGameObject(pInstance->GetData64(DATA_DOOR3), true);
-
              }
 
             void UpdateAI(const uint32 diff)
@@ -169,4 +168,3 @@ void AddSC_boss_the_maker()
 {
     new boss_the_maker();
 }
-

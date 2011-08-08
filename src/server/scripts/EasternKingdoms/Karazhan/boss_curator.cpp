@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -192,15 +192,12 @@ public:
 
                 if (Unit *pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 1))
                     DoCast(pTarget, SPELL_HATEFUL_BOLT);
-
             } else HatefulBoltTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_curator()
 {

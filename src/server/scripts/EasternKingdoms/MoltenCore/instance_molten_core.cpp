@@ -261,9 +261,7 @@ public:
                 IsBossDied[7] = true;
         }
     };
-
 };
-
 
 void AddSC_instance_molten_core()
 {

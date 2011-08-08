@@ -39,7 +39,7 @@ EndContentData */
 
 enum eSpells
 {
-    SPELL_CRYSTALLINE_SLUMBER   = 3636, 
+    SPELL_CRYSTALLINE_SLUMBER   = 3636,
 };
 
 class mob_jadespine_basilisk : public CreatureScript
@@ -88,7 +88,6 @@ class mob_jadespine_basilisk : public CreatureScript
 
                     if (pTarget)
                         me->TauntApply(pTarget);
-
                 } else uiCslumberTimer -= uiDiff;
 
                 DoMeleeAttackIfReady();
@@ -100,8 +99,6 @@ class mob_jadespine_basilisk : public CreatureScript
             return new mob_jadespine_basiliskAI(creature);
         }
 };
-
-
 
 /*######
 ## go_keystone_chamber
@@ -266,4 +263,3 @@ void AddSC_uldaman()
     new AreaTrigger_at_map_chamber();
     new npc_lore_keeper_of_norgannon();
 }
-

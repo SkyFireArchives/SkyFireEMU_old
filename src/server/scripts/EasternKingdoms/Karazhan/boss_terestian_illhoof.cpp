@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -131,7 +131,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class mob_demon_chain : public CreatureScript
@@ -169,7 +168,6 @@ public:
             }
         }
     };
-
 };
 
 class mob_fiendish_portal : public CreatureScript
@@ -204,7 +202,6 @@ public:
             summons.DespawnAll();
         }
     };
-
 };
 
 #define SPELL_FIREBOLT  30050   // Blasts a target for 181-209 Fire damage.
@@ -249,7 +246,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class boss_terestian_illhoof : public CreatureScript
@@ -426,7 +422,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_boss_terestian_illhoof()

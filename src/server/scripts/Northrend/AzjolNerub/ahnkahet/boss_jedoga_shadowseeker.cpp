@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,28 +31,28 @@
 
 enum Yells
 {
-    TEXT_AGGRO                                    = -1619000, 
-    TEXT_SACRIFICE_1_1                            = -1619001, 
-    TEXT_SACRIFICE_1_2                            = -1619002, 
-    TEXT_SACRIFICE_2_1                            = -1619003, 
-    TEXT_SACRIFICE_2_2                            = -1619004, 
-    TEXT_SLAY_1                                   = -1619005, 
-    TEXT_SLAY_2                                   = -1619006, 
-    TEXT_SLAY_3                                   = -1619007, 
-    TEXT_DEATH                                    = -1619008, 
-    TEXT_PREACHING_1                              = -1619009, 
-    TEXT_PREACHING_2                              = -1619010, 
-    TEXT_PREACHING_3                              = -1619011, 
-    TEXT_PREACHING_4                              = -1619012, 
+    TEXT_AGGRO                                    = -1619000,
+    TEXT_SACRIFICE_1_1                            = -1619001,
+    TEXT_SACRIFICE_1_2                            = -1619002,
+    TEXT_SACRIFICE_2_1                            = -1619003,
+    TEXT_SACRIFICE_2_2                            = -1619004,
+    TEXT_SLAY_1                                   = -1619005,
+    TEXT_SLAY_2                                   = -1619006,
+    TEXT_SLAY_3                                   = -1619007,
+    TEXT_DEATH                                    = -1619008,
+    TEXT_PREACHING_1                              = -1619009,
+    TEXT_PREACHING_2                              = -1619010,
+    TEXT_PREACHING_3                              = -1619011,
+    TEXT_PREACHING_4                              = -1619012,
     TEXT_PREACHING_5                              = -1619013
 };
 
 enum Spells
 {
-    SPELL_SPHERE_VISUAL                           = 56075, 
-    SPELL_GIFT_OF_THE_HERALD                      = 56219, 
+    SPELL_SPHERE_VISUAL                           = 56075,
+    SPELL_GIFT_OF_THE_HERALD                      = 56219,
     SPELL_CYCLONE_STRIKE                          = 56855, // Self
-    SPELL_CYCLONE_STRIKE_H                        = 60030, 
+    SPELL_CYCLONE_STRIKE_H                        = 60030,
     SPELL_LIGHTNING_BOLT                          = 56891, // 40Y
     SPELL_LIGHTNING_BOLT_H                        = 60032, // 40Y
     SPELL_THUNDERSHOCK                            = 56926, // 30Y
@@ -66,7 +66,7 @@ enum Creatures
 
 const Position JedogaPosition[2] =
 {
-    {372.330994f, -705.278015f, -0.624178f,  5.427970f}, 
+    {372.330994f, -705.278015f, -0.624178f,  5.427970f},
     {372.330994f, -705.278015f, -16.179716f, 5.427970f}
 };
 
@@ -500,7 +500,7 @@ public:
 // ------------------------------------------------------------------------------------------------------------
 enum AufseherSpell
 {
-  SPELL_BEAM_VISUAL_JEDOGAS_AUFSEHER_1            = 60342, 
+  SPELL_BEAM_VISUAL_JEDOGAS_AUFSEHER_1            = 60342,
   SPELL_BEAM_VISUAL_JEDOGAS_AUFSEHER_2            = 56312
 };
 

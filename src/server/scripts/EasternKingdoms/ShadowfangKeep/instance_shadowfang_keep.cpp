@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -36,14 +36,14 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_BOSS_DIE_AD         = -1033007, 
-    SAY_BOSS_DIE_AS         = -1033008, 
-    SAY_ARCHMAGE            = -1033009, 
+    SAY_BOSS_DIE_AD         = -1033007,
+    SAY_BOSS_DIE_AS         = -1033008,
+    SAY_ARCHMAGE            = -1033009,
 
-    NPC_ASH                 = 3850, 
-    NPC_ADA                 = 3849, 
-    NPC_ARCHMAGE_ARUGAL     = 4275, 
-    NPC_ARUGAL_VOIDWALKER   = 4627, 
+    NPC_ASH                 = 3850,
+    NPC_ADA                 = 3849,
+    NPC_ARCHMAGE_ARUGAL     = 4275,
+    NPC_ARUGAL_VOIDWALKER   = 4627,
 
     GO_COURTYARD_DOOR       = 18895,                        //door to open when talking to NPC's
     GO_SORCERER_DOOR        = 18972,                        //door to open when Fenrus the Devourer
@@ -54,10 +54,10 @@ enum eEnums
 
 const Position SpawnLocation[] =
 {
-    {-148.199f, 2165.647f, 128.448f, 1.026f}, 
-    {-153.110f, 2168.620f, 128.448f, 1.026f}, 
-    {-145.905f, 2180.520f, 128.448f, 4.183f}, 
-    {-140.794f, 2178.037f, 128.448f, 4.090f}, 
+    {-148.199f, 2165.647f, 128.448f, 1.026f},
+    {-153.110f, 2168.620f, 128.448f, 1.026f},
+    {-145.905f, 2180.520f, 128.448f, 4.183f},
+    {-140.794f, 2178.037f, 128.448f, 4.090f},
     {-138.640f, 2170.159f, 136.577f, 2.737f}
 };
 class instance_shadowfang_keep : public InstanceMapScript
@@ -272,15 +272,12 @@ public:
                             pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[3], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
                             uiPhase = 0;
                             break;
-
                     }
                 } else uiTimer -= uiDiff;
             }
         }
     };
-
 };
-
 
 void AddSC_instance_shadowfang_keep()
 {

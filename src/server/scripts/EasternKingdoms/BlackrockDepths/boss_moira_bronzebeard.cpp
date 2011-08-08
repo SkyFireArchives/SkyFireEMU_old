@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,11 +33,11 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_HEAL                                             = 10917, 
-    SPELL_RENEW                                            = 10929, 
-    SPELL_SHIELD                                           = 10901, 
-    SPELL_MINDBLAST                                        = 10947, 
-    SPELL_SHADOWWORDPAIN                                   = 10894, 
+    SPELL_HEAL                                             = 10917,
+    SPELL_RENEW                                            = 10929,
+    SPELL_SHIELD                                           = 10901,
+    SPELL_MINDBLAST                                        = 10947,
+    SPELL_SHADOWWORDPAIN                                   = 10894,
     SPELL_SMITE                                            = 10934
 };
 
@@ -98,10 +98,8 @@ public:
                 DoCast(me->getVictim(), SPELL_SMITE);
                 Smite_Timer = 10000;
             } else Smite_Timer -= diff;
-
         }
     };
-
 };
 
 void AddSC_boss_moira_bronzebeard()

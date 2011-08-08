@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -50,20 +50,20 @@ EndScriptData */
 
 float Locations[4][3]=
 {
-    {-10991.0f, -1884.33f, 0.614315f}, 
-    {-10989.4f, -1885.88f, 0.904913f}, 
-    {-10978.1f, -1887.07f, 2.035550f}, 
-    {-10975.9f, -1885.81f, 2.253890f}, 
+    {-10991.0f, -1884.33f, 0.614315f},
+    {-10989.4f, -1885.88f, 0.904913f},
+    {-10978.1f, -1887.07f, 2.035550f},
+    {-10975.9f, -1885.81f, 2.253890f},
 };
 
 const uint32 Adds[6]=
 {
-    17007, 
-    19872, 
-    19873, 
-    19874, 
-    19875, 
-    19876, 
+    17007,
+    19872,
+    19873,
+    19874,
+    19875,
+    19876,
 };
 
 class boss_moroes : public CreatureScript
@@ -319,7 +319,6 @@ public:
                 DoMeleeAttackIfReady();
         }
     };
-
 };
 
 struct boss_moroes_guestAI : public ScriptedAI
@@ -471,7 +470,6 @@ public:
             } else ShadowWordPain_Timer -= diff;
         }
     };
-
 };
 
 class boss_baron_rafe_dreuger : public CreatureScript
@@ -529,7 +527,6 @@ public:
             } else HammerOfJustice_Timer -= diff;
         }
     };
-
 };
 
 class boss_lady_catriona_von_indi : public CreatureScript
@@ -600,7 +597,6 @@ public:
             } else DispelMagic_Timer -= diff;
         }
     };
-
 };
 
 class boss_lady_keira_berrybuck : public CreatureScript
@@ -675,7 +671,6 @@ public:
             } else Cleanse_Timer -= diff;
         }
     };
-
 };
 
 class boss_lord_robin_daris : public CreatureScript
@@ -732,7 +727,6 @@ public:
             } else WhirlWind_Timer -= diff;
         }
     };
-
 };
 
 class boss_lord_crispin_ference : public CreatureScript
@@ -797,7 +791,6 @@ public:
             } else ShieldWall_Timer -= diff;
         }
     };
-
 };
 
 void AddSC_boss_moroes()

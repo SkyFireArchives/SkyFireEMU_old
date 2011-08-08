@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,10 +26,10 @@
 
 enum Spells
 {
-    SPELL_WHIRLWIND                               = 15589, 
-    SPELL_WHIRLWIND2                              = 13736, 
-    SPELL_KNOCKDOWN                               = 19128, 
-    SPELL_FRENZY                                  = 8269, 
+    SPELL_WHIRLWIND                               = 15589,
+    SPELL_WHIRLWIND2                              = 13736,
+    SPELL_KNOCKDOWN                               = 19128,
+    SPELL_FRENZY                                  = 8269,
     SPELL_SWEEPING_STRIKES                        = 18765, // not sure
     SPELL_CLEAVE                                  = 20677, // not sure
     SPELL_WINDFURY                                = 35886, // not sure
@@ -38,13 +38,13 @@ enum Spells
 
 enum Yells
 {
-    YELL_AGGRO                                    = -1810000, 
-    YELL_EVADE                                    = -1810001, 
-    YELL_RESPAWN                                  = -1810002, 
-    YELL_RANDOM1                                  = -1810003, 
-    YELL_RANDOM2                                  = -1810004, 
-    YELL_RANDOM3                                  = -1810005, 
-    YELL_RANDOM4                                  = -1810006, 
+    YELL_AGGRO                                    = -1810000,
+    YELL_EVADE                                    = -1810001,
+    YELL_RESPAWN                                  = -1810002,
+    YELL_RANDOM1                                  = -1810003,
+    YELL_RANDOM2                                  = -1810004,
+    YELL_RANDOM3                                  = -1810005,
+    YELL_RANDOM4                                  = -1810006,
     YELL_RANDOM5                                  = -1810007
 };
 
@@ -134,7 +134,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 
     CreatureAI *GetAI(Creature *creature) const
     {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -36,107 +36,107 @@ EndScriptData */
 enum eEnums
 {
     //kael'thas Speech
-    SAY_INTRO                           = -1550016, 
-    SAY_INTRO_CAPERNIAN                 = -1550017, 
-    SAY_INTRO_TELONICUS                 = -1550018, 
-    SAY_INTRO_THALADRED                 = -1550019, 
-    SAY_INTRO_SANGUINAR                 = -1550020, 
-    SAY_PHASE2_WEAPON                   = -1550021, 
-    SAY_PHASE3_ADVANCE                  = -1550022, 
-    SAY_PHASE4_INTRO2                   = -1550023, 
-    SAY_PHASE5_NUTS                     = -1550024, 
-    SAY_SLAY1                           = -1550025, 
-    SAY_SLAY2                           = -1550026, 
-    SAY_SLAY3                           = -1550027, 
-    SAY_MINDCONTROL1                    = -1550028, 
-    SAY_MINDCONTROL2                    = -1550029, 
-    SAY_GRAVITYLAPSE1                   = -1550030, 
-    SAY_GRAVITYLAPSE2                   = -1550031, 
-    SAY_SUMMON_PHOENIX1                 = -1550032, 
-    SAY_SUMMON_PHOENIX2                 = -1550033, 
-    SAY_DEATH                           = -1550034, 
+    SAY_INTRO                           = -1550016,
+    SAY_INTRO_CAPERNIAN                 = -1550017,
+    SAY_INTRO_TELONICUS                 = -1550018,
+    SAY_INTRO_THALADRED                 = -1550019,
+    SAY_INTRO_SANGUINAR                 = -1550020,
+    SAY_PHASE2_WEAPON                   = -1550021,
+    SAY_PHASE3_ADVANCE                  = -1550022,
+    SAY_PHASE4_INTRO2                   = -1550023,
+    SAY_PHASE5_NUTS                     = -1550024,
+    SAY_SLAY1                           = -1550025,
+    SAY_SLAY2                           = -1550026,
+    SAY_SLAY3                           = -1550027,
+    SAY_MINDCONTROL1                    = -1550028,
+    SAY_MINDCONTROL2                    = -1550029,
+    SAY_GRAVITYLAPSE1                   = -1550030,
+    SAY_GRAVITYLAPSE2                   = -1550031,
+    SAY_SUMMON_PHOENIX1                 = -1550032,
+    SAY_SUMMON_PHOENIX2                 = -1550033,
+    SAY_DEATH                           = -1550034,
 
     //Thaladred the Darkener speech
-    SAY_THALADRED_AGGRO                 = -1550035, 
-    SAY_THALADRED_DEATH                 = -1550036, 
-    EMOTE_THALADRED_GAZE                = -1550037, 
+    SAY_THALADRED_AGGRO                 = -1550035,
+    SAY_THALADRED_DEATH                 = -1550036,
+    EMOTE_THALADRED_GAZE                = -1550037,
 
     //Lord Sanguinar speech
-    SAY_SANGUINAR_AGGRO                 = -1550038, 
-    SAY_SANGUINAR_DEATH                 = -1550039, 
+    SAY_SANGUINAR_AGGRO                 = -1550038,
+    SAY_SANGUINAR_DEATH                 = -1550039,
 
     //Grand Astromancer Capernian speech
-    SAY_CAPERNIAN_AGGRO                 = -1550040, 
-    SAY_CAPERNIAN_DEATH                 = -1550041, 
+    SAY_CAPERNIAN_AGGRO                 = -1550040,
+    SAY_CAPERNIAN_DEATH                 = -1550041,
 
     //Master Engineer Telonicus speech
-    SAY_TELONICUS_AGGRO                 = -1550042, 
-    SAY_TELONICUS_DEATH                 = -1550043, 
+    SAY_TELONICUS_AGGRO                 = -1550042,
+    SAY_TELONICUS_DEATH                 = -1550043,
 
     //Phase 2 spells
-    SPELL_SUMMON_WEAPONS                = 36976, 
-    SPELL_SUMMON_WEAPONA                = 36958, 
-    SPELL_SUMMON_WEAPONB                = 36959, 
-    SPELL_SUMMON_WEAPONC                = 36960, 
-    SPELL_SUMMON_WEAPOND                = 36961, 
-    SPELL_SUMMON_WEAPONE                = 36962, 
-    SPELL_SUMMON_WEAPONF                = 36963, 
-    SPELL_SUMMON_WEAPONG                = 36964, 
-    SPELL_RES_VISUAL                    = 24171, 
+    SPELL_SUMMON_WEAPONS                = 36976,
+    SPELL_SUMMON_WEAPONA                = 36958,
+    SPELL_SUMMON_WEAPONB                = 36959,
+    SPELL_SUMMON_WEAPONC                = 36960,
+    SPELL_SUMMON_WEAPOND                = 36961,
+    SPELL_SUMMON_WEAPONE                = 36962,
+    SPELL_SUMMON_WEAPONF                = 36963,
+    SPELL_SUMMON_WEAPONG                = 36964,
+    SPELL_RES_VISUAL                    = 24171,
 
     //Phase 4 spells
     SPELL_FIREBALL                      = 22088,           //wrong but works with CastCustomSpell
-    SPELL_PYROBLAST                     = 36819, 
-    SPELL_FLAME_STRIKE                  = 36735, 
-    SPELL_FLAME_STRIKE_VIS              = 36730, 
-    SPELL_FLAME_STRIKE_DMG              = 36731, 
-    SPELL_ARCANE_DISRUPTION             = 36834, 
-    SPELL_SHOCK_BARRIER                 = 36815, 
-    SPELL_PHOENIX_ANIMATION             = 36723, 
-    SPELL_MIND_CONTROL                  = 32830, 
+    SPELL_PYROBLAST                     = 36819,
+    SPELL_FLAME_STRIKE                  = 36735,
+    SPELL_FLAME_STRIKE_VIS              = 36730,
+    SPELL_FLAME_STRIKE_DMG              = 36731,
+    SPELL_ARCANE_DISRUPTION             = 36834,
+    SPELL_SHOCK_BARRIER                 = 36815,
+    SPELL_PHOENIX_ANIMATION             = 36723,
+    SPELL_MIND_CONTROL                  = 32830,
 
     //Phase 5 spells
-    SPELL_EXPLODE                       = 36092, 
-    SPELL_FULLPOWER                     = 36187, 
-    SPELL_KNOCKBACK                     = 11027, 
-    SPELL_GRAVITY_LAPSE                 = 34480, 
-    SPELL_GRAVITY_LAPSE_AURA            = 39432, 
-    SPELL_NETHER_BEAM                   = 35873, 
+    SPELL_EXPLODE                       = 36092,
+    SPELL_FULLPOWER                     = 36187,
+    SPELL_KNOCKBACK                     = 11027,
+    SPELL_GRAVITY_LAPSE                 = 34480,
+    SPELL_GRAVITY_LAPSE_AURA            = 39432,
+    SPELL_NETHER_BEAM                   = 35873,
 
     //Thaladred the Darkener spells
-    SPELL_PSYCHIC_BLOW                  = 10689, 
-    SPELL_SILENCE                       = 30225, 
+    SPELL_PSYCHIC_BLOW                  = 10689,
+    SPELL_SILENCE                       = 30225,
     //Lord Sanguinar spells
-    SPELL_BELLOWING_ROAR                = 40636, 
+    SPELL_BELLOWING_ROAR                = 40636,
     //Grand Astromancer Capernian spells
 
-    SPELL_CAPERNIAN_FIREBALL            = 36971, 
-    SPELL_CONFLAGRATION                 = 37018, 
-    SPELL_ARCANE_EXPLOSION              = 36970, 
+    SPELL_CAPERNIAN_FIREBALL            = 36971,
+    SPELL_CONFLAGRATION                 = 37018,
+    SPELL_ARCANE_EXPLOSION              = 36970,
     //Master Engineer Telonicus spells
-    SPELL_BOMB                          = 37036, 
-    SPELL_REMOTE_TOY                    = 37027, 
+    SPELL_BOMB                          = 37036,
+    SPELL_REMOTE_TOY                    = 37027,
     //Nether Vapor spell
-    SPELL_NETHER_VAPOR                  = 35859, 
+    SPELL_NETHER_VAPOR                  = 35859,
     //Phoenix spell
-    SPELL_BURN                          = 36720, 
-    SPELL_EMBER_BLAST                   = 34341, 
-    SPELL_REBIRTH                       = 41587, 
+    SPELL_BURN                          = 36720,
+    SPELL_EMBER_BLAST                   = 34341,
+    SPELL_REBIRTH                       = 41587,
 
     //Creature IDs
-    NPC_PHOENIX                         = 21362, 
-    NPC_PHOENIX_EGG                     = 21364, 
+    NPC_PHOENIX                         = 21362,
+    NPC_PHOENIX_EGG                     = 21364,
 
     //Phoenix egg and phoenix model
-    MODEL_ID_PHOENIX                    = 19682, 
-    MODEL_ID_PHOENIX_EGG                = 20245, 
+    MODEL_ID_PHOENIX                    = 19682,
+    MODEL_ID_PHOENIX_EGG                = 20245,
 
     MAX_ADVISORS                        = 4
 };
 
 uint32 m_auiSpellSummonWeapon[]=
 {
-    SPELL_SUMMON_WEAPONA, SPELL_SUMMON_WEAPONB, SPELL_SUMMON_WEAPONC, SPELL_SUMMON_WEAPOND, 
+    SPELL_SUMMON_WEAPONA, SPELL_SUMMON_WEAPONB, SPELL_SUMMON_WEAPONC, SPELL_SUMMON_WEAPOND,
     SPELL_SUMMON_WEAPONE, SPELL_SUMMON_WEAPONF, SPELL_SUMMON_WEAPONG
 };
 
@@ -273,7 +273,6 @@ struct advisorbase_ai : public ScriptedAI
     }
 };
 
-
 class boss_kaelthas : public CreatureScript
 {
     public:
@@ -385,7 +384,6 @@ class boss_kaelthas : public CreatureScript
 
                     if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                         AttackStart(pTarget);
-
                 }
                 else
                 {
@@ -883,7 +881,6 @@ class boss_kaelthas : public CreatureScript
                         //Phase 5
                         if (Phase == 6)
                         {
-
                             //GravityLapse_Timer
                             if (GravityLapse_Timer <= diff)
                             {
@@ -1523,7 +1520,6 @@ class mob_phoenix_tk : public CreatureScript
         }
 };
 
-
 //Phoenix Egg AI
 class mob_phoenix_egg_tk : public CreatureScript
 {
@@ -1584,7 +1580,6 @@ class mob_phoenix_egg_tk : public CreatureScript
             return new mob_phoenix_egg_tkAI(pCreature);
         }
 };
-
 
 void AddSC_boss_kaelthas()
 {

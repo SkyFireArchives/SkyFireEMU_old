@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -37,14 +37,14 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_STATIC_DISRUPTION     = 43622, 
-    SPELL_STATIC_VISUAL         = 45265, 
+    SPELL_STATIC_DISRUPTION     = 43622,
+    SPELL_STATIC_VISUAL         = 45265,
     SPELL_CALL_LIGHTNING        = 43661, //Missing timer
-    SPELL_GUST_OF_WIND          = 43621, 
-    SPELL_ELECTRICAL_STORM      = 43648, 
-    SPELL_BERSERK               = 45078, 
-    SPELL_ELECTRICAL_DAMAGE     = 43657, 
-    SPELL_ELECTRICAL_OVERLOAD   = 43658, 
+    SPELL_GUST_OF_WIND          = 43621,
+    SPELL_ELECTRICAL_STORM      = 43648,
+    SPELL_BERSERK               = 45078,
+    SPELL_ELECTRICAL_DAMAGE     = 43657,
+    SPELL_ELECTRICAL_OVERLOAD   = 43658,
     SPELL_EAGLE_SWOOP           = 44732
 };
 
@@ -485,4 +485,3 @@ void AddSC_boss_akilzon()
     new boss_akilzon();
     new mob_akilzon_eagle();
 }
-

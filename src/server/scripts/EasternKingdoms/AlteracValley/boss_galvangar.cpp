@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,16 +26,16 @@
 
 enum Spells
 {
-    SPELL_CLEAVE                                  = 15284, 
-    SPELL_FRIGHTENING_SHOUT                       = 19134, 
-    SPELL_WHIRLWIND1                              = 15589, 
-    SPELL_WHIRLWIND2                              = 13736, 
+    SPELL_CLEAVE                                  = 15284,
+    SPELL_FRIGHTENING_SHOUT                       = 19134,
+    SPELL_WHIRLWIND1                              = 15589,
+    SPELL_WHIRLWIND2                              = 13736,
     SPELL_MORTAL_STRIKE                           = 16856
 };
 
 enum Yells
 {
-    YELL_AGGRO                                    = -1810021, 
+    YELL_AGGRO                                    = -1810021,
     YELL_EVADE                                    = -1810022
 };
 
@@ -48,14 +48,12 @@ public:
     {
         boss_galvangarAI(Creature *c) : ScriptedAI(c) {}
 
-
         uint32 uiCleaveTimer;
         uint32 uiFrighteningShoutTimer;
         uint32 uiWhirlwind1Timer;
         uint32 uiWhirlwind2Timer;
         uint32 uiMortalStrikeTimer;
         uint32 uiResetTimer;
-
 
         void Reset()
         {

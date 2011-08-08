@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,23 +34,23 @@ EndScriptData */
 
 enum eEnums
 {
-    NPC_FELBOAR                 = 21878, 
+    NPC_FELBOAR                 = 21878,
 
-    SPELL_DEATH_COIL            = 33130, 
-    SPELL_ELIXIR_OF_FORTITUDE   = 3593, 
-    SPELL_BLUE_FIREWORK         = 11540, 
+    SPELL_DEATH_COIL            = 33130,
+    SPELL_ELIXIR_OF_FORTITUDE   = 3593,
+    SPELL_BLUE_FIREWORK         = 11540,
 
-    SAY_AGGRO1                  = -1999910, 
-    SAY_AGGRO2                  = -1999911, 
-    SAY_WP_1                    = -1999912, 
-    SAY_WP_2                    = -1999913, 
-    SAY_WP_3                    = -1999914, 
-    SAY_WP_4                    = -1999915, 
-    SAY_DEATH_1                 = -1999916, 
-    SAY_DEATH_2                 = -1999917, 
-    SAY_DEATH_3                 = -1999918, 
-    SAY_SPELL                   = -1999919, 
-    SAY_RAND_1                  = -1999920, 
+    SAY_AGGRO1                  = -1999910,
+    SAY_AGGRO2                  = -1999911,
+    SAY_WP_1                    = -1999912,
+    SAY_WP_2                    = -1999913,
+    SAY_WP_3                    = -1999914,
+    SAY_WP_4                    = -1999915,
+    SAY_DEATH_1                 = -1999916,
+    SAY_DEATH_2                 = -1999917,
+    SAY_DEATH_3                 = -1999918,
+    SAY_SPELL                   = -1999919,
+    SAY_RAND_1                  = -1999920,
     SAY_RAND_2                  = -1999921
 };
 

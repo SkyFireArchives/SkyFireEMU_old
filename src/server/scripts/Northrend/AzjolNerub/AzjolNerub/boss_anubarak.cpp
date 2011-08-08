@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,68 +27,68 @@
 
 enum Spells
 {
-    SPELL_CARRION_BEETLES                         = 53520, 
-    SPELL_SUMMON_CARRION_BEETLES                  = 53521, 
-    SPELL_LEECHING_SWARM                          = 53467, 
-    SPELL_POUND                                   = 53472, 
-    SPELL_POUND_H                                 = 59433, 
-    SPELL_SUBMERGE                                = 53421, 
-    SPELL_IMPALE_DMG                              = 53454, 
-    SPELL_IMPALE_DMG_H                            = 59446, 
-    SPELL_IMPALE_SHAKEGROUND                      = 53455, 
+    SPELL_CARRION_BEETLES                         = 53520,
+    SPELL_SUMMON_CARRION_BEETLES                  = 53521,
+    SPELL_LEECHING_SWARM                          = 53467,
+    SPELL_POUND                                   = 53472,
+    SPELL_POUND_H                                 = 59433,
+    SPELL_SUBMERGE                                = 53421,
+    SPELL_IMPALE_DMG                              = 53454,
+    SPELL_IMPALE_DMG_H                            = 59446,
+    SPELL_IMPALE_SHAKEGROUND                      = 53455,
     SPELL_IMPALE_SPIKE                            = 53539,   //this is not the correct visual effect
-    //SPELL_IMPALE_TARGET                           = 53458, 
+    //SPELL_IMPALE_TARGET                           = 53458,
 };
 
 enum Creatures
 {
-    CREATURE_GUARDIAN                             = 29216, 
-    CREATURE_VENOMANCER                           = 29217, 
-    CREATURE_DATTER                               = 29213, 
-    CREATURE_IMPALE_TARGET                        = 89, 
+    CREATURE_GUARDIAN                             = 29216,
+    CREATURE_VENOMANCER                           = 29217,
+    CREATURE_DATTER                               = 29213,
+    CREATURE_IMPALE_TARGET                        = 89,
     DISPLAY_INVISIBLE                             = 11686
 };
 
 // not in db
 enum Yells
 {
-    SAY_INTRO                                     = -1601010, 
-    SAY_AGGRO                                     = -1601000, 
-    SAY_SLAY_1                                    = -1601001, 
-    SAY_SLAY_2                                    = -1601002, 
-    SAY_SLAY_3                                    = -1601003, 
-    SAY_LOCUST_1                                  = -1601005, 
-    SAY_LOCUST_2                                  = -1601006, 
-    SAY_LOCUST_3                                  = -1601007, 
-    SAY_SUBMERGE_1                                = -1601008, 
-    SAY_SUBMERGE_2                                = -1601009, 
+    SAY_INTRO                                     = -1601010,
+    SAY_AGGRO                                     = -1601000,
+    SAY_SLAY_1                                    = -1601001,
+    SAY_SLAY_2                                    = -1601002,
+    SAY_SLAY_3                                    = -1601003,
+    SAY_LOCUST_1                                  = -1601005,
+    SAY_LOCUST_2                                  = -1601006,
+    SAY_LOCUST_3                                  = -1601007,
+    SAY_SUBMERGE_1                                = -1601008,
+    SAY_SUBMERGE_2                                = -1601009,
     SAY_DEATH                                     = -1601004
 };
 
 enum
 {
-    ACHIEV_TIMED_START_EVENT                      = 20381, 
+    ACHIEV_TIMED_START_EVENT                      = 20381,
 };
 
 enum Phases
 {
-    PHASE_MELEE                                   = 0, 
-    PHASE_UNDERGROUND                             = 1, 
-    IMPALE_PHASE_TARGET                           = 0, 
-    IMPALE_PHASE_ATTACK                           = 1, 
+    PHASE_MELEE                                   = 0,
+    PHASE_UNDERGROUND                             = 1,
+    IMPALE_PHASE_TARGET                           = 0,
+    IMPALE_PHASE_ATTACK                           = 1,
     IMPALE_PHASE_DMG                              = 2
 };
 
 const Position SpawnPoint[2] =
 {
-    { 550.7f, 282.8f, 224.3f, 0.0f }, 
-    { 551.1f, 229.4f, 224.3f, 0.0f }, 
+    { 550.7f, 282.8f, 224.3f, 0.0f },
+    { 551.1f, 229.4f, 224.3f, 0.0f },
 };
 
 const Position SpawnPointGuardian[2] =
 {
-    { 550.348633f, 316.006805f, 234.2947f, 0.0f }, 
-    { 550.188660f, 324.264557f, 237.7412f, 0.0f }, 
+    { 550.348633f, 316.006805f, 234.2947f, 0.0f },
+    { 550.188660f, 324.264557f, 237.7412f, 0.0f },
 };
 
 class boss_anub_arak : public CreatureScript

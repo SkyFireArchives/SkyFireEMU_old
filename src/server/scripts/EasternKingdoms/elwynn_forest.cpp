@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -40,7 +40,7 @@ EndContentData */
 ######*/
 enum eHenzeFaulkData
 {
-    SAY_HEAL = -1000187, 
+    SAY_HEAL = -1000187,
 };
 
 class npc_henze_faulk : public CreatureScript
@@ -102,9 +102,7 @@ public:
                 spellHit = true;
             }
         }
-
     };
-
 };
 
 /*######
@@ -113,38 +111,38 @@ public:
 
 enum Northshire
 {
-    NPC_BLACKROCK_BATTLE_WORG = 49871, 
-    NPC_STORMWIND_INFANTRY    = 49869, 
-    NPC_BROTHER_PAXTON        = 951, 
-    SAY_INFANTRY_NORMAL_1     = -1000001, 
-    SAY_INFANTRY_NORMAL_2     = -1000002, 
-    SAY_INFANTRY_NORMAL_3     = -1000003, 
-    SAY_INFANTRY_NORMAL_4     = -1000004, 
-    SAY_INFANTRY_NORMAL_5     = -1000005, 
-    SAY_INFANTRY_COMBAT_1     = -1000006, 
-    SAY_INFANTRY_COMBAT_2     = -1000007, 
-    SAY_INFANTRY_COMBAT_3     = -1000008, 
-    SAY_INFANTRY_COMBAT_4     = -1000009, 
-    SAY_PAXTON_NORMAL_1       = -1000010, 
-    SAY_PAXTON_NORMAL_2       = -1000011, 
-    SAY_PAXTON_NORMAL_3       = -1000012, 
-    SAY_PAXTON_NORMAL_4       = -1000013, 
-    SAY_PAXTON_NORMAL_5       = -1000014, 
-    SAY_BLACKROCK_COMBAT_1    = -1000015, 
-    SAY_BLACKROCK_COMBAT_2    = -1000016, 
-    SAY_BLACKROCK_COMBAT_3    = -1000017, 
-    SAY_BLACKROCK_COMBAT_4    = -1000018, 
-    SAY_BLACKROCK_COMBAT_5    = -1000019, 
-    SAY_ASSASSIN_COMBAT_1     = -1000020, 
-    SAY_ASSASSIN_COMBAT_2     = -1000021, 
-    SPELL_RENEW               = 93094, 
-    SPELL_PRAYER_OF_HEALING   = 93091, 
-    SPELL_FORTITUDE           = 13864, 
-    SPELL_PENANCE             = 47750, 
-    SPELL_FLASH_HEAL          = 17843, 
-    SPELL_SPYING              = 92857, 
-    SPELL_SNEAKING            = 93046, 
-    SPELL_SPYGLASS            = 80676, 
+    NPC_BLACKROCK_BATTLE_WORG = 49871,
+    NPC_STORMWIND_INFANTRY    = 49869,
+    NPC_BROTHER_PAXTON        = 951,
+    SAY_INFANTRY_NORMAL_1     = -1000001,
+    SAY_INFANTRY_NORMAL_2     = -1000002,
+    SAY_INFANTRY_NORMAL_3     = -1000003,
+    SAY_INFANTRY_NORMAL_4     = -1000004,
+    SAY_INFANTRY_NORMAL_5     = -1000005,
+    SAY_INFANTRY_COMBAT_1     = -1000006,
+    SAY_INFANTRY_COMBAT_2     = -1000007,
+    SAY_INFANTRY_COMBAT_3     = -1000008,
+    SAY_INFANTRY_COMBAT_4     = -1000009,
+    SAY_PAXTON_NORMAL_1       = -1000010,
+    SAY_PAXTON_NORMAL_2       = -1000011,
+    SAY_PAXTON_NORMAL_3       = -1000012,
+    SAY_PAXTON_NORMAL_4       = -1000013,
+    SAY_PAXTON_NORMAL_5       = -1000014,
+    SAY_BLACKROCK_COMBAT_1    = -1000015,
+    SAY_BLACKROCK_COMBAT_2    = -1000016,
+    SAY_BLACKROCK_COMBAT_3    = -1000017,
+    SAY_BLACKROCK_COMBAT_4    = -1000018,
+    SAY_BLACKROCK_COMBAT_5    = -1000019,
+    SAY_ASSASSIN_COMBAT_1     = -1000020,
+    SAY_ASSASSIN_COMBAT_2     = -1000021,
+    SPELL_RENEW               = 93094,
+    SPELL_PRAYER_OF_HEALING   = 93091,
+    SPELL_FORTITUDE           = 13864,
+    SPELL_PENANCE             = 47750,
+    SPELL_FLASH_HEAL          = 17843,
+    SPELL_SPYING              = 92857,
+    SPELL_SNEAKING            = 93046,
+    SPELL_SPYGLASS            = 80676,
 };
 
 class npc_stormwind_infantry : public CreatureScript
@@ -166,7 +164,7 @@ public:
         uint32 uiCombatTimer;
         uint32 DamageCount;
         uint32 Attack1HTimer;
-        
+
         void Reset()
         {
             uiSayNormalTimer = urand(50000, 90000);
@@ -314,7 +312,7 @@ public:
                     uiSayCombatTimer = urand(30000, 60000);
                 }else uiSayCombatTimer -= diff;
             }
-            
+
             if (uiCombatTimer <= diff)
             {
                 if (me->HasUnitState(UNIT_STAT_ROOT))
@@ -324,7 +322,6 @@ public:
             }else uiCombatTimer -= diff;
         }
     };
-
 };
 
 /*######
@@ -343,7 +340,7 @@ public:
 
     struct npc_brother_paxtonAI : public ScriptedAI
     {
-        npc_brother_paxtonAI(Creature *c) : ScriptedAI(c) 
+        npc_brother_paxtonAI(Creature *c) : ScriptedAI(c)
         {
             me->GetMotionMaster()->MovePath(951, true);
         }
@@ -362,11 +359,10 @@ public:
 
             if (!UpdateVictim())
                 return;
-            
+
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*######
@@ -386,7 +382,7 @@ public:
     struct npc_blackrock_battle_worgAI : public ScriptedAI
     {
         npc_blackrock_battle_worgAI(Creature *c) : ScriptedAI(c) {}
-                
+
         uint32 Attack1HTimer;
         uint32 DamageCount;
 
@@ -426,7 +422,7 @@ public:
         {
             if (!UpdateVictim())
                 return;
-            
+
             if (DamageCount < 2)
                 DoMeleeAttackIfReady();
             else
@@ -447,7 +443,6 @@ public:
             }
         }
     };
-
 };
 
 /*######
@@ -466,7 +461,7 @@ public:
 
     struct npc_blackrock_spyAI : public ScriptedAI
     {
-        npc_blackrock_spyAI(Creature *c) : ScriptedAI(c) 
+        npc_blackrock_spyAI(Creature *c) : ScriptedAI(c)
         {
             CastSpying();
         }
@@ -483,7 +478,7 @@ public:
             GetCreature(-8960.08f, -63.767f);
             GetCreature(-8983.12f, -202.827f);
         }
-        
+
         void GetCreature(float X, float Y)
         {
             if (me->GetHomePosition().GetPositionX() == X, me->GetHomePosition().GetPositionY() == Y)
@@ -495,11 +490,11 @@ public:
 
         void CastSpyglass()
         {
-            Spyglass(-8868.88f, -99.1016f, -8936.5f, -246.743f, -8922.44f, -73.9883f, -8909.68f, -40.0247f, -8834.85f, 
+            Spyglass(-8868.88f, -99.1016f, -8936.5f, -246.743f, -8922.44f, -73.9883f, -8909.68f, -40.0247f, -8834.85f,
                 -119.701f, -9022.08f, -163.965f, -8776.55f, -79.158f, -8960.08f, -63.767f, -8983.12f, -202.827f);
         }
 
-        void Spyglass(float X1, float Y1, float X2, float Y2, float X3, float Y3, float X4, float Y4, float X5, float Y5, 
+        void Spyglass(float X1, float Y1, float X2, float Y2, float X3, float Y3, float X4, float Y4, float X5, float Y5,
             float X6, float Y6, float X7, float Y7, float X8, float Y8, float X9, float Y9)
         {
             if (me->GetHomePosition().GetPositionX() != X1, me->GetHomePosition().GetPositionY() != Y1)
@@ -527,11 +522,10 @@ public:
 
             if (!UpdateVictim())
                 return;
-            
+
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*######
@@ -561,11 +555,10 @@ public:
         {
             if (!UpdateVictim())
                 return;
-            
+
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*######
@@ -584,7 +577,7 @@ public:
 
     struct npc_goblin_assassinAI : public ScriptedAI
     {
-        npc_goblin_assassinAI(Creature *c) : ScriptedAI(c) 
+        npc_goblin_assassinAI(Creature *c) : ScriptedAI(c)
         {
             if (!me->isInCombat() && !me->HasAura(SPELL_SPYING))
                 DoCast(SPELL_SNEAKING);
@@ -599,16 +592,15 @@ public:
         {
             if (!UpdateVictim())
                 return;
-            
+
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 enum
 {
-    SPELL_RENEWEDLIFE           = 93097, 
+    SPELL_RENEWEDLIFE           = 93097,
     NPC_INJURED_SOLDIER_DUMMY   = 50378
 };
 

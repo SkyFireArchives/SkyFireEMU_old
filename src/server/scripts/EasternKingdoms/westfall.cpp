@@ -37,15 +37,15 @@ EndContentData */
 
 enum eEnums
 {
-    SAY_DS_START        = -1000293, 
-    SAY_DS_DOWN_1       = -1000294, 
-    SAY_DS_DOWN_2       = -1000295, 
-    SAY_DS_DOWN_3       = -1000296, 
-    SAY_DS_PROLOGUE     = -1000297, 
+    SAY_DS_START        = -1000293,
+    SAY_DS_DOWN_1       = -1000294,
+    SAY_DS_DOWN_2       = -1000295,
+    SAY_DS_DOWN_3       = -1000296,
+    SAY_DS_PROLOGUE     = -1000297,
 
-    SPELL_SHOOT         = 6660, 
-    QUEST_TOME_VALOR    = 1651, 
-    NPC_DEFIAS_RAIDER   = 6180, 
+    SPELL_SHOOT         = 6660,
+    QUEST_TOME_VALOR    = 1651,
+    NPC_DEFIAS_RAIDER   = 6180,
     EQUIP_ID_RIFLE      = 2511
 };
 
@@ -185,10 +185,7 @@ public:
             } else uiShootTimer -= diff;
         }
     };
-
 };
-
-
 
 /*######
 ## npc_defias_traitor
@@ -260,10 +257,7 @@ public:
 
         void Reset() {}
     };
-
 };
-
-
 
 void AddSC_westfall()
 {

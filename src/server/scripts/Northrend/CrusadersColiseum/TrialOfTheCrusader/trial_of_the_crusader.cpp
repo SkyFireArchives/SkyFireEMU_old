@@ -4,7 +4,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -30,45 +30,45 @@ EndScriptData */
 
 enum eYells
 {
-    SAY_STAGE_0_01            = -1649070, 
-    SAY_STAGE_0_02            = -1649071, 
-    SAY_STAGE_0_03a           = -1649072, 
-    SAY_STAGE_0_03h           = -1649073, 
-    SAY_STAGE_0_04            = -1649074, 
-    SAY_STAGE_0_05            = -1649075, 
-    SAY_STAGE_0_06            = -1649076, 
-    SAY_STAGE_0_WIPE          = -1649077, 
-    SAY_STAGE_1_01            = -1649080, 
-    SAY_STAGE_1_02            = -1649081, 
-    SAY_STAGE_1_03            = -1649082, 
-    SAY_STAGE_1_04            = -1649083, 
+    SAY_STAGE_0_01            = -1649070,
+    SAY_STAGE_0_02            = -1649071,
+    SAY_STAGE_0_03a           = -1649072,
+    SAY_STAGE_0_03h           = -1649073,
+    SAY_STAGE_0_04            = -1649074,
+    SAY_STAGE_0_05            = -1649075,
+    SAY_STAGE_0_06            = -1649076,
+    SAY_STAGE_0_WIPE          = -1649077,
+    SAY_STAGE_1_01            = -1649080,
+    SAY_STAGE_1_02            = -1649081,
+    SAY_STAGE_1_03            = -1649082,
+    SAY_STAGE_1_04            = -1649083,
     SAY_STAGE_1_05            = -1649030, //INTRO Jaraxxus
-    SAY_STAGE_1_06            = -1649084, 
-    SAY_STAGE_1_07            = -1649086, 
-    SAY_STAGE_1_08            = -1649087, 
-    SAY_STAGE_1_09            = -1649088, 
-    SAY_STAGE_1_10            = -1649089, 
-    SAY_STAGE_1_11            = -1649090, 
-    SAY_STAGE_2_01            = -1649091, 
-    SAY_STAGE_2_02a           = -1649092, 
-    SAY_STAGE_2_02h           = -1649093, 
-    SAY_STAGE_2_03            = -1649094, 
-    SAY_STAGE_2_04a           = -1649095, 
-    SAY_STAGE_2_04h           = -1649096, 
-    SAY_STAGE_2_05a           = -1649097, 
-    SAY_STAGE_2_05h           = -1649098, 
-    SAY_STAGE_2_06            = -1649099, 
-    SAY_STAGE_3_01            = -1649100, 
-    SAY_STAGE_3_02            = -1649101, 
-    SAY_STAGE_3_03a           = -1649102, 
-    SAY_STAGE_3_03h           = -1649103, 
-    SAY_STAGE_4_01            = -1649104, 
-    SAY_STAGE_4_02            = -1649105, 
-    SAY_STAGE_4_03            = -1649106, 
-    SAY_STAGE_4_04            = -1649107, 
-    SAY_STAGE_4_05            = -1649108, 
-    SAY_STAGE_4_06            = -1649109, 
-    SAY_STAGE_4_07            = -1649110, 
+    SAY_STAGE_1_06            = -1649084,
+    SAY_STAGE_1_07            = -1649086,
+    SAY_STAGE_1_08            = -1649087,
+    SAY_STAGE_1_09            = -1649088,
+    SAY_STAGE_1_10            = -1649089,
+    SAY_STAGE_1_11            = -1649090,
+    SAY_STAGE_2_01            = -1649091,
+    SAY_STAGE_2_02a           = -1649092,
+    SAY_STAGE_2_02h           = -1649093,
+    SAY_STAGE_2_03            = -1649094,
+    SAY_STAGE_2_04a           = -1649095,
+    SAY_STAGE_2_04h           = -1649096,
+    SAY_STAGE_2_05a           = -1649097,
+    SAY_STAGE_2_05h           = -1649098,
+    SAY_STAGE_2_06            = -1649099,
+    SAY_STAGE_3_01            = -1649100,
+    SAY_STAGE_3_02            = -1649101,
+    SAY_STAGE_3_03a           = -1649102,
+    SAY_STAGE_3_03h           = -1649103,
+    SAY_STAGE_4_01            = -1649104,
+    SAY_STAGE_4_02            = -1649105,
+    SAY_STAGE_4_03            = -1649106,
+    SAY_STAGE_4_04            = -1649107,
+    SAY_STAGE_4_05            = -1649108,
+    SAY_STAGE_4_06            = -1649109,
+    SAY_STAGE_4_07            = -1649110,
 };
 
 struct _Messages
@@ -81,17 +81,17 @@ struct _Messages
 
 static _Messages _GossipMessage[]=
 {
-    {MSG_BEASTS, GOSSIP_ACTION_INFO_DEF+1, false, TYPE_BEASTS}, 
-    {MSG_JARAXXUS, GOSSIP_ACTION_INFO_DEF+2, false, TYPE_JARAXXUS}, 
-    {MSG_CRUSADERS, GOSSIP_ACTION_INFO_DEF+3, false, TYPE_CRUSADERS}, 
-    {MSG_VALKIRIES, GOSSIP_ACTION_INFO_DEF+4, false, TYPE_VALKIRIES}, 
-    {MSG_LICH_KING, GOSSIP_ACTION_INFO_DEF+5, false, TYPE_ANUBARAK}, 
+    {MSG_BEASTS, GOSSIP_ACTION_INFO_DEF+1, false, TYPE_BEASTS},
+    {MSG_JARAXXUS, GOSSIP_ACTION_INFO_DEF+2, false, TYPE_JARAXXUS},
+    {MSG_CRUSADERS, GOSSIP_ACTION_INFO_DEF+3, false, TYPE_CRUSADERS},
+    {MSG_VALKIRIES, GOSSIP_ACTION_INFO_DEF+4, false, TYPE_VALKIRIES},
+    {MSG_LICH_KING, GOSSIP_ACTION_INFO_DEF+5, false, TYPE_ANUBARAK},
     {MSG_ANUBARAK, GOSSIP_ACTION_INFO_DEF+6, true, TYPE_ANUBARAK}
 };
 
 enum
 {
-    NUM_MESSAGES = 6, 
+    NUM_MESSAGES = 6,
 };
 
 class npc_announcer_toc10 : public CreatureScript

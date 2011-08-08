@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -37,12 +37,12 @@ EndScriptData */
 float NalorakkWay[8][3] =
 {
     { 18.569f, 1414.512f, 11.42f}, // waypoint 1
-    {-17.264f, 1419.551f, 12.62f}, 
+    {-17.264f, 1419.551f, 12.62f},
     {-52.642f, 1419.357f, 27.31f}, // waypoint 2
-    {-69.908f, 1419.721f, 27.31f}, 
-    {-79.929f, 1395.958f, 27.31f}, 
+    {-69.908f, 1419.721f, 27.31f},
+    {-79.929f, 1395.958f, 27.31f},
     {-80.072f, 1374.555f, 40.87f}, // waypoint 3
-    {-80.072f, 1314.398f, 40.87f}, 
+    {-80.072f, 1314.398f, 40.87f},
     {-80.072f, 1295.775f, 48.60f} // waypoint 4
 };
 
@@ -343,7 +343,6 @@ class boss_nalorakk : public CreatureScript
                             inMove = false;
                             return;
                     }
-
                 }
             }
 
@@ -451,7 +450,6 @@ class boss_nalorakk : public CreatureScript
             }
         };
 
-
         CreatureAI* GetAI(Creature* creature) const
         {
             return new boss_nalorakkAI(creature);
@@ -462,4 +460,3 @@ void AddSC_boss_nalorakk()
 {
     new boss_nalorakk();
 }
-

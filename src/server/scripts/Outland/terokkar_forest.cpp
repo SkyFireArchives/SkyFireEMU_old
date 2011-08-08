@@ -150,9 +150,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*######
 ## mob_infested_root_walker
@@ -184,7 +182,6 @@ public:
                         DoCast(me, 39130, true);
         }
     };
-
 };
 
 /*######
@@ -246,7 +243,6 @@ public:
             npc_escortAI::UpdateAI(diff);
         }
     };
-
 };
 
 /*######
@@ -279,7 +275,6 @@ public:
                         DoCast(me, 39134, true);
         }
     };
-
 };
 
 /*######
@@ -332,7 +327,6 @@ public:
             }
         }
     };
-
 };
 
 /*######
@@ -344,13 +338,13 @@ public:
 
 enum eFloon
 {
-    SAY_FLOON_ATTACK        = -1000195, 
+    SAY_FLOON_ATTACK        = -1000195,
 
-    SPELL_SILENCE           = 6726, 
-    SPELL_FROSTBOLT         = 9672, 
-    SPELL_FROST_NOVA        = 11831, 
+    SPELL_SILENCE           = 6726,
+    SPELL_FROSTBOLT         = 9672,
+    SPELL_FROST_NOVA        = 11831,
 
-    FACTION_HOSTILE_FL      = 1738, 
+    FACTION_HOSTILE_FL      = 1738,
     QUEST_CRACK_SKULLS      = 10009
 };
 
@@ -440,26 +434,22 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
-
 
 /*######
 ## npc_isla_starmane
 ######*/
 enum eIslaStarmaneData
 {
-    SAY_PROGRESS_1  = -1000571, 
-    SAY_PROGRESS_2  = -1000572, 
-    SAY_PROGRESS_3  = -1000573, 
-    SAY_PROGRESS_4  = -1000574, 
+    SAY_PROGRESS_1  = -1000571,
+    SAY_PROGRESS_2  = -1000572,
+    SAY_PROGRESS_3  = -1000573,
+    SAY_PROGRESS_4  = -1000574,
 
-    QUEST_EFTW_H    = 10052, 
-    QUEST_EFTW_A    = 10051, 
-    GO_CAGE         = 182794, 
-    SPELL_CAT       = 32447, 
+    QUEST_EFTW_H    = 10052,
+    QUEST_EFTW_A    = 10051,
+    GO_CAGE         = 182794,
+    SPELL_CAT       = 32447,
 };
 
 class npc_isla_starmane : public CreatureScript
@@ -536,9 +526,7 @@ public:
     {
         return new npc_isla_starmaneAI(pCreature);
     }
-
 };
-
 
 /*######
 ## go_skull_pile
@@ -632,9 +620,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*########
 ####npc_akuno
@@ -642,7 +628,7 @@ public:
 
 enum eAkuno
 {
-    QUEST_ESCAPING_THE_TOMB = 10887, 
+    QUEST_ESCAPING_THE_TOMB = 10887,
     NPC_CABAL_SKRIMISHER    = 21661
 };
 
@@ -700,7 +686,6 @@ public:
             summon->AI()->AttackStart(me);
         }
     };
-
 };
 
 void AddSC_terokkar_forest()

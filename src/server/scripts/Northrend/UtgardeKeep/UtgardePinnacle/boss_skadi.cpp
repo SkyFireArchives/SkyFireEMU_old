@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -38,16 +38,16 @@ Script Data End */
 //Yell
 enum eYells
 {
-    SAY_AGGRO                           = -1575004, 
-    SAY_KILL_1                          = -1575005, 
-    SAY_KILL_2                          = -1575006, 
+    SAY_AGGRO                           = -1575004,
+    SAY_KILL_1                          = -1575005,
+    SAY_KILL_2                          = -1575006,
     EMOTE_RANGE                         = -1575007, //Skadi
-    SAY_DEATH                           = -1575008, 
-    SAY_DRAKE_DEATH                     = -1575009, 
+    SAY_DEATH                           = -1575008,
+    SAY_DRAKE_DEATH                     = -1575009,
     EMOTE_BREATH                        = -1575010, //Grauf
-    SAY_DRAKE_BREATH_1                  = -1575011, 
-    SAY_DRAKE_BREATH_2                  = -1575012, 
-    SAY_DRAKE_BREATH_3                  = -1575013, 
+    SAY_DRAKE_BREATH_1                  = -1575011,
+    SAY_DRAKE_BREATH_2                  = -1575012,
+    SAY_DRAKE_BREATH_3                  = -1575013,
 };
 
 static Position SpawnLoc = {468.931f, -513.555f, 104.723f, 0};
@@ -133,34 +133,34 @@ static Position Location[]=
 
 enum eCombatPhase
 {
-    FLYING, 
+    FLYING,
     SKADI
 };
 
 enum eSpells
 {
     //Skadi Spells
-    SPELL_CRUSH             = 50234, 
+    SPELL_CRUSH             = 50234,
     SPELL_POISONED_SPEAR    = 50225, //isn't being casted =/
     SPELL_WHIRLWIND         = 50228, //random target, but not the tank approx. every 20s
-    SPELL_RAPID_FIRE        = 56570, 
-    SPELL_HARPOON_DAMAGE    = 56578, 
-    SPELL_FREEZING_CLOUD    = 47579, 
+    SPELL_RAPID_FIRE        = 56570,
+    SPELL_HARPOON_DAMAGE    = 56578,
+    SPELL_FREEZING_CLOUD    = 47579,
 };
 
 enum eCreature
 {
-    CREATURE_YMIRJAR_WARRIOR       = 26690, 
-    CREATURE_YMIRJAR_WITCH_DOCTOR  = 26691, 
-    CREATURE_YMIRJAR_HARPOONER     = 26692, 
-    CREATURE_GRAUF                 = 26893, 
-    CREATURE_TRIGGER               = 28351, 
-    DATA_MOUNT                     = 27043, 
+    CREATURE_YMIRJAR_WARRIOR       = 26690,
+    CREATURE_YMIRJAR_WITCH_DOCTOR  = 26691,
+    CREATURE_YMIRJAR_HARPOONER     = 26692,
+    CREATURE_GRAUF                 = 26893,
+    CREATURE_TRIGGER               = 28351,
+    DATA_MOUNT                     = 27043,
 };
 
 enum eAchievments
 {
-    ACHIEV_TIMED_START_EVENT                      = 17726, 
+    ACHIEV_TIMED_START_EVENT                      = 17726,
 };
 
 class boss_skadi : public CreatureScript
@@ -311,7 +311,6 @@ public:
             }
         }
 
-
         void UpdateAI(const uint32 diff)
         {
             switch(Phase)
@@ -461,7 +460,6 @@ public:
                 me->SummonCreature(CREATURE_TRIGGER, Location[i]);
         }
     };
-
 };
 
 class go_harpoon_launcher : public GameObjectScript
@@ -480,9 +478,7 @@ public:
         }
         return false;
     }
-
 };
-
 
 void AddSC_boss_skadi()
 {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,15 +27,15 @@
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1603210, 
-    SAY_SLAY_1                                  = -1603211, 
-    SAY_SLAY_2                                  = -1603212, 
-    SAY_FLASH_FREEZE                            = -1603213, 
-    SAY_STALACTITE                              = -1603214, 
-    SAY_DEATH                                   = -1603215, 
-    SAY_BERSERK                                 = -1603216, 
-    SAY_YS_HELP                                 = -1603217, 
-    SAY_HARD_MODE_MISSED                        = -1603218, 
+    SAY_AGGRO                                   = -1603210,
+    SAY_SLAY_1                                  = -1603211,
+    SAY_SLAY_2                                  = -1603212,
+    SAY_FLASH_FREEZE                            = -1603213,
+    SAY_STALACTITE                              = -1603214,
+    SAY_DEATH                                   = -1603215,
+    SAY_BERSERK                                 = -1603216,
+    SAY_YS_HELP                                 = -1603217,
+    SAY_HARD_MODE_MISSED                        = -1603218,
 };
 
 class boss_hodir : public CreatureScript
@@ -88,9 +88,7 @@ public:
             EnterEvadeIfOutOfCombatArea(diff);
         }
     };
-
 };
-
 
 void AddSC_boss_hodir()
 {

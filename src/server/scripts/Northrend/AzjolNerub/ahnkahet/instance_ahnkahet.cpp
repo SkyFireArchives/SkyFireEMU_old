@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -66,8 +66,8 @@ public:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         uint32 spheres[2];
 
-        uint8 InitiandCnt, 
-            switchtrigger, 
+        uint8 InitiandCnt,
+            switchtrigger,
             initiandkilled;
 
         std::string str_data;
@@ -302,7 +302,6 @@ public:
 
                 spheres[0] = data5;
                 spheres[1] = data6;
-
             } else OUT_LOAD_INST_DATA_FAIL;
 
             OUT_LOAD_INST_DATA_COMPLETE;

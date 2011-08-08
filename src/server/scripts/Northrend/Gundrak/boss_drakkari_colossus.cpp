@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,40 +31,40 @@
 
 enum Spells
 {
-    SPELL_EMERGE                                  = 54850, 
-    SPELL_ELEMENTAL_SPAWN_EFEFCT                  = 54888, 
-    SPELL_MOJO_VOLLEY                             = 54849, 
-    SPELL_SURGE_VISUAL                            = 54827, 
-    SPELL_MERGE                                   = 54878, 
-    SPELL_MIGHTY_BLOW                             = 54719, 
-    SPELL_SURGE                                   = 54801, 
-    SPELL_FREEZE_ANIM                             = 16245, 
-    SPELL_MOJO_PUDDLE                             = 55627, 
-    SPELL_MOJO_WAVE                               = 55626, 
+    SPELL_EMERGE                                  = 54850,
+    SPELL_ELEMENTAL_SPAWN_EFEFCT                  = 54888,
+    SPELL_MOJO_VOLLEY                             = 54849,
+    SPELL_SURGE_VISUAL                            = 54827,
+    SPELL_MERGE                                   = 54878,
+    SPELL_MIGHTY_BLOW                             = 54719,
+    SPELL_SURGE                                   = 54801,
+    SPELL_FREEZE_ANIM                             = 16245,
+    SPELL_MOJO_PUDDLE                             = 55627,
+    SPELL_MOJO_WAVE                               = 55626,
 };
 
 enum ColossusEvents
 {
-    EVENT_MIGHTY_BLOW   = 1, 
+    EVENT_MIGHTY_BLOW   = 1,
 };
 
 enum ColossusActions
 {
-    ACTION_SUMMON_ELEMENTAL     = 1, 
-    ACTION_FREEZE_COLOSSUS      = 2, 
-    ACTION_UNFREEZE_COLOSSUS    = 3, 
+    ACTION_SUMMON_ELEMENTAL     = 1,
+    ACTION_FREEZE_COLOSSUS      = 2,
+    ACTION_UNFREEZE_COLOSSUS    = 3,
 };
 
 enum ColossusPhases
 {
-    COLOSSUS_PHASE_NORMAL                   = 1, 
-    COLOSSUS_PHASE_FIRST_ELEMENTAL_SUMMON   = 2, 
+    COLOSSUS_PHASE_NORMAL                   = 1,
+    COLOSSUS_PHASE_FIRST_ELEMENTAL_SUMMON   = 2,
     COLOSSUS_PHASE_SECOND_ELEMENTAL_SUMMON  = 3
 };
 
 enum ColossusData
 {
-    DATA_COLOSSUS_PHASE = 1, 
+    DATA_COLOSSUS_PHASE = 1,
     DATA_INTRO_DONE     = 2
 };
 
@@ -85,7 +85,7 @@ class boss_drakkari_colossus : public CreatureScript
 
         struct boss_drakkari_colossusAI : public BossAI
         {
-            boss_drakkari_colossusAI(Creature* creature) : BossAI(creature, DATA_DRAKKARI_COLOSSUS_EVENT) 
+            boss_drakkari_colossusAI(Creature* creature) : BossAI(creature, DATA_DRAKKARI_COLOSSUS_EVENT)
             {
                 me->SetReactState(REACT_PASSIVE);
                 introDone = false;
@@ -177,7 +177,6 @@ class boss_drakkari_colossus : public CreatureScript
                         phase = (phase == COLOSSUS_PHASE_NORMAL ? COLOSSUS_PHASE_FIRST_ELEMENTAL_SUMMON : COLOSSUS_PHASE_SECOND_ELEMENTAL_SUMMON);
                         DoAction(ACTION_FREEZE_COLOSSUS);
                         DoAction(ACTION_SUMMON_ELEMENTAL);
-                        
                     }
                 }
             }
@@ -280,7 +279,7 @@ class boss_drakkari_elemental : public CreatureScript
             {
                 if (!UpdateVictim())
                     return;
-                
+
                 events.Update(diff);
 
                 if (me->HasUnitState(UNIT_STAT_CASTING))
@@ -416,7 +415,6 @@ public:
             }
         }
 
-
         void AttackStart(Unit* attacker)
         {
             if (me->GetMotionMaster()->GetCurrentMovementGeneratorType() == POINT_MOTION_TYPE)
@@ -432,7 +430,7 @@ public:
                 colossus->GetHomePosition().GetPosition(&colossusHomePosition);
 
                 float distance = homePosition.GetExactDist(colossusHomePosition.GetPositionX(), colossusHomePosition.GetPositionY(), colossusHomePosition.GetPositionZ());
-                
+
                 if (distance < 12.0f)
                 {
                     MoveMojos(colossus);

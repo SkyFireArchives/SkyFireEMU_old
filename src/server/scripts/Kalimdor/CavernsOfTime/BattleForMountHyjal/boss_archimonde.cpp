@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -131,7 +131,6 @@ public:
             } else CheckTimer -= diff;
         }
     };
-
 };
 
 /* This script is merely a placeholder for the Doomfire that triggers Doomfire spell. It will
@@ -156,7 +155,6 @@ public:
         void EnterCombat(Unit* /*who*/) {}
         void DamageTaken(Unit * /*done_by*/, uint32 &damage) { damage = 0; }
     };
-
 };
 
 /* This is the script for the Doomfire Spirit Mob. This mob simply follow players or
@@ -216,7 +214,6 @@ public:
             } else ChangeTargetTimer -= diff;
         }
     };
-
 };
 
 /* Finally, Archimonde's script. His script isn't extremely complex, most are simply spells on timers.
@@ -422,12 +419,12 @@ public:
         //this is code doing close to what the summoning spell would do (spell 31903)
         void SummonDoomfire(Unit *pTarget)
         {
-            me->SummonCreature(CREATURE_DOOMFIRE_SPIRIT, 
-                pTarget->GetPositionX()+15.0f, pTarget->GetPositionY()+15.0f, pTarget->GetPositionZ(), 0, 
+            me->SummonCreature(CREATURE_DOOMFIRE_SPIRIT,
+                pTarget->GetPositionX()+15.0f, pTarget->GetPositionY()+15.0f, pTarget->GetPositionZ(), 0,
                 TEMPSUMMON_TIMED_DESPAWN, 27000);
 
-            me->SummonCreature(CREATURE_DOOMFIRE, 
-                pTarget->GetPositionX()-15.0f, pTarget->GetPositionY()-15.0f, pTarget->GetPositionZ(), 0, 
+            me->SummonCreature(CREATURE_DOOMFIRE,
+                pTarget->GetPositionX()-15.0f, pTarget->GetPositionY()-15.0f, pTarget->GetPositionZ(), 0,
                 TEMPSUMMON_TIMED_DESPAWN, 27000);
         }
 
@@ -648,12 +645,7 @@ public:
         }
         void WaypointReached(uint32 /*i*/){}
     };
-
 };
-
-
-
-
 
 void AddSC_boss_archimonde()
 {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,30 +27,30 @@
 
 enum Spells
 {
-    SPELL_CALL_FLAMES                             = 48258, 
+    SPELL_CALL_FLAMES                             = 48258,
     SPELL_RITUAL_OF_THE_SWORD                     = 48276, //Effect #1 Teleport,  Effect #2 Dummy
-    SPELL_SINSTER_STRIKE                          = 15667, 
-    H_SPELL_SINSTER_STRIKE                        = 59409, 
-    SPELL_SVALA_TRANSFORMING1                     = 54140, 
+    SPELL_SINSTER_STRIKE                          = 15667,
+    H_SPELL_SINSTER_STRIKE                        = 59409,
+    SPELL_SVALA_TRANSFORMING1                     = 54140,
     SPELL_SVALA_TRANSFORMING2                     = 54205
 };
 //not in db
 enum Yells
 {
-    SAY_DIALOG_WITH_ARTHAS_1                      = -1575015, 
-    SAY_DIALOG_WITH_ARTHAS_2                      = -1575016, 
-    SAY_DIALOG_WITH_ARTHAS_3                      = -1575017, 
-    SAY_AGGRO                                     = -1575018, 
-    SAY_SLAY_1                                    = -1575019, 
-    SAY_SLAY_2                                    = -1575020, 
-    SAY_SLAY_3                                    = -1575021, 
-    SAY_DEATH                                     = -1575022, 
-    SAY_SACRIFICE_PLAYER_1                        = -1575023, 
-    SAY_SACRIFICE_PLAYER_2                        = -1575024, 
-    SAY_SACRIFICE_PLAYER_3                        = -1575025, 
-    SAY_SACRIFICE_PLAYER_4                        = -1575026, 
-    SAY_SACRIFICE_PLAYER_5                        = -1575027, 
-    SAY_DIALOG_OF_ARTHAS_1                        = -1575028, 
+    SAY_DIALOG_WITH_ARTHAS_1                      = -1575015,
+    SAY_DIALOG_WITH_ARTHAS_2                      = -1575016,
+    SAY_DIALOG_WITH_ARTHAS_3                      = -1575017,
+    SAY_AGGRO                                     = -1575018,
+    SAY_SLAY_1                                    = -1575019,
+    SAY_SLAY_2                                    = -1575020,
+    SAY_SLAY_3                                    = -1575021,
+    SAY_DEATH                                     = -1575022,
+    SAY_SACRIFICE_PLAYER_1                        = -1575023,
+    SAY_SACRIFICE_PLAYER_2                        = -1575024,
+    SAY_SACRIFICE_PLAYER_3                        = -1575025,
+    SAY_SACRIFICE_PLAYER_4                        = -1575026,
+    SAY_SACRIFICE_PLAYER_5                        = -1575027,
+    SAY_DIALOG_OF_ARTHAS_1                        = -1575028,
     SAY_DIALOG_OF_ARTHAS_2                        = -1575029
 };
 enum Creatures
@@ -63,7 +63,7 @@ enum Creatures
 enum ChannelerSpells
 {
     //ritual channeler's spells
-    SPELL_PARALYZE                                = 48278, 
+    SPELL_PARALYZE                                = 48278,
     SPELL_SHADOWS_IN_THE_DARK                     = 59407
 };
 enum Misc
@@ -72,20 +72,20 @@ enum Misc
 };
 enum IntroPhase
 {
-    IDLE, 
-    INTRO, 
+    IDLE,
+    INTRO,
     FINISHED
 };
 enum CombatPhase
 {
-    NORMAL, 
+    NORMAL,
     SACRIFICING
 };
 
 static Position RitualChannelerPos[]=
 {
-    {296.42f, -355.01f, 90.94f, 0.0f}, 
-    {302.36f, -352.01f, 90.54f, 0.0f}, 
+    {296.42f, -355.01f, 90.94f, 0.0f},
+    {302.36f, -352.01f, 90.54f, 0.0f},
     {291.39f, -350.89f, 90.54f, 0.0f}
 };
 static Position ArthasPos = { 295.81f, -366.16f, 92.57f, 1.58f };
@@ -213,7 +213,6 @@ public:
             } else uiIntroTimer -= diff;
         }
     };
-
 };
 
 class mob_ritual_channeler : public CreatureScript
@@ -252,7 +251,6 @@ public:
         {
         }
     };
-
 };
 
 class boss_svala_sorrowgrave : public CreatureScript
@@ -417,7 +415,6 @@ public:
             DoScriptText(SAY_DEATH, me);
         }
     };
-
 };
 
 void AddSC_boss_svala()

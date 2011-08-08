@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,40 +27,40 @@
 
 enum Spells
 {
-    SPELL_ARCANE_BARRAGE_VOLLEY               = 54202, 
-    SPELL_ARCANE_BARRAGE_VOLLEY_H             = 59483, 
-    SPELL_ARCANE_BUFFET                       = 54226, 
-    SPELL_ARCANE_BUFFET_H                     = 59485, 
-    SPELL_SUMMON_ETHEREAL_SPHERE_1            = 54102, 
-    SPELL_SUMMON_ETHEREAL_SPHERE_2            = 54137, 
-    SPELL_SUMMON_ETHEREAL_SPHERE_3            = 54138, 
+    SPELL_ARCANE_BARRAGE_VOLLEY               = 54202,
+    SPELL_ARCANE_BARRAGE_VOLLEY_H             = 59483,
+    SPELL_ARCANE_BUFFET                       = 54226,
+    SPELL_ARCANE_BUFFET_H                     = 59485,
+    SPELL_SUMMON_ETHEREAL_SPHERE_1            = 54102,
+    SPELL_SUMMON_ETHEREAL_SPHERE_2            = 54137,
+    SPELL_SUMMON_ETHEREAL_SPHERE_3            = 54138,
 };
 
 enum NPCs
 {
-    NPC_ETHEREAL_SPHERE                       = 29271, 
+    NPC_ETHEREAL_SPHERE                       = 29271,
     //NPC_ETHEREAL_SPHERE2                    = 32582, // heroic only?
 };
 
 enum CreatureSpells
 {
-    SPELL_ARCANE_POWER                             = 54160, 
-    H_SPELL_ARCANE_POWER                           = 59474, 
-    SPELL_SUMMON_PLAYERS                           = 54164, 
-    SPELL_POWER_BALL_VISUAL                        = 54141, 
+    SPELL_ARCANE_POWER                             = 54160,
+    H_SPELL_ARCANE_POWER                           = 59474,
+    SPELL_SUMMON_PLAYERS                           = 54164,
+    SPELL_POWER_BALL_VISUAL                        = 54141,
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1608027, 
-    SAY_SLAY_1                                  = -1608028, 
-    SAY_SLAY_2                                  = -1608029, 
-    SAY_SLAY_3                                  = -1608030, 
-    SAY_DEATH                                   = -1608031, 
-    SAY_SPAWN                                   = -1608032, 
-    SAY_CHARGED                                 = -1608033, 
-    SAY_REPEAT_SUMMON_1                         = -1608034, 
-    SAY_REPEAT_SUMMON_2                         = -1608035, 
+    SAY_AGGRO                                   = -1608027,
+    SAY_SLAY_1                                  = -1608028,
+    SAY_SLAY_2                                  = -1608029,
+    SAY_SLAY_3                                  = -1608030,
+    SAY_DEATH                                   = -1608031,
+    SAY_SPAWN                                   = -1608032,
+    SAY_CHARGED                                 = -1608033,
+    SAY_REPEAT_SUMMON_1                         = -1608034,
+    SAY_REPEAT_SUMMON_2                         = -1608035,
     SAY_SUMMON_ENERGY                           = -1608036
 };
 
@@ -230,9 +230,7 @@ public:
             DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
     };
-
 };
-
 
 class mob_ethereal_sphere : public CreatureScript
 {
@@ -308,9 +306,7 @@ public:
             else uiSummonPlayers_Timer -= uiDiff;
         }
     };
-
 };
-
 
 void AddSC_boss_xevozz()
 {

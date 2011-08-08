@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,28 +31,28 @@
 
 enum Spells
 {
-    SPELL_BALL_LIGHTNING                          = 52780, 
-    H_SPELL_BALL_LIGHTNING                        = 59800, 
-    SPELL_STATIC_OVERLOAD                         = 52658, 
-    H_SPELL_STATIC_OVERLOAD                       = 59795, 
+    SPELL_BALL_LIGHTNING                          = 52780,
+    H_SPELL_BALL_LIGHTNING                        = 59800,
+    SPELL_STATIC_OVERLOAD                         = 52658,
+    H_SPELL_STATIC_OVERLOAD                       = 59795,
 
-    SPELL_DISPERSE                                = 52770, 
-    SPELL_SUMMON_SPARK                            = 52746, 
-    SPELL_SPARK_DESPAWN                           = 52776, 
+    SPELL_DISPERSE                                = 52770,
+    SPELL_SUMMON_SPARK                            = 52746,
+    SPELL_SPARK_DESPAWN                           = 52776,
 
     //Spark of Ionar
-    SPELL_SPARK_VISUAL_TRIGGER                    = 52667, 
+    SPELL_SPARK_VISUAL_TRIGGER                    = 52667,
     H_SPELL_SPARK_VISUAL_TRIGGER                  = 59833
 };
 
 enum Yells
 {
-    SAY_AGGRO                                     = -1602011, 
-    SAY_SLAY_1                                    = -1602012, 
-    SAY_SLAY_2                                    = -1602013, 
-    SAY_SLAY_3                                    = -1602014, 
-    SAY_DEATH                                     = -1602015, 
-    SAY_SPLIT_1                                   = -1602016, 
+    SAY_AGGRO                                     = -1602011,
+    SAY_SLAY_1                                    = -1602012,
+    SAY_SLAY_2                                    = -1602013,
+    SAY_SLAY_3                                    = -1602014,
+    SAY_DEATH                                     = -1602015,
+    SAY_SPLIT_1                                   = -1602016,
     SAY_SPLIT_2                                   = -1602017
 };
 
@@ -63,7 +63,7 @@ enum Creatures
 
 enum Misc
 {
-    DATA_MAX_SPARKS                               = 5, 
+    DATA_MAX_SPARKS                               = 5,
     DATA_MAX_SPARK_DISTANCE                       = 90, // Distance to boss - prevent runs through the whole instance
     DATA_POINT_CALLBACK                           = 0
 };
@@ -303,10 +303,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
 
 /*######
 ## mob_spark_of_ionar
@@ -391,9 +388,7 @@ public:
             // No melee attack at all!
         }
     };
-
 };
-
 
 void AddSC_boss_ionar()
 {

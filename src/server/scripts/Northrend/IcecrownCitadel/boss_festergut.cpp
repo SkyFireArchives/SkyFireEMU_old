@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,33 +31,33 @@
 
 enum ScriptTexts
 {
-    SAY_STINKY_DEAD             = 0, 
-    SAY_AGGRO                   = 1, 
-    EMOTE_GAS_SPORE             = 2, 
-    EMOTE_WARN_GAS_SPORE        = 3, 
-    SAY_PUNGENT_BLIGHT          = 4, 
-    EMOTE_WARN_PUNGENT_BLIGHT   = 5, 
-    EMOTE_PUNGENT_BLIGHT        = 6, 
-    SAY_KILL                    = 7, 
-    SAY_BERSERK                 = 8, 
-    SAY_DEATH                   = 9, 
+    SAY_STINKY_DEAD             = 0,
+    SAY_AGGRO                   = 1,
+    EMOTE_GAS_SPORE             = 2,
+    EMOTE_WARN_GAS_SPORE        = 3,
+    SAY_PUNGENT_BLIGHT          = 4,
+    EMOTE_WARN_PUNGENT_BLIGHT   = 5,
+    EMOTE_PUNGENT_BLIGHT        = 6,
+    SAY_KILL                    = 7,
+    SAY_BERSERK                 = 8,
+    SAY_DEATH                   = 9,
 };
 
 enum Spells
 {
     // Festergut
-    SPELL_INHALE_BLIGHT         = 69165, 
-    SPELL_PUNGENT_BLIGHT        = 69195, 
+    SPELL_INHALE_BLIGHT         = 69165,
+    SPELL_PUNGENT_BLIGHT        = 69195,
     SPELL_GASTRIC_BLOAT         = 72219, // 72214 is the proper way (with proc) but atm procs can't have cooldown for creatures
-    SPELL_GASTRIC_EXPLOSION     = 72227, 
-    SPELL_GAS_SPORE             = 69278, 
-    SPELL_VILE_GAS              = 69240, 
-    SPELL_INOCULATED            = 69291, 
+    SPELL_GASTRIC_EXPLOSION     = 72227,
+    SPELL_GAS_SPORE             = 69278,
+    SPELL_VILE_GAS              = 69240,
+    SPELL_INOCULATED            = 69291,
 
     // Stinky
-    SPELL_MORTAL_WOUND          = 71127, 
-    SPELL_DECIMATE              = 71123, 
-    SPELL_PLAGUE_STENCH         = 71805, 
+    SPELL_MORTAL_WOUND          = 71127,
+    SPELL_DECIMATE              = 71123,
+    SPELL_PLAGUE_STENCH         = 71805,
 };
 
 // Used for HasAura checks
@@ -69,14 +69,14 @@ static const uint32 gaseousBlightVisual[3]  = {69126, 69152, 69154};
 
 enum Events
 {
-    EVENT_BERSERK       = 1, 
-    EVENT_INHALE_BLIGHT = 2, 
-    EVENT_VILE_GAS      = 3, 
-    EVENT_GAS_SPORE     = 4, 
-    EVENT_GASTRIC_BLOAT = 5, 
+    EVENT_BERSERK       = 1,
+    EVENT_INHALE_BLIGHT = 2,
+    EVENT_VILE_GAS      = 3,
+    EVENT_GAS_SPORE     = 4,
+    EVENT_GASTRIC_BLOAT = 5,
 
-    EVENT_DECIMATE      = 6, 
-    EVENT_MORTAL_WOUND  = 7, 
+    EVENT_DECIMATE      = 6,
+    EVENT_MORTAL_WOUND  = 7,
 };
 
 #define DATA_INOCULATED_STACK 69291

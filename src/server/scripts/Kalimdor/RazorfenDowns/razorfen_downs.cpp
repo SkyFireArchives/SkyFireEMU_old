@@ -36,12 +36,12 @@ EndContentData */
 
 enum eEnums
 {
-    SPELL_GOLDTHORN_TEA                         = 13028, 
-    SPELL_TEACHING_GOLDTHORN_TEA                = 13029, 
-    SPELL_MIGHT_TROLLS_BLOOD_POTION             = 3451, 
-    SPELL_TEACHING_MIGHTY_TROLLS_BLOOD_POTION   = 13030, 
-    GOSSIP_TEXT_TEA_ANSWER                      = 2114, 
-    GOSSIP_TEXT_POTION_ANSWER                   = 2115, 
+    SPELL_GOLDTHORN_TEA                         = 13028,
+    SPELL_TEACHING_GOLDTHORN_TEA                = 13029,
+    SPELL_MIGHT_TROLLS_BLOOD_POTION             = 3451,
+    SPELL_TEACHING_MIGHTY_TROLLS_BLOOD_POTION   = 13030,
+    GOSSIP_TEXT_TEA_ANSWER                      = 2114,
+    GOSSIP_TEXT_POTION_ANSWER                   = 2115,
 };
 
 #define GOSSIP_ITEM_TEA     "Teach me the cooking recipe"
@@ -81,9 +81,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 /*######
 ## go_gong
@@ -107,7 +105,6 @@ public:
 
         return false;
     }
-
 };
 
 enum eTombCreature
@@ -165,9 +162,7 @@ public:
                 pInstance->SetData(DATA_GONG_WAVES, pInstance->GetData(DATA_GONG_WAVES)+1);
         }
     };
-
 };
-
 
 void AddSC_razorfen_downs()
 {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,8 +31,8 @@
 
 enum OutdoorPvPNASpells
 {
-    NA_KILL_TOKEN_ALLIANCE = 33005, 
-    NA_KILL_TOKEN_HORDE = 33004, 
+    NA_KILL_TOKEN_ALLIANCE = 33005,
+    NA_KILL_TOKEN_HORDE = 33004,
     NA_CAPTURE_BUFF = 33795  // strength of the halaani
 };
 
@@ -53,39 +53,39 @@ const uint32 NA_GUARD_CHECK_TIME = 500; // every half second
 
 enum OutdoorPvPNAWorldStates
 {
-    NA_UI_HORDE_GUARDS_SHOW = 2503, 
-    NA_UI_ALLIANCE_GUARDS_SHOW = 2502, 
-    NA_UI_GUARDS_MAX = 2493, 
-    NA_UI_GUARDS_LEFT = 2491, 
+    NA_UI_HORDE_GUARDS_SHOW = 2503,
+    NA_UI_ALLIANCE_GUARDS_SHOW = 2502,
+    NA_UI_GUARDS_MAX = 2493,
+    NA_UI_GUARDS_LEFT = 2491,
 
-    NA_UI_TOWER_SLIDER_DISPLAY = 2495, 
-    NA_UI_TOWER_SLIDER_POS = 2494, 
-    NA_UI_TOWER_SLIDER_N = 2497, 
+    NA_UI_TOWER_SLIDER_DISPLAY = 2495,
+    NA_UI_TOWER_SLIDER_POS = 2494,
+    NA_UI_TOWER_SLIDER_N = 2497,
 
-    NA_MAP_WYVERN_NORTH_NEU_H = 2762, 
-    NA_MAP_WYVERN_NORTH_NEU_A = 2662, 
-    NA_MAP_WYVERN_NORTH_H = 2663, 
-    NA_MAP_WYVERN_NORTH_A = 2664, 
+    NA_MAP_WYVERN_NORTH_NEU_H = 2762,
+    NA_MAP_WYVERN_NORTH_NEU_A = 2662,
+    NA_MAP_WYVERN_NORTH_H = 2663,
+    NA_MAP_WYVERN_NORTH_A = 2664,
 
-    NA_MAP_WYVERN_SOUTH_NEU_H = 2760, 
-    NA_MAP_WYVERN_SOUTH_NEU_A = 2670, 
-    NA_MAP_WYVERN_SOUTH_H = 2668, 
-    NA_MAP_WYVERN_SOUTH_A = 2669, 
+    NA_MAP_WYVERN_SOUTH_NEU_H = 2760,
+    NA_MAP_WYVERN_SOUTH_NEU_A = 2670,
+    NA_MAP_WYVERN_SOUTH_H = 2668,
+    NA_MAP_WYVERN_SOUTH_A = 2669,
 
-    NA_MAP_WYVERN_WEST_NEU_H = 2761, 
-    NA_MAP_WYVERN_WEST_NEU_A = 2667, 
-    NA_MAP_WYVERN_WEST_H = 2665, 
-    NA_MAP_WYVERN_WEST_A = 2666, 
+    NA_MAP_WYVERN_WEST_NEU_H = 2761,
+    NA_MAP_WYVERN_WEST_NEU_A = 2667,
+    NA_MAP_WYVERN_WEST_H = 2665,
+    NA_MAP_WYVERN_WEST_A = 2666,
 
-    NA_MAP_WYVERN_EAST_NEU_H = 2763, 
-    NA_MAP_WYVERN_EAST_NEU_A = 2659, 
-    NA_MAP_WYVERN_EAST_H = 2660, 
-    NA_MAP_WYVERN_EAST_A = 2661, 
+    NA_MAP_WYVERN_EAST_NEU_H = 2763,
+    NA_MAP_WYVERN_EAST_NEU_A = 2659,
+    NA_MAP_WYVERN_EAST_H = 2660,
+    NA_MAP_WYVERN_EAST_A = 2661,
 
-    NA_MAP_HALAA_NEUTRAL = 2671, 
-    NA_MAP_HALAA_NEU_A = 2676, 
-    NA_MAP_HALAA_NEU_H = 2677, 
-    NA_MAP_HALAA_HORDE = 2672, 
+    NA_MAP_HALAA_NEUTRAL = 2671,
+    NA_MAP_HALAA_NEU_A = 2676,
+    NA_MAP_HALAA_NEU_H = 2677,
+    NA_MAP_HALAA_HORDE = 2672,
     NA_MAP_HALAA_ALLIANCE = 2673
 };
 
@@ -94,20 +94,20 @@ const uint32 FLIGHT_NODES_NUM = 4;
 // used to access the elements of Horde/AllyControlGOs
 enum ControlGOTypes
 {
-    NA_ROOST_S = 0, 
-    NA_ROOST_W = 1, 
-    NA_ROOST_N = 2, 
-    NA_ROOST_E = 3, 
+    NA_ROOST_S = 0,
+    NA_ROOST_W = 1,
+    NA_ROOST_N = 2,
+    NA_ROOST_E = 3,
 
-    NA_BOMB_WAGON_S = 4, 
-    NA_BOMB_WAGON_W = 5, 
-    NA_BOMB_WAGON_N = 6, 
-    NA_BOMB_WAGON_E = 7, 
+    NA_BOMB_WAGON_S = 4,
+    NA_BOMB_WAGON_W = 5,
+    NA_BOMB_WAGON_N = 6,
+    NA_BOMB_WAGON_E = 7,
 
-    NA_DESTROYED_ROOST_S = 8, 
-    NA_DESTROYED_ROOST_W = 9, 
-    NA_DESTROYED_ROOST_N = 10, 
-    NA_DESTROYED_ROOST_E = 11, 
+    NA_DESTROYED_ROOST_S = 8,
+    NA_DESTROYED_ROOST_W = 9,
+    NA_DESTROYED_ROOST_N = 10,
+    NA_DESTROYED_ROOST_E = 11,
 
     NA_CONTROL_GO_NUM = 12
 };
@@ -117,9 +117,9 @@ const uint32 FlightPathEndNodes[FLIGHT_NODES_NUM] = {104, 106, 108, 110};
 
 enum FlightSpellsNA
 {
-    NA_SPELL_FLY_SOUTH = 32059, 
-    NA_SPELL_FLY_WEST = 32068, 
-    NA_SPELL_FLY_NORTH = 32075, 
+    NA_SPELL_FLY_SOUTH = 32059,
+    NA_SPELL_FLY_WEST = 32068,
+    NA_SPELL_FLY_NORTH = 32075,
     NA_SPELL_FLY_EAST = 32081
 };
 
@@ -163,93 +163,93 @@ const go_type AllianceControlGOs[NA_CONTROL_GO_NUM] =
 
 enum ControlNPCTypes
 {
-    NA_NPC_RESEARCHER = 0, 
-    NA_NPC_QUARTERMASTER, 
-    NA_NPC_BLADE_MERCHANT, 
-    NA_NPC_FOOD_MERCHANT, 
-    NA_NPC_AMMO, 
+    NA_NPC_RESEARCHER = 0,
+    NA_NPC_QUARTERMASTER,
+    NA_NPC_BLADE_MERCHANT,
+    NA_NPC_FOOD_MERCHANT,
+    NA_NPC_AMMO,
 
-    NA_NPC_GUARD_01, 
-    NA_NPC_GUARD_02, 
-    NA_NPC_GUARD_03, 
-    NA_NPC_GUARD_04, 
-    NA_NPC_GUARD_05, 
-    NA_NPC_GUARD_06, 
-    NA_NPC_GUARD_07, 
-    NA_NPC_GUARD_08, 
-    NA_NPC_GUARD_09, 
-    NA_NPC_GUARD_10, 
-    NA_NPC_GUARD_11, 
-    NA_NPC_GUARD_12, 
-    NA_NPC_GUARD_13, 
-    NA_NPC_GUARD_14, 
-    NA_NPC_GUARD_15, 
+    NA_NPC_GUARD_01,
+    NA_NPC_GUARD_02,
+    NA_NPC_GUARD_03,
+    NA_NPC_GUARD_04,
+    NA_NPC_GUARD_05,
+    NA_NPC_GUARD_06,
+    NA_NPC_GUARD_07,
+    NA_NPC_GUARD_08,
+    NA_NPC_GUARD_09,
+    NA_NPC_GUARD_10,
+    NA_NPC_GUARD_11,
+    NA_NPC_GUARD_12,
+    NA_NPC_GUARD_13,
+    NA_NPC_GUARD_14,
+    NA_NPC_GUARD_15,
 
     NA_CONTROL_NPC_NUM
 };
 
 const creature_type HordeControlNPCs[NA_CONTROL_NPC_NUM] =
 {
-    {18816, 67, 530, -1523.92f, 7951.76f, -17.6942f, 3.51172f}, 
-    {18821, 67, 530, -1527.75f, 7952.46f, -17.6948f, 3.99317f}, 
-    {21474, 67, 530, -1520.14f, 7927.11f, -20.2527f, 3.39389f}, 
-    {21484, 67, 530, -1524.84f, 7930.34f, -20.182f, 3.6405f}, 
-    {21483, 67, 530, -1570.01f, 7993.8f, -22.4505f, 5.02655f}, 
-    {18192, 67, 530, -1654.06f, 8000.46f, -26.59f, 3.37f}, 
-    {18192, 67, 530, -1487.18f, 7899.1f, -19.53f, 0.954f}, 
-    {18192, 67, 530, -1480.88f, 7908.79f, -19.19f, 4.485f}, 
-    {18192, 67, 530, -1540.56f, 7995.44f, -20.45f, 0.947f}, 
-    {18192, 67, 530, -1546.95f, 8000.85f, -20.72f, 6.035f}, 
-    {18192, 67, 530, -1595.31f, 7860.53f, -21.51f, 3.747f}, 
-    {18192, 67, 530, -1642.31f, 7995.59f, -25.8f, 3.317f}, 
-    {18192, 67, 530, -1545.46f, 7995.35f, -20.63f, 1.094f}, 
-    {18192, 67, 530, -1487.58f, 7907.99f, -19.27f, 5.567f}, 
-    {18192, 67, 530, -1651.54f, 7988.56f, -26.5289f, 2.98451f}, 
-    {18192, 67, 530, -1602.46f, 7866.43f, -22.1177f, 4.74729f}, 
-    {18192, 67, 530, -1591.22f, 7875.29f, -22.3536f, 4.34587f}, 
-    {18192, 67, 530, -1550.6f, 7944.45f, -21.63f, 3.559f}, 
-    {18192, 67, 530, -1545.57f, 7935.83f, -21.13f, 3.448f}, 
+    {18816, 67, 530, -1523.92f, 7951.76f, -17.6942f, 3.51172f},
+    {18821, 67, 530, -1527.75f, 7952.46f, -17.6948f, 3.99317f},
+    {21474, 67, 530, -1520.14f, 7927.11f, -20.2527f, 3.39389f},
+    {21484, 67, 530, -1524.84f, 7930.34f, -20.182f, 3.6405f},
+    {21483, 67, 530, -1570.01f, 7993.8f, -22.4505f, 5.02655f},
+    {18192, 67, 530, -1654.06f, 8000.46f, -26.59f, 3.37f},
+    {18192, 67, 530, -1487.18f, 7899.1f, -19.53f, 0.954f},
+    {18192, 67, 530, -1480.88f, 7908.79f, -19.19f, 4.485f},
+    {18192, 67, 530, -1540.56f, 7995.44f, -20.45f, 0.947f},
+    {18192, 67, 530, -1546.95f, 8000.85f, -20.72f, 6.035f},
+    {18192, 67, 530, -1595.31f, 7860.53f, -21.51f, 3.747f},
+    {18192, 67, 530, -1642.31f, 7995.59f, -25.8f, 3.317f},
+    {18192, 67, 530, -1545.46f, 7995.35f, -20.63f, 1.094f},
+    {18192, 67, 530, -1487.58f, 7907.99f, -19.27f, 5.567f},
+    {18192, 67, 530, -1651.54f, 7988.56f, -26.5289f, 2.98451f},
+    {18192, 67, 530, -1602.46f, 7866.43f, -22.1177f, 4.74729f},
+    {18192, 67, 530, -1591.22f, 7875.29f, -22.3536f, 4.34587f},
+    {18192, 67, 530, -1550.6f, 7944.45f, -21.63f, 3.559f},
+    {18192, 67, 530, -1545.57f, 7935.83f, -21.13f, 3.448f},
     {18192, 67, 530, -1550.86f, 7937.56f, -21.7f, 3.801f}
 };
 
 const creature_type AllianceControlNPCs[NA_CONTROL_NPC_NUM] =
 {
-    {18817, 469, 530, -1591.18f, 8020.39f, -22.2042f, 4.59022f}, 
-    {18822, 469, 530, -1588.0f, 8019.0f, -22.2042f, 4.06662f}, 
-    {21485, 469, 530, -1521.93f, 7927.37f, -20.2299f, 3.24631f}, 
-    {21487, 469, 530, -1540.33f, 7971.95f, -20.7186f, 3.07178f}, 
-    {21488, 469, 530, -1570.01f, 7993.8f, -22.4505f, 5.02655f}, 
-    {18256, 469, 530, -1654.06f, 8000.46f, -26.59f, 3.37f}, 
-    {18256, 469, 530, -1487.18f, 7899.1f, -19.53f, 0.954f}, 
-    {18256, 469, 530, -1480.88f, 7908.79f, -19.19f, 4.485f}, 
-    {18256, 469, 530, -1540.56f, 7995.44f, -20.45f, 0.947f}, 
-    {18256, 469, 530, -1546.95f, 8000.85f, -20.72f, 6.035f}, 
-    {18256, 469, 530, -1595.31f, 7860.53f, -21.51f, 3.747f}, 
-    {18256, 469, 530, -1642.31f, 7995.59f, -25.8f, 3.317f}, 
-    {18256, 469, 530, -1545.46f, 7995.35f, -20.63f, 1.094f}, 
-    {18256, 469, 530, -1487.58f, 7907.99f, -19.27f, 5.567f}, 
-    {18256, 469, 530, -1651.54f, 7988.56f, -26.5289f, 2.98451f}, 
-    {18256, 469, 530, -1602.46f, 7866.43f, -22.1177f, 4.74729f}, 
-    {18256, 469, 530, -1591.22f, 7875.29f, -22.3536f, 4.34587f}, 
-    {18256, 469, 530, -1603.75f, 8000.36f, -24.18f, 4.516f}, 
-    {18256, 469, 530, -1585.73f, 7994.68f, -23.29f, 4.439f}, 
+    {18817, 469, 530, -1591.18f, 8020.39f, -22.2042f, 4.59022f},
+    {18822, 469, 530, -1588.0f, 8019.0f, -22.2042f, 4.06662f},
+    {21485, 469, 530, -1521.93f, 7927.37f, -20.2299f, 3.24631f},
+    {21487, 469, 530, -1540.33f, 7971.95f, -20.7186f, 3.07178f},
+    {21488, 469, 530, -1570.01f, 7993.8f, -22.4505f, 5.02655f},
+    {18256, 469, 530, -1654.06f, 8000.46f, -26.59f, 3.37f},
+    {18256, 469, 530, -1487.18f, 7899.1f, -19.53f, 0.954f},
+    {18256, 469, 530, -1480.88f, 7908.79f, -19.19f, 4.485f},
+    {18256, 469, 530, -1540.56f, 7995.44f, -20.45f, 0.947f},
+    {18256, 469, 530, -1546.95f, 8000.85f, -20.72f, 6.035f},
+    {18256, 469, 530, -1595.31f, 7860.53f, -21.51f, 3.747f},
+    {18256, 469, 530, -1642.31f, 7995.59f, -25.8f, 3.317f},
+    {18256, 469, 530, -1545.46f, 7995.35f, -20.63f, 1.094f},
+    {18256, 469, 530, -1487.58f, 7907.99f, -19.27f, 5.567f},
+    {18256, 469, 530, -1651.54f, 7988.56f, -26.5289f, 2.98451f},
+    {18256, 469, 530, -1602.46f, 7866.43f, -22.1177f, 4.74729f},
+    {18256, 469, 530, -1591.22f, 7875.29f, -22.3536f, 4.34587f},
+    {18256, 469, 530, -1603.75f, 8000.36f, -24.18f, 4.516f},
+    {18256, 469, 530, -1585.73f, 7994.68f, -23.29f, 4.439f},
     {18256, 469, 530, -1595.5f, 7991.27f, -23.53f, 4.738f}
 };
 
 enum WyvernStates
 {
-    WYVERN_NEU_HORDE = 1, 
-    WYVERN_NEU_ALLIANCE = 2, 
-    WYVERN_HORDE = 4, 
+    WYVERN_NEU_HORDE = 1,
+    WYVERN_NEU_ALLIANCE = 2,
+    WYVERN_HORDE = 4,
     WYVERN_ALLIANCE = 8
 };
 
 enum HalaaStates
 {
-    HALAA_N = 1, 
-    HALAA_N_A = 2, 
-    HALAA_A = 4, 
-    HALAA_N_H = 8, 
+    HALAA_N = 1,
+    HALAA_N_A = 2,
+    HALAA_A = 4,
+    HALAA_N_H = 8,
     HALAA_H = 16
 };
 

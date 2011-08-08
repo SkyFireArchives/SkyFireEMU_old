@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,8 +33,8 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                       = -1189021, 
-    SPELL_SUMMONSCARLETHOUND        = 17164, 
+    SAY_AGGRO                       = -1189021,
+    SPELL_SUMMONSCARLETHOUND        = 17164,
     SPELL_BLOODLUST                 = 6742
 };
 
@@ -78,9 +78,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_houndmaster_loksey()
 {

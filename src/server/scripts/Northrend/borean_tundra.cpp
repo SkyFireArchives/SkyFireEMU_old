@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -53,10 +53,10 @@ EndContentData */
 
 enum eSinkhole
 {
-    SPELL_SET_CART                = 46797, 
-    SPELL_EXPLODE_CART            = 46799, 
-    SPELL_SUMMON_CART             = 46798, 
-    SPELL_SUMMON_WORM             = 46800, 
+    SPELL_SET_CART                = 46797,
+    SPELL_EXPLODE_CART            = 46799,
+    SPELL_SUMMON_CART             = 46798,
+    SPELL_SUMMON_WORM             = 46800,
 };
 
 class npc_sinkhole_kill_credit : public CreatureScript
@@ -154,9 +154,7 @@ public:
                         break;
                 }
             } else uiPhaseTimer -= diff;
-
         }
-
     };
 
     CreatureAI *GetAI(Creature *creature) const
@@ -255,10 +253,10 @@ public:
 
 enum eCorastrasza
 {
-    SPELL_SUMMON_WYRMREST_SKYTALON               = 61240, 
-    SPELL_WYRMREST_SKYTALON_RIDE_PERIODIC        = 61244, 
+    SPELL_SUMMON_WYRMREST_SKYTALON               = 61240,
+    SPELL_WYRMREST_SKYTALON_RIDE_PERIODIC        = 61244,
 
-    QUEST_ACES_HIGH_DAILY                        = 13414, 
+    QUEST_ACES_HIGH_DAILY                        = 13414,
     QUEST_ACES_HIGH                              = 13413
 };
 
@@ -288,7 +286,6 @@ public:
 
             pPlayer->CastSpell(pPlayer, SPELL_SUMMON_WYRMREST_SKYTALON, true);
             pPlayer->CastSpell(pPlayer, SPELL_WYRMREST_SKYTALON_RIDE_PERIODIC, true);
-
         }
 
         return true;
@@ -303,8 +300,8 @@ public:
 
 enum eIruk
 {
-    QUEST_SPIRITS_WATCH_OVER_US             = 11961, 
-    SPELL_CREATURE_TOTEM_OF_ISSLIRUK        = 46816, 
+    QUEST_SPIRITS_WATCH_OVER_US             = 11961,
+    SPELL_CREATURE_TOTEM_OF_ISSLIRUK        = 46816,
     GOSSIP_TEXT_I                           = 12585
 };
 
@@ -315,7 +312,6 @@ public:
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature)
     {
-
         if (pPlayer->GetQuestStatus(QUEST_SPIRITS_WATCH_OVER_US) == QUEST_STATUS_INCOMPLETE)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_I, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
@@ -332,7 +328,6 @@ public:
                 pPlayer->CastSpell(pPlayer, SPELL_CREATURE_TOTEM_OF_ISSLIRUK, true);
                 pPlayer->CLOSE_GOSSIP_MENU();
                 break;
-
         }
         return true;
     }
@@ -413,7 +408,6 @@ public:
                 if (pGO->GetGoState() == GO_STATE_ACTIVE)
                     pGO->SetGoState(GO_STATE_READY);
         }
-
     };
 
     CreatureAI *GetAI(Creature *creature) const
@@ -428,13 +422,13 @@ public:
 
 enum eJenny
 {
-    QUEST_LOADER_UP             = 11881, 
+    QUEST_LOADER_UP             = 11881,
 
-    NPC_FEZZIX_GEARTWIST        = 25849, 
-    NPC_JENNY                   = 25969, 
+    NPC_FEZZIX_GEARTWIST        = 25849,
+    NPC_JENNY                   = 25969,
 
-    SPELL_GIVE_JENNY_CREDIT     = 46358, 
-    SPELL_CRATES_CARRIED        = 46340, 
+    SPELL_GIVE_JENNY_CREDIT     = 46358,
+    SPELL_CRATES_CARRIED        = 46340,
     SPELL_DROP_CRATE            = 46342
 };
 
@@ -545,33 +539,33 @@ public:
 
 enum eNesingwaryTrapper
 {
-    GO_HIGH_QUALITY_FUR = 187983, 
+    GO_HIGH_QUALITY_FUR = 187983,
 
-    GO_CARIBOU_TRAP_1   = 187982, 
-    GO_CARIBOU_TRAP_2   = 187995, 
-    GO_CARIBOU_TRAP_3   = 187996, 
-    GO_CARIBOU_TRAP_4   = 187997, 
-    GO_CARIBOU_TRAP_5   = 187998, 
-    GO_CARIBOU_TRAP_6   = 187999, 
-    GO_CARIBOU_TRAP_7   = 188000, 
-    GO_CARIBOU_TRAP_8   = 188001, 
-    GO_CARIBOU_TRAP_9   = 188002, 
-    GO_CARIBOU_TRAP_10  = 188003, 
-    GO_CARIBOU_TRAP_11  = 188004, 
-    GO_CARIBOU_TRAP_12  = 188005, 
-    GO_CARIBOU_TRAP_13  = 188006, 
-    GO_CARIBOU_TRAP_14  = 188007, 
-    GO_CARIBOU_TRAP_15  = 188008, 
+    GO_CARIBOU_TRAP_1   = 187982,
+    GO_CARIBOU_TRAP_2   = 187995,
+    GO_CARIBOU_TRAP_3   = 187996,
+    GO_CARIBOU_TRAP_4   = 187997,
+    GO_CARIBOU_TRAP_5   = 187998,
+    GO_CARIBOU_TRAP_6   = 187999,
+    GO_CARIBOU_TRAP_7   = 188000,
+    GO_CARIBOU_TRAP_8   = 188001,
+    GO_CARIBOU_TRAP_9   = 188002,
+    GO_CARIBOU_TRAP_10  = 188003,
+    GO_CARIBOU_TRAP_11  = 188004,
+    GO_CARIBOU_TRAP_12  = 188005,
+    GO_CARIBOU_TRAP_13  = 188006,
+    GO_CARIBOU_TRAP_14  = 188007,
+    GO_CARIBOU_TRAP_15  = 188008,
 
-    SPELL_TRAPPED       = 46104, 
+    SPELL_TRAPPED       = 46104,
 };
 
 #define CaribouTrapsNum 15
 const uint32 CaribouTraps[CaribouTrapsNum] =
 {
-    GO_CARIBOU_TRAP_1, GO_CARIBOU_TRAP_2, GO_CARIBOU_TRAP_3, GO_CARIBOU_TRAP_4, GO_CARIBOU_TRAP_5, 
-    GO_CARIBOU_TRAP_6, GO_CARIBOU_TRAP_7, GO_CARIBOU_TRAP_8, GO_CARIBOU_TRAP_9, GO_CARIBOU_TRAP_10, 
-    GO_CARIBOU_TRAP_11, GO_CARIBOU_TRAP_12, GO_CARIBOU_TRAP_13, GO_CARIBOU_TRAP_14, GO_CARIBOU_TRAP_15, 
+    GO_CARIBOU_TRAP_1, GO_CARIBOU_TRAP_2, GO_CARIBOU_TRAP_3, GO_CARIBOU_TRAP_4, GO_CARIBOU_TRAP_5,
+    GO_CARIBOU_TRAP_6, GO_CARIBOU_TRAP_7, GO_CARIBOU_TRAP_8, GO_CARIBOU_TRAP_9, GO_CARIBOU_TRAP_10,
+    GO_CARIBOU_TRAP_11, GO_CARIBOU_TRAP_12, GO_CARIBOU_TRAP_13, GO_CARIBOU_TRAP_14, GO_CARIBOU_TRAP_15,
 };
 
 class npc_nesingwary_trapper : public CreatureScript
@@ -690,12 +684,12 @@ public:
 
 enum eLurgglbr
 {
-    QUEST_ESCAPE_WINTERFIN_CAVERNS      = 11570, 
+    QUEST_ESCAPE_WINTERFIN_CAVERNS      = 11570,
 
-    GO_CAGE                             = 187369, 
+    GO_CAGE                             = 187369,
 
-    FACTION_ESCORTEE_A                  = 774, 
-    FACTION_ESCORTEE_H                  = 775, 
+    FACTION_ESCORTEE_A                  = 774,
+    FACTION_ESCORTEE_H                  = 775,
 };
 
 /*#define SAY_WP_1_LUR_START  -1571004
@@ -837,14 +831,14 @@ public:
 
 enum eNexusDrakeHatchling
 {
-    SPELL_DRAKE_HARPOON             = 46607, 
-    SPELL_RED_DRAGONBLOOD           = 46620, 
-    SPELL_DRAKE_HATCHLING_SUBDUED   = 46691, 
-    SPELL_SUBDUED                   = 46675, 
+    SPELL_DRAKE_HARPOON             = 46607,
+    SPELL_RED_DRAGONBLOOD           = 46620,
+    SPELL_DRAKE_HATCHLING_SUBDUED   = 46691,
+    SPELL_SUBDUED                   = 46675,
 
-    NPC_RAELORASZ                   = 26117, 
+    NPC_RAELORASZ                   = 26117,
 
-    QUEST_DRAKE_HUNT                = 11919, 
+    QUEST_DRAKE_HUNT                = 11919,
     QUEST_DRAKE_HUNT_D              = 11940
 };
 
@@ -941,38 +935,38 @@ public:
 
 enum eThassarian
 {
-    QUEST_LAST_RITES        = 12019, 
+    QUEST_LAST_RITES        = 12019,
 
-    SPELL_TRANSFORM_VALANAR = 46753, 
-    SPELL_STUN              = 46957, 
-    SPELL_SHADOW_BOLT       = 15537, 
+    SPELL_TRANSFORM_VALANAR = 46753,
+    SPELL_STUN              = 46957,
+    SPELL_SHADOW_BOLT       = 15537,
 
-    NPC_IMAGE_LICH_KING     = 26203, 
-    NPC_COUNSELOR_TALBOT    = 25301, 
-    NPC_PRINCE_VALANAR      = 28189, 
-    NPC_GENERAL_ARLOS       = 25250, 
-    NPC_LERYSSA             = 25251, 
+    NPC_IMAGE_LICH_KING     = 26203,
+    NPC_COUNSELOR_TALBOT    = 25301,
+    NPC_PRINCE_VALANAR      = 28189,
+    NPC_GENERAL_ARLOS       = 25250,
+    NPC_LERYSSA             = 25251,
 
-    SAY_TALBOT_1            = -1571004, 
-    SAY_LICH_1              = -1571005, 
-    SAY_TALBOT_2            = -1571006, 
-    SAY_THASSARIAN_1        = -1571007, 
-    SAY_THASSARIAN_2        = -1571008, 
-    SAY_LICH_2              = -1571009, 
-    SAY_THASSARIAN_3        = -1571010, 
-    SAY_TALBOT_3            = -1571011, 
-    SAY_LICH_3              = -1571012, 
-    SAY_TALBOT_4            = -1571013, 
-    SAY_ARLOS_1             = -1571014, 
-    SAY_ARLOS_2             = -1571015, 
-    SAY_LERYSSA_1           = -1571016, 
-    SAY_THASSARIAN_4        = -1571017, 
-    SAY_LERYSSA_2           = -1571018, 
-    SAY_THASSARIAN_5        = -1571019, 
-    SAY_LERYSSA_3           = -1571020, 
-    SAY_THASSARIAN_6        = -1571021, 
-    SAY_LERYSSA_4           = -1571022, 
-    SAY_THASSARIAN_7        = -1571023, 
+    SAY_TALBOT_1            = -1571004,
+    SAY_LICH_1              = -1571005,
+    SAY_TALBOT_2            = -1571006,
+    SAY_THASSARIAN_1        = -1571007,
+    SAY_THASSARIAN_2        = -1571008,
+    SAY_LICH_2              = -1571009,
+    SAY_THASSARIAN_3        = -1571010,
+    SAY_TALBOT_3            = -1571011,
+    SAY_LICH_3              = -1571012,
+    SAY_TALBOT_4            = -1571013,
+    SAY_ARLOS_1             = -1571014,
+    SAY_ARLOS_2             = -1571015,
+    SAY_LERYSSA_1           = -1571016,
+    SAY_THASSARIAN_4        = -1571017,
+    SAY_LERYSSA_2           = -1571018,
+    SAY_THASSARIAN_5        = -1571019,
+    SAY_LERYSSA_3           = -1571020,
+    SAY_THASSARIAN_6        = -1571021,
+    SAY_LERYSSA_4           = -1571022,
+    SAY_THASSARIAN_7        = -1571023,
 };
 
 #define GOSSIP_ITEM_T   "Let's do this, Thassarian. It's now or never."
@@ -1354,8 +1348,8 @@ public:
 
 enum eCounselorTalbot
 {
-    SPELL_DEFLECTION    = 51009, 
-    SPELL_SOUL_BLAST    = 50992, 
+    SPELL_DEFLECTION    = 51009,
+    SPELL_SOUL_BLAST    = 50992,
 };
 
 class npc_counselor_talbot : public CreatureScript
@@ -1597,11 +1591,11 @@ public:
 
 enum eBerylSorcerer
 {
-    NPC_CAPTURED_BERLY_SORCERER         = 25474, 
-    NPC_LIBRARIAN_DONATHAN              = 25262, 
+    NPC_CAPTURED_BERLY_SORCERER         = 25474,
+    NPC_LIBRARIAN_DONATHAN              = 25262,
 
-    SPELL_ARCANE_CHAINS                 = 45611, 
-    SPELL_COSMETIC_CHAINS               = 54324, 
+    SPELL_ARCANE_CHAINS                 = 45611,
+    SPELL_COSMETIC_CHAINS               = 54324,
     SPELL_COSMETIC_ENSLAVE_CHAINS_SELF  = 45631
 };
 
@@ -1674,17 +1668,17 @@ public:
 
 enum eImprisionedBerylSorcerer
 {
-    SPELL_NEURAL_NEEDLE             = 45634, 
+    SPELL_NEURAL_NEEDLE             = 45634,
 
-    NPC_IMPRISONED_BERYL_SORCERER   = 25478, 
+    NPC_IMPRISONED_BERYL_SORCERER   = 25478,
 
-    SAY_IMPRISIONED_BERYL_1         = -1571024, 
-    SAY_IMPRISIONED_BERYL_2         = -1571025, 
-    SAY_IMPRISIONED_BERYL_3         = -1571026, 
-    SAY_IMPRISIONED_BERYL_4         = -1571027, 
-    SAY_IMPRISIONED_BERYL_5         = -1571028, 
-    SAY_IMPRISIONED_BERYL_6         = -1571029, 
-    SAY_IMPRISIONED_BERYL_7         = -1571030, 
+    SAY_IMPRISIONED_BERYL_1         = -1571024,
+    SAY_IMPRISIONED_BERYL_2         = -1571025,
+    SAY_IMPRISIONED_BERYL_3         = -1571026,
+    SAY_IMPRISIONED_BERYL_4         = -1571027,
+    SAY_IMPRISIONED_BERYL_5         = -1571028,
+    SAY_IMPRISIONED_BERYL_6         = -1571029,
+    SAY_IMPRISIONED_BERYL_7         = -1571030,
 };
 
 class npc_imprisoned_beryl_sorcerer : public CreatureScript
@@ -1808,15 +1802,15 @@ public:
 ######*/
 enum Script_Texts_Mootoo_the_Younger
 {
-    SAY_1                    =-1750040, 
-    SAY_2                    =-1750041, 
-    SAY_3                    =-1750042, 
-    SAY_4                    =-1750043, 
+    SAY_1                    =-1750040,
+    SAY_2                    =-1750041,
+    SAY_3                    =-1750042,
+    SAY_4                    =-1750043,
     SAY_5                    =-1750044
 };
 enum Mootoo_the_Younger_Entries
 {
-    NPC_MOOTOO_THE_YOUNGER          =25504, 
+    NPC_MOOTOO_THE_YOUNGER          =25504,
     QUEST_ESCAPING_THE_MIST         =11664
 };
 
@@ -1904,12 +1898,12 @@ public:
 
 enum Bonker_Togglevolt_Entries
 {
-    NPC_BONKER_TOGGLEVOLT           =25589, 
+    NPC_BONKER_TOGGLEVOLT           =25589,
     QUEST_GET_ME_OUTA_HERE          =11673
 };
 enum Script_Texts_Bonker_Togglevolt
 {
-    SAY_bonker_1                    =-1700002, 
+    SAY_bonker_1                    =-1700002,
     SAY_bonker_2                    =-1700003
 };
 
@@ -1997,38 +1991,38 @@ public:
 
 enum eHelpThemselves
 {
-    QUEST_CANNOT_HELP_THEMSELVES                  =  11876, 
-    GO_MAMMOTH_TRAP_1                             = 188022, 
-    GO_MAMMOTH_TRAP_2                             = 188024, 
-    GO_MAMMOTH_TRAP_3                             = 188025, 
-    GO_MAMMOTH_TRAP_4                             = 188026, 
-    GO_MAMMOTH_TRAP_5                             = 188027, 
-    GO_MAMMOTH_TRAP_6                             = 188028, 
-    GO_MAMMOTH_TRAP_7                             = 188029, 
-    GO_MAMMOTH_TRAP_8                             = 188030, 
-    GO_MAMMOTH_TRAP_9                             = 188031, 
-    GO_MAMMOTH_TRAP_10                            = 188032, 
-    GO_MAMMOTH_TRAP_11                            = 188033, 
-    GO_MAMMOTH_TRAP_12                            = 188034, 
-    GO_MAMMOTH_TRAP_13                            = 188035, 
-    GO_MAMMOTH_TRAP_14                            = 188036, 
-    GO_MAMMOTH_TRAP_15                            = 188037, 
-    GO_MAMMOTH_TRAP_16                            = 188038, 
-    GO_MAMMOTH_TRAP_17                            = 188039, 
-    GO_MAMMOTH_TRAP_18                            = 188040, 
-    GO_MAMMOTH_TRAP_19                            = 188041, 
-    GO_MAMMOTH_TRAP_20                            = 188042, 
-    GO_MAMMOTH_TRAP_21                            = 188043, 
-    GO_MAMMOTH_TRAP_22                            = 188044, 
+    QUEST_CANNOT_HELP_THEMSELVES                  =  11876,
+    GO_MAMMOTH_TRAP_1                             = 188022,
+    GO_MAMMOTH_TRAP_2                             = 188024,
+    GO_MAMMOTH_TRAP_3                             = 188025,
+    GO_MAMMOTH_TRAP_4                             = 188026,
+    GO_MAMMOTH_TRAP_5                             = 188027,
+    GO_MAMMOTH_TRAP_6                             = 188028,
+    GO_MAMMOTH_TRAP_7                             = 188029,
+    GO_MAMMOTH_TRAP_8                             = 188030,
+    GO_MAMMOTH_TRAP_9                             = 188031,
+    GO_MAMMOTH_TRAP_10                            = 188032,
+    GO_MAMMOTH_TRAP_11                            = 188033,
+    GO_MAMMOTH_TRAP_12                            = 188034,
+    GO_MAMMOTH_TRAP_13                            = 188035,
+    GO_MAMMOTH_TRAP_14                            = 188036,
+    GO_MAMMOTH_TRAP_15                            = 188037,
+    GO_MAMMOTH_TRAP_16                            = 188038,
+    GO_MAMMOTH_TRAP_17                            = 188039,
+    GO_MAMMOTH_TRAP_18                            = 188040,
+    GO_MAMMOTH_TRAP_19                            = 188041,
+    GO_MAMMOTH_TRAP_20                            = 188042,
+    GO_MAMMOTH_TRAP_21                            = 188043,
+    GO_MAMMOTH_TRAP_22                            = 188044,
 };
 
 #define MammothTrapsNum 22
 const uint32 MammothTraps[MammothTrapsNum] =
 {
-    GO_MAMMOTH_TRAP_1, GO_MAMMOTH_TRAP_2, GO_MAMMOTH_TRAP_3, GO_MAMMOTH_TRAP_4, GO_MAMMOTH_TRAP_5, 
-    GO_MAMMOTH_TRAP_6, GO_MAMMOTH_TRAP_7, GO_MAMMOTH_TRAP_8, GO_MAMMOTH_TRAP_9, GO_MAMMOTH_TRAP_10, 
-    GO_MAMMOTH_TRAP_11, GO_MAMMOTH_TRAP_12, GO_MAMMOTH_TRAP_13, GO_MAMMOTH_TRAP_14, GO_MAMMOTH_TRAP_15, 
-    GO_MAMMOTH_TRAP_16, GO_MAMMOTH_TRAP_17, GO_MAMMOTH_TRAP_18, GO_MAMMOTH_TRAP_19, GO_MAMMOTH_TRAP_20, 
+    GO_MAMMOTH_TRAP_1, GO_MAMMOTH_TRAP_2, GO_MAMMOTH_TRAP_3, GO_MAMMOTH_TRAP_4, GO_MAMMOTH_TRAP_5,
+    GO_MAMMOTH_TRAP_6, GO_MAMMOTH_TRAP_7, GO_MAMMOTH_TRAP_8, GO_MAMMOTH_TRAP_9, GO_MAMMOTH_TRAP_10,
+    GO_MAMMOTH_TRAP_11, GO_MAMMOTH_TRAP_12, GO_MAMMOTH_TRAP_13, GO_MAMMOTH_TRAP_14, GO_MAMMOTH_TRAP_15,
+    GO_MAMMOTH_TRAP_16, GO_MAMMOTH_TRAP_17, GO_MAMMOTH_TRAP_18, GO_MAMMOTH_TRAP_19, GO_MAMMOTH_TRAP_20,
     GO_MAMMOTH_TRAP_21, GO_MAMMOTH_TRAP_22
 };
 
@@ -2084,7 +2078,6 @@ public:
 
         void MovementInform(uint32 uiType, uint32 /*uiId*/)
         {
-
             if (uiType != POINT_MOTION_TYPE)
                 return;
             me->DisappearAndDie();
@@ -2113,10 +2106,10 @@ public:
 
 enum eNotSoBig
 {
-    QUEST_YOU_RE_NOT_SO_BIG_NOW                   = 11653, 
-    SPELL_AURA_NOTSOBIG_1                         = 45672, 
-    SPELL_AURA_NOTSOBIG_2                         = 45673, 
-    SPELL_AURA_NOTSOBIG_3                         = 45677, 
+    QUEST_YOU_RE_NOT_SO_BIG_NOW                   = 11653,
+    SPELL_AURA_NOTSOBIG_1                         = 45672,
+    SPELL_AURA_NOTSOBIG_2                         = 45673,
+    SPELL_AURA_NOTSOBIG_3                         = 45677,
     SPELL_AURA_NOTSOBIG_4                         = 45681
 };
 
@@ -2205,7 +2198,7 @@ public:
 
 enum eValiancekeepcannons
 {
-    GO_VALIANCE_KEEP_CANNON_1                     = 187560, 
+    GO_VALIANCE_KEEP_CANNON_1                     = 187560,
     GO_VALIANCE_KEEP_CANNON_2                     = 188692
 };
 
@@ -2242,7 +2235,6 @@ public:
             if (!UpdateVictim())
                 return;
         }
-
     };
 
     CreatureAI *GetAI(Creature *creature) const
@@ -2262,9 +2254,9 @@ enum Spells
 
 enum NPCs
 {
-    NPC_TRANSITUS_SHIELD_DUMMY   = 27306, 
-    NPC_WARMAGE_HOLLISTER        = 27906, 
-    NPC_WARMAGE_CALANDRA         = 27173, 
+    NPC_TRANSITUS_SHIELD_DUMMY   = 27306,
+    NPC_WARMAGE_HOLLISTER        = 27906,
+    NPC_WARMAGE_CALANDRA         = 27173,
     NPC_WARMAGE_WATKINS          = 27904
 };
 
@@ -2365,19 +2357,19 @@ enum eHiddenCultist
     SPELL_SHROUD_OF_THE_DEATH_CULTIST           = 46077, //not working
     SPELL_RIGHTEOUS_VISION                      = 46078, //player aura
 
-    QUEST_THE_HUNT_IS_ON                        = 11794, 
+    QUEST_THE_HUNT_IS_ON                        = 11794,
 
-    GOSSIP_TEXT_SALTY_JOHN_THORPE               = 12529, 
-    GOSSIP_TEXT_GUARD_MITCHELSS                 = 12530, 
-    GOSSIP_TEXT_TOM_HEGGER                      = 12528, 
+    GOSSIP_TEXT_SALTY_JOHN_THORPE               = 12529,
+    GOSSIP_TEXT_GUARD_MITCHELSS                 = 12530,
+    GOSSIP_TEXT_TOM_HEGGER                      = 12528,
 
-    NPC_TOM_HEGGER                              = 25827, 
-    NPC_SALTY_JOHN_THORPE                       = 25248, 
-    NPC_GUARD_MITCHELLS                         = 25828, 
+    NPC_TOM_HEGGER                              = 25827,
+    NPC_SALTY_JOHN_THORPE                       = 25248,
+    NPC_GUARD_MITCHELLS                         = 25828,
 
-    SAY_HIDDEN_CULTIST_1                        = -1571044, 
-    SAY_HIDDEN_CULTIST_2                        = -1571045, 
-    SAY_HIDDEN_CULTIST_3                        = -1571046, 
+    SAY_HIDDEN_CULTIST_1                        = -1571044,
+    SAY_HIDDEN_CULTIST_2                        = -1571045,
+    SAY_HIDDEN_CULTIST_3                        = -1571046,
     SAY_HIDDEN_CULTIST_4                        = -1571047
 };
 
@@ -2503,7 +2495,7 @@ public:
                             uiEventPhase = 0;
                         }
                         break;
-                }                       
+                }
             }else uiEventTimer -= uiDiff;
 
             if (!UpdateVictim())
@@ -2565,12 +2557,11 @@ public:
 
         if (uiAction == GOSSIP_ACTION_TRADE)
             pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
-    
+
         return true;
     }
-
 };
-    
+
 void AddSC_borean_tundra()
 {
     new npc_sinkhole_kill_credit;

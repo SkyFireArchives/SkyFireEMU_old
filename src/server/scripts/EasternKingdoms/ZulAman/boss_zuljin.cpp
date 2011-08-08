@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -125,9 +125,9 @@ struct SpiritInfoStruct
 
 static SpiritInfoStruct SpiritInfo[4] =
 {
-    {23878, 147.87f, 706.51f, 45.11f, 3.04f}, 
-    {23880, 88.95f, 705.49f, 45.11f, 6.11f}, 
-    {23877, 137.23f, 725.98f, 45.11f, 3.71f}, 
+    {23878, 147.87f, 706.51f, 45.11f, 3.04f},
+    {23880, 88.95f, 705.49f, 45.11f, 6.11f},
+    {23877, 137.23f, 725.98f, 45.11f, 3.71f},
     {23879, 104.29f, 726.43f, 45.11f, 5.43f}
 };
 
@@ -140,9 +140,9 @@ struct TransformStruct
 
 static TransformStruct Transform[4] =
 {
-    {SOUND_TRANSFORM_TO_BEAR, YELL_TRANSFORM_TO_BEAR, SPELL_SHAPE_OF_THE_BEAR, SPELL_WHIRLWIND}, 
-    {SOUND_TRANSFORM_TO_EAGLE, YELL_TRANSFORM_TO_EAGLE, SPELL_SHAPE_OF_THE_EAGLE, SPELL_SHAPE_OF_THE_BEAR}, 
-    {SOUND_TRANSFORM_TO_LYNX, YELL_TRANSFORM_TO_LYNX, SPELL_SHAPE_OF_THE_LYNX, SPELL_SHAPE_OF_THE_EAGLE}, 
+    {SOUND_TRANSFORM_TO_BEAR, YELL_TRANSFORM_TO_BEAR, SPELL_SHAPE_OF_THE_BEAR, SPELL_WHIRLWIND},
+    {SOUND_TRANSFORM_TO_EAGLE, YELL_TRANSFORM_TO_EAGLE, SPELL_SHAPE_OF_THE_EAGLE, SPELL_SHAPE_OF_THE_BEAR},
+    {SOUND_TRANSFORM_TO_LYNX, YELL_TRANSFORM_TO_LYNX, SPELL_SHAPE_OF_THE_LYNX, SPELL_SHAPE_OF_THE_EAGLE},
     {SOUND_TRANSFORM_TO_DRAGONHAWK, YELL_TRANSFORM_TO_DRAGONHAWK, SPELL_SHAPE_OF_THE_DRAGONHAWK, SPELL_SHAPE_OF_THE_LYNX}
 };
 
@@ -593,7 +593,6 @@ class boss_zuljin : public CreatureScript
             }
         };
 
-
         CreatureAI* GetAI(Creature* creature) const
         {
             return new boss_zuljinAI(creature);
@@ -637,10 +636,8 @@ class mob_zuljin_vortex : public CreatureScript
         }
 };
 
-
 void AddSC_boss_zuljin()
 {
     new boss_zuljin();
     new mob_zuljin_vortex();
 }
-

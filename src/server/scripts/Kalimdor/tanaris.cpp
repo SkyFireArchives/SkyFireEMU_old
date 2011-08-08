@@ -136,7 +136,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*######
@@ -232,9 +231,7 @@ public:
             npc_escortAI::UpdateAI(diff);
         }
     };
-
 };
-
 
 /*######
 ## npc_marin_noggenfogger
@@ -266,9 +263,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_steward_of_time
@@ -313,10 +308,7 @@ public:
 
         return true;
     }
-
 };
-
-
 
 /*######
 ## npc_stone_watcher_of_norgannon
@@ -379,9 +371,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_OOX17
@@ -390,16 +380,16 @@ public:
 enum e00X17
 {
     //texts are signed for 7806
-    SAY_OOX_START           = -1000287, 
-    SAY_OOX_AGGRO1          = -1000288, 
-    SAY_OOX_AGGRO2          = -1000289, 
-    SAY_OOX_AMBUSH          = -1000290, 
-    SAY_OOX17_AMBUSH_REPLY  = -1000291, 
-    SAY_OOX_END             = -1000292, 
+    SAY_OOX_START           = -1000287,
+    SAY_OOX_AGGRO1          = -1000288,
+    SAY_OOX_AGGRO2          = -1000289,
+    SAY_OOX_AMBUSH          = -1000290,
+    SAY_OOX17_AMBUSH_REPLY  = -1000291,
+    SAY_OOX_END             = -1000292,
 
-    Q_OOX17                 = 648, 
-    SPAWN_FIRST             = 7803, 
-    SPAWN_SECOND_1          = 5617, 
+    Q_OOX17                 = 648,
+    SPAWN_FIRST             = 7803,
+    SPAWN_SECOND_1          = 5617,
     SPAWN_SECOND_2          = 7805
 };
 
@@ -479,10 +469,7 @@ public:
             summoned->AI()->AttackStart(me);
         }
     };
-
 };
-
-
 
 /*####
 # npc_tooga
@@ -490,19 +477,19 @@ public:
 
 enum eTooga
 {
-    SAY_TOOG_THIRST             = -1000391, 
-    SAY_TOOG_WORRIED            = -1000392, 
-    SAY_TOOG_POST_1             = -1000393, 
-    SAY_TORT_POST_2             = -1000394, 
-    SAY_TOOG_POST_3             = -1000395, 
-    SAY_TORT_POST_4             = -1000396, 
-    SAY_TOOG_POST_5             = -1000397, 
-    SAY_TORT_POST_6             = -1000398, 
+    SAY_TOOG_THIRST             = -1000391,
+    SAY_TOOG_WORRIED            = -1000392,
+    SAY_TOOG_POST_1             = -1000393,
+    SAY_TORT_POST_2             = -1000394,
+    SAY_TOOG_POST_3             = -1000395,
+    SAY_TORT_POST_4             = -1000396,
+    SAY_TOOG_POST_5             = -1000397,
+    SAY_TORT_POST_6             = -1000398,
 
-    QUEST_TOOGA                 = 1560, 
-    NPC_TORTA                   = 6015, 
+    QUEST_TOOGA                 = 1560,
+    NPC_TORTA                   = 6015,
 
-    POINT_ID_TO_WATER           = 1, 
+    POINT_ID_TO_WATER           = 1,
     FACTION_TOOG_ESCORTEE       = 113
 };
 
@@ -646,10 +633,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
 
 void AddSC_tanaris()
 {

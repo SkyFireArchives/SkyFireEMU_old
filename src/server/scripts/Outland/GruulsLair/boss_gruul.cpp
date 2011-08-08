@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,29 +34,29 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                   = -1565010, 
-    SAY_SLAM1                   = -1565011, 
-    SAY_SLAM2                   = -1565012, 
-    SAY_SHATTER1                = -1565013, 
-    SAY_SHATTER2                = -1565014, 
-    SAY_SLAY1                   = -1565015, 
-    SAY_SLAY2                   = -1565016, 
-    SAY_SLAY3                   = -1565017, 
-    SAY_DEATH                   = -1565018, 
+    SAY_AGGRO                   = -1565010,
+    SAY_SLAM1                   = -1565011,
+    SAY_SLAM2                   = -1565012,
+    SAY_SHATTER1                = -1565013,
+    SAY_SHATTER2                = -1565014,
+    SAY_SLAY1                   = -1565015,
+    SAY_SLAY2                   = -1565016,
+    SAY_SLAY3                   = -1565017,
+    SAY_DEATH                   = -1565018,
 
-    EMOTE_GROW                  = -1565019, 
+    EMOTE_GROW                  = -1565019,
 
-    SPELL_GROWTH                = 36300, 
-    SPELL_CAVE_IN               = 36240, 
+    SPELL_GROWTH                = 36300,
+    SPELL_CAVE_IN               = 36240,
     SPELL_GROUND_SLAM           = 33525,                    //AoE Ground Slam applying Ground Slam to everyone with a script effect (most likely the knock back, we can code it to a set knockback)
-    SPELL_REVERBERATION         = 36297, 
-    SPELL_SHATTER               = 33654, 
+    SPELL_REVERBERATION         = 36297,
+    SPELL_SHATTER               = 33654,
 
-    SPELL_SHATTER_EFFECT        = 33671, 
-    SPELL_HURTFUL_STRIKE        = 33813, 
+    SPELL_SHATTER_EFFECT        = 33671,
+    SPELL_HURTFUL_STRIKE        = 33813,
     SPELL_STONED                = 33652,                    //Spell is self cast by target
 
-    SPELL_MAGNETIC_PULL         = 28337, 
+    SPELL_MAGNETIC_PULL         = 28337,
     SPELL_KNOCK_BACK            = 24199,                    //Knockback spell until correct implementation is made
 };
 
@@ -256,9 +256,7 @@ public:
             }
         }
     };
-
 };
-
 
 void AddSC_boss_gruul()
 {

@@ -87,9 +87,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_thrall_old_hillsbrad
@@ -560,11 +558,7 @@ public:
                 }
         }
     };
-
 };
-
-
-
 
 /*######
 ## npc_taretha
@@ -655,10 +649,7 @@ public:
             npc_escortAI::UpdateAI(diff);
         }
     };
-
 };
-
-
 
 /*######
 ## AddSC

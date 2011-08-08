@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,30 +39,29 @@ EndContentData */
 
 enum eSays
 {
-    SAY_INTRO              = -1552000, 
-    SAY_AGGRO              = -1552001, 
-    SAY_KILL_1             = -1552002, 
-    SAY_KILL_2             = -1552003, 
-    SAY_MIND_1             = -1552004, 
-    SAY_MIND_2             = -1552005, 
-    SAY_FEAR_1             = -1552006, 
-    SAY_FEAR_2             = -1552007, 
-    SAY_IMAGE              = -1552008, 
-    SAY_DEATH              = -1552009, 
+    SAY_INTRO              = -1552000,
+    SAY_AGGRO              = -1552001,
+    SAY_KILL_1             = -1552002,
+    SAY_KILL_2             = -1552003,
+    SAY_MIND_1             = -1552004,
+    SAY_MIND_2             = -1552005,
+    SAY_FEAR_1             = -1552006,
+    SAY_FEAR_2             = -1552007,
+    SAY_IMAGE              = -1552008,
+    SAY_DEATH              = -1552009,
 };
 
 enum eSpells
 {
-    SPELL_FEAR             = 39415, 
-    SPELL_MIND_REND        = 36924, 
-    H_SPELL_MIND_REND      = 39017, 
-    SPELL_DOMINATION       = 37162, 
-    H_SPELL_DOMINATION     = 39019, 
-    H_SPELL_MANA_BURN      = 39020, 
+    SPELL_FEAR             = 39415,
+    SPELL_MIND_REND        = 36924,
+    H_SPELL_MIND_REND      = 39017,
+    SPELL_DOMINATION       = 37162,
+    H_SPELL_DOMINATION     = 39019,
+    H_SPELL_MANA_BURN      = 39020,
     SPELL_66_ILLUSION      = 36931,                       //entry 21466
     SPELL_33_ILLUSION      = 36932,                       //entry 21467
 };
-
 
 class boss_harbinger_skyriss : public CreatureScript
 {
@@ -284,7 +283,6 @@ class boss_harbinger_skyriss : public CreatureScript
         }
 };
 
-
 #define SPELL_MIND_REND_IMAGE   36929
 #define H_SPELL_MIND_REND_IMAGE 39021
 
@@ -311,10 +309,8 @@ class boss_harbinger_skyriss_illusion : public CreatureScript
         }
 };
 
-
 void AddSC_boss_harbinger_skyriss()
 {
     new boss_harbinger_skyriss();
     new boss_harbinger_skyriss_illusion();
 }
-

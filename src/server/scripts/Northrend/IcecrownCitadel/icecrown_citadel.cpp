@@ -31,36 +31,36 @@
 enum Texts
 {
     // Rotting Frost Giant
-    EMOTE_DEATH_PLAGUE_WARNING  = 0, 
+    EMOTE_DEATH_PLAGUE_WARNING  = 0,
 };
 
 enum Spells
 {
     // Rotting Frost Giant
-    SPELL_DEATH_PLAGUE              = 72879, 
-    SPELL_DEATH_PLAGUE_AURA         = 72865, 
-    SPELL_RECENTLY_INFECTED         = 72884, 
-    SPELL_DEATH_PLAGUE_KILL         = 72867, 
-    SPELL_STOMP                     = 64652, 
-    SPELL_ARCTIC_BREATH             = 72848, 
+    SPELL_DEATH_PLAGUE              = 72879,
+    SPELL_DEATH_PLAGUE_AURA         = 72865,
+    SPELL_RECENTLY_INFECTED         = 72884,
+    SPELL_DEATH_PLAGUE_KILL         = 72867,
+    SPELL_STOMP                     = 64652,
+    SPELL_ARCTIC_BREATH             = 72848,
 
     // Frost Freeze Trap
-    SPELL_COLDFLAME_JETS            = 70460, 
+    SPELL_COLDFLAME_JETS            = 70460,
 
     // Alchemist Adrianna
-    SPELL_HARVEST_BLIGHT_SPECIMEN   = 72155, 
-    SPELL_HARVEST_BLIGHT_SPECIMEN25 = 72162, 
+    SPELL_HARVEST_BLIGHT_SPECIMEN   = 72155,
+    SPELL_HARVEST_BLIGHT_SPECIMEN25 = 72162,
 };
 
 enum Events
 {
     // Rotting Frost Giant
-    EVENT_DEATH_PLAGUE      = 1, 
-    EVENT_STOMP             = 2, 
-    EVENT_ARCTIC_BREATH     = 3, 
+    EVENT_DEATH_PLAGUE      = 1,
+    EVENT_STOMP             = 2,
+    EVENT_ARCTIC_BREATH     = 3,
 
     // Frost Freeze Trap
-    EVENT_ACTIVATE_TRAP     = 4, 
+    EVENT_ACTIVATE_TRAP     = 4,
 };
 
 class npc_rotting_frost_giant : public CreatureScript

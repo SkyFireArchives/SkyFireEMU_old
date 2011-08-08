@@ -27,7 +27,7 @@
 
 enum NSCSDeffiantTroll
 {
-    DEFFIANT_KILL_CREDIT               = 34830, 
+    DEFFIANT_KILL_CREDIT               = 34830,
     SPELL_LIGHTNING_VISUAL             = 56328
 };
 

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,14 +33,14 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                   = -1189019, 
-    SAY_SPECIALAE               = -1189020, 
+    SAY_AGGRO                   = -1189019,
+    SAY_SPECIALAE               = -1189020,
 
-    SPELL_POLYMORPH             = 13323, 
-    SPELL_AOESILENCE            = 8988, 
-    SPELL_ARCANEEXPLOSION       = 9433, 
-    SPELL_FIREAOE               = 9435, 
-    SPELL_ARCANEBUBBLE          = 9438, 
+    SPELL_POLYMORPH             = 13323,
+    SPELL_AOESILENCE            = 8988,
+    SPELL_ARCANEEXPLOSION       = 9433,
+    SPELL_FIREAOE               = 9435,
+    SPELL_ARCANEBUBBLE          = 9438,
 };
 
 class boss_arcanist_doan : public CreatureScript
@@ -130,7 +130,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_boss_arcanist_doan()

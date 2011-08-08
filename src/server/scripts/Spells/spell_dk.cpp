@@ -26,9 +26,9 @@
 
 enum DeathKnightSpells
 {
-    DISPLAY_GHOUL_CORPSE                    = 25537, 
-    DK_SPELL_SCOURGE_STRIKE_TRIGGERED       = 70890, 
-    DK_SPELL_BLOOD_BOIL_TRIGGERED           = 65658, 
+    DISPLAY_GHOUL_CORPSE                    = 25537,
+    DK_SPELL_SCOURGE_STRIKE_TRIGGERED       = 70890,
+    DK_SPELL_BLOOD_BOIL_TRIGGERED           = 65658,
 };
 
 // 50462 - Anti-Magic Shell (on raid member)
@@ -85,7 +85,7 @@ public:
 
         enum Spells
         {
-            DK_SPELL_RUNIC_POWER_ENERGIZE = 49088, 
+            DK_SPELL_RUNIC_POWER_ENERGIZE = 49088,
         };
 
         uint32 absorbPct, hpPct;
@@ -147,7 +147,7 @@ public:
 
         enum Spells
         {
-            DK_SPELL_ANTI_MAGIC_SHELL_TALENT = 51052, 
+            DK_SPELL_ANTI_MAGIC_SHELL_TALENT = 51052,
         };
 
         uint32 absorbPct;
@@ -231,7 +231,7 @@ class spell_dk_scourge_strike : public SpellScriptLoader
                 for (Unit::AuraEffectList::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
                     if (diseaseId == ((*itr)->GetAmount() >> 4))
                         return (*itr);
-    
+
                 return NULL;
             }
 

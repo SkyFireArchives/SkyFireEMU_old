@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -54,13 +54,13 @@ EndScriptData */
 
 float IntroWay[8][3] =
 {
-    {-11053.37f, -1794.48f, 149.00f}, 
-    {-11141.07f, -1841.40f, 125.00f}, 
-    {-11187.28f, -1890.23f, 125.00f}, 
-    {-11189.20f, -1931.25f, 125.00f}, 
-    {-11153.76f, -1948.93f, 125.00f}, 
-    {-11128.73f, -1929.75f, 125.00f}, 
-    {-11140.00f, -1915.00f, 122.00f}, 
+    {-11053.37f, -1794.48f, 149.00f},
+    {-11141.07f, -1841.40f, 125.00f},
+    {-11187.28f, -1890.23f, 125.00f},
+    {-11189.20f, -1931.25f, 125.00f},
+    {-11153.76f, -1948.93f, 125.00f},
+    {-11128.73f, -1929.75f, 125.00f},
+    {-11140.00f, -1915.00f, 122.00f},
     {-11163.00f, -1903.00f, 91.473f}
 };
 
@@ -418,9 +418,7 @@ public:
             }
         }
     };
-
 };
-
 
 void AddSC_boss_nightbane()
 {

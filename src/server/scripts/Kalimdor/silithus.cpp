@@ -102,9 +102,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(6812, pCreature->GetGUID());
             return true;
     }
-
 };
-
 
 /*###
 ## npcs_rutgar_and_frankal
@@ -218,64 +216,62 @@ public:
 
         return true;
     }
-
 };
-
 
 /*####
 # quest_a_pawn_on_the_eternal_board (Defines)
 ####*/
 enum eEternalBoard
 {
-    QUEST_A_PAWN_ON_THE_ETERNAL_BOARD = 8519, 
+    QUEST_A_PAWN_ON_THE_ETERNAL_BOARD = 8519,
 
-    FACTION_HOSTILE = 14, 
-    FACTION_FRIENDLY = 35, 
+    FACTION_HOSTILE = 14,
+    FACTION_FRIENDLY = 35,
 
-    C_ANACHRONOS = 15381, 
-    C_FANDRAL_STAGHELM = 15382, 
-    C_ARYGOS = 15380, 
-    C_MERITHRA = 15378, 
-    C_CAELESTRASZ = 15379, 
+    C_ANACHRONOS = 15381,
+    C_FANDRAL_STAGHELM = 15382,
+    C_ARYGOS = 15380,
+    C_MERITHRA = 15378,
+    C_CAELESTRASZ = 15379,
 
-    ANACHRONOS_SAY_1 = -1350000, 
-    ANACHRONOS_SAY_2 = -1350001, 
-    ANACHRONOS_SAY_3 = -1350002, 
-    ANACHRONOS_SAY_4 = -1350003, 
-    ANACHRONOS_SAY_5 = -1350004, 
-    ANACHRONOS_SAY_6 = -1350005, 
-    ANACHRONOS_SAY_7 = -1350006, 
-    ANACHRONOS_SAY_8 = -1350007, 
-    ANACHRONOS_SAY_9 = -1350008, 
-    ANACHRONOS_SAY_10 = -1350009, 
-    ANACHRONOS_EMOTE_1 = -1350010, 
-    ANACHRONOS_EMOTE_2 = -1350011, 
-    ANACHRONOS_EMOTE_3 = -1350012, 
+    ANACHRONOS_SAY_1 = -1350000,
+    ANACHRONOS_SAY_2 = -1350001,
+    ANACHRONOS_SAY_3 = -1350002,
+    ANACHRONOS_SAY_4 = -1350003,
+    ANACHRONOS_SAY_5 = -1350004,
+    ANACHRONOS_SAY_6 = -1350005,
+    ANACHRONOS_SAY_7 = -1350006,
+    ANACHRONOS_SAY_8 = -1350007,
+    ANACHRONOS_SAY_9 = -1350008,
+    ANACHRONOS_SAY_10 = -1350009,
+    ANACHRONOS_EMOTE_1 = -1350010,
+    ANACHRONOS_EMOTE_2 = -1350011,
+    ANACHRONOS_EMOTE_3 = -1350012,
 
-    FANDRAL_SAY_1 = -1350013, 
-    FANDRAL_SAY_2 = -1350014, 
-    FANDRAL_SAY_3 = -1350015, 
-    FANDRAL_SAY_4 = -1350016, 
-    FANDRAL_SAY_5 = -1350017, 
-    FANDRAL_SAY_6 = -1350018, 
-    FANDRAL_EMOTE_1 = -1350019, 
-    FANDRAL_EMOTE_2 = -1350020, 
+    FANDRAL_SAY_1 = -1350013,
+    FANDRAL_SAY_2 = -1350014,
+    FANDRAL_SAY_3 = -1350015,
+    FANDRAL_SAY_4 = -1350016,
+    FANDRAL_SAY_5 = -1350017,
+    FANDRAL_SAY_6 = -1350018,
+    FANDRAL_EMOTE_1 = -1350019,
+    FANDRAL_EMOTE_2 = -1350020,
 
-    CAELESTRASZ_SAY_1 = -1350021, 
-    CAELESTRASZ_SAY_2 = -1350022, 
-    CAELESTRASZ_YELL_1 = -1350023, 
+    CAELESTRASZ_SAY_1 = -1350021,
+    CAELESTRASZ_SAY_2 = -1350022,
+    CAELESTRASZ_YELL_1 = -1350023,
 
-    ARYGOS_SAY_1 = -1350024, 
-    ARYGOS_YELL_1 = -1350025, 
-    ARYGOS_EMOTE_1 = -1350026, 
+    ARYGOS_SAY_1 = -1350024,
+    ARYGOS_YELL_1 = -1350025,
+    ARYGOS_EMOTE_1 = -1350026,
 
-    MERITHRA_SAY_1 = -1350027, 
-    MERITHRA_SAY_2 = -1350028, 
-    MERITHRA_YELL_1 = -1350029, 
-    MERITHRA_EMOTE_1 = -1350030, 
+    MERITHRA_SAY_1 = -1350027,
+    MERITHRA_SAY_2 = -1350028,
+    MERITHRA_YELL_1 = -1350029,
+    MERITHRA_EMOTE_1 = -1350030,
 
-    GO_GATE_OF_AHN_QIRAJ = 176146, 
-    GO_GLYPH_OF_AHN_QIRAJ = 176148, 
+    GO_GATE_OF_AHN_QIRAJ = 176146,
+    GO_GLYPH_OF_AHN_QIRAJ = 176148,
     GO_ROOTS_OF_AHN_QIRAJ = 176147
 };
 /*#####
@@ -305,73 +301,73 @@ struct QuestCinematic
 // Creature 0 - Anachronos, 1 - Fandral, 2 - Arygos, 3 - Merithra, 4 - Caelestrasz
 static QuestCinematic EventAnim[]=
 {
-    {ANACHRONOS_SAY_1, 0, 2000}, 
-    {FANDRAL_SAY_1, 1, 4000}, 
-    {MERITHRA_EMOTE_1, 3, 500}, 
-    {MERITHRA_SAY_1, 3, 500}, 
-    {ARYGOS_EMOTE_1, 2, 2000}, 
-    {CAELESTRASZ_SAY_1, 4, 8000}, 
-    {MERITHRA_SAY_2, 3, 6000}, 
-    {NULL, 3, 2000}, 
-    {MERITHRA_YELL_1, 3, 2500}, 
+    {ANACHRONOS_SAY_1, 0, 2000},
+    {FANDRAL_SAY_1, 1, 4000},
+    {MERITHRA_EMOTE_1, 3, 500},
+    {MERITHRA_SAY_1, 3, 500},
+    {ARYGOS_EMOTE_1, 2, 2000},
+    {CAELESTRASZ_SAY_1, 4, 8000},
+    {MERITHRA_SAY_2, 3, 6000},
+    {NULL, 3, 2000},
+    {MERITHRA_YELL_1, 3, 2500},
     {NULL, 3, 3000}, //Morph
     {NULL, 3, 4000}, //EmoteLiftoff
     {NULL, 3, 4000}, // spell
     {NULL, 3, 1250}, //fly
     {NULL, 3, 250}, //remove flags
-    {ARYGOS_SAY_1, 2, 3000}, 
-    {NULL, 3, 2000}, 
-    {ARYGOS_YELL_1, 2, 3000}, 
+    {ARYGOS_SAY_1, 2, 3000},
+    {NULL, 3, 2000},
+    {ARYGOS_YELL_1, 2, 3000},
     {NULL, 3, 3000}, //Morph
     {NULL, 3, 4000}, //EmoteLiftoff
     {NULL, 3, 4000}, // spell
     {NULL, 3, 1000}, //fly
     {NULL, 3, 1000}, //remove flags
-    {CAELESTRASZ_SAY_2, 4, 5000}, 
-    {NULL, 3, 3000}, 
-    {CAELESTRASZ_YELL_1, 4, 3000}, 
+    {CAELESTRASZ_SAY_2, 4, 5000},
+    {NULL, 3, 3000},
+    {CAELESTRASZ_YELL_1, 4, 3000},
     {NULL, 3, 3000}, //Morph
     {NULL, 3, 4000}, //EmoteLiftoff
     {NULL, 3, 2500}, // spell
-    {ANACHRONOS_SAY_2, 0, 2000}, 
+    {ANACHRONOS_SAY_2, 0, 2000},
     {NULL, 3, 250}, //fly
     {NULL, 3, 25}, //remove flags
-    {FANDRAL_SAY_2, 1, 3000}, 
+    {FANDRAL_SAY_2, 1, 3000},
     {ANACHRONOS_SAY_3, 0, 10000}, //Both run through the armies
     {NULL, 3, 2000}, // Sands will stop
     {NULL, 3, 8000}, // Summon Gate
-    {ANACHRONOS_SAY_4, 0, 4000}, 
+    {ANACHRONOS_SAY_4, 0, 4000},
     {NULL, 0, 2000}, //spell 1-> Arcane cosmetic (Mobs freeze)
     {NULL, 0, 5000}, //Spell 2-> Arcane long cosmetic (barrier appears) (Barrier -> Glyphs)
     {NULL, 0, 7000}, //BarrieR
     {NULL, 0, 4000}, //Glyphs
-    {ANACHRONOS_SAY_5, 0, 2000}, 
+    {ANACHRONOS_SAY_5, 0, 2000},
     {NULL, 0, 4000}, // Roots
     {FANDRAL_SAY_3, 1, 3000}, //Root Text
     {FANDRAL_EMOTE_1, 1, 3000}, //falls knee
-    {ANACHRONOS_SAY_6, 0, 3000}, 
-    {ANACHRONOS_SAY_7, 0, 3000}, 
-    {ANACHRONOS_SAY_8, 0, 8000}, 
+    {ANACHRONOS_SAY_6, 0, 3000},
+    {ANACHRONOS_SAY_7, 0, 3000},
+    {ANACHRONOS_SAY_8, 0, 8000},
     {ANACHRONOS_EMOTE_1, 0, 1000}, //Give Scepter
-    {FANDRAL_SAY_4, 1, 3000}, 
+    {FANDRAL_SAY_4, 1, 3000},
     {FANDRAL_SAY_5, 1, 3000}, //->Equip hammer~Scepter, throw it at door
     {FANDRAL_EMOTE_2, 1, 3000}, //Throw hammer at door.
-    {ANACHRONOS_SAY_9, 0, 3000}, 
+    {ANACHRONOS_SAY_9, 0, 3000},
     {FANDRAL_SAY_6, 1, 3000}, //fandral goes away
-    {ANACHRONOS_EMOTE_2, 0, 3000}, 
-    {ANACHRONOS_EMOTE_3, 0, 3000}, 
-    {NULL, 0, 2000}, 
-    {NULL, 0, 2000}, 
-    {NULL, 0, 4000}, 
-    {ANACHRONOS_SAY_10, 0, 3000}, 
-    {NULL, 0, 2000}, 
-    {NULL, 0, 3000}, 
-    {NULL, 0, 15000}, 
-    {NULL, 0, 5000}, 
-    {NULL, 0, 3500}, 
-    {NULL, 0, 5000}, 
-    {NULL, 0, 3500}, 
-    {NULL, 0, 5000}, 
+    {ANACHRONOS_EMOTE_2, 0, 3000},
+    {ANACHRONOS_EMOTE_3, 0, 3000},
+    {NULL, 0, 2000},
+    {NULL, 0, 2000},
+    {NULL, 0, 4000},
+    {ANACHRONOS_SAY_10, 0, 3000},
+    {NULL, 0, 2000},
+    {NULL, 0, 3000},
+    {NULL, 0, 15000},
+    {NULL, 0, 5000},
+    {NULL, 0, 3500},
+    {NULL, 0, 5000},
+    {NULL, 0, 3500},
+    {NULL, 0, 5000},
     {NULL, 0, NULL}
 };
 
@@ -469,7 +465,6 @@ static WaveData WavesInfo[] =
     {12, 38, 15414, 0, 0, 24000, NULL},  //Qiraji Wasps
     {6, 50, 15422, 0, 0, 24000, NULL},   //Qiraji Tanks
     {15, 15, 15423, 0, 0, 24000, NULL}   //Kaldorei Soldier
-
 };
 
 struct SpawnSpells
@@ -808,7 +803,6 @@ public:
                 me->AI()->EnterEvadeMode();
         }
     };
-
 };
 
 /*######
@@ -923,7 +917,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /*#####
@@ -1077,7 +1070,6 @@ public:
                 EnterEvadeMode();
         };
     };
-
 };
 
 void mob_qiraj_war_spawn::mob_qiraj_war_spawnAI::JustDied(Unit* /*slayer*/)
@@ -1085,7 +1077,6 @@ void mob_qiraj_war_spawn::mob_qiraj_war_spawnAI::JustDied(Unit* /*slayer*/)
     me->RemoveCorpse();
     if (Creature* Mob = (Unit::GetCreature(*me, MobGUID)))
         CAST_AI(npc_anachronos_quest_trigger::npc_anachronos_quest_triggerAI, Mob->AI())->LiveCounter();
-
 };
 
 /*#####
@@ -1101,10 +1092,8 @@ public:
     {
         if (quest->GetQuestId() == QUEST_A_PAWN_ON_THE_ETERNAL_BOARD)
         {
-
             if (Unit* Anachronos_Quest_Trigger = go->FindNearestCreature(15454, 100, plr))
             {
-
                 Unit *Merithra = Anachronos_Quest_Trigger->SummonCreature(15378, -8034.535f, 1535.14f, 2.61f, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 220000);
                 Unit *Caelestrasz = Anachronos_Quest_Trigger->SummonCreature(15379, -8032.767f, 1533.148f, 2.61f, 1.5f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 220000);
                 Unit *Arygos = Anachronos_Quest_Trigger->SummonCreature(15380, -8034.52f, 1537.843f, 2.61f, 5.7f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 220000);
@@ -1147,7 +1136,6 @@ public:
         }
         return true;
     }
-
 };
 
 void AddSC_silithus()

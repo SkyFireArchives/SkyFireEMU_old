@@ -37,16 +37,16 @@ EndContentData */
 
 enum eEnums
 {
-    SAY_FREE_AS             = -1033000, 
-    SAY_OPEN_DOOR_AS        = -1033001, 
-    SAY_POST_DOOR_AS        = -1033002, 
-    SAY_FREE_AD             = -1033003, 
-    SAY_OPEN_DOOR_AD        = -1033004, 
-    SAY_POST1_DOOR_AD       = -1033005, 
-    SAY_POST2_DOOR_AD       = -1033006, 
+    SAY_FREE_AS             = -1033000,
+    SAY_OPEN_DOOR_AS        = -1033001,
+    SAY_POST_DOOR_AS        = -1033002,
+    SAY_FREE_AD             = -1033003,
+    SAY_OPEN_DOOR_AD        = -1033004,
+    SAY_POST1_DOOR_AD       = -1033005,
+    SAY_POST2_DOOR_AD       = -1033006,
 
-    SPELL_UNLOCK            = 6421, 
-    NPC_ASH                 = 3850, 
+    SPELL_UNLOCK            = 6421,
+    NPC_ASH                 = 3850,
 
     SPELL_DARK_OFFERING     = 7154
 };
@@ -138,11 +138,7 @@ public:
         void Reset() {}
         void EnterCombat(Unit* /*who*/) {}
     };
-
 };
-
-
-
 
 class npc_arugal_voidwalker : public CreatureScript
 {
@@ -196,9 +192,7 @@ public:
                 pInstance->SetData(TYPE_FENRUS, pInstance->GetData(TYPE_FENRUS) + 1);
         }
     };
-
 };
-
 
 void AddSC_shadowfang_keep()
 {

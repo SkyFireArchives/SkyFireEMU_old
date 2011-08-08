@@ -45,8 +45,8 @@ EndContentData */
 
 enum eRaliq
 {
-    SPELL_UPPERCUT          = 10966, 
-    QUEST_CRACK_SKULLS      = 10009, 
+    SPELL_UPPERCUT          = 10966,
+    QUEST_CRACK_SKULLS      = 10009,
     FACTION_HOSTILE_RD      = 45
 };
 
@@ -111,11 +111,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
-
 
 /*######
 # npc_salsalabim
@@ -190,16 +186,14 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*
 ##################################################
 Shattrath City Flask Vendors provides flasks to people exalted with 3 factions:
 Haldor the Compulsive
 Arcanist Xorith
-Both sell special flasks for use in Outlands 25man raids only, 
+Both sell special flasks for use in Outlands 25man raids only,
 purchasable for one Mark of Illidari each
 Purchase requires exalted reputation with Scryers/Aldor, Cenarion Expedition and The Sha'tar
 ##################################################
@@ -251,9 +245,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 # npc_zephyr
@@ -284,9 +276,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 # npc_kservant
@@ -578,10 +568,7 @@ public:
     {
         return new npc_dirty_larryAI (pCreature);
     }
-
 };
-
-
 
 /*######
 # npc_ishanah
@@ -618,9 +605,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 # npc_khadgar
@@ -687,9 +672,7 @@ public:
 
         return true;
     }
-
 };
-
 
 void AddSC_shattrath_city()
 {

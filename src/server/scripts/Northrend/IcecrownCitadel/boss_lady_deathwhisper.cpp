@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,158 +33,158 @@
 enum ScriptTexts
 {
     // Lady Deathwhisper
-    SAY_INTRO_1                 = 0, 
-    SAY_INTRO_2                 = 1, 
-    SAY_INTRO_3                 = 2, 
-    SAY_INTRO_4                 = 3, 
-    SAY_INTRO_5                 = 4, 
-    SAY_INTRO_6                 = 5, 
-    SAY_INTRO_7                 = 6, 
-    SAY_AGGRO                   = 7, 
-    SAY_PHASE_2                 = 8, 
-    EMOTE_PHASE_2               = 9, 
-    SAY_DOMINATE_MIND           = 10, 
-    SAY_DARK_EMPOWERMENT        = 11, 
-    SAY_DARK_TRANSFORMATION     = 12, 
-    SAY_ANIMATE_DEAD            = 13, 
-    SAY_KILL                    = 14, 
-    SAY_BERSERK                 = 15, 
-    SAY_DEATH                   = 16, 
+    SAY_INTRO_1                 = 0,
+    SAY_INTRO_2                 = 1,
+    SAY_INTRO_3                 = 2,
+    SAY_INTRO_4                 = 3,
+    SAY_INTRO_5                 = 4,
+    SAY_INTRO_6                 = 5,
+    SAY_INTRO_7                 = 6,
+    SAY_AGGRO                   = 7,
+    SAY_PHASE_2                 = 8,
+    EMOTE_PHASE_2               = 9,
+    SAY_DOMINATE_MIND           = 10,
+    SAY_DARK_EMPOWERMENT        = 11,
+    SAY_DARK_TRANSFORMATION     = 12,
+    SAY_ANIMATE_DEAD            = 13,
+    SAY_KILL                    = 14,
+    SAY_BERSERK                 = 15,
+    SAY_DEATH                   = 16,
 
     // Darnavan
-    SAY_DARNAVAN_AGGRO          = 0, 
-    SAY_DARNAVAN_RESCUED        = 1, 
+    SAY_DARNAVAN_AGGRO          = 0,
+    SAY_DARNAVAN_RESCUED        = 1,
 };
 
 enum Spells
 {
     // Lady Deathwhisper
-    SPELL_MANA_BARRIER              = 70842, 
-    SPELL_SHADOW_BOLT               = 71254, 
-    SPELL_DEATH_AND_DECAY           = 71001, 
-    SPELL_DOMINATE_MIND_H           = 71289, 
-    SPELL_FROSTBOLT                 = 71420, 
-    SPELL_FROSTBOLT_VOLLEY          = 72905, 
-    SPELL_TOUCH_OF_INSIGNIFICANCE   = 71204, 
-    SPELL_SUMMON_SHADE              = 71363, 
+    SPELL_MANA_BARRIER              = 70842,
+    SPELL_SHADOW_BOLT               = 71254,
+    SPELL_DEATH_AND_DECAY           = 71001,
+    SPELL_DOMINATE_MIND_H           = 71289,
+    SPELL_FROSTBOLT                 = 71420,
+    SPELL_FROSTBOLT_VOLLEY          = 72905,
+    SPELL_TOUCH_OF_INSIGNIFICANCE   = 71204,
+    SPELL_SUMMON_SHADE              = 71363,
     SPELL_SHADOW_CHANNELING         = 43897, // Prefight, during intro
-    SPELL_DARK_TRANSFORMATION_T     = 70895, 
-    SPELL_DARK_EMPOWERMENT_T        = 70896, 
-    SPELL_DARK_MARTYRDOM_T          = 70897, 
+    SPELL_DARK_TRANSFORMATION_T     = 70895,
+    SPELL_DARK_EMPOWERMENT_T        = 70896,
+    SPELL_DARK_MARTYRDOM_T          = 70897,
 
     // Achievement
     SPELL_FULL_HOUSE                = 72827, // does not exist in dbc but still can be used for criteria check
 
     // Both Adds
-    SPELL_TELEPORT_VISUAL           = 41236, 
+    SPELL_TELEPORT_VISUAL           = 41236,
 
     // Fanatics
-    SPELL_DARK_TRANSFORMATION       = 70900, 
-    SPELL_NECROTIC_STRIKE           = 70659, 
-    SPELL_SHADOW_CLEAVE             = 70670, 
-    SPELL_VAMPIRIC_MIGHT            = 70674, 
-    SPELL_FANATIC_S_DETERMINATION   = 71235, 
-    SPELL_DARK_MARTYRDOM_FANATIC    = 71236, 
+    SPELL_DARK_TRANSFORMATION       = 70900,
+    SPELL_NECROTIC_STRIKE           = 70659,
+    SPELL_SHADOW_CLEAVE             = 70670,
+    SPELL_VAMPIRIC_MIGHT            = 70674,
+    SPELL_FANATIC_S_DETERMINATION   = 71235,
+    SPELL_DARK_MARTYRDOM_FANATIC    = 71236,
 
     //  Adherents
-    SPELL_DARK_EMPOWERMENT          = 70901, 
-    SPELL_FROST_FEVER               = 67767, 
-    SPELL_DEATHCHILL_BOLT           = 70594, 
-    SPELL_DEATHCHILL_BLAST          = 70906, 
-    SPELL_CURSE_OF_TORPOR           = 71237, 
-    SPELL_SHORUD_OF_THE_OCCULT      = 70768, 
-    SPELL_ADHERENT_S_DETERMINATION  = 71234, 
-    SPELL_DARK_MARTYRDOM_ADHERENT   = 70903, 
+    SPELL_DARK_EMPOWERMENT          = 70901,
+    SPELL_FROST_FEVER               = 67767,
+    SPELL_DEATHCHILL_BOLT           = 70594,
+    SPELL_DEATHCHILL_BLAST          = 70906,
+    SPELL_CURSE_OF_TORPOR           = 71237,
+    SPELL_SHORUD_OF_THE_OCCULT      = 70768,
+    SPELL_ADHERENT_S_DETERMINATION  = 71234,
+    SPELL_DARK_MARTYRDOM_ADHERENT   = 70903,
 
     // Vengeful Shade
-    SPELL_VENGEFUL_BLAST            = 71544, 
-    SPELL_VENGEFUL_BLAST_PASSIVE    = 71494, 
-    SPELL_VENGEFUL_BLAST_25N        = 72010, 
-    SPELL_VENGEFUL_BLAST_10H        = 72011, 
-    SPELL_VENGEFUL_BLAST_25H        = 72012, 
+    SPELL_VENGEFUL_BLAST            = 71544,
+    SPELL_VENGEFUL_BLAST_PASSIVE    = 71494,
+    SPELL_VENGEFUL_BLAST_25N        = 72010,
+    SPELL_VENGEFUL_BLAST_10H        = 72011,
+    SPELL_VENGEFUL_BLAST_25H        = 72012,
 
     // Darnavan
-    SPELL_BLADESTORM                = 65947, 
-    SPELL_CHARGE                    = 65927, 
-    SPELL_INTIMIDATING_SHOUT        = 65930, 
-    SPELL_MORTAL_STRIKE             = 65926, 
-    SPELL_SHATTERING_THROW          = 65940, 
-    SPELL_SUNDER_ARMOR              = 65936, 
+    SPELL_BLADESTORM                = 65947,
+    SPELL_CHARGE                    = 65927,
+    SPELL_INTIMIDATING_SHOUT        = 65930,
+    SPELL_MORTAL_STRIKE             = 65926,
+    SPELL_SHATTERING_THROW          = 65940,
+    SPELL_SUNDER_ARMOR              = 65936,
 };
 
 enum Events
 {
     // Lady Deathwhisper
-    EVENT_INTRO_2                       = 1, 
-    EVENT_INTRO_3                       = 2, 
-    EVENT_INTRO_4                       = 3, 
-    EVENT_INTRO_5                       = 4, 
-    EVENT_INTRO_6                       = 5, 
-    EVENT_INTRO_7                       = 6, 
-    EVENT_INTRO_FINISH                  = 7, 
-    EVENT_BERSERK                       = 8, 
-    EVENT_DEATH_AND_DECAY               = 9, 
-    EVENT_DOMINATE_MIND_H               = 10, 
+    EVENT_INTRO_2                       = 1,
+    EVENT_INTRO_3                       = 2,
+    EVENT_INTRO_4                       = 3,
+    EVENT_INTRO_5                       = 4,
+    EVENT_INTRO_6                       = 5,
+    EVENT_INTRO_7                       = 6,
+    EVENT_INTRO_FINISH                  = 7,
+    EVENT_BERSERK                       = 8,
+    EVENT_DEATH_AND_DECAY               = 9,
+    EVENT_DOMINATE_MIND_H               = 10,
 
     // Phase 1 only
-    EVENT_P1_SUMMON_WAVE                = 11, 
-    EVENT_P1_SHADOW_BOLT                = 12, 
-    EVENT_P1_EMPOWER_CULTIST            = 13, 
-    EVENT_P1_REANIMATE_CULTIST          = 14, 
+    EVENT_P1_SUMMON_WAVE                = 11,
+    EVENT_P1_SHADOW_BOLT                = 12,
+    EVENT_P1_EMPOWER_CULTIST            = 13,
+    EVENT_P1_REANIMATE_CULTIST          = 14,
 
     // Phase 2 only
-    EVENT_P2_SUMMON_WAVE                = 15, 
-    EVENT_P2_FROSTBOLT                  = 16, 
-    EVENT_P2_FROSTBOLT_VOLLEY           = 17, 
-    EVENT_P2_TOUCH_OF_INSIGNIFICANCE    = 18, 
-    EVENT_P2_SUMMON_SHADE               = 19, 
+    EVENT_P2_SUMMON_WAVE                = 15,
+    EVENT_P2_FROSTBOLT                  = 16,
+    EVENT_P2_FROSTBOLT_VOLLEY           = 17,
+    EVENT_P2_TOUCH_OF_INSIGNIFICANCE    = 18,
+    EVENT_P2_SUMMON_SHADE               = 19,
 
     // Shared adds events
-    EVENT_CULTIST_DARK_MARTYRDOM        = 20, 
+    EVENT_CULTIST_DARK_MARTYRDOM        = 20,
 
     // Cult Fanatic
-    EVENT_FANATIC_NECROTIC_STRIKE       = 21, 
-    EVENT_FANATIC_SHADOW_CLEAVE         = 22, 
-    EVENT_FANATIC_VAMPIRIC_MIGHT        = 23, 
+    EVENT_FANATIC_NECROTIC_STRIKE       = 21,
+    EVENT_FANATIC_SHADOW_CLEAVE         = 22,
+    EVENT_FANATIC_VAMPIRIC_MIGHT        = 23,
 
     // Cult Adherent
-    EVENT_ADHERENT_FROST_FEVER          = 24, 
-    EVENT_ADHERENT_DEATHCHILL           = 25, 
-    EVENT_ADHERENT_CURSE_OF_TORPOR      = 26, 
-    EVENT_ADHERENT_SHORUD_OF_THE_OCCULT = 27, 
+    EVENT_ADHERENT_FROST_FEVER          = 24,
+    EVENT_ADHERENT_DEATHCHILL           = 25,
+    EVENT_ADHERENT_CURSE_OF_TORPOR      = 26,
+    EVENT_ADHERENT_SHORUD_OF_THE_OCCULT = 27,
 
     // Darnavan
-    EVENT_DARNAVAN_BLADESTORM           = 28, 
-    EVENT_DARNAVAN_CHARGE               = 29, 
-    EVENT_DARNAVAN_INTIMIDATING_SHOUT   = 30, 
-    EVENT_DARNAVAN_MORTAL_STRIKE        = 31, 
-    EVENT_DARNAVAN_SHATTERING_THROW     = 32, 
-    EVENT_DARNAVAN_SUNDER_ARMOR         = 33, 
+    EVENT_DARNAVAN_BLADESTORM           = 28,
+    EVENT_DARNAVAN_CHARGE               = 29,
+    EVENT_DARNAVAN_INTIMIDATING_SHOUT   = 30,
+    EVENT_DARNAVAN_MORTAL_STRIKE        = 31,
+    EVENT_DARNAVAN_SHATTERING_THROW     = 32,
+    EVENT_DARNAVAN_SUNDER_ARMOR         = 33,
 };
 
 enum Phases
 {
-    PHASE_ALL       = 0, 
-    PHASE_INTRO     = 1, 
-    PHASE_ONE       = 2, 
-    PHASE_TWO       = 3, 
+    PHASE_ALL       = 0,
+    PHASE_INTRO     = 1,
+    PHASE_ONE       = 2,
+    PHASE_TWO       = 3,
 
-    PHASE_INTRO_MASK    = 1 << PHASE_INTRO, 
-    PHASE_ONE_MASK      = 1 << PHASE_ONE, 
+    PHASE_INTRO_MASK    = 1 << PHASE_INTRO,
+    PHASE_ONE_MASK      = 1 << PHASE_ONE,
 };
 
 enum DeprogrammingData
 {
-    QUEST_DEPROGRAMMING_10  = 24869, 
-    QUEST_DEPROGRAMMING_25  = 24875, 
+    QUEST_DEPROGRAMMING_10  = 24869,
+    QUEST_DEPROGRAMMING_25  = 24875,
 
-    NPC_DARNAVAN_10         = 38472, 
-    NPC_DARNAVAN_25         = 38485, 
-    NPC_DARNAVAN_CREDIT_10  = 39091, 
-    NPC_DARNAVAN_CREDIT_25  = 39092, 
+    NPC_DARNAVAN_10         = 38472,
+    NPC_DARNAVAN_25         = 38485,
+    NPC_DARNAVAN_CREDIT_10  = 39091,
+    NPC_DARNAVAN_CREDIT_25  = 39092,
 
-    ACTION_COMPLETE_QUEST   = -384720, 
-    POINT_DESPAWN           = 384721, 
+    ACTION_COMPLETE_QUEST   = -384720,
+    POINT_DESPAWN           = 384721,
 };
 
 #define NPC_DARNAVAN RAID_MODE<uint32>(NPC_DARNAVAN_10, NPC_DARNAVAN_25, NPC_DARNAVAN_10, NPC_DARNAVAN_25)

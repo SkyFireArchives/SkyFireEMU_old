@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -37,24 +37,24 @@ EndScriptData */
 
 enum eYells
 {
-    SAY_AGGRO                   = -1249000, 
-    SAY_KILL                    = -1249001, 
-    SAY_PHASE_2_TRANS           = -1249002, 
-    SAY_PHASE_3_TRANS           = -1249003, 
-    EMOTE_BREATH                = -1249004, 
+    SAY_AGGRO                   = -1249000,
+    SAY_KILL                    = -1249001,
+    SAY_PHASE_2_TRANS           = -1249002,
+    SAY_PHASE_3_TRANS           = -1249003,
+    EMOTE_BREATH                = -1249004,
 };
 
 enum eSpells
 {
     // Phase 1 spells
-    SPELL_WING_BUFFET           = 18500, 
-    SPELL_FLAME_BREATH          = 18435, 
-    SPELL_CLEAVE                = 68868, 
-    SPELL_TAIL_SWEEP            = 68867, 
+    SPELL_WING_BUFFET           = 18500,
+    SPELL_FLAME_BREATH          = 18435,
+    SPELL_CLEAVE                = 68868,
+    SPELL_TAIL_SWEEP            = 68867,
 
     // Phase 2 spells
-    SPELL_DEEP_BREATH           = 23461, 
-    SPELL_FIREBALL              = 18392, 
+    SPELL_DEEP_BREATH           = 23461,
+    SPELL_FIREBALL              = 18392,
 
     //Not much choise about these. We have to make own defintion on the direction/start-end point
     SPELL_BREATH_NORTH_TO_SOUTH = 17086,                    // 20x in "array"
@@ -71,7 +71,7 @@ enum eSpells
     //SPELL_BREATH                = 21131,                  // 8x in "array", different initial cast than the other arrays
 
     // Phase 3 spells
-    SPELL_BELLOWING_ROAR         = 18431, 
+    SPELL_BELLOWING_ROAR         = 18431,
 };
 
 struct sOnyxMove
@@ -101,8 +101,8 @@ const Position Phase2Location = {-80.924f, -214.299f, -82.942f, 0.0f};
 static Position aSpawnLocations[3]=
 {
     //Whelps
-    {-30.127f, -254.463f, -89.440f, 0.0f}, 
-    {-30.817f, -177.106f, -89.258f, 0.0f}, 
+    {-30.127f, -254.463f, -89.440f, 0.0f},
+    {-30.817f, -177.106f, -89.258f, 0.0f},
     //Lair Guard
     {-145.950f, -212.831f, -68.659f, 0.0f}
 };
@@ -503,15 +503,14 @@ public:
         {
             std::list<Creature*> m_pCreatures;
             GetCreatureListWithEntryInGrid(m_pCreatures, me, entry, distance);
-     
+
             if (m_pCreatures.empty())
                 return;
-     
+
             for(std::list<Creature*>::iterator iter = m_pCreatures.begin(); iter != m_pCreatures.end(); ++iter)
                 (*iter)->DespawnOrUnsummon();
         }
     };
-
 };
 
 void AddSC_boss_onyxia()

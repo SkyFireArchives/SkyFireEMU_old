@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,23 +33,23 @@ EndScriptData */
 
 enum eSays
 {
-    SAY_TAUNT              = -1543000, 
-    SAY_HEAL               = -1543001, 
-    SAY_SURGE              = -1543002, 
-    SAY_AGGRO_1            = -1543003, 
-    SAY_AGGRO_2            = -1543004, 
-    SAY_AGGRO_3            = -1543005, 
-    SAY_KILL_1             = -1543006, 
-    SAY_KILL_2             = -1543007, 
-    SAY_DIE                = -1543008, 
+    SAY_TAUNT              = -1543000,
+    SAY_HEAL               = -1543001,
+    SAY_SURGE              = -1543002,
+    SAY_AGGRO_1            = -1543003,
+    SAY_AGGRO_2            = -1543004,
+    SAY_AGGRO_3            = -1543005,
+    SAY_KILL_1             = -1543006,
+    SAY_KILL_2             = -1543007,
+    SAY_DIE                = -1543008,
 };
 
 enum eSpells
 {
-    SPELL_MORTAL_WOUND     = 30641, 
-    H_SPELL_MORTAL_WOUND   = 36814, 
-    SPELL_SURGE            = 34645, 
-    SPELL_RETALIATION      = 22857, 
+    SPELL_MORTAL_WOUND     = 30641,
+    H_SPELL_MORTAL_WOUND   = 36814,
+    SPELL_SURGE            = 34645,
+    SPELL_RETALIATION      = 22857,
 };
 
 class boss_watchkeeper_gargolmar : public CreatureScript
@@ -179,4 +179,3 @@ void AddSC_boss_watchkeeper_gargolmar()
 {
     new boss_watchkeeper_gargolmar();
 }
-

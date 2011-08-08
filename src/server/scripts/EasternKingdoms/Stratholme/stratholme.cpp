@@ -74,7 +74,6 @@ public:
         pInstance->SetData(TYPE_BARON_RUN, IN_PROGRESS);
         return false;
     }
-
 };
 
 /*######
@@ -108,9 +107,7 @@ public:
 
         void EnterCombat(Unit* /*who*/) {}
     };
-
 };
-
 
 /*######
 ## mob_restless_soul
@@ -187,9 +184,7 @@ public:
             }
         }
     };
-
 };
-
 
 /*######
 ## mobs_spectral_ghostly_citizen
@@ -197,7 +192,7 @@ public:
 
 enum eGhostlyCitizenSpells
 {
-    SPELL_HAUNTING_PHANTOM  = 16336, 
+    SPELL_HAUNTING_PHANTOM  = 16336,
     SPELL_SLAP              = 6754
 };
 
@@ -285,9 +280,7 @@ public:
             }
         }
     };
-
 };
-
 
 void AddSC_stratholme()
 {

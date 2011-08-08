@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 
 /* Script Data Start
 SDName: Boss epoch
@@ -36,7 +35,7 @@ Script Data End */
 
 enum Spells
 {
-    SPELL_CURSE_OF_EXERTION                     = 52772, 
+    SPELL_CURSE_OF_EXERTION                     = 52772,
     SPELL_TIME_WARP                             = 52766, //Time slows down, reducing attack, casting and movement speed by 70% for 6 sec.
     SPELL_TIME_STOP                             = 58848, //Stops time in a 50 yard sphere for 2 sec.
     SPELL_WOUNDING_STRIKE                       = 52771, //Used only on the tank
@@ -155,9 +154,7 @@ public:
             DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
     };
-
 };
-
 
 void AddSC_boss_epoch()
 {

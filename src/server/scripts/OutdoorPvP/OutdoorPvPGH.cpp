@@ -26,9 +26,9 @@
 #include "ScriptPCH.h"
 
 OPvPCapturePointGH::OPvPCapturePointGH(OutdoorPvP *pvp) :
-OPvPCapturePoint(pvp), 
-m_capturable(true), 
-m_ControllingFaction(0), 
+OPvPCapturePoint(pvp),
+m_capturable(true),
+m_ControllingFaction(0),
 m_VentureState(VENTURE_N)
 {
     SetCapturePointData(189310, 571, 2483.68f, -1873.6f, 10.68f, -0.1047f, 0.0f, 0.0f, 0.0f, 0.0f);

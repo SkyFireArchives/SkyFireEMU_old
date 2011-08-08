@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -29,10 +29,10 @@
 enum Spells
 {
     SPELL_OVERCHARGE            = 64218,    // Cast every 45 sec on a random Tempest Minion
-    SPELL_BERSERK               = 26662, 
+    SPELL_BERSERK               = 26662,
 
-    SPELL_SHOCK                 = 64363, 
-    SPELL_OVERCHARGED           = 64217, 
+    SPELL_SHOCK                 = 64363,
+    SPELL_OVERCHARGED           = 64217,
     SPELL_OVERCHARGED_BLAST     = 64219,    // Cast when Overcharged reaches 10 stacks. Mob dies after that
 };
 
@@ -42,18 +42,18 @@ enum Spells
 
 enum BossEmotes
 {
-    EMOTE_OVERCHARGE        = -1590000, 
-    EMOTE_MINION_RESPAWN    = -1590001, 
-    EMOTE_BERSERK           = -1590002, 
+    EMOTE_OVERCHARGE        = -1590000,
+    EMOTE_MINION_RESPAWN    = -1590001,
+    EMOTE_BERSERK           = -1590002,
 };
 
 enum Events
 {
-    EVENT_CHAIN_LIGHTNING   = 1, 
-    EVENT_LIGHTNING_NOVA    = 2, 
-    EVENT_OVERCHARGE        = 3, 
-    EVENT_BERSERK           = 4, 
-    EVENT_SHOCK             = 5, 
+    EVENT_CHAIN_LIGHTNING   = 1,
+    EVENT_LIGHTNING_NOVA    = 2,
+    EVENT_OVERCHARGE        = 3,
+    EVENT_BERSERK           = 4,
+    EVENT_SHOCK             = 5,
 };
 
 //Creatures
@@ -63,9 +63,9 @@ enum Events
 
 struct Position TempestMinions[MAX_TEMPEST_MINIONS] =
 {
-    {-203.980103f, -281.287720f, 91.650223f, 1.598807f}, 
-    {-233.489410f, -281.139282f, 91.652412f, 1.598807f}, 
-    {-233.267578f, -297.104645f, 91.681915f, 1.598807f}, 
+    {-203.980103f, -281.287720f, 91.650223f, 1.598807f},
+    {-233.489410f, -281.139282f, 91.652412f, 1.598807f},
+    {-233.267578f, -297.104645f, 91.681915f, 1.598807f},
     {-203.842529f, -297.097015f, 91.745163f, 1.598807f}
 };
 

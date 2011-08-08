@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,18 +35,18 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_INTRO       = -1555000, 
-    SAY_AGGRO1      = -1555001, 
-    SAY_AGGRO2      = -1555002, 
-    SAY_AGGRO3      = -1555003, 
-    SAY_HELP        = -1555004, 
-    SAY_SLAY1       = -1555005, 
-    SAY_SLAY2       = -1555006, 
-    SAY_DEATH       = -1555007, 
+    SAY_INTRO       = -1555000,
+    SAY_AGGRO1      = -1555001,
+    SAY_AGGRO2      = -1555002,
+    SAY_AGGRO3      = -1555003,
+    SAY_HELP        = -1555004,
+    SAY_SLAY1       = -1555005,
+    SAY_SLAY2       = -1555006,
+    SAY_DEATH       = -1555007,
 
-    SPELL_BANISH            = 30231, 
-    SPELL_CORROSIVE_ACID    = 33551, 
-    SPELL_FEAR              = 33547, 
+    SPELL_BANISH            = 30231,
+    SPELL_CORROSIVE_ACID    = 33551,
+    SPELL_FEAR              = 33547,
     SPELL_ENRAGE            = 34970
 };
 
@@ -207,9 +207,7 @@ public:
             }
         }
     };
-
 };
-
 
 void AddSC_boss_ambassador_hellmaw()
 {

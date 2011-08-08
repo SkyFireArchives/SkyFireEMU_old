@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -296,7 +296,6 @@ public:
                             DrainCrystalTimer = 20000 + rand()%5000;
                     } else DrainCrystalTimer -= diff;
                 }
-
             }else
             {
                 if (IsDraining)
@@ -324,9 +323,7 @@ public:
             DoMeleeAttackIfReady();                             // No need to check if we are draining crystal here, as the spell has a stun.
         }
     };
-
 };
-
 
 class mob_fel_crystal : public CreatureScript
 {
@@ -371,9 +368,7 @@ public:
             } else sLog->outError(ERROR_INST_DATA);
         }
     };
-
 };
-
 
 void AddSC_boss_selin_fireheart()
 {

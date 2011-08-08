@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -29,14 +29,13 @@ SDComment: Need some cosmetics updates when archeadas door are closing (Guardian
 SDCategory: Uldaman
 EndScriptData */
 
-
 #include "ScriptPCH.h"
 #include "uldaman.h"
 
 enum eSpells
 {
-    SPELL_ARCHAEDAS_AWAKEN      = 10347, 
-    SPELL_AWAKEN_VAULT_WALKER   = 10258, 
+    SPELL_ARCHAEDAS_AWAKEN      = 10347,
+    SPELL_AWAKEN_VAULT_WALKER   = 10258,
 };
 
 class instance_uldaman : public InstanceMapScript
@@ -136,7 +135,7 @@ class instance_uldaman : public InstanceMapScript
                     case GO_IRONAYA_SEAL_DOOR:
                         uiIronayaSealDoor = pGO->GetGUID();
 
-                        if (m_auiEncounter[2] == DONE) 
+                        if (m_auiEncounter[2] == DONE)
                             HandleGameObject(NULL, true, pGO);
                         break;
 
@@ -359,7 +358,7 @@ class instance_uldaman : public InstanceMapScript
                         switch(data)
                         {
                             case NOT_STARTED:
-                                if (m_auiEncounter[0] == DONE) //if players opened the doors 
+                                if (m_auiEncounter[0] == DONE) //if players opened the doors
                                     SetDoor(uiArchaedasTempleDoor, true);
 
                                 RespawnMinions();
@@ -465,7 +464,6 @@ class instance_uldaman : public InstanceMapScript
                     case 2748:    // Archaedas
                         uiArchaedasGUID = pCreature->GetGUID();
                         break;
-
                 } // end switch
             } // end OnCreatureCreate
 

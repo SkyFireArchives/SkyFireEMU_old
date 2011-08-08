@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,21 +26,21 @@
 #define DEF_DRAK_THARON_H
 enum Data
 {
-    DATA_TROLLGORE_EVENT, 
-    DATA_NOVOS_EVENT, 
-    DATA_DRED_EVENT, 
-    DATA_THARON_JA_EVENT, 
+    DATA_TROLLGORE_EVENT,
+    DATA_NOVOS_EVENT,
+    DATA_DRED_EVENT,
+    DATA_THARON_JA_EVENT,
     DATA_KING_DRED_ACHIEV
 };
 enum Data64
 {
-    DATA_TROLLGORE, 
-    DATA_NOVOS, 
-    DATA_DRED, 
-    DATA_THARON_JA, 
-    DATA_NOVOS_CRYSTAL_1, 
-    DATA_NOVOS_CRYSTAL_2, 
-    DATA_NOVOS_CRYSTAL_3, 
+    DATA_TROLLGORE,
+    DATA_NOVOS,
+    DATA_DRED,
+    DATA_THARON_JA,
+    DATA_NOVOS_CRYSTAL_1,
+    DATA_NOVOS_CRYSTAL_2,
+    DATA_NOVOS_CRYSTAL_3,
     DATA_NOVOS_CRYSTAL_4
 };
 #endif

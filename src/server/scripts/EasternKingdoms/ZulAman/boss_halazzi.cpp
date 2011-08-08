@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -71,11 +71,11 @@ EndScriptData */
 
 enum PhaseHalazzi
 {
-    PHASE_NONE = 0, 
-    PHASE_LYNX = 1, 
-    PHASE_SPLIT = 2, 
-    PHASE_HUMAN = 3, 
-    PHASE_MERGE = 4, 
+    PHASE_NONE = 0,
+    PHASE_LYNX = 1,
+    PHASE_SPLIT = 2,
+    PHASE_HUMAN = 3,
+    PHASE_MERGE = 4,
     PHASE_ENRAGE = 5
 };
 
@@ -407,7 +407,6 @@ class mob_halazzi_lynx : public CreatureScript
 
                 DoMeleeAttackIfReady();
             }
-
         };
 
         CreatureAI* GetAI(Creature* creature) const
@@ -421,4 +420,3 @@ void AddSC_boss_halazzi()
     new boss_halazzi();
     new mob_halazzi_lynx();
 }
-

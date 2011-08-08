@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,91 +28,91 @@
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1603220, 
-    SAY_SLAY_1                                  = -1603221, 
-    SAY_SLAY_2                                  = -1603222, 
-    SAY_DEATH                                   = -1603223, 
-    SAY_SUMMON                                  = -1603224, 
-    SAY_SLAG_POT                                = -1603225, 
-    SAY_SCORCH_1                                = -1603226, 
-    SAY_SCORCH_2                                = -1603227, 
-    SAY_BERSERK                                 = -1603228, 
-    EMOTE_JETS                                  = -1603229, 
+    SAY_AGGRO                                   = -1603220,
+    SAY_SLAY_1                                  = -1603221,
+    SAY_SLAY_2                                  = -1603222,
+    SAY_DEATH                                   = -1603223,
+    SAY_SUMMON                                  = -1603224,
+    SAY_SLAG_POT                                = -1603225,
+    SAY_SCORCH_1                                = -1603226,
+    SAY_SCORCH_2                                = -1603227,
+    SAY_BERSERK                                 = -1603228,
+    EMOTE_JETS                                  = -1603229,
 };
 
 enum Spells
 {
-    SPELL_FLAME_JETS                         = 62680, 
-    SPELL_SCORCH                             = 62546, 
-    SPELL_SLAG_POT                           = 62717, 
-    SPELL_SLAG_POT_DAMAGE                    = 65722, 
-    SPELL_SLAG_IMBUED                        = 62836, 
-    SPELL_ACTIVATE_CONSTRUCT                 = 62488, 
-    SPELL_STRENGHT                           = 64473, 
-    SPELL_GRAB                               = 62707, 
+    SPELL_FLAME_JETS                         = 62680,
+    SPELL_SCORCH                             = 62546,
+    SPELL_SLAG_POT                           = 62717,
+    SPELL_SLAG_POT_DAMAGE                    = 65722,
+    SPELL_SLAG_IMBUED                        = 62836,
+    SPELL_ACTIVATE_CONSTRUCT                 = 62488,
+    SPELL_STRENGHT                           = 64473,
+    SPELL_GRAB                               = 62707,
     SPELL_BERSERK                            = 47008
 };
 
 enum Events
 {
-    EVENT_NONE, 
-    EVENT_JET, 
-    EVENT_SCORCH, 
-    EVENT_SLAG_POT, 
-    EVENT_GRAB_POT, 
-    EVENT_CHANGE_POT, 
-    EVENT_END_POT, 
-    EVENT_CONSTRUCT, 
-    EVENT_BERSERK, 
+    EVENT_NONE,
+    EVENT_JET,
+    EVENT_SCORCH,
+    EVENT_SLAG_POT,
+    EVENT_GRAB_POT,
+    EVENT_CHANGE_POT,
+    EVENT_END_POT,
+    EVENT_CONSTRUCT,
+    EVENT_BERSERK,
     ACTION_REMOVE_BUFF = 20
 };
 
 enum eCreatures
 {
-    NPC_IRON_CONSTRUCT                          = 33121, 
+    NPC_IRON_CONSTRUCT                          = 33121,
     NPC_GROUND_SCORCH                           = 33221
 };
 
 enum ConstructSpells
 {
-    SPELL_HEAT                                  = 65667, 
-    SPELL_MOLTEN                                = 62373, 
-    SPELL_BRITTLE                               = 62382, 
-    SPELL_SHATTER                               = 62383, 
-    SPELL_GROUND                                = 62548, 
+    SPELL_HEAT                                  = 65667,
+    SPELL_MOLTEN                                = 62373,
+    SPELL_BRITTLE                               = 62382,
+    SPELL_SHATTER                               = 62383,
+    SPELL_GROUND                                = 62548,
 };
 
 enum eAchievementData
 {
-    ACHIEVEMENT_STOKIN_THE_FURNACE_10           = 2930, 
-    ACHIEVEMENT_STOKIN_THE_FURNACE_25           = 2929, 
-    ACHIEVEMENT_SHATTERED_10                    = 2925, 
-    ACHIEVEMENT_SHATTERED_25                    = 2926, 
+    ACHIEVEMENT_STOKIN_THE_FURNACE_10           = 2930,
+    ACHIEVEMENT_STOKIN_THE_FURNACE_25           = 2929,
+    ACHIEVEMENT_SHATTERED_10                    = 2925,
+    ACHIEVEMENT_SHATTERED_25                    = 2926,
 };
 
 #define MAX_ENCOUNTER_TIME                    4 * 60 * 1000
 
 const Position Pos[20] =
 {
-    {630.366f, 216.772f, 360.891f, 3.001970f}, 
-    {630.594f, 231.846f, 360.891f, 3.124140f}, 
-    {630.435f, 337.246f, 360.886f, 3.211410f}, 
-    {630.493f, 313.349f, 360.886f, 3.054330f}, 
-    {630.444f, 321.406f, 360.886f, 3.124140f}, 
-    {630.366f, 247.307f, 360.888f, 3.211410f}, 
-    {630.698f, 305.311f, 360.886f, 3.001970f}, 
-    {630.500f, 224.559f, 360.891f, 3.054330f}, 
-    {630.668f, 239.840f, 360.890f, 3.159050f}, 
-    {630.384f, 329.585f, 360.886f, 3.159050f}, 
-    {543.220f, 313.451f, 360.886f, 0.104720f}, 
-    {543.356f, 329.408f, 360.886f, 6.248280f}, 
-    {543.076f, 247.458f, 360.888f, 6.213370f}, 
-    {543.117f, 232.082f, 360.891f, 0.069813f}, 
-    {543.161f, 305.956f, 360.886f, 0.157080f}, 
-    {543.277f, 321.482f, 360.886f, 0.052360f}, 
-    {543.316f, 337.468f, 360.886f, 6.195920f}, 
-    {543.280f, 239.674f, 360.890f, 6.265730f}, 
-    {543.265f, 217.147f, 360.891f, 0.174533f}, 
+    {630.366f, 216.772f, 360.891f, 3.001970f},
+    {630.594f, 231.846f, 360.891f, 3.124140f},
+    {630.435f, 337.246f, 360.886f, 3.211410f},
+    {630.493f, 313.349f, 360.886f, 3.054330f},
+    {630.444f, 321.406f, 360.886f, 3.124140f},
+    {630.366f, 247.307f, 360.888f, 3.211410f},
+    {630.698f, 305.311f, 360.886f, 3.001970f},
+    {630.500f, 224.559f, 360.891f, 3.054330f},
+    {630.668f, 239.840f, 360.890f, 3.159050f},
+    {630.384f, 329.585f, 360.886f, 3.159050f},
+    {543.220f, 313.451f, 360.886f, 0.104720f},
+    {543.356f, 329.408f, 360.886f, 6.248280f},
+    {543.076f, 247.458f, 360.888f, 6.213370f},
+    {543.117f, 232.082f, 360.891f, 0.069813f},
+    {543.161f, 305.956f, 360.886f, 0.157080f},
+    {543.277f, 321.482f, 360.886f, 0.052360f},
+    {543.316f, 337.468f, 360.886f, 6.195920f},
+    {543.280f, 239.674f, 360.890f, 6.265730f},
+    {543.265f, 217.147f, 360.891f, 0.174533f},
     {543.256f, 224.831f, 360.891f, 0.122173f}
 };
 
@@ -473,7 +473,6 @@ class spell_ignis_slag_pot : public SpellScriptLoader
             return new spell_ignis_slag_pot_AuraScript();
         }
 };
-
 
 void AddSC_boss_ignis()
 {

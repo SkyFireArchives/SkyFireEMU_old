@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,23 +33,23 @@ EndScriptData */
 
 enum eSays
 {
-    SAY_AGGRO                  = -1553000, 
-    SAY_KILL_1                 = -1553001, 
-    SAY_KILL_2                 = -1553002, 
-    SAY_TREE_1                 = -1553003, 
-    SAY_TREE_2                 = -1553004, 
-    SAY_DEATH                  = -1553005, 
+    SAY_AGGRO                  = -1553000,
+    SAY_KILL_1                 = -1553001,
+    SAY_KILL_2                 = -1553002,
+    SAY_TREE_1                 = -1553003,
+    SAY_TREE_2                 = -1553004,
+    SAY_DEATH                  = -1553005,
 };
 
 enum eSpells
 {
-    SPELL_TRANQUILITY          = 34550, 
-    SPELL_TREE_FORM            = 34551, 
-    SPELL_SUMMON_FRAYER        = 34557, 
-    SPELL_PLANT_WHITE          = 34759, 
-    SPELL_PLANT_GREEN          = 34761, 
-    SPELL_PLANT_BLUE           = 34762, 
-    SPELL_PLANT_RED            = 34763, 
+    SPELL_TRANQUILITY          = 34550,
+    SPELL_TREE_FORM            = 34551,
+    SPELL_SUMMON_FRAYER        = 34557,
+    SPELL_PLANT_WHITE          = 34759,
+    SPELL_PLANT_GREEN          = 34761,
+    SPELL_PLANT_BLUE           = 34762,
+    SPELL_PLANT_RED            = 34763,
 };
 
 #define ENTRY_FRAYER                19953
@@ -211,4 +211,3 @@ void AddSC_boss_high_botanist_freywinn()
 {
     new boss_high_botanist_freywinn();
 }
-

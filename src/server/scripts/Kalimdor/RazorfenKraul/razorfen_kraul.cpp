@@ -143,9 +143,7 @@ public:
                 CAST_PLR(pPlayer)->FailQuest(QUEST_WILLIX_THE_IMPORTER);
         }
     };
-
 };
-
 
 class npc_deaths_head_ward_keeper : public CreatureScript
 {
@@ -187,13 +185,9 @@ public:
                 DoCast(me, SPELL_QUILLBOAR_CHANNELING);
                 QuillboarChanneling_Timer = 1100;
             } else QuillboarChanneling_Timer -= diff;
-
         }
     };
-
 };
-
-
 
 void AddSC_razorfen_kraul()
 {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -29,52 +29,52 @@
 enum eEnums
 {
     //Yell
-    SAY_DEATH_3                             = -1999935, 
-    SAY_AGGRO                               = -1999929, 
-    SAY_AGGRO_2                             = -1999930, 
-    SAY_SLAY                                = -1999932, 
-    SAY_DEATH_1                             = -1999933, 
-    SAY_DEATH                               = -1999934, 
-    SAY_START5                              = -1999936, 
-    SAY_START6                              = -1999937, 
-    SAY_START7                              = -1999928, 
-    SAY_START8                              = -1999929, 
-    SAY_START9                              = -1999952, 
-    SAY_START10                             = -1999932, 
-    SAY_START11                             = -1999953, 
+    SAY_DEATH_3                             = -1999935,
+    SAY_AGGRO                               = -1999929,
+    SAY_AGGRO_2                             = -1999930,
+    SAY_SLAY                                = -1999932,
+    SAY_DEATH_1                             = -1999933,
+    SAY_DEATH                               = -1999934,
+    SAY_START5                              = -1999936,
+    SAY_START6                              = -1999937,
+    SAY_START7                              = -1999928,
+    SAY_START8                              = -1999929,
+    SAY_START9                              = -1999952,
+    SAY_START10                             = -1999932,
+    SAY_START11                             = -1999953,
 };
 enum eSpells
 {
     //phase 1
-    SPELL_PLAGUE_STRIKE     = 67724, 
-    SPELL_PLAGUE_STRIKE_2   = 67884, 
-    SPELL_ICY_TOUCH         = 67881, 
-    SPELL_ICY_TOUCH_H       = 67718, 
-    SPELL_DEATH_RESPITE     = 67745, 
-    SPELL_OBLITERATE        = 67883, 
-    SPELL_OBLITERATE_H      = 67725, 
+    SPELL_PLAGUE_STRIKE     = 67724,
+    SPELL_PLAGUE_STRIKE_2   = 67884,
+    SPELL_ICY_TOUCH         = 67881,
+    SPELL_ICY_TOUCH_H       = 67718,
+    SPELL_DEATH_RESPITE     = 67745,
+    SPELL_OBLITERATE        = 67883,
+    SPELL_OBLITERATE_H      = 67725,
 
     //phase 2 - During this phase, the Black Knight will use the same abilities as in phase 1, except for Death's Respite
-    SPELL_ARMY_DEAD         = 67761, 
-    SPELL_DESECRATION       = 67778, 
-    SPELL_DESECRATION_2     = 67778, 
-    SPELL_GHOUL_EXPLODE     = 67751, 
+    SPELL_ARMY_DEAD         = 67761,
+    SPELL_DESECRATION       = 67778,
+    SPELL_DESECRATION_2     = 67778,
+    SPELL_GHOUL_EXPLODE     = 67751,
 
     //phase 3
-    SPELL_DEATH_BITE_H      = 67875, 
-    SPELL_DEATH_BITE        = 67808, 
-    SPELL_MARKED_DEATH      = 67882, 
-    SPELL_MARKED_DEATH_2    = 67823, 
+    SPELL_DEATH_BITE_H      = 67875,
+    SPELL_DEATH_BITE        = 67808,
+    SPELL_MARKED_DEATH      = 67882,
+    SPELL_MARKED_DEATH_2    = 67823,
 
-    SPELL_BLACK_KNIGHT_RES  = 67693, 
+    SPELL_BLACK_KNIGHT_RES  = 67693,
 
-    SPELL_LEAP                = 67749, 
+    SPELL_LEAP                = 67749,
     SPELL_LEAP_H            = 67880
 };
 
 enum eModels
 {
-     MODEL_SKELETON = 29846, 
+     MODEL_SKELETON = 29846,
      MODEL_GHOST    = 21300
 };
 
@@ -85,15 +85,15 @@ enum eEqip
 
 enum IntroPhase
 {
-    IDLE, 
-    INTRO, 
+    IDLE,
+    INTRO,
     FINISHED
 };
 
 enum ePhases
 {
-    PHASE_UNDEAD    = 1, 
-    PHASE_SKELETON  = 2, 
+    PHASE_UNDEAD    = 1,
+    PHASE_SKELETON  = 2,
     PHASE_GHOST     = 3
 };
 
@@ -152,7 +152,6 @@ public:
         uint32 uiDeathBiteTimer;
         uint32 uiMarkedDeathTimer;
 
-
         void Reset()
         {
             RemoveSummons();
@@ -191,7 +190,6 @@ public:
 
         void EnterEvadeMode()
         {
-
             if (!pInstance) return;
 
             if (bEventInBattle)
@@ -223,12 +221,10 @@ public:
         {
             SummonList.push_back(pSummon->GetGUID());
             pSummon->AI()->AttackStart(me->getVictim());
-
         }
 
         void UpdateAI(const uint32 uiDiff)
         {
-
             if (!UpdateVictim())
                 return;
 
@@ -425,7 +421,6 @@ public:
     };
 };
 
-
 class npc_risen_ghoul : public CreatureScript
 {
 public:
@@ -467,7 +462,6 @@ public:
     };
 };
 
-
 class npc_black_knight_skeletal_gryphon : public CreatureScript
 {
 public:
@@ -483,7 +477,7 @@ public:
         npc_black_knight_skeletal_gryphonAI(Creature* pCreature) : npc_escortAI(pCreature), vehicle(pCreature->GetVehicleKit())
         {
             Start(false, true, 0, NULL);
-            pInstance = pCreature->GetInstanceScript();    
+            pInstance = pCreature->GetInstanceScript();
         }
 
         InstanceScript* pInstance;
@@ -494,7 +488,7 @@ public:
             ASSERT(vehicle);
             vehicle->Reset();
         }
-        
+
         void WaypointReached(uint32 uiPointId)
         {
             switch(uiPointId)
@@ -557,12 +551,6 @@ public:
     };
 };
 
-
-
-
-
-
-
 class npc_gr : public CreatureScript
 {
 public:
@@ -572,14 +560,13 @@ public:
     {
         return new npc_grAI(pCreature);
     }
-    
+
     struct npc_grAI : public npc_escortAI
     {
-    
         npc_grAI(Creature* pCreature) : npc_escortAI(pCreature)
         {
             Start(false, true, 0, NULL);
-            pInstance = pCreature->GetInstanceScript();    
+            pInstance = pCreature->GetInstanceScript();
         }
 
         InstanceScript* pInstance;
@@ -637,7 +624,6 @@ public:
             }
         }
 
-
         void UpdateAI(const uint32 uiDiff)
         {
             npc_escortAI::UpdateAI(uiDiff);
@@ -645,10 +631,8 @@ public:
             if (!UpdateVictim())
                 return;
         }
-
     };
 };
-
 
 void AddSC_boss_black_knight()
 {

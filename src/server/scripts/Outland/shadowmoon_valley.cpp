@@ -51,16 +51,16 @@ EndContentData */
 
 enum eMatureNetherwing
 {
-    SAY_JUST_EATEN              = -1000175, 
+    SAY_JUST_EATEN              = -1000175,
 
-    SPELL_PLACE_CARCASS         = 38439, 
-    SPELL_JUST_EATEN            = 38502, 
-    SPELL_NETHER_BREATH         = 38467, 
-    POINT_ID                    = 1, 
+    SPELL_PLACE_CARCASS         = 38439,
+    SPELL_JUST_EATEN            = 38502,
+    SPELL_NETHER_BREATH         = 38467,
+    POINT_ID                    = 1,
 
-    GO_CARCASS                  = 185155, 
+    GO_CARCASS                  = 185155,
 
-    QUEST_KINDNESS              = 10804, 
+    QUEST_KINDNESS              = 10804,
     NPC_EVENT_PINGER            = 22131
 };
 
@@ -180,9 +180,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*###
 # mob_enslaved_netherwing_drake
@@ -323,9 +321,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*#####
 # mob_dragonmaw_peon
@@ -404,9 +400,7 @@ public:
             }
         }
     };
-
 };
-
 
 /*######
 ## npc_drake_dealer_hurlunk
@@ -435,9 +429,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_flanis_swiftwing_and_kagrosh
@@ -488,9 +480,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_murkblood_overseer
@@ -558,9 +548,7 @@ public:
         pPlayer->SEND_GOSSIP_MENU(10940, pCreature->GetGUID());
         return true;
     }
-
 };
-
 
 /*######
 ## npc_neltharaku
@@ -613,9 +601,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_oronok
@@ -690,9 +676,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*####
 # npc_karynaku
@@ -700,7 +684,7 @@ public:
 
 enum eKarynaku
 {
-    QUEST_ALLY_OF_NETHER    = 10870, 
+    QUEST_ALLY_OF_NETHER    = 10870,
 
     TAXI_PATH_ID            = 649
 };
@@ -717,7 +701,6 @@ public:
 
         return true;
     }
-
 };
 
 /*####
@@ -725,35 +708,35 @@ public:
 ####*/
 enum eOverlordData
 {
-    QUEST_LORD_ILLIDAN_STORMRAGE    = 11108, 
+    QUEST_LORD_ILLIDAN_STORMRAGE    = 11108,
 
-    C_ILLIDAN                       = 22083, 
-    C_YARZILL                       = 23141, 
+    C_ILLIDAN                       = 22083,
+    C_YARZILL                       = 23141,
 
     SPELL_ONE                       = 39990, // Red Lightning Bolt
     SPELL_TWO                       = 41528, // Mark of Stormrage
     SPELL_THREE                     = 40216, // Dragonaw Faction
     SPELL_FOUR                      = 42016, // Dragonaw Trasform
 
-    OVERLORD_SAY_1                  = -1000606, 
-    OVERLORD_SAY_2                  = -1000607, 
+    OVERLORD_SAY_1                  = -1000606,
+    OVERLORD_SAY_2                  = -1000607,
     OVERLORD_SAY_3                  = -1000608, //signed for 28315
-    OVERLORD_SAY_4                  = -1000609, 
-    OVERLORD_SAY_5                  = -1000610, 
-    OVERLORD_SAY_6                  = -1000611, 
+    OVERLORD_SAY_4                  = -1000609,
+    OVERLORD_SAY_5                  = -1000610,
+    OVERLORD_SAY_6                  = -1000611,
 
-    OVERLORD_YELL_1                 = -1000612, 
-    OVERLORD_YELL_2                 = -1000613, 
+    OVERLORD_YELL_1                 = -1000612,
+    OVERLORD_YELL_2                 = -1000613,
 
-    LORD_ILLIDAN_SAY_1              = -1000614, 
-    LORD_ILLIDAN_SAY_2              = -1000615, 
-    LORD_ILLIDAN_SAY_3              = -1000616, 
-    LORD_ILLIDAN_SAY_4              = -1000617, 
-    LORD_ILLIDAN_SAY_5              = -1000618, 
-    LORD_ILLIDAN_SAY_6              = -1000619, 
-    LORD_ILLIDAN_SAY_7              = -1000620, 
+    LORD_ILLIDAN_SAY_1              = -1000614,
+    LORD_ILLIDAN_SAY_2              = -1000615,
+    LORD_ILLIDAN_SAY_3              = -1000616,
+    LORD_ILLIDAN_SAY_4              = -1000617,
+    LORD_ILLIDAN_SAY_5              = -1000618,
+    LORD_ILLIDAN_SAY_6              = -1000619,
+    LORD_ILLIDAN_SAY_7              = -1000620,
 
-    YARZILL_THE_MERC_SAY            = -1000621, 
+    YARZILL_THE_MERC_SAY            = -1000621,
 };
 
 class npc_overlord_morghor : public CreatureScript
@@ -942,10 +925,7 @@ public:
             } else ConversationTimer -= diff;
         }
     };
-
 };
-
-
 
 /*####
 # npc_earthmender_wilda
@@ -953,24 +933,24 @@ public:
 
 enum eEarthmender
 {
-    SAY_WIL_START               = -1000381, 
-    SAY_WIL_AGGRO1              = -1000382, 
-    SAY_WIL_AGGRO2              = -1000383, 
-    SAY_WIL_PROGRESS1           = -1000384, 
-    SAY_WIL_PROGRESS2           = -1000385, 
-    SAY_WIL_FIND_EXIT           = -1000386, 
-    SAY_WIL_PROGRESS4           = -1000387, 
-    SAY_WIL_PROGRESS5           = -1000388, 
-    SAY_WIL_JUST_AHEAD          = -1000389, 
-    SAY_WIL_END                 = -1000390, 
+    SAY_WIL_START               = -1000381,
+    SAY_WIL_AGGRO1              = -1000382,
+    SAY_WIL_AGGRO2              = -1000383,
+    SAY_WIL_PROGRESS1           = -1000384,
+    SAY_WIL_PROGRESS2           = -1000385,
+    SAY_WIL_FIND_EXIT           = -1000386,
+    SAY_WIL_PROGRESS4           = -1000387,
+    SAY_WIL_PROGRESS5           = -1000388,
+    SAY_WIL_JUST_AHEAD          = -1000389,
+    SAY_WIL_END                 = -1000390,
 
-    SPELL_CHAIN_LIGHTNING       = 16006, 
-    SPELL_EARTHBING_TOTEM       = 15786, 
-    SPELL_FROST_SHOCK           = 12548, 
-    SPELL_HEALING_WAVE          = 12491, 
+    SPELL_CHAIN_LIGHTNING       = 16006,
+    SPELL_EARTHBING_TOTEM       = 15786,
+    SPELL_FROST_SHOCK           = 12548,
+    SPELL_HEALING_WAVE          = 12491,
 
-    QUEST_ESCAPE_COILSCAR       = 10451, 
-    NPC_COILSKAR_ASSASSIN       = 21044, 
+    QUEST_ESCAPE_COILSCAR       = 10451,
+    NPC_COILSKAR_ASSASSIN       = 21044,
     FACTION_EARTHEN             = 1726                      //guessed
 };
 
@@ -1122,10 +1102,7 @@ public:
             }
         }
     };
-
 };
-
-
 
 /*#####
 # Quest: Battle of the crimson watch
@@ -1154,12 +1131,12 @@ struct TorlothCinematic
 // Creature 0 - Torloth, 1 - Illidan
 static TorlothCinematic TorlothAnim[]=
 {
-    {-1000367, 0, 2000}, 
-    {-1000368, 1, 7000}, 
-    {-1000369, 0, 3000}, 
+    {-1000367, 0, 2000},
+    {-1000368, 1, 7000},
+    {-1000369, 0, 3000},
     {NULL, 0, 2000}, // Torloth stand
-    {-1000370, 0, 1000}, 
-    {NULL, 0, 3000}, 
+    {-1000370, 0, 1000},
+    {NULL, 0, 3000},
     {NULL, 0, NULL}
 };
 
@@ -1328,7 +1305,6 @@ public:
                 me->CombatStop();
             } else if (!Timers)
             {
-
                 SpellTimer1 = SpawnCast[6].Timer1;
                 SpellTimer2 = SpawnCast[7].Timer1;
                 SpellTimer3 = SpawnCast[8].Timer1;
@@ -1384,7 +1360,6 @@ public:
             }
         }
     };
-
 };
 
 /*#####
@@ -1530,7 +1505,6 @@ public:
                 EnterEvadeMode();
         }
     };
-
 };
 
 /*######
@@ -1649,7 +1623,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void npc_lord_illidan_stormrage::npc_lord_illidan_stormrageAI::SummonNextWave()
@@ -1743,11 +1716,7 @@ public:
         }
      return true;
     }
-
 };
-
-
-
 
 /*####
 # npc_enraged_spirits
@@ -1867,7 +1836,6 @@ public:
             }
         }
     };
-
 };
 
 /*#####

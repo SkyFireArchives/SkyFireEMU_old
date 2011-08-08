@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,17 +34,17 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                   = -1550000, 
-    SAY_SLAY1                   = -1550001, 
-    SAY_SLAY2                   = -1550002, 
-    SAY_SLAY3                   = -1550003, 
-    SAY_DEATH                   = -1550004, 
-    SAY_POUNDING1               = -1550005, 
-    SAY_POUNDING2               = -1550006, 
+    SAY_AGGRO                   = -1550000,
+    SAY_SLAY1                   = -1550001,
+    SAY_SLAY2                   = -1550002,
+    SAY_SLAY3                   = -1550003,
+    SAY_DEATH                   = -1550004,
+    SAY_POUNDING1               = -1550005,
+    SAY_POUNDING2               = -1550006,
 
-    SPELL_POUNDING              = 34162, 
-    SPELL_ARCANE_ORB            = 34172, 
-    SPELL_KNOCK_AWAY            = 25778, 
+    SPELL_POUNDING              = 34162,
+    SPELL_ARCANE_ORB            = 34172,
+    SPELL_KNOCK_AWAY            = 25778,
     SPELL_BERSERK               = 27680
 };
 
@@ -188,4 +188,3 @@ void AddSC_boss_void_reaver()
 {
     new boss_void_reaver();
 }
-

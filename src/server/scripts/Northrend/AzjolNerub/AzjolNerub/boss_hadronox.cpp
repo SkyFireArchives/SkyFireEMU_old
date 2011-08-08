@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,7 +26,7 @@
 * Comment: No Waves atm and the doors spells are crazy...
 *
 * When your group enters the main room (the one after the bridge), you will notice a group of 3 Nerubians.
-* When you engage them, 2 more groups like this one spawn behind the first one - it is important to pull the first group back, 
+* When you engage them, 2 more groups like this one spawn behind the first one - it is important to pull the first group back,
 * so you don't aggro all 3. Hadronox will be under you, fighting Nerubians.
 *
 * This is the timed gauntlet - waves of non-elite spiders
@@ -46,8 +46,8 @@ enum Spells
     SPELL_WEB_GRAB                                = 57731, // Victim
     SPELL_WEB_FRONT_DOORS                         = 53177, // Self
     SPELL_WEB_SIDE_DOORS                          = 53185, // Self
-    H_SPELL_ACID_CLOUD                            = 59419, 
-    H_SPELL_LEECH_POISON                          = 59417, 
+    H_SPELL_ACID_CLOUD                            = 59419,
+    H_SPELL_LEECH_POISON                          = 59417,
     H_SPELL_WEB_GRAB                              = 59421
 };
 

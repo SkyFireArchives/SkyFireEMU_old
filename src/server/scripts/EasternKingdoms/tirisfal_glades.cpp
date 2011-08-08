@@ -37,9 +37,9 @@ EndContentData */
 
 enum eCalvin
 {
-    SAY_COMPLETE        = -1000431, 
+    SAY_COMPLETE        = -1000431,
     SPELL_DRINK         = 2639,                             // possibly not correct spell (but iconId is correct)
-    QUEST_590           = 590, 
+    QUEST_590           = 590,
     FACTION_HOSTILE     = 168
 };
 
@@ -150,9 +150,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*######
 ## go_mausoleum_door
@@ -161,9 +159,9 @@ public:
 
 enum eMausoleum
 {
-    QUEST_ULAG      = 1819, 
-    NPC_ULAG        = 6390, 
-    GO_TRIGGER      = 104593, 
+    QUEST_ULAG      = 1819,
+    NPC_ULAG        = 6390,
+    GO_TRIGGER      = 104593,
     GO_DOOR         = 176594
 };
 
@@ -186,7 +184,6 @@ public:
 
         return false;
     }
-
 };
 
 class go_mausoleum_trigger : public GameObjectScript
@@ -208,7 +205,6 @@ public:
 
         return false;
     }
-
 };
 
 void AddSC_tirisfal_glades()

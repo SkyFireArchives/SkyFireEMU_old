@@ -72,9 +72,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_bartleby
@@ -82,7 +80,7 @@ public:
 
 enum eBartleby
 {
-    FACTION_ENEMY       = 168, 
+    FACTION_ENEMY       = 168,
     QUEST_BEAT          = 1640
 };
 
@@ -145,10 +143,7 @@ public:
             }
         }
     };
-
 };
-
-
 
 /*######
 ## npc_dashel_stonefist
@@ -156,7 +151,7 @@ public:
 
 enum eDashel
 {
-    QUEST_MISSING_DIPLO_PT8     = 1447, 
+    QUEST_MISSING_DIPLO_PT8     = 1447,
     FACTION_HOSTILE             = 168
 };
 
@@ -219,10 +214,7 @@ public:
             }
         }
     };
-
 };
-
-
 
 /*######
 ## npc_lady_katrana_prestor
@@ -275,9 +267,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_lord_gregor_lescovar
@@ -285,17 +275,17 @@ public:
 
 enum eLordGregorLescovar
 {
-    SAY_LESCOVAR_2 = -1000457, 
-    SAY_GUARD_2    = -1000458, 
-    SAY_LESCOVAR_3 = -1000459, 
-    SAY_MARZON_1   = -1000460, 
-    SAY_LESCOVAR_4 = -1000461, 
-    SAY_TYRION_2   = -1000462, 
-    SAY_MARZON_2   = -1000463, 
+    SAY_LESCOVAR_2 = -1000457,
+    SAY_GUARD_2    = -1000458,
+    SAY_LESCOVAR_3 = -1000459,
+    SAY_MARZON_1   = -1000460,
+    SAY_LESCOVAR_4 = -1000461,
+    SAY_TYRION_2   = -1000462,
+    SAY_MARZON_2   = -1000463,
 
-    NPC_STORMWIND_ROYAL = 1756, 
-    NPC_MARZON_BLADE    = 1755, 
-    NPC_TYRION          = 7766, 
+    NPC_STORMWIND_ROYAL = 1756,
+    NPC_MARZON_BLADE    = 1755,
+    NPC_TYRION          = 7766,
 
     QUEST_THE_ATTACK    = 434
 };
@@ -449,9 +439,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*######
 ## npc_marzon_silent_blade
@@ -531,9 +519,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*######
 ## npc_tyrion_spybot
@@ -541,17 +527,17 @@ public:
 
 enum eTyrionSpybot
 {
-    SAY_QUEST_ACCEPT_ATTACK  = -1000499, 
-    SAY_TYRION_1             = -1000450, 
-    SAY_SPYBOT_1             = -1000451, 
-    SAY_GUARD_1              = -1000452, 
-    SAY_SPYBOT_2             = -1000453, 
-    SAY_SPYBOT_3             = -1000454, 
-    SAY_LESCOVAR_1           = -1000455, 
-    SAY_SPYBOT_4             = -1000456, 
+    SAY_QUEST_ACCEPT_ATTACK  = -1000499,
+    SAY_TYRION_1             = -1000450,
+    SAY_SPYBOT_1             = -1000451,
+    SAY_GUARD_1              = -1000452,
+    SAY_SPYBOT_2             = -1000453,
+    SAY_SPYBOT_3             = -1000454,
+    SAY_LESCOVAR_1           = -1000455,
+    SAY_SPYBOT_4             = -1000456,
 
-    NPC_PRIESTESS_TYRIONA    = 7779, 
-    NPC_LORD_GREGOR_LESCOVAR = 1754, 
+    NPC_PRIESTESS_TYRIONA    = 7779,
+    NPC_LORD_GREGOR_LESCOVAR = 1754,
 };
 
 class npc_tyrion_spybot : public CreatureScript
@@ -681,9 +667,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 /*######
 ## npc_tyrion
@@ -712,7 +696,6 @@ public:
         }
         return false;
     }
-
 };
 
 void AddSC_stormwind_city()

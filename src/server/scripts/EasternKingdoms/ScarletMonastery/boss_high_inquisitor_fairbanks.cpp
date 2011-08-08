@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,11 +33,11 @@ EndScriptData */
 
 enum eSpells
 {
-    SPELL_CURSEOFBLOOD              = 8282, 
-    SPELL_DISPELMAGIC               = 15090, 
-    SPELL_FEAR                      = 12096, 
-    SPELL_HEAL                      = 12039, 
-    SPELL_POWERWORDSHIELD           = 11647, 
+    SPELL_CURSEOFBLOOD              = 8282,
+    SPELL_DISPELMAGIC               = 15090,
+    SPELL_FEAR                      = 12096,
+    SPELL_HEAL                      = 12039,
+    SPELL_POWERWORDSHIELD           = 11647,
     SPELL_SLEEP                     = 8399
 };
 
@@ -134,9 +134,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
 
 void AddSC_boss_high_inquisitor_fairbanks()
 {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,10 +28,10 @@
 
 enum eSpells
 {
-    SPELL_BLESSING_OF_BLACKFATHOM                           = 8733, 
-    SPELL_RAVAGE                                            = 8391, 
-    SPELL_FROST_NOVA                                        = 865, 
-    SPELL_FROST_BOLT_VOLLEY                                 = 8398, 
+    SPELL_BLESSING_OF_BLACKFATHOM                           = 8733,
+    SPELL_RAVAGE                                            = 8391,
+    SPELL_FROST_NOVA                                        = 865,
+    SPELL_FROST_BOLT_VOLLEY                                 = 8398,
     SPELL_TELEPORT_DARNASSUS                                = 9268
 };
 
@@ -50,7 +50,6 @@ public:
             pPlayer->AddAura(SPELL_BLESSING_OF_BLACKFATHOM, pPlayer);
         return true;
     }
-
 };
 
 class go_blackfathom_fire : public GameObjectScript
@@ -71,7 +70,6 @@ public:
         }
         return false;
     }
-
 };
 
 class npc_blackfathom_deeps_event : public CreatureScript
@@ -194,13 +192,11 @@ public:
                     pInstance->SetData(DATA_EVENT, pInstance->GetData(DATA_EVENT) + 1);
         }
     };
-
 };
-
 
 enum eMorridune
 {
-    SAY_MORRIDUNE_1 = -1048003, 
+    SAY_MORRIDUNE_1 = -1048003,
     SAY_MORRIDUNE_2 = -1048004
 };
 
@@ -258,11 +254,7 @@ public:
             }
         }
     };
-
 };
-
-
-
 
 void AddSC_blackfathom_deeps()
 {

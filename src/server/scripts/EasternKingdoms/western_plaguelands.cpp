@@ -100,9 +100,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_myranda_the_hag
@@ -110,8 +108,8 @@ public:
 
 enum eMyranda
 {
-    QUEST_SUBTERFUGE        = 5862, 
-    QUEST_IN_DREAMS         = 5944, 
+    QUEST_SUBTERFUGE        = 5862,
+    QUEST_IN_DREAMS         = 5944,
     SPELL_SCARLET_ILLUSION  = 17961
 };
 
@@ -150,9 +148,7 @@ public:
 
         return true;
     }
-
 };
-
 
 /*######
 ## npc_the_scourge_cauldron
@@ -231,7 +227,6 @@ public:
             }
         }
     };
-
 };
 
 /*######
@@ -266,9 +261,7 @@ public:
                 CAST_PLR(pWho)->KilledMonsterCredit(me->GetEntry(), me->GetGUID());
         }
     };
-
 };
-
 
 /*######
 ##  npc_anchorite_truuen
@@ -276,11 +269,11 @@ public:
 
 enum eTruuen
 {
-    NPC_GHOST_UTHER             = 17233, 
-    NPC_THEL_DANIS              = 1854, 
+    NPC_GHOST_UTHER             = 17233,
+    NPC_THEL_DANIS              = 1854,
     NPC_GHOUL                   = 1791,      //ambush
 
-    QUEST_TOMB_LIGHTBRINGER     = 9446, 
+    QUEST_TOMB_LIGHTBRINGER     = 9446,
 
     SAY_WP_0                    = -1800064,  //Beware! We are attacked!
     SAY_WP_1                    = -1800065,  //It must be the purity of the Mark of the Lightbringer that is drawing forth the Scourge to attack us. We must proceed with caution lest we be overwhelmed!
@@ -398,10 +391,7 @@ public:
                 m_uiChatTimer = 6000;
         }
     };
-
 };
-
-
 
 /*######
 ##

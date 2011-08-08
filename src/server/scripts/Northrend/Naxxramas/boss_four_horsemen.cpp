@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,38 +27,38 @@
 
 enum Horsemen
 {
-    HORSEMEN_THANE, 
-    HORSEMEN_LADY, 
-    HORSEMEN_BARON, 
-    HORSEMEN_SIR, 
+    HORSEMEN_THANE,
+    HORSEMEN_LADY,
+    HORSEMEN_BARON,
+    HORSEMEN_SIR,
 };
 
 enum Events
 {
-    EVENT_NONE, 
-    EVENT_MARK, 
-    EVENT_CAST, 
-    EVENT_BERSERK, 
+    EVENT_NONE,
+    EVENT_MARK,
+    EVENT_CAST,
+    EVENT_BERSERK,
 };
 
 const Position WaypointPositions[12] =
 {
     // Thane waypoints
-    {2542.3f, -2984.1f, 241.49f, 5.362f}, 
-    {2547.6f, -2999.4f, 241.34f, 5.049f}, 
-    {2542.9f, -3015.0f, 241.35f, 4.654f}, 
+    {2542.3f, -2984.1f, 241.49f, 5.362f},
+    {2547.6f, -2999.4f, 241.34f, 5.049f},
+    {2542.9f, -3015.0f, 241.35f, 4.654f},
     // Lady waypoints
-    {2498.3f, -2961.8f, 241.28f, 3.267f}, 
-    {2487.7f, -2959.2f, 241.28f, 2.890f}, 
-    {2469.4f, -2947.6f, 241.28f, 2.576f}, 
+    {2498.3f, -2961.8f, 241.28f, 3.267f},
+    {2487.7f, -2959.2f, 241.28f, 2.890f},
+    {2469.4f, -2947.6f, 241.28f, 2.576f},
     // Baron waypoints
-    {2553.8f, -2968.4f, 241.33f, 5.757f}, 
-    {2564.3f, -2972.5f, 241.33f, 5.890f}, 
-    {2583.9f, -2971.67f, 241.35f, 0.008f}, 
+    {2553.8f, -2968.4f, 241.33f, 5.757f},
+    {2564.3f, -2972.5f, 241.33f, 5.890f},
+    {2583.9f, -2971.67f, 241.35f, 0.008f},
     // Sir waypoints
-    {2534.5f, -2921.7f, 241.53f, 1.363f}, 
-    {2523.5f, -2902.8f, 241.28f, 2.095f}, 
-    {2517.8f, -2896.6f, 241.28f, 2.315f}, 
+    {2534.5f, -2921.7f, 241.53f, 1.363f},
+    {2523.5f, -2902.8f, 241.28f, 2.095f},
+    {2517.8f, -2896.6f, 241.28f, 2.315f},
 };
 
 const uint32 MOB_HORSEMEN[]     =   {16064, 16065, 30549, 16063};
@@ -74,8 +74,8 @@ const uint32 SPELL_PUNISH[]     =   {0, 57381, 0, 57377};
 
 // used by 16063, 16064, 16065, 30549, but signed for 16063
 const int32 SAY_AGGRO[]     =   {-1533051, -1533044, -1533065, -1533058};
-const int32 SAY_TAUNT[3][4] ={  {-1533052, -1533045, -1533071, -1533059}, 
-                                {-1533053, -1533046, -1533072, -1533060}, 
+const int32 SAY_TAUNT[3][4] ={  {-1533052, -1533045, -1533071, -1533059},
+                                {-1533053, -1533046, -1533072, -1533060},
                                 {-1533054, -1533047, -1533073, -1533061}, };
 const int32 SAY_SPECIAL[]   =   {-1533055, -1533048, -1533070, -1533062};
 const int32 SAY_SLAY[]      =   {-1533056, -1533049, -1533068, -1533063};
@@ -401,7 +401,6 @@ public:
                 doDelayPunish = true;
         }
     };
-
 };
 
 void AddSC_boss_four_horsemen()

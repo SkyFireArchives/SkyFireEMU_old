@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -79,7 +79,7 @@ Script Data End */
 #define SAY_PHASE1_SLAY_2                          -1616016
 #define SAY_PHASE1_SLAY_3                          -1616017
 
-//--> Phase2 at 50% HP, 
+//--> Phase2 at 50% HP,
 
 /*Malygos himself is not targetable during this phase, it will end when the adds he spawns are all killed. However, he does continue to play a part in the encounter.
 During this phase he drops anti-magic zones onto the ground the raid MUST stand inside of, it reduces magical damage taken by 50%. They shrink over time, so it's important that your raid moves to each new one he drops.
@@ -106,7 +106,7 @@ After all of the NPCs riding on the disks die, the players on the disks need to 
 
 enum
 {
-    ACHIEV_TIMED_START_EVENT                      = 20387, 
+    ACHIEV_TIMED_START_EVENT                      = 20387,
 };
 
 class boss_malygos : public CreatureScript
@@ -191,9 +191,7 @@ public:
                 DoScriptText(RAND(SAY_PHASE3_SLAY_1, SAY_PHASE3_SLAY_2, SAY_PHASE3_SLAY_3), me);
         }
     };
-
 };
-
 
 void AddSC_boss_malygos()
 {

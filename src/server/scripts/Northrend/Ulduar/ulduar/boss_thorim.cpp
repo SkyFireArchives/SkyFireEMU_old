@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,24 +27,24 @@
 
 enum Yells
 {
-    SAY_AGGRO_1                                 = -1603270, 
-    SAY_AGGRO_2                                 = -1603271, 
-    SAY_SPECIAL_1                               = -1603272, 
-    SAY_SPECIAL_2                               = -1603273, 
-    SAY_SPECIAL_3                               = -1603274, 
-    SAY_JUMPDOWN                                = -1603275, 
-    SAY_SLAY_1                                  = -1603276, 
-    SAY_SLAY_2                                  = -1603277, 
-    SAY_BERSERK                                 = -1603278, 
-    SAY_WIPE                                    = -1603279, 
-    SAY_DEATH                                   = -1603280, 
-    SAY_END_NORMAL_1                            = -1603281, 
-    SAY_END_NORMAL_2                            = -1603282, 
-    SAY_END_NORMAL_3                            = -1603283, 
-    SAY_END_HARD_1                              = -1603284, 
-    SAY_END_HARD_2                              = -1603285, 
-    SAY_END_HARD_3                              = -1603286, 
-    SAY_YS_HELP                                 = -1603287, 
+    SAY_AGGRO_1                                 = -1603270,
+    SAY_AGGRO_2                                 = -1603271,
+    SAY_SPECIAL_1                               = -1603272,
+    SAY_SPECIAL_2                               = -1603273,
+    SAY_SPECIAL_3                               = -1603274,
+    SAY_JUMPDOWN                                = -1603275,
+    SAY_SLAY_1                                  = -1603276,
+    SAY_SLAY_2                                  = -1603277,
+    SAY_BERSERK                                 = -1603278,
+    SAY_WIPE                                    = -1603279,
+    SAY_DEATH                                   = -1603280,
+    SAY_END_NORMAL_1                            = -1603281,
+    SAY_END_NORMAL_2                            = -1603282,
+    SAY_END_NORMAL_3                            = -1603283,
+    SAY_END_HARD_1                              = -1603284,
+    SAY_END_HARD_2                              = -1603285,
+    SAY_END_HARD_3                              = -1603286,
+    SAY_YS_HELP                                 = -1603287,
 };
 
 class boss_thorim : public CreatureScript
@@ -103,9 +103,7 @@ public:
             EnterEvadeIfOutOfCombatArea(diff);
         }
     };
-
 };
-
 
 void AddSC_boss_thorim()
 {

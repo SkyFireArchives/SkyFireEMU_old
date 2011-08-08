@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -58,19 +58,18 @@ public:
             uiLockmaw = 0;
             uiAugh = 0;
             uiSiamat = 0;
-            
+
             for(uint8 i=0 ; i<ENCOUNTERS; ++i)
                 uiEncounter[i] = NOT_STARTED;
- 
         }
-    
+
         bool IsEncounterInProgress() const
         {
             for(uint8 i=0; i<ENCOUNTERS; ++i)
             {
                 if (uiEncounter[i] == IN_PROGRESS)
                     return true;
-            }            
+            }
             return false;
         }
 
@@ -100,7 +99,7 @@ public:
         {
             switch(identifier)
             {
-                case DATA_GENERAL_HUSAM: 
+                case DATA_GENERAL_HUSAM:
                     return uiGeneralHusam;
                 case DATA_HIGH_PROPHET_BARIM:
                     return uiHighProphetBarim;
@@ -202,7 +201,6 @@ public:
 
             OUT_LOAD_INST_DATA_COMPLETE;
         }
-
     };
 };
 

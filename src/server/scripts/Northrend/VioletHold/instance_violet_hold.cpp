@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -43,22 +43,22 @@
 
 enum GameObjects
 {
-    GO_MAIN_DOOR                                    = 191723, 
-    GO_XEVOZZ_DOOR                                  = 191556, 
-    GO_LAVANTHOR_DOOR                               = 191566, 
-    GO_ICHORON_DOOR                                 = 191722, 
-    GO_ZURAMAT_DOOR                                 = 191565, 
-    GO_EREKEM_DOOR                                  = 191564, 
-    GO_EREKEM_GUARD_1_DOOR                          = 191563, 
-    GO_EREKEM_GUARD_2_DOOR                          = 191562, 
-    GO_MORAGG_DOOR                                  = 191606, 
-    GO_INTRO_ACTIVATION_CRYSTAL                     = 193615, 
+    GO_MAIN_DOOR                                    = 191723,
+    GO_XEVOZZ_DOOR                                  = 191556,
+    GO_LAVANTHOR_DOOR                               = 191566,
+    GO_ICHORON_DOOR                                 = 191722,
+    GO_ZURAMAT_DOOR                                 = 191565,
+    GO_EREKEM_DOOR                                  = 191564,
+    GO_EREKEM_GUARD_1_DOOR                          = 191563,
+    GO_EREKEM_GUARD_2_DOOR                          = 191562,
+    GO_MORAGG_DOOR                                  = 191606,
+    GO_INTRO_ACTIVATION_CRYSTAL                     = 193615,
     GO_ACTIVATION_CRYSTAL                           = 193611
 };
 
 enum AzureSaboteurSpells
 {
-    SABOTEUR_SHIELD_DISRUPTION                      = 58291, 
+    SABOTEUR_SHIELD_DISRUPTION                      = 58291,
     SABOTEUR_SHIELD_EFFECT                          = 45775
 };
 
@@ -102,8 +102,8 @@ enum Yells
 };
 enum Spells
 {
-    CYANIGOSA_SPELL_TRANSFORM                     = 58668, 
-    CYANIGOSA_BLUE_AURA                           = 47759, 
+    CYANIGOSA_SPELL_TRANSFORM                     = 58668,
+    CYANIGOSA_BLUE_AURA                           = 47759,
 };
 enum Achievements
 {
@@ -811,10 +811,8 @@ public:
                     break;
             }
     }
-
 };
 };
-
 
 void AddSC_instance_violet_hold()
 {

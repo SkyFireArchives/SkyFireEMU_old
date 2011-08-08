@@ -26,16 +26,16 @@ Script Data End */
 
 enum eCorporalKeeshan
 {
-    QUEST_MISSING_IN_ACTION = 219, 
+    QUEST_MISSING_IN_ACTION = 219,
 
-    SAY_CORPORAL_1  = -1000464, 
-    SAY_CORPORAL_2  = -1000465, 
-    SAY_CORPORAL_3  = -1000466, 
-    SAY_CORPORAL_4  = -1000467, 
-    SAY_CORPORAL_5  = -1000468, 
+    SAY_CORPORAL_1  = -1000464,
+    SAY_CORPORAL_2  = -1000465,
+    SAY_CORPORAL_3  = -1000466,
+    SAY_CORPORAL_4  = -1000467,
+    SAY_CORPORAL_5  = -1000468,
 
-    SPELL_MOCKING_BLOW  = 21008, 
-    SPELL_SHIELD_BASH   = 11972, 
+    SPELL_MOCKING_BLOW  = 21008,
+    SPELL_SHIELD_BASH   = 11972,
 };
 
 class npc_corporal_keeshan : public CreatureScript
@@ -164,10 +164,7 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
-
-
 
 void AddSC_redridge_mountains()
 {

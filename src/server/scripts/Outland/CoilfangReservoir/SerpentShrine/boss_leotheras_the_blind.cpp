@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -160,7 +160,6 @@ public:
            DoMeleeAttackIfReady();
         }
     };
-
 };
 
 //Original Leotheras the Blind AI
@@ -251,7 +250,6 @@ public:
                 Creature* binder = me->SummonCreature(MOB_SPELLBINDER, nx, ny, z, o, TEMPSUMMON_DEAD_DESPAWN, 0);
                 if (binder)
                     SpellBinderGUID[i] = binder->GetGUID();
-
             }
         }
         void MoveInLineOfSight(Unit *who)
@@ -590,7 +588,6 @@ public:
             }
         }
     };
-
 };
 
 //Leotheras the Blind Demon Form AI
@@ -800,7 +797,6 @@ public:
 
         void JustDied(Unit * /*killer*/) {}
     };
-
 };
 
 void AddSC_boss_leotheras_the_blind()

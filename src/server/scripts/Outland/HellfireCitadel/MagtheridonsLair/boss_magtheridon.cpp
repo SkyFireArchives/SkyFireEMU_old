@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,64 +39,64 @@ struct Yell
 
 static Yell RandomTaunt[]=
 {
-    {-1544000}, 
-    {-1544001}, 
-    {-1544002}, 
-    {-1544003}, 
-    {-1544004}, 
-    {-1544005}, 
+    {-1544000},
+    {-1544001},
+    {-1544002},
+    {-1544003},
+    {-1544004},
+    {-1544005},
 };
 
 enum eSays
 {
-    SAY_FREED                  = -1544006, 
-    SAY_AGGRO                  = -1544007, 
-    SAY_BANISH                 = -1544008, 
-    SAY_CHAMBER_DESTROY        = -1544009, 
-    SAY_PLAYER_KILLED          = -1544010, 
-    SAY_DEATH                  = -1544011, 
+    SAY_FREED                  = -1544006,
+    SAY_AGGRO                  = -1544007,
+    SAY_BANISH                 = -1544008,
+    SAY_CHAMBER_DESTROY        = -1544009,
+    SAY_PLAYER_KILLED          = -1544010,
+    SAY_DEATH                  = -1544011,
 };
 
 enum eEmotes
 {
-    EMOTE_BERSERK              = -1544012, 
-    EMOTE_BLASTNOVA            = -1544013, 
-    EMOTE_BEGIN                = -1544014, 
+    EMOTE_BERSERK              = -1544012,
+    EMOTE_BLASTNOVA            = -1544013,
+    EMOTE_BEGIN                = -1544014,
 };
 
 enum eCreatures
 {
-    MOB_MAGTHERIDON    = 17257, 
-    MOB_ROOM           = 17516, 
-    MOB_CHANNELLER     = 17256, 
-    MOB_ABYSSAL        = 17454, 
+    MOB_MAGTHERIDON    = 17257,
+    MOB_ROOM           = 17516,
+    MOB_CHANNELLER     = 17256,
+    MOB_ABYSSAL        = 17454,
 };
 
 enum eSpells
 {
-    SPELL_BLASTNOVA            = 30616, 
-    SPELL_CLEAVE               = 30619, 
+    SPELL_BLASTNOVA            = 30616,
+    SPELL_CLEAVE               = 30619,
     SPELL_QUAKE_TRIGGER        = 30657, //must be cast with 30561 as the proc spell
-    SPELL_QUAKE_KNOCKBACK      = 30571, 
+    SPELL_QUAKE_KNOCKBACK      = 30571,
     SPELL_BLAZE_TARGET         = 30541, //core bug, does not support target 7
-    SPELL_BLAZE_TRAP           = 30542, 
-    SPELL_DEBRIS_KNOCKDOWN     = 36449, 
-    SPELL_DEBRIS_VISUAL        = 30632, 
+    SPELL_BLAZE_TRAP           = 30542,
+    SPELL_DEBRIS_KNOCKDOWN     = 36449,
+    SPELL_DEBRIS_VISUAL        = 30632,
     SPELL_DEBRIS_DAMAGE        = 30631, //core bug, does not support target 8
-    SPELL_CAMERA_SHAKE         = 36455, 
-    SPELL_BERSERK              = 27680, 
-    SPELL_SHADOW_CAGE          = 30168, 
-    SPELL_SHADOW_GRASP         = 30410, 
-    SPELL_SHADOW_GRASP_VISUAL  = 30166, 
+    SPELL_CAMERA_SHAKE         = 36455,
+    SPELL_BERSERK              = 27680,
+    SPELL_SHADOW_CAGE          = 30168,
+    SPELL_SHADOW_GRASP         = 30410,
+    SPELL_SHADOW_GRASP_VISUAL  = 30166,
     SPELL_MIND_EXHAUSTION      = 44032, //Casted by the cubes when channeling ends
-    SPELL_SHADOW_CAGE_C        = 30205, 
-    SPELL_SHADOW_GRASP_C       = 30207, 
-    SPELL_SHADOW_BOLT_VOLLEY   = 30510, 
-    SPELL_DARK_MENDING         = 30528, 
+    SPELL_SHADOW_CAGE_C        = 30205,
+    SPELL_SHADOW_GRASP_C       = 30207,
+    SPELL_SHADOW_BOLT_VOLLEY   = 30510,
+    SPELL_DARK_MENDING         = 30528,
     SPELL_FEAR                 = 30530, //39176
-    SPELL_BURNING_ABYSSAL      = 30511, 
+    SPELL_BURNING_ABYSSAL      = 30511,
     SPELL_SOUL_TRANSFER        = 30531, //core bug, does not support target 7
-    SPELL_FIRE_BLAST           = 37110, 
+    SPELL_FIRE_BLAST           = 37110,
 };
 
 //count of clickers needed to interrupt blast nova
@@ -649,4 +649,3 @@ void AddSC_boss_magtheridon()
     new mob_abyssal();
     new go_manticron_cube();
 }
-

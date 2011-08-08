@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -45,42 +45,42 @@ struct Say
 
 static Say PeonAttacked[]=
 {
-    {-1540001}, 
-    {-1540002}, 
-    {-1540003}, 
-    {-1540004}, 
+    {-1540001},
+    {-1540002},
+    {-1540003},
+    {-1540004},
 };
 static Say PeonDies[]=
 {
-    {-1540005}, 
-    {-1540006}, 
-    {-1540007}, 
-    {-1540008}, 
+    {-1540005},
+    {-1540006},
+    {-1540007},
+    {-1540008},
 };
 
 enum eSays
 {
-    SAY_INTRO          = -1540000, 
-    SAY_TAUNT_1        = -1540009, 
-    SAY_TAUNT_2        = -1540010, 
-    SAY_TAUNT_3        = -1540011, 
-    SAY_AGGRO_1        = -1540012, 
-    SAY_AGGRO_2        = -1540013, 
-    SAY_AGGRO_3        = -1540014, 
-    SAY_SLAY_1         = -1540015, 
-    SAY_SLAY_2         = -1540016, 
-    SAY_DIE            = -1540017, 
+    SAY_INTRO          = -1540000,
+    SAY_TAUNT_1        = -1540009,
+    SAY_TAUNT_2        = -1540010,
+    SAY_TAUNT_3        = -1540011,
+    SAY_AGGRO_1        = -1540012,
+    SAY_AGGRO_2        = -1540013,
+    SAY_AGGRO_3        = -1540014,
+    SAY_SLAY_1         = -1540015,
+    SAY_SLAY_2         = -1540016,
+    SAY_DIE            = -1540017,
 };
 
 enum eSpells
 {
-    SPELL_DEATH_COIL           = 30500, 
+    SPELL_DEATH_COIL           = 30500,
     SPELL_DARK_SPIN            = 30502, // core bug spell attack caster :D
     SPELL_SHADOW_FISSURE       = 30496, // Summon the ShadowFissure NPC
-    SPELL_SHADOW_CLEAVE        = 30495, 
-    H_SPELL_SHADOW_SLAM        = 35953, 
-    SPELL_HEMORRHAGE           = 30478, 
-    SPELL_CONSUMPTION          = 30497, 
+    SPELL_SHADOW_CLEAVE        = 30495,
+    H_SPELL_SHADOW_SLAM        = 35953,
+    SPELL_HEMORRHAGE           = 30478,
+    SPELL_CONSUMPTION          = 30497,
     SPELL_TEMPORARY_VISUAL     = 39312, // this is wrong, a temporary solution. spell consumption already has the purple visual, but doesn't display as it should
 };
 
@@ -313,7 +313,6 @@ class boss_grand_warlock_nethekurse : public CreatureScript
         }
 };
 
-
 class mob_fel_orc_convert : public CreatureScript
 {
     public:
@@ -428,4 +427,3 @@ void AddSC_boss_grand_warlock_nethekurse()
     new mob_fel_orc_convert();
     new mob_lesser_shadow_fissure();
 }
-

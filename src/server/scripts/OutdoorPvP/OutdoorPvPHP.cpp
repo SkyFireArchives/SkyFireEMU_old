@@ -6,7 +6,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -37,26 +37,26 @@ const uint32 HP_LANG_CAPTURE_H[HP_TOWER_NUM] = {LANG_OPVP_HP_CAPTURE_BROKENHILL_
 OPvPCapturePointHP::OPvPCapturePointHP(OutdoorPvP *pvp, OutdoorPvPHPTowerType type)
 : OPvPCapturePoint(pvp), m_TowerType(type)
 {
-    SetCapturePointData(HPCapturePoints[type].entry, 
-        HPCapturePoints[type].map, 
-        HPCapturePoints[type].x, 
-        HPCapturePoints[type].y, 
-        HPCapturePoints[type].z, 
-        HPCapturePoints[type].o, 
-        HPCapturePoints[type].rot0, 
-        HPCapturePoints[type].rot1, 
-        HPCapturePoints[type].rot2, 
+    SetCapturePointData(HPCapturePoints[type].entry,
+        HPCapturePoints[type].map,
+        HPCapturePoints[type].x,
+        HPCapturePoints[type].y,
+        HPCapturePoints[type].z,
+        HPCapturePoints[type].o,
+        HPCapturePoints[type].rot0,
+        HPCapturePoints[type].rot1,
+        HPCapturePoints[type].rot2,
         HPCapturePoints[type].rot3);
-    AddObject(type, 
-        HPTowerFlags[type].entry, 
-        HPTowerFlags[type].map, 
-        HPTowerFlags[type].x, 
-        HPTowerFlags[type].y, 
-        HPTowerFlags[type].z, 
-        HPTowerFlags[type].o, 
-        HPTowerFlags[type].rot0, 
-        HPTowerFlags[type].rot1, 
-        HPTowerFlags[type].rot2, 
+    AddObject(type,
+        HPTowerFlags[type].entry,
+        HPTowerFlags[type].map,
+        HPTowerFlags[type].x,
+        HPTowerFlags[type].y,
+        HPTowerFlags[type].z,
+        HPTowerFlags[type].o,
+        HPTowerFlags[type].rot0,
+        HPTowerFlags[type].rot1,
+        HPTowerFlags[type].rot2,
         HPTowerFlags[type].rot3);
 }
 

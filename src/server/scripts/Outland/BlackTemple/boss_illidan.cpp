@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -150,99 +150,99 @@ const char*  SAY_KILL2        = "This is too easy!";
 /**** Creature Summon and Recognition IDs ****/
 enum CreatureEntry
 {
-    EMPTY                   =       0, 
-    AKAMA                   =   22990, 
-    ILLIDAN_STORMRAGE       =   22917, 
-    BLADE_OF_AZZINOTH       =   22996, 
-    FLAME_OF_AZZINOTH       =   22997, 
-    MAIEV_SHADOWSONG        =   23197, 
-    SHADOW_DEMON            =   23375, 
-    DEMON_FIRE              =   23069, 
-    FLAME_CRASH             =   23336, 
-    ILLIDAN_DOOR_TRIGGER    =   23412, 
-    SPIRIT_OF_OLUM          =   23411, 
-    SPIRIT_OF_UDALO         =   23410, 
-    ILLIDARI_ELITE          =   23226, 
-    PARASITIC_SHADOWFIEND   =   23498, 
-    CAGE_TRAP_TRIGGER       =   23292, 
+    EMPTY                   =       0,
+    AKAMA                   =   22990,
+    ILLIDAN_STORMRAGE       =   22917,
+    BLADE_OF_AZZINOTH       =   22996,
+    FLAME_OF_AZZINOTH       =   22997,
+    MAIEV_SHADOWSONG        =   23197,
+    SHADOW_DEMON            =   23375,
+    DEMON_FIRE              =   23069,
+    FLAME_CRASH             =   23336,
+    ILLIDAN_DOOR_TRIGGER    =   23412,
+    SPIRIT_OF_OLUM          =   23411,
+    SPIRIT_OF_UDALO         =   23410,
+    ILLIDARI_ELITE          =   23226,
+    PARASITIC_SHADOWFIEND   =   23498,
+    CAGE_TRAP_TRIGGER       =   23292,
 };
 
 /*** Phase Names ***/
 enum PhaseIllidan
 {
-    PHASE_ILLIDAN_NULL          =   0, 
-    PHASE_NORMAL                =   1, 
-    PHASE_FLIGHT                =   2, 
-    PHASE_NORMAL_2              =   3, 
-    PHASE_DEMON                 =   4, 
-    PHASE_NORMAL_MAIEV          =   5, 
-    PHASE_TALK_SEQUENCE         =   6, 
-    PHASE_FLIGHT_SEQUENCE       =   7, 
-    PHASE_TRANSFORM_SEQUENCE    =   8, 
-    PHASE_ILLIDAN_MAX           =   9, 
+    PHASE_ILLIDAN_NULL          =   0,
+    PHASE_NORMAL                =   1,
+    PHASE_FLIGHT                =   2,
+    PHASE_NORMAL_2              =   3,
+    PHASE_DEMON                 =   4,
+    PHASE_NORMAL_MAIEV          =   5,
+    PHASE_TALK_SEQUENCE         =   6,
+    PHASE_FLIGHT_SEQUENCE       =   7,
+    PHASE_TRANSFORM_SEQUENCE    =   8,
+    PHASE_ILLIDAN_MAX           =   9,
 };//Maiev uses the same phase
 
 enum PhaseAkama
 {
-    PHASE_AKAMA_NULL        =   0, 
-    PHASE_CHANNEL           =   1, 
-    PHASE_WALK              =   2, 
-    PHASE_TALK              =   3, 
-    PHASE_FIGHT_ILLIDAN     =   4, 
-    PHASE_FIGHT_MINIONS     =   5, 
-    PHASE_RETURN            =   6, 
+    PHASE_AKAMA_NULL        =   0,
+    PHASE_CHANNEL           =   1,
+    PHASE_WALK              =   2,
+    PHASE_TALK              =   3,
+    PHASE_FIGHT_ILLIDAN     =   4,
+    PHASE_FIGHT_MINIONS     =   5,
+    PHASE_RETURN            =   6,
 };
 
 enum EventIllidan
 {
-    EVENT_NULL                  =   0, 
-    EVENT_BERSERK               =   1, 
+    EVENT_NULL                  =   0,
+    EVENT_BERSERK               =   1,
     //normal phase
-    EVENT_TAUNT                 =   2, 
-    EVENT_SHEAR                 =   3, 
-    EVENT_FLAME_CRASH           =   4, 
-    EVENT_PARASITIC_SHADOWFIEND =   5, 
-    EVENT_PARASITE_CHECK        =   6, 
-    EVENT_DRAW_SOUL             =   7, 
-    EVENT_AGONIZING_FLAMES      =   8, 
-    EVENT_TRANSFORM_NORMAL      =   9, 
-    EVENT_ENRAGE                =   10, 
+    EVENT_TAUNT                 =   2,
+    EVENT_SHEAR                 =   3,
+    EVENT_FLAME_CRASH           =   4,
+    EVENT_PARASITIC_SHADOWFIEND =   5,
+    EVENT_PARASITE_CHECK        =   6,
+    EVENT_DRAW_SOUL             =   7,
+    EVENT_AGONIZING_FLAMES      =   8,
+    EVENT_TRANSFORM_NORMAL      =   9,
+    EVENT_ENRAGE                =   10,
     //flight phase
-    EVENT_FIREBALL              =   2, 
-    EVENT_DARK_BARRAGE          =   3, 
-    EVENT_EYE_BLAST             =   4, 
-    EVENT_MOVE_POINT            =   5, 
+    EVENT_FIREBALL              =   2,
+    EVENT_DARK_BARRAGE          =   3,
+    EVENT_EYE_BLAST             =   4,
+    EVENT_MOVE_POINT            =   5,
     //demon phase
-    EVENT_SHADOW_BLAST          =   2, 
-    EVENT_FLAME_BURST           =   3, 
-    EVENT_SHADOWDEMON           =   4, 
-    EVENT_TRANSFORM_DEMON       =   5, 
+    EVENT_SHADOW_BLAST          =   2,
+    EVENT_FLAME_BURST           =   3,
+    EVENT_SHADOWDEMON           =   4,
+    EVENT_TRANSFORM_DEMON       =   5,
     //sequence phase
-    EVENT_TALK_SEQUENCE         =   2, 
-    EVENT_FLIGHT_SEQUENCE       =   2, 
-    EVENT_TRANSFORM_SEQUENCE    =   2, 
+    EVENT_TALK_SEQUENCE         =   2,
+    EVENT_FLIGHT_SEQUENCE       =   2,
+    EVENT_TRANSFORM_SEQUENCE    =   2,
 };
 
 enum EventMaiev
 {
-    EVENT_MAIEV_NULL            =   0, 
-    EVENT_MAIEV_STEALTH         =   1, 
-    EVENT_MAIEV_TAUNT           =   2, 
-    EVENT_MAIEV_SHADOW_STRIKE   =   3, 
-    EVENT_MAIEV_THROW_DAGGER    =   4, 
-    EVENT_MAIEV_TRAP            =   4, 
+    EVENT_MAIEV_NULL            =   0,
+    EVENT_MAIEV_STEALTH         =   1,
+    EVENT_MAIEV_TAUNT           =   2,
+    EVENT_MAIEV_SHADOW_STRIKE   =   3,
+    EVENT_MAIEV_THROW_DAGGER    =   4,
+    EVENT_MAIEV_TRAP            =   4,
 };
 
 static const EventIllidan MaxTimer[9] =
 {
-    EVENT_NULL, 
-    EVENT_DRAW_SOUL, 
-    EVENT_MOVE_POINT, 
-    EVENT_TRANSFORM_NORMAL, 
-    EVENT_TRANSFORM_DEMON, 
-    EVENT_ENRAGE, 
-    EVENT_TALK_SEQUENCE, 
-    EVENT_FLIGHT_SEQUENCE, 
+    EVENT_NULL,
+    EVENT_DRAW_SOUL,
+    EVENT_MOVE_POINT,
+    EVENT_TRANSFORM_NORMAL,
+    EVENT_TRANSFORM_DEMON,
+    EVENT_ENRAGE,
+    EVENT_TALK_SEQUENCE,
+    EVENT_FLIGHT_SEQUENCE,
     EVENT_TRANSFORM_SEQUENCE
 };
 
@@ -256,43 +256,43 @@ struct Yells
 
 static const Yells Conversation[22] =
 {
-    {11463, "Akama... your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.", ILLIDAN_STORMRAGE, 8000, 0, true}, 
-    {0,     "", ILLIDAN_STORMRAGE, 5000, 396, true}, 
-    {11389, "We've come to end your reign, Illidan. My people and all of Outland shall be free!", AKAMA, 7000, 25, true}, 
-    {0,     "", AKAMA, 5000, 66, true}, 
-    {11464, "Boldly said. But I remain unconvinced.", ILLIDAN_STORMRAGE, 8000, 396, true}, 
-    {11380, "The time has come! The moment is at hand!", AKAMA, 3000, 22, true}, 
-    {0,     "", AKAMA, 2000, 15, true}, 
-    {11466, "You are not prepared!", ILLIDAN_STORMRAGE, 3000, 406, true}, 
-    {0,     "", EMPTY, 1000, 0, true}, 
+    {11463, "Akama... your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.", ILLIDAN_STORMRAGE, 8000, 0, true},
+    {0,     "", ILLIDAN_STORMRAGE, 5000, 396, true},
+    {11389, "We've come to end your reign, Illidan. My people and all of Outland shall be free!", AKAMA, 7000, 25, true},
+    {0,     "", AKAMA, 5000, 66, true},
+    {11464, "Boldly said. But I remain unconvinced.", ILLIDAN_STORMRAGE, 8000, 396, true},
+    {11380, "The time has come! The moment is at hand!", AKAMA, 3000, 22, true},
+    {0,     "", AKAMA, 2000, 15, true},
+    {11466, "You are not prepared!", ILLIDAN_STORMRAGE, 3000, 406, true},
+    {0,     "", EMPTY, 1000, 0, true},
     {0,     "", EMPTY, 0, 0, false}, //9
-    {11476, "Is this it, mortals? Is this all the fury you can muster?", ILLIDAN_STORMRAGE, 8000, 0, true}, 
-    {11491, "Their fury pales before mine, Illidan. We have some unsettled business between us.", MAIEV_SHADOWSONG, 8000, 5, true}, 
-    {11477, "Maiev... How is this even possible?", ILLIDAN_STORMRAGE, 5000, 1, true}, 
-    {11492, "Ah... my long hunt is finally over. Today, Justice will be done!", MAIEV_SHADOWSONG, 8000, 15, true}, 
+    {11476, "Is this it, mortals? Is this all the fury you can muster?", ILLIDAN_STORMRAGE, 8000, 0, true},
+    {11491, "Their fury pales before mine, Illidan. We have some unsettled business between us.", MAIEV_SHADOWSONG, 8000, 5, true},
+    {11477, "Maiev... How is this even possible?", ILLIDAN_STORMRAGE, 5000, 1, true},
+    {11492, "Ah... my long hunt is finally over. Today, Justice will be done!", MAIEV_SHADOWSONG, 8000, 15, true},
     {11470, "Feel the hatred of ten thousand years!", ILLIDAN_STORMRAGE, 1000, 0, false}, //14
     {11496, "Ahh... It is finished. You are beaten.", MAIEV_SHADOWSONG, 6000, 0, true}, //15
     {11478, "You have won... Maiev...but the huntress... is nothing...without the hunt... you... are nothing... without me..", ILLIDAN_STORMRAGE, 30000, 65, true}, // Emote dead for now. Kill him later
-    {11497, "He is right. I feel nothing... I am nothing... Farewell, champions.", MAIEV_SHADOWSONG, 9000, 0, true}, 
-    {11498, "", MAIEV_SHADOWSONG, 5000, 0, true}, 
+    {11497, "He is right. I feel nothing... I am nothing... Farewell, champions.", MAIEV_SHADOWSONG, 9000, 0, true},
+    {11498, "", MAIEV_SHADOWSONG, 5000, 0, true},
     {11498, "", EMPTY, 1000, 0, true}, //19 Maiev disappear
-    {11387, "The Light will fill these dismal halls once again. I swear it.", AKAMA, 8000, 0, true}, 
+    {11387, "The Light will fill these dismal halls once again. I swear it.", AKAMA, 8000, 0, true},
     {0,     "", EMPTY, 1000, 0, false}//21
 };
 
 static const Yells RandomTaunts[4]=
 {
-    {11467, "I can feel your hatred.", ILLIDAN_STORMRAGE, 0, 0, false}, 
-    {11468, "Give in to your fear!", ILLIDAN_STORMRAGE, 0, 0, false}, 
-    {11469, "You know nothing of power!", ILLIDAN_STORMRAGE, 0, 0, false}, 
+    {11467, "I can feel your hatred.", ILLIDAN_STORMRAGE, 0, 0, false},
+    {11468, "Give in to your fear!", ILLIDAN_STORMRAGE, 0, 0, false},
+    {11469, "You know nothing of power!", ILLIDAN_STORMRAGE, 0, 0, false},
     {11471, "Such... arrogance!", ILLIDAN_STORMRAGE, 0, 0, false}
 };
 
 static const Yells MaievTaunts[4]=
 {
-    {11493, "That is for Naisha!", MAIEV_SHADOWSONG, 0, 0, false}, 
-    {11494, "Bleed as I have bled!", MAIEV_SHADOWSONG, 0, 0, false}, 
-    {11495, "There shall be no prison for you this time!", MAIEV_SHADOWSONG, 0, 0, false}, 
+    {11493, "That is for Naisha!", MAIEV_SHADOWSONG, 0, 0, false},
+    {11494, "Bleed as I have bled!", MAIEV_SHADOWSONG, 0, 0, false},
+    {11495, "There shall be no prison for you this time!", MAIEV_SHADOWSONG, 0, 0, false},
     {11500, "Meet your end, demon!", MAIEV_SHADOWSONG, 0, 0, false}
 };
 
@@ -303,17 +303,17 @@ struct Locations
 
 static const Locations HoverPosition[4]=
 {
-    {657.0f, 340.0f, 355.0f}, 
-    {657.0f, 275.0f, 355.0f}, 
-    {705.0f, 275.0f, 355.0f}, 
+    {657.0f, 340.0f, 355.0f},
+    {657.0f, 275.0f, 355.0f},
+    {705.0f, 275.0f, 355.0f},
     {705.0f, 340.0f, 355.0f}
 };
 
 static const Locations GlaivePosition[4]=
 {
-    {695.105f, 305.303f, 354.256f}, 
+    {695.105f, 305.303f, 354.256f},
     {659.338f, 305.303f, 354.256f}, //the distance between two glaives is 36
-    {700.105f, 305.303f, 354.256f}, 
+    {700.105f, 305.303f, 354.256f},
     {664.338f, 305.303f, 354.256f}
 };
 
@@ -342,7 +342,7 @@ static const Locations AkamaWP[13]=
 // 755.762f, 304.0747f, 312.1769f -- This is where Akama should be spawned
 static const Locations SpiritSpawns[2]=
 {
-    {755.5426f, 309.9156f, 312.2129f}, 
+    {755.5426f, 309.9156f, 312.2129f},
     {755.5426f, 298.7923f, 312.0834f}
 };
 
@@ -354,15 +354,15 @@ struct Animation // For the demon transformation
 
 static const Animation DemonTransformation[10]=
 {
-    {SPELL_DEMON_TRANSFORM_1, 0, 1000, 0, 0, 6, true}, 
-    {SPELL_DEMON_TRANSFORM_2, SPELL_DEMON_TRANSFORM_1, 4000, 0, 0, 6, true}, 
+    {SPELL_DEMON_TRANSFORM_1, 0, 1000, 0, 0, 6, true},
+    {SPELL_DEMON_TRANSFORM_2, SPELL_DEMON_TRANSFORM_1, 4000, 0, 0, 6, true},
     {0, 0, 3000, 1073741824, 21322, 6, false}, //stunned, cannot cast demon form
-    {SPELL_DEMON_TRANSFORM_3, SPELL_DEMON_TRANSFORM_2, 3500, 0, 0, 6, false}, 
-    {SPELL_DEMON_FORM, SPELL_DEMON_TRANSFORM_3, 0, 0, 0, 4, false}, 
-    {SPELL_DEMON_TRANSFORM_1, 0, 1000, 0, 0, 6, false}, 
-    {SPELL_DEMON_TRANSFORM_2, SPELL_DEMON_TRANSFORM_1, 4000, 0, 0, 6, false}, 
-    {0, SPELL_DEMON_FORM, 3000, 1069547520, 21135, 6, false}, 
-    {SPELL_DEMON_TRANSFORM_3, SPELL_DEMON_TRANSFORM_2, 3500, 0, 0, 6, true}, 
+    {SPELL_DEMON_TRANSFORM_3, SPELL_DEMON_TRANSFORM_2, 3500, 0, 0, 6, false},
+    {SPELL_DEMON_FORM, SPELL_DEMON_TRANSFORM_3, 0, 0, 0, 4, false},
+    {SPELL_DEMON_TRANSFORM_1, 0, 1000, 0, 0, 6, false},
+    {SPELL_DEMON_TRANSFORM_2, SPELL_DEMON_TRANSFORM_1, 4000, 0, 0, 6, false},
+    {0, SPELL_DEMON_FORM, 3000, 1069547520, 21135, 6, false},
+    {SPELL_DEMON_TRANSFORM_3, SPELL_DEMON_TRANSFORM_2, 3500, 0, 0, 6, true},
     {0, SPELL_DEMON_TRANSFORM_3, 0, 0, 0, 8, true}
 };
 
@@ -457,7 +457,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 /************************************** Illidan's AI ***************************************/
@@ -1145,7 +1144,6 @@ public:
             }
         }
     };
-
 };
 
 /********************************** End of Illidan AI ******************************************/
@@ -1368,7 +1366,6 @@ public:
                     DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class npc_akama_illidan : public CreatureScript
@@ -1829,7 +1826,6 @@ public:
     {
         return new npc_akama_illidanAI(pCreature);
     }
-
 };
 
 void boss_illidan_stormrage::boss_illidan_stormrageAI::Reset()
@@ -2086,7 +2082,6 @@ public:
                 //}
         }
     };
-
 };
 
 class gameobject_cage_trap : public GameObjectScript
@@ -2105,7 +2100,6 @@ public:
         pGo->SetGoState(GO_STATE_ACTIVE);
         return true;
     }
-
 };
 
 class mob_shadow_demon : public CreatureScript
@@ -2156,7 +2150,6 @@ public:
                 DoCast(me->getVictim(), SPELL_CONSUME_SOUL);
         }
     };
-
 };
 
 class mob_blade_of_azzinoth : public CreatureScript
@@ -2179,7 +2172,6 @@ public:
                 me->SetDisplayId(21431);//appear when hit by Illidan's glaive
         }
     };
-
 };
 
 class mob_parasitic_shadowfiend : public CreatureScript
@@ -2261,7 +2253,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 void AddSC_boss_illidan()

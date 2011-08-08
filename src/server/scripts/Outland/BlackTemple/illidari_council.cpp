@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -208,7 +208,6 @@ public:
             }
         }
     };
-
 };
 
 class mob_illidari_council : public CreatureScript
@@ -376,10 +375,8 @@ public:
                     CheckTimer = 2000;
                 } else CheckTimer -= diff;
             }
-
         }
     };
-
 };
 
 struct boss_illidari_councilAI : public ScriptedAI
@@ -593,7 +590,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class boss_high_nethermancer_zerevor : public CreatureScript
@@ -697,7 +693,6 @@ public:
             } else FlamestrikeTimer -= diff;
         }
     };
-
 };
 
 class boss_lady_malande : public CreatureScript
@@ -775,7 +770,6 @@ public:
             DoMeleeAttackIfReady();
         }
     };
-
 };
 
 class boss_veras_darkshadow : public CreatureScript
