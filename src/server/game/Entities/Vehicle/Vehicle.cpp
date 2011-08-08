@@ -233,7 +233,6 @@ int8 Vehicle::GetNextEmptySeat(int8 seatId, bool next, bool byAura) const
 
     while (seat->second.passenger || (!byAura && !seat->second.seatInfo->CanEnterOrExit()) || (byAura && !seat->second.seatInfo->IsUsableByAura()))
     {
-        //sLog->outDebug(LOG_FILTER_VEHICLES, "Vehicle::GetNextEmptySeat: m_flags: %u, m_flagsB:%u", seat->second.seatInfo->m_flags, seat->second.seatInfo->m_flagsB);
         if (next)
         {
             ++seat;
