@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -55,11 +55,17 @@ void AddSC_SmartSCripts();
 void AddSC_account_commandscript();
 void AddSC_achievement_commandscript();
 //void AddSC_gm_commandscript();
-void AddSC_npc_commandscript();
 //void AddSC_go_commandscript();
 //void AddSC_learn_commandscript();
 //void AddSC_modify_commandscript();
+void AddSC_npc_commandscript();
 void AddSC_debug_commandscript();
+void AddSC_reload_commandscript();
+void AddSC_titles_commandscript();
+void AddSC_wp_commandscript();
+void AddSC_gobject_commandscript();
+void AddSC_honor_commandscript();
+void AddSC_quest_commandscript();
 void AddSC_reload_commandscript();
 
 #ifdef SCRIPTS
@@ -663,11 +669,18 @@ void AddCommandScripts()
     AddSC_account_commandscript();
     AddSC_achievement_commandscript();
     //AddSC_gm_commandscript();
-    AddSC_npc_commandscript();
     //AddSC_go_commandscript();
     //AddSC_learn_commandscript();
     //AddSC_modify_commandscript();
-    AddSC_debug_commandscript();
+    AddSC_npc_commandscript();    
+	AddSC_debug_commandscript();
+    AddSC_reload_commandscript();
+    AddSC_reload_commandscript();
+    AddSC_titles_commandscript();
+    AddSC_wp_commandscript();
+    AddSC_gobject_commandscript();
+    AddSC_honor_commandscript();
+    AddSC_quest_commandscript();
     AddSC_reload_commandscript();
 }
 
@@ -967,7 +980,7 @@ void AddKalimdorScripts()
     AddSC_thunder_bluff();
     AddSC_ungoro_crater();
     AddSC_winterspring();
-    
+
 #endif
 }
 

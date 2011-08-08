@@ -662,7 +662,7 @@ struct CharTitlesEntry
 {
     uint32  ID;                                             // 0, title ids, for example in Quest::GetCharTitleId()
     //uint32      unk1;                                     // 1 flags?
-    DBCString name;                                         // 2
+    DBCString   name;                                         // 2
     //DBCString   name2;                                    // 3, unused
     uint32  bit_index;                                      // 4 used in PLAYER_CHOSEN_TITLE and 1<<index in PLAYER__FIELD_KNOWN_TITLES
     //uint32                                                // 5

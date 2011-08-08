@@ -677,7 +677,7 @@ class ObjectMgr
         }
 
         static ItemPrototype const* GetItemPrototype(uint32 id) { return sItemStorage.LookupEntry<ItemPrototype>(id); }
-
+        ItemTemplateContainer const* GetItemTemplateStore() { return &ItemTemplateStore; }
         ItemSetNameEntry const* GetItemSetNameEntry(uint32 itemId)
         {
             ItemSetNameMap::iterator itr = mItemSetNameMap.find(itemId);
@@ -1411,7 +1411,9 @@ class ObjectMgr
         CreatureLocaleMap mCreatureLocaleMap;
         GameObjectDataMap mGameObjectDataMap;
         GameObjectLocaleMap mGameObjectLocaleMap;
-        ItemLocaleMap mItemLocaleMap;
+
+        ItemTemplateContainer ItemTemplateStore;
+		ItemLocaleMap mItemLocaleMap;
         ItemSetNameLocaleMap mItemSetNameLocaleMap;
         QuestLocaleMap mQuestLocaleMap;
         NpcTextLocaleMap mNpcTextLocaleMap;

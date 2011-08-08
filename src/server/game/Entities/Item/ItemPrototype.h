@@ -745,6 +745,9 @@ struct ItemPrototype
     bool IsConjuredConsumable() const { return Class == ITEM_CLASS_CONSUMABLE && (Flags & ITEM_PROTO_FLAG_CONJURED); }
 };
 
+// Benchmarked: Faster than std::map (insert/find)
+typedef UNORDERED_MAP<uint32, ItemPrototype	> ItemTemplateContainer;
+
 struct ItemLocale
 {
     StringVector Name;

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,6 +27,16 @@
 
 #include <string>
 #include <vector>
+
+// Searcher for map of structs
+template<typename T, class S> struct Finder
+{
+    T val_;
+    T S::* idMember_;
+
+    Finder(T val, T S::* idMember) : val_(val), idMember_(idMember) {}
+    bool operator()(const std::pair<int, S> &obj) { return obj.second.*idMember_ == val_; }
+};
 
 struct Tokens: public std::vector<char*>
 {
@@ -531,14 +541,14 @@ public:
     template<class type>
     inline flag96 operator & (type & right)
     {
-        flag96 ret(part[0] & right.part[0], part[1] & right.part[1], part[2] & right.part[2]);
+        flag96 ret(part[0] & right.part[0],part[1] & right.part[1],part[2] & right.part[2]);
         return
             ret;
     };
     template<class type>
     inline flag96 operator & (type & right) const
     {
-        flag96 ret(part[0] & right.part[0], part[1] & right.part[1], part[2] & right.part[2]);
+        flag96 ret(part[0] & right.part[0],part[1] & right.part[1],part[2] & right.part[2]);
         return
             ret;
     };
@@ -552,7 +562,7 @@ public:
     template<class type>
     inline flag96 operator | (type & right)
     {
-        flag96 ret(part[0] | right.part[0], part[1] | right.part[1], part[2] | right.part[2]);
+        flag96 ret(part[0] | right.part[0],part[1] | right.part[1],part[2] | right.part[2]);
         return
             ret;
     };
@@ -560,7 +570,7 @@ public:
     template<class type>
     inline flag96 operator | (type & right) const
     {
-        flag96 ret(part[0] | right.part[0], part[1] | right.part[1], part[2] | right.part[2]);
+        flag96 ret(part[0] | right.part[0],part[1] | right.part[1],part[2] | right.part[2]);
         return
             ret;
     };
@@ -581,7 +591,7 @@ public:
     template<class type>
     inline flag96 operator ^ (type & right)
     {
-        flag96 ret(part[0] ^ right.part[0], part[1] ^ right.part[1], part[2] ^ right.part[2]);
+        flag96 ret(part[0] ^ right.part[0],part[1] ^ right.part[1],part[2] ^ right.part[2]);
         return
             ret;
     };
@@ -589,7 +599,7 @@ public:
     template<class type>
     inline flag96 operator ^ (type & right) const
     {
-        flag96 ret(part[0] ^ right.part[0], part[1] ^ right.part[1], part[2] ^ right.part[2]);
+        flag96 ret(part[0] ^ right.part[0],part[1] ^ right.part[1],part[2] ^ right.part[2]);
         return
             ret;
     };

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -482,7 +482,6 @@ void ScriptMgr::OnGroupRateCalculation(float& rate, uint32 count, bool isRaid)
                 continue; \
             if (entry->MapID == V->GetId()) \
             {
-
 #define SCR_MAP_END \
                 return; \
             } \
@@ -757,7 +756,7 @@ uint32 ScriptMgr::GetDialogStatus(Player* player, Creature* creature)
 Creature* ScriptMgr::GetCreatureScriptedClass(uint32 scriptID)
 {
     ASSERT(scriptID);
-    
+
     GET_SCRIPT_RET(CreatureScript, scriptID, tmpscript, NULL);
     return tmpscript->GetCreatureScriptedClass();
 }
@@ -1273,7 +1272,7 @@ void ScriptMgr::OnGuildMemberDepositMoney(Guild* guild, Player* player, uint32 &
     FOREACH_SCRIPT(GuildScript)->OnMemberDepositMoney(guild, player, amount);
 }
 
-void ScriptMgr::OnGuildItemMove(Guild* guild, Player* player, Item* pItem, bool isSrcBank, uint8 srcContainer, uint8 srcSlotId, 
+void ScriptMgr::OnGuildItemMove(Guild* guild, Player* player, Item* pItem, bool isSrcBank, uint8 srcContainer, uint8 srcSlotId,
             bool isDestBank, uint8 destContainer, uint8 destSlotId)
 {
     FOREACH_SCRIPT(GuildScript)->OnItemMove(guild, player, pItem, isSrcBank, srcContainer, srcSlotId, isDestBank, destContainer, destSlotId);

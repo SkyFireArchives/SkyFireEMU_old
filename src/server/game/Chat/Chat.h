@@ -182,16 +182,6 @@ class ChatHandler
         bool HandleEventStopCommand(const char* args);
         bool HandleEventInfoCommand(const char* args);
 
-        bool HandleGameObjectAddCommand(const char* args);
-        bool HandleGameObjectDeleteCommand(const char* args);
-        bool HandleGOInfoCommand(const char* args);
-        bool HandleGameObjectMoveCommand(const char* args);
-        bool HandleGameObjectNearCommand(const char* args);
-        bool HandleGameObjectPhaseCommand(const char* args);
-        bool HandleGameObjectStateCommand(const char* args);
-        bool HandleGameObjectTargetCommand(const char* args);
-        bool HandleGameObjectTurnCommand(const char* args);
-
         bool HandleGMCommand(const char* args);
         bool HandleGMChatCommand(const char* args);
         bool HandleGMFlyCommand(const char* args);
@@ -217,10 +207,6 @@ class ChatHandler
         bool HandleGuildUninviteCommand(const char* args);
         bool HandleGuildRankCommand(const char* args);
         bool HandleGuildDeleteCommand(const char* args);
-
-        bool HandleHonorAddCommand(const char* args);
-        bool HandleHonorAddKillCommand(const char* args);
-        bool HandleHonorUpdateCommand(const char* args);
 
         bool HandleInstanceListBindsCommand(const char* args);
         bool HandleInstanceUnbindCommand(const char* args);
@@ -289,10 +275,6 @@ class ChatHandler
         bool HandlePDumpLoadCommand(const char *args);
         bool HandlePDumpWriteCommand(const char *args);
 
-        bool HandleQuestAdd(const char * args);
-        bool HandleQuestRemove(const char * args);
-        bool HandleQuestComplete(const char * args);
-
         bool HandleResetAchievementsCommand(const char * args);
         bool HandleResetAllCommand(const char * args);
         bool HandleResetHonorCommand(const char * args);
@@ -330,23 +312,10 @@ class ChatHandler
         bool HandleTeleGroupCommand(const char* args);
         bool HandleTeleNameCommand(const char* args);
 
-        bool HandleTitlesAddCommand(const char* args);
-        bool HandleTitlesCurrentCommand(const char* args);
-        bool HandleTitlesRemoveCommand(const char* args);
-        bool HandleTitlesSetMaskCommand(const char* args);
-
         bool HandleUnBanAccountCommand(const char* args);
         bool HandleUnBanAccountByCharCommand(const char* args);
         bool HandleUnBanCharacterCommand(const char* args);
         bool HandleUnBanIPCommand(const char* args);
-
-        bool HandleWpAddCommand(const char* args);
-        bool HandleWpLoadPathCommand(const char* args);
-        bool HandleWpUnLoadPathCommand(const char* args);
-        bool HandleWpModifyCommand(const char* args);
-        bool HandleWpEventCommand(const char* args);
-        bool HandleWpShowCommand(const char* args);
-        bool HandleReloadAllPaths(const char *args);
 
         bool HandleHelpCommand(const char* args);
         bool HandleCommandsCommand(const char* args);
