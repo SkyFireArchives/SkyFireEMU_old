@@ -3778,7 +3778,7 @@ void SpellMgr::LoadSpellCustomAttr()
             count++;
             break;
         case 85673: // World of Glory
-        case 89023: // Blesse life (spell, not talent)
+        case 89023: // Blessed life (spell, not talent)
             spellInfo->Effect[1] = 0;
             count++;
             break;
@@ -3794,15 +3794,15 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectRadiusIndex[2] = 14;
             count++;
             break;
-        case 44543: //Fingers of Frost rank 1
+        case 44543: // Fingers of Frost rank 1
             spellInfo->procChance = 7;
             count++;
             break;
-        case 44545: //Fingers of Frost rank 2
+        case 44545: // Fingers of Frost rank 2
             spellInfo->procChance = 14;
             count++;
             break;
-        case 83074: //Fingers of Frost rank 3
+        case 83074: // Fingers of Frost rank 3
             spellInfo->procChance = 20;
             count++;
             break;
@@ -3810,17 +3810,17 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_DST_TARGET_ENEMY;
             count++;
             break;
-        case 82661: //Aspect of the Fox
+        case 82661: // Aspect of the Fox
             spellInfo->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
             count++;
             break;
-        case 87934: //Serpent Spread
+        case 87934: // Serpent Spread
         case 87935:
             spellInfo->Effect[0] = SPELL_EFFECT_APPLY_AURA;
             spellInfo->EffectApplyAuraName[0] = SPELL_AURA_PROC_TRIGGER_SPELL;
             count++;
             break;
-        case 88691: //Marked for Death Tracking
+        case 88691: // Marked for Death Tracking
             spellInfo->EffectApplyAuraName[0] = SPELL_AURA_MOD_STALKED;
             count++;
             break;
@@ -4161,7 +4161,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_INTERRUPT;
             count++;
             break;
-        case 26573 : //Consecration
+		case 44203: // Tranquility
+			spellInfo->MaxAffectedTargets = 5;
+			count++;
+			break;
+        case 26573: // Consecration
             spellInfo->EffectTriggerSpell[2] = 82366;
             count++;
             break;
