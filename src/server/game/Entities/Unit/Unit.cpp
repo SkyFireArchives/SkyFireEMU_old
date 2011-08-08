@@ -6680,35 +6680,6 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
             }
             switch (dummySpell->Id)
             {
-                // Heart of the Crusader
-                case 20335: // rank 1
-                    triggered_spell_id = 21183;
-                    break;
-                case 20336: // rank 2
-                    triggered_spell_id = 54498;
-                    break;
-                case 20337: // rank 3
-                    triggered_spell_id = 54499;
-                    break;
-                // Judgement of Light
-                case 20185:
-                {
-                    // 2% of base mana
-                    basepoints0 = int32(pVictim->CountPctFromMaxHealth(2));
-                    pVictim->CastCustomSpell(pVictim, 20267, &basepoints0, 0, 0, true, 0, triggeredByAura);
-                    return true;
-                }
-                // Judgement of Wisdom
-                case 20186:
-                {
-                    if (pVictim && pVictim->isAlive() && pVictim->getPowerType() == POWER_MANA)
-                    {
-                        // 2% of base mana
-                        basepoints0 = int32(pVictim->GetCreateMana() * 2 / 100);
-                        pVictim->CastCustomSpell(pVictim, 20268, &basepoints0, NULL, NULL, true, 0, triggeredByAura);
-                    }
-                    return true;
-                }
                 // Holy Power (Redemption Armor set)
                 case 28789:
                 {
@@ -6754,7 +6725,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     }
                     break;
                 }
-                // Seal of Vengeance (damage calc on apply aura)
+                // Seal of Truth (damage calc on apply aura)
                 case 31801:
                 {
                     if (effIndex != 0)                       // effect 1, 2 used by seal unleashing code
@@ -6778,38 +6749,6 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                             if (stacker)
                                 aur->RefreshDuration();
                             CastSpell(pVictim, 42463, true);
-                            return true;
-                        }
-                    }
-
-                    if (!stacker)
-                        return false;
-                    break;
-                }
-                // Seal of Corruption
-                case 53736:
-                {
-                    if (effIndex != 0)                       // effect 1, 2 used by seal unleashing code
-                        return false;
-
-                    // At melee attack or Hammer of the Righteous spell damage considered as melee attack
-                    bool stacker = !procSpell || procSpell->Id == 53595;
-                    // spells with SPELL_DAMAGE_CLASS_MELEE excluding Judgements
-                    bool damager = procSpell && procSpell->EquippedItemClass != -1;
-
-                    if (!stacker && !damager)
-                        return false;
-
-                    triggered_spell_id = 31803;
-
-                    // On target with 5 stacks of Blood Corruption direct damage is done
-                    if (Aura * aur = pVictim->GetAura(triggered_spell_id, GetGUID()))
-                    {
-                        if (aur->GetStackAmount() == 5)
-                        {
-                            if (stacker)
-                                aur->RefreshDuration();
-                            CastSpell(pVictim, 53739, true);
                             return true;
                         }
                     }
