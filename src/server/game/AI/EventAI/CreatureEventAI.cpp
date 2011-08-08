@@ -1228,8 +1228,8 @@ void CreatureEventAI::DoFindFriendlyMissingBuff(std::list<Creature*>& _list, flo
     cell.Visit(p, grid_creature_searcher, *me->GetMap());
 }
 
-//*********************************
-//*** Functions used globally ***
+// *********************************
+// *** Functions used globally ***
 
 void CreatureEventAI::DoScriptText(int32 textEntry, WorldObject* pSource, Unit* target)
 {

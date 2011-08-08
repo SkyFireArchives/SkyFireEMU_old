@@ -62,9 +62,9 @@ struct ScriptedAI : public CreatureAI
     explicit ScriptedAI(Creature* pCreature);
     virtual ~ScriptedAI() {}
 
-    //*************
-    //CreatureAI Functions
-    //*************
+    // *************
+    // CreatureAI Functions
+    // *************
 
     void AttackStartNoMove(Unit *pTarget);
 
@@ -98,9 +98,9 @@ struct ScriptedAI : public CreatureAI
     // Called when AI is temporarily replaced or put back when possess is applied or removed
     void OnPossess(bool /*apply*/) {}
 
-    //*************
+    // *************
     // Variables
-    //*************
+    // *************
 
     //Pointer to creature we are manipulating
     Creature* me;
@@ -108,9 +108,9 @@ struct ScriptedAI : public CreatureAI
     //For fleeing
     bool IsFleeing;
 
-    //*************
-    //Pure virtual functions
-    //*************
+    // *************
+    // Pure virtual functions
+    // *************
 
     //Called at creature reset either by death or evade
     void Reset() {}
@@ -118,9 +118,9 @@ struct ScriptedAI : public CreatureAI
     //Called at creature aggro either by MoveInLOS or Attack Start
     void EnterCombat(Unit* /*who*/) {}
 
-    //*************
-    //AI Helper Functions
-    //*************
+    // *************
+    // AI Helper Functions
+    // *************
 
     //Start movement toward victim
     void DoStartMovement(Unit* pVictim, float fDistance = 0, float fAngle = 0);

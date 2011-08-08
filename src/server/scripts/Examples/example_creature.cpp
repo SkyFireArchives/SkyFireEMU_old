@@ -94,13 +94,13 @@ class example_creature : public CreatureScript
 
         struct example_creatureAI : public ScriptedAI
         {
-            //*** HANDLED FUNCTION ***
-            //This is the constructor, called only once when the Creature is first created
+            // *** HANDLED FUNCTION ***
+            // This is the constructor, called only once when the Creature is first created
             example_creatureAI(Creature *c) : ScriptedAI(c) {}
 
-            //*** CUSTOM VARIABLES ****
-            //These variables are for use only by this individual script.
-            //Nothing else will ever call them but us.
+            // *** CUSTOM VARIABLES ****
+            // These variables are for use only by this individual script.
+            // Nothing else will ever call them but us.
 
             uint32 m_uiSayTimer;                                    // Timer for random chat
             uint32 m_uiRebuffTimer;                                 // Timer for rebuffing
@@ -111,8 +111,8 @@ class example_creature : public CreatureScript
             uint32 m_uiPhase;                                       // The current battle phase we are in
             uint32 m_uiPhaseTimer;                                  // Timer until phase transition
 
-            //*** HANDLED FUNCTION ***
-            //This is called after spawn and whenever the core decides we need to evade
+            // *** HANDLED FUNCTION ***
+            // This is called after spawn and whenever the core decides we need to evade
             void Reset()
             {
                 m_uiPhase = 1;                                      // Start in phase 1
@@ -125,31 +125,31 @@ class example_creature : public CreatureScript
                 me->RestoreFaction();
             }
 
-            //*** HANDLED FUNCTION ***
+            // *** HANDLED FUNCTION ***
             // Enter Combat called once per combat
             void EnterCombat(Unit* pWho)
             {
-                //Say some stuff
+                // Say some stuff
                 DoScriptText(SAY_AGGRO, me, pWho);
             }
 
-            //*** HANDLED FUNCTION ***
+            // *** HANDLED FUNCTION ***
             // Attack Start is called when victim change (including at start of combat)
             // By default, attack pWho and start movement toward the victim.
-            //void AttackStart(Unit* pWho)
+            // void AttackStart(Unit* pWho)
             //{
             //    ScriptedAI::AttackStart(pWho);
             //}
 
-            //*** HANDLED FUNCTION ***
+            // *** HANDLED FUNCTION ***
             // Called when going out of combat. Reset is called just after.
             void EnterEvadeMode()
             {
                 DoScriptText(SAY_EVADE, me);
             }
 
-            //*** HANDLED FUNCTION ***
-            //Our Receive emote function
+            // *** HANDLED FUNCTION ***
+            // Our Receive emote function
             void ReceiveEmote(Player* /*pPlayer*/, uint32 uiTextEmote)
             {
                 me->HandleEmoteCommand(uiTextEmote);
@@ -165,17 +165,17 @@ class example_creature : public CreatureScript
                 }
              }
 
-            //*** HANDLED FUNCTION ***
-            //Update AI is called Every single map update (roughly once every 50ms if a player is within the grid)
+            // *** HANDLED FUNCTION ***
+            // Update AI is called Every single map update (roughly once every 50ms if a player is within the grid)
             void UpdateAI(const uint32 uiDiff)
             {
-                //Out of combat timers
+                // Out of combat timers
                 if (!me->getVictim())
                 {
-                    //Random Say timer
+                    // Random Say timer
                     if (m_uiSayTimer <= uiDiff)
                     {
-                        //Random switch between 5 outcomes
+                        // Random switch between 5 outcomes
                         DoScriptText(RAND(SAY_RANDOM_0, SAY_RANDOM_1, SAY_RANDOM_2, SAY_RANDOM_3, SAY_RANDOM_4), me);
 
                         m_uiSayTimer = 45000;                      //Say something agian in 45 seconds
@@ -183,7 +183,7 @@ class example_creature : public CreatureScript
                     else
                         m_uiSayTimer -= uiDiff;
 
-                    //Rebuff timer
+                    // Rebuff timer
                     if (m_uiRebuffTimer <= uiDiff)
                     {
                         DoCast(me, SPELL_BUFF);
@@ -193,14 +193,14 @@ class example_creature : public CreatureScript
                         m_uiRebuffTimer -= uiDiff;
                 }
 
-                //Return since we have no target
+                // Return since we have no target
                 if (!UpdateVictim())
                     return;
 
-                //Spell 1 timer
+                // Spell 1 timer
                 if (m_uiSpell1Timer <= uiDiff)
                 {
-                    //Cast spell one on our current target.
+                    // Cast spell one on our current target.
                     if (rand()%50 > 10)
                         DoCast(me->getVictim(), SPELL_ONE_ALT);
                     else if (me->IsWithinDist(me->getVictim(), 25.0f))
@@ -211,23 +211,23 @@ class example_creature : public CreatureScript
                 else
                     m_uiSpell1Timer -= uiDiff;
 
-                //Spell 2 timer
+                // Spell 2 timer
                 if (m_uiSpell2Timer <= uiDiff)
                 {
-                    //Cast spell two on our current target.
+                    // Cast spell two on our current target.
                     DoCast(me->getVictim(), SPELL_TWO);
                     m_uiSpell2Timer = 37000;
                 }
                 else
                     m_uiSpell2Timer -= uiDiff;
 
-                //Beserk timer
+                // Beserk timer
                 if (m_uiPhase > 1)
                 {
-                    //Spell 3 timer
+                    // Spell 3 timer
                     if (m_uiSpell3Timer <= uiDiff)
                     {
-                        //Cast spell one on our current target.
+                        // Cast spell one on our current target.
                         DoCast(me->getVictim(), SPELL_THREE);
 
                         m_uiSpell3Timer = 19000;
@@ -237,11 +237,11 @@ class example_creature : public CreatureScript
 
                     if (m_uiBeserkTimer <= uiDiff)
                     {
-                        //Say our line then cast uber death spell
+                        // Say our line then cast uber death spell
                         DoScriptText(SAY_BERSERK, me, me->getVictim());
                         DoCast(me->getVictim(), SPELL_BERSERK);
 
-                        //Cast our beserk spell agian in 12 seconds if we didn't kill everyone
+                        // Cast our beserk spell agian in 12 seconds if we didn't kill everyone
                         m_uiBeserkTimer = 12000;
                     }
                     else
@@ -251,7 +251,7 @@ class example_creature : public CreatureScript
                 {
                     if (m_uiPhaseTimer <= uiDiff)
                     {
-                        //Go to next phase
+                        // Go to next phase
                         ++m_uiPhase;
                         DoScriptText(SAY_PHASE, me);
                         DoCast(me, SPELL_FRENZY);
@@ -283,7 +283,7 @@ class example_creature : public CreatureScript
             if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
             {
                 pPlayer->CLOSE_GOSSIP_MENU();
-                //Set our faction to hostile towards all
+                // Set our faction to hostile towards all
                 pCreature->setFaction(FACTION_WORGEN);
                 pCreature->AI()->AttackStart(pPlayer);
             }
@@ -292,8 +292,8 @@ class example_creature : public CreatureScript
         }
 };
 
-//This is the actual function called only once durring InitScripts()
-//It must define all handled functions that are to be run in this script
+// This is the actual function called only once durring InitScripts()
+// It must define all handled functions that are to be run in this script
 void AddSC_example_creature()
 {
     new example_creature();

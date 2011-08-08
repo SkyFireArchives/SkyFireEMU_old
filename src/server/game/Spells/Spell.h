@@ -628,17 +628,17 @@ class Spell
         int32 m_healing;          // Healing      in effects count here
         int32 m_final_damage;     // Final damage in effects count here
 
-        //******************************************
+        // ******************************************
         // Spell trigger system
-        //******************************************
+        // ******************************************
         uint32 m_procAttacker;                // Attacker trigger flags
         uint32 m_procVictim;                  // Victim   trigger flags
         uint32 m_procEx;
         void   prepareDataForTriggerSystem(AuraEffect const * triggeredByAura);
 
-        //*****************************************
+        // *****************************************
         // Spell target subsystem
-        //*****************************************
+        // *****************************************
         // Targets store structures and data
         struct TargetInfo
         {
