@@ -178,11 +178,12 @@ void BattlegroundTP::Update(uint32 diff)
 
 void BattlegroundTP::StartingEventCloseDoors()
 {
-    /*for (uint32 i = BG_TP_OBJECT_DOOR_A_1; i <= BG_TP_OBJECT_DOOR_H_4; ++i)
-    {
-        DoorClose(i);
-        SpawnBGObject(i, RESPAWN_IMMEDIATELY);
-    }*/
+	for (uint32 i = BG_TP_OBJECT_DOOR_A_1; i <= BG_TP_OBJECT_DOOR_H_3; ++i)
+	{
+		DoorClose(i);
+		SpawnBGObject(i, RESPAWN_IMMEDIATELY);
+	}
+
     for (uint32 i = BG_TP_OBJECT_A_FLAG; i <= BG_TP_OBJECT_BERSERKBUFF_2; ++i)
         SpawnBGObject(i, RESPAWN_ONE_DAY);
 
@@ -192,15 +193,11 @@ void BattlegroundTP::StartingEventCloseDoors()
 
 void BattlegroundTP::StartingEventOpenDoors()
 {
-    /*for (uint32 i = BG_TP_OBJECT_DOOR_A_1; i <= BG_TP_OBJECT_DOOR_A_4; ++i)
-        DoorOpen(i);
-    for (uint32 i = BG_TP_OBJECT_DOOR_H_1; i <= BG_TP_OBJECT_DOOR_H_2; ++i)
-        DoorOpen(i);
-
-    SpawnBGObject(BG_TP_OBJECT_DOOR_A_5, RESPAWN_ONE_DAY);
-    SpawnBGObject(BG_TP_OBJECT_DOOR_A_6, RESPAWN_ONE_DAY);
-    SpawnBGObject(BG_TP_OBJECT_DOOR_H_3, RESPAWN_ONE_DAY);
-    SpawnBGObject(BG_TP_OBJECT_DOOR_H_4, RESPAWN_ONE_DAY);*/
+	for (uint32 i = BG_TP_OBJECT_DOOR_A_1; i <= BG_TP_OBJECT_DOOR_H_3; ++i)
+	{
+		DoorOpen(i);
+		SpawnBGObject(i, RESPAWN_ONE_DAY);
+	}
 
     for (uint32 i = BG_TP_OBJECT_A_FLAG; i <= BG_TP_OBJECT_BERSERKBUFF_2; ++i)
         SpawnBGObject(i, RESPAWN_IMMEDIATELY);
@@ -661,17 +658,13 @@ bool BattlegroundTP::SetupBattleground()
         || !AddObject(BG_TP_OBJECT_BERSERKBUFF_1, BG_OBJECTID_BERSERKERBUFF_ENTRY, 1934.369f, 226.064f, -17.0441f, 2.499154f, 0, 0, 0.5591929f, 0.8290376f, BUFF_RESPAWN_TIME)      // Cata
         || !AddObject(BG_TP_OBJECT_BERSERKBUFF_2, BG_OBJECTID_BERSERKERBUFF_ENTRY, 1725.240f, 446.431f, -7.8327f, 5.709677f, 0, 0, 0.9396926f, -0.3420201f, BUFF_RESPAWN_TIME)      // Cata
         // alliance gates
-        //|| !AddObject(BG_TP_OBJECT_DOOR_A_1, BG_OBJECT_DOOR_A_1_TP_ENTRY, 2115.399f, 150.175f, 43.526f, 4.333986f, 0, 0, 0.9999143f, 0.01308903f, RESPAWN_IMMEDIATELY)              // Cata
-        //|| !AddObject(BG_TP_OBJECT_DOOR_A_2, BG_OBJECT_DOOR_A_2_TP_ENTRY, 2156.703f, 220.721f, 43.522f, 1.043813f, 0, 0, 0.9999143f, 0.01308903f, RESPAWN_IMMEDIATELY)              // Cata
-        //|| !AddObject(BG_TP_OBJECT_DOOR_A_3, BG_OBJECT_DOOR_A_3_TP_ENTRY, 2126.760f, 223.901f, 43.507f, 2.508722f, 0, 0, 0.9999143f, 0.01308903f, RESPAWN_IMMEDIATELY)              // Cata
-        //|| !AddObject(BG_TP_OBJECT_DOOR_A_4, BG_OBJECT_DOOR_A_4_TP_ENTRY, 1471.555f, 1458.778f, 362.6332f, 3.115414f, 0, 0, 0.9999143f, 0.01308903f, RESPAWN_IMMEDIATELY)
-        //|| !AddObject(BG_TP_OBJECT_DOOR_A_5, BG_OBJECT_DOOR_A_5_TP_ENTRY, 1492.347f, 1458.34f, 342.3712f, -0.03490669f, 0, 0, 0.01745246f, -0.9998477f, RESPAWN_IMMEDIATELY)
-        //|| !AddObject(BG_TP_OBJECT_DOOR_A_6, BG_OBJECT_DOOR_A_6_TP_ENTRY, 1503.466f, 1493.367f, 351.7352f, -0.03490669f, 0, 0, 0.01745246f, -0.9998477f, RESPAWN_IMMEDIATELY)
+        || !AddObject(BG_TP_OBJECT_DOOR_A_1, BG_OBJECT_DOOR_A_1_TP_ENTRY, 2115.399f, 150.175f, 43.526f, 2.62f, 0, 0, 0, 0, RESPAWN_IMMEDIATELY)              // Cata
+        || !AddObject(BG_TP_OBJECT_DOOR_A_2, BG_OBJECT_DOOR_A_2_TP_ENTRY, 2156.803f, 220.331f, 43.482f, 5.76f, 0, 0, 0, 0, RESPAWN_IMMEDIATELY)              // Cata
+        || !AddObject(BG_TP_OBJECT_DOOR_A_3, BG_OBJECT_DOOR_A_3_TP_ENTRY, 2126.760f, 224.051f, 43.647f, 2.63f, 0, 0, 0, 0, RESPAWN_IMMEDIATELY)              // Cata
         // horde gates
-        //|| !AddObject(BG_TP_OBJECT_DOOR_H_1, BG_OBJECT_DOOR_H_1_TP_ENTRY, 949.1663f, 1423.772f, 345.6241f, -0.5756807f, -0.01673368f, -0.004956111f, -0.2839723f, 0.9586737f, RESPAWN_IMMEDIATELY)
-        //|| !AddObject(BG_TP_OBJECT_DOOR_H_2, BG_OBJECT_DOOR_H_2_TP_ENTRY, 953.0507f, 1459.842f, 340.6526f, -1.99662f, -0.1971825f, 0.1575096f, -0.8239487f, 0.5073641f, RESPAWN_IMMEDIATELY)
-        //|| !AddObject(BG_TP_OBJECT_DOOR_H_3, BG_OBJECT_DOOR_H_3_TP_ENTRY, 949.9523f, 1422.751f, 344.9273f, 0.0f, 0, 0, 0, 1, RESPAWN_IMMEDIATELY)
-        //|| !AddObject(BG_TP_OBJECT_DOOR_H_4, BG_OBJECT_DOOR_H_4_TP_ENTRY, 950.7952f, 1459.583f, 342.1523f, 0.05235988f, 0, 0, 0.02617695f, 0.9996573f, RESPAWN_IMMEDIATELY)
+        || !AddObject(BG_TP_OBJECT_DOOR_H_1, BG_OBJECT_DOOR_H_1_TP_ENTRY, 1556.595f, 314.502f, 1.223f, 3.04f, 0, 0, 0, 0, RESPAWN_IMMEDIATELY)
+        || !AddObject(BG_TP_OBJECT_DOOR_H_2, BG_OBJECT_DOOR_H_2_TP_ENTRY, 1587.415f, 319.935f, 1.522f, 6.20f, 0, 0, 0, 0, RESPAWN_IMMEDIATELY)
+        || !AddObject(BG_TP_OBJECT_DOOR_H_3, BG_OBJECT_DOOR_H_3_TP_ENTRY, 1558.315f, 372.709f, 1.484f, 6.12f, 0, 0, 0, 0, RESPAWN_IMMEDIATELY)
        )
     {
         sLog->outErrorDb("BatteGroundTP: Failed to spawn some object Battleground not created!");
