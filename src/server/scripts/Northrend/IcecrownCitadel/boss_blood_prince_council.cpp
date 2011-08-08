@@ -1172,15 +1172,6 @@ class npc_ball_of_flame : public CreatureScript
                     instance->SetData(DATA_ORB_WHISPERER_ACHIEVEMENT, uint32(false));
             }
 
-            void DamageDealt(Unit* /*target*/, uint32& damage, DamageEffectType damageType)
-            {
-                if (!instance || damageType != SPELL_DIRECT_DAMAGE)
-                    return;
-
-                if (damage > RAID_MODE<uint32>(23000, 25000, 23000, 25000))
-                    instance->SetData(DATA_ORB_WHISPERER_ACHIEVEMENT, uint32(false));
-            }
-
             void UpdateAI(const uint32 diff)
             {
                 if (!despawnTimer)
