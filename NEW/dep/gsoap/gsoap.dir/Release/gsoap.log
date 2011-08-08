@@ -1,6 +1,0 @@
-﻿  Building Custom Rule C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/gsoap/CMakeLists.txt
-  CMake does not need to re-run because C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\dep\gsoap\CMakeFiles\generate.stamp is up-to-date.
-  soapC.cpp
-  soapServer.cpp
-  stdsoap2.cpp
-  gsoap.vcxproj -> C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\dep\gsoap\Release\gsoap.lib
