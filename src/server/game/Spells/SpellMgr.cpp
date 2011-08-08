@@ -848,6 +848,9 @@ bool SpellMgr::_isPositiveEffect(uint32 spellId, uint32 effIndex, bool deep) con
             // Slice and Dice
             else if (spellproto->SpellFamilyFlags[0] & 0x40000)
                 return true;
+            // Ignite
+            if (spellproto->SpellIconID == 45)
+                return true;
             break;
         case SPELLFAMILY_MAGE:
             // Amplify Magic, Dampen Magic
