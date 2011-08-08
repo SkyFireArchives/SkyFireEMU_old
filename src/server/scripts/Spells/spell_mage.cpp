@@ -25,16 +25,16 @@
 
 enum MageSpells
 {
-    SPELL_MAGE_COLD_SNAP                         = 11958,
-    SPELL_MAGE_SQUIRREL_FORM                     = 32813,
-    SPELL_MAGE_GIRAFFE_FORM                      = 32816,
-    SPELL_MAGE_SERPENT_FORM                      = 32817,
-    SPELL_MAGE_DRAGONHAWK_FORM                   = 32818,
-    SPELL_MAGE_WORGEN_FORM                       = 32819,
-    SPELL_MAGE_SHEEP_FORM                        = 32820,
-    SPELL_MAGE_GLYPH_OF_ETERNAL_WATER            = 70937,
-    SPELL_MAGE_SUMMON_WATER_ELEMENTAL_PERMANENT  = 70908,
-    SPELL_MAGE_SUMMON_WATER_ELEMENTAL_TEMPORARY  = 70907,
+    SPELL_MAGE_COLD_SNAP                         = 11958, 
+    SPELL_MAGE_SQUIRREL_FORM                     = 32813, 
+    SPELL_MAGE_GIRAFFE_FORM                      = 32816, 
+    SPELL_MAGE_SERPENT_FORM                      = 32817, 
+    SPELL_MAGE_DRAGONHAWK_FORM                   = 32818, 
+    SPELL_MAGE_WORGEN_FORM                       = 32819, 
+    SPELL_MAGE_SHEEP_FORM                        = 32820, 
+    SPELL_MAGE_GLYPH_OF_ETERNAL_WATER            = 70937, 
+    SPELL_MAGE_SUMMON_WATER_ELEMENTAL_PERMANENT  = 70908, 
+    SPELL_MAGE_SUMMON_WATER_ELEMENTAL_TEMPORARY  = 70907, 
     SPELL_MAGE_GLYPH_OF_BLAST_WAVE               = 62126
 };
 
@@ -124,11 +124,11 @@ class spell_mage_polymorph_cast_visual : public SpellScriptLoader
 
 const uint32 spell_mage_polymorph_cast_visual::spell_mage_polymorph_cast_visual_SpellScript::spell_list[6] =
 {
-    SPELL_MAGE_SQUIRREL_FORM,
-    SPELL_MAGE_GIRAFFE_FORM,
-    SPELL_MAGE_SERPENT_FORM,
-    SPELL_MAGE_DRAGONHAWK_FORM,
-    SPELL_MAGE_WORGEN_FORM,
+    SPELL_MAGE_SQUIRREL_FORM, 
+    SPELL_MAGE_GIRAFFE_FORM, 
+    SPELL_MAGE_SERPENT_FORM, 
+    SPELL_MAGE_DRAGONHAWK_FORM, 
+    SPELL_MAGE_WORGEN_FORM, 
     SPELL_MAGE_SHEEP_FORM
 };
 
@@ -144,8 +144,8 @@ public:
 
         enum Spells
         {
-            SPELL_MAGE_FROST_WARDING_TRIGGERED = 57776,
-            SPELL_MAGE_FROST_WARDING_R1 = 28332,
+            SPELL_MAGE_FROST_WARDING_TRIGGERED = 57776, 
+            SPELL_MAGE_FROST_WARDING_R1 = 28332, 
         };
 
         bool Validate(SpellEntry const * /*spellEntry*/)
@@ -194,8 +194,8 @@ public:
 
         enum Spells
         {
-            SPELL_MAGE_INCANTERS_ABSORBTION_TRIGGERED = 44413,
-            SPELL_MAGE_INCANTERS_ABSORBTION_R1 = 44394,
+            SPELL_MAGE_INCANTERS_ABSORBTION_TRIGGERED = 44413, 
+            SPELL_MAGE_INCANTERS_ABSORBTION_R1 = 44394, 
         };
 
         bool Validate(SpellEntry const * /*spellEntry*/)
@@ -239,8 +239,8 @@ public:
 
         enum Spells
         {
-            SPELL_MAGE_INCANTERS_ABSORBTION_TRIGGERED = 44413,
-            SPELL_MAGE_INCANTERS_ABSORBTION_R1 = 44394,
+            SPELL_MAGE_INCANTERS_ABSORBTION_TRIGGERED = 44413, 
+            SPELL_MAGE_INCANTERS_ABSORBTION_R1 = 44394, 
         };
 
         bool Validate(SpellEntry const * /*spellEntry*/)

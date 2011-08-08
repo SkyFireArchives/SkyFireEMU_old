@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -81,7 +81,7 @@ HomeMovementGenerator<Creature>::Update(Creature &owner, const uint32& time_diff
         // restore orientation of not moving creature at returning to home
         if (owner.GetDefaultMovementType() == IDLE_MOTION_TYPE)
         {
-            //sLog->outDebug("Entering HomeMovement::GetDestination(z,y,z)");
+            //sLog->outDebug("Entering HomeMovement::GetDestination(z, y, z)");
             owner.SetOrientation(ori);
             WorldPacket packet;
             owner.BuildHeartBeatMsg(&packet);

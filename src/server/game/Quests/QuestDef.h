@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -48,7 +48,7 @@ class ObjectMgr;
 
 enum QuestFailedReasons
 {
-    INVALIDREASON_DONT_HAVE_REQ                 = 0,
+    INVALIDREASON_DONT_HAVE_REQ                 = 0, 
     INVALIDREASON_QUEST_FAILED_LOW_LEVEL        = 1,        // You are not high enough level for that quest.
     INVALIDREASON_QUEST_FAILED_WRONG_RACE       = 6,        // That quest is not available to your race.
     INVALIDREASON_QUEST_ALREADY_DONE            = 7,        // You have completed that quest.
@@ -65,62 +65,62 @@ enum QuestFailedReasons
 
 enum QuestShareMessages
 {
-    QUEST_PARTY_MSG_SHARING_QUEST           = 0,
-    QUEST_PARTY_MSG_CANT_TAKE_QUEST         = 1,
-    QUEST_PARTY_MSG_ACCEPT_QUEST            = 2,
-    QUEST_PARTY_MSG_DECLINE_QUEST           = 3,
-    QUEST_PARTY_MSG_BUSY                    = 4,
-    QUEST_PARTY_MSG_LOG_FULL                = 5,
-    QUEST_PARTY_MSG_HAVE_QUEST              = 6,
-    QUEST_PARTY_MSG_FINISH_QUEST            = 7,
-    QUEST_PARTY_MSG_CANT_BE_SHARED_TODAY    = 8,
-    QUEST_PARTY_MSG_SHARING_TIMER_EXPIRED   = 9,
+    QUEST_PARTY_MSG_SHARING_QUEST           = 0, 
+    QUEST_PARTY_MSG_CANT_TAKE_QUEST         = 1, 
+    QUEST_PARTY_MSG_ACCEPT_QUEST            = 2, 
+    QUEST_PARTY_MSG_DECLINE_QUEST           = 3, 
+    QUEST_PARTY_MSG_BUSY                    = 4, 
+    QUEST_PARTY_MSG_LOG_FULL                = 5, 
+    QUEST_PARTY_MSG_HAVE_QUEST              = 6, 
+    QUEST_PARTY_MSG_FINISH_QUEST            = 7, 
+    QUEST_PARTY_MSG_CANT_BE_SHARED_TODAY    = 8, 
+    QUEST_PARTY_MSG_SHARING_TIMER_EXPIRED   = 9, 
     QUEST_PARTY_MSG_NOT_IN_PARTY            = 10
 };
 
 enum __QuestTradeSkill
 {
-    QUEST_TRSKILL_NONE           = 0,
-    QUEST_TRSKILL_ALCHEMY        = 1,
-    QUEST_TRSKILL_BLACKSMITHING  = 2,
-    QUEST_TRSKILL_COOKING        = 3,
-    QUEST_TRSKILL_ENCHANTING     = 4,
-    QUEST_TRSKILL_ENGINEERING    = 5,
-    QUEST_TRSKILL_FIRSTAID       = 6,
-    QUEST_TRSKILL_HERBALISM      = 7,
-    QUEST_TRSKILL_LEATHERWORKING = 8,
-    QUEST_TRSKILL_POISONS        = 9,
-    QUEST_TRSKILL_TAILORING      = 10,
-    QUEST_TRSKILL_MINING         = 11,
-    QUEST_TRSKILL_FISHING        = 12,
-    QUEST_TRSKILL_SKINNING       = 13,
-    QUEST_TRSKILL_JEWELCRAFTING  = 14,
+    QUEST_TRSKILL_NONE           = 0, 
+    QUEST_TRSKILL_ALCHEMY        = 1, 
+    QUEST_TRSKILL_BLACKSMITHING  = 2, 
+    QUEST_TRSKILL_COOKING        = 3, 
+    QUEST_TRSKILL_ENCHANTING     = 4, 
+    QUEST_TRSKILL_ENGINEERING    = 5, 
+    QUEST_TRSKILL_FIRSTAID       = 6, 
+    QUEST_TRSKILL_HERBALISM      = 7, 
+    QUEST_TRSKILL_LEATHERWORKING = 8, 
+    QUEST_TRSKILL_POISONS        = 9, 
+    QUEST_TRSKILL_TAILORING      = 10, 
+    QUEST_TRSKILL_MINING         = 11, 
+    QUEST_TRSKILL_FISHING        = 12, 
+    QUEST_TRSKILL_SKINNING       = 13, 
+    QUEST_TRSKILL_JEWELCRAFTING  = 14, 
 };
 
 enum QuestStatus
 {
-    QUEST_STATUS_NONE           = 0,
-    QUEST_STATUS_COMPLETE       = 1,
-    //QUEST_STATUS_UNAVAILABLE    = 2,
-    QUEST_STATUS_INCOMPLETE     = 3,
-    //QUEST_STATUS_AVAILABLE      = 4,
-    QUEST_STATUS_FAILED         = 5,
+    QUEST_STATUS_NONE           = 0, 
+    QUEST_STATUS_COMPLETE       = 1, 
+    //QUEST_STATUS_UNAVAILABLE    = 2, 
+    QUEST_STATUS_INCOMPLETE     = 3, 
+    //QUEST_STATUS_AVAILABLE      = 4, 
+    QUEST_STATUS_FAILED         = 5, 
     QUEST_STATUS_REWARDED       = 6,        // Not used in DB
     MAX_QUEST_STATUS
 };
 
 enum __QuestGiverStatus
 {
-    DIALOG_STATUS_NONE                     = 0x00,
-    DIALOG_STATUS_UNK1                       = 0x01,
-    DIALOG_STATUS_UNAVAILABLE              = 0x02,
-    DIALOG_STATUS_LOW_LEVEL_AVAILABLE      = 0x04,
-    DIALOG_STATUS_LOW_LEVEL_REWARD_REP     = 0x08,
-    DIALOG_STATUS_LOW_LEVEL_AVAILABLE_REP  = 0x10,
-    DIALOG_STATUS_INCOMPLETE               = 0x20,
-    DIALOG_STATUS_REWARD_REP               = 0x40,
-    DIALOG_STATUS_AVAILABLE_REP            = 0x80,
-    DIALOG_STATUS_AVAILABLE                = 0x100,
+    DIALOG_STATUS_NONE                     = 0x00, 
+    DIALOG_STATUS_UNK1                       = 0x01, 
+    DIALOG_STATUS_UNAVAILABLE              = 0x02, 
+    DIALOG_STATUS_LOW_LEVEL_AVAILABLE      = 0x04, 
+    DIALOG_STATUS_LOW_LEVEL_REWARD_REP     = 0x08, 
+    DIALOG_STATUS_LOW_LEVEL_AVAILABLE_REP  = 0x10, 
+    DIALOG_STATUS_INCOMPLETE               = 0x20, 
+    DIALOG_STATUS_REWARD_REP               = 0x40, 
+    DIALOG_STATUS_AVAILABLE_REP            = 0x80, 
+    DIALOG_STATUS_AVAILABLE                = 0x100, 
     DIALOG_STATUS_REWARD2                  = 0x200,             // no yellow dot on minimap
     DIALOG_STATUS_REWARD                   = 0x400             // yellow dot on minimap
 };
@@ -128,7 +128,7 @@ enum __QuestGiverStatus
 enum QuestFlags
 {
     // Flags used at server and sent to client
-    QUEST_FLAGS_NONE           = 0x00000000,
+    QUEST_FLAGS_NONE           = 0x00000000, 
     QUEST_FLAGS_STAY_ALIVE     = 0x00000001,                // Not used currently
     QUEST_FLAGS_PARTY_ACCEPT   = 0x00000002,                // Not used currently. If player in party, all players that can accept this quest will receive confirmation box to accept quest CMSG_QUEST_CONFIRM_ACCEPT/SMSG_QUEST_CONFIRM_ACCEPT
     QUEST_FLAGS_EXPLORATION    = 0x00000004,                // Not used currently
@@ -144,7 +144,7 @@ enum QuestFlags
     QUEST_FLAGS_DAILY          = 0x00001000,                // Used to know quest is Daily one
     QUEST_FLAGS_REPEATABLE     = 0x00002000,                // Used on repeatable quests (3.0.0+)
     QUEST_FLAGS_UNAVAILABLE    = 0x00004000,                // Used on quests that are not generically available
-    QUEST_FLAGS_WEEKLY         = 0x00008000,
+    QUEST_FLAGS_WEEKLY         = 0x00008000, 
     QUEST_FLAGS_AUTOCOMPLETE   = 0x00010000,                // auto complete
     QUEST_FLAGS_SPECIAL_ITEM   = 0x00020000,                // has something to do with ReqItemId and SrcItemId
     QUEST_FLAGS_OBJ_TEXT       = 0x00040000,                // use Objective text as Complete text
@@ -185,7 +185,7 @@ struct QuestLocale
     std::vector< StringVector > ObjectiveText;
 };
 
-// This Quest class provides a convenient way to access a few pretotaled (cached) quest details,
+// This Quest class provides a convenient way to access a few pretotaled (cached) quest details, 
 // all base quest information, and any utility functions such as generating the amount of
 // xp to give
 class Quest

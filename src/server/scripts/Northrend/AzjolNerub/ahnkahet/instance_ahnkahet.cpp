@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -66,8 +66,8 @@ public:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         uint32 spheres[2];
 
-        uint8 InitiandCnt,
-            switchtrigger,
+        uint8 InitiandCnt, 
+            switchtrigger, 
             initiandkilled;
 
         std::string str_data;
@@ -119,7 +119,7 @@ public:
             switch(pGo->GetEntry())
             {
                 case 193564:     Prince_TaldaramPlatform = pGo->GetGUID();
-                    if (m_auiEncounter[1] == DONE) HandleGameObject(NULL,true,pGo); break;
+                    if (m_auiEncounter[1] == DONE) HandleGameObject(NULL, true, pGo); break;
                 case 193093:     Prince_TaldaramSpheres[0] = pGo->GetGUID();
                     if (spheres[0] == IN_PROGRESS)
                     {
@@ -137,7 +137,7 @@ public:
                     else pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
                     break;
                 case 192236:    Prince_TaldaramGate = pGo->GetGUID(); // Web gate past Prince Taldaram
-                    if (m_auiEncounter[1] == DONE)HandleGameObject(NULL,true,pGo);break;
+                    if (m_auiEncounter[1] == DONE)HandleGameObject(NULL, true, pGo);break;
             }
         }
 
@@ -174,7 +174,7 @@ public:
                     }
                     if (vInitiands.empty())
                         return 0;
-                    uint8 j = urand(0,vInitiands.size() -1);
+                    uint8 j = urand(0, vInitiands.size() -1);
                     return vInitiands[j];
                 }
                 case DATA_ADD_JEDOGA_OPFER: return JedogaSacrifices;
@@ -190,7 +190,7 @@ public:
                 case DATA_ELDER_NADOX_EVENT: m_auiEncounter[0] = data; break;
                 case DATA_PRINCE_TALDARAM_EVENT:
                     if (data == DONE)
-                        HandleGameObject(Prince_TaldaramGate,true);
+                        HandleGameObject(Prince_TaldaramGate, true);
                     m_auiEncounter[1] = data;
                     break;
                 case DATA_JEDOGA_SHADOWSEEKER_EVENT:

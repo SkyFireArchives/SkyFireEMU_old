@@ -256,13 +256,13 @@ struct AchievementCriteriaEntry
         // ACHIEVEMENT_CRITERIA_TYPE_HIGHEST_TEAM_RATING    = 38
         struct
         {
-            uint32  teamtype;                               // 3 {2,3,5}
+            uint32  teamtype;                               // 3 {2, 3, 5}
         } highest_team_rating;
 
         // ACHIEVEMENT_CRITERIA_TYPE_REACH_TEAM_RATING      = 39
         struct
         {
-            uint32  teamtype;                               // 3 {2,3,5}
+            uint32  teamtype;                               // 3 {2, 3, 5}
             uint32  teamrating;                             // 4
         } reach_team_rating;
 
@@ -500,14 +500,14 @@ struct AchievementCriteriaEntry
         uint32  additionalRequirement_type;
         uint32  additionalRequirement_value;
     } additionalRequirements[MAX_CRITERIA_REQUIREMENTS];
-    
+
     DBCString  name;                                            // 9
     uint32  completionFlag;                                 // 10
     uint32  timedType;                       // 11 Only appears with timed achievements, seems to be the type of starting a timed Achievement, only type 1 and some of type 6 need manual starting
                                                             // 1: ByEventId(?) (serverside IDs),    2: ByQuestId,   5: ByCastSpellId(?)
                                                             // 6: BySpellIdTarget(some of these are unknown spells, some not, some maybe spells)
                                                             // 7: ByKillNpcId,  9: ByUseItemId
-    uint32  timerStartEvent;                            // 12 Alway appears with timed events, used internally to start the achievement, store 
+    uint32  timerStartEvent;                            // 12 Alway appears with timed events, used internally to start the achievement, store
     uint32  timeLimit;                                      // 13 time limit in seconds
     uint32  showOrder;                                      // 14 show order
     //uint32 unk1;                                          // 15 only one value, still unknown
@@ -692,7 +692,7 @@ struct ChrClassesEntry
     uint32  expansion;                                      // 10 (0 - original race, 1 - tbc addon, ...)
     //uint32                                                // 11
     //uint32                                                // 12
-    //uint32                                                // 13    
+    //uint32                                                // 13
 };
 
 struct ChrRacesEntry
@@ -954,12 +954,12 @@ struct GameObjectDisplayInfoEntry
     uint32      Displayid;                                  // 0        m_ID
     //DBCString filename;                                   // 1
     //uint32  unk1[10];                                     // 2-11
-    float   minX;                                           // 12  
+    float   minX;                                           // 12
     float   minY;                                           // 13
     float   minZ;                                           // 14
-    float   maxX;                                           // 15 
-    float   maxY;                                           // 16  
-    float   maxZ;                                           // 17     
+    float   maxX;                                           // 15
+    float   maxY;                                           // 16
+    float   maxZ;                                           // 17
     //uint32 transport;                                     // 18
     //uint32 unk;                                           // 19
     //uint32 unk1;                                          // 20
@@ -1174,7 +1174,6 @@ struct ItemExtendedCostEntry
     //uint32    something[5];                               // 26-30
 };
 
-
 struct ItemLimitCategoryEntry
 {
     uint32      ID;                                         // 0 Id
@@ -1201,7 +1200,7 @@ struct ItemRandomSuffixEntry
     uint32    enchant_id[5];                                // 3-7      m_enchantment
     uint32    prefix[5];                                    // 8-12     m_allocationPct};
 };
-    
+
 #define MAX_ITEM_SET_ITEMS 10
 #define MAX_ITEM_SET_SPELLS 8
 
@@ -1416,17 +1415,17 @@ struct ScalingStatValuesEntry
     uint32  armorMod2[4];                                   // 18-21 Armor for level
     //uint32 trash[24];                                     // 22-45
     //uint32 unk2;                                          // 46 unk, probably also Armor for level (flag 0x80000?)
-    
+
     uint32 getssdMultiplier(uint32 mask) const
     {
         if (mask & 0x4001F)
         {
-            if(mask & 0x00000001) return ssdMultiplier[1];
-            if(mask & 0x00000002) return ssdMultiplier[2]; // 0 and 1 were duplicated
-            if(mask & 0x00000004) return ssdMultiplier[3];
-            if(mask & 0x00000008) return ssdMultiplier[0];
-            if(mask & 0x00000010) return ssdMultiplier[4];
-            if(mask & 0x00040000) return ssdMultiplier[2]; // 4.0.0
+            if (mask & 0x00000001) return ssdMultiplier[1];
+            if (mask & 0x00000002) return ssdMultiplier[2]; // 0 and 1 were duplicated
+            if (mask & 0x00000004) return ssdMultiplier[3];
+            if (mask & 0x00000008) return ssdMultiplier[0];
+            if (mask & 0x00000010) return ssdMultiplier[4];
+            if (mask & 0x00040000) return ssdMultiplier[2]; // 4.0.0
         }
         return 0;
     }
@@ -1704,8 +1703,8 @@ struct SpellScalingEntry
     int32     class_;                                       // 4        Caster's class. Can be a negative value : MAX_CLASSES + 1 - class_.
     float     coefMultiplier[3];                            // 5-7
     float     coefRandomMultiplier[3];                      // 8-10
-    float     coefOther[3];                                 // 11-13    
-    float     base_coef;                                    // 14       
+    float     coefOther[3];                                 // 11-13
+    float     base_coef;                                    // 14
     uint32    base_level_coef;                              // 15       under this level, the final base coef will be < 1.
 };
 
@@ -1739,7 +1738,7 @@ struct SpellTotemsEntry
 };
 
 // Spell.dbc
-struct SpellEntry_n //Structure of the true Spell.dbc 
+struct SpellEntry_n //Structure of the true Spell.dbc
 {
     uint32    Id;                                           // 0        m_ID
     uint32    Attributes;                                   // 1        m_attribute
@@ -1835,13 +1834,13 @@ struct SpellEntry
     uint32 SpellTargetRestrictionsId;                       // 44       SpellTargetRestrictions.dbc
     uint32 SpellTotemsId;                                   // 45       SpellTotems.dbc
     //uint32 unk2;                                          // 46
-    
+
     //SpellAuraOptionsEntry
         uint32    StackAmount;
         uint32    procChance;
         uint32    procCharges;
         uint32    procFlags;
-    
+
     //SpellAuraRestrictionsEntry
         uint32    CasterAuraState;
         uint32    TargetAuraState;
@@ -1851,12 +1850,12 @@ struct SpellEntry
         uint32    targetAuraSpell;
         uint32    excludeCasterAuraSpell;
         uint32    excludeTargetAuraSpell;
-    
+
     // SpellCastingRequirementsEntry
         uint32    FacingCasterFlags;
         int32     AreaGroupId;
         uint32    RequiresSpellFocus;
-    
+
     // SpellCategoriesEntry
         uint32    Category;
         uint32    DmgClass;
@@ -1864,16 +1863,16 @@ struct SpellEntry
         uint32    Mechanic;
         uint32    PreventionType;
         uint32    StartRecoveryCategory;
-    
+
     // SpellClassOptionsEntry
         flag96    SpellFamilyFlags;
         uint32    SpellFamilyName;
-    
+
     // SpellCooldownsEntry
         uint32    CategoryRecoveryTime;
         uint32    RecoveryTime;
         uint32    StartRecoveryTime;
-    
+
     // SpellEffectEntry
         uint32    Effect[3];
         float     EffectValueMultiplier[3];
@@ -1895,32 +1894,32 @@ struct SpellEntry
         uint32    EffectTriggerSpell[3];
         uint32    EffectImplicitTargetA[3];
         uint32    EffectImplicitTargetB[3];
-    
+
     // SpellEquippedItemsEntry
         int32     EquippedItemClass;
         int32     EquippedItemInventoryTypeMask;
         int32     EquippedItemSubClassMask;
-    
+
     // SpellInterruptsEntry
         uint32    AuraInterruptFlags;
         uint32    ChannelInterruptFlags;
         uint32    InterruptFlags;
-    
+
     // SpellLevelsEntry
         uint32    baseLevel;
         uint32    maxLevel;
         uint32    spellLevel;
-    
+
     // SpellPowerEntry
         uint32    manaCost;
         uint32    manaCostPerlevel;
         uint32    ManaCostPercentage;
         uint32    manaPerSecond;
-    
+
     // SpellReagentsEntry
         int32     Reagent[8];
         uint32    ReagentCount[8];
-    
+
     // SpellScalingEntry
         uint32    ct_min;
         uint32    ct_max;
@@ -1928,32 +1927,32 @@ struct SpellEntry
         int32     SpellScaling_class;
         float     coefMultiplier[3];
         float     coefRandomMultiplier[3];
-        float     coefOther[3];   
+        float     coefOther[3];
         float     base_coef;
         uint32    base_level_coef;
-    
+
     // SpellShapeshiftEntry
         uint32    Stances;
         uint32    StancesNot;
-    
+
     // SpellTargetRestrictionsEntry
         uint32    MaxAffectedTargets;
         uint32    MaxTargetLevel;
         uint32    TargetCreatureType;
         uint32    Targets;
-    
+
     // SpellTotemsEntry
         uint32    TotemCategory[2];    // 162-163  m_requiredTotemCategoryID
         uint32    Totem[2];                      // 52-53    m_totem
-    
+
     // helpers
     int32 CalculateSimpleValue(uint32 eff) const;
     uint32 const* GetEffectSpellClassMask(uint32 eff) const;
-    
+
     // Load references to other structs
     SpellEntry(SpellEntry_n const*);
     void LoadSpellAddons();
-    
+
     // struct access functions
     SpellAuraOptionsEntry const* GetSpellAuraOptions() const;
     SpellAuraRestrictionsEntry const* GetSpellAuraRestrictions() const;
@@ -1971,7 +1970,7 @@ struct SpellEntry
     SpellShapeshiftEntry const* GetSpellShapeshift() const;
     SpellTargetRestrictionsEntry const* GetSpellTargetRestrictions() const;
     SpellTotemsEntry const* GetSpellTotems() const;
-    
+
     // single fields
     uint32 GetManaCost() const;
     uint32 GetPreventionType() const;
@@ -2012,16 +2011,16 @@ struct SpellEntry
     uint32 GetCasterAuraState() const;
     uint32 GetTargets() const;
     uint32 GetEffectApplyAuraNameByIndex(uint32 index) const;
-    
+
 private:
     // prevent creating custom entries (copy data from original in fact)
     SpellEntry(SpellEntry const&);                      // DON'T must have implementation
 };
-    
+
 typedef std::set<uint32> SpellCategorySet;
-typedef std::map<uint32,SpellCategorySet > SpellCategoryStore;
+typedef std::map<uint32, SpellCategorySet > SpellCategoryStore;
 typedef std::set<uint32> PetFamilySpellsSet;
-typedef std::map<uint32,PetFamilySpellsSet > PetFamilySpellsStore;
+typedef std::map<uint32, PetFamilySpellsSet > PetFamilySpellsStore;
 
 struct SpellCastTimesEntry
 {
@@ -2034,7 +2033,7 @@ struct SpellCastTimesEntry
 struct SpellDifficultyEntry
 {
     uint32     ID;                                          // 0
-    int32      SpellID[MAX_DIFFICULTY];                     // 1-4 instance modes: 10N,25N,10H,25H or Normal/Heroic if only 1-2 is set, if 3-4 is 0 then Mode-2
+    int32      SpellID[MAX_DIFFICULTY];                     // 1-4 instance modes: 10N, 25N, 10H, 25H or Normal/Heroic if only 1-2 is set, if 3-4 is 0 then Mode-2
 };
 
 struct SpellFocusObjectEntry
@@ -2134,7 +2133,6 @@ struct SpellItemEnchantmentConditionEntry
     uint32 Price;
 };*/
 
-
 struct SummonPropertiesEntry
 {
     uint32  Id;                                             // 0
@@ -2151,7 +2149,6 @@ struct GuildPerksEntry
     uint32 Level;
     uint32 SpellId;
 };
-
 
 #define MAX_TALENT_RANK 5
 #define MAX_PET_TALENT_RANK 3                               // use in calculations, expected <= MAX_TALENT_RANK
@@ -2362,7 +2359,7 @@ struct WorldMapAreaEntry
     float   x1;                                             // 6
     float   x2;                                             // 7
     int32   virtual_map_id;                                 // 8 -1 (map_id have correct map) other: virtual map where zone show (map_id - where zone in fact internally)
-    // int32   dungeonMap_id;                               // 9 pointer to DungeonMap.dbc (owerride x1,x2,y1,y2 coordinates)
+    // int32   dungeonMap_id;                               // 9 pointer to DungeonMap.dbc (owerride x1, x2, y1, y2 coordinates)
     // uint32  someMapID;                                   // 10
     //uint32   unk1;                                        // 11 4.0.0
 };
@@ -2416,7 +2413,7 @@ struct TalentSpellPos
     uint8  rank;
 };
 
-typedef std::map<uint32,TalentSpellPos> TalentSpellPosMap;
+typedef std::map<uint32, TalentSpellPos> TalentSpellPosMap;
 
 struct SpellEffect
 {
@@ -2433,14 +2430,14 @@ typedef std::map<uint32, SpellEffect> SpellEffectMap;
 
 struct TaxiPathBySourceAndDestination
 {
-    TaxiPathBySourceAndDestination() : ID(0),price(0) {}
-    TaxiPathBySourceAndDestination(uint32 _id,uint32 _price) : ID(_id),price(_price) {}
+    TaxiPathBySourceAndDestination() : ID(0), price(0) {}
+    TaxiPathBySourceAndDestination(uint32 _id, uint32 _price) : ID(_id), price(_price) {}
 
     uint32    ID;
     uint32    price;
 };
-typedef std::map<uint32,TaxiPathBySourceAndDestination> TaxiPathSetForSource;
-typedef std::map<uint32,TaxiPathSetForSource> TaxiPathSetBySource;
+typedef std::map<uint32, TaxiPathBySourceAndDestination> TaxiPathSetForSource;
+typedef std::map<uint32, TaxiPathSetForSource> TaxiPathSetBySource;
 
 struct TaxiPathNodePtr
 {
@@ -2450,10 +2447,9 @@ struct TaxiPathNodePtr
     operator TaxiPathNodeEntry const& () const { return *i_ptr; }
 };
 
-typedef Path<TaxiPathNodePtr,TaxiPathNodeEntry const> TaxiPathNodeList;
+typedef Path<TaxiPathNodePtr, TaxiPathNodeEntry const> TaxiPathNodeList;
 typedef std::vector<TaxiPathNodeList> TaxiPathNodesByPath;
 
 #define TaxiMaskSize 22
 typedef uint32 TaxiMask[TaxiMaskSize];
 #endif
-

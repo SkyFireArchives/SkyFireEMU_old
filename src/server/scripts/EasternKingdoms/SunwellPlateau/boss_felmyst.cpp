@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,33 +33,33 @@ EndScriptData */
 
 enum Yells
 {
-    YELL_BIRTH                                    = -1580036,
-    YELL_KILL1                                    = -1580037,
-    YELL_KILL2                                    = -1580038,
-    YELL_BREATH                                   = -1580039,
-    YELL_TAKEOFF                                  = -1580040,
-    YELL_BERSERK                                  = -1580041,
-    YELL_DEATH                                    = -1580042,
+    YELL_BIRTH                                    = -1580036, 
+    YELL_KILL1                                    = -1580037, 
+    YELL_KILL2                                    = -1580038, 
+    YELL_BREATH                                   = -1580039, 
+    YELL_TAKEOFF                                  = -1580040, 
+    YELL_BERSERK                                  = -1580041, 
+    YELL_DEATH                                    = -1580042, 
     YELL_KALECGOS                                 = -1580043, // after felmyst's death spawned and say this
 };
 
 enum Spells
 {
     //Aura
-    AURA_SUNWELL_RADIANCE                         = 45769,
-    AURA_NOXIOUS_FUMES                            = 47002,
+    AURA_SUNWELL_RADIANCE                         = 45769, 
+    AURA_NOXIOUS_FUMES                            = 47002, 
 
     //Land phase
-    SPELL_CLEAVE                                  = 19983,
-    SPELL_CORROSION                               = 45866,
-    SPELL_GAS_NOVA                                = 45855,
-    SPELL_ENCAPSULATE_CHANNEL                     = 45661,
-    // SPELL_ENCAPSULATE_EFFECT                      = 45665,
-    // SPELL_ENCAPSULATE_AOE                         = 45662,
+    SPELL_CLEAVE                                  = 19983, 
+    SPELL_CORROSION                               = 45866, 
+    SPELL_GAS_NOVA                                = 45855, 
+    SPELL_ENCAPSULATE_CHANNEL                     = 45661, 
+    // SPELL_ENCAPSULATE_EFFECT                      = 45665, 
+    // SPELL_ENCAPSULATE_AOE                         = 45662, 
 
     //Flight phase
     SPELL_VAPOR_SELECT                            = 45391,   // fel to player, force cast 45392, 50000y selete target
-    SPELL_VAPOR_SUMMON                            = 45392,   // player summon vapor, radius around caster, 5y,
+    SPELL_VAPOR_SUMMON                            = 45392,   // player summon vapor, radius around caster, 5y, 
     SPELL_VAPOR_FORCE                             = 45388,   // vapor to fel, force cast 45389
     SPELL_VAPOR_CHANNEL                           = 45389,   // fel to vapor, green beam channel
     SPELL_VAPOR_TRIGGER                           = 45411,   // linked to 45389, vapor to self, trigger 45410 and 46931
@@ -68,7 +68,7 @@ enum Spells
     SPELL_TRAIL_TRIGGER                           = 45399,   // trail to self, trigger 45402
     SPELL_TRAIL_DAMAGE                            = 45402,   // trail damage, 2000 + 2000 dot
     SPELL_DEAD_SUMMON                             = 45400,   // summon blazing dead, 5min
-    SPELL_DEAD_PASSIVE                            = 45415,
+    SPELL_DEAD_PASSIVE                            = 45415, 
     SPELL_FOG_BREATH                              = 45495,   // fel to self, speed burst
     SPELL_FOG_TRIGGER                             = 45582,   // fog to self, trigger 45782
     SPELL_FOG_FORCE                               = 45782,   // fog to player, force cast 45714
@@ -79,35 +79,35 @@ enum Spells
     SPELL_TRANSFORM_TRIGGER                       = 44885,   // madrigosa to self, trigger 46350
     SPELL_TRANSFORM_VISUAL                        = 46350,   // 46411stun?
     SPELL_TRANSFORM_FELMYST                       = 45068,   // become fel
-    SPELL_FELMYST_SUMMON                          = 45069,
+    SPELL_FELMYST_SUMMON                          = 45069, 
 
     //Other
-    SPELL_BERSERK                                 = 45078,
-    SPELL_CLOUD_VISUAL                            = 45212,
-    SPELL_CLOUD_SUMMON                            = 45884,
+    SPELL_BERSERK                                 = 45078, 
+    SPELL_CLOUD_VISUAL                            = 45212, 
+    SPELL_CLOUD_SUMMON                            = 45884, 
 };
 
 enum PhaseFelmyst
 {
-    PHASE_NONE,
-    PHASE_GROUND,
-    PHASE_FLIGHT,
+    PHASE_NONE, 
+    PHASE_GROUND, 
+    PHASE_FLIGHT, 
 };
 
 enum EventFelmyst
 {
-    EVENT_NONE,
-    EVENT_BERSERK,
+    EVENT_NONE, 
+    EVENT_BERSERK, 
 
-    EVENT_CLEAVE,
-    EVENT_CORROSION,
-    EVENT_GAS_NOVA,
-    EVENT_ENCAPSULATE,
-    EVENT_FLIGHT,
+    EVENT_CLEAVE, 
+    EVENT_CORROSION, 
+    EVENT_GAS_NOVA, 
+    EVENT_ENCAPSULATE, 
+    EVENT_FLIGHT, 
 
-    EVENT_FLIGHT_SEQUENCE,
-    EVENT_SUMMON_DEAD,
-    EVENT_SUMMON_FOG,
+    EVENT_FLIGHT_SEQUENCE, 
+    EVENT_SUMMON_DEAD, 
+    EVENT_SUMMON_FOG, 
 };
 
 class boss_felmyst : public CreatureScript
@@ -194,7 +194,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(YELL_KILL1,YELL_KILL2), me);
+            DoScriptText(RAND(YELL_KILL1, YELL_KILL2), me);
         }
 
         void JustRespawned()
@@ -443,20 +443,20 @@ public:
                         break;
                     case EVENT_CLEAVE:
                         DoCast(me->getVictim(), SPELL_CLEAVE, false);
-                        events.ScheduleEvent(EVENT_CLEAVE, urand(5000,10000));
+                        events.ScheduleEvent(EVENT_CLEAVE, urand(5000, 10000));
                         break;
                     case EVENT_CORROSION:
                         DoCast(me->getVictim(), SPELL_CORROSION, false);
-                        events.ScheduleEvent(EVENT_CORROSION, urand(20000,30000));
+                        events.ScheduleEvent(EVENT_CORROSION, urand(20000, 30000));
                         break;
                     case EVENT_GAS_NOVA:
                         DoCast(me, SPELL_GAS_NOVA, false);
-                        events.ScheduleEvent(EVENT_GAS_NOVA, urand(20000,25000));
+                        events.ScheduleEvent(EVENT_GAS_NOVA, urand(20000, 25000));
                         break;
                     case EVENT_ENCAPSULATE:
                         if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 150, true))
                             DoCast(pTarget, SPELL_ENCAPSULATE_CHANNEL, false);
-                        events.ScheduleEvent(EVENT_ENCAPSULATE, urand(25000,30000));
+                        events.ScheduleEvent(EVENT_ENCAPSULATE, urand(25000, 30000));
                         break;
                     case EVENT_FLIGHT:
                         EnterPhase(PHASE_FLIGHT);

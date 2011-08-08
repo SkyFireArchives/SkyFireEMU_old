@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,24 +39,24 @@
 //8860 death - An honorable... death...
 //8947 - Aggro Mixed? - ?
 
-#define SOUND_AGGRO     RAND(8852,8853,8854)
-#define SOUND_SLAY      RAND(8861,8863)
-#define SOUND_COMMND    RAND(8855,8856,8858,8859,8861)
+#define SOUND_AGGRO     RAND(8852, 8853, 8854)
+#define SOUND_SLAY      RAND(8861, 8863)
+#define SOUND_COMMND    RAND(8855, 8856, 8858, 8859, 8861)
 #define SOUND_DEATH     8860
 #define SOUND_AGGROMIX  8847
 
 #define SPELL_UNBALANCING_STRIKE    26613
-#define SPELL_DISRUPTING_SHOUT      RAID_MODE(29107,55543)
+#define SPELL_DISRUPTING_SHOUT      RAID_MODE(29107, 55543)
 #define SPELL_JAGGED_KNIFE          55550
 #define SPELL_HOPELESS              29125
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_STRIKE,
-    EVENT_SHOUT,
-    EVENT_KNIFE,
-    EVENT_COMMAND,
+    EVENT_NONE, 
+    EVENT_STRIKE, 
+    EVENT_SHOUT, 
+    EVENT_KNIFE, 
+    EVENT_COMMAND, 
 };
 
 class boss_razuvious : public CreatureScript

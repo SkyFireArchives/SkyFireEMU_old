@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -135,7 +135,7 @@ public:
                 for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
                 {
                     Player* plr = itr->getSource();
-                    if (plr && !plr->HasAura(45839,0))
+                    if (plr && !plr->HasAura(45839, 0))
                             return plr;
                 }
             }
@@ -232,15 +232,15 @@ public:
                     {
                         if (data == NOT_STARTED || data == DONE)
                         {
-                            HandleGameObject(ForceField,true);
-                            HandleGameObject(KalecgosWall[0],true);
-                            HandleGameObject(KalecgosWall[1],true);
+                            HandleGameObject(ForceField, true);
+                            HandleGameObject(KalecgosWall[0], true);
+                            HandleGameObject(KalecgosWall[1], true);
                         }
                         else if (data == IN_PROGRESS)
                         {
-                            HandleGameObject(ForceField,false);
-                            HandleGameObject(KalecgosWall[0],false);
-                            HandleGameObject(KalecgosWall[1],false);
+                            HandleGameObject(ForceField, false);
+                            HandleGameObject(KalecgosWall[0], false);
+                            HandleGameObject(KalecgosWall[1], false);
                         }
                         m_auiEncounter[0] = data;
                     }

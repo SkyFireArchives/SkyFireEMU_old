@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -138,7 +138,7 @@ class boss_hakkar : public CreatureScript
                 //CauseInsanity_Timer
                 /*if (CauseInsanity_Timer <= diff)
                 {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 DoCast(pTarget, SPELL_CAUSEINSANITY);
 
                 CauseInsanity_Timer = 35000 + rand()%8000;
@@ -147,7 +147,7 @@ class boss_hakkar : public CreatureScript
                 //WillOfHakkar_Timer
                 if (WillOfHakkar_Timer <= diff)
                 {
-                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                         DoCast(pTarget, SPELL_WILLOFHAKKAR);
 
                     WillOfHakkar_Timer = 25000 + rand()%10000;

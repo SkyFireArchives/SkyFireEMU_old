@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,17 +27,17 @@
 
 enum eGameObjects
 {
-    GO_KOLOGARN_CHEST_HERO  = 195047,
-    GO_KOLOGARN_CHEST       = 195046,
-    GO_THORIM_CHEST_HERO    = 194315,
-    GO_THORIM_CHEST         = 194314,
-    GO_HODIR_CHEST_HERO     = 194308,
-    GO_HODIR_CHEST          = 194307,
-    GO_FREYA_CHEST_HERO     = 194325,
-    GO_FREYA_CHEST          = 194324,
-    GO_LEVIATHAN_DOOR       = 194905,
-    GO_LEVIATHAN_GATE       = 194630,
-    GO_VEZAX_DOOR           = 194750,
+    GO_KOLOGARN_CHEST_HERO  = 195047, 
+    GO_KOLOGARN_CHEST       = 195046, 
+    GO_THORIM_CHEST_HERO    = 194315, 
+    GO_THORIM_CHEST         = 194314, 
+    GO_HODIR_CHEST_HERO     = 194308, 
+    GO_HODIR_CHEST          = 194307, 
+    GO_FREYA_CHEST_HERO     = 194325, 
+    GO_FREYA_CHEST          = 194324, 
+    GO_LEVIATHAN_DOOR       = 194905, 
+    GO_LEVIATHAN_GATE       = 194630, 
+    GO_VEZAX_DOOR           = 194750, 
 };
 
 class instance_ulduar : public InstanceMapScript
@@ -255,10 +255,10 @@ public:
                 case TYPE_LEVIATHAN:
                     if (state == IN_PROGRESS)
                         for (uint8 uiI = 0; uiI < 7; ++uiI)
-                            HandleGameObject(uiLeviathanDoor[uiI],false);
+                            HandleGameObject(uiLeviathanDoor[uiI], false);
                     else
                         for (uint8 uiI = 0; uiI < 7; ++uiI)
-                            HandleGameObject(uiLeviathanDoor[uiI],true);
+                            HandleGameObject(uiLeviathanDoor[uiI], true);
                     break;
                 case TYPE_IGNIS:
                 case TYPE_RAZORSCALE:

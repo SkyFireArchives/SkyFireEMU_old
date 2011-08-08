@@ -220,7 +220,7 @@ bool AccountMgr::normalizeString(std::string& utf8str)
     wchar_t wstr_buf[MAX_ACCOUNT_STR+1];
 
     size_t wstr_len = MAX_ACCOUNT_STR;
-    if (!Utf8toWStr(utf8str, wstr_buf,wstr_len))
+    if (!Utf8toWStr(utf8str, wstr_buf, wstr_len))
         return false;
 #ifdef _MSC_VER
 #pragma warning(disable: 4996)
@@ -230,7 +230,7 @@ bool AccountMgr::normalizeString(std::string& utf8str)
 #pragma warning(default: 4996)
 #endif
 
-    return WStrToUtf8(wstr_buf, wstr_len,utf8str);
+    return WStrToUtf8(wstr_buf, wstr_len, utf8str);
 }
 
 std::string AccountMgr::CalculateShaPassHash(std::string& name, std::string& password)

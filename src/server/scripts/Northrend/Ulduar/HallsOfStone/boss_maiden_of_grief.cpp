@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,29 +35,29 @@ Script Data End */
 
 enum Spells
 {
-    SPELL_PARTING_SORROW                          = 59723,
-    SPELL_STORM_OF_GRIEF_N                        = 50752,
-    SPELL_STORM_OF_GRIEF_H                        = 59772,
-    SPELL_SHOCK_OF_SORROW_N                       = 50760,
-    SPELL_SHOCK_OF_SORROW_H                       = 59726,
-    SPELL_PILLAR_OF_WOE_N                         = 50761,
+    SPELL_PARTING_SORROW                          = 59723, 
+    SPELL_STORM_OF_GRIEF_N                        = 50752, 
+    SPELL_STORM_OF_GRIEF_H                        = 59772, 
+    SPELL_SHOCK_OF_SORROW_N                       = 50760, 
+    SPELL_SHOCK_OF_SORROW_H                       = 59726, 
+    SPELL_PILLAR_OF_WOE_N                         = 50761, 
     SPELL_PILLAR_OF_WOE_H                         = 59727
 };
 
 enum Yells
 {
-    SAY_AGGRO                                     = -1599000,
-    SAY_SLAY_1                                    = -1599001,
-    SAY_SLAY_2                                    = -1599002,
-    SAY_SLAY_3                                    = -1599003,
-    SAY_SLAY_4                                    = -1599004,
-    SAY_DEATH                                     = -1599005,
+    SAY_AGGRO                                     = -1599000, 
+    SAY_SLAY_1                                    = -1599001, 
+    SAY_SLAY_2                                    = -1599002, 
+    SAY_SLAY_3                                    = -1599003, 
+    SAY_SLAY_4                                    = -1599004, 
+    SAY_DEATH                                     = -1599005, 
     SAY_STUN                                      = -1599006
 };
 
 enum Achievements
 {
-    ACHIEV_GOOD_GRIEF_START_EVENT                 = 20383,
+    ACHIEV_GOOD_GRIEF_START_EVENT                 = 20383, 
 };
 
 class boss_maiden_of_grief : public CreatureScript
@@ -177,7 +177,7 @@ public:
             if (victim == me)
                 return;
 
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3,SAY_SLAY_4), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3, SAY_SLAY_4), me);
         }
     };
 

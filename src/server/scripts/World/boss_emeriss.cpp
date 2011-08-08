@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,13 +33,13 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO               = -1000401,
+    SAY_AGGRO               = -1000401, 
     SAY_CASTCORRUPTION      = -1000402, //signed for 6182
 
-    SPELL_SLEEP             = 24777,
-    SPELL_NOXIOUSBREATH     = 24818,
-    SPELL_TAILSWEEP         = 15847,
-    SPELL_VOLATILEINFECTION = 24928,
+    SPELL_SLEEP             = 24777, 
+    SPELL_NOXIOUSBREATH     = 24818, 
+    SPELL_TAILSWEEP         = 15847, 
+    SPELL_VOLATILEINFECTION = 24928, 
     SPELL_CORRUPTIONOFEARTH = 24910
 };
 

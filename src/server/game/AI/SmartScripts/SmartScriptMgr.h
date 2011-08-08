@@ -93,13 +93,13 @@ enum SMART_EVENT
     SMART_EVENT_HEALT_PCT                = 2,       //1             // HPMin%, HPMax%,  RepeatMin, RepeatMax
     SMART_EVENT_MANA_PCT                 = 3,       //1             // ManaMin%, ManaMax%, RepeatMin, RepeatMax
     SMART_EVENT_AGGRO                    = 4,       //1             // NONE
-    SMART_EVENT_KILL                     = 5,       //1             // CooldownMin0, CooldownMax1,playerOnly2,else creature entry3
+    SMART_EVENT_KILL                     = 5,       //1             // CooldownMin0, CooldownMax1, playerOnly2, else creature entry3
     SMART_EVENT_DEATH                    = 6,       //1             // NONE
     SMART_EVENT_EVADE                    = 7,       //1             // NONE
     SMART_EVENT_SPELLHIT                 = 8,       //1             // SpellID, School, CooldownMin, CooldownMax
     SMART_EVENT_RANGE                    = 9,       //1             // MinDist, MaxDist, RepeatMin, RepeatMax
     SMART_EVENT_OOC_LOS                  = 10,      //1             // NoHostile, MaxRnage, CooldownMin, CooldownMax
-    SMART_EVENT_RESPAWN                  = 11,      //1             // type, MapId,ZoneId
+    SMART_EVENT_RESPAWN                  = 11,      //1             // type, MapId, ZoneId
     SMART_EVENT_TARGET_HEALTH_PCT        = 12,      //1             // HPMin%, HPMax%, RepeatMin, RepeatMax
     SMART_EVENT_TARGET_CASTING           = 13,      //1             // RepeatMin, RepeatMax
     SMART_EVENT_FRIENDLY_HEALTH          = 14,      //1             // HPDeficit, Radius, RepeatMin, RepeatMax
@@ -110,7 +110,7 @@ enum SMART_EVENT
     SMART_EVENT_ACCEPTED_QUEST           = 19,      //1             // QuestID(0any)
     SMART_EVENT_REWARD_QUEST             = 20,      //1             // QuestID(0any)
     SMART_EVENT_REACHED_HOME             = 21,      //1             // NONE
-    SMART_EVENT_RECEIVE_EMOTE            = 22,      //1             // EmoteId, CooldownMin, CooldownMax, condition, val1,val2,val3
+    SMART_EVENT_RECEIVE_EMOTE            = 22,      //1             // EmoteId, CooldownMin, CooldownMax, condition, val1, val2, val3
     SMART_EVENT_HAS_AURA                 = 23,      //1             // Param1 = SpellID, Param2 = Number of Time STacked, Param3/4 RepeatMin, RepeatMax
     SMART_EVENT_TARGET_BUFFED            = 24,      //1             // Param1 = SpellID, Param2 = Number of Time STacked, Param3/4 RepeatMin, RepeatMax
     SMART_EVENT_RESET                    = 25,      //1             // Called after combat, when the creature respawn and spawn.
@@ -375,7 +375,7 @@ enum SMART_ACTION
     SMART_ACTION_ACTIVATE_GOBJECT                   = 9,      //
     SMART_ACTION_RANDOM_EMOTE                       = 10,     // EmoteId1, EmoteId2, EmoteId3...
     SMART_ACTION_CAST                               = 11,     // SpellId, CastFlags
-    SMART_ACTION_SUMMON_CREATURE                    = 12,     // CreatureID,summonType, duration in ms, storageID, attackInvoker,
+    SMART_ACTION_SUMMON_CREATURE                    = 12,     // CreatureID, summonType, duration in ms, storageID, attackInvoker,
     SMART_ACTION_THREAT_SINGLE_PCT                  = 13,     // Threat%
     SMART_ACTION_THREAT_ALL_PCT                     = 14,     // Threat%
     SMART_ACTION_CALL_AREAEXPLOREDOREVENTHAPPENS    = 15,     // QuestID
@@ -392,7 +392,7 @@ enum SMART_ACTION
     SMART_ACTION_CALL_GROUPEVENTHAPPENS             = 26,     // QuestID
     SMART_ACTION_CALL_CASTEDCREATUREORGO            = 27,     // CreatureId, SpellId
     SMART_ACTION_REMOVEAURASFROMSPELL               = 28,     // Spellid
-    SMART_ACTION_FOLLOW                             = 29,     // Distance, Angle, EndCreatureEntry, credit, creditType (0monsterkill,1event)
+    SMART_ACTION_FOLLOW                             = 29,     // Distance, Angle, EndCreatureEntry, credit, creditType (0monsterkill, 1event)
     SMART_ACTION_RANDOM_PHASE                       = 30,     // PhaseId1, PhaseId2, PhaseId3...
     SMART_ACTION_RANDOM_PHASE_RANGE                 = 31,     // PhaseMin, PhaseMax
     SMART_ACTION_RESET_GOBJECT                      = 32,     //
@@ -403,7 +403,7 @@ enum SMART_ACTION
     SMART_ACTION_DIE                                = 37,     // No Params
     SMART_ACTION_SET_IN_COMBAT_WITH_ZONE            = 38,     // No Params
     SMART_ACTION_CALL_FOR_HELP                      = 39,     // Radius
-    SMART_ACTION_SET_SHEATH                         = 40,     // Sheath (0-unarmed,1-melee,2-ranged)
+    SMART_ACTION_SET_SHEATH                         = 40,     // Sheath (0-unarmed, 1-melee, 2-ranged)
     SMART_ACTION_FORCE_DESPAWN                      = 41,     // timer
     SMART_ACTION_SET_INVINCIBILITY_HP_LEVEL         = 42,     // MinHpValue(+pct, -flat)
     SMART_ACTION_MOUNT_TO_ENTRY_OR_MODEL            = 43,     // Creature_template entry(param1) OR ModelId (param2) (or 0 for both to unmount)
@@ -436,7 +436,7 @@ enum SMART_ACTION
     SMART_ACTION_PLAYMOVIE                          = 68,     // entry
     SMART_ACTION_MOVE_TO_POS                        = 69,     // xyz
     SMART_ACTION_RESPAWN_TARGET                     = 70,     //
-    SMART_ACTION_EQUIP                              = 71,     // entry, slotmask slot1,slot2,slot3   ,only slots with mask set will be sent to client, bits are 1,2,4, leaving mask 0 is defaulted to mask 7 (send all), slots1-3 are only used if no entry is set
+    SMART_ACTION_EQUIP                              = 71,     // entry, slotmask slot1, slot2, slot3   , only slots with mask set will be sent to client, bits are 1, 2, 4, leaving mask 0 is defaulted to mask 7 (send all), slots1-3 are only used if no entry is set
     SMART_ACTION_CLOSE_GOSSIP                       = 72,     // none
     SMART_ACTION_TRIGGER_TIMED_EVENT                = 73,     // id(>1)
     SMART_ACTION_REMOVE_TIMED_EVENT                 = 74,     // id(>1)
@@ -516,7 +516,6 @@ struct SmartAction
 
         struct
         {
-
             uint32 emote1;
             uint32 emote2;
             uint32 emote3;
@@ -912,7 +911,7 @@ struct SmartTarget
         raw.param3 = p3;
     }
     SMARTAI_TARGETS type;
-    float x,y,z,o;
+    float x, y, z, o;
     union
     {
         struct
@@ -1002,16 +1001,16 @@ enum eSmartAI
 
 enum SmartScriptType
 {
-    SMART_SCRIPT_TYPE_CREATURE = 0,//done
-    SMART_SCRIPT_TYPE_GAMEOBJECT = 1,//done
-    SMART_SCRIPT_TYPE_AREATRIGGER = 2,//done
-    SMART_SCRIPT_TYPE_EVENT = 3,//
-    SMART_SCRIPT_TYPE_GOSSIP = 4,//
-    SMART_SCRIPT_TYPE_QUEST = 5,//
-    SMART_SCRIPT_TYPE_SPELL = 6,//
-    SMART_SCRIPT_TYPE_TRANSPORT = 7,//
-    SMART_SCRIPT_TYPE_INSTANCE = 8,//
-    SMART_SCRIPT_TYPE_TIMED_ACTIONLIST = 9,//
+    SMART_SCRIPT_TYPE_CREATURE = 0, //done
+    SMART_SCRIPT_TYPE_GAMEOBJECT = 1, //done
+    SMART_SCRIPT_TYPE_AREATRIGGER = 2, //done
+    SMART_SCRIPT_TYPE_EVENT = 3, //
+    SMART_SCRIPT_TYPE_GOSSIP = 4, //
+    SMART_SCRIPT_TYPE_QUEST = 5, //
+    SMART_SCRIPT_TYPE_SPELL = 6, //
+    SMART_SCRIPT_TYPE_TRANSPORT = 7, //
+    SMART_SCRIPT_TYPE_INSTANCE = 8, //
+    SMART_SCRIPT_TYPE_TIMED_ACTIONLIST = 9, //
     SMART_SCRIPT_TYPE_MAX = 10
 };
 
@@ -1113,7 +1112,6 @@ const uint32 SmartAIEventMask[SMART_EVENT_END][2] =
     {SMART_EVENT_FOLLOW_COMPLETED,          SMART_SCRIPT_TYPE_MASK_CREATURE },
     {SMART_EVENT_DUMMY_EFFECT,              SMART_SCRIPT_TYPE_MASK_CREATURE },
     {SMART_EVENT_IS_BEHIND_TARGET,          SMART_SCRIPT_TYPE_MASK_CREATURE }
-
 };
 
 enum SmartEventFlags
@@ -1173,7 +1171,6 @@ struct SmartScriptHolder
     bool active;
     bool runOnce;
     bool enableTimed;
-
 };
 
 typedef UNORDERED_MAP<uint32, WayPoint*> WPPath;
@@ -1223,7 +1220,7 @@ class SmartAIMgr
                 return mEventMap[uint32(type)][entry];
             else
             {
-                if(entry > 0)//first search is for guid (negative), do not drop error if not found
+                if (entry > 0)//first search is for guid (negative), do not drop error if not found
                     sLog->outDebug(LOG_FILTER_TSCR, "SmartAIMgr::GetScript: Could not load Script for Entry %d ScriptType %u.", entry, uint32(type));
                 return temp;
             }

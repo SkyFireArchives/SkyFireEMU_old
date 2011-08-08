@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -36,9 +36,9 @@ enum LazyPeonYells
 
 enum LazyPeon
 {
-    QUEST_LAZY_PEONS                              = 25134,
-    GO_LUMBERPILE                                 = 175784,
-    SPELL_BUFF_SLEEP                              = 17743,
+    QUEST_LAZY_PEONS                              = 25134, 
+    GO_LUMBERPILE                                 = 175784, 
+    SPELL_BUFF_SLEEP                              = 17743, 
     SPELL_AWAKEN_PEON                             = 19938
 };
 
@@ -79,11 +79,11 @@ public:
             if (spell->Id == SPELL_AWAKEN_PEON && caster->GetTypeId() == TYPEID_PLAYER
                 && CAST_PLR(caster)->GetQuestStatus(QUEST_LAZY_PEONS) == QUEST_STATUS_INCOMPLETE)
             {
-                caster->ToPlayer()->KilledMonsterCredit(me->GetEntry(),me->GetGUID());
+                caster->ToPlayer()->KilledMonsterCredit(me->GetEntry(), me->GetGUID());
                 DoScriptText(SAY_SPELL_HIT, me, caster);
                 me->RemoveAllAuras();
                 if (GameObject* Lumberpile = me->FindNearestGameObject(GO_LUMBERPILE, 20))
-                    me->GetMotionMaster()->MovePoint(1,Lumberpile->GetPositionX()-1,Lumberpile->GetPositionY(),Lumberpile->GetPositionZ());
+                    me->GetMotionMaster()->MovePoint(1, Lumberpile->GetPositionX()-1, Lumberpile->GetPositionY(), Lumberpile->GetPositionZ());
             }
         }
 
@@ -108,69 +108,69 @@ public:
 enum Texts
 {
     // Tiger Matriarch Credit
-    SAY_MATRIARCH_AGGRO     = 0,
+    SAY_MATRIARCH_AGGRO     = 0, 
 
     // Troll Volunteer
-    SAY_VOLUNTEER_START     = 0,
-    SAY_VOLUNTEER_END       = 1,
+    SAY_VOLUNTEER_START     = 0, 
+    SAY_VOLUNTEER_END       = 1, 
 };
 
 enum Spells
 {
     // Tiger Matriarch Credit
-    SPELL_SUMMON_MATRIARCH              = 75187,
-    SPELL_NO_SUMMON_AURA                = 75213,
-    SPELL_DETECT_INVIS                  = 75180,
-    SPELL_SUMMON_ZENTABRA_TRIGGER       = 75212,
+    SPELL_SUMMON_MATRIARCH              = 75187, 
+    SPELL_NO_SUMMON_AURA                = 75213, 
+    SPELL_DETECT_INVIS                  = 75180, 
+    SPELL_SUMMON_ZENTABRA_TRIGGER       = 75212, 
 
     // Tiger Matriarch
-    SPELL_POUNCE                        = 61184,
-    SPELL_FURIOUS_BITE                  = 75164,
-    SPELL_SUMMON_ZENTABRA               = 75181,
-    SPELL_SPIRIT_OF_THE_TIGER_RIDER     = 75166,
-    SPELL_EJECT_PASSENGERS              = 50630,
+    SPELL_POUNCE                        = 61184, 
+    SPELL_FURIOUS_BITE                  = 75164, 
+    SPELL_SUMMON_ZENTABRA               = 75181, 
+    SPELL_SPIRIT_OF_THE_TIGER_RIDER     = 75166, 
+    SPELL_EJECT_PASSENGERS              = 50630, 
 
     // Troll Volunteer
-    SPELL_VOLUNTEER_AURA                = 75076,
-    SPELL_PETACT_AURA                   = 74071,
-    SPELL_QUEST_CREDIT                  = 75106,
-    SPELL_MOUNTING_CHECK                = 75420,
-    SPELL_TURNIN                        = 73953,
-    SPELL_AOE_TURNIN                    = 75107,
+    SPELL_VOLUNTEER_AURA                = 75076, 
+    SPELL_PETACT_AURA                   = 74071, 
+    SPELL_QUEST_CREDIT                  = 75106, 
+    SPELL_MOUNTING_CHECK                = 75420, 
+    SPELL_TURNIN                        = 73953, 
+    SPELL_AOE_TURNIN                    = 75107, 
 
     // Vol'jin War Drums
-    SPELL_MOTIVATE_1                    = 75088,
-    SPELL_MOTIVATE_2                    = 75086,
+    SPELL_MOTIVATE_1                    = 75088, 
+    SPELL_MOTIVATE_2                    = 75086, 
 };
 
 enum Creatures
 {
     // Tiger Matriarch Credit
-    NPC_TIGER_VEHICLE                   = 40305,
+    NPC_TIGER_VEHICLE                   = 40305, 
 
     // Troll Volunteer
-    NPC_URUZIN                          = 40253,
-    NPC_VOLUNTEER_1                     = 40264,
-    NPC_VOLUNTEER_2                     = 40260,
+    NPC_URUZIN                          = 40253, 
+    NPC_VOLUNTEER_1                     = 40264, 
+    NPC_VOLUNTEER_2                     = 40260, 
 
     // Vol'jin War Drums
-    NPC_CITIZEN_1                       = 40256,
-    NPC_CITIZEN_2                       = 40257,
+    NPC_CITIZEN_1                       = 40256, 
+    NPC_CITIZEN_2                       = 40257, 
 };
 
 enum Events
 {
     // Tiger Matriarch Credit
-    EVENT_CHECK_SUMMON_AURA             = 1,
+    EVENT_CHECK_SUMMON_AURA             = 1, 
 
     // Tiger Matriarch
-    EVENT_POUNCE                        = 2,
-    EVENT_NOSUMMON                      = 3,
+    EVENT_POUNCE                        = 2, 
+    EVENT_NOSUMMON                      = 3, 
 };
 
 enum Points
 {
-    POINT_URUZIN                        = 4026400,
+    POINT_URUZIN                        = 4026400, 
 };
 
 class npc_tiger_matriarch_credit : public CreatureScript
@@ -327,9 +327,9 @@ class npc_tiger_matriarch : public CreatureScript
 // These models was found in sniff.
 // TODO: generalize these models with race from dbc
 uint32 const trollmodel[] =
-{11665,11734,11750,12037,12038,12042,12049,12849,13529,14759,15570,15701,
-15702,1882,1897,1976,2025,27286,2734,2735,4084,4085,4087,4089,4231,4357,
-4358,4360,4361,4362,4363,4370,4532,4537,4540,4610,6839,7037,9767,9768};
+{11665, 11734, 11750, 12037, 12038, 12042, 12049, 12849, 13529, 14759, 15570, 15701, 
+15702, 1882, 1897, 1976, 2025, 27286, 2734, 2735, 4084, 4085, 4087, 4089, 4231, 4357, 
+4358, 4360, 4361, 4362, 4363, 4370, 4532, 4537, 4540, 4610, 6839, 7037, 9767, 9768};
 
 class npc_troll_volunteer : public CreatureScript
 {
@@ -343,7 +343,7 @@ class npc_troll_volunteer : public CreatureScript
                 Reset();
                 Player* player = me->GetOwner()->ToPlayer();
 
-                switch (urand(1,4))
+                switch (urand(1, 4))
                 {
                     case 1:
                         _mountModel = 6471;

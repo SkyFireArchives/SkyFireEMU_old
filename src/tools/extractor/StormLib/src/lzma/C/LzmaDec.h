@@ -78,7 +78,7 @@ void LzmaDec_Init(CLzmaDec *p);
 
 typedef enum
 {
-  LZMA_FINISH_ANY,   /* finish at any point */
+  LZMA_FINISH_ANY,  /* finish at any point */
   LZMA_FINISH_END    /* block must be finished at the end */
 } ELzmaFinishMode;
 
@@ -99,10 +99,10 @@ typedef enum
 
 typedef enum
 {
-  LZMA_STATUS_NOT_SPECIFIED,               /* use main error code instead */
-  LZMA_STATUS_FINISHED_WITH_MARK,          /* stream was finished with end mark. */
-  LZMA_STATUS_NOT_FINISHED,                /* stream was not finished */
-  LZMA_STATUS_NEEDS_MORE_INPUT,            /* you must provide more input bytes */
+  LZMA_STATUS_NOT_SPECIFIED,              /* use main error code instead */
+  LZMA_STATUS_FINISHED_WITH_MARK,         /* stream was finished with end mark. */
+  LZMA_STATUS_NOT_FINISHED,               /* stream was not finished */
+  LZMA_STATUS_NEEDS_MORE_INPUT,           /* you must provide more input bytes */
   LZMA_STATUS_MAYBE_FINISHED_WITHOUT_MARK  /* there is probability that stream was finished without end mark */
 } ELzmaStatus;
 

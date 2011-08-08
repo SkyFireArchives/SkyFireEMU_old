@@ -66,7 +66,7 @@ SpellEntry::SpellEntry(SpellEntry_n const* spell)
     SpellReagentsId = spell->SpellReagentsId;
     SpellTargetRestrictionsId = spell->SpellTargetRestrictionsId;
     SpellTotemsId = spell->SpellTotemsId;
-    
+
     LoadSpellAddons();
 }
 
@@ -77,7 +77,7 @@ void SpellEntry::LoadSpellAddons()
     procChance = SpellAuraOptions ? SpellAuraOptions->procChance : 0;
     procCharges = SpellAuraOptions ? SpellAuraOptions->procCharges : 0;
     procFlags = SpellAuraOptions ? SpellAuraOptions->procFlags : 0;
-    
+
     SpellAuraRestrictionsEntry const* SpellAuraRestrictions = GetSpellAuraRestrictions();
     CasterAuraState = SpellAuraRestrictions ? SpellAuraRestrictions->CasterAuraState : 0;
     TargetAuraState = SpellAuraRestrictions ? SpellAuraRestrictions->TargetAuraState : 0;
@@ -87,12 +87,12 @@ void SpellEntry::LoadSpellAddons()
     targetAuraSpell = SpellAuraRestrictions ? SpellAuraRestrictions->targetAuraSpell : 0;
     excludeCasterAuraSpell = SpellAuraRestrictions ? SpellAuraRestrictions->excludeCasterAuraSpell : 0;
     excludeTargetAuraSpell = SpellAuraRestrictions ? SpellAuraRestrictions->excludeTargetAuraSpell : 0;
-    
+
     SpellCastingRequirementsEntry const* SpellCastingRequirements = GetSpellCastingRequirements();
     FacingCasterFlags = SpellCastingRequirements ? SpellCastingRequirements->FacingCasterFlags : 0;
     AreaGroupId = SpellCastingRequirements ? SpellCastingRequirements->AreaGroupId : 0;
     RequiresSpellFocus = SpellCastingRequirements ? SpellCastingRequirements->RequiresSpellFocus : 0;
-    
+
     SpellCategoriesEntry const* SpellCategories = GetSpellCategories();
     Category = SpellCategories ? SpellCategories->Category : 0;
     DmgClass = SpellCategories ? SpellCategories->DmgClass : 0;
@@ -100,16 +100,16 @@ void SpellEntry::LoadSpellAddons()
     Mechanic = SpellCategories ? SpellCategories->Mechanic : 0;
     PreventionType = SpellCategories ? SpellCategories->PreventionType : 0;
     StartRecoveryCategory = SpellCategories ? SpellCategories->StartRecoveryCategory : 0;
-    
+
     SpellClassOptionsEntry const* SpellClassOptions = GetSpellClassOptions();
     SpellFamilyFlags = SpellClassOptions ? SpellClassOptions->SpellFamilyFlags : flag96(0);
     SpellFamilyName = SpellClassOptions ? SpellClassOptions->SpellFamilyName : 0;
-    
+
     SpellCooldownsEntry const* SpellCooldowns = GetSpellCooldowns();
     CategoryRecoveryTime = SpellCooldowns ? SpellCooldowns->CategoryRecoveryTime : 0;
     RecoveryTime = SpellCooldowns ? SpellCooldowns->RecoveryTime : 0;
     StartRecoveryTime = SpellCooldowns ? SpellCooldowns->StartRecoveryTime : 0;
-    
+
     for(int i = 0; i < 3; i++)
     {
         SpellEffectEntry const* SpellEffect = GetSpellEffect(i);
@@ -134,38 +134,37 @@ void SpellEntry::LoadSpellAddons()
         EffectImplicitTargetA[i] = SpellEffect ? SpellEffect->EffectImplicitTargetA : 0;
         EffectImplicitTargetB[i] = SpellEffect ? SpellEffect->EffectImplicitTargetB : 0;
     }
-    
+
     SpellEquippedItemsEntry const* SpellEquippedItems = GetSpellEquippedItems();
     EquippedItemClass = SpellEquippedItems ? SpellEquippedItems->EquippedItemClass : -1;
     EquippedItemInventoryTypeMask = SpellEquippedItems ? SpellEquippedItems->EquippedItemInventoryTypeMask : 0;
     EquippedItemSubClassMask = SpellEquippedItems ? SpellEquippedItems->EquippedItemSubClassMask : 0;
-    
+
     SpellInterruptsEntry const* SpellInterrupts = GetSpellInterrupts();
     AuraInterruptFlags = SpellInterrupts ? SpellInterrupts->AuraInterruptFlags : 0;
     ChannelInterruptFlags = SpellInterrupts ? SpellInterrupts->ChannelInterruptFlags : 0;
     InterruptFlags = SpellInterrupts ? SpellInterrupts->InterruptFlags : 0;
-    
+
     SpellLevelsEntry const* SpellLevels  = GetSpellLevels();
     baseLevel = SpellLevels ? SpellLevels->baseLevel : 0;
     maxLevel = SpellLevels ? SpellLevels->maxLevel : 0;
     spellLevel = SpellLevels ? SpellLevels->spellLevel : 0;
-    
+
     SpellPowerEntry const* SpellPower = GetSpellPower();
     manaCost = SpellPower ? SpellPower->manaCost : 0;
     manaCostPerlevel = SpellPower ? SpellPower->manaCostPerlevel : 0;
     ManaCostPercentage = SpellPower ? SpellPower->ManaCostPercentage : 0;
     manaPerSecond = SpellPower ? SpellPower->manaPerSecond : 0;
-    
+
     SpellReagentsEntry const* SpellReagents = GetSpellReagents();
     for(int i = 0; i < 8; i++)
     {
         Reagent[i] = SpellReagents ? SpellReagents->Reagent[i] : 0;
         ReagentCount[i] = SpellReagents ? SpellReagents->ReagentCount[i] : 0;
     }
-    
+
     SpellScalingEntry const* SpellScaling = GetSpellScaling();
-    
-    
+
     ct_min = SpellScaling ? SpellScaling->ct_min : 0;
     ct_max = SpellScaling ? SpellScaling->ct_max : 0;
     ct_max_level = SpellScaling ? SpellScaling->ct_max_level : 0;
@@ -178,17 +177,17 @@ void SpellEntry::LoadSpellAddons()
     }
     base_coef = SpellScaling ? SpellScaling->base_coef : 0;
     base_level_coef = SpellScaling ? SpellScaling->base_level_coef : 0;
-    
+
     SpellShapeshiftEntry const* SpellShapeshift = GetSpellShapeshift();
     Stances = SpellShapeshift ? SpellShapeshift->Stances : 0;
     StancesNot = SpellShapeshift ? SpellShapeshift->StancesNot : 0;
-    
+
     SpellTargetRestrictionsEntry const* SpellTargetRestrictions = GetSpellTargetRestrictions();
     MaxAffectedTargets = SpellTargetRestrictions ? SpellTargetRestrictions->MaxAffectedTargets : 0;
     MaxTargetLevel = SpellTargetRestrictions ? SpellTargetRestrictions->MaxTargetLevel : 0;
     TargetCreatureType = SpellTargetRestrictions ? SpellTargetRestrictions->TargetCreatureType : 0;
     Targets = SpellTargetRestrictions ? SpellTargetRestrictions->Targets : 0;
-    
+
     SpellTotemsEntry const* SpellTotems = GetSpellTotems();
     for(int i = 0; i < 2; i++)
     {
@@ -199,14 +198,14 @@ void SpellEntry::LoadSpellAddons()
 
 int32 SpellEntry::CalculateSimpleValue(uint32 eff) const
 {
-    if(SpellEffectEntry const* effectEntry = GetSpellEffectEntry(Id, eff))
+    if (SpellEffectEntry const* effectEntry = GetSpellEffectEntry(Id, eff))
         return effectEntry->EffectBasePoints;
     return 0;
 }
 
 uint32 const* SpellEntry::GetEffectSpellClassMask(uint32 eff) const
 {
-    if(SpellEffectEntry const* effectEntry = GetSpellEffectEntry(Id, eff))
+    if (SpellEffectEntry const* effectEntry = GetSpellEffectEntry(Id, eff))
         return &effectEntry->EffectSpellClassMask[0];
     return NULL;
 }

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -50,17 +50,17 @@ EndContentData */
 
 enum eEnums
 {
-    SAY_HEAL1           = -1000176,
-    SAY_HEAL2           = -1000177,
-    SAY_HEAL3           = -1000178,
-    SAY_HEAL4           = -1000179,
+    SAY_HEAL1           = -1000176, 
+    SAY_HEAL2           = -1000177, 
+    SAY_HEAL3           = -1000178, 
+    SAY_HEAL4           = -1000179, 
 
-    SAY_HELP1           = -1000180,
-    SAY_HELP2           = -1000181,
-    SAY_HELP3           = -1000182,
-    SAY_HELP4           = -1000183,
+    SAY_HELP1           = -1000180, 
+    SAY_HELP2           = -1000181, 
+    SAY_HELP3           = -1000182, 
+    SAY_HELP4           = -1000183, 
 
-    SPELL_IRRIDATION    = 35046,
+    SPELL_IRRIDATION    = 35046, 
     SPELL_STUNNED       = 28630
 };
 
@@ -145,7 +145,7 @@ public:
                     {
                         DoScriptText(RAND(SAY_HEAL1, SAY_HEAL2, SAY_HEAL3, SAY_HEAL4), me, pPlayer);
 
-                        pPlayer->TalkedToCreature(me->GetEntry(),me->GetGUID());
+                        pPlayer->TalkedToCreature(me->GetEntry(), me->GetGUID());
                     }
 
                     me->GetMotionMaster()->Clear();
@@ -184,14 +184,14 @@ public:
 
 enum eOvergrind
 {
-    SAY_TEXT        = -1000184,
-    SAY_EMOTE       = -1000185,
-    ATTACK_YELL     = -1000186,
+    SAY_TEXT        = -1000184, 
+    SAY_EMOTE       = -1000185, 
+    ATTACK_YELL     = -1000186, 
 
-    AREA_COVE       = 3579,
-    AREA_ISLE       = 3639,
-    QUEST_GNOMERCY  = 9537,
-    FACTION_HOSTILE = 14,
+    AREA_COVE       = 3579, 
+    AREA_ISLE       = 3639, 
+    QUEST_GNOMERCY  = 9537, 
+    FACTION_HOSTILE = 14, 
     SPELL_DYNAMITE  = 7978
 };
 
@@ -344,12 +344,12 @@ public:
 
 enum eMagwin
 {
-    SAY_START                   = -1000111,
-    SAY_AGGRO                   = -1000112,
-    SAY_PROGRESS                = -1000113,
-    SAY_END1                    = -1000114,
-    SAY_END2                    = -1000115,
-    EMOTE_HUG                   = -1000116,
+    SAY_START                   = -1000111, 
+    SAY_AGGRO                   = -1000112, 
+    SAY_PROGRESS                = -1000113, 
+    SAY_END1                    = -1000114, 
+    SAY_END2                    = -1000115, 
+    EMOTE_HUG                   = -1000116, 
 
     QUEST_A_CRY_FOR_SAY_HELP    = 9528
 };
@@ -400,7 +400,7 @@ public:
             case 29:
                 DoScriptText(EMOTE_HUG, me, pPlayer);
                 DoScriptText(SAY_END2, me, pPlayer);
-                pPlayer->GroupEventHappens(QUEST_A_CRY_FOR_SAY_HELP,me);
+                pPlayer->GroupEventHappens(QUEST_A_CRY_FOR_SAY_HELP, me);
                 break;
             }
         }
@@ -422,21 +422,21 @@ public:
 
 enum eGeezle
 {
-    QUEST_TREES_COMPANY = 9531,
+    QUEST_TREES_COMPANY = 9531, 
 
-    SPELL_TREE_DISGUISE = 30298,
+    SPELL_TREE_DISGUISE = 30298, 
 
-    GEEZLE_SAY_1    = -1000629,
-    SPARK_SAY_2     = -1000630,
-    SPARK_SAY_3     = -1000631,
-    GEEZLE_SAY_4    = -1000632,
-    SPARK_SAY_5     = -1000633,
-    SPARK_SAY_6     = -1000634,
-    GEEZLE_SAY_7    = -1000635,
+    GEEZLE_SAY_1    = -1000629, 
+    SPARK_SAY_2     = -1000630, 
+    SPARK_SAY_3     = -1000631, 
+    GEEZLE_SAY_4    = -1000632, 
+    SPARK_SAY_5     = -1000633, 
+    SPARK_SAY_6     = -1000634, 
+    GEEZLE_SAY_7    = -1000635, 
 
-    EMOTE_SPARK     = -1000636,
+    EMOTE_SPARK     = -1000636, 
 
-    MOB_SPARK       = 17243,
+    MOB_SPARK       = 17243, 
     GO_NAGA_FLAG    = 181694
 };
 
@@ -544,7 +544,7 @@ public:
                 if ((*itr)->GetQuestStatus(QUEST_TREES_COMPANY) == QUEST_STATUS_INCOMPLETE
                     &&(*itr)->HasAura(SPELL_TREE_DISGUISE))
                 {
-                    (*itr)->KilledMonsterCredit(MOB_SPARK,0);
+                    (*itr)->KilledMonsterCredit(MOB_SPARK, 0);
                 }
             }
         }
@@ -552,7 +552,7 @@ public:
         void DespawnNagaFlag(bool despawn)
         {
             std::list<GameObject*> FlagList;
-            me->GetGameObjectListWithEntryInGrid(FlagList,GO_NAGA_FLAG, 100.0f);
+            me->GetGameObjectListWithEntryInGrid(FlagList, GO_NAGA_FLAG, 100.0f);
 
             if (!FlagList.empty())
             {
@@ -588,8 +588,8 @@ public:
 
 enum eOwlkin
 {
-    SPELL_INOCULATE_OWLKIN  = 29528,
-    ENTRY_OWLKIN            = 16518,
+    SPELL_INOCULATE_OWLKIN  = 29528, 
+    ENTRY_OWLKIN            = 16518, 
     ENTRY_OWLKIN_INOC       = 16534
 };
 
@@ -658,10 +658,10 @@ public:
 
 enum eRavegerCage
 {
-    NPC_DEATH_RAVAGER       = 17556,
+    NPC_DEATH_RAVAGER       = 17556, 
 
-    SPELL_REND              = 13443,
-    SPELL_ENRAGING_BITE     = 30736,
+    SPELL_REND              = 13443, 
+    SPELL_ENRAGING_BITE     = 30736, 
 
     QUEST_STRENGTH_ONE      = 9582
 };
@@ -677,7 +677,7 @@ public:
         {
             if (Creature* ravager = pGo->FindNearestCreature(NPC_DEATH_RAVAGER, 5.0f, true))
             {
-                ravager->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
+                ravager->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 ravager->SetReactState(REACT_AGGRESSIVE);
                 ravager->AI()->AttackStart(pPlayer);
             }
@@ -742,11 +742,11 @@ public:
 ########*/
 enum BristlelimbCage
 {
-    QUEST_THE_PROPHECY_OF_AKIDA         = 9544,
-    NPC_STILLPINE_CAPITIVE              = 17375,
-    GO_BRISTELIMB_CAGE                  = 181714,
-    CAPITIVE_SAY_1                      = -1000474,
-    CAPITIVE_SAY_2                      = -1000475,
+    QUEST_THE_PROPHECY_OF_AKIDA         = 9544, 
+    NPC_STILLPINE_CAPITIVE              = 17375, 
+    GO_BRISTELIMB_CAGE                  = 181714, 
+    CAPITIVE_SAY_1                      = -1000474, 
+    CAPITIVE_SAY_2                      = -1000475, 
     CAPITIVE_SAY_3                      = -1000476
 };
 
@@ -765,15 +765,15 @@ public:
         {
             FleeTimer = 0;
             GameObject* cage = me->FindNearestGameObject(GO_BRISTELIMB_CAGE, 5.0f);
-            if(cage)
+            if (cage)
                 cage->ResetDoorOrButton();
         }
 
         void UpdateAI(const uint32 diff)
         {
-            if(FleeTimer)
+            if (FleeTimer)
             {
-                if(FleeTimer <= diff)
+                if (FleeTimer <= diff)
                     me->ForcedDespawn();
                 else FleeTimer -= diff;
             }
@@ -794,10 +794,10 @@ public:
 
     bool OnGossipHello(Player* pPlayer, GameObject* pGo)
     {
-        if(pPlayer->GetQuestStatus(QUEST_THE_PROPHECY_OF_AKIDA) == QUEST_STATUS_INCOMPLETE)
+        if (pPlayer->GetQuestStatus(QUEST_THE_PROPHECY_OF_AKIDA) == QUEST_STATUS_INCOMPLETE)
         {
             Creature* pCreature = pGo->FindNearestCreature(NPC_STILLPINE_CAPITIVE, 5.0f, true);
-            if(pCreature)
+            if (pCreature)
             {
                 DoScriptText(RAND(CAPITIVE_SAY_1, CAPITIVE_SAY_2, CAPITIVE_SAY_3), pCreature, pPlayer);
                 pCreature->GetMotionMaster()->MoveFleeing(pPlayer, 3500);

@@ -46,4 +46,3 @@ class TotemAI : public CreatureAI
         uint64 i_victimGuid;
 };
 #endif
-

@@ -131,4 +131,3 @@ struct npc_escortAI : public ScriptedAI
         bool ScriptWP;
 };
 #endif
-

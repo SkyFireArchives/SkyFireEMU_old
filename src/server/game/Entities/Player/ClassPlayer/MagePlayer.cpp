@@ -37,7 +37,7 @@ public:
             {
                 if (spellEffect->Effect == SPELL_EFFECT_SCHOOL_DAMAGE)
                 {
-                    uint32 Chance = urand(1,5); // Every number has %20 chance
+                    uint32 Chance = urand(1, 5); // Every number has %20 chance
                     if (player->HasSpell(5143) && (Chance == 1 || Chance == 2)) // 40% Chance
                         player->CastSpell(player, 79683, true);
                 }

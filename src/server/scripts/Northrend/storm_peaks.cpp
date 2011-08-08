@@ -27,7 +27,7 @@
 
 enum eAgnetta
 {
-    QUEST_ITS_THAT_YOUR_GOBLIN      = 12969,
+    QUEST_ITS_THAT_YOUR_GOBLIN      = 12969, 
     FACTION_HOSTILE_AT1             = 45
 };
 
@@ -139,11 +139,11 @@ public:
 
 enum eThorim
 {
-    QUEST_SIBLING_RIVALRY = 13064,
-    NPC_THORIM = 29445,
-    GOSSIP_TEXTID_THORIM1 = 13799,
-    GOSSIP_TEXTID_THORIM2 = 13801,
-    GOSSIP_TEXTID_THORIM3 = 13802,
+    QUEST_SIBLING_RIVALRY = 13064, 
+    NPC_THORIM = 29445, 
+    GOSSIP_TEXTID_THORIM1 = 13799, 
+    GOSSIP_TEXTID_THORIM2 = 13801, 
+    GOSSIP_TEXTID_THORIM3 = 13802, 
     GOSSIP_TEXTID_THORIM4 = 13803
 };
 
@@ -213,7 +213,7 @@ public:
         {
             me->SetReactState(REACT_PASSIVE);
 
-            if (GameObject* pGO = me->FindNearestGameObject(GO_RUSTY_CAGE,5.0f))
+            if (GameObject* pGO = me->FindNearestGameObject(GO_RUSTY_CAGE, 5.0f))
             {
                 if (pGO->GetGoState() == GO_STATE_ACTIVE)
                     pGO->SetGoState(GO_STATE_READY);
@@ -236,10 +236,10 @@ public:
 
 enum eVictoriousChallenger
 {
-    QUEST_TAKING_ALL_CHALLENGERS    = 12971,
-    QUEST_DEFENDING_YOUR_TITLE      = 13423,
+    QUEST_TAKING_ALL_CHALLENGERS    = 12971, 
+    QUEST_DEFENDING_YOUR_TITLE      = 13423, 
 
-    SPELL_SUNDER_ARMOR              = 11971,
+    SPELL_SUNDER_ARMOR              = 11971, 
     SPELL_REND_VC                   = 11977
 };
 
@@ -336,10 +336,10 @@ public:
 
 enum eLokliraCrone
 {
-    QUEST_HYLDSMEET     = 12970,
+    QUEST_HYLDSMEET     = 12970, 
 
-    GOSSIP_TEXTID_LOK1  = 13778,
-    GOSSIP_TEXTID_LOK2  = 13779,
+    GOSSIP_TEXTID_LOK1  = 13778, 
+    GOSSIP_TEXTID_LOK2  = 13779, 
     GOSSIP_TEXTID_LOK3  = 13780
 };
 
@@ -394,8 +394,8 @@ public:
 
 enum eInjuredGoblin
 {
-    QUEST_BITTER_DEPARTURE     = 12832,
-    SAY_QUEST_ACCEPT           =  -1800042,
+    QUEST_BITTER_DEPARTURE     = 12832, 
+    SAY_QUEST_ACCEPT           =  -1800042, 
     SAY_END_WP_REACHED         =  -1800043
 };
 
@@ -506,12 +506,12 @@ public:
             pPlayer->PrepareQuestMenu(pCreature->GetGUID());
 
         //Trainer Menu
-        if( pCreature->isTrainer() )
+        if ( pCreature->isTrainer() )
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_TRAINER, GOSSIP_TEXT_TRAIN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRAIN);
 
         //Vendor Menu
-        if( pCreature->isVendor() )
-            if(pPlayer->HasSpell(SPELL_MECHANO_HOG) || pPlayer->HasSpell(SPELL_MEKGINEERS_CHOPPER))
+        if ( pCreature->isVendor() )
+            if (pPlayer->HasSpell(SPELL_MECHANO_HOG) || pPlayer->HasSpell(SPELL_MEKGINEERS_CHOPPER))
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_TEXT_BROWSE_GOODS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
 
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());

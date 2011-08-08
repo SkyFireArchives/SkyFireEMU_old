@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,16 +27,16 @@
 
 enum eTypes
 {
-    DATA_MAGUS_TELESTRA_EVENT,
-    DATA_ANOMALUS_EVENT,
-    DATA_ORMOROK_EVENT,
-    DATA_KERISTRASZA_EVENT,
+    DATA_MAGUS_TELESTRA_EVENT, 
+    DATA_ANOMALUS_EVENT, 
+    DATA_ORMOROK_EVENT, 
+    DATA_KERISTRASZA_EVENT, 
 
-    DATA_ANOMALUS,
-    DATA_KERISTRASZA,
+    DATA_ANOMALUS, 
+    DATA_KERISTRASZA, 
 
-    ANOMALUS_CONTAINMET_SPHERE,
-    ORMOROKS_CONTAINMET_SPHERE,
+    ANOMALUS_CONTAINMET_SPHERE, 
+    ORMOROKS_CONTAINMET_SPHERE, 
     TELESTRAS_CONTAINMET_SPHERE
 };
 

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -57,14 +57,14 @@ EndScriptData */
 #define MOB_VOID_PORTAL             19224
 #define SPELL_VOID_PORTAL_VISUAL    33569
 
-float VorpilPosition[3] = {-252.8820f,-264.3030f,17.1f};
+float VorpilPosition[3] = {-252.8820f, -264.3030f, 17.1f};
 
 float VoidPortalCoords[5][3] =
 {
-    {-283.5894f, -239.5718f, 12.7f},
-    {-306.5853f, -258.4539f, 12.7f},
-    {-295.8789f, -269.0899f, 12.7f},
-    {-209.3401f, -262.7564f, 17.1f},
+    {-283.5894f, -239.5718f, 12.7f}, 
+    {-306.5853f, -258.4539f, 12.7f}, 
+    {-295.8789f, -269.0899f, 12.7f}, 
+    {-209.3401f, -262.7564f, 17.1f}, 
     {-261.4533f, -297.3298f, 17.1f}
 };
 
@@ -121,7 +121,7 @@ public:
                     me->Kill(me);
                     return;
                 }
-                me->GetMotionMaster()->MoveFollow(Vorpil,0,0);
+                me->GetMotionMaster()->MoveFollow(Vorpil, 0, 0);
                 if (me->IsWithinDist(Vorpil, 3))
                 {
                     DoCast(me, SPELL_SACRIFICE, false);
@@ -189,11 +189,11 @@ public:
                 for (uint8 i = 0; i < 5; ++i)
                 {
                     Creature *Portal = NULL;
-                    Portal = me->SummonCreature(MOB_VOID_PORTAL,VoidPortalCoords[i][0],VoidPortalCoords[i][1],VoidPortalCoords[i][2],0,TEMPSUMMON_CORPSE_DESPAWN,3000000);
+                    Portal = me->SummonCreature(MOB_VOID_PORTAL, VoidPortalCoords[i][0], VoidPortalCoords[i][1], VoidPortalCoords[i][2], 0, TEMPSUMMON_CORPSE_DESPAWN, 3000000);
                     if (Portal)
                     {
                         PortalsGuid[i] = Portal->GetGUID();
-                        Portal->CastSpell(Portal,SPELL_VOID_PORTAL_VISUAL,false);
+                        Portal->CastSpell(Portal, SPELL_VOID_PORTAL_VISUAL, false);
                     }
                 }
                 sumportals = true;
@@ -218,8 +218,8 @@ public:
 
         void spawnVoidTraveler()
         {
-            int pos = urand(0,4);
-            me->SummonCreature(MOB_VOID_TRAVELER,VoidPortalCoords[pos][0],VoidPortalCoords[pos][1],VoidPortalCoords[pos][2],0,TEMPSUMMON_CORPSE_TIMED_DESPAWN,5000);
+            int pos = urand(0, 4);
+            me->SummonCreature(MOB_VOID_TRAVELER, VoidPortalCoords[pos][0], VoidPortalCoords[pos][1], VoidPortalCoords[pos][2], 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 5000);
             if (!HelpYell)
             {
                 DoScriptText(SAY_HELP, me);
@@ -235,7 +235,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1,SAY_SLAY2), me);
+            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
         }
 
         void JustDied(Unit * /*victim*/)
@@ -249,7 +249,7 @@ public:
 
         void EnterCombat(Unit * /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO1,SAY_AGGRO2,SAY_AGGRO3), me);
+            DoScriptText(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3), me);
             summonPortals();
 
             if (pInstance)
@@ -280,7 +280,7 @@ public:
 
             if (IsHeroic() && banish_Timer <= diff)
             {
-                Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM,0,30,false);
+                Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 30, false);
                 if (pTarget)
                 {
                     DoCast(pTarget, SPELL_BANISH);
@@ -295,9 +295,9 @@ public:
                 for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
                     if (Player* i_pl = i->getSource())
                         if (i_pl->isAlive() && !i_pl->HasAura(SPELL_BANISH))
-                            i_pl->TeleportTo(me->GetMapId(), VorpilPosition[0],VorpilPosition[1],VorpilPosition[2], 0, TELE_TO_NOT_LEAVE_COMBAT);
+                            i_pl->TeleportTo(me->GetMapId(), VorpilPosition[0], VorpilPosition[1], VorpilPosition[2], 0, TELE_TO_NOT_LEAVE_COMBAT);
 
-                me->GetMap()->CreatureRelocation(me, VorpilPosition[0],VorpilPosition[1],VorpilPosition[2],0.0f);
+                me->GetMap()->CreatureRelocation(me, VorpilPosition[0], VorpilPosition[1], VorpilPosition[2], 0.0f);
                 DoCast(me, SPELL_DRAW_SHADOWS, true);
 
                 DoCast(me, SPELL_RAIN_OF_FIRE);

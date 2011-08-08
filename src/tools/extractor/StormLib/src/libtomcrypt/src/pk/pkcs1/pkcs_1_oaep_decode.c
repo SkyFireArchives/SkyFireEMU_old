@@ -30,10 +30,10 @@
    @param res              [out] Result of decoding, 1==valid, 0==invalid
    @return CRYPT_OK if successful (even if invalid)
 */
-int pkcs_1_oaep_decode(const unsigned char *msg,    unsigned long msglen,
+int pkcs_1_oaep_decode(const unsigned char *msg,   unsigned long msglen,
                        const unsigned char *lparam, unsigned long lparamlen,
                              unsigned long modulus_bitlen, int hash_idx,
-                             unsigned char *out,    unsigned long *outlen,
+                             unsigned char *out,   unsigned long *outlen,
                              int           *res)
 {
    unsigned char *DB, *seed, *mask;
@@ -170,7 +170,7 @@ int pkcs_1_oaep_decode(const unsigned char *msg,    unsigned long msglen,
    err = CRYPT_OK;
 LBL_ERR:
 #ifdef LTC_CLEAN_STACK
-   zeromem(DB,   modulus_len);
+   zeromem(DB,  modulus_len);
    zeromem(seed, hLen);
    zeromem(mask, modulus_len);
 #endif

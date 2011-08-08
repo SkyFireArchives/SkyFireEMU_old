@@ -296,7 +296,7 @@ public:
     bool prepareLoadedData();
     adt_MH2O *getMH2O()
     { 
-        if(offsMH2O)
+        if (offsMH2O)
             return (adt_MH2O *)((uint8 *)&pad+offsMH2O);
         return 0;
     }

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -200,7 +200,7 @@ struct boss_twinemperorsAI : public ScriptedAI
         if (Heal_Timer <= diff)
         {
             Unit *pOtherBoss = GetOtherBoss();
-            if (pOtherBoss && pOtherBoss->IsWithinDist(me,60))
+            if (pOtherBoss && pOtherBoss->IsWithinDist(me, 60))
             {
                 DoCast(pOtherBoss, SPELL_HEAL_BROTHER);
                 Heal_Timer = 1000;
@@ -228,7 +228,7 @@ struct boss_twinemperorsAI : public ScriptedAI
             float other_o = pOtherBoss->GetOrientation();
 
             Map *thismap = me->GetMap();
-            thismap->CreatureRelocation(pOtherBoss, me->GetPositionX(),
+            thismap->CreatureRelocation(pOtherBoss, me->GetPositionX(), 
                 me->GetPositionY(),    me->GetPositionZ(), me->GetOrientation());
             thismap->CreatureRelocation(me, other_x, other_y, other_z, other_o);
 
@@ -317,8 +317,8 @@ struct boss_twinemperorsAI : public ScriptedAI
     Creature *RespawnNearbyBugsAndGetOne()
     {
         std::list<Creature*> lUnitList;
-        me->GetCreatureListWithEntryInGrid(lUnitList,15316,150.0f);
-        me->GetCreatureListWithEntryInGrid(lUnitList,15317,150.0f);
+        me->GetCreatureListWithEntryInGrid(lUnitList, 15316, 150.0f);
+        me->GetCreatureListWithEntryInGrid(lUnitList, 15317, 150.0f);
 
         if (lUnitList.empty())
             return NULL;

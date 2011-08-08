@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -332,7 +332,7 @@ public:
                             if (Creature* VoiceTrigger = (Unit::GetCreature(*me, pInstance->GetData64(DATA_BLOOD_ELF_COUNCIL_VOICE))))
                                 VoiceTrigger->DealDamage(VoiceTrigger, VoiceTrigger->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                             pInstance->SetData(DATA_ILLIDARICOUNCILEVENT, DONE);
-                            //me->SummonCreature(AKAMAID,746.466980f,304.394989f,311.90208f,6.272870f,TEMPSUMMON_DEAD_DESPAWN,0);
+                            //me->SummonCreature(AKAMAID, 746.466980f, 304.394989f, 311.90208f, 6.272870f, TEMPSUMMON_DEAD_DESPAWN, 0);
                         }
                         me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                         return;
@@ -524,7 +524,7 @@ public:
         void CastAuraOnCouncil()
         {
             uint32 spellid = 0;
-            switch (urand(0,1))
+            switch (urand(0, 1))
             {
                 case 0: spellid = SPELL_DEVOTION_AURA;   break;
                 case 1: spellid = SPELL_CHROMATIC_AURA;  break;
@@ -546,7 +546,7 @@ public:
             {
                 if (Unit* pUnit = SelectCouncilMember())
                 {
-                    switch (urand(0,1))
+                    switch (urand(0, 1))
                     {
                         case 0: DoCast(pUnit, SPELL_BLESS_SPELLWARD);  break;
                         case 1: DoCast(pUnit, SPELL_BLESS_PROTECTION); break;
@@ -576,7 +576,7 @@ public:
 
             if (SealTimer <= diff)
             {
-                switch (urand(0,1))
+                switch (urand(0, 1))
                 {
                     case 0: DoCast(me, SPELL_SEAL_OF_COMMAND);  break;
                     case 1: DoCast(me, SPELL_SEAL_OF_BLOOD);    break;
@@ -656,7 +656,7 @@ public:
             {
                 DoCast(me, SPELL_DAMPEN_MAGIC);
                 Cooldown = 1000;
-                DampenMagicTimer = 67200;                      // almost 1,12 minutes
+                DampenMagicTimer = 67200;                      // almost 1, 12 minutes
                 ArcaneBoltTimer += 1000;                        // Give the Mage some time to spellsteal Dampen.
             } else DampenMagicTimer -= diff;
 

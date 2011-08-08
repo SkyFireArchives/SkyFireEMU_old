@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -541,7 +541,7 @@ void WorldSession::HandleGroupRaidConvertOpcode(WorldPacket & recv_data)
 
     bool toRaid = false;
     recv_data >> toRaid;
-    if(toRaid)
+    if (toRaid)
     {
         // everything's fine, do it (is it 0 (PARTY_OP_INVITE) correct code)
         SendPartyResult(PARTY_OP_INVITE, "", ERR_PARTY_RESULT_OK);
@@ -924,7 +924,7 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
             data << (uint8)  1;
         }
     }
-    data.put<uint64>(maskPos,auramask);                     // GROUP_UPDATE_FLAG_AURAS
+    data.put<uint64>(maskPos, auramask);                     // GROUP_UPDATE_FLAG_AURAS
 
     if (pet)
     {
@@ -954,7 +954,7 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
                 data << (uint8)  1;
             }
         }
-        data.put<uint64>(petMaskPos,petauramask);           // GROUP_UPDATE_FLAG_PET_AURAS
+        data.put<uint64>(petMaskPos, petauramask);           // GROUP_UPDATE_FLAG_PET_AURAS
     }
     else
     {
@@ -1004,7 +1004,7 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
     recv_data >> guid;
     
     Player * plr = sObjectMgr->GetPlayer(guid);
-    if(!plr)
+    if (!plr)
     {
         sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_GROUP_SET_ROLES [" UI64FMTD "] Player not found", guid);
         return;
@@ -1016,7 +1016,7 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
         sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_GROUP_SET_ROLES [" UI64FMTD "] Not in group", plr->GetGUID());
         return;
     }
-    else if(grp != GetPlayer()->GetGroup())
+    else if (grp != GetPlayer()->GetGroup())
     {
         sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_GROUP_SET_ROLES [" UI64FMTD "]  and [" UI64FMTD "] Not in group same group", plr->GetGUID(), GetPlayer()->GetGUID());
         return;

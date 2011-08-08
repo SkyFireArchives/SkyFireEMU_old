@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,13 +35,13 @@
 
 enum eDeathKnightSpells
 {
-    SPELL_SOUL_PRISON_CHAIN_SELF    = 54612,
-    SPELL_SOUL_PRISON_CHAIN         = 54613,
-    SPELL_DK_INITIATE_VISUAL        = 51519,
+    SPELL_SOUL_PRISON_CHAIN_SELF    = 54612, 
+    SPELL_SOUL_PRISON_CHAIN         = 54613, 
+    SPELL_DK_INITIATE_VISUAL        = 51519, 
 
-    SPELL_ICY_TOUCH                 = 52372,
-    SPELL_PLAGUE_STRIKE             = 52373,
-    SPELL_BLOOD_STRIKE              = 52374,
+    SPELL_ICY_TOUCH                 = 52372, 
+    SPELL_PLAGUE_STRIKE             = 52373, 
+    SPELL_BLOOD_STRIKE              = 52374, 
     SPELL_DEATH_COIL                = 52375
 };
 
@@ -50,51 +50,51 @@ enum eDeathKnightSpells
 #define EVENT_BLOOD_STRIKE              3
 #define EVENT_DEATH_COIL                4
 
-//used by 29519,29520,29565,29566,29567 but signed for 29519
+//used by 29519, 29520, 29565, 29566, 29567 but signed for 29519
 int32 say_event_start[8] =
 {
-    -1609000,-1609001,-1609002,-1609003,
-    -1609004,-1609005,-1609006,-1609007
+    -1609000, -1609001, -1609002, -1609003, 
+    -1609004, -1609005, -1609006, -1609007
 };
 
 int32 say_event_attack[9] =
 {
-    -1609008,-1609009,-1609010,-1609011,-1609012,
-    -1609013,-1609014,-1609015,-1609016
+    -1609008, -1609009, -1609010, -1609011, -1609012, 
+    -1609013, -1609014, -1609015, -1609016
 };
 
 uint32 acherus_soul_prison[12] =
 {
-    191577,
-    191580,
-    191581,
-    191582,
-    191583,
-    191584,
-    191585,
-    191586,
-    191587,
-    191588,
-    191589,
+    191577, 
+    191580, 
+    191581, 
+    191582, 
+    191583, 
+    191584, 
+    191585, 
+    191586, 
+    191587, 
+    191588, 
+    191589, 
     191590
 };
 
 uint32 acherus_unworthy_initiate[5] =
 {
-    29519,
-    29520,
-    29565,
-    29566,
+    29519, 
+    29520, 
+    29565, 
+    29566, 
     29567
 };
 
 enum UnworthyInitiatePhase
 {
-    PHASE_CHAINED,
-    PHASE_TO_EQUIP,
-    PHASE_EQUIPING,
-    PHASE_TO_ATTACK,
-    PHASE_ATTACKING,
+    PHASE_CHAINED, 
+    PHASE_TO_EQUIP, 
+    PHASE_EQUIPING, 
+    PHASE_TO_ATTACK, 
+    PHASE_ATTACKING, 
 };
 
 class npc_unworthy_initiate : public CreatureScript
@@ -199,7 +199,7 @@ public:
 
                     for (uint8 i = 0; i < 12; ++i)
                     {
-                        if (GameObject* temp_prison = me->FindNearestGameObject(acherus_soul_prison[i],30))
+                        if (GameObject* temp_prison = me->FindNearestGameObject(acherus_soul_prison[i], 30))
                         {
                             if (me->IsWithinDist(temp_prison, dist, false))
                             {
@@ -342,14 +342,14 @@ public:
 
 enum EyeOfAcherus
 {
-    DISPLAYID_EYE_HUGE      = 26320,
-    DISPLAYID_EYE_SMALL     = 25499,
+    DISPLAYID_EYE_HUGE      = 26320, 
+    DISPLAYID_EYE_SMALL     = 25499, 
 
-    SPELL_EYE_PHASEMASK     = 70889,
-    SPELL_EYE_VISUAL        = 51892,
-    SPELL_EYE_FL_BOOST_RUN  = 51923,
-    SPELL_EYE_FL_BOOST_FLY  = 51890,
-    SPELL_EYE_CONTROL       = 51852,
+    SPELL_EYE_PHASEMASK     = 70889, 
+    SPELL_EYE_VISUAL        = 51892, 
+    SPELL_EYE_FL_BOOST_RUN  = 51923, 
+    SPELL_EYE_FL_BOOST_FLY  = 51890, 
+    SPELL_EYE_CONTROL       = 51852, 
 };
 //#define SAY_EYE_LAUNCHED          "Eye of Acherus is launched towards its destination."
 //#define SAY_EYE_UNDER_CONTROL     "You are now in control of the eye."
@@ -357,13 +357,13 @@ enum EyeOfAcherus
 // for some reason yells aren't working correctly yet.
 enum YELLS
 {
-    SAY_EYE_LAUNCHED            = -1666451,
+    SAY_EYE_LAUNCHED            = -1666451, 
     SAY_EYE_UNDER_CONTROL       = -1666452
 };
 
 static Position Center[]=
 {
-    {2346.550049f, -5694.430176f, 426.029999f, 0.0f},
+    {2346.550049f, -5694.430176f, 426.029999f, 0.0f}, 
 };
 
 class npc_eye_of_acherus : public CreatureScript
@@ -388,7 +388,7 @@ public:
 
 		void Reset()
         {
-            if(Unit* pController = me->GetCharmer())
+            if (Unit* pController = me->GetCharmer())
             me->SetLevel(pController->getLevel());
 
             me->CastSpell(me, 51890, true);
@@ -425,7 +425,7 @@ public:
 
                     // workaround for faster flight speed
                     me->CastSpell(me, 51923, true);
-                    me->SetSpeed(MOVE_FLIGHT , 3.4f,true);
+                    me->SetSpeed(MOVE_FLIGHT , 3.4f, true);
 
                     me->GetMotionMaster()->MovePoint(0, 1711.0f, -5820.0f, 147.0f);
                     return;    // was "me = true;" causing errors
@@ -462,22 +462,22 @@ public:
 
 enum eDuelEnums
 {
-    SAY_DUEL_A                  = -1609080,
-    SAY_DUEL_B                  = -1609081,
-    SAY_DUEL_C                  = -1609082,
-    SAY_DUEL_D                  = -1609083,
-    SAY_DUEL_E                  = -1609084,
-    SAY_DUEL_F                  = -1609085,
-    SAY_DUEL_G                  = -1609086,
-    SAY_DUEL_H                  = -1609087,
-    SAY_DUEL_I                  = -1609088,
+    SAY_DUEL_A                  = -1609080, 
+    SAY_DUEL_B                  = -1609081, 
+    SAY_DUEL_C                  = -1609082, 
+    SAY_DUEL_D                  = -1609083, 
+    SAY_DUEL_E                  = -1609084, 
+    SAY_DUEL_F                  = -1609085, 
+    SAY_DUEL_G                  = -1609086, 
+    SAY_DUEL_H                  = -1609087, 
+    SAY_DUEL_I                  = -1609088, 
 
-    SPELL_DUEL                  = 52996,
-    //SPELL_DUEL_TRIGGERED        = 52990,
-    SPELL_DUEL_VICTORY          = 52994,
-    SPELL_DUEL_FLAG             = 52991,
+    SPELL_DUEL                  = 52996, 
+    //SPELL_DUEL_TRIGGERED        = 52990, 
+    SPELL_DUEL_VICTORY          = 52994, 
+    SPELL_DUEL_FLAG             = 52991, 
 
-    QUEST_DEATH_CHALLENGE       = 12733,
+    QUEST_DEATH_CHALLENGE       = 12733, 
     FACTION_HOSTILE             = 2068
 };
 
@@ -530,7 +530,7 @@ public:
                 return true;
 
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ACCEPT_DUEL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature),pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
         }
         return true;
     }
@@ -737,10 +737,10 @@ public:
 
 enum eSalanar
 {
-    REALM_OF_SHADOWS            = 52693,
-    EFFECT_STOLEN_HORSE         = 52263,
-    DELIVER_STOLEN_HORSE        = 52264,
-    CALL_DARK_RIDER             = 52266,
+    REALM_OF_SHADOWS            = 52693, 
+    EFFECT_STOLEN_HORSE         = 52263, 
+    DELIVER_STOLEN_HORSE        = 52264, 
+    CALL_DARK_RIDER             = 52266, 
     SPELL_EFFECT_OVERTAKE       = 52349
 };
 
@@ -860,8 +860,8 @@ public:
 // correct way: 52312 52314 52555 ...
 enum SG
 {
-    GHOULS = 28845,
-    GHOSTS = 28846,
+    GHOULS = 28845, 
+    GHOSTS = 28846, 
 };
 class npc_dkc1_gothik : public CreatureScript
 {
@@ -923,14 +923,14 @@ public:
             // Ghouls should display their Birth Animation
             // Crawling out of the ground
             //DoCast(me, 35177, true);
-            //me->MonsterSay("Mommy?",LANG_UNIVERSAL,0);
+            //me->MonsterSay("Mommy?", LANG_UNIVERSAL, 0);
             me->SetReactState(REACT_DEFENSIVE);
         }
 
         void FindMinions(Unit *owner)
         {
             std::list<Unit*> MinionList;
-            owner->GetAllMinionsByEntry(MinionList,GHOULS);
+            owner->GetAllMinionsByEntry(MinionList, GHOULS);
 
             if (!MinionList.empty())
             {
@@ -1097,7 +1097,7 @@ public:
             AddWaypoint(11, 2202.595947f, -6061.325684f, 5.882018f);
             AddWaypoint(12, 2188.974609f, -6080.866699f, 3.370027f);
 
-            if (urand(0,1))
+            if (urand(0, 1))
             {
                 AddWaypoint(13, 2176.483887f, -6110.407227f, 1.855181f);
                 AddWaypoint(14, 2172.516602f, -6146.752441f, 1.074235f);
@@ -1133,7 +1133,7 @@ public:
                         me->SetInFront(car);
                         me->SendMovementFlagUpdate();
                     }
-                    me->MonsterSay(SAY_SCARLET_MINER1,LANG_UNIVERSAL,NULL);
+                    me->MonsterSay(SAY_SCARLET_MINER1, LANG_UNIVERSAL, NULL);
                     SetRun(true);
                     IntroTimer = 4000;
                     IntroPhase = 1;
@@ -1147,7 +1147,7 @@ public:
                         car->SendMonsterStop();
                         car->RemoveAura(SPELL_CART_DRAG);
                     }
-                    me->MonsterSay(SAY_SCARLET_MINER2,LANG_UNIVERSAL,NULL);
+                    me->MonsterSay(SAY_SCARLET_MINER2, LANG_UNIVERSAL, NULL);
                     break;
                 default:
                     break;
@@ -1198,7 +1198,7 @@ public:
         if (pPlayer->GetQuestStatus(12701) == QUEST_STATUS_INCOMPLETE)
         {
             // Hack Why Trinity Dont Support Custom Summon Location
-            if (Creature *miner = pPlayer->SummonCreature(28841, 2383.869629f, -5900.312500f, 107.996086f, pPlayer->GetOrientation(),TEMPSUMMON_DEAD_DESPAWN, 1))
+            if (Creature *miner = pPlayer->SummonCreature(28841, 2383.869629f, -5900.312500f, 107.996086f, pPlayer->GetOrientation(), TEMPSUMMON_DEAD_DESPAWN, 1))
             {
                 pPlayer->CastSpell(pPlayer, SPELL_CART_SUMM, true);
                 if (Creature *car = pPlayer->GetVehicleCreatureBase())

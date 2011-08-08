@@ -85,7 +85,7 @@ void bsPutUInt32 ( EState* s, UInt32 u )
    bsW ( s, 8, (u >> 24) & 0xffL );
    bsW ( s, 8, (u >> 16) & 0xffL );
    bsW ( s, 8, (u >>  8) & 0xffL );
-   bsW ( s, 8,  u        & 0xffL );
+   bsW ( s, 8, u        & 0xffL );
 }
 
 
@@ -486,7 +486,7 @@ void sendMTFValues ( EState* s )
          if (s->len[t][i] < minLen) minLen = s->len[t][i];
       }
       AssertH ( !(maxLen > 17 /*20*/ ), 3004 );
-      AssertH ( !(minLen < 1),  3005 );
+      AssertH ( !(minLen < 1), 3005 );
       BZ2_hbAssignCodes ( &(s->code[t][0]), &(s->len[t][0]), 
                           minLen, maxLen, alphaSize );
    }
@@ -561,8 +561,8 @@ void sendMTFValues ( EState* s )
 
 #           define BZ_ITAH(nn)                      \
                mtfv_i = mtfv[gs+(nn)];              \
-               bsW ( s,                             \
-                     s_len_sel_selCtr[mtfv_i],      \
+               bsW ( s,                            \
+                     s_len_sel_selCtr[mtfv_i],     \
                      s_code_sel_selCtr[mtfv_i] )
 
             BZ_ITAH(0);  BZ_ITAH(1);  BZ_ITAH(2);  BZ_ITAH(3);  BZ_ITAH(4);

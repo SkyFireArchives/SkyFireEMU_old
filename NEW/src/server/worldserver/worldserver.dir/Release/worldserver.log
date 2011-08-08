@@ -1,0 +1,13 @@
+﻿  Building Custom Rule C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/worldserver/CMakeLists.txt
+  CMake does not need to re-run because C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\worldserver\CMakeFiles\generate.stamp is up-to-date.
+  worldPCH.cpp
+  CliRunnable.cpp
+  RARunnable.cpp
+  RASocket.cpp
+  TCSoap.cpp
+  WorldRunnable.cpp
+  Main.cpp
+  Master.cpp
+  WheatyExceptionReport.cpp
+     Creating library C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/worldserver/Release/worldserver.lib and object C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/worldserver/Release/worldserver.exp
+  worldserver.vcxproj -> C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\bin\Release\worldserver.exe

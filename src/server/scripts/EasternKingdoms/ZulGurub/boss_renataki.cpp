@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -99,7 +99,7 @@ class boss_renataki : public CreatureScript
                     if (Ambush_Timer <= diff)
                     {
                         Unit *pTarget = NULL;
-                        pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                        pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                         if (pTarget)
                         {
                             DoTeleportTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
@@ -133,10 +133,10 @@ class boss_renataki : public CreatureScript
                     if (Aggro_Timer <= diff)
                     {
                         Unit *pTarget = NULL;
-                        pTarget = SelectUnit(SELECT_TARGET_RANDOM,1);
+                        pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
 
                         if (DoGetThreat(me->getVictim()))
-                            DoModifyThreatPercent(me->getVictim(),-50);
+                            DoModifyThreatPercent(me->getVictim(), -50);
 
                         if (pTarget)
                             AttackStart(pTarget);

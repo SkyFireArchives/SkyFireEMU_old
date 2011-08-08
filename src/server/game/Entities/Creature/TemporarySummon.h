@@ -101,4 +101,3 @@ class Puppet : public Minion
 };
 
 #endif
-

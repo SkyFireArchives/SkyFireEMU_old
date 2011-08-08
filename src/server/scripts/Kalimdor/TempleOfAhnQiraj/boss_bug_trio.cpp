@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -200,11 +200,11 @@ public:
             if (Charge_Timer <= diff)
             {
                 Unit *pTarget = NULL;
-                pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 if (pTarget)
                 {
                     DoCast(pTarget, SPELL_CHARGE);
-                    //me->SendMonsterMove(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, true,1);
+                    //me->SendMonsterMove(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, true, 1);
                     AttackStart(pTarget);
                 }
 
@@ -216,7 +216,7 @@ public:
             {
                 DoCast(me->getVictim(), SPELL_KNOCKBACK);
                 if (DoGetThreat(me->getVictim()))
-                    DoModifyThreatPercent(me->getVictim(),-80);
+                    DoModifyThreatPercent(me->getVictim(), -80);
                 KnockBack_Timer = 15000 + rand()%10000;
             } else KnockBack_Timer -= diff;
 
@@ -279,8 +279,8 @@ public:
 
             for (uint8 i = 0; i < 10; ++i)
             {
-                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
-                Creature* Summoned = me->SummonCreature(15621,me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(),0,TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN,90000);
+                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
+                Creature* Summoned = me->SummonCreature(15621, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 90000);
                 if (Summoned && pTarget)
                     Summoned->AI()->AttackStart(pTarget);
             }
@@ -312,7 +312,7 @@ public:
                     Unit *pKri = Unit::GetUnit((*me), pInstance->GetData64(DATA_KRI));
                     Unit *pVem = Unit::GetUnit((*me), pInstance->GetData64(DATA_VEM));
 
-                    switch (urand(0,2))
+                    switch (urand(0, 2))
                     {
                         case 0:
                             if (pKri)

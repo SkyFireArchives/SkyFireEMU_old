@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,7 +35,7 @@ EndScriptData */
 
 enum eEnums
 {
-    MAX_ENCOUNTER       = 5,
+    MAX_ENCOUNTER       = 5, 
 
     GO_ANCIENT_GEM      = 185557
 };
@@ -197,7 +197,7 @@ public:
                             Creature* pCreature = instance->GetCreature(Azgalor);
                             if (pCreature)
                             {
-                                Creature* pUnit = pCreature->SummonCreature(21987,pCreature->GetPositionX(),pCreature->GetPositionY(),pCreature->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN,10000);
+                                Creature* pUnit = pCreature->SummonCreature(21987, pCreature->GetPositionX(), pCreature->GetPositionY(), pCreature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 10000);
 
                                 Map* pMap = pCreature->GetMap();
                                 if (pMap->IsDungeon() && pUnit)
@@ -212,7 +212,7 @@ public:
                                          if (i->getSource())
                                          {
                                             WorldPacket data(SMSG_MESSAGECHAT, 200);
-                                            pUnit->BuildMonsterChat(&data,CHAT_MSG_MONSTER_YELL,YELL_EFFORTS,0,YELL_EFFORTS_NAME,i->getSource()->GetGUID());
+                                            pUnit->BuildMonsterChat(&data, CHAT_MSG_MONSTER_YELL, YELL_EFFORTS, 0, YELL_EFFORTS_NAME, i->getSource()->GetGUID());
                                             i->getSource()->GetSession()->SendPacket(&data);
 
                                             WorldPacket data2(SMSG_PLAY_SOUND, 4);
@@ -241,7 +241,7 @@ public:
                             for (std::list<uint64>::const_iterator itr = m_uiAncientGemGUID.begin(); itr != m_uiAncientGemGUID.end(); ++itr)
                             {
                                 //don't know how long it expected
-                                DoRespawnGameObject(*itr,DAY);
+                                DoRespawnGameObject(*itr, DAY);
                             }
                         }
                     }
@@ -266,7 +266,7 @@ public:
                     break;
             }
 
-             sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Instance Hyjal: Instance data updated for event %u (Data=%u)",type,data);
+             sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Instance Hyjal: Instance data updated for event %u (Data=%u)", type, data);
 
             if (data == DONE)
             {

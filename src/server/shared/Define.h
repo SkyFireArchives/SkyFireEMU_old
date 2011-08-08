@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -62,10 +62,10 @@
 
 #if COMPILER == COMPILER_GNU
 #  define ATTR_NORETURN __attribute__((noreturn))
-#  define ATTR_PRINTF(F,V) __attribute__ ((format (printf, F, V)))
+#  define ATTR_PRINTF(F, V) __attribute__ ((format (printf, F, V)))
 #else //COMPILER != COMPILER_GNU
 #  define ATTR_NORETURN
-#  define ATTR_PRINTF(F,V)
+#  define ATTR_PRINTF(F, V)
 #endif //COMPILER == COMPILER_GNU
 
 typedef ACE_INT64 int64;
@@ -86,7 +86,7 @@ enum
 	FT_INT='i',                                             //uint32
 	FT_BYTE='b',                                            //uint8
 	FT_SORT='d',                                            //sorted by this field, field is not included
-	FT_IND='n',                                             //the same,but parsed to data
+	FT_IND='n',                                             //the same, but parsed to data
 	FT_LOGIC='l',                                            //Logical (boolean)
 	FT_SQL_PRESENT='p',                                      //Used in sql format to mark column present in sql dbc
 	FT_SQL_ABSENT='a'                                       //Used in sql format to mark column absent in sql dbc

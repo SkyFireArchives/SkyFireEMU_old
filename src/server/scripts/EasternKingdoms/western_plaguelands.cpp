@@ -110,8 +110,8 @@ public:
 
 enum eMyranda
 {
-    QUEST_SUBTERFUGE        = 5862,
-    QUEST_IN_DREAMS         = 5944,
+    QUEST_SUBTERFUGE        = 5862, 
+    QUEST_IN_DREAMS         = 5944, 
     SPELL_SCARLET_ILLUSION  = 17961
 };
 
@@ -215,7 +215,7 @@ public:
                         if (CAST_PLR(who)->GetQuestStatus(5225) == QUEST_STATUS_INCOMPLETE ||
                             CAST_PLR(who)->GetQuestStatus(5235) == QUEST_STATUS_INCOMPLETE)
                         {
-                            me->SummonCreature(11078, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,600000);
+                            me->SummonCreature(11078, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 600000);
                             DoDie();
                         }
                         break;
@@ -223,7 +223,7 @@ public:
                         if (CAST_PLR(who)->GetQuestStatus(5222) == QUEST_STATUS_INCOMPLETE ||
                             CAST_PLR(who)->GetQuestStatus(5233) == QUEST_STATUS_INCOMPLETE)
                         {
-                            me->SummonCreature(11076, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,600000);
+                            me->SummonCreature(11076, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 600000);
                             DoDie();
                         }
                         break;
@@ -276,11 +276,11 @@ public:
 
 enum eTruuen
 {
-    NPC_GHOST_UTHER             = 17233,
-    NPC_THEL_DANIS              = 1854,
+    NPC_GHOST_UTHER             = 17233, 
+    NPC_THEL_DANIS              = 1854, 
     NPC_GHOUL                   = 1791,      //ambush
 
-    QUEST_TOMB_LIGHTBRINGER     = 9446,
+    QUEST_TOMB_LIGHTBRINGER     = 9446, 
 
     SAY_WP_0                    = -1800064,  //Beware! We are attacked!
     SAY_WP_1                    = -1800065,  //It must be the purity of the Mark of the Lightbringer that is drawing forth the Scourge to attack us. We must proceed with caution lest we be overwhelmed!
@@ -361,7 +361,7 @@ public:
                 case 22:
                     break;
                 case 23:
-                    Ughost = me->SummonCreature(NPC_GHOST_UTHER, 971.86f,-1825.42f ,81.99f , 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
+                    Ughost = me->SummonCreature(NPC_GHOST_UTHER, 971.86f, -1825.42f , 81.99f , 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
                     Ughost->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
                     DoScriptText(SAY_WP_4, Ughost, me);
                     m_uiChatTimer = 4000;

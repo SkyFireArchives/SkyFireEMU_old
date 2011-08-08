@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,13 +27,13 @@
 
 enum Spells
 {
-    SPELL_SHROUD_OF_DARKNESS                    = 54524,
-    H_SPELL_SHROUD_OF_DARKNESS                  = 59745,
-    SPELL_SUMMON_VOID_SENTRY                    = 54369,
-    SPELL_VOID_SHIFT                            = 54361,
-    H_SPELL_VOID_SHIFT                          = 59743,
+    SPELL_SHROUD_OF_DARKNESS                    = 54524, 
+    H_SPELL_SHROUD_OF_DARKNESS                  = 59745, 
+    SPELL_SUMMON_VOID_SENTRY                    = 54369, 
+    SPELL_VOID_SHIFT                            = 54361, 
+    H_SPELL_VOID_SHIFT                          = 59743, 
 
-    SPELL_ZURAMAT_ADD_2                         = 54342,
+    SPELL_ZURAMAT_ADD_2                         = 54342, 
     H_SPELL_ZURAMAT_ADD_2                       = 59747
 };
 
@@ -44,13 +44,13 @@ enum ZuramatCreatures
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1608037,
-    SAY_SLAY_1                                  = -1608038,
-    SAY_SLAY_2                                  = -1608039,
-    SAY_SLAY_3                                  = -1608040,
-    SAY_DEATH                                   = -1608041,
-    SAY_SPAWN                                   = -1608042,
-    SAY_SHIELD                                  = -1608043,
+    SAY_AGGRO                                   = -1608037, 
+    SAY_SLAY_1                                  = -1608038, 
+    SAY_SLAY_2                                  = -1608039, 
+    SAY_SLAY_3                                  = -1608040, 
+    SAY_DEATH                                   = -1608041, 
+    SAY_SPAWN                                   = -1608042, 
+    SAY_SHIELD                                  = -1608043, 
     SAY_WHISPER                                 = -1608044
 };
 
@@ -180,14 +180,14 @@ public:
             if (victim == me)
                 return;
 
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
 
         void JustSummoned(Creature* summon)
         {
             summon->AI()->AttackStart(me->getVictim());
             summon->AI()->DoCastAOE(SPELL_ZURAMAT_ADD_2);
-            summon->SetPhaseMask(17,true);
+            summon->SetPhaseMask(17, true);
         }
     };
 

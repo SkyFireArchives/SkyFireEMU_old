@@ -26,9 +26,9 @@
 
 enum RogueSpells
 {
-    ROGUE_SPELL_SHIV_TRIGGERED                   = 5940,
-    ROGUE_SPELL_GLYPH_OF_PREPARATION             = 56819,
-    ROGUE_SPELL_PREY_ON_THE_WEAK                 = 58670,
+    ROGUE_SPELL_SHIV_TRIGGERED                   = 5940, 
+    ROGUE_SPELL_GLYPH_OF_PREPARATION             = 56819, 
+    ROGUE_SPELL_PREY_ON_THE_WEAK                 = 58670, 
 };
 
 // Cheat Death
@@ -45,7 +45,7 @@ public:
 
         enum Spell
         {
-            ROG_SPELL_CHEAT_DEATH_COOLDOWN = 31231,
+            ROG_SPELL_CHEAT_DEATH_COOLDOWN = 31231, 
         };
 
         bool Validate(SpellEntry const * /*spellEntry*/)

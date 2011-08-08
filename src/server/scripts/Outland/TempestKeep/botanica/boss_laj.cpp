@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,26 +33,26 @@ EndScriptData */
 
 enum eSpells
 {
-    SPELL_ALLERGIC_REACTION    = 34697,
-    SPELL_TELEPORT_SELF        = 34673,
+    SPELL_ALLERGIC_REACTION    = 34697, 
+    SPELL_TELEPORT_SELF        = 34673, 
 
-    SPELL_SUMMON_LASHER_1      = 34681,
-    SPELL_SUMMON_FLAYER_1      = 34682,
-    SPELL_SUMMON_LASHER_2      = 34684,
-    SPELL_SUMMON_FLAYER_2      = 34685,
-    SPELL_SUMMON_LASHER_3      = 34686,
-    SPELL_SUMMON_FLAYER_4      = 34687,
-    SPELL_SUMMON_LASHER_4      = 34688,
-    SPELL_SUMMON_FLAYER_3      = 34690,
+    SPELL_SUMMON_LASHER_1      = 34681, 
+    SPELL_SUMMON_FLAYER_1      = 34682, 
+    SPELL_SUMMON_LASHER_2      = 34684, 
+    SPELL_SUMMON_FLAYER_2      = 34685, 
+    SPELL_SUMMON_LASHER_3      = 34686, 
+    SPELL_SUMMON_FLAYER_4      = 34687, 
+    SPELL_SUMMON_LASHER_4      = 34688, 
+    SPELL_SUMMON_FLAYER_3      = 34690, 
 };
 enum eOthers
 {
-    EMOTE_SUMMON               = -1553006,
-    MODEL_DEFAULT              = 13109,
-    MODEL_ARCANE               = 14213,
-    MODEL_FIRE                 = 13110,
-    MODEL_FROST                = 14112,
-    MODEL_NATURE               = 14214,
+    EMOTE_SUMMON               = -1553006, 
+    MODEL_DEFAULT              = 13109, 
+    MODEL_ARCANE               = 14213, 
+    MODEL_FIRE                 = 13110, 
+    MODEL_FROST                = 14112, 
+    MODEL_NATURE               = 14214, 
 };
 
 class boss_laj : public CreatureScript

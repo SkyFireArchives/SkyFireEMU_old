@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,16 +34,16 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO_1                 = -1542009,
-    SAY_AGGRO_2                 = -1542010,
-    SAY_AGGRO_3                 = -1542011,
-    SAY_KILL_1                  = -1542012,
-    SAY_KILL_2                  = -1542013,
-    SAY_DIE                     = -1542014,
+    SAY_AGGRO_1                 = -1542009, 
+    SAY_AGGRO_2                 = -1542010, 
+    SAY_AGGRO_3                 = -1542011, 
+    SAY_KILL_1                  = -1542012, 
+    SAY_KILL_2                  = -1542013, 
+    SAY_DIE                     = -1542014, 
 
     SPELL_ACID_SPRAY            = 38153,                    // heroic 38973 ??? 38153
-    SPELL_EXPLODING_BREAKER     = 30925,
-    SPELL_KNOCKDOWN             = 20276,
+    SPELL_EXPLODING_BREAKER     = 30925, 
+    SPELL_KNOCKDOWN             = 20276, 
     SPELL_DOMINATION            = 25772                     // ???
 };
 
@@ -86,7 +86,7 @@ class boss_the_maker : public CreatureScript
 
             void EnterCombat(Unit * /*who*/)
             {
-                DoScriptText(RAND(SAY_AGGRO_1,SAY_AGGRO_2,SAY_AGGRO_3), me);
+                DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
 
                 if (!pInstance)
                     return;
@@ -97,7 +97,7 @@ class boss_the_maker : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                DoScriptText(RAND(SAY_KILL_1,SAY_KILL_2), me);
+                DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
             }
 
             void JustDied(Unit* /*Killer*/)
@@ -128,7 +128,7 @@ class boss_the_maker : public CreatureScript
 
                 if (ExplodingBreaker_Timer <= diff)
                 {
-                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                         DoCast(pTarget, SPELL_EXPLODING_BREAKER);
                     ExplodingBreaker_Timer = 4000+rand()%8000;
                 }
@@ -139,7 +139,7 @@ class boss_the_maker : public CreatureScript
                 if (domination_timer_timer <= diff)
                 {
                 Unit *pTarget;
-                pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
 
                 DoCast(pTarget, SPELL_DOMINATION);
 

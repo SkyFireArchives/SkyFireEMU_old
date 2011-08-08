@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -106,7 +106,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            switch (urand(0,2))
+            switch (urand(0, 2))
             {
                 case 0:
                     DoPlaySoundToSet(me, SOUND_ONSLAY1);
@@ -130,7 +130,7 @@ public:
             {
                 Unit *pTarget = Unit::GetUnit((*me), pInstance->GetData64(DATA_THRALL));
                 if (pTarget && pTarget->isAlive())
-                    me->AddThreat(pTarget,0.0f);
+                    me->AddThreat(pTarget, 0.0f);
             }
         }
 
@@ -173,13 +173,13 @@ public:
 
             if (RainTimer <= diff)
             {
-                DoCast(SelectTarget(SELECT_TARGET_RANDOM,0,30,true), SPELL_RAIN_OF_FIRE);
+                DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0, 30, true), SPELL_RAIN_OF_FIRE);
                 RainTimer = 20000+rand()%15000;
             } else RainTimer -= diff;
 
             if (DoomTimer <= diff)
             {
-                DoCast(SelectTarget(SELECT_TARGET_RANDOM,1,100,true), SPELL_DOOM);//never on tank
+                DoCast(SelectTarget(SELECT_TARGET_RANDOM, 1, 100, true), SPELL_DOOM);//never on tank
                 DoomTimer = 45000+rand()%5000;
             } else DoomTimer -= diff;
 
@@ -275,7 +275,7 @@ public:
             {
                 if (AzgalorGUID)
                 {
-                    Creature* boss = Unit::GetCreature((*me),AzgalorGUID);
+                    Creature* boss = Unit::GetCreature((*me), AzgalorGUID);
                     if (!boss || (boss && boss->isDead()))
                     {
                         me->setDeathState(JUST_DIED);

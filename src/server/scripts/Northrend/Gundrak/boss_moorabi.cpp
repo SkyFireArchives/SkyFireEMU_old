@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,14 +27,14 @@
 
 enum eSpells
 {
-    SPELL_DETERMINED_STAB                         = 55104,
-    SPELL_GROUND_TREMOR                           = 55142,
-    SPELL_NUMBING_SHOUT                           = 55106,
-    SPELL_DETERMINED_GORE                         = 55102,
-    H_SPELL_DETERMINED_GORE                       = 59444,
-    SPELL_QUAKE                                   = 55101,
-    SPELL_NUMBING_ROAR                            = 55100,
-    SPELL_MOJO_FRENZY                             = 55163,
+    SPELL_DETERMINED_STAB                         = 55104, 
+    SPELL_GROUND_TREMOR                           = 55142, 
+    SPELL_NUMBING_SHOUT                           = 55106, 
+    SPELL_DETERMINED_GORE                         = 55102, 
+    H_SPELL_DETERMINED_GORE                       = 59444, 
+    SPELL_QUAKE                                   = 55101, 
+    SPELL_NUMBING_ROAR                            = 55100, 
+    SPELL_MOJO_FRENZY                             = 55163, 
     SPELL_TRANSFORMATION                          = 55098, //Periodic, The caster transforms into a powerful mammoth, increasing Physical damage done by 25% and granting immunity to Stun effects.
 };
 
@@ -45,13 +45,13 @@ enum eArchivements
 
 enum eSays
 {
-    SAY_AGGRO                                     = -1604010,
+    SAY_AGGRO                                     = -1604010, 
     //SAY_SLAY_1                                  = -1604011, // not in db
-    SAY_SLAY_2                                    = -1604012,
-    SAY_SLAY_3                                    = -1604013,
-    SAY_DEATH                                     = -1604014,
-    SAY_TRANSFORM                                 = -1604015,
-    SAY_QUAKE                                     = -1604016,
+    SAY_SLAY_2                                    = -1604012, 
+    SAY_SLAY_3                                    = -1604013, 
+    SAY_DEATH                                     = -1604014, 
+    SAY_TRANSFORM                                 = -1604015, 
+    SAY_QUAKE                                     = -1604016, 
     EMOTE_TRANSFORM                               = -1604017
 };
 
@@ -173,7 +173,7 @@ public:
             if (pVictim == me)
                 return;
 
-            DoScriptText(RAND(SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_2, SAY_SLAY_3), me);
         }
     };
 

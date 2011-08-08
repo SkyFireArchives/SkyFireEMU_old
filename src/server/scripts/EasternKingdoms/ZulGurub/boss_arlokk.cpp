@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,22 +34,22 @@ EndScriptData */
 
 enum eYells
 {
-    SAY_AGGRO                   = -1309011,
-    SAY_FEAST_PANTHER           = -1309012,
-    SAY_DEATH                   = -1309013,
+    SAY_AGGRO                   = -1309011, 
+    SAY_FEAST_PANTHER           = -1309012, 
+    SAY_DEATH                   = -1309013, 
 };
 
 enum eSpells
 {
-    SPELL_SHADOWWORDPAIN        = 23952,
-    SPELL_GOUGE                 = 24698,
-    SPELL_MARK                  = 24210,
+    SPELL_SHADOWWORDPAIN        = 23952, 
+    SPELL_GOUGE                 = 24698, 
+    SPELL_MARK                  = 24210, 
     SPELL_CLEAVE                = 26350,                    //Perhaps not right. Not a red aura...
-    SPELL_PANTHER_TRANSFORM     = 24190,
+    SPELL_PANTHER_TRANSFORM     = 24190, 
 
-    MODEL_ID_NORMAL             = 15218,
-    MODEL_ID_PANTHER            = 15215,
-    MODEL_ID_BLANK              = 11686,
+    MODEL_ID_NORMAL             = 15218, 
+    MODEL_ID_PANTHER            = 15215, 
+    MODEL_ID_BLANK              = 11686, 
 
     NPC_ZULIAN_PROWLER          = 15101
 };
@@ -168,7 +168,7 @@ class boss_arlokk : public CreatureScript
 
                     if (m_uiMark_Timer <= uiDiff)
                     {
-                        Unit *pMarkedTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                        Unit *pMarkedTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
 
                         if (pMarkedTarget)
                         {
@@ -199,7 +199,7 @@ class boss_arlokk : public CreatureScript
                     {
                         DoCast(me->getVictim(), SPELL_GOUGE);
 
-                        DoModifyThreatPercent(me->getVictim(),-80);
+                        DoModifyThreatPercent(me->getVictim(), -80);
 
                         m_uiGouge_Timer = 17000+rand()%10000;
                     }
@@ -248,7 +248,7 @@ class boss_arlokk : public CreatureScript
                         me->SetBaseWeaponDamage(BASE_ATTACK, MAXDAMAGE, (cinfo->maxdmg +((cinfo->maxdmg/100) * 35)));
                         me->UpdateDamagePhysical(BASE_ATTACK);
 
-                        if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                        if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                             AttackStart(pTarget);
 
                         m_bIsPhaseTwo = true;

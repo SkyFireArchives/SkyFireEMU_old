@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -88,58 +88,58 @@ struct AccountData
 
 enum PartyOperation
 {
-    PARTY_OP_INVITE = 0,
-    PARTY_OP_UNINVITE = 1,
-    PARTY_OP_LEAVE = 2,
+    PARTY_OP_INVITE = 0, 
+    PARTY_OP_UNINVITE = 1, 
+    PARTY_OP_LEAVE = 2, 
     PARTY_OP_SWAP = 4
 };
 
 enum PartyResult
 {
-    ERR_PARTY_RESULT_OK                 = 0,
-    ERR_BAD_PLAYER_NAME_S               = 1,
-    ERR_TARGET_NOT_IN_GROUP_S           = 2,
-    ERR_TARGET_NOT_IN_INSTANCE_S        = 3,
-    ERR_GROUP_FULL                      = 4,
-    ERR_ALREADY_IN_GROUP_S              = 5,
-    ERR_NOT_IN_GROUP                    = 6,
-    ERR_NOT_LEADER                      = 7,
-    ERR_PLAYER_WRONG_FACTION            = 8,
-    ERR_IGNORING_YOU_S                  = 9,
-    ERR_LFG_PENDING                     = 12,
-    ERR_INVITE_RESTRICTED               = 13,
+    ERR_PARTY_RESULT_OK                 = 0, 
+    ERR_BAD_PLAYER_NAME_S               = 1, 
+    ERR_TARGET_NOT_IN_GROUP_S           = 2, 
+    ERR_TARGET_NOT_IN_INSTANCE_S        = 3, 
+    ERR_GROUP_FULL                      = 4, 
+    ERR_ALREADY_IN_GROUP_S              = 5, 
+    ERR_NOT_IN_GROUP                    = 6, 
+    ERR_NOT_LEADER                      = 7, 
+    ERR_PLAYER_WRONG_FACTION            = 8, 
+    ERR_IGNORING_YOU_S                  = 9, 
+    ERR_LFG_PENDING                     = 12, 
+    ERR_INVITE_RESTRICTED               = 13, 
     ERR_GROUP_SWAP_FAILED               = 14,               // if (PartyOperation == PARTY_OP_SWAP) ERR_GROUP_SWAP_FAILED else ERR_INVITE_IN_COMBAT
-    ERR_INVITE_UNKNOWN_REALM            = 15,
-    ERR_INVITE_NO_PARTY_SERVER          = 16,
-    ERR_INVITE_PARTY_BUSY               = 17,
-    ERR_PARTY_TARGET_AMBIGUOUS          = 18,
-    ERR_PARTY_LFG_INVITE_RAID_LOCKED    = 19,
-    ERR_PARTY_LFG_BOOT_LIMIT            = 20,
-    ERR_PARTY_LFG_BOOT_COOLDOWN_S       = 21,
-    ERR_PARTY_LFG_BOOT_IN_PROGRESS      = 22,
-    ERR_PARTY_LFG_BOOT_TOO_FEW_PLAYERS  = 23,
-    ERR_PARTY_LFG_BOOT_NOT_ELIGIBLE_S   = 24,
-    ERR_RAID_DISALLOWED_BY_LEVEL        = 25,
-    ERR_PARTY_LFG_BOOT_IN_COMBAT        = 26,
-    ERR_VOTE_KICK_REASON_NEEDED         = 27,
-    ERR_PARTY_LFG_BOOT_DUNGEON_COMPLETE = 28,
-    ERR_PARTY_LFG_BOOT_LOOT_ROLLS       = 29,
+    ERR_INVITE_UNKNOWN_REALM            = 15, 
+    ERR_INVITE_NO_PARTY_SERVER          = 16, 
+    ERR_INVITE_PARTY_BUSY               = 17, 
+    ERR_PARTY_TARGET_AMBIGUOUS          = 18, 
+    ERR_PARTY_LFG_INVITE_RAID_LOCKED    = 19, 
+    ERR_PARTY_LFG_BOOT_LIMIT            = 20, 
+    ERR_PARTY_LFG_BOOT_COOLDOWN_S       = 21, 
+    ERR_PARTY_LFG_BOOT_IN_PROGRESS      = 22, 
+    ERR_PARTY_LFG_BOOT_TOO_FEW_PLAYERS  = 23, 
+    ERR_PARTY_LFG_BOOT_NOT_ELIGIBLE_S   = 24, 
+    ERR_RAID_DISALLOWED_BY_LEVEL        = 25, 
+    ERR_PARTY_LFG_BOOT_IN_COMBAT        = 26, 
+    ERR_VOTE_KICK_REASON_NEEDED         = 27, 
+    ERR_PARTY_LFG_BOOT_DUNGEON_COMPLETE = 28, 
+    ERR_PARTY_LFG_BOOT_LOOT_ROLLS       = 29, 
     ERR_PARTY_LFG_TELEPORT_IN_COMBAT    = 30
 };
 
 enum ChatRestrictionType
 {
-    ERR_CHAT_RESTRICTED = 0,
-    ERR_CHAT_THROTTLED  = 1,
-    ERR_USER_SQUELCHED  = 2,
+    ERR_CHAT_RESTRICTED = 0, 
+    ERR_CHAT_THROTTLED  = 1, 
+    ERR_USER_SQUELCHED  = 2, 
     ERR_YELL_RESTRICTED = 3
 };
 
 enum CharterTypes
 {
-    GUILD_CHARTER_TYPE                            = 9,
-    ARENA_TEAM_CHARTER_2v2_TYPE                   = 2,
-    ARENA_TEAM_CHARTER_3v3_TYPE                   = 3,
+    GUILD_CHARTER_TYPE                            = 9, 
+    ARENA_TEAM_CHARTER_2v2_TYPE                   = 2, 
+    ARENA_TEAM_CHARTER_3v3_TYPE                   = 3, 
     ARENA_TEAM_CHARTER_5v5_TYPE                   = 5
 };
 
@@ -201,11 +201,11 @@ class WorldSession
         void WriteMovementInfo(WorldPacket *data, MovementInfo *mi);
 
         void SendPacket(WorldPacket const* packet);
-        void SendNotification(const char *format,...) ATTR_PRINTF(2,3);
-        void SendNotification(uint32 string_id,...);
+        void SendNotification(const char *format, ...) ATTR_PRINTF(2, 3);
+        void SendNotification(uint32 string_id, ...);
         void SendPetNameInvalid(uint32 error, const std::string& name, DeclinedName *declinedName);
         void SendPartyResult(PartyOperation operation, const std::string& member, PartyResult res, uint32 val = 0);
-        void SendAreaTriggerMessage(const char* Text, ...) ATTR_PRINTF(2,3);
+        void SendAreaTriggerMessage(const char* Text, ...) ATTR_PRINTF(2, 3);
         void SendSetPhaseShift(uint32 phaseShift, uint32 MapID = 0);
         void SendQueryTimeResponse();
 
@@ -313,8 +313,8 @@ class WorldSession
         void SendAuctionOwnerNotification(AuctionEntry * auction);
 
         //Item Enchantment
-        void SendEnchantmentLog(uint64 Target, uint64 Caster,uint32 ItemID,uint32 SpellID);
-        void SendItemEnchantTimeUpdate(uint64 Playerguid, uint64 Itemguid,uint32 slot,uint32 Duration);
+        void SendEnchantmentLog(uint64 Target, uint64 Caster, uint32 ItemID, uint32 SpellID);
+        void SendItemEnchantTimeUpdate(uint64 Playerguid, uint64 Itemguid, uint32 slot, uint32 Duration);
 
         //Taxi
         void SendTaxiStatus(uint64 guid);

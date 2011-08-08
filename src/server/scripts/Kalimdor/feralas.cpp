@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -78,21 +78,21 @@ public:
 enum eOOX
 {
     //signed for 7806
-    SAY_OOX_START           = -1000287,
-    SAY_OOX_AGGRO1          = -1000288,
-    SAY_OOX_AGGRO2          = -1000289,
-    SAY_OOX_AMBUSH          = -1000290,
-    SAY_OOX_END             = -1000292,
+    SAY_OOX_START           = -1000287, 
+    SAY_OOX_AGGRO1          = -1000288, 
+    SAY_OOX_AGGRO2          = -1000289, 
+    SAY_OOX_AMBUSH          = -1000290, 
+    SAY_OOX_END             = -1000292, 
 
-    NPC_YETI                = 7848,
-    NPC_GORILLA             = 5260,
-    NPC_WOODPAW_REAVER      = 5255,
-    NPC_WOODPAW_BRUTE       = 5253,
-    NPC_WOODPAW_ALPHA       = 5258,
-    NPC_WOODPAW_MYSTIC      = 5254,
+    NPC_YETI                = 7848, 
+    NPC_GORILLA             = 5260, 
+    NPC_WOODPAW_REAVER      = 5255, 
+    NPC_WOODPAW_BRUTE       = 5253, 
+    NPC_WOODPAW_ALPHA       = 5258, 
+    NPC_WOODPAW_MYSTIC      = 5254, 
 
-    QUEST_RESCUE_OOX22FE    = 2767,
-    FACTION_ESCORTEE_A      = 774,
+    QUEST_RESCUE_OOX22FE    = 2767, 
+    FACTION_ESCORTEE_A      = 774, 
     FACTION_ESCORTEE_H      = 775
 };
 
@@ -177,8 +177,8 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             //For an small probability the npc says something when he get aggro
-            if (urand(0,9) > 7)
-                DoScriptText(RAND(SAY_OOX_AGGRO1,SAY_OOX_AGGRO2), me);
+            if (urand(0, 9) > 7)
+                DoScriptText(RAND(SAY_OOX_AGGRO1, SAY_OOX_AGGRO2), me);
         }
 
         void JustSummoned(Creature* summoned)

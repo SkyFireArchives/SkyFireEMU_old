@@ -39,7 +39,7 @@ EndContentData */
 
 enum eSpells
 {
-    SPELL_CRYSTALLINE_SLUMBER   = 3636,
+    SPELL_CRYSTALLINE_SLUMBER   = 3636, 
 };
 
 class mob_jadespine_basilisk : public CreatureScript

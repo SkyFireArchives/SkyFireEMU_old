@@ -30,8 +30,8 @@
    @return CRYPT_OK if successful (even if the comparison failed)
 */
 int pkcs_1_pss_decode(const unsigned char *msghash, unsigned long msghashlen,
-                      const unsigned char *sig,     unsigned long siglen,
-                            unsigned long saltlen,  int           hash_idx,
+                      const unsigned char *sig,    unsigned long siglen,
+                            unsigned long saltlen, int           hash_idx,
                             unsigned long modulus_bitlen, int    *res)
 {
    unsigned char *DB, *mask, *salt, *hash;
@@ -156,7 +156,7 @@ int pkcs_1_pss_decode(const unsigned char *msghash, unsigned long msghashlen,
    err = CRYPT_OK;
 LBL_ERR:
 #ifdef LTC_CLEAN_STACK
-   zeromem(DB,   modulus_len);   
+   zeromem(DB,  modulus_len);   
    zeromem(mask, modulus_len);   
    zeromem(salt, modulus_len);   
    zeromem(hash, modulus_len);   

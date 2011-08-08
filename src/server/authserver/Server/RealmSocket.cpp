@@ -54,7 +54,6 @@ RealmSocket::RealmSocket(void):
 
     msg_queue()->high_water_mark(8 * 1024 * 1024);
     msg_queue()->low_water_mark(8 * 1024 * 1024);
-
 }
 
 RealmSocket::~RealmSocket(void)
@@ -308,7 +307,6 @@ int RealmSocket::handle_input(ACE_HANDLE /*= ACE_INVALID_HANDLE*/)
     return n == space ? 1 : 0;
 }
 
-
 void RealmSocket::set_session(Session* session)
 {
     if (session_ != NULL)
@@ -316,4 +314,3 @@ void RealmSocket::set_session(Session* session)
 
     session_ = session;
 }
-

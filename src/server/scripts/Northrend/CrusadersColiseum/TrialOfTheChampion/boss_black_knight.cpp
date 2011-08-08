@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -29,52 +29,52 @@
 enum eEnums
 {
     //Yell
-    SAY_DEATH_3                             = -1999935,
-    SAY_AGGRO                               = -1999929,
-    SAY_AGGRO_2                             = -1999930,
-    SAY_SLAY                                = -1999932,
-    SAY_DEATH_1                             = -1999933,
-    SAY_DEATH                               = -1999934,
-    SAY_START5                              = -1999936,
-    SAY_START6                              = -1999937,
-    SAY_START7                              = -1999928,
-    SAY_START8                              = -1999929,
-    SAY_START9                              = -1999952,
-    SAY_START10                             = -1999932,
-    SAY_START11                             = -1999953,
+    SAY_DEATH_3                             = -1999935, 
+    SAY_AGGRO                               = -1999929, 
+    SAY_AGGRO_2                             = -1999930, 
+    SAY_SLAY                                = -1999932, 
+    SAY_DEATH_1                             = -1999933, 
+    SAY_DEATH                               = -1999934, 
+    SAY_START5                              = -1999936, 
+    SAY_START6                              = -1999937, 
+    SAY_START7                              = -1999928, 
+    SAY_START8                              = -1999929, 
+    SAY_START9                              = -1999952, 
+    SAY_START10                             = -1999932, 
+    SAY_START11                             = -1999953, 
 };
 enum eSpells
 {
     //phase 1
-    SPELL_PLAGUE_STRIKE     = 67724,
-    SPELL_PLAGUE_STRIKE_2   = 67884,
-    SPELL_ICY_TOUCH         = 67881,
-    SPELL_ICY_TOUCH_H       = 67718,
-    SPELL_DEATH_RESPITE     = 67745,
-    SPELL_OBLITERATE        = 67883,
-    SPELL_OBLITERATE_H      = 67725,
+    SPELL_PLAGUE_STRIKE     = 67724, 
+    SPELL_PLAGUE_STRIKE_2   = 67884, 
+    SPELL_ICY_TOUCH         = 67881, 
+    SPELL_ICY_TOUCH_H       = 67718, 
+    SPELL_DEATH_RESPITE     = 67745, 
+    SPELL_OBLITERATE        = 67883, 
+    SPELL_OBLITERATE_H      = 67725, 
 
     //phase 2 - During this phase, the Black Knight will use the same abilities as in phase 1, except for Death's Respite
-    SPELL_ARMY_DEAD         = 67761,
-    SPELL_DESECRATION       = 67778,
-    SPELL_DESECRATION_2     = 67778,
-    SPELL_GHOUL_EXPLODE     = 67751,
+    SPELL_ARMY_DEAD         = 67761, 
+    SPELL_DESECRATION       = 67778, 
+    SPELL_DESECRATION_2     = 67778, 
+    SPELL_GHOUL_EXPLODE     = 67751, 
 
     //phase 3
-    SPELL_DEATH_BITE_H      = 67875,
-    SPELL_DEATH_BITE        = 67808,
-    SPELL_MARKED_DEATH      = 67882,
-    SPELL_MARKED_DEATH_2    = 67823,
+    SPELL_DEATH_BITE_H      = 67875, 
+    SPELL_DEATH_BITE        = 67808, 
+    SPELL_MARKED_DEATH      = 67882, 
+    SPELL_MARKED_DEATH_2    = 67823, 
 
-    SPELL_BLACK_KNIGHT_RES  = 67693,
+    SPELL_BLACK_KNIGHT_RES  = 67693, 
 
-    SPELL_LEAP                = 67749,
+    SPELL_LEAP                = 67749, 
     SPELL_LEAP_H            = 67880
 };
 
 enum eModels
 {
-     MODEL_SKELETON = 29846,
+     MODEL_SKELETON = 29846, 
      MODEL_GHOST    = 21300
 };
 
@@ -85,15 +85,15 @@ enum eEqip
 
 enum IntroPhase
 {
-    IDLE,
-    INTRO,
+    IDLE, 
+    INTRO, 
     FINISHED
 };
 
 enum ePhases
 {
-    PHASE_UNDEAD    = 1,
-    PHASE_SKELETON  = 2,
+    PHASE_UNDEAD    = 1, 
+    PHASE_SKELETON  = 2, 
     PHASE_GHOST     = 3
 };
 
@@ -158,7 +158,7 @@ public:
             RemoveSummons();
             me->SetDisplayId(me->GetNativeDisplayId());
             me->ClearUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED);
-            me->SetHomePosition(746.71f,661.02f,411.69f,4.6f);
+            me->SetHomePosition(746.71f, 661.02f, 411.69f, 4.6f);
 
             bEventInProgress = false;
             bEvent = false;
@@ -168,24 +168,24 @@ public:
             bFight = false;
 
             if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                pInstance->HandleGameObject(pGO->GetGUID(),true);
+                pInstance->HandleGameObject(pGO->GetGUID(), true);
 
             uiPhase = PHASE_UNDEAD;
 
-            uiIcyTouchTimer = urand(5000,9000);
-            uiIcyTouch1Timer = urand(15000,15000);
-            uiPlagueStrikeTimer = urand(10000,13000);
-            uiPlagueStrike1Timer = urand(14000,14000);
-            uiDeathRespiteTimer = urand(17000,17000);
-            uiObliterateTimer = urand(17000,19000);
-            uiObliterate1Timer = urand(15000,15000);
-            uiDesecrationTimer = urand(15000,16000);
-            uiDesecration1Timer = urand(22000,22000);
+            uiIcyTouchTimer = urand(5000, 9000);
+            uiIcyTouch1Timer = urand(15000, 15000);
+            uiPlagueStrikeTimer = urand(10000, 13000);
+            uiPlagueStrike1Timer = urand(14000, 14000);
+            uiDeathRespiteTimer = urand(17000, 17000);
+            uiObliterateTimer = urand(17000, 19000);
+            uiObliterate1Timer = urand(15000, 15000);
+            uiDesecrationTimer = urand(15000, 16000);
+            uiDesecration1Timer = urand(22000, 22000);
             uiDeathArmyCheckTimer = 7000;
             uiResurrectTimer = 4000;
             uiGhoulExplodeTimer = 8000;
-            uiDeathBiteTimer = urand (2000,4000);
-            uiMarkedDeathTimer = urand (5000,7000);
+            uiDeathBiteTimer = urand (2000, 4000);
+            uiMarkedDeathTimer = urand (5000, 7000);
             uiIntroTimer = 5000;
         }
 
@@ -196,7 +196,7 @@ public:
 
             if (bEventInBattle)
             {
-                me->GetMotionMaster()->MovePoint(1,743.396f, 635.411f, 411.575f);
+                me->GetMotionMaster()->MovePoint(1, 743.396f, 635.411f, 411.575f);
                 me->setFaction(14);
                 me->SetReactState(REACT_AGGRESSIVE);
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
@@ -246,8 +246,8 @@ public:
                                 DoScriptText(SAY_DEATH, me);
                                 break;
                         }
-                        DoCast(me,SPELL_BLACK_KNIGHT_RES,true);
-                        me->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
+                        DoCast(me, SPELL_BLACK_KNIGHT_RES, true);
+                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
                         uiPhase++;
                         uiResurrectTimer = 3000;
                         bEventInProgress = false;
@@ -261,19 +261,19 @@ public:
                         if (uiPlagueStrikeTimer <= uiDiff)
                         {
                             DoCastVictim(SPELL_PLAGUE_STRIKE);
-                            uiPlagueStrikeTimer = urand(12000,15000);
+                            uiPlagueStrikeTimer = urand(12000, 15000);
                         } else uiPlagueStrikeTimer -= uiDiff;
 
                         if (uiObliterateTimer <= uiDiff)
                         {
                             DoCastVictim(SPELL_OBLITERATE);
-                            uiObliterateTimer = urand(17000,19000);
+                            uiObliterateTimer = urand(17000, 19000);
                         } else uiObliterateTimer -= uiDiff;
 
                            if (uiIcyTouchTimer <= uiDiff)
                         {
                             DoCastVictim(SPELL_ICY_TOUCH);
-                            uiIcyTouchTimer = urand(5000,7000);
+                            uiIcyTouchTimer = urand(5000, 7000);
                         } else uiIcyTouchTimer -= uiDiff;
                         break;
                     }
@@ -283,7 +283,7 @@ public:
                         {
                             bSummonArmy = true;
                                 me->AddUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED);
-                            me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
+                            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                             DoCast(me, SPELL_ARMY_DEAD);
                         }
 
@@ -291,7 +291,7 @@ public:
                             if (uiDeathArmyCheckTimer <= uiDiff)
                             {
                                     me->ClearUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED);
-                        me->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
+                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                                 uiDeathArmyCheckTimer = 0;
                                 bDeathArmyDone = true;
                             } else uiDeathArmyCheckTimer -= uiDiff;
@@ -301,9 +301,9 @@ public:
                             if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                             {
                                 if (pTarget && pTarget->isAlive())
-                                DoCast(pTarget,SPELL_DESECRATION);
+                                DoCast(pTarget, SPELL_DESECRATION);
                             }
-                            uiDesecration1Timer = urand(15000,16000);
+                            uiDesecration1Timer = urand(15000, 16000);
                         } else uiDesecration1Timer -= uiDiff;
 
                         if (uiGhoulExplodeTimer <= uiDiff)
@@ -315,19 +315,19 @@ public:
                         if (uiPlagueStrike1Timer <= uiDiff)
                         {
                             DoCastVictim(SPELL_PLAGUE_STRIKE);
-                            uiPlagueStrike1Timer = urand(12000,15000);
+                            uiPlagueStrike1Timer = urand(12000, 15000);
                         } else uiPlagueStrike1Timer -= uiDiff;
 
                         if (uiObliterate1Timer <= uiDiff)
                         {
                             DoCastVictim(SPELL_OBLITERATE);
-                            uiObliterate1Timer = urand(17000,19000);
+                            uiObliterate1Timer = urand(17000, 19000);
                         } else uiObliterate1Timer -= uiDiff;
 
                         if (uiIcyTouch1Timer <= uiDiff)
                         {
                             DoCastVictim(SPELL_ICY_TOUCH);
-                            uiIcyTouch1Timer = urand(5000,7000);
+                            uiIcyTouch1Timer = urand(5000, 7000);
                         } else uiIcyTouch1Timer -= uiDiff;
 
                         if (uiDeathRespiteTimer <= uiDiff)
@@ -335,9 +335,9 @@ public:
                             if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                             {
                                 if (pTarget && pTarget->isAlive())
-                                DoCast(pTarget,SPELL_DEATH_RESPITE);
+                                DoCast(pTarget, SPELL_DEATH_RESPITE);
                             }
-                            uiDeathRespiteTimer = urand(15000,16000);
+                            uiDeathRespiteTimer = urand(15000, 16000);
                         } else uiDeathRespiteTimer -= uiDiff;
                         break;
                     }
@@ -347,7 +347,7 @@ public:
                             if (uiDeathBiteTimer <= uiDiff)
                         {
                             SetEquipmentSlots(false, EQUIP_UNEQUIP, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
-                            DoCast(me,SPELL_DEATH_BITE);
+                            DoCast(me, SPELL_DEATH_BITE);
                             uiDeathBiteTimer = urand (2000, 4000);
                         } else uiDeathBiteTimer -= uiDiff;
 
@@ -356,7 +356,7 @@ public:
                             if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                             {
                                 if (pTarget && pTarget->isAlive())
-                                DoCast(pTarget,SPELL_MARKED_DEATH);
+                                DoCast(pTarget, SPELL_MARKED_DEATH);
                             }
                                 uiMarkedDeathTimer = urand (5000, 7000);
                         } else uiMarkedDeathTimer -= uiDiff;
@@ -374,15 +374,15 @@ public:
             DoScriptText(SAY_AGGRO_2, me);
             SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
             if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                    pInstance->HandleGameObject(pGO->GetGUID(),false);
+                    pInstance->HandleGameObject(pGO->GetGUID(), false);
             if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                    pInstance->HandleGameObject(pGO->GetGUID(),false);
+                    pInstance->HandleGameObject(pGO->GetGUID(), false);
         }
 
         void KilledUnit(Unit* pVictim)
         {
             if (pInstance)
-                pInstance->SetData(BOSS_BLACK_KNIGHT,IN_PROGRESS);
+                pInstance->SetData(BOSS_BLACK_KNIGHT, IN_PROGRESS);
         }
 
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
@@ -392,7 +392,7 @@ public:
                 uiDamage = 0;
                 me->SetHealth(0);
                 me->AddUnitState(UNIT_STAT_ROOT | UNIT_STAT_STUNNED);
-                me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
+                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 RemoveSummons();
                 switch(uiPhase)
                 {
@@ -412,7 +412,7 @@ public:
         {
             DoScriptText(SAY_DEATH_3, me);
             if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                pInstance->HandleGameObject(pGO->GetGUID(),true);
+                pInstance->HandleGameObject(pGO->GetGUID(), true);
 
             if (pInstance)
             {
@@ -457,7 +457,7 @@ public:
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1, 100, true))
                 {
                     if (pTarget && pTarget->isAlive())
-                    DoCast(pTarget,SPELL_LEAP);
+                    DoCast(pTarget, SPELL_LEAP);
                 }
                 uiAttackTimer = 3500;
             } else uiAttackTimer -= uiDiff;
@@ -482,7 +482,7 @@ public:
     {
         npc_black_knight_skeletal_gryphonAI(Creature* pCreature) : npc_escortAI(pCreature), vehicle(pCreature->GetVehicleKit())
         {
-            Start(false,true,0,NULL);
+            Start(false, true, 0, NULL);
             pInstance = pCreature->GetInstanceScript();    
         }
 
@@ -542,7 +542,7 @@ public:
                     break;
                     case 13:
                     me->SetUnitMovementFlags(MOVEMENTFLAG_WALKING);
-                    me->SummonCreature(VEHICLE_GR,744.841f,634.505f,411.575f, 2.79f);
+                    me->SummonCreature(VEHICLE_GR, 744.841f, 634.505f, 411.575f, 2.79f);
                     break;
             }
         }
@@ -578,7 +578,7 @@ public:
     
         npc_grAI(Creature* pCreature) : npc_escortAI(pCreature)
         {
-            Start(false,true,0,NULL);
+            Start(false, true, 0, NULL);
             pInstance = pCreature->GetInstanceScript();    
         }
 

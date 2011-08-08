@@ -26,7 +26,7 @@ void LoadLocaleMPQFiles(int const locale)
     //Locale-xxXX.MPQ
     sprintf(filename,"%s/Data/%s/locale-%s.MPQ", input_path, langs[locale], langs[locale]);
     printf("Loading %s\n", filename);
-    if(!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &localeMPQ[0]))
+    if (!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &localeMPQ[0]))
     {
         printf("%i\n", GetLastError());
         assert(false && "\nLoad of MPQ failed");
@@ -38,13 +38,13 @@ void LoadLocaleMPQFiles(int const locale)
         sprintf(ext, "-%i", patchRev[i]);
 		
         sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
-        if(!SFileOpenPatchArchive(localeMPQ[0], filename, langs[locale], MPQ_OPEN_READ_ONLY))
+        if (!SFileOpenPatchArchive(localeMPQ[0], filename, langs[locale], MPQ_OPEN_READ_ONLY))
         {
             printf("%i\n", GetLastError());
             assert(false && "Load of MPQ patch failed");
         }
     }
-    if(!SFileIsPatchedArchive(localeMPQ[0]))
+    if (!SFileIsPatchedArchive(localeMPQ[0]))
         assert(false && "An error occured");
 	
     //Others
@@ -55,7 +55,7 @@ void LoadLocaleMPQFiles(int const locale)
 		
         sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
         printf("Loading %s\n", filename);
-        if(!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &localeMPQ[i+1]))
+        if (!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &localeMPQ[i+1]))
         {
             printf("%i\n", GetLastError());
             assert(false && "Load of MPQ failed");
@@ -67,13 +67,13 @@ void LoadLocaleMPQFiles(int const locale)
             sprintf(ext, "-%i", patchRev[j]);
 			
             sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
-            if(!SFileOpenPatchArchive(localeMPQ[i+1], filename, langs[locale], MPQ_OPEN_READ_ONLY))
+            if (!SFileOpenPatchArchive(localeMPQ[i+1], filename, langs[locale], MPQ_OPEN_READ_ONLY))
             {
                 printf("%i\n", GetLastError());
                 assert(false && "Load of MPQ patch failed");
             }
         }
-        if(!SFileIsPatchedArchive(localeMPQ[i+1]))
+        if (!SFileIsPatchedArchive(localeMPQ[i+1]))
             assert(false && "An error occured");
     }
 }
@@ -85,7 +85,7 @@ void LoadMapMPQFiles()
     //Locale-xxXX.MPQ
     sprintf(filename,"%s/Data/world.MPQ", input_path);
     printf("Loading %s\n", filename);
-    if(!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &WorldMPQ))
+    if (!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &WorldMPQ))
     {
         printf("%i\n", GetLastError());
         assert(false && "\nLoad of MPQ failed");
@@ -98,26 +98,26 @@ void LoadMapMPQFiles()
 		
         sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
         printf("    -%i\n", patchRev[i]);
-        if(!SFileOpenPatchArchive(WorldMPQ, filename, "base", MPQ_OPEN_READ_ONLY))
+        if (!SFileOpenPatchArchive(WorldMPQ, filename, "base", MPQ_OPEN_READ_ONLY))
         {
             printf("%i\n", GetLastError());
             assert(false && "Load of MPQ patch failed");
         }
     }
-    if(!SFileIsPatchedArchive(WorldMPQ))
+    if (!SFileIsPatchedArchive(WorldMPQ))
         assert(false && "An error occured");
     
     for(int j = 0; j < 3; j++)
     {
         sprintf(filename, "%s/Data/expansion%u.MPQ", input_path, j+1);
         printf("Loading %s\n", filename);
-        if(!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &ExpansionsMPQ[j]))
+        if (!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &ExpansionsMPQ[j]))
         {
             printf("%i\n", GetLastError());
             assert(false && "\nLoad of MPQ failed");
         }
         
-        if(!IsValidMpqHandle((TMPQArchive*)ExpansionsMPQ[j]))
+        if (!IsValidMpqHandle((TMPQArchive*)ExpansionsMPQ[j]))
         {
             printf("Load of Expansion%u.MPQ Failed!\n", j+1);
             printf("\nPlease verify you downloaded all the MPQs. You should replace\n'SET accountType \"xx\"'\nin your WTF/config.wtf and WTF/launcher.wtf by\n'SET accountType \"CT\"'\nand then restart your launcher\n");
@@ -131,7 +131,7 @@ void LoadMapMPQFiles()
             
             sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
             printf("    -%i\n", patchRev[i]);
-            if(!SFileOpenPatchArchive(ExpansionsMPQ[j], filename, "base", MPQ_OPEN_READ_ONLY))
+            if (!SFileOpenPatchArchive(ExpansionsMPQ[j], filename, "base", MPQ_OPEN_READ_ONLY))
             {
                 printf("%i\n", GetLastError());
                 assert(false && "Load of MPQ patch failed");
@@ -146,30 +146,30 @@ int ExtractFileToHardDrive(HANDLE &MPQ_handle, const char * szArchivedFile, cons
     TFileStream* handle = NULL;          // Disk file handle
     int    nError = ERROR_SUCCESS; // Result value
     
-    if(nError == ERROR_SUCCESS)            
+    if (nError == ERROR_SUCCESS)            
     {
-        if(!SFileOpenFileEx(MPQ_handle, szArchivedFile, SFILE_OPEN_PATCHED_FILE, &hFile))
+        if (!SFileOpenFileEx(MPQ_handle, szArchivedFile, SFILE_OPEN_PATCHED_FILE, &hFile))
             nError = GetLastError();
     }
 	
     // Create the target file
-    if(nError == ERROR_SUCCESS)
+    if (nError == ERROR_SUCCESS)
     {
 		handle = FileStream_CreateFile(szFileName);
-        if(handle == NULL)
+        if (handle == NULL)
             nError = GetLastError();
     }
 	
     // Read the file from the archive
-    if(nError == ERROR_SUCCESS)
+    if (nError == ERROR_SUCCESS)
     {
         // Get the size of the full patched file
         DWORD dwFileSize = SFileGetFileSize(hFile, NULL);
-        if(dwFileSize != 0)
+        if (dwFileSize != 0)
         {
             // Allocate space for the full file
             BYTE * pbFullFile = new BYTE[dwFileSize];
-            if(!SFileReadFile(hFile, pbFullFile, dwFileSize))
+            if (!SFileReadFile(hFile, pbFullFile, dwFileSize))
 			{           
 				nError = GetLastError();
 				printf("Failed to read full patched file data \"%s\"\n", szFileName);
@@ -181,9 +181,9 @@ int ExtractFileToHardDrive(HANDLE &MPQ_handle, const char * szArchivedFile, cons
     }
 	
     // Cleanup and exit
-    if(handle != NULL)
+    if (handle != NULL)
         FileStream_Close(handle);
-    if(hFile != NULL)
+    if (hFile != NULL)
         SFileCloseFile(hFile);
 	
     return nError;
@@ -195,22 +195,22 @@ char* ExtractFileToMemory(HANDLE &MPQ_handle, const char * szArchivedFile, int &
     int    nError = ERROR_SUCCESS; // Result value
     char * pbFullFile = NULL;
     
-    if(nError == ERROR_SUCCESS)            
+    if (nError == ERROR_SUCCESS)            
     {
-        if(!SFileOpenFileEx(MPQ_handle, szArchivedFile, SFILE_OPEN_PATCHED_FILE, &hFile))
+        if (!SFileOpenFileEx(MPQ_handle, szArchivedFile, SFILE_OPEN_PATCHED_FILE, &hFile))
             nError = GetLastError();
     }
 	
     // Read the file from the archive
-    if(nError == ERROR_SUCCESS)
+    if (nError == ERROR_SUCCESS)
     {
         // Get the size of the full patched file
         size = SFileGetFileSize(hFile, NULL);
-        if(size != 0)
+        if (size != 0)
         {
             // Allocate space for the full file
             pbFullFile = new char[size];
-            if(!SFileReadFile(hFile, pbFullFile, size))
+            if (!SFileReadFile(hFile, pbFullFile, size))
 			{           
 				nError = GetLastError();
 				printf("Failed to read full patched file data \"%s\"\n", szArchivedFile);
@@ -220,7 +220,7 @@ char* ExtractFileToMemory(HANDLE &MPQ_handle, const char * szArchivedFile, int &
     }
 	
     // Cleanup and exit
-    if(nError == ERROR_SUCCESS && hFile != NULL)
+    if (nError == ERROR_SUCCESS && hFile != NULL)
         SFileCloseFile(hFile);
 	
     return pbFullFile;

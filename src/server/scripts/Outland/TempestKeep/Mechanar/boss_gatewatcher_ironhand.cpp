@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,24 +33,24 @@ EndScriptData */
 
 enum eSays
 {
-    SAY_AGGRO_1                    = -1554006,
-    SAY_HAMMER_1                   = -1554007,
-    SAY_HAMMER_2                   = -1554008,
-    SAY_SLAY_1                     = -1554009,
-    SAY_SLAY_2                     = -1554010,
-    SAY_DEATH_1                    = -1554011,
-    EMOTE_HAMMER                   = -1554012,
+    SAY_AGGRO_1                    = -1554006, 
+    SAY_HAMMER_1                   = -1554007, 
+    SAY_HAMMER_2                   = -1554008, 
+    SAY_SLAY_1                     = -1554009, 
+    SAY_SLAY_2                     = -1554010, 
+    SAY_DEATH_1                    = -1554011, 
+    EMOTE_HAMMER                   = -1554012, 
 };
 
 enum eSpells
 {
     // Spells to be casted
-    SPELL_SHADOW_POWER             = 35322,
-    H_SPELL_SHADOW_POWER           = 39193,
-    SPELL_HAMMER_PUNCH             = 35326,
-    SPELL_JACKHAMMER               = 35327,
-    H_SPELL_JACKHAMMER             = 39194,
-    SPELL_STREAM_OF_MACHINE_FLUID  = 35311,
+    SPELL_SHADOW_POWER             = 35322, 
+    H_SPELL_SHADOW_POWER           = 39193, 
+    SPELL_HAMMER_PUNCH             = 35326, 
+    SPELL_JACKHAMMER               = 35327, 
+    H_SPELL_JACKHAMMER             = 39194, 
+    SPELL_STREAM_OF_MACHINE_FLUID  = 35311, 
 };
 
 class boss_gatewatcher_iron_hand : public CreatureScript
@@ -89,7 +89,7 @@ class boss_gatewatcher_iron_hand : public CreatureScript
                     if (rand()%2)
                         return;
 
-                    DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
+                    DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
                 }
 
                 void JustDied(Unit* /*Killer*/)
@@ -124,7 +124,7 @@ class boss_gatewatcher_iron_hand : public CreatureScript
                         if (rand()%2)
                                             return;
 
-                        DoScriptText(RAND(SAY_HAMMER_1,SAY_HAMMER_2), me);
+                        DoScriptText(RAND(SAY_HAMMER_1, SAY_HAMMER_2), me);
                         Jackhammer_Timer = 30000;
                     }
                     else

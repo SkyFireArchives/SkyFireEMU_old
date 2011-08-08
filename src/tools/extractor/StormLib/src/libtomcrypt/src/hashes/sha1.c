@@ -26,7 +26,7 @@ const struct ltc_hash_descriptor sha1_desc =
     64,
 
     /* OID */
-   { 1, 3, 14, 3, 2, 26,  },
+   { 1, 3, 14, 3, 2, 26, },
    6,
 
     &sha1_init,

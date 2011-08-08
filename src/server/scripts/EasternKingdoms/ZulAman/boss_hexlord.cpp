@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -122,11 +122,11 @@ static uint32 AddEntryList[8]=
 
 enum AbilityTarget
 {
-    ABILITY_TARGET_SELF = 0,
-    ABILITY_TARGET_VICTIM = 1,
-    ABILITY_TARGET_ENEMY = 2,
-    ABILITY_TARGET_HEAL = 3,
-    ABILITY_TARGET_BUFF = 4,
+    ABILITY_TARGET_SELF = 0, 
+    ABILITY_TARGET_VICTIM = 1, 
+    ABILITY_TARGET_ENEMY = 2, 
+    ABILITY_TARGET_HEAL = 3, 
+    ABILITY_TARGET_BUFF = 4, 
     ABILITY_TARGET_SPECIAL = 5
 };
 
@@ -140,44 +140,44 @@ struct PlayerAbilityStruct
 static PlayerAbilityStruct PlayerAbility[][3] =
 {
     // 1 warrior
-    {{SPELL_WR_SPELL_REFLECT, ABILITY_TARGET_SELF, 10000},
-    {SPELL_WR_WHIRLWIND, ABILITY_TARGET_SELF, 10000},
-    {SPELL_WR_MORTAL_STRIKE, ABILITY_TARGET_VICTIM, 6000}},
+    {{SPELL_WR_SPELL_REFLECT, ABILITY_TARGET_SELF, 10000}, 
+    {SPELL_WR_WHIRLWIND, ABILITY_TARGET_SELF, 10000}, 
+    {SPELL_WR_MORTAL_STRIKE, ABILITY_TARGET_VICTIM, 6000}}, 
     // 2 paladin
-    {{SPELL_PA_CONSECRATION, ABILITY_TARGET_SELF, 10000},
-    {SPELL_PA_HOLY_LIGHT, ABILITY_TARGET_HEAL, 10000},
-    {SPELL_PA_AVENGING_WRATH, ABILITY_TARGET_SELF, 10000}},
+    {{SPELL_PA_CONSECRATION, ABILITY_TARGET_SELF, 10000}, 
+    {SPELL_PA_HOLY_LIGHT, ABILITY_TARGET_HEAL, 10000}, 
+    {SPELL_PA_AVENGING_WRATH, ABILITY_TARGET_SELF, 10000}}, 
     // 3 hunter
-    {{SPELL_HU_EXPLOSIVE_TRAP, ABILITY_TARGET_SELF, 10000},
-    {SPELL_HU_FREEZING_TRAP, ABILITY_TARGET_SELF, 10000},
-    {SPELL_HU_SNAKE_TRAP, ABILITY_TARGET_SELF, 10000}},
+    {{SPELL_HU_EXPLOSIVE_TRAP, ABILITY_TARGET_SELF, 10000}, 
+    {SPELL_HU_FREEZING_TRAP, ABILITY_TARGET_SELF, 10000}, 
+    {SPELL_HU_SNAKE_TRAP, ABILITY_TARGET_SELF, 10000}}, 
     // 4 rogue
-    {{SPELL_RO_WOUND_POISON, ABILITY_TARGET_VICTIM, 3000},
-    {SPELL_RO_SLICE_DICE, ABILITY_TARGET_SELF, 10000},
-    {SPELL_RO_BLIND, ABILITY_TARGET_ENEMY, 10000}},
+    {{SPELL_RO_WOUND_POISON, ABILITY_TARGET_VICTIM, 3000}, 
+    {SPELL_RO_SLICE_DICE, ABILITY_TARGET_SELF, 10000}, 
+    {SPELL_RO_BLIND, ABILITY_TARGET_ENEMY, 10000}}, 
     // 5 priest
-    {{SPELL_PR_PAIN_SUPP, ABILITY_TARGET_HEAL, 10000},
-    {SPELL_PR_HEAL, ABILITY_TARGET_HEAL, 10000},
-    {SPELL_PR_PSYCHIC_SCREAM, ABILITY_TARGET_SELF, 10000}},
+    {{SPELL_PR_PAIN_SUPP, ABILITY_TARGET_HEAL, 10000}, 
+    {SPELL_PR_HEAL, ABILITY_TARGET_HEAL, 10000}, 
+    {SPELL_PR_PSYCHIC_SCREAM, ABILITY_TARGET_SELF, 10000}}, 
     // 5* shadow priest
-    {{SPELL_PR_MIND_CONTROL, ABILITY_TARGET_ENEMY, 15000},
-    {SPELL_PR_MIND_BLAST, ABILITY_TARGET_ENEMY, 5000},
-    {SPELL_PR_SW_DEATH, ABILITY_TARGET_ENEMY, 10000}},
+    {{SPELL_PR_MIND_CONTROL, ABILITY_TARGET_ENEMY, 15000}, 
+    {SPELL_PR_MIND_BLAST, ABILITY_TARGET_ENEMY, 5000}, 
+    {SPELL_PR_SW_DEATH, ABILITY_TARGET_ENEMY, 10000}}, 
     // 7 shaman
-    {{SPELL_SH_FIRE_NOVA, ABILITY_TARGET_SELF, 10000},
-    {SPELL_SH_HEALING_WAVE, ABILITY_TARGET_HEAL, 10000},
-    {SPELL_SH_CHAIN_LIGHT, ABILITY_TARGET_ENEMY, 8000}},
+    {{SPELL_SH_FIRE_NOVA, ABILITY_TARGET_SELF, 10000}, 
+    {SPELL_SH_HEALING_WAVE, ABILITY_TARGET_HEAL, 10000}, 
+    {SPELL_SH_CHAIN_LIGHT, ABILITY_TARGET_ENEMY, 8000}}, 
     // 8 mage
-    {{SPELL_MG_FIREBALL, ABILITY_TARGET_ENEMY, 5000},
-    {SPELL_MG_FROSTBOLT, ABILITY_TARGET_ENEMY, 5000},
-    {SPELL_MG_ICE_LANCE, ABILITY_TARGET_SPECIAL, 2000}},
+    {{SPELL_MG_FIREBALL, ABILITY_TARGET_ENEMY, 5000}, 
+    {SPELL_MG_FROSTBOLT, ABILITY_TARGET_ENEMY, 5000}, 
+    {SPELL_MG_ICE_LANCE, ABILITY_TARGET_SPECIAL, 2000}}, 
     // 9 warlock
-    {{SPELL_WL_CURSE_OF_DOOM, ABILITY_TARGET_ENEMY, 10000},
-    {SPELL_WL_RAIN_OF_FIRE, ABILITY_TARGET_ENEMY, 10000},
-    {SPELL_WL_UNSTABLE_AFFL, ABILITY_TARGET_ENEMY, 10000}},
+    {{SPELL_WL_CURSE_OF_DOOM, ABILITY_TARGET_ENEMY, 10000}, 
+    {SPELL_WL_RAIN_OF_FIRE, ABILITY_TARGET_ENEMY, 10000}, 
+    {SPELL_WL_UNSTABLE_AFFL, ABILITY_TARGET_ENEMY, 10000}}, 
     // 11 druid
-    {{SPELL_DR_LIFEBLOOM, ABILITY_TARGET_HEAL, 10000},
-    {SPELL_DR_THORNS, ABILITY_TARGET_SELF, 10000},
+    {{SPELL_DR_LIFEBLOOM, ABILITY_TARGET_HEAL, 10000}, 
+    {SPELL_DR_THORNS, ABILITY_TARGET_SELF, 10000}, 
     {SPELL_DR_MOONFIRE, ABILITY_TARGET_ENEMY, 8000}}
 };
 
@@ -270,7 +270,7 @@ class boss_hexlord_malacrass : public CreatureScript
 
                 for (uint8 i = 0; i < 4; ++i)
                 {
-                    Unit* Temp = Unit::GetUnit((*me),AddGUID[i]);
+                    Unit* Temp = Unit::GetUnit((*me), AddGUID[i]);
                     if (Temp && Temp->isAlive())
                         CAST_CRE(Temp)->AI()->AttackStart(me->getVictim());
                     else
@@ -283,7 +283,7 @@ class boss_hexlord_malacrass : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                switch (urand(0,1))
+                switch (urand(0, 1))
                 {
                     case 0:
                         me->MonsterYell(YELL_KILL_ONE, LANG_UNIVERSAL, NULL);
@@ -306,7 +306,7 @@ class boss_hexlord_malacrass : public CreatureScript
 
                 for (uint8 i = 0; i < 4 ; ++i)
                 {
-                    Unit* Temp = Unit::GetUnit((*me),AddGUID[i]);
+                    Unit* Temp = Unit::GetUnit((*me), AddGUID[i]);
                     if (Temp && Temp->isAlive())
                         Temp->DealDamage(Temp, Temp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 }
@@ -377,7 +377,7 @@ class boss_hexlord_malacrass : public CreatureScript
                     DoCast(me, SPELL_DRAIN_POWER, true);
                     me->MonsterYell(YELL_DRAIN_POWER, LANG_UNIVERSAL, NULL);
                     DoPlaySoundToSet(me, SOUND_YELL_DRAIN_POWER);
-                    DrainPower_Timer = urand(40000,55000);    // must cast in 60 sec, or buff/debuff will disappear
+                    DrainPower_Timer = urand(40000, 55000);    // must cast in 60 sec, or buff/debuff will disappear
                 } else DrainPower_Timer -= diff;
 
                 if (SpiritBolts_Timer <= diff)
@@ -416,7 +416,7 @@ class boss_hexlord_malacrass : public CreatureScript
                         //me->SetUInt32Value(UNIT_CHANNEL_SPELL, SPELL_SIPHON_SOUL);
 
                         PlayerGUID = pTarget->GetGUID();
-                        PlayerAbility_Timer = urand(8000,10000);
+                        PlayerAbility_Timer = urand(8000, 10000);
                         PlayerClass = pTarget->getClass() - 1;
 
                         if (PlayerClass == CLASS_DRUID-1)
@@ -434,7 +434,7 @@ class boss_hexlord_malacrass : public CreatureScript
                     //if (pTarget && pTarget->isAlive())
                     //{
                         UseAbility();
-                        PlayerAbility_Timer = urand(8000,10000);
+                        PlayerAbility_Timer = urand(8000, 10000);
                     //}
                 } else PlayerAbility_Timer -= diff;
 
@@ -443,7 +443,7 @@ class boss_hexlord_malacrass : public CreatureScript
 
             void UseAbility()
             {
-                uint8 random = urand(0,2);
+                uint8 random = urand(0, 2);
                 Unit *pTarget = NULL;
                 switch(PlayerAbility[PlayerClass][random].target)
                 {
@@ -605,7 +605,7 @@ class boss_alyson_antille : public CreatureScript
                     }
                     else
                     {
-                        if (urand(0,1))
+                        if (urand(0, 1))
                             pTarget = DoSelectLowestHpFriendly(50, 0);
                         else
                             pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
@@ -617,7 +617,7 @@ class boss_alyson_antille : public CreatureScript
 
                 /*if (dispelmagic_timer <= diff)
                 {
-                if (urand(0,1))
+                if (urand(0, 1))
                 {
                     Unit *pTarget = SelectTarget();
 
@@ -871,7 +871,7 @@ class boss_fenstalker : public CreatureScript
                 if (volatileinf_timer <= diff)
                 {
                     // core bug
-                    me->getVictim()->CastSpell(me->getVictim(),SPELL_VOLATILE_INFECTION, false);
+                    me->getVictim()->CastSpell(me->getVictim(), SPELL_VOLATILE_INFECTION, false);
                     volatileinf_timer = 12000;
                 } else volatileinf_timer -= diff;
 

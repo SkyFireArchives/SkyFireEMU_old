@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,15 +26,15 @@
 
 enum Spells
 {
-    SPELL_ARCANE_EXPLOSION                        = 46608,
-    SPELL_CONE_OF_COLD                            = 38384,
-    SPELL_FIREBALL                                = 46988,
+    SPELL_ARCANE_EXPLOSION                        = 46608, 
+    SPELL_CONE_OF_COLD                            = 38384, 
+    SPELL_FIREBALL                                = 46988, 
     SPELL_FROSTBOLT                               = 46987
 };
 
 enum Yells
 {
-    YELL_AGGRO                                    = -2100019,
+    YELL_AGGRO                                    = -2100019, 
     YELL_EVADE                                    = -2100020
 };
 
@@ -117,7 +117,7 @@ public:
 
         void Reset()
         {
-            uiArcaneExplosionTimer      = urand(5*IN_MILLISECONDS,15*IN_MILLISECONDS);
+            uiArcaneExplosionTimer      = urand(5*IN_MILLISECONDS, 15*IN_MILLISECONDS);
             uiConeOfColdTimer           = 8*IN_MILLISECONDS;
             uiFireBoltTimer             = 1*IN_MILLISECONDS;
             uiFrostboltTimer            = 4*IN_MILLISECONDS;
@@ -140,7 +140,7 @@ public:
         void JustSummoned(Creature* summoned)
         {
             CAST_AI(mob_water_elemental::mob_water_elementalAI, summoned->AI())->uiBalindaGUID = me->GetGUID();
-            summoned->AI()->AttackStart(SelectTarget(SELECT_TARGET_RANDOM,0, 50, true));
+            summoned->AI()->AttackStart(SelectTarget(SELECT_TARGET_RANDOM, 0, 50, true));
             summoned->setFaction(me->getFaction());
             Summons.Summon(summoned);
         }
@@ -165,25 +165,25 @@ public:
             if (uiArcaneExplosionTimer < diff)
             {
                 DoCast(me->getVictim(), SPELL_ARCANE_EXPLOSION);
-                uiArcaneExplosionTimer =  urand(5*IN_MILLISECONDS,15*IN_MILLISECONDS);
+                uiArcaneExplosionTimer =  urand(5*IN_MILLISECONDS, 15*IN_MILLISECONDS);
             } else uiArcaneExplosionTimer -= diff;
 
             if (uiConeOfColdTimer < diff)
             {
                 DoCast(me->getVictim(), SPELL_CONE_OF_COLD);
-                uiConeOfColdTimer = urand(10*IN_MILLISECONDS,20*IN_MILLISECONDS);
+                uiConeOfColdTimer = urand(10*IN_MILLISECONDS, 20*IN_MILLISECONDS);
             } else uiConeOfColdTimer -= diff;
 
             if (uiFireBoltTimer < diff)
             {
                 DoCast(me->getVictim(), SPELL_FIREBALL);
-                uiFireBoltTimer = urand(5*IN_MILLISECONDS,9*IN_MILLISECONDS);
+                uiFireBoltTimer = urand(5*IN_MILLISECONDS, 9*IN_MILLISECONDS);
             } else uiFireBoltTimer -= diff;
 
             if (uiFrostboltTimer < diff)
             {
                 DoCast(me->getVictim(), SPELL_FROSTBOLT);
-                uiFrostboltTimer = urand(4*IN_MILLISECONDS,12*IN_MILLISECONDS);
+                uiFrostboltTimer = urand(4*IN_MILLISECONDS, 12*IN_MILLISECONDS);
             } else uiFrostboltTimer -= diff;
 
 

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -151,7 +151,7 @@ public:
                 case GO_TRIBUNAL_CHEST_HERO:
                     uiTribunalChest = pGo->GetGUID();
                     if (m_auiEncounter[2] == DONE)
-                        pGo->RemoveFlag(GAMEOBJECT_FLAGS,GO_FLAG_INTERACT_COND);
+                        pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND);
                     break;
                 case 191527:
                     uiTribunalSkyFloor = pGo->GetGUID();
@@ -166,12 +166,12 @@ public:
                 case DATA_MAIDEN_OF_GRIEF_EVENT:
                     m_auiEncounter[1] = data;
                     if (m_auiEncounter[1] == DONE)
-                        HandleGameObject(uiBrannDoor,true);
+                        HandleGameObject(uiBrannDoor, true);
                     break;
                 case DATA_KRYSTALLUS_EVENT:
                     m_auiEncounter[0] = data;
                     if (m_auiEncounter[0] == DONE)
-                        HandleGameObject(uiMaidenOfGriefDoor,true);
+                        HandleGameObject(uiMaidenOfGriefDoor, true);
                     break;
                 case DATA_SJONNIR_EVENT:
                     m_auiEncounter[3] = data;
@@ -180,10 +180,10 @@ public:
                     m_auiEncounter[2] = data;
                     if (m_auiEncounter[2] == DONE)
                     {
-                        HandleGameObject(uiSjonnirDoor,true);
+                        HandleGameObject(uiSjonnirDoor, true);
                         GameObject *pGo = instance->GetGameObject(uiTribunalChest);
                         if (pGo)
-                            pGo->RemoveFlag(GAMEOBJECT_FLAGS,GO_FLAG_INTERACT_COND);
+                            pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND);
                     }
                     break;
             }

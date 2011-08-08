@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,59 +27,59 @@
 
 enum Data
 {
-    DATA_FALRIC_EVENT,
-    DATA_MARWYN_EVENT,
-    DATA_LICHKING_EVENT,
-    DATA_WAVE_COUNT,
-    DATA_TEAM_IN_INSTANCE,
+    DATA_FALRIC_EVENT, 
+    DATA_MARWYN_EVENT, 
+    DATA_LICHKING_EVENT, 
+    DATA_WAVE_COUNT, 
+    DATA_TEAM_IN_INSTANCE, 
 };
 
 enum Data64
 {
-    DATA_FALRIC,
-    DATA_MARWYN,
-    DATA_LICHKING,
-    DATA_FROSTMOURNE,
+    DATA_FALRIC, 
+    DATA_MARWYN, 
+    DATA_LICHKING, 
+    DATA_FROSTMOURNE, 
 };
 
 enum Creatures
 {
-    NPC_FALRIC                                    = 38112,
-    NPC_MARWYN                                    = 38113,
-    NPC_LICH_KING_EVENT                           = 37226,
-    NPC_LICH_KING_BOSS                            = 36954,
+    NPC_FALRIC                                    = 38112, 
+    NPC_MARWYN                                    = 38113, 
+    NPC_LICH_KING_EVENT                           = 37226, 
+    NPC_LICH_KING_BOSS                            = 36954, 
 
-    NPC_UTHER                                     = 37225,
-    NPC_JAINA_PART1                               = 37221,
-    NPC_JAINA_PART2                               = 36955,
-    NPC_SYLVANAS_PART1                            = 37223,
-    NPC_SYLVANAS_PART2                            = 37554,
+    NPC_UTHER                                     = 37225, 
+    NPC_JAINA_PART1                               = 37221, 
+    NPC_JAINA_PART2                               = 36955, 
+    NPC_SYLVANAS_PART1                            = 37223, 
+    NPC_SYLVANAS_PART2                            = 37554, 
 
-    NPC_WAVE_MERCENARY                            = 38177,
-    NPC_WAVE_FOOTMAN                              = 38173,
-    NPC_WAVE_RIFLEMAN                             = 38176,
-    NPC_WAVE_PRIEST                               = 38175,
-    NPC_WAVE_MAGE                                 = 38172,
+    NPC_WAVE_MERCENARY                            = 38177, 
+    NPC_WAVE_FOOTMAN                              = 38173, 
+    NPC_WAVE_RIFLEMAN                             = 38176, 
+    NPC_WAVE_PRIEST                               = 38175, 
+    NPC_WAVE_MAGE                                 = 38172, 
 };
 
 enum GameObjects
 {
-    GO_FROSTMOURNE                                = 202302,
-    GO_FROSTMOURNE_ALTAR                          = 202236,
-    GO_FRONT_DOOR                                 = 201976,
-    GO_ARTHAS_DOOR                                = 197341,
+    GO_FROSTMOURNE                                = 202302, 
+    GO_FROSTMOURNE_ALTAR                          = 202236, 
+    GO_FRONT_DOOR                                 = 201976, 
+    GO_ARTHAS_DOOR                                = 197341, 
 };
 
 enum HorWorldStates
 {
-    WORLD_STATE_HOR                               = 4884,
-    WORLD_STATE_HOR_WAVE_COUNT                    = 4882,
+    WORLD_STATE_HOR                               = 4884, 
+    WORLD_STATE_HOR_WAVE_COUNT                    = 4882, 
 };
 
 // Common actions from Instance Script to Boss Script
 enum Actions
 {
-    ACTION_ENTER_COMBAT,
+    ACTION_ENTER_COMBAT, 
 };
 
 // Base class for FALRIC and MARWYN

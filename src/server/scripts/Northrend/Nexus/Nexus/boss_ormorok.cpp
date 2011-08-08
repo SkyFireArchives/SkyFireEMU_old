@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -29,23 +29,23 @@ enum Spells
 {
     SPELL_CRYSTAL_SPIKES                          = 47958, //Don't work, using walkaround
     H_SPELL_CRYSTAL_SPIKES                        = 57082, //Don't work, using walkaround
-    SPELL_CRYSTALL_SPIKE_DAMAGE                   = 47944,
-    H_SPELL_CRYSTALL_SPIKE_DAMAGE                 = 57067,
-    SPELL_CRYSTAL_SPIKE_PREVISUAL                 = 50442,
-    MOB_CRYSTAL_SPIKE                             = 27099,
-    SPELL_SPELL_REFLECTION                        = 47981,
-    SPELL_TRAMPLE                                 = 48016,
-    H_SPELL_TRAMPLE                               = 57066,
-    SPELL_FRENZY                                  = 48017,
+    SPELL_CRYSTALL_SPIKE_DAMAGE                   = 47944, 
+    H_SPELL_CRYSTALL_SPIKE_DAMAGE                 = 57067, 
+    SPELL_CRYSTAL_SPIKE_PREVISUAL                 = 50442, 
+    MOB_CRYSTAL_SPIKE                             = 27099, 
+    SPELL_SPELL_REFLECTION                        = 47981, 
+    SPELL_TRAMPLE                                 = 48016, 
+    H_SPELL_TRAMPLE                               = 57066, 
+    SPELL_FRENZY                                  = 48017, 
     SPELL_SUMMON_CRYSTALLINE_TANGLER              = 61564, //summons npc 32665
     SPELL_ROOTS                                   = 28858  //proper spell id is unknown
 };
 enum Yells
 {
-    SAY_AGGRO                                     = -1576020,
-    SAY_DEATH                                     = -1576021,
-    SAY_REFLECT                                   = -1576022,
-    SAY_CRYSTAL_SPIKES                            = -1576023,
+    SAY_AGGRO                                     = -1576020, 
+    SAY_DEATH                                     = -1576021, 
+    SAY_REFLECT                                   = -1576022, 
+    SAY_CRYSTAL_SPIKES                            = -1576023, 
     SAY_KILL                                      = -1576024
 };
 enum Creatures
@@ -203,7 +203,7 @@ public:
                         std::list<HostileReference*>::const_iterator i = me->getThreatManager().getThreatList().begin();
                         for (; i != me->getThreatManager().getThreatList().end(); ++i)
                         {
-                            Unit* pTemp = Unit::GetUnit((*me),(*i)->getUnitGuid());
+                            Unit* pTemp = Unit::GetUnit((*me), (*i)->getUnitGuid());
                             if (pTemp && pTemp->GetTypeId() == TYPEID_PLAYER && pTemp->getClass() == Healer)
                             {
                                 pTarget = pTemp;

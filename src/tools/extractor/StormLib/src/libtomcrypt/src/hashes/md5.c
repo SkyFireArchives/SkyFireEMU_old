@@ -26,7 +26,7 @@ const struct ltc_hash_descriptor md5_desc =
     64,
 
     /* OID */
-   { 1, 2, 840, 113549, 2, 5,  },
+   { 1, 2, 840, 113549, 2, 5, },
    6,
 
     &md5_init,

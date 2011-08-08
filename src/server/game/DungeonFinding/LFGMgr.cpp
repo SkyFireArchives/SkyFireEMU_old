@@ -97,7 +97,7 @@ void LFGMgr::LoadRewards()
         return;
     }
 
-    uint32 count = 0;    
+    uint32 count = 0;
 
     Field* fields = NULL;
     do
@@ -169,7 +169,7 @@ void LFGMgr::Update(uint32 diff)
             if (Player* plr = sObjectMgr->GetPlayer(guid))
             {
                 plr->GetSession()->SendLfgRoleCheckUpdate(roleCheck);
-                
+
                 if (itRoles->first == roleCheck->leader)
                     plr->GetSession()->SendLfgJoinResult(LfgJoinResultData(LFG_JOIN_FAILED, LFG_ROLECHECK_MISSING_ROLE));
             }
@@ -359,7 +359,6 @@ bool LFGMgr::RemoveFromQueue(const uint64& guid)
         sLog->outDebug(LOG_FILTER_LFG, "LFGMgr::RemoveFromQueue: [" UI64FMTD "] not in queue", guid);
         return false;
     }
-
 }
 
 /**
@@ -793,7 +792,7 @@ bool LFGMgr::CheckCompatibility(LfgGuidList check, LfgProposal*& pProposal)
         uint64 frontGuid = check.front();
         check.pop_front();
 
-        // Check all-but-new compatibilities (New,A,B,C,D) --> check(A,B,C,D)
+        // Check all-but-new compatibilities (New, A, B, C, D) --> check(A, B, C, D)
         if (!CheckCompatibility(check, pProposal))          // Group not compatible
         {
             sLog->outDebug(LOG_FILTER_LFG, "LFGMgr::CheckCompatibility: (%s) not compatibles (%s not compatibles)", strGuids.c_str(), ConcatenateGuids(check).c_str());
@@ -1148,7 +1147,7 @@ LfgAnswer LFGMgr::GetCompatibles(std::string key)
 /**
    Given a list of dungeons remove the dungeons players have restrictions.
 
-   @param[in,out] dungeons Dungeons to check restrictions
+   @param[in, out] dungeons Dungeons to check restrictions
    @param[in]     players Set of players to check their dungeon restrictions
    @param[out]    lockMap Map of players Lock status info of given dungeons (Empty if dungeons is not empty)
 */
@@ -1683,7 +1682,6 @@ void LFGMgr::TeleportPlayer(Player* plr, bool out, bool fromOpcode /*= false*/)
 
             if (!fromOpcode)
             {
-
                 // Select a player inside to be teleported to
                 for (GroupReference* itr = grp->GetFirstMember(); itr != NULL && !mapid; itr = itr->next())
                 {
@@ -1747,7 +1745,7 @@ void LFGMgr::TeleportPlayer(Player* plr, bool out, bool fromOpcode /*= false*/)
 /**
    Give completion reward to player
 
-   @param[in]     dungeonId Id of the dungeon finished 
+   @param[in]     dungeonId Id of the dungeon finished
    @param[in]     plr Player to reward
 */
 void LFGMgr::RewardDungeonDoneFor(const uint32 dungeonId, Player* player)
@@ -1761,11 +1759,11 @@ void LFGMgr::RewardDungeonDoneFor(const uint32 dungeonId, Player* player)
 
     uint64 guid = player->GetGUID();
     uint64 gguid = player->GetGroup()->GetGUID();
-    uint32 gDungeonId = GetDungeon(gguid);     
+    uint32 gDungeonId = GetDungeon(gguid);
     if (gDungeonId != dungeonId)
     {
-        sLog->outDebug(LOG_FILTER_LFG, "LFGMgr::RewardDungeonDoneFor: [" UI64FMTD "] Finished dungeon %u but group queued for %u. Ignoring", guid, dungeonId, gDungeonId);    
-        return;    
+        sLog->outDebug(LOG_FILTER_LFG, "LFGMgr::RewardDungeonDoneFor: [" UI64FMTD "] Finished dungeon %u but group queued for %u. Ignoring", guid, dungeonId, gDungeonId);
+        return;
     }
 
     if (GetState(guid) == LFG_STATE_FINISHED_DUNGEON)
@@ -1804,8 +1802,8 @@ void LFGMgr::RewardDungeonDoneFor(const uint32 dungeonId, Player* player)
         return;
 
     // if we can take the quest, means that we haven't done this kind of "run", IE: First Heroic Random of Day.
-    if (player->CanRewardQuest(qReward,false))
-        player->RewardQuest(qReward,0,NULL,false);
+    if (player->CanRewardQuest(qReward, false))
+        player->RewardQuest(qReward, 0, NULL, false);
     else
     {
         index = 1;
@@ -1813,11 +1811,11 @@ void LFGMgr::RewardDungeonDoneFor(const uint32 dungeonId, Player* player)
         if (!qReward)
             return;
         // we give reward without informing client (retail does this)
-        player->RewardQuest(qReward,0,NULL,false);
+        player->RewardQuest(qReward, 0, NULL, false);
     }
 
     // Give rewards
-    sLog->outDebug(LOG_FILTER_LFG, "LFGMgr::RewardDungeonDoneFor: [" UI64FMTD "] done dungeon %u,%s previously done.", player->GetGUID(), GetDungeon(gguid), index > 0 ? " " : " not");
+    sLog->outDebug(LOG_FILTER_LFG, "LFGMgr::RewardDungeonDoneFor: [" UI64FMTD "] done dungeon %u, %s previously done.", player->GetGUID(), GetDungeon(gguid), index > 0 ? " " : " not");
     player->GetSession()->SendLfgPlayerReward(dungeon->Entry(), GetDungeon(gguid, false), index, reward, qReward);
 }
 
@@ -1893,7 +1891,6 @@ std::string LFGMgr::ConcatenateGuids(LfgGuidList check)
         o << "|" << (*it);
     return o.str();
 }
-
 
 LfgState LFGMgr::GetState(const uint64& guid)
 {

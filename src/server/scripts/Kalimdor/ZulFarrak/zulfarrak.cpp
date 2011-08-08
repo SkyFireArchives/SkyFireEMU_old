@@ -37,20 +37,20 @@ EndContentData */
 
 enum blyAndCrewFactions
 {
-    FACTION_HOSTILE           = 14,
+    FACTION_HOSTILE           = 14, 
     FACTION_FRIENDLY          = 35,  //while in cages (so the trolls won't attack them while they're caged)
     FACTION_FREED             = 250  //after release (so they'll be hostile towards trolls)
 };
 
 enum blySays
 {
-    SAY_1 = -1209002,
+    SAY_1 = -1209002, 
     SAY_2 = -1209003
 };
 
 enum blySpells
 {
-    SPELL_SHIELD_BASH          = 11972,
+    SPELL_SHIELD_BASH          = 11972, 
     SPELL_REVENGE              = 12170
 };
 
@@ -67,7 +67,7 @@ public:
         if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
         {
             pPlayer->CLOSE_GOSSIP_MENU();
-            CAST_AI(npc_sergeant_bly::npc_sergeant_blyAI,pCreature->AI())->PlayerGUID = pPlayer->GetGUID();
+            CAST_AI(npc_sergeant_bly::npc_sergeant_blyAI, pCreature->AI())->PlayerGUID = pPlayer->GetGUID();
             pCreature->AI()->DoAction();
         }
         return true;
@@ -133,11 +133,11 @@ public:
                             //weegli doesn't fight - he goes & blows up the door
                             if (Creature* pWeegli = pInstance->instance->GetCreature(pInstance->GetData64(ENTRY_WEEGLI)))
                                 pWeegli->AI()->DoAction();
-                            DoScriptText(SAY_1,me);
+                            DoScriptText(SAY_1, me);
                             Text_Timer = 5000;
                             break;
                         case 2:
-                            DoScriptText(SAY_2,me);
+                            DoScriptText(SAY_2, me);
                             Text_Timer = 5000;
                             break;
                         case 3:
@@ -185,7 +185,7 @@ public:
             Text_Timer = 0;
         }
 
-        void switchFactionIfAlive(InstanceScript* pInstance,uint32 entry)
+        void switchFactionIfAlive(InstanceScript* pInstance, uint32 entry)
         {
            if (Creature* crew = pInstance->instance->GetCreature(pInstance->GetData64(entry)))
                if (crew->isAlive())
@@ -202,14 +202,14 @@ public:
 +## go_troll_cage
 +######*/
 
-void initBlyCrewMember(InstanceScript* pInstance, uint32 entry,float x,float y, float z)
+void initBlyCrewMember(InstanceScript* pInstance, uint32 entry, float x, float y, float z)
 {
    if (Creature* crew = pInstance->instance->GetCreature(pInstance->GetData64(entry)))
    {
         crew->SetReactState(REACT_AGGRESSIVE);
         crew->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
-        crew->SetHomePosition(x,y,z,0);
-        crew->GetMotionMaster()->MovePoint(1,x,y,z);
+        crew->SetHomePosition(x, y, z, 0);
+        crew->GetMotionMaster()->MovePoint(1, x, y, z);
         crew->setFaction(FACTION_FREED);
     }
 }
@@ -225,11 +225,11 @@ public:
         {
             pInstance->SetData(EVENT_PYRAMID, PYRAMID_CAGES_OPEN);
             //set bly & co to aggressive & start moving to top of stairs
-            initBlyCrewMember(pInstance,ENTRY_BLY,1884.99f,1263,41.52f);
-            initBlyCrewMember(pInstance,ENTRY_RAVEN,1882.5f,1263,41.52f);
-            initBlyCrewMember(pInstance,ENTRY_ORO,1886.47f,1270.68f,41.68f);
-            initBlyCrewMember(pInstance,ENTRY_WEEGLI,1890,1263,41.52f);
-            initBlyCrewMember(pInstance,ENTRY_MURTA,1891.19f,1272.03f,41.60f);
+            initBlyCrewMember(pInstance, ENTRY_BLY, 1884.99f, 1263, 41.52f);
+            initBlyCrewMember(pInstance, ENTRY_RAVEN, 1882.5f, 1263, 41.52f);
+            initBlyCrewMember(pInstance, ENTRY_ORO, 1886.47f, 1270.68f, 41.68f);
+            initBlyCrewMember(pInstance, ENTRY_WEEGLI, 1890, 1263, 41.52f);
+            initBlyCrewMember(pInstance, ENTRY_MURTA, 1891.19f, 1272.03f, 41.60f);
         }
         return false;
     }
@@ -242,15 +242,15 @@ public:
 
 enum weegliSpells
 {
-    SPELL_BOMB                 = 8858,
-    SPELL_GOBLIN_LAND_MINE     = 21688,
-    SPELL_SHOOT                = 6660,
+    SPELL_BOMB                 = 8858, 
+    SPELL_GOBLIN_LAND_MINE     = 21688, 
+    SPELL_SHOOT                = 6660, 
     SPELL_WEEGLIS_BARREL       = 10772
 };
 
 enum weegliSays
 {
-    SAY_WEEGLI_OHNO = -1209000,
+    SAY_WEEGLI_OHNO = -1209000, 
     SAY_WEEGLI_OK_I_GO = -1209001
 };
 
@@ -322,7 +322,7 @@ public:
 
         void AttackStart(Unit *victim)
         {
-            AttackStartCaster(victim,10);//keep back & toss bombs/shoot
+            AttackStartCaster(victim, 10);//keep back & toss bombs/shoot
         }
 
         void JustDied(Unit * /*victim*/)
@@ -338,7 +338,7 @@ public:
 
             if (Bomb_Timer < diff)
             {
-                DoCast(me->getVictim(),SPELL_BOMB);
+                DoCast(me->getVictim(), SPELL_BOMB);
                 Bomb_Timer = 10000;
             }
             else
@@ -346,7 +346,7 @@ public:
 
             if (me->isAttackReady() && !me->IsWithinMeleeRange(me->getVictim()))
             {
-                DoCast(me->getVictim(),SPELL_SHOOT);
+                DoCast(me->getVictim(), SPELL_SHOOT);
                 me->SetSheath(SHEATH_STATE_RANGED);
             }
             else
@@ -362,9 +362,9 @@ public:
             {
                 if (pInstance->GetData(EVENT_PYRAMID) == PYRAMID_CAGES_OPEN)
                 {
-                    pInstance->SetData(EVENT_PYRAMID,PYRAMID_ARRIVED_AT_STAIR);
-                    DoScriptText(SAY_WEEGLI_OHNO,me);
-                    me->SetHomePosition(1882.69f,1272.28f,41.87f,0);
+                    pInstance->SetData(EVENT_PYRAMID, PYRAMID_ARRIVED_AT_STAIR);
+                    DoScriptText(SAY_WEEGLI_OHNO, me);
+                    me->SetHomePosition(1882.69f, 1272.28f, 41.87f, 0);
                 }
                 else
                     if (destroyingDoor)
@@ -386,9 +386,9 @@ public:
             if (me->isAlive())
             {
                 me->setFaction(FACTION_FRIENDLY);
-                me->GetMotionMaster()->MovePoint(0, 1858.57f,1146.35f,14.745f);
-                me->SetHomePosition(1858.57f,1146.35f,14.745f,3.85f); // in case he gets interrupted
-                DoScriptText(SAY_WEEGLI_OK_I_GO,me);
+                me->GetMotionMaster()->MovePoint(0, 1858.57f, 1146.35f, 14.745f);
+                me->SetHomePosition(1858.57f, 1146.35f, 14.745f, 3.85f); // in case he gets interrupted
+                DoScriptText(SAY_WEEGLI_OK_I_GO, me);
                 destroyingDoor=true;
             }
         }
@@ -404,9 +404,9 @@ public:
 
 enum
 {
-    ZOMBIE = 7286,
-    DEAD_HERO = 7276,
-    ZOMBIE_CHANCE = 65,
+    ZOMBIE = 7286, 
+    DEAD_HERO = 7276, 
+    ZOMBIE_CHANCE = 65, 
     DEAD_HERO_CHANCE = 10
 };
 
@@ -420,7 +420,7 @@ public:
         // randomly summon a zombie or dead hero the first time a grave is used
         if (pGo->GetUseCount() == 0)
         {
-            uint32 randomchance = urand(0,100);
+            uint32 randomchance = urand(0, 100);
             if (randomchance < ZOMBIE_CHANCE)
                 pGo->SummonCreature(ZOMBIE, pGo->GetPositionX(), pGo->GetPositionY(), pGo->GetPositionZ(), 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
             else
@@ -439,7 +439,7 @@ public:
 
 enum zumrahConsts
 {
-    ZUMRAH_ID = 7271,
+    ZUMRAH_ID = 7271, 
     ZUMRAH_HOSTILE_FACTION = 37
 };
 
@@ -448,7 +448,7 @@ class at_zumrah : public AreaTriggerScript
 public:
     at_zumrah() : AreaTriggerScript("at_zumrah") { }
 
-    bool OnTrigger(Player* pPlayer,const AreaTriggerEntry * /*at*/)
+    bool OnTrigger(Player* pPlayer, const AreaTriggerEntry * /*at*/)
     {
         Creature* pZumrah = pPlayer->FindNearestCreature(ZUMRAH_ID, 30.0f);
 

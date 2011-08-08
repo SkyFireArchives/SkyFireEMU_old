@@ -60,7 +60,6 @@ bool ArenaTeam::Create(uint32 captainGuid, uint8 type, std::string teamName, uin
     if (sObjectMgr->GetArenaTeamByName(TeamName))
         return false;
 
-
     // Generate new arena team id
     TeamId = sObjectMgr->GenerateArenaTeamId();
 
@@ -73,8 +72,6 @@ bool ArenaTeam::Create(uint32 captainGuid, uint8 type, std::string teamName, uin
     EmblemColor = emblemColor;
     BorderStyle = borderStyle;
     BorderColor = borderColor;
-
-
 
     // Save arena team to db
     PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_ARENA_TEAM);

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,18 +34,18 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_ENTER           = -1269012,
-    SAY_AGGRO           = -1269013,
-    SAY_BANISH          = -1269014,
-    SAY_SLAY1           = -1269015,
-    SAY_SLAY2           = -1269016,
-    SAY_DEATH           = -1269017,
-    EMOTE_FRENZY        = -1269018,
+    SAY_ENTER           = -1269012, 
+    SAY_AGGRO           = -1269013, 
+    SAY_BANISH          = -1269014, 
+    SAY_SLAY1           = -1269015, 
+    SAY_SLAY2           = -1269016, 
+    SAY_DEATH           = -1269017, 
+    EMOTE_FRENZY        = -1269018, 
 
-    SPELL_CLEAVE        = 40504,
-    SPELL_TIME_STOP     = 31422,
-    SPELL_ENRAGE        = 37605,
-    SPELL_SAND_BREATH   = 31473,
+    SPELL_CLEAVE        = 40504, 
+    SPELL_TIME_STOP     = 31422, 
+    SPELL_ENRAGE        = 37605, 
+    SPELL_SAND_BREATH   = 31473, 
     H_SPELL_SAND_BREATH = 39049
 };
 
@@ -89,7 +89,7 @@ public:
             //Despawn Time Keeper
             if (who->GetTypeId() == TYPEID_UNIT && who->GetEntry() == C_TIME_KEEPER)
             {
-                if (me->IsWithinDistInMap(who,20.0f))
+                if (me->IsWithinDistInMap(who, 20.0f))
                 {
                     DoScriptText(SAY_BANISH, me);
                     me->DealDamage(who, who->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
@@ -105,14 +105,14 @@ public:
 
              if (pInstance)
              {
-                 pInstance->SetData(TYPE_RIFT,DONE);
-                 pInstance->SetData(TYPE_MEDIVH,DONE);//FIXME: later should be removed
+                 pInstance->SetData(TYPE_RIFT, DONE);
+                 pInstance->SetData(TYPE_MEDIVH, DONE);//FIXME: later should be removed
              }
         }
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1,SAY_SLAY2), me);
+            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
         }
 
         void UpdateAI(const uint32 diff)

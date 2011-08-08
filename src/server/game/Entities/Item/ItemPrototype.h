@@ -391,9 +391,8 @@ enum ItemSubclassArmor
     //ITEM_SUBCLASS_ARMOR_SIGIL                   = 10,
     ITEM_SUBCLASS_ARMOR_RELIC                   = 11
 };
- 
-#define MAX_ITEM_SUBCLASS_ARMOR                   12
 
+#define MAX_ITEM_SUBCLASS_ARMOR                   12
 
 enum ItemSubclassReagent
 {
@@ -562,11 +561,11 @@ inline uint8 ItemSubClassToDurabilityMultiplierId(uint32 ItemClass, uint32 ItemS
     return 0;
 }
 
-// GCC have alternative #pragma pack(N) syntax and old gcc version not support pack(push,N), also any gcc version not support it at some platform
+// GCC have alternative #pragma pack(N) syntax and old gcc version not support pack(push, N), also any gcc version not support it at some platform
 #if defined(__GNUC__)
 #pragma pack(1)
 #else
-#pragma pack(push,1)
+#pragma pack(push, 1)
 #endif
 
 struct _Damage
@@ -734,7 +733,7 @@ struct ItemPrototype
     }
 
     uint32 GetArmor() const;
-    
+
     ItemDamageEntry const* getItemDamageEntry() const;
     float getDPS() const;
     float GetMinDamage() const { return floor(getDPS() * float(Delay) / 1000.0f * 0.7f + 0.5f); }

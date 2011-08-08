@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -83,7 +83,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL1,SAY_KILL2), me);
+            DoScriptText(RAND(SAY_KILL1, SAY_KILL2), me);
         }
 
         void JustDied(Unit * /*victim*/)
@@ -165,9 +165,9 @@ public:
                         }
                         else
                         {
-                            if (urand(0,1) == 0)
+                            if (urand(0, 1) == 0)
                             {
-                                DoScriptText(RAND(SAY_SUMMON1,SAY_SUMMON2), me);
+                                DoScriptText(RAND(SAY_SUMMON1, SAY_SUMMON2), me);
                             }
                         }
                     }

@@ -39,4 +39,3 @@ class ReactorAI : public CreatureAI
         static int Permissible(const Creature *);
 };
 #endif
-

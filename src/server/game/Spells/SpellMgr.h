@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -46,37 +46,37 @@ struct SpellModifier;
 // only used in code
 enum SpellCategories
 {
-    SPELLCATEGORY_HEALTH_MANA_POTIONS = 4,
-    SPELLCATEGORY_DEVOUR_MAGIC        = 12,
+    SPELLCATEGORY_HEALTH_MANA_POTIONS = 4, 
+    SPELLCATEGORY_DEVOUR_MAGIC        = 12, 
     SPELLCATEGORY_JUDGEMENT           = 1210,               // Judgement (seal trigger)
-    SPELLCATEGORY_FOOD             = 11,
-    SPELLCATEGORY_DRINK            = 59,
+    SPELLCATEGORY_FOOD             = 11, 
+    SPELLCATEGORY_DRINK            = 59, 
 };
 
 enum SpellEffectTargetTypes
 {
-    SPELL_REQUIRE_NONE,
-    SPELL_REQUIRE_UNIT,
-    SPELL_REQUIRE_DEST,
-    SPELL_REQUIRE_ITEM,
-    SPELL_REQUIRE_CASTER,
-    SPELL_REQUIRE_GOBJECT,
+    SPELL_REQUIRE_NONE, 
+    SPELL_REQUIRE_UNIT, 
+    SPELL_REQUIRE_DEST, 
+    SPELL_REQUIRE_ITEM, 
+    SPELL_REQUIRE_CASTER, 
+    SPELL_REQUIRE_GOBJECT, 
 };
 
 enum SpellSelectTargetTypes
 {
-    TARGET_TYPE_DEFAULT,
-    TARGET_TYPE_UNIT_CASTER,
-    TARGET_TYPE_UNIT_TARGET,
-    TARGET_TYPE_UNIT_NEARBY,
-    TARGET_TYPE_AREA_SRC,
-    TARGET_TYPE_AREA_DST,
-    TARGET_TYPE_AREA_CONE,
-    TARGET_TYPE_DEST_CASTER,
-    TARGET_TYPE_DEST_TARGET,
-    TARGET_TYPE_DEST_DEST,
-    TARGET_TYPE_DEST_SPECIAL,
-    TARGET_TYPE_CHANNEL,
+    TARGET_TYPE_DEFAULT, 
+    TARGET_TYPE_UNIT_CASTER, 
+    TARGET_TYPE_UNIT_TARGET, 
+    TARGET_TYPE_UNIT_NEARBY, 
+    TARGET_TYPE_AREA_SRC, 
+    TARGET_TYPE_AREA_DST, 
+    TARGET_TYPE_AREA_CONE, 
+    TARGET_TYPE_DEST_CASTER, 
+    TARGET_TYPE_DEST_TARGET, 
+    TARGET_TYPE_DEST_DEST, 
+    TARGET_TYPE_DEST_SPECIAL, 
+    TARGET_TYPE_CHANNEL, 
 };
 
 //SpellFamilyFlags
@@ -87,57 +87,57 @@ enum SpellFamilyFlag
     // SPELLFAMILYFLAG2 = SpellFamilyFlags[2]
 
     // Rogue
-    SPELLFAMILYFLAG_ROGUE_VANISH            = 0x00000800,
-    SPELLFAMILYFLAG_ROGUE_STEALTH           = 0x00400000,
-    SPELLFAMILYFLAG_ROGUE_BACKSTAB          = 0x00800004,
-    SPELLFAMILYFLAG_ROGUE_SAP               = 0x00000080,
-    SPELLFAMILYFLAG_ROGUE_FEINT             = 0x08000000,
-    SPELLFAMILYFLAG_ROGUE_KIDNEYSHOT        = 0x00200000,
-    SPELLFAMILYFLAG1_ROGUE_HUNGERFORBLOOD   = 0x01000000,
+    SPELLFAMILYFLAG_ROGUE_VANISH            = 0x00000800, 
+    SPELLFAMILYFLAG_ROGUE_STEALTH           = 0x00400000, 
+    SPELLFAMILYFLAG_ROGUE_BACKSTAB          = 0x00800004, 
+    SPELLFAMILYFLAG_ROGUE_SAP               = 0x00000080, 
+    SPELLFAMILYFLAG_ROGUE_FEINT             = 0x08000000, 
+    SPELLFAMILYFLAG_ROGUE_KIDNEYSHOT        = 0x00200000, 
+    SPELLFAMILYFLAG1_ROGUE_HUNGERFORBLOOD   = 0x01000000, 
     SPELLFAMILYFLAG_ROGUE_VAN_EVAS_SPRINT   = 0x00000860,    // Vanish, Evasion, Sprint
     SPELLFAMILYFLAG1_ROGUE_COLDB_SHADOWSTEP = 0x00000240,    // Cold Blood, Shadowstep
     SPELLFAMILYFLAG_ROGUE_KICK              = 0x00000010,   // Kick
     SPELLFAMILYFLAG1_ROGUE_DISMANTLE        = 0x00100000,   // Dismantle
     SPELLFAMILYFLAG_ROGUE_BLADE_FLURRY      = 0x40000000,   // Blade Flurry
     SPELLFAMILYFLAG1_ROGUE_BLADE_FLURRY     = 0x00000800,   // Blade Flurry
-    //SPELLFAMILYFLAG_ROGUE__FINISHING_MOVE  = 0x9003E0000LL,
+    //SPELLFAMILYFLAG_ROGUE__FINISHING_MOVE  = 0x9003E0000LL, 
 
     // Warrior
-    SPELLFAMILYFLAG_WARRIOR_SUNDERARMOR     = 0x00004000,
-    SPELLFAMILYFLAG_WARRIOR_CHARGE          = 0x00000001,
-    SPELLFAMILYFLAG_WARRIOR_SLAM            = 0x00200000,
-    SPELLFAMILYFLAG_WARRIOR_EXECUTE         = 0x20000000,
-    SPELLFAMILYFLAG_WARRIOR_CONCUSSION_BLOW = 0x04000000,
+    SPELLFAMILYFLAG_WARRIOR_SUNDERARMOR     = 0x00004000, 
+    SPELLFAMILYFLAG_WARRIOR_CHARGE          = 0x00000001, 
+    SPELLFAMILYFLAG_WARRIOR_SLAM            = 0x00200000, 
+    SPELLFAMILYFLAG_WARRIOR_EXECUTE         = 0x20000000, 
+    SPELLFAMILYFLAG_WARRIOR_CONCUSSION_BLOW = 0x04000000, 
 
     // Mage
-    SPELLFAMILYFLAG1_MAGE_CONEOFCOLD        = 0x00000200,
+    SPELLFAMILYFLAG1_MAGE_CONEOFCOLD        = 0x00000200, 
 
     // Warlock
-    SPELLFAMILYFLAG_WARLOCK_LIFETAP         = 0x00040000,
+    SPELLFAMILYFLAG_WARLOCK_LIFETAP         = 0x00040000, 
 
     // Priest
-    SPELLFAMILYFLAG1_PRIEST_PENANCE         = 0x00800000,
+    SPELLFAMILYFLAG1_PRIEST_PENANCE         = 0x00800000, 
 
     // Druid
-    SPELLFAMILYFLAG2_DRUID_STARFALL         = 0x00000100,
+    SPELLFAMILYFLAG2_DRUID_STARFALL         = 0x00000100, 
 
     // Paladin
-    SPELLFAMILYFLAG1_PALADIN_DIVINESTORM    = 0x00020000,
+    SPELLFAMILYFLAG1_PALADIN_DIVINESTORM    = 0x00020000, 
 
     // Shaman
-    SPELLFAMILYFLAG_SHAMAN_FROST_SHOCK      = 0x80000000,
-    SPELLFAMILYFLAG_SHAMAN_HEALING_STREAM   = 0x00002000,
-    SPELLFAMILYFLAG_SHAMAN_MANA_SPRING      = 0x00004000,
-    SPELLFAMILYFLAG2_SHAMAN_LAVA_LASH       = 0x00000004,
-    SPELLFAMILYFLAG_SHAMAN_FLAMETONGUE      = 0x00200000,
-    SPELLFAMILYFLAG_SHAMAN_FIRE_NOVA        = 0x28000000,
+    SPELLFAMILYFLAG_SHAMAN_FROST_SHOCK      = 0x80000000, 
+    SPELLFAMILYFLAG_SHAMAN_HEALING_STREAM   = 0x00002000, 
+    SPELLFAMILYFLAG_SHAMAN_MANA_SPRING      = 0x00004000, 
+    SPELLFAMILYFLAG2_SHAMAN_LAVA_LASH       = 0x00000004, 
+    SPELLFAMILYFLAG_SHAMAN_FLAMETONGUE      = 0x00200000, 
+    SPELLFAMILYFLAG_SHAMAN_FIRE_NOVA        = 0x28000000, 
 
     // Deathknight
-    SPELLFAMILYFLAG_DK_DEATH_STRIKE         = 0x00000010,
-    SPELLFAMILYFLAG1_DK_SCOURGE_STRIKE      = 0x08000000,
-    SPELLFAMILYFLAG_DK_DEATH_COIL           = 0x00002000,
-    SPELLFAMILYFLAG1_DK_HUNGERING_COLD      = 0x00001000,
-    SPELLFAMILYFLAG_DK_CHAINS_OF_ICE        = 0x00000004,
+    SPELLFAMILYFLAG_DK_DEATH_STRIKE         = 0x00000010, 
+    SPELLFAMILYFLAG1_DK_SCOURGE_STRIKE      = 0x08000000, 
+    SPELLFAMILYFLAG_DK_DEATH_COIL           = 0x00002000, 
+    SPELLFAMILYFLAG1_DK_HUNGERING_COLD      = 0x00001000, 
+    SPELLFAMILYFLAG_DK_CHAINS_OF_ICE        = 0x00000004, 
 
     // TODO: Figure out a more accurate name for the following familyflag(s)
     SPELLFAMILYFLAG_SHAMAN_TOTEM_EFFECTS    = 0x04000000,  // Seems to be linked to most totems and some totem effects
@@ -147,30 +147,30 @@ enum SpellFamilyFlag
 // Spell clasification
 enum SpellSpecific
 {
-    SPELL_SPECIFIC_NORMAL            = 0,
-    SPELL_SPECIFIC_SEAL              = 1,
-    SPELL_SPECIFIC_AURA              = 3,
-    SPELL_SPECIFIC_STING             = 4,
-    SPELL_SPECIFIC_CURSE             = 5,
-    SPELL_SPECIFIC_ASPECT            = 6,
-    SPELL_SPECIFIC_TRACKER           = 7,
-    SPELL_SPECIFIC_WARLOCK_ARMOR     = 8,
-    SPELL_SPECIFIC_MAGE_ARMOR        = 9,
-    SPELL_SPECIFIC_ELEMENTAL_SHIELD  = 10,
-    SPELL_SPECIFIC_MAGE_POLYMORPH    = 11,
-    SPELL_SPECIFIC_JUDGEMENT         = 13,
-    SPELL_SPECIFIC_WARLOCK_CORRUPTION= 17,
-    SPELL_SPECIFIC_FOOD              = 19,
-    SPELL_SPECIFIC_DRINK             = 20,
-    SPELL_SPECIFIC_FOOD_AND_DRINK    = 21,
-    SPELL_SPECIFIC_PRESENCE          = 22,
-    SPELL_SPECIFIC_CHARM             = 23,
-    SPELL_SPECIFIC_SCROLL            = 24,
-    SPELL_SPECIFIC_MAGE_ARCANE_BRILLANCE = 25,
-    SPELL_SPECIFIC_WARRIOR_ENRAGE    = 26,
-    SPELL_SPECIFIC_PRIEST_DIVINE_SPIRIT = 27,
-    SPELL_SPECIFIC_HAND              = 28,
-    SPELL_SPECIFIC_PHASE             = 29,
+    SPELL_SPECIFIC_NORMAL            = 0, 
+    SPELL_SPECIFIC_SEAL              = 1, 
+    SPELL_SPECIFIC_AURA              = 3, 
+    SPELL_SPECIFIC_STING             = 4, 
+    SPELL_SPECIFIC_CURSE             = 5, 
+    SPELL_SPECIFIC_ASPECT            = 6, 
+    SPELL_SPECIFIC_TRACKER           = 7, 
+    SPELL_SPECIFIC_WARLOCK_ARMOR     = 8, 
+    SPELL_SPECIFIC_MAGE_ARMOR        = 9, 
+    SPELL_SPECIFIC_ELEMENTAL_SHIELD  = 10, 
+    SPELL_SPECIFIC_MAGE_POLYMORPH    = 11, 
+    SPELL_SPECIFIC_JUDGEMENT         = 13, 
+    SPELL_SPECIFIC_WARLOCK_CORRUPTION= 17, 
+    SPELL_SPECIFIC_FOOD              = 19, 
+    SPELL_SPECIFIC_DRINK             = 20, 
+    SPELL_SPECIFIC_FOOD_AND_DRINK    = 21, 
+    SPELL_SPECIFIC_PRESENCE          = 22, 
+    SPELL_SPECIFIC_CHARM             = 23, 
+    SPELL_SPECIFIC_SCROLL            = 24, 
+    SPELL_SPECIFIC_MAGE_ARCANE_BRILLANCE = 25, 
+    SPELL_SPECIFIC_WARRIOR_ENRAGE    = 26, 
+    SPELL_SPECIFIC_PRIEST_DIVINE_SPIRIT = 27, 
+    SPELL_SPECIFIC_HAND              = 28, 
+    SPELL_SPECIFIC_PHASE             = 29, 
 };
 
 #define SPELL_LINKED_MAX_SPELLS  200000
@@ -178,9 +178,9 @@ enum SpellSpecific
 enum SpellLinkedType
 {
     SPELL_LINK_CAST     = 0,            // +: cast; -: remove
-    SPELL_LINK_HIT      = 1 * 200000,
+    SPELL_LINK_HIT      = 1 * 200000, 
     SPELL_LINK_AURA     = 2 * 200000,   // +: aura; -: immune
-    SPELL_LINK_REMOVE   = 0,
+    SPELL_LINK_REMOVE   = 0, 
 };
 
 Unit * GetTriggeredSpellCaster(SpellEntry const * spellInfo, Unit * caster, Unit * target);
@@ -298,7 +298,7 @@ inline bool IsLootCraftingSpell(SpellEntry const *spellInfo)
         (spellInfo->TotemCategory[0] != 0 || spellInfo->EffectItemType[0]==0)));
 }
 
-bool IsHigherHankOfSpell(uint32 spellId_1,uint32 spellId_2);
+bool IsHigherHankOfSpell(uint32 spellId_1, uint32 spellId_2);
 bool IsSingleFromSpellSpecificPerCaster(SpellSpecific spellSpec1, SpellSpecific spellSpec2);
 bool IsSingleFromSpellSpecificPerTarget(SpellSpecific spellSpec1, SpellSpecific spellSpec2);
 bool IsPassiveSpell(uint32 spellId);
@@ -312,7 +312,7 @@ inline bool IsPassiveSpellStackableWithRanks(SpellEntry const* spellProto)
     if (!IsPassiveSpell(spellProto->Id))
         return false;
 
-    return !IsSpellHaveEffect(spellProto,SPELL_EFFECT_APPLY_AURA);
+    return !IsSpellHaveEffect(spellProto, SPELL_EFFECT_APPLY_AURA);
 }
 
 inline bool IsDeathPersistentSpell(SpellEntry const *spellInfo)
@@ -557,7 +557,7 @@ int32 GetDiminishingReturnsLimitDuration(DiminishingGroup group, SpellEntry cons
 // Spell proc event related declarations (accessed using SpellMgr functions)
 enum ProcFlags
 {
-   PROC_FLAG_NONE                            = 0x00000000,
+   PROC_FLAG_NONE                            = 0x00000000, 
 
    PROC_FLAG_KILLED                          = 0x00000001,    // 00 Killed by agressor - not sure about this flag
    PROC_FLAG_KILL                            = 0x00000002,    // 01 Kill target (in most cases need XP/Honor reward)
@@ -611,30 +611,30 @@ enum ProcFlagsEx
 {
    PROC_EX_NONE                = 0x0000000,                 // If none can tigger on Hit/Crit only (passive spells MUST defined by SpellFamily flag)
    PROC_EX_NORMAL_HIT          = 0x0000001,                 // If set only from normal hit (only damage spells)
-   PROC_EX_CRITICAL_HIT        = 0x0000002,
-   PROC_EX_MISS                = 0x0000004,
-   PROC_EX_RESIST              = 0x0000008,
-   PROC_EX_DODGE               = 0x0000010,
-   PROC_EX_PARRY               = 0x0000020,
-   PROC_EX_BLOCK               = 0x0000040,
-   PROC_EX_EVADE               = 0x0000080,
-   PROC_EX_IMMUNE              = 0x0000100,
-   PROC_EX_DEFLECT             = 0x0000200,
-   PROC_EX_ABSORB              = 0x0000400,
-   PROC_EX_REFLECT             = 0x0000800,
+   PROC_EX_CRITICAL_HIT        = 0x0000002, 
+   PROC_EX_MISS                = 0x0000004, 
+   PROC_EX_RESIST              = 0x0000008, 
+   PROC_EX_DODGE               = 0x0000010, 
+   PROC_EX_PARRY               = 0x0000020, 
+   PROC_EX_BLOCK               = 0x0000040, 
+   PROC_EX_EVADE               = 0x0000080, 
+   PROC_EX_IMMUNE              = 0x0000100, 
+   PROC_EX_DEFLECT             = 0x0000200, 
+   PROC_EX_ABSORB              = 0x0000400, 
+   PROC_EX_REFLECT             = 0x0000800, 
    PROC_EX_INTERRUPT           = 0x0001000,                 // Melee hit result can be Interrupt (not used)
    PROC_EX_FULL_BLOCK          = 0x0002000,                 // block al attack damage
-   PROC_EX_RESERVED2           = 0x0004000,
+   PROC_EX_RESERVED2           = 0x0004000, 
    PROC_EX_NOT_ACTIVE_SPELL    = 0x0008000,                 // Spell mustn't do damage/heal to proc
    PROC_EX_EX_TRIGGER_ALWAYS   = 0x0010000,                 // If set trigger always no matter of hit result
    PROC_EX_EX_ONE_TIME_TRIGGER = 0x0020000,                 // If set trigger always but only one time (not implemented yet)
    PROC_EX_ONLY_ACTIVE_SPELL   = 0x0040000,                 // Spell has to do damage/heal to proc
 
    // Flags for internal use - do not use these in db!
-   PROC_EX_INTERNAL_CANT_PROC  = 0x0800000,
-   PROC_EX_INTERNAL_DOT        = 0x1000000,
-   PROC_EX_INTERNAL_HOT        = 0x2000000,
-   PROC_EX_INTERNAL_TRIGGERED  = 0x4000000,
+   PROC_EX_INTERNAL_CANT_PROC  = 0x0800000, 
+   PROC_EX_INTERNAL_DOT        = 0x1000000, 
+   PROC_EX_INTERNAL_HOT        = 0x2000000, 
+   PROC_EX_INTERNAL_TRIGGERED  = 0x4000000, 
    PROC_EX_INTERNAL_REQ_FAMILY = 0x8000000
 };
 
@@ -678,28 +678,28 @@ typedef UNORDERED_MAP<uint32, SpellBonusEntry>     SpellBonusMap;
 
 enum SpellGroup
 {
-    SPELL_GROUP_ELIXIR_BATTLE = 1,
-    SPELL_GROUP_ELIXIR_GUARDIAN = 2,
-    SPELL_GROUP_ELIXIR_UNSTABLE = 3,
-    SPELL_GROUP_ELIXIR_SHATTRATH = 4,
-    SPELL_GROUP_CORE_RANGE_MAX = 5,
+    SPELL_GROUP_ELIXIR_BATTLE = 1, 
+    SPELL_GROUP_ELIXIR_GUARDIAN = 2, 
+    SPELL_GROUP_ELIXIR_UNSTABLE = 3, 
+    SPELL_GROUP_ELIXIR_SHATTRATH = 4, 
+    SPELL_GROUP_CORE_RANGE_MAX = 5, 
 };
 
 #define SPELL_GROUP_DB_RANGE_MIN 1000
 
 //                  spell_id, group_id
 typedef std::multimap<uint32, SpellGroup > SpellSpellGroupMap;
-typedef std::pair<SpellSpellGroupMap::const_iterator,SpellSpellGroupMap::const_iterator> SpellSpellGroupMapBounds;
+typedef std::pair<SpellSpellGroupMap::const_iterator, SpellSpellGroupMap::const_iterator> SpellSpellGroupMapBounds;
 
 //                      group_id, spell_id
 typedef std::multimap<SpellGroup, int32> SpellGroupSpellMap;
-typedef std::pair<SpellGroupSpellMap::const_iterator,SpellGroupSpellMap::const_iterator> SpellGroupSpellMapBounds;
+typedef std::pair<SpellGroupSpellMap::const_iterator, SpellGroupSpellMap::const_iterator> SpellGroupSpellMapBounds;
 
 enum SpellGroupStackRule
 {
-    SPELL_GROUP_STACK_RULE_DEFAULT = 0,
-    SPELL_GROUP_STACK_RULE_EXCLUSIVE = 1,
-    SPELL_GROUP_STACK_RULE_EXCLUSIVE_FROM_SAME_CASTER = 2,
+    SPELL_GROUP_STACK_RULE_DEFAULT = 0, 
+    SPELL_GROUP_STACK_RULE_EXCLUSIVE = 1, 
+    SPELL_GROUP_STACK_RULE_EXCLUSIVE_FROM_SAME_CASTER = 2, 
 };
 #define SPELL_GROUP_STACK_RULE_MAX 3
 
@@ -710,17 +710,17 @@ typedef std::map<uint32, uint16> SpellThreatMap;
 // Spell script target related declarations (accessed using SpellMgr functions)
 enum SpellScriptTargetType
 {
-    SPELL_TARGET_TYPE_GAMEOBJECT = 0,
-    SPELL_TARGET_TYPE_CREATURE   = 1,
-    SPELL_TARGET_TYPE_DEAD       = 2,
-    SPELL_TARGET_TYPE_CONTROLLED = 3,
+    SPELL_TARGET_TYPE_GAMEOBJECT = 0, 
+    SPELL_TARGET_TYPE_CREATURE   = 1, 
+    SPELL_TARGET_TYPE_DEAD       = 2, 
+    SPELL_TARGET_TYPE_CONTROLLED = 3, 
 };
 
 #define MAX_SPELL_TARGET_TYPE 4
 
 struct SpellTargetEntry
 {
-    SpellTargetEntry(SpellScriptTargetType type_,uint32 targetEntry_) : type(type_), targetEntry(targetEntry_) {}
+    SpellTargetEntry(SpellScriptTargetType type_, uint32 targetEntry_) : type(type_), targetEntry(targetEntry_) {}
     SpellScriptTargetType type;
     uint32 targetEntry;
 };
@@ -801,12 +801,12 @@ struct SpellArea
     bool IsFitToRequirements(Player const* player, uint32 newZone, uint32 newArea) const;
 };
 
-typedef std::multimap<uint32,SpellArea> SpellAreaMap;
-typedef std::multimap<uint32,SpellArea const*> SpellAreaForQuestMap;
-typedef std::multimap<uint32,SpellArea const*> SpellAreaForAuraMap;
-typedef std::multimap<uint32,SpellArea const*> SpellAreaForAreaMap;
-typedef std::pair<SpellAreaMap::const_iterator,SpellAreaMap::const_iterator> SpellAreaMapBounds;
-typedef std::pair<SpellAreaForQuestMap::const_iterator,SpellAreaForQuestMap::const_iterator> SpellAreaForQuestMapBounds;
+typedef std::multimap<uint32, SpellArea> SpellAreaMap;
+typedef std::multimap<uint32, SpellArea const*> SpellAreaForQuestMap;
+typedef std::multimap<uint32, SpellArea const*> SpellAreaForAuraMap;
+typedef std::multimap<uint32, SpellArea const*> SpellAreaForAreaMap;
+typedef std::pair<SpellAreaMap::const_iterator, SpellAreaMap::const_iterator> SpellAreaMapBounds;
+typedef std::pair<SpellAreaForQuestMap::const_iterator, SpellAreaForQuestMap::const_iterator> SpellAreaForQuestMapBounds;
 typedef std::pair<SpellAreaForAuraMap::const_iterator, SpellAreaForAuraMap::const_iterator>  SpellAreaForAuraMapBounds;
 typedef std::pair<SpellAreaForAreaMap::const_iterator, SpellAreaForAreaMap::const_iterator>  SpellAreaForAreaMapBounds;
 
@@ -824,11 +824,11 @@ typedef UNORDERED_MAP<uint32, SpellChainNode> SpellChainMap;
 
 //                   spell_id  req_spell
 typedef std::multimap<uint32, uint32> SpellRequiredMap;
-typedef std::pair<SpellRequiredMap::const_iterator,SpellRequiredMap::const_iterator> SpellRequiredMapBounds;
+typedef std::pair<SpellRequiredMap::const_iterator, SpellRequiredMap::const_iterator> SpellRequiredMapBounds;
 
 //                   req_spell spell_id
 typedef std::multimap<uint32, uint32> SpellsRequiringSpellMap;
-typedef std::pair<SpellsRequiringSpellMap::const_iterator,SpellsRequiringSpellMap::const_iterator> SpellsRequiringSpellMapBounds;
+typedef std::pair<SpellsRequiringSpellMap::const_iterator, SpellsRequiringSpellMap::const_iterator> SpellsRequiringSpellMapBounds;
 
 // Spell learning properties (accessed using SpellMgr functions)
 struct SpellLearnSkillNode
@@ -849,10 +849,10 @@ struct SpellLearnSpellNode
 };
 
 typedef std::multimap<uint32, SpellLearnSpellNode> SpellLearnSpellMap;
-typedef std::pair<SpellLearnSpellMap::const_iterator,SpellLearnSpellMap::const_iterator> SpellLearnSpellMapBounds;
+typedef std::pair<SpellLearnSpellMap::const_iterator, SpellLearnSpellMap::const_iterator> SpellLearnSpellMapBounds;
 
 typedef std::multimap<uint32, SkillLineAbilityEntry const*> SkillLineAbilityMap;
-typedef std::pair<SkillLineAbilityMap::const_iterator,SkillLineAbilityMap::const_iterator> SkillLineAbilityMapBounds;
+typedef std::pair<SkillLineAbilityMap::const_iterator, SkillLineAbilityMap::const_iterator> SkillLineAbilityMapBounds;
 
 typedef std::multimap<uint32, uint32> PetLevelupSpellSet;
 typedef std::map<uint32, PetLevelupSpellSet> PetLevelupSpellMap;
@@ -886,27 +886,27 @@ inline bool IsProfessionSkill(uint32 skill)
 
 enum SpellCustomAttributes
 {
-    SPELL_ATTR0_CU_ENCHANT_PROC     = 0x00000001,
-    SPELL_ATTR0_CU_CONE_BACK        = 0x00000002,
-    SPELL_ATTR0_CU_CONE_LINE        = 0x00000004,
-    SPELL_ATTR0_CU_SHARE_DAMAGE     = 0x00000008,
+    SPELL_ATTR0_CU_ENCHANT_PROC     = 0x00000001, 
+    SPELL_ATTR0_CU_CONE_BACK        = 0x00000002, 
+    SPELL_ATTR0_CU_CONE_LINE        = 0x00000004, 
+    SPELL_ATTR0_CU_SHARE_DAMAGE     = 0x00000008, 
     SPELL_ATTR0_CU_NONE1            = 0x00000010,   // UNUSED
     SPELL_ATTR0_CU_NONE2            = 0x00000020,   // UNUSED
-    SPELL_ATTR0_CU_AURA_CC          = 0x00000040,
-    SPELL_ATTR0_CU_DIRECT_DAMAGE    = 0x00000100,
-    SPELL_ATTR0_CU_CHARGE           = 0x00000200,
-    SPELL_ATTR0_CU_LINK_CAST        = 0x00000400,
-    SPELL_ATTR0_CU_LINK_HIT         = 0x00000800,
-    SPELL_ATTR0_CU_LINK_AURA        = 0x00001000,
-    SPELL_ATTR0_CU_LINK_REMOVE      = 0x00002000,
-    SPELL_ATTR0_CU_PICKPOCKET       = 0x00004000,
-    SPELL_ATTR0_CU_EXCLUDE_SELF     = 0x00008000,
-    SPELL_ATTR0_CU_NEGATIVE_EFF0    = 0x00010000,
-    SPELL_ATTR0_CU_NEGATIVE_EFF1    = 0x00020000,
-    SPELL_ATTR0_CU_NEGATIVE_EFF2    = 0x00040000,
-    SPELL_ATTR0_CU_IGNORE_ARMOR     = 0x00080000,
+    SPELL_ATTR0_CU_AURA_CC          = 0x00000040, 
+    SPELL_ATTR0_CU_DIRECT_DAMAGE    = 0x00000100, 
+    SPELL_ATTR0_CU_CHARGE           = 0x00000200, 
+    SPELL_ATTR0_CU_LINK_CAST        = 0x00000400, 
+    SPELL_ATTR0_CU_LINK_HIT         = 0x00000800, 
+    SPELL_ATTR0_CU_LINK_AURA        = 0x00001000, 
+    SPELL_ATTR0_CU_LINK_REMOVE      = 0x00002000, 
+    SPELL_ATTR0_CU_PICKPOCKET       = 0x00004000, 
+    SPELL_ATTR0_CU_EXCLUDE_SELF     = 0x00008000, 
+    SPELL_ATTR0_CU_NEGATIVE_EFF0    = 0x00010000, 
+    SPELL_ATTR0_CU_NEGATIVE_EFF1    = 0x00020000, 
+    SPELL_ATTR0_CU_NEGATIVE_EFF2    = 0x00040000, 
+    SPELL_ATTR0_CU_IGNORE_ARMOR     = 0x00080000, 
 
-    SPELL_ATTR0_CU_NEGATIVE         = SPELL_ATTR0_CU_NEGATIVE_EFF0 | SPELL_ATTR0_CU_NEGATIVE_EFF1 | SPELL_ATTR0_CU_NEGATIVE_EFF2,
+    SPELL_ATTR0_CU_NEGATIVE         = SPELL_ATTR0_CU_NEGATIVE_EFF0 | SPELL_ATTR0_CU_NEGATIVE_EFF1 | SPELL_ATTR0_CU_NEGATIVE_EFF2, 
 };
 
 typedef std::vector<uint32> SpellCustomAttribute;
@@ -956,7 +956,7 @@ class SpellMgr
         SpellSpellGroupMapBounds GetSpellSpellGroupMapBounds(uint32 spell_id) const
         {
             spell_id = GetFirstSpellInChain(spell_id);
-            return SpellSpellGroupMapBounds(mSpellSpellGroup.lower_bound(spell_id),mSpellSpellGroup.upper_bound(spell_id));
+            return SpellSpellGroupMapBounds(mSpellSpellGroup.lower_bound(spell_id), mSpellSpellGroup.upper_bound(spell_id));
         }
         uint32 IsSpellMemberOfSpellGroup(uint32 spellid, SpellGroup groupid) const
         {
@@ -971,7 +971,7 @@ class SpellMgr
 
         SpellGroupSpellMapBounds GetSpellGroupSpellMapBounds(SpellGroup group_id) const
         {
-            return SpellGroupSpellMapBounds(mSpellGroupSpell.lower_bound(group_id),mSpellGroupSpell.upper_bound(group_id));
+            return SpellGroupSpellMapBounds(mSpellGroupSpell.lower_bound(group_id), mSpellGroupSpell.upper_bound(group_id));
         }
         void GetSetOfSpellsInSpellGroup(SpellGroup group_id, std::set<uint32>& foundSpells) const
         {
@@ -1191,12 +1191,12 @@ class SpellMgr
 
         SpellRequiredMapBounds GetSpellsRequiredForSpellBounds(uint32 spell_id) const
         {
-            return SpellRequiredMapBounds(mSpellReq.lower_bound(spell_id),mSpellReq.upper_bound(spell_id));
+            return SpellRequiredMapBounds(mSpellReq.lower_bound(spell_id), mSpellReq.upper_bound(spell_id));
         }
 
         SpellsRequiringSpellMapBounds GetSpellsRequiringSpellBounds(uint32 spell_id) const
         {
-            return SpellsRequiringSpellMapBounds(mSpellsReqSpell.lower_bound(spell_id),mSpellsReqSpell.upper_bound(spell_id));
+            return SpellsRequiringSpellMapBounds(mSpellsReqSpell.lower_bound(spell_id), mSpellsReqSpell.upper_bound(spell_id));
         }
         bool IsSpellRequiringSpell(uint32 spellid, uint32 req_spellid) const
         {
@@ -1230,7 +1230,7 @@ class SpellMgr
             return mEnchantCustomAttr[ench_id];
         }
 
-        uint8 IsHighRankOfSpell(uint32 spell1,uint32 spell2) const
+        uint8 IsHighRankOfSpell(uint32 spell1, uint32 spell2) const
         {
             SpellChainMap::const_iterator itr1 = mSpellChains.find(spell1);
             SpellChainMap::const_iterator itr2 = mSpellChains.find(spell2);
@@ -1243,7 +1243,7 @@ class SpellMgr
             return false;
         }
 
-        bool IsRankSpellDueToSpell(SpellEntry const *spellInfo_1,uint32 spellId_2) const;
+        bool IsRankSpellDueToSpell(SpellEntry const *spellInfo_1, uint32 spellId_2) const;
         static bool canStackSpellRanks(SpellEntry const *spellInfo);
         bool CanAurasStack(Aura const *aura1, Aura const *aura2, bool sameCaster) const;
 
@@ -1266,10 +1266,10 @@ class SpellMgr
 
         SpellLearnSpellMapBounds GetSpellLearnSpellMapBounds(uint32 spell_id) const
         {
-            return SpellLearnSpellMapBounds(mSpellLearnSpells.lower_bound(spell_id),mSpellLearnSpells.upper_bound(spell_id));
+            return SpellLearnSpellMapBounds(mSpellLearnSpells.lower_bound(spell_id), mSpellLearnSpells.upper_bound(spell_id));
         }
 
-        bool IsSpellLearnToSpell(uint32 spell_id1,uint32 spell_id2) const
+        bool IsSpellLearnToSpell(uint32 spell_id1, uint32 spell_id2) const
         {
             SpellLearnSpellMapBounds bounds = GetSpellLearnSpellMapBounds(spell_id1);
             for (SpellLearnSpellMap::const_iterator i = bounds.first; i != bounds.second; ++i)
@@ -1295,7 +1295,7 @@ class SpellMgr
 
         SkillLineAbilityMapBounds GetSkillLineAbilityMapBounds(uint32 spell_id) const
         {
-            return SkillLineAbilityMapBounds(mSkillLineAbilityMap.lower_bound(spell_id),mSkillLineAbilityMap.upper_bound(spell_id));
+            return SkillLineAbilityMapBounds(mSkillLineAbilityMap.lower_bound(spell_id), mSkillLineAbilityMap.upper_bound(spell_id));
         }
 
         PetAura const* GetPetAura(uint32 spell_id, uint8 eff)
@@ -1343,30 +1343,30 @@ class SpellMgr
 
         SpellAreaMapBounds GetSpellAreaMapBounds(uint32 spell_id) const
         {
-            return SpellAreaMapBounds(mSpellAreaMap.lower_bound(spell_id),mSpellAreaMap.upper_bound(spell_id));
+            return SpellAreaMapBounds(mSpellAreaMap.lower_bound(spell_id), mSpellAreaMap.upper_bound(spell_id));
         }
 
         SpellAreaForQuestMapBounds GetSpellAreaForQuestMapBounds(uint32 quest_id, bool active) const
         {
             if (active)
-                return SpellAreaForQuestMapBounds(mSpellAreaForActiveQuestMap.lower_bound(quest_id),mSpellAreaForActiveQuestMap.upper_bound(quest_id));
+                return SpellAreaForQuestMapBounds(mSpellAreaForActiveQuestMap.lower_bound(quest_id), mSpellAreaForActiveQuestMap.upper_bound(quest_id));
             else
-                return SpellAreaForQuestMapBounds(mSpellAreaForQuestMap.lower_bound(quest_id),mSpellAreaForQuestMap.upper_bound(quest_id));
+                return SpellAreaForQuestMapBounds(mSpellAreaForQuestMap.lower_bound(quest_id), mSpellAreaForQuestMap.upper_bound(quest_id));
         }
 
         SpellAreaForQuestMapBounds GetSpellAreaForQuestEndMapBounds(uint32 quest_id) const
         {
-            return SpellAreaForQuestMapBounds(mSpellAreaForQuestEndMap.lower_bound(quest_id),mSpellAreaForQuestEndMap.upper_bound(quest_id));
+            return SpellAreaForQuestMapBounds(mSpellAreaForQuestEndMap.lower_bound(quest_id), mSpellAreaForQuestEndMap.upper_bound(quest_id));
         }
 
         SpellAreaForAuraMapBounds GetSpellAreaForAuraMapBounds(uint32 spell_id) const
         {
-            return SpellAreaForAuraMapBounds(mSpellAreaForAuraMap.lower_bound(spell_id),mSpellAreaForAuraMap.upper_bound(spell_id));
+            return SpellAreaForAuraMapBounds(mSpellAreaForAuraMap.lower_bound(spell_id), mSpellAreaForAuraMap.upper_bound(spell_id));
         }
 
         SpellAreaForAreaMapBounds GetSpellAreaForAreaMapBounds(uint32 area_id) const
         {
-            return SpellAreaForAreaMapBounds(mSpellAreaForAreaMap.lower_bound(area_id),mSpellAreaForAreaMap.upper_bound(area_id));
+            return SpellAreaForAreaMapBounds(mSpellAreaForAreaMap.lower_bound(area_id), mSpellAreaForAreaMap.upper_bound(area_id));
         }
 
         bool IsSrcTargetSpell(SpellEntry const *spellInfo) const;

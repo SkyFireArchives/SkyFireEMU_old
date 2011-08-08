@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,14 +33,14 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO               = -1189016,
-    SAY_HEALTH              = -1189017,
-    SAY_KILL                = -1189018,
+    SAY_AGGRO               = -1189016, 
+    SAY_HEALTH              = -1189017, 
+    SAY_KILL                = -1189018, 
 
-    SPELL_FLAMESHOCK        = 8053,
-    SPELL_SHADOWBOLT        = 1106,
-    SPELL_FLAMESPIKE        = 8814,
-    SPELL_FIRENOVA          = 16079,
+    SPELL_FLAMESHOCK        = 8053, 
+    SPELL_SHADOWBOLT        = 1106, 
+    SPELL_FLAMESPIKE        = 8814, 
+    SPELL_FIRENOVA          = 16079, 
 };
 
 class boss_bloodmage_thalnos : public CreatureScript

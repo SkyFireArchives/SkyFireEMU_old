@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -50,20 +50,20 @@ EndScriptData */
 
 float Locations[4][3]=
 {
-    {-10991.0f, -1884.33f, 0.614315f},
-    {-10989.4f, -1885.88f, 0.904913f},
-    {-10978.1f, -1887.07f, 2.035550f},
-    {-10975.9f, -1885.81f, 2.253890f},
+    {-10991.0f, -1884.33f, 0.614315f}, 
+    {-10989.4f, -1885.88f, 0.904913f}, 
+    {-10978.1f, -1887.07f, 2.035550f}, 
+    {-10975.9f, -1885.81f, 2.253890f}, 
 };
 
 const uint32 Adds[6]=
 {
-    17007,
-    19872,
-    19873,
-    19874,
-    19875,
-    19876,
+    17007, 
+    19872, 
+    19873, 
+    19874, 
+    19875, 
+    19876, 
 };
 
 class boss_moroes : public CreatureScript
@@ -139,7 +139,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL_1,SAY_KILL_2,SAY_KILL_3), me);
+            DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2, SAY_KILL_3), me);
         }
 
         void JustDied(Unit* /*victim*/)
@@ -213,7 +213,7 @@ public:
                 Creature* Temp = NULL;
                 if (AddGUID[i])
                 {
-                    Temp = Creature::GetCreature((*me),AddGUID[i]);
+                    Temp = Creature::GetCreature((*me), AddGUID[i]);
                     if (Temp && Temp->isAlive())
                         Temp->DisappearAndDie();
                 }
@@ -227,7 +227,7 @@ public:
                 Creature* Temp = NULL;
                 if (AddGUID[i])
                 {
-                    Temp = Creature::GetCreature((*me),AddGUID[i]);
+                    Temp = Creature::GetCreature((*me), AddGUID[i]);
                     if (Temp && Temp->isAlive())
                     {
                         Temp->AI()->AttackStart(me->getVictim());
@@ -262,7 +262,7 @@ public:
                     Creature* Temp = NULL;
                     if (AddGUID[i])
                     {
-                        Temp = Unit::GetCreature((*me),AddGUID[i]);
+                        Temp = Unit::GetCreature((*me), AddGUID[i]);
                         if (Temp && Temp->isAlive())
                             if (!Temp->getVictim())
                                 Temp->AI()->AttackStart(me->getVictim());
@@ -306,10 +306,10 @@ public:
             {
                 if (Wait_Timer <= diff)
                 {
-                    DoScriptText(RAND(SAY_SPECIAL_1,SAY_SPECIAL_2), me);
+                    DoScriptText(RAND(SAY_SPECIAL_1, SAY_SPECIAL_2), me);
 
                     if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                        pTarget->CastSpell(pTarget, SPELL_GARROTE,true);
+                        pTarget->CastSpell(pTarget, SPELL_GARROTE, true);
 
                     InVanish = false;
                 } else Wait_Timer -= diff;

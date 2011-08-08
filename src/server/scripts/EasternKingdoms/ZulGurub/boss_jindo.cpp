@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -96,7 +96,7 @@ class boss_jindo : public CreatureScript
                 if (HealingWard_Timer <= diff)
                 {
                     //DoCast(me, SPELL_POWERFULLHEALINGWARD);
-                    me->SummonCreature(14987, me->GetPositionX()+3, me->GetPositionY()-2, me->GetPositionZ(), 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,30000);
+                    me->SummonCreature(14987, me->GetPositionX()+3, me->GetPositionY()-2, me->GetPositionZ(), 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000);
                     HealingWard_Timer = 14000 + rand()%6000;
                 } else HealingWard_Timer -= diff;
 
@@ -106,7 +106,7 @@ class boss_jindo : public CreatureScript
                     DoCast(me->getVictim(), SPELL_HEX);
 
                     if (DoGetThreat(me->getVictim()))
-                        DoModifyThreatPercent(me->getVictim(),-80);
+                        DoModifyThreatPercent(me->getVictim(), -80);
 
                     Hex_Timer = 12000 + rand()%8000;
                 } else Hex_Timer -= diff;
@@ -114,7 +114,7 @@ class boss_jindo : public CreatureScript
                 //Casting the delusion curse with a shade. So shade will attack the same target with the curse.
                 if (Delusions_Timer <= diff)
                 {
-                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     {
                         DoCast(pTarget, SPELL_DELUSIONSOFJINDO);
 
@@ -130,13 +130,13 @@ class boss_jindo : public CreatureScript
                 if (Teleport_Timer <= diff)
                 {
                     Unit *pTarget = NULL;
-                    pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                    pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                     if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
                     {
-                        DoTeleportPlayer(pTarget, -11583.7783f,-1249.4278f,77.5471f,4.745f);
+                        DoTeleportPlayer(pTarget, -11583.7783f, -1249.4278f, 77.5471f, 4.745f);
 
                         if (DoGetThreat(me->getVictim()))
-                            DoModifyThreatPercent(pTarget,-100);
+                            DoModifyThreatPercent(pTarget, -100);
 
                         Creature *Skeletons;
                         Skeletons = me->SummonCreature(14826, pTarget->GetPositionX()+2, pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);

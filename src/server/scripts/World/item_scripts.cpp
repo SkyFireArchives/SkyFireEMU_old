@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -32,7 +32,7 @@ EndScriptData */
 /* ContentData
 item_draenei_fishing_net(i23654)    Hacklike implements chance to spawn item or creature
 item_nether_wraith_beacon(i31742)   Summons creatures for quest Becoming a Spellfire Tailor (q10832)
-item_flying_machine(i34060,i34061)  Engineering crafted flying machines
+item_flying_machine(i34060, i34061)  Engineering crafted flying machines
 item_gor_dreks_ointment(i30175)     Protecting Our Own(q10488)
 item_only_for_flight                Items which should only useable while flying
 EndContentData */
@@ -81,7 +81,7 @@ public:
             return false;
 
         // error
-        pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW,pItem,NULL);
+        pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, pItem, NULL);
         return true;
     }
 };
@@ -101,7 +101,7 @@ public:
     {
         if (pPlayer->GetQuestStatus(9452) == QUEST_STATUS_INCOMPLETE)
         {
-            if (urand(0,99) < 35)
+            if (urand(0, 99) < 35)
             {
                 Creature *Murloc = pPlayer->SummonCreature(17102, pPlayer->GetPositionX(), pPlayer->GetPositionY()+20, pPlayer->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
                 if (Murloc)
@@ -166,8 +166,8 @@ public:
             if (pPlayer->GetBaseSkillValue(SKILL_RIDING) == 300)
                 return false;
 
-        sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Player attempt to use item %u, but did not meet riding requirement",itemId);
-        pPlayer->SendEquipError(EQUIP_ERR_CANT_EQUIP_SKILL,pItem,NULL);
+        sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Player attempt to use item %u, but did not meet riding requirement", itemId);
+        pPlayer->SendEquipError(EQUIP_ERR_CANT_EQUIP_SKILL, pItem, NULL);
         return true;
     }
 };
@@ -187,7 +187,7 @@ public:
             targets.getUnitTarget()->GetEntry() == 20748 && !targets.getUnitTarget()->HasAura(32578))
             return false;
 
-        pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW,pItem,NULL);
+        pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, pItem, NULL);
         return true;
     }
 };
@@ -203,11 +203,11 @@ public:
 
     bool OnUse(Player *pPlayer, Item *pItem, SpellCastTargets const & /*targets*/)
     {
-        if (pPlayer->FindNearestCreature(26248,15) || pPlayer->FindNearestCreature(26249,15))
+        if (pPlayer->FindNearestCreature(26248, 15) || pPlayer->FindNearestCreature(26249, 15))
             return false;
         else
         {
-            pPlayer->SendEquipError(EQUIP_ERR_OUT_OF_RANGE,pItem,NULL);
+            pPlayer->SendEquipError(EQUIP_ERR_OUT_OF_RANGE, pItem, NULL);
             return true;
         }
     }
@@ -265,7 +265,7 @@ public:
     bool OnUse(Player* pPlayer, Item* /*pItem*/, SpellCastTargets const& /*targets*/)
     {
         std::list<Unit*> MinionList;
-        pPlayer->GetAllMinionsByEntry(MinionList,GHOULS);
+        pPlayer->GetAllMinionsByEntry(MinionList, GHOULS);
 
         if (pPlayer->GetQuestStatus(12698) == QUEST_STATUS_INCOMPLETE)
         {
@@ -276,7 +276,7 @@ public:
                 else
                 {
                     //This should be sent to the player as red text.
-                    pPlayer->Say("You have created enough ghouls. Return to Gothik the Harvester at Death's Breach.",LANG_UNIVERSAL);
+                    pPlayer->Say("You have created enough ghouls. Return to Gothik the Harvester at Death's Breach.", LANG_UNIVERSAL);
                     return true;
                 }
             }
@@ -293,31 +293,31 @@ public:
 
 enum ePileFakeFur
 {
-    GO_CARIBOU_TRAP_1                                      = 187982,
-    GO_CARIBOU_TRAP_2                                      = 187995,
-    GO_CARIBOU_TRAP_3                                      = 187996,
-    GO_CARIBOU_TRAP_4                                      = 187997,
-    GO_CARIBOU_TRAP_5                                      = 187998,
-    GO_CARIBOU_TRAP_6                                      = 187999,
-    GO_CARIBOU_TRAP_7                                      = 188000,
-    GO_CARIBOU_TRAP_8                                      = 188001,
-    GO_CARIBOU_TRAP_9                                      = 188002,
-    GO_CARIBOU_TRAP_10                                     = 188003,
-    GO_CARIBOU_TRAP_11                                     = 188004,
-    GO_CARIBOU_TRAP_12                                     = 188005,
-    GO_CARIBOU_TRAP_13                                     = 188006,
-    GO_CARIBOU_TRAP_14                                     = 188007,
-    GO_CARIBOU_TRAP_15                                     = 188008,
-    GO_HIGH_QUALITY_FUR                                    = 187983,
+    GO_CARIBOU_TRAP_1                                      = 187982, 
+    GO_CARIBOU_TRAP_2                                      = 187995, 
+    GO_CARIBOU_TRAP_3                                      = 187996, 
+    GO_CARIBOU_TRAP_4                                      = 187997, 
+    GO_CARIBOU_TRAP_5                                      = 187998, 
+    GO_CARIBOU_TRAP_6                                      = 187999, 
+    GO_CARIBOU_TRAP_7                                      = 188000, 
+    GO_CARIBOU_TRAP_8                                      = 188001, 
+    GO_CARIBOU_TRAP_9                                      = 188002, 
+    GO_CARIBOU_TRAP_10                                     = 188003, 
+    GO_CARIBOU_TRAP_11                                     = 188004, 
+    GO_CARIBOU_TRAP_12                                     = 188005, 
+    GO_CARIBOU_TRAP_13                                     = 188006, 
+    GO_CARIBOU_TRAP_14                                     = 188007, 
+    GO_CARIBOU_TRAP_15                                     = 188008, 
+    GO_HIGH_QUALITY_FUR                                    = 187983, 
     NPC_NESINGWARY_TRAPPER                                 = 25835
 };
 
 #define CaribouTrapsNum 15
 const uint32 CaribouTraps[CaribouTrapsNum] =
 {
-    GO_CARIBOU_TRAP_1, GO_CARIBOU_TRAP_2, GO_CARIBOU_TRAP_3, GO_CARIBOU_TRAP_4, GO_CARIBOU_TRAP_5,
-    GO_CARIBOU_TRAP_6, GO_CARIBOU_TRAP_7, GO_CARIBOU_TRAP_8, GO_CARIBOU_TRAP_9, GO_CARIBOU_TRAP_10,
-    GO_CARIBOU_TRAP_11, GO_CARIBOU_TRAP_12, GO_CARIBOU_TRAP_13, GO_CARIBOU_TRAP_14, GO_CARIBOU_TRAP_15,
+    GO_CARIBOU_TRAP_1, GO_CARIBOU_TRAP_2, GO_CARIBOU_TRAP_3, GO_CARIBOU_TRAP_4, GO_CARIBOU_TRAP_5, 
+    GO_CARIBOU_TRAP_6, GO_CARIBOU_TRAP_7, GO_CARIBOU_TRAP_8, GO_CARIBOU_TRAP_9, GO_CARIBOU_TRAP_10, 
+    GO_CARIBOU_TRAP_11, GO_CARIBOU_TRAP_12, GO_CARIBOU_TRAP_13, GO_CARIBOU_TRAP_14, GO_CARIBOU_TRAP_15, 
 };
 
 class item_pile_fake_furs : public ItemScript
@@ -360,8 +360,8 @@ public:
 
 enum ePetrovClusterBombs
 {
-    SPELL_PETROV_BOMB           = 42406,
-    AREA_ID_SHATTERED_STRAITS   = 4064,
+    SPELL_PETROV_BOMB           = 42406, 
+    AREA_ID_SHATTERED_STRAITS   = 4064, 
     ZONE_ID_HOWLING             = 495
 };
 
@@ -395,39 +395,39 @@ public:
 ######*/
 enum eHelpThemselves
 {
-    QUEST_CANNOT_HELP_THEMSELVES                  =  11876,
-    NPC_TRAPPED_MAMMOTH_CALF                      =  25850,
-    GO_MAMMOTH_TRAP_1                             = 188022,
-    GO_MAMMOTH_TRAP_2                             = 188024,
-    GO_MAMMOTH_TRAP_3                             = 188025,
-    GO_MAMMOTH_TRAP_4                             = 188026,
-    GO_MAMMOTH_TRAP_5                             = 188027,
-    GO_MAMMOTH_TRAP_6                             = 188028,
-    GO_MAMMOTH_TRAP_7                             = 188029,
-    GO_MAMMOTH_TRAP_8                             = 188030,
-    GO_MAMMOTH_TRAP_9                             = 188031,
-    GO_MAMMOTH_TRAP_10                            = 188032,
-    GO_MAMMOTH_TRAP_11                            = 188033,
-    GO_MAMMOTH_TRAP_12                            = 188034,
-    GO_MAMMOTH_TRAP_13                            = 188035,
-    GO_MAMMOTH_TRAP_14                            = 188036,
-    GO_MAMMOTH_TRAP_15                            = 188037,
-    GO_MAMMOTH_TRAP_16                            = 188038,
-    GO_MAMMOTH_TRAP_17                            = 188039,
-    GO_MAMMOTH_TRAP_18                            = 188040,
-    GO_MAMMOTH_TRAP_19                            = 188041,
-    GO_MAMMOTH_TRAP_20                            = 188042,
-    GO_MAMMOTH_TRAP_21                            = 188043,
-    GO_MAMMOTH_TRAP_22                            = 188044,
+    QUEST_CANNOT_HELP_THEMSELVES                  =  11876, 
+    NPC_TRAPPED_MAMMOTH_CALF                      =  25850, 
+    GO_MAMMOTH_TRAP_1                             = 188022, 
+    GO_MAMMOTH_TRAP_2                             = 188024, 
+    GO_MAMMOTH_TRAP_3                             = 188025, 
+    GO_MAMMOTH_TRAP_4                             = 188026, 
+    GO_MAMMOTH_TRAP_5                             = 188027, 
+    GO_MAMMOTH_TRAP_6                             = 188028, 
+    GO_MAMMOTH_TRAP_7                             = 188029, 
+    GO_MAMMOTH_TRAP_8                             = 188030, 
+    GO_MAMMOTH_TRAP_9                             = 188031, 
+    GO_MAMMOTH_TRAP_10                            = 188032, 
+    GO_MAMMOTH_TRAP_11                            = 188033, 
+    GO_MAMMOTH_TRAP_12                            = 188034, 
+    GO_MAMMOTH_TRAP_13                            = 188035, 
+    GO_MAMMOTH_TRAP_14                            = 188036, 
+    GO_MAMMOTH_TRAP_15                            = 188037, 
+    GO_MAMMOTH_TRAP_16                            = 188038, 
+    GO_MAMMOTH_TRAP_17                            = 188039, 
+    GO_MAMMOTH_TRAP_18                            = 188040, 
+    GO_MAMMOTH_TRAP_19                            = 188041, 
+    GO_MAMMOTH_TRAP_20                            = 188042, 
+    GO_MAMMOTH_TRAP_21                            = 188043, 
+    GO_MAMMOTH_TRAP_22                            = 188044, 
 };
 
 #define MammothTrapsNum 22
 const uint32 MammothTraps[MammothTrapsNum] =
 {
-    GO_MAMMOTH_TRAP_1, GO_MAMMOTH_TRAP_2, GO_MAMMOTH_TRAP_3, GO_MAMMOTH_TRAP_4, GO_MAMMOTH_TRAP_5,
-    GO_MAMMOTH_TRAP_6, GO_MAMMOTH_TRAP_7, GO_MAMMOTH_TRAP_8, GO_MAMMOTH_TRAP_9, GO_MAMMOTH_TRAP_10,
-    GO_MAMMOTH_TRAP_11, GO_MAMMOTH_TRAP_12, GO_MAMMOTH_TRAP_13, GO_MAMMOTH_TRAP_14, GO_MAMMOTH_TRAP_15,
-    GO_MAMMOTH_TRAP_16, GO_MAMMOTH_TRAP_17, GO_MAMMOTH_TRAP_18, GO_MAMMOTH_TRAP_19, GO_MAMMOTH_TRAP_20,
+    GO_MAMMOTH_TRAP_1, GO_MAMMOTH_TRAP_2, GO_MAMMOTH_TRAP_3, GO_MAMMOTH_TRAP_4, GO_MAMMOTH_TRAP_5, 
+    GO_MAMMOTH_TRAP_6, GO_MAMMOTH_TRAP_7, GO_MAMMOTH_TRAP_8, GO_MAMMOTH_TRAP_9, GO_MAMMOTH_TRAP_10, 
+    GO_MAMMOTH_TRAP_11, GO_MAMMOTH_TRAP_12, GO_MAMMOTH_TRAP_13, GO_MAMMOTH_TRAP_14, GO_MAMMOTH_TRAP_15, 
+    GO_MAMMOTH_TRAP_16, GO_MAMMOTH_TRAP_17, GO_MAMMOTH_TRAP_18, GO_MAMMOTH_TRAP_19, GO_MAMMOTH_TRAP_20, 
     GO_MAMMOTH_TRAP_21, GO_MAMMOTH_TRAP_22
 };
 
@@ -442,19 +442,19 @@ public:
             return false;
 
         Creature* pMammoth;
-        pMammoth = pPlayer->FindNearestCreature(NPC_TRAPPED_MAMMOTH_CALF,5.0f);
+        pMammoth = pPlayer->FindNearestCreature(NPC_TRAPPED_MAMMOTH_CALF, 5.0f);
         if (!pMammoth)
             return false;
 
         GameObject* pTrap;
         for (uint8 i = 0; i < MammothTrapsNum; ++i)
         {
-            pTrap = pPlayer->FindNearestGameObject(MammothTraps[i],11.0f);
+            pTrap = pPlayer->FindNearestGameObject(MammothTraps[i], 11.0f);
             if (pTrap)
             {
                 pMammoth->AI()->DoAction(1);
                 pTrap->SetGoState(GO_STATE_READY);
-                pPlayer->KilledMonsterCredit(NPC_TRAPPED_MAMMOTH_CALF,0);
+                pPlayer->KilledMonsterCredit(NPC_TRAPPED_MAMMOTH_CALF, 0);
                 return true;
             }
         }
@@ -464,7 +464,7 @@ public:
 
 enum TheEmissary
 {
-    QUEST_THE_EMISSARY      =   11626,
+    QUEST_THE_EMISSARY      =   11626, 
     NPC_LEVIROTH            =   26452
 };
 
@@ -484,14 +484,14 @@ public:
             } else
                 pPlayer->SendEquipError(EQUIP_ERR_OUT_OF_RANGE, pItem, NULL);
         } else
-            pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW ,pItem, NULL);
+            pPlayer->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW , pItem, NULL);
         return true;
     }
 };
 
 enum eCapturedFrog
 {
-    QUEST_THE_PERFECT_SPIES      = 25444,
+    QUEST_THE_PERFECT_SPIES      = 25444, 
     NPC_VANIRAS_SENTRY_TOTEM     = 40187
 };
 
@@ -528,7 +528,7 @@ public:
     {
         if (pPlayer->GetQuestStatus(26357) == QUEST_STATUS_INCOMPLETE)
 
-        if (pPlayer->FindNearestCreature(42704,15))
+        if (pPlayer->FindNearestCreature(42704, 15))
             {
                 pPlayer->CastSpell(pPlayer, 79513, true, NULL); 
                 pPlayer->KilledMonsterCredit(42704, 0);

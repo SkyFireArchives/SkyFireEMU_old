@@ -43,4 +43,3 @@ class GridRefManager : public RefManager<GridRefManager<OBJECT>, OBJECT>
         iterator rend() { return iterator(NULL); }
 };
 #endif
-

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -36,14 +36,14 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_BOSS_DIE_AD         = -1033007,
-    SAY_BOSS_DIE_AS         = -1033008,
-    SAY_ARCHMAGE            = -1033009,
+    SAY_BOSS_DIE_AD         = -1033007, 
+    SAY_BOSS_DIE_AS         = -1033008, 
+    SAY_ARCHMAGE            = -1033009, 
 
-    NPC_ASH                 = 3850,
-    NPC_ADA                 = 3849,
-    NPC_ARCHMAGE_ARUGAL     = 4275,
-    NPC_ARUGAL_VOIDWALKER   = 4627,
+    NPC_ASH                 = 3850, 
+    NPC_ADA                 = 3849, 
+    NPC_ARCHMAGE_ARUGAL     = 4275, 
+    NPC_ARUGAL_VOIDWALKER   = 4627, 
 
     GO_COURTYARD_DOOR       = 18895,                        //door to open when talking to NPC's
     GO_SORCERER_DOOR        = 18972,                        //door to open when Fenrus the Devourer
@@ -54,11 +54,11 @@ enum eEnums
 
 const Position SpawnLocation[] =
 {
-    {-148.199f,2165.647f,128.448f,1.026f},
-    {-153.110f,2168.620f,128.448f,1.026f},
-    {-145.905f,2180.520f,128.448f,4.183f},
-    {-140.794f,2178.037f,128.448f,4.090f},
-    {-138.640f,2170.159f,136.577f,2.737f}
+    {-148.199f, 2165.647f, 128.448f, 1.026f}, 
+    {-153.110f, 2168.620f, 128.448f, 1.026f}, 
+    {-145.905f, 2180.520f, 128.448f, 4.183f}, 
+    {-140.794f, 2178.037f, 128.448f, 4.090f}, 
+    {-138.640f, 2170.159f, 136.577f, 2.737f}
 };
 class instance_shadowfang_keep : public InstanceMapScript
 {
@@ -143,8 +143,8 @@ public:
 
             if (pAda && pAda->isAlive() && pAsh && pAsh->isAlive())
             {
-                DoScriptText(SAY_BOSS_DIE_AD,pAda);
-                DoScriptText(SAY_BOSS_DIE_AS,pAsh);
+                DoScriptText(SAY_BOSS_DIE_AD, pAda);
+                DoScriptText(SAY_BOSS_DIE_AS, pAsh);
             }
         }
 
@@ -257,19 +257,19 @@ public:
                     switch(uiPhase)
                     {
                         case 1:
-                            pSummon = pArchmage->SummonCreature(pArchmage->GetEntry(),SpawnLocation[4],TEMPSUMMON_TIMED_DESPAWN,10000);
+                            pSummon = pArchmage->SummonCreature(pArchmage->GetEntry(), SpawnLocation[4], TEMPSUMMON_TIMED_DESPAWN, 10000);
                             pSummon->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
                             pSummon->SetReactState(REACT_DEFENSIVE);
-                            pSummon->CastSpell(pSummon,SPELL_ASHCROMBE_TELEPORT,true);
-                            DoScriptText(SAY_ARCHMAGE,pSummon);
+                            pSummon->CastSpell(pSummon, SPELL_ASHCROMBE_TELEPORT, true);
+                            DoScriptText(SAY_ARCHMAGE, pSummon);
                             uiTimer = 2000;
                             uiPhase = 2;
                             break;
                         case 2:
-                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER,SpawnLocation[0],TEMPSUMMON_CORPSE_TIMED_DESPAWN,60000);
-                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER,SpawnLocation[1],TEMPSUMMON_CORPSE_TIMED_DESPAWN,60000);
-                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER,SpawnLocation[2],TEMPSUMMON_CORPSE_TIMED_DESPAWN,60000);
-                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER,SpawnLocation[3],TEMPSUMMON_CORPSE_TIMED_DESPAWN,60000);
+                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[0], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
+                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[1], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
+                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[2], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
+                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[3], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
                             uiPhase = 0;
                             break;
 

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,7 +33,7 @@ EndScriptData */
 
 enum Emotes
 {
-    EMOTE_FRENZY                                           = -1469002,
+    EMOTE_FRENZY                                           = -1469002, 
     EMOTE_SHIMMER                                          = -1469003
 };
 
@@ -42,16 +42,16 @@ enum Spells
     //These spells are actually called elemental shield
     //What they do is decrease all damage by 75% then they increase
     //One school of damage by 1100%
-    SPELL_FIRE_VULNERABILITY                               = 22277,
-    SPELL_FROST_VULNERABILITY                              = 22278,
-    SPELL_SHADOW_VULNERABILITY                             = 22279,
-    SPELL_NATURE_VULNERABILITY                             = 22280,
-    SPELL_ARCANE_VULNERABILITY                             = 22281,
+    SPELL_FIRE_VULNERABILITY                               = 22277, 
+    SPELL_FROST_VULNERABILITY                              = 22278, 
+    SPELL_SHADOW_VULNERABILITY                             = 22279, 
+    SPELL_NATURE_VULNERABILITY                             = 22280, 
+    SPELL_ARCANE_VULNERABILITY                             = 22281, 
     //Other spells
-    SPELL_INCINERATE                                       = 23308,   //Incinerate 23308,23309
+    SPELL_INCINERATE                                       = 23308,   //Incinerate 23308, 23309
     SPELL_TIMELAPSE                                        = 23310,   //Time lapse 23310, 23311(old threat mod that was removed in 2.01)
     SPELL_CORROSIVEACID                                    = 23313,   //Corrosive Acid 23313, 23314
-    SPELL_IGNITEFLESH                                      = 23315,   //Ignite Flesh 23315,23316
+    SPELL_IGNITEFLESH                                      = 23315,   //Ignite Flesh 23315, 23316
     SPELL_FROSTBURN                                        = 23187,   //Frost burn 23187, 23189
     //Brood Affliction 23173 - Scripted Spell that cycles through all targets within 100 yards and has a chance to cast one of the afflictions on them
     //Since Scripted spells arn't coded I'll just write a function that does the same thing
@@ -83,7 +83,7 @@ public:
             //5 possiblities for the first breath, 4 for the second, 20 total possiblites
             //This way we don't end up casting 2 of the same breath
             //TL TL would be stupid
-            switch (urand(0,19))
+            switch (urand(0, 19))
             {
                 //B1 - Incin
                 case 0:
@@ -220,7 +220,7 @@ public:
                     me->RemoveAurasDueToSpell(CurrentVurln_Spell);
 
                 //Cast new random vulnerabilty on self
-                uint32 spell = RAND(SPELL_FIRE_VULNERABILITY, SPELL_FROST_VULNERABILITY,
+                uint32 spell = RAND(SPELL_FIRE_VULNERABILITY, SPELL_FROST_VULNERABILITY, 
                     SPELL_SHADOW_VULNERABILITY, SPELL_NATURE_VULNERABILITY, SPELL_ARCANE_VULNERABILITY);
 
                 DoCast(me, spell);
@@ -257,7 +257,7 @@ public:
                         if (pUnit)
                         {
                             //Cast affliction
-                            DoCast(pUnit, RAND(SPELL_BROODAF_BLUE, SPELL_BROODAF_BLACK,
+                            DoCast(pUnit, RAND(SPELL_BROODAF_BLUE, SPELL_BROODAF_BLACK, 
                                                SPELL_BROODAF_RED, SPELL_BROODAF_BRONZE, SPELL_BROODAF_GREEN), true);
 
                             //Chromatic mutation if target is effected by all afflictions
@@ -290,7 +290,7 @@ public:
             {
                 DoCast(me, SPELL_FRENZY);
                 DoScriptText(EMOTE_FRENZY, me);
-                Frenzy_Timer = urand(10000,15000);
+                Frenzy_Timer = urand(10000, 15000);
             } else Frenzy_Timer -= diff;
 
             //Enrage if not already enraged and below 20%

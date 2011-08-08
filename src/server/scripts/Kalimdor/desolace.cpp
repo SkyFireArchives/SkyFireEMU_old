@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,21 +39,21 @@ EndContentData */
 enum eDyingKodo
 {
     // signed for 9999
-    SAY_SMEED_HOME_1                = -1000348,
-    SAY_SMEED_HOME_2                = -1000349,
-    SAY_SMEED_HOME_3                = -1000350,
+    SAY_SMEED_HOME_1                = -1000348, 
+    SAY_SMEED_HOME_2                = -1000349, 
+    SAY_SMEED_HOME_3                = -1000350, 
 
-    QUEST_KODO                      = 5561,
+    QUEST_KODO                      = 5561, 
 
-    NPC_SMEED                       = 11596,
-    NPC_AGED_KODO                   = 4700,
-    NPC_DYING_KODO                  = 4701,
-    NPC_ANCIENT_KODO                = 4702,
-    NPC_TAMED_KODO                  = 11627,
+    NPC_SMEED                       = 11596, 
+    NPC_AGED_KODO                   = 4700, 
+    NPC_DYING_KODO                  = 4701, 
+    NPC_ANCIENT_KODO                = 4702, 
+    NPC_TAMED_KODO                  = 11627, 
 
-    SPELL_KODO_KOMBO_ITEM           = 18153,
+    SPELL_KODO_KOMBO_ITEM           = 18153, 
     SPELL_KODO_KOMBO_PLAYER_BUFF    = 18172,                //spells here have unclear function, but using them at least for visual parts and checks
-    SPELL_KODO_KOMBO_DESPAWN_BUFF   = 18377,
+    SPELL_KODO_KOMBO_DESPAWN_BUFF   = 18377, 
     SPELL_KODO_KOMBO_GOSSIP         = 18362
 
 };
@@ -91,10 +91,10 @@ public:
                 pCreatureTarget->GetEntry() == NPC_DYING_KODO ||
                 pCreatureTarget->GetEntry() == NPC_ANCIENT_KODO)
             {
-                pCaster->CastSpell(pCaster,SPELL_KODO_KOMBO_PLAYER_BUFF,true);
+                pCaster->CastSpell(pCaster, SPELL_KODO_KOMBO_PLAYER_BUFF, true);
 
                 pCreatureTarget->UpdateEntry(NPC_TAMED_KODO);
-                pCreatureTarget->CastSpell(pCreatureTarget,SPELL_KODO_KOMBO_DESPAWN_BUFF,false);
+                pCreatureTarget->CastSpell(pCreatureTarget, SPELL_KODO_KOMBO_DESPAWN_BUFF, false);
 
                 if (pCreatureTarget->GetMotionMaster()->GetCurrentMovementGeneratorType() == WAYPOINT_MOTION_TYPE)
                     pCreatureTarget->GetMotionMaster()->MoveIdle();
@@ -133,7 +133,7 @@ public:
 
                 if (me->IsWithinDistInMap(pWho, 10.0f))
                 {
-                    DoScriptText(RAND(SAY_SMEED_HOME_1,SAY_SMEED_HOME_2,SAY_SMEED_HOME_3), pWho);
+                    DoScriptText(RAND(SAY_SMEED_HOME_1, SAY_SMEED_HOME_2, SAY_SMEED_HOME_3), pWho);
 
                     //spell have no implemented effect (dummy), so useful to notify spellHit
                     DoCast(me, SPELL_KODO_KOMBO_GOSSIP, true);
@@ -188,7 +188,7 @@ public:
     bool OnGossipHello(Player *pPlayer, GameObject* /*pGO*/)
     {
             if (pPlayer->GetQuestStatus(5381) == QUEST_STATUS_INCOMPLETE)
-                pPlayer->SummonCreature(11876, pPlayer->GetInnPosX(),pPlayer->GetInnPosY(),pPlayer->GetInnPosZ(),0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,10000);
+                pPlayer->SummonCreature(11876, pPlayer->GetInnPosX(), pPlayer->GetInnPosY(), pPlayer->GetInnPosZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
 
             return true;
     }

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,38 +39,38 @@ EndContentData */
 
 enum eKelidan
 {
-    SAY_WAKE                    = -1542000,
-    SAY_ADD_AGGRO_1             = -1542001,
-    SAY_ADD_AGGRO_2             = -1542002,
-    SAY_ADD_AGGRO_3             = -1542003,
-    SAY_KILL_1                  = -1542004,
-    SAY_KILL_2                  = -1542005,
-    SAY_NOVA                    = -1542006,
-    SAY_DIE                     = -1542007,
+    SAY_WAKE                    = -1542000, 
+    SAY_ADD_AGGRO_1             = -1542001, 
+    SAY_ADD_AGGRO_2             = -1542002, 
+    SAY_ADD_AGGRO_3             = -1542003, 
+    SAY_KILL_1                  = -1542004, 
+    SAY_KILL_2                  = -1542005, 
+    SAY_NOVA                    = -1542006, 
+    SAY_DIE                     = -1542007, 
 
-    SPELL_CORRUPTION            = 30938,
-    SPELL_EVOCATION             = 30935,
+    SPELL_CORRUPTION            = 30938, 
+    SPELL_EVOCATION             = 30935, 
 
-    SPELL_FIRE_NOVA             = 33132,
-    H_SPELL_FIRE_NOVA           = 37371,
+    SPELL_FIRE_NOVA             = 33132, 
+    H_SPELL_FIRE_NOVA           = 37371, 
 
-    SPELL_SHADOW_BOLT_VOLLEY    = 28599,
-    H_SPELL_SHADOW_BOLT_VOLLEY  = 40070,
+    SPELL_SHADOW_BOLT_VOLLEY    = 28599, 
+    H_SPELL_SHADOW_BOLT_VOLLEY  = 40070, 
 
-    SPELL_BURNING_NOVA          = 30940,
-    SPELL_VORTEX                = 37370,
+    SPELL_BURNING_NOVA          = 30940, 
+    SPELL_VORTEX                = 37370, 
 
-    ENTRY_KELIDAN               = 17377,
+    ENTRY_KELIDAN               = 17377, 
     ENTRY_CHANNELER             = 17653
 };
 
 const float ShadowmoonChannelers[5][4]=
 {
-    {302.0f,-87.0f,-24.4f,0.157f},
-    {321.0f,-63.5f,-24.6f,4.887f},
-    {346.0f,-74.5f,-24.6f,3.595f},
-    {344.0f,-103.5f,-24.5f,2.356f},
-    {316.0f,-109.0f,-24.6f,1.257f}
+    {302.0f, -87.0f, -24.4f, 0.157f}, 
+    {321.0f, -63.5f, -24.6f, 4.887f}, 
+    {346.0f, -74.5f, -24.6f, 3.595f}, 
+    {344.0f, -103.5f, -24.5f, 2.356f}, 
+    {316.0f, -109.0f, -24.6f, 1.257f}
 };
 
 class boss_kelidan_the_breaker : public CreatureScript
@@ -130,7 +130,7 @@ class boss_kelidan_the_breaker : public CreatureScript
                 if (rand()%2)
                     return;
 
-                DoScriptText(RAND(SAY_KILL_1,SAY_KILL_2), me);
+                DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
             }
 
             void ChannelerEngaged(Unit* who)
@@ -138,7 +138,7 @@ class boss_kelidan_the_breaker : public CreatureScript
                 if (who && !addYell)
                 {
                     addYell = true;
-                    DoScriptText(RAND(SAY_ADD_AGGRO_1,SAY_ADD_AGGRO_2,SAY_ADD_AGGRO_3), me);
+                    DoScriptText(RAND(SAY_ADD_AGGRO_1, SAY_ADD_AGGRO_2, SAY_ADD_AGGRO_3), me);
                 }
                 for (uint8 i=0; i<5; ++i)
                 {
@@ -181,7 +181,7 @@ class boss_kelidan_the_breaker : public CreatureScript
                 {
                     Creature *channeler = Unit::GetCreature(*me, Channelers[i]);
                     if (!channeler || channeler->isDead())
-                        channeler = me->SummonCreature(ENTRY_CHANNELER,ShadowmoonChannelers[i][0],ShadowmoonChannelers[i][1],ShadowmoonChannelers[i][2],ShadowmoonChannelers[i][3],TEMPSUMMON_CORPSE_TIMED_DESPAWN,300000);
+                        channeler = me->SummonCreature(ENTRY_CHANNELER, ShadowmoonChannelers[i][0], ShadowmoonChannelers[i][1], ShadowmoonChannelers[i][2], ShadowmoonChannelers[i][3], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 300000);
                     if (channeler)
                         Channelers[i] = channeler->GetGUID();
                     else
@@ -260,7 +260,7 @@ class boss_kelidan_the_breaker : public CreatureScript
                     }
 
                     if (IsHeroic())
-                        DoTeleportAll(me->GetPositionX(),me->GetPositionY(),me->GetPositionZ(),me->GetOrientation());
+                        DoTeleportAll(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
 
                     BurningNova_Timer = 20000+rand()%8000;
                     Firenova_Timer= 5000;
@@ -286,10 +286,10 @@ class boss_kelidan_the_breaker : public CreatureScript
 
 enum eShadowmoon
 {
-    SPELL_SHADOW_BOLT       = 12739,
-    H_SPELL_SHADOW_BOLT     = 15472,
+    SPELL_SHADOW_BOLT       = 12739, 
+    H_SPELL_SHADOW_BOLT     = 15472, 
 
-    SPELL_MARK_OF_SHADOW    = 30937,
+    SPELL_MARK_OF_SHADOW    = 30937, 
     SPELL_CHANNELING        = 39123
 };
 

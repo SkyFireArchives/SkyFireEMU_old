@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,7 +39,7 @@ struct TypeList
 };
 
 // enough for now.. can be expand at any point in time as needed
-#define TYPELIST_1(T1)                  TypeList<T1,TypeNull>
+#define TYPELIST_1(T1)                  TypeList<T1, TypeNull>
 #define TYPELIST_2(T1, T2)              TypeList<T1, TYPELIST_1(T2) >
 #define TYPELIST_3(T1, T2, T3)          TypeList<T1, TYPELIST_2(T2, T3) >
 #define TYPELIST_4(T1, T2, T3, T4)      TypeList<T1, TYPELIST_3(T2, T3, T4) >

@@ -118,8 +118,8 @@ public:
 // 45472 Parachute
 enum eParachuteSpells
 {
-    SPELL_PARACHUTE         = 45472,
-    SPELL_PARACHUTE_BUFF    = 44795,
+    SPELL_PARACHUTE         = 45472, 
+    SPELL_PARACHUTE_BUFF    = 44795, 
 };
 
 class spell_gen_parachute : public SpellScriptLoader
@@ -164,9 +164,9 @@ public:
 
 enum NPCEntries
 {
-    NPC_DOOMGUARD                                = 11859,
-    NPC_INFERNAL                                 = 89,
-    NPC_IMP                                      = 416,
+    NPC_DOOMGUARD                                = 11859, 
+    NPC_INFERNAL                                 = 89, 
+    NPC_IMP                                      = 416, 
 };
 
 class spell_gen_pet_summoned : public SpellScriptLoader
@@ -196,7 +196,7 @@ public:
                             NewPet->setDeathState(ALIVE);
 
                         NewPet->SetFullHealth();
-                        NewPet->SetPower(NewPet->getPowerType(),NewPet->GetMaxPower(NewPet->getPowerType()));
+                        NewPet->SetPower(NewPet->getPowerType(), NewPet->GetMaxPower(NewPet->getPowerType()));
 
                         switch (NewPet->GetEntry())
                         {
@@ -258,8 +258,8 @@ public:
 // 66118 Leeching Swarm
 enum eLeechingSwarmSpells
 {
-    SPELL_LEECHING_SWARM_DMG    = 66240,
-    SPELL_LEECHING_SWARM_HEAL   = 66125,
+    SPELL_LEECHING_SWARM_DMG    = 66240, 
+    SPELL_LEECHING_SWARM_HEAL   = 66125, 
 };
 
 class spell_gen_leeching_swarm : public SpellScriptLoader
@@ -309,16 +309,16 @@ public:
 // 24750 Trick
 enum eTrickSpells
 {
-    SPELL_PIRATE_COSTUME_MALE           = 24708,
-    SPELL_PIRATE_COSTUME_FEMALE         = 24709,
-    SPELL_NINJA_COSTUME_MALE            = 24710,
-    SPELL_NINJA_COSTUME_FEMALE          = 24711,
-    SPELL_LEPER_GNOME_COSTUME_MALE      = 24712,
-    SPELL_LEPER_GNOME_COSTUME_FEMALE    = 24713,
-    SPELL_SKELETON_COSTUME              = 24723,
-    SPELL_GHOST_COSTUME_MALE            = 24735,
-    SPELL_GHOST_COSTUME_FEMALE          = 24736,
-    SPELL_TRICK_BUFF                    = 24753,
+    SPELL_PIRATE_COSTUME_MALE           = 24708, 
+    SPELL_PIRATE_COSTUME_FEMALE         = 24709, 
+    SPELL_NINJA_COSTUME_MALE            = 24710, 
+    SPELL_NINJA_COSTUME_FEMALE          = 24711, 
+    SPELL_LEPER_GNOME_COSTUME_MALE      = 24712, 
+    SPELL_LEPER_GNOME_COSTUME_FEMALE    = 24713, 
+    SPELL_SKELETON_COSTUME              = 24723, 
+    SPELL_GHOST_COSTUME_MALE            = 24735, 
+    SPELL_GHOST_COSTUME_FEMALE          = 24736, 
+    SPELL_TRICK_BUFF                    = 24753, 
 };
 
 class spell_gen_trick : public SpellScriptLoader
@@ -387,8 +387,8 @@ public:
 // 24751 Trick or Treat
 enum eTrickOrTreatSpells
 {
-    SPELL_TRICK                 = 24714,
-    SPELL_TREAT                 = 24715,
+    SPELL_TRICK                 = 24714, 
+    SPELL_TREAT                 = 24715, 
     SPELL_TRICKED_OR_TREATED    = 24755
 };
 
@@ -462,8 +462,8 @@ class spell_creature_permanent_feign_death : public SpellScriptLoader
 
 enum PvPTrinketTriggeredSpells
 {
-    SPELL_WILL_OF_THE_FORSAKEN_COOLDOWN_TRIGGER         = 72752,
-    SPELL_WILL_OF_THE_FORSAKEN_COOLDOWN_TRIGGER_WOTF    = 72757,
+    SPELL_WILL_OF_THE_FORSAKEN_COOLDOWN_TRIGGER         = 72752, 
+    SPELL_WILL_OF_THE_FORSAKEN_COOLDOWN_TRIGGER_WOTF    = 72757, 
 };
 
 class spell_pvp_trinket_wotf_shared_cd : public SpellScriptLoader
@@ -513,8 +513,8 @@ public:
 
 enum AnimalBloodPoolSpell
 {
-    SPELL_ANIMAL_BLOOD      = 46221,
-    SPELL_SPAWN_BLOOD_POOL  = 63471,
+    SPELL_ANIMAL_BLOOD      = 46221, 
+    SPELL_SPAWN_BLOOD_POOL  = 63471, 
 };
 
 class spell_gen_animal_blood : public SpellScriptLoader
@@ -561,7 +561,7 @@ class spell_gen_animal_blood : public SpellScriptLoader
 
 enum DivineStormSpell
 {
-    SPELL_DIVINE_STORM  = 53385,
+    SPELL_DIVINE_STORM  = 53385, 
 };
 
 // 70769 Divine Storm!
@@ -616,7 +616,7 @@ public:
             if (Battleground *bg = caster->ToPlayer()->GetBattleground())
             {
                 if (bg->GetTypeID(true) == BATTLEGROUND_IC)
-                    bg->DoAction(1,caster->GetGUID());
+                    bg->DoAction(1, caster->GetGUID());
             }
         }
 
@@ -654,7 +654,7 @@ class spell_gen_parachute_ic : public SpellScriptLoader
                     return;
 
                 if (target->ToPlayer()->m_movementInfo.fallTime > 2000)
-                    target->CastSpell(target,SPELL_PARACHUTE_IC,true);               
+                    target->CastSpell(target, SPELL_PARACHUTE_IC, true);               
             }
 
             void Register()

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -207,7 +207,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1,SAY_SLAY2,SAY_SLAY3), me);
+            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
         }
 
         void JustDied(Unit * /*killer*/)
@@ -438,7 +438,7 @@ public:
                 pet = true;
                 //uint32 spell_id;
                 uint32 pet_id;
-                if (!urand(0,1))
+                if (!urand(0, 1))
                 {
                     //spell_id = SPELL_SUMMON_FATHOM_LURKER;
                     pet_id = CREATURE_FATHOM_LURKER;
@@ -449,8 +449,8 @@ public:
                     pet_id = CREATURE_FATHOM_SPOREBAT;
                 }
                 //DoCast(me, spell_id, true);
-                Creature *Pet = DoSpawnCreature(pet_id,0,0,0,0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
-                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                Creature *Pet = DoSpawnCreature(pet_id, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 if (Pet && pTarget)
                 {
                     Pet->AI()->AttackStart(pTarget);

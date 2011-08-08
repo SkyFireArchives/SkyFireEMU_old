@@ -146,7 +146,7 @@ EAIErrorLevel = 2
 #    SessionAddDelay
 #        Time in microseconds that a network thread will sleep after authentication
 #        protocol and adding a connection to the world session map.
-#        Default: 10000 (10 milliseconds, 0,01 second)
+#        Default: 10000 (10 milliseconds, 0, 01 second)
 #
 #    GridCleanUpDelay
 #        Grid clean up delay (in milliseconds)
@@ -182,14 +182,14 @@ EAIErrorLevel = 2
 #
 #    vmap.ignoreMapIds
 #        Map id that will be ignored by VMaps
-#         List of ids with delimiter ','
+#         List of ids with delimiter ', '
 #         If more then one id is defined and spaces are included, the string
 #         has to be enclosed by "
-#        Example: "369,0,1,530"
+#        Example: "369, 0, 1, 530"
 #
 #    vmap.ignoreSpellIds
 #        These spells are ignored for LoS calculation
-#         List of ids with delimiter ','
+#         List of ids with delimiter ', '
 #
 #    vmap.petLOS
 #        Check LOS for pets, to avoid them going through walls etc.
@@ -350,7 +350,7 @@ PersistentCharacterCleanFlags = 0
 #                   8 - Anything related to C++ AI, instance scripts, etc.
 #                  16 - Anything related to DB AI, such as SAI, EAI, CreatureAI
 #                  32 - Anything related to DB map scripts
-#                  64 - Anything related to network input/output,
+#                  64 - Anything related to network input/output, 
 #                        such as packet handlers and netcode logs
 #                 128 - Anything related to the spellsystem and aurasystem
 #                 256 - Anything related to the achievement system
@@ -361,7 +361,7 @@ PersistentCharacterCleanFlags = 0
 #                8192 - Anything related to outdoor PVP
 #               16384 - Anything related to the chat system
 #               32768 - Anything related to the LFG system
-#               65536 - Anything related to maps, instances (not scripts),
+#               65536 - Anything related to maps, instances (not scripts), 
 #                       grids, cells, visibility, etc.
 #              131072 - Anything related to player loading from DB
 #                      (Player::_LoadXXX functions)
@@ -691,7 +691,7 @@ ChatLogTimestamp = 0
 #                 3 basic latin characters + server timezone specific
 #
 #    StrictCharterNames
-#        Limit guild/arena team charter names to language specific symbol set,
+#        Limit guild/arena team charter names to language specific symbol set, 
 #          don't allow charter creation with unallowed symbols in name
 #        Default: 0 disable
 #                 1 basic latin characters  (strict)
@@ -933,7 +933,7 @@ ChatLogTimestamp = 0
 #         guild_bank_eventlog table
 #         Increase to store more guild_bank events in table - minimum is 25
 #         (GUILD_BANK_MAX_LOGS) for each guild_bank tab
-#         Useful when you don't want old log events to be overwritten by new,
+#         Useful when you don't want old log events to be overwritten by new, 
 #         but increasing can slow down performance
 #        Default: 25
 #
@@ -959,13 +959,13 @@ ChatLogTimestamp = 0
 #        Default: 3600 sec (1 hour)
 #
 #    SkillChance.Prospecting
-#        For prospecting skillup impossible by default,
+#        For prospecting skillup impossible by default, 
 #         but can be allowed as custom setting
 #        Default: 0 - no skilups
 #                 1 - skilups possible
 #
 #    SkillChance.Milling
-#        For milling skillup impossible by default,
+#        For milling skillup impossible by default, 
 #         but can be allowed as custom setting
 #        Default: 0 - no skilups
 #                 1 - skilups possible
@@ -1104,7 +1104,7 @@ GuildAdvancement.MaxLevel = 25
 #    AllowTwoSide.Interaction.Guild
 #    AllowTwoSide.Interaction.Auction
 #    AllowTwoSide.Interaction.Mail
-#        Allow or not common :chat(say,yell)
+#        Allow or not common :chat(say, yell)
 #                             channel(chat)
 #                             group(join)
 #                             guild(join)
@@ -1197,7 +1197,7 @@ TalentsInspecting = 1
 #        Default: 60, 300, 300, 300, 3600
 #
 #    Rate.Corpse.Decay.Looted
-#         Controls how long the creature corpse stays after it had been looted,
+#         Controls how long the creature corpse stays after it had been looted, 
 #          as a multiplier of its Corpse.Decay.* config.
 #         Default: 0.5
 #
@@ -1279,7 +1279,7 @@ ListenRange.Yell = 300
 #
 #    ChatFakeMessagePreventing
 #        Chat protection from creating fake messages using a lot spaces
-#         (other invisible symbols),
+#         (other invisible symbols), 
 #         not applied to addon language messages, but can cause old addons
 #         that use normal languages for sending data to another clients.
 #        Default: 0 (disible fake messages preventing)
@@ -1587,7 +1587,7 @@ Visibility.Notify.Period.InBGArenas   = 1000
 #    Rate.Auction.Deposit
 #    Rate.Auction.Cut
 #        Auction rates
-#         (auction time, deposit get at auction start,
+#         (auction time, deposit get at auction start, 
 #         auction cut from price at auction end)
 #
 #    Rate.Honor
@@ -1596,7 +1596,7 @@ Visibility.Notify.Period.InBGArenas   = 1000
 #    Rate.Mining.Amount
 #    Rate.Mining.Next
 #        Mining Rates
-#         Mining.Amount changes minimum/maximum use times of a deposit,
+#         Mining.Amount changes minimum/maximum use times of a deposit, 
 #         Mining.Next changes chance to have next use of a deposit
 #
 #    Rate.Talent
@@ -1634,7 +1634,7 @@ Visibility.Notify.Period.InBGArenas   = 1000
 #    SkillGain.Defense
 #    SkillGain.Gathering
 #    SkillGain.Weapon
-#        Crafting/defense/gathering/weapon skills gain at skill grow (1,2,...)
+#        Crafting/defense/gathering/weapon skills gain at skill grow (1, 2, ...)
 #        Default: 1
 #
 #    SkillChance.Orange
@@ -1820,7 +1820,7 @@ AutoBroadcast.Timer = 60000
 #
 #    Battleground.InvitationType
 #        Set Battleground invitation type
-#        Default: 0 (normal - invite as much players to bg as possible,
+#        Default: 0 (normal - invite as much players to bg as possible, 
 #                    don't bother with ballance)
 #                 1 (Experimental - don't allow to invite much more players
 #                    of one faction)
@@ -1866,14 +1866,14 @@ Battleground.Random.ResetHour = 6
 #                 0 (disable, rating difference is discarded)
 #
 #    Arena.RatingDiscardTimer
-#        After the specified milliseconds has passed,
+#        After the specified milliseconds has passed, 
 #         rating information will be discarded when selecting teams for
 #         matches also initiates an update by this timer
 #        Default: 600000 (10 minutes, recommended)
 #                 0 (disable)
 #
 #    Arena.AutoDistributePoints
-#        Set if arena points should be distributed automatically,
+#        Set if arena points should be distributed automatically, 
 #         or by GM command
 #        Default: 0 (disable) (recommended):
 #                    use gm command or sql query to distribute the points
@@ -1929,7 +1929,7 @@ Arena.ConquestPointsReward = 180
 # NETWORK CONFIG
 #
 #    Network.Threads
-#         Number of threads for network,
+#         Number of threads for network, 
 #          recommend 1 thread per 1000 connections.
 #         Default: 1
 #
@@ -1946,7 +1946,7 @@ Arena.ConquestPointsReward = 180
 #    Network.TcpNoDelay:
 #         TCP Nagle algorithm setting
 #         Default: 0 (enable Nagle algorithm, less traffic, more latency)
-#                  1 (TCP_NO_DELAY, disable Nagle algorithm,
+#                  1 (TCP_NO_DELAY, disable Nagle algorithm, 
 #                     more traffic but less latency)
 #
 ###############################################################################
@@ -1976,7 +1976,7 @@ Network.TcpNodelay = 1
 #        Default remote console port
 #
 #    Ra.MinLevel
-#        Minimum level that's required to login,3 by default
+#        Minimum level that's required to login, 3 by default
 #
 #    SOAP.Enable
 #        Enable soap service
@@ -2006,7 +2006,7 @@ SOAP.Port = 7878
 #    CharDelete.Method
 #        Character deletion behavior
 #        Default: 0  - Completely remove the character from the database
-#                 1  - Unlinking, the character gets unlinked from the account,
+#                 1  - Unlinking, the character gets unlinked from the account, 
 #                      the name gets freed up and appears as deleted ingame
 #
 #    CharDelete.MinLevel

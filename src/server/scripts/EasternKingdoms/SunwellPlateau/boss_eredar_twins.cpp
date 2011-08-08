@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,60 +34,60 @@ EndScriptData */
 enum Quotes
 {
     //Alytesh
-    YELL_CANFLAGRATION          =   -1580044,
-    YELL_SISTER_SACROLASH_DEAD  =   -1580045,
-    YELL_ALY_KILL_1             =   -1580046,
-    YELL_ALY_KILL_2             =   -1580047,
-    YELL_ALY_DEAD               =   -1580048,
-    YELL_BERSERK                =   -1580049,
+    YELL_CANFLAGRATION          =   -1580044, 
+    YELL_SISTER_SACROLASH_DEAD  =   -1580045, 
+    YELL_ALY_KILL_1             =   -1580046, 
+    YELL_ALY_KILL_2             =   -1580047, 
+    YELL_ALY_DEAD               =   -1580048, 
+    YELL_BERSERK                =   -1580049, 
 
     //Sacrolash
-    YELL_SHADOW_NOVA            =   -1580050,
-    YELL_SISTER_ALYTHESS_DEAD   =   -1580051,
-    YELL_SAC_KILL_1             =   -1580052,
-    YELL_SAC_KILL_2             =   -1580053,
-    SAY_SAC_DEAD                =   -1580054,
-    YELL_ENRAGE                 =   -1580055,
+    YELL_SHADOW_NOVA            =   -1580050, 
+    YELL_SISTER_ALYTHESS_DEAD   =   -1580051, 
+    YELL_SAC_KILL_1             =   -1580052, 
+    YELL_SAC_KILL_2             =   -1580053, 
+    SAY_SAC_DEAD                =   -1580054, 
+    YELL_ENRAGE                 =   -1580055, 
 
     //Intro
-    YELL_INTRO_SAC_1            =   -1580056,
-    YELL_INTRO_ALY_2            =   -1580057,
-    YELL_INTRO_SAC_3            =   -1580058,
-    YELL_INTRO_ALY_4            =   -1580059,
-    YELL_INTRO_SAC_5            =   -1580060,
-    YELL_INTRO_ALY_6            =   -1580061,
-    YELL_INTRO_SAC_7            =   -1580062,
-    YELL_INTRO_ALY_8            =   -1580063,
+    YELL_INTRO_SAC_1            =   -1580056, 
+    YELL_INTRO_ALY_2            =   -1580057, 
+    YELL_INTRO_SAC_3            =   -1580058, 
+    YELL_INTRO_ALY_4            =   -1580059, 
+    YELL_INTRO_SAC_5            =   -1580060, 
+    YELL_INTRO_ALY_6            =   -1580061, 
+    YELL_INTRO_SAC_7            =   -1580062, 
+    YELL_INTRO_ALY_8            =   -1580063, 
 
     //Emote
-    EMOTE_SHADOW_NOVA           =   -1580064,
+    EMOTE_SHADOW_NOVA           =   -1580064, 
     EMOTE_CONFLAGRATION         =   -1580065
 };
 
 enum Spells
 {
     //Lady Sacrolash spells
-    SPELL_DARK_TOUCHED      =   45347,
+    SPELL_DARK_TOUCHED      =   45347, 
     SPELL_SHADOW_BLADES     =   45248, //10 secs
-    SPELL_DARK_STRIKE       =   45271,
+    SPELL_DARK_STRIKE       =   45271, 
     SPELL_SHADOW_NOVA       =   45329, //30-35 secs
     SPELL_CONFOUNDING_BLOW  =   45256, //25 secs
 
     //Shadow Image spells
-    SPELL_SHADOW_FURY       =   45270,
-    SPELL_IMAGE_VISUAL      =   45263,
+    SPELL_SHADOW_FURY       =   45270, 
+    SPELL_IMAGE_VISUAL      =   45263, 
 
     //Misc spells
-    SPELL_ENRAGE            =   46587,
-    SPELL_EMPOWER           =   45366,
-    SPELL_DARK_FLAME        =   45345,
+    SPELL_ENRAGE            =   46587, 
+    SPELL_EMPOWER           =   45366, 
+    SPELL_DARK_FLAME        =   45345, 
 
     //Grand Warlock Alythess spells
     SPELL_PYROGENICS        =   45230, //15secs
-    SPELL_FLAME_TOUCHED     =   45348,
+    SPELL_FLAME_TOUCHED     =   45348, 
     SPELL_CONFLAGRATION     =   45342, //30-35 secs
     SPELL_BLAZE             =   45235, //on main target every 3 secs
-    SPELL_FLAME_SEAR        =   46771,
+    SPELL_FLAME_SEAR        =   46771, 
     SPELL_BLAZE_SUMMON      =   45236, //187366 GO
     SPELL_BLAZE_BURN        =   45246
 };
@@ -127,13 +127,13 @@ public:
 
             if (pInstance)
             {
-                Unit* Temp =  Unit::GetUnit((*me),pInstance->GetData64(DATA_ALYTHESS));
+                Unit* Temp =  Unit::GetUnit((*me), pInstance->GetData64(DATA_ALYTHESS));
                 if (Temp)
                 {
                     if (Temp->isDead())
                         CAST_CRE(Temp)->Respawn();
                     else if (Temp->getVictim())
-                        me->getThreatManager().addThreat(Temp->getVictim(),0.0f);
+                        me->getThreatManager().addThreat(Temp->getVictim(), 0.0f);
                 }
             }
 
@@ -159,7 +159,7 @@ public:
 
             if (pInstance)
             {
-                Unit* Temp =  Unit::GetUnit((*me),pInstance->GetData64(DATA_ALYTHESS));
+                Unit* Temp =  Unit::GetUnit((*me), pInstance->GetData64(DATA_ALYTHESS));
                 if (Temp && Temp->isAlive() && !(Temp->getVictim()))
                     CAST_CRE(Temp)->AI()->AttackStart(who);
             }
@@ -171,7 +171,7 @@ public:
         void KilledUnit(Unit * /*victim*/)
         {
             if (rand()%4 == 0)
-                DoScriptText(RAND(YELL_SAC_KILL_1,YELL_SAC_KILL_2), me);
+                DoScriptText(RAND(YELL_SAC_KILL_1, YELL_SAC_KILL_2), me);
         }
 
         void JustDied(Unit* /*Killer*/)
@@ -188,7 +188,7 @@ public:
                 me->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
         }
 
-        void SpellHitTarget(Unit *pTarget,const SpellEntry* spell)
+        void SpellHitTarget(Unit *pTarget, const SpellEntry* spell)
         {
             switch(spell->Id)
             {
@@ -238,7 +238,7 @@ public:
                 if (pInstance)
                 {
                     Unit* Temp = NULL;
-                    Temp = Unit::GetUnit((*me),pInstance->GetData64(DATA_ALYTHESS));
+                    Temp = Unit::GetUnit((*me), pInstance->GetData64(DATA_ALYTHESS));
                     if (Temp && Temp->isDead())
                     {
                         DoScriptText(YELL_SISTER_ALYTHESS_DEAD, me);
@@ -308,10 +308,10 @@ public:
                 for (uint8 i = 0; i<3; ++i)
                 {
                     pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
-                    temp = DoSpawnCreature(MOB_SHADOW_IMAGE,0,0,0,0,TEMPSUMMON_CORPSE_DESPAWN,10000);
+                    temp = DoSpawnCreature(MOB_SHADOW_IMAGE, 0, 0, 0, 0, TEMPSUMMON_CORPSE_DESPAWN, 10000);
                     if (temp && pTarget)
                     {
-                        temp->AddThreat(pTarget,1000000);//don't change target(healers)
+                        temp->AddThreat(pTarget, 1000000);//don't change target(healers)
                         temp->AI()->AttackStart(pTarget);
                     }
                 }
@@ -390,13 +390,13 @@ public:
 
             if (pInstance)
             {
-                Unit* Temp =  Unit::GetUnit((*me),pInstance->GetData64(DATA_SACROLASH));
+                Unit* Temp =  Unit::GetUnit((*me), pInstance->GetData64(DATA_SACROLASH));
                 if (Temp)
                 {
                     if (Temp->isDead())
                         CAST_CRE(Temp)->Respawn();
                     else if (Temp->getVictim())
-                        me->getThreatManager().addThreat(Temp->getVictim(),0.0f);
+                        me->getThreatManager().addThreat(Temp->getVictim(), 0.0f);
                 }
             }
 
@@ -423,7 +423,7 @@ public:
 
             if (pInstance)
             {
-                Unit* Temp =  Unit::GetUnit((*me),pInstance->GetData64(DATA_SACROLASH));
+                Unit* Temp =  Unit::GetUnit((*me), pInstance->GetData64(DATA_SACROLASH));
                 if (Temp && Temp->isAlive() && !(Temp->getVictim()))
                     CAST_CRE(Temp)->AI()->AttackStart(who);
             }
@@ -467,7 +467,7 @@ public:
         {
             if (rand()%4 == 0)
             {
-                DoScriptText(RAND(YELL_ALY_KILL_1,YELL_ALY_KILL_2), me);
+                DoScriptText(RAND(YELL_ALY_KILL_1, YELL_ALY_KILL_2), me);
             }
         }
 
@@ -484,7 +484,7 @@ public:
                 me->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
         }
 
-        void SpellHitTarget(Unit *pTarget,const SpellEntry* spell)
+        void SpellHitTarget(Unit *pTarget, const SpellEntry* spell)
         {
             switch(spell->Id)
             {
@@ -576,7 +576,7 @@ public:
                 if (pInstance)
                 {
                     Unit* Temp = NULL;
-                    Temp = Unit::GetUnit((*me),pInstance->GetData64(DATA_SACROLASH));
+                    Temp = Unit::GetUnit((*me), pInstance->GetData64(DATA_SACROLASH));
                     if (Temp && Temp->isDead())
                     {
                         DoScriptText(YELL_SISTER_SACROLASH_DEAD, me);
@@ -590,12 +590,12 @@ public:
             {
                 if (pInstance)
                 {
-                    Creature* sisiter = Unit::GetCreature((*me),pInstance->GetData64(DATA_SACROLASH));
+                    Creature* sisiter = Unit::GetCreature((*me), pInstance->GetData64(DATA_SACROLASH));
                     if (sisiter && !sisiter->isDead() && sisiter->getVictim())
                     {
-                        me->AddThreat(sisiter->getVictim(),0.0f);
+                        me->AddThreat(sisiter->getVictim(), 0.0f);
                         DoStartNoMovement(sisiter->getVictim());
-                        me->Attack(sisiter->getVictim(),false);
+                        me->Attack(sisiter->getVictim(), false);
                     }
                 }
             }
@@ -710,7 +710,7 @@ public:
 
         void EnterCombat(Unit * /*who*/){}
 
-        void SpellHitTarget(Unit *pTarget,const SpellEntry* spell)
+        void SpellHitTarget(Unit *pTarget, const SpellEntry* spell)
         {
             switch(spell->Id)
             {
@@ -723,7 +723,7 @@ public:
                     {
                         pTarget->RemoveAurasDueToSpell(SPELL_FLAME_TOUCHED);
                         pTarget->CastSpell(pTarget, SPELL_DARK_FLAME, true);
-                    } else pTarget->CastSpell(pTarget,SPELL_DARK_TOUCHED,true);
+                    } else pTarget->CastSpell(pTarget, SPELL_DARK_TOUCHED, true);
                 }
                 break;
             }

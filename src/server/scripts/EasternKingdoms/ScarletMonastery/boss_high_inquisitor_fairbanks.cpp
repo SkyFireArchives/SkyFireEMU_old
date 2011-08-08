@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,11 +33,11 @@ EndScriptData */
 
 enum eSpells
 {
-    SPELL_CURSEOFBLOOD              = 8282,
-    SPELL_DISPELMAGIC               = 15090,
-    SPELL_FEAR                      = 12096,
-    SPELL_HEAL                      = 12039,
-    SPELL_POWERWORDSHIELD           = 11647,
+    SPELL_CURSEOFBLOOD              = 8282, 
+    SPELL_DISPELMAGIC               = 15090, 
+    SPELL_FEAR                      = 12096, 
+    SPELL_HEAL                      = 12039, 
+    SPELL_POWERWORDSHIELD           = 11647, 
     SPELL_SLEEP                     = 8399
 };
 
@@ -93,7 +93,7 @@ public:
             //Fear_Timer
             if (Fear_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1))
                     DoCast(pTarget, SPELL_FEAR);
 
                 Fear_Timer = 40000;
@@ -102,7 +102,7 @@ public:
             //Sleep_Timer
             if (Sleep_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO,0))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 0))
                     DoCast(pTarget, SPELL_SLEEP);
 
                 Sleep_Timer = 30000;
@@ -118,7 +118,7 @@ public:
             //Dispel_Timer
             if (Dispel_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     DoCast(pTarget, SPELL_DISPELMAGIC);
 
                 DispelMagic_Timer = 30000;

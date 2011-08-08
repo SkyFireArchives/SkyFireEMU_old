@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -25,7 +25,7 @@
 /* ScriptData
 SDName: GO_Scripts
 SD%Complete: 100
-SDComment: Quest support: 4285,4287,4288(crystal pylons), 4296, 6481, 10990, 10991, 10992, Field_Repair_Bot->Teaches spell 22704. Barov_journal->Teaches spell 26089,12843,12982, 2936. Soulwell
+SDComment: Quest support: 4285, 4287, 4288(crystal pylons), 4296, 6481, 10990, 10991, 10992, Field_Repair_Bot->Teaches spell 22704. Barov_journal->Teaches spell 26089, 12843, 12982, 2936. Soulwell
 SDCategory: Game Objects
 EndScriptData */
 
@@ -63,7 +63,7 @@ EndContentData */
 
 enum eCatFigurine
 {
-    SPELL_SUMMON_GHOST_SABER    = 5968,
+    SPELL_SUMMON_GHOST_SABER    = 5968, 
 };
 
 class go_cat_figurine : public GameObjectScript
@@ -73,7 +73,7 @@ public:
 
     bool OnGossipHello(Player *pPlayer, GameObject * /*pGO*/)
     {
-        pPlayer->CastSpell(pPlayer,SPELL_SUMMON_GHOST_SABER,true);
+        pPlayer->CastSpell(pPlayer, SPELL_SUMMON_GHOST_SABER, true);
         return false;
     }
 };
@@ -154,7 +154,7 @@ public:
     {
         if (pPlayer->HasSkill(SKILL_TAILORING) && pPlayer->GetBaseSkillValue(SKILL_TAILORING) >= 280 && !pPlayer->HasSpell(26086))
         {
-            pPlayer->CastSpell(pPlayer,26095,false);
+            pPlayer->CastSpell(pPlayer, 26095, false);
         }
         return true;
     }
@@ -173,7 +173,7 @@ public:
     {
         if (pPlayer->HasSkill(SKILL_ENGINERING) && pPlayer->GetBaseSkillValue(SKILL_ENGINERING) >= 300 && !pPlayer->HasSpell(22704))
         {
-            pPlayer->CastSpell(pPlayer,22864,false);
+            pPlayer->CastSpell(pPlayer, 22864, false);
         }
         return true;
     }
@@ -185,7 +185,7 @@ public:
 
 enum eGildedBrazier
 {
-    NPC_STILLBLADE  = 17716,
+    NPC_STILLBLADE  = 17716, 
 };
 
 class go_gilded_brazier : public GameObjectScript
@@ -219,7 +219,7 @@ public:
     bool OnGossipHello(Player *pPlayer, GameObject * /*pGO*/)
     {
         if (pPlayer->GetQuestRewardStatus(7761))
-            pPlayer->CastSpell(pPlayer,23460,true);
+            pPlayer->CastSpell(pPlayer, 23460, true);
 
         return true;
     }
@@ -238,7 +238,7 @@ public:
     {
         if (pPlayer->HasSkill(SKILL_ALCHEMY) && pPlayer->GetSkillValue(SKILL_ALCHEMY) >= 300 && !pPlayer->HasSpell(24266))
         {
-            pPlayer->CastSpell(pPlayer,24267,false);
+            pPlayer->CastSpell(pPlayer, 24267, false);
         }
         return true;
     }
@@ -260,7 +260,7 @@ public:
             return true;
 
         if (pPlayer->GetQuestStatus(4296) == QUEST_STATUS_INCOMPLETE)
-            pPlayer->CastSpell(pPlayer,15065,false);
+            pPlayer->CastSpell(pPlayer, 15065, false);
 
         return true;
     }
@@ -278,7 +278,7 @@ public:
     bool OnGossipHello(Player *pPlayer, GameObject * /*pGO*/)
     {
         if (pPlayer->GetQuestStatus(10111) == QUEST_STATUS_INCOMPLETE)
-         pPlayer->CastSpell(pPlayer,33382,true);
+         pPlayer->CastSpell(pPlayer, 33382, true);
 
         return true;
     }
@@ -290,11 +290,11 @@ public:
 
 enum eEthereumPrison
 {
-    SPELL_REP_LC        = 39456,
-    SPELL_REP_SHAT      = 39457,
-    SPELL_REP_CE        = 39460,
-    SPELL_REP_CON       = 39474,
-    SPELL_REP_KT        = 39475,
+    SPELL_REP_LC        = 39456, 
+    SPELL_REP_SHAT      = 39457, 
+    SPELL_REP_CE        = 39460, 
+    SPELL_REP_CON       = 39474, 
+    SPELL_REP_KT        = 39475, 
     SPELL_REP_SPOR      = 39476
 };
 
@@ -313,8 +313,8 @@ public:
     {
         int Random = rand() % (sizeof(NpcPrisonEntry) / sizeof(uint32));
 
-        if (Creature* pCreature = pPlayer->SummonCreature(NpcPrisonEntry[Random],
-            pGO->GetPositionX(), pGO->GetPositionY(), pGO->GetPositionZ(), pGO->GetAngle(pPlayer),
+        if (Creature* pCreature = pPlayer->SummonCreature(NpcPrisonEntry[Random], 
+            pGO->GetPositionX(), pGO->GetPositionY(), pGO->GetPositionZ(), pGO->GetAngle(pPlayer), 
             TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000))
         {
             if (!pCreature->IsHostileTo(pPlayer))
@@ -363,8 +363,8 @@ public:
     {
         int Random = rand() % (sizeof(NpcStasisEntry) / sizeof(uint32));
 
-        pPlayer->SummonCreature(NpcStasisEntry[Random],
-            pGO->GetPositionX(), pGO->GetPositionY(), pGO->GetPositionZ(), pGO->GetAngle(pPlayer),
+        pPlayer->SummonCreature(NpcStasisEntry[Random], 
+            pGO->GetPositionX(), pGO->GetPositionY(), pGO->GetPositionZ(), pGO->GetAngle(pPlayer), 
             TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
 
         return false;
@@ -420,11 +420,11 @@ public:
 
 enum eShrineOfTheBirds
 {
-    NPC_HAWK_GUARD      = 22992,
-    NPC_EAGLE_GUARD     = 22993,
-    NPC_FALCON_GUARD    = 22994,
-    GO_SHRINE_HAWK      = 185551,
-    GO_SHRINE_EAGLE     = 185547,
+    NPC_HAWK_GUARD      = 22992, 
+    NPC_EAGLE_GUARD     = 22993, 
+    NPC_FALCON_GUARD    = 22994, 
+    GO_SHRINE_HAWK      = 185551, 
+    GO_SHRINE_EAGLE     = 185547, 
     GO_SHRINE_FALCON    = 185553
 };
 
@@ -466,7 +466,7 @@ public:
 
 enum eSouthfury
 {
-    NPC_RIZZLE                  = 23002,
+    NPC_RIZZLE                  = 23002, 
     SPELL_BLACKJACK             = 39865, //stuns player
     SPELL_SUMMON_RIZZLE         = 39866
 };
@@ -479,10 +479,10 @@ public:
     bool OnGossipHello(Player *pPlayer, GameObject * /*pGO*/)
     {
         //implicitTarget=48 not implemented as of writing this code, and manual summon may be just ok for our purpose
-        //pPlayer->CastSpell(pPlayer,SPELL_SUMMON_RIZZLE,false);
+        //pPlayer->CastSpell(pPlayer, SPELL_SUMMON_RIZZLE, false);
 
         if (Creature* pCreature = pPlayer->SummonCreature(NPC_RIZZLE, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0))
-            pCreature->CastSpell(pPlayer,SPELL_BLACKJACK,false);
+            pCreature->CastSpell(pPlayer, SPELL_BLACKJACK, false);
 
         return false;
     }
@@ -494,7 +494,7 @@ public:
 
 enum eDalaranCrystal
 {
-    QUEST_LEARN_LEAVE_RETURN    = 12790,
+    QUEST_LEARN_LEAVE_RETURN    = 12790, 
     QUEST_TELE_CRYSTAL_FLAG     = 12845
 };
 
@@ -547,8 +547,8 @@ public:
 
 enum eFelCrystalforge
 {
-    SPELL_CREATE_1_FLASK_OF_BEAST   = 40964,
-    SPELL_CREATE_5_FLASK_OF_BEAST   = 40965,
+    SPELL_CREATE_1_FLASK_OF_BEAST   = 40964, 
+    SPELL_CREATE_5_FLASK_OF_BEAST   = 40965, 
 };
 
 class go_fel_crystalforge : public GameObjectScript
@@ -575,12 +575,12 @@ public:
         switch(uiAction)
         {
             case GOSSIP_ACTION_INFO_DEF:
-                pPlayer->CastSpell(pPlayer,SPELL_CREATE_1_FLASK_OF_BEAST,false);
+                pPlayer->CastSpell(pPlayer, SPELL_CREATE_1_FLASK_OF_BEAST, false);
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FEL_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
                 pPlayer->SEND_GOSSIP_MENU(GOSSIP_FEL_CRYSTALFORGE_ITEM_TEXT_RETURN, pGO->GetGUID());
                 break;
             case GOSSIP_ACTION_INFO_DEF + 1:
-                pPlayer->CastSpell(pPlayer,SPELL_CREATE_5_FLASK_OF_BEAST,false);
+                pPlayer->CastSpell(pPlayer, SPELL_CREATE_5_FLASK_OF_BEAST, false);
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FEL_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
                 pPlayer->SEND_GOSSIP_MENU(GOSSIP_FEL_CRYSTALFORGE_ITEM_TEXT_RETURN, pGO->GetGUID());
                 break;
@@ -606,8 +606,8 @@ public:
 
 enum eBashirCrystalforge
 {
-    SPELL_CREATE_1_FLASK_OF_SORCERER   = 40968,
-    SPELL_CREATE_5_FLASK_OF_SORCERER   = 40970,
+    SPELL_CREATE_1_FLASK_OF_SORCERER   = 40968, 
+    SPELL_CREATE_5_FLASK_OF_SORCERER   = 40970, 
 };
 
 class go_bashir_crystalforge : public GameObjectScript
@@ -634,12 +634,12 @@ public:
         switch(uiAction)
         {
             case GOSSIP_ACTION_INFO_DEF:
-                pPlayer->CastSpell(pPlayer,SPELL_CREATE_1_FLASK_OF_SORCERER,false);
+                pPlayer->CastSpell(pPlayer, SPELL_CREATE_1_FLASK_OF_SORCERER, false);
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BASHIR_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
                 pPlayer->SEND_GOSSIP_MENU(GOSSIP_BASHIR_CRYSTALFORGE_ITEM_TEXT_RETURN, pGO->GetGUID());
                 break;
             case GOSSIP_ACTION_INFO_DEF + 1:
-                pPlayer->CastSpell(pPlayer,SPELL_CREATE_5_FLASK_OF_SORCERER,false);
+                pPlayer->CastSpell(pPlayer, SPELL_CREATE_5_FLASK_OF_SORCERER, false);
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BASHIR_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
                 pPlayer->SEND_GOSSIP_MENU(GOSSIP_BASHIR_CRYSTALFORGE_ITEM_TEXT_RETURN, pGO->GetGUID());
                 break;
@@ -659,19 +659,19 @@ public:
 
 enum eMatrixPunchograph
 {
-    ITEM_WHITE_PUNCH_CARD = 9279,
-    ITEM_YELLOW_PUNCH_CARD = 9280,
-    ITEM_BLUE_PUNCH_CARD = 9282,
-    ITEM_RED_PUNCH_CARD = 9281,
-    ITEM_PRISMATIC_PUNCH_CARD = 9316,
-    SPELL_YELLOW_PUNCH_CARD = 11512,
-    SPELL_BLUE_PUNCH_CARD = 11525,
-    SPELL_RED_PUNCH_CARD = 11528,
-    SPELL_PRISMATIC_PUNCH_CARD = 11545,
-    MATRIX_PUNCHOGRAPH_3005_A = 142345,
-    MATRIX_PUNCHOGRAPH_3005_B = 142475,
-    MATRIX_PUNCHOGRAPH_3005_C = 142476,
-    MATRIX_PUNCHOGRAPH_3005_D = 142696,
+    ITEM_WHITE_PUNCH_CARD = 9279, 
+    ITEM_YELLOW_PUNCH_CARD = 9280, 
+    ITEM_BLUE_PUNCH_CARD = 9282, 
+    ITEM_RED_PUNCH_CARD = 9281, 
+    ITEM_PRISMATIC_PUNCH_CARD = 9316, 
+    SPELL_YELLOW_PUNCH_CARD = 11512, 
+    SPELL_BLUE_PUNCH_CARD = 11525, 
+    SPELL_RED_PUNCH_CARD = 11528, 
+    SPELL_PRISMATIC_PUNCH_CARD = 11545, 
+    MATRIX_PUNCHOGRAPH_3005_A = 142345, 
+    MATRIX_PUNCHOGRAPH_3005_B = 142475, 
+    MATRIX_PUNCHOGRAPH_3005_C = 142476, 
+    MATRIX_PUNCHOGRAPH_3005_D = 142696, 
 };
 
 class go_matrix_punchograph : public GameObjectScript
@@ -687,21 +687,21 @@ public:
                 if (pPlayer->HasItemCount(ITEM_WHITE_PUNCH_CARD, 1))
                 {
                     pPlayer->DestroyItemCount(ITEM_WHITE_PUNCH_CARD, 1, true);
-                    pPlayer->CastSpell(pPlayer,SPELL_YELLOW_PUNCH_CARD,true);
+                    pPlayer->CastSpell(pPlayer, SPELL_YELLOW_PUNCH_CARD, true);
                 }
                 break;
             case MATRIX_PUNCHOGRAPH_3005_B:
                 if (pPlayer->HasItemCount(ITEM_YELLOW_PUNCH_CARD, 1))
                 {
                     pPlayer->DestroyItemCount(ITEM_YELLOW_PUNCH_CARD, 1, true);
-                    pPlayer->CastSpell(pPlayer,SPELL_BLUE_PUNCH_CARD,true);
+                    pPlayer->CastSpell(pPlayer, SPELL_BLUE_PUNCH_CARD, true);
                 }
                 break;
             case MATRIX_PUNCHOGRAPH_3005_C:
                 if (pPlayer->HasItemCount(ITEM_BLUE_PUNCH_CARD, 1))
                 {
                     pPlayer->DestroyItemCount(ITEM_BLUE_PUNCH_CARD, 1, true);
-                    pPlayer->CastSpell(pPlayer,SPELL_RED_PUNCH_CARD,true);
+                    pPlayer->CastSpell(pPlayer, SPELL_RED_PUNCH_CARD, true);
                 }
                 break;
             case MATRIX_PUNCHOGRAPH_3005_D:
@@ -778,7 +778,7 @@ public:
 
 enum eArcanePrison
 {
-    QUEST_PRISON_BREAK                  = 11587,
+    QUEST_PRISON_BREAK                  = 11587, 
     SPELL_ARCANE_PRISONER_KILL_CREDIT   = 45456
 };
 
@@ -825,14 +825,14 @@ public:
 
 enum eJotunheimCage
 {
-    NPC_EBON_BLADE_PRISONER_HUMAN   = 30186,
-    NPC_EBON_BLADE_PRISONER_NE      = 30194,
-    NPC_EBON_BLADE_PRISONER_TROLL   = 30196,
-    NPC_EBON_BLADE_PRISONER_ORC     = 30195,
+    NPC_EBON_BLADE_PRISONER_HUMAN   = 30186, 
+    NPC_EBON_BLADE_PRISONER_NE      = 30194, 
+    NPC_EBON_BLADE_PRISONER_TROLL   = 30196, 
+    NPC_EBON_BLADE_PRISONER_ORC     = 30195, 
 
-    SPELL_SUMMON_BLADE_KNIGHT_H     = 56207,
-    SPELL_SUMMON_BLADE_KNIGHT_NE    = 56209,
-    SPELL_SUMMON_BLADE_KNIGHT_ORC   = 56212,
+    SPELL_SUMMON_BLADE_KNIGHT_H     = 56207, 
+    SPELL_SUMMON_BLADE_KNIGHT_NE    = 56209, 
+    SPELL_SUMMON_BLADE_KNIGHT_ORC   = 56212, 
     SPELL_SUMMON_BLADE_KNIGHT_TROLL = 56214
 };
 
@@ -862,16 +862,16 @@ public:
         switch(pPrisoner->GetEntry())
         {
             case NPC_EBON_BLADE_PRISONER_HUMAN:
-                pPlayer->CastSpell(pPlayer,SPELL_SUMMON_BLADE_KNIGHT_H,true);
+                pPlayer->CastSpell(pPlayer, SPELL_SUMMON_BLADE_KNIGHT_H, true);
                 break;
             case NPC_EBON_BLADE_PRISONER_NE:
-                pPlayer->CastSpell(pPlayer,SPELL_SUMMON_BLADE_KNIGHT_NE,true);
+                pPlayer->CastSpell(pPlayer, SPELL_SUMMON_BLADE_KNIGHT_NE, true);
                 break;
             case NPC_EBON_BLADE_PRISONER_TROLL:
-                pPlayer->CastSpell(pPlayer,SPELL_SUMMON_BLADE_KNIGHT_TROLL,true);
+                pPlayer->CastSpell(pPlayer, SPELL_SUMMON_BLADE_KNIGHT_TROLL, true);
                 break;
             case NPC_EBON_BLADE_PRISONER_ORC:
-                pPlayer->CastSpell(pPlayer,SPELL_SUMMON_BLADE_KNIGHT_ORC,true);
+                pPlayer->CastSpell(pPlayer, SPELL_SUMMON_BLADE_KNIGHT_ORC, true);
                 break;
         }
         return true;
@@ -880,7 +880,7 @@ public:
 
 enum eTableTheka
 {
-    GOSSIP_TABLE_THEKA = 1653,
+    GOSSIP_TABLE_THEKA = 1653, 
 
     QUEST_SPIDER_GOLD = 2936
 };
@@ -907,8 +907,8 @@ public:
 
 enum eInconspicuousLandmark
 {
-    SPELL_SUMMON_PIRATES_TREASURE_AND_TRIGGER_MOB    = 11462,
-    ITEM_CUERGOS_KEY                                 = 9275,
+    SPELL_SUMMON_PIRATES_TREASURE_AND_TRIGGER_MOB    = 11462, 
+    ITEM_CUERGOS_KEY                                 = 9275, 
 };
 
 class go_inconspicuous_landmark : public GameObjectScript
@@ -918,10 +918,10 @@ public:
 
     bool OnGossipHello(Player *pPlayer, GameObject* /*pGO*/)
     {
-        if (pPlayer->HasItemCount(ITEM_CUERGOS_KEY,1))
+        if (pPlayer->HasItemCount(ITEM_CUERGOS_KEY, 1))
             return false;
 
-        pPlayer->CastSpell(pPlayer,SPELL_SUMMON_PIRATES_TREASURE_AND_TRIGGER_MOB,true);
+        pPlayer->CastSpell(pPlayer, SPELL_SUMMON_PIRATES_TREASURE_AND_TRIGGER_MOB, true);
 
         return true;
     }
@@ -979,10 +979,10 @@ public:
 
 enum ePrisonersOfWyrmskull
 {
-    QUEST_PRISONERS_OF_WYRMSKULL                  = 11255,
-    NPC_PRISONER_PRIEST                           = 24086,
-    NPC_PRISONER_MAGE                             = 24088,
-    NPC_PRISONER_WARRIOR                          = 24089,
+    QUEST_PRISONERS_OF_WYRMSKULL                  = 11255, 
+    NPC_PRISONER_PRIEST                           = 24086, 
+    NPC_PRISONER_MAGE                             = 24088, 
+    NPC_PRISONER_WARRIOR                          = 24089, 
     NPC_PRISONER_PALADIN                          = 24090
 };
 
@@ -1015,7 +1015,7 @@ public:
         if (qInfo)
         {
             //TODO: prisoner should help player for a short period of time
-            pPlayer->KilledMonsterCredit(qInfo->ReqCreatureOrGOId[0],0);
+            pPlayer->KilledMonsterCredit(qInfo->ReqCreatureOrGOId[0], 0);
             pPrisoner->DisappearAndDie();
         }
         return true;
@@ -1029,7 +1029,7 @@ public:
 
 enum eTadpoles
 {
-    QUEST_OH_NOES_THE_TADPOLES                    = 11560,
+    QUEST_OH_NOES_THE_TADPOLES                    = 11560, 
     NPC_WINTERFIN_TADPOLE                         = 25201
 };
 
@@ -1042,12 +1042,12 @@ public:
     {
         if (pPlayer->GetQuestStatus(QUEST_OH_NOES_THE_TADPOLES) == QUEST_STATUS_INCOMPLETE)
         {
-            Creature *pTadpole = pGO->FindNearestCreature(NPC_WINTERFIN_TADPOLE,1.0f);
+            Creature *pTadpole = pGO->FindNearestCreature(NPC_WINTERFIN_TADPOLE, 1.0f);
             if (pTadpole)
             {
                 pGO->UseDoorOrButton();
                 pTadpole->DisappearAndDie();
-                pPlayer->KilledMonsterCredit(NPC_WINTERFIN_TADPOLE,0);
+                pPlayer->KilledMonsterCredit(NPC_WINTERFIN_TADPOLE, 0);
                 //FIX: Summon minion tadpole
             }
         }
@@ -1062,9 +1062,9 @@ public:
 
 enum eReallyDoneItThisTime
 {
-    QUEST_ALLIANCE_YOU_VE_REALLY_DONE_IT_THIS_TIME_KUL      = 14096,
-    QUEST_HORDE_YOU_VE_REALLY_DONE_IT_THIS_TIME_KUL         = 14142,
-    NPC_CAPTIVE_ASPIRANT                                    = 34716,
+    QUEST_ALLIANCE_YOU_VE_REALLY_DONE_IT_THIS_TIME_KUL      = 14096, 
+    QUEST_HORDE_YOU_VE_REALLY_DONE_IT_THIS_TIME_KUL         = 14142, 
+    NPC_CAPTIVE_ASPIRANT                                    = 34716, 
     NPC_KUL                                                 = 34956
 };
 
@@ -1078,14 +1078,14 @@ public:
         if ((pPlayer->GetTeamId() == TEAM_ALLIANCE && pPlayer->GetQuestStatus(QUEST_ALLIANCE_YOU_VE_REALLY_DONE_IT_THIS_TIME_KUL) == QUEST_STATUS_INCOMPLETE) ||
             (pPlayer->GetTeamId() == TEAM_HORDE && pPlayer->GetQuestStatus(QUEST_HORDE_YOU_VE_REALLY_DONE_IT_THIS_TIME_KUL) == QUEST_STATUS_INCOMPLETE))
         {
-            Creature *pPrisoner = pGO->FindNearestCreature(NPC_CAPTIVE_ASPIRANT,1.0f);
+            Creature *pPrisoner = pGO->FindNearestCreature(NPC_CAPTIVE_ASPIRANT, 1.0f);
             if (!pPrisoner)
-                pPrisoner = pGO->FindNearestCreature(NPC_KUL,1.0f);
+                pPrisoner = pGO->FindNearestCreature(NPC_KUL, 1.0f);
             if (pPrisoner)
             {
                 pGO->UseDoorOrButton();
                 pPrisoner->DisappearAndDie();
-                pPlayer->KilledMonsterCredit(pPrisoner->GetEntry(),0);
+                pPlayer->KilledMonsterCredit(pPrisoner->GetEntry(), 0);
             }
         }
         return true;
@@ -1101,13 +1101,13 @@ public:
 
 enum eAmberpineOuthouse
 {
-    ITEM_ANDERHOLS_SLIDER_CIDER     = 37247,
-    NPC_OUTHOUSE_BUNNY              = 27326,
-    QUEST_DOING_YOUR_DUTY           = 12227,
-    SPELL_INDISPOSED                = 53017,
-    SPELL_INDISPOSED_III            = 48341,
-    SPELL_CREATE_AMBERSEEDS         = 48330,
-    GOSSIP_OUTHOUSE_INUSE           = 12775,
+    ITEM_ANDERHOLS_SLIDER_CIDER     = 37247, 
+    NPC_OUTHOUSE_BUNNY              = 27326, 
+    QUEST_DOING_YOUR_DUTY           = 12227, 
+    SPELL_INDISPOSED                = 53017, 
+    SPELL_INDISPOSED_III            = 48341, 
+    SPELL_CREATE_AMBERSEEDS         = 48330, 
+    GOSSIP_OUTHOUSE_INUSE           = 12775, 
     GOSSIP_OUTHOUSE_VACANT          = 12779
 };
 
@@ -1139,11 +1139,11 @@ public:
             Creature* pTarget = GetClosestCreatureWithEntry(pPlayer, NPC_OUTHOUSE_BUNNY, 3.0f);
             if (pTarget)
             {
-                pTarget->AI()->SetData(1,pPlayer->getGender());
+                pTarget->AI()->SetData(1, pPlayer->getGender());
                 pGO->CastSpell(pTarget, SPELL_INDISPOSED_III);
             }
             pGO->CastSpell(pPlayer, SPELL_INDISPOSED);
-            if (pPlayer->HasItemCount(ITEM_ANDERHOLS_SLIDER_CIDER,1))
+            if (pPlayer->HasItemCount(ITEM_ANDERHOLS_SLIDER_CIDER, 1))
                 pGO->CastSpell(pPlayer, SPELL_CREATE_AMBERSEEDS);
             return true;
         }
@@ -1162,7 +1162,7 @@ public:
 
 enum eHives
 {
-    QUEST_HIVE_IN_THE_TOWER                       = 9544,
+    QUEST_HIVE_IN_THE_TOWER                       = 9544, 
     NPC_HIVE_AMBUSHER                             = 13301
 };
 
@@ -1174,8 +1174,8 @@ public:
     bool OnGossipHello(Player *pPlayer, GameObject *pGO)
     {
         pPlayer->SendLoot(pGO->GetGUID(), LOOT_CORPSE);
-        pGO->SummonCreature(NPC_HIVE_AMBUSHER,pGO->GetPositionX()+1,pGO->GetPositionY(),pGO->GetPositionZ(),pGO->GetAngle(pPlayer),TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
-        pGO->SummonCreature(NPC_HIVE_AMBUSHER,pGO->GetPositionX(),pGO->GetPositionY()+1,pGO->GetPositionZ(),pGO->GetAngle(pPlayer),TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
+        pGO->SummonCreature(NPC_HIVE_AMBUSHER, pGO->GetPositionX()+1, pGO->GetPositionY(), pGO->GetPositionZ(), pGO->GetAngle(pPlayer), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
+        pGO->SummonCreature(NPC_HIVE_AMBUSHER, pGO->GetPositionX(), pGO->GetPositionY()+1, pGO->GetPositionZ(), pGO->GetAngle(pPlayer), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
         return true;
     }
 };

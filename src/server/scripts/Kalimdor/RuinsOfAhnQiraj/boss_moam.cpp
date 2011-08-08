@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,15 +34,15 @@ EndScriptData */
 
 enum Emotes
 {
-    EMOTE_AGGRO             = -1509000,
+    EMOTE_AGGRO             = -1509000, 
     EMOTE_MANA_FULL         = -1509001
 };
 
 enum Spells
 {
-    SPELL_TRAMPLE           = 15550,
+    SPELL_TRAMPLE           = 15550, 
     SPELL_DRAINMANA         = 27256,    //Doesn't exist ?
-    SPELL_ARCANEERUPTION    = 25672,
+    SPELL_ARCANEERUPTION    = 25672, 
     SPELL_SUMMONMANA        = 25681,    //Summon Mana fiend. It only summons one so exec it three times
     SPELL_GRDRSLEEP         = 24360     //Greater Dreamless Sleep
 };
@@ -54,7 +54,7 @@ enum Creatures
 
 enum CombatPhase
 {
-    NORMAL,
+    NORMAL, 
     STONE
 };
 
@@ -84,11 +84,11 @@ public:
 
         void Reset()
         {
-            uiTrampleTimer = urand(3000,7000);
-            uiDrainManaTimer = urand(3000,7000);
+            uiTrampleTimer = urand(3000, 7000);
+            uiDrainManaTimer = urand(3000, 7000);
             uiPhaseTimer = 90000;
             Phase = NORMAL;
-            me->SetPower(POWER_MANA,0);
+            me->SetPower(POWER_MANA, 0);
 
             if (pInstance)
                 pInstance->SetData(DATA_MOAM_EVENT, NOT_STARTED);
@@ -132,21 +132,21 @@ public:
                 {
                     DoCast(me->getVictim(), SPELL_ARCANEERUPTION);
                     DoScriptText(EMOTE_MANA_FULL, me);
-                    me->SetPower(POWER_MANA,0);
+                    me->SetPower(POWER_MANA, 0);
                 }
 
                 //Trample Spell
                 if (uiTrampleTimer <= diff)
                 {
                     DoCast(me->getVictim(), SPELL_TRAMPLE);
-                    uiTrampleTimer = urand(3000,7000);
+                    uiTrampleTimer = urand(3000, 7000);
                 } else uiTrampleTimer -= diff;
 
                 //Drain Mana
                 if (uiDrainManaTimer <= diff)
                 {
                     DrainMana();
-                    uiDrainManaTimer = urand(3000,7000);
+                    uiDrainManaTimer = urand(3000, 7000);
                 } else uiDrainManaTimer -= diff;
 
                 DoMeleeAttackIfReady();

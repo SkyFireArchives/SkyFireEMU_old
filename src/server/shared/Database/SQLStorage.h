@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -55,9 +55,9 @@ class SQLStorage
         template<class T>
             T const* LookupEntry(uint32 id) const
         {
-            if( id == 0 )
+            if ( id == 0 )
                 return NULL;
-            if(id >= MaxEntry)
+            if (id >= MaxEntry)
                 return NULL;
             return reinterpret_cast<T const*>(pIndex[id]);
         }

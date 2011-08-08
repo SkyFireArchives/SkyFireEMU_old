@@ -41,7 +41,7 @@ void ExtractDBCFiles(int locale, bool basicLocale)
         while(pFileEntry < pFileTableEnd)
         {
             // Only take existing files
-            if( pFileEntry->dwFlags & MPQ_FILE_EXISTS && 
+            if ( pFileEntry->dwFlags & MPQ_FILE_EXISTS && 
 			   (pFileEntry->dwFlags & MPQ_FILE_PATCH_FILE) == 0 && 
 			   (pFileEntry->dwFlags & MPQ_FILE_DELETE_MARKER) == 0 && 
 			   pFileEntry->szFileName != NULL)
@@ -49,7 +49,7 @@ void ExtractDBCFiles(int locale, bool basicLocale)
                 std::string name = pFileEntry->szFileName;
                 if (i != 0)
                 {
-                    if(name.find(langs[locale]) == 0)
+                    if (name.find(langs[locale]) == 0)
                         name = name.substr(strlen(langs[locale]) + 1);
                     else
                     {
@@ -62,18 +62,18 @@ void ExtractDBCFiles(int locale, bool basicLocale)
 					name.rfind(".db2") == name.length() - strlen(".db2"))
                 {
                     //Verify if this dbc isn't in the list yet. StormLibs return some extra dbcs :P
-                    if(i != 0)
+                    if (i != 0)
                     {
                         bool alreadyExist = false;
                         for(std::set<std::pair<int, std::string> >::iterator itr = dbcfiles.begin(); itr != dbcfiles.end(); itr++)
                         {
-                            if(itr->second == name)
+                            if (itr->second == name)
                             {
                                 alreadyExist = true;
                                 break;
                             }
                         }
-                        if(alreadyExist)
+                        if (alreadyExist)
                         {
                             pFileEntry++;
                             continue;
@@ -91,7 +91,7 @@ void ExtractDBCFiles(int locale, bool basicLocale)
     printf("Found %i dbc files\n", foundCount);
 	
     std::string path = "./dbc/";
-    if(!basicLocale)
+    if (!basicLocale)
     {
         path += langs[locale];
         path += "/";
@@ -105,7 +105,7 @@ void ExtractDBCFiles(int locale, bool basicLocale)
         std::string filename = path;
         filename += (iter->second.c_str() + strlen("DBFilesClient\\"));
 		
-        if(ExtractFileToHardDrive(localeMPQ[iter->first], iter->second.c_str(), filename.c_str()) == ERROR_SUCCESS)
+        if (ExtractFileToHardDrive(localeMPQ[iter->first], iter->second.c_str(), filename.c_str()) == ERROR_SUCCESS)
             ++count;
         else
         {
@@ -120,7 +120,7 @@ uint32 ReadMapDBC()
     printf("Read Map.dbc file... ");
     DBCFile dbc("DBFilesClient\\Map.dbc");
     
-    if(!dbc.open())
+    if (!dbc.open())
     {
         printf("Fatal error: Invalid Map.dbc file format!\n");
         exit(1);
@@ -142,7 +142,7 @@ void ReadAreaTableDBC()
     printf("Read AreaTable.dbc file...");
     DBCFile dbc("DBFilesClient\\AreaTable.dbc");
     
-    if(!dbc.open())
+    if (!dbc.open())
     {
         printf("Fatal error: Invalid AreaTable.dbc file format!\n");
         assert(false);
@@ -165,7 +165,7 @@ void ReadLiquidTypeTableDBC()
 {
     printf("Read LiquidType.dbc file...");
     DBCFile dbc("DBFilesClient\\LiquidType.dbc");
-    if(!dbc.open())
+    if (!dbc.open())
     {
         printf("Fatal error: Invalid LiquidType.dbc file format!\n");
         exit(1);

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -48,30 +48,30 @@ enum Yells
     //List of text id's. The text is stored in database, also in a localized version
     //(if translation not exist for the textId, default english text will be used)
     //Not required to define in this way, but simplify if changes are needed.
-    SAY_AGGRO                                   = -1999900,
-    SAY_RANDOM_0                                = -1999901,
-    SAY_RANDOM_1                                = -1999902,
-    SAY_RANDOM_2                                = -1999903,
-    SAY_RANDOM_3                                = -1999904,
-    SAY_RANDOM_4                                = -1999905,
-    SAY_BERSERK                                 = -1999906,
-    SAY_PHASE                                   = -1999907,
-    SAY_DANCE                                   = -1999908,
-    SAY_SALUTE                                  = -1999909,
-    SAY_EVADE                                   = -1999910,
+    SAY_AGGRO                                   = -1999900, 
+    SAY_RANDOM_0                                = -1999901, 
+    SAY_RANDOM_1                                = -1999902, 
+    SAY_RANDOM_2                                = -1999903, 
+    SAY_RANDOM_3                                = -1999904, 
+    SAY_RANDOM_4                                = -1999905, 
+    SAY_BERSERK                                 = -1999906, 
+    SAY_PHASE                                   = -1999907, 
+    SAY_DANCE                                   = -1999908, 
+    SAY_SALUTE                                  = -1999909, 
+    SAY_EVADE                                   = -1999910, 
 };
 
 enum Spells
 {
     // List of spells.
     // Not required to define them in this way, but will make it easier to maintain in case spellId change
-    SPELL_BUFF                                  = 25661,
-    SPELL_ONE                                   = 12555,
-    SPELL_ONE_ALT                               = 24099,
-    SPELL_TWO                                   = 10017,
-    SPELL_THREE                                 = 26027,
-    SPELL_FRENZY                                = 23537,
-    SPELL_BERSERK                               = 32965,
+    SPELL_BUFF                                  = 25661, 
+    SPELL_ONE                                   = 12555, 
+    SPELL_ONE_ALT                               = 24099, 
+    SPELL_TWO                                   = 10017, 
+    SPELL_THREE                                 = 26027, 
+    SPELL_FRENZY                                = 23537, 
+    SPELL_BERSERK                               = 32965, 
 };
 
 enum eEnums
@@ -118,7 +118,7 @@ class example_creature : public CreatureScript
                 m_uiPhase = 1;                                      // Start in phase 1
                 m_uiPhaseTimer = 60000;                             // 60 seconds
                 m_uiSpell1Timer = 5000;                             //  5 seconds
-                m_uiSpell2Timer = urand(10000,20000);               // between 10 and 20 seconds
+                m_uiSpell2Timer = urand(10000, 20000);               // between 10 and 20 seconds
                 m_uiSpell3Timer = 19000;                            // 19 seconds
                 m_uiBeserkTimer = 120000;                           //  2 minutes
 
@@ -176,7 +176,7 @@ class example_creature : public CreatureScript
                     if (m_uiSayTimer <= uiDiff)
                     {
                         //Random switch between 5 outcomes
-                        DoScriptText(RAND(SAY_RANDOM_0,SAY_RANDOM_1,SAY_RANDOM_2,SAY_RANDOM_3,SAY_RANDOM_4), me);
+                        DoScriptText(RAND(SAY_RANDOM_0, SAY_RANDOM_1, SAY_RANDOM_2, SAY_RANDOM_3, SAY_RANDOM_4), me);
 
                         m_uiSayTimer = 45000;                      //Say something agian in 45 seconds
                     }

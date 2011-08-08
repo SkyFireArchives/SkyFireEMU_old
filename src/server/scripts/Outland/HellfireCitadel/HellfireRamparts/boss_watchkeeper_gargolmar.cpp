@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,23 +33,23 @@ EndScriptData */
 
 enum eSays
 {
-    SAY_TAUNT              = -1543000,
-    SAY_HEAL               = -1543001,
-    SAY_SURGE              = -1543002,
-    SAY_AGGRO_1            = -1543003,
-    SAY_AGGRO_2            = -1543004,
-    SAY_AGGRO_3            = -1543005,
-    SAY_KILL_1             = -1543006,
-    SAY_KILL_2             = -1543007,
-    SAY_DIE                = -1543008,
+    SAY_TAUNT              = -1543000, 
+    SAY_HEAL               = -1543001, 
+    SAY_SURGE              = -1543002, 
+    SAY_AGGRO_1            = -1543003, 
+    SAY_AGGRO_2            = -1543004, 
+    SAY_AGGRO_3            = -1543005, 
+    SAY_KILL_1             = -1543006, 
+    SAY_KILL_2             = -1543007, 
+    SAY_DIE                = -1543008, 
 };
 
 enum eSpells
 {
-    SPELL_MORTAL_WOUND     = 30641,
-    H_SPELL_MORTAL_WOUND   = 36814,
-    SPELL_SURGE            = 34645,
-    SPELL_RETALIATION      = 22857,
+    SPELL_MORTAL_WOUND     = 30641, 
+    H_SPELL_MORTAL_WOUND   = 36814, 
+    SPELL_SURGE            = 34645, 
+    SPELL_RETALIATION      = 22857, 
 };
 
 class boss_watchkeeper_gargolmar : public CreatureScript
@@ -86,7 +86,7 @@ class boss_watchkeeper_gargolmar : public CreatureScript
 
             void EnterCombat(Unit * /*who*/)
             {
-                DoScriptText(RAND(SAY_AGGRO_1,SAY_AGGRO_2,SAY_AGGRO_3), me);
+                DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
             }
 
             void MoveInLineOfSight(Unit* who)
@@ -112,7 +112,7 @@ class boss_watchkeeper_gargolmar : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                DoScriptText(RAND(SAY_KILL_1,SAY_KILL_2), me);
+                DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
             }
 
             void JustDied(Unit* /*Killer*/)
@@ -137,7 +137,7 @@ class boss_watchkeeper_gargolmar : public CreatureScript
                 {
                     DoScriptText(SAY_SURGE, me);
 
-                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                         DoCast(pTarget, SPELL_SURGE);
 
                     Surge_Timer = 5000+rand()%8000;

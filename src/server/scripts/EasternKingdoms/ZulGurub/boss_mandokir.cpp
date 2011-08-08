@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -127,7 +127,7 @@ class boss_mandokir : public CreatureScript
                             uint64 JindoGUID = m_pInstance->GetData64(DATA_JINDO);
                             if (JindoGUID)
                             {
-                                if (Unit* jTemp = Unit::GetUnit(*me,JindoGUID))
+                                if (Unit* jTemp = Unit::GetUnit(*me, JindoGUID))
                                 {
                                     if (jTemp->isAlive())
                                         DoScriptText(SAY_GRATS_JINDO, jTemp);
@@ -181,7 +181,7 @@ class boss_mandokir : public CreatureScript
                                 else
                                 {
                                     DoCast(pUnit, SPELL_CHARGE);
-                                    //me->SendMonsterMove(pUnit->GetPositionX(), pUnit->GetPositionY(), pUnit->GetPositionZ(), 0, true,1);
+                                    //me->SendMonsterMove(pUnit->GetPositionX(), pUnit->GetPositionY(), pUnit->GetPositionZ(), 0, true, 1);
                                     AttackStart(pUnit);
                                 }
                             }
@@ -192,7 +192,7 @@ class boss_mandokir : public CreatureScript
 
                     if ((Watch_Timer < 8000) && !someWatched)       //8 sec(cast time + expire time) before the check for the watch effect mandokir will cast watch debuff on a random target
                     {
-                        if (Unit* p = SelectUnit(SELECT_TARGET_RANDOM,0))
+                        if (Unit* p = SelectUnit(SELECT_TARGET_RANDOM, 0))
                         {
                             DoScriptText(SAY_WATCH, me, p);
                             DoCast(p, SPELL_WATCH);

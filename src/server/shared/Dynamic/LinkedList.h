@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -55,7 +55,7 @@ class LinkedListElement
 
         void delink()
         {
-            if(isInList())
+            if (isInList())
             {
                 iNext->iPrev = iPrev; iPrev->iNext = iNext; iNext = NULL; iPrev = NULL;
             }
@@ -116,7 +116,7 @@ class LinkedListHead
 
         uint32 getSize() const
         {
-            if(!iSize)
+            if (!iSize)
             {
                 uint32 result = 0;
                 LinkedListElement const* e = getFirst();

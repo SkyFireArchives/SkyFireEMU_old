@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,20 +35,20 @@ enum Achievements
 //not in db
 enum Yells
 {
-    SAY_AGGRO                                     = -1619014,
-    SAY_SLAY_1                                    = -1619015,
-    SAY_SLAY_2                                    = -1619016,
-    SAY_SLAY_3                                    = -1619017,
-    SAY_DEATH                                     = -1619018,
-    SAY_EGG_SAC_1                                 = -1619019,
+    SAY_AGGRO                                     = -1619014, 
+    SAY_SLAY_1                                    = -1619015, 
+    SAY_SLAY_2                                    = -1619016, 
+    SAY_SLAY_3                                    = -1619017, 
+    SAY_DEATH                                     = -1619018, 
+    SAY_EGG_SAC_1                                 = -1619019, 
     SAY_EGG_SAC_2                                 = -1619020
 };
 
 enum Spells
 {
-    SPELL_BROOD_PLAGUE                            = 56130,
-    H_SPELL_BROOD_PLAGUE                          = 59467,
-    H_SPELL_BROOD_RAGE                            = 59465,
+    SPELL_BROOD_PLAGUE                            = 56130, 
+    H_SPELL_BROOD_PLAGUE                          = 59467, 
+    H_SPELL_BROOD_RAGE                            = 59465, 
     SPELL_ENRAGE                                  = 26662, // Enraged if too far away from home
     SPELL_SUMMON_SWARMERS                         = 56119, //2x 30178  -- 2x every 10secs
     SPELL_SUMMON_SWARM_GUARD                      = 56120, //1x 30176  -- every 25secs
@@ -56,7 +56,7 @@ enum Spells
 
 enum Creatures
 {
-    MOB_AHNKAHAR_SWARMER                          = 30178,
+    MOB_AHNKAHAR_SWARMER                          = 30178, 
     MOB_AHNKAHAR_GUARDIAN_ENTRY                   = 30176
 };
 
@@ -106,7 +106,7 @@ public:
 
         void EnterCombat(Unit * /*who*/)
         {
-            DoScriptText(SAY_DEATH,me);
+            DoScriptText(SAY_DEATH, me);
 
             if (pInstance)
                 pInstance->SetData(DATA_ELDER_NADOX_EVENT, IN_PROGRESS);
@@ -114,12 +114,12 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_SLAY_3,me); //SAY_SLAY_3 on death?
+            DoScriptText(SAY_SLAY_3, me); //SAY_SLAY_3 on death?
 
             if (pInstance)
             {
@@ -156,22 +156,22 @@ public:
             {
                 DoCast(me, SPELL_SUMMON_SWARMERS, true);
                 DoCast(me, SPELL_SUMMON_SWARMERS);
-                if (urand(1,3) == 3) // 33% chance of dialog
-                    DoScriptText(RAND(SAY_EGG_SAC_1,SAY_EGG_SAC_2), me);
+                if (urand(1, 3) == 3) // 33% chance of dialog
+                    DoScriptText(RAND(SAY_EGG_SAC_1, SAY_EGG_SAC_2), me);
 
                 uiSwarmerSpawnTimer = 10*IN_MILLISECONDS;
             } else uiSwarmerSpawnTimer -= diff;
 
             if (!bGuardSpawned && uiGuardSpawnTimer <= diff)
             {
-                me->MonsterTextEmote(EMOTE_HATCHES,me->GetGUID(),true);
+                me->MonsterTextEmote(EMOTE_HATCHES, me->GetGUID(), true);
                 DoCast(me, SPELL_SUMMON_SWARM_GUARD);
                 bGuardSpawned = true;
             } else uiGuardSpawnTimer -= diff;
 
             if (uiEnragueTimer <= diff)
             {
-                if (me->HasAura(SPELL_ENRAGE,0))
+                if (me->HasAura(SPELL_ENRAGE, 0))
                     return;
 
                 float x, y, z, o;
@@ -195,7 +195,7 @@ public:
 
 enum AddSpells
 {
-    SPELL_SPRINT                                  = 56354,
+    SPELL_SPRINT                                  = 56354, 
     SPELL_GUARDIAN_AURA                           = 56151
 };
 

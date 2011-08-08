@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -124,22 +124,22 @@ class boss_marli : public CreatureScript
                     {
                         DoScriptText(SAY_SPIDER_SPAWN, me);
 
-                        Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                        Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                         if (!pTarget)
                             return;
 
                         Creature *Spider = NULL;
 
-                        Spider = me->SummonCreature(15041,pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                        Spider = me->SummonCreature(15041, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
                         if (Spider)
                             Spider->AI()->AttackStart(pTarget);
-                        Spider = me->SummonCreature(15041,pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                        Spider = me->SummonCreature(15041, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
                         if (Spider)
                             Spider->AI()->AttackStart(pTarget);
-                        Spider = me->SummonCreature(15041,pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                        Spider = me->SummonCreature(15041, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
                         if (Spider)
                             Spider->AI()->AttackStart(pTarget);
-                        Spider = me->SummonCreature(15041,pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                        Spider = me->SummonCreature(15041, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
                         if (Spider)
                             Spider->AI()->AttackStart(pTarget);
 
@@ -148,11 +148,11 @@ class boss_marli : public CreatureScript
 
                     if (SpawnSpider_Timer <= diff)
                     {
-                        Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                        Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                         if (!pTarget)
                             return;
 
-                        Creature *Spider = me->SummonCreature(15041,pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                        Creature *Spider = me->SummonCreature(15041, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
                         if (Spider)
                             Spider->AI()->AttackStart(pTarget);
                         SpawnSpider_Timer = 12000 + rand()%5000;
@@ -169,10 +169,10 @@ class boss_marli : public CreatureScript
                         DoCast(me->getVictim(), SPELL_ENVOLWINGWEB);
 
                         if (DoGetThreat(me->getVictim()))
-                            DoModifyThreatPercent(me->getVictim(),-100);
+                            DoModifyThreatPercent(me->getVictim(), -100);
 
                         PhaseTwo = true;
-                        Transform_Timer = urand(35000,60000);
+                        Transform_Timer = urand(35000, 60000);
                     } else Transform_Timer -= diff;
 
                     if (PhaseTwo)
@@ -184,7 +184,7 @@ class boss_marli : public CreatureScript
                             while (i < 3)                           // max 3 tries to get a random target with power_mana
                             {
                                 ++i;
-                                pTarget = SelectTarget(SELECT_TARGET_RANDOM,1, 100, true);  // not aggro leader
+                                pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1, 100, true);  // not aggro leader
                                 if (pTarget && pTarget->getPowerType() == POWER_MANA)
                                         i = 3;
                             }
@@ -192,7 +192,7 @@ class boss_marli : public CreatureScript
                             {
                                 DoCast(pTarget, SPELL_CHARGE);
                                 //me->GetMap()->CreatureRelocation(me, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0);
-                                //me->SendMonsterMove(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, true,1);
+                                //me->SendMonsterMove(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, true, 1);
                                 AttackStart(pTarget);
                             }
 
@@ -208,7 +208,7 @@ class boss_marli : public CreatureScript
                             me->UpdateDamagePhysical(BASE_ATTACK);
 
                             PhaseTwo = false;
-                            TransformBack_Timer = urand(25000,40000);
+                            TransformBack_Timer = urand(25000, 40000);
                         } else TransformBack_Timer -= diff;
 
                     }

@@ -468,13 +468,13 @@ extern struct ltc_cipher_descriptor {
        @return CRYPT_OK if successful
    */
    int (*accel_ccm_memory)(
-       const unsigned char *key,    unsigned long keylen,
+       const unsigned char *key,   unsigned long keylen,
        symmetric_key       *uskey,
-       const unsigned char *nonce,  unsigned long noncelen,
+       const unsigned char *nonce, unsigned long noncelen,
        const unsigned char *header, unsigned long headerlen,
-             unsigned char *pt,     unsigned long ptlen,
+             unsigned char *pt,    unsigned long ptlen,
              unsigned char *ct,
-             unsigned char *tag,    unsigned long *taglen,
+             unsigned char *tag,   unsigned long *taglen,
                        int  direction);
 
    /** Accelerated GCM packet (one shot)
@@ -493,12 +493,12 @@ extern struct ltc_cipher_descriptor {
        @return CRYPT_OK on success
    */
    int (*accel_gcm_memory)(
-       const unsigned char *key,    unsigned long keylen,
-       const unsigned char *IV,     unsigned long IVlen,
-       const unsigned char *adata,  unsigned long adatalen,
-             unsigned char *pt,     unsigned long ptlen,
+       const unsigned char *key,   unsigned long keylen,
+       const unsigned char *IV,    unsigned long IVlen,
+       const unsigned char *adata, unsigned long adatalen,
+             unsigned char *pt,    unsigned long ptlen,
              unsigned char *ct, 
-             unsigned char *tag,    unsigned long *taglen,
+             unsigned char *tag,   unsigned long *taglen,
                        int direction);
 
    /** Accelerated one shot LTC_OMAC 
@@ -512,7 +512,7 @@ extern struct ltc_cipher_descriptor {
    */
    int (*omac_memory)(
        const unsigned char *key, unsigned long keylen,
-       const unsigned char *in,  unsigned long inlen,
+       const unsigned char *in, unsigned long inlen,
              unsigned char *out, unsigned long *outlen);
 
    /** Accelerated one shot XCBC 
@@ -526,7 +526,7 @@ extern struct ltc_cipher_descriptor {
    */
    int (*xcbc_memory)(
        const unsigned char *key, unsigned long keylen,
-       const unsigned char *in,  unsigned long inlen,
+       const unsigned char *in, unsigned long inlen,
              unsigned char *out, unsigned long *outlen);
 
    /** Accelerated one shot F9 
@@ -541,7 +541,7 @@ extern struct ltc_cipher_descriptor {
    */
    int (*f9_memory)(
        const unsigned char *key, unsigned long keylen,
-       const unsigned char *in,  unsigned long inlen,
+       const unsigned char *in, unsigned long inlen,
              unsigned char *out, unsigned long *outlen);
 } cipher_descriptor[];
 
@@ -802,7 +802,7 @@ int cbc_done(symmetric_CBC *cbc);
 
 int ctr_start(               int   cipher,
               const unsigned char *IV,
-              const unsigned char *key,       int keylen,
+              const unsigned char *key,      int keylen,
                              int  num_rounds, int ctr_mode,
                    symmetric_CTR *ctr);
 int ctr_encrypt(const unsigned char *pt, unsigned char *ct, unsigned long len, symmetric_CTR *ctr);
@@ -820,7 +820,7 @@ int ctr_test(void);
 
 int lrw_start(               int   cipher,
               const unsigned char *IV,
-              const unsigned char *key,       int keylen,
+              const unsigned char *key,      int keylen,
               const unsigned char *tweak,
                              int  num_rounds, 
                    symmetric_LRW *lrw);
@@ -837,9 +837,9 @@ int lrw_process(const unsigned char *pt, unsigned char *ct, unsigned long len, i
 
 #ifdef LTC_F8_MODE
 int f8_start(                int  cipher, const unsigned char *IV, 
-             const unsigned char *key,                    int  keylen, 
-             const unsigned char *salt_key,               int  skeylen,
-                             int  num_rounds,   symmetric_F8  *f8);
+             const unsigned char *key,                   int  keylen, 
+             const unsigned char *salt_key,              int  skeylen,
+                             int  num_rounds,  symmetric_F8  *f8);
 int f8_encrypt(const unsigned char *pt, unsigned char *ct, unsigned long len, symmetric_F8 *f8);
 int f8_decrypt(const unsigned char *ct, unsigned char *pt, unsigned long len, symmetric_F8 *f8);
 int f8_getiv(unsigned char *IV, unsigned long *len, symmetric_F8 *f8);

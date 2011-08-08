@@ -82,7 +82,7 @@ public:
 
 enum eBartleby
 {
-    FACTION_ENEMY       = 168,
+    FACTION_ENEMY       = 168, 
     QUEST_BEAT          = 1640
 };
 
@@ -156,7 +156,7 @@ public:
 
 enum eDashel
 {
-    QUEST_MISSING_DIPLO_PT8     = 1447,
+    QUEST_MISSING_DIPLO_PT8     = 1447, 
     FACTION_HOSTILE             = 168
 };
 
@@ -285,17 +285,17 @@ public:
 
 enum eLordGregorLescovar
 {
-    SAY_LESCOVAR_2 = -1000457,
-    SAY_GUARD_2    = -1000458,
-    SAY_LESCOVAR_3 = -1000459,
-    SAY_MARZON_1   = -1000460,
-    SAY_LESCOVAR_4 = -1000461,
-    SAY_TYRION_2   = -1000462,
-    SAY_MARZON_2   = -1000463,
+    SAY_LESCOVAR_2 = -1000457, 
+    SAY_GUARD_2    = -1000458, 
+    SAY_LESCOVAR_3 = -1000459, 
+    SAY_MARZON_1   = -1000460, 
+    SAY_LESCOVAR_4 = -1000461, 
+    SAY_TYRION_2   = -1000462, 
+    SAY_MARZON_2   = -1000463, 
 
-    NPC_STORMWIND_ROYAL = 1756,
-    NPC_MARZON_BLADE    = 1755,
-    NPC_TYRION          = 7766,
+    NPC_STORMWIND_ROYAL = 1756, 
+    NPC_MARZON_BLADE    = 1755, 
+    NPC_TYRION          = 7766, 
 
     QUEST_THE_ATTACK    = 434
 };
@@ -362,9 +362,9 @@ public:
                     break;
                 case 16:
                     SetEscortPaused(true);
-                    if (Creature *pMarzon = me->SummonCreature(NPC_MARZON_BLADE,-8411.360352f, 480.069733f, 123.760895f, 4.941504f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 1000))
+                    if (Creature *pMarzon = me->SummonCreature(NPC_MARZON_BLADE, -8411.360352f, 480.069733f, 123.760895f, 4.941504f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 1000))
                     {
-                        pMarzon->GetMotionMaster()->MovePoint(0,-8408.000977f, 468.611450f, 123.759903f);
+                        pMarzon->GetMotionMaster()->MovePoint(0, -8408.000977f, 468.611450f, 123.759903f);
                         MarzonGUID = pMarzon->GetGUID();
                     }
                     uiTimer = 2000;
@@ -376,7 +376,7 @@ public:
         void DoGuardsDisappearAndDie()
         {
             std::list<Creature*> GuardList;
-            me->GetCreatureListWithEntryInGrid(GuardList,NPC_STORMWIND_ROYAL,8.0f);
+            me->GetCreatureListWithEntryInGrid(GuardList, NPC_STORMWIND_ROYAL, 8.0f);
             if (!GuardList.empty())
             {
                 for (std::list<Creature*>::const_iterator itr = GuardList.begin(); itr != GuardList.end(); ++itr)
@@ -541,17 +541,17 @@ public:
 
 enum eTyrionSpybot
 {
-    SAY_QUEST_ACCEPT_ATTACK  = -1000499,
-    SAY_TYRION_1             = -1000450,
-    SAY_SPYBOT_1             = -1000451,
-    SAY_GUARD_1              = -1000452,
-    SAY_SPYBOT_2             = -1000453,
-    SAY_SPYBOT_3             = -1000454,
-    SAY_LESCOVAR_1           = -1000455,
-    SAY_SPYBOT_4             = -1000456,
+    SAY_QUEST_ACCEPT_ATTACK  = -1000499, 
+    SAY_TYRION_1             = -1000450, 
+    SAY_SPYBOT_1             = -1000451, 
+    SAY_GUARD_1              = -1000452, 
+    SAY_SPYBOT_2             = -1000453, 
+    SAY_SPYBOT_3             = -1000454, 
+    SAY_LESCOVAR_1           = -1000455, 
+    SAY_SPYBOT_4             = -1000456, 
 
-    NPC_PRIESTESS_TYRIONA    = 7779,
-    NPC_LORD_GREGOR_LESCOVAR = 1754,
+    NPC_PRIESTESS_TYRIONA    = 7779, 
+    NPC_LORD_GREGOR_LESCOVAR = 1754, 
 };
 
 class npc_tyrion_spybot : public CreatureScript
@@ -615,7 +615,7 @@ public:
                             uiPhase = 2;
                             break;
                         case 2:
-                            if (Creature* pTyrion = me->FindNearestCreature(NPC_TYRION,10.0f))
+                            if (Creature* pTyrion = me->FindNearestCreature(NPC_TYRION, 10.0f))
                                 DoScriptText(SAY_TYRION_1, pTyrion);
                             uiTimer = 3000;
                             uiPhase = 3;
@@ -647,7 +647,7 @@ public:
                             uiPhase = 0;
                             break;
                         case 8:
-                            if (Creature* pLescovar = me->FindNearestCreature(NPC_LORD_GREGOR_LESCOVAR,10.0f))
+                            if (Creature* pLescovar = me->FindNearestCreature(NPC_LORD_GREGOR_LESCOVAR, 10.0f))
                                 DoScriptText(SAY_LESCOVAR_1, pLescovar);
                             uiTimer = 3000;
                             uiPhase = 9;
@@ -658,11 +658,11 @@ public:
                             uiPhase = 10;
                             break;
                         case 10:
-                            if (Creature* pLescovar = me->FindNearestCreature(NPC_LORD_GREGOR_LESCOVAR,10.0f))
+                            if (Creature* pLescovar = me->FindNearestCreature(NPC_LORD_GREGOR_LESCOVAR, 10.0f))
                             {
                                 if (Player* pPlayer = GetPlayerForEscort())
                                 {
-                                    CAST_AI(npc_lord_gregor_lescovar::npc_lord_gregor_lescovarAI,pLescovar->AI())->Start(false, false, pPlayer->GetGUID());
+                                    CAST_AI(npc_lord_gregor_lescovar::npc_lord_gregor_lescovarAI, pLescovar->AI())->Start(false, false, pPlayer->GetGUID());
                                     CAST_AI(npc_lord_gregor_lescovar::npc_lord_gregor_lescovarAI, pLescovar->AI())->SetMaxPlayerDistance(200.0f);
                                 }
                             }
@@ -705,8 +705,8 @@ public:
         {
             if (Creature* pSpybot = pCreature->FindNearestCreature(NPC_TYRION_SPYBOT, 5.0f, true))
             {
-                CAST_AI(npc_tyrion_spybot::npc_tyrion_spybotAI,pSpybot->AI())->Start(false, false, pPlayer->GetGUID());
-                CAST_AI(npc_tyrion_spybot::npc_tyrion_spybotAI,pSpybot->AI())->SetMaxPlayerDistance(200.0f);
+                CAST_AI(npc_tyrion_spybot::npc_tyrion_spybotAI, pSpybot->AI())->Start(false, false, pPlayer->GetGUID());
+                CAST_AI(npc_tyrion_spybot::npc_tyrion_spybotAI, pSpybot->AI())->SetMaxPlayerDistance(200.0f);
             }
             return true;
         }

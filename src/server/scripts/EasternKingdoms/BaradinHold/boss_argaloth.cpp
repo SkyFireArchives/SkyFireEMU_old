@@ -25,20 +25,20 @@
 
 enum Spells
 {
-    SPELL_BERSERK              = 47008,
-    SPELL_CONSUMING_DARKNESS   = 88954,
-    H_SPELL_CONSUMING_DARKNESS = 95173,
-    SPELL_FEL_FIRESTORM        = 88972,
-    SPELL_METEOR_SLASH         = 88942,
-    H_SPELL_METEOR_SLASH       = 95172,
+    SPELL_BERSERK              = 47008, 
+    SPELL_CONSUMING_DARKNESS   = 88954, 
+    H_SPELL_CONSUMING_DARKNESS = 95173, 
+    SPELL_FEL_FIRESTORM        = 88972, 
+    SPELL_METEOR_SLASH         = 88942, 
+    H_SPELL_METEOR_SLASH       = 95172, 
 };
 
 enum Events
 {
-    EVENT_BERSERK,
-    EVENT_CONSUMING_DARKNESS,
-    EVENT_FEL_FIRESTORM,
-    EVENT_METEOR_SLASH,
+    EVENT_BERSERK, 
+    EVENT_CONSUMING_DARKNESS, 
+    EVENT_FEL_FIRESTORM, 
+    EVENT_METEOR_SLASH, 
 };
 
 class boss_argaloth: public CreatureScript
@@ -123,7 +123,7 @@ public:
                         }
                         break;
                     case EVENT_BERSERK:
-                        if(!enrage_flag && bsk <= uiDiff)
+                        if (!enrage_flag && bsk <= uiDiff)
                         {
                             DoCast(me, SPELL_BERSERK);
                             enrage_flag = true;

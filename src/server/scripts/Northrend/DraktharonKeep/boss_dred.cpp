@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -32,13 +32,13 @@
 enum eSpells
 {
     SPELL_BELLOWING_ROAR                          = 22686, // fears the group, can be resisted/dispelled
-    SPELL_GRIEVOUS_BITE                           = 48920,
+    SPELL_GRIEVOUS_BITE                           = 48920, 
     SPELL_MANGLING_SLASH                          = 48873, //casted on the current tank, adds debuf
-    SPELL_FEARSOME_ROAR                           = 48849,
+    SPELL_FEARSOME_ROAR                           = 48849, 
     H_SPELL_FEARSOME_ROAR                         = 59422, //Not stacking, debuff
     SPELL_PIERCING_SLASH                          = 48878, //debuff -->Armor reduced by 75%
     SPELL_RAPTOR_CALL                             = 59416, //dummy
-    SPELL_GUT_RIP                                 = 49710,
+    SPELL_GUT_RIP                                 = 49710, 
     SPELL_REND                                    = 13738
 };
 
@@ -49,7 +49,7 @@ enum eArchivements
 
 enum Creatures
 {
-    NPC_RAPTOR_1                                  = 26641,
+    NPC_RAPTOR_1                                  = 26641, 
     NPC_RAPTOR_2                                  = 26628
 };
 
@@ -80,22 +80,22 @@ public:
         {
             if (pInstance)
             {
-                pInstance->SetData(DATA_DRED_EVENT,NOT_STARTED);
+                pInstance->SetData(DATA_DRED_EVENT, NOT_STARTED);
                 pInstance->SetData(DATA_KING_DRED_ACHIEV, 0);
             }
 
             uiBellowingRoarTimer = 33*IN_MILLISECONDS;
             uiGrievousBiteTimer  = 20*IN_MILLISECONDS;
             uiManglingSlashTimer = 18500;
-            uiFearsomeRoarTimer  = urand(10*IN_MILLISECONDS,20*IN_MILLISECONDS);
+            uiFearsomeRoarTimer  = urand(10*IN_MILLISECONDS, 20*IN_MILLISECONDS);
             uiPiercingSlashTimer = 17*IN_MILLISECONDS;
-            uiRaptorCallTimer    = urand(20*IN_MILLISECONDS,25*IN_MILLISECONDS);
+            uiRaptorCallTimer    = urand(20*IN_MILLISECONDS, 25*IN_MILLISECONDS);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             if (pInstance)
-                pInstance->SetData(DATA_DRED_EVENT,IN_PROGRESS);
+                pInstance->SetData(DATA_DRED_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -112,38 +112,38 @@ public:
 
             if (uiGrievousBiteTimer < diff)
             {
-                DoCastVictim(SPELL_GRIEVOUS_BITE ,false);
+                DoCastVictim(SPELL_GRIEVOUS_BITE , false);
                 uiGrievousBiteTimer = 20*IN_MILLISECONDS;
             } else uiGrievousBiteTimer -=diff;
 
             if (uiManglingSlashTimer < diff)
             {
-                DoCastVictim(SPELL_MANGLING_SLASH,false);
+                DoCastVictim(SPELL_MANGLING_SLASH, false);
                 uiManglingSlashTimer = 20*IN_MILLISECONDS;
             } else uiManglingSlashTimer -=diff;
 
             if (uiFearsomeRoarTimer < diff)
             {
-                DoCastAOE(SPELL_FEARSOME_ROAR,false);
-                uiFearsomeRoarTimer = urand(16*IN_MILLISECONDS,18*IN_MILLISECONDS);
+                DoCastAOE(SPELL_FEARSOME_ROAR, false);
+                uiFearsomeRoarTimer = urand(16*IN_MILLISECONDS, 18*IN_MILLISECONDS);
             } else uiFearsomeRoarTimer -=diff;
 
             if (uiPiercingSlashTimer < diff)
             {
-                DoCastVictim(SPELL_PIERCING_SLASH,false);
+                DoCastVictim(SPELL_PIERCING_SLASH, false);
                 uiPiercingSlashTimer = 20*IN_MILLISECONDS;
             } else uiPiercingSlashTimer -=diff;
 
             if (uiRaptorCallTimer < diff)
             {
-                DoCastVictim(SPELL_RAPTOR_CALL,false);
+                DoCastVictim(SPELL_RAPTOR_CALL, false);
 
-                float x,y,z;
+                float x, y, z;
 
-                me->GetClosePoint(x,y,z,me->GetObjectSize()/3,10.0f);
-                me->SummonCreature(RAND(NPC_RAPTOR_1,NPC_RAPTOR_2),x,y,z,0,TEMPSUMMON_DEAD_DESPAWN,1*IN_MILLISECONDS);
+                me->GetClosePoint(x, y, z, me->GetObjectSize()/3, 10.0f);
+                me->SummonCreature(RAND(NPC_RAPTOR_1, NPC_RAPTOR_2), x, y, z, 0, TEMPSUMMON_DEAD_DESPAWN, 1*IN_MILLISECONDS);
 
-                uiRaptorCallTimer = urand(20*IN_MILLISECONDS,25*IN_MILLISECONDS);
+                uiRaptorCallTimer = urand(20*IN_MILLISECONDS, 25*IN_MILLISECONDS);
             } else uiRaptorCallTimer -=diff;
 
             DoMeleeAttackIfReady();
@@ -153,7 +153,7 @@ public:
         {
             if (pInstance)
             {
-                pInstance->SetData(DATA_DRED_EVENT,DONE);
+                pInstance->SetData(DATA_DRED_EVENT, DONE);
 
                 if (IsHeroic() && pInstance->GetData(DATA_KING_DRED_ACHIEV) == 6)
                     pInstance->DoCompleteAchievement(ACHIEV_BETTER_OFF_DRED);
@@ -185,7 +185,7 @@ public:
 
         void Reset()
         {
-            GutRipTimer = urand(10000,15000);
+            GutRipTimer = urand(10000, 15000);
         }
 
         void UpdateAI(const uint32 diff)
@@ -196,8 +196,8 @@ public:
 
             if (GutRipTimer < diff)
             {
-                DoCastVictim(SPELL_GUT_RIP,false);
-                GutRipTimer = urand(10000,15000);
+                DoCastVictim(SPELL_GUT_RIP, false);
+                GutRipTimer = urand(10000, 15000);
             }else GutRipTimer -=diff;
 
             DoMeleeAttackIfReady();
@@ -239,7 +239,7 @@ public:
 
         void Reset()
         {
-            uiRendTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
+            uiRendTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -250,8 +250,8 @@ public:
 
             if (uiRendTimer < diff)
             {
-                DoCastVictim(SPELL_REND,false);
-                uiRendTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
+                DoCastVictim(SPELL_REND, false);
+                uiRendTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
             }else uiRendTimer -=diff;
 
             DoMeleeAttackIfReady();

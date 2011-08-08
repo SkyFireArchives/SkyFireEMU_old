@@ -137,11 +137,11 @@ BZ_EXTERN int BZ_API(BZ2_bzDecompressEnd) (
 typedef void BZFILE;
 
 BZ_EXTERN BZFILE* BZ_API(BZ2_bzReadOpen) ( 
-      int*  bzerror,   
+      int*  bzerror,  
       FILE* f, 
       int   verbosity, 
       int   small,
-      void* unused,    
+      void* unused,   
       int   nUnused 
    );
 
@@ -153,7 +153,7 @@ BZ_EXTERN void BZ_API(BZ2_bzReadClose) (
 BZ_EXTERN void BZ_API(BZ2_bzReadGetUnused) ( 
       int*    bzerror, 
       BZFILE* b, 
-      void**  unused,  
+      void**  unused, 
       int*    nUnused 
    );
 
@@ -165,7 +165,7 @@ BZ_EXTERN int BZ_API(BZ2_bzRead) (
    );
 
 BZ_EXTERN BZFILE* BZ_API(BZ2_bzWriteOpen) ( 
-      int*  bzerror,      
+      int*  bzerror,     
       FILE* f, 
       int   blockSize100k, 
       int   verbosity, 

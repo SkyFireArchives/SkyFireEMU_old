@@ -67,7 +67,7 @@ struct SpawnAssociation
 
 enum eEnums
 {
-    SPELL_GUARDS_MARK               = 38067,
+    SPELL_GUARDS_MARK               = 38067, 
     AURA_DURATION_TIME_LEFT         = 5000
 };
 
@@ -267,10 +267,10 @@ public:
 
 enum
 {
-    QUEST_BODY_HEART_A      = 6001,
-    QUEST_BODY_HEART_H      = 6002,
+    QUEST_BODY_HEART_A      = 6001, 
+    QUEST_BODY_HEART_H      = 6002, 
 
-    TEXT_ID_DEFAULT         = 4714,
+    TEXT_ID_DEFAULT         = 4714, 
     TEXT_ID_PROGRESS        = 4715
 };
 
@@ -422,13 +422,13 @@ public:
             DoCast(me, SPELL_BRAZIER, true);
             DoCast(me, SPELL_FIERY_AURA, false);
             float x, y, z;
-            me->GetPosition(x,y,z);
-            me->Relocate(x,y,z + 0.94f);
+            me->GetPosition(x, y, z);
+            me->Relocate(x, y, z + 0.94f);
             me->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
             me->HandleEmoteCommand(EMOTE_ONESHOT_DANCE);
             WorldPacket data;                       //send update position to client
             me->BuildHeartBeatMsg(&data);
-            me->SendMessageToSet(&data,true);
+            me->SendMessageToSet(&data, true);
         }
 
         void UpdateAI(const uint32 diff)
@@ -448,14 +448,14 @@ public:
 
         void ReceiveEmote(Player* pPlayer, uint32 emote)
         {
-            if (me->IsWithinLOS(pPlayer->GetPositionX(),pPlayer->GetPositionY(),pPlayer->GetPositionZ()) && me->IsWithinDistInMap(pPlayer,30.0f))
+            if (me->IsWithinLOS(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ()) && me->IsWithinDistInMap(pPlayer, 30.0f))
             {
                 me->SetInFront(pPlayer);
                 active = false;
 
                 WorldPacket data;
                 me->BuildHeartBeatMsg(&data);
-                me->SendMessageToSet(&data,true);
+                me->SendMessageToSet(&data, true);
                 switch(emote)
                 {
                     case TEXTEMOTE_KISS:    me->HandleEmoteCommand(EMOTE_ONESHOT_SHY); break;
@@ -757,7 +757,7 @@ public:
                 //stand up
                 me->SetUInt32Value(UNIT_FIELD_BYTES_1, UNIT_STAND_STATE_STAND);
 
-                DoScriptText(RAND(SAY_DOC1,SAY_DOC2,SAY_DOC3), me);
+                DoScriptText(RAND(SAY_DOC1, SAY_DOC2, SAY_DOC3), me);
 
                 uint32 mobId = me->GetEntry();
                 me->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
@@ -865,32 +865,32 @@ void npc_doctor::npc_doctorAI::UpdateAI(const uint32 diff)
 
 enum eGarments
 {
-    SPELL_LESSER_HEAL_R2    = 2052,
-    SPELL_FORTITUDE_R1      = 1243,
+    SPELL_LESSER_HEAL_R2    = 2052, 
+    SPELL_FORTITUDE_R1      = 1243, 
 
-    QUEST_MOON              = 5621,
-    QUEST_LIGHT_1           = 5624,
-    QUEST_LIGHT_2           = 5625,
-    QUEST_SPIRIT            = 5648,
-    QUEST_DARKNESS          = 5650,
+    QUEST_MOON              = 5621, 
+    QUEST_LIGHT_1           = 5624, 
+    QUEST_LIGHT_2           = 5625, 
+    QUEST_SPIRIT            = 5648, 
+    QUEST_DARKNESS          = 5650, 
 
-    ENTRY_SHAYA             = 12429,
-    ENTRY_ROBERTS           = 12423,
-    ENTRY_DOLF              = 12427,
-    ENTRY_KORJA             = 12430,
-    ENTRY_DG_KEL            = 12428,
+    ENTRY_SHAYA             = 12429, 
+    ENTRY_ROBERTS           = 12423, 
+    ENTRY_DOLF              = 12427, 
+    ENTRY_KORJA             = 12430, 
+    ENTRY_DG_KEL            = 12428, 
 
-    //used by 12429,12423,12427,12430,12428, but signed for 12429
-    SAY_COMMON_HEALED       = -1000164,
-    SAY_DG_KEL_THANKS       = -1000165,
-    SAY_DG_KEL_GOODBYE      = -1000166,
-    SAY_ROBERTS_THANKS      = -1000167,
-    SAY_ROBERTS_GOODBYE     = -1000168,
-    SAY_KORJA_THANKS        = -1000169,
-    SAY_KORJA_GOODBYE       = -1000170,
-    SAY_DOLF_THANKS         = -1000171,
-    SAY_DOLF_GOODBYE        = -1000172,
-    SAY_SHAYA_THANKS        = -1000173,
+    //used by 12429, 12423, 12427, 12430, 12428, but signed for 12429
+    SAY_COMMON_HEALED       = -1000164, 
+    SAY_DG_KEL_THANKS       = -1000165, 
+    SAY_DG_KEL_GOODBYE      = -1000166, 
+    SAY_ROBERTS_THANKS      = -1000167, 
+    SAY_ROBERTS_GOODBYE     = -1000168, 
+    SAY_KORJA_THANKS        = -1000169, 
+    SAY_KORJA_GOODBYE       = -1000170, 
+    SAY_DOLF_THANKS         = -1000171, 
+    SAY_DOLF_GOODBYE        = -1000172, 
+    SAY_SHAYA_THANKS        = -1000173, 
     SAY_SHAYA_GOODBYE       = -1000174, //signed for 21469
 };
 
@@ -947,14 +947,14 @@ public:
                             {
                                 if (bIsHealed && !bCanRun && Spell->Id == SPELL_FORTITUDE_R1)
                                 {
-                                    DoScriptText(SAY_SHAYA_THANKS,me,pCaster);
+                                    DoScriptText(SAY_SHAYA_THANKS, me, pCaster);
                                     bCanRun = true;
                                 }
                                 else if (!bIsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
                                 {
                                     caster = pCaster->GetGUID();
                                     me->SetStandState(UNIT_STAND_STATE_STAND);
-                                    DoScriptText(SAY_COMMON_HEALED,me,pCaster);
+                                    DoScriptText(SAY_COMMON_HEALED, me, pCaster);
                                     bIsHealed = true;
                                 }
                             }
@@ -964,14 +964,14 @@ public:
                             {
                                 if (bIsHealed && !bCanRun && Spell->Id == SPELL_FORTITUDE_R1)
                                 {
-                                    DoScriptText(SAY_ROBERTS_THANKS,me,pCaster);
+                                    DoScriptText(SAY_ROBERTS_THANKS, me, pCaster);
                                     bCanRun = true;
                                 }
                                 else if (!bIsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
                                 {
                                     caster = pCaster->GetGUID();
                                     me->SetStandState(UNIT_STAND_STATE_STAND);
-                                    DoScriptText(SAY_COMMON_HEALED,me,pCaster);
+                                    DoScriptText(SAY_COMMON_HEALED, me, pCaster);
                                     bIsHealed = true;
                                 }
                             }
@@ -981,14 +981,14 @@ public:
                             {
                                 if (bIsHealed && !bCanRun && Spell->Id == SPELL_FORTITUDE_R1)
                                 {
-                                    DoScriptText(SAY_DOLF_THANKS,me,pCaster);
+                                    DoScriptText(SAY_DOLF_THANKS, me, pCaster);
                                     bCanRun = true;
                                 }
                                 else if (!bIsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
                                 {
                                     caster = pCaster->GetGUID();
                                     me->SetStandState(UNIT_STAND_STATE_STAND);
-                                    DoScriptText(SAY_COMMON_HEALED,me,pCaster);
+                                    DoScriptText(SAY_COMMON_HEALED, me, pCaster);
                                     bIsHealed = true;
                                 }
                             }
@@ -998,14 +998,14 @@ public:
                             {
                                 if (bIsHealed && !bCanRun && Spell->Id == SPELL_FORTITUDE_R1)
                                 {
-                                    DoScriptText(SAY_KORJA_THANKS,me,pCaster);
+                                    DoScriptText(SAY_KORJA_THANKS, me, pCaster);
                                     bCanRun = true;
                                 }
                                 else if (!bIsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
                                 {
                                     caster = pCaster->GetGUID();
                                     me->SetStandState(UNIT_STAND_STATE_STAND);
-                                    DoScriptText(SAY_COMMON_HEALED,me,pCaster);
+                                    DoScriptText(SAY_COMMON_HEALED, me, pCaster);
                                     bIsHealed = true;
                                 }
                             }
@@ -1015,14 +1015,14 @@ public:
                             {
                                 if (bIsHealed && !bCanRun && Spell->Id == SPELL_FORTITUDE_R1)
                                 {
-                                    DoScriptText(SAY_DG_KEL_THANKS,me,pCaster);
+                                    DoScriptText(SAY_DG_KEL_THANKS, me, pCaster);
                                     bCanRun = true;
                                 }
                                 else if (!bIsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
                                 {
                                     caster = pCaster->GetGUID();
                                     me->SetStandState(UNIT_STAND_STATE_STAND);
-                                    DoScriptText(SAY_COMMON_HEALED,me,pCaster);
+                                    DoScriptText(SAY_COMMON_HEALED, me, pCaster);
                                     bIsHealed = true;
                                 }
                             }
@@ -1031,7 +1031,7 @@ public:
 
                     //give quest credit, not expect any special quest objectives
                     if (bCanRun)
-                        CAST_PLR(pCaster)->TalkedToCreature(me->GetEntry(),me->GetGUID());
+                        CAST_PLR(pCaster)->TalkedToCreature(me->GetEntry(), me->GetGUID());
                 }
             }
         }
@@ -1046,18 +1046,18 @@ public:
             {
                 if (RunAwayTimer <= diff)
                 {
-                    if (Unit *pUnit = Unit::GetUnit(*me,caster))
+                    if (Unit *pUnit = Unit::GetUnit(*me, caster))
                     {
                         switch(me->GetEntry())
                         {
-                            case ENTRY_SHAYA: DoScriptText(SAY_SHAYA_GOODBYE,me,pUnit); break;
-                            case ENTRY_ROBERTS: DoScriptText(SAY_ROBERTS_GOODBYE,me,pUnit); break;
-                            case ENTRY_DOLF: DoScriptText(SAY_DOLF_GOODBYE,me,pUnit); break;
-                            case ENTRY_KORJA: DoScriptText(SAY_KORJA_GOODBYE,me,pUnit); break;
-                            case ENTRY_DG_KEL: DoScriptText(SAY_DG_KEL_GOODBYE,me,pUnit); break;
+                            case ENTRY_SHAYA: DoScriptText(SAY_SHAYA_GOODBYE, me, pUnit); break;
+                            case ENTRY_ROBERTS: DoScriptText(SAY_ROBERTS_GOODBYE, me, pUnit); break;
+                            case ENTRY_DOLF: DoScriptText(SAY_DOLF_GOODBYE, me, pUnit); break;
+                            case ENTRY_KORJA: DoScriptText(SAY_KORJA_GOODBYE, me, pUnit); break;
+                            case ENTRY_DG_KEL: DoScriptText(SAY_DG_KEL_GOODBYE, me, pUnit); break;
                         }
 
-                        Start(false,true,true);
+                        Start(false, true, true);
                     }
                     else
                         EnterEvadeMode();                       //something went wrong
@@ -1125,10 +1125,10 @@ public:
 
 enum eKingdomDalaran
 {
-    SPELL_TELEPORT_DALARAN  = 53360,
-    ITEM_KT_SIGNET          = 39740,
-    QUEST_MAGICAL_KINGDOM_A = 12794,
-    QUEST_MAGICAL_KINGDOM_H = 12791,
+    SPELL_TELEPORT_DALARAN  = 53360, 
+    ITEM_KT_SIGNET          = 39740, 
+    QUEST_MAGICAL_KINGDOM_A = 12794, 
+    QUEST_MAGICAL_KINGDOM_H = 12791, 
     QUEST_MAGICAL_KINGDOM_N = 12796
 };
 
@@ -1143,7 +1143,7 @@ public:
         if (pCreature->isQuestGiver())
             pPlayer->PrepareQuestMenu(pCreature->GetGUID());
 
-        if (pPlayer->HasItemCount(ITEM_KT_SIGNET,1) && (!pPlayer->GetQuestRewardStatus(QUEST_MAGICAL_KINGDOM_A) ||
+        if (pPlayer->HasItemCount(ITEM_KT_SIGNET, 1) && (!pPlayer->GetQuestRewardStatus(QUEST_MAGICAL_KINGDOM_A) ||
             !pPlayer->GetQuestRewardStatus(QUEST_MAGICAL_KINGDOM_H) || !pPlayer->GetQuestRewardStatus(QUEST_MAGICAL_KINGDOM_N)))
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TELEPORT_TO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
@@ -1157,7 +1157,7 @@ public:
         if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
         {
             pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->CastSpell(pPlayer,SPELL_TELEPORT_DALARAN,false);
+            pPlayer->CastSpell(pPlayer, SPELL_TELEPORT_DALARAN, false);
         }
         return true;
     }
@@ -1285,7 +1285,7 @@ public:
         if (pPlayer->GetSpecsCount() == 1 && pCreature->isCanTrainingAndResetTalentsOf(pPlayer) && pPlayer->getLevel() >= sWorld->getIntConfig(CONFIG_MIN_DUALSPEC_LEVEL))
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_TRAINER, GOSSIP_HELLO_ROGUE3, GOSSIP_SENDER_MAIN, GOSSIP_OPTION_LEARNDUALSPEC);
 
-        if (pPlayer->getClass() == CLASS_ROGUE && pPlayer->getLevel() >= 24 && !pPlayer->HasItemCount(17126,1) && !pPlayer->GetQuestRewardStatus(6681))
+        if (pPlayer->getClass() == CLASS_ROGUE && pPlayer->getLevel() >= 24 && !pPlayer->HasItemCount(17126, 1) && !pPlayer->GetQuestRewardStatus(6681))
         {
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HELLO_ROGUE2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
             pPlayer->SEND_GOSSIP_MENU(5996, pCreature->GetGUID());
@@ -1302,7 +1302,7 @@ public:
         {
             case GOSSIP_ACTION_INFO_DEF+1:
                 pPlayer->CLOSE_GOSSIP_MENU();
-                pPlayer->CastSpell(pPlayer,21100,false);
+                pPlayer->CastSpell(pPlayer, 21100, false);
                 break;
             case GOSSIP_ACTION_TRAIN:
                 pPlayer->SEND_TRAINERLIST(pCreature->GetGUID());
@@ -1326,8 +1326,8 @@ public:
 
                         // Cast spells that teach dual spec
                         // Both are also ImplicitTarget self and must be cast by player
-                        pPlayer->CastSpell(pPlayer,63680,true,NULL,NULL,pPlayer->GetGUID());
-                        pPlayer->CastSpell(pPlayer,63624,true,NULL,NULL,pPlayer->GetGUID());
+                        pPlayer->CastSpell(pPlayer, 63680, true, NULL, NULL, pPlayer->GetGUID());
+                        pPlayer->CastSpell(pPlayer, 63624, true, NULL, NULL, pPlayer->GetGUID());
 
                         // Should show another Gossip text with "Congratulations..."
                         pPlayer->PlayerTalkClass->CloseGossip();
@@ -1456,42 +1456,42 @@ public:
                 break;
             case GOSSIP_SENDER_MAIN+1:
                 pCreature->CastSpell(pPlayer, SPELL_DMG, false);
-                pPlayer->AddSpellCooldown(SPELL_DMG,0,time(NULL) + 7200);
+                pPlayer->AddSpellCooldown(SPELL_DMG, 0, time(NULL) + 7200);
                 SendAction(pPlayer, pCreature, uiAction);
                 break;
             case GOSSIP_SENDER_MAIN+2:
                 pCreature->CastSpell(pPlayer, SPELL_RES, false);
-                pPlayer->AddSpellCooldown(SPELL_RES,0,time(NULL) + 7200);
+                pPlayer->AddSpellCooldown(SPELL_RES, 0, time(NULL) + 7200);
                 SendAction(pPlayer, pCreature, uiAction);
                 break;
             case GOSSIP_SENDER_MAIN+3:
                 pCreature->CastSpell(pPlayer, SPELL_ARM, false);
-                pPlayer->AddSpellCooldown(SPELL_ARM,0,time(NULL) + 7200);
+                pPlayer->AddSpellCooldown(SPELL_ARM, 0, time(NULL) + 7200);
                 SendAction(pPlayer, pCreature, uiAction);
                 break;
             case GOSSIP_SENDER_MAIN+4:
                 pCreature->CastSpell(pPlayer, SPELL_SPI, false);
-                pPlayer->AddSpellCooldown(SPELL_SPI,0,time(NULL) + 7200);
+                pPlayer->AddSpellCooldown(SPELL_SPI, 0, time(NULL) + 7200);
                 SendAction(pPlayer, pCreature, uiAction);
                 break;
             case GOSSIP_SENDER_MAIN+5:
                 pCreature->CastSpell(pPlayer, SPELL_INT, false);
-                pPlayer->AddSpellCooldown(SPELL_INT,0,time(NULL) + 7200);
+                pPlayer->AddSpellCooldown(SPELL_INT, 0, time(NULL) + 7200);
                 SendAction(pPlayer, pCreature, uiAction);
                 break;
             case GOSSIP_SENDER_MAIN+6:
                 pCreature->CastSpell(pPlayer, SPELL_STM, false);
-                pPlayer->AddSpellCooldown(SPELL_STM,0,time(NULL) + 7200);
+                pPlayer->AddSpellCooldown(SPELL_STM, 0, time(NULL) + 7200);
                 SendAction(pPlayer, pCreature, uiAction);
                 break;
             case GOSSIP_SENDER_MAIN+7:
                 pCreature->CastSpell(pPlayer, SPELL_STR, false);
-                pPlayer->AddSpellCooldown(SPELL_STR,0,time(NULL) + 7200);
+                pPlayer->AddSpellCooldown(SPELL_STR, 0, time(NULL) + 7200);
                 SendAction(pPlayer, pCreature, uiAction);
                 break;
             case GOSSIP_SENDER_MAIN+8:
                 pCreature->CastSpell(pPlayer, SPELL_AGI, false);
-                pPlayer->AddSpellCooldown(SPELL_AGI,0,time(NULL) + 7200);
+                pPlayer->AddSpellCooldown(SPELL_AGI, 0, time(NULL) + 7200);
                 SendAction(pPlayer, pCreature, uiAction);
                 break;
         }
@@ -1627,7 +1627,7 @@ public:
             {
                 me->CastSpell(me, 26218, false);
                 pPlayer->CastSpell(pPlayer, 26218, false);
-                switch (urand(0,2))
+                switch (urand(0, 2))
                 {
                     case 0: me->CastSpell(pPlayer, 26207, false); break;
                     case 1: me->CastSpell(pPlayer, 26206, false); break;
@@ -1726,10 +1726,10 @@ public:
             {
                 if (IsViper) //Viper
                 {
-                    if (urand(0,2) == 0) //33% chance to cast
+                    if (urand(0, 2) == 0) //33% chance to cast
                     {
                         uint32 spell;
-                        if (urand(0,1) == 0)
+                        if (urand(0, 1) == 0)
                             spell = SPELL_MIND_NUMBING_POISON;
                         else
                             spell = SPELL_CRIPPLING_POISON;
@@ -1741,7 +1741,7 @@ public:
                 }
                 else //Venomous Snake
                 {
-                    if (urand(0,2) == 0) //33% chance to cast
+                    if (urand(0, 2) == 0) //33% chance to cast
                         DoCast(me->getVictim(), SPELL_DEADLY_POISON);
                     SpellTimer = VENOMOUS_SNAKE_TIMER + (rand() %5)*100;
                 }
@@ -1781,7 +1781,7 @@ public:
             victimGUID = 0;
             hearts = 15000;
             if (Unit* own = me->GetOwner())
-                me->GetMotionMaster()->MoveFollow(own,0,0);
+                me->GetMotionMaster()->MoveFollow(own, 0, 0);
         }
         void EnterCombat(Unit * /*who*/){}
         void UpdateAI(const uint32 diff)
@@ -1819,17 +1819,17 @@ public:
                         break;
                     case 7:whisp.append(SAY_RANDOM_MOJO7);break;
                 }
-                me->MonsterWhisper(whisp.c_str(),pPlayer->GetGUID());
+                me->MonsterWhisper(whisp.c_str(), pPlayer->GetGUID());
                 if (victimGUID)
                 {
                     Player* victim = Unit::GetPlayer(*me, victimGUID);
                     if (victim)
                         victim->RemoveAura(43906);//remove polymorph frog thing
                 }
-                me->AddAura(43906,pPlayer);//add polymorph frog thing
+                me->AddAura(43906, pPlayer);//add polymorph frog thing
                 victimGUID = pPlayer->GetGUID();
                 DoCast(me, 20372, true);//tag.hearts
-                me->GetMotionMaster()->MoveFollow(pPlayer,0,0);
+                me->GetMotionMaster()->MoveFollow(pPlayer, 0, 0);
                 hearts = 15000;
             }
         }
@@ -1968,9 +1968,9 @@ public:
             Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
             me->VisitNearbyObject(30, searcher);
             for (std::list<Unit*>::const_iterator iter = targets.begin(); iter != targets.end(); ++iter)
-                if ((*iter)->GetAura(49206,owner->GetGUID()))
+                if ((*iter)->GetAura(49206, owner->GetGUID()))
                 {
-                    me->Attack((*iter),false);
+                    me->Attack((*iter), false);
                     break;
                 }
         }
@@ -2030,8 +2030,8 @@ public:
 
 enum eTrainingDummy
 {
-    NPC_ADVANCED_TARGET_DUMMY                  = 2674,
-    NPC_TARGET_DUMMY                           = 2673,
+    NPC_ADVANCED_TARGET_DUMMY                  = 2674, 
+    NPC_TARGET_DUMMY                           = 2673, 
     NPC_CATACLYSM_TARGET_DUMMY                 = 44548
 };
 
@@ -2053,7 +2053,7 @@ public:
 
         void Reset()
         {
-            me->SetControlled(true,UNIT_STAT_STUNNED);//disable rotate
+            me->SetControlled(true, UNIT_STAT_STUNNED);//disable rotate
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);//imune to knock aways like blast wave
 
             uiResetTimer = 5000;
@@ -2092,7 +2092,7 @@ public:
                 return;
 
             if (!me->HasUnitState(UNIT_STAT_STUNNED))
-                me->SetControlled(true,UNIT_STAT_STUNNED);//disable rotate
+                me->SetControlled(true, UNIT_STAT_STUNNED);//disable rotate
 
             if (uiEntry != NPC_CATACLYSM_TARGET_DUMMY)
             {            
@@ -2147,7 +2147,7 @@ public:
                 {
                     if (pOwner->HasAura(GLYPH_OF_SHADOWFIEND))
                         if (damage >= me->GetHealth())
-                            pOwner->CastSpell(pOwner,GLYPH_OF_SHADOWFIEND_MANA,true);
+                            pOwner->CastSpell(pOwner, GLYPH_OF_SHADOWFIEND_MANA, true);
                 }
         }
 
@@ -2175,10 +2175,10 @@ public:
 
 enum eWormhole
 {
-    SPELL_HOWLING_FJORD         = 67838,
-    SPELL_SHOLAZAR_BASIN        = 67835,
-    SPELL_ICECROWN              = 67836,
-    SPELL_STORM_PEAKS           = 67837,
+    SPELL_HOWLING_FJORD         = 67838, 
+    SPELL_SHOLAZAR_BASIN        = 67835, 
+    SPELL_ICECROWN              = 67836, 
+    SPELL_STORM_PEAKS           = 67837, 
 
     TEXT_WORMHOLE               = 907
 };
@@ -2209,7 +2209,7 @@ public:
     bool OnGossipSelect(Player* pPlayer, Creature* /*pCreature*/, uint32 /*uiSender*/, uint32 uiAction)
     {
         pPlayer->PlayerTalkClass->ClearMenus();
-        bool roll = urand(0,1);
+        bool roll = urand(0, 1);
 
         switch(uiAction)
         {
@@ -2247,9 +2247,9 @@ public:
 
 enum ePetTrainer
 {
-    TEXT_ISHUNTER               = 5838,
-    TEXT_NOTHUNTER              = 5839,
-    TEXT_PETINFO                = 13474,
+    TEXT_ISHUNTER               = 5838, 
+    TEXT_NOTHUNTER              = 5839, 
+    TEXT_PETINFO                = 13474, 
     TEXT_CONFIRM                = 7722
 };
 
@@ -2311,27 +2311,27 @@ public:
 
 enum eLockSmith
 {
-    QUEST_HOW_TO_BRAKE_IN_TO_THE_ARCATRAZ = 10704,
-    QUEST_DARK_IRON_LEGACY                = 3802,
-    QUEST_THE_KEY_TO_SCHOLOMANCE_A        = 5505,
-    QUEST_THE_KEY_TO_SCHOLOMANCE_H        = 5511,
-    QUEST_HOTTER_THAN_HELL_A              = 10758,
-    QUEST_HOTTER_THAN_HELL_H              = 10764,
-    QUEST_RETURN_TO_KHAGDAR               = 9837,
-    QUEST_CONTAINMENT                     = 13159,
+    QUEST_HOW_TO_BRAKE_IN_TO_THE_ARCATRAZ = 10704, 
+    QUEST_DARK_IRON_LEGACY                = 3802, 
+    QUEST_THE_KEY_TO_SCHOLOMANCE_A        = 5505, 
+    QUEST_THE_KEY_TO_SCHOLOMANCE_H        = 5511, 
+    QUEST_HOTTER_THAN_HELL_A              = 10758, 
+    QUEST_HOTTER_THAN_HELL_H              = 10764, 
+    QUEST_RETURN_TO_KHAGDAR               = 9837, 
+    QUEST_CONTAINMENT                     = 13159, 
 
-    ITEM_ARCATRAZ_KEY                     = 31084,
-    ITEM_SHADOWFORGE_KEY                  = 11000,
-    ITEM_SKELETON_KEY                     = 13704,
-    ITEM_SHATTERED_HALLS_KEY              = 28395,
-    ITEM_THE_MASTERS_KEY                  = 24490,
-    ITEM_VIOLET_HOLD_KEY                  = 42482,
+    ITEM_ARCATRAZ_KEY                     = 31084, 
+    ITEM_SHADOWFORGE_KEY                  = 11000, 
+    ITEM_SKELETON_KEY                     = 13704, 
+    ITEM_SHATTERED_HALLS_KEY              = 28395, 
+    ITEM_THE_MASTERS_KEY                  = 24490, 
+    ITEM_VIOLET_HOLD_KEY                  = 42482, 
 
-    SPELL_ARCATRAZ_KEY                    = 54881,
-    SPELL_SHADOWFORGE_KEY                 = 54882,
-    SPELL_SKELETON_KEY                    = 54883,
-    SPELL_SHATTERED_HALLS_KEY             = 54884,
-    SPELL_THE_MASTERS_KEY                 = 54885,
+    SPELL_ARCATRAZ_KEY                    = 54881, 
+    SPELL_SHADOWFORGE_KEY                 = 54882, 
+    SPELL_SKELETON_KEY                    = 54883, 
+    SPELL_SHATTERED_HALLS_KEY             = 54884, 
+    SPELL_THE_MASTERS_KEY                 = 54885, 
     SPELL_VIOLET_HOLD_KEY                 = 67253
 };
 
@@ -2420,38 +2420,38 @@ public:
 
 enum
 {
-    QUEST_TRUE_MASTERS_OF_LIGHT = 9737,
-    QUEST_THE_UNWRITTEN_PROPHECY = 9762,
-    QUEST_INTO_THE_BREACH = 10259,
-    QUEST_BATTLE_OF_THE_CRIMSON_WATCH = 10781,
-    QUEST_SHARDS_OF_AHUNE = 11972,
+    QUEST_TRUE_MASTERS_OF_LIGHT = 9737, 
+    QUEST_THE_UNWRITTEN_PROPHECY = 9762, 
+    QUEST_INTO_THE_BREACH = 10259, 
+    QUEST_BATTLE_OF_THE_CRIMSON_WATCH = 10781, 
+    QUEST_SHARDS_OF_AHUNE = 11972, 
 
-    ACHIEVEMENT_EXPLORE_NORTHREND = 45,
-    ACHIEVEMENT_TWENTYFIVE_TABARDS = 1021,
-    ACHIEVEMENT_THE_LOREMASTER_A = 1681,
-    ACHIEVEMENT_THE_LOREMASTER_H = 1682,
+    ACHIEVEMENT_EXPLORE_NORTHREND = 45, 
+    ACHIEVEMENT_TWENTYFIVE_TABARDS = 1021, 
+    ACHIEVEMENT_THE_LOREMASTER_A = 1681, 
+    ACHIEVEMENT_THE_LOREMASTER_H = 1682, 
 
-    ITEM_TABARD_OF_THE_HAND = 24344,
-    ITEM_TABARD_OF_THE_BLOOD_KNIGHT = 25549,
-    ITEM_TABARD_OF_THE_PROTECTOR = 28788,
-    ITEM_OFFERING_OF_THE_SHATAR = 31408,
-    ITEM_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI = 31404,
-    ITEM_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI = 31405,
-    ITEM_TABARD_OF_THE_SUMMER_SKIES = 35279,
-    ITEM_TABARD_OF_THE_SUMMER_FLAMES = 35280,
-    ITEM_TABARD_OF_THE_ACHIEVER = 40643,
-    ITEM_LOREMASTERS_COLORS = 43300,
-    ITEM_TABARD_OF_THE_EXPLORER = 43348,
+    ITEM_TABARD_OF_THE_HAND = 24344, 
+    ITEM_TABARD_OF_THE_BLOOD_KNIGHT = 25549, 
+    ITEM_TABARD_OF_THE_PROTECTOR = 28788, 
+    ITEM_OFFERING_OF_THE_SHATAR = 31408, 
+    ITEM_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI = 31404, 
+    ITEM_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI = 31405, 
+    ITEM_TABARD_OF_THE_SUMMER_SKIES = 35279, 
+    ITEM_TABARD_OF_THE_SUMMER_FLAMES = 35280, 
+    ITEM_TABARD_OF_THE_ACHIEVER = 40643, 
+    ITEM_LOREMASTERS_COLORS = 43300, 
+    ITEM_TABARD_OF_THE_EXPLORER = 43348, 
 
-    SPELL_TABARD_OF_THE_BLOOD_KNIGHT = 54974,
-    SPELL_TABARD_OF_THE_HAND = 54976,
-    SPELL_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI = 54977,
-    SPELL_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI = 54982,
-    SPELL_TABARD_OF_THE_ACHIEVER = 55006,
-    SPELL_TABARD_OF_THE_PROTECTOR = 55008,
-    SPELL_LOREMASTERS_COLORS = 58194,
-    SPELL_TABARD_OF_THE_EXPLORER = 58224,
-    SPELL_TABARD_OF_SUMMER_SKIES = 62768,
+    SPELL_TABARD_OF_THE_BLOOD_KNIGHT = 54974, 
+    SPELL_TABARD_OF_THE_HAND = 54976, 
+    SPELL_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI = 54977, 
+    SPELL_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI = 54982, 
+    SPELL_TABARD_OF_THE_ACHIEVER = 55006, 
+    SPELL_TABARD_OF_THE_PROTECTOR = 55008, 
+    SPELL_LOREMASTERS_COLORS = 58194, 
+    SPELL_TABARD_OF_THE_EXPLORER = 58224, 
+    SPELL_TABARD_OF_SUMMER_SKIES = 62768, 
     SPELL_TABARD_OF_SUMMER_FLAMES = 62769
 };
 
@@ -2645,11 +2645,11 @@ public:
 
 enum eSpringRabbit
 {
-    NPC_SPRING_RABBIT = 32791,
-    NPC_SPRING_RABBIT_BABBY = 32793,
-    SPELL_SPRING_RABBIT_IN_LOVE = 61728,
-    SPELL_SPRING_RABBIT_JUMP = 61724,
-    SPELL_SPRING_RABBIT_FLING = 61875,
+    NPC_SPRING_RABBIT = 32791, 
+    NPC_SPRING_RABBIT_BABBY = 32793, 
+    SPELL_SPRING_RABBIT_IN_LOVE = 61728, 
+    SPELL_SPRING_RABBIT_JUMP = 61724, 
+    SPELL_SPRING_RABBIT_FLING = 61875, 
 };
 
 class npc_spring_rabbit : public CreatureScript
@@ -2669,7 +2669,7 @@ public:
             m_bIsLove = false;
 
             if (Unit* own = me->GetOwner())
-                me->GetMotionMaster()->MoveFollow(own,0,0);
+                me->GetMotionMaster()->MoveFollow(own, 0, 0);
         }
 
         void UpdateAI(const uint32 diff)
@@ -2844,7 +2844,7 @@ public:
 			if (who->isAlive() && who->HasAura(81782))
 			{
 			
-			    if (AuraEffect const* aur = who->GetAuraEffect(81782,0))
+			    if (AuraEffect const* aur = who->GetAuraEffect(81782, 0))
                     aur->GetBase()->SetDuration(GetSpellMaxDuration(aur->GetSpellProto()), true);
             }
 		}
@@ -2887,7 +2887,7 @@ public:
 
 enum eFlameOrb
 {
-    SPELL_FLAME_ORB_DAMAGE          = 86719,
+    SPELL_FLAME_ORB_DAMAGE          = 86719, 
     FLAME_ORB_DISTANCE              = 120
 };
 
@@ -2911,7 +2911,7 @@ public:
             CombatCheck = false;
         }
         
-        float x,y,z,o,newx,newy,angle;
+        float x, y, z, o, newx, newy, angle;
         bool CombatCheck;
         uint32 uiDespawnTimer;
         uint32 uiDespawnCheckTimer;

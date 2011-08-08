@@ -130,9 +130,9 @@ class Pet : public Guardian
 
         bool Create (uint32 guidlow, Map *map, uint32 phaseMask, uint32 Entry, uint32 pet_number);
         bool CreateBaseAtCreature(Creature* creature);
-        bool CreateBaseAtCreatureInfo(CreatureInfo const* cinfo,Unit * owner);
+        bool CreateBaseAtCreatureInfo(CreatureInfo const* cinfo, Unit * owner);
         bool CreateBaseAtTamed(CreatureInfo const * cinfo, Map * map, uint32 phaseMask);
-        bool LoadPetFromDB(Player* owner,uint32 petentry = 0,uint32 petnumber = 0, bool current = false, PetSlot slotID = PET_SLOT_UNK_SLOT);
+        bool LoadPetFromDB(Player* owner, uint32 petentry = 0, uint32 petnumber = 0, bool current = false, PetSlot slotID = PET_SLOT_UNK_SLOT);
         bool isBeingLoaded() const { return m_loading;}
         void SavePetToDB(PetSlot mode);
         void Remove(PetSlot mode, bool returnreagent = false);
@@ -187,7 +187,7 @@ class Pet : public Guardian
         void _LoadSpells();
         void _SaveSpells(SQLTransaction& trans);
 
-        bool addSpell(uint32 spell_id,ActiveStates active = ACT_DECIDE, PetSpellState state = PETSPELL_NEW, PetSpellType type = PETSPELL_NORMAL);
+        bool addSpell(uint32 spell_id, ActiveStates active = ACT_DECIDE, PetSpellState state = PETSPELL_NEW, PetSpellType type = PETSPELL_NORMAL);
         bool learnSpell(uint32 spell_id);
         void learnSpellHighRank(uint32 spellid);
         void InitLevelupSpellsForLevel();
@@ -222,7 +222,7 @@ class Pet : public Guardian
         bool    m_removed;                                  // prevent overwrite pet state in DB at next Pet::Update if pet already removed(saved)
 
         Player *GetOwner() { return m_owner; }
-    
+
         PetTalentType GetTalentType();
     protected:
         Player *m_owner;

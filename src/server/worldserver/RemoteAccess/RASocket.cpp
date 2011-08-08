@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -112,16 +112,16 @@ int RASocket::recv_line(std::string& out_line)
 {
     char buf[4096];
 
-    ACE_Data_Block db(sizeof (buf),
-            ACE_Message_Block::MB_DATA,
-            buf,
-            0,
-            0,
-            ACE_Message_Block::DONT_DELETE,
+    ACE_Data_Block db(sizeof (buf), 
+            ACE_Message_Block::MB_DATA, 
+            buf, 
+            0, 
+            0, 
+            ACE_Message_Block::DONT_DELETE, 
             0);
 
-    ACE_Message_Block message_block(&db,
-            ACE_Message_Block::DONT_DELETE,
+    ACE_Message_Block message_block(&db, 
+            ACE_Message_Block::DONT_DELETE, 
             0);
 
     if (recv_line(message_block) == -1)
@@ -220,7 +220,7 @@ int RASocket::check_password(const std::string& user, const std::string& pass)
     std::string hash = sAccountMgr->CalculateShaPassHash(safe_user, safe_pass);
 
     QueryResult check = LoginDatabase.PQuery(
-            "SELECT 1 FROM account WHERE username = '%s' AND sha_pass_hash = '%s'",
+            "SELECT 1 FROM account WHERE username = '%s' AND sha_pass_hash = '%s'", 
             safe_user.c_str(), hash.c_str());
 
     if (!check)

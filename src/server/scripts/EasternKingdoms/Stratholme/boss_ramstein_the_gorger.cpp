@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -73,12 +73,12 @@ public:
         {
             for (uint8 i = 0; i < 30; ++i)
             {
-                if (Creature* mob = me->SummonCreature(C_MINDLESS_UNDEAD,3969.35f+irand(-10,10),-3391.87f+irand(-10,10),119.11f,5.91f,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,1800000))
+                if (Creature* mob = me->SummonCreature(C_MINDLESS_UNDEAD, 3969.35f+irand(-10, 10), -3391.87f+irand(-10, 10), 119.11f, 5.91f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 1800000))
                     mob->AI()->AttackStart(me->SelectNearestTarget(500));
             }
 
             if (pInstance)
-                pInstance->SetData(TYPE_RAMSTEIN,DONE);
+                pInstance->SetData(TYPE_RAMSTEIN, DONE);
         }
 
         void UpdateAI(const uint32 diff)

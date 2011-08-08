@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -200,7 +200,7 @@ void PoolGroup<T>::DespawnObject(ActivePoolData& spawns, uint32 guid)
             if (!guid || EqualChanced[i].guid == guid)
             {
                 Despawn1Object(EqualChanced[i].guid);
-                spawns.RemoveObject<T>(EqualChanced[i].guid,poolId);
+                spawns.RemoveObject<T>(EqualChanced[i].guid, poolId);
             }
         }
     }
@@ -213,7 +213,7 @@ void PoolGroup<T>::DespawnObject(ActivePoolData& spawns, uint32 guid)
             if (!guid || ExplicitlyChanced[i].guid == guid)
             {
                 Despawn1Object(ExplicitlyChanced[i].guid);
-                spawns.RemoveObject<T>(ExplicitlyChanced[i].guid,poolId);
+                spawns.RemoveObject<T>(ExplicitlyChanced[i].guid, poolId);
             }
         }
     }
@@ -375,12 +375,12 @@ void PoolGroup<Creature>::Spawn1Object(PoolObject* obj)
                 return;
             
             Creature* pCreature = NULL;
-            if(ci->ScriptID)
+            if (ci->ScriptID)
                 pCreature = sScriptMgr->GetCreatureScriptedClass(ci->ScriptID);
-            if(pCreature == NULL)
+            if (pCreature == NULL)
                 pCreature = new Creature();
             
-            //sLog->outDebug(LOG_FILTER_POOLSYS, "Spawning creature %u",guid);
+            //sLog->outDebug(LOG_FILTER_POOLSYS, "Spawning creature %u", guid);
             if (!pCreature->LoadFromDB(obj->guid, map))
             {
                 delete pCreature;
@@ -575,7 +575,7 @@ void PoolMgr::LoadFromDB()
 
     mPoolTemplate.resize(max_pool_id + 1);
 
-    result = WorldDatabase.Query("SELECT entry,max_limit FROM pool_template");
+    result = WorldDatabase.Query("SELECT entry, max_limit FROM pool_template");
     if (!result)
     {
         mPoolTemplate.clear();
@@ -637,7 +637,7 @@ void PoolMgr::LoadFromDB()
             }
             if (pool_id > max_pool_id)
             {
-                sLog->outErrorDb("`pool_creature` pool id (%u) is out of range compared to max pool id in `pool_template`, skipped.",pool_id);
+                sLog->outErrorDb("`pool_creature` pool id (%u) is out of range compared to max pool id in `pool_template`, skipped.", pool_id);
                 continue;
             }
             if (chance < 0 || chance > 100)
@@ -703,7 +703,7 @@ void PoolMgr::LoadFromDB()
             }
             if (pool_id > max_pool_id)
             {
-                sLog->outErrorDb("`pool_gameobject` pool id (%u) is out of range compared to max pool id in `pool_template`, skipped.",pool_id);
+                sLog->outErrorDb("`pool_gameobject` pool id (%u) is out of range compared to max pool id in `pool_template`, skipped.", pool_id);
                 continue;
             }
             if (chance < 0 || chance > 100)
@@ -755,17 +755,17 @@ void PoolMgr::LoadFromDB()
 
             if (mother_pool_id > max_pool_id)
             {
-                sLog->outErrorDb("`pool_pool` mother_pool id (%u) is out of range compared to max pool id in `pool_template`, skipped.",mother_pool_id);
+                sLog->outErrorDb("`pool_pool` mother_pool id (%u) is out of range compared to max pool id in `pool_template`, skipped.", mother_pool_id);
                 continue;
             }
             if (child_pool_id > max_pool_id)
             {
-                sLog->outErrorDb("`pool_pool` included pool_id (%u) is out of range compared to max pool id in `pool_template`, skipped.",child_pool_id);
+                sLog->outErrorDb("`pool_pool` included pool_id (%u) is out of range compared to max pool id in `pool_template`, skipped.", child_pool_id);
                 continue;
             }
             if (mother_pool_id == child_pool_id)
             {
-                sLog->outErrorDb("`pool_pool` pool_id (%u) includes itself, dead-lock detected, skipped.",child_pool_id);
+                sLog->outErrorDb("`pool_pool` pool_id (%u) includes itself, dead-lock detected, skipped.", child_pool_id);
                 continue;
             }
             if (chance < 0 || chance > 100)
@@ -839,8 +839,8 @@ void PoolMgr::LoadQuestPools()
 
     enum eQuestTypes
     {
-        QUEST_NONE   = 0,
-        QUEST_DAILY  = 1,
+        QUEST_NONE   = 0, 
+        QUEST_DAILY  = 1, 
         QUEST_WEEKLY = 2
     };
 
@@ -862,7 +862,7 @@ void PoolMgr::LoadQuestPools()
 
         if (pool_id > max_pool_id)
         {
-            sLog->outErrorDb("`pool_quest` pool id (%u) is out of range compared to max pool id in `pool_template`, skipped.",pool_id);
+            sLog->outErrorDb("`pool_quest` pool id (%u) is out of range compared to max pool id in `pool_template`, skipped.", pool_id);
             continue;
         }
 
@@ -925,7 +925,7 @@ void PoolMgr::Initialize()
             if (!CheckPool(pool_entry))
             {
                 if (pool_pool_id)
-                    // The pool is a child pool in pool_pool table. Ideally we should remove it from the pool handler to ensure it never gets spawned,
+                    // The pool is a child pool in pool_pool table. Ideally we should remove it from the pool handler to ensure it never gets spawned, 
                     // however that could recursively invalidate entire chain of mother pools. It can be done in the future but for now we'll do nothing.
                     sLog->outErrorDb("Pool Id %u has no equal chance pooled entites defined and explicit chance sum is not 100. This broken pool is a child pool of Id %u and cannot be safely removed.", pool_entry, fields[2].GetUInt32());
                 else

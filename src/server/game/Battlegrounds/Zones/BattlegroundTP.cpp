@@ -43,13 +43,13 @@ enum BG_TP_Rewards
 };
 
 uint32 BG_TP_Honor[BG_HONOR_MODE_NUM][BG_TP_REWARD_NUM] = {
-    {20,40,40}, // normal honor
-    {60,40,80}  // holiday
+    {20, 40, 40}, // normal honor
+    {60, 40, 80}  // holiday
 };
 
 uint32 BG_TP_Reputation[BG_HONOR_MODE_NUM][BG_TP_REWARD_NUM] = {
-    {0,35,0}, // normal honor
-    {0,45,0}  // holiday
+    {0, 35, 0}, // normal honor
+    {0, 45, 0}  // holiday
 };
 
 BattlegroundTP::BattlegroundTP()
@@ -148,9 +148,9 @@ void BattlegroundTP::Update(uint32 diff)
           if (m_FlagDebuffState == 0 && m_FlagSpellForceTimer >= 600000)  //10 minutes
           {
             if (Player * plr = sObjectMgr->GetPlayer(m_FlagKeepers[0]))
-              plr->CastSpell(plr,TP_SPELL_FOCUSED_ASSAULT,true);
+              plr->CastSpell(plr, TP_SPELL_FOCUSED_ASSAULT, true);
             if (Player * plr = sObjectMgr->GetPlayer(m_FlagKeepers[1]))
-              plr->CastSpell(plr,TP_SPELL_FOCUSED_ASSAULT,true);
+              plr->CastSpell(plr, TP_SPELL_FOCUSED_ASSAULT, true);
             m_FlagDebuffState = 1;
           }
           else if (m_FlagDebuffState == 1 && m_FlagSpellForceTimer >= 900000) //15 minutes
@@ -158,12 +158,12 @@ void BattlegroundTP::Update(uint32 diff)
             if (Player * plr = sObjectMgr->GetPlayer(m_FlagKeepers[0]))
             {
               plr->RemoveAurasDueToSpell(TP_SPELL_FOCUSED_ASSAULT);
-              plr->CastSpell(plr,TP_SPELL_BRUTAL_ASSAULT,true);
+              plr->CastSpell(plr, TP_SPELL_BRUTAL_ASSAULT, true);
             }
             if (Player * plr = sObjectMgr->GetPlayer(m_FlagKeepers[1]))
             {
               plr->RemoveAurasDueToSpell(TP_SPELL_FOCUSED_ASSAULT);
-              plr->CastSpell(plr,TP_SPELL_BRUTAL_ASSAULT,true);
+              plr->CastSpell(plr, TP_SPELL_BRUTAL_ASSAULT, true);
             }
             m_FlagDebuffState = 2;
           }
@@ -247,7 +247,7 @@ void BattlegroundTP::RespawnFlagAfterDrop(uint32 team)
     if (GetStatus() != STATUS_IN_PROGRESS)
         return;
 
-    RespawnFlag(team,false);
+    RespawnFlag(team, false);
     if (team == ALLIANCE)
     {
         SpawnBGObject(BG_TP_OBJECT_A_FLAG, RESPAWN_IMMEDIATELY);
@@ -265,9 +265,9 @@ void BattlegroundTP::RespawnFlagAfterDrop(uint32 team)
     if (obj)
         obj->Delete();
     else
-        sLog->outError("unknown droped flag bg, guid: %u",GUID_LOPART(GetDroppedFlagGUID(team)));
+        sLog->outError("unknown droped flag bg, guid: %u", GUID_LOPART(GetDroppedFlagGUID(team)));
 
-    SetDroppedFlagGUID(0,team);
+    SetDroppedFlagGUID(0, team);
     m_BothFlagsKept = false;
 }
 
@@ -514,9 +514,9 @@ void BattlegroundTP::EventPlayerClickedOnFlag(Player *Source, GameObject* target
             m_FlagState[BG_TEAM_ALLIANCE] = BG_TP_FLAG_STATE_ON_PLAYER;
             UpdateFlagState(HORDE, BG_TP_FLAG_STATE_ON_PLAYER);
             if (m_FlagDebuffState == 1)
-              Source->CastSpell(Source,TP_SPELL_FOCUSED_ASSAULT,true);
+              Source->CastSpell(Source, TP_SPELL_FOCUSED_ASSAULT, true);
             if (m_FlagDebuffState == 2)
-              Source->CastSpell(Source,TP_SPELL_BRUTAL_ASSAULT,true);
+              Source->CastSpell(Source, TP_SPELL_BRUTAL_ASSAULT, true);
             UpdateWorldState(BG_TP_FLAG_UNK_ALLIANCE, 1);
         }
         //called in HandleGameObjectUseOpcode:
@@ -548,9 +548,9 @@ void BattlegroundTP::EventPlayerClickedOnFlag(Player *Source, GameObject* target
             m_FlagState[BG_TEAM_HORDE] = BG_TP_FLAG_STATE_ON_PLAYER;
             UpdateFlagState(ALLIANCE, BG_TP_FLAG_STATE_ON_PLAYER);
             if (m_FlagDebuffState == 1)
-              Source->CastSpell(Source,TP_SPELL_FOCUSED_ASSAULT,true);
+              Source->CastSpell(Source, TP_SPELL_FOCUSED_ASSAULT, true);
             if (m_FlagDebuffState == 2)
-              Source->CastSpell(Source,TP_SPELL_BRUTAL_ASSAULT,true);
+              Source->CastSpell(Source, TP_SPELL_BRUTAL_ASSAULT, true);
             UpdateWorldState(BG_TP_FLAG_UNK_HORDE, 1);
         }
         //called in HandleGameObjectUseOpcode:
@@ -645,7 +645,7 @@ void BattlegroundTP::HandleAreaTrigger(Player *Source, uint32 Trigger)
     }
 
     //if (buff_guid)
-    //    HandleTriggerBuff(buff_guid,Source);
+    //    HandleTriggerBuff(buff_guid, Source);
 }
 
 bool BattlegroundTP::SetupBattleground()
@@ -766,7 +766,6 @@ void BattlegroundTP::HandleKillPlayer(Player *player, Player *killer)
 
 void BattlegroundTP::UpdatePlayerScore(Player *Source, uint32 type, uint32 value, bool doAddHonor)
 {
-
     BattlegroundScoreMap::iterator itr = m_PlayerScores.find(Source->GetGUID());
     if (itr == m_PlayerScores.end())                         // player not found
         return;
@@ -801,9 +800,9 @@ WorldSafeLocsEntry const* BattlegroundTP::GetClosestGraveYard(Player* player)
             WorldSafeLocsEntry const* ret;
             WorldSafeLocsEntry const* closest;
             float dist, nearest;
-            float x,y,z;
+            float x, y, z;
 
-            player->GetPosition(x,y,z);
+            player->GetPosition(x, y, z);
 
             closest = sWorldSafeLocsStore.LookupEntry(TP_GRAVEYARD_MIDDLE_ALLIANCE);
             nearest = sqrt((closest->x - x)*(closest->x - x) + (closest->y - y)*(closest->y - y)+(closest->z - z)*(closest->z - z));
@@ -869,5 +868,4 @@ void BattlegroundTP::FillInitialWorldStates(WorldPacket& data)
         data << uint32(BG_TP_FLAG_STATE_HORDE) << uint32(2);
     else
         data << uint32(BG_TP_FLAG_STATE_HORDE) << uint32(1);
-
 }

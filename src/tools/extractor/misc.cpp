@@ -23,7 +23,7 @@
 bool FileExists( const char* FileName )
 {
     FILE *fp = fopen(FileName,"r");
-    if( fp ) 
+    if ( fp ) 
     {
         fclose(fp);
         return true;
@@ -53,7 +53,7 @@ int ReadBuild(int locale)
     std::string temp;
 	
     std::ifstream fichier((std::string("./dbc/") + filename).c_str(), std::ios::in);
-    if(!fichier)
+    if (!fichier)
         assert(false && "Error when loading component.wow-...");
     while(fichier)
     {

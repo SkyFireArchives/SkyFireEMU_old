@@ -35,4 +35,3 @@ class GroupRefManager : public RefManager<Group, Player>
         GroupReference* getFirst() { return ((GroupReference*) RefManager<Group, Player>::getFirst()); }
 };
 #endif
-

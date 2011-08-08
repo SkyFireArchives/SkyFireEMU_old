@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,13 +31,13 @@ class GameObject;
 
 enum OutdoorPvPTypes
 {
-    OUTDOOR_PVP_HP = 1,
-    OUTDOOR_PVP_NA = 2,
-    OUTDOOR_PVP_TF = 3,
-    OUTDOOR_PVP_ZM = 4,
-    OUTDOOR_PVP_SI = 5,
-    OUTDOOR_PVP_EP = 6,
-    OUTDOOR_PVP_GH = 7,
+    OUTDOOR_PVP_HP = 1, 
+    OUTDOOR_PVP_NA = 2, 
+    OUTDOOR_PVP_TF = 3, 
+    OUTDOOR_PVP_ZM = 4, 
+    OUTDOOR_PVP_SI = 5, 
+    OUTDOOR_PVP_EP = 6, 
+    OUTDOOR_PVP_GH = 7, 
 };
 
 #define MAX_OUTDOORPVP_TYPES 8
@@ -46,13 +46,13 @@ const uint8 CapturePointArtKit[3] = {2, 1, 21};
 
 enum ObjectiveStates
 {
-    OBJECTIVESTATE_NEUTRAL = 0,
-    OBJECTIVESTATE_ALLIANCE,
-    OBJECTIVESTATE_HORDE,
-    OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE,
-    OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE,
-    OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE,
-    OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE,
+    OBJECTIVESTATE_NEUTRAL = 0, 
+    OBJECTIVESTATE_ALLIANCE, 
+    OBJECTIVESTATE_HORDE, 
+    OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE, 
+    OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE, 
+    OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE, 
+    OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE, 
 };
 
 #define OTHER_TEAM(a) (a == TEAM_ALLIANCE ? TEAM_HORDE : TEAM_ALLIANCE)
@@ -144,12 +144,12 @@ class OPvPCapturePoint
         void AddGO(uint32 type, uint32 guid, uint32 entry = 0);
         void AddCre(uint32 type, uint32 guid, uint32 entry = 0);
 
-        bool SetCapturePointData(uint32 entry, uint32 map, float x, float y, float z, float o = 0,
+        bool SetCapturePointData(uint32 entry, uint32 map, float x, float y, float z, float o = 0, 
             float rotation0 = 0, float rotation1 = 0, float rotation2 = 0, float rotation3 = 0);
 
     protected:
 
-        bool AddObject(uint32 type, uint32 entry, uint32 map, float x, float y, float z, float o,
+        bool AddObject(uint32 type, uint32 entry, uint32 map, float x, float y, float z, float o, 
             float rotation0, float rotation1, float rotation2, float rotation3);
         bool AddCreature(uint32 type, uint32 entry, uint32 teamval, uint32 map, float x, float y, float z, float o, uint32 spawntimedelay = 0);
 
@@ -187,10 +187,10 @@ class OPvPCapturePoint
 
         // map to store the various gameobjects and creatures spawned by the objective
         //        type , guid
-        std::map<uint32,uint64> m_Objects;
-        std::map<uint32,uint64> m_Creatures;
-        std::map<uint64,uint32> m_ObjectTypes;
-        std::map<uint64,uint32> m_CreatureTypes;
+        std::map<uint32, uint64> m_Objects;
+        std::map<uint32, uint64> m_Creatures;
+        std::map<uint64, uint32> m_ObjectTypes;
+        std::map<uint64, uint32> m_CreatureTypes;
 };
 
 // base class for specific outdoor pvp handlers

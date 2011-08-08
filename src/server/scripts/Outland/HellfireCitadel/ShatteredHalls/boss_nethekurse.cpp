@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -45,42 +45,42 @@ struct Say
 
 static Say PeonAttacked[]=
 {
-    {-1540001},
-    {-1540002},
-    {-1540003},
-    {-1540004},
+    {-1540001}, 
+    {-1540002}, 
+    {-1540003}, 
+    {-1540004}, 
 };
 static Say PeonDies[]=
 {
-    {-1540005},
-    {-1540006},
-    {-1540007},
-    {-1540008},
+    {-1540005}, 
+    {-1540006}, 
+    {-1540007}, 
+    {-1540008}, 
 };
 
 enum eSays
 {
-    SAY_INTRO          = -1540000,
-    SAY_TAUNT_1        = -1540009,
-    SAY_TAUNT_2        = -1540010,
-    SAY_TAUNT_3        = -1540011,
-    SAY_AGGRO_1        = -1540012,
-    SAY_AGGRO_2        = -1540013,
-    SAY_AGGRO_3        = -1540014,
-    SAY_SLAY_1         = -1540015,
-    SAY_SLAY_2         = -1540016,
-    SAY_DIE            = -1540017,
+    SAY_INTRO          = -1540000, 
+    SAY_TAUNT_1        = -1540009, 
+    SAY_TAUNT_2        = -1540010, 
+    SAY_TAUNT_3        = -1540011, 
+    SAY_AGGRO_1        = -1540012, 
+    SAY_AGGRO_2        = -1540013, 
+    SAY_AGGRO_3        = -1540014, 
+    SAY_SLAY_1         = -1540015, 
+    SAY_SLAY_2         = -1540016, 
+    SAY_DIE            = -1540017, 
 };
 
 enum eSpells
 {
-    SPELL_DEATH_COIL           = 30500,
+    SPELL_DEATH_COIL           = 30500, 
     SPELL_DARK_SPIN            = 30502, // core bug spell attack caster :D
     SPELL_SHADOW_FISSURE       = 30496, // Summon the ShadowFissure NPC
-    SPELL_SHADOW_CLEAVE        = 30495,
-    H_SPELL_SHADOW_SLAM        = 35953,
-    SPELL_HEMORRHAGE           = 30478,
-    SPELL_CONSUMPTION          = 30497,
+    SPELL_SHADOW_CLEAVE        = 30495, 
+    H_SPELL_SHADOW_SLAM        = 35953, 
+    SPELL_HEMORRHAGE           = 30478, 
+    SPELL_CONSUMPTION          = 30497, 
     SPELL_TEMPORARY_VISUAL     = 39312, // this is wrong, a temporary solution. spell consumption already has the purple visual, but doesn't display as it should
 };
 
@@ -164,7 +164,7 @@ class boss_grand_warlock_nethekurse : public CreatureScript
 
             void DoTauntPeons()
             {
-                DoScriptText(RAND(SAY_TAUNT_1,SAY_TAUNT_2,SAY_TAUNT_3), me);
+                DoScriptText(RAND(SAY_TAUNT_1, SAY_TAUNT_2, SAY_TAUNT_3), me);
 
                 //TODO: kill the peons first
                 IsIntroEvent = false;
@@ -200,7 +200,7 @@ class boss_grand_warlock_nethekurse : public CreatureScript
                         IsIntroEvent = true;
 
                         if (pInstance)
-                            pInstance->SetData(TYPE_NETHEKURSE,IN_PROGRESS);
+                            pInstance->SetData(TYPE_NETHEKURSE, IN_PROGRESS);
                     }
 
                     if (IsIntroEvent || !IsMainEvent)
@@ -211,7 +211,7 @@ class boss_grand_warlock_nethekurse : public CreatureScript
 
             void EnterCombat(Unit * /*who*/)
             {
-                DoScriptText(RAND(SAY_AGGRO_1,SAY_AGGRO_2,SAY_AGGRO_3), me);
+                DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
             }
 
             void JustSummoned(Creature *summoned)
@@ -221,13 +221,13 @@ class boss_grand_warlock_nethekurse : public CreatureScript
                 summoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
                 //triggered spell of consumption does not properly show it's SpellVisual, wrong spellid?
-                summoned->CastSpell(summoned,SPELL_TEMPORARY_VISUAL,true);
-                summoned->CastSpell(summoned,SPELL_CONSUMPTION,false,0,0,me->GetGUID());
+                summoned->CastSpell(summoned, SPELL_TEMPORARY_VISUAL, true);
+                summoned->CastSpell(summoned, SPELL_CONSUMPTION, false, 0, 0, me->GetGUID());
             }
 
             void KilledUnit(Unit* /*victim*/)
             {
-                DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
+                DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
             }
 
             void JustDied(Unit* /*Killer*/)
@@ -237,7 +237,7 @@ class boss_grand_warlock_nethekurse : public CreatureScript
                 if (!pInstance)
                     return;
 
-                pInstance->SetData(TYPE_NETHEKURSE,DONE);
+                pInstance->SetData(TYPE_NETHEKURSE, DONE);
                 pInstance->HandleGameObject(pInstance->GetData64(DATA_NETHEKURSE_DOOR), true);
             }
 
@@ -283,18 +283,18 @@ class boss_grand_warlock_nethekurse : public CreatureScript
                 {
                     if (ShadowFissure_Timer <= diff)
                     {
-                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                             DoCast(pTarget, SPELL_SHADOW_FISSURE);
-                        ShadowFissure_Timer = urand(7500,15000);
+                        ShadowFissure_Timer = urand(7500, 15000);
                     }
                     else
                         ShadowFissure_Timer -= diff;
 
                     if (DeathCoil_Timer <= diff)
                     {
-                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                             DoCast(pTarget, SPELL_DEATH_COIL);
-                        DeathCoil_Timer = urand(15000,20000);
+                        DeathCoil_Timer = urand(15000, 20000);
                     }
                     else
                         DeathCoil_Timer -= diff;
@@ -349,7 +349,7 @@ class mob_fel_orc_convert : public CreatureScript
                 {
                     if (pInstance->GetData64(DATA_NETHEKURSE))
                     {
-                        Creature *pKurse = Unit::GetCreature(*me,pInstance->GetData64(DATA_NETHEKURSE));
+                        Creature *pKurse = Unit::GetCreature(*me, pInstance->GetData64(DATA_NETHEKURSE));
                         if (pKurse && me->IsWithinDist(pKurse, 45.0f))
                         {
                             CAST_AI(boss_grand_warlock_nethekurse::boss_grand_warlock_nethekurseAI, pKurse->AI())->DoYellForPeonAggro();
@@ -357,7 +357,7 @@ class mob_fel_orc_convert : public CreatureScript
                             if (pInstance->GetData(TYPE_NETHEKURSE) == IN_PROGRESS)
                                 return;
                             else
-                                pInstance->SetData(TYPE_NETHEKURSE,IN_PROGRESS);
+                                pInstance->SetData(TYPE_NETHEKURSE, IN_PROGRESS);
                         }
                     }
                 }
@@ -370,7 +370,7 @@ class mob_fel_orc_convert : public CreatureScript
                     if (pInstance->GetData(TYPE_NETHEKURSE) != IN_PROGRESS)
                         return;
                     if (pInstance->GetData64(DATA_NETHEKURSE))
-                        if (Creature *pKurse = Unit::GetCreature(*me,pInstance->GetData64(DATA_NETHEKURSE)))
+                        if (Creature *pKurse = Unit::GetCreature(*me, pInstance->GetData64(DATA_NETHEKURSE)))
                             CAST_AI(boss_grand_warlock_nethekurse::boss_grand_warlock_nethekurseAI, pKurse->AI())->DoYellForPeonDeath();
                 }
             }

@@ -179,4 +179,3 @@ bool IsHolidayActive(HolidayIds id);
 bool IsEventActive(uint16 event_id);
 
 #endif
-

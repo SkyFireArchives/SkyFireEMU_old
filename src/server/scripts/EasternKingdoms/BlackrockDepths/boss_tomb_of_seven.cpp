@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,8 +34,8 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_SMELT_DARK_IRON                                  = 14891,
-    SPELL_LEARN_SMELT                                      = 14894,
+    SPELL_SMELT_DARK_IRON                                  = 14891, 
+    SPELL_LEARN_SMELT                                      = 14894, 
 };
 
 enum Quests
@@ -80,7 +80,7 @@ public:
                 if (InstanceScript* pInstance = pCreature->GetInstanceScript())
                 {
                     //are 5 minutes expected? go template may have data to despawn when used at quest
-                    pInstance->DoRespawnGameObject(pInstance->GetData64(DATA_GO_CHALICE),MINUTE*5);
+                    pInstance->DoRespawnGameObject(pInstance->GetData64(DATA_GO_CHALICE), MINUTE*5);
                 }
                 break;
         }
@@ -104,10 +104,10 @@ public:
 
 enum DoomrelSpells
 {
-    SPELL_SHADOWBOLTVOLLEY                                 = 15245,
-    SPELL_IMMOLATE                                         = 12742,
-    SPELL_CURSEOFWEAKNESS                                  = 12493,
-    SPELL_DEMONARMOR                                       = 13787,
+    SPELL_SHADOWBOLTVOLLEY                                 = 15245, 
+    SPELL_IMMOLATE                                         = 12742, 
+    SPELL_CURSEOFWEAKNESS                                  = 12493, 
+    SPELL_DEMONARMOR                                       = 13787, 
     SPELL_SUMMON_VOIDWALKERS                               = 15092
 };
 
@@ -136,7 +136,7 @@ public:
                 pCreature->AI()->AttackStart(pPlayer);
                 InstanceScript* pInstance = pCreature->GetInstanceScript();
                 if (pInstance)
-                    pInstance->SetData64(DATA_EVENSTARTER,pPlayer->GetGUID());
+                    pInstance->SetData64(DATA_EVENSTARTER, pPlayer->GetGUID());
                 break;
         }
         return true;

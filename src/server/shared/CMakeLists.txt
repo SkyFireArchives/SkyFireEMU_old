@@ -12,9 +12,9 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-if( USE_COREPCH )
+if ( USE_COREPCH )
   include_directories(${CMAKE_CURRENT_BINARY_DIR})
-endif()
+endif ()
 
 file(GLOB_RECURSE sources_Configuration Configuration/*.cpp Configuration/*.h)
 file(GLOB_RECURSE sources_Cryptography Cryptography/*.cpp Cryptography/*.h)
@@ -32,12 +32,12 @@ file(GLOB sources_localdir *.cpp *.h)
 # Build shared sourcelist
 #
 
-if( USE_COREPCH AND MSVC )
+if ( USE_COREPCH AND MSVC )
   set(shared_STAT_SRCS
     PrecompiledHeaders/sharedPCH.cpp
     PrecompiledHeaders/sharedPCH.h
   )
-endif()
+endif ()
 
 set(shared_STAT_SRCS
   ${shared_STAT_SRCS}
@@ -85,11 +85,11 @@ target_link_libraries(shared
 )
 
 # Generate precompiled header
-if( USE_COREPCH )
-  if(CMAKE_COMPILER_IS_GNUCXX)
+if ( USE_COREPCH )
+  if (CMAKE_COMPILER_IS_GNUCXX)
     add_precompiled_header(shared ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders/sharedPCH.h)
-  elseif(MSVC)
+  elseif (MSVC)
     add_native_precompiled_header(shared ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders/sharedPCH)
-  endif()
-endif()
+  endif ()
+endif ()
 

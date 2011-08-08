@@ -55,7 +55,7 @@ Channel::Channel(const std::string& name, uint32 channel_id, uint32 Team)
     {
         channel_id = 0;
         m_flags |= CHANNEL_FLAG_CUSTOM;
-        
+
         // If storing custom channels in the db is enabled either load or save the channel
         if (sWorld->getBoolConfig(CONFIG_PRESERVE_CUSTOM_CHANNELS))
         {
@@ -81,7 +81,7 @@ Channel::Channel(const std::string& name, uint32 channel_id, uint32 Team)
                         uint64 banned_guid = atol(*iter);
                         if (banned_guid)
                         {
-                            sLog->outDebug(LOG_FILTER_CHATSYS, "Channel(%s) loaded banned guid:" UI64FMTD "",name.c_str(), banned_guid);
+                            sLog->outDebug(LOG_FILTER_CHATSYS, "Channel(%s) loaded banned guid:" UI64FMTD "", name.c_str(), banned_guid);
                             banned.insert(banned_guid);
                         }
                     }
@@ -123,7 +123,6 @@ void Channel::UpdateChannelInDB() const
 
         sLog->outDebug(LOG_FILTER_CHATSYS, "Channel(%s) updated in database", m_name.c_str());
     }
-
 }
 
 void Channel::UpdateChannelUseageInDB() const
@@ -210,7 +209,7 @@ void Channel::Join(uint64 p, const char *pass)
     if (!IsConstant())
     {
         // Update last_used timestamp in db
-        if(!players.empty())
+        if (!players.empty())
             UpdateChannelUseageInDB();
 
         // If the channel has no owner yet and ownership is allowed, set the new owner.
@@ -581,7 +580,7 @@ void Channel::List(Player* player)
             }
         }
 
-        data.put<uint32>(pos,count);
+        data.put<uint32>(pos, count);
 
         SendToOne(&data, p);
     }
@@ -787,12 +786,10 @@ void Channel::SendToOne(WorldPacket *data, uint64 who)
 
 void Channel::Voice(uint64 /*guid1*/, uint64 /*guid2*/)
 {
-
 }
 
 void Channel::DeVoice(uint64 /*guid1*/, uint64 /*guid2*/)
 {
-
 }
 
 // done

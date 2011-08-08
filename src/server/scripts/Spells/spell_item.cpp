@@ -70,11 +70,11 @@ public:
 // 8063 Deviate Fish
 enum eDeviateFishSpells
 {
-    SPELL_SLEEPY            = 8064,
-    SPELL_INVIGORATE        = 8065,
-    SPELL_SHRINK            = 8066,
-    SPELL_PARTY_TIME        = 8067,
-    SPELL_HEALTHY_SPIRIT    = 8068,
+    SPELL_SLEEPY            = 8064, 
+    SPELL_INVIGORATE        = 8065, 
+    SPELL_SHRINK            = 8066, 
+    SPELL_PARTY_TIME        = 8067, 
+    SPELL_HEALTHY_SPIRIT    = 8068, 
 };
 
 class spell_item_deviate_fish : public SpellScriptLoader
@@ -120,9 +120,9 @@ public:
 // 67019 Flask of the North
 enum eFlaskOfTheNorthSpells
 {
-    SPELL_FLASK_OF_THE_NORTH_SP = 67016,
-    SPELL_FLASK_OF_THE_NORTH_AP = 67017,
-    SPELL_FLASK_OF_THE_NORTH_STR = 67018,
+    SPELL_FLASK_OF_THE_NORTH_SP = 67016, 
+    SPELL_FLASK_OF_THE_NORTH_AP = 67017, 
+    SPELL_FLASK_OF_THE_NORTH_STR = 67018, 
 };
 
 class spell_item_flask_of_the_north : public SpellScriptLoader
@@ -197,8 +197,8 @@ public:
 // 13280 Gnomish Death Ray
 enum eGnomishDeathRay
 {
-    SPELL_GNOMISH_DEATH_RAY_SELF = 13493,
-    SPELL_GNOMISH_DEATH_RAY_TARGET = 13279,
+    SPELL_GNOMISH_DEATH_RAY_SELF = 13493, 
+    SPELL_GNOMISH_DEATH_RAY_TARGET = 13279, 
 };
 
 class spell_item_gnomish_death_ray : public SpellScriptLoader
@@ -247,11 +247,11 @@ public:
 // 33060 Make a Wish
 enum eMakeAWish
 {
-    SPELL_MR_PINCHYS_BLESSING       = 33053,
-    SPELL_SUMMON_MIGHTY_MR_PINCHY   = 33057,
-    SPELL_SUMMON_FURIOUS_MR_PINCHY  = 33059,
-    SPELL_TINY_MAGICAL_CRAWDAD      = 33062,
-    SPELL_MR_PINCHYS_GIFT           = 33064,
+    SPELL_MR_PINCHYS_BLESSING       = 33053, 
+    SPELL_SUMMON_MIGHTY_MR_PINCHY   = 33057, 
+    SPELL_SUMMON_FURIOUS_MR_PINCHY  = 33059, 
+    SPELL_TINY_MAGICAL_CRAWDAD      = 33062, 
+    SPELL_MR_PINCHYS_GIFT           = 33064, 
 };
 
 class spell_item_make_a_wish : public SpellScriptLoader
@@ -366,9 +366,9 @@ public:
 // 13120 Net-o-Matic
 enum eNetOMaticSpells
 {
-    SPELL_NET_O_MATIC_TRIGGERED1 = 16566,
-    SPELL_NET_O_MATIC_TRIGGERED2 = 13119,
-    SPELL_NET_O_MATIC_TRIGGERED3 = 13099,
+    SPELL_NET_O_MATIC_TRIGGERED1 = 16566, 
+    SPELL_NET_O_MATIC_TRIGGERED2 = 13119, 
+    SPELL_NET_O_MATIC_TRIGGERED3 = 13099, 
 };
 
 class spell_item_net_o_matic : public SpellScriptLoader
@@ -422,9 +422,9 @@ public:
 // 16589 Noggenfogger Elixir
 enum eNoggenfoggerElixirSpells
 {
-    SPELL_NOGGENFOGGER_ELIXIR_TRIGGERED1 = 16595,
-    SPELL_NOGGENFOGGER_ELIXIR_TRIGGERED2 = 16593,
-    SPELL_NOGGENFOGGER_ELIXIR_TRIGGERED3 = 16591,
+    SPELL_NOGGENFOGGER_ELIXIR_TRIGGERED1 = 16595, 
+    SPELL_NOGGENFOGGER_ELIXIR_TRIGGERED2 = 16593, 
+    SPELL_NOGGENFOGGER_ELIXIR_TRIGGERED3 = 16591, 
 };
 
 class spell_item_noggenfogger_elixir : public SpellScriptLoader
@@ -479,10 +479,10 @@ public:
 // 8213 Savory Deviate Delight
 enum eSavoryDeviateDelight
 {
-    SPELL_FLIP_OUT_MALE     = 8219,
-    SPELL_FLIP_OUT_FEMALE   = 8220,
-    SPELL_YAAARRRR_MALE     = 8221,
-    SPELL_YAAARRRR_FEMALE   = 8222,
+    SPELL_FLIP_OUT_MALE     = 8219, 
+    SPELL_FLIP_OUT_FEMALE   = 8220, 
+    SPELL_YAAARRRR_MALE     = 8221, 
+    SPELL_YAAARRRR_FEMALE   = 8222, 
 };
 
 class spell_item_savory_deviate_delight : public SpellScriptLoader
@@ -535,12 +535,12 @@ public:
 // 14537 Six Demon Bag
 enum eSixDemonBagSpells
 {
-    SPELL_FROSTBOLT                 = 11538,
-    SPELL_POLYMORPH                 = 14621,
-    SPELL_SUMMON_FELHOUND_MINION    = 14642,
-    SPELL_FIREBALL                  = 15662,
-    SPELL_CHAIN_LIGHTNING           = 21179,
-    SPELL_ENVELOPING_WINDS          = 25189,
+    SPELL_FROSTBOLT                 = 11538, 
+    SPELL_POLYMORPH                 = 14621, 
+    SPELL_SUMMON_FELHOUND_MINION    = 14642, 
+    SPELL_FIREBALL                  = 15662, 
+    SPELL_CHAIN_LIGHTNING           = 21179, 
+    SPELL_ENVELOPING_WINDS          = 25189, 
 };
 
 class spell_item_six_demon_bag : public SpellScriptLoader
@@ -617,9 +617,9 @@ public:
 // 59640 Underbelly Elixir
 enum eUnderbellyElixirSpells
 {
-    SPELL_UNDERBELLY_ELIXIR_TRIGGERED1 = 59645,
-    SPELL_UNDERBELLY_ELIXIR_TRIGGERED2 = 59831,
-    SPELL_UNDERBELLY_ELIXIR_TRIGGERED3 = 59843,
+    SPELL_UNDERBELLY_ELIXIR_TRIGGERED1 = 59645, 
+    SPELL_UNDERBELLY_ELIXIR_TRIGGERED2 = 59831, 
+    SPELL_UNDERBELLY_ELIXIR_TRIGGERED3 = 59843, 
 };
 
 class spell_item_underbelly_elixir : public SpellScriptLoader
@@ -671,9 +671,9 @@ public:
 
 enum eShadowmourneVisuals
 {
-    SPELL_SHADOWMOURNE_VISUAL_LOW       = 72521,
-    SPELL_SHADOWMOURNE_VISUAL_HIGH      = 72523,
-    SPELL_SHADOWMOURNE_CHAOS_BANE_BUFF  = 73422,
+    SPELL_SHADOWMOURNE_VISUAL_LOW       = 72521, 
+    SPELL_SHADOWMOURNE_VISUAL_HIGH      = 72523, 
+    SPELL_SHADOWMOURNE_CHAOS_BANE_BUFF  = 73422, 
 };
 
 class spell_item_shadowmourne : public SpellScriptLoader
@@ -743,10 +743,10 @@ public:
 
 enum eGenericData
 {
-    SPELL_ARCANITE_DRAGONLING           = 19804,
-    SPELL_BATTLE_CHICKEN                = 13166,
-    SPELL_MECHANICAL_DRAGONLING         = 4073,
-    SPELL_MITHRIL_MECHANICAL_DRAGONLING = 12749,
+    SPELL_ARCANITE_DRAGONLING           = 19804, 
+    SPELL_BATTLE_CHICKEN                = 13166, 
+    SPELL_MECHANICAL_DRAGONLING         = 4073, 
+    SPELL_MITHRIL_MECHANICAL_DRAGONLING = 12749, 
 };
 
 void AddSC_item_spell_scripts()

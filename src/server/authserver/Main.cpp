@@ -95,7 +95,7 @@ void usage(const char *prog)
         "    -s install               install service\n\r"
         "    -s uninstall             uninstall service\n\r"
 #endif
-        ,prog);
+        , prog);
 }
 
 /// Launch the realm server
@@ -168,12 +168,12 @@ extern int main(int argc, char **argv)
     sLog->Initialize();
 
     sLog->outString("%s (realm-daemon)", _FULLVERSION);
-	sLog->outString("   ______  __  __  __  __  ______ __  ______  ______ ");  
-    sLog->outString("  /\\  ___\\/\\ \\/ / /\\ \\_\\ \\/\\  ___/\\ \\/\\  == \\/\\  ___\\ ");  
-    sLog->outString("  \\ \\___  \\ \\  _'-\\ \\____ \\ \\  __\\ \\ \\ \\  __<\\ \\  __\\ ");  
+	sLog->outString("   ______  __  __  __  __  ______ __  ______  ______ ");
+    sLog->outString("  /\\  ___\\/\\ \\/ / /\\ \\_\\ \\/\\  ___/\\ \\/\\  == \\/\\  ___\\ ");
+    sLog->outString("  \\ \\___  \\ \\  _'-\\ \\____ \\ \\  __\\ \\ \\ \\  __<\\ \\  __\\ ");
     sLog->outString("   \\/\\_____\\ \\_\\ \\_\\/\\_____\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_____\\ ");
     sLog->outString("    \\/_____/\\/_/\\/_/\\/_____/\\/_/   \\/_/\\/_/ /_/\\/_____/ ");
-    sLog->outString("  Project SkyFireEmu 2011(c) Open-sourced Game Emulation ");                                                   
+    sLog->outString("  Project SkyFireEmu 2011(c) Open-sourced Game Emulation ");
     sLog->outString("           <http://www.projectskyfire.org/> ");
     sLog->outString("<Ctrl-C> to stop.\n");
 

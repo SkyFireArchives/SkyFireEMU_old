@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -294,7 +294,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1,SAY_SLAY2), me);
+            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
         }
 
         void JustDied(Unit * /*victim*/)
@@ -308,7 +308,7 @@ public:
         float CalculateRandomLocation(float Loc, uint32 radius)
         {
             float coord = Loc;
-            switch (urand(0,1))
+            switch (urand(0, 1))
             {
                 case 0:
                     coord += rand()%radius;
@@ -351,13 +351,13 @@ public:
                 Ghost = Unit::GetUnit((*me), GhostGUID);
             if (Ghost && Ghost->isAlive() && Ghost->HasAura(SPELL_SHADOW_OF_DEATH))
             {
-                /*float x,y,z;
-                Ghost->GetPosition(x,y,z);
+                /*float x, y, z;
+                Ghost->GetPosition(x, y, z);
                 Creature* control = me->SummonCreature(CREATURE_GHOST, x, y, z, 0, TEMPSUMMON_TIMED_DESAWN, 30000);
                 if (control)
                 {
                     CAST_PLR(Ghost)->Possess(control);
-                    Ghost->DealDamage(Ghost, Ghost->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL,
+                    Ghost->DealDamage(Ghost, Ghost->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, 
                 false);
                 }*/
                 for (uint8 i = 0; i < 4; ++i)
@@ -464,7 +464,7 @@ public:
 
                 if (pTarget)
                 {
-                    DoScriptText(RAND(SAY_SPECIAL1,SAY_SPECIAL2), me);
+                    DoScriptText(RAND(SAY_SPECIAL1, SAY_SPECIAL2), me);
                     DoCast(pTarget, SPELL_INCINERATE);
                     IncinerateTimer = 20000 + rand()%31 * 1000;
                 }
@@ -497,7 +497,7 @@ public:
 
             if (RandomYellTimer <= diff)
             {
-                DoScriptText(RAND(SAY_SPELL1,SAY_SPELL2), me);
+                DoScriptText(RAND(SAY_SPELL1, SAY_SPELL2), me);
                 RandomYellTimer = 50000 + rand()%51 * 1000;
             } else RandomYellTimer -= diff;
 

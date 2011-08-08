@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,72 +39,72 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_AGGRO           = -1649040,
-    SAY_DEATH           = -1649041,
-    SAY_BERSERK         = -1649042,
-    EMOTE_SHIELD        = -1649043,
-    SAY_SHIELD          = -1649044,
-    SAY_KILL1           = -1649045,
-    SAY_KILL2           = -1649046,
-    EMOTE_LIGHT_VORTEX  = -1649047,
-    SAY_LIGHT_VORTEX    = -1649048,
-    EMOTE_DARK_VORTEX   = -1649049,
-    SAY_DARK_VORTEX     = -1649050,
+    SAY_AGGRO           = -1649040, 
+    SAY_DEATH           = -1649041, 
+    SAY_BERSERK         = -1649042, 
+    EMOTE_SHIELD        = -1649043, 
+    SAY_SHIELD          = -1649044, 
+    SAY_KILL1           = -1649045, 
+    SAY_KILL2           = -1649046, 
+    EMOTE_LIGHT_VORTEX  = -1649047, 
+    SAY_LIGHT_VORTEX    = -1649048, 
+    EMOTE_DARK_VORTEX   = -1649049, 
+    SAY_DARK_VORTEX     = -1649050, 
 };
 
 enum Equipment
 {
-    EQUIP_MAIN_1         = 49303,
-    EQUIP_OFFHAND_1      = 47146,
-    EQUIP_RANGED_1       = 47267,
-    EQUIP_MAIN_2         = 45990,
-    EQUIP_OFFHAND_2      = 47470,
-    EQUIP_RANGED_2       = 47267,
-    EQUIP_DONE           = EQUIP_NO_CHANGE,
+    EQUIP_MAIN_1         = 49303, 
+    EQUIP_OFFHAND_1      = 47146, 
+    EQUIP_RANGED_1       = 47267, 
+    EQUIP_MAIN_2         = 45990, 
+    EQUIP_OFFHAND_2      = 47470, 
+    EQUIP_RANGED_2       = 47267, 
+    EQUIP_DONE           = EQUIP_NO_CHANGE, 
 };
 
 enum Summons
 {
-    NPC_DARK_ESSENCE     = 34567,
-    NPC_LIGHT_ESSENCE    = 34568,
+    NPC_DARK_ESSENCE     = 34567, 
+    NPC_LIGHT_ESSENCE    = 34568, 
 
-    NPC_UNLEASHED_DARK   = 34628,
-    NPC_UNLEASHED_LIGHT  = 34630,
+    NPC_UNLEASHED_DARK   = 34628, 
+    NPC_UNLEASHED_LIGHT  = 34630, 
 };
 
 enum BossSpells
 {
-    SPELL_LIGHT_TWIN_SPIKE      = 66075,
-    SPELL_LIGHT_SURGE           = 65766,
-    SPELL_LIGHT_SHIELD          = 65858,
-    SPELL_LIGHT_TWIN_PACT       = 65876,
-    SPELL_LIGHT_VORTEX          = 66046,
-    SPELL_LIGHT_TOUCH           = 67297,
+    SPELL_LIGHT_TWIN_SPIKE      = 66075, 
+    SPELL_LIGHT_SURGE           = 65766, 
+    SPELL_LIGHT_SHIELD          = 65858, 
+    SPELL_LIGHT_TWIN_PACT       = 65876, 
+    SPELL_LIGHT_VORTEX          = 66046, 
+    SPELL_LIGHT_TOUCH           = 67297, 
 
-    SPELL_DARK_TWIN_SPIKE       = 66069,
-    SPELL_DARK_SURGE            = 65768,
-    SPELL_DARK_SHIELD           = 65874,
-    SPELL_DARK_TWIN_PACT        = 65875,
-    SPELL_DARK_VORTEX           = 66058,
-    SPELL_DARK_TOUCH            = 67282,
+    SPELL_DARK_TWIN_SPIKE       = 66069, 
+    SPELL_DARK_SURGE            = 65768, 
+    SPELL_DARK_SHIELD           = 65874, 
+    SPELL_DARK_TWIN_PACT        = 65875, 
+    SPELL_DARK_VORTEX           = 66058, 
+    SPELL_DARK_TOUCH            = 67282, 
 
-    SPELL_TWIN_POWER            = 65916,
-    SPELL_LIGHT_ESSENCE         = 65686,
-    SPELL_DARK_ESSENCE          = 65684,
-    SPELL_BERSERK               = 64238,
-    SPELL_NONE                  = 0,
+    SPELL_TWIN_POWER            = 65916, 
+    SPELL_LIGHT_ESSENCE         = 65686, 
+    SPELL_DARK_ESSENCE          = 65684, 
+    SPELL_BERSERK               = 64238, 
+    SPELL_NONE                  = 0, 
 
-    SPELL_EMPOWERED_DARK        = 67215,
-    SPELL_EMPOWERED_LIGHT       = 67218,
+    SPELL_EMPOWERED_DARK        = 67215, 
+    SPELL_EMPOWERED_LIGHT       = 67218, 
 
-    SPELL_UNLEASHED_DARK        = 65808,
-    SPELL_UNLEASHED_LIGHT       = 65795,
+    SPELL_UNLEASHED_DARK        = 65808, 
+    SPELL_UNLEASHED_LIGHT       = 65795, 
     //PowerUp 67604
 };
 
 enum Actions
 {
-    ACTION_VORTEX,
+    ACTION_VORTEX, 
     ACTION_PACT
 };
 
@@ -151,7 +151,7 @@ struct boss_twin_baseAI : public ScriptedAI
     Position EssenceLocation[2];
 
     void Reset() {
-        me->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_OOC_NOT_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
+        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_OOC_NOT_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
         me->SetReactState(REACT_PASSIVE);
         /* Uncomment this once that they are flying above the ground
         me->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
@@ -162,7 +162,7 @@ struct boss_twin_baseAI : public ScriptedAI
         m_uiColorballsTimer = 15*IN_MILLISECONDS;
         m_uiSpecialAbilityTimer = MINUTE*IN_MILLISECONDS;
         m_uiSpikeTimer = 20*IN_MILLISECONDS;
-        m_uiTouchTimer = urand(10,15)*IN_MILLISECONDS;
+        m_uiTouchTimer = urand(10, 15)*IN_MILLISECONDS;
         m_uiBerserkTimer = IsHeroic() ? 6*MINUTE*IN_MILLISECONDS : 10*MINUTE*IN_MILLISECONDS;
 
         Summons.DespawnAll();
@@ -189,7 +189,7 @@ struct boss_twin_baseAI : public ScriptedAI
                 me->SetHomePosition(HomeLocation);
                 break;
             case 1:
-                me->RemoveFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_OOC_NOT_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
+                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_OOC_NOT_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                 me->SetReactState(REACT_AGGRESSIVE);
                 me->SetInCombatWithZone();
                 break;
@@ -200,7 +200,7 @@ struct boss_twin_baseAI : public ScriptedAI
     {
         if (pWho->GetTypeId() == TYPEID_PLAYER)
         {
-            DoScriptText(urand(0,1) ? SAY_KILL1 : SAY_KILL2,me);
+            DoScriptText(urand(0, 1) ? SAY_KILL1 : SAY_KILL2, me);
             if (m_pInstance)
                 m_pInstance->SetData(DATA_TRIBUTE_TO_IMMORTALITY_ELEGIBLE, 0);
         }
@@ -279,17 +279,17 @@ struct boss_twin_baseAI : public ScriptedAI
         for (uint8 i = 0; i < quantity; i++)
         {
             float x = float(urand(uint32(x0 - r), uint32(x0 + r)));
-            if (urand(0,1))
-                y = y0 + sqrt(pow(r,2) - pow((x-x0),2));
+            if (urand(0, 1))
+                y = y0 + sqrt(pow(r, 2) - pow((x-x0), 2));
             else
-                y = y0 - sqrt(pow(r,2) - pow((x-x0),2));
-            me->SummonCreature(m_uiColorballNpcId,x,y,me->GetPositionZ(),TEMPSUMMON_CORPSE_DESPAWN);
+                y = y0 - sqrt(pow(r, 2) - pow((x-x0), 2));
+            me->SummonCreature(m_uiColorballNpcId, x, y, me->GetPositionZ(), TEMPSUMMON_CORPSE_DESPAWN);
         }
     }
 
     void JustDied(Unit* /*pKiller*/)
     {
-        DoScriptText(SAY_DEATH,me);
+        DoScriptText(SAY_DEATH, me);
         if (m_pInstance)
         {
             m_pInstance->SetData(DATA_HEALTH_TWIN_SHARED, 0);
@@ -309,7 +309,7 @@ struct boss_twin_baseAI : public ScriptedAI
     // Called when sister pointer needed
     Creature* GetSister()
     {
-        return Unit::GetCreature((*me),m_pInstance->GetData64(m_uiSisterNpcId));
+        return Unit::GetCreature((*me), m_pInstance->GetData64(m_uiSisterNpcId));
     }
 
     void EnterCombat(Unit* /*pWho*/)
@@ -325,8 +325,8 @@ struct boss_twin_baseAI : public ScriptedAI
             me->SummonCreature(m_uiEssenceNpcId, EssenceLocation[0].GetPositionX(), EssenceLocation[0].GetPositionY(), EssenceLocation[0].GetPositionZ());
             me->SummonCreature(m_uiEssenceNpcId, EssenceLocation[1].GetPositionX(), EssenceLocation[1].GetPositionY(), EssenceLocation[1].GetPositionZ());
         }
-        DoScriptText(SAY_AGGRO,me);
-        DoCast(me,m_uiSurgeSpellId);
+        DoScriptText(SAY_AGGRO, me);
+        DoCast(me, m_uiSurgeSpellId);
     }
 
     void DoAction(const int32 action)
@@ -338,7 +338,7 @@ struct boss_twin_baseAI : public ScriptedAI
                 break;
             case ACTION_PACT:
                 m_uiStage = me->GetEntry() == NPC_LIGHTBANE ? 1 : 2;
-                DoCast(me,SPELL_TWIN_POWER);
+                DoCast(me, SPELL_TWIN_POWER);
                 break;
         }
     }
@@ -362,8 +362,8 @@ struct boss_twin_baseAI : public ScriptedAI
                 {
                     if (Creature* pSister = GetSister())
                         pSister->AI()->DoAction(ACTION_VORTEX);
-                    DoScriptText(m_uiVortexEmote,me);
-                    DoScriptText(m_uiVortexSay,me);
+                    DoScriptText(m_uiVortexEmote, me);
+                    DoScriptText(m_uiVortexSay, me);
                     DoCastAOE(m_uiVortexSpellId);
                     m_uiStage = 0;
                     m_uiSpecialAbilityTimer = MINUTE*IN_MILLISECONDS;
@@ -374,10 +374,10 @@ struct boss_twin_baseAI : public ScriptedAI
                 {
                     if (Creature* pSister = GetSister())
                         pSister->AI()->DoAction(ACTION_PACT);
-                    DoScriptText(EMOTE_SHIELD,me);
-                    DoScriptText(SAY_SHIELD,me);
-                    DoCast(me,m_uiShieldSpellId);
-                    DoCast(me,m_uiTwinPactSpellId);
+                    DoScriptText(EMOTE_SHIELD, me);
+                    DoScriptText(SAY_SHIELD, me);
+                    DoCast(me, m_uiShieldSpellId);
+                    DoCast(me, m_uiTwinPactSpellId);
                     m_uiStage = 0;
                     m_uiSpecialAbilityTimer = MINUTE*IN_MILLISECONDS;
                 } m_uiSpecialAbilityTimer -= uiDiff;
@@ -394,9 +394,9 @@ struct boss_twin_baseAI : public ScriptedAI
 
         if (IsHeroic() && m_uiTouchTimer <= uiDiff)
         {
-            if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM,0,200,true,m_uiOtherEssenceSpellId))
-                DoCast(pTarget,m_uiTouchSpellId);
-            m_uiTouchTimer = urand(10,15)*IN_MILLISECONDS;
+            if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 200, true, m_uiOtherEssenceSpellId))
+                DoCast(pTarget, m_uiTouchSpellId);
+            m_uiTouchTimer = urand(10, 15)*IN_MILLISECONDS;
         } m_uiTouchTimer -= uiDiff;
 
         if (m_uiColorballsTimer <= uiDiff)
@@ -416,8 +416,8 @@ struct boss_twin_baseAI : public ScriptedAI
 
         if (!m_bIsBerserk && m_uiBerserkTimer <= uiDiff)
         {
-            DoCast(me,SPELL_BERSERK);
-            DoScriptText(SAY_BERSERK,me);
+            DoCast(me, SPELL_BERSERK);
+            DoScriptText(SAY_BERSERK, me);
             m_bIsBerserk = true;
         } else m_uiBerserkTimer -= uiDiff;
 
@@ -576,11 +576,11 @@ struct mob_unleashed_ballAI : public ScriptedAI
         float x0 = ToCCommonLoc[1].GetPositionX(), y0 = ToCCommonLoc[1].GetPositionY(), r = 47.0f;
         float y = y0;
         float x = float(urand(uint32(x0 - r), uint32(x0 + r)));
-        if (urand(0,1))
-            y = y0 + sqrt(pow(r,2) - pow((x-x0),2));
+        if (urand(0, 1))
+            y = y0 + sqrt(pow(r, 2) - pow((x-x0), 2));
         else
-            y = y0 - sqrt(pow(r,2) - pow((x-x0),2));
-        me->GetMotionMaster()->MovePoint(0,x,y,me->GetPositionZ());
+            y = y0 - sqrt(pow(r, 2) - pow((x-x0), 2));
+        me->GetMotionMaster()->MovePoint(0, x, y, me->GetPositionZ());
     }
 
     void Reset()
@@ -601,7 +601,7 @@ struct mob_unleashed_ballAI : public ScriptedAI
         switch (uiId)
         {
             case 0:
-                if (urand(0,3) == 0)
+                if (urand(0, 3) == 0)
                     MoveToNextPoint();
                 else
                     me->DisappearAndDie();

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -70,17 +70,17 @@ uint32 PrismaticAuras[]=
 
 struct Locations
 {
-    float x,y,z;
+    float x, y, z;
 };
 
 static Locations TeleportPoint[]=
 {
-    {959.996f, 212.576f, 193.843f},
-    {932.537f, 231.813f, 193.838f},
-    {958.675f, 254.767f, 193.822f},
-    {946.955f, 201.316f, 192.535f},
-    {944.294f, 149.676f, 197.551f},
-    {930.548f, 284.888f, 193.367f},
+    {959.996f, 212.576f, 193.843f}, 
+    {932.537f, 231.813f, 193.838f}, 
+    {958.675f, 254.767f, 193.822f}, 
+    {946.955f, 201.316f, 192.535f}, 
+    {944.294f, 149.676f, 197.551f}, 
+    {930.548f, 284.888f, 193.367f}, 
     {965.997f, 278.398f, 195.777f}
 };
 
@@ -152,7 +152,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1,SAY_SLAY2), me);
+            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
         }
 
         void JustDied(Unit * /*victim*/)
@@ -241,7 +241,7 @@ public:
 
                 TeleportPlayers();
 
-                DoScriptText(RAND(SAY_SPELL2,SAY_SPELL3), me);
+                DoScriptText(RAND(SAY_SPELL2, SAY_SPELL3), me);
                 FatalAttractionExplodeTimer = 2000;
                 FatalAttractionTimer = 40000 + rand()%31 * 1000;
             } else FatalAttractionTimer -= diff;
@@ -298,7 +298,7 @@ public:
             //Random taunts
             if (RandomYellTimer <= diff)
             {
-                DoScriptText(RAND(SAY_TAUNT1,SAY_TAUNT2,SAY_TAUNT3), me);
+                DoScriptText(RAND(SAY_TAUNT1, SAY_TAUNT2, SAY_TAUNT3), me);
                 RandomYellTimer = 60000 + rand()%91 * 1000;
             } else RandomYellTimer -= diff;
 

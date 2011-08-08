@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -36,40 +36,40 @@ EndScriptData */
 
 enum eEnums
 {
-    MAX_ENCOUNTER           = 6,
+    MAX_ENCOUNTER           = 6, 
 
-    NPC_EMPEROR             = 9019,
-    NPC_PHALANX             = 9502,
-    NPC_ANGERREL            = 9035,
-    NPC_DOPEREL             = 9040,
-    NPC_HATEREL             = 9034,
-    NPC_VILEREL             = 9036,
-    NPC_SEETHREL            = 9038,
-    NPC_GLOOMREL            = 9037,
-    NPC_DOOMREL             = 9039,
-    NPC_MAGMUS              = 9938,
+    NPC_EMPEROR             = 9019, 
+    NPC_PHALANX             = 9502, 
+    NPC_ANGERREL            = 9035, 
+    NPC_DOPEREL             = 9040, 
+    NPC_HATEREL             = 9034, 
+    NPC_VILEREL             = 9036, 
+    NPC_SEETHREL            = 9038, 
+    NPC_GLOOMREL            = 9037, 
+    NPC_DOOMREL             = 9039, 
+    NPC_MAGMUS              = 9938, 
 
-    GO_ARENA1               = 161525,
-    GO_ARENA2               = 161522,
-    GO_ARENA3               = 161524,
-    GO_ARENA4               = 161523,
-    GO_SHADOW_LOCK          = 161460,
-    GO_SHADOW_MECHANISM     = 161461,
-    GO_SHADOW_GIANT_DOOR    = 157923,
-    GO_SHADOW_DUMMY         = 161516,
-    GO_BAR_KEG_SHOT         = 170607,
-    GO_BAR_KEG_TRAP         = 171941,
-    GO_BAR_DOOR             = 170571,
-    GO_TOMB_ENTER           = 170576,
-    GO_TOMB_EXIT            = 170577,
-    GO_LYCEUM               = 170558,
+    GO_ARENA1               = 161525, 
+    GO_ARENA2               = 161522, 
+    GO_ARENA3               = 161524, 
+    GO_ARENA4               = 161523, 
+    GO_SHADOW_LOCK          = 161460, 
+    GO_SHADOW_MECHANISM     = 161461, 
+    GO_SHADOW_GIANT_DOOR    = 157923, 
+    GO_SHADOW_DUMMY         = 161516, 
+    GO_BAR_KEG_SHOT         = 170607, 
+    GO_BAR_KEG_TRAP         = 171941, 
+    GO_BAR_DOOR             = 170571, 
+    GO_TOMB_ENTER           = 170576, 
+    GO_TOMB_EXIT            = 170577, 
+    GO_LYCEUM               = 170558, 
     GO_SF_N                 = 174745, // Shadowforge Brazier North
     GO_SF_S                 = 174744, // Shadowforge Brazier South
     GO_GOLEM_ROOM_N         = 170573, // Magmus door North
     GO_GOLEM_ROOM_S         = 170574, // Magmus door Soutsh
     GO_THRONE_ROOM          = 170575, // Throne door
 
-    GO_SPECTRAL_CHALICE     = 164869,
+    GO_SPECTRAL_CHALICE     = 164869, 
     GO_CHEST_SEVEN          = 169243
 };
 
@@ -392,8 +392,8 @@ public:
 
         void TombOfSevenReset()
         {
-            HandleGameObject(GoTombExitGUID,false);//event reseted, close exit door
-            HandleGameObject(GoTombEnterGUID,true);//event reseted, open entrance door
+            HandleGameObject(GoTombExitGUID, false);//event reseted, close exit door
+            HandleGameObject(GoTombEnterGUID, true);//event reseted, open entrance door
             for (uint8 i = 0; i < 7; ++i)
             {
                 if (Creature* boss = instance->GetCreature(TombBossGUIDs[i]))
@@ -420,16 +420,16 @@ public:
 
         void TombOfSevenStart()
         {
-            HandleGameObject(GoTombExitGUID,false);//event started, close exit door
-            HandleGameObject(GoTombEnterGUID,false);//event started, close entrance door
+            HandleGameObject(GoTombExitGUID, false);//event started, close exit door
+            HandleGameObject(GoTombEnterGUID, false);//event started, close entrance door
             SetData(TYPE_TOMB_OF_SEVEN, IN_PROGRESS);
         }
 
         void TombOfSevenEnd()
         {
-            DoRespawnGameObject(GoChestGUID,DAY);
-            HandleGameObject(GoTombExitGUID,true);//event done, open exit door
-            HandleGameObject(GoTombEnterGUID,true);//event done, open entrance door
+            DoRespawnGameObject(GoChestGUID, DAY);
+            HandleGameObject(GoTombExitGUID, true);//event done, open exit door
+            HandleGameObject(GoTombEnterGUID, true);//event done, open entrance door
             TombEventStarterGUID = 0;
             SetData(TYPE_TOMB_OF_SEVEN, DONE);
         }

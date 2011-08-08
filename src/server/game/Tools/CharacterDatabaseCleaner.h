@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,10 +27,10 @@ namespace CharacterDatabaseCleaner
 {
     enum CleaningFlags
     {
-        CLEANING_FLAG_ACHIEVEMENT_PROGRESS  = 0x1,
-        CLEANING_FLAG_SKILLS                = 0x2,
-        CLEANING_FLAG_SPELLS                = 0x4,
-        CLEANING_FLAG_TALENTS               = 0x8,
+        CLEANING_FLAG_ACHIEVEMENT_PROGRESS  = 0x1, 
+        CLEANING_FLAG_SKILLS                = 0x2, 
+        CLEANING_FLAG_SPELLS                = 0x4, 
+        CLEANING_FLAG_TALENTS               = 0x8, 
         CLEANING_FLAG_QUESTSTATUS           = 0x10
     };
 

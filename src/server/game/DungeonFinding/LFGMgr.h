@@ -120,7 +120,6 @@ enum LfgAnswer
     LFG_ANSWER_AGREE                             = 1
 };
 
-
 // Forward declaration (just to have all typedef together)
 struct LfgReward;
 struct LfgLockStatus;
@@ -215,7 +214,6 @@ struct LfgProposalPlayer
     uint32 groupLowGuid;                                   ///< Original group guid (Low guid) 0 if no original group
 };
 
-
 /// Stores group data related to proposal to join
 struct LfgProposal
 {
@@ -233,7 +231,6 @@ struct LfgProposal
     time_t cancelTime;                                     ///< Time when we will cancel this proposal
     LfgGuidList queues;                                    ///< Queue Ids to remove/readd
     LfgProposalPlayerMap players;                          ///< Players data
-
 };
 
 /// Stores all rolecheck info of a group that wants to join

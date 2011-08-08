@@ -24,16 +24,16 @@ source_group(Server FILES ${sources_server})
 source_group(Debugging FILES ${sources_Debugging})
 source_group("" FILES ${sources_localdir})
 
-if( USE_COREPCH )
+if ( USE_COREPCH )
   include_directories(${CMAKE_CURRENT_BINARY_DIR})
-endif()
+endif ()
 
 if ( USE_COREPCH AND MSVC )
   set(authserver_SRCS
     PrecompiledHeaders/authPCH.cpp
     PrecompiledHeaders/authPCH.h
   )
-endif()
+endif ()
 
 set(authserver_SRCS
   ${authserver_SRCS}
@@ -43,13 +43,13 @@ set(authserver_SRCS
   ${sources_localdir}
 )
 
-if( WIN32 )
+if ( WIN32 )
 set(authserver_SRCS
     ${authserver_SRCS}
     ${sources_Debugging}
     authserver.rc
 )
-endif()
+endif ()
 
 include_directories(
   ${CMAKE_BINARY_DIR}
@@ -79,17 +79,17 @@ add_executable(authserver
 
 add_dependencies(authserver revision.h)
 
-if( NOT WIN32 )
+if ( NOT WIN32 )
   add_definitions(-D_TRINITY_REALM_CONFIG='"${CONF_DIR}/authserver.conf"')
-endif()
+endif ()
 
-if( UNIX )
+if ( UNIX )
   set(authserver_LINK_FLAGS "-pthread ${authserver_LINK_FLAGS}")
-endif()
+endif ()
 
-if( CMAKE_SYSTEM_NAME MATCHES "Darwin" )
+if ( CMAKE_SYSTEM_NAME MATCHES "Darwin" )
   set(authserver_LINK_FLAGS "-framework Carbon ${authserver_LINK_FLAGS}")
-endif()
+endif ()
 
 set_target_properties(authserver PROPERTIES LINK_FLAGS "${authserver_LINK_FLAGS}")
 
@@ -101,27 +101,27 @@ target_link_libraries(authserver
   ${OSX_LIBS}
 )
 
-if( WIN32 )
+if ( WIN32 )
   add_custom_command(TARGET authserver
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/authserver.conf.dist ${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/
   )
-endif()
+endif ()
 
-if( UNIX )
+if ( UNIX )
   install(TARGETS authserver DESTINATION bin)
   install(FILES  authserver.conf.dist DESTINATION etc)
-elseif( WIN32 )
+elseif ( WIN32 )
   install(TARGETS authserver DESTINATION "${CMAKE_INSTALL_PREFIX}")
   install(FILES authserver.conf.dist DESTINATION "${CMAKE_INSTALL_PREFIX}")
-endif()
+endif ()
 
 # Generate precompiled header
-if( USE_COREPCH )
-  if(CMAKE_COMPILER_IS_GNUCXX)
+if ( USE_COREPCH )
+  if (CMAKE_COMPILER_IS_GNUCXX)
     add_precompiled_header(authserver ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders/authPCH.h)
-  elseif(MSVC)
+  elseif (MSVC)
     add_native_precompiled_header(authserver ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders/authPCH)
-  endif()
-endif()
+  endif ()
+endif ()
 

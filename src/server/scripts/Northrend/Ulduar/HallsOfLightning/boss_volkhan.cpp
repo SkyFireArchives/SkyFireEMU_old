@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,22 +34,22 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                               = -1602032,
-    SAY_SLAY_1                              = -1602033,
-    SAY_SLAY_2                              = -1602034,
-    SAY_SLAY_3                              = -1602035,
-    SAY_DEATH                               = -1602036,
-    SAY_STOMP_1                             = -1602037,
-    SAY_STOMP_2                             = -1602038,
-    SAY_FORGE_1                             = -1602039,
-    SAY_FORGE_2                             = -1602040,
-    EMOTE_TO_ANVIL                          = -1602041,
-    EMOTE_SHATTER                           = -1602042,
+    SAY_AGGRO                               = -1602032, 
+    SAY_SLAY_1                              = -1602033, 
+    SAY_SLAY_2                              = -1602034, 
+    SAY_SLAY_3                              = -1602035, 
+    SAY_DEATH                               = -1602036, 
+    SAY_STOMP_1                             = -1602037, 
+    SAY_STOMP_2                             = -1602038, 
+    SAY_FORGE_1                             = -1602039, 
+    SAY_FORGE_2                             = -1602040, 
+    EMOTE_TO_ANVIL                          = -1602041, 
+    EMOTE_SHATTER                           = -1602042, 
 
-    SPELL_HEAT_N                            = 52387,
-    SPELL_HEAT_H                            = 59528,
-    SPELL_SHATTERING_STOMP_N                = 52237,
-    SPELL_SHATTERING_STOMP_H                = 59529,
+    SPELL_HEAT_N                            = 52387, 
+    SPELL_HEAT_H                            = 59528, 
+    SPELL_SHATTERING_STOMP_N                = 52237, 
+    SPELL_SHATTERING_STOMP_H                = 59529, 
 
     //unclear how "directions" of spells must be. Last, summoning GO, what is it for? Script depend on:
     SPELL_TEMPER                            = 52238,        //TARGET_SCRIPT boss->anvil
@@ -57,21 +57,21 @@ enum eEnums
 
     //SPELL_TEMPER_VISUAL                     = 52661,        //summons GO
 
-    SPELL_SUMMON_MOLTEN_GOLEM               = 52405,
+    SPELL_SUMMON_MOLTEN_GOLEM               = 52405, 
 
     //Molten Golem
-    SPELL_BLAST_WAVE                        = 23113,
-    SPELL_IMMOLATION_STRIKE_N               = 52433,
-    SPELL_IMMOLATION_STRIKE_H               = 59530,
-    SPELL_SHATTER_N                         = 52429,
-    SPELL_SHATTER_H                         = 59527,
+    SPELL_BLAST_WAVE                        = 23113, 
+    SPELL_IMMOLATION_STRIKE_N               = 52433, 
+    SPELL_IMMOLATION_STRIKE_H               = 59530, 
+    SPELL_SHATTER_N                         = 52429, 
+    SPELL_SHATTER_H                         = 59527, 
 
-    NPC_VOLKHAN_ANVIL                       = 28823,
-    NPC_MOLTEN_GOLEM                        = 28695,
-    NPC_BRITTLE_GOLEM                       = 28681,
+    NPC_VOLKHAN_ANVIL                       = 28823, 
+    NPC_MOLTEN_GOLEM                        = 28695, 
+    NPC_BRITTLE_GOLEM                       = 28681, 
 
-    POINT_ID_ANVIL                          = 0,
-    MAX_GOLEM                               = 2,
+    POINT_ID_ANVIL                          = 0, 
+    MAX_GOLEM                               = 2, 
 
     ACHIEVEMENT_SHATTER_RESISTANT            = 2042
 };
@@ -199,7 +199,7 @@ public:
 
         void KilledUnit(Unit* /*pVictim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
 
         void DespawnGolem()
@@ -291,7 +291,7 @@ public:
                 {
                     //should he stomp even if he has no brittle golem to shatter?
 
-                    DoScriptText(RAND(SAY_STOMP_1,SAY_STOMP_2), me);
+                    DoScriptText(RAND(SAY_STOMP_1, SAY_STOMP_2), me);
 
                     DoCast(me, SPELL_SHATTERING_STOMP_N);
 
@@ -325,7 +325,7 @@ public:
                 if (me->IsNonMeleeSpellCasted(false))
                     me->InterruptNonMeleeSpells(false);
 
-                DoScriptText(RAND(SAY_FORGE_1,SAY_FORGE_2), me);
+                DoScriptText(RAND(SAY_FORGE_1, SAY_FORGE_2), me);
 
                 m_bHasTemper = true;
 

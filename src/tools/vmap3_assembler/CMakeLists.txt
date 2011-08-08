@@ -26,9 +26,9 @@ add_definitions(-DNO_CORE_FUNCS)
 add_executable(vmap3assembler VMapAssembler.cpp)
 add_dependencies(vmap3assembler mpq)
 
-if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
+if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
   set_target_properties(vmap3assembler PROPERTIES LINK_FLAGS "-framework Carbon")
-endif()
+endif ()
 
 target_link_libraries(vmap3assembler
   collision
@@ -36,8 +36,8 @@ target_link_libraries(vmap3assembler
   ${ZLIB_LIBRARIES}
 )
 
-if( UNIX )
+if ( UNIX )
   install(TARGETS vmap3assembler DESTINATION bin)
-elseif( WIN32 )
+elseif ( WIN32 )
   install(TARGETS vmap3assembler DESTINATION "${CMAKE_INSTALL_PREFIX}")
-endif()
+endif ()

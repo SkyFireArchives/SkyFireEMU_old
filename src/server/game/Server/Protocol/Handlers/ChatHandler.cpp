@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -55,7 +55,7 @@ bool WorldSession::processChatmessageFurtherAfterSecurityChecks(std::string& msg
         if (sWorld->getIntConfig(CONFIG_CHAT_STRICT_LINK_CHECKING_SEVERITY) && GetSecurity() < SEC_MODERATOR
                 && !ChatHandler(this).isValidChatMessage(msg.c_str()))
         {
-            sLog->outError("Player %s (GUID: %u) sent a chatmessage with an invalid link: %s", GetPlayer()->GetName(),
+            sLog->outError("Player %s (GUID: %u) sent a chatmessage with an invalid link: %s", GetPlayer()->GetName(), 
                     GetPlayer()->GetGUIDLow(), msg.c_str());
             if (sWorld->getIntConfig(CONFIG_CHAT_STRICT_LINK_CHECKING_KICK))
                 KickPlayer();
@@ -130,7 +130,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
     }
 
     // no language for AFK and DND messages
-    if(type == CHAT_MSG_AFK)
+    if (type == CHAT_MSG_AFK)
     {
         std::string msg;
         recv_data >> msg;
@@ -152,7 +152,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         }
         return;
     }
-    else if(type == CHAT_MSG_DND)
+    else if (type == CHAT_MSG_DND)
     {
         std::string msg;
         recv_data >> msg;
@@ -271,7 +271,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         if (!_player->CanSpeak())
         {
             std::string timeStr = secsToTimeString(m_muteTime - time(NULL));
-            SendNotification(GetSkyFireString(LANG_WAIT_BEFORE_SPEAKING),timeStr.c_str());
+            SendNotification(GetSkyFireString(LANG_WAIT_BEFORE_SPEAKING), timeStr.c_str());
             return;
         }
 
@@ -595,7 +595,7 @@ void WorldSession::HandleTextEmoteOpcode(WorldPacket & recv_data)
     if (!GetPlayer()->CanSpeak())
     {
         std::string timeStr = secsToTimeString(m_muteTime - time(NULL));
-        SendNotification(GetSkyFireString(LANG_WAIT_BEFORE_SPEAKING),timeStr.c_str());
+        SendNotification(GetSkyFireString(LANG_WAIT_BEFORE_SPEAKING), timeStr.c_str());
         return;
     }
 

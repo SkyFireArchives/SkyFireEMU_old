@@ -326,7 +326,7 @@ public:
                         me->SummonCreature(netherwebVictims[rand()%6], 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
 
                     if (rand()%100 < 75)
-                        me->SummonCreature(netherwebVictims[rand()%6], 0.0f, 0.0f, 0.0f,0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+                        me->SummonCreature(netherwebVictims[rand()%6], 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
                     me->SummonCreature(netherwebVictims[rand()%6], 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
                 }
             }
@@ -344,13 +344,13 @@ public:
 
 enum eFloon
 {
-    SAY_FLOON_ATTACK        = -1000195,
+    SAY_FLOON_ATTACK        = -1000195, 
 
-    SPELL_SILENCE           = 6726,
-    SPELL_FROSTBOLT         = 9672,
-    SPELL_FROST_NOVA        = 11831,
+    SPELL_SILENCE           = 6726, 
+    SPELL_FROSTBOLT         = 9672, 
+    SPELL_FROST_NOVA        = 11831, 
 
-    FACTION_HOSTILE_FL      = 1738,
+    FACTION_HOSTILE_FL      = 1738, 
     QUEST_CRACK_SKULLS      = 10009
 };
 
@@ -451,15 +451,15 @@ public:
 ######*/
 enum eIslaStarmaneData
 {
-    SAY_PROGRESS_1  = -1000571,
-    SAY_PROGRESS_2  = -1000572,
-    SAY_PROGRESS_3  = -1000573,
-    SAY_PROGRESS_4  = -1000574,
+    SAY_PROGRESS_1  = -1000571, 
+    SAY_PROGRESS_2  = -1000572, 
+    SAY_PROGRESS_3  = -1000573, 
+    SAY_PROGRESS_4  = -1000574, 
 
-    QUEST_EFTW_H    = 10052,
-    QUEST_EFTW_A    = 10051,
-    GO_CAGE         = 182794,
-    SPELL_CAT       = 32447,
+    QUEST_EFTW_H    = 10052, 
+    QUEST_EFTW_A    = 10051, 
+    GO_CAGE         = 182794, 
+    SPELL_CAT       = 32447, 
 };
 
 class npc_isla_starmane : public CreatureScript
@@ -582,16 +582,16 @@ public:
         switch(uiAction)
         {
             case GOSSIP_ACTION_INFO_DEF + 1:
-                  pPlayer->CastSpell(pPlayer,40642,false);
+                  pPlayer->CastSpell(pPlayer, 40642, false);
                 break;
             case GOSSIP_ACTION_INFO_DEF + 2:
-                  pPlayer->CastSpell(pPlayer,40640,false);
+                  pPlayer->CastSpell(pPlayer, 40640, false);
                 break;
             case GOSSIP_ACTION_INFO_DEF + 3:
-                  pPlayer->CastSpell(pPlayer,40632,false);
+                  pPlayer->CastSpell(pPlayer, 40632, false);
                 break;
             case GOSSIP_ACTION_INFO_DEF + 4:
-                  pPlayer->CastSpell(pPlayer,40644,false);
+                  pPlayer->CastSpell(pPlayer, 40644, false);
                 break;
         }
     }
@@ -642,7 +642,7 @@ public:
 
 enum eAkuno
 {
-    QUEST_ESCAPING_THE_TOMB = 10887,
+    QUEST_ESCAPING_THE_TOMB = 10887, 
     NPC_CABAL_SKRIMISHER    = 21661
 };
 
@@ -685,12 +685,12 @@ public:
             switch(i)
             {
                 case 3:
-                    me->SummonCreature(NPC_CABAL_SKRIMISHER,-2795.99f,5420.33f,-34.53f,0.0f,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                    me->SummonCreature(NPC_CABAL_SKRIMISHER,-2793.55f,5412.79f,-34.53f,0.0f,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(NPC_CABAL_SKRIMISHER, -2795.99f, 5420.33f, -34.53f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(NPC_CABAL_SKRIMISHER, -2793.55f, 5412.79f, -34.53f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
                     break;
                 case 11:
                     if (pPlayer && pPlayer->GetTypeId() == TYPEID_PLAYER)
-                        pPlayer->GroupEventHappens(QUEST_ESCAPING_THE_TOMB,me);
+                        pPlayer->GroupEventHappens(QUEST_ESCAPING_THE_TOMB, me);
                     break;
             }
         }

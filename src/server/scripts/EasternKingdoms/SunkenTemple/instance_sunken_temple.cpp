@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -176,20 +176,20 @@ public:
 
         void UseStatue(GameObject* pGo)
         {
-            pGo->SummonGameObject(GO_ATALAI_LIGHT1,pGo->GetPositionX(),pGo->GetPositionY(),pGo->GetPositionZ(),0,0,0,0,0,0);
+            pGo->SummonGameObject(GO_ATALAI_LIGHT1, pGo->GetPositionX(), pGo->GetPositionY(), pGo->GetPositionZ(), 0, 0, 0, 0, 0, 0);
             pGo->SetUInt32Value(GAMEOBJECT_FLAGS, 4);
         }
 
          /*
          void UseLastStatue(GameObject* pGo)
          {
-             AtalaiStatue1->SummonGameObject(GO_ATALAI_LIGHT2,AtalaiStatue1->GetPositionX(),AtalaiStatue1->GetPositionY(),AtalaiStatue1->GetPositionZ(),0,0,0,0,0,100000);
-             AtalaiStatue2->SummonGameObject(GO_ATALAI_LIGHT2,AtalaiStatue2->GetPositionX(),AtalaiStatue2->GetPositionY(),AtalaiStatue2->GetPositionZ(),0,0,0,0,0,100000);
-             AtalaiStatue3->SummonGameObject(GO_ATALAI_LIGHT2,AtalaiStatue3->GetPositionX(),AtalaiStatue3->GetPositionY(),AtalaiStatue3->GetPositionZ(),0,0,0,0,0,100000);
-             AtalaiStatue4->SummonGameObject(GO_ATALAI_LIGHT2,AtalaiStatue4->GetPositionX(),AtalaiStatue4->GetPositionY(),AtalaiStatue4->GetPositionZ(),0,0,0,0,0,100000);
-             AtalaiStatue5->SummonGameObject(GO_ATALAI_LIGHT2,AtalaiStatue5->GetPositionX(),AtalaiStatue5->GetPositionY(),AtalaiStatue5->GetPositionZ(),0,0,0,0,0,100000);
-             AtalaiStatue6->SummonGameObject(GO_ATALAI_LIGHT2,AtalaiStatue6->GetPositionX(),AtalaiStatue6->GetPositionY(),AtalaiStatue6->GetPositionZ(),0,0,0,0,0,100000);
-             pGo->SummonGameObject(148838,-488.997,96.61,-189.019,-1.52,0,0,0,0,100000);
+             AtalaiStatue1->SummonGameObject(GO_ATALAI_LIGHT2, AtalaiStatue1->GetPositionX(), AtalaiStatue1->GetPositionY(), AtalaiStatue1->GetPositionZ(), 0, 0, 0, 0, 0, 100000);
+             AtalaiStatue2->SummonGameObject(GO_ATALAI_LIGHT2, AtalaiStatue2->GetPositionX(), AtalaiStatue2->GetPositionY(), AtalaiStatue2->GetPositionZ(), 0, 0, 0, 0, 0, 100000);
+             AtalaiStatue3->SummonGameObject(GO_ATALAI_LIGHT2, AtalaiStatue3->GetPositionX(), AtalaiStatue3->GetPositionY(), AtalaiStatue3->GetPositionZ(), 0, 0, 0, 0, 0, 100000);
+             AtalaiStatue4->SummonGameObject(GO_ATALAI_LIGHT2, AtalaiStatue4->GetPositionX(), AtalaiStatue4->GetPositionY(), AtalaiStatue4->GetPositionZ(), 0, 0, 0, 0, 0, 100000);
+             AtalaiStatue5->SummonGameObject(GO_ATALAI_LIGHT2, AtalaiStatue5->GetPositionX(), AtalaiStatue5->GetPositionY(), AtalaiStatue5->GetPositionZ(), 0, 0, 0, 0, 0, 100000);
+             AtalaiStatue6->SummonGameObject(GO_ATALAI_LIGHT2, AtalaiStatue6->GetPositionX(), AtalaiStatue6->GetPositionY(), AtalaiStatue6->GetPositionZ(), 0, 0, 0, 0, 0, 100000);
+             pGo->SummonGameObject(148838, -488.997, 96.61, -189.019, -1.52, 0, 0, 0, 0, 100000);
          }
          */
 

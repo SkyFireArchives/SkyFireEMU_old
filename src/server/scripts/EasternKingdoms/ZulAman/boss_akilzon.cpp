@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -37,14 +37,14 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_STATIC_DISRUPTION     = 43622,
-    SPELL_STATIC_VISUAL         = 45265,
+    SPELL_STATIC_DISRUPTION     = 43622, 
+    SPELL_STATIC_VISUAL         = 45265, 
     SPELL_CALL_LIGHTNING        = 43661, //Missing timer
-    SPELL_GUST_OF_WIND          = 43621,
-    SPELL_ELECTRICAL_STORM      = 43648,
-    SPELL_BERSERK               = 45078,
-    SPELL_ELECTRICAL_DAMAGE     = 43657,
-    SPELL_ELECTRICAL_OVERLOAD   = 43658,
+    SPELL_GUST_OF_WIND          = 43621, 
+    SPELL_ELECTRICAL_STORM      = 43648, 
+    SPELL_BERSERK               = 45078, 
+    SPELL_ELECTRICAL_DAMAGE     = 43657, 
+    SPELL_ELECTRICAL_OVERLOAD   = 43658, 
     SPELL_EAGLE_SWOOP           = 44732
 };
 
@@ -110,9 +110,9 @@ class boss_akilzon : public CreatureScript
                 if (pInstance)
                     pInstance->SetData(DATA_AKILZONEVENT, NOT_STARTED);
 
-                StaticDisruption_Timer = urand(10000,20000); //10 to 20 seconds (bosskillers)
-                GustOfWind_Timer = urand(20000,30000); //20 to 30 seconds(bosskillers)
-                CallLighting_Timer = urand(10000,20000); //totaly random timer. can't find any info on this
+                StaticDisruption_Timer = urand(10000, 20000); //10 to 20 seconds (bosskillers)
+                GustOfWind_Timer = urand(20000, 30000); //20 to 30 seconds(bosskillers)
+                CallLighting_Timer = urand(10000, 20000); //totaly random timer. can't find any info on this
                 ElectricalStorm_Timer = 60000; //60 seconds(bosskillers)
                 Enrage_Timer = 10*MINUTE*IN_MILLISECONDS; //10 minutes till enrage(bosskillers)
                 SummonEagles_Timer = 99999;
@@ -143,7 +143,7 @@ class boss_akilzon : public CreatureScript
 
             void JustDied(Unit* /*Killer*/)
             {
-                me->MonsterYell(SAY_ONDEATH,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_ONDEATH, LANG_UNIVERSAL, NULL);
                 DoPlaySoundToSet(me, SOUND_ONDEATH);
                 if (pInstance)
                     pInstance->SetData(DATA_AKILZONEVENT, DONE);
@@ -152,7 +152,7 @@ class boss_akilzon : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                switch (urand(0,1))
+                switch (urand(0, 1))
                 {
                     case 0:
                         me->MonsterYell(SAY_ONSLAY1, LANG_UNIVERSAL, NULL);
@@ -169,7 +169,7 @@ class boss_akilzon : public CreatureScript
             {
                 for (uint8 i = 0; i < 8; ++i)
                 {
-                    Unit* bird = Unit::GetUnit(*me,BirdGUIDs[i]);
+                    Unit* bird = Unit::GetUnit(*me, BirdGUIDs[i]);
                     if (bird && bird->isAlive())
                     {
                         bird->SetVisible(false);
@@ -225,7 +225,7 @@ class boss_akilzon : public CreatureScript
                         }
                     }
                     // visual
-                    float x,y,z;
+                    float x, y, z;
                     z = me->GetPositionZ();
                     for (uint8 i = 0; i < 5+rand()%5; ++i)
                     {
@@ -238,7 +238,7 @@ class boss_akilzon : public CreatureScript
                             trigger->SetHealth(100000);
                             trigger->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                             if (Cloud)
-                                Cloud->CastCustomSpell(trigger, /*43661*/43137, &bp0, NULL, NULL,true, 0, 0, Cloud->GetGUID());
+                                Cloud->CastCustomSpell(trigger, /*43661*/43137, &bp0, NULL, NULL, true, 0, 0, Cloud->GetGUID());
                         }
                     }
                 }
@@ -250,7 +250,7 @@ class boss_akilzon : public CreatureScript
                     me->InterruptNonMeleeSpells(false);
                     CloudGUID = 0;
                     if (Cloud)
-                        Cloud->DealDamage(Cloud, Cloud->GetHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                        Cloud->DealDamage(Cloud, Cloud->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                     SetWeather(WEATHER_STATE_FINE, 0.0f);
                     isRaining = false;
                 }
@@ -331,12 +331,12 @@ class boss_akilzon : public CreatureScript
                     }
                     pTarget->CastSpell(pTarget, 44007, true);//cloud visual
                     DoCast(pTarget, SPELL_ELECTRICAL_STORM, false);//storm cyclon + visual
-                    float x,y,z;
-                    pTarget->GetPosition(x,y,z);
+                    float x, y, z;
+                    pTarget->GetPosition(x, y, z);
                     if (pTarget)
                     {
                         pTarget->SetUnitMovementFlags(MOVEMENTFLAG_LEVITATING);
-                        pTarget->SendMonsterMove(x,y,me->GetPositionZ()+15,0);
+                        pTarget->SendMonsterMove(x, y, me->GetPositionZ()+15, 0);
                     }
                     Unit *Cloud = me->SummonTrigger(x, y, me->GetPositionZ()+16, 0, 15000);
                     if (Cloud)
@@ -365,16 +365,16 @@ class boss_akilzon : public CreatureScript
 
                     for (uint8 i = 0; i < 8; ++i)
                     {
-                        Unit* bird = Unit::GetUnit(*me,BirdGUIDs[i]);
+                        Unit* bird = Unit::GetUnit(*me, BirdGUIDs[i]);
                         if (!bird) //they despawned on die
                         {
                             if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                             {
-                                x = pTarget->GetPositionX() + irand(-10,10);
-                                y = pTarget->GetPositionY() + irand(-10,10);
-                                z = pTarget->GetPositionZ() + urand(16,20);
+                                x = pTarget->GetPositionX() + irand(-10, 10);
+                                y = pTarget->GetPositionY() + irand(-10, 10);
+                                z = pTarget->GetPositionZ() + urand(16, 20);
                                 if (z > 95)
-                                    z = 95.0f - urand(0,5);
+                                    z = 95.0f - urand(0, 5);
                             }
                             Creature *pCreature = me->SummonCreature(MOB_SOARING_EAGLE, x, y, z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
                             if (pCreature)
@@ -454,11 +454,11 @@ class mob_akilzon_eagle : public CreatureScript
                         float x, y, z;
                         if (EagleSwoop_Timer)
                         {
-                            x = pTarget->GetPositionX() + irand(-10,10);
-                            y = pTarget->GetPositionY() + irand(-10,10);
-                            z = pTarget->GetPositionZ() + urand(10,15);
+                            x = pTarget->GetPositionX() + irand(-10, 10);
+                            y = pTarget->GetPositionY() + irand(-10, 10);
+                            z = pTarget->GetPositionZ() + urand(10, 15);
                             if (z > 95)
-                                z = 95.0f - urand(0,5);
+                                z = 95.0f - urand(0, 5);
                         }
                         else
                         {

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,15 +34,15 @@
 
 enum Texts
 {
-    SAY_PRECIOUS_DIES           = 0,
-    SAY_AGGRO                   = 1,
-    EMOTE_SLIME_SPRAY           = 2,
-    SAY_SLIME_SPRAY             = 3,
-    EMOTE_UNSTABLE_EXPLOSION    = 4,
-    SAY_UNSTABLE_EXPLOSION      = 5,
-    SAY_KILL                    = 6,
-    SAY_BERSERK                 = 7,
-    SAY_DEATH                   = 8,
+    SAY_PRECIOUS_DIES           = 0, 
+    SAY_AGGRO                   = 1, 
+    EMOTE_SLIME_SPRAY           = 2, 
+    SAY_SLIME_SPRAY             = 3, 
+    EMOTE_UNSTABLE_EXPLOSION    = 4, 
+    SAY_UNSTABLE_EXPLOSION      = 5, 
+    SAY_KILL                    = 6, 
+    SAY_BERSERK                 = 7, 
+    SAY_DEATH                   = 8, 
 };
 
 enum Spells
@@ -60,28 +60,28 @@ enum Spells
     SPELL_RADIATING_OOZE                    = 69760,    // passive damage aura - large
     SPELL_UNSTABLE_OOZE                     = 69558,    // damage boost and counter for explosion
     SPELL_GREEN_ABOMINATION_HITTIN__YA_PROC = 70001,    // prevents getting hit by infection
-    SPELL_UNSTABLE_OOZE_EXPLOSION           = 69839,
-    SPELL_STICKY_OOZE                       = 69774,
-    SPELL_UNSTABLE_OOZE_EXPLOSION_TRIGGER   = 69832,
+    SPELL_UNSTABLE_OOZE_EXPLOSION           = 69839, 
+    SPELL_STICKY_OOZE                       = 69774, 
+    SPELL_UNSTABLE_OOZE_EXPLOSION_TRIGGER   = 69832, 
 
     // Precious
-    SPELL_MORTAL_WOUND                      = 71127,
-    SPELL_DECIMATE                          = 71123,
+    SPELL_MORTAL_WOUND                      = 71127, 
+    SPELL_DECIMATE                          = 71123, 
 };
 
-#define MUTATED_INFECTION RAID_MODE<int32>(69674,71224,73022,73023)
+#define MUTATED_INFECTION RAID_MODE<int32>(69674, 71224, 73022, 73023)
 
 enum Events
 {
-    EVENT_SLIME_SPRAY       = 1,
-    EVENT_HASTEN_INFECTIONS = 2,
-    EVENT_MUTATED_INFECTION = 3,
+    EVENT_SLIME_SPRAY       = 1, 
+    EVENT_HASTEN_INFECTIONS = 2, 
+    EVENT_MUTATED_INFECTION = 3, 
 
-    EVENT_DECIMATE          = 4,
-    EVENT_MORTAL_WOUND      = 5,
+    EVENT_DECIMATE          = 4, 
+    EVENT_MORTAL_WOUND      = 5, 
 
-    EVENT_STICKY_OOZE       = 6,
-    EVENT_UNSTABLE_DESPAWN  = 7,
+    EVENT_STICKY_OOZE       = 6, 
+    EVENT_UNSTABLE_DESPAWN  = 7, 
 };
 
 class boss_rotface : public CreatureScript

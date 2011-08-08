@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,46 +27,46 @@
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1658001,
-    SAY_SLAY_1                                  = -1658002,
-    SAY_SLAY_2                                  = -1658003,
-    SAY_DEATH                                   = -1658004,
-    SAY_PHASE2                                  = -1658005,
-    SAY_PHASE3                                  = -1658006,
+    SAY_AGGRO                                   = -1658001, 
+    SAY_SLAY_1                                  = -1658002, 
+    SAY_SLAY_2                                  = -1658003, 
+    SAY_DEATH                                   = -1658004, 
+    SAY_PHASE2                                  = -1658005, 
+    SAY_PHASE3                                  = -1658006, 
 
-    SAY_TYRANNUS_DEATH                          = -1659007,
+    SAY_TYRANNUS_DEATH                          = -1659007, 
 };
 
 enum eEvents
 {
-    EVENT_NONE,
-    EVENT_PERMAFROST,
-    EVENT_THROW_SARONITE,
-    EVENT_CHILLINGWAVE,
-    EVENT_DEEPFREEZE,
+    EVENT_NONE, 
+    EVENT_PERMAFROST, 
+    EVENT_THROW_SARONITE, 
+    EVENT_CHILLINGWAVE, 
+    EVENT_DEEPFREEZE, 
 };
 
 enum Spells
 {
-    SPELL_PERMAFROST                            = 70326,
+    SPELL_PERMAFROST                            = 70326, 
     SPELL_PERMAFROST_TRIGGER                    = 68786, // triggered by PERMAFROST. Used to check aura
-    SPELL_THROW_SARONITE                        = 68788,
-    SPELL_THUNDERING_STOMP                      = 68771,
-    SPELL_CHILLING_WAVE                         = 68778,
-    H_SPELL_CHILLING_WAVE                       = 70333,
-    SPELL_DEEP_FREEZE                           = 70381,
-    H_SPELL_DEEP_FREEZE                         = 72930,
-    SPELL_FORGE_MACE                            = 68785,
-    H_SPELL_FORGE_MACE                          = 70335,
-    SPELL_FORGE_BLADE                           = 68774,
-    H_SPELL_FORGE_BLADE                         = 70334,
+    SPELL_THROW_SARONITE                        = 68788, 
+    SPELL_THUNDERING_STOMP                      = 68771, 
+    SPELL_CHILLING_WAVE                         = 68778, 
+    H_SPELL_CHILLING_WAVE                       = 70333, 
+    SPELL_DEEP_FREEZE                           = 70381, 
+    H_SPELL_DEEP_FREEZE                         = 72930, 
+    SPELL_FORGE_MACE                            = 68785, 
+    H_SPELL_FORGE_MACE                          = 70335, 
+    SPELL_FORGE_BLADE                           = 68774, 
+    H_SPELL_FORGE_BLADE                         = 70334, 
 };
 
 enum eEnums
 {
-    EQUIP_ID_SWORD                              = 49345,
-    EQUIP_ID_MACE                               = 49344,
-    ACHIEV_DOESNT_GO_TO_ELEVEN                  = 4524,
+    EQUIP_ID_SWORD                              = 49345, 
+    EQUIP_ID_MACE                               = 49344, 
+    ACHIEV_DOESNT_GO_TO_ELEVEN                  = 4524, 
 };
 
 class boss_garfrost : public CreatureScript
@@ -151,7 +151,7 @@ public:
             if (victim == me)
                 return;
 
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
         }
 
         void JustDied(Unit* /*killer*/)

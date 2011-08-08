@@ -62,7 +62,7 @@ extern void BZ2_bz__AssertH__fail ( int errcode );
 #if BZ_DEBUG
 #define AssertD(cond,msg) \
    { if (!(cond)) {       \
-      fprintf ( stderr,   \
+      fprintf ( stderr,  \
         "\n\nlibbzip2(debug build): internal error\n\t%s\n", msg );\
       exit(1); \
    }}
@@ -489,7 +489,7 @@ BZ2_decompress ( DState* );
 
 extern void 
 BZ2_hbCreateDecodeTables ( Int32*, Int32*, Int32*, UChar*,
-                           Int32,  Int32, Int32 );
+                           Int32, Int32, Int32 );
 
 
 #endif

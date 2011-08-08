@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,29 +27,29 @@
 
 enum Yells
 {
-    SAY_AGGRO                                     = -1668060,
-    SAY_SLAY_1                                    = -1668061,
-    SAY_SLAY_2                                    = -1668062,
-    SAY_DEATH                                     = -1668063,
-    SAY_CORRUPTED_FLESH_1                         = -1668064,
-    SAY_CORRUPTED_FLESH_2                         = -1668065,
+    SAY_AGGRO                                     = -1668060, 
+    SAY_SLAY_1                                    = -1668061, 
+    SAY_SLAY_2                                    = -1668062, 
+    SAY_DEATH                                     = -1668063, 
+    SAY_CORRUPTED_FLESH_1                         = -1668064, 
+    SAY_CORRUPTED_FLESH_2                         = -1668065, 
 };
 
 enum Spells
 {
-    SPELL_OBLITERATE                              = 72360,
-    SPELL_WELL_OF_CORRUPTION                      = 72362,
-    SPELL_CORRUPTED_FLESH                         = 72363,
-    SPELL_SHARED_SUFFERING                        = 72368,
+    SPELL_OBLITERATE                              = 72360, 
+    SPELL_WELL_OF_CORRUPTION                      = 72362, 
+    SPELL_CORRUPTED_FLESH                         = 72363, 
+    SPELL_SHARED_SUFFERING                        = 72368, 
 };
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_OBLITERATE,
-    EVENT_WELL_OF_CORRUPTION,
-    EVENT_CORRUPTED_FLESH,
-    EVENT_SHARED_SUFFERING,
+    EVENT_NONE, 
+    EVENT_OBLITERATE, 
+    EVENT_WELL_OF_CORRUPTION, 
+    EVENT_CORRUPTED_FLESH, 
+    EVENT_SHARED_SUFFERING, 
 };
 
 class boss_marwyn : public CreatureScript
@@ -98,7 +98,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
         }
 
         void UpdateAI(const uint32 diff)
@@ -123,7 +123,7 @@ public:
                     events.ScheduleEvent(EVENT_WELL_OF_CORRUPTION, 13000);
                     break;
                 case EVENT_CORRUPTED_FLESH:
-                    DoScriptText(RAND(SAY_CORRUPTED_FLESH_1,SAY_CORRUPTED_FLESH_2), me);
+                    DoScriptText(RAND(SAY_CORRUPTED_FLESH_1, SAY_CORRUPTED_FLESH_2), me);
                     DoCast(SPELL_CORRUPTED_FLESH);
                     events.ScheduleEvent(EVENT_CORRUPTED_FLESH, 20000);
                     break;

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -118,7 +118,7 @@ public:
 
         void EnterCombat(Unit * who)
         {
-            DoScriptText(RAND(SAY_XHEALTH,SAY_AGGRO,SAY_SHADOWFLAME), me);
+            DoScriptText(RAND(SAY_XHEALTH, SAY_AGGRO, SAY_SHADOWFLAME), me);
 
             DoCast(who, SPELL_SHADOWFLAME_INITIAL);
             DoZoneInCombat();
@@ -180,7 +180,7 @@ public:
                 //On official it is based on what classes are currently on the hostil list
                 //but we can't do that yet so just randomly call one
 
-                switch (urand(0,8))
+                switch (urand(0, 8))
                 {
                     case 0:
                         DoScriptText(SAY_MAGE, me);

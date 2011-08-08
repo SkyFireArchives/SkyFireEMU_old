@@ -526,7 +526,7 @@ int mp_to_unsigned_bin_n (mp_int * a, unsigned char *b, unsigned long *outlen);
 
 int mp_signed_bin_size(mp_int *a);
 int mp_read_signed_bin(mp_int *a, const unsigned char *b, int c);
-int mp_to_signed_bin(mp_int *a,  unsigned char *b);
+int mp_to_signed_bin(mp_int *a, unsigned char *b);
 int mp_to_signed_bin_n (mp_int * a, unsigned char *b, unsigned long *outlen);
 
 int mp_read_radix(mp_int *a, const char *str, int radix);

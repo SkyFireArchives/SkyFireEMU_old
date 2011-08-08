@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -49,9 +49,9 @@ EndContentData */
 
 enum eProspectorAnvilward
 {
-    SAY_ANVIL1                                  = -1000209,
-    SAY_ANVIL2                                  = -1000210,
-    QUEST_THE_DWARVEN_SPY                       = 8483,
+    SAY_ANVIL1                                  = -1000209, 
+    SAY_ANVIL2                                  = -1000210, 
+    QUEST_THE_DWARVEN_SPY                       = 8483, 
 };
 
 class npc_prospector_anvilward : public CreatureScript
@@ -134,39 +134,39 @@ public:
 
 enum SeconTrial
 {
-    QUEST_SECOND_TRIAL                = 9686,
-    OFFSET_NEXT_ATTACK                = 750,
+    QUEST_SECOND_TRIAL                = 9686, 
+    OFFSET_NEXT_ATTACK                = 750, 
 };
 
 enum eSpells
 {
-    SPELL_FLASH_OF_LIGHT              = 19939,
-    SPELL_SEAL_OF_JUSTICE             = 20164,
-    SPELL_JUDGEMENT_OF_LIGHT          = 20271,
-    SPELL_SEAL_OF_COMMAND             = 20375,
+    SPELL_FLASH_OF_LIGHT              = 19939, 
+    SPELL_SEAL_OF_JUSTICE             = 20164, 
+    SPELL_JUDGEMENT_OF_LIGHT          = 20271, 
+    SPELL_SEAL_OF_COMMAND             = 20375, 
 };
 
 enum eNpc
 {
-    MASTER_KELERUN_BLOODMOURN         = 17807,
-    CHAMPION_BLOODWRATH               = 17809,
-    CHAMPION_LIGHTREND                = 17810,
-    CHAMPION_SWIFTBLADE               = 17811,
-    CHAMPION_SUNSTRIKER               = 17812,
+    MASTER_KELERUN_BLOODMOURN         = 17807, 
+    CHAMPION_BLOODWRATH               = 17809, 
+    CHAMPION_LIGHTREND                = 17810, 
+    CHAMPION_SWIFTBLADE               = 17811, 
+    CHAMPION_SUNSTRIKER               = 17812, 
 };
 
 enum eFaction
 {
-    FACTION_HOSTILE                   = 45,
-    FACTION_FRIENDLY                  = 7,
+    FACTION_HOSTILE                   = 45, 
+    FACTION_FRIENDLY                  = 7, 
 };
 
 enum eSays
 {
-    TEXT_SECOND_TRIAL_1               = -1000637,
-    TEXT_SECOND_TRIAL_2               = -1000638,
-    TEXT_SECOND_TRIAL_3               = -1000639,
-    TEXT_SECOND_TRIAL_4               = -1000640,
+    TEXT_SECOND_TRIAL_1               = -1000637, 
+    TEXT_SECOND_TRIAL_2               = -1000638, 
+    TEXT_SECOND_TRIAL_3               = -1000639, 
+    TEXT_SECOND_TRIAL_4               = -1000640, 
 };
 
 struct Locations
@@ -176,9 +176,9 @@ struct Locations
 
 static Locations SpawnPosition[]=
 {
-    {5.3f, -11.8f, 0.361f, 4.2f},
-    {11.2f, -29.17f, 0.361f, 2.7f},
-    {-5.7f, -34.85f, 0.361f, 1.09f},
+    {5.3f, -11.8f, 0.361f, 4.2f}, 
+    {11.2f, -29.17f, 0.361f, 2.7f}, 
+    {-5.7f, -34.85f, 0.361f, 1.09f}, 
     {-11.9f, -18, 0.361f, 5.87f}
 };
 
@@ -429,16 +429,16 @@ public:
                         switch(paladinPhase)
                         {
                         case 0:
-                            DoScriptText(TEXT_SECOND_TRIAL_1,me);
+                            DoScriptText(TEXT_SECOND_TRIAL_1, me);
                             break;
                         case 1:
-                            DoScriptText(TEXT_SECOND_TRIAL_2,me);
+                            DoScriptText(TEXT_SECOND_TRIAL_2, me);
                             break;
                         case 2:
-                            DoScriptText(TEXT_SECOND_TRIAL_3,me);
+                            DoScriptText(TEXT_SECOND_TRIAL_3, me);
                             break;
                         case 3:
-                            DoScriptText(TEXT_SECOND_TRIAL_4,me);
+                            DoScriptText(TEXT_SECOND_TRIAL_4, me);
                             break;
                         }
                     }
@@ -501,7 +501,7 @@ void npc_second_trial_paladin::npc_secondTrialAI::JustDied(Unit* Killer)
         if (me->GetEntry() == CHAMPION_SUNSTRIKER)
         {
             if (Killer->GetTypeId() == TYPEID_PLAYER)
-                Killer->ToPlayer()->GroupEventHappens(QUEST_SECOND_TRIAL,Killer);
+                Killer->ToPlayer()->GroupEventHappens(QUEST_SECOND_TRIAL, Killer);
         }
     }
 }
@@ -627,13 +627,13 @@ struct Location
 
 static Location SpawnLocations[] =
 {
-    {8270.68f, -7188.53f, 139.619f},
-    {8284.27f, -7187.78f, 139.603f},
-    {8297.43f, -7193.53f, 139.603f},
-    {8303.5f, -7201.96f, 139.577f},
-    {8273.22f, -7241.82f, 139.382f},
-    {8254.89f, -7222.12f, 139.603f},
-    {8278.51f, -7242.13f, 139.162f},
+    {8270.68f, -7188.53f, 139.619f}, 
+    {8284.27f, -7187.78f, 139.603f}, 
+    {8297.43f, -7193.53f, 139.603f}, 
+    {8303.5f, -7201.96f, 139.577f}, 
+    {8273.22f, -7241.82f, 139.382f}, 
+    {8254.89f, -7222.12f, 139.603f}, 
+    {8278.51f, -7242.13f, 139.162f}, 
     {8267.97f, -7239.17f, 139.517f}
 };
 
@@ -702,7 +702,7 @@ public:
                     if (Player* pPlayer = Unit::GetPlayer(*me, PlayerGUID))
                         CAST_PLR(pPlayer)->CompleteQuest(QUEST_POWERING_OUR_DEFENSES);
 
-                me->DealDamage(me,me->GetHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 me->RemoveCorpse();
             } else EndTimer -= diff;
 

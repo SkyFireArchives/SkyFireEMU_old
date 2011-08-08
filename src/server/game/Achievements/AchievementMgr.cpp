@@ -79,7 +79,7 @@ bool AchievementCriteriaData::IsValid(AchievementCriteriaEntry const* criteria)
 {
     if (dataType >= MAX_ACHIEVEMENT_CRITERIA_DATA_TYPE)
     {
-        sLog->outErrorDb("Table `achievement_criteria_data` for criteria (Entry: %u) has wrong data type (%u), ignored.", criteria->ID,dataType);
+        sLog->outErrorDb("Table `achievement_criteria_data` for criteria (Entry: %u) has wrong data type (%u), ignored.", criteria->ID, dataType);
         return false;
     }
 
@@ -166,7 +166,7 @@ bool AchievementCriteriaData::IsValid(AchievementCriteriaEntry const* criteria)
             if (!spellEntry)
             {
                 sLog->outErrorDb("Table `achievement_criteria_data` (Entry: %u Type: %u) for data type %s (%u) has wrong spell id in value1 (%u), ignored.",
-                    criteria->ID, criteria->requiredType,(dataType == ACHIEVEMENT_CRITERIA_DATA_TYPE_S_AURA ? "ACHIEVEMENT_CRITERIA_DATA_TYPE_S_AURA" : "ACHIEVEMENT_CRITERIA_DATA_TYPE_T_AURA"), dataType, aura.spell_id);
+                    criteria->ID, criteria->requiredType, (dataType == ACHIEVEMENT_CRITERIA_DATA_TYPE_S_AURA ? "ACHIEVEMENT_CRITERIA_DATA_TYPE_S_AURA" : "ACHIEVEMENT_CRITERIA_DATA_TYPE_T_AURA"), dataType, aura.spell_id);
                 return false;
             }
             if (aura.effect_idx >= 3)
@@ -274,7 +274,7 @@ bool AchievementCriteriaData::IsValid(AchievementCriteriaEntry const* criteria)
             }
             return true;
         default:
-            sLog->outErrorDb("Table `achievement_criteria_data` (Entry: %u Type: %u) has data for non-supported data type (%u), ignored.", criteria->ID, criteria->requiredType,dataType);
+            sLog->outErrorDb("Table `achievement_criteria_data` (Entry: %u Type: %u) has data for non-supported data type (%u), ignored.", criteria->ID, criteria->requiredType, dataType);
             return false;
     }
 }
@@ -407,14 +407,14 @@ void AchievementMgr::Reset()
 {
     for (CompletedAchievementMap::const_iterator iter = m_completedAchievements.begin(); iter != m_completedAchievements.end(); ++iter)
     {
-        WorldPacket data(SMSG_ACHIEVEMENT_DELETED,4);
+        WorldPacket data(SMSG_ACHIEVEMENT_DELETED, 4);
         data << uint32(iter->first);
         m_player->SendDirectMessage(&data);
     }
 
     for (CriteriaProgressMap::const_iterator iter = m_criteriaProgress.begin(); iter != m_criteriaProgress.end(); ++iter)
     {
-        WorldPacket data(SMSG_CRITERIA_DELETED,4);
+        WorldPacket data(SMSG_CRITERIA_DELETED, 4);
         data << uint32(iter->first);
         m_player->SendDirectMessage(&data);
     }
@@ -591,7 +591,7 @@ void AchievementMgr::LoadFromDB(PreparedQueryResult achievementResult, PreparedQ
             CompletedAchievementData& ca = m_completedAchievements[achievementid];
             ca.date = time_t(fields[1].GetUInt32());
             ca.changed = false;
-            
+
             if (AchievementEntry const* pAchievement = sAchievementStore.LookupEntry(achievementid))
                 achievementPoints += pAchievement->points;
 
@@ -601,7 +601,6 @@ void AchievementMgr::LoadFromDB(PreparedQueryResult achievementResult, PreparedQ
                     if (CharTitlesEntry const* titleEntry = sCharTitlesStore.LookupEntry(titleId))
                         if (!GetPlayer()->HasTitle(titleEntry))
                             GetPlayer()->SetTitle(titleEntry);
-
         }
         while (achievementResult->NextRow());
     }
@@ -632,7 +631,7 @@ void AchievementMgr::LoadFromDB(PreparedQueryResult achievementResult, PreparedQ
             progress.counter = counter;
             progress.date    = date;
             progress.changed = false;
-        } 
+        }
         while (criteriaResult->NextRow());
     }
 }
@@ -652,9 +651,9 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
 
     if (Guild* guild = sObjectMgr->GetGuildById(GetPlayer()->GetGuildId()))
     {
-        Trinity::AchievementChatBuilder say_builder(*GetPlayer(), CHAT_MSG_GUILD_ACHIEVEMENT, LANG_ACHIEVEMENT_EARNED,achievement->ID);
+        Trinity::AchievementChatBuilder say_builder(*GetPlayer(), CHAT_MSG_GUILD_ACHIEVEMENT, LANG_ACHIEVEMENT_EARNED, achievement->ID);
         Trinity::LocalizedPacketDo<Trinity::AchievementChatBuilder> say_do(say_builder);
-        guild->BroadcastWorker(say_do,GetPlayer());
+        guild->BroadcastWorker(say_do, GetPlayer());
 
         guild->UpdateMemberData(GetPlayer(), GUILD_MEMBER_DATA_ACHIEVEMENT_POINTS, GetAchievementPoints());
     }
@@ -678,7 +677,7 @@ void AchievementMgr::SendAchievementEarned(AchievementEntry const* achievement)
         cell.data.Part.reserved = ALL_DISTRICT;
         cell.SetNoCreate();
 
-        Trinity::AchievementChatBuilder say_builder(*GetPlayer(), CHAT_MSG_ACHIEVEMENT, LANG_ACHIEVEMENT_EARNED,achievement->ID);
+        Trinity::AchievementChatBuilder say_builder(*GetPlayer(), CHAT_MSG_ACHIEVEMENT, LANG_ACHIEVEMENT_EARNED, achievement->ID);
         Trinity::LocalizedPacketDo<Trinity::AchievementChatBuilder> say_do(say_builder);
         Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::AchievementChatBuilder> > say_worker(GetPlayer(), sWorld->getFloatConfig(CONFIG_LISTEN_RANGE_SAY), say_do);
         TypeContainerVisitor<Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::AchievementChatBuilder> >, WorldTypeMapContainer > message(say_worker);
@@ -725,7 +724,7 @@ void AchievementMgr::CheckAllAchievementCriteria()
 static const uint32 achievIdByArenaSlot[MAX_ARENA_SLOT] = {1057, 1107, 1108};
 static const uint32 achievIdForDungeon[][4] =
 {
-    // ach_cr_id,is_dungeon,is_raid,is_heroic_dungeon
+    // ach_cr_id, is_dungeon, is_raid, is_heroic_dungeon
     { 321,       true,      true,   true  },
     { 916,       false,     true,   false },
     { 917,       false,     true,   false },
@@ -1004,7 +1003,6 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, ui
                     continue;
                 SetCriteriaProgress(achievementCriteria, 1, PROGRESS_ACCUMULATE);
                 break;
-
             }
             case ACHIEVEMENT_CRITERIA_TYPE_KILLED_BY_CREATURE:
                 // AchievementMgr::UpdateAchievementCriteria might also be called on login - skip in this case
@@ -1384,7 +1382,7 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, ui
                     if (!data)
                         continue;
 
-                    if (!data->Meets(GetPlayer(),unit))
+                    if (!data->Meets(GetPlayer(), unit))
                         continue;
                 }
 
@@ -1544,7 +1542,7 @@ void AchievementMgr::UpdateAchievementCriteria(AchievementCriteriaTypes type, ui
                 break;                                   // Not implemented yet :(
         }
 
-        if (IsCompletedCriteria(achievementCriteria,achievement))
+        if (IsCompletedCriteria(achievementCriteria, achievement))
             CompletedCriteriaFor(achievement);
 
         // check again the completeness for SUMM and REQ COUNT achievements,
@@ -1583,7 +1581,6 @@ bool AchievementMgr::IsCompletedCriteria(AchievementCriteriaEntry const* achieve
     CriteriaProgress const* progress = GetCriteriaProgress(achievementCriteria);
     if (!progress)
         return false;
-
 
     switch (achievementCriteria->requiredType)
     {
@@ -1896,7 +1893,7 @@ void AchievementMgr::RemoveCriteriaProgress(const AchievementCriteriaEntry *entr
     if (criteriaProgress == m_criteriaProgress.end())
         return;
 
-    WorldPacket data(SMSG_CRITERIA_DELETED,4);
+    WorldPacket data(SMSG_CRITERIA_DELETED, 4);
     data << uint32(entry->ID);
     m_player->SendDirectMessage(&data);
 
@@ -1982,7 +1979,7 @@ void AchievementMgr::CompletedAchievement(AchievementEntry const* achievement, b
     CompletedAchievementData& ca =  m_completedAchievements[achievement->ID];
     ca.date = time(NULL);
     ca.changed = true;
-    
+
     if (AchievementEntry const* pAchievement = sAchievementStore.LookupEntry(achievement->ID))
         achievementPoints += pAchievement->points;
 
@@ -2099,7 +2096,7 @@ void AchievementMgr::SendRespondInspectAchievements(Player* player)
     for (CriteriaProgressMap::const_iterator iter = m_criteriaProgress.begin(); iter!=m_criteriaProgress.end(); ++iter)
         data << uint64(iter->second.counter);
     for (CriteriaProgressMap::const_iterator iter = m_criteriaProgress.begin(); iter!=m_criteriaProgress.end(); ++iter)
-        data << uint32(iter->second.date);                                            
+        data << uint32(iter->second.date);
     for (CriteriaProgressMap::const_iterator iter = m_criteriaProgress.begin(); iter!=m_criteriaProgress.end(); ++iter)
         data << uint32(iter->first);
 
@@ -2343,11 +2340,11 @@ void AchievementGlobalMgr::LoadCompletedAchievements()
 
     if (!result)
     {
-        sLog->outString(">> Loaded 0 completed achievements. DB table `character_achievement` is empty.");        
+        sLog->outString(">> Loaded 0 completed achievements. DB table `character_achievement` is empty.");
         sLog->outString();
         return;
     }
-    
+
     do
     {
         Field *fields = result->Fetch();
@@ -2385,7 +2382,7 @@ void AchievementGlobalMgr::LoadRewards()
         return;
     }
 
-    uint32 count = 0;   
+    uint32 count = 0;
 
     do
     {
@@ -2468,7 +2465,6 @@ void AchievementGlobalMgr::LoadRewards()
 
         m_achievementRewards[entry] = reward;
         ++count;
-
     }
     while (result->NextRow());
 
@@ -2482,12 +2478,12 @@ void AchievementGlobalMgr::LoadRewardLocales()
 
     m_achievementRewardLocales.clear();                       // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry,subject_loc1,text_loc1,subject_loc2,text_loc2,subject_loc3,text_loc3,subject_loc4,text_loc4,"
-                                             "subject_loc5,text_loc5,subject_loc6,text_loc6,subject_loc7,text_loc7,subject_loc8,text_loc8"
+    QueryResult result = WorldDatabase.Query("SELECT entry, subject_loc1, text_loc1, subject_loc2, text_loc2, subject_loc3, text_loc3, subject_loc4, text_loc4, "
+                                             "subject_loc5, text_loc5, subject_loc6, text_loc6, subject_loc7, text_loc7, subject_loc8, text_loc8"
                                              " FROM locales_achievement_reward");
 
     if (!result)
-    {                
+    {
         sLog->outString(">> Loaded 0 achievement reward locale strings.  DB table `locales_achievement_reward` is empty");
         sLog->outString();
         return;
@@ -2495,7 +2491,7 @@ void AchievementGlobalMgr::LoadRewardLocales()
 
     do
     {
-        Field *fields = result->Fetch();      
+        Field *fields = result->Fetch();
 
         uint32 entry = fields[0].GetUInt32();
 
@@ -2578,7 +2574,7 @@ void AchievementMgr::Compress(void* dst, uint32 *dst_size, void* src, int src_si
     z_res = deflate(&c_stream, Z_FINISH);
     if (z_res != Z_STREAM_END)
     {
-        sLog->outError("Can't compress update packet (zlib: deflate should report Z_STREAM_END instead %i (%s)", z_res,zError(z_res));
+        sLog->outError("Can't compress update packet (zlib: deflate should report Z_STREAM_END instead %i (%s)", z_res, zError(z_res));
         *dst_size = 0;
         return;
     }
@@ -2586,7 +2582,7 @@ void AchievementMgr::Compress(void* dst, uint32 *dst_size, void* src, int src_si
     z_res = deflateEnd(&c_stream);
     if (z_res != Z_OK)
     {
-        sLog->outError("Can't compress update packet (zlib: deflateEnd) Error code: %i (%s)", z_res,zError(z_res));
+        sLog->outError("Can't compress update packet (zlib: deflateEnd) Error code: %i (%s)", z_res, zError(z_res));
         *dst_size = 0;
         return;
     }

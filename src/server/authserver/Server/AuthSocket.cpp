@@ -280,7 +280,7 @@ void AuthSocket::_SetVSFields(const std::string& rI)
     BigNumber x;
     x.SetBinary(sha.GetDigest(), sha.GetLength());
     v = g.ModExp(x, N);
-    
+
 	// No SQL injection (username escaped)
     const char *v_hex, *s_hex;
     v_hex = v.AsHexStr();
@@ -312,7 +312,7 @@ bool AuthSocket::_HandleLogonChallenge()
 #if TRINITY_ENDIAN == TRINITY_BIGENDIAN
     EndianConvert(*((uint16*)(buf[0])));
 #endif
-    
+
 	uint16 remaining = ((sAuthLogonChallenge_C *)&buf[0])->size;
     sLog->outStaticDebug("[AuthChallenge] got header, body is %#04x bytes", remaining);
 
@@ -331,7 +331,7 @@ bool AuthSocket::_HandleLogonChallenge()
 
     // BigEndian code, nop in little endian case
     // size already converted
-#if TRINITY_ENDIAN == TRINITY_BIGENDIAN    
+#if TRINITY_ENDIAN == TRINITY_BIGENDIAN
     EndianConvert(*((uint32*)(&ch->gamename[0])));
     EndianConvert(ch->build);
     EndianConvert(*((uint32*)(&ch->platform[0])));
@@ -380,7 +380,7 @@ bool AuthSocket::_HandleLogonChallenge()
             {
                 sLog->outStaticDebug("[AuthChallenge] Account '%s' is locked to IP - '%s'", _login.c_str(), fields[3].GetCString());
                 sLog->outStaticDebug("[AuthChallenge] Player address is '%s'", ip_address.c_str());
-                
+
 				if (strcmp(fields[3].GetCString(), ip_address.c_str()))
                 {
                     sLog->outStaticDebug("[AuthChallenge] Account IP differs");
@@ -510,7 +510,7 @@ bool AuthSocket::_HandleLogonProof()
     {
         // Check if we have the appropriate patch on the disk
         sLog->outDebug(LOG_FILTER_NETWORKIO, "Client with invalid version, patching is not implemented");
-        
+
 		socket().shutdown();
         return true;
     }
@@ -538,23 +538,23 @@ bool AuthSocket::_HandleLogonProof()
     uint8 t1[16];
     uint8 vK[40];
     memcpy(t, S.AsByteArray(32), 32);
-    
+
 	for (int i = 0; i < 16; ++i)
         t1[i] = t[i * 2];
 
     sha.Initialize();
     sha.UpdateData(t1, 16);
     sha.Finalize();
-    
+
 	for (int i = 0; i < 20; ++i)
         vK[i * 2] = sha.GetDigest()[i];
-    
+
 	for (int i = 0; i < 16; ++i)
         t1[i] = t[i * 2 + 1];
     sha.Initialize();
     sha.UpdateData(t1, 16);
     sha.Finalize();
-    
+
 	for (int i = 0; i < 20; ++i)
         vK[i * 2 + 1] = sha.GetDigest()[i];
     K.SetBinary(vK, 40);
@@ -568,10 +568,10 @@ bool AuthSocket::_HandleLogonProof()
     sha.Initialize();
     sha.UpdateBigNumbers(&g, NULL);
     sha.Finalize();
-    
+
 	for (int i = 0; i < 20; ++i)
         hash[i] ^= sha.GetDigest()[i];
-   
+
     BigNumber t3;
     t3.SetBinary(hash, 20);
 
@@ -639,8 +639,8 @@ bool AuthSocket::_HandleLogonProof()
     {
         char data[4] = { AUTH_LOGON_PROOF, WOW_FAIL_UNKNOWN_ACCOUNT, 3, 0 };
         socket().send(data, sizeof(data));
-        
-        sLog->outBasic("[AuthChallenge] account %s tried to login with wrong password!",_login.c_str ());
+
+        sLog->outBasic("[AuthChallenge] account %s tried to login with wrong password!", _login.c_str ());
 
         uint32 MaxWrongPassCount = sConfig->GetIntDefault("WrongPass.MaxCount", 0);
         if (MaxWrongPassCount > 0)
@@ -706,7 +706,7 @@ bool AuthSocket::_HandleReconnectChallenge()
 #if TRINITY_ENDIAN == TRINITY_BIGENDIAN
     EndianConvert(*((uint16*)(buf[0])));
 #endif //TRINITY_ENDIAN
-    
+
 	uint16 remaining = ((sAuthLogonChallenge_C *)&buf[0])->size;
     sLog->outStaticDebug("[ReconnectChallenge] got header, body is %#04x bytes", remaining);
 
@@ -845,7 +845,7 @@ bool AuthSocket::_HandleRealmList()
                 continue;
 
         uint8 AmountOfCharacters;
-        
+
 		// No SQL injection. id of realm is controlled by the database.
         stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_NUMCHARSONREALM);
         stmt->setUInt32(0, i->second.m_ID);
@@ -919,7 +919,7 @@ bool AuthSocket::_HandleXferResume()
     // Launch a PatcherRunnable thread starting at given patch file offset
     uint64 start;
     socket().recv_skip(1);
-    socket().recv((char*)&start,sizeof(start));
+    socket().recv((char*)&start, sizeof(start));
     fseek(pPatch, long(start), 0);
 
     ACE_Based::Thread u(new PatcherRunnable(this));
@@ -988,7 +988,7 @@ void Patcher::LoadPatchesInfo()
             int l = strlen(dp->d_name);
             if (l < 8)
                 continue;
-            if (!memcmp(&dp->d_name[l-4],".mpq",4))
+            if (!memcmp(&dp->d_name[l-4], ".mpq", 4))
                 LoadPatchMD5(dp->d_name);
         }
         else

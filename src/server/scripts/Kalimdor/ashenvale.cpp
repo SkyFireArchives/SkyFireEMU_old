@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -91,9 +91,9 @@ class npc_torek : public CreatureScript
                     break;
                 case 19:
                     //TODO: verify location and creatures amount.
-                    me->SummonCreature(ENTRY_DURIEL,1776.73f,-2049.06f,109.83f,1.54f,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,25000);
-                    me->SummonCreature(ENTRY_SILVERWING_SENTINEL,1774.64f,-2049.41f,109.83f,1.40f,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,25000);
-                    me->SummonCreature(ENTRY_SILVERWING_WARRIOR,1778.73f,-2049.50f,109.83f,1.67f,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,25000);
+                    me->SummonCreature(ENTRY_DURIEL, 1776.73f, -2049.06f, 109.83f, 1.54f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(ENTRY_SILVERWING_SENTINEL, 1774.64f, -2049.41f, 109.83f, 1.40f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(ENTRY_SILVERWING_WARRIOR, 1778.73f, -2049.50f, 109.83f, 1.67f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
                     break;
                 case 20:
                     DoScriptText(SAY_WIN, me, pPlayer);
@@ -260,30 +260,30 @@ class npc_ruul_snowhoof : public CreatureScript
 
 enum eEnums
 {
-    SAY_MUG_START1          = -1800054,
-    SAY_MUG_START2          = -1800055,
-    SAY_MUG_BRAZIER         = -1800056,
-    SAY_MUG_BRAZIER_WAIT    = -1800057,
-    SAY_MUG_ON_GUARD        = -1800058,
-    SAY_MUG_REST            = -1800059,
-    SAY_MUG_DONE            = -1800060,
-    SAY_MUG_GRATITUDE       = -1800061,
-    SAY_MUG_PATROL          = -1800062,
-    SAY_MUG_RETURN          = -1800063,
+    SAY_MUG_START1          = -1800054, 
+    SAY_MUG_START2          = -1800055, 
+    SAY_MUG_BRAZIER         = -1800056, 
+    SAY_MUG_BRAZIER_WAIT    = -1800057, 
+    SAY_MUG_ON_GUARD        = -1800058, 
+    SAY_MUG_REST            = -1800059, 
+    SAY_MUG_DONE            = -1800060, 
+    SAY_MUG_GRATITUDE       = -1800061, 
+    SAY_MUG_PATROL          = -1800062, 
+    SAY_MUG_RETURN          = -1800063, 
 
-    QUEST_VORSHA            = 6641,
+    QUEST_VORSHA            = 6641, 
 
-    GO_NAGA_BRAZIER         = 178247,
+    GO_NAGA_BRAZIER         = 178247, 
 
-    NPC_WRATH_RIDER         = 3713,
-    NPC_WRATH_SORCERESS     = 3717,
-    NPC_WRATH_RAZORTAIL     = 3712,
+    NPC_WRATH_RIDER         = 3713, 
+    NPC_WRATH_SORCERESS     = 3717, 
+    NPC_WRATH_RAZORTAIL     = 3712, 
 
-    NPC_WRATH_PRIESTESS     = 3944,
-    NPC_WRATH_MYRMIDON      = 3711,
-    NPC_WRATH_SEAWITCH      = 3715,
+    NPC_WRATH_PRIESTESS     = 3944, 
+    NPC_WRATH_MYRMIDON      = 3711, 
+    NPC_WRATH_SEAWITCH      = 3715, 
 
-    NPC_VORSHA              = 12940,
+    NPC_VORSHA              = 12940, 
     NPC_MUGLASH             = 12717
 };
 

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,47 +28,47 @@
 //Spells
 enum Spells
 {
-    SPELL_POISON_NOVA                             = 55081,
-    H_SPELL_POISON_NOVA                           = 59842,
-    SPELL_POWERFULL_BITE                          = 48287,
-    H_SPELL_POWERFULL_BITE                        = 59840,
-    SPELL_VENOM_BOLT                              = 54970,
+    SPELL_POISON_NOVA                             = 55081, 
+    H_SPELL_POISON_NOVA                           = 59842, 
+    SPELL_POWERFULL_BITE                          = 48287, 
+    H_SPELL_POWERFULL_BITE                        = 59840, 
+    SPELL_VENOM_BOLT                              = 54970, 
     H_SPELL_VENOM_BOLT                            = 59839
 };
 
 //Yell
 enum Yells
 {
-    SAY_AGGRO                                     = -1604017,
-    SAY_SLAY_1                                    = -1604018,
-    SAY_SLAY_2                                    = -1604019,
-    SAY_SLAY_3                                    = -1604020,
-    SAY_DEATH                                     = -1604021,
-    SAY_SUMMON_SNAKES                             = -1604022,
+    SAY_AGGRO                                     = -1604017, 
+    SAY_SLAY_1                                    = -1604018, 
+    SAY_SLAY_2                                    = -1604019, 
+    SAY_SLAY_3                                    = -1604020, 
+    SAY_DEATH                                     = -1604021, 
+    SAY_SUMMON_SNAKES                             = -1604022, 
     SAY_SUMMON_CONSTRICTORS                       = -1604023
 };
 
 //Creatures
 enum Creatures
 {
-    CREATURE_SNAKE                                = 29680,
+    CREATURE_SNAKE                                = 29680, 
     CREATURE_CONSTRICTORS                         = 29713
 };
 
 //Creatures' spells
 enum ConstrictorSpells
 {
-    SPELL_GRIP_OF_SLAD_RAN                        = 55093,
-    SPELL_VENOMOUS_BITE                           = 54987,
+    SPELL_GRIP_OF_SLAD_RAN                        = 55093, 
+    SPELL_VENOMOUS_BITE                           = 54987, 
     H_SPELL_VENOMOUS_BITE                         = 58996
 };
 
 static Position SpawnLoc[]=
 {
-  {1783.81f, 646.637f, 133.948f, 3.71755f},
-  {1775.03f, 606.586f, 134.165f, 1.43117f},
-  {1717.39f, 630.041f, 129.282f, 5.96903f},
-  {1765.66f, 646.542f, 134.02f,  5.11381f},
+  {1783.81f, 646.637f, 133.948f, 3.71755f}, 
+  {1775.03f, 606.586f, 134.165f, 1.43117f}, 
+  {1717.39f, 630.041f, 129.282f, 5.96903f}, 
+  {1765.66f, 646.542f, 134.02f,  5.11381f}, 
   {1716.76f, 635.159f, 129.282f, 0.191986f}
 };
 
@@ -154,23 +154,23 @@ public:
                 {
                     if (uiPhase == 1)
                         for (uint8 i = 0; i < DUNGEON_MODE(3, 5); ++i)
-                            me->SummonCreature(CREATURE_SNAKE, SpawnLoc[i], TEMPSUMMON_CORPSE_TIMED_DESPAWN,20*IN_MILLISECONDS);
+                            me->SummonCreature(CREATURE_SNAKE, SpawnLoc[i], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20*IN_MILLISECONDS);
                     if (uiPhase == 2)
                         for (uint8 i = 0; i < DUNGEON_MODE(3, 5); ++i)
-                            me->SummonCreature(CREATURE_CONSTRICTORS, SpawnLoc[i], TEMPSUMMON_CORPSE_TIMED_DESPAWN,20*IN_MILLISECONDS);
+                            me->SummonCreature(CREATURE_CONSTRICTORS, SpawnLoc[i], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20*IN_MILLISECONDS);
                     uiSpawnTimer = 5*IN_MILLISECONDS;
                 } else uiSpawnTimer -= diff;
             }
 
             if (uiPhase == 0 && HealthBelowPct(30))
             {
-                DoScriptText(SAY_SUMMON_SNAKES,me);
+                DoScriptText(SAY_SUMMON_SNAKES, me);
                 uiPhase = 1;
             }
 
             if (uiPhase == 1 && HealthBelowPct(25))
             {
-                DoScriptText(SAY_SUMMON_CONSTRICTORS,me);
+                DoScriptText(SAY_SUMMON_CONSTRICTORS, me);
                 uiPhase = 2;
             }
 
@@ -187,12 +187,12 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
 
         void JustSummoned(Creature* summoned)
         {
-            summoned->GetMotionMaster()->MovePoint(0,me->GetPositionX(),me->GetPositionY(),me->GetPositionZ());
+            summoned->GetMotionMaster()->MovePoint(0, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ());
             lSummons.Summon(summoned);
         }
     };

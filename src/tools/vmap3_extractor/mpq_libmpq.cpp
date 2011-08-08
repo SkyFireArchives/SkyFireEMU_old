@@ -8,7 +8,7 @@ MPQArchive::MPQArchive(const char* filename)
 {
     int result = libmpq__archive_open(&mpq_a, filename, -1);
     printf("Opening %s\n", filename);
-    if(result) {
+    if (result) {
         switch(result) {
             case LIBMPQ_ERROR_OPEN :
                 printf("Error opening archive '%s': Does file really exist?\n", filename);
@@ -51,7 +51,7 @@ MPQFile::MPQFile(const char* filename):
         mpq_archive *mpq_a = (*i)->mpq_a;
 
         uint32 filenum;
-        if(libmpq__file_number(mpq_a, filename, &filenum)) continue;
+        if (libmpq__file_number(mpq_a, filename, &filenum)) continue;
         libmpq__off_t transferred;
         libmpq__file_unpacked_size(mpq_a, filenum, &size);
 

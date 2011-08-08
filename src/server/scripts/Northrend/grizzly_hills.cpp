@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -44,21 +44,21 @@ EndContentData */
 
 enum eEnums
 {
-    GOSSIP_TEXTID_ORSONN1       = 12793,
-    GOSSIP_TEXTID_ORSONN2       = 12794,
-    GOSSIP_TEXTID_ORSONN3       = 12796,
+    GOSSIP_TEXTID_ORSONN1       = 12793, 
+    GOSSIP_TEXTID_ORSONN2       = 12794, 
+    GOSSIP_TEXTID_ORSONN3       = 12796, 
 
-    GOSSIP_TEXTID_KODIAN1       = 12797,
-    GOSSIP_TEXTID_KODIAN2       = 12798,
+    GOSSIP_TEXTID_KODIAN1       = 12797, 
+    GOSSIP_TEXTID_KODIAN2       = 12798, 
 
-    NPC_ORSONN                  = 27274,
-    NPC_KODIAN                  = 27275,
+    NPC_ORSONN                  = 27274, 
+    NPC_KODIAN                  = 27275, 
 
     //trigger creatures
-    NPC_ORSONN_CREDIT           = 27322,
-    NPC_KODIAN_CREDIT           = 27321,
+    NPC_ORSONN_CREDIT           = 27322, 
+    NPC_KODIAN_CREDIT           = 27321, 
 
-    QUEST_CHILDREN_OF_URSOC     = 12247,
+    QUEST_CHILDREN_OF_URSOC     = 12247, 
     QUEST_THE_BEAR_GODS_OFFSPRING        = 12231
 };
 
@@ -137,12 +137,12 @@ public:
 
 enum eFloppy
 {
-    NPC_MRFLOPPY                = 26589,
-    NPC_HUNGRY_WORG             = 26586,
+    NPC_MRFLOPPY                = 26589, 
+    NPC_HUNGRY_WORG             = 26586, 
     NPC_RAVENOUS_WORG           = 26590,   //RWORG
-    NPC_EMILY                   = 26588,
+    NPC_EMILY                   = 26588, 
 
-    QUEST_PERILOUS_ADVENTURE    = 12027,
+    QUEST_PERILOUS_ADVENTURE    = 12027, 
 
     SPELL_MRFLOPPY              = 47184,    //vehicle aura
 
@@ -201,7 +201,7 @@ public:
                     if (Unit::GetCreature(*me, MrfloppyGUID))
                     {
                         DoScriptText(SAY_WORGHAGGRO1, me);
-                        me->SummonCreature(NPC_HUNGRY_WORG,me->GetPositionX()+5,me->GetPositionY()+2,me->GetPositionZ()+1,3.229f,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,120000);
+                        me->SummonCreature(NPC_HUNGRY_WORG, me->GetPositionX()+5, me->GetPositionY()+2, me->GetPositionZ()+1, 3.229f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 120000);
                     }
                     break;
                 case 11:
@@ -212,7 +212,7 @@ public:
                     if (Creature *Mrfloppy = Unit::GetCreature(*me, MrfloppyGUID))
                         Mrfloppy->GetMotionMaster()->MovePoint(0, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ());
                     DoScriptText(SAY_WORGRAGGRO3, me);
-                    if (Creature *RWORG = me->SummonCreature(NPC_RAVENOUS_WORG,me->GetPositionX()+10,me->GetPositionY()+8,me->GetPositionZ()+2,3.229f,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,120000))
+                    if (Creature *RWORG = me->SummonCreature(NPC_RAVENOUS_WORG, me->GetPositionX()+10, me->GetPositionY()+8, me->GetPositionZ()+2, 3.229f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 120000))
                     {
                         RWORG->setFaction(35);
                         RWORGGUID = RWORG->GetGUID();
@@ -223,7 +223,7 @@ public:
                     {
                         if (Creature *RWORG = Unit::GetCreature(*me, RWORGGUID))
                             RWORG->GetMotionMaster()->MovePoint(0, Mrfloppy->GetPositionX(), Mrfloppy->GetPositionY(), Mrfloppy->GetPositionZ());
-                        DoCast(Mrfloppy,SPELL_MRFLOPPY);
+                        DoCast(Mrfloppy, SPELL_MRFLOPPY);
                     }
                     break;
                 case 19:
@@ -248,7 +248,7 @@ public:
                             RWORG->Kill(Mrfloppy);
                             Mrfloppy->ExitVehicle();
                             RWORG->setFaction(14);
-                            RWORG->GetMotionMaster()->MovePoint(0, RWORG->GetPositionX()+10,RWORG->GetPositionY()+80,RWORG->GetPositionZ());
+                            RWORG->GetMotionMaster()->MovePoint(0, RWORG->GetPositionX()+10, RWORG->GetPositionY()+80, RWORG->GetPositionZ());
                             DoScriptText(SAY_VICTORY2, me);
                         }
                     }
@@ -392,14 +392,14 @@ public:
 
 enum eOuthouseBunny
 {
-    SPELL_OUTHOUSE_GROANS           = 48382,
-    SPELL_CAMERA_SHAKE              = 47533,
+    SPELL_OUTHOUSE_GROANS           = 48382, 
+    SPELL_CAMERA_SHAKE              = 47533, 
     SPELL_DUST_FIELD                = 48329
 };
 
 enum eSounds
 {
-    SOUND_FEMALE        = 12671,
+    SOUND_FEMALE        = 12671, 
     SOUND_MALE          = 12670
 };
 
@@ -567,8 +567,8 @@ public:
 
 enum eSkirmisher
 {
-    SPELL_RENEW_SKIRMISHER  = 48812,
-    CREDIT_NPC              = 27466,
+    SPELL_RENEW_SKIRMISHER  = 48812, 
+    CREDIT_NPC              = 27466, 
 
     RANDOM_SAY_1             =  -1800044,        //Ahh..better..
     RANDOM_SAY_2             =  -1800045,        //Whoa.. i nearly died there. Thank you, $Race!
@@ -606,8 +606,8 @@ public:
                 && caster->ToPlayer()->GetQuestStatus(12288) == QUEST_STATUS_INCOMPLETE)
             {
                 caster->ToPlayer()->KilledMonsterCredit(CREDIT_NPC, 0);
-                DoScriptText(RAND(RANDOM_SAY_1,RANDOM_SAY_2,RANDOM_SAY_3),caster);
-                if(me->IsStandState())
+                DoScriptText(RAND(RANDOM_SAY_1, RANDOM_SAY_2, RANDOM_SAY_3), caster);
+                if (me->IsStandState())
                     me->GetMotionMaster()->MovePoint(1, me->GetPositionX()+7, me->GetPositionY()+7, me->GetPositionZ());
                 else
                 {
@@ -635,13 +635,13 @@ public:
 /*Lightning Sentry - if you kill it when you have your Minion with you, you will get a quest credit*/
 enum eSentry
 {
-    QUEST_OR_MAYBE_WE_DONT_A                     = 12138,
-    QUEST_OR_MAYBE_WE_DONT_H                     = 12198,
+    QUEST_OR_MAYBE_WE_DONT_A                     = 12138, 
+    QUEST_OR_MAYBE_WE_DONT_H                     = 12198, 
 
-    NPC_LIGHTNING_SENTRY                         = 26407,
-    NPC_WAR_GOLEM                                = 27017,
+    NPC_LIGHTNING_SENTRY                         = 26407, 
+    NPC_WAR_GOLEM                                = 27017, 
 
-    SPELL_CHARGED_SENTRY_TOTEM                   = 52703,
+    SPELL_CHARGED_SENTRY_TOTEM                   = 52703, 
 };
 
 class npc_lightning_sentry : public CreatureScript
@@ -662,7 +662,7 @@ public:
 
         void Reset()
         {
-            uiChargedSentryTotem = urand(10000,12000);
+            uiChargedSentryTotem = urand(10000, 12000);
         }
 
         void UpdateAI(const uint32 uiDiff)
@@ -673,7 +673,7 @@ public:
             if (uiChargedSentryTotem <= uiDiff)
             {
                 DoCast(SPELL_CHARGED_SENTRY_TOTEM);
-                uiChargedSentryTotem = urand(10000,12000);
+                uiChargedSentryTotem = urand(10000, 12000);
             }
             else
                 uiChargedSentryTotem -= uiDiff;
@@ -699,16 +699,16 @@ public:
 /*Venture co. Straggler - when you cast Smoke Bomb, he will yell and run away*/
 enum eSmokeEmOut
 {
-    SAY_SEO1                                     = -1603535,
-    SAY_SEO2                                     = -1603536,
-    SAY_SEO3                                     = -1603537,
-    SAY_SEO4                                     = -1603538,
-    SAY_SEO5                                     = -1603539,
-    QUEST_SMOKE_EM_OUT_A                         = 12323,
-    QUEST_SMOKE_EM_OUT_H                         = 12324,
-    SPELL_SMOKE_BOMB                             = 49075,
-    SPELL_CHOP                                   = 43410,
-    NPC_VENTURE_CO_STABLES_KC                    = 27568,
+    SAY_SEO1                                     = -1603535, 
+    SAY_SEO2                                     = -1603536, 
+    SAY_SEO3                                     = -1603537, 
+    SAY_SEO4                                     = -1603538, 
+    SAY_SEO5                                     = -1603539, 
+    QUEST_SMOKE_EM_OUT_A                         = 12323, 
+    QUEST_SMOKE_EM_OUT_H                         = 12324, 
+    SPELL_SMOKE_BOMB                             = 49075, 
+    SPELL_CHOP                                   = 43410, 
+    NPC_VENTURE_CO_STABLES_KC                    = 27568, 
 };
 
 class npc_venture_co_straggler : public CreatureScript
@@ -734,7 +734,7 @@ public:
         {
             uiPlayerGUID = 0;
             uiTimer = 0;
-            uiChopTimer = urand(10000,12500);
+            uiChopTimer = urand(10000, 12500);
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
             me->SetReactState(REACT_AGGRESSIVE);
         }
@@ -782,7 +782,7 @@ public:
             if (uiChopTimer <= uiDiff)
             {
                 DoCast(me->getVictim(), SPELL_CHOP);
-                uiChopTimer = urand(10000,12000);
+                uiChopTimer = urand(10000, 12000);
             }
             else
                 uiChopTimer -= uiDiff;

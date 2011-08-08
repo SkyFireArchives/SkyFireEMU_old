@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,11 +34,11 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_MORTALWOUND            = 25646,
-    SPELL_SANDTRAP               = 25656,
-    SPELL_ENRAGE                 = 28798,
-    SPELL_SUMMON_PLAYER          = 26446,
-    SPELL_TRASH                  =  3391,
+    SPELL_MORTALWOUND            = 25646, 
+    SPELL_SANDTRAP               = 25656, 
+    SPELL_ENRAGE                 = 28798, 
+    SPELL_SUMMON_PLAYER          = 26446, 
+    SPELL_TRASH                  =  3391, 
     SPELL_WIDE_SLASH             = 25814
 };
 
@@ -71,11 +71,11 @@ public:
         void Reset()
         {
             bIsEnraged = false;
-            uiMortalWoundTimer = urand(2000,7000);
-            uiSandtrapTimer = urand(20000,30000);
-            uiWideSlashTimer = urand(10000,15000);
-            uiTrashTimer = urand(20000,25000);
-            uiSummonPlayerTimer = urand(30000,40000);
+            uiMortalWoundTimer = urand(2000, 7000);
+            uiSandtrapTimer = urand(20000, 30000);
+            uiWideSlashTimer = urand(10000, 15000);
+            uiTrashTimer = urand(20000, 25000);
+            uiSummonPlayerTimer = urand(30000, 40000);
 
             if (pInstance)
                 pInstance->SetData(DATA_KURINNAXX_EVENT, NOT_STARTED);
@@ -109,7 +109,7 @@ public:
             if (uiMortalWoundTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_MORTALWOUND);
-                uiMortalWoundTimer = urand(2000,7000);
+                uiMortalWoundTimer = urand(2000, 7000);
             } else uiMortalWoundTimer -= diff;
 
             //Santrap spell
@@ -124,14 +124,14 @@ public:
             if (uiWideSlashTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_WIDE_SLASH);
-                uiWideSlashTimer = urand(10000,15000);
+                uiWideSlashTimer = urand(10000, 15000);
             } else uiWideSlashTimer -= diff;
 
             //Trash spell
             if (uiTrashTimer <= diff)
             {
                 DoCast(me, SPELL_TRASH);
-                uiTrashTimer = urand(20000,25000);
+                uiTrashTimer = urand(20000, 25000);
             } else uiTrashTimer -= diff;
 
             //Summon Player spell
@@ -139,7 +139,7 @@ public:
             {
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_SUMMON_PLAYER);
-                uiSummonPlayerTimer = urand(30000,40000);
+                uiSummonPlayerTimer = urand(30000, 40000);
             } else uiSummonPlayerTimer -= diff;
 
             DoMeleeAttackIfReady();

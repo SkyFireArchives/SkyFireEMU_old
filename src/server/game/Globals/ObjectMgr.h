@@ -343,7 +343,7 @@ struct SpellClickInfo
 };
 
 typedef std::multimap<uint32, SpellClickInfo> SpellClickInfoMap;
-typedef std::pair<SpellClickInfoMap::const_iterator,SpellClickInfoMap::const_iterator> SpellClickInfoMapBounds;
+typedef std::pair<SpellClickInfoMap::const_iterator, SpellClickInfoMap::const_iterator> SpellClickInfoMapBounds;
 
 struct AreaTrigger
 {
@@ -355,17 +355,17 @@ struct AreaTrigger
 };
 
 typedef std::set<uint32> CellGuidSet;
-typedef std::map<uint32/*player guid*/,uint32/*instance*/> CellCorpseSet;
+typedef std::map<uint32/*player guid*/, uint32/*instance*/> CellCorpseSet;
 struct CellObjectGuids
 {
     CellGuidSet creatures;
     CellGuidSet gameobjects;
     CellCorpseSet corpses;
 };
-typedef UNORDERED_MAP<uint32/*cell_id*/,CellObjectGuids> CellObjectGuidsMap;
-typedef UNORDERED_MAP<uint32/*(mapid,spawnMode) pair*/,CellObjectGuidsMap> MapObjectGuids;
+typedef UNORDERED_MAP<uint32/*cell_id*/, CellObjectGuids> CellObjectGuidsMap;
+typedef UNORDERED_MAP<uint32/*(mapid, spawnMode) pair*/, CellObjectGuidsMap> MapObjectGuids;
 
-typedef UNORDERED_MAP<uint64/*(instance,guid) pair*/,time_t> RespawnTimes;
+typedef UNORDERED_MAP<uint64/*(instance, guid) pair*/, time_t> RespawnTimes;
 
 // Trinity string ranges
 #define MIN_SKYFIRE_STRING_ID           1                    // 'skyfire_string'
@@ -383,25 +383,25 @@ struct SkyFireStringLocale
     StringVector Content;
 };
 
-typedef std::map<uint64,uint64> LinkedRespawnMap;
-typedef UNORDERED_MAP<uint32,CreatureData> CreatureDataMap;
-typedef UNORDERED_MAP<uint32,GameObjectData> GameObjectDataMap;
-typedef UNORDERED_MAP<uint32,CreatureLocale> CreatureLocaleMap;
-typedef UNORDERED_MAP<uint32,GameObjectLocale> GameObjectLocaleMap;
-typedef UNORDERED_MAP<uint32,ItemLocale> ItemLocaleMap;
-typedef UNORDERED_MAP<uint32,ItemSetNameLocale> ItemSetNameLocaleMap;
-typedef UNORDERED_MAP<uint32,QuestLocale> QuestLocaleMap;
-typedef UNORDERED_MAP<uint32,NpcTextLocale> NpcTextLocaleMap;
-typedef UNORDERED_MAP<uint32,PageTextLocale> PageTextLocaleMap;
-typedef UNORDERED_MAP<int32,SkyFireStringLocale> SkyFireStringLocaleMap;
-typedef UNORDERED_MAP<uint32,GossipMenuItemsLocale> GossipMenuItemsLocaleMap;
-typedef UNORDERED_MAP<uint32,PointOfInterestLocale> PointOfInterestLocaleMap;
+typedef std::map<uint64, uint64> LinkedRespawnMap;
+typedef UNORDERED_MAP<uint32, CreatureData> CreatureDataMap;
+typedef UNORDERED_MAP<uint32, GameObjectData> GameObjectDataMap;
+typedef UNORDERED_MAP<uint32, CreatureLocale> CreatureLocaleMap;
+typedef UNORDERED_MAP<uint32, GameObjectLocale> GameObjectLocaleMap;
+typedef UNORDERED_MAP<uint32, ItemLocale> ItemLocaleMap;
+typedef UNORDERED_MAP<uint32, ItemSetNameLocale> ItemSetNameLocaleMap;
+typedef UNORDERED_MAP<uint32, QuestLocale> QuestLocaleMap;
+typedef UNORDERED_MAP<uint32, NpcTextLocale> NpcTextLocaleMap;
+typedef UNORDERED_MAP<uint32, PageTextLocale> PageTextLocaleMap;
+typedef UNORDERED_MAP<int32, SkyFireStringLocale> SkyFireStringLocaleMap;
+typedef UNORDERED_MAP<uint32, GossipMenuItemsLocale> GossipMenuItemsLocaleMap;
+typedef UNORDERED_MAP<uint32, PointOfInterestLocale> PointOfInterestLocaleMap;
 
-typedef std::multimap<uint32,uint32> QuestRelations;
+typedef std::multimap<uint32, uint32> QuestRelations;
 typedef std::pair<QuestRelations::const_iterator, QuestRelations::const_iterator> QuestRelationBounds;
-typedef std::multimap<uint32,uint32> AreaTriggerQuestStart;
+typedef std::multimap<uint32, uint32> AreaTriggerQuestStart;
 typedef std::pair<AreaTriggerQuestStart::const_iterator, AreaTriggerQuestStart::const_iterator> AreaTriggerQuestStartBounds;
-typedef std::multimap<uint32,ItemRequiredTarget> ItemRequiredTargetMap;
+typedef std::multimap<uint32, ItemRequiredTarget> ItemRequiredTargetMap;
 typedef std::pair<ItemRequiredTargetMap::const_iterator, ItemRequiredTargetMap::const_iterator>  ItemRequiredTargetMapBounds;
 
 struct PetLevelInfo
@@ -425,7 +425,7 @@ struct MailLevelReward
 };
 
 typedef std::list<MailLevelReward> MailLevelRewardList;
-typedef UNORDERED_MAP<uint8,MailLevelRewardList> MailLevelRewardMap;
+typedef UNORDERED_MAP<uint8, MailLevelRewardList> MailLevelRewardMap;
 
 // We assume the rate is in general the same for all three types below, but chose to keep three for scalability and customization
 struct RepRewardRate
@@ -490,10 +490,10 @@ struct GossipMenus
     ConditionList   conditions;
 };
 
-typedef std::multimap<uint32,GossipMenus> GossipMenusMap;
+typedef std::multimap<uint32, GossipMenus> GossipMenusMap;
 typedef std::pair<GossipMenusMap::const_iterator, GossipMenusMap::const_iterator> GossipMenusMapBounds;
 typedef std::pair<GossipMenusMap::iterator, GossipMenusMap::iterator> GossipMenusMapBoundsNonConst;
-typedef std::multimap<uint32,GossipMenuItems> GossipMenuItemsMap;
+typedef std::multimap<uint32, GossipMenuItems> GossipMenuItemsMap;
 typedef std::pair<GossipMenuItemsMap::const_iterator, GossipMenuItemsMap::const_iterator> GossipMenuItemsMapBounds;
 typedef std::pair<GossipMenuItemsMap::iterator, GossipMenuItemsMap::iterator> GossipMenuItemsMapBoundsNonConst;
 
@@ -537,7 +537,7 @@ struct GraveYardData
     uint32 safeLocId;
     uint32 team;
 };
-typedef std::multimap<uint32,GraveYardData> GraveYardMap;
+typedef std::multimap<uint32, GraveYardData> GraveYardMap;
 
 // NPC gossip text id
 typedef UNORDERED_MAP<uint32, uint32> CacheNpcTextIdMap;
@@ -591,7 +591,7 @@ struct DungeonEncounter
 };
 
 typedef std::list<DungeonEncounter const*> DungeonEncounterList;
-typedef UNORDERED_MAP<uint32,DungeonEncounterList> DungeonEncounterMap;
+typedef UNORDERED_MAP<uint32, DungeonEncounterList> DungeonEncounterMap;
 
 class PlayerDumpReader;
 
@@ -681,7 +681,7 @@ class ObjectMgr
         ItemSetNameEntry const* GetItemSetNameEntry(uint32 itemId)
         {
             ItemSetNameMap::iterator itr = mItemSetNameMap.find(itemId);
-            if(itr != mItemSetNameMap.end())
+            if (itr != mItemSetNameMap.end())
                 return &itr->second;
             return NULL;
         }
@@ -698,7 +698,7 @@ class ObjectMgr
             if (class_ >= MAX_CLASSES) return NULL;
             return &playerClassInfo[class_];
         }
-        void GetPlayerClassLevelInfo(uint32 class_,uint8 level, PlayerClassLevelInfo* info) const;
+        void GetPlayerClassLevelInfo(uint32 class_, uint8 level, PlayerClassLevelInfo* info) const;
 
         PlayerInfo const* GetPlayerInfo(uint32 race, uint32 class_) const
         {
@@ -736,7 +736,7 @@ class ObjectMgr
                 return itr->second;
             return 0;
         }
-        
+
         uint32 GetQuestStartForAreaTrigger(uint32 Trigger_ID) const
         {
             QuestStartAreaTriggerMap::const_iterator itr = mQuestStartAreaTriggerMap.find(Trigger_ID);
@@ -783,7 +783,7 @@ class ObjectMgr
 
         AccessRequirement const* GetAccessRequirement(uint32 mapid, Difficulty difficulty) const
         {
-            AccessRequirementMap::const_iterator itr = mAccessRequirements.find(MAKE_PAIR32(mapid,difficulty));
+            AccessRequirementMap::const_iterator itr = mAccessRequirements.find(MAKE_PAIR32(mapid, difficulty));
             if (itr != mAccessRequirements.end())
                 return &itr->second;
             return NULL;
@@ -924,7 +924,7 @@ class ObjectMgr
         void ValidateSpellScripts();
 
         bool LoadSkyFireStrings(char const* table, int32 min_value, int32 max_value);
-        bool LoadSkyFireStrings() { return LoadSkyFireStrings("skyfire_string",MIN_SKYFIRE_STRING_ID,MAX_SKYFIRE_STRING_ID); }
+        bool LoadSkyFireStrings() { return LoadSkyFireStrings("skyfire_string", MIN_SKYFIRE_STRING_ID, MAX_SKYFIRE_STRING_ID); }
         void LoadDbScriptStrings();
         void LoadCreatureClassLevelStats();
         void LoadCreatureLocales();
@@ -1020,7 +1020,7 @@ class ObjectMgr
         typedef std::multimap<int32, uint32> ExclusiveQuestGroups;
         ExclusiveQuestGroups mExclusiveQuestGroups;
 
-        MailLevelReward const* GetMailLevelReward(uint32 level,uint32 raceMask)
+        MailLevelReward const* GetMailLevelReward(uint32 level, uint32 raceMask)
         {
             MailLevelRewardMap::const_iterator map_itr = m_mailLevelRewardMap.find(level);
             if (map_itr == m_mailLevelRewardMap.end())
@@ -1035,7 +1035,7 @@ class ObjectMgr
 
         CellObjectGuids const& GetCellObjectGuids(uint16 mapid, uint8 spawnMode, uint32 cell_id)
         {
-            return mMapObjectGuids[MAKE_PAIR32(mapid,spawnMode)][cell_id];
+            return mMapObjectGuids[MAKE_PAIR32(mapid, spawnMode)][cell_id];
         }
 
         CreatureData const* GetCreatureData(uint32 guid) const
@@ -1132,7 +1132,7 @@ class ObjectMgr
             return &itr->second;
         }
         const char *GetSkyFireString(int32 entry, LocaleConstant locale_idx) const;
-        const char *GetSkyFireStringForDBCLocale(int32 entry) const { return GetSkyFireString(entry,DBCLocaleIndex); }
+        const char *GetSkyFireStringForDBCLocale(int32 entry) const { return GetSkyFireString(entry, DBCLocaleIndex); }
         LocaleConstant GetDBCLocaleIndex() const { return DBCLocaleIndex; }
         void SetDBCLocaleIndex(LocaleConstant locale) { DBCLocaleIndex = locale; }
 
@@ -1156,14 +1156,14 @@ class ObjectMgr
         time_t GetCreatureRespawnTime(uint32 loguid, uint32 instance)
         {
             ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, m_CreatureRespawnTimesMtx, 0);
-            return mCreatureRespawnTimes[MAKE_PAIR64(loguid,instance)];
+            return mCreatureRespawnTimes[MAKE_PAIR64(loguid, instance)];
         }
         void SaveCreatureRespawnTime(uint32 loguid, uint32 instance, time_t t);
         void RemoveCreatureRespawnTime(uint32 loguid, uint32 instance);
         time_t GetGORespawnTime(uint32 loguid, uint32 instance)
         {
             ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, m_GORespawnTimesMtx, 0);
-            return mGORespawnTimes[MAKE_PAIR64(loguid,instance)];
+            return mGORespawnTimes[MAKE_PAIR64(loguid, instance)];
         }
         void SaveGORespawnTime(uint32 loguid, uint32 instance, time_t t);
         void RemoveGORespawnTime(uint32 loguid, uint32 instance);
@@ -1226,7 +1226,7 @@ class ObjectMgr
 
             return &iter->second;
         }
-        void AddVendorItem(uint32 entry,uint32 item, int32 maxcount, uint32 incrtime, uint32 ExtendedCost, bool savetodb = true); // for event
+        void AddVendorItem(uint32 entry, uint32 item, int32 maxcount, uint32 incrtime, uint32 ExtendedCost, bool savetodb = true); // for event
         bool RemoveVendorItem(uint32 entry, uint32 item, bool savetodb = true); // for event
         bool IsVendorItemValid(uint32 vendor_entry, uint32 item, int32 maxcount, uint32 ptime, uint32 ExtendedCost, Player* pl = NULL, std::set<uint32>* skip_vendors = NULL, uint32 ORnpcflag = 0) const;
 
@@ -1237,26 +1237,26 @@ class ObjectMgr
 
         SpellClickInfoMapBounds GetSpellClickInfoMapBounds(uint32 creature_id) const
         {
-            return SpellClickInfoMapBounds(mSpellClickInfoMap.lower_bound(creature_id),mSpellClickInfoMap.upper_bound(creature_id));
+            return SpellClickInfoMapBounds(mSpellClickInfoMap.lower_bound(creature_id), mSpellClickInfoMap.upper_bound(creature_id));
         }
 
         GossipMenusMapBounds GetGossipMenusMapBounds(uint32 uiMenuId) const
         {
-            return GossipMenusMapBounds(m_mGossipMenusMap.lower_bound(uiMenuId),m_mGossipMenusMap.upper_bound(uiMenuId));
+            return GossipMenusMapBounds(m_mGossipMenusMap.lower_bound(uiMenuId), m_mGossipMenusMap.upper_bound(uiMenuId));
         }
 
         GossipMenusMapBoundsNonConst GetGossipMenusMapBoundsNonConst(uint32 uiMenuId)
         {
-            return GossipMenusMapBoundsNonConst(m_mGossipMenusMap.lower_bound(uiMenuId),m_mGossipMenusMap.upper_bound(uiMenuId));
+            return GossipMenusMapBoundsNonConst(m_mGossipMenusMap.lower_bound(uiMenuId), m_mGossipMenusMap.upper_bound(uiMenuId));
         }
 
         GossipMenuItemsMapBounds GetGossipMenuItemsMapBounds(uint32 uiMenuId) const
         {
-            return GossipMenuItemsMapBounds(m_mGossipMenuItemsMap.lower_bound(uiMenuId),m_mGossipMenuItemsMap.upper_bound(uiMenuId));
+            return GossipMenuItemsMapBounds(m_mGossipMenuItemsMap.lower_bound(uiMenuId), m_mGossipMenuItemsMap.upper_bound(uiMenuId));
         }
         GossipMenuItemsMapBoundsNonConst GetGossipMenuItemsMapBoundsNonConst(uint32 uiMenuId)
         {
-            return GossipMenuItemsMapBoundsNonConst(m_mGossipMenuItemsMap.lower_bound(uiMenuId),m_mGossipMenuItemsMap.upper_bound(uiMenuId));
+            return GossipMenuItemsMapBoundsNonConst(m_mGossipMenuItemsMap.lower_bound(uiMenuId), m_mGossipMenuItemsMap.upper_bound(uiMenuId));
         }
 
         // for wintergrasp only
@@ -1377,7 +1377,7 @@ class ObjectMgr
 
         CreatureBaseStatsMap m_creatureBaseStatsMap;
 
-        typedef std::map<uint32,PetLevelInfo*> PetLevelInfoMap;
+        typedef std::map<uint32, PetLevelInfo*> PetLevelInfoMap;
         // PetLevelInfoMap[creature_id][level]
         PetLevelInfoMap petInfo;                            // [creature_id][level]
 
@@ -1392,10 +1392,10 @@ class ObjectMgr
         typedef std::vector<uint64> GuildXPperLevel; // [level]
         GuildXPperLevel mGuildXPperLevel;
 
-        typedef std::map<uint32,uint32> BaseXPMap;          // [area level][base xp]
+        typedef std::map<uint32, uint32> BaseXPMap;          // [area level][base xp]
         BaseXPMap mBaseXPTable;
 
-        typedef std::map<uint32,int32> FishingBaseSkillMap; // [areaId][base skill level]
+        typedef std::map<uint32, int32> FishingBaseSkillMap; // [areaId][base skill level]
         FishingBaseSkillMap mFishingBaseForArea;
 
         typedef std::map<uint32, StringVector> HalfNameMap;
@@ -1438,13 +1438,12 @@ class ObjectMgr
             GO_TO_GO,
             GO_TO_CREATURE,         // GO is dependant on creature
         };
-
 };
 
 #define sObjectMgr ACE_Singleton<ObjectMgr, ACE_Null_Mutex>::instance()
 
 // scripting access functions
- bool LoadSkyFireStrings(char const* table,int32 start_value = MAX_CREATURE_AI_TEXT_STRING_ID, int32 end_value = std::numeric_limits<int32>::min());
+ bool LoadSkyFireStrings(char const* table, int32 start_value = MAX_CREATURE_AI_TEXT_STRING_ID, int32 end_value = std::numeric_limits<int32>::min());
  uint32 GetAreaTriggerScriptId(uint32 trigger_id);
  uint32 GetScriptId(const char *name);
  ObjectMgr::ScriptNameMap& GetScriptNames();

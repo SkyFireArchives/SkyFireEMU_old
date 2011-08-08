@@ -232,4 +232,3 @@ class BattlegroundWS : public Battleground
         uint8 m_minutesElapsed;
 };
 #endif
-

@@ -31,28 +31,28 @@ EndScriptData */
 
 enum eSpells
 {
-    SPELL_MORTALCLEAVE        = 22859,
-    SPELL_SILENCE             = 23207,
-    SPELL_FRENZY              = 23342,
-    SPELL_FORCEPUNCH          = 24189,
-    SPELL_CHARGE              = 24408,
-    SPELL_ENRAGE              = 23537,
-    SPELL_SUMMONTIGERS        = 24183,
-    SPELL_TIGER_FORM          = 24169,
+    SPELL_MORTALCLEAVE        = 22859, 
+    SPELL_SILENCE             = 23207, 
+    SPELL_FRENZY              = 23342, 
+    SPELL_FORCEPUNCH          = 24189, 
+    SPELL_CHARGE              = 24408, 
+    SPELL_ENRAGE              = 23537, 
+    SPELL_SUMMONTIGERS        = 24183, 
+    SPELL_TIGER_FORM          = 24169, 
     SPELL_RESURRECT           = 24173,                    //We will not use this spell.
 
 //Zealot Lor'Khan Spells
-    SPELL_SHIELD              = 25020,
-    SPELL_BLOODLUST           = 24185,
-    SPELL_GREATERHEAL         = 24208,
-    SPELL_DISARM              = 22691,
+    SPELL_SHIELD              = 25020, 
+    SPELL_BLOODLUST           = 24185, 
+    SPELL_GREATERHEAL         = 24208, 
+    SPELL_DISARM              = 22691, 
 
 //Zealot Lor'Khan Spells
-    SPELL_SWEEPINGSTRIKES     = 18765,
-    SPELL_SINISTERSTRIKE      = 15667,
-    SPELL_GOUGE               = 24698,
-    SPELL_KICK                = 15614,
-    SPELL_BLIND               = 21060,
+    SPELL_SWEEPINGSTRIKES     = 18765, 
+    SPELL_SINISTERSTRIKE      = 15667, 
+    SPELL_GOUGE               = 24698, 
+    SPELL_KICK                = 15614, 
+    SPELL_BLIND               = 21060, 
 };
 
 class boss_thekal : public CreatureScript
@@ -216,7 +216,7 @@ class boss_thekal : public CreatureScript
                     {
                         if (Charge_Timer <= diff)
                         {
-                            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                            if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                             {
                                 DoCast(pTarget, SPELL_CHARGE);
                                 DoResetThreat();
@@ -340,7 +340,7 @@ class mob_zealot_lorkhan : public CreatureScript
                         if (!pThekal || !pZath)
                             return;
 
-                        switch (urand(0,1))
+                        switch (urand(0, 1))
                         {
                             case 0:
                                 if (me->IsWithinMeleeRange(pThekal))
@@ -494,7 +494,7 @@ class mob_zealot_zath : public CreatureScript
                     DoCast(me->getVictim(), SPELL_GOUGE);
 
                     if (DoGetThreat(me->getVictim()))
-                        DoModifyThreatPercent(me->getVictim(),-100);
+                        DoModifyThreatPercent(me->getVictim(), -100);
 
                     Gouge_Timer = 17000+rand()%10000;
                 } else Gouge_Timer -= diff;

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,7 +26,7 @@
 * Comment: No Waves atm and the doors spells are crazy...
 *
 * When your group enters the main room (the one after the bridge), you will notice a group of 3 Nerubians.
-* When you engage them, 2 more groups like this one spawn behind the first one - it is important to pull the first group back,
+* When you engage them, 2 more groups like this one spawn behind the first one - it is important to pull the first group back, 
 * so you don't aggro all 3. Hadronox will be under you, fighting Nerubians.
 *
 * This is the timed gauntlet - waves of non-elite spiders
@@ -46,8 +46,8 @@ enum Spells
     SPELL_WEB_GRAB                                = 57731, // Victim
     SPELL_WEB_FRONT_DOORS                         = 53177, // Self
     SPELL_WEB_SIDE_DOORS                          = 53185, // Self
-    H_SPELL_ACID_CLOUD                            = 59419,
-    H_SPELL_LEECH_POISON                          = 59417,
+    H_SPELL_ACID_CLOUD                            = 59419, 
+    H_SPELL_LEECH_POISON                          = 59417, 
     H_SPELL_WEB_GRAB                              = 59421
 };
 
@@ -85,11 +85,11 @@ public:
             me->SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, 9.0f);
             me->SetFloatValue(UNIT_FIELD_COMBATREACH, 9.0f);
 
-            uiAcidTimer = urand(10*IN_MILLISECONDS,14*IN_MILLISECONDS);
-            uiLeechTimer = urand(3*IN_MILLISECONDS,9*IN_MILLISECONDS);
-            uiPierceTimer = urand(1*IN_MILLISECONDS,3*IN_MILLISECONDS);
-            uiGrabTimer = urand(15*IN_MILLISECONDS,19*IN_MILLISECONDS);
-            uiDoorsTimer = urand(20*IN_MILLISECONDS,30*IN_MILLISECONDS);
+            uiAcidTimer = urand(10*IN_MILLISECONDS, 14*IN_MILLISECONDS);
+            uiLeechTimer = urand(3*IN_MILLISECONDS, 9*IN_MILLISECONDS);
+            uiPierceTimer = urand(1*IN_MILLISECONDS, 3*IN_MILLISECONDS);
+            uiGrabTimer = urand(15*IN_MILLISECONDS, 19*IN_MILLISECONDS);
+            uiDoorsTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS);
             uiCheckDistanceTimer = 2*IN_MILLISECONDS;
 
             if (pInstance && (pInstance->GetData(DATA_HADRONOX_EVENT) != DONE && !bFirstTime))
@@ -127,7 +127,7 @@ public:
                 return;
 
             float x=0.0f, y=0.0f, z=0.0f;
-            me->GetRespawnCoord(x,y,z);
+            me->GetRespawnCoord(x, y, z);
 
             if (uiCheckDistanceTimer <= uiDiff)
                 uiCheckDistanceTimer = 5*IN_MILLISECONDS;
@@ -138,7 +138,7 @@ public:
             }
             if (me->IsInEvadeMode() || !me->getVictim())
                 return;
-            if (me->GetDistance(x,y,z) > dist)
+            if (me->GetDistance(x, y, z) > dist)
                 EnterEvadeMode();
         }
 
@@ -169,7 +169,7 @@ public:
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_ACID_CLOUD);
 
-                uiAcidTimer = urand(20*IN_MILLISECONDS,30*IN_MILLISECONDS);
+                uiAcidTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS);
             } else uiAcidTimer -= diff;
 
             if (uiLeechTimer <= diff)
@@ -177,7 +177,7 @@ public:
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_LEECH_POISON);
 
-                uiLeechTimer = urand(11*IN_MILLISECONDS,14*IN_MILLISECONDS);
+                uiLeechTimer = urand(11*IN_MILLISECONDS, 14*IN_MILLISECONDS);
             } else uiLeechTimer -= diff;
 
             if (uiGrabTimer <= diff)
@@ -185,12 +185,12 @@ public:
                 if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0)) // Draws all players (and attacking Mobs) to itself.
                     DoCast(pTarget, SPELL_WEB_GRAB);
 
-                uiGrabTimer = urand(15*IN_MILLISECONDS,30*IN_MILLISECONDS);
+                uiGrabTimer = urand(15*IN_MILLISECONDS, 30*IN_MILLISECONDS);
             } else uiGrabTimer -= diff;
 
             if (uiDoorsTimer <= diff)
             {
-                uiDoorsTimer = urand(30*IN_MILLISECONDS,60*IN_MILLISECONDS);
+                uiDoorsTimer = urand(30*IN_MILLISECONDS, 60*IN_MILLISECONDS);
             } else uiDoorsTimer -= diff;
 
             DoMeleeAttackIfReady();

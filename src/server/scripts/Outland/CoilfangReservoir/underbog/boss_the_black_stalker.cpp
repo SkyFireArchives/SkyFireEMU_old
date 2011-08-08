@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -86,7 +86,7 @@ public:
             if (summon && summon->GetEntry() == ENTRY_SPORE_STRIDER)
             {
                 Striders.push_back(summon->GetGUID());
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1))
                     summon->AI()->AttackStart(pTarget);
                 else
                     if (me->getVictim())
@@ -109,9 +109,9 @@ public:
             // Evade if too far
             if (check_Timer <= diff)
             {
-                float x,y,z,o;
-                me->GetHomePosition(x,y,z,o);
-                if (!me->IsWithinDist3d(x,y,z, 60))
+                float x, y, z, o;
+                me->GetHomePosition(x, y, z, o);
+                if (!me->IsWithinDist3d(x, y, z, 60))
                 {
                     EnterEvadeMode();
                     return;
@@ -156,7 +156,7 @@ public:
             }
             if (Levitate_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1))
                 {
                     DoCast(pTarget, SPELL_LEVITATE);
                     LevitatedTarget = pTarget->GetGUID();
@@ -169,7 +169,7 @@ public:
             // Chain Lightning
             if (ChainLightning_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     DoCast(pTarget, SPELL_CHAIN_LIGHTNING);
                 ChainLightning_Timer = 7000;
             } else ChainLightning_Timer -= diff;
@@ -177,7 +177,7 @@ public:
             // Static Charge
             if (StaticCharge_Timer <= diff)
             {
-                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM,0,30,true))
+                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 30, true))
                     DoCast(pTarget, SPELL_STATIC_CHARGE);
                 StaticCharge_Timer = 10000;
             } else StaticCharge_Timer -= diff;

@@ -63,4 +63,3 @@ class AccountMgr
 
 #define sAccountMgr ACE_Singleton<AccountMgr, ACE_Null_Mutex>::instance()
 #endif
-

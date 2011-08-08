@@ -41,7 +41,7 @@ EndContentData */
 
 #define GOSSIP_ITEM_BLESS_ASH     "Grant me your mark, wise ancient."
 #define GOSSIP_ITEM_BLESS_KEL     "Grant me your mark, mighty ancient."
-//signed for 17900 but used by 17900,17901
+//signed for 17900 but used by 17900, 17901
 #define GOSSIP_REWARD_BLESS       -1000359
 //#define TEXT_BLESSINGS        "<You need higher standing with Cenarion Expedition to recive a blessing.>"
 
@@ -70,8 +70,8 @@ public:
         if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
         {
             pCreature->setPowerType(POWER_MANA);
-            pCreature->SetMaxPower(POWER_MANA,200);             //set a "fake" mana value, we can't depend on database doing it in this case
-            pCreature->SetPower(POWER_MANA,200);
+            pCreature->SetMaxPower(POWER_MANA, 200);             //set a "fake" mana value, we can't depend on database doing it in this case
+            pCreature->SetPower(POWER_MANA, 200);
 
             if (pCreature->GetEntry() == 17900)                //check which Creature we are dealing with
             {
@@ -137,8 +137,8 @@ public:
 
 enum eCooshhooosh
 {
-    SPELL_LIGHTNING_BOLT    = 9532,
-    QUEST_CRACK_SKULLS      = 10009,
+    SPELL_LIGHTNING_BOLT    = 9532, 
+    QUEST_CRACK_SKULLS      = 10009, 
     FACTION_HOSTILE_CO      = 45
 };
 
@@ -246,7 +246,7 @@ public:
                 break;
             case GOSSIP_ACTION_INFO_DEF + 2:
             {
-                if (!pPlayer->HasItemCount(24573,1))
+                if (!pPlayer->HasItemCount(24573, 1))
                 {
                     ItemPosCountVec dest;
                     uint32 itemId = 24573;
@@ -301,14 +301,14 @@ public:
 
 enum eKayra
 {
-    SAY_START           = -1000343,
-    SAY_AMBUSH1         = -1000344,
-    SAY_PROGRESS        = -1000345,
-    SAY_AMBUSH2         = -1000346,
-    SAY_NEAR_END        = -1000347,
+    SAY_START           = -1000343, 
+    SAY_AMBUSH1         = -1000344, 
+    SAY_PROGRESS        = -1000345, 
+    SAY_AMBUSH2         = -1000346, 
+    SAY_NEAR_END        = -1000347, 
     SAY_END             = -1000348, //this is signed for 10646
 
-    QUEST_ESCAPE_FROM   = 9752,
+    QUEST_ESCAPE_FROM   = 9752, 
     NPC_SLAVEBINDER     = 18042
 };
 

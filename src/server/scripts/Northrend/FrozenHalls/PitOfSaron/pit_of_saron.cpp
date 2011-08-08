@@ -20,41 +20,41 @@
 
 /***************************************SPELLS*************************************/
 // Ymirjar Wrathbringer
-#define SPELL_BLIGHT                      DUNGEON_MODE(69603,70285)
+#define SPELL_BLIGHT                      DUNGEON_MODE(69603, 70285)
 
 //Ymirjar Skycaller
 #define SPELL_FROSTBLADE                  70291
 #define SPELL_GLACIAL_STRIKE              70292
 
 //Ymirjar Flamebearer
-#define SPELL_FIREBALL                    DUNGEON_MODE(69583,70282)
-#define SPELL_HELLFIRE                    DUNGEON_MODE(69586,70283)
+#define SPELL_FIREBALL                    DUNGEON_MODE(69583, 70282)
+#define SPELL_HELLFIRE                    DUNGEON_MODE(69586, 70283)
 #define SPELL_TACTICAL_BLINK              69584
 
 //Ymirjar Deathbringer
-#define SPELL_EMPOWERED_SHADOW_BOLT       DUNGEON_MODE(69528,70281)
+#define SPELL_EMPOWERED_SHADOW_BOLT       DUNGEON_MODE(69528, 70281)
 #define SPELL_SUMMON_UNDEAD               69516
 
 //Wrathbone Laborer
 #define SPELL_BLINDING_DIRT               70302
-#define SPELL_PUNCTURE_WOUND              DUNGEON_MODE(70278,70279)
-#define SPELL_SHOVELLED                   DUNGEON_MODE(69572,70280)
+#define SPELL_PUNCTURE_WOUND              DUNGEON_MODE(70278, 70279)
+#define SPELL_SHOVELLED                   DUNGEON_MODE(69572, 70280)
 
 //Wrathbone Coldwraith
-#define SPELL_FREEZING_CIRCLE             DUNGEON_MODE(69574,70276)
-#define SPELL_FROSTBOLT                   DUNGEON_MODE(69573,70277)
+#define SPELL_FREEZING_CIRCLE             DUNGEON_MODE(69574, 70276)
+#define SPELL_FROSTBOLT                   DUNGEON_MODE(69573, 70277)
 
 //Stonespine Gargoyle
-#define SPELL_GARGOYLE_STRIKE             DUNGEON_MODE(69520,70275)
+#define SPELL_GARGOYLE_STRIKE             DUNGEON_MODE(69520, 70275)
 #define SPELL_STONEFORM                   69575
 
 // Plagueborn Horror
 #define SPELL_BLIGHT_BOMB                 69582
-#define SPELL_PUSTULANT_FLESH             DUNGEON_MODE(69581,70273)
+#define SPELL_PUSTULANT_FLESH             DUNGEON_MODE(69581, 70273)
 #define SPELL_TOXIC_WASTE                 70274
 
 //Iceborn Proto-Drake
-#define SPELL_FROST_BREATH                DUNGEON_MODE(69527,70272)
+#define SPELL_FROST_BREATH                DUNGEON_MODE(69527, 70272)
 
 //Hungering Ghoul
 #define SPELL_DEVOUR_FLESH                70393
@@ -69,83 +69,83 @@
 #define SPELL_CURSE_OF_AGONY              70391
 
 //Deathwhisper Shadowcaster
-#define SPELL_SHADOW_BOLT                 DUNGEON_MODE(70386,70387)
+#define SPELL_SHADOW_BOLT                 DUNGEON_MODE(70386, 70387)
 
 //Deathwhisper Necrolyte
-#define SPELL_CONVERSION_BEAM             DUNGEON_MODE(69578,70269)
-#define SPELL_SHADOW_BOLT_2               DUNGEON_MODE(69577,70270)
+#define SPELL_CONVERSION_BEAM             DUNGEON_MODE(69578, 70269)
+#define SPELL_SHADOW_BOLT_2               DUNGEON_MODE(69577, 70270)
 
 //Wrathbone Sorcerer
-#define SPELL_SHADOW_BOLT_3               DUNGEON_MODE(70386,70387)
+#define SPELL_SHADOW_BOLT_3               DUNGEON_MODE(70386, 70387)
 
 //Geist Ambusher
-#define SPELL_LEAPING_FACE_MAUL           DUNGEON_MODE(69504,70271)
+#define SPELL_LEAPING_FACE_MAUL           DUNGEON_MODE(69504, 70271)
 
 /****************************************EVENTS************************************/
 enum eEvents
 {
-    EVENT_NONE,
+    EVENT_NONE, 
 
     // Ymirjar Wrathbringer
-    EVENT_BLIGHT,
+    EVENT_BLIGHT, 
 
     // Ymirjar Skycaller
-    EVENT_FROSTBLADE,
-    EVENT_GLACIAL_STRIKE,
+    EVENT_FROSTBLADE, 
+    EVENT_GLACIAL_STRIKE, 
 
     // Ymirjar Flamebearer
-    EVENT_FIREBALL,
-    EVENT_HELLFIRE,
-    EVENT_TACTICAL_BLINK,
+    EVENT_FIREBALL, 
+    EVENT_HELLFIRE, 
+    EVENT_TACTICAL_BLINK, 
 
     //Ymirjar Deathbringer
-    EVENT_EMPOWERED_SHADOW_BOLT,
-    EVENT_SUMMON_UNDEAD,
+    EVENT_EMPOWERED_SHADOW_BOLT, 
+    EVENT_SUMMON_UNDEAD, 
 
     //Wrathbone Laborer
-    EVENT_BLINDING_DIRT,
-    EVENT_PUNCTURE_WOUND,
-    EVENT_SHOVELLED,
+    EVENT_BLINDING_DIRT, 
+    EVENT_PUNCTURE_WOUND, 
+    EVENT_SHOVELLED, 
 
     //Wrathbone Coldwraith
-    EVENT_FREEZING_CIRCLE,
-    EVENT_FROSTBOLT,
+    EVENT_FREEZING_CIRCLE, 
+    EVENT_FROSTBOLT, 
 
     //Stonespine Gargoyle
-    EVENT_GARGOYLE_STRIKE,
-    EVENT_STONEFORM,
+    EVENT_GARGOYLE_STRIKE, 
+    EVENT_STONEFORM, 
 
     //Plagueborn Horror
-    EVENT_BLIGHT_BOMB,
-    EVENT_PUSTULANT_FLESH,
-    EVENT_TOXIC_WASTE,
+    EVENT_BLIGHT_BOMB, 
+    EVENT_PUSTULANT_FLESH, 
+    EVENT_TOXIC_WASTE, 
 
     //Iceborn Proto-Drake
-    EVENT_FROST_BREATH,
+    EVENT_FROST_BREATH, 
 
     //Hungering Ghoul
-    EVENT_DEVOUR_FLESH,
+    EVENT_DEVOUR_FLESH, 
 
     //Fallen Warrior
-    EVENT_ARCING_SLICE,
-    EVENT_DEMORALIZING_SHOUT,
-    EVENT_SHIELD_BLOCK,
+    EVENT_ARCING_SLICE, 
+    EVENT_DEMORALIZING_SHOUT, 
+    EVENT_SHIELD_BLOCK, 
 
     //Deathwhisper Torturer
-    EVENT_BLACK_BRAND,
-    EVENT_CURSE_OF_AGONY,
+    EVENT_BLACK_BRAND, 
+    EVENT_CURSE_OF_AGONY, 
 
     //Deathwhisper Shadowcaster
-    EVENT_SHADOW_BOLT,
+    EVENT_SHADOW_BOLT, 
 
     //Deathwhisper Necrolyte
-    EVENT_CONVERSION_BEAM,
-    EVENT_SHADOW_BOLT_2,
+    EVENT_CONVERSION_BEAM, 
+    EVENT_SHADOW_BOLT_2, 
 
-    EVENT_SHADOW_BOLT_3,
+    EVENT_SHADOW_BOLT_3, 
 
     //Geist Ambusher
-    EVENT_LEAPING_FACE_MAUL,
+    EVENT_LEAPING_FACE_MAUL, 
 };
 
 /****************************************AI****************************************/

@@ -111,7 +111,7 @@ void PlayerSocial::SetFriendNote(uint32 friend_guid, std::string note)
     if (itr == m_playerSocialMap.end())                     // not exist
         return;
 
-    utf8truncate(note,48);                                  // DB and client size limitation
+    utf8truncate(note, 48);                                  // DB and client size limitation
 
     CharacterDatabase.EscapeString(note);
     CharacterDatabase.PExecute("UPDATE character_social SET note = '%s' WHERE guid = '%u' AND friend = '%u'", note.c_str(), GetPlayerGUID(), friend_guid);
@@ -123,7 +123,6 @@ void PlayerSocial::SendSocialList(Player* plr, uint32 mask)
     if (!plr)
         return;
 
-    
     WorldPacket data(SMSG_CONTACT_LIST, (4 + 4));           // just can guess size
     data << uint32(mask);                                   // flag (0x1, 0x2, 0x4)
     size_t countPos = data.wpos();
@@ -134,9 +133,9 @@ void PlayerSocial::SendSocialList(Player* plr, uint32 mask)
     {
         sSocialMgr->GetFriendInfo(plr, itr->first, itr->second);
 
-        if (!(itr->second.Flags & mask))    
+        if (!(itr->second.Flags & mask))
             continue;
-    
+
         ++count;
 
         data << uint64(itr->first);                         // player guid
@@ -329,4 +328,3 @@ PlayerSocial *SocialMgr::LoadFromDB(PreparedQueryResult result, uint32 guid)
 
     return social;
 }
-

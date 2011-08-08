@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -25,16 +25,16 @@
 #include "ScriptPCH.h"
 #include "naxxramas.h"
 
-#define SAY_AGGRO               RAND(-1533075,-1533076,-1533077)
+#define SAY_AGGRO               RAND(-1533075, -1533076, -1533077)
 #define SAY_SUMMON              -1533078
-#define SAY_SLAY                RAND(-1533079,-1533080)
+#define SAY_SLAY                RAND(-1533079, -1533080)
 #define SAY_DEATH               -1533081
 
 #define SOUND_DEATH      8848
 
-#define SPELL_CURSE_PLAGUEBRINGER       RAID_MODE(29213,54835)
-#define SPELL_BLINK                     RAND(29208,29209,29210,29211)
-#define SPELL_CRIPPLE                   RAID_MODE(29212,54814)
+#define SPELL_CURSE_PLAGUEBRINGER       RAID_MODE(29213, 54835)
+#define SPELL_BLINK                     RAND(29208, 29209, 29210, 29211)
+#define SPELL_CRIPPLE                   RAID_MODE(29212, 54814)
 #define SPELL_TELEPORT                  29216
 
 #define MOB_WARRIOR         16984
@@ -51,23 +51,23 @@
 
 const float SummonPos[MAX_SUMMON_POS][4] =
 {
-    {2728.12f, -3544.43f, 261.91f, 6.04f},
-    {2729.05f, -3544.47f, 261.91f, 5.58f},
-    {2728.24f, -3465.08f, 264.20f, 3.56f},
-    {2704.11f, -3456.81f, 265.53f, 4.51f},
-    {2663.56f, -3464.43f, 262.66f, 5.20f},
+    {2728.12f, -3544.43f, 261.91f, 6.04f}, 
+    {2729.05f, -3544.47f, 261.91f, 5.58f}, 
+    {2728.24f, -3465.08f, 264.20f, 3.56f}, 
+    {2704.11f, -3456.81f, 265.53f, 4.51f}, 
+    {2663.56f, -3464.43f, 262.66f, 5.20f}, 
 };
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_BERSERK,
-    EVENT_CURSE,
-    EVENT_BLINK,
-    EVENT_WARRIOR,
-    EVENT_BALCONY,
-    EVENT_WAVE,
-    EVENT_GROUND,
+    EVENT_NONE, 
+    EVENT_BERSERK, 
+    EVENT_CURSE, 
+    EVENT_BLINK, 
+    EVENT_WARRIOR, 
+    EVENT_BALCONY, 
+    EVENT_WAVE, 
+    EVENT_GROUND, 
 };
 
 class boss_noth : public CreatureScript
@@ -144,7 +144,7 @@ public:
             for (uint32 i = 0; i < num; ++i)
             {
                 uint32 pos = rand()%MAX_SUMMON_POS;
-                me->SummonCreature(entry, SummonPos[pos][0], SummonPos[pos][1], SummonPos[pos][2],
+                me->SummonCreature(entry, SummonPos[pos][0], SummonPos[pos][1], SummonPos[pos][2], 
                     SummonPos[pos][3], TEMPSUMMON_CORPSE_DESPAWN, 60000);
             }
         }
@@ -166,7 +166,7 @@ public:
                         return;
                     case EVENT_WARRIOR:
                         DoScriptText(SAY_SUMMON, me);
-                        SummonUndead(MOB_WARRIOR, RAID_MODE(2,3));
+                        SummonUndead(MOB_WARRIOR, RAID_MODE(2, 3));
                         events.ScheduleEvent(EVENT_WARRIOR, 30000);
                         return;
                     case EVENT_BLINK:
@@ -189,12 +189,12 @@ public:
                         DoScriptText(SAY_SUMMON, me);
                         switch(balconyCount)
                         {
-                            case 0: SummonUndead(MOB_CHAMPION, RAID_MODE(2,4)); break;
-                            case 1: SummonUndead(MOB_CHAMPION, RAID_MODE(1,2));
-                                    SummonUndead(MOB_GUARDIAN, RAID_MODE(1,2)); break;
-                            case 2: SummonUndead(MOB_GUARDIAN, RAID_MODE(2,4)); break;
-                            default:SummonUndead(MOB_CHAMPION, RAID_MODE(5,10));
-                                    SummonUndead(MOB_GUARDIAN, RAID_MODE(5,10));break;
+                            case 0: SummonUndead(MOB_CHAMPION, RAID_MODE(2, 4)); break;
+                            case 1: SummonUndead(MOB_CHAMPION, RAID_MODE(1, 2));
+                                    SummonUndead(MOB_GUARDIAN, RAID_MODE(1, 2)); break;
+                            case 2: SummonUndead(MOB_GUARDIAN, RAID_MODE(2, 4)); break;
+                            default:SummonUndead(MOB_CHAMPION, RAID_MODE(5, 10));
+                                    SummonUndead(MOB_GUARDIAN, RAID_MODE(5, 10));break;
                         }
                         ++waveCount;
                         events.ScheduleEvent(waveCount < 2 ? EVENT_WAVE : EVENT_GROUND, 30000 + rand()%15000);

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -38,8 +38,8 @@ EndContentData */
 
 enum eEnums
 {
-    QUEST_RETURN_TO_AG_A    = 12499,
-    QUEST_RETURN_TO_AG_H    = 12500,
+    QUEST_RETURN_TO_AG_A    = 12499, 
+    QUEST_RETURN_TO_AG_H    = 12500, 
     MOVIE_ID_GATES          = 14
 };
 
@@ -82,36 +82,36 @@ public:
 
 enum eInquisitor
 {
-    NPC_GODFREY                 = 27577,
-    SPELL_HOLY_FIRE             = 39323,
+    NPC_GODFREY                 = 27577, 
+    SPELL_HOLY_FIRE             = 39323, 
 
-    SAY_WP_0                    = -1800014,
-    SAY_WP_1                    = -1800015,
-    SAY_WP_2                    = -1800016,
-    SAY_WP_3                    = -1800017,
-    SAY_WP_4                    = -1800018,
-    SAY_WP_5                    = -1800019,
-    SAY_WP_6                    = -1800020,
-    SAY_WP_7                    = -1800021,
-    SAY_WP_8                    = -1800022,
-    SAY_WP_9                    = -1800023,
-    SAY_WP_10                   = -1800024,
-    SAY_WP_11                   = -1800025,
-    SAY_WP_12                   = -1800026,
-    SAY_WP_13                   = -1800027,
-    SAY_WP_14                   = -1800028,
-    SAY_WP_15                   = -1800029,
-    SAY_WP_16                   = -1800030,
-    SAY_WP_17                   = -1800031,
-    SAY_WP_18                   = -1800032,
-    SAY_WP_19                   = -1800033,
-    SAY_WP_20                   = -1800034,
-    SAY_WP_21                   = -1800035,
-    SAY_WP_22                   = -1800036,
-    SAY_WP_23                   = -1800037,
-    SAY_WP_24                   = -1800038,
-    SAY_WP_25                   = -1800039,
-    SAY_WP_26                   = -1800040,
+    SAY_WP_0                    = -1800014, 
+    SAY_WP_1                    = -1800015, 
+    SAY_WP_2                    = -1800016, 
+    SAY_WP_3                    = -1800017, 
+    SAY_WP_4                    = -1800018, 
+    SAY_WP_5                    = -1800019, 
+    SAY_WP_6                    = -1800020, 
+    SAY_WP_7                    = -1800021, 
+    SAY_WP_8                    = -1800022, 
+    SAY_WP_9                    = -1800023, 
+    SAY_WP_10                   = -1800024, 
+    SAY_WP_11                   = -1800025, 
+    SAY_WP_12                   = -1800026, 
+    SAY_WP_13                   = -1800027, 
+    SAY_WP_14                   = -1800028, 
+    SAY_WP_15                   = -1800029, 
+    SAY_WP_16                   = -1800030, 
+    SAY_WP_17                   = -1800031, 
+    SAY_WP_18                   = -1800032, 
+    SAY_WP_19                   = -1800033, 
+    SAY_WP_20                   = -1800034, 
+    SAY_WP_21                   = -1800035, 
+    SAY_WP_22                   = -1800036, 
+    SAY_WP_23                   = -1800037, 
+    SAY_WP_24                   = -1800038, 
+    SAY_WP_25                   = -1800039, 
+    SAY_WP_26                   = -1800040, 
     SAY_WP_27                   = -1800041
 };
 

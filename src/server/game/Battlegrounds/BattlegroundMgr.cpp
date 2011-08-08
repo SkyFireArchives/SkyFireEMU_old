@@ -181,7 +181,7 @@ void BattlegroundMgr::Update(uint32 diff)
 
 void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battleground *bg, uint8 QueueSlot, uint8 StatusID, uint32 Time1, uint32 Time2, uint8 arenatype, uint8 uiFrame)
 {
-    if(!bg)
+    if (!bg)
         StatusID = STATUS_NONE;
 
     switch(StatusID)
@@ -202,7 +202,7 @@ void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battlegro
             *data << uint32(QueueSlot); // queueSlot
             *data << uint32(bg->GetClientInstanceID()); // instanceid
             *data << uint8(bg->GetMinLevel()); // lowest level (seems to be set to 0 even though its not 0 sometimes O.O)
-            
+
             // packed uint64 (seems to be BG GUID)
             *data << uint32(bg->GetTypeID()); // BGTypeID
             *data << uint32(arenatype); // On retail 0x101F is sent here, but we need this value to be returned in PORT opcode
@@ -226,7 +226,7 @@ void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battlegro
             *data << uint8(arenatype); // teamsize (0 if not arena)
             *data << uint32(Time1); // port expiration time
 
-            if(bg->GetTypeID() != BATTLEGROUND_RB)
+            if (bg->GetTypeID() != BATTLEGROUND_RB)
                 *data << uint32(bg->GetMapId()); // mapid
             else *data << uint32(0);
 
@@ -237,9 +237,9 @@ void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battlegro
             data->Initialize(SMSG_BATTLEFIELD_STATUS2, 100);
             *data << uint8(bg->isRated() ? 128 : 0);
             *data << uint32(Time2); // Time since started
-            *data << uint32(QueueSlot); // queueslot 
+            *data << uint32(QueueSlot); // queueslot
             *data << uint32(bg->GetMapId()); // MapID
-            
+
             // This is bg guid
             *data << uint32(bg->GetTypeID()); // BGTypeID
             *data << uint16(0);
@@ -251,14 +251,14 @@ void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battlegro
             *data << uint8(arenatype); // teamsize (0 if not arena)
             *data << uint8(bg->GetMaxLevel());
             *data << uint32(bg->GetClientInstanceID()); // instanceid
-            *data << uint8(bg->GetMinLevel());        
+            *data << uint8(bg->GetMinLevel());
         }break;
     case STATUS_WAIT_LEAVE:
         {
             // Not used...
             data->Initialize(SMSG_BATTLEFIELD_STATUS4, (1+4+1+1+1+4+1+4+1+4+1+8+1));
             *data << uint8(0); // flag
-            *data << uint32(Time1); // 
+            *data << uint32(Time1); //
             *data << uint8(bg->GetMinLevel()); // lowestLevel
             *data << uint8(0);
             *data << uint8(0);
@@ -267,8 +267,8 @@ void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battlegro
             *data << uint32(Time2); //
             *data << uint8(0); // teamsize (0 if not arena)
             *data << uint32(bg->GetClientInstanceID()); // instanceid
-            *data << uint8(0); 
-            
+            *data << uint8(0);
+
             // This is bg guid
             *data << uint32(bg->GetTypeID()); // BGTypeID
             *data << uint16(0);
@@ -284,7 +284,7 @@ void BattlegroundMgr::BuildBattlegroundStatusPacket(WorldPacket *data, Battlegro
 void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
 {
     uint8 type = (bg->isArena() ? 128 + 64 : 0);
-    if(bg->GetStatus() == STATUS_WAIT_LEAVE)
+    if (bg->GetStatus() == STATUS_WAIT_LEAVE)
         type |= 32;
 
     // last check on 4.0.6
@@ -303,7 +303,7 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
                 *data << uint8(0);
         }
     }
-    if((type & 128) != 0)
+    if ((type & 128) != 0)
     {
         // it seems this must be according to BG_WINNER_A/H and _NOT_ BG_TEAM_A/H
         for (int8 i = 1; i >= 0; --i)
@@ -322,7 +322,7 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
     size_t wpos = data->wpos();
     uint32 scoreCount = 0;
     *data << uint32(scoreCount);                // placeholder
-    if(int8(type * 4) < 0)                      // when battle is over
+    if (int8(type * 4) < 0)                      // when battle is over
     {
          *data << uint8(bg->GetWinner());       // who win
     }
@@ -343,18 +343,18 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
         if (!team && plr)
             team = plr->GetBGTeam();
 
-        if(flagCounter % 2 == 0)
+        if (flagCounter % 2 == 0)
         {
             // set all flags except team
             updateFlags = 255 - 32 - 2;
-            if(team == ALLIANCE)
+            if (team == ALLIANCE)
             {
                 updateFlags |= 32;
             }
         }
         else
         {
-            if(team == ALLIANCE)
+            if (team == ALLIANCE)
             {
                 updateFlags |= 2;
             }
@@ -363,7 +363,7 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
 
         flagCounter++;
     }
-    if(flagCounter > 0 && flagCounter % 2 != 0)
+    if (flagCounter > 0 && flagCounter % 2 != 0)
     {
         // uneven number of players so need to send last field
         *data << uint8(updateFlags);
@@ -386,7 +386,7 @@ void BattlegroundMgr::BuildPvpLogDataPacket(WorldPacket *data, Battleground *bg)
         *data << uint32(itr2->second->HonorableKills);
         *data << uint32(itr2->second->BonusHonor);
         *data << uint32(itr2->second->Deaths);
-        
+
         *data << uint64(itr2->first);
         *data << uint32(itr2->second->KillingBlows);
 
@@ -805,7 +805,7 @@ void BattlegroundMgr::CreateInitialBattlegrounds()
     uint32 scriptId = 0;
 
     //                                                       0   1                 2                 3      4      5                6              7             8           9      10
-    QueryResult result = WorldDatabase.Query("SELECT id, MinPlayersPerTeam,MaxPlayersPerTeam,MinLvl,MaxLvl,AllianceStartLoc,AllianceStartO,HordeStartLoc,HordeStartO,Weight,ScriptName FROM battleground_template");
+    QueryResult result = WorldDatabase.Query("SELECT id, MinPlayersPerTeam, MaxPlayersPerTeam, MinLvl, MaxLvl, AllianceStartLoc, AllianceStartO, HordeStartLoc, HordeStartO, Weight, ScriptName FROM battleground_template");
 
     if (!result)
     {
@@ -1017,7 +1017,7 @@ void BattlegroundMgr::SendToBattleground(Player *pl, uint32 instanceId, Battlegr
     }
     else
     {
-        sLog->outError("player %u trying to port to non-existent bg instance %u",pl->GetGUIDLow(), instanceId);
+        sLog->outError("player %u trying to port to non-existent bg instance %u", pl->GetGUIDLow(), instanceId);
     }
 }
 

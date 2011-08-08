@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,35 +34,35 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                       = -1564000,
-    SAY_NEEDLE1                     = -1564001,
-    SAY_NEEDLE2                     = -1564002,
-    SAY_SLAY1                       = -1564003,
-    SAY_SLAY2                       = -1564004,
-    SAY_SPECIAL1                    = -1564005,
-    SAY_SPECIAL2                    = -1564006,
+    SAY_AGGRO                       = -1564000, 
+    SAY_NEEDLE1                     = -1564001, 
+    SAY_NEEDLE2                     = -1564002, 
+    SAY_SLAY1                       = -1564003, 
+    SAY_SLAY2                       = -1564004, 
+    SAY_SPECIAL1                    = -1564005, 
+    SAY_SPECIAL2                    = -1564006, 
     SAY_ENRAGE1                     = -1564007,           //is this text actually in use?
-    SAY_ENRAGE2                     = -1564008,
-    SAY_DEATH                       = -1564009,
+    SAY_ENRAGE2                     = -1564008, 
+    SAY_DEATH                       = -1564009, 
 
     //Spells
-    SPELL_NEEDLE_SPINE              = 39992,
-    SPELL_TIDAL_BURST               = 39878,
-    SPELL_TIDAL_SHIELD              = 39872,
-    SPELL_IMPALING_SPINE            = 39837,
-    SPELL_CREATE_NAJENTUS_SPINE     = 39956,
-    SPELL_HURL_SPINE                = 39948,
-    SPELL_BERSERK                   = 26662,
+    SPELL_NEEDLE_SPINE              = 39992, 
+    SPELL_TIDAL_BURST               = 39878, 
+    SPELL_TIDAL_SHIELD              = 39872, 
+    SPELL_IMPALING_SPINE            = 39837, 
+    SPELL_CREATE_NAJENTUS_SPINE     = 39956, 
+    SPELL_HURL_SPINE                = 39948, 
+    SPELL_BERSERK                   = 26662, 
 
-    GOBJECT_SPINE                   = 185584,
+    GOBJECT_SPINE                   = 185584, 
 
-    EVENT_BERSERK                   = 1,
-    EVENT_YELL                      = 2,
-    EVENT_NEEDLE                    = 3,
-    EVENT_SPINE                     = 4,
-    EVENT_SHIELD                    = 5,
+    EVENT_BERSERK                   = 1, 
+    EVENT_YELL                      = 2, 
+    EVENT_NEEDLE                    = 3, 
+    EVENT_SPINE                     = 4, 
+    EVENT_SHIELD                    = 5, 
 
-    GCD_CAST                        = 1,
+    GCD_CAST                        = 1, 
     GCD_YELL                        = 2
 };
 
@@ -195,13 +195,13 @@ public:
                         SelectTargetList(pTargets, 3, SELECT_TARGET_RANDOM, 80, true);
                         for (std::list<Unit*>::const_iterator i = pTargets.begin(); i != pTargets.end(); ++i)
                             DoCast(*i, 39835, true);
-                        events.ScheduleEvent(EVENT_NEEDLE, urand(15000,25000), GCD_CAST);
+                        events.ScheduleEvent(EVENT_NEEDLE, urand(15000, 25000), GCD_CAST);
                         events.DelayEvents(1500, GCD_CAST);
                         return;
                     }
                     case EVENT_YELL:
                         DoScriptText(RAND(SAY_SPECIAL1, SAY_SPECIAL2), me);
-                        events.ScheduleEvent(EVENT_YELL, urand(25000,100000), GCD_YELL);
+                        events.ScheduleEvent(EVENT_YELL, urand(25000, 100000), GCD_YELL);
                         events.DelayEvents(15000, GCD_YELL);
                         break;
                 }

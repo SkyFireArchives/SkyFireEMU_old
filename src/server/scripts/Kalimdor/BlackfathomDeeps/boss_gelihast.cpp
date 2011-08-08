@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -53,7 +53,7 @@ public:
 
         void Reset()
         {
-            uiNetTimer = urand(2000,4000);
+            uiNetTimer = urand(2000, 4000);
             if (pInstance)
                 pInstance->SetData(TYPE_GELIHAST, NOT_STARTED);
         }
@@ -78,7 +78,7 @@ public:
             if (uiNetTimer < diff)
             {
                 DoCastVictim(SPELL_NET);
-                uiNetTimer = urand(4000,7000);
+                uiNetTimer = urand(4000, 7000);
             } else uiNetTimer -= diff;
 
             DoMeleeAttackIfReady();

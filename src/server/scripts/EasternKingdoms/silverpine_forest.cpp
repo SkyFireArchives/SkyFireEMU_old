@@ -108,23 +108,23 @@ public:
 
 enum eErland
 {
-    SAY_QUESTACCEPT     = -1000306,
-    SAY_START           = -1000307,
-    SAY_AGGRO_1         = -1000308,
-    SAY_AGGRO_2         = -1000309,
-    SAY_LAST            = -1000310,
+    SAY_QUESTACCEPT     = -1000306, 
+    SAY_START           = -1000307, 
+    SAY_AGGRO_1         = -1000308, 
+    SAY_AGGRO_2         = -1000309, 
+    SAY_LAST            = -1000310, 
 
-    SAY_THANKS          = -1000311,
-    SAY_RANE            = -1000312,
-    SAY_ANSWER          = -1000313,
-    SAY_MOVE_QUINN      = -1000314,
+    SAY_THANKS          = -1000311, 
+    SAY_RANE            = -1000312, 
+    SAY_ANSWER          = -1000313, 
+    SAY_MOVE_QUINN      = -1000314, 
 
-    SAY_GREETINGS       = -1000315,
-    SAY_QUINN           = -1000316,
-    SAY_ON_BYE          = -1000317,
+    SAY_GREETINGS       = -1000315, 
+    SAY_QUINN           = -1000316, 
+    SAY_ON_BYE          = -1000317, 
 
-    QUEST_ESCORTING     = 435,
-    NPC_RANE            = 1950,
+    QUEST_ESCORTING     = 435, 
+    NPC_RANE            = 1950, 
     NPC_QUINN           = 1951
 };
 
@@ -173,7 +173,7 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            DoScriptText(RAND(SAY_AGGRO_1,SAY_AGGRO_2), me, who);
+            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2), me, who);
         }
     };
 
@@ -212,14 +212,14 @@ static float PyrewoodSpawnPoints[3][4] =
     //pos_x   pos_y     pos_z    orien
     //outside
     /*
-    {-400.85f, 1513.64f, 18.67f, 0},
-    {-397.32f, 1514.12f, 18.67f, 0},
-    {-397.44f, 1511.09f, 18.67f, 0},
+    {-400.85f, 1513.64f, 18.67f, 0}, 
+    {-397.32f, 1514.12f, 18.67f, 0}, 
+    {-397.44f, 1511.09f, 18.67f, 0}, 
     */
     //door
-    {-396.17f, 1505.86f, 19.77f, 0},
-    {-396.91f, 1505.77f, 19.77f, 0},
-    {-397.94f, 1504.74f, 19.77f, 0},
+    {-396.17f, 1505.86f, 19.77f, 0}, 
+    {-396.91f, 1505.77f, 19.77f, 0}, 
+    {-397.94f, 1504.74f, 19.77f, 0}, 
 };
 
 #define WAIT_SECS 6000

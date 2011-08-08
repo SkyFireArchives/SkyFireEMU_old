@@ -273,7 +273,7 @@ AOEAI::AOEAI(Creature *c) : CreatureAI(c)
     me->SetVisible(true);//visible to see all spell anims
     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);//can't be targeted
     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_1);//can't be damaged
-    me->SetDisplayId(11686);//invisible model,around a size of a player
+    me->SetDisplayId(11686);//invisible model, around a size of a player
 }
 
 bool AOEAI::CanAIAttack(const Unit * /*who*/) const
@@ -288,7 +288,7 @@ void AOEAI::AttackStart(Unit * /*who*/)
 void AOEAI::UpdateAI(const uint32 /*diff*/)
 {
     if (!me->HasAura(me->m_spells[0]))
-        me->CastSpell(me, me->m_spells[0],false);
+        me->CastSpell(me, me->m_spells[0], false);
 }
 
 //////////////
@@ -301,7 +301,6 @@ VehicleAI::VehicleAI(Creature *c) : CreatureAI(c), m_vehicle(c->GetVehicleKit())
     m_DoDismiss = false;
     m_DismissTimer = VEHICLE_DISMISS_TIME;
 }
-
 
 //NOTE: VehicleAI::UpdateAI runs even while the vehicle is mounted
 void VehicleAI::UpdateAI(const uint32 diff)
@@ -349,7 +348,7 @@ void VehicleAI::LoadConditions()
 
 void VehicleAI::CheckConditions(const uint32 diff)
 {
-    if(m_ConditionsTimer < diff)
+    if (m_ConditionsTimer < diff)
     {
         if (!conditions.empty())
         {

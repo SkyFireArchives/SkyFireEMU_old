@@ -124,7 +124,7 @@ Cell::Visit(const CellPair& standing_cell, TypeContainerVisitor<T, CONTAINER> &v
     {
         for (uint32 y = begin_cell.y_coord; y <= end_cell.y_coord; y++)
         {
-            CellPair cell_pair(x,y);
+            CellPair cell_pair(x, y);
             Cell r_zone(cell_pair);
             r_zone.data.Part.nocreate = this->data.Part.nocreate;
             m.Visit(r_zone, visitor);
@@ -222,7 +222,7 @@ Cell::Visit(const CellPair& standing_cell, TypeContainerVisitor<T, CONTAINER> &v
     {
         for (uint32 y = begin_cell.y_coord; y <= end_cell.y_coord; ++y)
         {
-            CellPair cell_pair(x,y);
+            CellPair cell_pair(x, y);
             //lets skip standing cell since we already visited it
             if (cell_pair != standing_cell)
             {
@@ -258,7 +258,7 @@ Cell::VisitCircle(TypeContainerVisitor<T, CONTAINER> &visitor, Map &m, const Cel
     {
         for (uint32 y = begin_cell.y_coord; y <= end_cell.y_coord; ++y)
         {
-            CellPair cell_pair(x,y);
+            CellPair cell_pair(x, y);
             Cell r_zone(cell_pair);
             r_zone.data.Part.nocreate = this->data.Part.nocreate;
             m.Visit(r_zone, visitor);
@@ -296,4 +296,3 @@ Cell::VisitCircle(TypeContainerVisitor<T, CONTAINER> &visitor, Map &m, const Cel
     }
 }
 #endif
-

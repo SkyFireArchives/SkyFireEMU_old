@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,22 +31,22 @@
 
 enum Spells
 {
-    SPELL_INFECTED_WOUND                          = 49637,
-    SPELL_CRUSH                                   = 49639,
-    SPELL_CORPSE_EXPLODE                          = 49555,
-    SPELL_CONSUME                                 = 49380,
-    SPELL_CONSUME_AURA                            = 49381,
+    SPELL_INFECTED_WOUND                          = 49637, 
+    SPELL_CRUSH                                   = 49639, 
+    SPELL_CORPSE_EXPLODE                          = 49555, 
+    SPELL_CONSUME                                 = 49380, 
+    SPELL_CONSUME_AURA                            = 49381, 
     //Heroic spells
-    H_SPELL_CORPSE_EXPLODE                        = 59807,
-    H_SPELL_CONSUME                               = 59803,
-    H_SPELL_CONSUME_AURA                          = 59805,
+    H_SPELL_CORPSE_EXPLODE                        = 59807, 
+    H_SPELL_CONSUME                               = 59803, 
+    H_SPELL_CONSUME_AURA                          = 59805, 
 };
 enum Yells
 {
-    SAY_AGGRO                                     = -1600006,
-    SAY_KILL                                      = -1600007,
-    SAY_CONSUME                                   = -1600008,
-    SAY_EXPLODE                                   = -1600009,
+    SAY_AGGRO                                     = -1600006, 
+    SAY_KILL                                      = -1600007, 
+    SAY_CONSUME                                   = -1600008, 
+    SAY_EXPLODE                                   = -1600009, 
     SAY_DEATH                                     = -1600010
 };
 enum Achievements
@@ -55,7 +55,7 @@ enum Achievements
 };
 enum Creatures
 {
-    NPC_DRAKKARI_INVADER_1                        = 27753,
+    NPC_DRAKKARI_INVADER_1                        = 27753, 
     NPC_DRAKKARI_INVADER_2                        = 27709
 };
 
@@ -92,16 +92,16 @@ public:
         {
             uiConsumeTimer = 15*IN_MILLISECONDS;
             uiAuraCountTimer = 15500;
-            uiCrushTimer = urand(1*IN_MILLISECONDS,5*IN_MILLISECONDS);
-            uiInfectedWoundTimer = urand(60*IN_MILLISECONDS,10*IN_MILLISECONDS);
+            uiCrushTimer = urand(1*IN_MILLISECONDS, 5*IN_MILLISECONDS);
+            uiInfectedWoundTimer = urand(60*IN_MILLISECONDS, 10*IN_MILLISECONDS);
             uiExplodeCorpseTimer = 3*IN_MILLISECONDS;
-            uiSpawnTimer = urand(30*IN_MILLISECONDS,40*IN_MILLISECONDS);
+            uiSpawnTimer = urand(30*IN_MILLISECONDS, 40*IN_MILLISECONDS);
 
             bAchiev = IsHeroic();
 
             lSummons.DespawnAll();
 
-            me->RemoveAura(DUNGEON_MODE(SPELL_CONSUME_AURA,H_SPELL_CONSUME_AURA));
+            me->RemoveAura(DUNGEON_MODE(SPELL_CONSUME_AURA, H_SPELL_CONSUME_AURA));
 
             if (pInstance)
                 pInstance->SetData(DATA_TROLLGORE_EVENT, NOT_STARTED);
@@ -123,10 +123,10 @@ public:
 
             if (uiSpawnTimer <= diff)
             {
-                uint32 spawnNumber = urand(2,DUNGEON_MODE(3,5));
+                uint32 spawnNumber = urand(2, DUNGEON_MODE(3, 5));
                 for (uint8 i = 0; i < spawnNumber; ++i)
-                    DoSummon(RAND(NPC_DRAKKARI_INVADER_1,NPC_DRAKKARI_INVADER_2), AddSpawnPoint, 0, TEMPSUMMON_DEAD_DESPAWN);
-                uiSpawnTimer = urand(30*IN_MILLISECONDS,40*IN_MILLISECONDS);
+                    DoSummon(RAND(NPC_DRAKKARI_INVADER_1, NPC_DRAKKARI_INVADER_2), AddSpawnPoint, 0, TEMPSUMMON_DEAD_DESPAWN);
+                uiSpawnTimer = urand(30*IN_MILLISECONDS, 40*IN_MILLISECONDS);
             } else uiSpawnTimer -= diff;
 
             if (uiConsumeTimer <= diff)
@@ -138,7 +138,7 @@ public:
 
             if (bAchiev)
             {
-                Aura *pConsumeAura = me->GetAura(DUNGEON_MODE(SPELL_CONSUME_AURA,H_SPELL_CONSUME_AURA));
+                Aura *pConsumeAura = me->GetAura(DUNGEON_MODE(SPELL_CONSUME_AURA, H_SPELL_CONSUME_AURA));
                 if (pConsumeAura && pConsumeAura->GetStackAmount() > 9)
                     bAchiev = false;
             }
@@ -146,20 +146,20 @@ public:
             if (uiCrushTimer <= diff)
             {
                 DoCastVictim(SPELL_CRUSH);
-                uiCrushTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
+                uiCrushTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
             } else uiCrushTimer -= diff;
 
             if (uiInfectedWoundTimer <= diff)
             {
                 DoCastVictim(SPELL_INFECTED_WOUND);
-                uiInfectedWoundTimer = urand(25*IN_MILLISECONDS,35*IN_MILLISECONDS);
+                uiInfectedWoundTimer = urand(25*IN_MILLISECONDS, 35*IN_MILLISECONDS);
             } else uiInfectedWoundTimer -= diff;
 
             if (uiExplodeCorpseTimer <= diff)
             {
                 DoCast(SPELL_CORPSE_EXPLODE);
                 DoScriptText(SAY_EXPLODE, me);
-                uiExplodeCorpseTimer = urand(15*IN_MILLISECONDS,19*IN_MILLISECONDS);
+                uiExplodeCorpseTimer = urand(15*IN_MILLISECONDS, 19*IN_MILLISECONDS);
             } else uiExplodeCorpseTimer -= diff;
 
             DoMeleeAttackIfReady();

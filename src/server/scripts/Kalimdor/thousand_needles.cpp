@@ -41,9 +41,9 @@ EndContentData */
 
 enum eKanati
 {
-    SAY_KAN_START              = -1000410,
+    SAY_KAN_START              = -1000410, 
 
-    QUEST_PROTECT_KANATI        = 4966,
+    QUEST_PROTECT_KANATI        = 4966, 
     NPC_GALAK_ASS               = 10720
 };
 
@@ -93,8 +93,8 @@ public:
         void DoSpawnGalak()
         {
             for (int i = 0; i < 3; ++i)
-                me->SummonCreature(NPC_GALAK_ASS,
-                m_afGalakLoc[0], m_afGalakLoc[1], m_afGalakLoc[2], 0.0f,
+                me->SummonCreature(NPC_GALAK_ASS, 
+                m_afGalakLoc[0], m_afGalakLoc[1], m_afGalakLoc[2], 0.0f, 
                 TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
         }
 
@@ -114,28 +114,28 @@ public:
 
 enum eLakota
 {
-    SAY_LAKO_START              = -1000365,
-    SAY_LAKO_LOOK_OUT           = -1000366,
-    SAY_LAKO_HERE_COME          = -1000367,
-    SAY_LAKO_MORE               = -1000368,
-    SAY_LAKO_END                = -1000369,
+    SAY_LAKO_START              = -1000365, 
+    SAY_LAKO_LOOK_OUT           = -1000366, 
+    SAY_LAKO_HERE_COME          = -1000367, 
+    SAY_LAKO_MORE               = -1000368, 
+    SAY_LAKO_END                = -1000369, 
 
-    QUEST_FREE_AT_LAST          = 4904,
-    NPC_GRIM_BANDIT             = 10758,
+    QUEST_FREE_AT_LAST          = 4904, 
+    NPC_GRIM_BANDIT             = 10758, 
     FACTION_ESCORTEE_LAKO       = 232,                      //guessed
 
-    ID_AMBUSH_1                 = 0,
-    ID_AMBUSH_2                 = 2,
+    ID_AMBUSH_1                 = 0, 
+    ID_AMBUSH_2                 = 2, 
     ID_AMBUSH_3                 = 4
 };
 
 float m_afBanditLoc[6][6]=
 {
-    {-4905.479492f, -2062.732666f, 84.352f},
-    {-4915.201172f, -2073.528320f, 84.733f},
-    {-4878.883301f, -1986.947876f, 91.966f},
-    {-4877.503906f, -1966.113403f, 91.859f},
-    {-4767.985352f, -1873.169189f, 90.192f},
+    {-4905.479492f, -2062.732666f, 84.352f}, 
+    {-4915.201172f, -2073.528320f, 84.733f}, 
+    {-4878.883301f, -1986.947876f, 91.966f}, 
+    {-4877.503906f, -1966.113403f, 91.859f}, 
+    {-4767.985352f, -1873.169189f, 90.192f}, 
     {-4788.861328f, -1888.007813f, 89.888f}
 };
 
@@ -194,8 +194,8 @@ public:
         void DoSpawnBandits(int uiAmbushId)
         {
             for (int i = 0; i < 2; ++i)
-                me->SummonCreature(NPC_GRIM_BANDIT,
-                m_afBanditLoc[i+uiAmbushId][0], m_afBanditLoc[i+uiAmbushId][1], m_afBanditLoc[i+uiAmbushId][2], 0.0f,
+                me->SummonCreature(NPC_GRIM_BANDIT, 
+                m_afBanditLoc[i+uiAmbushId][0], m_afBanditLoc[i+uiAmbushId][1], m_afBanditLoc[i+uiAmbushId][2], 0.0f, 
                 TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
         }
     };
@@ -210,19 +210,19 @@ public:
 
 enum ePacka
 {
-    SAY_START           = -1000362,
-    SAY_WYVERN          = -1000363,
-    SAY_COMPLETE        = -1000364,
+    SAY_START           = -1000362, 
+    SAY_WYVERN          = -1000363, 
+    SAY_COMPLETE        = -1000364, 
 
-    QUEST_HOMEWARD      = 4770,
-    NPC_WYVERN          = 4107,
+    QUEST_HOMEWARD      = 4770, 
+    NPC_WYVERN          = 4107, 
     FACTION_ESCORTEE    = 232                               //guessed
 };
 
 float m_afWyvernLoc[3][3]=
 {
-    {-4990.606f, -906.057f, -5.343f},
-    {-4970.241f, -927.378f, -4.951f},
+    {-4990.606f, -906.057f, -5.343f}, 
+    {-4970.241f, -927.378f, -4.951f}, 
     {-4985.364f, -952.528f, -5.199f}
 };
 
@@ -238,7 +238,7 @@ public:
             DoScriptText(SAY_START, pCreature, pPlayer);
             pCreature->setFaction(FACTION_ESCORTEE);
 
-            if (npc_paoka_swiftmountainAI* pEscortAI = CAST_AI(npc_paoka_swiftmountain::npc_paoka_swiftmountainAI,pCreature->AI()))
+            if (npc_paoka_swiftmountainAI* pEscortAI = CAST_AI(npc_paoka_swiftmountain::npc_paoka_swiftmountainAI, pCreature->AI()))
                 pEscortAI->Start(false, false, pPlayer->GetGUID(), pQuest);
         }
         return true;
@@ -276,8 +276,8 @@ public:
         void DoSpawnWyvern()
         {
             for (int i = 0; i < 3; ++i)
-                me->SummonCreature(NPC_WYVERN,
-                m_afWyvernLoc[i][0], m_afWyvernLoc[i][1], m_afWyvernLoc[i][2], 0.0f,
+                me->SummonCreature(NPC_WYVERN, 
+                m_afWyvernLoc[i][0], m_afWyvernLoc[i][1], m_afWyvernLoc[i][2], 0.0f, 
                 TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
         }
     };
@@ -294,9 +294,9 @@ public:
 
 enum ePlucky
 {
-    FACTION_FRIENDLY        = 35,
-    QUEST_SCOOP             = 1950,
-    SPELL_PLUCKY_HUMAN      = 9192,
+    FACTION_FRIENDLY        = 35, 
+    QUEST_SCOOP             = 1950, 
+    SPELL_PLUCKY_HUMAN      = 9192, 
     SPELL_PLUCKY_CHICKEN    = 9220
 };
 

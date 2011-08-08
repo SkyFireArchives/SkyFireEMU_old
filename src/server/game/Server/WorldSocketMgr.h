@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -42,7 +42,7 @@ class WorldSocketMgr
 {
 public:
     friend class WorldSocket;
-    friend class ACE_Singleton<WorldSocketMgr,ACE_Thread_Mutex>;
+    friend class ACE_Singleton<WorldSocketMgr, ACE_Thread_Mutex>;
 
     /// Start network, listen at address:port .
     int StartNetwork (ACE_UINT16 port, const char* address);
@@ -72,7 +72,7 @@ private:
     ACE_Event_Handler* m_Acceptor;
 };
 
-#define sWorldSocketMgr ACE_Singleton<WorldSocketMgr,ACE_Thread_Mutex>::instance()
+#define sWorldSocketMgr ACE_Singleton<WorldSocketMgr, ACE_Thread_Mutex>::instance()
 
 #endif
 /// @}

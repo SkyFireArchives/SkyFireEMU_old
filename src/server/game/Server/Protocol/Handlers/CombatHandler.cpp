@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -41,9 +41,9 @@ void WorldSession::HandleAttackSwingOpcode(WorldPacket & recv_data)
     if (!pEnemy)
     {
         if (!IS_UNIT_GUID(guid))
-            sLog->outError("WORLD: Object %u (TypeID: %u) isn't player, pet or creature",GUID_LOPART(guid),GuidHigh2TypeId(GUID_HIPART(guid)));
+            sLog->outError("WORLD: Object %u (TypeID: %u) isn't player, pet or creature", GUID_LOPART(guid), GuidHigh2TypeId(GUID_HIPART(guid)));
         else
-            sLog->outError("WORLD: Enemy %s %u not found",GetLogNameForGuid(guid),GUID_LOPART(guid));
+            sLog->outError("WORLD: Enemy %s %u not found", GetLogNameForGuid(guid), GUID_LOPART(guid));
 
         // stop attack state at client
         SendAttackStop(NULL);
@@ -57,7 +57,7 @@ void WorldSession::HandleAttackSwingOpcode(WorldPacket & recv_data)
         return;
     }
 
-    _player->Attack(pEnemy,true);
+    _player->Attack(pEnemy, true);
 }
 
 void WorldSession::HandleAttackStopOpcode(WorldPacket & /*recv_data*/)
@@ -74,7 +74,7 @@ void WorldSession::HandleSetSheathedOpcode(WorldPacket & recv_data)
 
     if (sheathed >= MAX_SHEATH_STATE)
     {
-        sLog->outError("Unknown sheath state %u ??",sheathed);
+        sLog->outError("Unknown sheath state %u ??", sheathed);
         return;
     }
 

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,7 +27,7 @@
 
 enum Spells
 {
-    SPELL_POISON_CLOUD                                     = 3815,
+    SPELL_POISON_CLOUD                                     = 3815, 
     SPELL_FRENZIED_RAGE                                    = 3490
 };
 
@@ -55,7 +55,7 @@ public:
 
         void Reset()
         {
-            uiPoisonCloudTimer = urand(5000,9000);
+            uiPoisonCloudTimer = urand(5000, 9000);
             bIsEnraged = false;
             if (pInstance)
                 pInstance->SetData(TYPE_AKU_MAI, NOT_STARTED);
@@ -81,12 +81,12 @@ public:
             if (uiPoisonCloudTimer < diff)
             {
                 DoCastVictim(SPELL_POISON_CLOUD);
-                uiPoisonCloudTimer = urand(25000,50000);
+                uiPoisonCloudTimer = urand(25000, 50000);
             } else uiPoisonCloudTimer -= diff;
 
             if (!bIsEnraged && HealthBelowPct(30))
             {
-                DoCast(me,SPELL_FRENZIED_RAGE);
+                DoCast(me, SPELL_FRENZIED_RAGE);
                 bIsEnraged = true;
             }
 

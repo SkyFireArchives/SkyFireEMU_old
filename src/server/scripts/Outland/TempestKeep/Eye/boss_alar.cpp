@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,7 +34,7 @@ EndScriptData */
 
 enum eSpells
 {
-    SPELL_FLAME_BUFFET           = 34121, // Flame Buffet - every 1,5 secs in phase 1 if there is no victim in melee range and after Dive Bomb in phase 2 with same conditions
+    SPELL_FLAME_BUFFET           = 34121, // Flame Buffet - every 1, 5 secs in phase 1 if there is no victim in melee range and after Dive Bomb in phase 2 with same conditions
     SPELL_FLAME_QUILLS           = 34229, // Randomly after changing position in phase after watching tonns of movies, set probability 20%
     SPELL_REBIRTH                = 34342, // Rebirth - beginning of second phase(after loose all health in phase 1)
     SPELL_REBIRTH_2              = 35369, // Rebirth(another, without healing to full HP) - after Dive Bomb in phase 2
@@ -53,26 +53,26 @@ enum eSpells
 
 static float waypoint[6][3] =
 {
-    {340.15f, 58.65f, 17.71f},
-    {388.09f, 31.54f, 20.18f},
-    {388.18f, -32.85f, 20.18f},
-    {340.29f, -60.19f, 17.72f},
+    {340.15f, 58.65f, 17.71f}, 
+    {388.09f, 31.54f, 20.18f}, 
+    {388.18f, -32.85f, 20.18f}, 
+    {340.29f, -60.19f, 17.72f}, 
     {332.0f, 0.01f, 39.0f}, // better not use the same xy coord
     {331.0f, 0.01f, -2.39f}
 };
 
 enum WaitEventType
 {
-    WE_NONE     = 0,
-    WE_DUMMY    = 1,
-    WE_PLATFORM = 2,
-    WE_QUILL    = 3,
-    WE_DIE      = 4,
-    WE_REVIVE   = 5,
-    WE_CHARGE   = 6,
-    WE_METEOR   = 7,
-    WE_DIVE     = 8,
-    WE_LAND     = 9,
+    WE_NONE     = 0, 
+    WE_DUMMY    = 1, 
+    WE_PLATFORM = 2, 
+    WE_QUILL    = 3, 
+    WE_DIE      = 4, 
+    WE_REVIVE   = 5, 
+    WE_CHARGE   = 6, 
+    WE_METEOR   = 7, 
+    WE_DIVE     = 8, 
+    WE_LAND     = 9, 
     WE_SUMMON   = 10
 };
 
@@ -297,7 +297,7 @@ class boss_alar : public CreatureScript
                                     if (me->IsWithinDist3d(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 5.0f))
                                         dist = 5.0f;
                                     WaitTimer = 1000 + uint32(floor(dist / 80 * 1000.0f));
-                                    me->GetMap()->CreatureRelocation(me, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(),0.0f);
+                                    me->GetMap()->CreatureRelocation(me, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0.0f);
                                     me->StopMoving();
                                     WaitEvent = WE_LAND;
                                 }
@@ -349,7 +349,7 @@ class boss_alar : public CreatureScript
                         }
                         else
                         {
-                            if (urand(0,4)) // next platform
+                            if (urand(0, 4)) // next platform
                             {
                                 DoSpawnCreature(CREATURE_EMBER_OF_ALAR, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                                 if (cur_wp == 3)

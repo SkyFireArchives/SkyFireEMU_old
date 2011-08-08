@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -63,7 +63,7 @@ class SOAPWorkingThread : public ACE_Task<ACE_MT_SYNCH>
                 ACE_Message_Block *mb = 0;
                 if (this->getq(mb) == -1)
                 {
-                    ACE_DEBUG((LM_INFO,
+                    ACE_DEBUG((LM_INFO, 
                         ACE_TEXT("(%t) Shutting down\n")));
                     break;
                 }

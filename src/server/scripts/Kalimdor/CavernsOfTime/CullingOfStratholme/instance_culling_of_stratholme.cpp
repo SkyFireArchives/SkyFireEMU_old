@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -114,13 +114,13 @@ public:
                 case GO_EXIT_GATE:
                     uiExitGate = pGo->GetGUID();
                     if (m_auiEncounter[3] == DONE)
-                        HandleGameObject(uiExitGate,true);
+                        HandleGameObject(uiExitGate, true);
                     break;
                 case GO_MALGANIS_CHEST_N:
                 case GO_MALGANIS_CHEST_H:
                     uiMalGanisChest = pGo->GetGUID();
                     if (m_auiEncounter[3] == DONE)
-                        pGo->RemoveFlag(GAMEOBJECT_FLAGS,GO_FLAG_INTERACT_COND);
+                        pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND);
                     break;
             }
         }
@@ -144,15 +144,15 @@ public:
                     switch(m_auiEncounter[3])
                     {
                         case NOT_STARTED:
-                            HandleGameObject(uiMalGanisGate2,true);
+                            HandleGameObject(uiMalGanisGate2, true);
                             break;
                         case IN_PROGRESS:
-                            HandleGameObject(uiMalGanisGate2,false);
+                            HandleGameObject(uiMalGanisGate2, false);
                             break;
                         case DONE:
                             HandleGameObject(uiExitGate, true);
                             if (GameObject *pGo = instance->GetGameObject(uiMalGanisChest))
-                                pGo->RemoveFlag(GAMEOBJECT_FLAGS,GO_FLAG_INTERACT_COND);
+                                pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND);
                             break;
                     }
                     break;

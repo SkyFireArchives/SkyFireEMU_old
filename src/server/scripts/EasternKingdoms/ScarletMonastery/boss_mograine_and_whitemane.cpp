@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,27 +35,27 @@ EndScriptData */
 enum eEnums
 {
     //Mograine says
-    SAY_MO_AGGRO                 = -1189005,
-    SAY_MO_KILL                  = -1189006,
-    SAY_MO_RESSURECTED           = -1189007,
+    SAY_MO_AGGRO                 = -1189005, 
+    SAY_MO_KILL                  = -1189006, 
+    SAY_MO_RESSURECTED           = -1189007, 
 
     //Whitemane says
-    SAY_WH_INTRO                 = -1189008,
-    SAY_WH_KILL                  = -1189009,
-    SAY_WH_RESSURECT             = -1189010,
+    SAY_WH_INTRO                 = -1189008, 
+    SAY_WH_KILL                  = -1189009, 
+    SAY_WH_RESSURECT             = -1189010, 
 
     //Mograine Spells
-    SPELL_CRUSADERSTRIKE         = 14518,
-    SPELL_HAMMEROFJUSTICE        = 5589,
-    SPELL_LAYONHANDS             = 9257,
-    SPELL_RETRIBUTIONAURA        = 8990,
+    SPELL_CRUSADERSTRIKE         = 14518, 
+    SPELL_HAMMEROFJUSTICE        = 5589, 
+    SPELL_LAYONHANDS             = 9257, 
+    SPELL_RETRIBUTIONAURA        = 8990, 
 
     //Whitemanes Spells
-    SPELL_DEEPSLEEP              = 9256,
-    SPELL_SCARLETRESURRECTION    = 9232,
-    SPELL_DOMINATEMIND           = 14515,
-    SPELL_HOLYSMITE              = 9481,
-    SPELL_HEAL                   = 12039,
+    SPELL_DEEPSLEEP              = 9256, 
+    SPELL_SCARLETRESURRECTION    = 9232, 
+    SPELL_DOMINATEMIND           = 14515, 
+    SPELL_HOLYSMITE              = 9481, 
+    SPELL_HEAL                   = 12039, 
     SPELL_POWERWORDSHIELD        = 22187
 };
 
@@ -97,7 +97,7 @@ public:
 
             if (m_pInstance)
                 if (me->isAlive())
-                    m_pInstance->SetData(TYPE_MOGRAINE_AND_WHITE_EVENT,NOT_STARTED);
+                    m_pInstance->SetData(TYPE_MOGRAINE_AND_WHITE_EVENT, NOT_STARTED);
 
             m_bHasDied = false;
             m_bHeal = false;
@@ -139,7 +139,7 @@ public:
             {
                 m_pInstance->SetData(TYPE_MOGRAINE_AND_WHITE_EVENT, IN_PROGRESS);
 
-                Whitemane->GetMotionMaster()->MovePoint(1,1163.113370f,1398.856812f,32.527786f);
+                Whitemane->GetMotionMaster()->MovePoint(1, 1163.113370f, 1398.856812f, 32.527786f);
 
                 me->GetMotionMaster()->MovementExpired();
                 me->GetMotionMaster()->MoveIdle();

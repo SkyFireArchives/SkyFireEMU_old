@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -82,9 +82,9 @@ EndScriptData */
 
 enum SuperSpell
 {
-    SUPER_FLAME = 0,
-    SUPER_BLIZZARD,
-    SUPER_AE,
+    SUPER_FLAME = 0, 
+    SUPER_BLIZZARD, 
+    SUPER_AE, 
 };
 
 class boss_shade_of_aran : public CreatureScript
@@ -165,7 +165,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL1,SAY_KILL2), me);
+            DoScriptText(RAND(SAY_KILL1, SAY_KILL2), me);
         }
 
         void JustDied(Unit * /*victim*/)
@@ -181,7 +181,7 @@ public:
 
         void EnterCombat(Unit * /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO1,SAY_AGGRO2,SAY_AGGRO3), me);
+            DoScriptText(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3), me);
 
             if (pInstance)
             {
@@ -351,7 +351,7 @@ public:
 
             if (SecondarySpellTimer <= diff)
             {
-                switch (urand(0,1))
+                switch (urand(0, 1))
                 {
                     case 0:
                         DoCast(me, SPELL_AOE_CS);
@@ -361,7 +361,7 @@ public:
                             DoCast(pTarget, SPELL_CHAINSOFICE);
                         break;
                 }
-                SecondarySpellTimer = urand(5000,20000);
+                SecondarySpellTimer = urand(5000, 20000);
             } else SecondarySpellTimer -= diff;
 
             if (SuperCastTimer <= diff)
@@ -384,12 +384,12 @@ public:
                         break;
                 }
 
-                LastSuperSpell = Available[urand(0,1)];
+                LastSuperSpell = Available[urand(0, 1)];
 
                 switch (LastSuperSpell)
                 {
                     case SUPER_AE:
-                        DoScriptText(RAND(SAY_EXPLOSION1,SAY_EXPLOSION2), me);
+                        DoScriptText(RAND(SAY_EXPLOSION1, SAY_EXPLOSION2), me);
 
                         DoCast(me, SPELL_BLINK_CENTER, true);
                         DoCast(me, SPELL_PLAYERPULL, true);
@@ -398,7 +398,7 @@ public:
                         break;
 
                     case SUPER_FLAME:
-                        DoScriptText(RAND(SAY_FLAMEWREATH1,SAY_FLAMEWREATH2), me);
+                        DoScriptText(RAND(SAY_FLAMEWREATH1, SAY_FLAMEWREATH2), me);
 
                         FlameWreathTimer = 20000;
                         FlameWreathCheckTime = 500;
@@ -411,7 +411,7 @@ public:
                         break;
 
                     case SUPER_BLIZZARD:
-                        DoScriptText(RAND(SAY_BLIZZARD1,SAY_BLIZZARD2), me);
+                        DoScriptText(RAND(SAY_BLIZZARD1, SAY_BLIZZARD2), me);
 
                         if (Creature* pSpawn = me->SummonCreature(CREATURE_ARAN_BLIZZARD, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 25000))
                         {
@@ -421,7 +421,7 @@ public:
                         break;
                 }
 
-                SuperCastTimer = urand(35000,40000);
+                SuperCastTimer = urand(35000, 40000);
             } else SuperCastTimer -= diff;
 
             if (!ElementalsSpawned && HealthBelowPct(40))
@@ -548,7 +548,7 @@ public:
             if (CastTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_WATERBOLT);
-                CastTimer = urand(2000,5000);
+                CastTimer = urand(2000, 5000);
             } else CastTimer -= diff;
         }
     };

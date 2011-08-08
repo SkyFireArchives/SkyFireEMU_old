@@ -224,10 +224,10 @@ Battleground::~Battleground()
     if (GetInstanceID())                                    // not spam by useless queries in case BG templates
     {
         // delete creature and go respawn times
-        CharacterDatabase.PExecute("DELETE FROM creature_respawn WHERE instanceId = '%u'",GetInstanceID());
-        CharacterDatabase.PExecute("DELETE FROM gameobject_respawn WHERE instanceId = '%u'",GetInstanceID());
+        CharacterDatabase.PExecute("DELETE FROM creature_respawn WHERE instanceId = '%u'", GetInstanceID());
+        CharacterDatabase.PExecute("DELETE FROM gameobject_respawn WHERE instanceId = '%u'", GetInstanceID());
         // delete instance from db
-        CharacterDatabase.PExecute("DELETE FROM instance WHERE id = '%u'",GetInstanceID());
+        CharacterDatabase.PExecute("DELETE FROM instance WHERE id = '%u'", GetInstanceID());
         // remove from battlegrounds
     }
 
@@ -296,7 +296,6 @@ inline void Battleground::_ProcessOfflineQueue()
             }
         }
     }
-
 }
 
 inline void Battleground::_ProcessRessurect(uint32 diff)
@@ -792,7 +791,7 @@ void Battleground::EndBattleground(uint32 winner)
                 if (member)
                     plr->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_RATED_ARENA, member->PersonalRating);
 
-                winner_arena_team->MemberWon(plr,loser_matchmaker_rating, winner_change);
+                winner_arena_team->MemberWon(plr, loser_matchmaker_rating, winner_change);
 
                 plr->ModifyCurrency(CURRENCY_TYPE_CONQUEST_POINTS, sWorld->getIntConfig(CONFIG_ARENA_CONQUEST_POINTS_REWARD) * PLAYER_CURRENCY_PRECISION);
                 plr->UpdateMaxWeekRating(CP_SOURCE_ARENA, winner_arena_team->GetSlot());
@@ -1094,7 +1093,7 @@ void Battleground::AddPlayer(Player* plr)
     plr->GetSession()->SendPacket(&status);
 
     plr->RemoveAurasByType(SPELL_AURA_MOUNTED);
-    if(plr->getClass() == CLASS_DRUID)
+    if (plr->getClass() == CLASS_DRUID)
         plr->RemoveAurasByType(SPELL_AURA_MOD_SHAPESHIFT);
 
     // add arena specific auras
@@ -1104,16 +1103,16 @@ void Battleground::AddPlayer(Player* plr)
         if (team == ALLIANCE)                                // gold
         {
             if (plr->GetTeam() == HORDE)
-                plr->CastSpell(plr, SPELL_HORDE_GOLD_FLAG,true);
+                plr->CastSpell(plr, SPELL_HORDE_GOLD_FLAG, true);
             else
-                plr->CastSpell(plr, SPELL_ALLIANCE_GOLD_FLAG,true);
+                plr->CastSpell(plr, SPELL_ALLIANCE_GOLD_FLAG, true);
         }
         else                                                // green
         {
             if (plr->GetTeam() == HORDE)
-                plr->CastSpell(plr, SPELL_HORDE_GREEN_FLAG,true);
+                plr->CastSpell(plr, SPELL_HORDE_GREEN_FLAG, true);
             else
-                plr->CastSpell(plr, SPELL_ALLIANCE_GREEN_FLAG,true);
+                plr->CastSpell(plr, SPELL_ALLIANCE_GREEN_FLAG, true);
         }
 
         plr->DestroyConjuredItems(true);

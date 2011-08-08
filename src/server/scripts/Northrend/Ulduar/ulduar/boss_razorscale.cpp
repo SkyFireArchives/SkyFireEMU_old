@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,39 +35,39 @@ EndScriptData */
 
 enum Says
 {
-    SAY_GREET                       = -1603260,
-    SAY_GROUND_PHASE                = -1603261,
-    SAY_AGGRO_1                     = -1603262,
-    SAY_AGGRO_2                     = -1603263,
-    SAY_AGGRO_3                     = -1603264,
-    SAY_TURRETS                     = -1603265,
-    EMOTE_HARPOON                   = -1603266,
-    EMOTE_BREATH                    = -1603267,
-    EMOTE_PERMA                     = -1603268,
+    SAY_GREET                       = -1603260, 
+    SAY_GROUND_PHASE                = -1603261, 
+    SAY_AGGRO_1                     = -1603262, 
+    SAY_AGGRO_2                     = -1603263, 
+    SAY_AGGRO_3                     = -1603264, 
+    SAY_TURRETS                     = -1603265, 
+    EMOTE_HARPOON                   = -1603266, 
+    EMOTE_BREATH                    = -1603267, 
+    EMOTE_PERMA                     = -1603268, 
 };
 
 #define GOSSIP_ITEM_1 "Activate Harpoones!"
 
 enum Spells
 {
-    SPELL_FLAMEBUFFET               = 64016,
-    SPELL_FIREBALL                  = 62796,
-    SPELL_FLAME_GROUND              = 64709,
-    SPELL_WINGBUFFET                = 62666,
-    SPELL_FLAMEBREATH               = 63317,
-    SPELL_FUSEARMOR                 = 64771,
-    SPELL_DEVOURING_FLAME           = 63236,
-    SPELL_HARPOON                   = 54933,
-    SPELL_FLAMED                    = 62696,
-    SPELL_STUN                      = 9032,
+    SPELL_FLAMEBUFFET               = 64016, 
+    SPELL_FIREBALL                  = 62796, 
+    SPELL_FLAME_GROUND              = 64709, 
+    SPELL_WINGBUFFET                = 62666, 
+    SPELL_FLAMEBREATH               = 63317, 
+    SPELL_FUSEARMOR                 = 64771, 
+    SPELL_DEVOURING_FLAME           = 63236, 
+    SPELL_HARPOON                   = 54933, 
+    SPELL_FLAMED                    = 62696, 
+    SPELL_STUN                      = 9032, 
     SPELL_BERSERK                   = 47008
 };
 
 const Position PosHarpoon[4] =
 {
-{594.317f, -136.953f, 391.517f, 4.544f},
-{577.449f, -136.953f, 391.517f, 4.877f},
-{607.726f, -146.857f, 391.517f, 4.041f},
+{594.317f, -136.953f, 391.517f, 4.544f}, 
+{577.449f, -136.953f, 391.517f, 4.877f}, 
+{607.726f, -146.857f, 391.517f, 4.041f}, 
 {561.449f, -146.857f, 391.517f, 5.426f}
 };
 
@@ -75,25 +75,25 @@ const Position PosEngSpawn = {591.951f, -95.968f, 391.517f, 0};
 
 const Position PosEngRepair[4] =
 {
-{590.442f, -130.550f, 391.517f, 4.789f},
-{574.850f, -133.687f, 391.517f, 4.252f},
-{606.567f, -143.369f, 391.517f, 4.434f},
+{590.442f, -130.550f, 391.517f, 4.789f}, 
+{574.850f, -133.687f, 391.517f, 4.252f}, 
+{606.567f, -143.369f, 391.517f, 4.434f}, 
 {560.609f, -142.967f, 391.517f, 5.074f}
 };
 
 const Position PosDefSpawn[4] =
 {
-{600.75f, -104.850f, 391.517f, 0},
-{596.38f, -110.262f, 391.517f, 0},
-{566.47f, -103.633f, 391.517f, 0},
+{600.75f, -104.850f, 391.517f, 0}, 
+{596.38f, -110.262f, 391.517f, 0}, 
+{566.47f, -103.633f, 391.517f, 0}, 
 {570.41f, -108.791f, 391.517f, 0}
 };
 
 const Position PosDefCombat[4] =
 {
-{614.975f, -155.138f, 391.517f, 4.154f},
-{609.814f, -204.968f, 391.517f, 5.385f},
-{563.531f, -201.557f, 391.517f, 4.108f},
+{614.975f, -155.138f, 391.517f, 4.154f}, 
+{609.814f, -204.968f, 391.517f, 5.385f}, 
+{563.531f, -201.557f, 391.517f, 4.108f}, 
 {560.231f, -153.677f, 391.517f, 5.403f}
 };
 
@@ -102,31 +102,31 @@ const Position RazorGround = {586.966f, -175.534f, 391.517f, 1.692f};
 
 enum Mobs
 {
-    RAZORSCALE                      = 33186,// ?? why not use instance?
-    NPC_DARK_RUNE_GUARDIAN          = 33388,
-    NPC_DARK_RUNE_SENTINEL          = 33846,
-    NPC_DARK_RUNE_WATCHER           = 33453,
-    MOLE_MACHINE_TRIGGER            = 33245,
-    NPC_COMMANDER                   = 33210,
-    NPC_ENGINEER                    = 33287,
-    NPC_DEFENDER                    = 33816,
-    NPC_HARPOON                     = 33184,
+    RAZORSCALE                      = 33186, // ?? why not use instance?
+    NPC_DARK_RUNE_GUARDIAN          = 33388, 
+    NPC_DARK_RUNE_SENTINEL          = 33846, 
+    NPC_DARK_RUNE_WATCHER           = 33453, 
+    MOLE_MACHINE_TRIGGER            = 33245, 
+    NPC_COMMANDER                   = 33210, 
+    NPC_ENGINEER                    = 33287, 
+    NPC_DEFENDER                    = 33816, 
+    NPC_HARPOON                     = 33184, 
     GOB_MOLE_MACHINE                = 194316
 };
 
 enum DarkRuneSpells
 {
     // Dark Rune Watcher
-    SPELL_CHAIN_LIGHTNING           = 64758,
-    SPELL_LIGHTNING_BOLT            = 63809,
+    SPELL_CHAIN_LIGHTNING           = 64758, 
+    SPELL_LIGHTNING_BOLT            = 63809, 
 
     // Dark Rune Guardian
-    SPELL_STORMSTRIKE               = 64757,
+    SPELL_STORMSTRIKE               = 64757, 
 
     // Dark Rune Sentinel
-    SPELL_BATTLE_SHOUT              = 46763,
-    SPELL_HEROIC_STRIKE             = 45026,
-    SPELL_WHIRLWIND                 = 63807,
+    SPELL_BATTLE_SHOUT              = 46763, 
+    SPELL_HEROIC_STRIKE             = 45026, 
+    SPELL_WHIRLWIND                 = 63807, 
 };
 
 #define ACHIEVEMENT_QUICK_SHAVE     RAID_MODE(2919, 2921)
@@ -136,26 +136,26 @@ enum DarkRuneSpells
 
 enum Phases
 {
-    PHASE_NULL,
-    PHASE_PERMAGROUND,
-    PHASE_GROUND,
+    PHASE_NULL, 
+    PHASE_PERMAGROUND, 
+    PHASE_GROUND, 
     PHASE_FLIGHT
 };
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_BERSERK,
-    EVENT_BREATH,
-    EVENT_BUFFET,
-    EVENT_HARPOON,
-    EVENT_FIREBALL,
-    EVENT_FLIGHT,
-    EVENT_DEVOURING,
-    EVENT_FLAME,
-    EVENT_LAND,
-    EVENT_GROUND,
-    EVENT_FUSE,
+    EVENT_NONE, 
+    EVENT_BERSERK, 
+    EVENT_BREATH, 
+    EVENT_BUFFET, 
+    EVENT_HARPOON, 
+    EVENT_FIREBALL, 
+    EVENT_FLIGHT, 
+    EVENT_DEVOURING, 
+    EVENT_FLAME, 
+    EVENT_LAND, 
+    EVENT_GROUND, 
+    EVENT_FUSE, 
     EVENT_SUMMON
 };
 
@@ -200,7 +200,7 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             _EnterCombat();
-            for (uint8 n = 0; n < RAID_MODE(2,4); ++n)
+            for (uint8 n = 0; n < RAID_MODE(2, 4); ++n)
                 Harpoon[n] = me->SummonCreature(NPC_HARPOON, PosHarpoon[n], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 0);
             me->SetSpeed(MOVE_FLIGHT, 3.0f, true);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -259,7 +259,7 @@ public:
                             me->SetReactState(REACT_PASSIVE);
                             me->AttackStop();
                             me->RemoveAllAuras();
-                            me->GetMotionMaster()->MovePoint(0,RazorFlight);
+                            me->GetMotionMaster()->MovePoint(0, RazorFlight);
                             events.ScheduleEvent(EVENT_FIREBALL, 7000, 0, PHASE_FLIGHT);
                             events.ScheduleEvent(EVENT_DEVOURING, 10000, 0, PHASE_FLIGHT);
                             events.ScheduleEvent(EVENT_SUMMON, 5000, 0, PHASE_FLIGHT);
@@ -279,7 +279,7 @@ public:
                             events.ScheduleEvent(EVENT_FLIGHT, 35000, 0, PHASE_GROUND);
                             return;
                         case EVENT_HARPOON:
-                            for (uint8 n = 0; n < RAID_MODE(2,4); ++n)
+                            for (uint8 n = 0; n < RAID_MODE(2, 4); ++n)
                                 if (Harpoon[n])
                                     Harpoon[n]->CastSpell(me, SPELL_HARPOON, true);
                             events.ScheduleEvent(EVENT_HARPOON, 1500, 0, PHASE_GROUND);
@@ -292,7 +292,7 @@ public:
                             return;
                         case EVENT_BUFFET:
                             DoCastAOE(SPELL_WINGBUFFET);
-                            for (uint8 n = 0; n < RAID_MODE(2,4); ++n)
+                            for (uint8 n = 0; n < RAID_MODE(2, 4); ++n)
                                 if (Harpoon[n])
                                     Harpoon[n]->CastSpell(Harpoon[n], SPELL_FLAMED, true);
                             events.CancelEvent(EVENT_BUFFET);
@@ -349,7 +349,7 @@ public:
                             events.SetPhase(PHASE_GROUND);
                             if (Harpoon[0])
                                 Harpoon[0]->MonsterTextEmote(EMOTE_HARPOON, 0, true);
-                            me->GetMotionMaster()->MovePoint(0,RazorGround);
+                            me->GetMotionMaster()->MovePoint(0, RazorGround);
                             events.ScheduleEvent(EVENT_LAND, 5500, 0, PHASE_GROUND);
                             return;
                         case EVENT_FIREBALL:
@@ -396,7 +396,7 @@ public:
         {
             // Adds will come in waves from mole machines. One mole can spawn a Dark Rune Watcher
             // with 1-2 Guardians, or a lone Sentinel. Up to 4 mole machines can spawn adds at any given time.
-            uint8 random = urand(1,4);
+            uint8 random = urand(1, 4);
             for (uint8 i = 0; i < random; ++i)
             {
                 float x = float(irand(540, 640));       // Safe range is between 500 and 650
@@ -450,7 +450,7 @@ public:
         {
             pPlayer->PrepareGossipMenu(pCreature);
 
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,GOSSIP_ITEM_1,GOSSIP_SENDER_MAIN,GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
             pPlayer->SEND_GOSSIP_MENU(13853, pCreature->GetGUID());
         }
         else pPlayer->SEND_GOSSIP_MENU(13910, pCreature->GetGUID());
@@ -525,7 +525,7 @@ public:
                         uiPhase = 2;
                         break;
                     case 2:
-                        for (uint8 n = 0; n < RAID_MODE(2,4); ++n)
+                        for (uint8 n = 0; n < RAID_MODE(2, 4); ++n)
                         {
                             engineer[n] = me->SummonCreature(NPC_ENGINEER, PosEngSpawn, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
                             engineer[n]->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
@@ -548,7 +548,7 @@ public:
                         uiPhase = 4;
                         break;
                     case 4:
-                        for (uint8 n = 0; n < RAID_MODE(2,4); ++n)
+                        for (uint8 n = 0; n < RAID_MODE(2, 4); ++n)
                             engineer[n]->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_USESTANDING);
                         for (uint8 n = 0; n < 4; ++n)
                             defender[n]->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_READY2H);
@@ -594,7 +594,7 @@ public:
 
         void Reset()
         {
-            MoleMachine = me->SummonGameObject(GOB_MOLE_MACHINE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(),
+            MoleMachine = me->SummonGameObject(GOB_MOLE_MACHINE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 
                 float(urand(0, 6)), 0, 0, 0, 0, 300);
             if (MoleMachine)
                 MoleMachine->SetGoState(GO_STATE_ACTIVE);
@@ -616,7 +616,7 @@ public:
                 if (!(rand()%2))
                 {
                     me->SummonCreature(NPC_DARK_RUNE_WATCHER, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 3000);
-                    uint8 random = urand(1,2);
+                    uint8 random = urand(1, 2);
                     for (uint8 i = 0; i < random; ++i)
                         me->SummonCreature(NPC_DARK_RUNE_GUARDIAN, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 3000);
                 }

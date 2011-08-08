@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -78,13 +78,13 @@ public:
 
         void KilledUnit()
         {
-            // When a player, pet or totem gets killed, Lord Kazzak casts this spell to instantly regenerate 70,000 health.
+            // When a player, pet or totem gets killed, Lord Kazzak casts this spell to instantly regenerate 70, 000 health.
             DoCast(me, SPELL_CAPTURESOUL);
         }
 
         void SummonHounds(Unit* pVictim)
         {
-            if (Creature *Hound = DoSpawnCreature(19207, float(irand(-9,9)), float(irand(-9,9)), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 300000))
+            if (Creature *Hound = DoSpawnCreature(19207, float(irand(-9, 9)), float(irand(-9, 9)), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 300000))
                 Hound->AI()->AttackStart(pVictim);
         }
 
@@ -97,7 +97,7 @@ public:
             //ShadowVolley_Timer
             if (ShadowVolley_Timer <= diff)
             {
-                if (urand(0,99) < 45)
+                if (urand(0, 99) < 45)
                     DoCast(me->getVictim(), SPELL_SHADOWVOLLEY);
 
                 ShadowVolley_Timer = 5000;
@@ -106,7 +106,7 @@ public:
             //Cleave_Timer
             if (Cleave_Timer <= diff)
             {
-                if (urand(0,1))
+                if (urand(0, 1))
                     DoCast(me->getVictim(), SPELL_CLEAVE);
 
                 Cleave_Timer = 10000;
@@ -115,7 +115,7 @@ public:
             //ThunderClap_Timer
             if (ThunderClap_Timer <= diff)
             {
-                if (urand(0,9) < 2)
+                if (urand(0, 9) < 2)
                     DoCast(me->getVictim(), SPELL_THUNDERCLAP);
 
                 ThunderClap_Timer = 12000;
@@ -131,7 +131,7 @@ public:
             //VoidBolt_Timer
             if (VoidBolt_Timer <= diff)
             {
-                if (urand(0,9) < 4)
+                if (urand(0, 9) < 4)
                     DoCast(me->getVictim(), SPELL_VOIDBOLT);
 
                 VoidBolt_Timer = 18000;

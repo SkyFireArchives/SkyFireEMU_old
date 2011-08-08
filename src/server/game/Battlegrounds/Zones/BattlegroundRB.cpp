@@ -37,7 +37,6 @@ BattlegroundRB::BattlegroundRB()
 
 BattlegroundRB::~BattlegroundRB()
 {
-
 }
 
 void BattlegroundRB::Update(uint32 diff)
@@ -62,7 +61,7 @@ void BattlegroundRB::AddPlayer(Player *plr)
     m_PlayerScores[plr->GetGUID()] = sc;
 }
 
-void BattlegroundRB::RemovePlayer(Player* /*plr*/,uint64 /*guid*/)
+void BattlegroundRB::RemovePlayer(Player* /*plr*/, uint64 /*guid*/)
 {
 }
 
@@ -80,5 +79,5 @@ void BattlegroundRB::UpdatePlayerScore(Player* Source, uint32 type, uint32 value
     if (itr == m_PlayerScores.end())                         // player not found...
         return;
 
-    Battleground::UpdatePlayerScore(Source,type,value, doAddHonor);
+    Battleground::UpdatePlayerScore(Source, type, value, doAddHonor);
 }

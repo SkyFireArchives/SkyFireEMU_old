@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,34 +34,34 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                           = -1550007,
-    SAY_SUMMON1                         = -1550008,
-    SAY_SUMMON2                         = -1550009,
-    SAY_KILL1                           = -1550010,
-    SAY_KILL2                           = -1550011,
-    SAY_KILL3                           = -1550012,
-    SAY_DEATH                           = -1550013,
-    SAY_VOIDA                           = -1550014,
-    SAY_VOIDB                           = -1550015,
+    SAY_AGGRO                           = -1550007, 
+    SAY_SUMMON1                         = -1550008, 
+    SAY_SUMMON2                         = -1550009, 
+    SAY_KILL1                           = -1550010, 
+    SAY_KILL2                           = -1550011, 
+    SAY_KILL3                           = -1550012, 
+    SAY_DEATH                           = -1550013, 
+    SAY_VOIDA                           = -1550014, 
+    SAY_VOIDB                           = -1550015, 
 
-    SPELL_ARCANE_MISSILES               = 33031,
-    SPELL_WRATH_OF_THE_ASTROMANCER      = 42783,
-    SPELL_BLINDING_LIGHT                = 33009,
-    SPELL_FEAR                          = 34322,
-    SPELL_VOID_BOLT                     = 39329,
+    SPELL_ARCANE_MISSILES               = 33031, 
+    SPELL_WRATH_OF_THE_ASTROMANCER      = 42783, 
+    SPELL_BLINDING_LIGHT                = 33009, 
+    SPELL_FEAR                          = 34322, 
+    SPELL_VOID_BOLT                     = 39329, 
 
-    SPELL_SPOTLIGHT                     = 25824,
-    NPC_ASTROMANCER_SOLARIAN_SPOTLIGHT  = 18928,
+    SPELL_SPOTLIGHT                     = 25824, 
+    NPC_ASTROMANCER_SOLARIAN_SPOTLIGHT  = 18928, 
 
-    NPC_SOLARIUM_AGENT                  = 18925,
-    NPC_SOLARIUM_PRIEST                 = 18806,
+    NPC_SOLARIUM_AGENT                  = 18925, 
+    NPC_SOLARIUM_PRIEST                 = 18806, 
 
-    MODEL_HUMAN                         = 18239,
-    MODEL_VOIDWALKER                    = 18988,
+    MODEL_HUMAN                         = 18239, 
+    MODEL_VOIDWALKER                    = 18988, 
 
-    SPELL_SOLARIUM_GREAT_HEAL           = 33387,
-    SPELL_SOLARIUM_HOLY_SMITE           = 25054,
-    SPELL_SOLARIUM_ARCANE_TORRENT       = 33390,
+    SPELL_SOLARIUM_GREAT_HEAL           = 33387, 
+    SPELL_SOLARIUM_HOLY_SMITE           = 25054, 
+    SPELL_SOLARIUM_ARCANE_TORRENT       = 33390, 
 
     WV_ARMOR                            = 31000
 };
@@ -151,7 +151,7 @@ class boss_high_astromancer_solarian : public CreatureScript
 
             void KilledUnit(Unit * /*victim*/)
             {
-                DoScriptText(RAND(SAY_KILL1,SAY_KILL2,SAY_KILL3), me);
+                DoScriptText(RAND(SAY_KILL1, SAY_KILL2, SAY_KILL3), me);
             }
 
             void JustDied(Unit * /*victim*/)
@@ -186,7 +186,7 @@ class boss_high_astromancer_solarian : public CreatureScript
 
             float Portal_X(float radius)
             {
-                if (urand(0,1))
+                if (urand(0, 1))
                     radius = -radius;
 
                 return radius * (float)(rand()%100)/100.0f + CENTER_X;
@@ -453,7 +453,7 @@ class mob_solarium_priest : public CreatureScript
                 if (healTimer <= diff)
                 {
                     Unit *pTarget = NULL;
-                    switch (urand(0,1))
+                    switch (urand(0, 1))
                     {
                         case 0:
                             if (pInstance)

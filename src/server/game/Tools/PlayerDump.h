@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,9 +31,9 @@ enum DumpTableType
 {
     DTT_CHARACTER,      //                                  // characters
 
-    DTT_CHAR_TABLE,     //                                  // character_achievement, character_achievement_progress,
-                                                            // character_action, character_aura, character_homebind,
-                                                            // character_queststatus, character_queststatus_rewarded, character_reputation,
+    DTT_CHAR_TABLE,     //                                  // character_achievement, character_achievement_progress, 
+                                                            // character_action, character_aura, character_homebind, 
+                                                            // character_queststatus, character_queststatus_rewarded, character_reputation, 
                                                             // character_spell, character_spell_cooldown, character_ticket, character_talent
 
     DTT_EQSET_TABLE,    // <- guid                          // character_equipmentsets
@@ -57,11 +57,11 @@ enum DumpTableType
 
 enum DumpReturn
 {
-    DUMP_SUCCESS,
-    DUMP_FILE_OPEN_ERROR,
-    DUMP_TOO_MANY_CHARS,
-    DUMP_UNEXPECTED_END,
-    DUMP_FILE_BROKEN,
+    DUMP_SUCCESS, 
+    DUMP_FILE_OPEN_ERROR, 
+    DUMP_TOO_MANY_CHARS, 
+    DUMP_UNEXPECTED_END, 
+    DUMP_FILE_BROKEN, 
     DUMP_CHARACTER_DELETED
 };
 

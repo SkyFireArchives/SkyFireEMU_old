@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -139,7 +139,7 @@ public:
     {
         mob_scarlet_traineeAI(Creature *c) : npc_escortAI(c)
         {
-            Start_Timer = urand(1000,6000);
+            Start_Timer = urand(1000, 6000);
         }
 
         uint32 Start_Timer;
@@ -154,7 +154,7 @@ public:
             {
                 if (Start_Timer <= diff)
                 {
-                    Start(true,true);
+                    Start(true, true);
                     Start_Timer = 0;
                 } else Start_Timer -= diff;
             }

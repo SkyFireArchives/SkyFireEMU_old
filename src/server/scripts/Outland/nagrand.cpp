@@ -73,9 +73,9 @@ public:
                 float y = me->GetPositionY();
                 float z = me->GetPositionZ();
 
-                Hitter->SummonCreature(18181,x+(0.7f * (rand()%30)),y+(rand()%5),z,0,TEMPSUMMON_CORPSE_TIMED_DESPAWN,60000);
-                Hitter->SummonCreature(18181,x+(rand()%5),y-(rand()%5),z,0,TEMPSUMMON_CORPSE_TIMED_DESPAWN,60000);
-                Hitter->SummonCreature(18181,x-(rand()%5),y+(0.5f *(rand()%60)),z,0,TEMPSUMMON_CORPSE_TIMED_DESPAWN,60000);
+                Hitter->SummonCreature(18181, x+(0.7f * (rand()%30)), y+(rand()%5), z, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
+                Hitter->SummonCreature(18181, x+(rand()%5), y-(rand()%5), z, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
+                Hitter->SummonCreature(18181, x-(rand()%5), y+(0.5f *(rand()%60)), z, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
                 me->setDeathState(CORPSE);
                 Spawn = true;
             }
@@ -208,7 +208,7 @@ public:
             if (!me->IsStandState())
                  me->SetStandState(UNIT_STAND_STATE_STAND);
 
-            DoScriptText(RAND(LUMP_SAY0,LUMP_SAY1), me);
+            DoScriptText(RAND(LUMP_SAY0, LUMP_SAY1), me);
         }
 
         void UpdateAI(const uint32 diff)
@@ -582,24 +582,24 @@ public:
 
 enum eMagharCaptive
 {
-    SAY_MAG_START               = -1000482,
-    SAY_MAG_NO_ESCAPE           = -1000483,
-    SAY_MAG_MORE                = -1000484,
-    SAY_MAG_MORE_REPLY          = -1000485,
-    SAY_MAG_LIGHTNING           = -1000486,
-    SAY_MAG_SHOCK               = -1000487,
-    SAY_MAG_COMPLETE            = -1000488,
+    SAY_MAG_START               = -1000482, 
+    SAY_MAG_NO_ESCAPE           = -1000483, 
+    SAY_MAG_MORE                = -1000484, 
+    SAY_MAG_MORE_REPLY          = -1000485, 
+    SAY_MAG_LIGHTNING           = -1000486, 
+    SAY_MAG_SHOCK               = -1000487, 
+    SAY_MAG_COMPLETE            = -1000488, 
 
-    SPELL_CHAIN_LIGHTNING       = 16006,
-    SPELL_EARTHBIND_TOTEM       = 15786,
-    SPELL_FROST_SHOCK           = 12548,
-    SPELL_HEALING_WAVE          = 12491,
+    SPELL_CHAIN_LIGHTNING       = 16006, 
+    SPELL_EARTHBIND_TOTEM       = 15786, 
+    SPELL_FROST_SHOCK           = 12548, 
+    SPELL_HEALING_WAVE          = 12491, 
 
-    QUEST_TOTEM_KARDASH_H       = 9868,
+    QUEST_TOTEM_KARDASH_H       = 9868, 
 
-    NPC_MURK_RAIDER             = 18203,
-    NPC_MURK_BRUTE              = 18211,
-    NPC_MURK_SCAVENGER          = 18207,
+    NPC_MURK_RAIDER             = 18203, 
+    NPC_MURK_BRUTE              = 18211, 
+    NPC_MURK_SCAVENGER          = 18207, 
     NPC_MURK_PUTRIFIER          = 18202
 };
 

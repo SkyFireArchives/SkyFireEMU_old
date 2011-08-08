@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -49,15 +49,15 @@ EndContentData */
 
 enum eAldurtharGate
 {
-    TRIGGER_SOUTH                               = 5284,
+    TRIGGER_SOUTH                               = 5284, 
 
-    TRIGGER_CENTRAL                             = 5285,
-    TRIGGER_NORTH                               = 5286,
-    TRIGGER_NORTHWEST                           = 5287,
+    TRIGGER_CENTRAL                             = 5285, 
+    TRIGGER_NORTH                               = 5286, 
+    TRIGGER_NORTHWEST                           = 5287, 
 
-    NPC_SOUTH_GATE                              = 32195,
-    NPC_CENTRAL_GATE                            = 32196,
-    NPC_NORTH_GATE                              = 32197,
+    NPC_SOUTH_GATE                              = 32195, 
+    NPC_CENTRAL_GATE                            = 32196, 
+    NPC_NORTH_GATE                              = 32197, 
     NPC_NORTHWEST_GATE                          = 32199
 };
 
@@ -117,10 +117,10 @@ class AreaTrigger_at_coilfang_waterfall : public AreaTriggerScript
 
 enum eLegionTeleporter
 {
-    SPELL_TELE_A_TO         = 37387,
-    QUEST_GAINING_ACCESS_A  = 10589,
+    SPELL_TELE_A_TO         = 37387, 
+    QUEST_GAINING_ACCESS_A  = 10589, 
 
-    SPELL_TELE_H_TO         = 37389,
+    SPELL_TELE_H_TO         = 37389, 
     QUEST_GAINING_ACCESS_H  = 10604
 };
 
@@ -157,7 +157,7 @@ class AreaTrigger_at_legion_teleporter : public AreaTriggerScript
 
 enum eRavenholdt
 {
-    QUEST_MANOR_RAVENHOLDT  = 6681,
+    QUEST_MANOR_RAVENHOLDT  = 6681, 
     NPC_RAVENHOLDT          = 13936
 };
 
@@ -185,14 +185,14 @@ class AreaTrigger_at_ravenholdt : public AreaTriggerScript
 
 enum eWarsongFarms
 {
-    QUEST_THE_WARSONG_FARMS                     = 11686,
+    QUEST_THE_WARSONG_FARMS                     = 11686, 
 
-    NPC_CREDIT_SLAUGHTERHOUSE                   = 25672,
-    NPC_CREDIT_GRAINERY                         = 25669,
-    NPC_CREDIT_TORP_FARM                        = 25671,
+    NPC_CREDIT_SLAUGHTERHOUSE                   = 25672, 
+    NPC_CREDIT_GRAINERY                         = 25669, 
+    NPC_CREDIT_TORP_FARM                        = 25671, 
 
-    AT_SLAUGHTERHOUSE                           = 4873,
-    AT_GRAINERY                                 = 4871,
+    AT_SLAUGHTERHOUSE                           = 4873, 
+    AT_GRAINERY                                 = 4871, 
     AT_TORP_FARM                                = 4872
 };
 
@@ -226,7 +226,7 @@ class AreaTrigger_at_warsong_farms : public AreaTriggerScript
 
 enum eStormwrightShelf
 {
-    QUEST_STRENGTH_OF_THE_TEMPEST               = 12741,
+    QUEST_STRENGTH_OF_THE_TEMPEST               = 12741, 
 
     SPELL_CREATE_TRUE_POWER_OF_THE_TEMPEST      = 53067
 };
@@ -255,7 +255,7 @@ class AreaTrigger_at_stormwright_shelf : public AreaTriggerScript
 
 enum eScentLarkorwi
 {
-    QUEST_SCENT_OF_LARKORWI                     = 4291,
+    QUEST_SCENT_OF_LARKORWI                     = 4291, 
     NPC_LARKORWI_MATE                           = 9683
 };
 
@@ -272,7 +272,7 @@ class AreaTrigger_at_scent_larkorwi : public AreaTriggerScript
         {
             if (!player->isDead() && player->GetQuestStatus(QUEST_SCENT_OF_LARKORWI) == QUEST_STATUS_INCOMPLETE)
             {
-                if (!player->FindNearestCreature(NPC_LARKORWI_MATE,15))
+                if (!player->FindNearestCreature(NPC_LARKORWI_MATE, 15))
                     player->SummonCreature(NPC_LARKORWI_MATE, player->GetPositionX()+5, player->GetPositionY(), player->GetPositionZ(), 3.3f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 100000);
             }
 
@@ -286,8 +286,8 @@ class AreaTrigger_at_scent_larkorwi : public AreaTriggerScript
 
 enum eAtLastRites
 {
-    QUEST_LAST_RITES                          = 12019,
-    QUEST_BREAKING_THROUGH                    = 11898,
+    QUEST_LAST_RITES                          = 12019, 
+    QUEST_BREAKING_THROUGH                    = 11898, 
 };
 
 class AreaTrigger_at_last_rites : public AreaTriggerScript
@@ -313,13 +313,13 @@ class AreaTrigger_at_last_rites : public AreaTriggerScript
             {
                 case 5332:
                 case 5338:
-                    pPosition = WorldLocation(571,3733.68f,3563.25f,290.812f,3.665192f);
+                    pPosition = WorldLocation(571, 3733.68f, 3563.25f, 290.812f, 3.665192f);
                     break;
                 case 5334:
-                    pPosition = WorldLocation(571,3802.38f,3585.95f,49.5765f,0.0f);
+                    pPosition = WorldLocation(571, 3802.38f, 3585.95f, 49.5765f, 0.0f);
                     break;
                 case 5340:
-                    pPosition = WorldLocation(571,3687.91f,3577.28f,473.342f,0.0f);
+                    pPosition = WorldLocation(571, 3687.91f, 3577.28f, 473.342f, 0.0f);
                     break;
                 default:
                     return false;

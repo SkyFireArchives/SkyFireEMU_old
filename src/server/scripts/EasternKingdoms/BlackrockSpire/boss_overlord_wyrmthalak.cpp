@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -116,11 +116,11 @@ public:
             //Summon two Beserks
             if (!Summoned && HealthBelowPct(51))
             {
-                Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM,0, 100, true);
+                Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
 
-                if (Creature *SummonedCreature = me->SummonCreature(9216,ADD_1X,ADD_1Y,ADD_1Z,ADD_1O,TEMPSUMMON_TIMED_DESPAWN,300000))
+                if (Creature *SummonedCreature = me->SummonCreature(9216, ADD_1X, ADD_1Y, ADD_1Z, ADD_1O, TEMPSUMMON_TIMED_DESPAWN, 300000))
                     SummonedCreature->AI()->AttackStart(pTarget);
-                if (Creature *SummonedCreature = me->SummonCreature(9268,ADD_2X,ADD_2Y,ADD_2Z,ADD_2O,TEMPSUMMON_TIMED_DESPAWN,300000))
+                if (Creature *SummonedCreature = me->SummonCreature(9268, ADD_2X, ADD_2Y, ADD_2Z, ADD_2O, TEMPSUMMON_TIMED_DESPAWN, 300000))
                     SummonedCreature->AI()->AttackStart(pTarget);
                 Summoned = true;
             }

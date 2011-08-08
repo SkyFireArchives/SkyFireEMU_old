@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,26 +27,26 @@
 
 enum Spells
 {
-    SPELL_BLOODLUST                             = 54516,
-    SPELL_BREAK_BONDS                           = 59463,
-    SPELL_CHAIN_HEAL                            = 54481,
-    H_SPELL_CHAIN_HEAL                          = 59473,
-    SPELL_EARTH_SHIELD                          = 54479,
-    H_SPELL_EARTH_SHIELD                        = 59471,
-    SPELL_EARTH_SHOCK                           = 54511,
-    SPELL_LIGHTNING_BOLT                        = 53044,
+    SPELL_BLOODLUST                             = 54516, 
+    SPELL_BREAK_BONDS                           = 59463, 
+    SPELL_CHAIN_HEAL                            = 54481, 
+    H_SPELL_CHAIN_HEAL                          = 59473, 
+    SPELL_EARTH_SHIELD                          = 54479, 
+    H_SPELL_EARTH_SHIELD                        = 59471, 
+    SPELL_EARTH_SHOCK                           = 54511, 
+    SPELL_LIGHTNING_BOLT                        = 53044, 
     SPELL_STORMSTRIKE                           = 51876
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1608010,
-    SAY_SLAY_1                                  = -1608011,
-    SAY_SLAY_2                                  = -1608012,
-    SAY_SLAY_3                                  = -1608013,
-    SAY_DEATH                                   = -1608014,
-    SAY_SPAWN                                   = -1608015,
-    SAY_ADD_KILLED                              = -1608016,
+    SAY_AGGRO                                   = -1608010, 
+    SAY_SLAY_1                                  = -1608011, 
+    SAY_SLAY_2                                  = -1608012, 
+    SAY_SLAY_3                                  = -1608013, 
+    SAY_DEATH                                   = -1608014, 
+    SAY_SPAWN                                   = -1608015, 
+    SAY_ADD_KILLED                              = -1608016, 
     SAY_BOTH_ADDS_KILLED                        = -1608017
 };
 
@@ -81,8 +81,8 @@ public:
         {
             uiBloodlustTimer = 15000;
             uiChainHealTimer = 0;
-            uiEarthShockTimer = urand(2000,8000);
-            uiLightningBoltTimer = urand(5000,10000);
+            uiEarthShockTimer = urand(2000, 8000);
+            uiLightningBoltTimer = urand(5000, 10000);
             uiEarthShieldTimer = 20000;
             if (pInstance)
             {
@@ -196,20 +196,20 @@ public:
             if (uiBloodlustTimer <= diff)
             {
                 DoCast(me, SPELL_BLOODLUST);
-                uiBloodlustTimer = urand(35000,45000);
+                uiBloodlustTimer = urand(35000, 45000);
             } else uiBloodlustTimer -= diff;
 
             if (uiEarthShockTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_EARTH_SHOCK);
-                uiEarthShockTimer = urand(8000,13000);
+                uiEarthShockTimer = urand(8000, 13000);
             } else uiEarthShockTimer -= diff;
 
             if (uiLightningBoltTimer <= diff)
             {
                 if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_LIGHTNING_BOLT);
-                uiLightningBoltTimer = urand(18000,24000);
+                uiLightningBoltTimer = urand(18000, 24000);
             } else uiLightningBoltTimer -= diff;
 
             DoMeleeAttackIfReady();
@@ -238,7 +238,7 @@ public:
         {
             if (victim == me)
                 return;
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
 
         uint64 GetChainHealTargetGUID()
@@ -263,8 +263,8 @@ public:
 
 enum GuardSpells
 {
-    SPELL_GUSHING_WOUND                   = 39215,
-    SPELL_HOWLING_SCREECH                 = 54462,
+    SPELL_GUSHING_WOUND                   = 39215, 
+    SPELL_HOWLING_SCREECH                 = 54462, 
     SPELL_STRIKE                          = 14516
 };
 
@@ -293,9 +293,9 @@ public:
 
         void Reset()
         {
-            uiStrikeTimer = urand(4000,8000);
-            uiHowlingScreechTimer = urand(8000,13000);
-            uiGushingWoundTimer = urand(1000,3000);
+            uiStrikeTimer = urand(4000, 8000);
+            uiHowlingScreechTimer = urand(8000, 13000);
+            uiGushingWoundTimer = urand(1000, 3000);
         }
 
         void AttackStart(Unit* pWho)
@@ -324,19 +324,19 @@ public:
             if (uiStrikeTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_STRIKE);
-                uiStrikeTimer = urand(4000,8000);
+                uiStrikeTimer = urand(4000, 8000);
             } else uiStrikeTimer -= diff;
 
             if (uiHowlingScreechTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_HOWLING_SCREECH);
-                uiHowlingScreechTimer = urand(8000,13000);
+                uiHowlingScreechTimer = urand(8000, 13000);
             } else uiHowlingScreechTimer -= diff;
 
             if (uiGushingWoundTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_GUSHING_WOUND);
-                uiGushingWoundTimer = urand(7000,12000);
+                uiGushingWoundTimer = urand(7000, 12000);
             } else uiGushingWoundTimer -= diff;
         }
     };

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,13 +34,13 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO               = -1189011,
-    SAY_HEALTH1             = -1189012,
-    SAY_HEALTH2             = -1189013,
-    SAY_KILL                = -1189014,
-    SAY_TRIGGER_VORREL      = -1189015,
+    SAY_AGGRO               = -1189011, 
+    SAY_HEALTH1             = -1189012, 
+    SAY_HEALTH2             = -1189013, 
+    SAY_KILL                = -1189014, 
+    SAY_TRIGGER_VORREL      = -1189015, 
 
-    SPELL_SHADOWWORDPAIN    = 2767,
+    SPELL_SHADOWWORDPAIN    = 2767, 
 };
 
 class boss_interrogator_vishas : public CreatureScript
@@ -87,7 +87,7 @@ public:
                 return;
 
             //Any other actions to do with vorrel? setStandState?
-            if (Unit *vorrel = Unit::GetUnit(*me,pInstance->GetData64(DATA_VORREL)))
+            if (Unit *vorrel = Unit::GetUnit(*me, pInstance->GetData64(DATA_VORREL)))
                 DoScriptText(SAY_TRIGGER_VORREL, vorrel);
         }
 

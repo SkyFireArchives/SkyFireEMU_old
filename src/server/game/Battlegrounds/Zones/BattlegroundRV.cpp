@@ -46,7 +46,6 @@ BattlegroundRV::BattlegroundRV()
 
 BattlegroundRV::~BattlegroundRV()
 {
-
 }
 
 void BattlegroundRV::Update(uint32 diff)
@@ -60,7 +59,7 @@ void BattlegroundRV::Update(uint32 diff)
             UpdateArenaWorldState();
             CheckArenaAfterTimerConditions();
         }
-    } 
+    }
 
     if (getTimer() < diff)
     {
@@ -171,7 +170,6 @@ bool BattlegroundRV::HandlePlayerUnderMap(Player *player)
     player->TeleportTo(GetMapId(), 763.5f, -284, 28.276f, 2.422f, false);
     return true;
 }
-
 
 void BattlegroundRV::HandleAreaTrigger(Player *Source, uint32 Trigger)
 {

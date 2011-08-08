@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,34 +27,34 @@
 
 enum Spells
 {
-    SPELL_HATEFUL_STRIKE                        = 41926,
-    H_SPELL_HATEFUL_STRIKE                      = 59192,
-    SPELL_FRENZY                                = 28131,
-    SPELL_BERSERK                               = 26662,
-    SPELL_SLIME_BOLT                            = 32309,
+    SPELL_HATEFUL_STRIKE                        = 41926, 
+    H_SPELL_HATEFUL_STRIKE                      = 59192, 
+    SPELL_FRENZY                                = 28131, 
+    SPELL_BERSERK                               = 26662, 
+    SPELL_SLIME_BOLT                            = 32309, 
 };
 
 enum Yells
 {
-    SAY_AGGRO_1                                 = -1533017,
-    SAY_AGGRO_2                                 = -1533018,
-    SAY_SLAY                                    = -1533019,
-    SAY_DEATH                                   = -1533020,
-    EMOTE_BERSERK                               = -1533021,
-    EMOTE_ENRAGE                                = -1533022,
+    SAY_AGGRO_1                                 = -1533017, 
+    SAY_AGGRO_2                                 = -1533018, 
+    SAY_SLAY                                    = -1533019, 
+    SAY_DEATH                                   = -1533020, 
+    EMOTE_BERSERK                               = -1533021, 
+    EMOTE_ENRAGE                                = -1533022, 
 };
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_BERSERK,
-    EVENT_HATEFUL,
+    EVENT_NONE, 
+    EVENT_BERSERK, 
+    EVENT_HATEFUL, 
     EVENT_SLIME
 };
 
 enum
 {
-    ACHIEV_MAKE_QUICK_WERK_OF_HIM_STARTING_EVENT  = 10286,
+    ACHIEV_MAKE_QUICK_WERK_OF_HIM_STARTING_EVENT  = 10286, 
 };
 
 class boss_patchwerk : public CreatureScript
@@ -99,7 +99,7 @@ public:
         {
             _EnterCombat();
             Enraged = false;
-            DoScriptText(RAND(SAY_AGGRO_1,SAY_AGGRO_2), me);
+            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2), me);
             events.ScheduleEvent(EVENT_HATEFUL, 1200);
             events.ScheduleEvent(EVENT_BERSERK, 360000);
 
@@ -126,7 +126,7 @@ public:
                         Unit* pMostHPTarget = NULL;
 
                         std::list<HostileReference*>::const_iterator i = me->getThreatManager().getThreatList().begin();
-                        int targetCounter = RAID_MODE(2,3); // Picks 2 (3) highest threat targets as Hateful Strike candidates
+                        int targetCounter = RAID_MODE(2, 3); // Picks 2 (3) highest threat targets as Hateful Strike candidates
                         for (; i != me->getThreatManager().getThreatList().end() && targetCounter > 0; ++i, --targetCounter)
                         {
                             Unit *pTarget = (*i)->getTarget();
@@ -140,7 +140,7 @@ public:
                         if (!pMostHPTarget)
                             pMostHPTarget = me->getVictim();
 
-                        DoCast(pMostHPTarget, RAID_MODE(SPELL_HATEFUL_STRIKE,H_SPELL_HATEFUL_STRIKE), true);
+                        DoCast(pMostHPTarget, RAID_MODE(SPELL_HATEFUL_STRIKE, H_SPELL_HATEFUL_STRIKE), true);
 
                         events.ScheduleEvent(EVENT_HATEFUL, 1200);
                         break;

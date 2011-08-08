@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -69,7 +69,7 @@ public:
         {
             uint32 spawnCreatureID = 0;
 
-            switch (urand(0,2))
+            switch (urand(0, 2))
             {
                 case 0:
                     spawnCreatureID = 17681;
@@ -78,7 +78,7 @@ public:
                     break;
                 case 1:
                 case 2:
-                    spawnCreatureID = possibleSpawns[urand(0,30)];
+                    spawnCreatureID = possibleSpawns[urand(0, 30)];
                     break;
             }
 

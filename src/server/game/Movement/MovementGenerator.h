@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -83,9 +83,9 @@ class MovementGeneratorMedium : public MovementGenerator
         bool Update(T &u, const uint32 &time_diff);
 };
 
-struct SelectableMovement : public FactoryHolder<MovementGenerator,MovementGeneratorType>
+struct SelectableMovement : public FactoryHolder<MovementGenerator, MovementGeneratorType>
 {
-    SelectableMovement(MovementGeneratorType mgt) : FactoryHolder<MovementGenerator,MovementGeneratorType>(mgt) {}
+    SelectableMovement(MovementGeneratorType mgt) : FactoryHolder<MovementGenerator, MovementGeneratorType>(mgt) {}
 };
 
 template<class REAL_MOVEMENT>
@@ -96,9 +96,9 @@ struct MovementGeneratorFactory : public SelectableMovement
     MovementGenerator* Create(void *) const;
 };
 
-typedef FactoryHolder<MovementGenerator,MovementGeneratorType> MovementGeneratorCreator;
-typedef FactoryHolder<MovementGenerator,MovementGeneratorType>::FactoryHolderRegistry MovementGeneratorRegistry;
-typedef FactoryHolder<MovementGenerator,MovementGeneratorType>::FactoryHolderRepository MovementGeneratorRepository;
+typedef FactoryHolder<MovementGenerator, MovementGeneratorType> MovementGeneratorCreator;
+typedef FactoryHolder<MovementGenerator, MovementGeneratorType>::FactoryHolderRegistry MovementGeneratorRegistry;
+typedef FactoryHolder<MovementGenerator, MovementGeneratorType>::FactoryHolderRepository MovementGeneratorRepository;
 #endif
 
 

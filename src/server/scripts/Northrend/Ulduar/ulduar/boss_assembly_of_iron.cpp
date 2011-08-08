@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,94 +35,94 @@ EndScriptData */
 enum eSpells
 {
     // Any boss
-    SPELL_SUPERCHARGE           = 61920,
+    SPELL_SUPERCHARGE           = 61920, 
     SPELL_BERSERK               = 47008,   // Hard enrage, don't know the correct ID.
 
     // Steelbreaker
-    SPELL_HIGH_VOLTAGE         = 61890,
-    SPELL_HIGH_VOLTAGE_H       = 63498,
-    SPELL_FUSION_PUNCH         = 61903,
-    SPELL_FUSION_PUNCH_H       = 63493,
-    SPELL_STATIC_DISRUPTION    = 44008,
-    SPELL_STATIC_DISRUPTION_H  = 63494,
-    SPELL_OVERWHELMING_POWER_H = 61888,
-    SPELL_OVERWHELMING_POWER   = 64637,
-    SPELL_ELECTRICAL_CHARGE    = 61902,
+    SPELL_HIGH_VOLTAGE         = 61890, 
+    SPELL_HIGH_VOLTAGE_H       = 63498, 
+    SPELL_FUSION_PUNCH         = 61903, 
+    SPELL_FUSION_PUNCH_H       = 63493, 
+    SPELL_STATIC_DISRUPTION    = 44008, 
+    SPELL_STATIC_DISRUPTION_H  = 63494, 
+    SPELL_OVERWHELMING_POWER_H = 61888, 
+    SPELL_OVERWHELMING_POWER   = 64637, 
+    SPELL_ELECTRICAL_CHARGE    = 61902, 
 
     // Runemaster Molgeim
-    SPELL_SHIELD_OF_RUNES      = 62274,
-    SPELL_SHIELD_OF_RUNES_H    = 63489,
-    SPELL_SUMMON_RUNE_OF_POWER = 63513,
-    SPELL_RUNE_OF_POWER        = 61974,
-    SPELL_RUNE_OF_DEATH        = 62269,
+    SPELL_SHIELD_OF_RUNES      = 62274, 
+    SPELL_SHIELD_OF_RUNES_H    = 63489, 
+    SPELL_SUMMON_RUNE_OF_POWER = 63513, 
+    SPELL_RUNE_OF_POWER        = 61974, 
+    SPELL_RUNE_OF_DEATH        = 62269, 
     SPELL_RUNE_OF_SUMMONING     = 62273,    // This is the spell that summons the rune
     SPELL_RUNE_OF_SUMMONING_VIS = 62019,    // Visual
     SPELL_RUNE_OF_SUMMONING_SUMMON = 62020, // Spell that summons
-    SPELL_LIGHTNING_ELEMENTAL_PASSIVE = 62052,
-    SPELL_LIGHTNING_ELEMENTAL_PASSIVE_H = 63492,
+    SPELL_LIGHTNING_ELEMENTAL_PASSIVE = 62052, 
+    SPELL_LIGHTNING_ELEMENTAL_PASSIVE_H = 63492, 
 
     // Stormcaller Brundir
-    SPELL_CHAIN_LIGHTNING_N    = 61879,
-    SPELL_CHAIN_LIGHTNING_H    = 63479,
-    SPELL_OVERLOAD             = 61869,
-    SPELL_OVERLOAD_H           = 63481,
-    SPELL_LIGHTNING_WHIRL      = 61915,
-    SPELL_LIGHTNING_WHIRL_H    = 63483,
-    SPELL_LIGHTNING_TENDRILS   = 61887,
-    SPELL_LIGHTNING_TENDRILS_H = 63486,
-    SPELL_STORMSHIELD          = 64187,
+    SPELL_CHAIN_LIGHTNING_N    = 61879, 
+    SPELL_CHAIN_LIGHTNING_H    = 63479, 
+    SPELL_OVERLOAD             = 61869, 
+    SPELL_OVERLOAD_H           = 63481, 
+    SPELL_LIGHTNING_WHIRL      = 61915, 
+    SPELL_LIGHTNING_WHIRL_H    = 63483, 
+    SPELL_LIGHTNING_TENDRILS   = 61887, 
+    SPELL_LIGHTNING_TENDRILS_H = 63486, 
+    SPELL_STORMSHIELD          = 64187, 
 };
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_UPDATEPHASE,
-    EVENT_ENRAGE,
+    EVENT_NONE, 
+    EVENT_UPDATEPHASE, 
+    EVENT_ENRAGE, 
     // Steelbreaker
-    EVENT_FUSION_PUNCH,
-    EVENT_STATIC_DISRUPTION,
-    EVENT_OVERWHELMING_POWER,
+    EVENT_FUSION_PUNCH, 
+    EVENT_STATIC_DISRUPTION, 
+    EVENT_OVERWHELMING_POWER, 
     // Molgeim
-    EVENT_RUNE_OF_POWER,
-    EVENT_SHIELD_OF_RUNES,
-    EVENT_RUNE_OF_DEATH,
-    EVENT_RUNE_OF_SUMMONING,
-    EVENT_LIGHTNING_BLAST,
+    EVENT_RUNE_OF_POWER, 
+    EVENT_SHIELD_OF_RUNES, 
+    EVENT_RUNE_OF_DEATH, 
+    EVENT_RUNE_OF_SUMMONING, 
+    EVENT_LIGHTNING_BLAST, 
     // Brundir
-    EVENT_CHAIN_LIGHTNING,
-    EVENT_OVERLOAD,
-    EVENT_LIGHTNING_WHIRL,
-    EVENT_LIGHTNING_TENDRILS,
-    EVENT_STORMSHIELD,
+    EVENT_CHAIN_LIGHTNING, 
+    EVENT_OVERLOAD, 
+    EVENT_LIGHTNING_WHIRL, 
+    EVENT_LIGHTNING_TENDRILS, 
+    EVENT_STORMSHIELD, 
 };
 
 enum Yells
 {
-    SAY_STEELBREAKER_AGGRO                      = -1603020,
-    SAY_STEELBREAKER_SLAY_1                     = -1603021,
-    SAY_STEELBREAKER_SLAY_2                     = -1603022,
-    SAY_STEELBREAKER_POWER                      = -1603023,
-    SAY_STEELBREAKER_DEATH_1                    = -1603024,
-    SAY_STEELBREAKER_DEATH_2                    = -1603025,
-    SAY_STEELBREAKER_BERSERK                    = -1603026,
+    SAY_STEELBREAKER_AGGRO                      = -1603020, 
+    SAY_STEELBREAKER_SLAY_1                     = -1603021, 
+    SAY_STEELBREAKER_SLAY_2                     = -1603022, 
+    SAY_STEELBREAKER_POWER                      = -1603023, 
+    SAY_STEELBREAKER_DEATH_1                    = -1603024, 
+    SAY_STEELBREAKER_DEATH_2                    = -1603025, 
+    SAY_STEELBREAKER_BERSERK                    = -1603026, 
 
-    SAY_MOLGEIM_AGGRO                           = -1603030,
-    SAY_MOLGEIM_SLAY_1                          = -1603031,
-    SAY_MOLGEIM_SLAY_2                          = -1603032,
-    SAY_MOLGEIM_RUNE_DEATH                      = -1603033,
-    SAY_MOLGEIM_SUMMON                          = -1603034,
-    SAY_MOLGEIM_DEATH_1                         = -1603035,
-    SAY_MOLGEIM_DEATH_2                         = -1603036,
-    SAY_MOLGEIM_BERSERK                         = -1603037,
+    SAY_MOLGEIM_AGGRO                           = -1603030, 
+    SAY_MOLGEIM_SLAY_1                          = -1603031, 
+    SAY_MOLGEIM_SLAY_2                          = -1603032, 
+    SAY_MOLGEIM_RUNE_DEATH                      = -1603033, 
+    SAY_MOLGEIM_SUMMON                          = -1603034, 
+    SAY_MOLGEIM_DEATH_1                         = -1603035, 
+    SAY_MOLGEIM_DEATH_2                         = -1603036, 
+    SAY_MOLGEIM_BERSERK                         = -1603037, 
 
-    SAY_BRUNDIR_AGGRO                           = -1603040,
-    SAY_BRUNDIR_SLAY_1                          = -1603041,
-    SAY_BRUNDIR_SLAY_2                          = -1603042,
-    SAY_BRUNDIR_SPECIAL                         = -1603043,
-    SAY_BRUNDIR_FLIGHT                          = -1603044,
-    SAY_BRUNDIR_DEATH_1                         = -1603045,
-    SAY_BRUNDIR_DEATH_2                         = -1603046,
-    SAY_BRUNDIR_BERSERK                         = -1603047,
+    SAY_BRUNDIR_AGGRO                           = -1603040, 
+    SAY_BRUNDIR_SLAY_1                          = -1603041, 
+    SAY_BRUNDIR_SLAY_2                          = -1603042, 
+    SAY_BRUNDIR_SPECIAL                         = -1603043, 
+    SAY_BRUNDIR_FLIGHT                          = -1603044, 
+    SAY_BRUNDIR_DEATH_1                         = -1603045, 
+    SAY_BRUNDIR_DEATH_2                         = -1603046, 
+    SAY_BRUNDIR_BERSERK                         = -1603047, 
 };
 
 bool IsEncounterComplete(InstanceScript* pInstance, Creature* me)
@@ -288,14 +288,14 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(RAND(SAY_STEELBREAKER_DEATH_1,SAY_STEELBREAKER_DEATH_2), me);
+            DoScriptText(RAND(SAY_STEELBREAKER_DEATH_1, SAY_STEELBREAKER_DEATH_2), me);
             if (IsEncounterComplete(pInstance, me) && pInstance)
                 pInstance->SetData(TYPE_ASSEMBLY, DONE);
         }
 
         void KilledUnit(Unit * /*who*/)
         {
-            DoScriptText(RAND(SAY_STEELBREAKER_SLAY_1,SAY_STEELBREAKER_SLAY_2), me);
+            DoScriptText(RAND(SAY_STEELBREAKER_SLAY_1, SAY_STEELBREAKER_SLAY_2), me);
 
             if (phase == 3)
                 DoCast(me, SPELL_ELECTRICAL_CHARGE);
@@ -399,7 +399,7 @@ public:
                     if (phase >= 2)
                         events.RescheduleEvent(EVENT_RUNE_OF_DEATH, 30000);
                     if (phase >= 3)
-                        events.RescheduleEvent(EVENT_RUNE_OF_SUMMONING, urand(20000,30000));
+                        events.RescheduleEvent(EVENT_RUNE_OF_SUMMONING, urand(20000, 30000));
                 break;
             }
         }
@@ -435,14 +435,14 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(RAND(SAY_MOLGEIM_DEATH_1,SAY_MOLGEIM_DEATH_2), me);
+            DoScriptText(RAND(SAY_MOLGEIM_DEATH_1, SAY_MOLGEIM_DEATH_2), me);
             if (IsEncounterComplete(pInstance, me) && pInstance)
                 pInstance->SetData(TYPE_ASSEMBLY, DONE);
         }
 
         void KilledUnit(Unit * /*who*/)
         {
-            DoScriptText(RAND(SAY_MOLGEIM_SLAY_1,SAY_MOLGEIM_SLAY_2), me);
+            DoScriptText(RAND(SAY_MOLGEIM_SLAY_1, SAY_MOLGEIM_SLAY_2), me);
         }
 
         void SpellHit(Unit * /*from*/, const SpellEntry *spell)
@@ -477,19 +477,19 @@ public:
                     }
                     case EVENT_SHIELD_OF_RUNES:
                         DoCast(me, RAID_MODE(SPELL_SHIELD_OF_RUNES, SPELL_SHIELD_OF_RUNES_H));
-                        events.ScheduleEvent(EVENT_SHIELD_OF_RUNES, urand(27000,34000));
+                        events.ScheduleEvent(EVENT_SHIELD_OF_RUNES, urand(27000, 34000));
                         break;
                     case EVENT_RUNE_OF_DEATH:
                         DoScriptText(SAY_MOLGEIM_RUNE_DEATH, me);
                         if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM))
                             DoCast(pTarget, SPELL_RUNE_OF_DEATH);
-                        events.ScheduleEvent(EVENT_RUNE_OF_DEATH, urand(30000,40000));
+                        events.ScheduleEvent(EVENT_RUNE_OF_DEATH, urand(30000, 40000));
                         break;
                     case EVENT_RUNE_OF_SUMMONING:
                         DoScriptText(SAY_MOLGEIM_SUMMON, me);
                         if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM))
                             DoCast(pTarget, SPELL_RUNE_OF_SUMMONING);
-                        events.ScheduleEvent(EVENT_RUNE_OF_SUMMONING, urand(20000,30000));
+                        events.ScheduleEvent(EVENT_RUNE_OF_SUMMONING, urand(20000, 30000));
                         break;
                 }
             }
@@ -635,14 +635,14 @@ public:
             {
                 case EVENT_UPDATEPHASE:
                     events.SetPhase(++phase);
-                    events.RescheduleEvent(EVENT_CHAIN_LIGHTNING, urand(9000,17000));
-                    events.RescheduleEvent(EVENT_OVERLOAD, urand(60000,125000));
+                    events.RescheduleEvent(EVENT_CHAIN_LIGHTNING, urand(9000, 17000));
+                    events.RescheduleEvent(EVENT_OVERLOAD, urand(60000, 125000));
                     if (phase >= 2)
-                        events.RescheduleEvent(EVENT_LIGHTNING_WHIRL, urand(20000,40000));
+                        events.RescheduleEvent(EVENT_LIGHTNING_WHIRL, urand(20000, 40000));
                     if (phase >= 3)
                     {
                         DoCast(me, SPELL_STORMSHIELD);
-                        events.RescheduleEvent(EVENT_LIGHTNING_TENDRILS, urand(40000,80000));
+                        events.RescheduleEvent(EVENT_LIGHTNING_TENDRILS, urand(40000, 80000));
                     }
                 break;
 
@@ -680,14 +680,14 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(RAND(SAY_BRUNDIR_DEATH_1,SAY_BRUNDIR_DEATH_2), me);
+            DoScriptText(RAND(SAY_BRUNDIR_DEATH_1, SAY_BRUNDIR_DEATH_2), me);
             if (IsEncounterComplete(pInstance, me) && pInstance)
                 pInstance->SetData(TYPE_ASSEMBLY, DONE);
         }
 
         void KilledUnit(Unit * /*who*/)
         {
-            DoScriptText(RAND(SAY_BRUNDIR_SLAY_1,SAY_BRUNDIR_SLAY_2), me);
+            DoScriptText(RAND(SAY_BRUNDIR_SLAY_1, SAY_BRUNDIR_SLAY_2), me);
         }
 
         void SpellHit(Unit * /*from*/, const SpellEntry *spell)
@@ -712,17 +712,17 @@ public:
                         DoCast(SPELL_BERSERK);
                         break;
                     case EVENT_CHAIN_LIGHTNING:
-                        if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                        if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                             DoCast(pTarget, RAID_MODE(SPELL_CHAIN_LIGHTNING_N , SPELL_CHAIN_LIGHTNING_H));
-                        events.ScheduleEvent(EVENT_CHAIN_LIGHTNING, urand(9000,17000));
+                        events.ScheduleEvent(EVENT_CHAIN_LIGHTNING, urand(9000, 17000));
                         break;
                     case EVENT_OVERLOAD:
                         DoCast(RAID_MODE(SPELL_OVERLOAD , SPELL_OVERLOAD_H));
-                        events.ScheduleEvent(EVENT_OVERLOAD, urand(60000,125000));
+                        events.ScheduleEvent(EVENT_OVERLOAD, urand(60000, 125000));
                         break;
                     case EVENT_LIGHTNING_WHIRL:
                         DoCast(RAID_MODE(SPELL_LIGHTNING_WHIRL , SPELL_LIGHTNING_WHIRL_H));
-                        events.ScheduleEvent(EVENT_LIGHTNING_WHIRL, urand(20000,40000));
+                        events.ScheduleEvent(EVENT_LIGHTNING_WHIRL, urand(20000, 40000));
                         break;
                     case EVENT_LIGHTNING_TENDRILS:
                         DoCast(RAID_MODE(SPELL_LIGHTNING_TENDRILS, SPELL_LIGHTNING_TENDRILS_H));

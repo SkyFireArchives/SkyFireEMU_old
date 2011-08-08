@@ -319,31 +319,31 @@ typedef void (WINAPI * SFILE_COMPACT_CALLBACK)(void * pvUserData, DWORD dwWorkTy
 struct TFileStream;
 
 typedef bool (*STREAM_GETPOS)(
-    TFileStream * pStream,              // Pointer to an open stream
+    TFileStream * pStream,             // Pointer to an open stream
     ULONGLONG & ByteOffset              // Pointer to store current file position
     );
 
 typedef bool (*STREAM_READ)(
-    TFileStream * pStream,              // Pointer to an open stream
-    ULONGLONG * pByteOffset,            // Pointer to file byte offset. If NULL, it reads from the current position
-    void * pvBuffer,                    // Pointer to data to be read
+    TFileStream * pStream,             // Pointer to an open stream
+    ULONGLONG * pByteOffset,           // Pointer to file byte offset. If NULL, it reads from the current position
+    void * pvBuffer,                   // Pointer to data to be read
     DWORD dwBytesToRead                 // Number of bytes to read from the file
     );
 
 typedef bool (*STREAM_WRITE)(
-    TFileStream * pStream,              // Pointer to an open stream
-    ULONGLONG * pByteOffset,            // Pointer to file byte offset. If NULL, it writes to the current position
-    const void * pvBuffer,              // Pointer to data to be written
+    TFileStream * pStream,             // Pointer to an open stream
+    ULONGLONG * pByteOffset,           // Pointer to file byte offset. If NULL, it writes to the current position
+    const void * pvBuffer,             // Pointer to data to be written
     DWORD dwBytesToWrite                // Number of bytes to read from the file
     );
 
 typedef bool (*STREAM_GETSIZE)(
-    TFileStream * pStream,              // Pointer to an open stream
+    TFileStream * pStream,             // Pointer to an open stream
     ULONGLONG & FileSize                // Receives the file size, in bytes
     );
 
 typedef bool (*STREAM_SETSIZE)(
-    TFileStream * pStream,              // Pointer to an open stream
+    TFileStream * pStream,             // Pointer to an open stream
     ULONGLONG FileSize                  // New size for the file, in bytes
     );
 

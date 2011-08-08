@@ -30,11 +30,11 @@
   @param key              The public RSA key corresponding to the key that performed the signature
   @return CRYPT_OK on success (even if the signature is invalid)
 */
-int rsa_verify_hash_ex(const unsigned char *sig,      unsigned long siglen,
-                       const unsigned char *hash,     unsigned long hashlen,
+int rsa_verify_hash_ex(const unsigned char *sig,     unsigned long siglen,
+                       const unsigned char *hash,    unsigned long hashlen,
                              int            padding,
                              int            hash_idx, unsigned long saltlen,
-                             int           *stat,     rsa_key      *key)
+                             int           *stat,    rsa_key      *key)
 {
   unsigned long modulus_bitlen, modulus_bytelen, x;
   int           err;
@@ -129,9 +129,9 @@ int rsa_verify_hash_ex(const unsigned char *sig,      unsigned long siglen,
       }
    */
     LTC_SET_ASN1(digestinfo, 0, LTC_ASN1_OBJECT_IDENTIFIER, loid, sizeof(loid)/sizeof(loid[0]));
-    LTC_SET_ASN1(digestinfo, 1, LTC_ASN1_NULL,              NULL,                          0);
-    LTC_SET_ASN1(siginfo,    0, LTC_ASN1_SEQUENCE,          digestinfo,                    2);
-    LTC_SET_ASN1(siginfo,    1, LTC_ASN1_OCTET_STRING,      tmpbuf,                        siglen);
+    LTC_SET_ASN1(digestinfo, 1, LTC_ASN1_NULL,             NULL,                         0);
+    LTC_SET_ASN1(siginfo,   0, LTC_ASN1_SEQUENCE,         digestinfo,                   2);
+    LTC_SET_ASN1(siginfo,   1, LTC_ASN1_OCTET_STRING,     tmpbuf,                       siglen);
    
     if ((err = der_decode_sequence(out, outlen, siginfo, 2)) != CRYPT_OK) {
        XFREE(out);

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,21 +34,21 @@ EndScriptData */
 
 enum eEnums
 {
-    ACHIEVEMENT_ON_THE_ROCKS                 = 1919,
+    ACHIEVEMENT_ON_THE_ROCKS                 = 1919, 
 
-    SPELL_SHADOWBOLT                         = 43667,
-    SPELL_SHADOWBOLT_HEROIC                  = 59389,
-    SPELL_FROST_TOMB                         = 48400,
-    SPELL_FROST_TOMB_SUMMON                  = 42714,
-    SPELL_DECREPIFY                          = 42702,
-    SPELL_SCOURGE_RESSURRECTION              = 42704,
-    CREATURE_FROSTTOMB                       = 23965,
-    CREATURE_SKELETON                        = 23970,
+    SPELL_SHADOWBOLT                         = 43667, 
+    SPELL_SHADOWBOLT_HEROIC                  = 59389, 
+    SPELL_FROST_TOMB                         = 48400, 
+    SPELL_FROST_TOMB_SUMMON                  = 42714, 
+    SPELL_DECREPIFY                          = 42702, 
+    SPELL_SCOURGE_RESSURRECTION              = 42704, 
+    CREATURE_FROSTTOMB                       = 23965, 
+    CREATURE_SKELETON                        = 23970, 
 
-    SAY_AGGRO                                = -1574000,
-    SAY_FROST_TOMB                           = -1574001,
-    SAY_SKELETONS                            = -1574002,
-    SAY_KILL                                 = -1574003,
+    SAY_AGGRO                                = -1574000, 
+    SAY_FROST_TOMB                           = -1574001, 
+    SAY_SKELETONS                            = -1574002, 
+    SAY_KILL                                 = -1574003, 
     SAY_DEATH                                = -1574004
 };
 
@@ -56,11 +56,11 @@ enum eEnums
 
 float SkeletonSpawnPoint[5][5]=
 {
-    {156.2559f, 259.2093f},
-    {156.2559f, 259.2093f},
-    {156.2559f, 259.2093f},
-    {156.2559f, 259.2093f},
-    {156.2559f, 259.2093f},
+    {156.2559f, 259.2093f}, 
+    {156.2559f, 259.2093f}, 
+    {156.2559f, 259.2093f}, 
+    {156.2559f, 259.2093f}, 
+    {156.2559f, 259.2093f}, 
 };
 
 float AttackLoc[3]={197.636f, 194.046f, 40.8164f};
@@ -103,7 +103,7 @@ public:
 
             if (FrostTombGUID)
             {
-                Unit* FrostTomb = Unit::GetUnit((*me),FrostTombGUID);
+                Unit* FrostTomb = Unit::GetUnit((*me), FrostTombGUID);
                 if (FrostTomb)
                     FrostTomb->RemoveAurasDueToSpell(SPELL_FROST_TOMB);
             }
@@ -111,7 +111,7 @@ public:
 
         void UpdateAI(const uint32 /*diff*/)
         {
-            Unit* temp = Unit::GetUnit((*me),FrostTombGUID);
+            Unit* temp = Unit::GetUnit((*me), FrostTombGUID);
             if ((temp && temp->isAlive() && !temp->HasAura(SPELL_FROST_TOMB)) || !temp)
                 me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
         }
@@ -291,7 +291,7 @@ public:
         void Reset()
         {
             Respawn_Time = 12000;
-            Decrepify_Timer = urand(10000,20000);
+            Decrepify_Timer = urand(10000, 20000);
             isDead = false;
         }
 

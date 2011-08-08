@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -45,9 +45,9 @@ inline uint32 RandRiftBoss() { return ((rand()%2) ? C_RKEEP : C_RLORD); }
 
 float PortalLocation[4][4]=
 {
-    {-2041.06f, 7042.08f, 29.99f, 1.30f},
-    {-1968.18f, 7042.11f, 21.93f, 2.12f},
-    {-1885.82f, 7107.36f, 22.32f, 3.07f},
+    {-2041.06f, 7042.08f, 29.99f, 1.30f}, 
+    {-1968.18f, 7042.11f, 21.93f, 2.12f}, 
+    {-1885.82f, 7107.36f, 22.32f, 3.07f}, 
     {-1928.11f, 7175.95f, 22.11f, 3.44f}
 };
 
@@ -59,11 +59,11 @@ struct Wave
 
 static Wave RiftWaves[]=
 {
-    {RIFT_BOSS, 0},
-    {C_DEJA, 0},
-    {RIFT_BOSS, 120000},
-    {C_TEMPO, 140000},
-    {RIFT_BOSS, 120000},
+    {RIFT_BOSS, 0}, 
+    {C_DEJA, 0}, 
+    {RIFT_BOSS, 120000}, 
+    {C_TEMPO, 140000}, 
+    {RIFT_BOSS, 120000}, 
     {C_AEONUS, 0}
 };
 
@@ -115,7 +115,7 @@ public:
 
         void InitWorldState(bool Enable = true)
         {
-            DoUpdateWorldState(WORLD_STATE_BM,Enable ? 1 : 0);
+            DoUpdateWorldState(WORLD_STATE_BM, Enable ? 1 : 0);
             DoUpdateWorldState(WORLD_STATE_BM_SHIELD, 100);
             DoUpdateWorldState(WORLD_STATE_BM_RIFT, 0);
         }
@@ -133,7 +133,7 @@ public:
             if (GetData(TYPE_MEDIVH) == IN_PROGRESS)
                 return;
 
-            pPlayer->SendUpdateWorldState(WORLD_STATE_BM,0);
+            pPlayer->SendUpdateWorldState(WORLD_STATE_BM, 0);
         }
 
         void OnCreatureCreate(Creature* pCreature, bool /*add*/)
@@ -270,7 +270,7 @@ public:
             if (entry == RIFT_BOSS)
                 entry = RandRiftBoss();
 
-            sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Instance Dark Portal: Summoning rift boss entry %u.",entry);
+            sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Instance Dark Portal: Summoning rift boss entry %u.", entry);
 
             Position pos;
             me->GetRandomNearPosition(pos, 10.0f);
@@ -289,18 +289,18 @@ public:
         {
             if (Creature* pMedivh = instance->GetCreature(MedivhGUID))
             {
-                uint8 tmp = urand(0,2);
+                uint8 tmp = urand(0, 2);
 
                 if (tmp >= CurrentRiftId)
                     ++tmp;
 
-                sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Instance Dark Portal: Creating Time Rift at locationId %i (old locationId was %u).",tmp,CurrentRiftId);
+                sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Instance Dark Portal: Creating Time Rift at locationId %i (old locationId was %u).", tmp, CurrentRiftId);
 
                 CurrentRiftId = tmp;
 
-                Creature *pTemp = pMedivh->SummonCreature(C_TIME_RIFT,
-                    PortalLocation[tmp][0],PortalLocation[tmp][1],PortalLocation[tmp][2],PortalLocation[tmp][3],
-                    TEMPSUMMON_CORPSE_DESPAWN,0);
+                Creature *pTemp = pMedivh->SummonCreature(C_TIME_RIFT, 
+                    PortalLocation[tmp][0], PortalLocation[tmp][1], PortalLocation[tmp][2], PortalLocation[tmp][3], 
+                    TEMPSUMMON_CORPSE_DESPAWN, 0);
                 if (pTemp)
                 {
                     pTemp->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -309,11 +309,11 @@ public:
                     if (Creature *pBoss = SummonedPortalBoss(pTemp))
                     {
                         if (pBoss->GetEntry() == C_AEONUS)
-                            pBoss->AddThreat(pMedivh,0.0f);
+                            pBoss->AddThreat(pMedivh, 0.0f);
                         else
                         {
-                            pBoss->AddThreat(pTemp,0.0f);
-                            pTemp->CastSpell(pBoss,SPELL_RIFT_CHANNEL,false);
+                            pBoss->AddThreat(pTemp, 0.0f);
+                            pTemp->CastSpell(pBoss, SPELL_RIFT_CHANNEL, false);
                         }
                     }
                 }

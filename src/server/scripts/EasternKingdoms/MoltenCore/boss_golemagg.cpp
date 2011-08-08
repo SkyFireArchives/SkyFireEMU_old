@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,14 +34,14 @@ EndScriptData */
 
 enum eEnums
 {
-    SPELL_MAGMASPLASH       = 13879,
-    SPELL_PYROBLAST         = 20228,
-    SPELL_EARTHQUAKE        = 19798,
-    SPELL_ENRAGE            = 19953,
-    SPELL_GOLEMAGG_TRUST    = 20553,
+    SPELL_MAGMASPLASH       = 13879, 
+    SPELL_PYROBLAST         = 20228, 
+    SPELL_EARTHQUAKE        = 19798, 
+    SPELL_ENRAGE            = 19953, 
+    SPELL_GOLEMAGG_TRUST    = 20553, 
 
     // Core Rager
-    EMOTE_LOWHP             = -1409002,
+    EMOTE_LOWHP             = -1409002, 
     SPELL_MANGLE            = 19820
 };
 

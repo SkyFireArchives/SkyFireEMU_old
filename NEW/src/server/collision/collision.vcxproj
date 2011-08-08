@@ -1,0 +1,277 @@
+﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{12E5C1DF-E9F1-42B7-A44E-8C9202076D70}</ProjectGUID>
+    <SccProjectName />
+    <SccLocalPath />
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>collision</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\Debug\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">collision.dir\Debug\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">collision</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\Release\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">collision.dir\Release\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">collision</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\MinSizeRel\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">collision.dir\MinSizeRel\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">collision</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.lib</TargetExt>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\RelWithDebInfo\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">collision.dir\RelWithDebInfo\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">collision</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.lib</TargetExt>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions> /Zm1000 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;4355;4244;4985;4267;4619</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForcedIncludeFiles>collisionPCH.h</ForcedIncludeFiles>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>collisionPCH.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE="$(ConfigurationName)";_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;TRINITY_COREPCH;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>Debug</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision/Debug/collision.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_BUILD_DIRECTIVE=\"$(ConfigurationName)\";_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;TRINITY_COREPCH;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions> /Zm1000 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4996;4355;4244;4985;4267;4619</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForcedIncludeFiles>collisionPCH.h</ForcedIncludeFiles>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>collisionPCH.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat></DebugInformationFormat>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE="$(ConfigurationName)";_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;TRINITY_COREPCH;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>Release</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision/Release/collision.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\"$(ConfigurationName)\";_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;TRINITY_COREPCH;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalOptions> /Zm1000 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4996;4355;4244;4985;4267;4619</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForcedIncludeFiles>collisionPCH.h</ForcedIncludeFiles>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>collisionPCH.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat></DebugInformationFormat>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE="$(ConfigurationName)";_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;TRINITY_COREPCH;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>MinSizeRel</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision/MinSizeRel/collision.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\"$(ConfigurationName)\";_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;TRINITY_COREPCH;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalOptions> /Zm1000 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;4355;4244;4985;4267;4619</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForcedIncludeFiles>collisionPCH.h</ForcedIncludeFiles>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>collisionPCH.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE="$(ConfigurationName)";_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;TRINITY_COREPCH;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>RelWithDebInfo</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision/RelWithDebInfo/collision.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_BUILD_DIRECTIVE=\"$(ConfigurationName)\";_CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;SCRIPTS;TRINITY_COREPCH;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/g3dlite/include;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Debugging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Database;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Dynamic;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Logging;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/shared/Threading;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Management;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Maps;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/Models;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/acelite;C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/dep/mysqllite/include;C:/OpenSSL-Win32/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\..\..\src\server\collision\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" "-HC:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU" "-BC:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW" --check-stamp-file "C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\CMakeFiles\generate.stamp"
+if errorlevel 1 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/CMakeLists.txt;C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\src\server\collision\CMakeLists.txt;C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\src\server\collision\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\CMakeFiles\generate.stamp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" "-HC:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU" "-BC:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW" --check-stamp-file "C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\CMakeFiles\generate.stamp"
+if errorlevel 1 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/CMakeLists.txt;C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\src\server\collision\CMakeLists.txt;C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\src\server\collision\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\CMakeFiles\generate.stamp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" "-HC:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU" "-BC:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW" --check-stamp-file "C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\CMakeFiles\generate.stamp"
+if errorlevel 1 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/CMakeLists.txt;C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\src\server\collision\CMakeLists.txt;C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\src\server\collision\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\CMakeFiles\generate.stamp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">"C:\Program Files (x86)\CMake 2.8\bin\cmake.exe" "-HC:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU" "-BC:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW" --check-stamp-file "C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\CMakeFiles\generate.stamp"
+if errorlevel 1 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/src/server/collision/CMakeLists.txt;C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\src\server\collision\CMakeLists.txt;C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\src\server\collision\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\Aptiva\Desktop\Project Skyfire\SkyFireEMU\NEW\src\server\collision\CMakeFiles\generate.stamp;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\server\collision\PrecompiledHeaders\collisionPCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">collisionPCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">collisionPCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">collisionPCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">collisionPCH.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClInclude Include="..\..\..\..\src\server\collision\PrecompiledHeaders\collisionPCH.h" />
+    <ClCompile Include="..\..\..\..\src\server\collision\Management\VMapFactory.cpp" />
+    <ClCompile Include="..\..\..\..\src\server\collision\Management\VMapManager2.cpp" />
+    <ClInclude Include="..\..\..\..\src\server\collision\Management\IVMapManager.h" />
+    <ClInclude Include="..\..\..\..\src\server\collision\Management\VMapFactory.h" />
+    <ClInclude Include="..\..\..\..\src\server\collision\Management\VMapManager2.h" />
+    <ClCompile Include="..\..\..\..\src\server\collision\Maps\MapTree.cpp" />
+    <ClCompile Include="..\..\..\..\src\server\collision\Maps\TileAssembler.cpp" />
+    <ClInclude Include="..\..\..\..\src\server\collision\Maps\MapTree.h" />
+    <ClInclude Include="..\..\..\..\src\server\collision\Maps\TileAssembler.h" />
+    <ClCompile Include="..\..\..\..\src\server\collision\Models\ModelInstance.cpp" />
+    <ClCompile Include="..\..\..\..\src\server\collision\Models\WorldModel.cpp" />
+    <ClInclude Include="..\..\..\..\src\server\collision\Models\ModelInstance.h" />
+    <ClInclude Include="..\..\..\..\src\server\collision\Models\WorldModel.h" />
+    <ClCompile Include="..\..\..\..\src\server\collision\BoundingIntervalHierarchy.cpp" />
+    <ClInclude Include="..\..\..\..\src\server\collision\BoundingIntervalHierarchy.h" />
+    <ClInclude Include="..\..\..\..\src\server\collision\VMapDefinitions.h" />
+    <ClInclude Include="..\..\..\..\src\server\collision\VMapTools.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:/Users/Aptiva/Desktop/Project Skyfire/SkyFireEMU/NEW/ZERO_CHECK.vcxproj">
+      <Project>5F467BF7-757B-4430-B4CA-59626A6CE8CF</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

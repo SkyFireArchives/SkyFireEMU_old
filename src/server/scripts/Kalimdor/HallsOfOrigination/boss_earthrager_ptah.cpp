@@ -25,22 +25,22 @@
 
 enum ScriptTexts
 {
-    SAY_AGGRO          = 0,
-    SAY_KILL_1         = 1,
-    SAY_KILL_2         = 2,
-    SAY_DEATH          = 3,
+    SAY_AGGRO          = 0, 
+    SAY_KILL_1         = 1, 
+    SAY_KILL_2         = 2, 
+    SAY_DEATH          = 3, 
 };
 
 enum Spells
 {
-    SPELL_FLAME_BOLT   = 77370,
-    SPELL_RAGING_SMASH = 83650,
+    SPELL_FLAME_BOLT   = 77370, 
+    SPELL_RAGING_SMASH = 83650, 
 };
 
 enum Events
 {
-    EVENT_FLAME_BOLT   = 1,
-    EVENT_RAGING_SMASH = 2,
+    EVENT_FLAME_BOLT   = 1, 
+    EVENT_RAGING_SMASH = 2, 
 };
 
 class boss_earthrager_ptah : public CreatureScript
@@ -67,7 +67,7 @@ class boss_earthrager_ptah : public CreatureScript
             {
                 events.Reset();
                 
-                if(pInstance && (pInstance->GetData(DATA_EARTHRAGER_PTAH_EVENT) != DONE && !check_in))
+                if (pInstance && (pInstance->GetData(DATA_EARTHRAGER_PTAH_EVENT) != DONE && !check_in))
                    pInstance->SetData(DATA_EARTHRAGER_PTAH_EVENT, NOT_STARTED);
                 check_in = false;
             }
@@ -95,7 +95,7 @@ class boss_earthrager_ptah : public CreatureScript
 
             void UpdateAI(const uint32 uiDiff)
             {
-                if(!UpdateVictim())
+                if (!UpdateVictim())
                    return;
                 events.Update(uiDiff);
 

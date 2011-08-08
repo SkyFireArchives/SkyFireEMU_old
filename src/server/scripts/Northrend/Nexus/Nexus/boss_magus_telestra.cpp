@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,35 +27,35 @@
 
 enum Spells
 {
-    SPELL_ICE_NOVA                                = 47772,
-    H_SPELL_ICE_NOVA                              = 56935,
-    SPELL_FIREBOMB                                = 47773,
-    H_SPELL_FIREBOMB                              = 56934,
-    SPELL_GRAVITY_WELL                            = 47756,
-    SPELL_TELESTRA_BACK                           = 47714,
+    SPELL_ICE_NOVA                                = 47772, 
+    H_SPELL_ICE_NOVA                              = 56935, 
+    SPELL_FIREBOMB                                = 47773, 
+    H_SPELL_FIREBOMB                              = 56934, 
+    SPELL_GRAVITY_WELL                            = 47756, 
+    SPELL_TELESTRA_BACK                           = 47714, 
 
-    SPELL_FIRE_MAGUS_VISUAL                       = 47705,
-    SPELL_FROST_MAGUS_VISUAL                      = 47706,
+    SPELL_FIRE_MAGUS_VISUAL                       = 47705, 
+    SPELL_FROST_MAGUS_VISUAL                      = 47706, 
     SPELL_ARCANE_MAGUS_VISUAL                     = 47704
 };
 enum Creatures
 {
-    MOB_FIRE_MAGUS                                = 26928,
-    MOB_FROST_MAGUS                               = 26930,
+    MOB_FIRE_MAGUS                                = 26928, 
+    MOB_FROST_MAGUS                               = 26930, 
     MOB_ARCANE_MAGUS                              = 26929
 };
 enum Yells
 {
-    SAY_AGGRO                                     = -1576000,
-    SAY_KILL                                      = -1576001,
-    SAY_DEATH                                     = -1576002,
-    SAY_MERGE                                     = -1576003,
-    SAY_SPLIT_1                                   = -1576004,
-    SAY_SPLIT_2                                   = -1576005,
+    SAY_AGGRO                                     = -1576000, 
+    SAY_KILL                                      = -1576001, 
+    SAY_DEATH                                     = -1576002, 
+    SAY_MERGE                                     = -1576003, 
+    SAY_SPLIT_1                                   = -1576004, 
+    SAY_SPLIT_2                                   = -1576005, 
 };
 enum Achievements
 {
-    ACHIEV_SPLIT_PERSONALITY                      = 2150,
+    ACHIEV_SPLIT_PERSONALITY                      = 2150, 
     ACHIEV_TIMER                                  = 5*IN_MILLISECONDS
 };
 
@@ -264,7 +264,7 @@ public:
                 bFireMagusDead = false;
                 bFrostMagusDead = false;
                 bArcaneMagusDead = false;
-                DoScriptText(RAND(SAY_SPLIT_1,SAY_SPLIT_2), me);
+                DoScriptText(RAND(SAY_SPLIT_1, SAY_SPLIT_2), me);
                 return;
             }
 
@@ -281,7 +281,7 @@ public:
                 bFireMagusDead = false;
                 bFrostMagusDead = false;
                 bArcaneMagusDead = false;
-                DoScriptText(RAND(SAY_SPLIT_1,SAY_SPLIT_2), me);
+                DoScriptText(RAND(SAY_SPLIT_1, SAY_SPLIT_2), me);
                 return;
             }
 

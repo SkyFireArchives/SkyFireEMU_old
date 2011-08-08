@@ -92,7 +92,7 @@ int pkcs_1_mgf1(int                  hash_idx,
 LBL_ERR:
 #ifdef LTC_CLEAN_STACK
    zeromem(buf, hLen);
-   zeromem(md,  sizeof(hash_state));
+   zeromem(md, sizeof(hash_state));
 #endif
 
    XFREE(buf);

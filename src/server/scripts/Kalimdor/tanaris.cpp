@@ -80,10 +80,10 @@ public:
 
         void SendItem(Unit* receiver)
         {
-            if (CAST_PLR(receiver)->HasItemCount(11169,1,false) &&
-                CAST_PLR(receiver)->HasItemCount(11172,11,false) &&
-                CAST_PLR(receiver)->HasItemCount(11173,1,false) &&
-                !CAST_PLR(receiver)->HasItemCount(11522,1,true))
+            if (CAST_PLR(receiver)->HasItemCount(11169, 1, false) &&
+                CAST_PLR(receiver)->HasItemCount(11172, 11, false) &&
+                CAST_PLR(receiver)->HasItemCount(11173, 1, false) &&
+                !CAST_PLR(receiver)->HasItemCount(11522, 1, true))
             {
                 ItemPosCountVec dest;
                 uint8 msg = CAST_PLR(receiver)->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, 11522, 1, false);
@@ -284,7 +284,7 @@ public:
     bool OnQuestAccept(Player* pPlayer, Creature* /*pCreature*/, Quest const *quest)
     {
         if (quest->GetQuestId() == 10279)                      //Quest: To The Master's Lair
-            pPlayer->CastSpell(pPlayer,34891,true);               //(Flight through Caverns)
+            pPlayer->CastSpell(pPlayer, 34891, true);               //(Flight through Caverns)
 
         return false;
     }
@@ -293,7 +293,7 @@ public:
     {
         pPlayer->PlayerTalkClass->ClearMenus();
         if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
-            pPlayer->CastSpell(pPlayer,34891,true);               //(Flight through Caverns)
+            pPlayer->CastSpell(pPlayer, 34891, true);               //(Flight through Caverns)
 
         return true;
     }
@@ -390,16 +390,16 @@ public:
 enum e00X17
 {
     //texts are signed for 7806
-    SAY_OOX_START           = -1000287,
-    SAY_OOX_AGGRO1          = -1000288,
-    SAY_OOX_AGGRO2          = -1000289,
-    SAY_OOX_AMBUSH          = -1000290,
-    SAY_OOX17_AMBUSH_REPLY  = -1000291,
-    SAY_OOX_END             = -1000292,
+    SAY_OOX_START           = -1000287, 
+    SAY_OOX_AGGRO1          = -1000288, 
+    SAY_OOX_AGGRO2          = -1000289, 
+    SAY_OOX_AMBUSH          = -1000290, 
+    SAY_OOX17_AMBUSH_REPLY  = -1000291, 
+    SAY_OOX_END             = -1000292, 
 
-    Q_OOX17                 = 648,
-    SPAWN_FIRST             = 7803,
-    SPAWN_SECOND_1          = 5617,
+    Q_OOX17                 = 648, 
+    SPAWN_FIRST             = 7803, 
+    SPAWN_SECOND_1          = 5617, 
     SPAWN_SECOND_2          = 7805
 };
 
@@ -414,7 +414,7 @@ public:
         {
             pCreature->setFaction(113);
             pCreature->SetFullHealth();
-            pCreature->SetUInt32Value(UNIT_FIELD_BYTES_1,0);
+            pCreature->SetUInt32Value(UNIT_FIELD_BYTES_1, 0);
             pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
             DoScriptText(SAY_OOX_START, pCreature);
 
@@ -471,7 +471,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_OOX_AGGRO1,SAY_OOX_AGGRO2), me);
+            DoScriptText(RAND(SAY_OOX_AGGRO1, SAY_OOX_AGGRO2), me);
         }
 
         void JustSummoned(Creature* summoned)
@@ -490,19 +490,19 @@ public:
 
 enum eTooga
 {
-    SAY_TOOG_THIRST             = -1000391,
-    SAY_TOOG_WORRIED            = -1000392,
-    SAY_TOOG_POST_1             = -1000393,
-    SAY_TORT_POST_2             = -1000394,
-    SAY_TOOG_POST_3             = -1000395,
-    SAY_TORT_POST_4             = -1000396,
-    SAY_TOOG_POST_5             = -1000397,
-    SAY_TORT_POST_6             = -1000398,
+    SAY_TOOG_THIRST             = -1000391, 
+    SAY_TOOG_WORRIED            = -1000392, 
+    SAY_TOOG_POST_1             = -1000393, 
+    SAY_TORT_POST_2             = -1000394, 
+    SAY_TOOG_POST_3             = -1000395, 
+    SAY_TORT_POST_4             = -1000396, 
+    SAY_TOOG_POST_5             = -1000397, 
+    SAY_TORT_POST_6             = -1000398, 
 
-    QUEST_TOOGA                 = 1560,
-    NPC_TORTA                   = 6015,
+    QUEST_TOOGA                 = 1560, 
+    NPC_TORTA                   = 6015, 
 
-    POINT_ID_TO_WATER           = 1,
+    POINT_ID_TO_WATER           = 1, 
     FACTION_TOOG_ESCORTEE       = 113
 };
 
@@ -633,8 +633,8 @@ public:
                     {
                         m_uiCheckSpeechTimer = 5000;
 
-                        if (urand(0,9) > 8)
-                            DoScriptText(RAND(SAY_TOOG_THIRST,SAY_TOOG_WORRIED), me);
+                        if (urand(0, 9) > 8)
+                            DoScriptText(RAND(SAY_TOOG_THIRST, SAY_TOOG_WORRIED), me);
                     }
                     else
                         m_uiCheckSpeechTimer -= uiDiff;

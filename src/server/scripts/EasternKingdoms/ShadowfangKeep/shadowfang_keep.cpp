@@ -37,16 +37,16 @@ EndContentData */
 
 enum eEnums
 {
-    SAY_FREE_AS             = -1033000,
-    SAY_OPEN_DOOR_AS        = -1033001,
-    SAY_POST_DOOR_AS        = -1033002,
-    SAY_FREE_AD             = -1033003,
-    SAY_OPEN_DOOR_AD        = -1033004,
-    SAY_POST1_DOOR_AD       = -1033005,
-    SAY_POST2_DOOR_AD       = -1033006,
+    SAY_FREE_AS             = -1033000, 
+    SAY_OPEN_DOOR_AS        = -1033001, 
+    SAY_POST_DOOR_AS        = -1033002, 
+    SAY_FREE_AD             = -1033003, 
+    SAY_OPEN_DOOR_AD        = -1033004, 
+    SAY_POST1_DOOR_AD       = -1033005, 
+    SAY_POST2_DOOR_AD       = -1033006, 
 
-    SPELL_UNLOCK            = 6421,
-    NPC_ASH                 = 3850,
+    SPELL_UNLOCK            = 6421, 
+    NPC_ASH                 = 3850, 
 
     SPELL_DARK_OFFERING     = 7154
 };
@@ -167,7 +167,7 @@ public:
 
         void Reset()
         {
-            uiDarkOffering = urand(290,10);
+            uiDarkOffering = urand(290, 10);
         }
 
         void UpdateAI(uint32 const uiDiff)
@@ -177,14 +177,14 @@ public:
 
             if (uiDarkOffering <= uiDiff)
             {
-                if (Creature* pFriend = me->FindNearestCreature(me->GetEntry(),25.0f,true))
+                if (Creature* pFriend = me->FindNearestCreature(me->GetEntry(), 25.0f, true))
                 {
                     if (pFriend)
-                        DoCast(pFriend,SPELL_DARK_OFFERING);
+                        DoCast(pFriend, SPELL_DARK_OFFERING);
                 }
                 else
-                    DoCast(me,SPELL_DARK_OFFERING);
-                uiDarkOffering = urand(4400,12500);
+                    DoCast(me, SPELL_DARK_OFFERING);
+                uiDarkOffering = urand(4400, 12500);
             } else uiDarkOffering -= uiDiff;
 
             DoMeleeAttackIfReady();

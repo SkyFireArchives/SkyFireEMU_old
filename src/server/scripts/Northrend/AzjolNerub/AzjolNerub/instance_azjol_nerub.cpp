@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -96,7 +96,7 @@ public:
                 case 192395:
                     uiKrikthirDoor = pGo->GetGUID();
                     if (auiEncounter[0] == DONE)
-                        HandleGameObject(NULL,true,pGo);
+                        HandleGameObject(NULL, true, pGo);
                     break;
                 case 192396:
                     uiAnubarakDoor[0] = pGo->GetGUID();
@@ -133,7 +133,7 @@ public:
             case DATA_KRIKTHIR_THE_GATEWATCHER_EVENT:
                 auiEncounter[0] = data;
                 if (data == DONE)
-                    HandleGameObject(uiKrikthirDoor,true);
+                    HandleGameObject(uiKrikthirDoor, true);
                 break;
             case DATA_HADRONOX_EVENT:
                 auiEncounter[1] = data;
@@ -190,7 +190,7 @@ public:
             OUT_LOAD_INST_DATA(in);
 
             char dataHead1, dataHead2;
-            uint16 data0,data1,data2;
+            uint16 data0, data1, data2;
 
             std::istringstream loadStream(in);
             loadStream >> dataHead1 >> dataHead2 >> data0 >> data1 >> data2;

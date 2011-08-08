@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -64,7 +64,7 @@ struct Traveller
 template<class T>
 inline uint32 Traveller<T>::GetTotalTrevelTimeTo(float x, float y, float z)
 {
-    float dist = GetMoveDestinationTo(x,y,z);
+    float dist = GetMoveDestinationTo(x, y, z);
     float speed = Speed();
     if (speed < 0.0f)
         return 0xfffffffe;  // almost infinity-unit should stop

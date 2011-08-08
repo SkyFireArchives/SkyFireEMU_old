@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -71,11 +71,11 @@ EndScriptData */
 
 enum PhaseHalazzi
 {
-    PHASE_NONE = 0,
-    PHASE_LYNX = 1,
-    PHASE_SPLIT = 2,
-    PHASE_HUMAN = 3,
-    PHASE_MERGE = 4,
+    PHASE_NONE = 0, 
+    PHASE_LYNX = 1, 
+    PHASE_SPLIT = 2, 
+    PHASE_HUMAN = 3, 
+    PHASE_MERGE = 4, 
     PHASE_ENRAGE = 5
 };
 
@@ -192,7 +192,7 @@ class boss_halazzi : public CreatureScript
                     break;
                 case PHASE_HUMAN:
                     //DoCast(me, SPELL_SUMMON_LYNX, true);
-                    DoSpawnCreature(MOB_SPIRIT_LYNX, 5,5,0,0, TEMPSUMMON_CORPSE_DESPAWN, 0);
+                    DoSpawnCreature(MOB_SPIRIT_LYNX, 5, 5, 0, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
                     me->SetMaxHealth(400000);
                     me->SetHealth(400000);
                     ShockTimer = 10000;
@@ -244,7 +244,7 @@ class boss_halazzi : public CreatureScript
                     if (FrenzyTimer <= diff)
                     {
                         DoCast(me, SPELL_FRENZY);
-                        FrenzyTimer = urand(10000,15000);
+                        FrenzyTimer = urand(10000, 15000);
                     } else FrenzyTimer -= diff;
 
                     if (Phase == PHASE_LYNX)
@@ -268,7 +268,7 @@ class boss_halazzi : public CreatureScript
 
                     if (ShockTimer <= diff)
                     {
-                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                        if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                         {
                             if (pTarget->IsNonMeleeSpellCasted(false))
                                 DoCast(pTarget, SPELL_EARTHSHOCK);
@@ -321,7 +321,7 @@ class boss_halazzi : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                switch (urand(0,1))
+                switch (urand(0, 1))
                 {
                     case 0:
                         me->MonsterYell(YELL_KILL_ONE, LANG_UNIVERSAL, NULL);
@@ -370,7 +370,7 @@ class mob_halazzi_lynx : public CreatureScript
 
             void Reset()
             {
-                FrenzyTimer = urand(30000,50000);  //frenzy every 30-50 seconds
+                FrenzyTimer = urand(30000, 50000);  //frenzy every 30-50 seconds
                 shredder_timer = 4000;
             }
 
@@ -396,7 +396,7 @@ class mob_halazzi_lynx : public CreatureScript
                 if (FrenzyTimer <= diff)
                 {
                     DoCast(me, SPELL_LYNX_FRENZY);
-                    FrenzyTimer = urand(30000,50000);  //frenzy every 30-50 seconds
+                    FrenzyTimer = urand(30000, 50000);  //frenzy every 30-50 seconds
                 } else FrenzyTimer -= diff;
 
                 if (shredder_timer <= diff)

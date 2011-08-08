@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -186,16 +186,16 @@ public:
 
                                 if (!pPlayer->HasAura(SPELL_SCALDINGWATER))
                                 {
-                                    pPlayer->CastSpell(pPlayer, SPELL_SCALDINGWATER,true);
+                                    pPlayer->CastSpell(pPlayer, SPELL_SCALDINGWATER, true);
                                 }
                             } else if (Water == WATERSTATE_FRENZY)
                             {
                                 //spawn frenzy
                                 if (DoSpawnFrenzy)
                                 {
-                                    if (Creature* frenzy = pPlayer->SummonCreature(MOB_COILFANG_FRENZY,pPlayer->GetPositionX(),pPlayer->GetPositionY(),pPlayer->GetPositionZ(),pPlayer->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,2000))
+                                    if (Creature* frenzy = pPlayer->SummonCreature(MOB_COILFANG_FRENZY, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 2000))
                                     {
-                                        frenzy->Attack(pPlayer,false);
+                                        frenzy->Attack(pPlayer, false);
                                         frenzy->AddUnitMovementFlag(MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_LEVITATING);
                                     }
                                     DoSpawnFrenzy = false;

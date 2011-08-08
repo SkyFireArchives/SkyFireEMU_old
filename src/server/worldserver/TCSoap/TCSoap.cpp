@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -115,25 +115,25 @@ int ns1__executeCommand(soap* soap, char* command, char** result)
     }
 
     uint32 accountId = sAccountMgr->GetId(soap->userid);
-    if(!accountId)
+    if (!accountId)
     {
         sLog->outDebug(LOG_FILTER_NETWORKIO, "TCSoap: Client used invalid username '%s'", soap->userid);
         return 401;
     }
 
-    if(!sAccountMgr->CheckPassword(accountId, soap->passwd))
+    if (!sAccountMgr->CheckPassword(accountId, soap->passwd))
     {
         sLog->outDebug(LOG_FILTER_NETWORKIO, "TCSoap: invalid password for account '%s'", soap->userid);
         return 401;
     }
 
-    if(sAccountMgr->GetSecurity(accountId) < SEC_ADMINISTRATOR)
+    if (sAccountMgr->GetSecurity(accountId) < SEC_ADMINISTRATOR)
     {
         sLog->outDebug(LOG_FILTER_NETWORKIO, "TCSoap: %s's gmlevel is too low", soap->userid);
         return 403;
     }
 
-    if(!command || !*command)
+    if (!command || !*command)
         return soap_sender_fault(soap, "Command mustn't be empty", "The supplied command was an empty string");
 
     sLog->outDebug(LOG_FILTER_NETWORKIO, "TCSoap: got command '%s'", command);
@@ -149,7 +149,7 @@ int ns1__executeCommand(soap* soap, char* command, char** result)
     // wait for callback to complete command
 
     int acc = connection.pendingCommands.acquire();
-    if(acc)
+    if (acc)
     {
         sLog->outError("TCSoap: Error while acquiring lock, acc = %i, errno = %u", acc, errno);
     }
@@ -160,7 +160,7 @@ int ns1__executeCommand(soap* soap, char* command, char** result)
     // alright, command finished
 
     char* printBuffer = soap_strdup(soap, connection.m_printBuffer.c_str());
-    if(connection.hasCommandSucceeded())
+    if (connection.hasCommandSucceeded())
     {
         *result = printBuffer;
         return SOAP_OK;
@@ -187,8 +187,8 @@ void SOAPCommand::commandFinished(void* soapconnection, bool success)
 struct Namespace namespaces[] =
 {   { "SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/", NULL, NULL }, // must be first
     { "SOAP-ENC", "http://schemas.xmlsoap.org/soap/encoding/", NULL, NULL }, // must be second
-    { "xsi", "http://www.w3.org/1999/XMLSchema-instance", "http://www.w3.org/*/XMLSchema-instance", NULL },
-    { "xsd", "http://www.w3.org/1999/XMLSchema",          "http://www.w3.org/*/XMLSchema", NULL },
+    { "xsi", "http://www.w3.org/1999/XMLSchema-instance", "http://www.w3.org/*/XMLSchema-instance", NULL }, 
+    { "xsd", "http://www.w3.org/1999/XMLSchema",          "http://www.w3.org/*/XMLSchema", NULL }, 
     { "ns1", "urn:TC", NULL, NULL },     // "ns1" namespace prefix
     { NULL, NULL, NULL, NULL }
 };

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -92,7 +92,7 @@ public:
             if (Inspire_Timer <= diff)
             {
                 Creature *pTarget = NULL;
-                std::list<Creature*> pList = DoFindFriendlyMissingBuff(45.0f,SPELL_INSPIRE);
+                std::list<Creature*> pList = DoFindFriendlyMissingBuff(45.0f, SPELL_INSPIRE);
                 if (!pList.empty())
                 {
                     std::list<Creature*>::const_iterator i = pList.begin();
@@ -119,7 +119,7 @@ public:
             if (Flamespear_Timer <= diff)
             {
                 Unit *pTarget = NULL;
-                pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 if (pTarget) DoCast(pTarget, SPELL_FLAMESPEAR);
 
                 Flamespear_Timer = 12000 + rand()%4000;
@@ -188,7 +188,7 @@ public:
             if (ShadowWordPain_Timer <= diff)
             {
                 Unit *pTarget = NULL;
-                pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 if (pTarget) DoCast(pTarget, SPELL_SHADOWWORDPAIN);
 
                 ShadowWordPain_Timer = 18000+rand()%8000;
@@ -198,7 +198,7 @@ public:
             if (Immolate_Timer <= diff)
             {
                 Unit *pTarget = NULL;
-                pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 if (pTarget) DoCast(pTarget, SPELL_IMMOLATE);
 
                 Immolate_Timer = 15000+rand()%10000;

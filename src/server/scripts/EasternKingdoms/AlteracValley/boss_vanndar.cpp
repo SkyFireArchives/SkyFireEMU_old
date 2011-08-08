@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,23 +26,23 @@
 
 enum Yells
 {
-    YELL_AGGRO                                    = -1810008,
-    YELL_EVADE                                    = -1810009,
-    YELL_RESPAWN1                                 = -1810010,
-    YELL_RESPAWN2                                 = -1810011,
-    YELL_RANDOM1                                  = -1810012,
-    YELL_RANDOM2                                  = -1810013,
-    YELL_RANDOM3                                  = -1810014,
-    YELL_RANDOM4                                  = -1810015,
-    YELL_RANDOM5                                  = -1810016,
-    YELL_RANDOM6                                  = -1810017,
+    YELL_AGGRO                                    = -1810008, 
+    YELL_EVADE                                    = -1810009, 
+    YELL_RESPAWN1                                 = -1810010, 
+    YELL_RESPAWN2                                 = -1810011, 
+    YELL_RANDOM1                                  = -1810012, 
+    YELL_RANDOM2                                  = -1810013, 
+    YELL_RANDOM3                                  = -1810014, 
+    YELL_RANDOM4                                  = -1810015, 
+    YELL_RANDOM5                                  = -1810016, 
+    YELL_RANDOM6                                  = -1810017, 
     YELL_RANDOM7                                  = -1810018
 };
 
 enum Spells
 {
-    SPELL_AVATAR                                  = 19135,
-    SPELL_THUNDERCLAP                             = 15588,
+    SPELL_AVATAR                                  = 19135, 
+    SPELL_THUNDERCLAP                             = 15588, 
     SPELL_STORMBOLT                               = 20685 // not sure
 };
 
@@ -67,7 +67,7 @@ public:
             uiThunderclapTimer = 4*IN_MILLISECONDS;
             uiStormboltTimer = 6*IN_MILLISECONDS;
             uiResetTimer = 5*IN_MILLISECONDS;
-            uiYellTimer = urand(20*IN_MILLISECONDS,30*IN_MILLISECONDS);
+            uiYellTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS);
         }
 
         void EnterCombat(Unit * /*who*/)
@@ -78,7 +78,7 @@ public:
         void JustRespawned()
         {
             Reset();
-            DoScriptText(RAND(YELL_RESPAWN1,YELL_RESPAWN2), me);
+            DoScriptText(RAND(YELL_RESPAWN1, YELL_RESPAWN2), me);
         }
 
         void UpdateAI(const uint32 diff)
@@ -89,25 +89,25 @@ public:
             if (uiAvatarTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_AVATAR);
-                uiAvatarTimer =  urand(15*IN_MILLISECONDS,20*IN_MILLISECONDS);
+                uiAvatarTimer =  urand(15*IN_MILLISECONDS, 20*IN_MILLISECONDS);
             } else uiAvatarTimer -= diff;
 
             if (uiThunderclapTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_THUNDERCLAP);
-                uiThunderclapTimer = urand(5*IN_MILLISECONDS,15*IN_MILLISECONDS);
+                uiThunderclapTimer = urand(5*IN_MILLISECONDS, 15*IN_MILLISECONDS);
             } else uiThunderclapTimer -= diff;
 
             if (uiStormboltTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_STORMBOLT);
-                uiStormboltTimer = urand(10*IN_MILLISECONDS,25*IN_MILLISECONDS);
+                uiStormboltTimer = urand(10*IN_MILLISECONDS, 25*IN_MILLISECONDS);
             } else uiStormboltTimer -= diff;
 
             if (uiYellTimer <= diff)
             {
-                DoScriptText(RAND(YELL_RANDOM1,YELL_RANDOM2,YELL_RANDOM3,YELL_RANDOM4,YELL_RANDOM5,YELL_RANDOM6,YELL_RANDOM7), me);
-                uiYellTimer = urand(20*IN_MILLISECONDS,30*IN_MILLISECONDS); //20 to 30 seconds
+                DoScriptText(RAND(YELL_RANDOM1, YELL_RANDOM2, YELL_RANDOM3, YELL_RANDOM4, YELL_RANDOM5, YELL_RANDOM6, YELL_RANDOM7), me);
+                uiYellTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS); //20 to 30 seconds
             } else uiYellTimer -= diff;
 
             // check if creature is not outside of building

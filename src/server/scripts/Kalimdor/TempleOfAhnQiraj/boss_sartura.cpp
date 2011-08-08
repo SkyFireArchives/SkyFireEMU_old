@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -112,7 +112,7 @@ public:
                 {
                     //Attack random Gamers
                     Unit *pTarget = NULL;
-                    pTarget = SelectUnit(SELECT_TARGET_RANDOM,1);
+                    pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
                     if (pTarget)
                     me->AddThreat(pTarget, 1.0f);
                     me->TauntApply(pTarget);
@@ -141,7 +141,7 @@ public:
                 {
                     //Attack random Gamers
                     Unit *pTarget = NULL;
-                    pTarget = SelectUnit(SELECT_TARGET_RANDOM,1);
+                    pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
                     if (pTarget)
                     me->AddThreat(pTarget, 1.0f);
                     me->TauntApply(pTarget);
@@ -249,7 +249,7 @@ public:
                 {
                     //Attack random Gamers
                     Unit *pTarget = NULL;
-                    pTarget = SelectUnit(SELECT_TARGET_RANDOM,1);
+                    pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
                     if (pTarget)
                     me->AddThreat(pTarget, 1.0f);
                     me->TauntApply(pTarget);
@@ -270,7 +270,7 @@ public:
                 {
                     //Attack random Gamers
                     Unit *pTarget = NULL;
-                    pTarget = SelectUnit(SELECT_TARGET_RANDOM,1);
+                    pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
                     if (pTarget)
                     me->AddThreat(pTarget, 1.0f);
                     me->TauntApply(pTarget);

@@ -185,7 +185,7 @@ extern  struct ltc_hash_descriptor {
 
     /* accelerated hmac callback: if you need to-do multiple packets just use the generic hmac_memory and provide a hash callback */
     int  (*hmac_block)(const unsigned char *key, unsigned long  keylen,
-                       const unsigned char *in,  unsigned long  inlen, 
+                       const unsigned char *in, unsigned long  inlen, 
                              unsigned char *out, unsigned long *outlen);
 
 } hash_descriptor[];
@@ -329,7 +329,7 @@ int hash_is_valid(int idx);
 LTC_MUTEX_PROTO(ltc_hash_mutex)
 
 int hash_memory(int hash, 
-                const unsigned char *in,  unsigned long inlen, 
+                const unsigned char *in, unsigned long inlen, 
                       unsigned char *out, unsigned long *outlen);
 int hash_memory_multi(int hash, unsigned char *out, unsigned long *outlen,
                       const unsigned char *in, unsigned long inlen, ...);

@@ -46,7 +46,6 @@ BattlegroundNA::BattlegroundNA()
 
 BattlegroundNA::~BattlegroundNA()
 {
-
 }
 
 void BattlegroundNA::Update(uint32 diff)
@@ -60,7 +59,7 @@ void BattlegroundNA::Update(uint32 diff)
             UpdateArenaWorldState();
             CheckArenaAfterTimerConditions();
         }
-    } 
+    }
 }
 
 void BattlegroundNA::StartingEventCloseDoors()
@@ -109,7 +108,7 @@ void BattlegroundNA::HandleKillPlayer(Player *player, Player *killer)
         return;
     }
 
-    Battleground::HandleKillPlayer(player,killer);
+    Battleground::HandleKillPlayer(player, killer);
 
     UpdateArenaWorldState();
     CheckArenaWinConditions();
@@ -117,7 +116,7 @@ void BattlegroundNA::HandleKillPlayer(Player *player, Player *killer)
 
 bool BattlegroundNA::HandlePlayerUnderMap(Player *player)
 {
-    player->TeleportTo(GetMapId(),4055.504395f,2919.660645f,13.611241f,player->GetOrientation(),false);
+    player->TeleportTo(GetMapId(), 4055.504395f, 2919.660645f, 13.611241f, player->GetOrientation(), false);
     return true;
 }
 
@@ -140,7 +139,7 @@ void BattlegroundNA::HandleAreaTrigger(Player *Source, uint32 Trigger)
     }
 
     //if (buff_guid)
-    //    HandleTriggerBuff(buff_guid,Source);
+    //    HandleTriggerBuff(buff_guid, Source);
 }
 
 void BattlegroundNA::FillInitialWorldStates(WorldPacket &data)

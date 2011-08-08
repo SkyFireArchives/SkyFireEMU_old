@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -31,95 +31,95 @@
 
 enum Spells
 {
-    SPELL_PURSUED                               = 68987,
-    SPELL_CONFUSION                             = 69029,
-    SPELL_EXPLOSIVE_BARRAGE                     = 69263,
-    SPELL_MIGHTY_KICK                           = 69021,
-    SPELL_POISON_NOVA                           = 68989,
-    H_SPELL_POISON_NOVA                         = 70434,
-    SPELL_SHADOW_BOLT                           = 69028,
-    SPELL_TOXIC_WASTE                           = 69024,
-    H_SPELL_TOXIC_WASTE                         = 70436,
+    SPELL_PURSUED                               = 68987, 
+    SPELL_CONFUSION                             = 69029, 
+    SPELL_EXPLOSIVE_BARRAGE                     = 69263, 
+    SPELL_MIGHTY_KICK                           = 69021, 
+    SPELL_POISON_NOVA                           = 68989, 
+    H_SPELL_POISON_NOVA                         = 70434, 
+    SPELL_SHADOW_BOLT                           = 69028, 
+    SPELL_TOXIC_WASTE                           = 69024, 
+    H_SPELL_TOXIC_WASTE                         = 70436, 
 };
 
 enum Yells
 {
     // Krick
-    SAY_KRICK_AGGRO                             = -1658010,
-    SAY_KRICK_SLAY_1                            = -1658011,
-    SAY_KRICK_SLAY_2                            = -1658012,
-    SAY_KRICK_BARRAGE_1                         = -1658013,
-    SAY_KRICK_BARRAGE_2                         = -1658014,
-    SAY_KRICK_POISON_NOVA                       = -1658015,
-    SAY_KRICK_CHASE_1                           = -1658016,
-    SAY_KRICK_CHASE_2                           = -1658017,
-    SAY_KRICK_CHASE_3                           = -1658018,
+    SAY_KRICK_AGGRO                             = -1658010, 
+    SAY_KRICK_SLAY_1                            = -1658011, 
+    SAY_KRICK_SLAY_2                            = -1658012, 
+    SAY_KRICK_BARRAGE_1                         = -1658013, 
+    SAY_KRICK_BARRAGE_2                         = -1658014, 
+    SAY_KRICK_POISON_NOVA                       = -1658015, 
+    SAY_KRICK_CHASE_1                           = -1658016, 
+    SAY_KRICK_CHASE_2                           = -1658017, 
+    SAY_KRICK_CHASE_3                           = -1658018, 
 
     // Ick
-    SAY_ICK_POISON_NOVA                         = -1658020,
-    SAY_ICK_CHASE_1                             = -1658021,
+    SAY_ICK_POISON_NOVA                         = -1658020, 
+    SAY_ICK_CHASE_1                             = -1658021, 
 
     // OUTRO
-    SAY_KRICK_OUTRO_1                           = -1658030,
-    SAY_JAYNA_OUTRO_2                           = -1658031,
-    SAY_SYLVANAS_OUTRO_2                        = -1658032,
-    SAY_KRICK_OUTRO_3                           = -1658033,
-    SAY_JAYNA_OUTRO_4                           = -1658034,
-    SAY_SYLVANAS_OUTRO_4                        = -1658035,
-    SAY_KRICK_OUTRO_5                           = -1658036,
-    SAY_TYRANNUS_OUTRO_7                        = -1658037,
-    SAY_KRICK_OUTRO_8                           = -1658038,
-    SAY_TYRANNUS_OUTRO_9                        = -1658039,
-    SAY_JAYNA_OUTRO_10                          = -1658040,
-    SAY_SYLVANAS_OUTRO_10                       = -1658041,
+    SAY_KRICK_OUTRO_1                           = -1658030, 
+    SAY_JAYNA_OUTRO_2                           = -1658031, 
+    SAY_SYLVANAS_OUTRO_2                        = -1658032, 
+    SAY_KRICK_OUTRO_3                           = -1658033, 
+    SAY_JAYNA_OUTRO_4                           = -1658034, 
+    SAY_SYLVANAS_OUTRO_4                        = -1658035, 
+    SAY_KRICK_OUTRO_5                           = -1658036, 
+    SAY_TYRANNUS_OUTRO_7                        = -1658037, 
+    SAY_KRICK_OUTRO_8                           = -1658038, 
+    SAY_TYRANNUS_OUTRO_9                        = -1658039, 
+    SAY_JAYNA_OUTRO_10                          = -1658040, 
+    SAY_SYLVANAS_OUTRO_10                       = -1658041, 
 };
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_PURSUE,
-    EVENT_MIGHTY_KICK,
-    EVENT_POISON_NOVA,
-    EVENT_EXPLOSIVE_BARRAGE,
-    EVENT_END_EXPLOSIVE_BARRAGE,
+    EVENT_NONE, 
+    EVENT_PURSUE, 
+    EVENT_MIGHTY_KICK, 
+    EVENT_POISON_NOVA, 
+    EVENT_EXPLOSIVE_BARRAGE, 
+    EVENT_END_EXPLOSIVE_BARRAGE, 
 
     // Krick
-    EVENT_SHADOW_BOLT,
-    EVENT_TOXIC_WASTE,
+    EVENT_SHADOW_BOLT, 
+    EVENT_TOXIC_WASTE, 
 
     // Krick OUTRO
-    EVENT_OUTRO_1,
-    EVENT_OUTRO_2,
-    EVENT_OUTRO_3,
-    EVENT_OUTRO_4,
-    EVENT_OUTRO_5,
-    EVENT_OUTRO_6,
-    EVENT_OUTRO_7,
-    EVENT_OUTRO_8,
-    EVENT_OUTRO_9,
-    EVENT_OUTRO_10,
-    EVENT_OUTRO_11,
-    EVENT_OUTRO_12,
-    EVENT_OUTRO_END,
+    EVENT_OUTRO_1, 
+    EVENT_OUTRO_2, 
+    EVENT_OUTRO_3, 
+    EVENT_OUTRO_4, 
+    EVENT_OUTRO_5, 
+    EVENT_OUTRO_6, 
+    EVENT_OUTRO_7, 
+    EVENT_OUTRO_8, 
+    EVENT_OUTRO_9, 
+    EVENT_OUTRO_10, 
+    EVENT_OUTRO_11, 
+    EVENT_OUTRO_12, 
+    EVENT_OUTRO_END, 
 };
 
 enum KrickPhase
 {
-    PHASE_COMBAT,
-    PHASE_OUTRO,
+    PHASE_COMBAT, 
+    PHASE_OUTRO, 
 };
 
 enum Actions
 {
-    ACTION_OUTRO,
+    ACTION_OUTRO, 
 };
 
 enum Misc
 {
-    SEAT_KRICK = 0,
+    SEAT_KRICK = 0, 
 
     // events GCD. Shall not be 0.
-    GCD_1 = 1,
+    GCD_1 = 1, 
 };
 
 // Krick is the Gnome.
@@ -220,11 +220,11 @@ public:
             {
                 case EVENT_PURSUE:
                     if (Creature* pKrick = GetKrick())
-                        DoScriptText(RAND(SAY_KRICK_CHASE_1,SAY_KRICK_CHASE_2,SAY_KRICK_CHASE_3), pKrick);
+                        DoScriptText(RAND(SAY_KRICK_CHASE_1, SAY_KRICK_CHASE_2, SAY_KRICK_CHASE_3), pKrick);
 
                     if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     {
-                        me->Attack(pTarget,false);
+                        me->Attack(pTarget, false);
                         DoScriptText(SAY_ICK_CHASE_1, me, pTarget);
                         DoCast(pTarget, SPELL_PURSUED);
                     }
@@ -328,7 +328,7 @@ public:
             if (victim == me)
                 return;
 
-            DoScriptText(RAND(SAY_KRICK_SLAY_1,SAY_KRICK_SLAY_2), me);
+            DoScriptText(RAND(SAY_KRICK_SLAY_1, SAY_KRICK_SLAY_2), me);
         }
 
         void DamageTaken(Unit * /*pDoneBy*/, uint32 &uiDamage)
@@ -356,7 +356,7 @@ public:
                     if (pJainaOrSylvanas) {
                         Position pos;
                         me->GetNearPosition(pos, 5.0f, 0);
-                        pJainaOrSylvanas->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(),
+                        pJainaOrSylvanas->NearTeleportTo(pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), 
                             pos.GetAngle(me->GetPositionX(), me->GetPositionY()));
                     }
                     else {

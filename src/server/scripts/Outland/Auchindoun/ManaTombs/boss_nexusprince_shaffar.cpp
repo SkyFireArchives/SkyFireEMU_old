@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -38,25 +38,25 @@ EndContentData */
 
 enum ePrince
 {
-    SAY_INTRO                       = -1557000,
-    SAY_AGGRO_1                     = -1557001,
-    SAY_AGGRO_2                     = -1557002,
-    SAY_AGGRO_3                     = -1557003,
-    SAY_SLAY_1                      = -1557004,
-    SAY_SLAY_2                      = -1557005,
-    SAY_SUMMON                      = -1557006,
-    SAY_DEAD                        = -1557007,
+    SAY_INTRO                       = -1557000, 
+    SAY_AGGRO_1                     = -1557001, 
+    SAY_AGGRO_2                     = -1557002, 
+    SAY_AGGRO_3                     = -1557003, 
+    SAY_SLAY_1                      = -1557004, 
+    SAY_SLAY_2                      = -1557005, 
+    SAY_SUMMON                      = -1557006, 
+    SAY_DEAD                        = -1557007, 
 
-    SPELL_BLINK                     = 34605,
-    SPELL_FROSTBOLT                 = 32364,
-    SPELL_FIREBALL                  = 32363,
-    SPELL_FROSTNOVA                 = 32365,
+    SPELL_BLINK                     = 34605, 
+    SPELL_FROSTBOLT                 = 32364, 
+    SPELL_FIREBALL                  = 32363, 
+    SPELL_FROSTNOVA                 = 32365, 
 
     SPELL_ETHEREAL_BEACON           = 32371,                // Summons NPC_BEACON
-    SPELL_ETHEREAL_BEACON_VISUAL    = 32368,
+    SPELL_ETHEREAL_BEACON_VISUAL    = 32368, 
 
-    NPC_BEACON                      = 18431,
-    NPC_SHAFFAR                     = 18344,
+    NPC_BEACON                      = 18431, 
+    NPC_SHAFFAR                     = 18344, 
 
     NR_INITIAL_BEACONS              = 3
 };
@@ -122,7 +122,7 @@ public:
 
         void EnterCombat(Unit * /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO_1,SAY_AGGRO_2,SAY_AGGRO_3), me);
+            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
 
             DoZoneInCombat();
             summons.DoZoneInCombat();
@@ -132,9 +132,9 @@ public:
         {
             if (summoned->GetEntry() == NPC_BEACON)
             {
-                summoned->CastSpell(summoned,SPELL_ETHEREAL_BEACON_VISUAL,false);
+                summoned->CastSpell(summoned, SPELL_ETHEREAL_BEACON_VISUAL, false);
 
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     summoned->AI()->AttackStart(pTarget);
             }
 
@@ -148,7 +148,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
         }
 
         void JustDied(Unit* /*Killer*/)
@@ -207,7 +207,7 @@ public:
                 if (me->IsNonMeleeSpellCasted(false))
                     me->InterruptNonMeleeSpells(true);
 
-                if (!urand(0,3))
+                if (!urand(0, 3))
                     DoScriptText(SAY_SUMMON, me);
 
                 DoCast(me, SPELL_ETHEREAL_BEACON, true);
@@ -224,7 +224,7 @@ public:
 
 enum eEnums
 {
-    SPELL_ARCANE_BOLT               = 15254,
+    SPELL_ARCANE_BOLT               = 15254, 
     SPELL_ETHEREAL_APPRENTICE       = 32372                 // Summon 18430
 };
 
@@ -317,7 +317,7 @@ public:
 
 enum eEthereal
 {
-    SPELL_ETHEREAL_APPRENTICE_FIREBOLT          = 32369,
+    SPELL_ETHEREAL_APPRENTICE_FIREBOLT          = 32369, 
     SPELL_ETHEREAL_APPRENTICE_FROSTBOLT         = 32370
 };
 

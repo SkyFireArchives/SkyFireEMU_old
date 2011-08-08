@@ -82,8 +82,8 @@ bool Player::UpdateStats(Stats stat)
             UpdateAllCritPercentages();
             UpdateDodgePercentage();
             break;
-        case STAT_STAMINA:   
-            UpdateMaxHealth(); 
+        case STAT_STAMINA:
+            UpdateMaxHealth();
             break;
         case STAT_INTELLECT:
             UpdateMaxPower(POWER_MANA);
@@ -144,7 +144,7 @@ void Player::ApplySpellPowerBonus(int32 amount, bool apply)
     ApplyModUInt32Value(PLAYER_FIELD_MOD_HEALING_DONE_POS, amount, apply);
     for (int i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; ++i)
         ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS + i, amount, apply);
-    
+
     UpdateSpellPower();
 }
 
@@ -239,12 +239,12 @@ void Player::UpdateArmor()
 void Player::UpdateSpellPower()
 {
     uint32 spellPowerFromIntellect = GetStat(STAT_INTELLECT) - 10;
-    
+
     //apply only the diff between the last and the new value.
     ApplyModUInt32Value(PLAYER_FIELD_MOD_HEALING_DONE_POS, spellPowerFromIntellect - m_spellPowerFromIntellect, true);
     for (int i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; ++i)
         ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS + i, spellPowerFromIntellect - m_spellPowerFromIntellect, true);
-    
+
     m_spellPowerFromIntellect = spellPowerFromIntellect;
 }
 
@@ -282,7 +282,7 @@ void Player::UpdateMaxHealth()
 
 void Player::UpdateMaxPower(Powers power)
 {
-    if(power > POWER_RUNIC_POWER)
+    if (power > POWER_RUNIC_POWER)
     {
         // these powers don't currently have any modifiers
         SetMaxPower(power, GetCreatePowers(power));
@@ -455,11 +455,10 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
             for (AuraEffectList::const_iterator i = mRAPbyStat.begin(); i != mRAPbyStat.end(); ++i)
             {
                 int32 temp = int32(GetStat(Stats((*i)->GetMiscValue())) * (*i)->GetAmount() / 100.0f);
-                if(temp > 0)
+                if (temp > 0)
                     attPowerMod_pos += temp;
                 else
                     attPowerMod_neg -= temp;
-
             }
         }
     }
@@ -469,7 +468,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
         for (AuraEffectList::const_iterator i = mAPbyStat.begin(); i != mAPbyStat.end(); ++i)
         {
             int32 temp = int32(GetStat(Stats((*i)->GetMiscValue())) * (*i)->GetAmount() / 100.0f);
-            if(temp > 0)
+            if (temp > 0)
                 attPowerMod_pos += temp;
             else
                 attPowerMod_neg -= temp;
@@ -480,7 +479,7 @@ void Player::UpdateAttackPowerAndDamage(bool ranged)
         {
             // always: ((*i)->GetModifier()->m_miscvalue == 1 == SPELL_SCHOOL_MASK_NORMAL)
             int32 temp = int32(GetArmor() / (*iter)->GetAmount());
-            if(temp > 0)
+            if (temp > 0)
                 attPowerMod_pos += temp;
             else
                 attPowerMod_neg -= temp;
@@ -546,7 +545,7 @@ void Player::CalculateMinMaxDamage(WeaponAttackType attType, bool normalized, bo
             break;
     }
 
-    float att_speed = GetAPMultiplier(attType,normalized);
+    float att_speed = GetAPMultiplier(attType, normalized);
 
     float base_value  = GetModifierValue(unitMod, BASE_VALUE) + GetTotalAttackPowerValue(attType)/ 14.0f * att_speed;
     float base_pct    = GetModifierValue(unitMod, BASE_PCT);
@@ -598,16 +597,16 @@ void Player::UpdateDamagePhysical(WeaponAttackType attType)
     {
         case BASE_ATTACK:
         default:
-            SetStatFloatValue(UNIT_FIELD_MINDAMAGE,mindamage);
-            SetStatFloatValue(UNIT_FIELD_MAXDAMAGE,maxdamage);
+            SetStatFloatValue(UNIT_FIELD_MINDAMAGE, mindamage);
+            SetStatFloatValue(UNIT_FIELD_MAXDAMAGE, maxdamage);
             break;
         case OFF_ATTACK:
-            SetStatFloatValue(UNIT_FIELD_MINOFFHANDDAMAGE,mindamage);
-            SetStatFloatValue(UNIT_FIELD_MAXOFFHANDDAMAGE,maxdamage);
+            SetStatFloatValue(UNIT_FIELD_MINOFFHANDDAMAGE, mindamage);
+            SetStatFloatValue(UNIT_FIELD_MAXOFFHANDDAMAGE, maxdamage);
             break;
         case RANGED_ATTACK:
-            SetStatFloatValue(UNIT_FIELD_MINRANGEDDAMAGE,mindamage);
-            SetStatFloatValue(UNIT_FIELD_MAXRANGEDDAMAGE,maxdamage);
+            SetStatFloatValue(UNIT_FIELD_MINRANGEDDAMAGE, mindamage);
+            SetStatFloatValue(UNIT_FIELD_MAXRANGEDDAMAGE, maxdamage);
             break;
     }
 }
@@ -828,10 +827,10 @@ void Player::UpdateManaRegen()
         modManaRegenInterrupt = 100;
 
     // The base regen value is 5% of your base mana pool per 5 seconds (wowpedia)
-    float baseCombatRegen = GetCreateMana() * 0.01f + 
+    float baseCombatRegen = GetCreateMana() * 0.01f +
         GetTotalAuraModifierByMiscValue(SPELL_AURA_MOD_POWER_REGEN, POWER_MANA) / 5.0f;
 
-    SetStatFloatValue(UNIT_FIELD_POWER_REGEN_INTERRUPTED_FLAT_MODIFIER, 
+    SetStatFloatValue(UNIT_FIELD_POWER_REGEN_INTERRUPTED_FLAT_MODIFIER,
         baseCombatRegen + power_regen * modManaRegenInterrupt / 100.0f);
     SetStatFloatValue(UNIT_FIELD_POWER_REGEN_FLAT_MODIFIER,  baseCombatRegen + power_regen);
 }
@@ -862,7 +861,7 @@ void Player::_RemoveAllStatBonuses()
 
 void Player::UpdateMastery()
 {
-    if(HasAuraType(SPELL_AURA_MASTERY))
+    if (HasAuraType(SPELL_AURA_MASTERY))
     {
         SetInt32Value(PLAYER_FIELD_COMBAT_RATING_1 + CR_MASTERY, m_baseRatingValue[CR_MASTERY]);
         SetFloatValue(PLAYER_MASTERY, GetMasteryPoints());
@@ -1007,16 +1006,16 @@ void Creature::UpdateDamagePhysical(WeaponAttackType attType)
     {
         case BASE_ATTACK:
         default:
-            SetStatFloatValue(UNIT_FIELD_MINDAMAGE,mindamage);
-            SetStatFloatValue(UNIT_FIELD_MAXDAMAGE,maxdamage);
+            SetStatFloatValue(UNIT_FIELD_MINDAMAGE, mindamage);
+            SetStatFloatValue(UNIT_FIELD_MAXDAMAGE, maxdamage);
             break;
         case OFF_ATTACK:
-            SetStatFloatValue(UNIT_FIELD_MINOFFHANDDAMAGE,mindamage);
-            SetStatFloatValue(UNIT_FIELD_MAXOFFHANDDAMAGE,maxdamage);
+            SetStatFloatValue(UNIT_FIELD_MINOFFHANDDAMAGE, mindamage);
+            SetStatFloatValue(UNIT_FIELD_MAXOFFHANDDAMAGE, maxdamage);
             break;
         case RANGED_ATTACK:
-            SetStatFloatValue(UNIT_FIELD_MINRANGEDDAMAGE,mindamage);
-            SetStatFloatValue(UNIT_FIELD_MAXRANGEDDAMAGE,maxdamage);
+            SetStatFloatValue(UNIT_FIELD_MINRANGEDDAMAGE, mindamage);
+            SetStatFloatValue(UNIT_FIELD_MAXRANGEDDAMAGE, maxdamage);
             break;
     }
 }
@@ -1102,7 +1101,7 @@ bool Guardian::UpdateStats(Stats stat)
                         mod = 0.725f;
                         break;
                 }
-                
+
                 PetSpellMap::const_iterator itr = (ToPet()->m_spells.find(62758)); // Wild Hunt rank 1
                 if (itr == ToPet()->m_spells.end())
                     itr = ToPet()->m_spells.find(62762);                            // Wild Hunt rank 2
@@ -1340,11 +1339,11 @@ void Guardian::UpdateAttackPowerAndDamage(bool ranged)
         }
     }
 
-    if(bonusAP > 0)
+    if (bonusAP > 0)
     {
         SetModifierValue(UNIT_MOD_ATTACK_POWER_POS, BASE_VALUE, val + bonusAP);
     }
-    else 
+    else
     {
         SetModifierValue(UNIT_MOD_ATTACK_POWER_POS, BASE_VALUE, val);
         SetModifierValue(UNIT_MOD_ATTACK_POWER_NEG, BASE_VALUE, -bonusAP);

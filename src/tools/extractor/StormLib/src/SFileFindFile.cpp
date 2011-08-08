@@ -35,7 +35,7 @@ struct TMPQSearch
 
 static bool IsValidSearchHandle(TMPQSearch * hs)
 {
-    if(hs == NULL)
+    if (hs == NULL)
         return false;
 
     return IsValidMpqHandle(hs->ha);
@@ -48,11 +48,11 @@ bool CheckWildCard(const char * szString, const char * szWildCard)
     int nMatchCount = 0;
 
     // When the mask is empty, it never matches
-    if(szWildCard == NULL || *szWildCard == 0)
+    if (szWildCard == NULL || *szWildCard == 0)
         return false;
 
     // If the wildcard contains just "*", then it always matches
-    if(szWildCard[0] == '*' && szWildCard[1] == 0)
+    if (szWildCard[0] == '*' && szWildCard[1] == 0)
         return true;
 
     // Do normal test
@@ -67,14 +67,14 @@ bool CheckWildCard(const char * szString, const char * szWildCard)
 
         // If there is '*', means zero or more chars. We have to 
         // find the sequence after '*'
-        if(*szWildCard == '*')
+        if (*szWildCard == '*')
         {
             // More stars is equal to one star
             while(*szWildCard == '*' || *szWildCard == '?')
                 szWildCard++;
 
             // If we found end of the wildcard, it's a match
-            if(*szWildCard == 0)
+            if (*szWildCard == 0)
                 return true;
 
             // Determine the length of the substring in szWildCard
@@ -91,15 +91,15 @@ bool CheckWildCard(const char * szString, const char * szWildCard)
                 // Calculate match count
                 while(nMatchCount < nSubStringLength)
                 {
-                    if(toupper(szString[nMatchCount]) != toupper(szWildCard[nMatchCount]))
+                    if (toupper(szString[nMatchCount]) != toupper(szWildCard[nMatchCount]))
                         break;
-                    if(szString[nMatchCount] == 0)
+                    if (szString[nMatchCount] == 0)
                         break;
                     nMatchCount++;
                 }
 
                 // If the match count has reached substring length, we found a match
-                if(nMatchCount == nSubStringLength)
+                if (nMatchCount == nSubStringLength)
                 {
                     szWildCard += nMatchCount;
                     szString += nMatchCount;
@@ -114,11 +114,11 @@ bool CheckWildCard(const char * szString, const char * szWildCard)
         else
         {
             // If we came to the end of the string, compare it to the wildcard
-            if(toupper(*szString) != toupper(*szWildCard))
+            if (toupper(*szString) != toupper(*szWildCard))
                 return false;
 
             // If we arrived to the end of the string, it's a match
-            if(*szString == 0)
+            if (*szString == 0)
                 return true;
 
             // Otherwise, continue in comparing
@@ -156,24 +156,24 @@ static int DoMPQSearch(TMPQSearch * hs, SFILE_FIND_DATA * lpFindFileData)
             hs->dwNextIndex++;
 
             // Does the block exist ?
-            if(pFileEntry->dwFlags & MPQ_FILE_EXISTS)
+            if (pFileEntry->dwFlags & MPQ_FILE_EXISTS)
             {
                 // Prepare the block index
                 dwBlockIndex = (DWORD)(pFileEntry - ha->pFileTable);
 
                 // Get the file name. If it's not known, we will create pseudo-name
                 szFileName = pFileEntry->szFileName;
-                if(szFileName == NULL)
+                if (szFileName == NULL)
                 {
                     HANDLE hFile;
 
                     // Open the file by index in order to force getting file name
-                    if(SFileOpenFileEx((HANDLE)hs->ha, (char *)(DWORD_PTR)dwBlockIndex, SFILE_OPEN_BY_INDEX, &hFile))
+                    if (SFileOpenFileEx((HANDLE)hs->ha, (char *)(DWORD_PTR)dwBlockIndex, SFILE_OPEN_BY_INDEX, &hFile))
                         SFileCloseFile(hFile);
 
                     // If the name was retrieved, use that one. Otherwise, just use generic pseudo-name
                     szFileName = pFileEntry->szFileName;
-                    if(szFileName == NULL)
+                    if (szFileName == NULL)
                     {
                         sprintf(szPseudoName, "File%08u.xxx", dwBlockIndex);
                         szFileName = szPseudoName;
@@ -182,18 +182,18 @@ static int DoMPQSearch(TMPQSearch * hs, SFILE_FIND_DATA * lpFindFileData)
 
                 // If we are already in the patch MPQ, we skip all files
                 // that don't have the appropriate patch prefix and are patch files
-                if(nPrefixLength)
+                if (nPrefixLength)
                 {
                     // We want to return patch files, because the calling
                     // application might want to update size
-//                  if(pFileEntry->dwFlags & MPQ_FILE_PATCH_FILE)
+//                  if (pFileEntry->dwFlags & MPQ_FILE_PATCH_FILE)
 //                      goto __SkipThisFile;
-                    if(_strnicmp(szFileName, ha->szPatchPrefix, nPrefixLength))
+                    if (_strnicmp(szFileName, ha->szPatchPrefix, nPrefixLength))
                         goto __SkipThisFile;
                 }
 
                 // Check the file name.
-                if(CheckWildCard(szFileName, hs->szSearchMask))
+                if (CheckWildCard(szFileName, hs->szSearchMask))
                 {
                     // Fill the found entry
                     lpFindFileData->dwHashIndex  = pFileEntry->dwHashIndex;
@@ -231,7 +231,7 @@ static int DoMPQSearch(TMPQSearch * hs, SFILE_FIND_DATA * lpFindFileData)
 
 static void FreeMPQSearch(TMPQSearch *& hs)
 {
-    if(hs != NULL)
+    if (hs != NULL)
     {
         FREEMEM(hs);
         hs = NULL;
@@ -249,27 +249,27 @@ HANDLE WINAPI SFileFindFirstFile(HANDLE hMpq, const char * szMask, SFILE_FIND_DA
     int nError = ERROR_SUCCESS;
 
     // Check for the valid parameters
-    if(!IsValidMpqHandle(ha))
+    if (!IsValidMpqHandle(ha))
         nError = ERROR_INVALID_HANDLE;
-    if(szMask == NULL || lpFindFileData == NULL)
+    if (szMask == NULL || lpFindFileData == NULL)
         nError = ERROR_INVALID_PARAMETER;
 
     // Include the listfile into the MPQ's internal listfile
     // Note that if the listfile name is NULL, do nothing because the
     // internal listfile is always included.
-    if(nError == ERROR_SUCCESS && szListFile != NULL && *szListFile != 0)
+    if (nError == ERROR_SUCCESS && szListFile != NULL && *szListFile != 0)
         nError = SFileAddListFile((HANDLE)ha, szListFile);
 
     // Allocate the structure for MPQ search
-    if(nError == ERROR_SUCCESS)
+    if (nError == ERROR_SUCCESS)
     {
         nSize = sizeof(TMPQSearch) + strlen(szMask) + 1;
-        if((hs = (TMPQSearch *)ALLOCMEM(char, nSize)) == NULL)
+        if ((hs = (TMPQSearch *)ALLOCMEM(char, nSize)) == NULL)
             nError = ERROR_NOT_ENOUGH_MEMORY;
     }
 
     // Perform the first search
-    if(nError == ERROR_SUCCESS)
+    if (nError == ERROR_SUCCESS)
     {
         memset(hs, 0, sizeof(TMPQSearch));
         strcpy(hs->szSearchMask, szMask);
@@ -278,7 +278,7 @@ HANDLE WINAPI SFileFindFirstFile(HANDLE hMpq, const char * szMask, SFILE_FIND_DA
     }
 
     // Cleanup
-    if(nError != ERROR_SUCCESS)
+    if (nError != ERROR_SUCCESS)
     {
         FreeMPQSearch(hs);
         SetLastError(nError);
@@ -294,15 +294,15 @@ bool WINAPI SFileFindNextFile(HANDLE hFind, SFILE_FIND_DATA * lpFindFileData)
     int nError = ERROR_SUCCESS;
 
     // Check the parameters
-    if(!IsValidSearchHandle(hs))
+    if (!IsValidSearchHandle(hs))
         nError = ERROR_INVALID_HANDLE;
-    if(lpFindFileData == NULL)
+    if (lpFindFileData == NULL)
         nError = ERROR_INVALID_PARAMETER;
 
-    if(nError == ERROR_SUCCESS)
+    if (nError == ERROR_SUCCESS)
         nError = DoMPQSearch(hs, lpFindFileData);
 
-    if(nError != ERROR_SUCCESS)
+    if (nError != ERROR_SUCCESS)
         SetLastError(nError);
     return (nError == ERROR_SUCCESS);
 }
@@ -312,7 +312,7 @@ bool WINAPI SFileFindClose(HANDLE hFind)
     TMPQSearch * hs = (TMPQSearch *)hFind;
 
     // Check the parameters
-    if(!IsValidSearchHandle(hs))
+    if (!IsValidSearchHandle(hs))
     {
         SetLastError(ERROR_INVALID_HANDLE);
         return false;

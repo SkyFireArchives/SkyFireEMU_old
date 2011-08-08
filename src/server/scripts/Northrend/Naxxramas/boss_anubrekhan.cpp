@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -25,8 +25,8 @@
 #include "ScriptPCH.h"
 #include "naxxramas.h"
 
-#define SAY_GREET           RAND(-1533000,-1533004,-1533005,-1533006,-1533007)
-#define SAY_AGGRO           RAND(-1533001,-1533002,-1533003)
+#define SAY_GREET           RAND(-1533000, -1533004, -1533005, -1533006, -1533007)
+#define SAY_AGGRO           RAND(-1533001, -1533002, -1533003)
 #define SAY_SLAY            -1533008
 
 #define MOB_CRYPT_GUARD     16573
@@ -35,27 +35,27 @@ const Position GuardSummonPos = {3333.72f, -3476.30f, 287.1f, 6.2801f};
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_IMPALE,
-    EVENT_LOCUST,
-    EVENT_SPAWN_GUARDIAN_NORMAL,
-    EVENT_BERSERK,
+    EVENT_NONE, 
+    EVENT_IMPALE, 
+    EVENT_LOCUST, 
+    EVENT_SPAWN_GUARDIAN_NORMAL, 
+    EVENT_BERSERK, 
 };
 
 enum Spells
 {
-    SPELL_IMPALE_10                 = 28783,
-    SPELL_IMPALE_25                 = 56090,
-    SPELL_LOCUST_SWARM_10           = 28785,
-    SPELL_LOCUST_SWARM_25           = 54021,
+    SPELL_IMPALE_10                 = 28783, 
+    SPELL_IMPALE_25                 = 56090, 
+    SPELL_LOCUST_SWARM_10           = 28785, 
+    SPELL_LOCUST_SWARM_25           = 54021, 
     SPELL_SUMMON_CORPSE_SCARABS_PLR = 29105,    // This spawns 5 corpse scarabs on top of player
     SPELL_SUMMON_CORPSE_SCARABS_MOB = 28864,   // This spawns 10 corpse scarabs on top of dead guards
-    SPELL_BERSERK                   = 27680,
+    SPELL_BERSERK                   = 27680, 
 };
 
 enum
 {
-    ACHIEV_TIMED_START_EVENT                      = 9891,
+    ACHIEV_TIMED_START_EVENT                      = 9891, 
 };
 
 class boss_anubrekhan : public CreatureScript
@@ -86,7 +86,7 @@ public:
             {
                 Position pos;
 
-                // respawn guard using home position,
+                // respawn guard using home position, 
                 // otherwise, after a wipe, they respawn where boss was at wipe moment.
                 pos = me->GetHomePosition();
                 pos.m_positionY -= 10.0f;
@@ -125,7 +125,7 @@ public:
             events.ScheduleEvent(EVENT_BERSERK, 600000);
 
             if (getDifficulty() == RAID_DIFFICULTY_10MAN_NORMAL)
-                events.ScheduleEvent(EVENT_SPAWN_GUARDIAN_NORMAL, urand(15000,20000));
+                events.ScheduleEvent(EVENT_SPAWN_GUARDIAN_NORMAL, urand(15000, 20000));
         }
 
         void MoveInLineOfSight(Unit *who)
@@ -164,14 +164,14 @@ public:
                     case EVENT_IMPALE:
                         //Cast Impale on a random target
                         //Do NOT cast it when we are afflicted by locust swarm
-                        if (!me->HasAura(RAID_MODE(SPELL_LOCUST_SWARM_10,SPELL_LOCUST_SWARM_25)))
+                        if (!me->HasAura(RAID_MODE(SPELL_LOCUST_SWARM_10, SPELL_LOCUST_SWARM_25)))
                             if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
-                                DoCast(pTarget, RAID_MODE(SPELL_IMPALE_10,SPELL_IMPALE_25));
-                        events.ScheduleEvent(EVENT_IMPALE, urand(10000,20000));
+                                DoCast(pTarget, RAID_MODE(SPELL_IMPALE_10, SPELL_IMPALE_25));
+                        events.ScheduleEvent(EVENT_IMPALE, urand(10000, 20000));
                         break;
                     case EVENT_LOCUST:
                         // TODO : Add Text
-                        DoCast(me, RAID_MODE(SPELL_LOCUST_SWARM_10,SPELL_LOCUST_SWARM_25));
+                        DoCast(me, RAID_MODE(SPELL_LOCUST_SWARM_10, SPELL_LOCUST_SWARM_25));
                         DoSummon(MOB_CRYPT_GUARD, GuardSummonPos, 0, TEMPSUMMON_CORPSE_DESPAWN);
                         events.ScheduleEvent(EVENT_LOCUST, 90000);
                         break;

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -29,50 +29,50 @@
 
 enum Spells
 {
-    SPELL_ASCEND                    = 64487,
-    SPELL_BERSERK                   = 47008,
-    SPELL_BIG_BANG                  = 64443,
-    H_SPELL_BIG_BANG                = 64584,
-    SPELL_COSMIC_SMASH              = 62301,
-    H_SPELL_COSMIC_SMASH            = 64598,
-    SPELL_PHASE_PUNCH               = 64412,
-    SPELL_QUANTUM_STRIKE            = 64395,
-    H_SPELL_QUANTUM_STRIKE          = 64592,
-    SPELL_BLACK_HOLE_EXPLOSION      = 64122,
-    SPELL_ARCANE_BARAGE             = 64599,
+    SPELL_ASCEND                    = 64487, 
+    SPELL_BERSERK                   = 47008, 
+    SPELL_BIG_BANG                  = 64443, 
+    H_SPELL_BIG_BANG                = 64584, 
+    SPELL_COSMIC_SMASH              = 62301, 
+    H_SPELL_COSMIC_SMASH            = 64598, 
+    SPELL_PHASE_PUNCH               = 64412, 
+    SPELL_QUANTUM_STRIKE            = 64395, 
+    H_SPELL_QUANTUM_STRIKE          = 64592, 
+    SPELL_BLACK_HOLE_EXPLOSION      = 64122, 
+    SPELL_ARCANE_BARAGE             = 64599, 
     H_SPELL_ARCANE_BARAGE           = 64607
 };
 
 enum Creatures
 {
-    CREATURE_COLLAPSING_STAR        = 32955,
-    CREATURE_BLACK_HOLE             = 32953,
-    CREATURE_LIVING_CONSTELLATION   = 33052,
+    CREATURE_COLLAPSING_STAR        = 32955, 
+    CREATURE_BLACK_HOLE             = 32953, 
+    CREATURE_LIVING_CONSTELLATION   = 33052, 
     CREATURE_DARK_MATTER            = 33089
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1603000,
-    SAY_SLAY_1                                  = -1603001,
-    SAY_SLAY_2                                  = -1603002,
-    SAY_ENGADED_FOR_FIRTS_TIME                  = -1603003,
-    SAY_PHASE_2                                 = -1603004,
-    SAY_SUMMON_COLLAPSING_STAR                  = -1603005,
-    SAY_DEATH_1                                 = -1603006,
-    SAY_DEATH_2                                 = -1603007,
-    SAY_DEATH_3                                 = -1603008,
-    SAY_DEATH_4                                 = -1603009,
-    SAY_DEATH_5                                 = -1603010,
-    SAY_BERSERK                                 = -1603011,
-    SAY_BIG_BANG_1                              = -1603012,
-    SAY_BIG_BANG_2                              = -1603013,
-    SAY_TIMER_1                                 = -1603014,
-    SAY_TIMER_2                                 = -1603015,
-    SAY_TIMER_3                                 = -1603016,
-    SAY_SUMMON_1                                = -1603017,
-    SAY_SUMMON_2                                = -1603018,
-    SAY_SUMMON_3                                = -1603019,
+    SAY_AGGRO                                   = -1603000, 
+    SAY_SLAY_1                                  = -1603001, 
+    SAY_SLAY_2                                  = -1603002, 
+    SAY_ENGADED_FOR_FIRTS_TIME                  = -1603003, 
+    SAY_PHASE_2                                 = -1603004, 
+    SAY_SUMMON_COLLAPSING_STAR                  = -1603005, 
+    SAY_DEATH_1                                 = -1603006, 
+    SAY_DEATH_2                                 = -1603007, 
+    SAY_DEATH_3                                 = -1603008, 
+    SAY_DEATH_4                                 = -1603009, 
+    SAY_DEATH_5                                 = -1603010, 
+    SAY_BERSERK                                 = -1603011, 
+    SAY_BIG_BANG_1                              = -1603012, 
+    SAY_BIG_BANG_2                              = -1603013, 
+    SAY_TIMER_1                                 = -1603014, 
+    SAY_TIMER_2                                 = -1603015, 
+    SAY_TIMER_3                                 = -1603016, 
+    SAY_SUMMON_1                                = -1603017, 
+    SAY_SUMMON_2                                = -1603018, 
+    SAY_SUMMON_3                                = -1603019, 
 };
 
 class boss_algalon : public CreatureScript
@@ -134,7 +134,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
         }
 
         void Reset()
@@ -194,8 +194,8 @@ public:
         void SummonCollapsingStar(Unit* target)
         {
             DoScriptText(SAY_SUMMON_COLLAPSING_STAR, me);
-            me->SummonCreature(CREATURE_COLLAPSING_STAR,target->GetPositionX()+15.0f,target->GetPositionY()+15.0f,target->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN, 100000);
-            me->SummonCreature(CREATURE_BLACK_HOLE,target->GetPositionX()+15.0f,target->GetPositionY()+15.0f,target->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN, 27000);
+            me->SummonCreature(CREATURE_COLLAPSING_STAR, target->GetPositionX()+15.0f, target->GetPositionY()+15.0f, target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 100000);
+            me->SummonCreature(CREATURE_BLACK_HOLE, target->GetPositionX()+15.0f, target->GetPositionY()+15.0f, target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 27000);
         }
 
         void UpdateAI(const uint32 diff)
@@ -212,7 +212,7 @@ public:
 
             if (HealthBelowPct(2))
             {
-                me->SummonGameObject(GAMEOBJECT_GIVE_OF_THE_OBSERVER, 1634.258667f, -295.101166f,417.321381f,0,0,0,0,0,0);
+                me->SummonGameObject(GAMEOBJECT_GIVE_OF_THE_OBSERVER, 1634.258667f, -295.101166f, 417.321381f, 0, 0, 0, 0, 0, 0);
 
                 // All of them. or random?
                 DoScriptText(SAY_DEATH_1, me);
@@ -266,36 +266,36 @@ public:
 
                 if (QuantumStrike_Timer <= diff)
                 {
-                    DoCast(me->getVictim(), RAID_MODE(SPELL_QUANTUM_STRIKE,H_SPELL_QUANTUM_STRIKE), true);
+                    DoCast(me->getVictim(), RAID_MODE(SPELL_QUANTUM_STRIKE, H_SPELL_QUANTUM_STRIKE), true);
 
                     QuantumStrike_Timer = urand(4000, 14000);
                 } else QuantumStrike_Timer -= diff;
 
                 if (BigBang_Timer <= diff)
                 {
-                    DoScriptText(RAND(SAY_BIG_BANG_1,SAY_BIG_BANG_2), me);
-                    DoCast(me->getVictim(), RAID_MODE(SPELL_BIG_BANG,H_SPELL_BIG_BANG), true);
+                    DoScriptText(RAND(SAY_BIG_BANG_1, SAY_BIG_BANG_2), me);
+                    DoCast(me->getVictim(), RAID_MODE(SPELL_BIG_BANG, H_SPELL_BIG_BANG), true);
 
                     BigBang_Timer = 90000;
                 } else BigBang_Timer -= diff;
 
                 if (Ascend_Timer <= diff)
                 {
-                    DoCast(me->getVictim(),SPELL_ASCEND, true);
+                    DoCast(me->getVictim(), SPELL_ASCEND, true);
 
                     Ascend_Timer = 480000;
                 } else Ascend_Timer -= diff;
 
                 if (PhasePunch_Timer <= diff)
                 {
-                    DoCast(me->getVictim(),SPELL_PHASE_PUNCH, true);
+                    DoCast(me->getVictim(), SPELL_PHASE_PUNCH, true);
 
                     PhasePunch_Timer = 8000;
                 } else PhasePunch_Timer -= diff;
 
                 if (CosmicSmash_Timer <= diff)
                 {
-                    DoCast(SelectUnit(SELECT_TARGET_RANDOM, 0), RAID_MODE(SPELL_COSMIC_SMASH,H_SPELL_COSMIC_SMASH), true);
+                    DoCast(SelectUnit(SELECT_TARGET_RANDOM, 0), RAID_MODE(SPELL_COSMIC_SMASH, H_SPELL_COSMIC_SMASH), true);
 
                     CosmicSmash_Timer = urand(30000, 60000);
                 } else CosmicSmash_Timer -= diff;
@@ -303,7 +303,7 @@ public:
                 if (Berserk_Timer <= diff)
                 {
                     DoScriptText(SAY_BERSERK, me);
-                    DoCast(me->getVictim(),SPELL_BERSERK, true);
+                    DoCast(me->getVictim(), SPELL_BERSERK, true);
 
                     Berserk_Timer = 360000;
                 } else Berserk_Timer -= diff;
@@ -321,7 +321,7 @@ public:
                     {
                         DoCast(me, SPELL_ASCEND);
                         DoScriptText(SAY_BERSERK, me);
-                        Ascend_Timer = urand(360000,365000);
+                        Ascend_Timer = urand(360000, 365000);
                         Enrage = false;
                     } else Ascend_Timer -= diff;
                 }

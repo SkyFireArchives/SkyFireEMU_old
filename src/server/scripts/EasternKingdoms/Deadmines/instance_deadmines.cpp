@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,9 +39,9 @@ enum Factions
 
 enum Sounds
 {
-    SOUND_CANNONFIRE                                     = 1400,
-    SOUND_DESTROYDOOR                                    = 3079,
-    SOUND_MR_SMITE_ALARM1                                = 5775,
+    SOUND_CANNONFIRE                                     = 1400, 
+    SOUND_DESTROYDOOR                                    = 3079, 
+    SOUND_MR_SMITE_ALARM1                                = 5775, 
     SOUND_MR_SMITE_ALARM2                                = 5777
 };
 
@@ -50,7 +50,7 @@ enum Sounds
 
 enum Misc
 {
-    DATA_CANNON_BLAST_TIMER                                = 3000,
+    DATA_CANNON_BLAST_TIMER                                = 3000, 
     DATA_PIRATES_DELAY_TIMER                               = 1000
 };
 
@@ -228,9 +228,9 @@ class instance_deadmines : public InstanceMapScript
             {
                 if (GameObject *pIronCladDoor = instance->GetGameObject(IronCladDoorGUID))
                 {
-                    Creature *DefiasPirate1 = pIronCladDoor->SummonCreature(657,pIronCladDoor->GetPositionX() - 2,pIronCladDoor->GetPositionY()-7,pIronCladDoor->GetPositionZ(), 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
-                    Creature *DefiasPirate2 = pIronCladDoor->SummonCreature(657,pIronCladDoor->GetPositionX() + 3,pIronCladDoor->GetPositionY()-6,pIronCladDoor->GetPositionZ(), 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
-                    Creature *DefiasCompanion = pIronCladDoor->SummonCreature(3450,pIronCladDoor->GetPositionX() + 2,pIronCladDoor->GetPositionY()-6,pIronCladDoor->GetPositionZ(), 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
+                    Creature *DefiasPirate1 = pIronCladDoor->SummonCreature(657, pIronCladDoor->GetPositionX() - 2, pIronCladDoor->GetPositionY()-7, pIronCladDoor->GetPositionZ(), 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
+                    Creature *DefiasPirate2 = pIronCladDoor->SummonCreature(657, pIronCladDoor->GetPositionX() + 3, pIronCladDoor->GetPositionY()-6, pIronCladDoor->GetPositionZ(), 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
+                    Creature *DefiasCompanion = pIronCladDoor->SummonCreature(3450, pIronCladDoor->GetPositionX() + 2, pIronCladDoor->GetPositionY()-6, pIronCladDoor->GetPositionZ(), 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
 
                     DefiasPirate1GUID = DefiasPirate1->GetGUID();
                     DefiasPirate2GUID = DefiasPirate2->GetGUID();
@@ -257,7 +257,7 @@ class instance_deadmines : public InstanceMapScript
             void MoveCreatureInside(Creature* pCreature)
             {
                 pCreature->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
-                pCreature->GetMotionMaster()->MovePoint(0, -102.7f,-655.9f, pCreature->GetPositionZ());
+                pCreature->GetMotionMaster()->MovePoint(0, -102.7f, -655.9f, pCreature->GetPositionZ());
             }
 
             void ShootCannon()
@@ -339,7 +339,7 @@ class instance_deadmines : public InstanceMapScript
                 WorldPacket data(4);
                 data.SetOpcode(SMSG_PLAY_SOUND);
                 data << uint32(sound);
-                unit->SendMessageToSet(&data,false);
+                unit->SendMessageToSet(&data, false);
             }
 
             void DoPlaySoundCreature(Unit* unit, uint32 sound)
@@ -347,7 +347,7 @@ class instance_deadmines : public InstanceMapScript
                 WorldPacket data(4);
                 data.SetOpcode(SMSG_PLAY_SOUND);
                 data << uint32(sound);
-                unit->SendMessageToSet(&data,false);
+                unit->SendMessageToSet(&data, false);
             }
         };
 

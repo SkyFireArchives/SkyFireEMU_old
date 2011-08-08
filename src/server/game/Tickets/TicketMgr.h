@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,21 +34,21 @@
 // from blizzard lua
 enum GMTicketSystemStatus
 {
-    GMTICKET_QUEUE_STATUS_DISABLED = 0,
-    GMTICKET_QUEUE_STATUS_ENABLED = 1,
+    GMTICKET_QUEUE_STATUS_DISABLED = 0, 
+    GMTICKET_QUEUE_STATUS_ENABLED = 1, 
 };
 
 enum GMTicketStatus
 {
-    GMTICKET_STATUS_HASTEXT                      = 0x06,
-    GMTICKET_STATUS_DEFAULT                      = 0x0A,
+    GMTICKET_STATUS_HASTEXT                      = 0x06, 
+    GMTICKET_STATUS_DEFAULT                      = 0x0A, 
 };
 
 enum GMTicketResponse
 {
-    GMTICKET_RESPONSE_FAILURE                     = 1,
-    GMTICKET_RESPONSE_SUCCESS                     = 2,
-    GMTICKET_RESPONSE_TICKET_DELETED              = 9,
+    GMTICKET_RESPONSE_FAILURE                     = 1, 
+    GMTICKET_RESPONSE_SUCCESS                     = 2, 
+    GMTICKET_RESPONSE_TICKET_DELETED              = 9, 
 };
 
 // from Blizzard LUA:
@@ -58,10 +58,10 @@ enum GMTicketResponse
 // 3 is a custom value and should never actually be sent
 enum GMTicketEscalationStatus
 {
-    TICKET_UNASSIGNED                             = 0,
-    TICKET_ASSIGNED                               = 1,
-    TICKET_IN_ESCALATION_QUEUE                    = 2,
-    TICKET_ESCALATED_ASSIGNED                     = 3,
+    TICKET_UNASSIGNED                             = 0, 
+    TICKET_ASSIGNED                               = 1, 
+    TICKET_IN_ESCALATION_QUEUE                    = 2, 
+    TICKET_ESCALATED_ASSIGNED                     = 3, 
 };
 
 // from blizzard lua
@@ -73,11 +73,11 @@ enum GMTicketOpenedByGMStatus
 
 enum LagReportType
 {
-    LAG_REPORT_TYPE_LOOT = 1,
-    LAG_REPORT_TYPE_AUCTION_HOUSE = 2,
-    LAG_REPORT_TYPE_MAIL = 3,
-    LAG_REPORT_TYPE_CHAT = 4,
-    LAG_REPORT_TYPE_MOVEMENT = 5,
+    LAG_REPORT_TYPE_LOOT = 1, 
+    LAG_REPORT_TYPE_AUCTION_HOUSE = 2, 
+    LAG_REPORT_TYPE_MAIL = 3, 
+    LAG_REPORT_TYPE_CHAT = 4, 
+    LAG_REPORT_TYPE_MOVEMENT = 5, 
     LAG_REPORT_TYPE_SPELL = 6
 };
 

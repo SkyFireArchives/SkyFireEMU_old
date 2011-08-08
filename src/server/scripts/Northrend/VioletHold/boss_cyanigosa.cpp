@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,28 +27,28 @@
 
 enum Spells
 {
-    SPELL_ARCANE_VACUUM                         = 58694,
-    SPELL_BLIZZARD                              = 58693,
-    H_SPELL_BLIZZARD                            = 59369,
-    SPELL_MANA_DESTRUCTION                      = 59374,
-    SPELL_TAIL_SWEEP                            = 58690,
-    H_SPELL_TAIL_SWEEP                          = 59283,
-    SPELL_UNCONTROLLABLE_ENERGY                 = 58688,
-    H_SPELL_UNCONTROLLABLE_ENERGY               = 59281,
+    SPELL_ARCANE_VACUUM                         = 58694, 
+    SPELL_BLIZZARD                              = 58693, 
+    H_SPELL_BLIZZARD                            = 59369, 
+    SPELL_MANA_DESTRUCTION                      = 59374, 
+    SPELL_TAIL_SWEEP                            = 58690, 
+    H_SPELL_TAIL_SWEEP                          = 59283, 
+    SPELL_UNCONTROLLABLE_ENERGY                 = 58688, 
+    H_SPELL_UNCONTROLLABLE_ENERGY               = 59281, 
     SPELL_TRANSFORM                             = 58668
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1608000,
-    SAY_SLAY_1                                  = -1608001,
-    SAY_SLAY_2                                  = -1608002,
-    SAY_SLAY_3                                  = -1608003,
-    SAY_DEATH                                   = -1608004,
-    SAY_SPAWN                                   = -1608005,
-    SAY_DISRUPTION                              = -1608006,
-    SAY_BREATH_ATTACK                           = -1608007,
-    SAY_SPECIAL_ATTACK_1                        = -1608008,
+    SAY_AGGRO                                   = -1608000, 
+    SAY_SLAY_1                                  = -1608001, 
+    SAY_SLAY_2                                  = -1608002, 
+    SAY_SLAY_3                                  = -1608003, 
+    SAY_DEATH                                   = -1608004, 
+    SAY_SPAWN                                   = -1608005, 
+    SAY_DISRUPTION                              = -1608006, 
+    SAY_BREATH_ATTACK                           = -1608007, 
+    SAY_SPECIAL_ATTACK_1                        = -1608008, 
     SAY_SPECIAL_ATTACK_2                        = -1608009
 };
 
@@ -162,7 +162,7 @@ public:
         {
             if (victim == me)
                 return;
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
     };
 

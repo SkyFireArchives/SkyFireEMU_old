@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -107,7 +107,7 @@ public:
         void SpellHitTarget(Unit *pTarget, const SpellEntry *spell)
         {
             if (pTarget && pTarget->isAlive() && spell && spell->Id == uint32(SPELL_SONIC_BOOM_EFFECT))
-                me->DealDamage(pTarget,(pTarget->GetHealth()*90)/100,NULL,SPELL_DIRECT_DAMAGE,SPELL_SCHOOL_MASK_NATURE,spell);
+                me->DealDamage(pTarget, (pTarget->GetHealth()*90)/100, NULL, SPELL_DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NATURE, spell);
         }
 
         void UpdateAI(const uint32 diff)
@@ -137,7 +137,7 @@ public:
             // Murmur's Touch
             if (MurmursTouch_Timer <= diff)
             {
-                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM,0,80,true))
+                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 80, true))
                     DoCast(pTarget, SPELL_MURMURS_TOUCH);
                 MurmursTouch_Timer = 25000 + rand()%10000;
             } else MurmursTouch_Timer -= diff;
@@ -155,7 +155,7 @@ public:
             // Magnetic Pull
             if (MagneticPull_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     if (pTarget->GetTypeId() == TYPEID_PLAYER && pTarget->isAlive())
                     {
                         DoCast(pTarget, SPELL_MAGNETIC_PULL);
@@ -172,7 +172,7 @@ public:
                 {
                     std::list<HostileReference*>& m_threatlist = me->getThreatManager().getThreatList();
                     for (std::list<HostileReference*>::const_iterator i = m_threatlist.begin(); i != m_threatlist.end(); ++i)
-                        if (Unit *pTarget = Unit::GetUnit((*me),(*i)->getUnitGuid()))
+                        if (Unit *pTarget = Unit::GetUnit((*me), (*i)->getUnitGuid()))
                             if (pTarget->isAlive() && !me->IsWithinDist(pTarget, 35, false))
                                 DoCast(pTarget, SPELL_THUNDERING_STORM, true);
                     ThunderingStorm_Timer = 15000;
@@ -181,7 +181,7 @@ public:
                 // Sonic Shock
                 if (SonicShock_Timer <= diff)
                 {
-                    if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM,0,20,false))
+                    if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 20, false))
                         if (pTarget->isAlive())
                             DoCast(pTarget, SPELL_SONIC_SHOCK);
                     SonicShock_Timer = 10000+rand()%10000;
@@ -195,7 +195,7 @@ public:
             {
                 std::list<HostileReference*>& m_threatlist = me->getThreatManager().getThreatList();
                 for (std::list<HostileReference*>::const_iterator i = m_threatlist.begin(); i != m_threatlist.end(); ++i)
-                    if (Unit *pTarget = Unit::GetUnit((*me),(*i)->getUnitGuid()))
+                    if (Unit *pTarget = Unit::GetUnit((*me), (*i)->getUnitGuid()))
                         if (pTarget->isAlive() && me->IsWithinMeleeRange(pTarget))
                         {
                             me->TauntApply(pTarget);

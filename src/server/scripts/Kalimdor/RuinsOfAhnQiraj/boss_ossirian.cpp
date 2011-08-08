@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,14 +34,14 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_SURPREME2   = -1509019,
-    SAY_SURPREME3   = -1509020,
-    SAY_RAND_INTRO1 = -1509021,
-    SAY_RAND_INTRO2 = -1509022,
-    SAY_RAND_INTRO3 = -1509023,
+    SAY_SURPREME2   = -1509019, 
+    SAY_SURPREME3   = -1509020, 
+    SAY_RAND_INTRO1 = -1509021, 
+    SAY_RAND_INTRO2 = -1509022, 
+    SAY_RAND_INTRO3 = -1509023, 
     SAY_RAND_INTRO4 = -1509024,                            //possibly old?
-    SAY_AGGRO       = -1509025,
-    SAY_SLAY        = -1509026,
+    SAY_AGGRO       = -1509025, 
+    SAY_SLAY        = -1509026, 
     SAY_DEATH       = -1509027
 };
 

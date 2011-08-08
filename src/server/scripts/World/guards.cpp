@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -40,15 +40,15 @@ EndContentData */
 
 enum GuardGeneric
 {
-    GENERIC_CREATURE_COOLDOWN       = 5000,
+    GENERIC_CREATURE_COOLDOWN       = 5000, 
     
-    SAY_GUARD_SIL_AGGRO1            = -1070001,
-    SAY_GUARD_SIL_AGGRO2            = -1070002,
-    SAY_GUARD_SIL_AGGRO3            = -1070003,
+    SAY_GUARD_SIL_AGGRO1            = -1070001, 
+    SAY_GUARD_SIL_AGGRO2            = -1070002, 
+    SAY_GUARD_SIL_AGGRO3            = -1070003, 
 
-    NPC_CENARION_HOLD_INFANTRY      = 15184,
-    NPC_STORMWIND_CITY_GUARD        = 68,
-    NPC_STORMWIND_CITY_PATROLLER    = 1976,
+    NPC_CENARION_HOLD_INFANTRY      = 15184, 
+    NPC_STORMWIND_CITY_GUARD        = 68, 
+    NPC_STORMWIND_CITY_PATROLLER    = 1976, 
     NPC_ORGRIMMAR_GRUNT             = 3296
 };
 
@@ -70,7 +70,7 @@ public:
         void EnterCombat(Unit* who)
         {
             if (me->GetEntry() == NPC_CENARION_HOLD_INFANTRY)
-                DoScriptText(RAND(SAY_GUARD_SIL_AGGRO1,SAY_GUARD_SIL_AGGRO2,SAY_GUARD_SIL_AGGRO3), me, who);
+                DoScriptText(RAND(SAY_GUARD_SIL_AGGRO1, SAY_GUARD_SIL_AGGRO2, SAY_GUARD_SIL_AGGRO3), me, who);
             if (SpellEntry const* spell = me->reachWithSpellAttack(who))
                 DoCast(who, spell->Id);
         }
@@ -130,7 +130,7 @@ public:
                         info = SelectSpell(me->getVictim(), 0, 0, SELECT_TARGET_ANY_ENEMY, 0, 0, 0, 0, SELECT_EFFECT_DONTCARE);
 
                     //20% chance to replace our white hit with a spell
-                    if (info && urand(0,99) < 20 && !globalCooldown)
+                    if (info && urand(0, 99) < 20 && !globalCooldown)
                     {
                         //Cast the spell
                         if (healing)
@@ -177,9 +177,9 @@ public:
 
                         //Cast spell
                         if (healing) 
-                            DoCast(me,info->Id);
+                            DoCast(me, info->Id);
                         else 
-                            DoCast(me->getVictim(),info->Id);
+                            DoCast(me->getVictim(), info->Id);
 
                         //Set our global cooldown
                         globalCooldown = GENERIC_CREATURE_COOLDOWN;
@@ -242,9 +242,9 @@ public:
 
 enum GuardShattrath
 {
-    SPELL_BANISHED_SHATTRATH_A = 36642,
-    SPELL_BANISHED_SHATTRATH_S = 36671,
-    SPELL_BANISH_TELEPORT      = 36643,
+    SPELL_BANISHED_SHATTRATH_A = 36642, 
+    SPELL_BANISHED_SHATTRATH_S = 36671, 
+    SPELL_BANISH_TELEPORT      = 36643, 
     SPELL_EXILE                = 39533
 };
 
@@ -274,10 +274,10 @@ public:
             {
                 if (exileTimer <= diff)
                 {
-                    if (Unit* temp = Unit::GetUnit(*me,playerGUID))
+                    if (Unit* temp = Unit::GetUnit(*me, playerGUID))
                     {
-                        temp->CastSpell(temp,SPELL_EXILE,true);
-                        temp->CastSpell(temp,SPELL_BANISH_TELEPORT,true);
+                        temp->CastSpell(temp, SPELL_EXILE, true);
+                        temp->CastSpell(temp, SPELL_BANISH_TELEPORT, true);
                     }
                     playerGUID = 0;
                     exileTimer = 8500;
@@ -339,10 +339,10 @@ public:
             {
                 if (exileTimer <= diff)
                 {
-                    if (Unit* temp = Unit::GetUnit(*me,playerGUID))
+                    if (Unit* temp = Unit::GetUnit(*me, playerGUID))
                     {
-                        temp->CastSpell(temp,SPELL_EXILE,true);
-                        temp->CastSpell(temp,SPELL_BANISH_TELEPORT,true);
+                        temp->CastSpell(temp, SPELL_EXILE, true);
+                        temp->CastSpell(temp, SPELL_BANISH_TELEPORT, true);
                     }
                     playerGUID = 0;
                     exileTimer = 8500;

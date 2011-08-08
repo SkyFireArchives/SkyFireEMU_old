@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -42,18 +42,18 @@ EndScriptData */
 
 const Position LorgusPosition[4] =
 {
-    { -458.500610f, -38.343079f, -33.474445f, 0.0f },
-    { -469.423615f, -88.400513f, -39.265102f, 0.0f },
-    { -622.354980f, -10.350100f, -22.777000f, 0.0f },
+    { -458.500610f, -38.343079f, -33.474445f, 0.0f }, 
+    { -469.423615f, -88.400513f, -39.265102f, 0.0f }, 
+    { -622.354980f, -10.350100f, -22.777000f, 0.0f }, 
     { -759.640564f,  16.658913f, -29.159529f, 0.0f }
 };
 
 const Position SpawnsLocation[] =
 {
-    {-775.431f, -153.853f, -25.871f, 3.207f},
-    {-775.404f, -174.132f, -25.871f, 3.185f},
-    {-862.430f, -154.937f, -25.871f, 0.060f},
-    {-862.193f, -174.251f, -25.871f, 6.182f},
+    {-775.431f, -153.853f, -25.871f, 3.207f}, 
+    {-775.404f, -174.132f, -25.871f, 3.185f}, 
+    {-862.430f, -154.937f, -25.871f, 0.060f}, 
+    {-862.193f, -174.251f, -25.871f, 6.182f}, 
     {-863.895f, -458.899f, -33.891f, 5.637f}
 };
 
@@ -108,7 +108,7 @@ public:
                     m_uiTwilightLordKelrisGUID = pCreature->GetGUID();
                     break;
                 case NPC_LORGUS_JETT:
-                    pCreature->SetHomePosition(LorgusPosition[urand(0,3)]);
+                    pCreature->SetHomePosition(LorgusPosition[urand(0, 3)]);
                     break;
             }
         }
@@ -141,7 +141,7 @@ public:
                     break;
                 case GO_AKU_MAI_DOOR:
                     if (m_auiEncounter[2] == DONE)
-                        HandleGameObject(NULL,true,pGo);
+                        HandleGameObject(NULL, true, pGo);
                     m_uiMainDoorGUID = pGo->GetGUID();
                     break;
             }
@@ -163,7 +163,7 @@ public:
                         if (GameObject *pGo = instance->GetGameObject(m_uiAltarOfTheDeepsGUID))
                         {
                             pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
-                            pGo->SummonCreature(NPC_MORRIDUNE,SpawnsLocation[4], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 300000);
+                            pGo->SummonCreature(NPC_MORRIDUNE, SpawnsLocation[4], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 300000);
                         }
                     break;
                 case DATA_FIRE:
@@ -212,7 +212,7 @@ public:
                 case DATA_EVENT:
                     uiDeathTimes = uiData;
                     if (uiDeathTimes == 18)
-                        HandleGameObject(m_uiMainDoorGUID,true);
+                        HandleGameObject(m_uiMainDoorGUID, true);
                     break;
             }
         }

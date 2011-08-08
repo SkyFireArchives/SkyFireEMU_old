@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,16 +27,16 @@
 
 enum CannonState
 {
-    CANNON_NOT_USED,
-    CANNON_GUNPOWDER_USED,
-    CANNON_BLAST_INITIATED,
-    PIRATES_ATTACK,
+    CANNON_NOT_USED, 
+    CANNON_GUNPOWDER_USED, 
+    CANNON_BLAST_INITIATED, 
+    PIRATES_ATTACK, 
     EVENT_DONE
 };
 
 enum Data
 {
-    EVENT_STATE,
+    EVENT_STATE, 
     EVENT_RHAHKZOR
 };
 
@@ -47,10 +47,10 @@ enum Data64
 
 enum GameObjects
 {
-    GO_FACTORY_DOOR                                        = 13965,
-    GO_IRONCLAD_DOOR                                       = 16397,
-    GO_DEFIAS_CANNON                                       = 16398,
-    GO_DOOR_LEVER                                          = 101833,
+    GO_FACTORY_DOOR                                        = 13965, 
+    GO_IRONCLAD_DOOR                                       = 16397, 
+    GO_DEFIAS_CANNON                                       = 16398, 
+    GO_DOOR_LEVER                                          = 101833, 
     GO_MR_SMITE_CHEST                                      = 144111
 };
 #endif

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,46 +28,46 @@
 enum Spells
 {
     //skeletal spells (phase 1)
-    SPELL_CURSE_OF_LIFE                           = 49527,
-    H_SPELL_CURSE_OF_LIFE                         = 59972,
-    SPELL_RAIN_OF_FIRE                            = 49518,
-    H_SPELL_RAIN_OF_FIRE                          = 59971,
-    SPELL_SHADOW_VOLLEY                           = 49528,
-    H_SPELL_SHADOW_VOLLEY                         = 59973,
+    SPELL_CURSE_OF_LIFE                           = 49527, 
+    H_SPELL_CURSE_OF_LIFE                         = 59972, 
+    SPELL_RAIN_OF_FIRE                            = 49518, 
+    H_SPELL_RAIN_OF_FIRE                          = 59971, 
+    SPELL_SHADOW_VOLLEY                           = 49528, 
+    H_SPELL_SHADOW_VOLLEY                         = 59973, 
     SPELL_DECAY_FLESH                             = 49356, //casted at end of phase 1, starts phase 2
     //flesh spells (phase 2)
-    SPELL_GIFT_OF_THARON_JA                       = 52509,
-    SPELL_EYE_BEAM                                = 49544,
-    H_SPELL_EYE_BEAM                              = 59965,
-    SPELL_LIGHTNING_BREATH                        = 49537,
-    H_SPELL_LIGHTNING_BREATH                      = 59963,
-    SPELL_POISON_CLOUD                            = 49548,
-    H_SPELL_POISON_CLOUD                          = 59969,
+    SPELL_GIFT_OF_THARON_JA                       = 52509, 
+    SPELL_EYE_BEAM                                = 49544, 
+    H_SPELL_EYE_BEAM                              = 59965, 
+    SPELL_LIGHTNING_BREATH                        = 49537, 
+    H_SPELL_LIGHTNING_BREATH                      = 59963, 
+    SPELL_POISON_CLOUD                            = 49548, 
+    H_SPELL_POISON_CLOUD                          = 59969, 
     SPELL_RETURN_FLESH                            = 53463, //Channeled spell ending phase two and returning to phase 1. This ability will stun the party for 6 seconds.
-    SPELL_ACHIEVEMENT_CHECK                       = 61863,
+    SPELL_ACHIEVEMENT_CHECK                       = 61863, 
 };
 
 enum Yells
 {
-    SAY_AGGRO                                     = -1600011,
-    SAY_KILL_1                                    = -1600012,
-    SAY_KILL_2                                    = -1600013,
-    SAY_FLESH_1                                   = -1600014,
-    SAY_FLESH_2                                   = -1600015,
-    SAY_SKELETON_1                                = -1600016,
-    SAY_SKELETON_2                                = -1600017,
+    SAY_AGGRO                                     = -1600011, 
+    SAY_KILL_1                                    = -1600012, 
+    SAY_KILL_2                                    = -1600013, 
+    SAY_FLESH_1                                   = -1600014, 
+    SAY_FLESH_2                                   = -1600015, 
+    SAY_SKELETON_1                                = -1600016, 
+    SAY_SKELETON_2                                = -1600017, 
     SAY_DEATH                                     = -1600018
 };
 enum Models
 {
-    MODEL_FLESH                                   = 27073,
+    MODEL_FLESH                                   = 27073, 
     MODEL_SKELETON                                = 27511
 };
 enum CombatPhase
 {
-    SKELETAL,
-    GOING_FLESH,
-    FLESH,
+    SKELETAL, 
+    GOING_FLESH, 
+    FLESH, 
     GOING_SKELETAL
 };
 
@@ -101,8 +101,8 @@ public:
         {
             uiPhaseTimer = 20*IN_MILLISECONDS;
             uiCurseOfLifeTimer = 1*IN_MILLISECONDS;
-            uiRainOfFireTimer = urand(14*IN_MILLISECONDS,18*IN_MILLISECONDS);
-            uiShadowVolleyTimer = urand(8*IN_MILLISECONDS,10*IN_MILLISECONDS);
+            uiRainOfFireTimer = urand(14*IN_MILLISECONDS, 18*IN_MILLISECONDS);
+            uiShadowVolleyTimer = urand(8*IN_MILLISECONDS, 10*IN_MILLISECONDS);
             Phase = SKELETAL;
             me->SetDisplayId(me->GetNativeDisplayId());
             if (pInstance)
@@ -130,19 +130,19 @@ public:
                     {
                         if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                             DoCast(pTarget, SPELL_CURSE_OF_LIFE);
-                        uiCurseOfLifeTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
+                        uiCurseOfLifeTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
                     } else uiCurseOfLifeTimer -= diff;
 
                     if (uiShadowVolleyTimer < diff)
                     {
                         DoCastVictim(SPELL_SHADOW_VOLLEY);
-                        uiShadowVolleyTimer = urand(8*IN_MILLISECONDS,10*IN_MILLISECONDS);
+                        uiShadowVolleyTimer = urand(8*IN_MILLISECONDS, 10*IN_MILLISECONDS);
                     } else uiShadowVolleyTimer -= diff;
 
                     if (uiRainOfFireTimer < diff)
                     {
                         DoCastAOE(SPELL_RAIN_OF_FIRE);
-                        uiRainOfFireTimer = urand(14*IN_MILLISECONDS,18*IN_MILLISECONDS);
+                        uiRainOfFireTimer = urand(14*IN_MILLISECONDS, 18*IN_MILLISECONDS);
                     } else uiRainOfFireTimer -= diff;
 
                     if (uiPhaseTimer < diff)
@@ -157,7 +157,7 @@ public:
                 case GOING_FLESH:
                     if (uiPhaseTimer < diff)
                     {
-                        DoScriptText(RAND(SAY_FLESH_1,SAY_FLESH_2),me);
+                        DoScriptText(RAND(SAY_FLESH_1, SAY_FLESH_2), me);
                         me->SetDisplayId(MODEL_FLESH);
 
                         std::list<Unit *> playerList;
@@ -165,13 +165,13 @@ public:
                         for (std::list<Unit*>::const_iterator itr = playerList.begin(); itr != playerList.end(); ++itr)
                         {
                             Unit *pTemp = (*itr);
-                            me->AddAura(SPELL_GIFT_OF_THARON_JA,pTemp);
+                            me->AddAura(SPELL_GIFT_OF_THARON_JA, pTemp);
                             pTemp->SetDisplayId(MODEL_SKELETON);
                         }
                         uiPhaseTimer = 20*IN_MILLISECONDS;
-                        uiLightningBreathTimer = urand(3*IN_MILLISECONDS,4*IN_MILLISECONDS);
-                        uiEyeBeamTimer = urand(4*IN_MILLISECONDS,8*IN_MILLISECONDS);
-                        uiPoisonCloudTimer = urand(6*IN_MILLISECONDS,7*IN_MILLISECONDS);
+                        uiLightningBreathTimer = urand(3*IN_MILLISECONDS, 4*IN_MILLISECONDS);
+                        uiEyeBeamTimer = urand(4*IN_MILLISECONDS, 8*IN_MILLISECONDS);
+                        uiPoisonCloudTimer = urand(6*IN_MILLISECONDS, 7*IN_MILLISECONDS);
                         Phase = FLESH;
                     } else uiPhaseTimer -= diff;
                     break;
@@ -180,20 +180,20 @@ public:
                     {
                         if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                             DoCast(pTarget, SPELL_LIGHTNING_BREATH);
-                        uiLightningBreathTimer = urand(6*IN_MILLISECONDS,7*IN_MILLISECONDS);
+                        uiLightningBreathTimer = urand(6*IN_MILLISECONDS, 7*IN_MILLISECONDS);
                     } else uiLightningBreathTimer -= diff;
 
                     if (uiEyeBeamTimer < diff)
                     {
                         if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                             DoCast(pTarget, SPELL_EYE_BEAM);
-                        uiEyeBeamTimer = urand(4*IN_MILLISECONDS,6*IN_MILLISECONDS);
+                        uiEyeBeamTimer = urand(4*IN_MILLISECONDS, 6*IN_MILLISECONDS);
                     } else uiEyeBeamTimer -= diff;
 
                     if (uiPoisonCloudTimer < diff)
                     {
                         DoCastAOE(SPELL_POISON_CLOUD);
-                        uiPoisonCloudTimer = urand(10*IN_MILLISECONDS,12*IN_MILLISECONDS);
+                        uiPoisonCloudTimer = urand(10*IN_MILLISECONDS, 12*IN_MILLISECONDS);
                     } else uiPoisonCloudTimer -= diff;
 
                     if (uiPhaseTimer < diff)
@@ -207,13 +207,13 @@ public:
                 case GOING_SKELETAL:
                     if (uiPhaseTimer < diff)
                     {
-                        DoScriptText(RAND(SAY_SKELETON_1,SAY_SKELETON_2), me);
+                        DoScriptText(RAND(SAY_SKELETON_1, SAY_SKELETON_2), me);
                         me->DeMorph();
                         Phase = SKELETAL;
                         uiPhaseTimer = 20*IN_MILLISECONDS;
                         uiCurseOfLifeTimer = 1*IN_MILLISECONDS;
-                        uiRainOfFireTimer = urand(14*IN_MILLISECONDS,18*IN_MILLISECONDS);
-                        uiShadowVolleyTimer = urand(8*IN_MILLISECONDS,10*IN_MILLISECONDS);
+                        uiRainOfFireTimer = urand(14*IN_MILLISECONDS, 18*IN_MILLISECONDS);
+                        uiShadowVolleyTimer = urand(8*IN_MILLISECONDS, 10*IN_MILLISECONDS);
 
                         std::list<Unit *> playerList;
                         SelectTargetList(playerList, 5, SELECT_TARGET_TOPAGGRO, 0, true);
@@ -231,12 +231,12 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL_1,SAY_KILL_2),me);
+            DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
         }
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH,me);
+            DoScriptText(SAY_DEATH, me);
 
             if (pInstance)
             {

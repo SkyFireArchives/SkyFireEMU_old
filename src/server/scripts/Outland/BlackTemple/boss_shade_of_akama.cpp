@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -49,24 +49,24 @@ struct Location
 /* Not used
 static Location ChannelerLocations[]=
 {
-    {463.161285f, 401.219757f, 3.141592f, 0.0f},
-    {457.377625f, 391.227661f, 2.106461f, 0.0f},
-    {446.012421f, 391.227661f, 1.071904f, 0.0f},
-    {439.533783f, 401.219757f, 0.000000f, 0.0f},
-    {446.012421f, 411.211853f, 5.210546f, 0.0f},
+    {463.161285f, 401.219757f, 3.141592f, 0.0f}, 
+    {457.377625f, 391.227661f, 2.106461f, 0.0f}, 
+    {446.012421f, 391.227661f, 1.071904f, 0.0f}, 
+    {439.533783f, 401.219757f, 0.000000f, 0.0f}, 
+    {446.012421f, 411.211853f, 5.210546f, 0.0f}, 
     {457.377625f, 411.211853f, 4.177494f, 0.0f}
 };
 */
 
 static Location SpawnLocations[]=
 {
-    {498.652740f, 461.728119f, 0.0f, 0.0f},
+    {498.652740f, 461.728119f, 0.0f, 0.0f}, 
     {498.505003f, 339.619324f, 0.0f, 0.0f}
 };
 
 static Location AkamaWP[]=
 {
-    {482.352448f, 401.162720f, 0.0f, 112.783928f},
+    {482.352448f, 401.162720f, 0.0f, 112.783928f}, 
     {469.597443f, 402.264404f, 0.0f, 118.537910f}
 };
 
@@ -80,10 +80,10 @@ static Location BrokenCoords[]=
 
 static Location BrokenWP[]=
 {
-    {492.491638f, 400.744690f, 3.122336f, 112.783737f},
-    {494.335724f, 382.221771f, 2.676230f, 112.783737f},
-    {489.555939f, 373.507202f, 2.416263f, 112.783737f},
-    {491.136353f, 427.868774f, 3.519748f, 112.783737f},
+    {492.491638f, 400.744690f, 3.122336f, 112.783737f}, 
+    {494.335724f, 382.221771f, 2.676230f, 112.783737f}, 
+    {489.555939f, 373.507202f, 2.416263f, 112.783737f}, 
+    {491.136353f, 427.868774f, 3.519748f, 112.783737f}, 
 };
 
 // Locations
@@ -179,7 +179,7 @@ public:
                 Creature* Shade = Unit::GetCreature((*me), ShadeGUID);
                 if (Shade && Shade->isAlive() && me->isAlive())
                 {
-                    if (me->IsWithinDist(Shade, 20,false))
+                    if (me->IsWithinDist(Shade, 20, false))
                     {
                         me->GetMotionMaster()->Clear(false);
                         me->GetMotionMaster()->MoveIdle();
@@ -214,7 +214,7 @@ public:
             AkamaGUID = pInstance ? pInstance->GetData64(DATA_AKAMA_SHADE) : 0;
             me->setActive(true);//if view distance is too low
             me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
-            me->ApplySpellImmune(0, IMMUNITY_EFFECT,SPELL_EFFECT_ATTACK_ME, true);
+            me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_ATTACK_ME, true);
         }
 
         InstanceScript* pInstance;
@@ -387,7 +387,7 @@ public:
         void FindChannelers()
         {
             std::list<Creature*> ChannelerList;
-            me->GetCreatureListWithEntryInGrid(ChannelerList,CREATURE_CHANNELER,50.0f);
+            me->GetCreatureListWithEntryInGrid(ChannelerList, CREATURE_CHANNELER, 50.0f);
 
             if (!ChannelerList.empty())
             {
@@ -443,7 +443,7 @@ public:
                             if (Creature* Akama = Unit::GetCreature(*me, AkamaGUID))
                             {
                                 float x, y, z;
-                                Akama->GetPosition(x,y,z);
+                                Akama->GetPosition(x, y, z);
                                 // They move towards AKama
                                 Defender->GetMotionMaster()->MovePoint(0, x, y, z);
                                 Defender->AI()->AttackStart(Akama);

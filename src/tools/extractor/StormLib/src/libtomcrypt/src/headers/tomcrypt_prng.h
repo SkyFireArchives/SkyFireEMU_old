@@ -21,11 +21,11 @@ struct fortuna_prng {
 
     symmetric_key skey;
 
-    unsigned char K[32],      /* the current key */
+    unsigned char K[32],     /* the current key */
                   IV[16];     /* IV for CTR mode */
     
-    unsigned long pool_idx,   /* current pool we will add to */
-                  pool0_len,  /* length of 0'th pool */
+    unsigned long pool_idx,  /* current pool we will add to */
+                  pool0_len, /* length of 0'th pool */
                   wd;            
 
     ulong64       reset_cnt;  /* number of times we have reset */
@@ -35,13 +35,13 @@ struct fortuna_prng {
 
 #ifdef LTC_SOBER128
 struct sober128_prng {
-    ulong32      R[17],          /* Working storage for the shift register */
-                 initR[17],      /* saved register contents */ 
-                 konst,          /* key dependent constant */
+    ulong32      R[17],         /* Working storage for the shift register */
+                 initR[17],     /* saved register contents */ 
+                 konst,         /* key dependent constant */
                  sbuf;           /* partial word encryption buffer */
 
-    int          nbuf,           /* number of part-word stream bits buffered */
-                 flag,           /* first add_entropy call or not? */
+    int          nbuf,          /* number of part-word stream bits buffered */
+                 flag,          /* first add_entropy call or not? */
                  set;            /* did we call add_entropy to set key? */
     
 };

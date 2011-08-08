@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -49,13 +49,13 @@ EndContentData */
 
 enum eArete
 {
-    GOSSIP_TEXTID_ARETE1        = 13525,
-    GOSSIP_TEXTID_ARETE2        = 13526,
-    GOSSIP_TEXTID_ARETE3        = 13527,
-    GOSSIP_TEXTID_ARETE4        = 13528,
-    GOSSIP_TEXTID_ARETE5        = 13529,
-    GOSSIP_TEXTID_ARETE6        = 13530,
-    GOSSIP_TEXTID_ARETE7        = 13531,
+    GOSSIP_TEXTID_ARETE1        = 13525, 
+    GOSSIP_TEXTID_ARETE2        = 13526, 
+    GOSSIP_TEXTID_ARETE3        = 13527, 
+    GOSSIP_TEXTID_ARETE4        = 13528, 
+    GOSSIP_TEXTID_ARETE5        = 13529, 
+    GOSSIP_TEXTID_ARETE6        = 13530, 
+    GOSSIP_TEXTID_ARETE7        = 13531, 
 
     QUEST_THE_STORY_THUS_FAR    = 12807
 };
@@ -158,10 +158,10 @@ public:
 
 enum eSquireDavid
 {
-    QUEST_THE_ASPIRANT_S_CHALLENGE_H                    = 13680,
-    QUEST_THE_ASPIRANT_S_CHALLENGE_A                    = 13679,
+    QUEST_THE_ASPIRANT_S_CHALLENGE_H                    = 13680, 
+    QUEST_THE_ASPIRANT_S_CHALLENGE_A                    = 13679, 
 
-    NPC_ARGENT_VALIANT                                  = 33448,
+    NPC_ARGENT_VALIANT                                  = 33448, 
 
     GOSSIP_TEXTID_SQUIRE                                = 14407
 };
@@ -193,7 +193,7 @@ public:
         if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
         {
             pPlayer->CLOSE_GOSSIP_MENU();
-            pCreature->SummonCreature(NPC_ARGENT_VALIANT,8575.451f,952.472f,547.554f,0.38f);
+            pCreature->SummonCreature(NPC_ARGENT_VALIANT, 8575.451f, 952.472f, 547.554f, 0.38f);
         }
         return true;
     }
@@ -205,8 +205,8 @@ public:
 
 enum eArgentValiant
 {
-    SPELL_CHARGE                = 63010,
-    SPELL_SHIELD_BREAKER        = 65147,
+    SPELL_CHARGE                = 63010, 
+    SPELL_SHIELD_BREAKER        = 65147, 
 
     NPC_ARGENT_VALIANT_CREDIT   = 24108
 };
@@ -220,7 +220,7 @@ public:
     {
         npc_argent_valiantAI(Creature* pCreature) : ScriptedAI(pCreature)
         {
-            pCreature->GetMotionMaster()->MovePoint(0,8599.258f,963.951f,547.553f);
+            pCreature->GetMotionMaster()->MovePoint(0, 8599.258f, 963.951f, 547.553f);
             pCreature->setFaction(35); //wrong faction in db?
         }
 
@@ -246,10 +246,10 @@ public:
             if (uiDamage > me->GetHealth() && pDoneBy->GetTypeId() == TYPEID_PLAYER)
             {
                 uiDamage = 0;
-                CAST_PLR(pDoneBy)->KilledMonsterCredit(NPC_ARGENT_VALIANT_CREDIT,0);
+                CAST_PLR(pDoneBy)->KilledMonsterCredit(NPC_ARGENT_VALIANT_CREDIT, 0);
                 me->setFaction(35);
                 me->ForcedDespawn(5000);
-                me->SetHomePosition(me->GetPositionX(),me->GetPositionY(),me->GetPositionZ(),me->GetOrientation());
+                me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation());
                 EnterEvadeMode();
             }
         }
@@ -287,8 +287,8 @@ public:
 
 enum eArgentTournamentPost
 {
-    SPELL_ROPE_BEAM                 = 63413,
-    NPC_GORMOK_THE_IMPALER          = 35469,
+    SPELL_ROPE_BEAM                 = 63413, 
+    NPC_GORMOK_THE_IMPALER          = 35469, 
     NPC_ICEHOWL                     = 35470
 };
 
@@ -329,10 +329,10 @@ public:
 
 enum ealorah_and_grimmin
 {
-    SPELL_CHAIN                     = 68341,
-    NPC_FJOLA_LIGHTBANE             = 36065,
-    NPC_EYDIS_DARKBANE              = 36066,
-    NPC_PRIESTESS_ALORAH            = 36101,
+    SPELL_CHAIN                     = 68341, 
+    NPC_FJOLA_LIGHTBANE             = 36065, 
+    NPC_EYDIS_DARKBANE              = 36066, 
+    NPC_PRIESTESS_ALORAH            = 36101, 
     NPC_PRIEST_GRIMMIN              = 36102
 };
 
@@ -388,11 +388,11 @@ public:
 
 enum eGuardianPavilion
 {
-    SPELL_TRESPASSER_H                            = 63987,
-    AREA_SUNREAVER_PAVILION                       = 4676,
+    SPELL_TRESPASSER_H                            = 63987, 
+    AREA_SUNREAVER_PAVILION                       = 4676, 
 
-    AREA_SILVER_COVENANT_PAVILION                 = 4677,
-    SPELL_TRESPASSER_A                            = 63986,
+    AREA_SILVER_COVENANT_PAVILION                 = 4677, 
+    SPELL_TRESPASSER_A                            = 63986, 
 };
 
 class npc_guardian_pavilion : public CreatureScript

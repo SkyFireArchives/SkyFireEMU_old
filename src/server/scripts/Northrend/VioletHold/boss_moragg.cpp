@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,7 +28,7 @@
 //Spells
 enum Spells
 {
-    SPELL_CORROSIVE_SALIVA                     = 54527,
+    SPELL_CORROSIVE_SALIVA                     = 54527, 
     SPELL_OPTIC_LINK                           = 54396
 };
 
@@ -136,7 +136,7 @@ public:
                 else if (pInstance->GetData(DATA_WAVE_COUNT) == 12)
                 {
                     pInstance->SetData(DATA_2ND_BOSS_EVENT, DONE);
-                    pInstance->SetData(DATA_WAVE_COUNT,13);
+                    pInstance->SetData(DATA_WAVE_COUNT, 13);
                 }
             }
         }

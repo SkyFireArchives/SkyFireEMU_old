@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -121,7 +121,7 @@ public:
 
         void EnterCombat(Unit * /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO_1,SAY_AGGRO_2,SAY_AGGRO_3), me);
+            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
         }
 
         void JustDied(Unit* /*Killer*/)
@@ -134,7 +134,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
         }
 
         void UpdateAI(const uint32 diff)
@@ -161,9 +161,9 @@ public:
 
                 //second top aggro target in normal, random target in heroic correct?
                 if (IsHeroic())
-                    pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                    pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 else
-                    pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO,1);
+                    pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 1);
 
                 if (pTarget)
                     DoCast(pTarget, SPELL_POLYMORPH);
@@ -190,7 +190,7 @@ public:
             {
                 DoScriptText(EMOTE_ARCANE_EXP, me);
 
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 {
                     if (me->IsNonMeleeSpellCasted(false))
                         me->InterruptNonMeleeSpells(false);
@@ -202,7 +202,7 @@ public:
                     float Y = pTarget->GetPositionY();
                     float Z = pTarget->GetPositionZ();
 
-                    DoTeleportTo(X,Y,Z);
+                    DoTeleportTo(X, Y, Z);
 
                     DoCast(pTarget, SPELL_BLINK_TELEPORT);
                     Blink = true;

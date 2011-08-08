@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,51 +35,51 @@ EndScriptData */
 enum eEnums
 {
     //Yell
-    SAY_AGGRO                               = -1602000,
-    SAY_SLAY_1                              = -1602001,
-    SAY_SLAY_2                              = -1602002,
-    SAY_SLAY_3                              = -1602003,
-    SAY_DEATH                               = -1602004,
-    SAY_BATTLE_STANCE                       = -1602005,
-    EMOTE_BATTLE_STANCE                     = -1602006,
-    SAY_BERSEKER_STANCE                     = -1602007,
-    EMOTE_BERSEKER_STANCE                   = -1602008,
-    SAY_DEFENSIVE_STANCE                    = -1602009,
-    EMOTE_DEFENSIVE_STANCE                  = -1602010,
+    SAY_AGGRO                               = -1602000, 
+    SAY_SLAY_1                              = -1602001, 
+    SAY_SLAY_2                              = -1602002, 
+    SAY_SLAY_3                              = -1602003, 
+    SAY_DEATH                               = -1602004, 
+    SAY_BATTLE_STANCE                       = -1602005, 
+    EMOTE_BATTLE_STANCE                     = -1602006, 
+    SAY_BERSEKER_STANCE                     = -1602007, 
+    EMOTE_BERSEKER_STANCE                   = -1602008, 
+    SAY_DEFENSIVE_STANCE                    = -1602009, 
+    EMOTE_DEFENSIVE_STANCE                  = -1602010, 
 
-    SPELL_DEFENSIVE_STANCE                  = 53790,
-    //SPELL_DEFENSIVE_AURA                    = 41105,
-    SPELL_SPELL_REFLECTION                  = 36096,
-    SPELL_PUMMEL                            = 12555,
-    SPELL_KNOCK_AWAY                        = 52029,
-    SPELL_IRONFORM                          = 52022,
+    SPELL_DEFENSIVE_STANCE                  = 53790, 
+    //SPELL_DEFENSIVE_AURA                    = 41105, 
+    SPELL_SPELL_REFLECTION                  = 36096, 
+    SPELL_PUMMEL                            = 12555, 
+    SPELL_KNOCK_AWAY                        = 52029, 
+    SPELL_IRONFORM                          = 52022, 
 
-    SPELL_BERSEKER_STANCE                   = 53791,
-    //SPELL_BERSEKER_AURA                     = 41107,
-    SPELL_INTERCEPT                         = 58769,
-    SPELL_WHIRLWIND                         = 52027,
-    SPELL_CLEAVE                            = 15284,
+    SPELL_BERSEKER_STANCE                   = 53791, 
+    //SPELL_BERSEKER_AURA                     = 41107, 
+    SPELL_INTERCEPT                         = 58769, 
+    SPELL_WHIRLWIND                         = 52027, 
+    SPELL_CLEAVE                            = 15284, 
 
-    SPELL_BATTLE_STANCE                     = 53792,
-    //SPELL_BATTLE_AURA                       = 41106,
-    SPELL_MORTAL_STRIKE                     = 16856,
-    SPELL_SLAM                              = 52026,
+    SPELL_BATTLE_STANCE                     = 53792, 
+    //SPELL_BATTLE_AURA                       = 41106, 
+    SPELL_MORTAL_STRIKE                     = 16856, 
+    SPELL_SLAM                              = 52026, 
 
     //OTHER SPELLS
     //SPELL_CHARGE_UP                         = 52098,      // only used when starting walk from one platform to the other
     //SPELL_TEMPORARY_ELECTRICAL_CHARGE       = 52092,      // triggered part of above
 
-    NPC_STORMFORGED_LIEUTENANT              = 29240,
-    SPELL_ARC_WELD                          = 59085,
-    SPELL_RENEW_STEEL_N                     = 52774,
-    SPELL_RENEW_STEEL_H                     = 59160,
+    NPC_STORMFORGED_LIEUTENANT              = 29240, 
+    SPELL_ARC_WELD                          = 59085, 
+    SPELL_RENEW_STEEL_N                     = 52774, 
+    SPELL_RENEW_STEEL_H                     = 59160, 
 
-    EQUIP_SWORD                             = 37871,
-    EQUIP_SHIELD                            = 35642,
-    EQUIP_MACE                              = 43623,
+    EQUIP_SWORD                             = 37871, 
+    EQUIP_SHIELD                            = 35642, 
+    EQUIP_MACE                              = 43623, 
 
-    STANCE_DEFENSIVE                        = 0,
-    STANCE_BERSERKER                        = 1,
+    STANCE_DEFENSIVE                        = 0, 
+    STANCE_BERSERKER                        = 1, 
     STANCE_BATTLE                           = 2
 };
 
@@ -186,7 +186,7 @@ public:
 
         void KilledUnit(Unit* /*pVictim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
 
         void JustDied(Unit* /*pKiller*/)

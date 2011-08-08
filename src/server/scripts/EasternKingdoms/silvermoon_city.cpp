@@ -34,11 +34,11 @@ EndContentData */
 #######*/
 enum eStillbladeData
 {
-    SAY_HEAL                    = -1000193,
+    SAY_HEAL                    = -1000193, 
 
-    QUEST_REDEEMING_THE_DEAD    = 9685,
-    SPELL_SHIMMERING_VESSEL     = 31225,
-    SPELL_REVIVE_SELF           = 32343,
+    QUEST_REDEEMING_THE_DEAD    = 9685, 
+    SPELL_SHIMMERING_VESSEL     = 31225, 
+    SPELL_REVIVE_SELF           = 32343, 
 };
 
 class npc_blood_knight_stillblade : public CreatureScript
@@ -62,7 +62,7 @@ public:
         {
             lifeTimer = 120000;
             me->SetStandState(UNIT_STAND_STATE_DEAD);
-            me->SetUInt32Value(UNIT_FIELD_BYTES_1,7);   // lay down
+            me->SetUInt32Value(UNIT_FIELD_BYTES_1, 7);   // lay down
             spellHit = false;
         }
 

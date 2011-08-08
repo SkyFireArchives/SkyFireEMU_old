@@ -46,7 +46,7 @@ enum VehicleFlags
     VEHICLE_FLAG_FULLSPEEDTURNING                = 0x00000004,           // Sets MOVEFLAG2_FULLSPEEDTURNING
     VEHICLE_FLAG_ALLOW_PITCHING                  = 0x00000010,           // Sets MOVEFLAG2_ALLOW_PITCHING
     VEHICLE_FLAG_FULLSPEEDPITCHING               = 0x00000020,           // Sets MOVEFLAG2_FULLSPEEDPITCHING
-    VEHICLE_FLAG_CUSTOM_PITCH                    = 0x00000040,           // If set use pitchMin and pitchMax from DBC, otherwise pitchMin = -pi/2, pitchMax = pi/2    
+    VEHICLE_FLAG_CUSTOM_PITCH                    = 0x00000040,           // If set use pitchMin and pitchMax from DBC, otherwise pitchMin = -pi/2, pitchMax = pi/2
     VEHICLE_FLAG_ADJUST_AIM_ANGLE                = 0x00000400,           // Lua_IsVehicleAimAngleAdjustable
     VEHICLE_FLAG_ADJUST_AIM_POWER                = 0x00000800,           // Lua_IsVehicleAimPowerAdjustable
 };
@@ -65,7 +65,7 @@ enum VehicleSeatFlags
 enum VehicleSeatFlagsB
 {
     VEHICLE_SEAT_FLAG_B_NONE                     = 0x00000000,
-    VEHICLE_SEAT_FLAG_B_USABLE_FORCED            = 0x00000002, 
+    VEHICLE_SEAT_FLAG_B_USABLE_FORCED            = 0x00000002,
     VEHICLE_SEAT_FLAG_B_USABLE_FORCED_2          = 0x00000040,
     VEHICLE_SEAT_FLAG_B_USABLE_FORCED_3          = 0x00000100,
 };
@@ -74,7 +74,6 @@ enum VehicleSpells
 {
     VEHICLE_SPELL_PARACHUTE                      = 45472
 };
-  
 
 struct VehicleSeat
 {
@@ -132,7 +131,7 @@ class Vehicle
         SeatMap m_Seats;
 
     protected:
-        uint16 GetExtraMovementFlagsForBase() const; 
+        uint16 GetExtraMovementFlagsForBase() const;
 
     protected:
         Unit *me;

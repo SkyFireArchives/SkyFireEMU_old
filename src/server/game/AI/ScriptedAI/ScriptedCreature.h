@@ -34,8 +34,8 @@
 #define CAST_CRE(a)     (SCRIPT_CAST_TYPE<Creature*>(a))
 #define CAST_SUM(a)     (SCRIPT_CAST_TYPE<TempSummon*>(a))
 #define CAST_PET(a)     (SCRIPT_CAST_TYPE<Pet*>(a))
-#define CAST_AI(a,b)    (SCRIPT_CAST_TYPE<a*>(b))
-#define CAST_INST(a,b)  (SCRIPT_CAST_TYPE<a*>(b))
+#define CAST_AI(a, b)    (SCRIPT_CAST_TYPE<a*>(b))
+#define CAST_INST(a, b)  (SCRIPT_CAST_TYPE<a*>(b))
 
 #define GET_SPELL(a)    (const_cast<SpellEntry*>(GetSpellStore()->LookupEntry(a)))
 
@@ -312,4 +312,3 @@ void GetCreatureListWithEntryInGrid(std::list<Creature*>& lList, WorldObject* pS
 void GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList, WorldObject* pSource, uint32 uiEntry, float fMaxSearchRange);
 
 #endif
-

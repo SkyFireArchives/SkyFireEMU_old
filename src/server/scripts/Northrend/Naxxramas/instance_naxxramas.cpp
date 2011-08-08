@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,55 +27,55 @@
 
 const DoorData doorData[] =
 {
-    {181126,    BOSS_ANUBREKHAN,DOOR_TYPE_ROOM,     BOUNDARY_S},
-    {181195,    BOSS_ANUBREKHAN,DOOR_TYPE_PASSAGE,  0},
-    {194022,    BOSS_FAERLINA,  DOOR_TYPE_PASSAGE,  0},
-    {181209,    BOSS_FAERLINA,  DOOR_TYPE_PASSAGE,  0},
-    {181209,    BOSS_MAEXXNA,   DOOR_TYPE_ROOM,     BOUNDARY_SW},
-    {181200,    BOSS_NOTH,      DOOR_TYPE_ROOM,     BOUNDARY_N},
-    {181201,    BOSS_NOTH,      DOOR_TYPE_PASSAGE,  BOUNDARY_E},
-    {181202,    BOSS_NOTH,      DOOR_TYPE_PASSAGE,  0},
-    {181202,    BOSS_HEIGAN,    DOOR_TYPE_ROOM,     BOUNDARY_N},
-    {181203,    BOSS_HEIGAN,    DOOR_TYPE_PASSAGE,  BOUNDARY_E},
-    {181241,    BOSS_HEIGAN,    DOOR_TYPE_PASSAGE,  0},
-    {181241,    BOSS_LOATHEB,   DOOR_TYPE_ROOM,     BOUNDARY_W},
-    {181123,    BOSS_PATCHWERK, DOOR_TYPE_PASSAGE,  0},
-    {181123,    BOSS_GROBBULUS, DOOR_TYPE_ROOM,     0},
-    {181120,    BOSS_GLUTH,     DOOR_TYPE_PASSAGE,  BOUNDARY_NW},
-    {181121,    BOSS_GLUTH,     DOOR_TYPE_PASSAGE,  0},
-    {181121,    BOSS_THADDIUS,  DOOR_TYPE_ROOM,     0},
-    {181124,    BOSS_RAZUVIOUS, DOOR_TYPE_PASSAGE,  0},
-    {181124,    BOSS_GOTHIK,    DOOR_TYPE_ROOM,     BOUNDARY_N},
-    {181125,    BOSS_GOTHIK,    DOOR_TYPE_PASSAGE,  BOUNDARY_S},
-    {181119,    BOSS_GOTHIK,    DOOR_TYPE_PASSAGE,  0},
-    {181119,    BOSS_HORSEMEN,  DOOR_TYPE_ROOM,     BOUNDARY_NE},
-    {181225,    BOSS_SAPPHIRON, DOOR_TYPE_PASSAGE,  BOUNDARY_W},
-    {181228,    BOSS_KELTHUZAD, DOOR_TYPE_ROOM,     BOUNDARY_S},
+    {181126,    BOSS_ANUBREKHAN, DOOR_TYPE_ROOM,     BOUNDARY_S}, 
+    {181195,    BOSS_ANUBREKHAN, DOOR_TYPE_PASSAGE,  0}, 
+    {194022,    BOSS_FAERLINA,  DOOR_TYPE_PASSAGE,  0}, 
+    {181209,    BOSS_FAERLINA,  DOOR_TYPE_PASSAGE,  0}, 
+    {181209,    BOSS_MAEXXNA,   DOOR_TYPE_ROOM,     BOUNDARY_SW}, 
+    {181200,    BOSS_NOTH,      DOOR_TYPE_ROOM,     BOUNDARY_N}, 
+    {181201,    BOSS_NOTH,      DOOR_TYPE_PASSAGE,  BOUNDARY_E}, 
+    {181202,    BOSS_NOTH,      DOOR_TYPE_PASSAGE,  0}, 
+    {181202,    BOSS_HEIGAN,    DOOR_TYPE_ROOM,     BOUNDARY_N}, 
+    {181203,    BOSS_HEIGAN,    DOOR_TYPE_PASSAGE,  BOUNDARY_E}, 
+    {181241,    BOSS_HEIGAN,    DOOR_TYPE_PASSAGE,  0}, 
+    {181241,    BOSS_LOATHEB,   DOOR_TYPE_ROOM,     BOUNDARY_W}, 
+    {181123,    BOSS_PATCHWERK, DOOR_TYPE_PASSAGE,  0}, 
+    {181123,    BOSS_GROBBULUS, DOOR_TYPE_ROOM,     0}, 
+    {181120,    BOSS_GLUTH,     DOOR_TYPE_PASSAGE,  BOUNDARY_NW}, 
+    {181121,    BOSS_GLUTH,     DOOR_TYPE_PASSAGE,  0}, 
+    {181121,    BOSS_THADDIUS,  DOOR_TYPE_ROOM,     0}, 
+    {181124,    BOSS_RAZUVIOUS, DOOR_TYPE_PASSAGE,  0}, 
+    {181124,    BOSS_GOTHIK,    DOOR_TYPE_ROOM,     BOUNDARY_N}, 
+    {181125,    BOSS_GOTHIK,    DOOR_TYPE_PASSAGE,  BOUNDARY_S}, 
+    {181119,    BOSS_GOTHIK,    DOOR_TYPE_PASSAGE,  0}, 
+    {181119,    BOSS_HORSEMEN,  DOOR_TYPE_ROOM,     BOUNDARY_NE}, 
+    {181225,    BOSS_SAPPHIRON, DOOR_TYPE_PASSAGE,  BOUNDARY_W}, 
+    {181228,    BOSS_KELTHUZAD, DOOR_TYPE_ROOM,     BOUNDARY_S}, 
     {0,         0,              DOOR_TYPE_ROOM,     0}, // EOF
 };
 
 const MinionData minionData[] =
 {
     //{16573,     BOSS_ANUBREKHAN},     there is no spawn point in db, so we do not add them here
-    {16506,     BOSS_FAERLINA},
-    {16803,     BOSS_RAZUVIOUS},
-    {16063,     BOSS_HORSEMEN},
-    {16064,     BOSS_HORSEMEN},
-    {16065,     BOSS_HORSEMEN},
-    {30549,     BOSS_HORSEMEN},
-    {0,         0,}
+    {16506,     BOSS_FAERLINA}, 
+    {16803,     BOSS_RAZUVIOUS}, 
+    {16063,     BOSS_HORSEMEN}, 
+    {16064,     BOSS_HORSEMEN}, 
+    {16065,     BOSS_HORSEMEN}, 
+    {30549,     BOSS_HORSEMEN}, 
+    {0,         0, }
 };
 
 enum eEnums
 {
-    GO_HORSEMEN_CHEST_HERO  = 193426,
+    GO_HORSEMEN_CHEST_HERO  = 193426, 
     GO_HORSEMEN_CHEST       = 181366,                   //four horsemen event, DoRespawnGameObject() when event == DONE
-    GO_GOTHIK_GATE          = 181170,
-    GO_KELTHUZAD_PORTAL01   = 181402,
-    GO_KELTHUZAD_PORTAL02   = 181403,
-    GO_KELTHUZAD_PORTAL03   = 181404,
-    GO_KELTHUZAD_PORTAL04   = 181405,
-    GO_KELTHUZAD_TRIGGER    = 181444,
+    GO_GOTHIK_GATE          = 181170, 
+    GO_KELTHUZAD_PORTAL01   = 181402, 
+    GO_KELTHUZAD_PORTAL02   = 181403, 
+    GO_KELTHUZAD_PORTAL03   = 181404, 
+    GO_KELTHUZAD_PORTAL04   = 181405, 
+    GO_KELTHUZAD_TRIGGER    = 181444, 
 
     SPELL_ERUPTION          = 29371
 };
@@ -83,9 +83,9 @@ enum eEnums
 const float HeiganPos[2] = {2796, -3707};
 const float HeiganEruptionSlope[3] =
 {
-    (-3685 - HeiganPos[1]) /(2724 - HeiganPos[0]),
-    (-3647 - HeiganPos[1]) /(2749 - HeiganPos[0]),
-    (-3637 - HeiganPos[1]) /(2771 - HeiganPos[0]),
+    (-3685 - HeiganPos[1]) /(2724 - HeiganPos[0]), 
+    (-3647 - HeiganPos[1]) /(2749 - HeiganPos[0]), 
+    (-3637 - HeiganPos[1]) /(2771 - HeiganPos[0]), 
 };
 
 // 0  H      x

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,22 +27,22 @@
 
 enum eTypes
 {
-    MAX_ENCOUNTER           = 4,
+    MAX_ENCOUNTER           = 4, 
 
-    DATA_BJARNGRIM          = 1,
-    DATA_IONAR              = 2,
-    DATA_LOKEN              = 3,
-    DATA_VOLKHAN            = 4,
+    DATA_BJARNGRIM          = 1, 
+    DATA_IONAR              = 2, 
+    DATA_LOKEN              = 3, 
+    DATA_VOLKHAN            = 4, 
 
-    TYPE_BJARNGRIM          = 10,
-    TYPE_IONAR              = 11,
-    TYPE_LOKEN              = 12,
-    TYPE_VOLKHAN            = 13,
+    TYPE_BJARNGRIM          = 10, 
+    TYPE_IONAR              = 11, 
+    TYPE_LOKEN              = 12, 
+    TYPE_VOLKHAN            = 13, 
 
-    NPC_BJARNGRIM           = 28586,
-    NPC_VOLKHAN             = 28587,
-    NPC_IONAR               = 28546,
-    NPC_LOKEN               = 28923,
+    NPC_BJARNGRIM           = 28586, 
+    NPC_VOLKHAN             = 28587, 
+    NPC_IONAR               = 28546, 
+    NPC_LOKEN               = 28923, 
 
     GO_BJARNGRIM_DOOR       = 191416,                       //_doors10
     GO_VOLKHAN_DOOR         = 191325,                       //_doors07

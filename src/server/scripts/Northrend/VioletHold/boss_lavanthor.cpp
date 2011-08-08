@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,11 +28,11 @@
 enum Spells
 {
   SPELL_CAUTERIZING_FLAMES                      = 59466, //Only in heroic
-  SPELL_FIREBOLT                                = 54235,
-  H_SPELL_FIREBOLT                              = 59468,
-  SPELL_FLAME_BREATH                            = 54282,
-  H_SPELL_FLAME_BREATH                          = 59469,
-  SPELL_LAVA_BURN                               = 54249,
+  SPELL_FIREBOLT                                = 54235, 
+  H_SPELL_FIREBOLT                              = 59468, 
+  SPELL_FLAME_BREATH                            = 54282, 
+  H_SPELL_FLAME_BREATH                          = 59469, 
+  SPELL_LAVA_BURN                               = 54249, 
   H_SPELL_LAVA_BURN                             = 59594
 };
 
@@ -119,19 +119,19 @@ public:
             if (uiFireboltTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_FIREBOLT);
-                uiFireboltTimer = urand(5000,13000);
+                uiFireboltTimer = urand(5000, 13000);
             } else uiFireboltTimer -= diff;
 
             if (uiFlameBreathTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_FLAME_BREATH);
-                uiFlameBreathTimer = urand(10000,15000);
+                uiFlameBreathTimer = urand(10000, 15000);
             } else uiFlameBreathTimer -= diff;
 
             if (uiLavaBurnTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_LAVA_BURN);
-                uiLavaBurnTimer = urand(15000,23000);
+                uiLavaBurnTimer = urand(15000, 23000);
             }
 
             if (IsHeroic())
@@ -139,7 +139,7 @@ public:
                 if (uiCauterizingFlamesTimer <= diff)
                 {
                     DoCast(me->getVictim(), SPELL_CAUTERIZING_FLAMES);
-                    uiCauterizingFlamesTimer = urand(10000,16000);
+                    uiCauterizingFlamesTimer = urand(10000, 16000);
                 } else uiCauterizingFlamesTimer -= diff;
             }
 

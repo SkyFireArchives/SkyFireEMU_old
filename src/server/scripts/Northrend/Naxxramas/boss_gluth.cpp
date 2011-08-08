@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,8 +26,8 @@
 #include "naxxramas.h"
 
 #define SPELL_MORTAL_WOUND      25646
-#define SPELL_ENRAGE            RAID_MODE(28371,54427)
-#define SPELL_DECIMATE          RAID_MODE(28374,54426)
+#define SPELL_ENRAGE            RAID_MODE(28371, 54427)
+#define SPELL_DECIMATE          RAID_MODE(28374, 54426)
 #define SPELL_BERSERK           26662
 #define SPELL_INFECTED_WOUND    29306
 
@@ -35,19 +35,19 @@
 
 const Position PosSummon[3] =
 {
-    {3267.9f, -3172.1f, 297.42f, 0.94f},
-    {3253.2f, -3132.3f, 297.42f, 0},
-    {3308.3f, -3185.8f, 297.42f, 1.58f},
+    {3267.9f, -3172.1f, 297.42f, 0.94f}, 
+    {3253.2f, -3132.3f, 297.42f, 0}, 
+    {3308.3f, -3185.8f, 297.42f, 1.58f}, 
 };
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_WOUND,
-    EVENT_ENRAGE,
-    EVENT_DECIMATE,
-    EVENT_BERSERK,
-    EVENT_SUMMON,
+    EVENT_NONE, 
+    EVENT_WOUND, 
+    EVENT_ENRAGE, 
+    EVENT_DECIMATE, 
+    EVENT_BERSERK, 
+    EVENT_SUMMON, 
 };
 
 #define EMOTE_NEARBY    " spots a nearby zombie to devour!"
@@ -132,7 +132,7 @@ public:
                         break;
                     case EVENT_SUMMON:
                         for (int32 i = 0; i < RAID_MODE(1, 2); ++i)
-                            DoSummon(MOB_ZOMBIE, PosSummon[rand() % RAID_MODE(1,3)]);
+                            DoSummon(MOB_ZOMBIE, PosSummon[rand() % RAID_MODE(1, 3)]);
                         events.ScheduleEvent(EVENT_SUMMON, 10000);
                         break;
                 }

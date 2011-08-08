@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -23,7 +23,7 @@
  */
 
 /*
- * Comment: there is missing code on triggers,
+ * Comment: there is missing code on triggers, 
  *          brann bronzebeard needs correct gossip info.
  *          requires more work involving area triggers.
  *          if reached brann speaks through his radio..
@@ -36,20 +36,20 @@
 
 enum Spells
 {
-    SPELL_PURSUED                               = 62374,
-    SPELL_GATHERING_SPEED                       = 62375,
-    SPELL_BATTERING_RAM                         = 62376,
-    SPELL_FLAME_VENTS                           = 62396,
-    SPELL_MISSILE_BARRAGE                       = 62400,
-    SPELL_SYSTEMS_SHUTDOWN                      = 62475,
-    SPELL_OVERLOAD_CIRCUIT                      = 62399,
-    SPELL_START_THE_ENGINE                      = 62472,
-    SPELL_SEARING_FLAME                         = 62402,
-    SPELL_BLAZE                                 = 62292,
-    SPELL_TAR_PASSIVE                           = 62288,
-    SPELL_SMOKE_TRAIL                           = 63575,
-    SPELL_ELECTROSHOCK                          = 62522,
-    SPELL_NAPALM                                = 63666,
+    SPELL_PURSUED                               = 62374, 
+    SPELL_GATHERING_SPEED                       = 62375, 
+    SPELL_BATTERING_RAM                         = 62376, 
+    SPELL_FLAME_VENTS                           = 62396, 
+    SPELL_MISSILE_BARRAGE                       = 62400, 
+    SPELL_SYSTEMS_SHUTDOWN                      = 62475, 
+    SPELL_OVERLOAD_CIRCUIT                      = 62399, 
+    SPELL_START_THE_ENGINE                      = 62472, 
+    SPELL_SEARING_FLAME                         = 62402, 
+    SPELL_BLAZE                                 = 62292, 
+    SPELL_TAR_PASSIVE                           = 62288, 
+    SPELL_SMOKE_TRAIL                           = 63575, 
+    SPELL_ELECTROSHOCK                          = 62522, 
+    SPELL_NAPALM                                = 63666, 
     //TOWER Additional SPELLS
     SPELL_THORIM_S_HAMMER                       = 62911, // Tower of Storms
     SPELL_MIMIRON_S_INFERNO                     = 62909, // Tower of Flames
@@ -57,58 +57,58 @@ enum Spells
     SPELL_FREYA_S_WARD                          = 62906, // Tower of Nature
     SPELL_FREYA_SUMMONS                         = 62947, // Tower of Nature
     //TOWER ap & health spells
-    SPELL_BUFF_TOWER_OF_STORMS                  = 65076,
-    SPELL_BUFF_TOWER_OF_FLAMES                  = 65075,
-    SPELL_BUFF_TOWER_OF_FR0ST                   = 65077,
-    SPELL_BUFF_TOWER_OF_LIFE                    = 64482,
+    SPELL_BUFF_TOWER_OF_STORMS                  = 65076, 
+    SPELL_BUFF_TOWER_OF_FLAMES                  = 65075, 
+    SPELL_BUFF_TOWER_OF_FR0ST                   = 65077, 
+    SPELL_BUFF_TOWER_OF_LIFE                    = 64482, 
     //Additional Spells
-    SPELL_LASH                                  = 65062,
-    SPELL_FREYA_S_WARD_EFFECT_1                 = 62947,
-    SPELL_FREYA_S_WARD_EFFECT_2                 = 62907,
-    SPELL_AUTO_REPAIR                           = 62705,
-    AURA_DUMMY_BLUE                             = 63294,
-    AURA_DUMMY_GREEN                            = 63295,
-    AURA_DUMMY_YELLOW                           = 63292,
-    SPELL_LIQUID_PYRITE                         = 62494,
+    SPELL_LASH                                  = 65062, 
+    SPELL_FREYA_S_WARD_EFFECT_1                 = 62947, 
+    SPELL_FREYA_S_WARD_EFFECT_2                 = 62907, 
+    SPELL_AUTO_REPAIR                           = 62705, 
+    AURA_DUMMY_BLUE                             = 63294, 
+    AURA_DUMMY_GREEN                            = 63295, 
+    AURA_DUMMY_YELLOW                           = 63292, 
+    SPELL_LIQUID_PYRITE                         = 62494, 
 };
 
 enum Creatures
 {
-    MOB_MECHANOLIFT                             = 33214,
-    MOB_LIQUID                                  = 33189,
-    MOB_CONTAINER                               = 33218,
-    MOB_THORIM_BEACON                           = 33365,
-    MOB_MIMIRON_BEACON                          = 33370,
-    MOB_HODIR_BEACON                            = 33212,
-    MOB_FREYA_BEACON                            = 33367,
-    NPC_THORIM_TARGET_BEACON                    = 33364,
-    NPC_MIMIRON_TARGET_BEACON                   = 33369,
-    NPC_HODIR_TARGET_BEACON                     = 33108,
-    NPC_FREYA_TARGET_BEACON                     = 33366,
+    MOB_MECHANOLIFT                             = 33214, 
+    MOB_LIQUID                                  = 33189, 
+    MOB_CONTAINER                               = 33218, 
+    MOB_THORIM_BEACON                           = 33365, 
+    MOB_MIMIRON_BEACON                          = 33370, 
+    MOB_HODIR_BEACON                            = 33212, 
+    MOB_FREYA_BEACON                            = 33367, 
+    NPC_THORIM_TARGET_BEACON                    = 33364, 
+    NPC_MIMIRON_TARGET_BEACON                   = 33369, 
+    NPC_HODIR_TARGET_BEACON                     = 33108, 
+    NPC_FREYA_TARGET_BEACON                     = 33366, 
     NPC_LOREKEEPER                              = 33686, //Hard mode starter
-    NPC_BRANZ_BRONZBEARD                        = 33579,
-    NPC_DELORAH                                 = 33701,
+    NPC_BRANZ_BRONZBEARD                        = 33579, 
+    NPC_DELORAH                                 = 33701, 
     NPC_ULDUAR_GAUNTLET_GENERATOR               = 33571, // Trigger tied to towers
 };
 
 enum Towers
 {
-    GO_TOWER_OF_STORMS = 194377,
-    GO_TOWER_OF_FLAMES = 194371,
-    GO_TOWER_OF_FROST = 194370,
-    GO_TOWER_OF_LIFE = 194375,
+    GO_TOWER_OF_STORMS = 194377, 
+    GO_TOWER_OF_FLAMES = 194371, 
+    GO_TOWER_OF_FROST = 194370, 
+    GO_TOWER_OF_LIFE = 194375, 
 };
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_PURSUE,
-    EVENT_MISSILE,
-    EVENT_VENT,
-    EVENT_SPEED,
-    EVENT_SUMMON,
-    EVENT_SHUTDOWN,
-    EVENT_REPAIR,
+    EVENT_NONE, 
+    EVENT_PURSUE, 
+    EVENT_MISSILE, 
+    EVENT_VENT, 
+    EVENT_SPEED, 
+    EVENT_SUMMON, 
+    EVENT_SHUTDOWN, 
+    EVENT_REPAIR, 
     EVENT_THORIM_S_HAMMER, // Tower of Storms
     EVENT_MIMIRON_S_INFERNO, // Tower of Flames
     EVENT_HODIR_S_FURY,      // Tower of Frost
@@ -117,17 +117,17 @@ enum Events
 
 enum Seats
 {
-    SEAT_PLAYER                                 = 0,
-    SEAT_TURRET                                 = 1,
-    SEAT_DEVICE                                 = 2,
-    SEAT_CANNON                                 = 7,
+    SEAT_PLAYER                                 = 0, 
+    SEAT_TURRET                                 = 1, 
+    SEAT_DEVICE                                 = 2, 
+    SEAT_CANNON                                 = 7, 
 };
 
 enum Vehicles
 {
-    VEHICLE_SIEGE                             = 33060,
-    VEHICLE_CHOPPER                           = 33062,
-    VEHICLE_DEMOLISHER                        = 33109,
+    VEHICLE_SIEGE                             = 33060, 
+    VEHICLE_CHOPPER                           = 33062, 
+    VEHICLE_DEMOLISHER                        = 33109, 
 };
 
 #define EMOTE_PURSUE          "Flame Leviathan pursues $N."
@@ -136,74 +136,74 @@ enum Vehicles
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1603060,
-    SAY_SLAY                                    = -1603061,
-    SAY_DEATH                                   = -1603062,
-    SAY_TARGET_1                                = -1603063,
-    SAY_TARGET_2                                = -1603064,
-    SAY_TARGET_3                                = -1603065,
-    SAY_HARDMODE                                = -1603066,
-    SAY_TOWER_NONE                              = -1603067,
-    SAY_TOWER_FROST                             = -1603068,
-    SAY_TOWER_FLAME                             = -1603069,
-    SAY_TOWER_NATURE                            = -1603070,
-    SAY_TOWER_STORM                             = -1603071,
-    SAY_PLAYER_RIDING                           = -1603072,
-    SAY_OVERLOAD_1                              = -1603073,
-    SAY_OVERLOAD_2                              = -1603074,
-    SAY_OVERLOAD_3                              = -1603075,
+    SAY_AGGRO                                   = -1603060, 
+    SAY_SLAY                                    = -1603061, 
+    SAY_DEATH                                   = -1603062, 
+    SAY_TARGET_1                                = -1603063, 
+    SAY_TARGET_2                                = -1603064, 
+    SAY_TARGET_3                                = -1603065, 
+    SAY_HARDMODE                                = -1603066, 
+    SAY_TOWER_NONE                              = -1603067, 
+    SAY_TOWER_FROST                             = -1603068, 
+    SAY_TOWER_FLAME                             = -1603069, 
+    SAY_TOWER_NATURE                            = -1603070, 
+    SAY_TOWER_STORM                             = -1603071, 
+    SAY_PLAYER_RIDING                           = -1603072, 
+    SAY_OVERLOAD_1                              = -1603073, 
+    SAY_OVERLOAD_2                              = -1603074, 
+    SAY_OVERLOAD_3                              = -1603075, 
 };
 
 enum eAchievementData
 {
-    ACHIEV_10_NUKED_FROM_ORBIT                  = 2915,
-    ACHIEV_25_NUKED_FROM_ORBIT                  = 2917,
-    ACHIEV_10_ORBITAL_BOMBARDMENT               = 2913,
-    ACHIEV_25_ORBITAL_BOMBARDMENT               = 2918,
-    ACHIEV_10_ORBITAL_DEVASTATION               = 2914,
-    ACHIEV_25_ORBITAL_DEVASTATION               = 2916,
-    ACHIEV_10_ORBIT_UARY                        = 3056,
-    ACHIEV_25_ORBIT_UARY                        = 3057,
-    ACHIEV_10_SHUTOUT                           = 2911,
-    ACHIEV_25_SHUTOUT                           = 2912,
-    ACHIEV_10_SIEGE_OF_ULDUAR                   = 2886,
-    ACHIEV_25_SIEGE_OF_ULDUAR                   = 2887,
+    ACHIEV_10_NUKED_FROM_ORBIT                  = 2915, 
+    ACHIEV_25_NUKED_FROM_ORBIT                  = 2917, 
+    ACHIEV_10_ORBITAL_BOMBARDMENT               = 2913, 
+    ACHIEV_25_ORBITAL_BOMBARDMENT               = 2918, 
+    ACHIEV_10_ORBITAL_DEVASTATION               = 2914, 
+    ACHIEV_25_ORBITAL_DEVASTATION               = 2916, 
+    ACHIEV_10_ORBIT_UARY                        = 3056, 
+    ACHIEV_25_ORBIT_UARY                        = 3057, 
+    ACHIEV_10_SHUTOUT                           = 2911, 
+    ACHIEV_25_SHUTOUT                           = 2912, 
+    ACHIEV_10_SIEGE_OF_ULDUAR                   = 2886, 
+    ACHIEV_25_SIEGE_OF_ULDUAR                   = 2887, 
     ACHIEV_10_THREE_CAR_GARAGE                  = 2907, //no core support for using a vehicle
     ACHIEV_25_THREE_CAR_GARAGE                  = 2908, //no core support for using a vehicle
-    ACHIEV_10_UNBROKEN                          = 2905,
-    ACHIEV_25_UNBROKEN                          = 2906,
+    ACHIEV_10_UNBROKEN                          = 2905, 
+    ACHIEV_25_UNBROKEN                          = 2906, 
 };
 
 static Position Center[]=
 {
-    {354.8771f, -12.90240f, 409.803650f, 0.0f},
+    {354.8771f, -12.90240f, 409.803650f, 0.0f}, 
 };
 
 const Position PosSiege[5] =
 {
-    {-814.59f,-64.54f,429.92f,5.969f},
-    {-784.37f,-33.31f,429.92f,5.096f},
-    {-808.99f,-52.10f,429.92f,5.668f},
-    {-798.59f,-44.00f,429.92f,5.663f},
-    {-812.83f,-77.71f,429.92f,0.046f},
+    {-814.59f, -64.54f, 429.92f, 5.969f}, 
+    {-784.37f, -33.31f, 429.92f, 5.096f}, 
+    {-808.99f, -52.10f, 429.92f, 5.668f}, 
+    {-798.59f, -44.00f, 429.92f, 5.663f}, 
+    {-812.83f, -77.71f, 429.92f, 0.046f}, 
 };
 
 const Position PosChopper[5] =
 {
-    {-717.83f,-106.56f,430.02f,0.122f},
-    {-717.83f,-114.23f,430.44f,0.122f},
-    {-717.83f,-109.70f,430.22f,0.122f},
-    {-718.45f,-118.24f,430.26f,0.052f},
-    {-718.45f,-123.58f,430.41f,0.085f},
+    {-717.83f, -106.56f, 430.02f, 0.122f}, 
+    {-717.83f, -114.23f, 430.44f, 0.122f}, 
+    {-717.83f, -109.70f, 430.22f, 0.122f}, 
+    {-718.45f, -118.24f, 430.26f, 0.052f}, 
+    {-718.45f, -123.58f, 430.41f, 0.085f}, 
 };
 
 const Position PosDemolisher[5] =
 {
-    {-724.12f,-176.64f,430.03f,2.543f},
-    {-766.70f,-225.03f,430.50f,1.710f},
-    {-729.54f,-186.26f,430.12f,1.902f},
-    {-756.01f,-219.23f,430.50f,2.369f},
-    {-798.01f,-227.24f,429.84f,1.446f},
+    {-724.12f, -176.64f, 430.03f, 2.543f}, 
+    {-766.70f, -225.03f, 430.50f, 1.710f}, 
+    {-729.54f, -186.26f, 430.12f, 1.902f}, 
+    {-756.01f, -219.23f, 430.50f, 2.369f}, 
+    {-798.01f, -227.24f, 429.84f, 1.446f}, 
 };
 
 class boss_flame_leviathan : public CreatureScript
@@ -279,7 +279,7 @@ public:
                     if (towerOfFlames)
                     {
                         me->AddAura(SPELL_BUFF_TOWER_OF_FLAMES, me);
-                        events.ScheduleEvent(EVENT_MIMIRON_S_INFERNO,70*IN_MILLISECONDS);
+                        events.ScheduleEvent(EVENT_MIMIRON_S_INFERNO, 70*IN_MILLISECONDS);
                     }
 
                     if (towerOfFrost)
@@ -309,7 +309,7 @@ public:
             if (!bReset)
             {
                 std::list<Creature*> lSeats;
-                me->GetCreatureListWithEntryInGrid(lSeats, 33114,17.0f);
+                me->GetCreatureListWithEntryInGrid(lSeats, 33114, 17.0f);
                 if (lSeats.empty())
                     return;
                 for(std::list<Creature*>::const_iterator itr = lSeats.begin(); itr != lSeats.end(); itr++)
@@ -325,7 +325,7 @@ public:
             else
             {
                 std::list<Creature*> lSeats;
-                me->GetCreatureListWithEntryInGrid(lSeats, 33114,17.0f);
+                me->GetCreatureListWithEntryInGrid(lSeats, 33114, 17.0f);
                 if (lSeats.empty())
                     return;
                 for(std::list<Creature*>::const_iterator itr = lSeats.begin(); itr != lSeats.end(); itr++)
@@ -393,7 +393,7 @@ public:
                 return;
             }
 
-            if (uiShutdown == RAID_MODE(2,4))
+            if (uiShutdown == RAID_MODE(2, 4))
             {
                 uiShutdown = 0;
                 events.ScheduleEvent(EVENT_SHUTDOWN, 0);
@@ -482,7 +482,7 @@ public:
             case EVENT_THORIM_S_HAMMER: // Tower of Storms
                 for (uint8 i = 0; i < 7; ++i)
                 {
-                    if (Creature* pThorim = DoSummon(MOB_THORIM_BEACON, me, float(urand(20,60)), 20000, TEMPSUMMON_TIMED_DESPAWN))
+                    if (Creature* pThorim = DoSummon(MOB_THORIM_BEACON, me, float(urand(20, 60)), 20000, TEMPSUMMON_TIMED_DESPAWN))
                         pThorim->GetMotionMaster()->MoveRandom(100);
                 }
                 DoScriptText(SAY_TOWER_STORM, me);
@@ -633,7 +633,7 @@ public:
                 if (!apply)
                     return;
                 else
-                    DoScriptText(SAY_PLAYER_RIDING,me);
+                    DoScriptText(SAY_PLAYER_RIDING, me);
 
                 if (Creature* pTurret = CAST_CRE(vehicle->GetPassenger(SEAT_TURRET)))
                 {
@@ -691,10 +691,10 @@ public:
 
             if (NapalmTimer <= diff)
             {
-                    if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     {
-                        if(CanAIAttack(pTarget))
-                            DoCast(pTarget,SPELL_NAPALM,true);
+                        if (CanAIAttack(pTarget))
+                            DoCast(pTarget, SPELL_NAPALM, true);
                     }
                     NapalmTimer = 5000;
             }
@@ -799,11 +799,11 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            float x,y,z;
-            me->GetPosition(x,y,z);
+            float x, y, z;
+            me->GetPosition(x, y, z);
             z = me->GetMap()->GetHeight(x, y, z);
-            me->GetMotionMaster()->MovePoint(0,x,y,z);
-            me->GetMap()->CreatureRelocation(me, x,y,z,0);
+            me->GetMotionMaster()->MovePoint(0, x, y, z);
+            me->GetMap()->CreatureRelocation(me, x, y, z, 0);
         }
 
         void UpdateAI(const uint32 /*diff*/)
@@ -869,7 +869,7 @@ public:
                 {
                     Creature* pContainer = me->FindNearestCreature(MOB_CONTAINER, 50, true);
                     if (pContainer && !pContainer->GetVehicle())
-                        me->GetMotionMaster()->MovePoint(1,pContainer->GetPositionX(),pContainer->GetPositionY(),pContainer->GetPositionZ());
+                        me->GetMotionMaster()->MovePoint(1, pContainer->GetPositionX(), pContainer->GetPositionY(), pContainer->GetPositionZ());
                 }
                 MoveTimer = 30000; //check next 30 seconds
             }
@@ -934,8 +934,8 @@ public:
 
         void JustDied(Unit* /*Who*/)
         {
-            if (me->GetHomePosition().IsInDist(Center,50.f))
-                instance->SetData(TYPE_COLOSSUS,instance->GetData(TYPE_COLOSSUS)+1);
+            if (me->GetHomePosition().IsInDist(Center, 50.f))
+                instance->SetData(TYPE_COLOSSUS, instance->GetData(TYPE_COLOSSUS)+1);
         }
 
         void UpdateAI(const uint32 /*diff*/)
@@ -968,7 +968,7 @@ public:
 
         void MoveInLineOfSight(Unit* who)
         {
-            if (who->GetTypeId() == TYPEID_PLAYER && who->IsVehicle() && me->IsInRange(who,0,10,false))
+            if (who->GetTypeId() == TYPEID_PLAYER && who->IsVehicle() && me->IsInRange(who, 0, 10, false))
             {
                 if (Creature* pTrigger = DoSummonFlyer(NPC_THORIM_TARGET_BEACON, me, 20, 0, 1000, TEMPSUMMON_TIMED_DESPAWN))
                     pTrigger->CastSpell(who, SPELL_THORIM_S_HAMMER, true);
@@ -1027,15 +1027,15 @@ public:
 
             if (!HasEscortState(STATE_ESCORT_ESCORTING))
             {
-                Start(false,true,0,NULL,false,true);
+                Start(false, true, 0, NULL, false, true);
             }
             else
             {
-                if(infernoTimer <= diff)
+                if (infernoTimer <= diff)
                 {
                     if (Creature* pTrigger = DoSummonFlyer(NPC_MIMIRON_TARGET_BEACON, me, 20, 0, 1000, TEMPSUMMON_TIMED_DESPAWN))
                     {
-                        pTrigger->CastSpell(me->GetPositionX(),me->GetPositionY(),me->GetPositionZ(), SPELL_MIMIRON_S_INFERNO, true);
+                        pTrigger->CastSpell(me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), SPELL_MIMIRON_S_INFERNO, true);
                         infernoTimer = 2000;
                     }
                 }
@@ -1071,7 +1071,7 @@ public:
 
         void MoveInLineOfSight(Unit* who)
         {
-            if (who->GetTypeId() == TYPEID_PLAYER && who->IsVehicle() && me->IsInRange(who,0,5,false))
+            if (who->GetTypeId() == TYPEID_PLAYER && who->IsVehicle() && me->IsInRange(who, 0, 5, false))
             {
                 if (Creature* pTrigger = DoSummonFlyer(NPC_HODIR_TARGET_BEACON, me, 20, 0, 1000, TEMPSUMMON_TIMED_DESPAWN))
                     pTrigger->CastSpell(who, SPELL_HODIR_S_FURY, true);
@@ -1120,7 +1120,7 @@ public:
 
         void UpdateAI(const uint32 diff)
         {
-            if(summonTimer <= diff)
+            if (summonTimer <= diff)
             {
                 DoCast(SPELL_FREYA_S_WARD_EFFECT_1) ;
                 DoCast(SPELL_FREYA_S_WARD_EFFECT_2) ;
@@ -1168,7 +1168,7 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if(lashTimer <= diff)
+            if (lashTimer <= diff)
             {
                 DoCast(SPELL_LASH);
                 lashTimer = 20000;
@@ -1200,10 +1200,10 @@ public:
             if (pPlayer)
             {
                 pPlayer->PrepareGossipMenu(pCreature);
-                instance->instance->LoadGrid(364,-16); //make sure leviathan is loaded
+                instance->instance->LoadGrid(364, -16); //make sure leviathan is loaded
 
 
-                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,GOSSIP_ITEM_2,GOSSIP_SENDER_MAIN,GOSSIP_ACTION_INFO_DEF+2);
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
                 pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
             }
             break;
@@ -1237,7 +1237,7 @@ public:
         {
             pPlayer->PrepareGossipMenu(pCreature);
 
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,GOSSIP_ITEM_1,GOSSIP_SENDER_MAIN,GOSSIP_ACTION_INFO_DEF+1);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
             pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
         }
         return true;
@@ -1296,7 +1296,7 @@ public:
     //            {
     //                pPlayer->PrepareGossipMenu(pCreature);
     //
-    //                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,GOSSIP_ITEM_2,GOSSIP_SENDER_MAIN,GOSSIP_ACTION_INFO_DEF+2);
+    //                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
     //                pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
     //            }
     //            break;
@@ -1316,7 +1316,7 @@ public:
     //    {
     //        pPlayer->PrepareGossipMenu(pCreature);
     //
-    //        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,GOSSIP_ITEM_1,GOSSIP_SENDER_MAIN,GOSSIP_ACTION_INFO_DEF+1);
+    //        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
     //        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
     //    }
     //    return true;
@@ -1362,9 +1362,9 @@ public:
 
     bool OnTrigger(Player* pPlayer, const AreaTriggerEntry* /*pAt*/)
     {
-        if(Creature* vehicle = pPlayer->GetVehicleCreatureBase())
+        if (Creature* vehicle = pPlayer->GetVehicleCreatureBase())
         {
-            if(!vehicle->HasAura(SPELL_AUTO_REPAIR))
+            if (!vehicle->HasAura(SPELL_AUTO_REPAIR))
             {
                 pPlayer->MonsterTextEmote(EMOTE_REPAIR, pPlayer->GetGUID(), true);
                 pPlayer->CastSpell(vehicle, SPELL_AUTO_REPAIR, true);

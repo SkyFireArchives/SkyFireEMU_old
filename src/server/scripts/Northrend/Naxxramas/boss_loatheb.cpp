@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,20 +27,20 @@
 
 enum Spells
 {
-    SPELL_NECROTIC_AURA                                    = 55593,
-    SPELL_SUMMON_SPORE                                     = 29234,
-    SPELL_DEATHBLOOM                                       = 29865,
-    H_SPELL_DEATHBLOOM                                     = 55053,
-    SPELL_INEVITABLE_DOOM                                  = 29204,
+    SPELL_NECROTIC_AURA                                    = 55593, 
+    SPELL_SUMMON_SPORE                                     = 29234, 
+    SPELL_DEATHBLOOM                                       = 29865, 
+    H_SPELL_DEATHBLOOM                                     = 55053, 
+    SPELL_INEVITABLE_DOOM                                  = 29204, 
     H_SPELL_INEVITABLE_DOOM                                = 55052
 };
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_AURA,
-    EVENT_BLOOM,
-    EVENT_DOOM,
+    EVENT_NONE, 
+    EVENT_AURA, 
+    EVENT_BLOOM, 
+    EVENT_DOOM, 
 };
 
 class boss_loatheb : public CreatureScript
@@ -85,11 +85,11 @@ public:
                     case EVENT_BLOOM:
                         // TODO : Add missing text
                         DoCastAOE(SPELL_SUMMON_SPORE, true);
-                        DoCastAOE(RAID_MODE(SPELL_DEATHBLOOM,H_SPELL_DEATHBLOOM));
+                        DoCastAOE(RAID_MODE(SPELL_DEATHBLOOM, H_SPELL_DEATHBLOOM));
                         events.ScheduleEvent(EVENT_BLOOM, 30000);
                         break;
                     case EVENT_DOOM:
-                        DoCastAOE(RAID_MODE(SPELL_INEVITABLE_DOOM,H_SPELL_INEVITABLE_DOOM));
+                        DoCastAOE(RAID_MODE(SPELL_INEVITABLE_DOOM, H_SPELL_INEVITABLE_DOOM));
                         events.ScheduleEvent(EVENT_DOOM, events.GetTimer() < 5*60000 ? 30000 : 15000);
                         break;
                 }

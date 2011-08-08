@@ -75,7 +75,7 @@ void GossipMenu::AddMenuItem(uint8 Icon, const std::string& Message, bool Coded)
 
 void GossipMenu::AddMenuItem(uint8 Icon, char const* Message, bool Coded)
 {
-    AddMenuItem(Icon, std::string(Message ? Message : ""),Coded);
+    AddMenuItem(Icon, std::string(Message ? Message : ""), Coded);
 }
 
 void GossipMenu::AddMenuItem(uint8 Icon, char const* Message, uint32 dtSender, uint32 dtAction, char const* BoxMessage, uint32 BoxMoney, bool Coded)
@@ -210,7 +210,7 @@ void PlayerMenu::SendPointOfInterest(uint32 poi_id)
     PointOfInterest const* poi = sObjectMgr->GetPointOfInterest(poi_id);
     if (!poi)
     {
-        sLog->outErrorDb("Request to send non-existing POI (Id: %u), ignored.",poi_id);
+        sLog->outErrorDb("Request to send non-existing POI (Id: %u), ignored.", poi_id);
         return;
     }
 
@@ -452,14 +452,14 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
     data << Objectives;
     data << QuestTargetTextWindow;
     data << QuestTargetName;
-    data << uint16(0);                                      // Unknown Value maybe string                             
+    data << uint16(0);                                      // Unknown Value maybe string
     data << uint32(pQuest->GetQuestGiverPortrait());
     data << uint32(0);
-    data << uint8(ActivateAccept ? 1 : 0);  
+    data << uint8(ActivateAccept ? 1 : 0);
     data << uint32(pQuest->GetQuestFlags());
     data << uint32(pQuest->GetSuggestedPlayers());
     data << uint8(0);              //Empty?
-    data << uint8(pQuest->GetQuestStartType());   
+    data << uint8(pQuest->GetQuestStartType());
     data << uint32(pQuest->GetRequiredSpell());
 
     ItemPrototype const* IProto;
@@ -697,7 +697,7 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
 
     data << uint32(pQuest->GetSoundAccept());
     data << uint32(pQuest->GetSoundTurnIn());
-    
+
     pSession->SendPacket(&data);
     sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Sent SMSG_QUEST_QUERY_RESPONSE questid=%u", pQuest->GetQuestId());
 }
@@ -813,7 +813,6 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
 
     data << uint32(0);
     data << uint32(0);
-
 
     pSession->SendPacket(&data);
     sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Sent SMSG_QUESTGIVER_OFFER_REWARD NPCGuid=%u, questid=%u", GUID_LOPART(npcGUID), pQuest->GetQuestId());

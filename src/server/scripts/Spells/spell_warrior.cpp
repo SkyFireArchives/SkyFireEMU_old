@@ -25,7 +25,7 @@
 
 enum WarriorSpells
 {
-    WARRIOR_SPELL_LAST_STAND_TRIGGERED           = 12976,
+    WARRIOR_SPELL_LAST_STAND_TRIGGERED           = 12976, 
 };
 
 class spell_warr_last_stand : public SpellScriptLoader

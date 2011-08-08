@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -36,7 +36,7 @@ Script Data End */
 
 enum Spells
 {
-    SPELL_CURSE_OF_EXERTION                     = 52772,
+    SPELL_CURSE_OF_EXERTION                     = 52772, 
     SPELL_TIME_WARP                             = 52766, //Time slows down, reducing attack, casting and movement speed by 70% for 6 sec.
     SPELL_TIME_STOP                             = 58848, //Stops time in a 50 yard sphere for 2 sec.
     SPELL_WOUNDING_STRIKE                       = 52771, //Used only on the tank
@@ -131,7 +131,7 @@ public:
 
             if (uiTimeWarpTimer < diff)
             {
-                DoScriptText(RAND(SAY_TIME_WARP_1,SAY_TIME_WARP_2,SAY_TIME_WARP_3), me);
+                DoScriptText(RAND(SAY_TIME_WARP_1, SAY_TIME_WARP_2, SAY_TIME_WARP_3), me);
                 DoCastAOE(SPELL_TIME_WARP);
                 uiTimeWarpTimer = 25300;
             } else uiTimeWarpTimer -= diff;
@@ -152,7 +152,7 @@ public:
             if (victim == me)
                 return;
 
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
     };
 

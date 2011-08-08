@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -36,14 +36,14 @@ enum eEnums
     SAY_AGGRO               = -1000360, //signed for 17969
     SAY_SUMMONDRUIDS        = -1000361, //signed for 17969
 
-    SPELL_SLEEP             = 24777,
-    SPELL_NOXIOUSBREATH     = 24818,
-    SPELL_TAILSWEEP         = 15847,
+    SPELL_SLEEP             = 24777, 
+    SPELL_NOXIOUSBREATH     = 24818, 
+    SPELL_TAILSWEEP         = 15847, 
     //SPELL_MARKOFNATURE   = 25040,                        // Not working
-    SPELL_LIGHTNINGWAVE     = 24819,
-    SPELL_SUMMONDRUIDS      = 24795,
+    SPELL_LIGHTNINGWAVE     = 24819, 
+    SPELL_SUMMONDRUIDS      = 24795, 
 
-    SPELL_SUMMON_PLAYER     = 24776,
+    SPELL_SUMMON_PLAYER     = 24776, 
 
     //druid spells
     SPELL_MOONFIRE          = 21669

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,21 +33,21 @@
 //ACTIVE or PASSIVE = Hostility to environment surroundings.
 enum eEscortFaction
 {
-    FACTION_ESCORT_A_NEUTRAL_PASSIVE    = 10,
-    FACTION_ESCORT_H_NEUTRAL_PASSIVE    = 33,
-    FACTION_ESCORT_N_NEUTRAL_PASSIVE    = 113,
+    FACTION_ESCORT_A_NEUTRAL_PASSIVE    = 10, 
+    FACTION_ESCORT_H_NEUTRAL_PASSIVE    = 33, 
+    FACTION_ESCORT_N_NEUTRAL_PASSIVE    = 113, 
 
-    FACTION_ESCORT_A_NEUTRAL_ACTIVE     = 231,
-    FACTION_ESCORT_H_NEUTRAL_ACTIVE     = 232,
-    FACTION_ESCORT_N_NEUTRAL_ACTIVE     = 250,
+    FACTION_ESCORT_A_NEUTRAL_ACTIVE     = 231, 
+    FACTION_ESCORT_H_NEUTRAL_ACTIVE     = 232, 
+    FACTION_ESCORT_N_NEUTRAL_ACTIVE     = 250, 
 
-    FACTION_ESCORT_N_FRIEND_PASSIVE     = 290,
-    FACTION_ESCORT_N_FRIEND_ACTIVE      = 495,
+    FACTION_ESCORT_N_FRIEND_PASSIVE     = 290, 
+    FACTION_ESCORT_N_FRIEND_ACTIVE      = 495, 
 
-    FACTION_ESCORT_A_PASSIVE            = 774,
-    FACTION_ESCORT_H_PASSIVE            = 775,
+    FACTION_ESCORT_A_PASSIVE            = 774, 
+    FACTION_ESCORT_H_PASSIVE            = 775, 
 
-    FACTION_ESCORT_N_ACTIVE             = 1986,
+    FACTION_ESCORT_N_ACTIVE             = 1986, 
     FACTION_ESCORT_H_ACTIVE             = 2046
 };
 

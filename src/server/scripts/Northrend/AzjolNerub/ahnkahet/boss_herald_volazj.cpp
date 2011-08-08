@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -32,16 +32,16 @@
 enum Spells
 {
     SPELL_INSANITY                                = 57496, //Dummy
-    INSANITY_VISUAL                               = 57561,
-    SPELL_INSANITY_TARGET                         = 57508,
-    SPELL_MIND_FLAY                               = 57941,
-    SPELL_SHADOW_BOLT_VOLLEY                      = 57942,
-    SPELL_SHIVER                                  = 57949,
+    INSANITY_VISUAL                               = 57561, 
+    SPELL_INSANITY_TARGET                         = 57508, 
+    SPELL_MIND_FLAY                               = 57941, 
+    SPELL_SHADOW_BOLT_VOLLEY                      = 57942, 
+    SPELL_SHIVER                                  = 57949, 
     SPELL_CLONE_PLAYER                            = 57507, //casted on player during insanity
-    SPELL_INSANITY_PHASING_1                      = 57508,
-    SPELL_INSANITY_PHASING_2                      = 57509,
-    SPELL_INSANITY_PHASING_3                      = 57510,
-    SPELL_INSANITY_PHASING_4                      = 57511,
+    SPELL_INSANITY_PHASING_1                      = 57508, 
+    SPELL_INSANITY_PHASING_2                      = 57509, 
+    SPELL_INSANITY_PHASING_3                      = 57510, 
+    SPELL_INSANITY_PHASING_4                      = 57511, 
     SPELL_INSANITY_PHASING_5                      = 57512
 };
 
@@ -53,18 +53,18 @@ enum Creatures
 //not in db
 enum Yells
 {
-    SAY_AGGRO                                     = -1619030,
-    SAY_SLAY_1                                    = -1619031,
-    SAY_SLAY_2                                    = -1619032,
-    SAY_SLAY_3                                    = -1619033,
-    SAY_DEATH_1                                   = -1619034,
-    SAY_DEATH_2                                   = -1619035,
+    SAY_AGGRO                                     = -1619030, 
+    SAY_SLAY_1                                    = -1619031, 
+    SAY_SLAY_2                                    = -1619032, 
+    SAY_SLAY_3                                    = -1619033, 
+    SAY_DEATH_1                                   = -1619034, 
+    SAY_DEATH_2                                   = -1619035, 
     SAY_PHASE                                     = -1619036
 };
 
 enum Achievements
 {
-    ACHIEV_QUICK_DEMISE_START_EVENT               = 20382,
+    ACHIEV_QUICK_DEMISE_START_EVENT               = 20382, 
 };
 
 class boss_volazj : public CreatureScript
@@ -74,7 +74,7 @@ public:
 
     struct boss_volazjAI : public ScriptedAI
     {
-        boss_volazjAI(Creature* pCreature) : ScriptedAI(pCreature),Summons(me)
+        boss_volazjAI(Creature* pCreature) : ScriptedAI(pCreature), Summons(me)
         {
             pInstance = pCreature->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
@@ -136,12 +136,12 @@ public:
                     if (!plr || !plr->isAlive())
                         continue;
                     // Summon clone
-                    if (Unit *summon = me->SummonCreature(MOB_TWISTED_VISAGE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(),TEMPSUMMON_CORPSE_DESPAWN,0))
+                    if (Unit *summon = me->SummonCreature(MOB_TWISTED_VISAGE, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_CORPSE_DESPAWN, 0))
                     {
                         // clone
                         plr->CastSpell(summon, SPELL_CLONE_PLAYER, true);
                         // set phase
-                        summon->SetPhaseMask((1<<(4+insanityHandled)),true);
+                        summon->SetPhaseMask((1<<(4+insanityHandled)), true);
                     }
                 }
                 ++insanityHandled;
@@ -171,7 +171,7 @@ public:
             }
 
             // Visible for all players in insanity
-            me->SetPhaseMask((1|16|32|64|128|256),true);
+            me->SetPhaseMask((1|16|32|64|128|256), true);
             // Used for Insanity handling
             insanityHandled = 0;
 
@@ -318,7 +318,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
     };
 

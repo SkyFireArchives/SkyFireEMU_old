@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -41,19 +41,19 @@ enum Spells
     H_SPELL_LIGHTING_RING_1                                = 59848, //Periodic Trigger (interval 2s) spell = 59849
     SPELL_STATIC_CHARGE                                    = 50834, //Periodic Trigger 2s interval, spell =50835
     H_SPELL_STATIC_CHARGE                                  = 59846, //Periodic Trigger 2s interval, spell =50847
-    SPELL_CHAIN_LIGHTING                                   = 50830,
-    H_SPELL_CHAIN_LIGHTING                                 = 59844,
-    SPELL_LIGHTING_SHIELD                                  = 50831,
-    H_SPELL_LIGHTING_SHIELD                                = 59845,
+    SPELL_CHAIN_LIGHTING                                   = 50830, 
+    H_SPELL_CHAIN_LIGHTING                                 = 59844, 
+    SPELL_LIGHTING_SHIELD                                  = 50831, 
+    H_SPELL_LIGHTING_SHIELD                                = 59845, 
     SPELL_FRENZY                                           = 28747
 };
 
 enum Yells
 {
-    SAY_AGGRO                                              = -1599011,
-    SAY_SLAY_1                                             = -1599012,
-    SAY_SLAY_2                                             = -1599013,
-    SAY_SLAY_3                                             = -1599014,
+    SAY_AGGRO                                              = -1599011, 
+    SAY_SLAY_1                                             = -1599012, 
+    SAY_SLAY_2                                             = -1599013, 
+    SAY_SLAY_3                                             = -1599014, 
     SAY_DEATH                                              = -1599015
 };
 
@@ -61,9 +61,9 @@ enum Yells
 
 enum SjonnirCreatures
 {
-    CREATURE_FORGED_IRON_TROGG                             = 27979,
-    CREATURE_MALFORMED_OOZE                                = 27981,
-    CREATURE_FORGED_IRON_DWARF                             = 27982,
+    CREATURE_FORGED_IRON_TROGG                             = 27979, 
+    CREATURE_MALFORMED_OOZE                                = 27981, 
+    CREATURE_FORGED_IRON_DWARF                             = 27982, 
     CREATURE_IRON_SLUDGE                                   = 28165
 };
 
@@ -193,8 +193,8 @@ public:
             {
                 uint32 uiSummonPipe = rand()%2;
                 me->SummonCreature(uiEncounterTimer > DATA_TIME_BEFORE_OOZE ? CREATURE_MALFORMED_OOZE :
-                                           RAND(CREATURE_FORGED_IRON_DWARF,CREATURE_FORGED_IRON_TROGG),
-                                           PipeLocations[uiSummonPipe].x, PipeLocations[uiSummonPipe].y, PipeLocations[uiSummonPipe].z, 0.0f,
+                                           RAND(CREATURE_FORGED_IRON_DWARF, CREATURE_FORGED_IRON_TROGG), 
+                                           PipeLocations[uiSummonPipe].x, PipeLocations[uiSummonPipe].y, PipeLocations[uiSummonPipe].z, 0.0f, 
                                            TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
                 uiSummonTimer = 20000;
             } else uiSummonTimer -= diff;
@@ -238,7 +238,7 @@ public:
         {
             if (victim == me)
                 return;
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
 
         void KilledIronSludge()

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -82,14 +82,14 @@ public:
                 if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     DoCast(pTarget, SPELL_RAINOFFIRE);
 
-                RainOfFire_Timer = urand(4000,12000);
+                RainOfFire_Timer = urand(4000, 12000);
             } else RainOfFire_Timer -= diff;
 
             //GehennasCurse_Timer
             if (GehennasCurse_Timer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_GEHENNASCURSE);
-                GehennasCurse_Timer = urand(22000,30000);
+                GehennasCurse_Timer = urand(22000, 30000);
             } else GehennasCurse_Timer -= diff;
 
             DoMeleeAttackIfReady();

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -202,7 +202,7 @@ public:
                     if (!Submerged && WaitTimer2 <= diff)//wait 500ms before emerge anim
                     {
                         me->RemoveAllAuras();
-                        me->RemoveFlag(UNIT_NPC_EMOTESTATE,EMOTE_STATE_SUBMERGED);
+                        me->RemoveFlag(UNIT_NPC_EMOTESTATE, EMOTE_STATE_SUBMERGED);
                         DoCast(me, SPELL_EMERGE, false);
                         WaitTimer2 = 60000;//never reached
                         WaitTimer = 3000;
@@ -237,7 +237,7 @@ public:
 
                 if (SpoutTimer <= diff)
                 {
-                    me->MonsterTextEmote(EMOTE_SPOUT,0,true);
+                    me->MonsterTextEmote(EMOTE_SPOUT, 0, true);
                     me->SetReactState(REACT_PASSIVE);
                     me->GetMotionMaster()->MoveRotate(20000, rand()%2 ? ROTATE_DIRECTION_LEFT : ROTATE_DIRECTION_RIGHT);
                     SpoutTimer = 45000;
@@ -277,7 +277,7 @@ public:
                         Map::PlayerList const &PlayerList = pMap->GetPlayers();
                         for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
                         {
-                            if (i->getSource() && i->getSource()->isAlive() && me->HasInArc(float(diff/20000*M_PI*2),i->getSource()) && me->IsWithinDist(i->getSource(), SPOUT_DIST) && !i->getSource()->IsInWater())
+                            if (i->getSource() && i->getSource()->isAlive() && me->HasInArc(float(diff/20000*M_PI*2), i->getSource()) && me->IsWithinDist(i->getSource(), SPOUT_DIST) && !i->getSource()->IsInWater())
                                 DoCast(i->getSource(), SPELL_SPOUT, true);//only knock back palyers in arc, in 100yards, not in water
                         }
                     }
@@ -297,7 +297,7 @@ public:
 
                 if (GeyserTimer <= diff)
                 {
-                    Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,1);
+                    Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 1);
                     if (!pTarget && me->getVictim())
                         pTarget = me->getVictim();
                     if (pTarget)
@@ -309,7 +309,7 @@ public:
                 {
                     if (WaterboltTimer <= diff)
                     {
-                        Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                        Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                         if (!pTarget && me->getVictim())
                             pTarget = me->getVictim();
                         if (pTarget)
@@ -331,7 +331,7 @@ public:
                     me->InterruptNonMeleeSpells(false);//shouldn't be any
                     me->RemoveAllAuras();
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-                    me->RemoveFlag(UNIT_NPC_EMOTESTATE,EMOTE_STATE_SUBMERGED);
+                    me->RemoveFlag(UNIT_NPC_EMOTESTATE, EMOTE_STATE_SUBMERGED);
                     DoCast(me, SPELL_EMERGE, true);
                     Spawned = false;
                     SpoutTimer = 3000; // directly cast Spout after emerging!
@@ -355,8 +355,8 @@ public:
                     {
                         Creature* Summoned;
                         if (i < 6)
-                            Summoned = me->SummonCreature(MOB_COILFANG_AMBUSHER,AddPos[i][0],AddPos[i][1],AddPos[i][2], 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
-                        else Summoned = me->SummonCreature(MOB_COILFANG_GUARDIAN,AddPos[i][0],AddPos[i][1],AddPos[i][2], 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
+                            Summoned = me->SummonCreature(MOB_COILFANG_AMBUSHER, AddPos[i][0], AddPos[i][1], AddPos[i][2], 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
+                        else Summoned = me->SummonCreature(MOB_COILFANG_GUARDIAN, AddPos[i][0], AddPos[i][1], AddPos[i][2], 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
 
                         if (Summoned)
                             Summons.Summon(Summoned);
@@ -455,7 +455,7 @@ public:
                 pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 int bp0 = 1100;
                 if (pTarget)
-                    me->CastCustomSpell(pTarget,SPELL_SHOOT,&bp0,NULL,NULL,true);
+                    me->CastCustomSpell(pTarget, SPELL_SHOOT, &bp0, NULL, NULL, true);
                 ShootBowTimer = 4000+rand()%5000;
                 MultiShotTimer += 1500;//add global cooldown
             } else ShootBowTimer -= diff;

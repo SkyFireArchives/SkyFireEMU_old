@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,26 +33,26 @@ EndScriptData */
 
 enum eSays
 {
-    SAY_AGGRO_1                = -1543009,
-    SAY_AGGRO_2                = -1543010,
-    SAY_AGGRO_3                = -1543011,
-    SAY_SUMMON                 = -1543012,
-    SAY_CURSE                  = -1543013,
-    SAY_KILL_1                 = -1543014,
-    SAY_DIE                    = -1543015,
-    SAY_WIPE                   = -1543016,
+    SAY_AGGRO_1                = -1543009, 
+    SAY_AGGRO_2                = -1543010, 
+    SAY_AGGRO_3                = -1543011, 
+    SAY_SUMMON                 = -1543012, 
+    SAY_CURSE                  = -1543013, 
+    SAY_KILL_1                 = -1543014, 
+    SAY_DIE                    = -1543015, 
+    SAY_WIPE                   = -1543016, 
 };
 
 enum eSpells
 {
-    SPELL_ORBITAL_STRIKE       = 30637,
-    SPELL_SHADOW_WHIP          = 30638,
-    SPELL_TREACHEROUS_AURA     = 30695,
-    H_SPELL_BANE_OF_TREACHERY  = 37566,
-    SPELL_DEMONIC_SHIELD       = 31901,
-    SPELL_SHADOW_BOLT          = 30686,
-    H_SPELL_SHADOW_BOLT        = 39297,
-    SPELL_SUMMON_FIENDISH_HOUND= 30707,
+    SPELL_ORBITAL_STRIKE       = 30637, 
+    SPELL_SHADOW_WHIP          = 30638, 
+    SPELL_TREACHEROUS_AURA     = 30695, 
+    H_SPELL_BANE_OF_TREACHERY  = 37566, 
+    SPELL_DEMONIC_SHIELD       = 31901, 
+    SPELL_SHADOW_BOLT          = 30686, 
+    H_SPELL_SHADOW_BOLT        = 39297, 
+    SPELL_SUMMON_FIENDISH_HOUND= 30707, 
 };
 
 class boss_omor_the_unscarred : public CreatureScript
@@ -98,7 +98,7 @@ class boss_omor_the_unscarred : public CreatureScript
 
             void EnterCombat(Unit * /*who*/)
             {
-                DoScriptText(RAND(SAY_AGGRO_1,SAY_AGGRO_2,SAY_AGGRO_3), me);
+                DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
             }
 
             void KilledUnit(Unit* /*victim*/)
@@ -113,7 +113,7 @@ class boss_omor_the_unscarred : public CreatureScript
             {
                 DoScriptText(SAY_SUMMON, me);
 
-                if (Unit* random = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit* random = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     summoned->AI()->AttackStart(random);
 
                 ++SummonedCount;
@@ -168,7 +168,7 @@ class boss_omor_the_unscarred : public CreatureScript
                         Unit* temp = NULL;
                         if (me->IsWithinMeleeRange(me->getVictim()))
                             temp = me->getVictim();
-                        else temp = SelectUnit(SELECT_TARGET_RANDOM,0);
+                        else temp = SelectUnit(SELECT_TARGET_RANDOM, 0);
 
                         if (temp && temp->GetTypeId() == TYPEID_PLAYER)
                         {
@@ -198,7 +198,7 @@ class boss_omor_the_unscarred : public CreatureScript
                 {
                     DoScriptText(SAY_CURSE, me);
 
-                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     {
                         DoCast(pTarget, SPELL_TREACHEROUS_AURA);
                         Aura_Timer = 8000+rand()%8000;
@@ -209,7 +209,7 @@ class boss_omor_the_unscarred : public CreatureScript
 
                 if (Shadowbolt_Timer <= diff)
                 {
-                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     {
                         if (pTarget)
                             pTarget = me->getVictim();

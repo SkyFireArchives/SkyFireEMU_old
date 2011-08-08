@@ -36,12 +36,12 @@ EndContentData */
 
 enum eEnums
 {
-    SPELL_GOLDTHORN_TEA                         = 13028,
-    SPELL_TEACHING_GOLDTHORN_TEA                = 13029,
-    SPELL_MIGHT_TROLLS_BLOOD_POTION             = 3451,
-    SPELL_TEACHING_MIGHTY_TROLLS_BLOOD_POTION   = 13030,
-    GOSSIP_TEXT_TEA_ANSWER                      = 2114,
-    GOSSIP_TEXT_POTION_ANSWER                   = 2115,
+    SPELL_GOLDTHORN_TEA                         = 13028, 
+    SPELL_TEACHING_GOLDTHORN_TEA                = 13029, 
+    SPELL_MIGHT_TROLLS_BLOOD_POTION             = 3451, 
+    SPELL_TEACHING_MIGHTY_TROLLS_BLOOD_POTION   = 13030, 
+    GOSSIP_TEXT_TEA_ANSWER                      = 2114, 
+    GOSSIP_TEXT_POTION_ANSWER                   = 2115, 
 };
 
 #define GOSSIP_ITEM_TEA     "Teach me the cooking recipe"
@@ -101,7 +101,7 @@ public:
 
         if (pInstance)
         {
-            pInstance->SetData(DATA_GONG_WAVES,pInstance->GetData(DATA_GONG_WAVES)+1);
+            pInstance->SetData(DATA_GONG_WAVES, pInstance->GetData(DATA_GONG_WAVES)+1);
             return true;
         }
 
@@ -138,7 +138,7 @@ public:
 
         void Reset()
         {
-            uiWebTimer = urand(5000,8000);
+            uiWebTimer = urand(5000, 8000);
         }
 
         void UpdateAI(const uint32 uiDiff)
@@ -152,7 +152,7 @@ public:
                 if (uiWebTimer <= uiDiff)
                 {
                     DoCast(me->getVictim(), SPELL_WEB);
-                    uiWebTimer = urand(7000,16000);
+                    uiWebTimer = urand(7000, 16000);
                 } else uiWebTimer -= uiDiff;
             }
 
@@ -162,7 +162,7 @@ public:
         void JustDied(Unit* /*pKiller*/)
         {
             if (pInstance)
-                pInstance->SetData(DATA_GONG_WAVES,pInstance->GetData(DATA_GONG_WAVES)+1);
+                pInstance->SetData(DATA_GONG_WAVES, pInstance->GetData(DATA_GONG_WAVES)+1);
         }
     };
 

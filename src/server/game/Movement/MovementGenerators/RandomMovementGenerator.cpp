@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -52,7 +52,7 @@ template<>
 void
 RandomMovementGenerator<Creature>::_setRandomLocation(Creature &creature)
 {
-    float X,Y,Z,z,nx,ny,nz,ori,dist;
+    float X, Y, Z, z, nx, ny, nz, ori, dist;
 
     creature.GetHomePosition(X, Y, Z, ori);
 
@@ -102,13 +102,13 @@ RandomMovementGenerator<Creature>::_setRandomLocation(Creature &creature)
 
             // The fastest way to get an accurate result 90% of the time.
             // Better result can be obtained like 99% accuracy with a ray light, but the cost is too high and the code is too long.
-            nz = map->GetHeight(nx,ny,Z+dist-2.0f,false); // Map check
+            nz = map->GetHeight(nx, ny, Z+dist-2.0f, false); // Map check
             if (fabs(nz-Z)>dist)
             {
-                nz = map->GetHeight(nx,ny,Z-2.0f,true); // Vmap Horizontal or above
+                nz = map->GetHeight(nx, ny, Z-2.0f, true); // Vmap Horizontal or above
                 if (fabs(nz-Z)>dist)
                 {
-                    nz = map->GetHeight(nx,ny,Z+dist-2.0f,true); // Vmap Higher
+                    nz = map->GetHeight(nx, ny, Z+dist-2.0f, true); // Vmap Higher
                     if (fabs(nz-Z)>dist)
                         continue; // let's forget this bad coords where a z cannot be find and retry at next tick
                 }
@@ -118,7 +118,7 @@ RandomMovementGenerator<Creature>::_setRandomLocation(Creature &creature)
     }
 
     Traveller<Creature> traveller(creature);
-    creature.SetOrientation(creature.GetAngle(nx,ny));
+    creature.SetOrientation(creature.GetAngle(nx, ny));
     i_destinationHolder.SetDestination(traveller, nx, ny, nz);
     creature.AddUnitState(UNIT_STAT_ROAMING);
     if (is_air_ok)
@@ -128,7 +128,7 @@ RandomMovementGenerator<Creature>::_setRandomLocation(Creature &creature)
     //else if (is_water_ok) // Swimming mode to be done with more than this check
     else
     {
-        i_nextMoveTime.Reset(urand(500+i_destinationHolder.GetTotalTravelTime(),5000+i_destinationHolder.GetTotalTravelTime()));
+        i_nextMoveTime.Reset(urand(500+i_destinationHolder.GetTotalTravelTime(), 5000+i_destinationHolder.GetTotalTravelTime()));
         creature.AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
     }
 
@@ -149,7 +149,7 @@ RandomMovementGenerator<Creature>::Initialize(Creature &creature)
     if (!wander_distance)
         wander_distance = creature.GetRespawnRadius();
 
-    if (irand(0,RUNNING_CHANCE_RANDOMMV) > 0)
+    if (irand(0, RUNNING_CHANCE_RANDOMMV) > 0)
         creature.AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
     _setRandomLocation(creature);
 }
@@ -190,11 +190,11 @@ RandomMovementGenerator<Creature>::Update(Creature &creature, const uint32 &diff
     {
         if (i_nextMoveTime.Passed())
         {
-            if (irand(0,RUNNING_CHANCE_RANDOMMV) > 0)
+            if (irand(0, RUNNING_CHANCE_RANDOMMV) > 0)
                 creature.AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
             _setRandomLocation(creature);
         }
-        else if (creature.isPet() && creature.GetOwner() && !creature.IsWithinDist(creature.GetOwner(),PET_FOLLOW_DIST+2.5f))
+        else if (creature.isPet() && creature.GetOwner() && !creature.IsWithinDist(creature.GetOwner(), PET_FOLLOW_DIST+2.5f))
         {
            creature.RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
            _setRandomLocation(creature);

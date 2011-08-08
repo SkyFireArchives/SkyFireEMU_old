@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,21 +35,21 @@ enum eEnums
 {
     //Dathrohan spells
     SPELL_CRUSADERSHAMMER           = 17286,                //AOE stun
-    SPELL_CRUSADERSTRIKE            = 17281,
+    SPELL_CRUSADERSTRIKE            = 17281, 
     SPELL_HOLYSTRIKE                = 17284,                //weapon dmg +3
 
     //Transform
     SPELL_BALNAZZARTRANSFORM        = 17288,                //restore full HP/mana, trigger spell Balnazzar Transform Stun
 
     //Balnazzar spells
-    SPELL_SHADOWSHOCK               = 17399,
-    SPELL_MINDBLAST                 = 17287,
-    SPELL_PSYCHICSCREAM             = 13704,
-    SPELL_SLEEP                     = 12098,
-    SPELL_MINDCONTROL               = 15690,
+    SPELL_SHADOWSHOCK               = 17399, 
+    SPELL_MINDBLAST                 = 17287, 
+    SPELL_PSYCHICSCREAM             = 13704, 
+    SPELL_SLEEP                     = 12098, 
+    SPELL_MINDCONTROL               = 15690, 
 
-    NPC_DATHROHAN                   = 10812,
-    NPC_BALNAZZAR                   = 10813,
+    NPC_DATHROHAN                   = 10812, 
+    NPC_BALNAZZAR                   = 10813, 
     NPC_ZOMBIE                      = 10698                 //probably incorrect
 };
 
@@ -116,8 +116,8 @@ public:
             static uint32 uiCount = sizeof(m_aSummonPoint)/sizeof(SummonDef);
 
             for (uint8 i=0; i<uiCount; ++i)
-                me->SummonCreature(NPC_ZOMBIE,
-                m_aSummonPoint[i].m_fX, m_aSummonPoint[i].m_fY, m_aSummonPoint[i].m_fZ, m_aSummonPoint[i].m_fOrient,
+                me->SummonCreature(NPC_ZOMBIE, 
+                m_aSummonPoint[i].m_fX, m_aSummonPoint[i].m_fY, m_aSummonPoint[i].m_fZ, m_aSummonPoint[i].m_fOrient, 
                 TEMPSUMMON_TIMED_DESPAWN, HOUR*IN_MILLISECONDS);
         }
 
@@ -192,7 +192,7 @@ public:
                 //PsychicScream
                 if (m_uiPsychicScream_Timer <= uiDiff)
                 {
-                    if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                         DoCast(pTarget, SPELL_PSYCHICSCREAM);
 
                     m_uiPsychicScream_Timer = 20000;
@@ -201,7 +201,7 @@ public:
                 //DeepSleep
                 if (m_uiDeepSleep_Timer <= uiDiff)
                 {
-                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                         DoCast(pTarget, SPELL_SLEEP);
 
                     m_uiDeepSleep_Timer = 15000;

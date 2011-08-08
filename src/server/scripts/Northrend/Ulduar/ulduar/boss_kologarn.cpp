@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,45 +26,45 @@
 #include "ulduar.h"
 #include "Vehicle.h"
 
-#define SPELL_ARM_DEAD_DAMAGE   RAID_MODE(63629,63979)
-#define SPELL_TWO_ARM_SMASH     RAID_MODE(63356,64003)
-#define SPELL_ONE_ARM_SMASH     RAID_MODE(63573,64006)
-#define SPELL_STONE_SHOUT       RAID_MODE(63716,64005)
-#define SPELL_PETRIFY_BREATH    RAID_MODE(62030,63980)
+#define SPELL_ARM_DEAD_DAMAGE   RAID_MODE(63629, 63979)
+#define SPELL_TWO_ARM_SMASH     RAID_MODE(63356, 64003)
+#define SPELL_ONE_ARM_SMASH     RAID_MODE(63573, 64006)
+#define SPELL_STONE_SHOUT       RAID_MODE(63716, 64005)
+#define SPELL_PETRIFY_BREATH    RAID_MODE(62030, 63980)
 
-#define SPELL_STONE_GRIP        RAID_MODE(62166,63981)
+#define SPELL_STONE_GRIP        RAID_MODE(62166, 63981)
 #define SPELL_STONE_GRIP_CANCEL 65594 
-#define SPELL_ARM_SWEEP         RAID_MODE(63766,63983)
+#define SPELL_ARM_SWEEP         RAID_MODE(63766, 63983)
 #define SPELL_ARM_VISUAL        64753 
 
 #define SPELL_BERSERK           47008 // guess
 
 enum Events
 {
-    EVENT_NONE = 0,
-    EVENT_MELEE_CHECK,
-    EVENT_SMASH,
-    EVENT_STONE_SHOUT,
-    EVENT_RESPAWN_ARM,
-    EVENT_ENRAGE,
+    EVENT_NONE = 0, 
+    EVENT_MELEE_CHECK, 
+    EVENT_SMASH, 
+    EVENT_STONE_SHOUT, 
+    EVENT_RESPAWN_ARM, 
+    EVENT_ENRAGE, 
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1603230,
-    SAY_SLAY_1                                  = -1603231,
-    SAY_SLAY_2                                  = -1603232,
-    SAY_LEFT_ARM_GONE                           = -1603233,
-    SAY_RIGHT_ARM_GONE                          = -1603234,
-    SAY_SHOCKWAVE                               = -1603235,
-    SAY_GRAB_PLAYER                             = -1603236,
-    SAY_DEATH                                   = -1603237,
-    SAY_BERSERK                                 = -1603238,
+    SAY_AGGRO                                   = -1603230, 
+    SAY_SLAY_1                                  = -1603231, 
+    SAY_SLAY_2                                  = -1603232, 
+    SAY_LEFT_ARM_GONE                           = -1603233, 
+    SAY_RIGHT_ARM_GONE                          = -1603234, 
+    SAY_SHOCKWAVE                               = -1603235, 
+    SAY_GRAB_PLAYER                             = -1603236, 
+    SAY_DEATH                                   = -1603237, 
+    SAY_BERSERK                                 = -1603238, 
 };
 
 enum
 {
-    ACHIEV_DISARMED_START_EVENT                   = 21687,
+    ACHIEV_DISARMED_START_EVENT                   = 21687, 
 };
 
 void EncounterInCombat(Creature* me, InstanceScript* pInstance)
@@ -95,7 +95,7 @@ public:
 
     struct boss_kologarnAI : public BossAI
     {
-        boss_kologarnAI(Creature *pCreature) : BossAI(pCreature, TYPE_KOLOGARN), vehicle(pCreature->GetVehicleKit()),
+        boss_kologarnAI(Creature *pCreature) : BossAI(pCreature, TYPE_KOLOGARN), vehicle(pCreature->GetVehicleKit()), 
             uiArmCount(0)
         {
             ASSERT(vehicle);
@@ -131,7 +131,7 @@ public:
 
         void KilledUnit(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_SLAY_2,SAY_SLAY_2), me);
+            DoScriptText(RAND(SAY_SLAY_2, SAY_SLAY_2), me);
         }
 
         void PassengerBoarded(Unit *who, int8 /*seatId*/, bool apply)

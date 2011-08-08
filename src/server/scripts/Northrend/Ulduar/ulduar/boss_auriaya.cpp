@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,11 +33,11 @@
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1603050,
-    SAY_SLAY_1                                  = -1603051,
-    SAY_SLAY_2                                  = -1603052,
-    SAY_DEATH                                   = -1603053,
-    SAY_BERSERK                                 = -1603054,
+    SAY_AGGRO                                   = -1603050, 
+    SAY_SLAY_1                                  = -1603051, 
+    SAY_SLAY_2                                  = -1603052, 
+    SAY_DEATH                                   = -1603053, 
+    SAY_BERSERK                                 = -1603054, 
 };
 
 class boss_auriaya : public CreatureScript
@@ -69,12 +69,12 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             _EnterCombat();
-            DoScriptText(SAY_AGGRO,me);
+            DoScriptText(SAY_AGGRO, me);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
         }
 
         void JustDied(Unit * /*victim*/)

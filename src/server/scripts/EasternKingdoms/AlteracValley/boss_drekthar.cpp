@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -26,10 +26,10 @@
 
 enum Spells
 {
-    SPELL_WHIRLWIND                               = 15589,
-    SPELL_WHIRLWIND2                              = 13736,
-    SPELL_KNOCKDOWN                               = 19128,
-    SPELL_FRENZY                                  = 8269,
+    SPELL_WHIRLWIND                               = 15589, 
+    SPELL_WHIRLWIND2                              = 13736, 
+    SPELL_KNOCKDOWN                               = 19128, 
+    SPELL_FRENZY                                  = 8269, 
     SPELL_SWEEPING_STRIKES                        = 18765, // not sure
     SPELL_CLEAVE                                  = 20677, // not sure
     SPELL_WINDFURY                                = 35886, // not sure
@@ -38,13 +38,13 @@ enum Spells
 
 enum Yells
 {
-    YELL_AGGRO                                    = -1810000,
-    YELL_EVADE                                    = -1810001,
-    YELL_RESPAWN                                  = -1810002,
-    YELL_RANDOM1                                  = -1810003,
-    YELL_RANDOM2                                  = -1810004,
-    YELL_RANDOM3                                  = -1810005,
-    YELL_RANDOM4                                  = -1810006,
+    YELL_AGGRO                                    = -1810000, 
+    YELL_EVADE                                    = -1810001, 
+    YELL_RESPAWN                                  = -1810002, 
+    YELL_RANDOM1                                  = -1810003, 
+    YELL_RANDOM2                                  = -1810004, 
+    YELL_RANDOM3                                  = -1810005, 
+    YELL_RANDOM4                                  = -1810006, 
     YELL_RANDOM5                                  = -1810007
 };
 
@@ -66,12 +66,12 @@ public:
 
         void Reset()
         {
-            uiWhirlwindTimer = urand(1*IN_MILLISECONDS,20*IN_MILLISECONDS);
-            uiWhirlwind2Timer = urand(1*IN_MILLISECONDS,20*IN_MILLISECONDS);
+            uiWhirlwindTimer = urand(1*IN_MILLISECONDS, 20*IN_MILLISECONDS);
+            uiWhirlwind2Timer = urand(1*IN_MILLISECONDS, 20*IN_MILLISECONDS);
             uiKnockdownTimer = 12*IN_MILLISECONDS;
             uiFrenzyTimer = 6*IN_MILLISECONDS;
             uiResetTimer = 5*IN_MILLISECONDS;
-            uiYellTimer = urand(20*IN_MILLISECONDS,30*IN_MILLISECONDS); //20 to 30 seconds
+            uiYellTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS); //20 to 30 seconds
         }
 
         void EnterCombat(Unit * /*who*/)
@@ -93,31 +93,31 @@ public:
             if (uiWhirlwindTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_WHIRLWIND);
-                uiWhirlwindTimer =  urand(8*IN_MILLISECONDS,18*IN_MILLISECONDS);
+                uiWhirlwindTimer =  urand(8*IN_MILLISECONDS, 18*IN_MILLISECONDS);
             } else uiWhirlwindTimer -= diff;
 
             if (uiWhirlwind2Timer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_WHIRLWIND2);
-                uiWhirlwind2Timer = urand(7*IN_MILLISECONDS,25*IN_MILLISECONDS);
+                uiWhirlwind2Timer = urand(7*IN_MILLISECONDS, 25*IN_MILLISECONDS);
             } else uiWhirlwind2Timer -= diff;
 
             if (uiKnockdownTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_KNOCKDOWN);
-                uiKnockdownTimer = urand(10*IN_MILLISECONDS,15*IN_MILLISECONDS);
+                uiKnockdownTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
             } else uiKnockdownTimer -= diff;
 
             if (uiFrenzyTimer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_FRENZY);
-                uiFrenzyTimer = urand(20*IN_MILLISECONDS,30*IN_MILLISECONDS);
+                uiFrenzyTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS);
             } else uiFrenzyTimer -= diff;
 
             if (uiYellTimer <= diff)
             {
-                DoScriptText(RAND(YELL_RANDOM1,YELL_RANDOM2,YELL_RANDOM3,YELL_RANDOM4,YELL_RANDOM5), me);
-                uiYellTimer = urand(20*IN_MILLISECONDS,30*IN_MILLISECONDS); //20 to 30 seconds
+                DoScriptText(RAND(YELL_RANDOM1, YELL_RANDOM2, YELL_RANDOM3, YELL_RANDOM4, YELL_RANDOM5), me);
+                uiYellTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS); //20 to 30 seconds
             } else uiYellTimer -= diff;
 
             // check if creature is not outside of building

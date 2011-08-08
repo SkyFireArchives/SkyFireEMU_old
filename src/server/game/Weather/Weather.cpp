@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -139,7 +139,7 @@ bool Weather::ReGenerate()
             if (m_grade > 0.6666667f)
             {
                                                             // Severe change, but how severe?
-                uint32 rnd = urand(0,99);
+                uint32 rnd = urand(0, 99);
                 if (rnd < 50)
                 {
                     m_grade -= 0.6666667f;

@@ -60,25 +60,25 @@ struct Dialogue
 
 static Dialogue OzDialogue[]=
 {
-    {-1532103, 6000},
-    {-1532104, 18000},
-    {-1532105, 9000},
+    {-1532103, 6000}, 
+    {-1532104, 18000}, 
+    {-1532105, 9000}, 
     {-1532106, 15000}
 };
 
 static Dialogue HoodDialogue[]=
 {
-    {-1532107, 6000},
-    {-1532108, 10000},
-    {-1532109, 14000},
+    {-1532107, 6000}, 
+    {-1532108, 10000}, 
+    {-1532109, 14000}, 
     {-1532110, 15000}
 };
 
 static Dialogue RAJDialogue[]=
 {
-    {-1532111, 5000},
-    {-1532112, 7000},
-    {-1532113, 14000},
+    {-1532111, 5000}, 
+    {-1532112, 7000}, 
+    {-1532113, 14000}, 
     {-1532114, 14000}
 };
 
@@ -173,8 +173,8 @@ public:
                     TalkCount = 0;
                     SetEscortPaused(true);
 
-                    if (Creature* pSpotlight = me->SummonCreature(CREATURE_SPOTLIGHT,
-                        me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0.0f,
+                    if (Creature* pSpotlight = me->SummonCreature(CREATURE_SPOTLIGHT, 
+                        me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0.0f, 
                         TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000))
                     {
                         pSpotlight->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -342,17 +342,17 @@ public:
             case GOSSIP_ACTION_INFO_DEF+3:
                 pPlayer->CLOSE_GOSSIP_MENU();
                 pBarnesAI->m_uiEventId = EVENT_OZ;
-                sLog->outString("TSCR: player (GUID " UI64FMTD ") manually set Opera event to EVENT_OZ",pPlayer->GetGUID());
+                sLog->outString("TSCR: player (GUID " UI64FMTD ") manually set Opera event to EVENT_OZ", pPlayer->GetGUID());
                 break;
             case GOSSIP_ACTION_INFO_DEF+4:
                 pPlayer->CLOSE_GOSSIP_MENU();
                 pBarnesAI->m_uiEventId = EVENT_HOOD;
-                sLog->outString("TSCR: player (GUID " UI64FMTD ") manually set Opera event to EVENT_HOOD",pPlayer->GetGUID());
+                sLog->outString("TSCR: player (GUID " UI64FMTD ") manually set Opera event to EVENT_HOOD", pPlayer->GetGUID());
                 break;
             case GOSSIP_ACTION_INFO_DEF+5:
                 pPlayer->CLOSE_GOSSIP_MENU();
                 pBarnesAI->m_uiEventId = EVENT_RAJ;
-                sLog->outString("TSCR: player (GUID " UI64FMTD ") manually set Opera event to EVENT_RAJ",pPlayer->GetGUID());
+                sLog->outString("TSCR: player (GUID " UI64FMTD ") manually set Opera event to EVENT_RAJ", pPlayer->GetGUID());
                 break;
         }
 
@@ -375,7 +375,7 @@ public:
                     pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_DOT, OZ_GM_GOSSIP3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
                 }
 
-                if (npc_barnesAI* pBarnesAI = CAST_AI(npc_barnes::npc_barnesAI,pCreature->AI()))
+                if (npc_barnesAI* pBarnesAI = CAST_AI(npc_barnes::npc_barnesAI, pCreature->AI()))
                 {
                     if (!pBarnesAI->RaidWiped)
                         pPlayer->SEND_GOSSIP_MENU(8970, pCreature->GetGUID());
@@ -462,8 +462,8 @@ public:
 #define SPELL_CONFLAGRATION_BLAST   30977
 #define SPELL_MANA_SHIELD           31635
 
-static float MedivPos[4] = {-11161.49f,-1902.24f,91.48f,1.94f};
-static float ArcanagosPos[4] = {-11169.75f,-1881.48f,95.39f,4.83f};
+static float MedivPos[4] = {-11161.49f, -1902.24f, 91.48f, 1.94f};
+static float ArcanagosPos[4] = {-11169.75f, -1881.48f, 95.39f, 4.83f};
 
 class npc_image_of_medivh : public CreatureScript
 {
@@ -500,11 +500,11 @@ public:
             if (pInstance && pInstance->GetData64(DATA_IMAGE_OF_MEDIVH) == 0)
             {
                 pInstance->SetData64(DATA_IMAGE_OF_MEDIVH, me->GetGUID());
-                (*me).GetMotionMaster()->MovePoint(1,MedivPos[0],MedivPos[1],MedivPos[2]);
+                (*me).GetMotionMaster()->MovePoint(1, MedivPos[0], MedivPos[1], MedivPos[2]);
                 Step = 0;
             }else
             {
-                me->DealDamage(me,me->GetHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 me->RemoveCorpse();
             }
         }
@@ -526,12 +526,12 @@ public:
         {
             Step = 1;
             EventStarted = true;
-            Creature* Arcanagos = me->SummonCreature(MOB_ARCANAGOS,ArcanagosPos[0],ArcanagosPos[1],ArcanagosPos[2],0,TEMPSUMMON_CORPSE_TIMED_DESPAWN,20000);
+            Creature* Arcanagos = me->SummonCreature(MOB_ARCANAGOS, ArcanagosPos[0], ArcanagosPos[1], ArcanagosPos[2], 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20000);
             if (!Arcanagos)
                 return;
             ArcanagosGUID = Arcanagos->GetGUID();
             Arcanagos->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
-            (*Arcanagos).GetMotionMaster()->MovePoint(0,ArcanagosPos[0],ArcanagosPos[1],ArcanagosPos[2]);
+            (*Arcanagos).GetMotionMaster()->MovePoint(0, ArcanagosPos[0], ArcanagosPos[1], ArcanagosPos[2]);
             Arcanagos->SetOrientation(ArcanagosPos[3]);
             me->SetOrientation(MedivPos[3]);
             YellTimer = 10000;
@@ -539,20 +539,20 @@ public:
 
         uint32 NextStep(uint32 Step)
         {
-            Unit* arca = Unit::GetUnit((*me),ArcanagosGUID);
+            Unit* arca = Unit::GetUnit((*me), ArcanagosGUID);
             Map* pMap = me->GetMap();
             switch(Step)
             {
             case 0: return 9999999;
             case 1:
-                me->MonsterYell(SAY_DIALOG_MEDIVH_1,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_DIALOG_MEDIVH_1, LANG_UNIVERSAL, NULL);
                 return 10000;
             case 2:
                 if (arca)
-                    CAST_CRE(arca)->MonsterYell(SAY_DIALOG_ARCANAGOS_2,LANG_UNIVERSAL,NULL);
+                    CAST_CRE(arca)->MonsterYell(SAY_DIALOG_ARCANAGOS_2, LANG_UNIVERSAL, NULL);
                 return 20000;
             case 3:
-                me->MonsterYell(SAY_DIALOG_MEDIVH_3,LANG_UNIVERSAL,NULL);
+                me->MonsterYell(SAY_DIALOG_MEDIVH_3, LANG_UNIVERSAL, NULL);
                 return 10000;
             case 4:
                 if (arca)
@@ -584,7 +584,7 @@ public:
                     CAST_CRE(arca)->MonsterYell(SAY_DIALOG_ARCANAGOS_8, LANG_UNIVERSAL, NULL);
                 return 5000;
             case 12:
-                arca->GetMotionMaster()->MovePoint(0, -11010.82f,-1761.18f, 156.47f);
+                arca->GetMotionMaster()->MovePoint(0, -11010.82f, -1761.18f, 156.47f);
                 arca->setActive(true);
                 arca->InterruptNonMeleeSpells(true);
                 arca->SetSpeed(MOVE_FLIGHT, 2.0f);
@@ -610,7 +610,7 @@ public:
                 }
                 return 50000;
             case 15:
-                arca->DealDamage(arca,arca->GetHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                arca->DealDamage(arca, arca->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 return 5000;
             default : return 9999999;
             }
@@ -628,7 +628,7 @@ public:
 
             if (Step >= 7 && Step <= 12)
             {
-                Unit* arca = Unit::GetUnit((*me),ArcanagosGUID);
+                Unit* arca = Unit::GetUnit((*me), ArcanagosGUID);
 
                 if (FireArcanagosTimer <= diff)
                 {

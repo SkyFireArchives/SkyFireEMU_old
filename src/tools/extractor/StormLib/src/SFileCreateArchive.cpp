@@ -43,7 +43,7 @@ bool WINAPI SFileCreateArchive(const char * szMpqName, DWORD dwFlags, DWORD dwHa
     int nError = ERROR_SUCCESS;
 
     // Check the parameters, if they are valid
-    if(szMpqName == NULL || *szMpqName == 0 || phMpq == NULL)
+    if (szMpqName == NULL || *szMpqName == 0 || phMpq == NULL)
     {
         SetLastError(ERROR_INVALID_PARAMETER);
         return false;
@@ -54,11 +54,11 @@ bool WINAPI SFileCreateArchive(const char * szMpqName, DWORD dwFlags, DWORD dwHa
 
     // We verify if the file already exists and if it's a MPQ archive.
     // If yes, we won't allow to overwrite it.
-    if(!(dwFlags & MPQ_CREATE_NO_MPQ_CHECK))
+    if (!(dwFlags & MPQ_CREATE_NO_MPQ_CHECK))
     {
         HANDLE hMpq = NULL;
 
-        if(SFileOpenArchive(szMpqName, 0, dwFlags, &hMpq))
+        if (SFileOpenArchive(szMpqName, 0, dwFlags, &hMpq))
         {
             SFileCloseArchive(hMpq);
             SetLastError(ERROR_ALREADY_EXISTS);
@@ -73,10 +73,10 @@ bool WINAPI SFileCreateArchive(const char * szMpqName, DWORD dwFlags, DWORD dwHa
     //
 
     pStream = FileStream_OpenFile(szMpqName, true);
-    if(pStream == NULL)
+    if (pStream == NULL)
     {
         pStream = FileStream_CreateFile(szMpqName);
-        if(pStream == NULL)
+        if (pStream == NULL)
             return false;
     }
 
@@ -86,24 +86,24 @@ bool WINAPI SFileCreateArchive(const char * szMpqName, DWORD dwFlags, DWORD dwHa
     // Retrieve the file size and round it up to 0x200 bytes
     FileStream_GetSize(pStream, MpqPos);
     MpqPos = (MpqPos + 0x1FF) & (ULONGLONG)0xFFFFFFFFFFFFFE00ULL;
-    if(!FileStream_SetSize(pStream, MpqPos))
+    if (!FileStream_SetSize(pStream, MpqPos))
         nError = GetLastError();
 
     // Create the archive handle
-    if(nError == ERROR_SUCCESS)
+    if (nError == ERROR_SUCCESS)
     {
-        if((ha = ALLOCMEM(TMPQArchive, 1)) == NULL)
+        if ((ha = ALLOCMEM(TMPQArchive, 1)) == NULL)
             nError = ERROR_NOT_ENOUGH_MEMORY;
     }
 
     // Fill the MPQ archive handle structure and create the header,
     // hash table and block table
-    if(nError == ERROR_SUCCESS)
+    if (nError == ERROR_SUCCESS)
     {
         // Round the hash table size up to the nearest power of two
         for(dwPowerOfTwo = HASH_TABLE_SIZE_MIN; dwPowerOfTwo < HASH_TABLE_SIZE_MAX; dwPowerOfTwo <<= 1)
         {
-            if(dwPowerOfTwo >= dwHashTableSize)
+            if (dwPowerOfTwo >= dwHashTableSize)
             {
                 dwHashTableSize = dwPowerOfTwo;
                 break;
@@ -130,18 +130,18 @@ bool WINAPI SFileCreateArchive(const char * szMpqName, DWORD dwFlags, DWORD dwHa
         pStream = NULL;
 
         // Setup the attributes
-        if(dwFlags & MPQ_CREATE_ATTRIBUTES)
+        if (dwFlags & MPQ_CREATE_ATTRIBUTES)
             ha->dwAttrFlags = MPQ_ATTRIBUTE_CRC32 | MPQ_ATTRIBUTE_FILETIME | MPQ_ATTRIBUTE_MD5;
 
         // Create hash table and file tablt
         ha->pHashTable = ALLOCMEM(TMPQHash, dwHashTableSize);
         ha->pFileTable = ALLOCMEM(TFileEntry, ha->dwFileTableMax);
-        if(!ha->pHashTable || !ha->pFileTable)
+        if (!ha->pHashTable || !ha->pFileTable)
             nError = ERROR_NOT_ENOUGH_MEMORY;
     }
 
     // Fill the MPQ header and all buffers
-    if(nError == ERROR_SUCCESS)
+    if (nError == ERROR_SUCCESS)
     {
         TMPQHeader * pHeader = ha->pHeader;
 
@@ -163,7 +163,7 @@ bool WINAPI SFileCreateArchive(const char * szMpqName, DWORD dwFlags, DWORD dwHa
         memset(ha->pFileTable, 0x00, sizeof(TFileEntry) * ha->dwFileTableMax);
 
         // Remember if we shall check sector CRCs when reading file
-        if(dwFlags & MPQ_OPEN_CHECK_SECTOR_CRC)
+        if (dwFlags & MPQ_OPEN_CHECK_SECTOR_CRC)
             ha->dwFlags |= MPQ_FLAG_CHECK_SECTOR_CRC;
 
         //
@@ -184,7 +184,7 @@ bool WINAPI SFileCreateArchive(const char * szMpqName, DWORD dwFlags, DWORD dwHa
     }
 
     // Cleanup : If an error, delete all buffers and return
-    if(nError != ERROR_SUCCESS)
+    if (nError != ERROR_SUCCESS)
     {
         FileStream_Close(pStream);
         FreeMPQArchive(ha);

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,37 +35,37 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                   = -1568000,
-    SAY_FIRE_BOMBS              = -1568001,
-    SAY_SUMMON_HATCHER          = -1568002,
-    SAY_ALL_EGGS                = -1568003,
-    SAY_BERSERK                 = -1568004,
-    SAY_SLAY_1                  = -1568005,
-    SAY_SLAY_2                  = -1568006,
-    SAY_DEATH                   = -1568007,
-    SAY_EVENT_STRANGERS         = -1568008,
-    SAY_EVENT_FRIENDS           = -1568009,
+    SAY_AGGRO                   = -1568000, 
+    SAY_FIRE_BOMBS              = -1568001, 
+    SAY_SUMMON_HATCHER          = -1568002, 
+    SAY_ALL_EGGS                = -1568003, 
+    SAY_BERSERK                 = -1568004, 
+    SAY_SLAY_1                  = -1568005, 
+    SAY_SLAY_2                  = -1568006, 
+    SAY_DEATH                   = -1568007, 
+    SAY_EVENT_STRANGERS         = -1568008, 
+    SAY_EVENT_FRIENDS           = -1568009, 
 
 // Jan'alai
-    SPELL_FLAME_BREATH          = 43140,
-    SPELL_FIRE_WALL             = 43113,
-    SPELL_ENRAGE                = 44779,
-    SPELL_SUMMON_PLAYERS        = 43097,
+    SPELL_FLAME_BREATH          = 43140, 
+    SPELL_FIRE_WALL             = 43113, 
+    SPELL_ENRAGE                = 44779, 
+    SPELL_SUMMON_PLAYERS        = 43097, 
     SPELL_TELE_TO_CENTER        = 43098, // coord
-    SPELL_HATCH_ALL             = 43144,
-    SPELL_BERSERK               = 45078,
+    SPELL_HATCH_ALL             = 43144, 
+    SPELL_BERSERK               = 45078, 
 
 // -- Fire Bob Spells
     SPELL_FIRE_BOMB_CHANNEL     = 42621, // last forever
     SPELL_FIRE_BOMB_THROW       = 42628, // throw visual
     SPELL_FIRE_BOMB_DUMMY       = 42629, // bomb visual
-    SPELL_FIRE_BOMB_DAMAGE      = 42630,
+    SPELL_FIRE_BOMB_DAMAGE      = 42630, 
 
 // --Summons
-    MOB_AMANI_HATCHER           = 23818,
+    MOB_AMANI_HATCHER           = 23818, 
     MOB_HATCHLING               = 23598,   // 42493
-    MOB_EGG                     = 23817,
-    MOB_FIRE_BOMB               = 23920,
+    MOB_EGG                     = 23817, 
+    MOB_FIRE_BOMB               = 23920, 
 
 // -- Hatcher Spells
     SPELL_HATCH_EGG             = 43734,   // 42471
@@ -84,27 +84,27 @@ float JanalainPos[1][3] =
 
 float FireWallCoords[4][4] =
 {
-    {-10.13f, 1149.27f, 19, 3.1415f},
-    {-33.93f, 1123.90f, 19, 0.5f*3.1415f},
-    {-54.80f, 1150.08f, 19, 0},
+    {-10.13f, 1149.27f, 19, 3.1415f}, 
+    {-33.93f, 1123.90f, 19, 0.5f*3.1415f}, 
+    {-54.80f, 1150.08f, 19, 0}, 
     {-33.93f, 1175.68f, 19, 1.5f*3.1415f}
 };
 
 float hatcherway[2][5][3] =
 {
     {
-        {-87.46f,1170.09f,6},
-        {-74.41f,1154.75f,6},
-        {-52.74f,1153.32f,19},
-        {-33.37f,1172.46f,19},
-        {-33.09f,1203.87f,19}
-    },
+        {-87.46f, 1170.09f, 6}, 
+        {-74.41f, 1154.75f, 6}, 
+        {-52.74f, 1153.32f, 19}, 
+        {-33.37f, 1172.46f, 19}, 
+        {-33.09f, 1203.87f, 19}
+    }, 
     {
-        {-86.57f,1132.85f,6},
-        {-73.94f,1146.00f,6},
-        {-52.29f,1146.51f,19},
-        {-33.57f,1125.72f,19},
-        {-34.29f,1095.22f,19}
+        {-86.57f, 1132.85f, 6}, 
+        {-73.94f, 1146.00f, 6}, 
+        {-52.29f, 1146.51f, 19}, 
+        {-33.57f, 1125.72f, 19}, 
+        {-34.29f, 1095.22f, 19}
     }
 };
 class boss_janalai : public CreatureScript
@@ -181,7 +181,7 @@ class boss_janalai : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
+                DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
             }
 
             void EnterCombat(Unit * /*who*/)
@@ -216,9 +216,9 @@ class boss_janalai : public CreatureScript
                     for (uint8 j = 0; j < WallNum; j++)
                     {
                         if (WallNum == 3)
-                            wall = me->SummonCreature(MOB_FIRE_BOMB, FireWallCoords[i][0],FireWallCoords[i][1]+5*(j-1),FireWallCoords[i][2],FireWallCoords[i][3],TEMPSUMMON_TIMED_DESPAWN,15000);
+                            wall = me->SummonCreature(MOB_FIRE_BOMB, FireWallCoords[i][0], FireWallCoords[i][1]+5*(j-1), FireWallCoords[i][2], FireWallCoords[i][3], TEMPSUMMON_TIMED_DESPAWN, 15000);
                         else
-                            wall = me->SummonCreature(MOB_FIRE_BOMB, FireWallCoords[i][0]-2+4*j,FireWallCoords[i][1],FireWallCoords[i][2],FireWallCoords[i][3],TEMPSUMMON_TIMED_DESPAWN,15000);
+                            wall = me->SummonCreature(MOB_FIRE_BOMB, FireWallCoords[i][0]-2+4*j, FireWallCoords[i][1], FireWallCoords[i][2], FireWallCoords[i][3], TEMPSUMMON_TIMED_DESPAWN, 15000);
                         if (wall) wall->CastSpell(wall, SPELL_FIRE_WALL, true);
                     }
                 }
@@ -318,7 +318,7 @@ class boss_janalai : public CreatureScript
                 {
                     Boom();
                     isBombing = false;
-                    BombTimer = urand(20000,40000);
+                    BombTimer = urand(20000, 40000);
                     me->RemoveAurasDueToSpell(SPELL_FIRE_BOMB_CHANNEL);
                     if (EnrageTimer <= 10000)
                         EnrageTimer = 0;
@@ -375,10 +375,10 @@ class boss_janalai : public CreatureScript
 
                     me->AttackStop();
                     me->GetMotionMaster()->Clear();
-                    DoTeleportTo(JanalainPos[0][0],JanalainPos[0][1],JanalainPos[0][2]);
+                    DoTeleportTo(JanalainPos[0][0], JanalainPos[0][1], JanalainPos[0][2]);
                     me->StopMoving();
                     DoCast(me, SPELL_FIRE_BOMB_CHANNEL, false);
-                    //DoTeleportPlayer(me, JanalainPos[0][0], JanalainPos[0][1],JanalainPos[0][2], 0);
+                    //DoTeleportPlayer(me, JanalainPos[0][0], JanalainPos[0][1], JanalainPos[0][2], 0);
                     //DoCast(me, SPELL_TELE_TO_CENTER, true);
 
                     FireWall();
@@ -406,7 +406,7 @@ class boss_janalai : public CreatureScript
 
                         me->AttackStop();
                         me->GetMotionMaster()->Clear();
-                        DoTeleportTo(JanalainPos[0][0],JanalainPos[0][1],JanalainPos[0][2]);
+                        DoTeleportTo(JanalainPos[0][0], JanalainPos[0][1], JanalainPos[0][2]);
                         me->StopMoving();
                         DoCast(me, SPELL_HATCH_ALL, false);
                         HatchAllEggs(2);
@@ -417,8 +417,8 @@ class boss_janalai : public CreatureScript
                         if (HatchAllEggs(0))
                         {
                             DoScriptText(SAY_SUMMON_HATCHER, me);
-                            me->SummonCreature(MOB_AMANI_HATCHER,hatcherway[0][0][0],hatcherway[0][0][1],hatcherway[0][0][2],0,TEMPSUMMON_CORPSE_TIMED_DESPAWN,10000);
-                            me->SummonCreature(MOB_AMANI_HATCHER,hatcherway[1][0][0],hatcherway[1][0][1],hatcherway[1][0][2],0,TEMPSUMMON_CORPSE_TIMED_DESPAWN,10000);
+                            me->SummonCreature(MOB_AMANI_HATCHER, hatcherway[0][0][0], hatcherway[0][0][1], hatcherway[0][0][2], 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
+                            me->SummonCreature(MOB_AMANI_HATCHER, hatcherway[1][0][0], hatcherway[1][0][1], hatcherway[1][0][2], 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                             HatcherTimer = 90000;
                         }
                         else
@@ -432,7 +432,7 @@ class boss_janalai : public CreatureScript
 
                 if (FireBreathTimer <= diff)
                 {
-                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     {
                         me->AttackStop();
                         me->GetMotionMaster()->Clear();
@@ -585,7 +585,7 @@ class mob_janalai_hatcher : public CreatureScript
                     if (WaitTimer)
                     {
                         me->GetMotionMaster()->Clear();
-                        me->GetMotionMaster()->MovePoint(0,hatcherway[side][waypoint][0],hatcherway[side][waypoint][1],hatcherway[side][waypoint][2]);
+                        me->GetMotionMaster()->MovePoint(0, hatcherway[side][waypoint][0], hatcherway[side][waypoint][1], hatcherway[side][waypoint][2]);
                         ++waypoint;
                         WaitTimer = 0;
                     }
@@ -644,9 +644,9 @@ class mob_janalai_hatchling : public CreatureScript
             {
                 BuffetTimer = 7000;
                 if (me->GetPositionY() > 1150)
-                    me->GetMotionMaster()->MovePoint(0, hatcherway[0][3][0]+rand()%4-2,1150.0f+rand()%4-2,hatcherway[0][3][2]);
+                    me->GetMotionMaster()->MovePoint(0, hatcherway[0][3][0]+rand()%4-2, 1150.0f+rand()%4-2, hatcherway[0][3][2]);
                 else
-                    me->GetMotionMaster()->MovePoint(0, hatcherway[1][3][0]+rand()%4-2,1150.0f+rand()%4-2,hatcherway[1][3][2]);
+                    me->GetMotionMaster()->MovePoint(0, hatcherway[1][3][0]+rand()%4-2, 1150.0f+rand()%4-2, hatcherway[1][3][2]);
 
                 me->SetUnitMovementFlags(MOVEMENTFLAG_LEVITATING);
             }

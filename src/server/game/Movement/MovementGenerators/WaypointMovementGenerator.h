@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -57,8 +57,8 @@ class PathMovementBase
         void ReloadPath(T &);
         uint32 GetCurrentNode() const { return i_currentNode; }
 
-        bool GetDestination(float& x, float& y, float& z) const { i_destinationHolder.GetDestination(x,y,z); return true; }
-        bool GetPosition(float& x, float& y, float& z) const { i_destinationHolder.GetLocationNowNoMicroMovement(x,y,z); return true; }
+        bool GetDestination(float& x, float& y, float& z) const { i_destinationHolder.GetDestination(x, y, z); return true; }
+        bool GetPosition(float& x, float& y, float& z) const { i_destinationHolder.GetLocationNowNoMicroMovement(x, y, z); return true; }
 
     protected:
         uint32 i_currentNode;
@@ -97,8 +97,8 @@ class WaypointMovementGenerator
  * and hence generates ground and activities for the player.
  */
 class FlightPathMovementGenerator
-: public MovementGeneratorMedium< Player, FlightPathMovementGenerator >,
-public PathMovementBase<Player,TaxiPathNodeList const*>
+: public MovementGeneratorMedium< Player, FlightPathMovementGenerator >, 
+public PathMovementBase<Player, TaxiPathNodeList const*>
 {
     public:
         explicit FlightPathMovementGenerator(TaxiPathNodeList const& pathnodes, uint32 startNode = 0)
@@ -119,7 +119,7 @@ public PathMovementBase<Player,TaxiPathNodeList const*>
         void SkipCurrentNode() { ++i_currentNode; }
         void DoEventIfAny(Player& player, TaxiPathNodeEntry const& node, bool departure);
 
-        bool GetDestination(float& x, float& y, float& z) const { return PathMovementBase<Player,TaxiPathNodeList const*>::GetDestination(x,y,z); }
+        bool GetDestination(float& x, float& y, float& z) const { return PathMovementBase<Player, TaxiPathNodeList const*>::GetDestination(x, y, z); }
 
         void PreloadEndGrid();
         void InitEndGridInfo();

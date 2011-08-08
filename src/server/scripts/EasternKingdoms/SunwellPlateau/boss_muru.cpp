@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,76 +34,76 @@ SDComment: all sounds, black hole effect triggers to often (46228)
 // Muru & Entropius's spells
 enum Spells
 {
-    SPELL_ENRAGE                = 26662,
+    SPELL_ENRAGE                = 26662, 
 
     // Muru's spells
     SPELL_NEGATIVE_ENERGY        = 46009, //(this trigger 46008)
-    SPELL_DARKNESS                = 45999,
-    SPELL_OPEN_ALL_PORTALS        = 46177,
-    SPELL_OPEN_PORTAL            = 45977,
-    SPELL_OPEN_PORTAL_2            = 45976,
-    SPELL_SUMMON_BERSERKER        = 46037,
-    SPELL_SUMNON_FURY_MAGE        = 46038,
-    SPELL_SUMMON_VOID_SENTINEL    = 45988,
-    SPELL_SUMMON_ENTROPIUS        = 46217,
+    SPELL_DARKNESS                = 45999, 
+    SPELL_OPEN_ALL_PORTALS        = 46177, 
+    SPELL_OPEN_PORTAL            = 45977, 
+    SPELL_OPEN_PORTAL_2            = 45976, 
+    SPELL_SUMMON_BERSERKER        = 46037, 
+    SPELL_SUMNON_FURY_MAGE        = 46038, 
+    SPELL_SUMMON_VOID_SENTINEL    = 45988, 
+    SPELL_SUMMON_ENTROPIUS        = 46217, 
 
     // Entropius's spells
-    SPELL_DARKNESS_E            = 46269,
-    SPELL_BLACKHOLE             = 46282,
-    SPELL_NEGATIVE_ENERGY_E     = 46284,
-    SPELL_ENTROPIUS_SPAWN        = 46223,
+    SPELL_DARKNESS_E            = 46269, 
+    SPELL_BLACKHOLE             = 46282, 
+    SPELL_NEGATIVE_ENERGY_E     = 46284, 
+    SPELL_ENTROPIUS_SPAWN        = 46223, 
 
     // Shadowsword Berserker's spells
-    SPELL_FLURRY                = 46160,
-    SPELL_DUAL_WIELD            = 29651,
+    SPELL_FLURRY                = 46160, 
+    SPELL_DUAL_WIELD            = 29651, 
 
     // Shadowsword Fury Mage's spells
-    SPELL_FEL_FIREBALL          = 46101,
-    SPELL_SPELL_FURY            = 46102,
+    SPELL_FEL_FIREBALL          = 46101, 
+    SPELL_SPELL_FURY            = 46102, 
 
     // Void Sentinel's spells
-    SPELL_SHADOW_PULSE          = 46087,
-    SPELL_VOID_BLAST            = 46161,
+    SPELL_SHADOW_PULSE          = 46087, 
+    SPELL_VOID_BLAST            = 46161, 
 
     // Void Spawn's spells
-    SPELL_SHADOW_BOLT_VOLLEY    = 46082,
+    SPELL_SHADOW_BOLT_VOLLEY    = 46082, 
 
     //Dark Fiend Spells
-    SPELL_DARKFIEND_AOE            = 45944,
-    SPELL_DARKFIEND_VISUAL        = 45936,
-    SPELL_DARKFIEND_SKIN        = 45934,
+    SPELL_DARKFIEND_AOE            = 45944, 
+    SPELL_DARKFIEND_VISUAL        = 45936, 
+    SPELL_DARKFIEND_SKIN        = 45934, 
 
     //Black Hole Spells
-    SPELL_BLACKHOLE_SPAWN        = 46242,
+    SPELL_BLACKHOLE_SPAWN        = 46242, 
     SPELL_BLACKHOLE_GROW        = 46228
 };
 
 enum BossTimers{
-    TIMER_DARKNESS                = 0,
-    TIMER_HUMANOIDES            = 1,
-    TIMER_PHASE                    = 2,
+    TIMER_DARKNESS                = 0, 
+    TIMER_HUMANOIDES            = 1, 
+    TIMER_PHASE                    = 2, 
     TIMER_SENTINEL                = 3
 };
 
 float DarkFiends[8][4] =
 {
-    {1819.9f,    609.80f,    69.74f,    1.94f},
-    {1829.39f,   617.89f,    69.73f,    2.61f},
-    {1801.98f,   633.62f,    69.74f,    5.71f},
-    {1830.88f,   629.99f,    69.73f,    3.52f},
-    {1800.38f,   621.41f,    69.74f,    0.22f},
-    {1808.3f ,   612.45f,    69.73f,    1.02f},
-    {1823.9f ,   639.69f,    69.74f,    4.12f},
+    {1819.9f,    609.80f,    69.74f,    1.94f}, 
+    {1829.39f,   617.89f,    69.73f,    2.61f}, 
+    {1801.98f,   633.62f,    69.74f,    5.71f}, 
+    {1830.88f,   629.99f,    69.73f,    3.52f}, 
+    {1800.38f,   621.41f,    69.74f,    0.22f}, 
+    {1808.3f ,   612.45f,    69.73f,    1.02f}, 
+    {1823.9f ,   639.69f,    69.74f,    4.12f}, 
     {1811.85f,   640.46f,    69.73f,    4.97f}
 };
 
 float Humanoides[6][5] =
 {
-    {CREATURE_FURY_MAGE, 1780.16f,    666.83f,    71.19f,    5.21f},
-    {CREATURE_FURY_MAGE, 1847.93f,    600.30f,    71.30f,    2.57f},
-    {CREATURE_BERSERKER, 1779.97f,    660.64f,    71.19f,    5.28f},
-    {CREATURE_BERSERKER, 1786.2f ,    661.01f,    71.19f,    4.51f},
-    {CREATURE_BERSERKER, 1845.17f,    602.63f,    71.28f,    2.43f},
+    {CREATURE_FURY_MAGE, 1780.16f,    666.83f,    71.19f,    5.21f}, 
+    {CREATURE_FURY_MAGE, 1847.93f,    600.30f,    71.30f,    2.57f}, 
+    {CREATURE_BERSERKER, 1779.97f,    660.64f,    71.19f,    5.28f}, 
+    {CREATURE_BERSERKER, 1786.2f ,    661.01f,    71.19f,    4.51f}, 
+    {CREATURE_BERSERKER, 1845.17f,    602.63f,    71.28f,    2.43f}, 
     {CREATURE_BERSERKER, 1842.91f,    599.93f,    71.23f,    2.44f}
 };
 
@@ -155,16 +155,16 @@ public:
             switch(summoned->GetEntry())
             {
                 case CREATURE_DARK_FIENDS:
-                    summoned->CastSpell(summoned,SPELL_DARKFIEND_VISUAL,false);
+                    summoned->CastSpell(summoned, SPELL_DARKFIEND_VISUAL, false);
                     break;
                 case CREATURE_DARKNESS:
                     summoned->AddUnitState(UNIT_STAT_STUNNED);
-                    float x,y,z,o;
-                    summoned->GetHomePosition(x,y,z,o);
-                    me->SummonCreature(CREATURE_DARK_FIENDS, x,y,z,o, TEMPSUMMON_CORPSE_DESPAWN, 0);
+                    float x, y, z, o;
+                    summoned->GetHomePosition(x, y, z, o);
+                    me->SummonCreature(CREATURE_DARK_FIENDS, x, y, z, o, TEMPSUMMON_CORPSE_DESPAWN, 0);
                     break;
             }
-            summoned->AI()->AttackStart(SelectTarget(SELECT_TARGET_RANDOM,0, 50, true));
+            summoned->AI()->AttackStart(SelectTarget(SELECT_TARGET_RANDOM, 0, 50, true));
             Summons.Summon(summoned);
         }
 
@@ -256,7 +256,7 @@ public:
 
         void EnterCombat(Unit * /*who*/)
         {
-            DoCastAOE(SPELL_NEGATIVE_ENERGY,false);
+            DoCastAOE(SPELL_NEGATIVE_ENERGY, false);
 
             if (pInstance)
                 pInstance->SetData(DATA_MURU_EVENT, IN_PROGRESS);
@@ -284,10 +284,10 @@ public:
                     me->SetVisible(false);
                     break;
                 case CREATURE_DARK_FIENDS:
-                    summoned->CastSpell(summoned,SPELL_DARKFIEND_VISUAL,false);
+                    summoned->CastSpell(summoned, SPELL_DARKFIEND_VISUAL, false);
                     break;
             }
-            summoned->AI()->AttackStart(SelectTarget(SELECT_TARGET_RANDOM,0, 50, true));
+            summoned->AI()->AttackStart(SelectTarget(SELECT_TARGET_RANDOM, 0, 50, true));
             Summons.Summon(summoned);
         }
 
@@ -339,13 +339,13 @@ public:
                             {
                                 DarkFiend = false;
                                 for (uint8 i = 0; i < 8; ++i)
-                                    me->SummonCreature(CREATURE_DARK_FIENDS,DarkFiends[i][0],DarkFiends[i][1],DarkFiends[i][2], DarkFiends[i][3], TEMPSUMMON_CORPSE_DESPAWN, 0);
+                                    me->SummonCreature(CREATURE_DARK_FIENDS, DarkFiends[i][0], DarkFiends[i][1], DarkFiends[i][2], DarkFiends[i][3], TEMPSUMMON_CORPSE_DESPAWN, 0);
                                 Timer[TIMER_DARKNESS] = 42000;
                             }
                             break;
                         case TIMER_HUMANOIDES:
                             for (uint8 i = 0; i < 6; ++i)
-                                me->SummonCreature(uint32(Humanoides[i][0]),Humanoides[i][1],Humanoides[i][2],Humanoides[i][3], Humanoides[i][4], TEMPSUMMON_CORPSE_DESPAWN, 0);
+                                me->SummonCreature(uint32(Humanoides[i][0]), Humanoides[i][1], Humanoides[i][2], Humanoides[i][3], Humanoides[i][4], TEMPSUMMON_CORPSE_DESPAWN, 0);
                             Timer[TIMER_HUMANOIDES] = 60000;
                             break;
                         case TIMER_PHASE:
@@ -424,9 +424,9 @@ public:
 
         void SpellHit(Unit* /*caster*/, const SpellEntry* Spell)
         {
-            float x,y,z,o;
-            me->GetHomePosition(x,y,z,o);
-            DoTeleportTo(x,y,z);
+            float x, y, z, o;
+            me->GetHomePosition(x, y, z, o);
+            DoTeleportTo(x, y, z);
             InAction = true;
             switch(Spell->Id)
             {
@@ -546,15 +546,15 @@ public:
             PulseTimer = 3000;
             VoidBlastTimer = 45000; //is this a correct timer?
 
-            float x,y,z,o;
-            me->GetHomePosition(x,y,z,o);
-            DoTeleportTo(x,y,71);
+            float x, y, z, o;
+            me->GetHomePosition(x, y, z, o);
+            DoTeleportTo(x, y, 71);
         }
 
         void JustDied(Unit* /*killer*/)
         {
             for (uint8 i = 0; i < 8; ++i)
-                me->SummonCreature(CREATURE_VOID_SPAWN, me->GetPositionX(),me->GetPositionY(),me->GetPositionZ(), float(rand()%6), TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 180000);
+                me->SummonCreature(CREATURE_VOID_SPAWN, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), float(rand()%6), TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 180000);
         }
 
         void UpdateAI(const uint32 diff)
@@ -641,7 +641,7 @@ public:
                         me->RemoveAura(SPELL_BLACKHOLE_GROW, 1);
                         break;
                     case 3:
-                        SpellTimer = urand(400,900);
+                        SpellTimer = urand(400, 900);
                         NeedForAHack = 1;
                         if (Unit* Temp = me->getVictim())
                         {

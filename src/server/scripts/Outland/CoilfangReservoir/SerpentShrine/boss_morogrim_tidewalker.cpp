@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,50 +35,50 @@ EndScriptData */
 enum eEnums
 {
     // Yell
-    SAY_AGGRO = -1548030,
-    SAY_SUMMON1 = -1548031,
-    SAY_SUMMON2 = -1548032,
-    SAY_SUMMON_BUBL1 = -1548033,
-    SAY_SUMMON_BUBL2 = -1548034,
-    SAY_SLAY1 = -1548035,
-    SAY_SLAY2 = -1548036,
-    SAY_SLAY3 = -1548037,
-    SAY_DEATH = -1548038,
+    SAY_AGGRO = -1548030, 
+    SAY_SUMMON1 = -1548031, 
+    SAY_SUMMON2 = -1548032, 
+    SAY_SUMMON_BUBL1 = -1548033, 
+    SAY_SUMMON_BUBL2 = -1548034, 
+    SAY_SLAY1 = -1548035, 
+    SAY_SLAY2 = -1548036, 
+    SAY_SLAY3 = -1548037, 
+    SAY_DEATH = -1548038, 
     // Emotes
-    EMOTE_WATERY_GRAVE = -1548039,
-    EMOTE_EARTHQUAKE = -1548040,
-    EMOTE_WATERY_GLOBULES = -1548041,
+    EMOTE_WATERY_GRAVE = -1548039, 
+    EMOTE_EARTHQUAKE = -1548040, 
+    EMOTE_WATERY_GLOBULES = -1548041, 
     // Spells
-    SPELL_TIDAL_WAVE = 37730,
-    SPELL_WATERY_GRAVE = 38049,
-    SPELL_EARTHQUAKE = 37764,
-    SPELL_WATERY_GRAVE_EXPLOSION = 37852,
+    SPELL_TIDAL_WAVE = 37730, 
+    SPELL_WATERY_GRAVE = 38049, 
+    SPELL_EARTHQUAKE = 37764, 
+    SPELL_WATERY_GRAVE_EXPLOSION = 37852, 
 
-    SPELL_WATERY_GRAVE_1 = 38023,
-    SPELL_WATERY_GRAVE_2 = 38024,
-    SPELL_WATERY_GRAVE_3 = 38025,
-    SPELL_WATERY_GRAVE_4 = 37850,
+    SPELL_WATERY_GRAVE_1 = 38023, 
+    SPELL_WATERY_GRAVE_2 = 38024, 
+    SPELL_WATERY_GRAVE_3 = 38025, 
+    SPELL_WATERY_GRAVE_4 = 37850, 
 
-    SPELL_SUMMON_WATER_GLOBULE_1 = 37854,
-    SPELL_SUMMON_WATER_GLOBULE_2 = 37858,
-    SPELL_SUMMON_WATER_GLOBULE_3 = 37860,
-    SPELL_SUMMON_WATER_GLOBULE_4 = 37861,
+    SPELL_SUMMON_WATER_GLOBULE_1 = 37854, 
+    SPELL_SUMMON_WATER_GLOBULE_2 = 37858, 
+    SPELL_SUMMON_WATER_GLOBULE_3 = 37860, 
+    SPELL_SUMMON_WATER_GLOBULE_4 = 37861, 
     // Creatures
-    NPC_WATER_GLOBULE = 21913,
-    NPC_TIDEWALKER_LURKER = 21920,
+    NPC_WATER_GLOBULE = 21913, 
+    NPC_TIDEWALKER_LURKER = 21920, 
 };
 
 float MurlocCords[10][4] =
 {
-      {424.36f, -715.4f,  -7.14f,  0.124f},
-      {425.13f, -719.3f,  -7.14f,  0.124f},
-      {425.05f, -724.23f, -7.14f,  0.124f},
-      {424.91f, -728.68f, -7.14f,  0.124f},
-      {424.84f, -732.18f, -7.14f,  0.124f},
-      {321.05f, -734.2f,  -13.15f, 0.124f},
-      {321.05f, -729.4f,  -13.15f, 0.124f},
-      {321.05f, -724.03f, -13.15f, 0.124f},
-      {321.05f, -718.73f, -13.15f, 0.124f},
+      {424.36f, -715.4f,  -7.14f,  0.124f}, 
+      {425.13f, -719.3f,  -7.14f,  0.124f}, 
+      {425.05f, -724.23f, -7.14f,  0.124f}, 
+      {424.91f, -728.68f, -7.14f,  0.124f}, 
+      {424.84f, -732.18f, -7.14f,  0.124f}, 
+      {321.05f, -734.2f,  -13.15f, 0.124f}, 
+      {321.05f, -729.4f,  -13.15f, 0.124f}, 
+      {321.05f, -724.03f, -13.15f, 0.124f}, 
+      {321.05f, -718.73f, -13.15f, 0.124f}, 
       {321.05f, -714.24f, -13.15f, 0.124f}
 };
 
@@ -143,7 +143,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1,SAY_SLAY2,SAY_SLAY3), me);
+            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
         }
 
         void JustDied(Unit * /*victim*/)
@@ -189,7 +189,7 @@ public:
                 }
                 else
                 {
-                    DoScriptText(RAND(SAY_SUMMON1,SAY_SUMMON2), me);
+                    DoScriptText(RAND(SAY_SUMMON1, SAY_SUMMON2), me);
 
                     for (uint8 i = 0; i < 10; ++i)
                     {
@@ -240,7 +240,7 @@ public:
                         }
                     }
 
-                    DoScriptText(RAND(SAY_SUMMON_BUBL1,SAY_SUMMON_BUBL2), me);
+                    DoScriptText(RAND(SAY_SUMMON_BUBL1, SAY_SUMMON_BUBL2), me);
 
                     DoScriptText(EMOTE_WATERY_GRAVE, me);
                     WateryGrave_Timer = 30000;

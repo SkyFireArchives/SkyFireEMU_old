@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -43,11 +43,11 @@ bool DBCFileLoader::Load(const char* filename, const char* fmt)
         data = NULL;
     }
 
-    FILE* f = fopen(filename,"rb");
+    FILE* f = fopen(filename, "rb");
     if (!f)
         return false;
 
-    if (fread(&header,4,1,f) != 1)                           // Number of records
+    if (fread(&header, 4, 1, f) != 1)                           // Number of records
     {
         fclose(f);
         return false;
@@ -62,7 +62,7 @@ bool DBCFileLoader::Load(const char* filename, const char* fmt)
         return false;
     }
 
-    if (fread(&recordCount,4,1,f) != 1)                      // Number of records
+    if (fread(&recordCount, 4, 1, f) != 1)                      // Number of records
     {
         fclose(f);
         return false;
@@ -70,7 +70,7 @@ bool DBCFileLoader::Load(const char* filename, const char* fmt)
 
     EndianConvert(recordCount);
 
-    if (fread(&fieldCount,4,1,f) != 1)                       // Number of fields
+    if (fread(&fieldCount, 4, 1, f) != 1)                       // Number of fields
     {
         fclose(f);
         return false;
@@ -78,7 +78,7 @@ bool DBCFileLoader::Load(const char* filename, const char* fmt)
 
     EndianConvert(fieldCount);
 
-    if (fread(&recordSize,4,1,f) != 1)                       // Size of a record
+    if (fread(&recordSize, 4, 1, f) != 1)                       // Size of a record
     {
         fclose(f);
         return false;
@@ -86,7 +86,7 @@ bool DBCFileLoader::Load(const char* filename, const char* fmt)
 
     EndianConvert(recordSize);
 
-    if (fread(&stringSize,4,1,f) != 1)                       // String size
+    if (fread(&stringSize, 4, 1, f) != 1)                       // String size
     {
         fclose(f);
         return false;
@@ -108,7 +108,7 @@ bool DBCFileLoader::Load(const char* filename, const char* fmt)
     data = new unsigned char[recordSize*recordCount+stringSize];
     stringTable = data + recordSize*recordCount;
 
-    if (fread(data,recordSize*recordCount+stringSize,1,f) != 1)
+    if (fread(data, recordSize*recordCount+stringSize, 1, f) != 1)
     {
         fclose(f);
         return false;
@@ -134,7 +134,7 @@ DBCFileLoader::Record DBCFileLoader::getRecord(size_t id)
     return Record(*this, data + id*recordSize);
 }
 
-uint32 DBCFileLoader::GetFormatRecordSize(const char * format,int32* index_pos)
+uint32 DBCFileLoader::GetFormatRecordSize(const char * format, int32* index_pos)
 {
     uint32 recordsize = 0;
     int32 i = -1;
@@ -171,10 +171,10 @@ uint32 DBCFileLoader::GetFormatRecordSize(const char * format,int32* index_pos)
 char* DBCFileLoader::AutoProduceData(const char* format, uint32& records, char**& indexTable, uint32 sqlRecordCount, uint32 sqlHighestIndex, char*& sqlDataTable)
 {
     /*
-    format STRING, NA, FLOAT,NA,INT <=>
+    format STRING, NA, FLOAT, NA, INT <=>
     struct{
-    char* field0,
-    float field1,
+    char* field0, 
+    float field1, 
     int field2
     }entry;
 
@@ -187,7 +187,7 @@ char* DBCFileLoader::AutoProduceData(const char* format, uint32& records, char**
 
     //get struct size and index pos
     int32 i;
-    uint32 recordsize=GetFormatRecordSize(format,&i);
+    uint32 recordsize=GetFormatRecordSize(format, &i);
 
     if (i>=0)
     {
@@ -196,7 +196,7 @@ char* DBCFileLoader::AutoProduceData(const char* format, uint32& records, char**
         for (uint32 y=0; y<recordCount; y++)
         {
             uint32 ind=getRecord(y).getUInt (i);
-            if(ind>maxi)maxi=ind;
+            if (ind>maxi)maxi=ind;
         }
 
         // If higher index avalible from sql - use it instead of dbcs
@@ -206,7 +206,7 @@ char* DBCFileLoader::AutoProduceData(const char* format, uint32& records, char**
         ++maxi;
         records=maxi;
         indexTable=new ptr[maxi];
-        memset(indexTable,0,maxi*sizeof(ptr));
+        memset(indexTable, 0, maxi*sizeof(ptr));
     }
     else
     {
@@ -220,7 +220,7 @@ char* DBCFileLoader::AutoProduceData(const char* format, uint32& records, char**
 
     for (uint32 y =0; y<recordCount; ++y)
     {
-        if(i>=0)
+        if (i>=0)
             indexTable[getRecord(y).getUInt(i)]=&dataTable[offset];
         else
             indexTable[y]=&dataTable[offset];
@@ -261,7 +261,7 @@ char* DBCFileLoader::AutoProduceStrings(const char* format, char* dataTable)
         return NULL;
 
     char* stringPool= new char[stringSize];
-    memcpy(stringPool,stringTable,stringSize);
+    memcpy(stringPool, stringTable, stringSize);
 
     uint32 offset=0;
 
@@ -281,7 +281,7 @@ char* DBCFileLoader::AutoProduceStrings(const char* format, char* dataTable)
             case FT_STRING:
                 // fill only not filled entries
                 char** slot = (char**)(&dataTable[offset]);
-                if(!*slot || !**slot)
+                if (!*slot || !**slot)
                 {
                     const char * st = getRecord(y).getString(x);
                     *slot=stringPool+(st-(const char*)stringTable);

@@ -63,4 +63,3 @@ class Totem : public Minion
         uint32 m_duration;
 };
 #endif
-

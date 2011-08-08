@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -91,7 +91,7 @@ public:
             //IgniteMana_Timer
             if (IgniteMana_Timer <= diff)
             {
-                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     DoCast(pTarget, SPELL_IGNITEMANA);
 
                 IgniteMana_Timer = 30000;
@@ -100,7 +100,7 @@ public:
             //LivingBomb_Timer
             if (LivingBomb_Timer <= diff)
             {
-               if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+               if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                    DoCast(pTarget, SPELL_LIVINGBOMB);
 
                 LivingBomb_Timer = 35000;

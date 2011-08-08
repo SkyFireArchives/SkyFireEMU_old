@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -52,7 +52,7 @@
 #include "ScriptMgr.h"
 
 /**
-* This is a helper class to WorldSocketMgr ,that manages
+* This is a helper class to WorldSocketMgr , that manages
 * network threads, and assigning connections from acceptor thread
 * to other network threads
 */
@@ -61,8 +61,8 @@ class ReactorRunnable : protected ACE_Task_Base
     public:
 
         ReactorRunnable() :
-            m_Reactor(0),
-            m_Connections(0),
+            m_Reactor(0), 
+            m_Connections(0), 
             m_ThreadId(-1)
         {
             ACE_Reactor_Impl* imp = 0;
@@ -217,11 +217,11 @@ class ReactorRunnable : protected ACE_Task_Base
 };
 
 WorldSocketMgr::WorldSocketMgr() :
-    m_NetThreads(0),
-    m_NetThreadsCount(0),
-    m_SockOutKBuff(-1),
-    m_SockOutUBuff(65536),
-    m_UseNoDelay(true),
+    m_NetThreads(0), 
+    m_NetThreadsCount(0), 
+    m_SockOutKBuff(-1), 
+    m_SockOutUBuff(65536), 
+    m_UseNoDelay(true), 
     m_Acceptor (0)
 {
     InitOpcodeTable();
@@ -270,7 +270,7 @@ WorldSocketMgr::StartReactiveIO (ACE_UINT16 port, const char* address)
 
     if (acc->open(listen_addr, m_NetThreads[0].GetReactor(), ACE_NONBLOCK) == -1)
     {
-        sLog->outError ("Failed to open acceptor ,check if the port is free");
+        sLog->outError ("Failed to open acceptor , check if the port is free");
         return -1;
     }
 
@@ -332,9 +332,9 @@ WorldSocketMgr::OnSocketOpen (WorldSocket* sock)
     // set some options here
     if (m_SockOutKBuff >= 0)
     {
-        if (sock->peer().set_option (SOL_SOCKET,
-            SO_SNDBUF,
-            (void*) & m_SockOutKBuff,
+        if (sock->peer().set_option (SOL_SOCKET, 
+            SO_SNDBUF, 
+            (void*) & m_SockOutKBuff, 
             sizeof (int)) == -1 && errno != ENOTSUP)
         {
             sLog->outError ("WorldSocketMgr::OnSocketOpen set_option SO_SNDBUF");
@@ -347,9 +347,9 @@ WorldSocketMgr::OnSocketOpen (WorldSocket* sock)
     // Set TCP_NODELAY.
     if (m_UseNoDelay)
     {
-        if (sock->peer().set_option (ACE_IPPROTO_TCP,
-            TCP_NODELAY,
-            (void*)&ndoption,
+        if (sock->peer().set_option (ACE_IPPROTO_TCP, 
+            TCP_NODELAY, 
+            (void*)&ndoption, 
             sizeof (int)) == -1)
         {
             sLog->outError ("WorldSocketMgr::OnSocketOpen: peer().set_option TCP_NODELAY errno = %s", ACE_OS::strerror (errno));

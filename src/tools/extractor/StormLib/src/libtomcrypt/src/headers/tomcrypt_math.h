@@ -408,8 +408,8 @@ typedef struct {
       @param key      The RSA key to use 
       @return CRYPT_OK on success
    */
-   int (*rsa_me)(const unsigned char *in,   unsigned long inlen,
-                       unsigned char *out,  unsigned long *outlen, int which,
+   int (*rsa_me)(const unsigned char *in,  unsigned long inlen,
+                       unsigned char *out, unsigned long *outlen, int which,
                        rsa_key *key);
 } ltc_math_descriptor;
 

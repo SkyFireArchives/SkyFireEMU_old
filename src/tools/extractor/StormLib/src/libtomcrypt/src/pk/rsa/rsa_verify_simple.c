@@ -28,7 +28,7 @@
   @param key              The public RSA key corresponding
   @return Error code
 */
-int rsa_verify_simple(const unsigned char *sig,  unsigned long siglen,
+int rsa_verify_simple(const unsigned char *sig, unsigned long siglen,
                       const unsigned char *hash, unsigned long hashlen,
                             int           *stat,
                             rsa_key       *key)
@@ -74,7 +74,7 @@ int rsa_verify_simple(const unsigned char *sig,  unsigned long siglen,
   }
 
   /* compare the decrypted signature with the given hash */
-  if(x == hashlen && XMEMCMP(tmpbuf, hash, hashlen) == 0)
+  if (x == hashlen && XMEMCMP(tmpbuf, hash, hashlen) == 0)
       *stat = 1;
        
 #ifdef LTC_CLEAN_STACK

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -40,7 +40,7 @@ EndContentData */
 ######*/
 enum eHenzeFaulkData
 {
-    SAY_HEAL = -1000187,
+    SAY_HEAL = -1000187, 
 };
 
 class npc_henze_faulk : public CreatureScript
@@ -113,38 +113,38 @@ public:
 
 enum Northshire
 {
-    NPC_BLACKROCK_BATTLE_WORG = 49871,
-    NPC_STORMWIND_INFANTRY    = 49869,
-    NPC_BROTHER_PAXTON        = 951,
-    SAY_INFANTRY_NORMAL_1     = -1000001,
-    SAY_INFANTRY_NORMAL_2     = -1000002,
-    SAY_INFANTRY_NORMAL_3     = -1000003,
-    SAY_INFANTRY_NORMAL_4     = -1000004,
-    SAY_INFANTRY_NORMAL_5     = -1000005,
-    SAY_INFANTRY_COMBAT_1     = -1000006,
-    SAY_INFANTRY_COMBAT_2     = -1000007,
-    SAY_INFANTRY_COMBAT_3     = -1000008,
-    SAY_INFANTRY_COMBAT_4     = -1000009,
-    SAY_PAXTON_NORMAL_1       = -1000010,
-    SAY_PAXTON_NORMAL_2       = -1000011,
-    SAY_PAXTON_NORMAL_3       = -1000012,
-    SAY_PAXTON_NORMAL_4       = -1000013,
-    SAY_PAXTON_NORMAL_5       = -1000014,
-    SAY_BLACKROCK_COMBAT_1    = -1000015,
-    SAY_BLACKROCK_COMBAT_2    = -1000016,
-    SAY_BLACKROCK_COMBAT_3    = -1000017,
-    SAY_BLACKROCK_COMBAT_4    = -1000018,
-    SAY_BLACKROCK_COMBAT_5    = -1000019,
-    SAY_ASSASSIN_COMBAT_1     = -1000020,
-    SAY_ASSASSIN_COMBAT_2     = -1000021,
-    SPELL_RENEW               = 93094,
-    SPELL_PRAYER_OF_HEALING   = 93091,
-    SPELL_FORTITUDE           = 13864,
-    SPELL_PENANCE             = 47750,
-    SPELL_FLASH_HEAL          = 17843,
-    SPELL_SPYING              = 92857,
-    SPELL_SNEAKING            = 93046,
-    SPELL_SPYGLASS            = 80676,
+    NPC_BLACKROCK_BATTLE_WORG = 49871, 
+    NPC_STORMWIND_INFANTRY    = 49869, 
+    NPC_BROTHER_PAXTON        = 951, 
+    SAY_INFANTRY_NORMAL_1     = -1000001, 
+    SAY_INFANTRY_NORMAL_2     = -1000002, 
+    SAY_INFANTRY_NORMAL_3     = -1000003, 
+    SAY_INFANTRY_NORMAL_4     = -1000004, 
+    SAY_INFANTRY_NORMAL_5     = -1000005, 
+    SAY_INFANTRY_COMBAT_1     = -1000006, 
+    SAY_INFANTRY_COMBAT_2     = -1000007, 
+    SAY_INFANTRY_COMBAT_3     = -1000008, 
+    SAY_INFANTRY_COMBAT_4     = -1000009, 
+    SAY_PAXTON_NORMAL_1       = -1000010, 
+    SAY_PAXTON_NORMAL_2       = -1000011, 
+    SAY_PAXTON_NORMAL_3       = -1000012, 
+    SAY_PAXTON_NORMAL_4       = -1000013, 
+    SAY_PAXTON_NORMAL_5       = -1000014, 
+    SAY_BLACKROCK_COMBAT_1    = -1000015, 
+    SAY_BLACKROCK_COMBAT_2    = -1000016, 
+    SAY_BLACKROCK_COMBAT_3    = -1000017, 
+    SAY_BLACKROCK_COMBAT_4    = -1000018, 
+    SAY_BLACKROCK_COMBAT_5    = -1000019, 
+    SAY_ASSASSIN_COMBAT_1     = -1000020, 
+    SAY_ASSASSIN_COMBAT_2     = -1000021, 
+    SPELL_RENEW               = 93094, 
+    SPELL_PRAYER_OF_HEALING   = 93091, 
+    SPELL_FORTITUDE           = 13864, 
+    SPELL_PENANCE             = 47750, 
+    SPELL_FLASH_HEAL          = 17843, 
+    SPELL_SPYING              = 92857, 
+    SPELL_SNEAKING            = 93046, 
+    SPELL_SPYGLASS            = 80676, 
 };
 
 class npc_stormwind_infantry : public CreatureScript
@@ -608,7 +608,7 @@ public:
 
 enum
 {
-    SPELL_RENEWEDLIFE           = 93097,
+    SPELL_RENEWEDLIFE           = 93097, 
     NPC_INJURED_SOLDIER_DUMMY   = 50378
 };
 
@@ -631,7 +631,7 @@ public:
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_15);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_14);
-            me->SetFlag(UNIT_FIELD_BYTES_1,7);
+            me->SetFlag(UNIT_FIELD_BYTES_1, 7);
             IsHealed = false;
             RunTimer = 2000;
             Phase = 0;
@@ -639,29 +639,29 @@ public:
 
         void SpellHit(Unit* caster, const SpellEntry *pSpell)
         {
-            if(pSpell->Id == SPELL_RENEWEDLIFE)
+            if (pSpell->Id == SPELL_RENEWEDLIFE)
             {
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_15);
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_14);
-                me->RemoveFlag(UNIT_FIELD_BYTES_1,7);
+                me->RemoveFlag(UNIT_FIELD_BYTES_1, 7);
                 IsHealed = true;
             }
         }
         void UpdateAI(const uint32 diff)
         {
-            if(!IsHealed)
+            if (!IsHealed)
                 return;
 
-            if(Player* pOwner = me->GetPlayer(*me, me->GetCreatorGUID()))
+            if (Player* pOwner = me->GetPlayer(*me, me->GetCreatorGUID()))
             {
-                if(RunTimer <= diff)
+                if (RunTimer <= diff)
                 {
                     switch(Phase)
                     {
                         case 0:
                         {
-                            switch(urand(0,3))
+                            switch(urand(0, 3))
                             {
                                 //I'm really lazy ;)
                                 case 0: me->MonsterSay("Bless you, hero!", 0, NULL); break;
@@ -678,7 +678,7 @@ public:
                         }
                         case 1:
                         {
-                            if(Creature* Dummy = me->FindNearestCreature(NPC_INJURED_SOLDIER_DUMMY, 300.0f, true))
+                            if (Creature* Dummy = me->FindNearestCreature(NPC_INJURED_SOLDIER_DUMMY, 300.0f, true))
                             {
                                 me->GetMotionMaster()->MovePoint(1, Dummy->GetPositionX(), Dummy->GetPositionY(), Dummy->GetPositionZ());
                                 RunTimer = 8000;

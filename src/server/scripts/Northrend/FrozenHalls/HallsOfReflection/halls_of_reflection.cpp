@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,119 +27,119 @@
 
 enum Yells
 {
-    SAY_JAINA_INTRO_1                             = -1668001,
-    SAY_JAINA_INTRO_2                             = -1668002,
-    SAY_JAINA_INTRO_3                             = -1668003,
-    SAY_JAINA_INTRO_4                             = -1668004,
-    SAY_UTHER_INTRO_A2_1                          = -1668005,
-    SAY_JAINA_INTRO_5                             = -1668006,
-    SAY_UTHER_INTRO_A2_2                          = -1668007,
-    SAY_JAINA_INTRO_6                             = -1668008,
-    SAY_UTHER_INTRO_A2_3                          = -1668009,
-    SAY_JAINA_INTRO_7                             = -1668010,
-    SAY_UTHER_INTRO_A2_4                          = -1668011,
-    SAY_JAINA_INTRO_8                             = -1668012,
-    SAY_UTHER_INTRO_A2_5                          = -1668013,
-    SAY_JAINA_INTRO_9                             = -1668014,
-    SAY_UTHER_INTRO_A2_6                          = -1668015,
-    SAY_UTHER_INTRO_A2_7                          = -1668016,
-    SAY_JAINA_INTRO_10                            = -1668017,
-    SAY_UTHER_INTRO_A2_8                          = -1668018,
-    SAY_JAINA_INTRO_11                            = -1668019,
-    SAY_UTHER_INTRO_A2_9                          = -1668020,
+    SAY_JAINA_INTRO_1                             = -1668001, 
+    SAY_JAINA_INTRO_2                             = -1668002, 
+    SAY_JAINA_INTRO_3                             = -1668003, 
+    SAY_JAINA_INTRO_4                             = -1668004, 
+    SAY_UTHER_INTRO_A2_1                          = -1668005, 
+    SAY_JAINA_INTRO_5                             = -1668006, 
+    SAY_UTHER_INTRO_A2_2                          = -1668007, 
+    SAY_JAINA_INTRO_6                             = -1668008, 
+    SAY_UTHER_INTRO_A2_3                          = -1668009, 
+    SAY_JAINA_INTRO_7                             = -1668010, 
+    SAY_UTHER_INTRO_A2_4                          = -1668011, 
+    SAY_JAINA_INTRO_8                             = -1668012, 
+    SAY_UTHER_INTRO_A2_5                          = -1668013, 
+    SAY_JAINA_INTRO_9                             = -1668014, 
+    SAY_UTHER_INTRO_A2_6                          = -1668015, 
+    SAY_UTHER_INTRO_A2_7                          = -1668016, 
+    SAY_JAINA_INTRO_10                            = -1668017, 
+    SAY_UTHER_INTRO_A2_8                          = -1668018, 
+    SAY_JAINA_INTRO_11                            = -1668019, 
+    SAY_UTHER_INTRO_A2_9                          = -1668020, 
 
-    SAY_SYLVANAS_INTRO_1                          = -1668021,
-    SAY_SYLVANAS_INTRO_2                          = -1668022,
-    SAY_SYLVANAS_INTRO_3                          = -1668023,
-    SAY_UTHER_INTRO_H2_1                          = -1668024,
-    SAY_SYLVANAS_INTRO_4                          = -1668025,
-    SAY_UTHER_INTRO_H2_2                          = -1668026,
-    SAY_SYLVANAS_INTRO_5                          = -1668027,
-    SAY_UTHER_INTRO_H2_3                          = -1668028,
-    SAY_SYLVANAS_INTRO_6                          = -1668029,
-    SAY_UTHER_INTRO_H2_4                          = -1668030,
-    SAY_SYLVANAS_INTRO_7                          = -1668031,
-    SAY_UTHER_INTRO_H2_5                          = -1668032,
-    SAY_UTHER_INTRO_H2_6                          = -1668033,
-    SAY_SYLVANAS_INTRO_8                          = -1668034,
-    SAY_UTHER_INTRO_H2_7                          = -1668035,
+    SAY_SYLVANAS_INTRO_1                          = -1668021, 
+    SAY_SYLVANAS_INTRO_2                          = -1668022, 
+    SAY_SYLVANAS_INTRO_3                          = -1668023, 
+    SAY_UTHER_INTRO_H2_1                          = -1668024, 
+    SAY_SYLVANAS_INTRO_4                          = -1668025, 
+    SAY_UTHER_INTRO_H2_2                          = -1668026, 
+    SAY_SYLVANAS_INTRO_5                          = -1668027, 
+    SAY_UTHER_INTRO_H2_3                          = -1668028, 
+    SAY_SYLVANAS_INTRO_6                          = -1668029, 
+    SAY_UTHER_INTRO_H2_4                          = -1668030, 
+    SAY_SYLVANAS_INTRO_7                          = -1668031, 
+    SAY_UTHER_INTRO_H2_5                          = -1668032, 
+    SAY_UTHER_INTRO_H2_6                          = -1668033, 
+    SAY_SYLVANAS_INTRO_8                          = -1668034, 
+    SAY_UTHER_INTRO_H2_7                          = -1668035, 
 
-    SAY_LK_INTRO_1                                = -1668036,
-    SAY_LK_INTRO_2                                = -1668037,
-    SAY_LK_INTRO_3                                = -1668038,
-    SAY_FALRIC_INTRO_1                            = -1668039,
-    SAY_MARWYN_INTRO_1                            = -1668040,
-    SAY_FALRIC_INTRO_2                            = -1668041,
+    SAY_LK_INTRO_1                                = -1668036, 
+    SAY_LK_INTRO_2                                = -1668037, 
+    SAY_LK_INTRO_3                                = -1668038, 
+    SAY_FALRIC_INTRO_1                            = -1668039, 
+    SAY_MARWYN_INTRO_1                            = -1668040, 
+    SAY_FALRIC_INTRO_2                            = -1668041, 
 
-    SAY_JAINA_INTRO_END                           = -1668042,
-    SAY_SYLVANAS_INTRO_END                        = -1668043,
+    SAY_JAINA_INTRO_END                           = -1668042, 
+    SAY_SYLVANAS_INTRO_END                        = -1668043, 
 };
 
 enum Events
 {
-    EVENT_NONE,
+    EVENT_NONE, 
 
-    EVENT_START_INTRO,
-    EVENT_SKIP_INTRO,
+    EVENT_START_INTRO, 
+    EVENT_SKIP_INTRO, 
 
-    EVENT_INTRO_A2_1,
-    EVENT_INTRO_A2_2,
-    EVENT_INTRO_A2_3,
-    EVENT_INTRO_A2_4,
-    EVENT_INTRO_A2_5,
-    EVENT_INTRO_A2_6,
-    EVENT_INTRO_A2_7,
-    EVENT_INTRO_A2_8,
-    EVENT_INTRO_A2_9,
-    EVENT_INTRO_A2_10,
-    EVENT_INTRO_A2_11,
-    EVENT_INTRO_A2_12,
-    EVENT_INTRO_A2_13,
-    EVENT_INTRO_A2_14,
-    EVENT_INTRO_A2_15,
-    EVENT_INTRO_A2_16,
-    EVENT_INTRO_A2_17,
-    EVENT_INTRO_A2_18,
-    EVENT_INTRO_A2_19,
+    EVENT_INTRO_A2_1, 
+    EVENT_INTRO_A2_2, 
+    EVENT_INTRO_A2_3, 
+    EVENT_INTRO_A2_4, 
+    EVENT_INTRO_A2_5, 
+    EVENT_INTRO_A2_6, 
+    EVENT_INTRO_A2_7, 
+    EVENT_INTRO_A2_8, 
+    EVENT_INTRO_A2_9, 
+    EVENT_INTRO_A2_10, 
+    EVENT_INTRO_A2_11, 
+    EVENT_INTRO_A2_12, 
+    EVENT_INTRO_A2_13, 
+    EVENT_INTRO_A2_14, 
+    EVENT_INTRO_A2_15, 
+    EVENT_INTRO_A2_16, 
+    EVENT_INTRO_A2_17, 
+    EVENT_INTRO_A2_18, 
+    EVENT_INTRO_A2_19, 
 
-    EVENT_INTRO_H2_1,
-    EVENT_INTRO_H2_2,
-    EVENT_INTRO_H2_3,
-    EVENT_INTRO_H2_4,
-    EVENT_INTRO_H2_5,
-    EVENT_INTRO_H2_6,
-    EVENT_INTRO_H2_7,
-    EVENT_INTRO_H2_8,
-    EVENT_INTRO_H2_9,
-    EVENT_INTRO_H2_10,
-    EVENT_INTRO_H2_11,
-    EVENT_INTRO_H2_12,
-    EVENT_INTRO_H2_13,
-    EVENT_INTRO_H2_14,
-    EVENT_INTRO_H2_15,
+    EVENT_INTRO_H2_1, 
+    EVENT_INTRO_H2_2, 
+    EVENT_INTRO_H2_3, 
+    EVENT_INTRO_H2_4, 
+    EVENT_INTRO_H2_5, 
+    EVENT_INTRO_H2_6, 
+    EVENT_INTRO_H2_7, 
+    EVENT_INTRO_H2_8, 
+    EVENT_INTRO_H2_9, 
+    EVENT_INTRO_H2_10, 
+    EVENT_INTRO_H2_11, 
+    EVENT_INTRO_H2_12, 
+    EVENT_INTRO_H2_13, 
+    EVENT_INTRO_H2_14, 
+    EVENT_INTRO_H2_15, 
 
-    EVENT_INTRO_LK_1,
-    EVENT_INTRO_LK_2,
-    EVENT_INTRO_LK_3,
-    EVENT_INTRO_LK_4,
-    EVENT_INTRO_LK_5,
-    EVENT_INTRO_LK_6,
-    EVENT_INTRO_LK_7,
-    EVENT_INTRO_LK_8,
-    EVENT_INTRO_LK_9,
+    EVENT_INTRO_LK_1, 
+    EVENT_INTRO_LK_2, 
+    EVENT_INTRO_LK_3, 
+    EVENT_INTRO_LK_4, 
+    EVENT_INTRO_LK_5, 
+    EVENT_INTRO_LK_6, 
+    EVENT_INTRO_LK_7, 
+    EVENT_INTRO_LK_8, 
+    EVENT_INTRO_LK_9, 
 
-    EVENT_INTRO_END,
+    EVENT_INTRO_END, 
 };
 
 enum eEnum
 {
-    ACTION_START_INTRO,
-    ACTION_SKIP_INTRO,
+    ACTION_START_INTRO, 
+    ACTION_SKIP_INTRO, 
 
-    QUEST_DELIVRANCE_FROM_THE_PIT_A2              = 24710,
-    QUEST_DELIVRANCE_FROM_THE_PIT_H2              = 24712,
-    QUEST_WRATH_OF_THE_LICH_KING_A2               = 24500,
-    QUEST_WRATH_OF_THE_LICH_KING_H2               = 24802,
+    QUEST_DELIVRANCE_FROM_THE_PIT_A2              = 24710, 
+    QUEST_DELIVRANCE_FROM_THE_PIT_H2              = 24712, 
+    QUEST_WRATH_OF_THE_LICH_KING_A2               = 24500, 
+    QUEST_WRATH_OF_THE_LICH_KING_H2               = 24802, 
 };
 
 const Position HallsofReflectionLocs[]=
@@ -560,72 +560,72 @@ public:
 enum TrashSpells
 {
     // Ghostly Priest
-    SPELL_SHADOW_WORD_PAIN                        = 72318,
-    SPELL_CIRCLE_OF_DESTRUCTION                   = 72320,
-    SPELL_COWER_IN_FEAR                           = 72321,
-    SPELL_DARK_MENDING                            = 72322,
+    SPELL_SHADOW_WORD_PAIN                        = 72318, 
+    SPELL_CIRCLE_OF_DESTRUCTION                   = 72320, 
+    SPELL_COWER_IN_FEAR                           = 72321, 
+    SPELL_DARK_MENDING                            = 72322, 
 
     // Phantom Mage
-    SPELL_FIREBALL                                = 72163,
-    SPELL_FLAMESTRIKE                             = 72169,
-    SPELL_FROSTBOLT                               = 72166,
-    SPELL_CHAINS_OF_ICE                           = 72121,
-    SPELL_HALLUCINATION                           = 72342,
+    SPELL_FIREBALL                                = 72163, 
+    SPELL_FLAMESTRIKE                             = 72169, 
+    SPELL_FROSTBOLT                               = 72166, 
+    SPELL_CHAINS_OF_ICE                           = 72121, 
+    SPELL_HALLUCINATION                           = 72342, 
 
     // Phantom Hallucination (same as phantom mage + HALLUCINATION_2 when dies)
-    SPELL_HALLUCINATION_2                         = 72344,
+    SPELL_HALLUCINATION_2                         = 72344, 
 
     // Shadowy Mercenary
-    SPELL_SHADOW_STEP                             = 72326,
-    SPELL_DEADLY_POISON                           = 72329,
-    SPELL_ENVENOMED_DAGGER_THROW                  = 72333,
-    SPELL_KIDNEY_SHOT                             = 72335,
+    SPELL_SHADOW_STEP                             = 72326, 
+    SPELL_DEADLY_POISON                           = 72329, 
+    SPELL_ENVENOMED_DAGGER_THROW                  = 72333, 
+    SPELL_KIDNEY_SHOT                             = 72335, 
 
     // Spectral Footman
-    SPELL_SPECTRAL_STRIKE                         = 72198,
-    SPELL_SHIELD_BASH                             = 72194,
-    SPELL_TORTURED_ENRAGE                         = 72203,
+    SPELL_SPECTRAL_STRIKE                         = 72198, 
+    SPELL_SHIELD_BASH                             = 72194, 
+    SPELL_TORTURED_ENRAGE                         = 72203, 
 
     // Tortured Rifleman
-    SPELL_SHOOT                                   = 72208,
-    SPELL_CURSED_ARROW                            = 72222,
-    SPELL_FROST_TRAP                              = 72215,
-    SPELL_ICE_SHOT                                = 72268,
+    SPELL_SHOOT                                   = 72208, 
+    SPELL_CURSED_ARROW                            = 72222, 
+    SPELL_FROST_TRAP                              = 72215, 
+    SPELL_ICE_SHOT                                = 72268, 
 };
 
 enum TrashEvents
 {
-    EVENT_TRASH_NONE,
+    EVENT_TRASH_NONE, 
 
     // Ghostly Priest
-    EVENT_SHADOW_WORD_PAIN,
-    EVENT_CIRCLE_OF_DESTRUCTION,
-    EVENT_COWER_IN_FEAR,
-    EVENT_DARK_MENDING,
+    EVENT_SHADOW_WORD_PAIN, 
+    EVENT_CIRCLE_OF_DESTRUCTION, 
+    EVENT_COWER_IN_FEAR, 
+    EVENT_DARK_MENDING, 
 
     // Phantom Mage
-    EVENT_FIREBALL,
-    EVENT_FLAMESTRIKE,
-    EVENT_FROSTBOLT,
-    EVENT_CHAINS_OF_ICE,
-    EVENT_HALLUCINATION,
+    EVENT_FIREBALL, 
+    EVENT_FLAMESTRIKE, 
+    EVENT_FROSTBOLT, 
+    EVENT_CHAINS_OF_ICE, 
+    EVENT_HALLUCINATION, 
 
     // Shadowy Mercenary
-    EVENT_SHADOW_STEP,
-    EVENT_DEADLY_POISON,
-    EVENT_ENVENOMED_DAGGER_THROW,
-    EVENT_KIDNEY_SHOT,
+    EVENT_SHADOW_STEP, 
+    EVENT_DEADLY_POISON, 
+    EVENT_ENVENOMED_DAGGER_THROW, 
+    EVENT_KIDNEY_SHOT, 
 
     // Spectral Footman
-    EVENT_SPECTRAL_STRIKE,
-    EVENT_SHIELD_BASH,
-    EVENT_TORTURED_ENRAGE,
+    EVENT_SPECTRAL_STRIKE, 
+    EVENT_SHIELD_BASH, 
+    EVENT_TORTURED_ENRAGE, 
 
     // Tortured Rifleman
-    EVENT_SHOOT,
-    EVENT_CURSED_ARROW,
-    EVENT_FROST_TRAP,
-    EVENT_ICE_SHOT,
+    EVENT_SHOOT, 
+    EVENT_CURSED_ARROW, 
+    EVENT_FROST_TRAP, 
+    EVENT_ICE_SHOT, 
 };
 
 class npc_ghostly_priest : public CreatureScript
@@ -690,7 +690,7 @@ public:
                         return;
                     case EVENT_DARK_MENDING:
                         // find an ally with missing HP
-                        if (Unit *pTarget = DoSelectLowestHpFriendly(40, DUNGEON_MODE(30000,50000)))
+                        if (Unit *pTarget = DoSelectLowestHpFriendly(40, DUNGEON_MODE(30000, 50000)))
                         {
                             DoCast(pTarget, SPELL_DARK_MENDING);
                             events.ScheduleEvent(EVENT_DARK_MENDING, 20000);

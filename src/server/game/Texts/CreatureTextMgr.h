@@ -41,10 +41,10 @@ struct CreatureTextEntry
 
 enum TextRange
 {
-    TEXT_RANGE_NORMAL   = 0,
-    TEXT_RANGE_AREA     = 1,
-    TEXT_RANGE_ZONE     = 2,
-    TEXT_RANGE_MAP      = 3,
+    TEXT_RANGE_NORMAL   = 0, 
+    TEXT_RANGE_AREA     = 1, 
+    TEXT_RANGE_ZONE     = 2, 
+    TEXT_RANGE_MAP      = 3, 
     TEXT_RANGE_WORLD    = 4
 };
 
@@ -66,7 +66,7 @@ class CreatureTextMgr
         void LoadCreatureTexts();
         CreatureTextMap  const& GetTextMap() const { return mTextMap; }
 
-        void SendSound(Creature* source,uint32 sound, ChatType msgtype, uint64 whisperGuid, TextRange range, Team team, bool gmOnly);
+        void SendSound(Creature* source, uint32 sound, ChatType msgtype, uint64 whisperGuid, TextRange range, Team team, bool gmOnly);
         void SendEmote(Unit* source, uint32 emote);
 
         //if sent, returns the 'duration' of the text else 0 if error

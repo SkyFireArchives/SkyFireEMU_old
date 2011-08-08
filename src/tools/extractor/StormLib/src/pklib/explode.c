@@ -128,9 +128,9 @@ static unsigned short ChCodeAsc[] =
 // Local functions
 
 static void GenDecodeTabs(
-    unsigned char * positions,          // [out] Table of positions
-    unsigned char * start_indexes,      // [in] Table of start indexes
-    unsigned char * length_bits,        // [in] Table of lengths. Each length is stored as number of bits
+    unsigned char * positions,         // [out] Table of positions
+    unsigned char * start_indexes,     // [in] Table of start indexes
+    unsigned char * length_bits,       // [in] Table of lengths. Each length is stored as number of bits
     size_t elements)                    // [in] Number of elements in start_indexes and length_bits
 {
     unsigned long index;
@@ -159,7 +159,7 @@ static void GenAscTabs(TDcmpStruct * pWork)
         unsigned char * pChBitsAsc = pWork->ChBitsAsc + count;
         unsigned char bits_asc = *pChBitsAsc;
 
-        if(bits_asc <= 8)
+        if (bits_asc <= 8)
         {
             add = (1 << bits_asc);
             acc = *pChCodeAsc;
@@ -171,11 +171,11 @@ static void GenAscTabs(TDcmpStruct * pWork)
             }
             while(acc < 0x100);
         }
-        else if((acc = (*pChCodeAsc & 0xFF)) != 0)
+        else if ((acc = (*pChCodeAsc & 0xFF)) != 0)
         {
             pWork->offs2C34[acc] = 0xFF;
 
-            if(*pChCodeAsc & 0x3F)
+            if (*pChCodeAsc & 0x3F)
             {
                 bits_asc -= 4;
                 *pChBitsAsc = bits_asc;
@@ -230,7 +230,7 @@ static void GenAscTabs(TDcmpStruct * pWork)
 static int WasteBits(TDcmpStruct * pWork, unsigned long nBits)
 {
     // If number of bits required is less than number of (bits in the buffer) ?
-    if(nBits <= pWork->extra_bits)
+    if (nBits <= pWork->extra_bits)
     {
         pWork->extra_bits -= nBits;
         pWork->bit_buff  >>= nBits;
@@ -239,10 +239,10 @@ static int WasteBits(TDcmpStruct * pWork, unsigned long nBits)
 
     // Load input buffer if necessary
     pWork->bit_buff >>= pWork->extra_bits;
-    if(pWork->in_pos == pWork->in_bytes)
+    if (pWork->in_pos == pWork->in_bytes)
     {
         pWork->in_pos = sizeof(pWork->in_buff);
-        if((pWork->in_bytes = pWork->read_buf((char *)pWork->in_buff, &pWork->in_pos, pWork->param)) == 0)
+        if ((pWork->in_bytes = pWork->read_buf((char *)pWork->in_buff, &pWork->in_pos, pWork->param)) == 0)
             return PKDCL_STREAM_END;
         pWork->in_pos = 0;
     }
@@ -274,27 +274,27 @@ static unsigned long DecodeLit(TDcmpStruct * pWork)
     unsigned long value;
 
     // Test the current bit in byte buffer. If is not set, simply return the next 8 bits.
-    if(pWork->bit_buff & 1)
+    if (pWork->bit_buff & 1)
     {
         // Remove one bit from the input data
-        if(WasteBits(pWork, 1))
+        if (WasteBits(pWork, 1))
             return 0x306;   
                       
         // The next 8 bits hold the index to the length code table
         length_code = pWork->LengthCodes[pWork->bit_buff & 0xFF];
         
         // Remove the apropriate number of bits
-        if(WasteBits(pWork, pWork->LenBits[length_code]))
+        if (WasteBits(pWork, pWork->LenBits[length_code]))
             return 0x306;
 
         // Are there some extra bits for the obtained length code ?
-        if((extra_length_bits = pWork->ExLenBits[length_code]) != 0)
+        if ((extra_length_bits = pWork->ExLenBits[length_code]) != 0)
         {
             unsigned long extra_length = pWork->bit_buff & ((1 << extra_length_bits) - 1);
 
-            if(WasteBits(pWork, extra_length_bits))
+            if (WasteBits(pWork, extra_length_bits))
             {
-                if((length_code + extra_length) != 0x10E)
+                if ((length_code + extra_length) != 0x10E)
                     return 0x306;
             }
             length_code = pWork->LenBase[length_code] + extra_length;
@@ -306,36 +306,36 @@ static unsigned long DecodeLit(TDcmpStruct * pWork)
     }
 
     // Remove one bit from the input data
-    if(WasteBits(pWork, 1))
+    if (WasteBits(pWork, 1))
         return 0x306;
 
     // If the binary compression type, read 8 bits and return them as one byte.
-    if(pWork->ctype == CMP_BINARY)
+    if (pWork->ctype == CMP_BINARY)
     {
         unsigned long uncompressed_byte = pWork->bit_buff & 0xFF;
 
-        if(WasteBits(pWork, 8))
+        if (WasteBits(pWork, 8))
             return 0x306;
         return uncompressed_byte;
     }
 
     // When ASCII compression ...
-    if(pWork->bit_buff & 0xFF)
+    if (pWork->bit_buff & 0xFF)
     {
         value = pWork->offs2C34[pWork->bit_buff & 0xFF];
 
-        if(value == 0xFF)
+        if (value == 0xFF)
         {
-            if(pWork->bit_buff & 0x3F)
+            if (pWork->bit_buff & 0x3F)
             {
-                if(WasteBits(pWork, 4))
+                if (WasteBits(pWork, 4))
                     return 0x306;
 
                 value = pWork->offs2D34[pWork->bit_buff & 0xFF];
             }
             else
             {
-                if(WasteBits(pWork, 6))
+                if (WasteBits(pWork, 6))
                     return 0x306;
 
                 value = pWork->offs2E34[pWork->bit_buff & 0x7F];
@@ -344,7 +344,7 @@ static unsigned long DecodeLit(TDcmpStruct * pWork)
     }
     else
     {
-        if(WasteBits(pWork, 8))
+        if (WasteBits(pWork, 8))
             return 0x306;
 
         value = pWork->offs2EB4[pWork->bit_buff & 0xFF];
@@ -366,15 +366,15 @@ static unsigned long DecodeDist(TDcmpStruct * pWork, unsigned long rep_length)
     // Next 2-8 bits in the input buffer is the distance position code
     dist_pos_code = pWork->DistPosCodes[pWork->bit_buff & 0xFF];
     dist_pos_bits = pWork->DistBits[dist_pos_code];
-    if(WasteBits(pWork, dist_pos_bits))
+    if (WasteBits(pWork, dist_pos_bits))
         return 0;
 
-    if(rep_length == 2)
+    if (rep_length == 2)
     {
         // If the repetition is only 2 bytes length,
         // then take 2 bits from the stream in order to get the distance
         distance = (dist_pos_code << 2) | (pWork->bit_buff & 0x03);
-        if(WasteBits(pWork, 2))
+        if (WasteBits(pWork, 2))
             return 0;
     }
     else
@@ -382,7 +382,7 @@ static unsigned long DecodeDist(TDcmpStruct * pWork, unsigned long rep_length)
         // If the repetition is more than 2 bytes length,
         // then take "dsize_bits" bits in order to get the distance
         distance = (dist_pos_code << pWork->dsize_bits) | (pWork->bit_buff & pWork->dsize_mask);
-        if(WasteBits(pWork, pWork->dsize_bits))
+        if (WasteBits(pWork, pWork->dsize_bits))
             return 0;
     }
     return distance + 1;
@@ -408,7 +408,7 @@ static unsigned long Expand(TDcmpStruct * pWork)
         // literal of 0x101 means repeating sequence of 0x3 bytes
         // ...
         // literal of 0x305 means repeating sequence of 0x207 bytes
-        if(next_literal >= 0x100)
+        if (next_literal >= 0x100)
         {
             unsigned char * source;
             unsigned char * target;
@@ -421,7 +421,7 @@ static unsigned long Expand(TDcmpStruct * pWork)
             rep_length = next_literal - 0xFE;
 
             // Get backward distance to the repetition
-            if((minus_dist = DecodeDist(pWork, rep_length)) == 0)
+            if ((minus_dist = DecodeDist(pWork, rep_length)) == 0)
             {
                 result = 0x306;
                 break;
@@ -444,7 +444,7 @@ static unsigned long Expand(TDcmpStruct * pWork)
         }
     
         // Flush the output buffer, if number of extracted bytes has reached the end
-        if(pWork->outputPos >= 0x2000)
+        if (pWork->outputPos >= 0x2000)
         {
             // Copy decompressed data into user buffer
             copyBytes = 0x1000;
@@ -485,7 +485,7 @@ unsigned int explode(
     pWork->param      = param;
     pWork->in_pos     = sizeof(pWork->in_buff);
     pWork->in_bytes   = pWork->read_buf((char *)pWork->in_buff, &pWork->in_pos, pWork->param);
-    if(pWork->in_bytes <= 4)
+    if (pWork->in_bytes <= 4)
         return CMP_BAD_DATA;
 
     pWork->ctype      = pWork->in_buff[0]; // Get the compression type (CMP_BINARY or CMP_ASCII)
@@ -495,14 +495,14 @@ unsigned int explode(
     pWork->in_pos     = 3;                 // Position in input buffer
 
     // Test for the valid dictionary size
-    if(4 > pWork->dsize_bits || pWork->dsize_bits > 6) 
+    if (4 > pWork->dsize_bits || pWork->dsize_bits > 6) 
         return CMP_INVALID_DICTSIZE;
 
     pWork->dsize_mask = 0xFFFF >> (0x10 - pWork->dsize_bits); // Shifted by 'sar' instruction
 
-    if(pWork->ctype != CMP_BINARY)
+    if (pWork->ctype != CMP_BINARY)
     {
-        if(pWork->ctype != CMP_ASCII)
+        if (pWork->ctype != CMP_ASCII)
             return CMP_INVALID_MODE;
 
         memcpy(pWork->ChBitsAsc, ChBitsAsc, sizeof(pWork->ChBitsAsc));
@@ -515,7 +515,7 @@ unsigned int explode(
     memcpy(pWork->LenBase, LenBase, sizeof(pWork->LenBase));
     memcpy(pWork->DistBits, DistBits, sizeof(pWork->DistBits));
     GenDecodeTabs(pWork->DistPosCodes, DistCode, pWork->DistBits, sizeof(pWork->DistBits));
-    if(Expand(pWork) != 0x306)
+    if (Expand(pWork) != 0x306)
         return CMP_NO_ERROR;
         
     return CMP_ABORT;

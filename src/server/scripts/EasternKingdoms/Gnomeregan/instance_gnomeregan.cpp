@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -98,12 +98,12 @@ public:
                 case GO_CAVE_IN_LEFT:
                     uiCaveInLeftGUID = pGo->GetGUID();
                     if (m_auiEncounter[0] == DONE || m_auiEncounter[0] == NOT_STARTED)
-                        HandleGameObject(NULL,false,pGo);
+                        HandleGameObject(NULL, false, pGo);
                     break;
                 case GO_CAVE_IN_RIGHT:
                     uiCaveInRightGUID = pGo->GetGUID();
                     if (m_auiEncounter[0] == DONE || m_auiEncounter[0] == NOT_STARTED)
-                        HandleGameObject(NULL,false,pGo);
+                        HandleGameObject(NULL, false, pGo);
                     break;
             }
         }

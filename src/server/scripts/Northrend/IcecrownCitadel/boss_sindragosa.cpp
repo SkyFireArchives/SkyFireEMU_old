@@ -35,111 +35,111 @@ enum Texts
     SAY_KILL                            = 8, // Perish!
                                              // A flaw of mortality...
     SAY_BERSERK                         = 9, // Enough! I tire of these games!
-    SAY_DEATH                           = 10,// Free...at last...
+    SAY_DEATH                           = 10, // Free...at last...
 };
 
 enum Spells
 {
     // Sindragosa
-    SPELL_SINDRAGOSA_S_FURY     = 70608,
-    SPELL_TANK_MARKER           = 71039,
-    SPELL_FROST_AURA            = 70084,
-    SPELL_PERMAEATING_CHILL     = 70109,
-    SPELL_CLEAVE                = 19983,
-    SPELL_TAIL_SMASH            = 71077,
-    SPELL_FROST_BREATH_P1       = 69649,
-    SPELL_FROST_BREATH_P2       = 73061,
-    SPELL_UNCHAINED_MAGIC       = 69762,
-    SPELL_BACKLASH              = 69770,
-    SPELL_ICY_GRIP              = 70117,
-    SPELL_ICY_GRIP_JUMP         = 70122,
-    SPELL_BLISTERING_COLD       = 70123,
-    SPELL_FROST_BEACON          = 70126,
-    SPELL_ICE_TOMB_TARGET       = 69712,
-    SPELL_ICE_TOMB_DUMMY        = 69675,
-    SPELL_ICE_TOMB_UNTARGETABLE = 69700,
-    SPELL_ICE_TOMB_DAMAGE       = 70157,
-    SPELL_ASPHYXIATION          = 71665,
-    SPELL_FROST_BOMB_TRIGGER    = 69846,
-    SPELL_FROST_BOMB_VISUAL     = 70022,
-    SPELL_FROST_BOMB            = 69845,
-    SPELL_MYSTIC_BUFFET         = 70128,
+    SPELL_SINDRAGOSA_S_FURY     = 70608, 
+    SPELL_TANK_MARKER           = 71039, 
+    SPELL_FROST_AURA            = 70084, 
+    SPELL_PERMAEATING_CHILL     = 70109, 
+    SPELL_CLEAVE                = 19983, 
+    SPELL_TAIL_SMASH            = 71077, 
+    SPELL_FROST_BREATH_P1       = 69649, 
+    SPELL_FROST_BREATH_P2       = 73061, 
+    SPELL_UNCHAINED_MAGIC       = 69762, 
+    SPELL_BACKLASH              = 69770, 
+    SPELL_ICY_GRIP              = 70117, 
+    SPELL_ICY_GRIP_JUMP         = 70122, 
+    SPELL_BLISTERING_COLD       = 70123, 
+    SPELL_FROST_BEACON          = 70126, 
+    SPELL_ICE_TOMB_TARGET       = 69712, 
+    SPELL_ICE_TOMB_DUMMY        = 69675, 
+    SPELL_ICE_TOMB_UNTARGETABLE = 69700, 
+    SPELL_ICE_TOMB_DAMAGE       = 70157, 
+    SPELL_ASPHYXIATION          = 71665, 
+    SPELL_FROST_BOMB_TRIGGER    = 69846, 
+    SPELL_FROST_BOMB_VISUAL     = 70022, 
+    SPELL_FROST_BOMB            = 69845, 
+    SPELL_MYSTIC_BUFFET         = 70128, 
 
     // Spinestalker
-    SPELL_BELLOWING_ROAR        = 36922,
-    SPELL_CLEAVE_SPINESTALKER   = 40505,
-    SPELL_TAIL_SWEEP            = 71370,
+    SPELL_BELLOWING_ROAR        = 36922, 
+    SPELL_CLEAVE_SPINESTALKER   = 40505, 
+    SPELL_TAIL_SWEEP            = 71370, 
 
     // Rimefang
-    SPELL_FROST_BREATH          = 71386,
-    SPELL_FROST_AURA_RIMEFANG   = 71387,
-    SPELL_ICY_BLAST             = 71376,
-    SPELL_ICY_BLAST_AREA        = 71380,
+    SPELL_FROST_BREATH          = 71386, 
+    SPELL_FROST_AURA_RIMEFANG   = 71387, 
+    SPELL_ICY_BLAST             = 71376, 
+    SPELL_ICY_BLAST_AREA        = 71380, 
 
     // Frostwarden Handler
-    SPELL_FOCUS_FIRE            = 71350,
-    SPELL_ORDER_WHELP           = 71357,
-    SPELL_CONCUSSIVE_SHOCK      = 71337,
+    SPELL_FOCUS_FIRE            = 71350, 
+    SPELL_ORDER_WHELP           = 71357, 
+    SPELL_CONCUSSIVE_SHOCK      = 71337, 
 };
 
 enum Events
 {
     // Sindragosa
-    EVENT_BERSERK                   = 1,
-    EVENT_CLEAVE                    = 2,
-    EVENT_TAIL_SMASH                = 3,
-    EVENT_FROST_BREATH              = 4,
-    EVENT_UNCHAINED_MAGIC           = 5,
-    EVENT_ICY_GRIP                  = 6,
-    EVENT_BLISTERING_COLD           = 7,
-    EVENT_BLISTERING_COLD_YELL      = 8,
-    EVENT_AIR_PHASE                 = 9,
-    EVENT_ICE_TOMB                  = 10,
-    EVENT_FROST_BOMB                = 11,
-    EVENT_LAND                      = 12,
+    EVENT_BERSERK                   = 1, 
+    EVENT_CLEAVE                    = 2, 
+    EVENT_TAIL_SMASH                = 3, 
+    EVENT_FROST_BREATH              = 4, 
+    EVENT_UNCHAINED_MAGIC           = 5, 
+    EVENT_ICY_GRIP                  = 6, 
+    EVENT_BLISTERING_COLD           = 7, 
+    EVENT_BLISTERING_COLD_YELL      = 8, 
+    EVENT_AIR_PHASE                 = 9, 
+    EVENT_ICE_TOMB                  = 10, 
+    EVENT_FROST_BOMB                = 11, 
+    EVENT_LAND                      = 12, 
 
     // Spinestalker
-    EVENT_BELLOWING_ROAR            = 13,
-    EVENT_CLEAVE_SPINESTALKER       = 14,
-    EVENT_TAIL_SWEEP                = 15,
+    EVENT_BELLOWING_ROAR            = 13, 
+    EVENT_CLEAVE_SPINESTALKER       = 14, 
+    EVENT_TAIL_SWEEP                = 15, 
 
     // Rimefang
-    EVENT_FROST_BREATH_RIMEFANG     = 16,
-    EVENT_ICY_BLAST                 = 17,
-    EVENT_ICY_BLAST_CAST            = 18,
+    EVENT_FROST_BREATH_RIMEFANG     = 16, 
+    EVENT_ICY_BLAST                 = 17, 
+    EVENT_ICY_BLAST_CAST            = 18, 
 
     // Trash
-    EVENT_FROSTWARDEN_ORDER_WHELP   = 19,
-    EVENT_CONCUSSIVE_SHOCK          = 20,
+    EVENT_FROSTWARDEN_ORDER_WHELP   = 19, 
+    EVENT_CONCUSSIVE_SHOCK          = 20, 
 
     // event groups
-    EVENT_GROUP_LAND_PHASE          = 1,
+    EVENT_GROUP_LAND_PHASE          = 1, 
 };
 
 enum FrostwingData
 {
-    DATA_MYSTIC_BUFFET_STACK    = 0,
-    DATA_FROSTWYRM_OWNER        = 1,
-    DATA_WHELP_MARKER           = 2,
-    DATA_LINKED_GAMEOBJECT      = 3,
-    DATA_TRAPPED_PLAYER         = 4,
+    DATA_MYSTIC_BUFFET_STACK    = 0, 
+    DATA_FROSTWYRM_OWNER        = 1, 
+    DATA_WHELP_MARKER           = 2, 
+    DATA_LINKED_GAMEOBJECT      = 3, 
+    DATA_TRAPPED_PLAYER         = 4, 
 };
 
 enum MovementPoints
 {
-    POINT_FROSTWYRM_FLY_IN  = 1,
-    POINT_FROSTWYRM_LAND    = 2,
-    POINT_AIR_PHASE         = 3,
-    POINT_LAND              = 4,
+    POINT_FROSTWYRM_FLY_IN  = 1, 
+    POINT_FROSTWYRM_LAND    = 2, 
+    POINT_AIR_PHASE         = 3, 
+    POINT_LAND              = 4, 
 };
 
 enum Shadowmourne
 {
-    QUEST_FROST_INFUSION        = 24757,
-    ITEM_SHADOW_S_EDGE          = 49888,
+    QUEST_FROST_INFUSION        = 24757, 
+    ITEM_SHADOW_S_EDGE          = 49888, 
 
-    SPELL_FROST_INFUSION        = 72292,
-    SPELL_FROST_IMBUED_BLADE    = 72290,
+    SPELL_FROST_INFUSION        = 72292, 
+    SPELL_FROST_IMBUED_BLADE    = 72290, 
 };
 
 static Position const RimefangFlyPos      = {4413.309f, 2456.421f, 223.3795f, 2.890186f};
@@ -1010,7 +1010,7 @@ class spell_sindragosa_unchained_magic : public SpellScriptLoader
 
             void FilterTargets(std::list<Unit*>& unitList)
             {
-                unitList.remove_if(UnchainedMagicTargetSelector());
+                unitList.remove_if (UnchainedMagicTargetSelector());
                 uint32 maxSize = GetCaster()->GetMap()->GetSpawnMode() & 1 ? 5 : 2;
                 if (unitList.size() > maxSize)
                     Trinity::RandomResizeList(unitList, maxSize);
@@ -1204,7 +1204,7 @@ class spell_sindragosa_collision_filter : public SpellScriptLoader
             {
                 std::list<Creature*> tombs;
                 GetCreatureListWithEntryInGrid(tombs, GetCaster(), NPC_ICE_TOMB, 200.0f);
-                unitList.remove_if(FrostBombTargetSelector(GetCaster(), tombs));
+                unitList.remove_if (FrostBombTargetSelector(GetCaster(), tombs));
             }
 
             void Register()
@@ -1345,7 +1345,7 @@ class spell_frostwarden_handler_order_whelp : public SpellScriptLoader
                 std::list<Creature*> unitList;
                 GetCreatureListWithEntryInGrid(unitList, GetCaster(), NPC_FROSTWING_WHELP, 150.0f);
                 if (Creature* creature = GetCaster()->ToCreature())
-                    unitList.remove_if(OrderWhelpTargetSelector(creature));
+                    unitList.remove_if (OrderWhelpTargetSelector(creature));
 
                 std::list<Creature*>::iterator itr = unitList.begin();
                 std::advance(itr, urand(0, unitList.size()-1));

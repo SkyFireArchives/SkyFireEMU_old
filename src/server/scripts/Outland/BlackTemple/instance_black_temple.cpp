@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -170,24 +170,24 @@ public:
             switch(pGo->GetEntry())
             {
             case 185483: NajentusGate = pGo->GetGUID();// Gate past Naj'entus (at the entrance to Supermoose's courtyards)
-                if (m_auiEncounter[0] == DONE)HandleGameObject(NULL,true,pGo);break;
+                if (m_auiEncounter[0] == DONE)HandleGameObject(NULL, true, pGo);break;
             case 185882: MainTempleDoors = pGo->GetGUID();// Main Temple Doors - right past Supermoose (Supremus)
-                if (m_auiEncounter[1] == DONE)HandleGameObject(NULL,true,pGo);break;
+                if (m_auiEncounter[1] == DONE)HandleGameObject(NULL, true, pGo);break;
             case 185478: ShadeOfAkamaDoor = pGo->GetGUID();break;
             case 185480: CommonDoor = pGo->GetGUID();
-                if (m_auiEncounter[3] == DONE)HandleGameObject(NULL,true,pGo);break;
+                if (m_auiEncounter[3] == DONE)HandleGameObject(NULL, true, pGo);break;
             case 186153: TeronDoor = pGo->GetGUID();
-                if (m_auiEncounter[3] == DONE)HandleGameObject(NULL,true,pGo);break;
+                if (m_auiEncounter[3] == DONE)HandleGameObject(NULL, true, pGo);break;
             case 185892: GuurtogDoor = pGo->GetGUID();
-                if (m_auiEncounter[4] == DONE)HandleGameObject(NULL,true,pGo);break;
+                if (m_auiEncounter[4] == DONE)HandleGameObject(NULL, true, pGo);break;
             case 185479: TempleDoor = pGo->GetGUID();
-                if (m_auiEncounter[5] == DONE)HandleGameObject(NULL,true,pGo);break;
+                if (m_auiEncounter[5] == DONE)HandleGameObject(NULL, true, pGo);break;
             case 185482: MotherDoor = pGo->GetGUID();
-                if (m_auiEncounter[6] == DONE)HandleGameObject(NULL,true,pGo);break;
+                if (m_auiEncounter[6] == DONE)HandleGameObject(NULL, true, pGo);break;
             case 185481: CouncilDoor = pGo->GetGUID();
-                if (m_auiEncounter[7] == DONE)HandleGameObject(NULL,true,pGo);break;
+                if (m_auiEncounter[7] == DONE)HandleGameObject(NULL, true, pGo);break;
             case 186152: SimpleDoor = pGo->GetGUID();
-                if (m_auiEncounter[7] == DONE)HandleGameObject(NULL,true,pGo);break;
+                if (m_auiEncounter[7] == DONE)HandleGameObject(NULL, true, pGo);break;
             case 185905: IllidanGate = pGo->GetGUID(); break; // Gate leading to Temple Summit
             case 186261: IllidanDoor[0] = pGo->GetGUID(); break; // Right door at Temple Summit
             case 186262: IllidanDoor[1] = pGo->GetGUID(); break; // Left door at Temple Summit

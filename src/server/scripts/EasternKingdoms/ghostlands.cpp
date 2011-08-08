@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -68,7 +68,7 @@ public:
 
     bool OnGossipHello(Player* pPlayer, Creature* pCreature)
     {
-        if (pPlayer->GetQuestStatus(9692) == QUEST_STATUS_INCOMPLETE && !pPlayer->HasItemCount(24226,1,true))
+        if (pPlayer->GetQuestStatus(9692) == QUEST_STATUS_INCOMPLETE && !pPlayer->HasItemCount(24226, 1, true))
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_H_BKD, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
@@ -157,18 +157,18 @@ public:
 
 enum eEnums
 {
-    SAY_START           = -1000140,
-    SAY_PROGRESS1       = -1000141,
-    SAY_PROGRESS2       = -1000142,
-    SAY_PROGRESS3       = -1000143,
-    SAY_END1            = -1000144,
-    SAY_END2            = -1000145,
-    SAY_CAPTAIN_ANSWER      = -1000146,
+    SAY_START           = -1000140, 
+    SAY_PROGRESS1       = -1000141, 
+    SAY_PROGRESS2       = -1000142, 
+    SAY_PROGRESS3       = -1000143, 
+    SAY_END1            = -1000144, 
+    SAY_END2            = -1000145, 
+    SAY_CAPTAIN_ANSWER      = -1000146, 
 
-    QUEST_ESCAPE_FROM_THE_CATACOMBS     = 9212,
-    GO_CAGE             = 181152,
-    NPC_CAPTAIN_HELIOS  = 16220,
-    FACTION_SMOON_E     = 1603,
+    QUEST_ESCAPE_FROM_THE_CATACOMBS     = 9212, 
+    GO_CAGE             = 181152, 
+    NPC_CAPTAIN_HELIOS  = 16220, 
+    FACTION_SMOON_E     = 1603, 
 };
 
 class npc_ranger_lilatha : public CreatureScript
@@ -220,7 +220,7 @@ public:
             case 25: me->AddUnitMovementFlag(MOVEMENTFLAG_WALKING); break;
             case 30:
                 if (pPlayer && pPlayer->GetTypeId() == TYPEID_PLAYER)
-                    CAST_PLR(pPlayer)->GroupEventHappens(QUEST_ESCAPE_FROM_THE_CATACOMBS,me);
+                    CAST_PLR(pPlayer)->GroupEventHappens(QUEST_ESCAPE_FROM_THE_CATACOMBS, me);
                 break;
             case 32:
                 me->SetOrientation(2.978281f);
@@ -267,8 +267,8 @@ public:
  
 enum eCaptive
 {
-    MOB1        =16208,
-    MOB2        =16206,
+    MOB1        =16208, 
+    MOB2        =16206, 
     MOB3        =16209
 };
  

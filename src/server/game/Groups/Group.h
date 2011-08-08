@@ -117,7 +117,7 @@ enum GroupUpdateFlags
 };
 
 #define GROUP_UPDATE_FLAGS_COUNT          20
-                                                                // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19
+                                                                // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 static const uint8 GroupUpdateLength[GROUP_UPDATE_FLAGS_COUNT] = { 0, 2, 2, 2, 1, 2, 2, 2, 2, 4, 8, 8, 1, 2, 2, 2, 1, 2, 2, 8};
 
 class Roll : public LootValidatorRef
@@ -224,7 +224,7 @@ class Group
         Player* GetInvited(const uint64& guid) const;
         Player* GetInvited(const std::string& name) const;
 
-        bool SameSubGroup(uint64 guid1,const uint64& guid2) const;
+        bool SameSubGroup(uint64 guid1, const uint64& guid2) const;
         bool SameSubGroup(uint64 guid1, MemberSlot const* slot2) const;
         bool HasFreeSlotSubGroup(uint8 subgroup) const;
         bool SameSubGroup(Player const* member1, Player const* member2) const;
@@ -232,13 +232,13 @@ class Group
         MemberSlotList const& GetMemberSlots() const;
         GroupReference* GetFirstMember();
         uint32 GetMembersCount() const;
-        void GetDataForXPAtKill(Unit const* victim, uint32& count,uint32& sum_level, Player* & member_with_max_level, Player* & not_gray_member_with_max_level);
+        void GetDataForXPAtKill(Unit const* victim, uint32& count, uint32& sum_level, Player* & member_with_max_level, Player* & not_gray_member_with_max_level);
         uint8 GetMemberGroup(uint64 guid) const;
 
         void ConvertToLFG();
         void ConvertToRaid();
         void ConvertToGroup();
-        
+
         // some additional raid methods
         void SetBattlegroundGroup(Battleground *bg);
         GroupJoinBattlegroundResult CanJoinBattlegroundQueue(Battleground const* bgOrTemplate, BattlegroundQueueTypeId bgQueueTypeId, uint32 MinPlayerCount, uint32 MaxPlayerCount, bool isRated, uint32 arenaSlot);

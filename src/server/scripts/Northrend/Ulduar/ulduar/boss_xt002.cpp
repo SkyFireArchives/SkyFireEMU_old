@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,102 +39,102 @@
 
 enum Spells
 {
-    SPELL_TYMPANIC_TANTRUM                      = 62776,
-    SPELL_SEARING_LIGHT_10                      = 63018,
-    SPELL_SEARING_LIGHT_25                      = 65121,
+    SPELL_TYMPANIC_TANTRUM                      = 62776, 
+    SPELL_SEARING_LIGHT_10                      = 63018, 
+    SPELL_SEARING_LIGHT_25                      = 65121, 
 
-    SPELL_GRAVITY_BOMB_10                       = 63024,
-    SPELL_GRAVITY_BOMB_25                       = 64234,
-    SPELL_GRAVITY_BOMB_AURA_10                  = 63025,
-    SPELL_GRAVITY_BOMB_AURA_25                  = 63233,
+    SPELL_GRAVITY_BOMB_10                       = 63024, 
+    SPELL_GRAVITY_BOMB_25                       = 64234, 
+    SPELL_GRAVITY_BOMB_AURA_10                  = 63025, 
+    SPELL_GRAVITY_BOMB_AURA_25                  = 63233, 
 
-    SPELL_HEARTBREAK_10                         = 65737,
-    SPELL_HEARTBREAK_25                         = 64193,
+    SPELL_HEARTBREAK_10                         = 65737, 
+    SPELL_HEARTBREAK_25                         = 64193, 
 
-    SPELL_ENRAGE                                = 26662,
+    SPELL_ENRAGE                                = 26662, 
 
     //------------------VOID ZONE--------------------
-    SPELL_VOID_ZONE_10                          = 64203,
-    SPELL_VOID_ZONE_25                          = 64235,
+    SPELL_VOID_ZONE_10                          = 64203, 
+    SPELL_VOID_ZONE_25                          = 64235, 
 
     // Life Spark
-    SPELL_STATIC_CHARGED_10                     = 64227,
-    SPELL_STATIC_CHARGED_25                     = 64236,
-    SPELL_SHOCK                                 = 64230,
+    SPELL_STATIC_CHARGED_10                     = 64227, 
+    SPELL_STATIC_CHARGED_25                     = 64236, 
+    SPELL_SHOCK                                 = 64230, 
 
     //----------------XT-002 HEART-------------------
-    SPELL_EXPOSED_HEART                         = 63849,
+    SPELL_EXPOSED_HEART                         = 63849, 
 
     //---------------XM-024 PUMMELLER----------------
-    SPELL_ARCING_SMASH                          = 8374,
-    SPELL_TRAMPLE                               = 5568,
-    SPELL_UPPERCUT                              = 10966,
+    SPELL_ARCING_SMASH                          = 8374, 
+    SPELL_TRAMPLE                               = 5568, 
+    SPELL_UPPERCUT                              = 10966, 
 
     //------------------BOOMBOT-----------------------
-    SPELL_BOOM                                  = 62834,
+    SPELL_BOOM                                  = 62834, 
 };
 
 enum Timers
 {
-    TIMER_TYMPANIC_TANTRUM_MIN                  = 32000,
-    TIMER_TYMPANIC_TANTRUM_MAX                  = 36000,
-    TIMER_SEARING_LIGHT                         = 20000,
-    TIMER_SPAWN_LIFE_SPARK                      = 9000,
-    TIMER_GRAVITY_BOMB                          = 20000,
-    TIMER_HEART_PHASE                           = 30000,
-    TIMER_ENRAGE                                = 600000,
-    TIMER_GRAVITY_BOMB_AURA                     = 8900,
+    TIMER_TYMPANIC_TANTRUM_MIN                  = 32000, 
+    TIMER_TYMPANIC_TANTRUM_MAX                  = 36000, 
+    TIMER_SEARING_LIGHT                         = 20000, 
+    TIMER_SPAWN_LIFE_SPARK                      = 9000, 
+    TIMER_GRAVITY_BOMB                          = 20000, 
+    TIMER_HEART_PHASE                           = 30000, 
+    TIMER_ENRAGE                                = 600000, 
+    TIMER_GRAVITY_BOMB_AURA                     = 8900, 
 
-    TIMER_VOID_ZONE                             = 3000,
+    TIMER_VOID_ZONE                             = 3000, 
 
     // Life Spark
-    TIMER_SHOCK                                 = 12000,
+    TIMER_SHOCK                                 = 12000, 
 
     // Pummeller
     // Timers may be off
-    TIMER_ARCING_SMASH                          = 27000,
-    TIMER_TRAMPLE                               = 22000,
-    TIMER_UPPERCUT                              = 17000,
+    TIMER_ARCING_SMASH                          = 27000, 
+    TIMER_TRAMPLE                               = 22000, 
+    TIMER_UPPERCUT                              = 17000, 
 
-    TIMER_SPAWN_ADD                             = 12000,
+    TIMER_SPAWN_ADD                             = 12000, 
 };
 
 enum Creatures
 {
-    NPC_VOID_ZONE                               = 34001,
-    NPC_LIFE_SPARK                              = 34004,
-    NPC_XT002_HEART                             = 33329,
-    NPC_XS013_SCRAPBOT                          = 33343,
-    NPC_XM024_PUMMELLER                         = 33344,
-    NPC_XE321_BOOMBOT                           = 33346,
+    NPC_VOID_ZONE                               = 34001, 
+    NPC_LIFE_SPARK                              = 34004, 
+    NPC_XT002_HEART                             = 33329, 
+    NPC_XS013_SCRAPBOT                          = 33343, 
+    NPC_XM024_PUMMELLER                         = 33344, 
+    NPC_XE321_BOOMBOT                           = 33346, 
 };
 
 enum Actions
 {
-    ACTION_ENTER_HARD_MODE                      = 0,
+    ACTION_ENTER_HARD_MODE                      = 0, 
 };
 
 enum XT002Data
 {
-    DATA_TRANSFERED_HEALTH                      = 0,
+    DATA_TRANSFERED_HEALTH                      = 0, 
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1603300,
-    SAY_HEART_OPENED                            = -1603301,
-    SAY_HEART_CLOSED                            = -1603302,
-    SAY_TYMPANIC_TANTRUM                        = -1603303,
-    SAY_SLAY_1                                  = -1603304,
-    SAY_SLAY_2                                  = -1603305,
-    SAY_BERSERK                                 = -1603306,
-    SAY_DEATH                                   = -1603307,
-    SAY_SUMMON                                  = -1603308,
+    SAY_AGGRO                                   = -1603300, 
+    SAY_HEART_OPENED                            = -1603301, 
+    SAY_HEART_CLOSED                            = -1603302, 
+    SAY_TYMPANIC_TANTRUM                        = -1603303, 
+    SAY_SLAY_1                                  = -1603304, 
+    SAY_SLAY_2                                  = -1603305, 
+    SAY_BERSERK                                 = -1603306, 
+    SAY_DEATH                                   = -1603307, 
+    SAY_SUMMON                                  = -1603308, 
 };
 
 enum
 {
-    ACHIEV_TIMED_START_EVENT                      = 21027,
+    ACHIEV_TIMED_START_EVENT                      = 21027, 
 };
 
 //#define GRAVITY_BOMB_DMG_MIN_10                11700
@@ -282,7 +282,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
         }
 
         void JustDied(Unit * /*victim*/)
@@ -322,7 +322,7 @@ public:
                 {
                     if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     {
-                        DoCast(pTarget, RAID_MODE(SPELL_GRAVITY_BOMB_10,SPELL_GRAVITY_BOMB_25));
+                        DoCast(pTarget, RAID_MODE(SPELL_GRAVITY_BOMB_10, SPELL_GRAVITY_BOMB_25));
                         uiGravityBombTarget = pTarget->GetGUID();
                     }
                     uiGravityBombTimer = TIMER_GRAVITY_BOMB;
@@ -433,7 +433,7 @@ public:
                 {
                     if (Unit *pGravityBombTarget = me->GetUnit(*me, uiGravityBombTarget))
                     {
-                        pGravityBombTarget->RemoveAurasDueToSpell(RAID_MODE(SPELL_GRAVITY_BOMB_10,SPELL_GRAVITY_BOMB_25));
+                        pGravityBombTarget->RemoveAurasDueToSpell(RAID_MODE(SPELL_GRAVITY_BOMB_10, SPELL_GRAVITY_BOMB_25));
                         if (hardMode)
                         {
                             //Remains spawned for 3 minutes

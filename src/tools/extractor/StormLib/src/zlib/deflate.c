@@ -64,8 +64,8 @@ const char deflate_copyright[] =
  *  Function prototypes.
  */
 typedef enum {
-    need_more,      /* block not completed, need more input or more output */
-    block_done,     /* block flush performed */
+    need_more,     /* block not completed, need more input or more output */
+    block_done,    /* block flush performed */
     finish_started, /* finish started, need only more output at next deflate */
     finish_done     /* finish done, accept no more input or output */
 } block_state;
@@ -131,20 +131,20 @@ typedef struct config_s {
 #ifdef FASTEST
 local const config configuration_table[2] = {
 /*      good lazy nice chain */
-/* 0 */ {0,    0,  0,    0, deflate_stored},  /* store only */
-/* 1 */ {4,    4,  8,    4, deflate_fast}}; /* max speed, no lazy matches */
+/* 0 */ {0,   0, 0,   0, deflate_stored}, /* store only */
+/* 1 */ {4,   4, 8,   4, deflate_fast}}; /* max speed, no lazy matches */
 #else
 local const config configuration_table[10] = {
 /*      good lazy nice chain */
-/* 0 */ {0,    0,  0,    0, deflate_stored},  /* store only */
-/* 1 */ {4,    4,  8,    4, deflate_fast}, /* max speed, no lazy matches */
-/* 2 */ {4,    5, 16,    8, deflate_fast},
-/* 3 */ {4,    6, 32,   32, deflate_fast},
+/* 0 */ {0,   0, 0,   0, deflate_stored}, /* store only */
+/* 1 */ {4,   4, 8,   4, deflate_fast}, /* max speed, no lazy matches */
+/* 2 */ {4,   5, 16,   8, deflate_fast},
+/* 3 */ {4,   6, 32,  32, deflate_fast},
 
-/* 4 */ {4,    4, 16,   16, deflate_slow},  /* lazy matches */
-/* 5 */ {8,   16, 32,   32, deflate_slow},
-/* 6 */ {8,   16, 128, 128, deflate_slow},
-/* 7 */ {8,   32, 128, 256, deflate_slow},
+/* 4 */ {4,   4, 16,  16, deflate_slow}, /* lazy matches */
+/* 5 */ {8,  16, 32,  32, deflate_slow},
+/* 6 */ {8,  16, 128, 128, deflate_slow},
+/* 7 */ {8,  32, 128, 256, deflate_slow},
 /* 8 */ {32, 128, 258, 1024, deflate_slow},
 /* 9 */ {32, 258, 258, 4096, deflate_slow}}; /* max compression */
 #endif

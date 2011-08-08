@@ -28,8 +28,8 @@ bool isHole(int holes, int i, int j)
 {
     int testi = i / 2;
     int testj = j / 4;
-    if(testi > 3) testi = 3;
-    if(testj > 3) testj = 3;
+    if (testi > 3) testi = 3;
+    if (testj > 3) testj = 3;
     return (holes & holetab_h[testi] & holetab_v[testj]) != 0;
 }
 
@@ -64,7 +64,7 @@ bool ADT_file::prepareLoadedData()
     int found = 0;
     while (ptr < size)
     {
-        if((buffer + ptr)[0] == 'K' &&
+        if ((buffer + ptr)[0] == 'K' &&
            (buffer + ptr)[1] == 'N' &&
            (buffer + ptr)[2] == 'C' &&
            (buffer + ptr)[3] == 'M')

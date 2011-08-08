@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -45,7 +45,7 @@
 
 char * command_finder(const char* text, int state)
 {
-    static int idx,len;
+    static int idx, len;
     const char* ret;
     ChatCommand *cmd = ChatHandler::getCommandTable();
 
@@ -80,9 +80,9 @@ char ** cli_completion(const char * text, int start, int /*end*/)
     matches = (char**)NULL;
 
     if (start == 0)
-        matches = rl_completion_matches((char*)text,&command_finder);
+        matches = rl_completion_matches((char*)text, &command_finder);
     else
-        rl_bind_key('\t',rl_abort);
+        rl_bind_key('\t', rl_abort);
     return (matches);
 }
 
@@ -100,11 +100,11 @@ void utf8print(void* /*arg*/, const char* str)
 #if PLATFORM == PLATFORM_WINDOWS
     wchar_t wtemp_buf[6000];
     size_t wtemp_len = 6000-1;
-    if (!Utf8toWStr(str,strlen(str),wtemp_buf,wtemp_len))
+    if (!Utf8toWStr(str, strlen(str), wtemp_buf, wtemp_len))
         return;
 
     char temp_buf[6000];
-    CharToOemBuffW(&wtemp_buf[0],&temp_buf[0],wtemp_len+1);
+    CharToOemBuffW(&wtemp_buf[0], &temp_buf[0], wtemp_len+1);
     printf(temp_buf);
 #else
 {
@@ -196,7 +196,7 @@ std::string ChatHandler::GenerateDeletedCharacterGUIDsWhereStr(DeletedInfoList::
 
         DeletedInfoList::const_iterator itr2 = itr;
         if (++itr2 != itr_end)
-            wherestr << "','";
+            wherestr << "', '";
     }
     wherestr << "')";
     return wherestr.str();
@@ -226,12 +226,12 @@ void ChatHandler::HandleCharacterDeletedListHelper(DeletedInfoList const& foundL
         std::string dateStr = TimeToTimestampStr(itr->deleteDate);
 
         if (!m_session)
-            PSendSysMessage(LANG_CHARACTER_DELETED_LIST_LINE_CONSOLE,
-                itr->lowguid, itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(),
+            PSendSysMessage(LANG_CHARACTER_DELETED_LIST_LINE_CONSOLE, 
+                itr->lowguid, itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(), 
                 itr->accountId, dateStr.c_str());
         else
-            PSendSysMessage(LANG_CHARACTER_DELETED_LIST_LINE_CHAT,
-                itr->lowguid, itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(),
+            PSendSysMessage(LANG_CHARACTER_DELETED_LIST_LINE_CHAT, 
+                itr->lowguid, itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(), 
                 itr->accountId, dateStr.c_str());
     }
 
@@ -298,7 +298,7 @@ void ChatHandler::HandleCharacterDeletedRestoreHelper(DeletedInfo const& delInfo
         return;
     }
 
-    CharacterDatabase.PExecute("UPDATE characters SET name='%s', account='%u', deleteDate=NULL, deleteInfos_Name=NULL, deleteInfos_Account=NULL WHERE deleteDate IS NOT NULL AND guid = %u",
+    CharacterDatabase.PExecute("UPDATE characters SET name='%s', account='%u', deleteDate=NULL, deleteInfos_Name=NULL, deleteInfos_Account=NULL WHERE deleteDate IS NOT NULL AND guid = %u", 
         delInfo.name.c_str(), delInfo.accountId, delInfo.lowguid);
 }
 
@@ -441,7 +441,7 @@ bool ChatHandler::HandleCharacterEraseCommand(const char* args){
     if (!*args)
         return false;
 
-    char *character_name_str = strtok((char*)args," ");
+    char *character_name_str = strtok((char*)args, " ");
     if (!character_name_str)
         return false;
 
@@ -464,7 +464,7 @@ bool ChatHandler::HandleCharacterEraseCommand(const char* args){
         character_guid = sObjectMgr->GetPlayerGUIDByName(character_name);
         if (!character_guid)
         {
-            PSendSysMessage(LANG_NO_PLAYER,character_name.c_str());
+            PSendSysMessage(LANG_NO_PLAYER, character_name.c_str());
             SetSentErrorMessage(true);
             return false;
         }
@@ -473,10 +473,10 @@ bool ChatHandler::HandleCharacterEraseCommand(const char* args){
     }
 
     std::string account_name;
-    sAccountMgr->GetName (account_id,account_name);
+    sAccountMgr->GetName (account_id, account_name);
 
     Player::DeleteFromDB(character_guid, account_id, true, true);
-    PSendSysMessage(LANG_CHARACTER_DELETED,character_name.c_str(),GUID_LOPART(character_guid),account_name.c_str(), account_id);
+    PSendSysMessage(LANG_CHARACTER_DELETED, character_name.c_str(), GUID_LOPART(character_guid), account_name.c_str(), account_id);
     return true;
 }
 
@@ -585,14 +585,14 @@ void CliRunnable::run()
     {
         fflush(stdout);
 
-        char *command_str ;             // = fgets(commandbuf,sizeof(commandbuf),stdin);
+        char *command_str ;             // = fgets(commandbuf, sizeof(commandbuf), stdin);
 
         #if PLATFORM == PLATFORM_WINDOWS
         char commandbuf[256];
         command_str = fgets(commandbuf, sizeof(commandbuf), stdin);
         #else
         command_str = readline("SkyFire>");
-        rl_bind_key('\t',rl_complete);
+        rl_bind_key('\t', rl_complete);
         #endif
         if (command_str != NULL)
         {

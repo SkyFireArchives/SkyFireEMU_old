@@ -19,9 +19,9 @@
 static const struct {
     int mpi_code, ltc_code;
 } mpi_to_ltc_codes[] = {
-   { MP_OKAY ,  CRYPT_OK},
-   { MP_MEM  ,  CRYPT_MEM},
-   { MP_VAL  ,  CRYPT_INVALID_ARG},
+   { MP_OKAY , CRYPT_OK},
+   { MP_MEM  , CRYPT_MEM},
+   { MP_VAL  , CRYPT_INVALID_ARG},
 };
 
 /**

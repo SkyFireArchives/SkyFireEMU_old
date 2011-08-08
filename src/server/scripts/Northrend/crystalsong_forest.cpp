@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -43,9 +43,9 @@ enum Spells
 
 enum NPCs
 {
-    NPC_TRANSITUS_SHIELD_DUMMY   = 27306,
-    NPC_WARMAGE_SARINA           = 32369,
-    NPC_WARMAGE_HALISTER         = 32371,
+    NPC_TRANSITUS_SHIELD_DUMMY   = 27306, 
+    NPC_WARMAGE_SARINA           = 32369, 
+    NPC_WARMAGE_HALISTER         = 32371, 
     NPC_WARMAGE_ILSUDRIA         = 32372
 };
 
@@ -94,13 +94,13 @@ public:
             }else
             {
                 if (!uiTargetGUID)
-                    if (Creature* pOrb = GetClosestCreatureWithEntry(me,NPC_TRANSITUS_SHIELD_DUMMY,32.0f))
+                    if (Creature* pOrb = GetClosestCreatureWithEntry(me, NPC_TRANSITUS_SHIELD_DUMMY, 32.0f))
                         uiTargetGUID = pOrb->GetGUID();
 
             }
 
-            if (Creature* pOrb = me->GetCreature(*me,uiTargetGUID))
-                DoCast(pOrb,SPELL_TRANSITUS_SHIELD_BEAM);
+            if (Creature* pOrb = me->GetCreature(*me, uiTargetGUID))
+                DoCast(pOrb, SPELL_TRANSITUS_SHIELD_BEAM);
 
         }
     };

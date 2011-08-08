@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -82,59 +82,59 @@ EndScriptData */
 
 float ElementPos[8][4] =
 {
-    {8.3f, -835.3f, 21.9f, 5.0f},
-    {53.4f, -835.3f, 21.9f, 4.5f},
-    {96.0f, -861.9f, 21.8f, 4.0f},
-    {96.0f, -986.4f, 21.4f, 2.5f},
-    {54.4f, -1010.6f, 22, 1.8f},
-    {9.8f, -1012, 21.7f, 1.4f},
-    {-35.0f, -987.6f, 21.5f, 0.8f},
+    {8.3f, -835.3f, 21.9f, 5.0f}, 
+    {53.4f, -835.3f, 21.9f, 4.5f}, 
+    {96.0f, -861.9f, 21.8f, 4.0f}, 
+    {96.0f, -986.4f, 21.4f, 2.5f}, 
+    {54.4f, -1010.6f, 22, 1.8f}, 
+    {9.8f, -1012, 21.7f, 1.4f}, 
+    {-35.0f, -987.6f, 21.5f, 0.8f}, 
     {-58.9f, -901.6f, 21.5f, 6.0f}
 };
 
 float ElementWPPos[8][3] =
 {
-    {71.700752f, -883.905884f, 41.097168f},
-    {45.039848f, -868.022827f, 41.097015f},
-    {14.585141f, -867.894470f, 41.097061f},
-    {-25.415508f, -906.737732f, 41.097061f},
-    {-11.801594f, -963.405884f, 41.097067f},
-    {14.556657f, -979.051514f, 41.097137f},
-    {43.466549f, -979.406677f, 41.097027f},
+    {71.700752f, -883.905884f, 41.097168f}, 
+    {45.039848f, -868.022827f, 41.097015f}, 
+    {14.585141f, -867.894470f, 41.097061f}, 
+    {-25.415508f, -906.737732f, 41.097061f}, 
+    {-11.801594f, -963.405884f, 41.097067f}, 
+    {14.556657f, -979.051514f, 41.097137f}, 
+    {43.466549f, -979.406677f, 41.097027f}, 
     {69.945908f, -964.663940f, 41.097054f}
 };
 
 float SporebatWPPos[8][3] =
 {
-    {31.6f, -896.3f, 59.1f},
-    {9.1f,  -913.9f, 56.0f},
-    {5.2f,  -934.4f, 52.4f},
-    {20.7f, -946.9f, 49.7f},
-    {41.0f, -941.9f, 51.0f},
-    {47.7f, -927.3f, 55.0f},
-    {42.2f, -912.4f, 51.7f},
+    {31.6f, -896.3f, 59.1f}, 
+    {9.1f,  -913.9f, 56.0f}, 
+    {5.2f,  -934.4f, 52.4f}, 
+    {20.7f, -946.9f, 49.7f}, 
+    {41.0f, -941.9f, 51.0f}, 
+    {47.7f, -927.3f, 55.0f}, 
+    {42.2f, -912.4f, 51.7f}, 
     {27.0f, -905.9f, 50.0f}
 };
 
 float CoilfangElitePos[3][4] =
 {
-    {28.84f, -923.28f, 42.9f, 6.0f},
-    {31.183281f, -953.502625f, 41.523602f, 1.640957f},
+    {28.84f, -923.28f, 42.9f, 6.0f}, 
+    {31.183281f, -953.502625f, 41.523602f, 1.640957f}, 
     {58.895180f, -923.124268f, 41.545307f, 3.152848f}
 };
 
 float CoilfangStriderPos[3][4] =
 {
-    {66.427010f, -948.778503f, 41.262245f, 2.584220f},
-    {7.513962f, -959.538208f, 41.300422f, 1.034629f},
+    {66.427010f, -948.778503f, 41.262245f, 2.584220f}, 
+    {7.513962f, -959.538208f, 41.300422f, 1.034629f}, 
     {-12.843201f, -907.798401f, 41.239620f, 6.087094f}
 };
 
 float ShieldGeneratorChannelPos[4][4] =
 {
-    {49.6262f, -902.181f, 43.0975f, 3.95683f},
-    {10.988f, -901.616f, 42.5371f, 5.4373f},
-    {10.3859f, -944.036f, 42.5446f, 0.779888f},
+    {49.6262f, -902.181f, 43.0975f, 3.95683f}, 
+    {10.988f, -901.616f, 42.5371f, 5.4373f}, 
+    {10.3859f, -944.036f, 42.5446f, 0.779888f}, 
     {49.3126f, -943.398f, 42.5501f, 2.40174f}
 };
 
@@ -234,7 +234,7 @@ public:
         }
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1,SAY_SLAY2,SAY_SLAY3), me);
+            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
         }
 
         void JustDied(Unit * /*victim*/)
@@ -247,7 +247,7 @@ public:
 
         void StartEvent()
         {
-            DoScriptText(RAND(SAY_AGGRO1,SAY_AGGRO2,SAY_AGGRO3,SAY_AGGRO4), me);
+            DoScriptText(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3, SAY_AGGRO4), me);
 
             Phase = 1;
 
@@ -307,7 +307,7 @@ public:
 
         void CastShootOrMultishot()
         {
-            switch (urand(0,1))
+            switch (urand(0, 1))
             {
                 case 0:
                     //Shoot
@@ -322,7 +322,7 @@ public:
             }
             if (rand()%3)
             {
-                DoScriptText(RAND(SAY_BOWSHOT1,SAY_BOWSHOT2), me);
+                DoScriptText(RAND(SAY_BOWSHOT1, SAY_BOWSHOT2), me);
             }
         }
 
@@ -607,8 +607,8 @@ public:
 
         void Reset()
         {
-            me->SetSpeed(MOVE_WALK,0.6f);//walk
-            me->SetSpeed(MOVE_RUN,0.6f);//run
+            me->SetSpeed(MOVE_WALK, 0.6f);//walk
+            me->SetSpeed(MOVE_RUN, 0.6f);//run
             move = 0;
             phase = 1;
 
@@ -624,7 +624,7 @@ public:
                 }
                 else
                 {
-                    if (me->GetDistance(ElementWPPos[i][0],ElementWPPos[i][1],ElementWPPos[i][2]) < me->GetDistance(x,y,z))
+                    if (me->GetDistance(ElementWPPos[i][0], ElementWPPos[i][1], ElementWPPos[i][2]) < me->GetDistance(x, y, z))
                     {
                         x = ElementWPPos[i][0];
                         y = ElementWPPos[i][1];
@@ -653,7 +653,7 @@ public:
                 me->AddUnitMovementFlag(MOVEMENTFLAG_WALKING);
                 if (phase == 1)
                     me->GetMotionMaster()->MovePoint(0, x, y, z);
-                if (phase == 1 && me->IsWithinDist3d(x,y,z, 0.1f))
+                if (phase == 1 && me->IsWithinDist3d(x, y, z, 0.1f))
                     phase = 2;
                 if (phase == 2)
                 {
@@ -682,7 +682,7 @@ public:
 };
 
 //Tainted Elemental
-//This mob has 7,900 life, doesn't move, and shoots Poison Bolts at one person anywhere in the area, doing 3,000 nature damage and placing a posion doing 2,000 damage every 2 seconds. He will switch targets often, or sometimes just hang on a single player, but there is nothing you can do about it except heal the damage and kill the Tainted Elemental
+//This mob has 7, 900 life, doesn't move, and shoots Poison Bolts at one person anywhere in the area, doing 3, 000 nature damage and placing a posion doing 2, 000 damage every 2 seconds. He will switch targets often, or sometimes just hang on a single player, but there is nothing you can do about it except heal the damage and kill the Tainted Elemental
 class mob_tainted_elemental : public CreatureScript
 {
 public:
@@ -818,7 +818,7 @@ public:
             if (movement_timer <= diff)
             {
                 uint32 rndpos = rand()%8;
-                me->GetMotionMaster()->MovePoint(1,SporebatWPPos[rndpos][0], SporebatWPPos[rndpos][1], SporebatWPPos[rndpos][2]);
+                me->GetMotionMaster()->MovePoint(1, SporebatWPPos[rndpos][0], SporebatWPPos[rndpos][1], SporebatWPPos[rndpos][2]);
                 movement_timer = 6000;
             } else movement_timer -= diff;
 
@@ -829,11 +829,11 @@ public:
                 pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 if (pTarget)
                 {
-                    Creature* trig = me->SummonCreature(TOXIC_SPORES_TRIGGER,pTarget->GetPositionX(),pTarget->GetPositionY(),pTarget->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN,30000);
+                    Creature* trig = me->SummonCreature(TOXIC_SPORES_TRIGGER, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 30000);
                     if (trig)
                     {
                         trig->setFaction(14);
-                        trig->CastSpell(trig, SPELL_TOXIC_SPORES,true);
+                        trig->CastSpell(trig, SPELL_TOXIC_SPORES, true);
                     }
                 }
                 bolt_timer = 10000+rand()%5000;
@@ -865,7 +865,7 @@ public:
 };
 
 //Coilfang Elite
-//It's an elite Naga mob with 170,000 HP. It does about 5000 damage on plate, and has a nasty cleave hitting for about 7500 damage
+//It's an elite Naga mob with 170, 000 HP. It does about 5000 damage on plate, and has a nasty cleave hitting for about 7500 damage
 class mob_coilfang_elite : public CreatureScript
 {
 public:

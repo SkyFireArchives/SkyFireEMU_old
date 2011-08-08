@@ -89,4 +89,3 @@ class AddonMgr
 #define sAddonMgr ACE_Singleton<AddonMgr, ACE_Null_Mutex>::instance()
 
 #endif
-

@@ -26,16 +26,16 @@ Script Data End */
 
 enum eCorporalKeeshan
 {
-    QUEST_MISSING_IN_ACTION = 219,
+    QUEST_MISSING_IN_ACTION = 219, 
 
-    SAY_CORPORAL_1  = -1000464,
-    SAY_CORPORAL_2  = -1000465,
-    SAY_CORPORAL_3  = -1000466,
-    SAY_CORPORAL_4  = -1000467,
-    SAY_CORPORAL_5  = -1000468,
+    SAY_CORPORAL_1  = -1000464, 
+    SAY_CORPORAL_2  = -1000465, 
+    SAY_CORPORAL_3  = -1000466, 
+    SAY_CORPORAL_4  = -1000467, 
+    SAY_CORPORAL_5  = -1000468, 
 
-    SPELL_MOCKING_BLOW  = 21008,
-    SPELL_SHIELD_BASH   = 11972,
+    SPELL_MOCKING_BLOW  = 21008, 
+    SPELL_SHIELD_BASH   = 11972, 
 };
 
 class npc_corporal_keeshan : public CreatureScript
@@ -47,7 +47,7 @@ public:
     {
         if (pQuest->GetQuestId() == QUEST_MISSING_IN_ACTION)
         {
-            CAST_AI(npc_corporal_keeshan::npc_corporal_keeshanAI,pCreature->AI())->Start(true, false, pPlayer->GetGUID(),pQuest);
+            CAST_AI(npc_corporal_keeshan::npc_corporal_keeshanAI, pCreature->AI())->Start(true, false, pPlayer->GetGUID(), pQuest);
             DoScriptText(SAY_CORPORAL_1, pCreature);
         }
 
@@ -123,12 +123,12 @@ public:
                             uiPhase = 2;
                             break;
                         case 2:
-                            DoScriptText(SAY_CORPORAL_2,me);
+                            DoScriptText(SAY_CORPORAL_2, me);
                             uiTimer = 15000;
                             uiPhase = 3;
                             break;
                         case 3:
-                            DoScriptText(SAY_CORPORAL_3,me);
+                            DoScriptText(SAY_CORPORAL_3, me);
                             me->SetStandState(UNIT_STAND_STATE_STAND);
                             SetEscortPaused(false);
                             uiTimer = 0;
@@ -151,13 +151,13 @@ public:
 
             if (uiMockingBlowTimer <= uiDiff)
             {
-                DoCast(me->getVictim(),SPELL_MOCKING_BLOW);
+                DoCast(me->getVictim(), SPELL_MOCKING_BLOW);
                 uiMockingBlowTimer = 5000;
             } else uiMockingBlowTimer -= uiDiff;
 
             if (uiShieldBashTimer <= uiDiff)
             {
-                DoCast(me->getVictim(),SPELL_MOCKING_BLOW);
+                DoCast(me->getVictim(), SPELL_MOCKING_BLOW);
                 uiShieldBashTimer = 8000;
             } else uiShieldBashTimer -= uiDiff;
 

@@ -25,7 +25,6 @@
 #include "CreatureGroups.h"
 #include "ObjectMgr.h"
 
-
 #include "CreatureAI.h"
 
 #define MAX_DESYNC 5.0f
@@ -77,7 +76,7 @@ void CreatureGroupManager::LoadCreatureFormations()
 {
     uint32 oldMSTime = getMSTime();
 
-    for (CreatureGroupInfoType::iterator itr = CreatureGroupMap.begin(); itr != CreatureGroupMap.end(); ++itr) // for reload case 
+    for (CreatureGroupInfoType::iterator itr = CreatureGroupMap.begin(); itr != CreatureGroupMap.end(); ++itr) // for reload case
         delete itr->second;
     CreatureGroupMap.clear();
 
@@ -96,13 +95,12 @@ void CreatureGroupManager::LoadCreatureFormations()
     QueryResult guidResult = WorldDatabase.PQuery("SELECT guid FROM creature");
     if (guidResult)
     {
-        do 
+        do
         {
             Field *fields = guidResult->Fetch();
             uint32 guid = fields[0].GetUInt32();
 
             guidSet.insert(guid);
-
         }
         while (guidResult->NextRow());
     }
@@ -117,7 +115,6 @@ void CreatureGroupManager::LoadCreatureFormations()
     {
         fields = result->Fetch();
 
-        
         //Load group member data
         group_member                        = new FormationInfo;
         group_member->leaderGUID            = fields[0].GetUInt32();

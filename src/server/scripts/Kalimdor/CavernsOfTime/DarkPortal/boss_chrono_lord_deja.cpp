@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,18 +34,18 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_ENTER                   = -1269006,
-    SAY_AGGRO                   = -1269007,
-    SAY_BANISH                  = -1269008,
-    SAY_SLAY1                   = -1269009,
-    SAY_SLAY2                   = -1269010,
-    SAY_DEATH                   = -1269011,
+    SAY_ENTER                   = -1269006, 
+    SAY_AGGRO                   = -1269007, 
+    SAY_BANISH                  = -1269008, 
+    SAY_SLAY1                   = -1269009, 
+    SAY_SLAY2                   = -1269010, 
+    SAY_DEATH                   = -1269011, 
 
-    SPELL_ARCANE_BLAST          = 31457,
-    H_SPELL_ARCANE_BLAST        = 38538,
-    SPELL_ARCANE_DISCHARGE      = 31472,
-    H_SPELL_ARCANE_DISCHARGE    = 38539,
-    SPELL_TIME_LAPSE            = 31467,
+    SPELL_ARCANE_BLAST          = 31457, 
+    H_SPELL_ARCANE_BLAST        = 38538, 
+    SPELL_ARCANE_DISCHARGE      = 31472, 
+    H_SPELL_ARCANE_DISCHARGE    = 38539, 
+    SPELL_TIME_LAPSE            = 31467, 
     SPELL_ATTRACTION            = 38540                       //Not Implemented (Heroic mode)
 };
 
@@ -91,7 +91,7 @@ public:
             //Despawn Time Keeper
             if (who->GetTypeId() == TYPEID_UNIT && who->GetEntry() == C_TIME_KEEPER)
             {
-                if (me->IsWithinDistInMap(who,20.0f))
+                if (me->IsWithinDistInMap(who, 20.0f))
                 {
                     DoScriptText(SAY_BANISH, me);
                     me->DealDamage(who, who->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
@@ -103,7 +103,7 @@ public:
 
         void KilledUnit(Unit * /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1,SAY_SLAY2), me);
+            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
         }
 
         void JustDied(Unit * /*victim*/)
@@ -111,7 +111,7 @@ public:
             DoScriptText(SAY_DEATH, me);
 
             if (pInstance)
-                pInstance->SetData(TYPE_RIFT,SPECIAL);
+                pInstance->SetData(TYPE_RIFT, SPECIAL);
         }
 
         void UpdateAI(const uint32 diff)

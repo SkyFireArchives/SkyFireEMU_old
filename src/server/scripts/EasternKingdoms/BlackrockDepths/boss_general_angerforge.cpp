@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,8 +33,8 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_MIGHTYBLOW                                       = 14099,
-    SPELL_HAMSTRING                                        = 9080,
+    SPELL_MIGHTYBLOW                                       = 14099, 
+    SPELL_HAMSTRING                                        = 9080, 
     SPELL_CLEAVE                                           = 20691
 };
 
@@ -73,13 +73,13 @@ public:
 
         void SummonAdds(Unit* victim)
         {
-            if (Creature *SummonedAdd = DoSpawnCreature(8901, float(irand(-14,14)), float(irand(-14,14)), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000))
+            if (Creature *SummonedAdd = DoSpawnCreature(8901, float(irand(-14, 14)), float(irand(-14, 14)), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000))
                 SummonedAdd->AI()->AttackStart(victim);
         }
 
         void SummonMedics(Unit* victim)
         {
-            if (Creature *SummonedMedic = DoSpawnCreature(8894, float(irand(-9,9)), float(irand(-9,9)), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000))
+            if (Creature *SummonedMedic = DoSpawnCreature(8894, float(irand(-9, 9)), float(irand(-9, 9)), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000))
                 SummonedMedic->AI()->AttackStart(victim);
         }
 

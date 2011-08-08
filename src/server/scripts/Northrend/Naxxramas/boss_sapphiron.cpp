@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,11 +28,11 @@
 #define EMOTE_BREATH            -1533082
 #define EMOTE_ENRAGE            -1533083
 
-#define SPELL_FROST_AURA        RAID_MODE(28531,55799)
+#define SPELL_FROST_AURA        RAID_MODE(28531, 55799)
 #define SPELL_CLEAVE            19983
-#define SPELL_TAIL_SWEEP        RAID_MODE(55697,55696)
+#define SPELL_TAIL_SWEEP        RAID_MODE(55697, 55696)
 #define SPELL_SUMMON_BLIZZARD   28560
-#define SPELL_LIFE_DRAIN        RAID_MODE(28542,55665)
+#define SPELL_LIFE_DRAIN        RAID_MODE(28542, 55665)
 #define SPELL_ICEBOLT           28522
 #define SPELL_FROST_BREATH      29318
 #define SPELL_FROST_EXPLOSION   28524
@@ -40,7 +40,7 @@
 #define SPELL_BERSERK           26662
 #define SPELL_DIES              29357
 
-#define SPELL_CHILL             RAID_MODE(28547,55699)
+#define SPELL_CHILL             RAID_MODE(28547, 55699)
 
 #define MOB_BLIZZARD            16474
 #define GO_ICEBLOCK             181247
@@ -50,28 +50,28 @@
 
 enum Phases
 {
-    PHASE_NULL = 0,
-    PHASE_BIRTH,
-    PHASE_GROUND,
-    PHASE_FLIGHT,
+    PHASE_NULL = 0, 
+    PHASE_BIRTH, 
+    PHASE_GROUND, 
+    PHASE_FLIGHT, 
 };
 
 enum Events
 {
-    EVENT_NONE,
-    EVENT_BERSERK,
-    EVENT_CLEAVE,
-    EVENT_TAIL,
-    EVENT_DRAIN,
-    EVENT_BLIZZARD,
-    EVENT_FLIGHT,
-    EVENT_LIFTOFF,
-    EVENT_ICEBOLT,
-    EVENT_BREATH,
-    EVENT_EXPLOSION,
-    EVENT_LAND,
-    EVENT_GROUND,
-    EVENT_BIRTH,
+    EVENT_NONE, 
+    EVENT_BERSERK, 
+    EVENT_CLEAVE, 
+    EVENT_TAIL, 
+    EVENT_DRAIN, 
+    EVENT_BLIZZARD, 
+    EVENT_FLIGHT, 
+    EVENT_LIFTOFF, 
+    EVENT_ICEBOLT, 
+    EVENT_BREATH, 
+    EVENT_EXPLOSION, 
+    EVENT_LAND, 
+    EVENT_GROUND, 
+    EVENT_BIRTH, 
 };
 
 typedef std::map<uint64, uint64> IceBlockMap;
@@ -274,9 +274,9 @@ public:
                         case EVENT_BLIZZARD:
                         {
                             //DoCastAOE(SPELL_SUMMON_BLIZZARD);
-                            if (Creature *pSummon = DoSummon(MOB_BLIZZARD, me, 0.0f, urand(25000,30000), TEMPSUMMON_TIMED_DESPAWN))
+                            if (Creature *pSummon = DoSummon(MOB_BLIZZARD, me, 0.0f, urand(25000, 30000), TEMPSUMMON_TIMED_DESPAWN))
                                 pSummon->GetMotionMaster()->MoveRandom(40);
-                            events.ScheduleEvent(EVENT_BLIZZARD, RAID_MODE(20000,7000), 0, PHASE_GROUND);
+                            events.ScheduleEvent(EVENT_BLIZZARD, RAID_MODE(20000, 7000), 0, PHASE_GROUND);
                             break;
                         }
                         case EVENT_FLIGHT:
@@ -304,7 +304,7 @@ public:
                             me->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
                             me->SendMovementFlagUpdate();
                             events.ScheduleEvent(EVENT_ICEBOLT, 1500);
-                            iceboltCount = RAID_MODE(2,3);
+                            iceboltCount = RAID_MODE(2, 3);
                             return;
                         case EVENT_ICEBOLT:
                         {

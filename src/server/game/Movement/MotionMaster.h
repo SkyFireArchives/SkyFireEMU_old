@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -52,29 +52,29 @@ enum MovementGeneratorType
     ASSISTANCE_MOTION_TYPE= 11,                             // PointMovementGenerator.h (first part of flee for assistance)
     ASSISTANCE_DISTRACT_MOTION_TYPE = 12,                   // IdleMovementGenerator.h (second part of flee for assistance)
     TIMED_FLEEING_MOTION_TYPE = 13,                         // FleeingMovementGenerator.h (alt.second part of flee for assistance)
-    ROTATE_MOTION_TYPE    = 14,
-    NULL_MOTION_TYPE      = 15,
+    ROTATE_MOTION_TYPE    = 14, 
+    NULL_MOTION_TYPE      = 15, 
 };
 
 enum MovementSlot
 {
-    MOTION_SLOT_IDLE,
-    MOTION_SLOT_ACTIVE,
-    MOTION_SLOT_CONTROLLED,
-    MAX_MOTION_SLOT,
+    MOTION_SLOT_IDLE, 
+    MOTION_SLOT_ACTIVE, 
+    MOTION_SLOT_CONTROLLED, 
+    MAX_MOTION_SLOT, 
 };
 
 enum MMCleanFlag
 {
-    MMCF_NONE   = 0,
+    MMCF_NONE   = 0, 
     MMCF_UPDATE = 1, // Clear or Expire called from update
     MMCF_RESET  = 2  // Flag if need top()->Reset()
 };
 
 enum RotateDirection
 {
-    ROTATE_DIRECTION_LEFT,
-    ROTATE_DIRECTION_RIGHT,
+    ROTATE_DIRECTION_LEFT, 
+    ROTATE_DIRECTION_RIGHT, 
 };
 
 // assume it is 25 yard per 0.6 second
@@ -157,13 +157,13 @@ class MotionMaster //: private std::stack<MovementGenerator *>
         void MoveFleeing(Unit* enemy, uint32 time = 0);
         void MovePoint(uint32 id, const Position &pos)
             { MovePoint(id, pos.m_positionX, pos.m_positionY, pos.m_positionZ); }
-        void MovePoint(uint32 id, float x,float y,float z);
+        void MovePoint(uint32 id, float x, float y, float z);
         void MoveCharge(float x, float y, float z, float speed = SPEED_CHARGE, uint32 id = EVENT_CHARGE);
         void MoveFall(float z, uint32 id = 0);
         void MoveKnockbackFrom(float srcX, float srcY, float speedXY, float speedZ);
         void MoveJumpTo(float angle, float speedXY, float speedZ);
         void MoveJump(float x, float y, float z, float speedXY, float speedZ);
-        void MoveSeekAssistance(float x,float y,float z);
+        void MoveSeekAssistance(float x, float y, float z);
         void MoveSeekAssistanceDistract(uint32 timer);
         void MoveTaxiFlight(uint32 path, uint32 pathnode);
         void MoveDistract(uint32 time);

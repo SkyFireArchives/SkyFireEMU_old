@@ -36,7 +36,7 @@ class ChannelMgr
 {
     public:
         uint32 team;
-        typedef std::map<std::wstring,Channel*> ChannelMap;
+        typedef std::map<std::wstring, Channel*> ChannelMap;
         ChannelMgr() {team = 0;}
         ~ChannelMgr();
 
@@ -54,4 +54,3 @@ class HordeChannelMgr    : public ChannelMgr {};
 ChannelMgr* channelMgr(uint32 team);
 
 #endif
-

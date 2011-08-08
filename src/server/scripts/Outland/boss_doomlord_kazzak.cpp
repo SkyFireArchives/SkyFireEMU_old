@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -93,7 +93,7 @@ public:
 
         void EnterCombat(Unit * /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO1,SAY_AGGRO2), me);
+            DoScriptText(RAND(SAY_AGGRO1, SAY_AGGRO2), me);
         }
 
         void KilledUnit(Unit* victim)
@@ -104,7 +104,7 @@ public:
 
                 DoCast(me, SPELL_CAPTURESOUL);
 
-                DoScriptText(RAND(SAY_KILL1,SAY_KILL2,SAY_KILL3), me);
+                DoScriptText(RAND(SAY_KILL1, SAY_KILL2, SAY_KILL3), me);
         }
 
         void JustDied(Unit * /*victim*/)

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -102,7 +102,7 @@ public:
         }
         void JustDied(Unit * /*victim*/)
         {
-            Unit* pUnit = Unit::GetUnit((*me),victimGUID);
+            Unit* pUnit = Unit::GetUnit((*me), victimGUID);
             if (pUnit && pUnit->HasAura(SPELL_INSIDIOUS_WHISPER))
                 pUnit->RemoveAurasDueToSpell(SPELL_INSIDIOUS_WHISPER);
         }
@@ -130,10 +130,10 @@ public:
             if (me->getVictim()->GetGUID() != victimGUID)
             {
                 DoModifyThreatPercent(me->getVictim(), -100);
-                Unit* owner = Unit::GetUnit((*me),victimGUID);
+                Unit* owner = Unit::GetUnit((*me), victimGUID);
                 if (owner && owner->isAlive())
                 {
-                    me->AddThreat(owner,999999);
+                    me->AddThreat(owner, 999999);
                     AttackStart(owner);
                 } else if (owner && owner->isDead())
                 {
@@ -178,7 +178,7 @@ public:
     {
         boss_leotheras_the_blindAI(Creature *c) : ScriptedAI(c)
         {
-            c->GetPosition(x,y,z);
+            c->GetPosition(x, y, z);
             pInstance = c->GetInstanceScript();
             Demon = 0;
 
@@ -201,7 +201,7 @@ public:
         bool DemonForm;
         bool IsFinalForm;
         bool EnrageUsed;
-        float x,y,z;
+        float x, y, z;
 
         uint64 InnderDemon[5];
         uint32 InnerDemon_Count;
@@ -239,7 +239,7 @@ public:
         {
             for (uint8 i = 0; i < 3; ++i)
             {
-                if (Creature *add = Unit::GetCreature(*me,SpellBinderGUID[i]))
+                if (Creature *add = Unit::GetCreature(*me, SpellBinderGUID[i]))
                     add->DisappearAndDie();
 
                 float nx = x;
@@ -248,7 +248,7 @@ public:
                 if (i == 0) {nx += 10; ny -= 5; o=2.5f;}
                 if (i == 1) {nx -= 8; ny -= 7; o=0.9f;}
                 if (i == 2) {nx -= 3; ny += 9; o=5.0f;}
-                Creature* binder = me->SummonCreature(MOB_SPELLBINDER,nx,ny,z,o,TEMPSUMMON_DEAD_DESPAWN,0);
+                Creature* binder = me->SummonCreature(MOB_SPELLBINDER, nx, ny, z, o, TEMPSUMMON_DEAD_DESPAWN, 0);
                 if (binder)
                     SpellBinderGUID[i] = binder->GetGUID();
 
@@ -288,7 +288,7 @@ public:
             uint8 AliveChannelers = 0;
             for (uint8 i = 0; i < 3; ++i)
             {
-                Unit *add = Unit::GetUnit(*me,SpellBinderGUID[i]);
+                Unit *add = Unit::GetUnit(*me, SpellBinderGUID[i]);
                 if (add && add->isAlive())
                     ++AliveChannelers;
             }
@@ -380,11 +380,11 @@ public:
 
             if (DemonForm)
             {
-                DoScriptText(RAND(SAY_DEMON_SLAY1,SAY_DEMON_SLAY2,SAY_DEMON_SLAY3), me);
+                DoScriptText(RAND(SAY_DEMON_SLAY1, SAY_DEMON_SLAY2, SAY_DEMON_SLAY3), me);
             }
             else
             {
-                DoScriptText(RAND(SAY_NIGHTELF_SLAY1,SAY_NIGHTELF_SLAY2,SAY_NIGHTELF_SLAY3), me);
+                DoScriptText(RAND(SAY_NIGHTELF_SLAY1, SAY_NIGHTELF_SLAY2, SAY_NIGHTELF_SLAY3), me);
             }
         }
 
@@ -431,7 +431,7 @@ public:
                     {
                         DoResetThreat();
                         me->GetMotionMaster()->Clear();
-                        me->GetMotionMaster()->MovePoint(0,newTarget->GetPositionX(),newTarget->GetPositionY(),newTarget->GetPositionZ());
+                        me->GetMotionMaster()->MovePoint(0, newTarget->GetPositionX(), newTarget->GetPositionY(), newTarget->GetPositionZ());
                     }
                     Whirlwind_Timer = 2000;
                 } else Whirlwind_Timer -= diff;
@@ -480,7 +480,7 @@ public:
                     if (SwitchToDemon_Timer <= diff)
                     {
                         //switch to demon form
-                        me->RemoveAurasDueToSpell(SPELL_WHIRLWIND,0);
+                        me->RemoveAurasDueToSpell(SPELL_WHIRLWIND, 0);
                         me->SetDisplayId(MODEL_DEMON);
                         DoScriptText(SAY_SWITCH_TO_DEMON, me);
                         me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID  , 0);
@@ -627,7 +627,7 @@ public:
             if (victim->GetTypeId() != TYPEID_PLAYER)
                 return;
 
-            DoScriptText(RAND(SAY_DEMON_SLAY1,SAY_DEMON_SLAY2,SAY_DEMON_SLAY3), me);
+            DoScriptText(RAND(SAY_DEMON_SLAY1, SAY_DEMON_SLAY2, SAY_DEMON_SLAY3), me);
         }
 
         void JustDied(Unit * /*victim*/)
@@ -766,7 +766,7 @@ public:
             if (Mindblast_Timer <= diff)
             {
                 Unit *pTarget = NULL;
-                pTarget = SelectUnit(SELECT_TARGET_RANDOM,0);
+                pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
 
                 if (pTarget)DoCast(pTarget, SPELL_MINDBLAST);
 

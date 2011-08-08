@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,95 +28,95 @@
 
 enum Texts
 {
-    SAY_KILL_1                          = -1599016,
-    SAY_KILL_2                          = -1599017,
-    SAY_KILL_3                          = -1599018,
-    SAY_LOW_HEALTH                      = -1599019,
-    SAY_DEATH                           = -1599020,
-    SAY_PLAYER_DEATH_1                  = -1599021,
-    SAY_PLAYER_DEATH_2                  = -1599022,
-    SAY_PLAYER_DEATH_3                  = -1599023,
-    SAY_ESCORT_START                    = -1599024,
+    SAY_KILL_1                          = -1599016, 
+    SAY_KILL_2                          = -1599017, 
+    SAY_KILL_3                          = -1599018, 
+    SAY_LOW_HEALTH                      = -1599019, 
+    SAY_DEATH                           = -1599020, 
+    SAY_PLAYER_DEATH_1                  = -1599021, 
+    SAY_PLAYER_DEATH_2                  = -1599022, 
+    SAY_PLAYER_DEATH_3                  = -1599023, 
+    SAY_ESCORT_START                    = -1599024, 
 
-    SAY_SPAWN_DWARF                     = -1599025,
-    SAY_SPAWN_TROGG                     = -1599026,
-    SAY_SPAWN_OOZE                      = -1599027,
-    SAY_SPAWN_EARTHEN                   = -1599028,
+    SAY_SPAWN_DWARF                     = -1599025, 
+    SAY_SPAWN_TROGG                     = -1599026, 
+    SAY_SPAWN_OOZE                      = -1599027, 
+    SAY_SPAWN_EARTHEN                   = -1599028, 
 
-    SAY_EVENT_INTRO_1                   = -1599029,
-    SAY_EVENT_INTRO_2                   = -1599030,
-    SAY_EVENT_INTRO_3_ABED              = -1599031,
+    SAY_EVENT_INTRO_1                   = -1599029, 
+    SAY_EVENT_INTRO_2                   = -1599030, 
+    SAY_EVENT_INTRO_3_ABED              = -1599031, 
 
-    SAY_EVENT_A_1                       = -1599032,
-    SAY_EVENT_A_2_KADD                  = -1599033,
-    SAY_EVENT_A_3                       = -1599034,
+    SAY_EVENT_A_1                       = -1599032, 
+    SAY_EVENT_A_2_KADD                  = -1599033, 
+    SAY_EVENT_A_3                       = -1599034, 
 
-    SAY_EVENT_B_1                       = -1599035,
-    SAY_EVENT_B_2_MARN                  = -1599036,
-    SAY_EVENT_B_3                       = -1599037,
+    SAY_EVENT_B_1                       = -1599035, 
+    SAY_EVENT_B_2_MARN                  = -1599036, 
+    SAY_EVENT_B_3                       = -1599037, 
 
-    SAY_EVENT_C_1                       = -1599038,
-    SAY_EVENT_C_2_ABED                  = -1599039,
-    SAY_EVENT_C_3                       = -1599040,
+    SAY_EVENT_C_1                       = -1599038, 
+    SAY_EVENT_C_2_ABED                  = -1599039, 
+    SAY_EVENT_C_3                       = -1599040, 
 
-    SAY_EVENT_D_1                       = -1599041,
-    SAY_EVENT_D_2_ABED                  = -1599042,
-    SAY_EVENT_D_3                       = -1599043,
-    SAY_EVENT_D_4_ABED                  = -1599044,
+    SAY_EVENT_D_1                       = -1599041, 
+    SAY_EVENT_D_2_ABED                  = -1599042, 
+    SAY_EVENT_D_3                       = -1599043, 
+    SAY_EVENT_D_4_ABED                  = -1599044, 
 
-    SAY_EVENT_END_01                    = -1599045,
-    SAY_EVENT_END_02                    = -1599046,
-    SAY_EVENT_END_03_ABED               = -1599047,
-    SAY_EVENT_END_04                    = -1599048,
-    SAY_EVENT_END_05_ABED               = -1599049,
-    SAY_EVENT_END_06                    = -1599050,
-    SAY_EVENT_END_07_ABED               = -1599051,
-    SAY_EVENT_END_08                    = -1599052,
-    SAY_EVENT_END_09_KADD               = -1599053,
-    SAY_EVENT_END_10                    = -1599054,
-    SAY_EVENT_END_11_KADD               = -1599055,
-    SAY_EVENT_END_12                    = -1599056,
-    SAY_EVENT_END_13_KADD               = -1599057,
-    SAY_EVENT_END_14                    = -1599058,
-    SAY_EVENT_END_15_MARN               = -1599059,
-    SAY_EVENT_END_16                    = -1599060,
-    SAY_EVENT_END_17_MARN               = -1599061,
-    SAY_EVENT_END_18                    = -1599062,
-    SAY_EVENT_END_19_MARN               = -1599063,
-    SAY_EVENT_END_20                    = -1599064,
-    SAY_EVENT_END_21_ABED               = -1599065,
+    SAY_EVENT_END_01                    = -1599045, 
+    SAY_EVENT_END_02                    = -1599046, 
+    SAY_EVENT_END_03_ABED               = -1599047, 
+    SAY_EVENT_END_04                    = -1599048, 
+    SAY_EVENT_END_05_ABED               = -1599049, 
+    SAY_EVENT_END_06                    = -1599050, 
+    SAY_EVENT_END_07_ABED               = -1599051, 
+    SAY_EVENT_END_08                    = -1599052, 
+    SAY_EVENT_END_09_KADD               = -1599053, 
+    SAY_EVENT_END_10                    = -1599054, 
+    SAY_EVENT_END_11_KADD               = -1599055, 
+    SAY_EVENT_END_12                    = -1599056, 
+    SAY_EVENT_END_13_KADD               = -1599057, 
+    SAY_EVENT_END_14                    = -1599058, 
+    SAY_EVENT_END_15_MARN               = -1599059, 
+    SAY_EVENT_END_16                    = -1599060, 
+    SAY_EVENT_END_17_MARN               = -1599061, 
+    SAY_EVENT_END_18                    = -1599062, 
+    SAY_EVENT_END_19_MARN               = -1599063, 
+    SAY_EVENT_END_20                    = -1599064, 
+    SAY_EVENT_END_21_ABED               = -1599065, 
 
-    SAY_VICTORY_SJONNIR_1               = -1599066,
-    SAY_VICTORY_SJONNIR_2               = -1599067,
+    SAY_VICTORY_SJONNIR_1               = -1599066, 
+    SAY_VICTORY_SJONNIR_2               = -1599067, 
 
-    SAY_ENTRANCE_MEET                   = -1599068,
+    SAY_ENTRANCE_MEET                   = -1599068, 
 
-    TEXT_ID_START                       = 13100,
+    TEXT_ID_START                       = 13100, 
     TEXT_ID_PROGRESS                    = 13101
 };
 
 enum BrannCreatures
 {
-    CREATURE_TRIBUNAL_OF_THE_AGES       = 28234,
-    CREATURE_BRANN_BRONZEBEARD          = 28070,
-    CREATURE_DARK_MATTER_TARGET         = 28237,
-    CREATURE_SEARING_GAZE_TARGET        = 28265,
-    CREATURE_DARK_RUNE_PROTECTOR        = 27983,
-    CREATURE_DARK_RUNE_STORMCALLER      = 27984,
-    CREATURE_IRON_GOLEM_CUSTODIAN       = 27985,
+    CREATURE_TRIBUNAL_OF_THE_AGES       = 28234, 
+    CREATURE_BRANN_BRONZEBEARD          = 28070, 
+    CREATURE_DARK_MATTER_TARGET         = 28237, 
+    CREATURE_SEARING_GAZE_TARGET        = 28265, 
+    CREATURE_DARK_RUNE_PROTECTOR        = 27983, 
+    CREATURE_DARK_RUNE_STORMCALLER      = 27984, 
+    CREATURE_IRON_GOLEM_CUSTODIAN       = 27985, 
 };
 
 enum Spells
 {
-    SPELL_STEALTH                       = 58506,
+    SPELL_STEALTH                       = 58506, 
     //Kadrak
-    SPELL_GLARE_OF_THE_TRIBUNAL         = 50988,
-    H_SPELL_GLARE_OF_THE_TRIBUNAL       = 59868,
+    SPELL_GLARE_OF_THE_TRIBUNAL         = 50988, 
+    H_SPELL_GLARE_OF_THE_TRIBUNAL       = 59868, 
     //Marnak
-    SPELL_DARK_MATTER                   = 51012,
-    H_SPELL_DARK_MATTER                 = 59868,
+    SPELL_DARK_MATTER                   = 51012, 
+    H_SPELL_DARK_MATTER                 = 59868, 
     //Abedneum
-    SPELL_SEARING_GAZE                  = 51136,
+    SPELL_SEARING_GAZE                  = 51136, 
     H_SPELL_SEARING_GAZE                = 59867
 };
 
@@ -135,8 +135,8 @@ enum Achievements
 
 static Position SpawnLocations[]=
 {
-    {946.992f, 397.016f, 208.374f, 0.0f},
-    {960.748f, 382.944f, 208.374f, 0.0f},
+    {946.992f, 397.016f, 208.374f, 0.0f}, 
+    {960.748f, 382.944f, 208.374f, 0.0f}, 
 };
 
 class mob_tribuna_controller : public CreatureScript
@@ -181,10 +181,10 @@ public:
 
             if (pInstance)
             {
-                pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_KADDRAK),false);
-                pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_MARNAK),false);
-                pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_ABEDNEUM),false);
-                pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_SKY_FLOOR),false);
+                pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_KADDRAK), false);
+                pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_MARNAK), false);
+                pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_ABEDNEUM), false);
+                pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_SKY_FLOOR), false);
             }
 
             KaddrakGUIDList.clear();
@@ -376,7 +376,7 @@ public:
                 case 17:
                     DoScriptText(SAY_EVENT_INTRO_2, me);
                     if (pInstance)
-                        pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_TRIBUNAL_CONSOLE),true);
+                        pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_TRIBUNAL_CONSOLE), true);
                     me->SetStandState(UNIT_STAND_STATE_KNEEL);
                     SetEscortPaused(true);
                     JumpToNextStep(8500);
@@ -393,7 +393,7 @@ public:
            {
                case 1:
                {
-                   uint32 uiSpawnNumber = DUNGEON_MODE(2,3);
+                   uint32 uiSpawnNumber = DUNGEON_MODE(2, 3);
                    for (uint8 i = 0; i < uiSpawnNumber; ++i)
                        me->SummonCreature(CREATURE_DARK_RUNE_PROTECTOR, SpawnLocations[0], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
                    me->SummonCreature(CREATURE_DARK_RUNE_STORMCALLER, SpawnLocations[0], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000);
@@ -477,7 +477,7 @@ public:
                     case 8:
                         DoScriptText(SAY_EVENT_A_3, me);
                         if (pInstance)
-                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_KADDRAK),true);
+                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_KADDRAK), true);
                         if (Creature* pTemp = Unit::GetCreature(*me, uiControllerGUID))
                             CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->bKaddrakActivated = true;
                         JumpToNextStep(5000);
@@ -501,7 +501,7 @@ public:
                     case 12:
                         DoScriptText(SAY_EVENT_B_3, me);
                         if (pInstance)
-                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_MARNAK),true);
+                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_MARNAK), true);
                         if (Creature* pTemp = Unit::GetCreature(*me, uiControllerGUID))
                             CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->bMarnakActivated = true;
                         JumpToNextStep(10000);
@@ -533,7 +533,7 @@ public:
                     case 18:
                         DoScriptText(SAY_EVENT_C_3, me);
                         if (pInstance)
-                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_ABEDNEUM),true);
+                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_ABEDNEUM), true);
                         if (Creature* pTemp = Unit::GetCreature(*me, uiControllerGUID))
                             CAST_AI(mob_tribuna_controller::mob_tribuna_controllerAI, pTemp->AI())->bAbedneumActivated = true;
                         JumpToNextStep(5000);
@@ -587,7 +587,7 @@ public:
                         DoScriptText(SAY_EVENT_END_01, me);
                         me->SetStandState(UNIT_STAND_STATE_STAND);
                         if (pInstance)
-                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_SKY_FLOOR),true);
+                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_SKY_FLOOR), true);
                         if (Creature* pTemp = Unit::GetCreature(*me, uiControllerGUID))
                             pTemp->DealDamage(pTemp, pTemp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                         bIsBattle = true;
@@ -710,10 +710,10 @@ public:
                     {
                         if (pInstance)
                         {
-                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_KADDRAK),false);
-                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_MARNAK),false);
-                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_ABEDNEUM),false);
-                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_SKY_FLOOR),false);
+                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_KADDRAK), false);
+                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_MARNAK), false);
+                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_ABEDNEUM), false);
+                            pInstance->HandleGameObject(pInstance->GetData64(DATA_GO_SKY_FLOOR), false);
                         }
                         Player* pPlayer = GetPlayerForEscort();
                         if (pPlayer)

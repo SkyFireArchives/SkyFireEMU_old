@@ -62,7 +62,7 @@ void SmartWaypointMgr::LoadFromDB()
         Field* fields = result->Fetch();
         uint32 entry = fields[0].GetUInt32();
         uint32 id = fields[1].GetUInt32();
-        float x,y,z;
+        float x, y, z;
         x = fields[2].GetFloat();
         y = fields[3].GetFloat();
         z = fields[4].GetFloat();
@@ -589,7 +589,6 @@ bool SmartAIMgr::IsEventValid(SmartScriptHolder &e)
             if (!IsQuestValid(e, e.action.castCreatureOrGO.quest)) return false;
             if (!IsSpellValid(e, e.action.castCreatureOrGO.spell)) return false;
             break;
-
 
         case SMART_ACTION_SET_EVENT_PHASE:
             if (e.action.setEventPhase.phase >= SMART_EVENT_PHASE_MAX)

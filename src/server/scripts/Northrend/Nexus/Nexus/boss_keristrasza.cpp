@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,23 +28,23 @@
 enum Spells
 {
     //Spells
-    SPELL_FROZEN_PRISON                           = 47854,
-    SPELL_TAIL_SWEEP                              = 50155,
-    SPELL_CRYSTAL_CHAINS                          = 50997,
-    SPELL_ENRAGE                                  = 8599,
-    SPELL_CRYSTALFIRE_BREATH                      = 48096,
-    H_SPELL_CRYSTALFIRE_BREATH                    = 57091,
-    SPELL_CRYSTALIZE                              = 48179,
-    SPELL_INTENSE_COLD                            = 48094,
+    SPELL_FROZEN_PRISON                           = 47854, 
+    SPELL_TAIL_SWEEP                              = 50155, 
+    SPELL_CRYSTAL_CHAINS                          = 50997, 
+    SPELL_ENRAGE                                  = 8599, 
+    SPELL_CRYSTALFIRE_BREATH                      = 48096, 
+    H_SPELL_CRYSTALFIRE_BREATH                    = 57091, 
+    SPELL_CRYSTALIZE                              = 48179, 
+    SPELL_INTENSE_COLD                            = 48094, 
     SPELL_INTENSE_COLD_TRIGGERED                  = 48095
 };
 enum Yells
 {
     //Yell
-    SAY_AGGRO                                     = -1576040,
-    SAY_SLAY                                      = -1576041,
-    SAY_ENRAGE                                    = -1576042,
-    SAY_DEATH                                     = -1576043,
+    SAY_AGGRO                                     = -1576040, 
+    SAY_SLAY                                      = -1576041, 
+    SAY_ENRAGE                                    = -1576042, 
+    SAY_DEATH                                     = -1576043, 
     SAY_CRYSTAL_NOVA                              = -1576044
 };
 enum Achievements
@@ -90,7 +90,7 @@ public:
         void Reset()
         {
             uiCrystalfireBreathTimer = 14*IN_MILLISECONDS;
-            uiCrystalChainsCrystalizeTimer = DUNGEON_MODE(30*IN_MILLISECONDS,11*IN_MILLISECONDS);
+            uiCrystalChainsCrystalizeTimer = DUNGEON_MODE(30*IN_MILLISECONDS, 11*IN_MILLISECONDS);
             uiTailSweepTimer = 5*IN_MILLISECONDS;
             bEnrage = false;
 
@@ -222,7 +222,7 @@ public:
                     DoCast(me, SPELL_CRYSTALIZE);
                 else if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(pTarget, SPELL_CRYSTAL_CHAINS);
-                uiCrystalChainsCrystalizeTimer = DUNGEON_MODE(30*IN_MILLISECONDS,11*IN_MILLISECONDS);
+                uiCrystalChainsCrystalizeTimer = DUNGEON_MODE(30*IN_MILLISECONDS, 11*IN_MILLISECONDS);
             } else uiCrystalChainsCrystalizeTimer -= diff;
 
             DoMeleeAttackIfReady();

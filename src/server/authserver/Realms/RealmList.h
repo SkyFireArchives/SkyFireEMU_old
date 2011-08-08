@@ -72,4 +72,3 @@ private:
 #define sRealmList ACE_Singleton<RealmList, ACE_Null_Mutex>::instance()
 
 #endif
-

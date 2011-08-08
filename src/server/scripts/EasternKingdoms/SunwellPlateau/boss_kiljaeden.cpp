@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,44 +39,44 @@ EndScriptData */
 enum Yells
 {
     // These are used throughout Sunwell and Magisters(?). Players can hear this while running through the instances.
-    SAY_KJ_OFFCOMBAT1                           = -1580066,
-    SAY_KJ_OFFCOMBAT2                           = -1580067,
-    SAY_KJ_OFFCOMBAT3                           = -1580068,
-    SAY_KJ_OFFCOMBAT4                           = -1580069,
-    SAY_KJ_OFFCOMBAT5                           = -1580070,
+    SAY_KJ_OFFCOMBAT1                           = -1580066, 
+    SAY_KJ_OFFCOMBAT2                           = -1580067, 
+    SAY_KJ_OFFCOMBAT3                           = -1580068, 
+    SAY_KJ_OFFCOMBAT4                           = -1580069, 
+    SAY_KJ_OFFCOMBAT5                           = -1580070, 
 
     // Encounter speech and sounds
-    SAY_KJ_EMERGE                               = -1580071,
-    SAY_KJ_SLAY1                                = -1580072,
-    SAY_KJ_SLAY2                                = -1580073,
-    SAY_KJ_REFLECTION1                          = -1580074,
-    SAY_KJ_REFLECTION2                          = -1580075,
-    SAY_KJ_DARKNESS1                            = -1580076,
-    SAY_KJ_DARKNESS2                            = -1580077,
-    SAY_KJ_DARKNESS3                            = -1580078,
-    SAY_KJ_PHASE3                               = -1580079,
-    SAY_KJ_PHASE4                               = -1580080,
-    SAY_KJ_PHASE5                               = -1580081,
-    SAY_KJ_DEATH                                = -1580093,
-    EMOTE_KJ_DARKNESS                           = -1580094,
+    SAY_KJ_EMERGE                               = -1580071, 
+    SAY_KJ_SLAY1                                = -1580072, 
+    SAY_KJ_SLAY2                                = -1580073, 
+    SAY_KJ_REFLECTION1                          = -1580074, 
+    SAY_KJ_REFLECTION2                          = -1580075, 
+    SAY_KJ_DARKNESS1                            = -1580076, 
+    SAY_KJ_DARKNESS2                            = -1580077, 
+    SAY_KJ_DARKNESS3                            = -1580078, 
+    SAY_KJ_PHASE3                               = -1580079, 
+    SAY_KJ_PHASE4                               = -1580080, 
+    SAY_KJ_PHASE5                               = -1580081, 
+    SAY_KJ_DEATH                                = -1580093, 
+    EMOTE_KJ_DARKNESS                           = -1580094, 
 
     /*** Kalecgos - Anveena speech at the beginning of Phase 5; Anveena's sacrifice ***/
-    SAY_KALECGOS_AWAKEN                         = -1580082,
-    SAY_ANVEENA_IMPRISONED                      = -1580083,
-    SAY_KALECGOS_LETGO                          = -1580084,
-    SAY_ANVEENA_LOST                            = -1580085,
-    SAY_KALECGOS_FOCUS                          = -1580086,
-    SAY_ANVEENA_KALEC                           = -1580087,
-    SAY_KALECGOS_FATE                           = -1580088,
-    SAY_ANVEENA_GOODBYE                         = -1580089,
-    SAY_KALECGOS_GOODBYE                        = -1580090,
-    SAY_KALECGOS_ENCOURAGE                      = -1580091,
+    SAY_KALECGOS_AWAKEN                         = -1580082, 
+    SAY_ANVEENA_IMPRISONED                      = -1580083, 
+    SAY_KALECGOS_LETGO                          = -1580084, 
+    SAY_ANVEENA_LOST                            = -1580085, 
+    SAY_KALECGOS_FOCUS                          = -1580086, 
+    SAY_ANVEENA_KALEC                           = -1580087, 
+    SAY_KALECGOS_FATE                           = -1580088, 
+    SAY_ANVEENA_GOODBYE                         = -1580089, 
+    SAY_KALECGOS_GOODBYE                        = -1580090, 
+    SAY_KALECGOS_ENCOURAGE                      = -1580091, 
 
     /*** Kalecgos says throughout the fight ***/
-    SAY_KALECGOS_JOIN                           = -1580092,
-    SAY_KALEC_ORB_READY1                        = -1580095,
-    SAY_KALEC_ORB_READY2                        = -1580096,
-    SAY_KALEC_ORB_READY3                        = -1580097,
+    SAY_KALECGOS_JOIN                           = -1580092, 
+    SAY_KALEC_ORB_READY1                        = -1580095, 
+    SAY_KALEC_ORB_READY2                        = -1580096, 
+    SAY_KALEC_ORB_READY3                        = -1580097, 
     SAY_KALEC_ORB_READY4                        = -1580098
 };
 
@@ -96,7 +96,7 @@ enum Spells
     SPELL_TRANS                                 = 23188, // Surprisingly, this seems to be the right spell.. (Where is it used?)
     SPELL_REBIRTH                               = 44200, // Emerge from the Sunwell
     SPELL_SOUL_FLAY                             = 45442, // 9k Shadow damage over 3 seconds. Spammed throughout all the fight.
-    SPELL_SOUL_FLAY_SLOW                        = 47106,
+    SPELL_SOUL_FLAY_SLOW                        = 47106, 
     SPELL_LEGION_LIGHTNING                      = 45664, // Chain Lightning, 4 targets, ~3k Shadow damage, 1.5fk mana burn
     SPELL_FIRE_BLOOM                            = 45641, // Places a debuff on 5 raid members, which causes them to deal 2k Fire damage to nearby allies and selves. MIGHT NOT WORK
     SPELL_DESTROY_ALL_DRAKES                    = 46707, // when he use it?
@@ -111,7 +111,7 @@ enum Spells
     SPELL_SHADOW_SPIKE                          = 46680, // Bombard random raid members with Shadow Spikes (Very similar to Void Reaver orbs)
     SPELL_FLAME_DART                            = 45737, // Bombards the raid with flames every 3(?) seconds
     SPELL_DARKNESS_OF_A_THOUSAND_SOULS          = 46605, // Begins a 8-second channeling, after which he will deal 50'000 damage to the raid
-    SPELL_DARKNESS_OF_A_THOUSAND_SOULS_DAMAGE   = 45657,
+    SPELL_DARKNESS_OF_A_THOUSAND_SOULS_DAMAGE   = 45657, 
 
     /* Armageddon spells wrong visual */
     SPELL_ARMAGEDDON_TRIGGER                    = 45909, // Meteor spell trigger missile should cast Creature on himself
@@ -130,28 +130,28 @@ enum Spells
     SPELL_SACRIFICE_OF_ANVEENA                  = 46474, // This is cast on Kil'Jaeden when Anveena sacrifices herself into the Sunwell
 
     /* Sinister Reflection Spells */
-    SPELL_SR_CURSE_OF_AGONY                     = 46190,
-    SPELL_SR_SHADOW_BOLT                        = 47076,
+    SPELL_SR_CURSE_OF_AGONY                     = 46190, 
+    SPELL_SR_SHADOW_BOLT                        = 47076, 
 
-    SPELL_SR_EARTH_SHOCK                        = 47071,
+    SPELL_SR_EARTH_SHOCK                        = 47071, 
 
-    SPELL_SR_FIREBALL                           = 47074,
+    SPELL_SR_FIREBALL                           = 47074, 
 
-    SPELL_SR_HEMORRHAGE                         = 45897,
+    SPELL_SR_HEMORRHAGE                         = 45897, 
 
-    SPELL_SR_HOLY_SHOCK                         = 38921,
-    SPELL_SR_HAMMER_OF_JUSTICE                  = 37369,
+    SPELL_SR_HOLY_SHOCK                         = 38921, 
+    SPELL_SR_HAMMER_OF_JUSTICE                  = 37369, 
 
-    SPELL_SR_HOLY_SMITE                         = 47077,
-    SPELL_SR_RENEW                              = 47079,
+    SPELL_SR_HOLY_SMITE                         = 47077, 
+    SPELL_SR_RENEW                              = 47079, 
 
-    SPELL_SR_SHOOT                              = 16496,
-    SPELL_SR_MULTI_SHOT                         = 48098,
-    SPELL_SR_WING_CLIP                          = 40652,
+    SPELL_SR_SHOOT                              = 16496, 
+    SPELL_SR_MULTI_SHOT                         = 48098, 
+    SPELL_SR_WING_CLIP                          = 40652, 
 
-    SPELL_SR_WHIRLWIND                          = 17207,
+    SPELL_SR_WHIRLWIND                          = 17207, 
 
-    SPELL_SR_MOONFIRE                           = 47072,
+    SPELL_SR_MOONFIRE                           = 47072, 
     //SPELL_SR_PLAGU STRIKE                       = 58843, Dk Spell!
 
     /*** Other Spells (used by players, etc) ***/
@@ -179,19 +179,19 @@ enum Phase
 //Timers
 enum KilJaedenTimers
 {
-    TIMER_SPEECH           = 0,
+    TIMER_SPEECH           = 0, 
 
     //Phase 2 Timer
-    TIMER_SOUL_FLAY        = 1,
-    TIMER_LEGION_LIGHTNING = 2,
-    TIMER_FIRE_BLOOM       = 3,
-    TIMER_SUMMON_SHILEDORB = 4,
+    TIMER_SOUL_FLAY        = 1, 
+    TIMER_LEGION_LIGHTNING = 2, 
+    TIMER_FIRE_BLOOM       = 3, 
+    TIMER_SUMMON_SHILEDORB = 4, 
 
     //Phase 3 Timer
-    TIMER_SHADOW_SPIKE     = 5,
-    TIMER_FLAME_DART       = 6,
-    TIMER_DARKNESS         = 7,
-    TIMER_ORBS_EMPOWER     = 8,
+    TIMER_SHADOW_SPIKE     = 5, 
+    TIMER_FLAME_DART       = 6, 
+    TIMER_DARKNESS         = 7, 
+    TIMER_ORBS_EMPOWER     = 8, 
 
     //Phase 4 Timer
     TIMER_ARMAGEDDON       = 9
@@ -200,9 +200,9 @@ enum KilJaedenTimers
 // Locations of the Hand of Deceiver adds
 Position DeceiverLocations[3]=
 {
-    {1682.045f, 631.299f, 5.936f, 0.0f},
-    {1684.099f, 618.848f, 0.589f, 0.0f},
-    {1694.170f, 612.272f, 1.416f, 0.0f},
+    {1682.045f, 631.299f, 5.936f, 0.0f}, 
+    {1684.099f, 618.848f, 0.589f, 0.0f}, 
+    {1694.170f, 612.272f, 1.416f, 0.0f}, 
 };
 
 // Locations, where Shield Orbs will spawn
@@ -224,25 +224,25 @@ struct Speech
 static Speech Speeches[]=
 {
     //Kil Phase 1 -> Phase 2
-    {SAY_KJ_EMERGE,             DATA_KILJAEDEN,     0},
-    {SAY_KALECGOS_JOIN,         DATA_KALECGOS_KJ,   26000},
+    {SAY_KJ_EMERGE,             DATA_KILJAEDEN,     0}, 
+    {SAY_KALECGOS_JOIN,         DATA_KALECGOS_KJ,   26000}, 
     //Kil Phase 2 -> Phase 3
-    {SAY_KALECGOS_AWAKEN,       DATA_KALECGOS_KJ,   10000},
-    {SAY_ANVEENA_IMPRISONED,    DATA_ANVEENA,       5000},
-    {SAY_KJ_PHASE3,             DATA_KILJAEDEN,     5000},
+    {SAY_KALECGOS_AWAKEN,       DATA_KALECGOS_KJ,   10000}, 
+    {SAY_ANVEENA_IMPRISONED,    DATA_ANVEENA,       5000}, 
+    {SAY_KJ_PHASE3,             DATA_KILJAEDEN,     5000}, 
     //Kil Phase 3 -> Phase 4
-    {SAY_KALECGOS_LETGO,        DATA_KALECGOS_KJ,   10000},
-    {SAY_ANVEENA_LOST,          DATA_ANVEENA,       8000},
-    {SAY_KJ_PHASE4,             DATA_KILJAEDEN,     7000},
+    {SAY_KALECGOS_LETGO,        DATA_KALECGOS_KJ,   10000}, 
+    {SAY_ANVEENA_LOST,          DATA_ANVEENA,       8000}, 
+    {SAY_KJ_PHASE4,             DATA_KILJAEDEN,     7000}, 
     //Kil Phase 4 -> Phase 5
-    {SAY_KALECGOS_FOCUS,        DATA_KALECGOS_KJ,   4000},
-    {SAY_ANVEENA_KALEC,         DATA_ANVEENA,       11000},
-    {SAY_KALECGOS_FATE,         DATA_KALECGOS_KJ,   2000},
-    {SAY_ANVEENA_GOODBYE,       DATA_ANVEENA,       6000},
-    {SAY_KJ_PHASE5,             DATA_KILJAEDEN,     5500},
+    {SAY_KALECGOS_FOCUS,        DATA_KALECGOS_KJ,   4000}, 
+    {SAY_ANVEENA_KALEC,         DATA_ANVEENA,       11000}, 
+    {SAY_KALECGOS_FATE,         DATA_KALECGOS_KJ,   2000}, 
+    {SAY_ANVEENA_GOODBYE,       DATA_ANVEENA,       6000}, 
+    {SAY_KJ_PHASE5,             DATA_KILJAEDEN,     5500}, 
 
     // use in End sequence?
-    {SAY_KALECGOS_GOODBYE,      DATA_KALECGOS_KJ,   12000},
+    {SAY_KALECGOS_GOODBYE,      DATA_KALECGOS_KJ,   12000}, 
 };
 
 //AI for Kalecgos
@@ -331,7 +331,7 @@ public:
             }
             else
             {
-                if (GameObject* pOrb = GetOrb(urand(0,3)))
+                if (GameObject* pOrb = GetOrb(urand(0, 3)))
                 {
                     pOrb->CastSpell(me, SPELL_RING_OF_BLUE_FLAMES);
                     pOrb->SetUInt32Value(GAMEOBJECT_FACTION, 35);
@@ -475,7 +475,7 @@ public:
             if (uiRandomSayTimer < diff)
             {
                 if (pInstance && pInstance->GetData(DATA_MURU_EVENT) != DONE && pInstance->GetData(DATA_KILJAEDEN_EVENT) == NOT_STARTED)
-                    DoScriptText(RAND(SAY_KJ_OFFCOMBAT1,SAY_KJ_OFFCOMBAT2,SAY_KJ_OFFCOMBAT3,SAY_KJ_OFFCOMBAT4,SAY_KJ_OFFCOMBAT5), me);
+                    DoScriptText(RAND(SAY_KJ_OFFCOMBAT1, SAY_KJ_OFFCOMBAT2, SAY_KJ_OFFCOMBAT3, SAY_KJ_OFFCOMBAT4, SAY_KJ_OFFCOMBAT5), me);
                 uiRandomSayTimer = 30000;
             } else uiRandomSayTimer -= diff;
 
@@ -493,7 +493,7 @@ public:
             {
                 me->RemoveAurasDueToSpell(SPELL_ANVEENA_ENERGY_DRAIN);
                 phase = PHASE_NORMAL;
-                DoSpawnCreature(CREATURE_KILJAEDEN, 0, 0,0, 0, TEMPSUMMON_MANUAL_DESPAWN, 0);
+                DoSpawnCreature(CREATURE_KILJAEDEN, 0, 0, 0, 0, TEMPSUMMON_MANUAL_DESPAWN, 0);
             }
         }
     };
@@ -630,7 +630,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_KJ_SLAY1,SAY_KJ_SLAY2), me);
+            DoScriptText(RAND(SAY_KJ_SLAY1, SAY_KJ_SLAY2), me);
         }
 
         void EnterEvadeMode()
@@ -659,26 +659,26 @@ public:
             TimerIsDeactivated[TIMER_SHADOW_SPIKE] = false;
             Timer[TIMER_SHADOW_SPIKE]     = 100;
             // empowered orbs before darkness
-            Timer[TIMER_DARKNESS] = (Phase == PHASE_SACRIFICE) ? 15000 : urand(10000,40000);
+            Timer[TIMER_DARKNESS] = (Phase == PHASE_SACRIFICE) ? 15000 : urand(10000, 40000);
             Timer[TIMER_ORBS_EMPOWER] = (Phase == PHASE_SACRIFICE) ? 10000 : 5000;
         }
 
         void CastSinisterReflection()
         {
-            DoScriptText(RAND(SAY_KJ_REFLECTION1,SAY_KJ_REFLECTION2), me);
+            DoScriptText(RAND(SAY_KJ_REFLECTION1, SAY_KJ_REFLECTION2), me);
             for (uint8 i = 0; i < 4; ++i)
             {
-                float x,y,z;
+                float x, y, z;
                 Unit *pTarget;
                 for (uint8 z = 0; z < 6; ++z)
                 {
                     pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
-                    if (!pTarget || !pTarget->HasAura(SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT,0))break;
+                    if (!pTarget || !pTarget->HasAura(SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT, 0))break;
                 }
                 if (pTarget)
                 {
-                    pTarget->GetPosition(x,y,z);
-                    if (Creature* pSinisterReflection = me->SummonCreature(CREATURE_SINISTER_REFLECTION, x,y,z,0, TEMPSUMMON_CORPSE_DESPAWN, 0))
+                    pTarget->GetPosition(x, y, z);
+                    if (Creature* pSinisterReflection = me->SummonCreature(CREATURE_SINISTER_REFLECTION, x, y, z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0))
                     {
                         pSinisterReflection->SetDisplayId(pTarget->GetDisplayId());
                         pSinisterReflection->AI()->AttackStart(pTarget);
@@ -760,7 +760,7 @@ public:
                                 for (uint8 z = 0; z < 6; ++z)
                                 {
                                     pRandomPlayer = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
-                                    if (!pRandomPlayer || !pRandomPlayer->HasAura(SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT,0))
+                                    if (!pRandomPlayer || !pRandomPlayer->HasAura(SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT, 0))
                                         break;
                                 }
 
@@ -790,7 +790,7 @@ public:
                                 sy = ShieldOrbLocations[0][1] + sin(ShieldOrbLocations[i][1]);
                                 me->SummonCreature(CREATURE_SHIELD_ORB, sx, sy, SHIELD_ORB_Z, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 45000);
                             }
-                            Timer[TIMER_SUMMON_SHILEDORB] = urand(30000,60000); // 30-60seconds cooldown
+                            Timer[TIMER_SUMMON_SHILEDORB] = urand(30000, 60000); // 30-60seconds cooldown
                             Timer[TIMER_SOUL_FLAY] = 2000;
                             break;
                         case TIMER_SHADOW_SPIKE: //Phase 3
@@ -824,10 +824,10 @@ public:
                                 }
                                 else
                                 {
-                                    Timer[TIMER_DARKNESS] = (Phase == PHASE_SACRIFICE) ? 15000 : urand(40000,70000);
+                                    Timer[TIMER_DARKNESS] = (Phase == PHASE_SACRIFICE) ? 15000 : urand(40000, 70000);
                                     IsInDarkness = false;
                                     DoCastAOE(SPELL_DARKNESS_OF_A_THOUSAND_SOULS_DAMAGE);
-                                    DoScriptText(RAND(SAY_KJ_DARKNESS1,SAY_KJ_DARKNESS2,SAY_KJ_DARKNESS3), me);
+                                    DoScriptText(RAND(SAY_KJ_DARKNESS1, SAY_KJ_DARKNESS2, SAY_KJ_DARKNESS3), me);
                                 }
                                 Timer[TIMER_SOUL_FLAY] = 9000;
                             }
@@ -853,13 +853,13 @@ public:
                             for (uint8 z = 0; z < 6; ++z)
                             {
                                 pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
-                                if (!pTarget || !pTarget->HasAura(SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT,0)) break;
+                                if (!pTarget || !pTarget->HasAura(SPELL_VENGEANCE_OF_THE_BLUE_FLIGHT, 0)) break;
                             }
                             if (pTarget)
                             {
                                 float x, y, z;
                                 pTarget->GetPosition(x, y, z);
-                                me->SummonCreature(CREATURE_ARMAGEDDON_TARGET, x,y,z,0, TEMPSUMMON_TIMED_DESPAWN,15000);
+                                me->SummonCreature(CREATURE_ARMAGEDDON_TARGET, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 15000);
                             }
                             Timer[TIMER_ARMAGEDDON] = 2000; // No, I'm not kidding
                             break;
@@ -941,7 +941,7 @@ public:
         void Reset()
         {
             // TODO: Timers!
-            ShadowBoltVolleyTimer = urand(8000,14000); // So they don't all cast it in the same moment.
+            ShadowBoltVolleyTimer = urand(8000, 14000); // So they don't all cast it in the same moment.
             FelfirePortalTimer = 20000;
             if (pInstance)
                 pInstance->SetData(DATA_KILJAEDEN_EVENT, NOT_STARTED);
@@ -997,7 +997,7 @@ public:
             // Felfire Portal - Creatres a portal, that spawns Volatile Felfire Fiends, which do suicide bombing.
             if (FelfirePortalTimer <= diff)
             {
-                if (Creature* pPortal = DoSpawnCreature(CREATURE_FELFIRE_PORTAL, 0, 0,0, 0, TEMPSUMMON_TIMED_DESPAWN, 20000))
+                if (Creature* pPortal = DoSpawnCreature(CREATURE_FELFIRE_PORTAL, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN, 20000))
                 {
                     std::list<HostileReference*>::iterator itr;
                     for (itr = me->getThreatManager().getThreatList().begin(); itr != me->getThreatManager().getThreatList().end(); ++itr)
@@ -1054,8 +1054,8 @@ public:
             if (uiSpawnFiendTimer <= diff)
             {
                 if (Creature* pFiend = DoSpawnCreature(CREATURE_VOLATILE_FELFIRE_FIEND, 0, 0, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 20000))
-                    pFiend->AddThreat(SelectUnit(SELECT_TARGET_RANDOM,0), 100000.0f);
-                uiSpawnFiendTimer = urand(4000,8000);
+                    pFiend->AddThreat(SelectUnit(SELECT_TARGET_RANDOM, 0), 100000.0f);
+                uiSpawnFiendTimer = urand(4000, 8000);
             } else uiSpawnFiendTimer -= diff;
         }
     };
@@ -1208,13 +1208,13 @@ public:
         {
             me->AddUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
             bPointReached = true;
-            uiTimer = urand(500,1000);
+            uiTimer = urand(500, 1000);
             uiCheckTimer = 1000;
             r = 17;
             c = 0;
             mx = ShieldOrbLocations[0][0];
             my = ShieldOrbLocations[0][1];
-            bClockwise = urand(0,1);
+            bClockwise = urand(0, 1);
         }
 
         void UpdateAI(const uint32 diff)
@@ -1233,7 +1233,7 @@ public:
                 }
                 bPointReached = false;
                 uiCheckTimer = 1000;
-                me->GetMotionMaster()->MovePoint(1,x, y, SHIELD_ORB_Z);
+                me->GetMotionMaster()->MovePoint(1, x, y, SHIELD_ORB_Z);
                 c += M_PI/32;
                 if (c >= 2*M_PI) c = 0;
             }
@@ -1241,7 +1241,7 @@ public:
             {
                 if (uiCheckTimer <= diff)
                 {
-                    DoTeleportTo(x,y,SHIELD_ORB_Z);
+                    DoTeleportTo(x, y, SHIELD_ORB_Z);
                     bPointReached = true;
                 }
                 else uiCheckTimer -= diff;
@@ -1251,7 +1251,7 @@ public:
             {
                 if (Unit* random = Unit::GetUnit(*me, pInstance ? pInstance->GetData64(DATA_PLAYER_GUID) : 0))
                     DoCast(random, SPELL_SHADOW_BOLT, false);
-                uiTimer = urand(500,1000);
+                uiTimer = urand(500, 1000);
             } else uiTimer -= diff;
         }
 
@@ -1332,7 +1332,7 @@ public:
                     if (uiTimer[1] <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_SR_MOONFIRE, false);
-                        uiTimer[1] = urand(2000,4000);
+                        uiTimer[1] = urand(2000, 4000);
                     }
                     DoMeleeAttackIfReady();
                     break;
@@ -1340,19 +1340,19 @@ public:
                     if (uiTimer[1] <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_SR_MULTI_SHOT, false);
-                        uiTimer[1] = urand(8000,10000);
+                        uiTimer[1] = urand(8000, 10000);
                     }
                     if (uiTimer[2] <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_SR_SHOOT, false);
-                        uiTimer[2] = urand(4000,6000);
+                        uiTimer[2] = urand(4000, 6000);
                     }
                     if (me->IsWithinMeleeRange(me->getVictim(), 6))
                     {
                         if (uiTimer[0] <= diff)
                         {
                             DoCast(me->getVictim(), SPELL_SR_MULTI_SHOT, false);
-                            uiTimer[0] = urand(6000,8000);
+                            uiTimer[0] = urand(6000, 8000);
                         }
                         DoMeleeAttackIfReady();
                     }
@@ -1361,7 +1361,7 @@ public:
                     if (uiTimer[1] <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_SR_FIREBALL, false);
-                        uiTimer[1] = urand(2000,4000);
+                        uiTimer[1] = urand(2000, 4000);
                     }
                     DoMeleeAttackIfReady();
                     break;
@@ -1369,12 +1369,12 @@ public:
                     if (uiTimer[1] <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_SR_SHADOW_BOLT, false);
-                        uiTimer[1] = urand(3000,5000);
+                        uiTimer[1] = urand(3000, 5000);
                     }
                     if (uiTimer[2] <= diff)
                     {
                         DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true), SPELL_SR_CURSE_OF_AGONY, true);
-                        uiTimer[2] = urand(2000,4000);
+                        uiTimer[2] = urand(2000, 4000);
                     }
                     DoMeleeAttackIfReady();
                     break;
@@ -1382,7 +1382,7 @@ public:
                     if (uiTimer[1] <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_SR_WHIRLWIND, false);
-                        uiTimer[1] = urand(9000,11000);
+                        uiTimer[1] = urand(9000, 11000);
                     }
                     DoMeleeAttackIfReady();
                     break;
@@ -1390,12 +1390,12 @@ public:
                     if (uiTimer[1] <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_SR_HAMMER_OF_JUSTICE, false);
-                        uiTimer[1] = urand(6000,8000);
+                        uiTimer[1] = urand(6000, 8000);
                     }
                     if (uiTimer[2] <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_SR_HOLY_SHOCK, false);
-                        uiTimer[2] = urand(2000,4000);
+                        uiTimer[2] = urand(2000, 4000);
                     }
                     DoMeleeAttackIfReady();
                     break;
@@ -1403,12 +1403,12 @@ public:
                     if (uiTimer[1] <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_SR_HOLY_SMITE, false);
-                        uiTimer[1] = urand(4000,6000);
+                        uiTimer[1] = urand(4000, 6000);
                     }
                     if (uiTimer[2] <= diff)
                     {
                         DoCast(me, SPELL_SR_RENEW, false);
-                        uiTimer[2] = urand(6000,8000);
+                        uiTimer[2] = urand(6000, 8000);
                     }
                     DoMeleeAttackIfReady();
                     break;
@@ -1416,7 +1416,7 @@ public:
                     if (uiTimer[1] <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_SR_EARTH_SHOCK, false);
-                        uiTimer[1] = urand(4000,6000);
+                        uiTimer[1] = urand(4000, 6000);
                     }
                     DoMeleeAttackIfReady();
                     break;
@@ -1424,7 +1424,7 @@ public:
                     if (uiTimer[1] <= diff)
                     {
                         DoCast(me->getVictim(), SPELL_SR_HEMORRHAGE, true);
-                        uiTimer[1] = urand(4000,6000);
+                        uiTimer[1] = urand(4000, 6000);
                     }
                     DoMeleeAttackIfReady();
                     break;

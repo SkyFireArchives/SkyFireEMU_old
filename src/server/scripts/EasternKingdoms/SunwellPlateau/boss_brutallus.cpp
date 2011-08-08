@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,40 +33,40 @@ EndScriptData */
 
 enum Quotes
 {
- YELL_INTRO                 =   -1580017,
- YELL_INTRO_BREAK_ICE       =   -1580018,
- YELL_INTRO_CHARGE          =   -1580019,
- YELL_INTRO_KILL_MADRIGOSA  =   -1580020,
- YELL_INTRO_TAUNT           =   -1580021,
+ YELL_INTRO                 =   -1580017, 
+ YELL_INTRO_BREAK_ICE       =   -1580018, 
+ YELL_INTRO_CHARGE          =   -1580019, 
+ YELL_INTRO_KILL_MADRIGOSA  =   -1580020, 
+ YELL_INTRO_TAUNT           =   -1580021, 
 
- YELL_MADR_ICE_BARRIER      =   -1580031,
- YELL_MADR_INTRO            =   -1580032,
- YELL_MADR_ICE_BLOCK        =   -1580033,
- YELL_MADR_TRAP             =   -1580034,
- YELL_MADR_DEATH            =   -1580035,
+ YELL_MADR_ICE_BARRIER      =   -1580031, 
+ YELL_MADR_INTRO            =   -1580032, 
+ YELL_MADR_ICE_BLOCK        =   -1580033, 
+ YELL_MADR_TRAP             =   -1580034, 
+ YELL_MADR_DEATH            =   -1580035, 
 
- YELL_AGGRO                 =   -1580022,
- YELL_KILL1                 =   -1580023,
- YELL_KILL2                 =   -1580024,
- YELL_KILL3                 =   -1580025,
- YELL_LOVE1                 =   -1580026,
- YELL_LOVE2                 =   -1580027,
- YELL_LOVE3                 =   -1580028,
- YELL_BERSERK               =   -1580029,
+ YELL_AGGRO                 =   -1580022, 
+ YELL_KILL1                 =   -1580023, 
+ YELL_KILL2                 =   -1580024, 
+ YELL_KILL3                 =   -1580025, 
+ YELL_LOVE1                 =   -1580026, 
+ YELL_LOVE2                 =   -1580027, 
+ YELL_LOVE3                 =   -1580028, 
+ YELL_BERSERK               =   -1580029, 
  YELL_DEATH                 =   -1580030
 };
 
 enum Spells
 {
-    SPELL_METEOR_SLASH                 =   45150,
-    SPELL_BURN                         =   46394,
-    SPELL_STOMP                        =   45185,
-    SPELL_BERSERK                      =   26662,
-    SPELL_DUAL_WIELD                   =   42459,
+    SPELL_METEOR_SLASH                 =   45150, 
+    SPELL_BURN                         =   46394, 
+    SPELL_STOMP                        =   45185, 
+    SPELL_BERSERK                      =   26662, 
+    SPELL_DUAL_WIELD                   =   42459, 
 
-    SPELL_INTRO_FROST_BLAST            =   45203,
-    SPELL_INTRO_FROSTBOLT              =   44843,
-    SPELL_INTRO_ENCAPSULATE            =   45665,
+    SPELL_INTRO_FROST_BLAST            =   45203, 
+    SPELL_INTRO_FROSTBOLT              =   44843, 
+    SPELL_INTRO_ENCAPSULATE            =   45665, 
     SPELL_INTRO_ENCAPSULATE_CHANELLING =   45661
 };
 
@@ -135,7 +135,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(YELL_KILL1,YELL_KILL2,YELL_KILL3), me);
+            DoScriptText(RAND(YELL_KILL1, YELL_KILL2, YELL_KILL3), me);
         }
 
         void JustDied(Unit* /*Killer*/)
@@ -145,9 +145,9 @@ public:
             if (pInstance)
             {
                 pInstance->SetData(DATA_BRUTALLUS_EVENT, DONE);
-                float x,y,z;
-                me->GetPosition(x,y,z);
-                me->SummonCreature(FELMYST, x,y, z+30, me->GetOrientation(), TEMPSUMMON_MANUAL_DESPAWN, 0);
+                float x, y, z;
+                me->GetPosition(x, y, z);
+                me->SummonCreature(FELMYST, x, y, z+30, me->GetOrientation(), TEMPSUMMON_MANUAL_DESPAWN, 0);
             }
         }
 
@@ -322,7 +322,7 @@ public:
 
             if (StompTimer <= diff)
             {
-                DoScriptText(RAND(YELL_LOVE1,YELL_LOVE2,YELL_LOVE3), me);
+                DoScriptText(RAND(YELL_LOVE1, YELL_LOVE2, YELL_LOVE3), me);
                 DoCast(me->getVictim(), SPELL_STOMP);
                 StompTimer = 30000;
             } else StompTimer -= diff;
@@ -337,7 +337,7 @@ public:
                         (*i)->CastSpell((*i), SPELL_BURN, true);
                         break;
                     }
-                BurnTimer = urand(60000,180000);
+                BurnTimer = urand(60000, 180000);
             } else BurnTimer -= diff;
 
             if (BerserkTimer < diff && !Enraged)

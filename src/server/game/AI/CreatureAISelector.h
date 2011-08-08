@@ -36,4 +36,3 @@ namespace FactorySelector
     GameObjectAI* SelectGameObjectAI(GameObject *);
 }
 #endif
-

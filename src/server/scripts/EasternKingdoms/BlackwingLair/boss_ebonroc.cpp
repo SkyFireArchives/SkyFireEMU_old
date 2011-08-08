@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -77,7 +77,7 @@ public:
             if (ShadowFlame_Timer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_SHADOWFLAME);
-                ShadowFlame_Timer = urand(12000,15000);
+                ShadowFlame_Timer = urand(12000, 15000);
             } else ShadowFlame_Timer -= diff;
 
             //Wing Buffet Timer
@@ -91,7 +91,7 @@ public:
             if (ShadowOfEbonroc_Timer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_SHADOWOFEBONROC);
-                ShadowOfEbonroc_Timer = urand(25000,350000);
+                ShadowOfEbonroc_Timer = urand(25000, 350000);
             } else ShadowOfEbonroc_Timer -= diff;
 
             if (me->getVictim()->HasAura(SPELL_SHADOWOFEBONROC))
@@ -99,7 +99,7 @@ public:
                 if (Heal_Timer <= diff)
                 {
                     DoCast(me, SPELL_HEAL);
-                    Heal_Timer = urand(1000,3000);
+                    Heal_Timer = urand(1000, 3000);
                 } else Heal_Timer -= diff;
             }
 

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -34,12 +34,12 @@ EndScriptData */
 
 enum eSpels
 {
-    SPELL_ARCANE_POWER      = 88009,
-    SPELL_FIST_OF_FLAME     = 87859,
-    SPELL_FIST_OF_FROST     = 87861,
-    SPELL_FIRE_BLOSSOM      = 88129,
-    SPELL_FIRE_BLOSSOM_H    = 91286,
-    SPELL_FROST_BLOSSOM     = 88169,
+    SPELL_ARCANE_POWER      = 88009, 
+    SPELL_FIST_OF_FLAME     = 87859, 
+    SPELL_FIST_OF_FROST     = 87861, 
+    SPELL_FIRE_BLOSSOM      = 88129, 
+    SPELL_FIRE_BLOSSOM_H    = 91286, 
+    SPELL_FROST_BLOSSOM     = 88169, 
     SPELL_FROST_BLOSSOM_H   = 91287
 };
 

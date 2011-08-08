@@ -54,13 +54,13 @@ int main(int argc, char * arg[])
     
     for (int i = 0; i < argc; ++i)  
     {
-        if(strcmp(arg[i], ARG_MAP) == 0)
+        if (strcmp(arg[i], ARG_MAP) == 0)
             extractMap = true;
-        if(strcmp(arg[i], ARG_NOMAP) == 0)
+        if (strcmp(arg[i], ARG_NOMAP) == 0)
             extractMap = false;
-        if(strcmp(arg[i], ARG_DBC) == 0)
+        if (strcmp(arg[i], ARG_DBC) == 0)
             extractDBC = true;
-        if(strcmp(arg[i], ARG_NODBC) == 0)
+        if (strcmp(arg[i], ARG_NODBC) == 0)
             extractDBC = false;
     }
     
@@ -79,31 +79,31 @@ int main(int argc, char * arg[])
             LoadLocaleMPQFiles(i);
 			
             //Extract DBC files
-            if(FirstLocale < 0)
+            if (FirstLocale < 0)
             {
                 FirstLocale = i;
                 build = ReadBuild(FirstLocale);
                 printf("Detected base client build: %u\n", build);
-                if(build != CLIENT_BUILD)
+                if (build != CLIENT_BUILD)
                 {
                     printf("ERROR: your client is not up-to-date. Client build should be %u", CLIENT_BUILD);
                     return 0;
                 }
-                if(extractDBC)
+                if (extractDBC)
                     ExtractDBCFiles(i, true);
             }
-            else if(extractDBC)
+            else if (extractDBC)
                 ExtractDBCFiles(i, false);
         }
     }
 	
-    if(FirstLocale < 0)
+    if (FirstLocale < 0)
     {
         printf("No locales detected\n");
         return 0;
     }
     
-    if(extractMap)
+    if (extractMap)
         ExtractMapsFromMpq(build);
 	
     return 0;

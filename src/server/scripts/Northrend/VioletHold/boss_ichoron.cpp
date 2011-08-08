@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,56 +27,56 @@
 
 enum Spells
 {
-    SPELL_DRAINED                               = 59820,
-    SPELL_FRENZY                                = 54312,
-    SPELL_FRENZY_H                              = 59522,
-    SPELL_PROTECTIVE_BUBBLE                     = 54306,
-    SPELL_WATER_BLAST                           = 54237,
-    SPELL_WATER_BLAST_H                         = 59520,
-    SPELL_WATER_BOLT_VOLLEY                     = 54241,
-    SPELL_WATER_BOLT_VOLLEY_H                   = 59521,
-    SPELL_SPLASH                                = 59516,
+    SPELL_DRAINED                               = 59820, 
+    SPELL_FRENZY                                = 54312, 
+    SPELL_FRENZY_H                              = 59522, 
+    SPELL_PROTECTIVE_BUBBLE                     = 54306, 
+    SPELL_WATER_BLAST                           = 54237, 
+    SPELL_WATER_BLAST_H                         = 59520, 
+    SPELL_WATER_BOLT_VOLLEY                     = 54241, 
+    SPELL_WATER_BOLT_VOLLEY_H                   = 59521, 
+    SPELL_SPLASH                                = 59516, 
     SPELL_WATER_GLOBULE                         = 54268
 };
 
 enum IchoronCreatures
 {
-    NPC_ICHOR_GLOBULE                           = 29321,
+    NPC_ICHOR_GLOBULE                           = 29321, 
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1608018,
-    SAY_SLAY_1                                  = -1608019,
-    SAY_SLAY_2                                  = -1608020,
-    SAY_SLAY_3                                  = -1608021,
-    SAY_DEATH                                   = -1608022,
-    SAY_SPAWN                                   = -1608023,
-    SAY_ENRAGE                                  = -1608024,
-    SAY_SHATTER                                 = -1608025,
+    SAY_AGGRO                                   = -1608018, 
+    SAY_SLAY_1                                  = -1608019, 
+    SAY_SLAY_2                                  = -1608020, 
+    SAY_SLAY_3                                  = -1608021, 
+    SAY_DEATH                                   = -1608022, 
+    SAY_SPAWN                                   = -1608023, 
+    SAY_ENRAGE                                  = -1608024, 
+    SAY_SHATTER                                 = -1608025, 
     SAY_BUBBLE                                  = -1608026
 };
 
 enum Achievements
 {
-    ACHIEVEMENT_DEHYDRATION                     = 2041,
+    ACHIEVEMENT_DEHYDRATION                     = 2041, 
 };
 
 enum Actions
 {
-    ACTION_WATER_ELEMENT_HIT                    = 1,
-    ACTION_WATER_ELEMENT_KILLED                 = 2,
+    ACTION_WATER_ELEMENT_HIT                    = 1, 
+    ACTION_WATER_ELEMENT_KILLED                 = 2, 
 };
 
 // TODO get those positions from spawn of creature 29326
 #define MAX_SPAWN_LOC 5
 static Position SpawnLoc[MAX_SPAWN_LOC]=
 {
-    {1840.64f, 795.407f, 44.079f, 1.676f},
-    {1886.24f, 757.733f, 47.750f, 5.201f},
-    {1877.91f, 845.915f, 43.417f, 3.560f},
-    {1918.97f, 850.645f, 47.225f, 4.136f},
-    {1935.50f, 796.224f, 52.492f, 4.224f},
+    {1840.64f, 795.407f, 44.079f, 1.676f}, 
+    {1886.24f, 757.733f, 47.750f, 5.201f}, 
+    {1877.91f, 845.915f, 43.417f, 3.560f}, 
+    {1918.97f, 850.645f, 47.225f, 4.136f}, 
+    {1935.50f, 796.224f, 52.492f, 4.224f}, 
 };
 
 class boss_ichoron : public CreatureScript
@@ -316,7 +316,7 @@ public:
                 pSummoned->SetSpeed(MOVE_RUN, 0.3f);
                 pSummoned->GetMotionMaster()->MoveFollow(me, 0, 0);
                 m_waterElements.push_back(pSummoned->GetGUID());
-                pInstance->SetData64(DATA_ADD_TRASH_MOB,pSummoned->GetGUID());
+                pInstance->SetData64(DATA_ADD_TRASH_MOB, pSummoned->GetGUID());
             }
         }
 
@@ -326,7 +326,7 @@ public:
             if (pSummoned)
             {
                 m_waterElements.remove(pSummoned->GetGUID());
-                pInstance->SetData64(DATA_DEL_TRASH_MOB,pSummoned->GetGUID());
+                pInstance->SetData64(DATA_DEL_TRASH_MOB, pSummoned->GetGUID());
             }
         }
 
@@ -334,7 +334,7 @@ public:
         {
             if (victim == me)
                 return;
-            DoScriptText(RAND(SAY_SLAY_1,SAY_SLAY_2,SAY_SLAY_3), me);
+            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
         }
     };
 
@@ -365,7 +365,7 @@ public:
         void Reset()
         {
             uiRangeCheck_Timer = 1000;
-            DoCast(me,SPELL_WATER_GLOBULE);
+            DoCast(me, SPELL_WATER_GLOBULE);
         }
 
         void AttackStart(Unit* /*pWho*/)

@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -90,19 +90,19 @@ enum eNetherdrake
     SAY_NIHIL_1                 = -1000169, //signed for 5955
     SAY_NIHIL_2                 = -1000170, //signed for 5955
     SAY_NIHIL_3                 = -1000171, //signed for 5955
-    SAY_NIHIL_4                 = -1000172, //signed for 20021, used by 20021,21817,21820,21821,21823
-    SAY_NIHIL_INTERRUPT         = -1000173, //signed for 20021, used by 20021,21817,21820,21821,21823
+    SAY_NIHIL_4                 = -1000172, //signed for 20021, used by 20021, 21817, 21820, 21821, 21823
+    SAY_NIHIL_INTERRUPT         = -1000173, //signed for 20021, used by 20021, 21817, 21820, 21821, 21823
 
-    ENTRY_WHELP                 = 20021,
-    ENTRY_PROTO                 = 21821,
-    ENTRY_ADOLE                 = 21817,
-    ENTRY_MATUR                 = 21820,
-    ENTRY_NIHIL                 = 21823,
+    ENTRY_WHELP                 = 20021, 
+    ENTRY_PROTO                 = 21821, 
+    ENTRY_ADOLE                 = 21817, 
+    ENTRY_MATUR                 = 21820, 
+    ENTRY_NIHIL                 = 21823, 
 
-    SPELL_T_PHASE_MODULATOR     = 37573,
+    SPELL_T_PHASE_MODULATOR     = 37573, 
 
-    SPELL_ARCANE_BLAST          = 38881,
-    SPELL_MANA_BURN             = 38884,
+    SPELL_ARCANE_BLAST          = 38881, 
+    SPELL_MANA_BURN             = 38884, 
     SPELL_INTANGIBLE_PRESENCE   = 36513
 };
 
@@ -268,7 +268,7 @@ public:
 
 enum eDaranelle
 {
-    SAY_SPELL_INFLUENCE     = -1000174,
+    SAY_SPELL_INFLUENCE     = -1000174, 
     SPELL_LASHHAN_CHANNEL   = 36904
 };
 
@@ -420,7 +420,7 @@ public:
 
             if (obelisk_one == true && obelisk_two == true && obelisk_three == true && obelisk_four == true && obelisk_five == true)
             {
-                pGo->SummonCreature(19963,2943.40f,4778.20f,284.49f,0.94f,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,120000);
+                pGo->SummonCreature(19963, 2943.40f, 4778.20f, 284.49f, 0.94f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 120000);
                 //reset global var
                 obelisk_one = false;
                 obelisk_two = false;
@@ -443,8 +443,8 @@ public:
 
 enum eBloodmaul
 {
-    NPC_OGRE_BRUTE        = 19995,
-    NPC_QUEST_CREDIT      = 21241,
+    NPC_OGRE_BRUTE        = 19995, 
+    NPC_QUEST_CREDIT      = 21241, 
     GO_KEG                = 184315
 };
 
@@ -462,7 +462,7 @@ public:
     {
         npc_bloodmaul_brutebaneAI(Creature *c) : ScriptedAI(c)
         {
-           if(Creature* Ogre = me->FindNearestCreature(NPC_OGRE_BRUTE, 50, true))
+           if (Creature* Ogre = me->FindNearestCreature(NPC_OGRE_BRUTE, 50, true))
            {
                Ogre->SetReactState(REACT_DEFENSIVE);
                Ogre->GetMotionMaster()->MovePoint(1, me->GetPositionX()-1, me->GetPositionY()+1, me->GetPositionZ());

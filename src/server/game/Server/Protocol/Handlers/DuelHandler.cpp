@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -47,8 +47,8 @@ void WorldSession::HandleDuelAcceptedOpcode(WorldPacket& recvPacket)
         return;
 
     //sLog->outDebug("WORLD: received CMSG_DUEL_ACCEPTED");
-    sLog->outStaticDebug("Player 1 is: %u (%s)", pl->GetGUIDLow(),pl->GetName());
-    sLog->outStaticDebug("Player 2 is: %u (%s)", plTarget->GetGUIDLow(),plTarget->GetName());
+    sLog->outStaticDebug("Player 1 is: %u (%s)", pl->GetGUIDLow(), pl->GetName());
+    sLog->outStaticDebug("Player 2 is: %u (%s)", plTarget->GetGUIDLow(), plTarget->GetName());
 
     time_t now = time(NULL);
     pl->duel->startTimer = now;

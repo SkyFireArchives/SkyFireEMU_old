@@ -48,7 +48,7 @@ void AddonMgr::LoadFromDB()
         sLog->outString();
         return;
     }
-    
+
     uint32 count = 0;
 
     do

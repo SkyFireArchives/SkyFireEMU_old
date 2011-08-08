@@ -1185,7 +1185,7 @@ enum DispelType
 
 #define DISPEL_ALL_MASK ((1<<DISPEL_MAGIC) | (1<<DISPEL_CURSE) | (1<<DISPEL_DISEASE) | (1<<DISPEL_POISON))
 
-//To all Immune system,if target has immunes,
+//To all Immune system, if target has immunes,
 //some spell that related to ImmuneToDispel or ImmuneToSchool or ImmuneToDamage type can't cast to it,
 //some spell_effects that related to ImmuneToEffect<effect>(only this effect in the spell) can't cast to it,
 //some aura(related to Mechanics or ImmuneToState<aura>) can't apply to it.
@@ -3052,16 +3052,16 @@ enum PetSlot
     //Some not-in-db slots
     PET_SLOT_FULL_LIST       =  -4,        //Used when there is no slot free for tameing
     PET_SLOT_UNK_SLOT        =  -3,        //Used in some scripts.
-    
+
     PET_SLOT_ACTUAL_PET_SLOT =  -2,        //Save the pet in his actual slot.
     PET_SLOT_DELETED         =  -1,        //Delete the pet
-    
+
     //Hunter pet slots, sended to client at stable.
     PET_SLOT_HUNTER_FIRST    =   0,        //PetType == HUNTER_PET
     PET_SLOT_HUNTER_LAST     =   4,        //PetType == HUNTER_PET
     PET_SLOT_STABLE_FIRST    =   5,
     PET_SLOT_STABLE_LAST     =  24,
-    
+
     //Non-hunter pet slot
     PET_SLOT_OTHER_PET       = 100,        //PetType != HUNTER_PET
 };

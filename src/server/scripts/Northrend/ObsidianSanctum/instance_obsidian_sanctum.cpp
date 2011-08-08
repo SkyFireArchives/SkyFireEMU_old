@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful, 
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -106,11 +106,11 @@ public:
         {
             if (uiType == TYPE_SARTHARION_EVENT)
                 m_auiEncounter[0] = uiData;
-            else if(uiType == TYPE_TENEBRON_PREKILLED)
+            else if (uiType == TYPE_TENEBRON_PREKILLED)
                 m_bTenebronKilled = true;
-            else if(uiType == TYPE_SHADRON_PREKILLED)
+            else if (uiType == TYPE_SHADRON_PREKILLED)
                 m_bShadronKilled = true;
-            else if(uiType == TYPE_VESPERON_PREKILLED)
+            else if (uiType == TYPE_VESPERON_PREKILLED)
                 m_bVesperonKilled = true;
         }
 
@@ -118,11 +118,11 @@ public:
         {
             if (uiType == TYPE_SARTHARION_EVENT)
                 return m_auiEncounter[0];
-            else if(uiType == TYPE_TENEBRON_PREKILLED)
+            else if (uiType == TYPE_TENEBRON_PREKILLED)
                 return m_bTenebronKilled;
-            else if(uiType == TYPE_SHADRON_PREKILLED)
+            else if (uiType == TYPE_SHADRON_PREKILLED)
                 return m_bShadronKilled;
-            else if(uiType == TYPE_VESPERON_PREKILLED)
+            else if (uiType == TYPE_VESPERON_PREKILLED)
                 return m_bVesperonKilled;
 
             return 0;

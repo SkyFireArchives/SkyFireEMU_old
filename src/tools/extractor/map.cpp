@@ -57,19 +57,19 @@ void ExtractMapsFromMpq(uint32 build)
         WDT_file wdt(mpq_map_name, actualMPQ);
         if (wdt.isEof())
         {
-            if(actualMPQ == WorldMPQ)
+            if (actualMPQ == WorldMPQ)
             {
                 z--;
                 actualMPQ = ExpansionsMPQ[0];
                 continue;
             }
-            if(actualMPQ == ExpansionsMPQ[0])
+            if (actualMPQ == ExpansionsMPQ[0])
             {
                 z--;
                 actualMPQ = ExpansionsMPQ[1];
                 continue;
             }
-            if(actualMPQ == ExpansionsMPQ[1])
+            if (actualMPQ == ExpansionsMPQ[1])
             {
                 z--;
                 actualMPQ = ExpansionsMPQ[2];
@@ -80,13 +80,13 @@ void ExtractMapsFromMpq(uint32 build)
             printf("Extract %s (%d/%d) -- not found\n", map_ids[z].name, z+1, map_count);
             continue;
         }
-        if(actualMPQ == WorldMPQ)
+        if (actualMPQ == WorldMPQ)
             printf("Extract %s (%d/%d) -- World.MPQ\n", map_ids[z].name, z+1, map_count);
-        if(actualMPQ == ExpansionsMPQ[0])
+        if (actualMPQ == ExpansionsMPQ[0])
             printf("Extract %s (%d/%d) -- expansion1.MPQ\n", map_ids[z].name, z+1, map_count);
-        if(actualMPQ == ExpansionsMPQ[1])
+        if (actualMPQ == ExpansionsMPQ[1])
             printf("Extract %s (%d/%d) -- expansion2.MPQ\n", map_ids[z].name, z+1, map_count);
-        if(actualMPQ == ExpansionsMPQ[2])
+        if (actualMPQ == ExpansionsMPQ[2])
             printf("Extract %s (%d/%d) -- expansion3.MPQ\n", map_ids[z].name, z+1, map_count);
         actualMPQ = WorldMPQ;
         
@@ -220,13 +220,13 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 
     
     if (adt.isEof())
     {
-        if(_mpq == WorldMPQ)
+        if (_mpq == WorldMPQ)
             return ConvertADT(filename, filename2, cell_y, cell_x, build, ExpansionsMPQ[0]);
-        if(_mpq == ExpansionsMPQ[0])
+        if (_mpq == ExpansionsMPQ[0])
             return ConvertADT(filename, filename2, cell_y, cell_x, build, ExpansionsMPQ[1]);
-        if(_mpq == ExpansionsMPQ[1])
+        if (_mpq == ExpansionsMPQ[1])
             return ConvertADT(filename, filename2, cell_y, cell_x, build, ExpansionsMPQ[2]);
-        if(_mpq == ExpansionsMPQ[2])
+        if (_mpq == ExpansionsMPQ[2])
             return false;
     }
     
@@ -247,12 +247,12 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 
         for(int j=0;j<ADT_CELLS_PER_GRID;j++)
         {
             adt_MCNK * cell = adt.getMCNK(i,j);
-            if(cell)
+            if (cell)
             {
                 uint32 areaid = cell->areaid;
-                if(areaid && areaid <= maxAreaId)
+                if (areaid && areaid <= maxAreaId)
                 {
-                    if(areas[areaid] != 0xffff)
+                    if (areas[areaid] != 0xffff)
                     {
                         area_flags[i][j] = areas[areaid];
                         continue;
@@ -272,7 +272,7 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 
     {
         for(int x=0;x<ADT_CELLS_PER_GRID;x++)
         {
-            if(area_flags[y][x]!=areaflag)
+            if (area_flags[y][x]!=areaflag)
             {
                 fullAreaData = true;
                 break;
@@ -572,11 +572,11 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 
                 }
                 
                 uint32 c_flag = cell->flags;
-                if(c_flag & (1<<2))
+                if (c_flag & (1<<2))
                     liquid_type[i][j]|=MAP_LIQUID_TYPE_WATER;            // water
-                if(c_flag & (1<<3))
+                if (c_flag & (1<<3))
                     liquid_type[i][j]|=MAP_LIQUID_TYPE_OCEAN;            // ochean
-                if(c_flag & (1<<4))
+                if (c_flag & (1<<4))
                     liquid_type[i][j]|=MAP_LIQUID_TYPE_MAGMA;            // magma/slime
                 
                 if (!count && liquid_type[i][j])
@@ -678,7 +678,7 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 
     
     // Ok all data prepared - store it
     FILE *output=fopen(filename2, "wb");
-    if(!output)
+    if (!output)
     {
         printf("Can't create the output file '%s'\n", filename2);
         return false;
