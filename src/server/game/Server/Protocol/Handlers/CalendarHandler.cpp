@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -223,7 +223,6 @@ void WorldSession::HandleCalendarRemoveEvent(WorldPacket &recv_data)
     //recv_data >> uint64
     //recv_data >> uint64
     //recv_data >> uint32
-
 }
 
 void WorldSession::HandleCalendarCopyEvent(WorldPacket &recv_data)
@@ -235,7 +234,6 @@ void WorldSession::HandleCalendarCopyEvent(WorldPacket &recv_data)
     //recv_data >> uint64
     //recv_data >> uint64
     //recv_data >> uint32
-
 }
 
 void WorldSession::HandleCalendarEventInvite(WorldPacket &recv_data)
@@ -249,7 +247,6 @@ void WorldSession::HandleCalendarEventInvite(WorldPacket &recv_data)
     //recv_data >> std::string
     //recv_data >> uint8
     //recv_data >> uint8
-
 }
 
 void WorldSession::HandleCalendarEventRsvp(WorldPacket &recv_data)
@@ -261,7 +258,6 @@ void WorldSession::HandleCalendarEventRsvp(WorldPacket &recv_data)
     //recv_data >> uint64
     //recv_data >> uint64
     //recv_data >> uint32
-
 }
 
 void WorldSession::HandleCalendarEventRemoveInvite(WorldPacket &recv_data)

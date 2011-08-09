@@ -309,7 +309,7 @@ bool Vehicle::AddPassenger(Unit *unit, int8 seatId, bool byAura)
             seat->second.passenger->ExitVehicle();
             else
                 seat->second.passenger = NULL;
-        
+
 		ASSERT(!seat->second.passenger);
     }
 

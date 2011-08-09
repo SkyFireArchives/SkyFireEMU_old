@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -531,7 +531,7 @@ void World::LoadConfigSettings(bool reload)
     }
     else if (rate_values[RATE_TARGET_POS_RECALCULATION_RANGE] > NOMINAL_MELEE_RANGE)
     {
-        sLog->outError("TargetPosRecalculateRange (%f) must be <= %f. Using %f instead.", 
+        sLog->outError("TargetPosRecalculateRange (%f) must be <= %f. Using %f instead.",
             rate_values[RATE_TARGET_POS_RECALCULATION_RANGE], NOMINAL_MELEE_RANGE, NOMINAL_MELEE_RANGE);
         rate_values[RATE_TARGET_POS_RECALCULATION_RANGE] = NOMINAL_MELEE_RANGE;
     }
@@ -767,13 +767,13 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL] = sConfig->GetIntDefault("StartHeroicPlayerLevel", 55);
     if (m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL] < 1)
     {
-        sLog->outError("StartHeroicPlayerLevel (%i) must be in range 1..MaxPlayerLevel(%u). Set to 55.", 
+        sLog->outError("StartHeroicPlayerLevel (%i) must be in range 1..MaxPlayerLevel(%u). Set to 55.",
             m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL]);
         m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL] = 55;
     }
     else if (m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL] > m_int_configs[CONFIG_MAX_PLAYER_LEVEL])
     {
-        sLog->outError("StartHeroicPlayerLevel (%i) must be in range 1..MaxPlayerLevel(%u). Set to %u.", 
+        sLog->outError("StartHeroicPlayerLevel (%i) must be in range 1..MaxPlayerLevel(%u). Set to %u.",
             m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL]);
         m_int_configs[CONFIG_START_HEROIC_PLAYER_LEVEL] = m_int_configs[CONFIG_MAX_PLAYER_LEVEL];
     }
@@ -786,7 +786,7 @@ void World::LoadConfigSettings(bool reload)
     }
     else if (m_int_configs[CONFIG_START_PLAYER_MONEY] > MAX_MONEY_AMOUNT)
     {
-        sLog->outError("StartPlayerMoney (%i) must be in range 0..%u. Set to %u.", 
+        sLog->outError("StartPlayerMoney (%i) must be in range 0..%u. Set to %u.",
             m_int_configs[CONFIG_START_PLAYER_MONEY], MAX_MONEY_AMOUNT, MAX_MONEY_AMOUNT);
         m_int_configs[CONFIG_START_PLAYER_MONEY] = MAX_MONEY_AMOUNT;
     }
@@ -801,13 +801,13 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_START_CONQUEST_POINTS] = sConfig->GetIntDefault("StartConquestPoints", 0);
     if (int32(m_int_configs[CONFIG_START_CONQUEST_POINTS]) < 0)
     {
-        sLog->outError("StartConquestPoints (%i) must be in range 0..MaxConquestPoints(%u). Set to %u.", 
+        sLog->outError("StartConquestPoints (%i) must be in range 0..MaxConquestPoints(%u). Set to %u.",
             m_int_configs[CONFIG_START_CONQUEST_POINTS], m_int_configs[CONFIG_MAX_CONQUEST_POINTS], 0);
         m_int_configs[CONFIG_START_CONQUEST_POINTS] = 0;
     }
     else if (m_int_configs[CONFIG_START_CONQUEST_POINTS] > m_int_configs[CONFIG_MAX_CONQUEST_POINTS])
     {
-        sLog->outError("StartConquestPoints (%i) must be in range 0..MaxConquestPoints(%u). Set to %u.", 
+        sLog->outError("StartConquestPoints (%i) must be in range 0..MaxConquestPoints(%u). Set to %u.",
             m_int_configs[CONFIG_START_CONQUEST_POINTS], m_int_configs[CONFIG_MAX_CONQUEST_POINTS], m_int_configs[CONFIG_MAX_CONQUEST_POINTS]);
         m_int_configs[CONFIG_START_CONQUEST_POINTS] = m_int_configs[CONFIG_MAX_CONQUEST_POINTS];
     }
@@ -822,13 +822,13 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_START_HONOR_POINTS] = sConfig->GetIntDefault("StartHonorPoints", 0);
     if (int32(m_int_configs[CONFIG_START_HONOR_POINTS]) < 0)
     {
-        sLog->outError("StartHonorPoints (%i) must be in range 0..MaxHonorPoints(%u). Set to %u.", 
+        sLog->outError("StartHonorPoints (%i) must be in range 0..MaxHonorPoints(%u). Set to %u.",
             m_int_configs[CONFIG_START_HONOR_POINTS], m_int_configs[CONFIG_MAX_HONOR_POINTS], 0);
         m_int_configs[CONFIG_START_HONOR_POINTS] = 0;
     }
     else if (m_int_configs[CONFIG_START_HONOR_POINTS] > m_int_configs[CONFIG_MAX_HONOR_POINTS])
     {
-        sLog->outError("StartHonorPoints (%i) must be in range 0..MaxHonorPoints(%u). Set to %u.", 
+        sLog->outError("StartHonorPoints (%i) must be in range 0..MaxHonorPoints(%u). Set to %u.",
             m_int_configs[CONFIG_START_HONOR_POINTS], m_int_configs[CONFIG_MAX_HONOR_POINTS], m_int_configs[CONFIG_MAX_HONOR_POINTS]);
         m_int_configs[CONFIG_START_HONOR_POINTS] = m_int_configs[CONFIG_MAX_HONOR_POINTS];
     }
@@ -843,13 +843,13 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_START_JUSTICE_POINTS] = sConfig->GetIntDefault("StartJusticePoints", 0);
     if (int32(m_int_configs[CONFIG_START_JUSTICE_POINTS]) < 0)
     {
-        sLog->outError("StartJusticePoints (%i) must be in range 0..MaxJusticePoints(%u). Set to %u.", 
+        sLog->outError("StartJusticePoints (%i) must be in range 0..MaxJusticePoints(%u). Set to %u.",
             m_int_configs[CONFIG_START_JUSTICE_POINTS], m_int_configs[CONFIG_MAX_JUSTICE_POINTS], 0);
         m_int_configs[CONFIG_START_JUSTICE_POINTS] = 0;
     }
     else if (m_int_configs[CONFIG_START_JUSTICE_POINTS] > m_int_configs[CONFIG_MAX_JUSTICE_POINTS])
     {
-        sLog->outError("StartJusticePoints (%i) must be in range 0..MaxJusticePoints(%u). Set to %u.", 
+        sLog->outError("StartJusticePoints (%i) must be in range 0..MaxJusticePoints(%u). Set to %u.",
             m_int_configs[CONFIG_START_JUSTICE_POINTS], m_int_configs[CONFIG_MAX_JUSTICE_POINTS], m_int_configs[CONFIG_MAX_JUSTICE_POINTS]);
         m_int_configs[CONFIG_START_JUSTICE_POINTS] = m_int_configs[CONFIG_MAX_JUSTICE_POINTS];
     }
@@ -857,7 +857,7 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_MAX_RECRUIT_A_FRIEND_BONUS_PLAYER_LEVEL] = sConfig->GetIntDefault("RecruitAFriend.MaxLevel", 60);
     if (m_int_configs[CONFIG_MAX_RECRUIT_A_FRIEND_BONUS_PLAYER_LEVEL] > m_int_configs[CONFIG_MAX_PLAYER_LEVEL])
     {
-        sLog->outError("RecruitAFriend.MaxLevel (%i) must be in the range 0..MaxLevel(%u). Set to %u.", 
+        sLog->outError("RecruitAFriend.MaxLevel (%i) must be in the range 0..MaxLevel(%u). Set to %u.",
             m_int_configs[CONFIG_MAX_RECRUIT_A_FRIEND_BONUS_PLAYER_LEVEL], m_int_configs[CONFIG_MAX_PLAYER_LEVEL], 60);
         m_int_configs[CONFIG_MAX_RECRUIT_A_FRIEND_BONUS_PLAYER_LEVEL] = 60;
     }
@@ -903,7 +903,7 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_START_GM_LEVEL]        = sConfig->GetIntDefault("GM.StartLevel", 1);
     if (m_int_configs[CONFIG_START_GM_LEVEL] < m_int_configs[CONFIG_START_PLAYER_LEVEL])
     {
-        sLog->outError("GM.StartLevel (%i) must be in range StartPlayerLevel(%u)..%u. Set to %u.", 
+        sLog->outError("GM.StartLevel (%i) must be in range StartPlayerLevel(%u)..%u. Set to %u.",
             m_int_configs[CONFIG_START_GM_LEVEL], m_int_configs[CONFIG_START_PLAYER_LEVEL], MAX_LEVEL, m_int_configs[CONFIG_START_PLAYER_LEVEL]);
         m_int_configs[CONFIG_START_GM_LEVEL] = m_int_configs[CONFIG_START_PLAYER_LEVEL];
     }
@@ -946,7 +946,7 @@ void World::LoadConfigSettings(bool reload)
         m_timers[WUPDATE_CLEANDB].Reset();
     }
     m_int_configs[CONFIG_LOGDB_CLEARTIME] = sConfig->GetIntDefault("LogDB.Opt.ClearTime", 1209600); // 14 days default
-    sLog->outString("Will clear `logs` table of entries older than %i seconds every %u minutes.", 
+    sLog->outString("Will clear `logs` table of entries older than %i seconds every %u minutes.",
         m_int_configs[CONFIG_LOGDB_CLEARTIME], m_int_configs[CONFIG_LOGDB_CLEARINTERVAL]);
 
     m_int_configs[CONFIG_SKILL_CHANCE_ORANGE] = sConfig->GetIntDefault("SkillChance.Orange", 100);
@@ -1147,7 +1147,7 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_CHARDELETE_KEEP_DAYS] = sConfig->GetIntDefault("CharDelete.KeepDays", 30);
 
     m_int_configs[CONFIG_IGNORING_MAPS_VERSION] = sConfig->GetIntDefault("IgnoringMapsVersion", 0);
-    
+
     ///- Read the "Data" directory from the config file
     std::string dataPath = sConfig->GetStringDefault("DataDir", "./");
     if (dataPath.at(dataPath.length()-1) != '/' && dataPath.at(dataPath.length()-1) != '\\')
@@ -1260,7 +1260,7 @@ void World::SetInitialWorldSettings()
                 !MapManager::ExistMapAndVMap(530, -3961.64f, -13931.2f))))
         {
             exit(1);
-        }    
+        }
     }
 
     ///- Loading strings. Getting no records means core load has to be canceled because no error message can be output.
@@ -1673,10 +1673,10 @@ void World::SetInitialWorldSettings()
     time(&curr);
     local=*(localtime(&curr));                              // dereference and assign
     char isoDate[128];
-    sprintf(isoDate, "%04d-%02d-%02d %02d:%02d:%02d", 
+    sprintf(isoDate, "%04d-%02d-%02d %02d:%02d:%02d",
         local.tm_year+1900, local.tm_mon+1, local.tm_mday, local.tm_hour, local.tm_min, local.tm_sec);
 
-    LoginDatabase.PExecute("INSERT INTO uptime (realmid, starttime, startstring, uptime, revision) VALUES('%u', " UI64FMTD ", '%s', 0, '%s')", 
+    LoginDatabase.PExecute("INSERT INTO uptime (realmid, starttime, startstring, uptime, revision) VALUES('%u', " UI64FMTD ", '%s', 0, '%s')",
         realmID, uint64(m_startTime), isoDate, _FULLVERSION);
 
     m_timers[WUPDATE_OBJECTS].SetInterval(IN_MILLISECONDS/2);
@@ -1974,7 +1974,7 @@ void World::Update(uint32 diff)
         if (m_timers[WUPDATE_CLEANDB].Passed())
         {
             m_timers[WUPDATE_CLEANDB].Reset();
-            LoginDatabase.PExecute("DELETE FROM logs WHERE (time + %u) < "UI64FMTD";", 
+            LoginDatabase.PExecute("DELETE FROM logs WHERE (time + %u) < "UI64FMTD";",
                 sWorld->getIntConfig(CONFIG_LOGDB_CLEARTIME), uint64(time(0)));
         }
     }
@@ -2568,7 +2568,6 @@ void World::UpdateSessions(uint32 diff)
             RemoveQueuedPlayer(pSession);
             m_sessions.erase(itr);
             delete pSession;
-
         }
     }
 }
@@ -2852,7 +2851,7 @@ void World::LoadWorldStates()
     {
         Field *fields = result->Fetch();
         m_worldstates[fields[0].GetUInt32()] = fields[1].GetUInt32();
-        
+
         ++count;
     }
     while (result->NextRow());

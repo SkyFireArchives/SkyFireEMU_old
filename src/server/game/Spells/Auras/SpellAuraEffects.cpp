@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -414,8 +414,8 @@ pAuraEffectHandler AuraEffectHandler[TOTAL_AURAS]=
 };
 
 AuraEffect::AuraEffect(Aura *base, uint8 effIndex, int32 *baseAmount, Unit *caster) :
-m_base(base), m_spellProto(base->GetSpellProto()), m_effIndex(effIndex), 
-m_baseAmount(baseAmount ? *baseAmount : m_spellProto->EffectBasePoints[m_effIndex]), 
+m_base(base), m_spellProto(base->GetSpellProto()), m_effIndex(effIndex),
+m_baseAmount(baseAmount ? *baseAmount : m_spellProto->EffectBasePoints[m_effIndex]),
 m_canBeRecalculated(true), m_spellmod(NULL), m_isPeriodic(false), m_periodicTimer(0), m_tickNumber(0)
 {
     CalculatePeriodic(caster, true);
@@ -423,9 +423,9 @@ m_canBeRecalculated(true), m_spellmod(NULL), m_isPeriodic(false), m_periodicTime
     m_amount = CalculateAmount(caster);
 
     CalculateSpellMod();
-    
-    if (m_spellProto) 
-       return; 
+
+    if (m_spellProto)
+       return;
 }
 
 AuraEffect::~AuraEffect()
@@ -587,7 +587,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                         if (AuraEffect const* pAurEff = caster->GetAuraEffect(SPELL_AURA_ADD_PCT_MODIFIER, SPELLFAMILY_PRIEST, 0x400000, 0, 0, caster->GetGUID()))
                             amount *= int32((100.0f + pAurEff->GetAmount()) / 100.0f);
 
-                        // Focused Power                       
+                        // Focused Power
                         // Reuse variable, not sure if this code below can be moved before Twin Disciplines
                         DoneActualBenefit = float(amount);
                         DoneActualBenefit *= caster->GetTotalAuraMultiplier(SPELL_AURA_MOD_HEALING_DONE_PERCENT);
@@ -609,7 +609,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                         DoneActualBenefit *= caster->CalculateLevelPenalty(GetSpellProto());
 
                         amount += (int32)DoneActualBenefit;
-                        
+
                         // Arena - Dampening
                         if (AuraEffect const* pAurEff = caster->GetAuraEffect(74410, 0))
                             amount *= int32((100.0f + pAurEff->GetAmount()) / 100.0f);
@@ -821,7 +821,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                 const MountTypeEntry *type = sMountTypeStore.LookupEntry(GetMiscValueB());
                 if (!type)
                     return 0;
-                
+
                 uint32 spellId = 0;
                 uint32 plrskill = plr->GetSkillValue(SKILL_RIDING);
                 uint32 map = GetVirtualMapForMapAndZone(plr->GetMapId(), plr->GetZoneId());
@@ -841,7 +841,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                     spellId = cap->spell;
                 }
                 return (int) spellId;
-            }  
+            }
             break;
         }
         case SPELL_AURA_MOD_RESISTANCE_EXCLUSIVE:
@@ -1522,7 +1522,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
 
             caster->CalcAbsorbResist(target, GetSpellSchoolMask(GetSpellProto()), DOT, damage, &absorb, &resist, m_spellProto);
 
-            sLog->outDetail("PeriodicTick: %u (TypeId: %u) attacked %u (TypeId: %u) for %u dmg inflicted by %u abs is %u", 
+            sLog->outDetail("PeriodicTick: %u (TypeId: %u) attacked %u (TypeId: %u) for %u dmg inflicted by %u abs is %u",
                 GUID_LOPART(GetCasterGUID()), GuidHigh2TypeId(GUID_HIPART(GetCasterGUID())), target->GetGUIDLow(), target->GetTypeId(), damage, GetId(), absorb);
 
             caster->DealDamageMods(target, damage, &absorb);
@@ -1603,7 +1603,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             if (target->GetHealth() < damage)
                 damage = uint32(target->GetHealth());
 
-            sLog->outDetail("PeriodicTick: %u (TypeId: %u) health leech of %u (TypeId: %u) for %u dmg inflicted by %u abs is %u", 
+            sLog->outDetail("PeriodicTick: %u (TypeId: %u) health leech of %u (TypeId: %u) for %u dmg inflicted by %u abs is %u",
                 GUID_LOPART(GetCasterGUID()), GuidHigh2TypeId(GUID_HIPART(GetCasterGUID())), target->GetGUIDLow(), target->GetTypeId(), damage, GetId(), absorb);
 
             caster->SendSpellNonMeleeDamageLog(target, GetId(), damage, GetSpellSchoolMask(GetSpellProto()), absorb, resist, false, 0, crit);
@@ -1786,7 +1786,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             if (crit)
                 damage = caster->SpellCriticalHealingBonus(m_spellProto, damage, target);
 
-            sLog->outDetail("PeriodicTick: %u (TypeId: %u) heal of %u (TypeId: %u) for %u health inflicted by %u", 
+            sLog->outDetail("PeriodicTick: %u (TypeId: %u) heal of %u (TypeId: %u) for %u health inflicted by %u",
                 GUID_LOPART(GetCasterGUID()), GuidHigh2TypeId(GUID_HIPART(GetCasterGUID())), target->GetGUIDLow(), target->GetTypeId(), damage, GetId());
 
             uint32 absorb = 0;
@@ -1872,7 +1872,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
                     damage = maxmana;
             }
 
-            sLog->outDetail("PeriodicTick: %u (TypeId: %u) power leech of %u (TypeId: %u) for %u dmg inflicted by %u", 
+            sLog->outDetail("PeriodicTick: %u (TypeId: %u) power leech of %u (TypeId: %u) for %u dmg inflicted by %u",
                 GUID_LOPART(GetCasterGUID()), GuidHigh2TypeId(GUID_HIPART(GetCasterGUID())), target->GetGUIDLow(), target->GetTypeId(), damage, GetId());
 
             int32 drain_amount = target->GetPower(power) > damage ? damage : target->GetPower(power);
@@ -1960,7 +1960,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
                 return;
 
             uint32 amount = m_amount * target->GetMaxPower(power) /100;
-            sLog->outDetail("PeriodicTick: %u (TypeId: %u) energize %u (TypeId: %u) for %u dmg inflicted by %u", 
+            sLog->outDetail("PeriodicTick: %u (TypeId: %u) energize %u (TypeId: %u) for %u dmg inflicted by %u",
                 GUID_LOPART(GetCasterGUID()), GuidHigh2TypeId(GUID_HIPART(GetCasterGUID())), target->GetGUIDLow(), target->GetTypeId(), amount, GetId());
 
             SpellPeriodicAuraLogInfo pInfo(this, amount, 0, 0, 0, 0.0f, false);
@@ -2000,7 +2000,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
             SpellPeriodicAuraLogInfo pInfo(this, amount, 0, 0, 0, 0.0f, false);
             target->SendPeriodicAuraLog(&pInfo);
 
-            sLog->outDetail("PeriodicTick: %u (TypeId: %u) energize %u (TypeId: %u) for %u dmg inflicted by %u", 
+            sLog->outDetail("PeriodicTick: %u (TypeId: %u) energize %u (TypeId: %u) for %u dmg inflicted by %u",
                 GUID_LOPART(GetCasterGUID()), GuidHigh2TypeId(GUID_HIPART(GetCasterGUID())), target->GetGUIDLow(), target->GetTypeId(), amount, GetId());
 
             int32 gain = target->ModifyPower(power, amount);
@@ -4368,7 +4368,7 @@ void AuraEffect::HandleAuraModRoot(AuraApplication const *aurApp, uint8 mode, bo
     Unit *target = aurApp->GetTarget();
 
     target->SetControlled(apply, UNIT_STAT_ROOT);
-    
+
     if (apply)
     {
         switch (GetSpellProto()->Id)
@@ -4535,7 +4535,7 @@ void AuraEffect::HandleAuraModIncreaseSpeed(AuraApplication const *aurApp, uint8
     Unit *target = aurApp->GetTarget();
 
     target->UpdateSpeed(MOVE_RUN, true);
-    
+
     if (apply)
     {
         switch (GetId())
@@ -4882,7 +4882,7 @@ void AuraEffect::HandleAuraModResistanceExclusive(AuraApplication const *aurApp,
         if (GetMiscValue() & int32(1<<x))
         {
             int32 amount = target->GetMaxPositiveAuraModifierByMiscMask(SPELL_AURA_MOD_RESISTANCE_EXCLUSIVE, 1<<x, this);
-            
+
             if (amount < modAmount )
             {
                 target->HandleStatModifier(UnitMods(UNIT_MOD_RESISTANCE_START + x), BASE_VALUE, float(modAmount - amount), apply);
@@ -5870,7 +5870,7 @@ void AuraEffect::HandleModDamagePercentDone(AuraApplication const *aurApp, uint8
     if (target->GetTypeId() == TYPEID_PLAYER)
         for (int i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; ++i)
             target->ApplyModSignedFloatValue(PLAYER_FIELD_MOD_DAMAGE_DONE_PCT+i, GetAmount()/100.0f, apply);
-     
+
     if (GetSpellProto()->Id == 84963) //Inquisition
     {
         switch (GetBase()->GetUnitOwner()->GetPower(POWER_HOLY_POWER))
@@ -5886,7 +5886,6 @@ void AuraEffect::HandleModDamagePercentDone(AuraApplication const *aurApp, uint8
                 break;
         }
     target->SetPower(POWER_HOLY_POWER, 0);
-     
     }
 }
 
@@ -6166,7 +6165,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                     break;
                 case 63322: // Saronite Vapors
                 {
-                    int32 mana = int32(GetAmount() * pow(2.0f, GetBase()->GetStackAmount())); // mana restore - bp * 2^stackamount 
+                    int32 mana = int32(GetAmount() * pow(2.0f, GetBase()->GetStackAmount())); // mana restore - bp * 2^stackamount
                     int32 damage = mana * 2; // damage
 
                     caster->CastCustomSpell(target, 63337, &mana, NULL, NULL, true);
@@ -6639,7 +6638,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                              }
                         }
                     }
-                    else 
+                    else
                         target->RemoveAura(88611);
                     break;
                 }
@@ -6812,7 +6811,6 @@ void AuraEffect::HandleAuraModFaction(AuraApplication const *aurApp, uint8 mode,
             target->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
     }
 }
-
 
 void AuraEffect::HandleComprehendLanguage(AuraApplication const *aurApp, uint8 mode, bool apply) const
 {

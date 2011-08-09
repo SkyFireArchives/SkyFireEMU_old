@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -59,7 +59,7 @@ void CharacterDatabaseCleaner::CleanDatabase()
     if (flags & CLEANING_FLAG_QUESTSTATUS)
         CleanCharacterQuestStatus();
 
-    // NOTE: In order to have persistentFlags be set in worldstates for the next cleanup, 
+    // NOTE: In order to have persistentFlags be set in worldstates for the next cleanup,
     // you need to define them at least once in worldstates.
     flags &= sWorld->getIntConfig(CONFIG_PERSISTENT_CHARACTER_CLEAN_FLAGS);
     CharacterDatabase.DirectPExecute("UPDATE worldstates SET value = %u WHERE entry = 20004", flags);
@@ -81,7 +81,7 @@ void CharacterDatabaseCleaner::CheckUnique(const char* column, const char* table
 
     bool found = false;
     std::ostringstream ss;
-    
+
     do
     {
         Field *fields = result->Fetch();

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -642,7 +642,7 @@ void AuraScript::_PrepareScriptCall(AuraScriptHookType hookType, AuraApplication
         case AURA_SCRIPT_HOOK_EFFECT_PERIODIC:
         case AURA_SCRIPT_HOOK_EFFECT_ABSORB:
         case AURA_SCRIPT_HOOK_EFFECT_MANASHIELD:
-            m_defaultActionPrevented = false; 
+            m_defaultActionPrevented = false;
             break;
         default:
             break;
@@ -669,7 +669,7 @@ bool AuraScript::_IsDefaultActionPrevented()
     }
 }
 
-void AuraScript::PreventDefaultAction() 
+void AuraScript::PreventDefaultAction()
 {
     switch (m_currentScriptState)
     {
@@ -838,4 +838,3 @@ AuraApplication const * AuraScript::GetTargetApplication() const
 {
     return m_auraApplication;
 }
-

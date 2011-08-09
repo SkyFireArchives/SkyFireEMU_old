@@ -128,13 +128,13 @@ public:
                 {
                     for (uint8 uiI = 0; uiI >= 3; uiI++)
                     {
-                        me->GetRandomNearPosition(pPosition, float(urand(0, 10)));
+                        me->GetRandomNearPosition(pPosition, float(urand(0,10)));
                         me->SummonCreature(NPC_UNSTABLE_SPHERE, pPosition);
                     }
                 }
                 else
                 {
-                    me->GetRandomNearPosition(pPosition, float(urand(0, 10)));
+                    me->GetRandomNearPosition(pPosition, float(urand(0,10)));
                     me->SummonCreature(NPC_UNSTABLE_SPHERE, pPosition);
                 }
 
@@ -152,7 +152,7 @@ public:
 
             if (uiStompTimer <= uiDiff)
             {
-                DoScriptText(RAND(SAY_STOMP_1, SAY_STOMP_2, SAY_STOMP_3), me);
+                DoScriptText(RAND(SAY_STOMP_1,SAY_STOMP_2,SAY_STOMP_3), me);
                 DoCast(SPELL_THUNDERING_STOMP);
                 uiStompTimer = 17000;
             } else uiStompTimer -= uiDiff;
@@ -175,7 +175,7 @@ public:
         }
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2, SAY_KILL_3), me);
+            DoScriptText(RAND(SAY_KILL_1,SAY_KILL_2,SAY_KILL_3), me);
         }
     };
 };

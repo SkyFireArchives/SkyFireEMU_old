@@ -93,7 +93,7 @@ void DisableMgr::LoadDisables()
                     sLog->outErrorDb("Disable flags for spell %u are invalid, skipped.", entry);
                     continue;
                 }
-                
+
                 if (flags & SPELL_DISABLE_MAP)
                 {
                     Tokens tokens(params_0, ',');
@@ -107,7 +107,6 @@ void DisableMgr::LoadDisables()
                     for (uint8 i = 0; i < tokens.size(); )
                         data.params[1].insert(atoi(tokens[i++]));
                 }
-
             }   break;
             // checked later
             case DISABLE_TYPE_QUEST:
@@ -234,21 +233,20 @@ bool DisableMgr::IsDisabledFor(DisableType type, uint32 entry, Unit const* pUnit
             uint8 flags = itr->second.flags;
             if (pUnit)
             {
-
                 if ((flags & SPELL_DISABLE_PLAYER && pUnit->GetTypeId() == TYPEID_PLAYER) ||
                     (pUnit->GetTypeId() == TYPEID_UNIT && (pUnit->ToCreature()->isPet() && flags & SPELL_DISABLE_PET || flags & SPELL_DISABLE_CREATURE)))
-                    
+
                 {
                     if (flags & SPELL_DISABLE_MAP)
                     {
                         std::set<uint32> const& mapIds = itr->second.params[0];
                         if (mapIds.find(pUnit->GetMapId()) != mapIds.end())
                             return true;                                        // Spell is disabled on current map
-                        
+
                         if (!(flags & SPELL_DISABLE_AREA))
                             return false;                                       // Spell is disabled on another map, but not this one, return false
 
-                        // Spell is disabled in an area, but not explicitly our current mapId. Continue processing. 
+                        // Spell is disabled in an area, but not explicitly our current mapId. Continue processing.
                     }
 
                     if (flags & SPELL_DISABLE_AREA)

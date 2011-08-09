@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -41,7 +41,7 @@
 #include "SpellScript.h"
 
 AuraApplication::AuraApplication(Unit * target, Unit * caster, Aura * aura, uint8 effMask):
-m_target(target), m_base(aura), m_slot(MAX_AURAS), m_flags(AFLAG_NONE), 
+m_target(target), m_base(aura), m_slot(MAX_AURAS), m_flags(AFLAG_NONE),
 m_effectsToApply(effMask), m_removeMode(AURA_REMOVE_NONE), m_needClientUpdate(false)
 {
     ASSERT(GetTarget() && GetBase());
@@ -337,10 +337,10 @@ Aura * Aura::Create(SpellEntry const* spellproto, uint8 effMask, WorldObject * o
 }
 
 Aura::Aura(SpellEntry const* spellproto, uint8 effMask, WorldObject * owner, Unit * caster, int32 *baseAmount, Item * castItem, uint64 casterGUID):
-m_spellProto(spellproto), m_casterGuid(casterGUID ? casterGUID : caster->GetGUID()), 
-m_castItemGuid(castItem ? castItem->GetGUID() : 0), m_applyTime(time(NULL)), 
-m_owner(owner), m_timeCla(0), m_updateTargetMapInterval(0), 
-m_casterLevel(caster ? caster->getLevel() : m_spellProto->spellLevel), m_procCharges(0), m_stackAmount(1), 
+m_spellProto(spellproto), m_casterGuid(casterGUID ? casterGUID : caster->GetGUID()),
+m_castItemGuid(castItem ? castItem->GetGUID() : 0), m_applyTime(time(NULL)),
+m_owner(owner), m_timeCla(0), m_updateTargetMapInterval(0),
+m_casterLevel(caster ? caster->getLevel() : m_spellProto->spellLevel), m_procCharges(0), m_stackAmount(1),
 m_isRemoved(false), m_isSingleTarget(false)
 {
     if (m_spellProto->manaPerSecond)
@@ -444,7 +444,7 @@ void Aura::_UnapplyForTarget(Unit * target, Unit * caster, AuraApplication * aur
     // TODO: Figure out why this happens.
     if (itr == m_applications.end())
     {
-        sLog->outError("Aura::_UnapplyForTarget, target:%u, caster:%u, spell:%u was not found in owners application map!", 
+        sLog->outError("Aura::_UnapplyForTarget, target:%u, caster:%u, spell:%u was not found in owners application map!",
         target->GetGUIDLow(), caster->GetGUIDLow(), auraApp->GetBase()->GetSpellProto()->Id);
     }
     else
@@ -788,7 +788,6 @@ bool Aura::ModStackAmount(int32 num)
     return false;
 }
 
-
 bool Aura::IsPassive() const
 {
     return IsPassiveSpell(GetSpellProto());
@@ -1060,18 +1059,18 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                 else if (GetId() == 15407)
                 {
                     // Pain and Suffering: Rank 1
-                    if (Aura* pain = caster->GetAura(47580)) 
+                    if (Aura* pain = caster->GetAura(47580))
                     {
-                        if (Aura* swp = target->GetAura(589)) 
+                        if (Aura* swp = target->GetAura(589))
                         {
                             if (roll_chance_i(30))
                                 swp->RefreshDuration();
                         }
                     }
                     // Pain and Suffering: Rank 2
-                    if (Aura* pain = caster->GetAura(47581)) 
+                    if (Aura* pain = caster->GetAura(47581))
                     {
-                        if (Aura* swp = target->GetAura(589)) 
+                        if (Aura* swp = target->GetAura(589))
                         {
                             if (roll_chance_i(60))
                                 swp->RefreshDuration();
@@ -1438,7 +1437,7 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                 if (GetId() == 1784)
                     target->RemoveAurasWithFamily(SPELLFAMILY_ROGUE, 0x0000800, 0, 0, target->GetGUID());
                 else if (GetId() == 6770) // On-sap removal - blackjack talent
-                {    
+                {
                     if (caster->HasAura(79125)) // rank 2
                         caster->CastSpell(target, 79126, true);
                     else if (caster->HasAura(79123)) // rank 1
@@ -1958,7 +1957,6 @@ void Aura::CallScriptEffectAfterAbsorbHandlers(AuraEffect * aurEff, AuraApplicat
     }
 }
 
-
 void Aura::CallScriptEffectManaShieldHandlers(AuraEffect * aurEff, AuraApplication const * aurApp, DamageInfo & dmgInfo, uint32 & absorbAmount, bool & defaultPrevented)
 {
     for(std::list<AuraScript *>::iterator scritr = m_loadedScripts.begin(); scritr != m_loadedScripts.end() ; ++scritr)
@@ -2165,4 +2163,3 @@ void DynObjAura::FillTargetMap(std::map<Unit *, uint8> & targets, Unit * /*caste
         }
     }
 }
-

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -226,7 +226,6 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket & recv_data)
             sLog->outDebug(LOG_FILTER_BATTLEGROUND, "Battleground: player joined queue for bg queue type %u bg type %u: GUID %u, NAME %s", bgQueueTypeId, bgTypeId, member->GetGUIDLow(), member->GetName());
         }
         sLog->outDebug(LOG_FILTER_BATTLEGROUND, "Battleground: group end");
-
     }
     sBattlegroundMgr->ScheduleQueueUpdate(0, 0, bgQueueTypeId, bgTypeId, bracketEntry->GetBracketId());
 }
@@ -260,7 +259,6 @@ void WorldSession::HandleBattlegroundPlayerPositionsOpcode(WorldPacket & /*recv_
                 data << count2;                                     // horde flag holders count
                 if (ali_plr)
                 {
-
                     data << (float)ali_plr->GetPositionX();
                     data << (float)ali_plr->GetPositionY();
                     data << (uint64)ali_plr->GetGUID();
@@ -393,7 +391,7 @@ void WorldSession::HandleBattleFieldPortOpcode(WorldPacket &recv_data)
         //if player don't match battleground max level, then do not allow him to enter! (this might happen when player leveled up during his waiting in queue
         if (_player->getLevel() > bg->GetMaxLevel())
         {
-            sLog->outError("Battleground: Player %s (%u) has level (%u) higher than maxlevel (%u) of battleground (%u)! Do not port him to battleground!", 
+            sLog->outError("Battleground: Player %s (%u) has level (%u) higher than maxlevel (%u) of battleground (%u)! Do not port him to battleground!",
                 _player->GetName(), _player->GetGUIDLow(), _player->getLevel(), bg->GetMaxLevel(), bg->GetTypeID());
             action = 0;
         }
@@ -571,7 +569,6 @@ void WorldSession::HandleAreaSpiritHealerQueryOpcode(WorldPacket & recv_data)
         sBattlegroundMgr->SendAreaSpiritHealerQueryOpcode(_player, bg, guid);
 }
 
-
 void WorldSession::HandleAreaSpiritHealerQueueOpcode(WorldPacket & recv_data)
 {
     sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: CMSG_AREA_SPIRIT_HEALER_QUEUE");
@@ -591,7 +588,6 @@ void WorldSession::HandleAreaSpiritHealerQueueOpcode(WorldPacket & recv_data)
     if (bg)
         bg->AddPlayerToResurrectQueue(guid, _player->GetGUID());
 }
-
 
 void WorldSession::HandleBattlemasterJoinArena(WorldPacket & recv_data)
 {

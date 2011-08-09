@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -94,7 +94,7 @@ void WorldSession::HandleSendMail(WorldPacket & recv_data)
 
     if (!rc)
     {
-        sLog->outDetail("Player %u is sending mail to %s (GUID: not existed!) with subject %s and body %s includes %u items,  "UI64FMTD" copper and  "UI64FMTD" COD copper with unk1 = %u, unk2 = %u", 
+        sLog->outDetail("Player %u is sending mail to %s (GUID: not existed!) with subject %s and body %s includes %u items,  "UI64FMTD" copper and  "UI64FMTD" COD copper with unk1 = %u, unk2 = %u",
             pl->GetGUIDLow(), receiver.c_str(), subject.c_str(), body.c_str(), items_count, money, COD, unk1, unk2);
         pl->SendMailResult(0, MAIL_SEND, MAIL_ERR_RECIPIENT_NOT_FOUND);
         return;
@@ -254,7 +254,7 @@ void WorldSession::HandleSendMail(WorldPacket & recv_data)
                 Item* item = items[i];
                 if (GetSecurity() > SEC_PLAYER && sWorld->getBoolConfig(CONFIG_GM_LOG_TRADE))
                 {
-                    sLog->outCommand(GetAccountId(), "GM %s (Account: %u) mail item: %s (Entry: %u Count: %u) to player: %s (Account: %u)", 
+                    sLog->outCommand(GetAccountId(), "GM %s (Account: %u) mail item: %s (Entry: %u Count: %u) to player: %s (Account: %u)",
                         GetPlayerName(), GetAccountId(), item->GetProto()->Name1, item->GetEntry(), item->GetCount(), receiver.c_str(), rc_account);
                 }
 
@@ -278,7 +278,7 @@ void WorldSession::HandleSendMail(WorldPacket & recv_data)
 
         if (money > 0 &&  GetSecurity() > SEC_PLAYER && sWorld->getBoolConfig(CONFIG_GM_LOG_TRADE))
         {
-            sLog->outCommand(GetAccountId(), "GM %s (Account: %u) mail money:  "UI64FMTD" to player: %s (Account: %u)", 
+            sLog->outCommand(GetAccountId(), "GM %s (Account: %u) mail money:  "UI64FMTD" to player: %s (Account: %u)",
                 GetPlayerName(), GetAccountId(), money, receiver.c_str(), rc_account);
         }
     }
@@ -468,7 +468,7 @@ void WorldSession::HandleMailTakeItem(WorldPacket & recv_data)
                     if (!sObjectMgr->GetPlayerNameByGUID(sender_guid, sender_name))
                         sender_name = sObjectMgr->GetSkyFireStringForDBCLocale(LANG_UNKNOWN);
                 }
-                sLog->outCommand(GetAccountId(), "GM %s (Account: %u) receive mail item: %s (Entry: %u Count: %u) and send COD money:  "UI64FMTD" to player: %s (Account: %u)", 
+                sLog->outCommand(GetAccountId(), "GM %s (Account: %u) receive mail item: %s (Entry: %u Count: %u) and send COD money:  "UI64FMTD" to player: %s (Account: %u)",
                     GetPlayerName(), GetAccountId(), it->GetProto()->Name1, it->GetEntry(), it->GetCount(), m->COD, sender_name.c_str(), sender_accId);
             }
             else if (!receive)
@@ -630,7 +630,7 @@ void WorldSession::HandleGetMailList(WorldPacket & recv_data)
                 data << uint32((item ? item->GetEnchantmentDuration((EnchantmentSlot)j) : 0));
                 data << uint32((item ? item->GetEnchantmentCharges((EnchantmentSlot)j) : 0));
             }
-            
+
             for (uint8 j = 0; j < 2; ++j)
             {
                 data << uint32(0);

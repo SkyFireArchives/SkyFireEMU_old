@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -68,7 +68,7 @@ void WorldSession::HandleGroupInviteOpcode(WorldPacket & recv_data)
     uint32 unk; //groupType?
     recv_data >> membername;
     recv_data >> unk; //in CMSG_GROUP_ACCEPT too.
-    
+
     // attempt add selected player
 
     // cheating
@@ -201,7 +201,7 @@ void WorldSession::HandleGroupAcceptOpcode(WorldPacket & recv_data)
 {
     uint32 unk;
     recv_data >> unk;
-    
+
     Group *group = GetPlayer()->GetGroupInvite();
     if (!group) return;
 
@@ -249,7 +249,7 @@ void WorldSession::HandleGroupDeclineOpcode(WorldPacket & /*recv_data*/)
         return;
 
     // Remember leader if online (group pointer will be invalid if group gets disbanded)
-    Player *leader = sObjectMgr->GetPlayer(group->GetLeaderGUID());    
+    Player *leader = sObjectMgr->GetPlayer(group->GetLeaderGUID());
 
     // uninvite, group can be deleted
     GetPlayer()->UninviteFromGroup();
@@ -547,7 +547,7 @@ void WorldSession::HandleGroupRaidConvertOpcode(WorldPacket & recv_data)
         SendPartyResult(PARTY_OP_INVITE, "", ERR_PARTY_RESULT_OK);
         group->ConvertToRaid();
     }
-    else 
+    else
     {
         SendPartyResult(PARTY_OP_INVITE, "", ERR_PARTY_RESULT_OK);
         group->ConvertToGroup();
@@ -873,7 +873,7 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
     uint64 Guid;
     recv_data >> Guid;
 
-    Player *player = HashMapHolder<Player>::Find(Guid); 
+    Player *player = HashMapHolder<Player>::Find(Guid);
     if (!player)
     {
         WorldPacket data(SMSG_PARTY_MEMBER_STATS_FULL, 3+4+2);
@@ -1002,14 +1002,14 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
     uint64 guid = GetPlayer()->GetGUID();
     recv_data >> roles;                                     // Player Group Roles
     recv_data >> guid;
-    
+
     Player * plr = sObjectMgr->GetPlayer(guid);
     if (!plr)
     {
         sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_GROUP_SET_ROLES [" UI64FMTD "] Player not found", guid);
         return;
     }
-    
+
     Group* grp = plr->GetGroup();
     if (!grp)
     {
@@ -1023,7 +1023,7 @@ void WorldSession::HandleGroupSetRoles(WorldPacket &recv_data)
     }
     else
         sLog->outDebug(LOG_FILTER_NETWORKIO, "CMSG_GROUP_SET_ROLES [" UI64FMTD "] Roles: %u", plr->GetGUID(), roles);
-    
+
     plr->SetRoles(roles);
     if (grp->isLFGGroup())
     {

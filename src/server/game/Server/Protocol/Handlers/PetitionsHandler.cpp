@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -39,12 +39,12 @@
 // Charters ID in item_template
 enum CharterItemIDs
 {
-    GUILD_CHARTER                                 = 5863, 
+    GUILD_CHARTER                                 = 5863,
 };
 
 enum CharterCosts
 {
-    GUILD_CHARTER_COST                            = 1000, 
+    GUILD_CHARTER_COST                            = 1000,
 };
 
 void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
@@ -168,7 +168,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket & recv_data)
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     trans->PAppend("DELETE FROM petition WHERE petitionguid IN (%s)",  ssInvalidPetitionGUIDs.str().c_str());
     trans->PAppend("DELETE FROM petition_sign WHERE petitionguid IN (%s)", ssInvalidPetitionGUIDs.str().c_str());
-    trans->PAppend("INSERT INTO petition (ownerguid, petitionguid, name) VALUES ('%u', '%u', '%s')", 
+    trans->PAppend("INSERT INTO petition (ownerguid, petitionguid, name) VALUES ('%u', '%u', '%s')",
         _player->GetGUIDLow(), charter->GetGUIDLow(), name.c_str());
     CharacterDatabase.CommitTransaction(trans);
 }
@@ -309,7 +309,7 @@ void WorldSession::HandlePetitionRenameOpcode(WorldPacket & recv_data)
 
     std::string db_newname = newname;
     CharacterDatabase.EscapeString(db_newname);
-    CharacterDatabase.PExecute("UPDATE petition SET name = '%s' WHERE petitionguid = '%u'", 
+    CharacterDatabase.PExecute("UPDATE petition SET name = '%s' WHERE petitionguid = '%u'",
         db_newname.c_str(), GUID_LOPART(petitionguid));
 
     sLog->outDebug(LOG_FILTER_NETWORKIO, "Petition (GUID: %u) renamed to '%s'", GUID_LOPART(petitionguid), newname.c_str());

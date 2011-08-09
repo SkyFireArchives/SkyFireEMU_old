@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -135,8 +135,8 @@ TargetedMovementGenerator<T>::_setTargetLocation(T &owner)
         By that we risk having far too many GetContactPoint() calls freezing the whole system.
         In TargetedMovementGenerator<T>::Update() we check the distance to the target and at
         some range we calculate a new position. The calculation takes some processor cycles due to vmaps.
-        If the distance to the target it too large to ignore, 
-        but the distance to the new contact point is short enough to be ignored, 
+        If the distance to the target it too large to ignore,
+        but the distance to the new contact point is short enough to be ignored,
         we will calculate a new contact point each update loop, but will never move to it.
         The system will freeze.
         ralf
@@ -279,5 +279,3 @@ template bool TargetedMovementGenerator<Player>::Update(Player &, const uint32 &
 template bool TargetedMovementGenerator<Creature>::Update(Creature &, const uint32 &);
 template Unit* TargetedMovementGenerator<Player>::GetTarget() const;
 template Unit* TargetedMovementGenerator<Creature>::GetTarget() const;
-
-

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -231,7 +231,7 @@ void WorldSession::HandleWhoOpcode(WorldPacket & recv_data)
     wstrToLower(wplayer_name);
     wstrToLower(wguild_name);
 
-    // client send in case not set max level value 100 but Trinity supports 255 max level, 
+    // client send in case not set max level value 100 but Trinity supports 255 max level,
     // update it to show GMs with characters after 100 level
     if (level_max >= MAX_LEVEL)
         level_max = STRONG_MAX_LEVEL;
@@ -565,7 +565,7 @@ void WorldSession::HandleAddFriendOpcode(WorldPacket & recv_data)
 
     CharacterDatabase.EscapeString(friendName);            // prevent SQL injection - normal name don't must changed by this call
 
-    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: %s asked to add friend : '%s'", 
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: %s asked to add friend : '%s'",
         GetPlayer()->GetName(), friendName.c_str());
 
     m_addFriendCallback.SetParam(friendNote);
@@ -654,7 +654,7 @@ void WorldSession::HandleAddIgnoreOpcode(WorldPacket & recv_data)
 
     CharacterDatabase.EscapeString(IgnoreName);            // prevent SQL injection - normal name don't must changed by this call
 
-    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: %s asked to Ignore: '%s'", 
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: %s asked to Ignore: '%s'",
         GetPlayer()->GetName(), IgnoreName.c_str());
 
     m_addIgnoreCallback = CharacterDatabase.AsyncPQuery("SELECT guid FROM characters WHERE name = '%s'", IgnoreName.c_str());
@@ -860,7 +860,7 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket & recv_data)
         float dist = pl->GetDistance(atEntry->x, atEntry->y, atEntry->z);
         if (dist > atEntry->radius + delta)
         {
-            sLog->outDebug(LOG_FILTER_NETWORKIO, "Player '%s' (GUID: %u) too far (radius: %f distance: %f), ignore Area Trigger ID: %u", 
+            sLog->outDebug(LOG_FILTER_NETWORKIO, "Player '%s' (GUID: %u) too far (radius: %f distance: %f), ignore Area Trigger ID: %u",
                 pl->GetName(), pl->GetGUIDLow(), atEntry->radius, dist, Trigger_ID);
             return;
         }
@@ -891,7 +891,7 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket & recv_data)
             (fabs(dy) > atEntry->box_y/2 + delta) ||
             (fabs(dz) > atEntry->box_z/2 + delta))
         {
-            sLog->outDebug(LOG_FILTER_NETWORKIO, "Player '%s' (GUID: %u) too far (1/2 box X: %f 1/2 box Y: %f 1/2 box Z: %f rotatedPlayerX: %f rotatedPlayerY: %f dZ:%f), ignore Area Trigger ID: %u", 
+            sLog->outDebug(LOG_FILTER_NETWORKIO, "Player '%s' (GUID: %u) too far (1/2 box X: %f 1/2 box Y: %f 1/2 box Z: %f rotatedPlayerX: %f rotatedPlayerY: %f dZ:%f), ignore Area Trigger ID: %u",
                 pl->GetName(), pl->GetGUIDLow(), atEntry->box_x/2, atEntry->box_y/2, atEntry->box_z/2, rotPlayerX, rotPlayerY, dz, Trigger_ID);
             return;
         }
@@ -1677,7 +1677,6 @@ void WorldSession::HandleMoveSetCanFlyAckOpcode(WorldPacket & recv_data)
     uint64 guid;                                            // guid - unused
     recv_data.readPackGUID(guid);
 
-
     recv_data.read_skip<uint32>();                          // unk
 
     MovementInfo movementInfo;
@@ -1747,7 +1746,7 @@ void WorldSession::SendSetPhaseShift(uint32 PhaseShift, uint32 MapID)
 
     data << uint32(2); // Count of bytes - Array3 - Phases
     data << uint16(PhaseShift);
-    
+
     if (MapID)
     {
         data << uint32(2); // Count of bytes - Array4 - TerrainSwap

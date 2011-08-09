@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -435,7 +435,7 @@ class CreatureScript : public ScriptObject, public UpdatableScript<Creature>
 
         // Called when a CreatureAI object is needed for the creature.
         virtual CreatureAI* GetAI(Creature* /*creature*/) const { return NULL; }
-    
+
         // Called when a new Creature will eb created
         virtual Creature * GetCreatureScriptedClass() const { return NULL; }
 };
@@ -692,7 +692,7 @@ class PlayerScript : public ScriptObject
 
         // Called when a duel starts (after 3s countdown)
         virtual void OnDuelStart(Player* /*player1*/, Player* /*player2*/) { }
-        
+
         // Called when a duel ends
         virtual void OnDuelEnd(Player* /*winner*/, Player* /*looser*/, DuelCompleteType /*type*/) { }
 
@@ -744,7 +744,7 @@ class GuildScript : public ScriptObject
         virtual void OnDisband(Guild* /*guild*/) { }
         virtual void OnMemberWitdrawMoney(Guild* /*guild*/, Player* /*player*/, uint32& /*amount*/, bool /*isRepair*/) { }
         virtual void OnMemberDepositMoney(Guild* /*guild*/, Player* /*player*/, uint32& /*amount*/) { }
-        virtual void OnItemMove(Guild* /*guild*/, Player* /*player*/, Item* /*pItem*/, bool /*isSrcBank*/, uint8 /*srcContainer*/, uint8 /*srcSlotId*/, 
+        virtual void OnItemMove(Guild* /*guild*/, Player* /*player*/, Item* /*pItem*/, bool /*isSrcBank*/, uint8 /*srcContainer*/, uint8 /*srcSlotId*/,
             bool /*isDestBank*/, uint8 /*destContainer*/, uint8 /*destSlotId*/) { }
         virtual void OnEvent(Guild* /*guild*/, uint8 /*eventType*/, uint32 /*playerGuid1*/, uint32 /*playerGuid2*/, uint8 /*newRank*/) { }
         virtual void OnBankEvent(Guild* /*guild*/, uint8 /*eventType*/, uint8 /*tabId*/, uint32 /*playerGuid*/, uint32 /*itemOrMoney*/, uint16 /*itemStackCount*/, uint8 /*destTabId*/) { }
@@ -976,7 +976,7 @@ class ScriptMgr
         void OnGuildDisband(Guild *guild);
         void OnGuildMemberWitdrawMoney(Guild* guild, Player* player, uint32 &amount, bool isRepair);
         void OnGuildMemberDepositMoney(Guild* guild, Player* player, uint32 &amount);
-        void OnGuildItemMove(Guild* guild, Player* player, Item* pItem, bool isSrcBank, uint8 srcContainer, uint8 srcSlotId, 
+        void OnGuildItemMove(Guild* guild, Player* player, Item* pItem, bool isSrcBank, uint8 srcContainer, uint8 srcSlotId,
             bool isDestBank, uint8 destContainer, uint8 destSlotId);
         void OnGuildEvent(Guild* guild, uint8 eventType, uint32 playerGuid1, uint32 playerGuid2, uint8 newRank);
         void OnGuildBankEvent(Guild* guild, uint8 eventType, uint8 tabId, uint32 playerGuid, uint32 itemOrMoney, uint16 itemStackCount, uint8 destTabId);
@@ -1016,7 +1016,7 @@ class ScriptMgr
                     {
                         if (it->second == script)
                         {
-                            sLog->outError("Script '%s' has same memory pointer as '%s'.", 
+                            sLog->outError("Script '%s' has same memory pointer as '%s'.",
                                 script->GetName().c_str(), it->second->GetName().c_str());
 
                             return;
@@ -1052,7 +1052,7 @@ class ScriptMgr
                             else
                             {
                                 // If the script is already assigned -> delete it!
-                                sLog->outError("Script '%s' already assigned with the same script name, so the script can't work.", 
+                                sLog->outError("Script '%s' already assigned with the same script name, so the script can't work.",
                                     script->GetName().c_str());
 
                                 ASSERT(false); // Error that should be fixed ASAP.
@@ -1062,7 +1062,7 @@ class ScriptMgr
                         {
                             // The script uses a script name from database, but isn't assigned to anything.
                             if (script->GetName().find("example") == std::string::npos && script->GetName().find("smart") == std::string::npos)
-                                sLog->outErrorDb("Script named '%s' does not have a script name assigned in database.", 
+                                sLog->outErrorDb("Script named '%s' does not have a script name assigned in database.",
                                     script->GetName().c_str());
                         }
                     }

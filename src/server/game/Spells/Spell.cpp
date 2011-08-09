@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -428,7 +428,7 @@ void SpellCastTargets::write (ByteBuffer & data)
 }
 
 Spell::Spell(Unit* Caster, SpellEntry const *info, bool triggered, uint64 originalCasterGUID, bool skipCheck):
-m_spellInfo(sSpellMgr->GetSpellForDifficultyFromSpell(info, Caster)), 
+m_spellInfo(sSpellMgr->GetSpellForDifficultyFromSpell(info, Caster)),
 m_caster(Caster), m_spellValue(new SpellValue(m_spellInfo))
 {
     m_customAttr = sSpellMgr->GetSpellCustomAttr(m_spellInfo->Id);
@@ -1350,7 +1350,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
             m_magnetingAura->DropCharge();
         m_magnetingAura = NULL;
     }
-    
+
     if (missInfo != SPELL_MISS_EVADE && m_caster && !m_caster->IsFriendlyTo(unit) && !IsPositiveSpell(m_spellInfo->Id))
     {
         m_caster->CombatStart(unit, !(m_spellInfo->AttributesEx3 & SPELL_ATTR3_NO_INITIAL_AGGRO));
@@ -1497,7 +1497,7 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask, bool 
 
         if (m_originalCaster)
         {
-            m_spellAura = Aura::TryCreate(aurSpellInfo, effectMask, unit, 
+            m_spellAura = Aura::TryCreate(aurSpellInfo, effectMask, unit,
                 m_originalCaster, (aurSpellInfo == m_spellInfo)? &m_spellValue->EffectBasePoints[0] : &basePoints[0], m_CastItem);
             if (m_spellAura)
             {
@@ -1816,10 +1816,10 @@ void Spell::SearchChainTarget(std::list<Unit*> &TagUnitMap, float max_range, uin
 
             if (cur->GetDistance(*next) > CHAIN_SPELL_JUMP_RADIUS)      // Don't search beyond the max jump radius
                 break;
-    
+
             // Check if (*next) is a valid chain target. If not, don't add to TagUnitMap, and repeat loop.
-            // If you want to add any conditions to exclude a target from TagUnitMap, add condition in this while() loop.    
-            while ((m_spellInfo->DmgClass == SPELL_DAMAGE_CLASS_MELEE  
+            // If you want to add any conditions to exclude a target from TagUnitMap, add condition in this while() loop.
+            while ((m_spellInfo->DmgClass == SPELL_DAMAGE_CLASS_MELEE
                 && !m_caster->isInFrontInMap(*next, max_range))
                 || !m_caster->canSeeOrDetect(*next)
                 || !cur->IsWithinLOSInMap(*next)
@@ -2426,7 +2426,7 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                             AddUnitTarget(driver, i);
                     break;
                 default:
-                    sLog->outError("SPELL (caster[type: %u; guidlow: %u], spell: %u): unhandled spell target (%u)", 
+                    sLog->outError("SPELL (caster[type: %u; guidlow: %u], spell: %u): unhandled spell target (%u)",
                         m_caster->GetTypeId(), m_caster->GetGUIDLow(), m_spellInfo->Id, cur);
                     break;
             }
@@ -2477,7 +2477,7 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
             }
 
             CallScriptAfterUnitTargetSelectHandlers(unitList, SpellEffIndex(i));
-            
+
             for (std::list<Unit*>::iterator itr = unitList.begin(); itr != unitList.end(); ++itr)
                 AddUnitTarget(*itr, i);
         }
@@ -3931,7 +3931,7 @@ void Spell::finish(bool ok)
                      m_caster->RemoveAuraFromStack(44544);
                 break;
             case 2061: // Flash heal
-                if (m_caster->HasAura(88688)) // Surge of Light 
+                if (m_caster->HasAura(88688)) // Surge of Light
                     m_caster->RemoveAura(88688);
                 break;
             case 85673: // Word of Glory
@@ -5013,7 +5013,7 @@ SpellCastResult Spell::CheckCast(bool strict)
     {
         // skip stuck spell to allow use it in falling case and apply spell limitations at movement
         if ((!m_caster->HasUnitMovementFlag(MOVEMENTFLAG_FALLING) || m_spellInfo->Effect[0] != SPELL_EFFECT_STUCK) &&
-            (IsAutoRepeat() || (m_spellInfo->AuraInterruptFlags & AURA_INTERRUPT_FLAG_NOT_SEATED) != 0) && 
+            (IsAutoRepeat() || (m_spellInfo->AuraInterruptFlags & AURA_INTERRUPT_FLAG_NOT_SEATED) != 0) &&
                 !m_caster->CanCastWhileWalking(m_spellInfo))
             return SPELL_FAILED_MOVING;
     }
@@ -5083,7 +5083,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                         return SPELL_FAILED_TARGET_NO_WEAPONS;
                 }
             }
-            
+
             if (!m_IsTriggeredSpell)
             {
                 if (VMAP::VMapFactory::checkSpellForLoS(m_spellInfo->Id) && !m_caster->IsWithinLOSInMap(target))
@@ -5091,7 +5091,6 @@ SpellCastResult Spell::CheckCast(bool strict)
                 if (m_caster->IsVisionObscured(target))
                     return SPELL_FAILED_VISION_OBSCURED; // smoke bomb, camouflage...
             }
-
         }
         else if (m_caster == target)
         {
@@ -5218,7 +5217,7 @@ SpellCastResult Spell::CheckCast(bool strict)
         uint32 zone, area;
         m_caster->GetZoneAndAreaId(zone, area);
 
-        SpellCastResult locRes= sSpellMgr->GetSpellAllowedInLocationError(m_spellInfo, m_caster->GetMapId(), zone, area, 
+        SpellCastResult locRes= sSpellMgr->GetSpellAllowedInLocationError(m_spellInfo, m_caster->GetMapId(), zone, area,
             m_caster->GetTypeId() == TYPEID_PLAYER ? m_caster->ToPlayer() : NULL);
         if (locRes != SPELL_CAST_OK)
             return locRes;
@@ -5362,7 +5361,6 @@ SpellCastResult Spell::CheckCast(bool strict)
                     Unit* target = m_targets.getUnitTarget();
                     if (!target || !target->IsFriendlyTo(m_caster) || target->getAttackers().empty())
                         return SPELL_FAILED_BAD_TARGETS;
-
                 }
                 break;
             }
@@ -5724,7 +5722,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                         // Check if there are to many so that you don't get mixed with pets
                         // being there from the begining
                         if (m_caster->ToPlayer()->getSlotForNewPet() == PET_SLOT_FULL_LIST)
-                        {   
+                        {
                             m_caster->ToPlayer()->SendToManyPets(m_caster->ToPlayer());
                             return SPELL_FAILED_NO_ACTIONS; // i havent found the right error message to use so this need to be changed
                         }
@@ -6005,7 +6003,7 @@ SpellCastResult Spell::CheckCasterAuras() const
             if (foundNotStun)
                 prevented_reason = SPELL_FAILED_STUNNED;
         }
-        else 
+        else
 			prevented_reason = SPELL_FAILED_STUNNED;
     }
 
@@ -7000,7 +6998,7 @@ SpellEvent::~SpellEvent()
     }
     else
     {
-        sLog->outError("~SpellEvent: %s %u tried to delete non-deletable spell %u. Was not deleted, causes memory leak.", 
+        sLog->outError("~SpellEvent: %s %u tried to delete non-deletable spell %u. Was not deleted, causes memory leak.",
             (m_Spell->GetCaster()->GetTypeId() == TYPEID_PLAYER ? "Player" : "Creature"), m_Spell->GetCaster()->GetGUIDLow(), m_Spell->m_spellInfo->Id);
         ASSERT(false);
     }

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -402,7 +402,7 @@ uint32 GetSpellCastTime(SpellEntry const* spellInfo, Spell * spell)
             castTime = values.cast;
         }
     }
-    
+
     if (spell && spell->GetCaster())
         spell->GetCaster()->ModSpellCastTime(spellInfo, castTime, spell);
 
@@ -856,7 +856,7 @@ bool SpellMgr::_isPositiveEffect(uint32 spellId, uint32 effIndex, bool deep) con
             // Amplify Magic, Dampen Magic
             if (spellproto->SpellFamilyFlags[0] == 0x00002000)
                 return true;
-            // Ignite    
+            // Ignite
             if (spellproto->SpellIconID == 45)
                 return true;
             break;
@@ -1283,7 +1283,6 @@ void SpellMgr::LoadSpellTargetPositions()
 
         mSpellTargetPositions[Spell_ID] = st;
         count++;
-
     }
     while (result->NextRow());
 
@@ -1359,7 +1358,7 @@ void SpellMgr::LoadSpellProcEvents()
         sLog->outString();
         return;
     }
-    
+
     uint32 customProc = 0;
     do
     {
@@ -1427,7 +1426,7 @@ void SpellMgr::LoadSpellBonusess()
     do
     {
         Field *fields = result->Fetch();
-        
+
         uint32 entry = fields[0].GetUInt32();
 
         const SpellEntry *spell = sSpellStore.LookupEntry(entry);
@@ -1616,7 +1615,7 @@ void SpellMgr::LoadSpellGroups()
         sLog->outString();
         sLog->outString(">> Loaded %u spell group definitions", count);
         return;
-    } 
+    }
 
     std::set<uint32> groups;
 
@@ -1634,7 +1633,6 @@ void SpellMgr::LoadSpellGroups()
 
         groups.insert(std::set<uint32>::value_type(group_id));
         mSpellGroupSpell.insert(SpellGroupSpellMap::value_type((SpellGroup)group_id, spell_id));
-
     }
     while (result->NextRow());
 
@@ -1700,7 +1698,7 @@ void SpellMgr::LoadSpellGroupStackRules()
         return;
     }
 
-    uint32 count = 0;    
+    uint32 count = 0;
 
     do
     {
@@ -1747,7 +1745,7 @@ void SpellMgr::LoadSpellThreats()
         return;
     }
 
-    uint32 count = 0;    
+    uint32 count = 0;
 
     do
     {
@@ -1976,7 +1974,7 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
                 {
                     if (comboPointScaling != 0.00f)
                         comboDamage = comboPointScaling;
-                    
+
                     value += int32(comboDamage * comboPoints);
                 }
             }
@@ -2077,7 +2075,7 @@ void SpellMgr::LoadSpellLearnSkills()
 
     // search auto-learned skills and add its to map also for use in unlearn spells/talents
     uint32 dbc_count = 0;
-    
+
     for (uint32 spell = 0; spell < sSpellStore.GetNumRows(); ++spell)
     {
         SpellEntry const* entry = sSpellStore.LookupEntry(spell);
@@ -2125,7 +2123,7 @@ void SpellMgr::LoadSpellLearnSpells()
     }
 
     uint32 count = 0;
-    
+
     do
     {
         Field *fields = result->Fetch();
@@ -2182,7 +2180,7 @@ void SpellMgr::LoadSpellLearnSpells()
                 if (!sSpellStore.LookupEntry(dbc_node.spell))
                     continue;
 
-                // talent or passive spells or skill-step spells auto-casted and not need dependent learning, 
+                // talent or passive spells or skill-step spells auto-casted and not need dependent learning,
                 // pet teaching spells don't must be dependent learning (casted)
                 // other required explicit dependent learning
                 dbc_node.autoLearned = entry->EffectImplicitTargetA[i] == TARGET_UNIT_PET || GetTalentSpellCost(spell) > 0 || IsPassiveSpell(spell) || IsSpellHaveEffect(entry, SPELL_EFFECT_SKILL_STEP);
@@ -2194,7 +2192,7 @@ void SpellMgr::LoadSpellLearnSpells()
                 {
                     if (itr->second.spell == dbc_node.spell)
                     {
-                        sLog->outErrorDb("Spell %u auto-learn spell %u in spell.dbc then the record in `spell_learn_spell` is redundant, please fix DB.", 
+                        sLog->outErrorDb("Spell %u auto-learn spell %u in spell.dbc then the record in `spell_learn_spell` is redundant, please fix DB.",
                             spell, dbc_node.spell);
                         found = true;
                         break;
@@ -2501,7 +2499,6 @@ bool SpellMgr::IsSpellValid(SpellEntry const *spellInfo, Player *pl, bool msg)
                         }
                         return false;
                     }
-
                 }
                 // also possible IsLootCraftingSpell case but fake item must exist anyway
                 else if (!ObjectMgr::GetItemPrototype(spellInfo->EffectItemType[i]))
@@ -2579,7 +2576,7 @@ void SpellMgr::LoadSpellAreas()
         return;
     }
 
-    uint32 count = 0;    
+    uint32 count = 0;
 
     do
     {
@@ -3391,7 +3388,7 @@ void SpellMgr::LoadSpellEnchantProcData()
         sLog->outString();
         return;
     }
-    
+
     do
     {
         Field *fields = result->Fetch();
@@ -3930,7 +3927,7 @@ void SpellMgr::LoadSpellCustomAttr()
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_EXCLUDE_SELF;
             count++;
             break;
-        case 64844: // Divine Hymn 
+        case 64844: // Divine Hymn
         case 64904: // Hymn of Hope
             spellInfo->AttributesEx &= ~SPELL_ATTR1_NEGATIVE;
             count++;
@@ -4227,7 +4224,7 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_DONE_BONUS;
             count++;
             break;
-        case 81782: // Power Word : Barrier 
+        case 81782: // Power Word : Barrier
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ALLY;
             spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ALLY;
             spellInfo->EffectImplicitTargetB[0] = TARGET_NONE;

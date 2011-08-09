@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -47,7 +47,7 @@ void InitOpcodeTable()
     {
         DefineOpcode( i, "UNKNOWN", STATUS_NEVER, PROCESS_INPLACE,  &WorldSession::Handle_NULL );
     }
-    
+
     OPCODE( CMSG_WORLD_TELEPORT,                          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleWorldTeleportOpcode       );
     OPCODE( CMSG_TELEPORT_TO_UNIT,                        STATUS_LOGGEDIN, PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
     OPCODE( SMSG_CHECK_FOR_BOTS,                          STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );

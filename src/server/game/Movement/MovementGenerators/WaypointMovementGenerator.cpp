@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -273,7 +273,6 @@ void FlightPathMovementGenerator::Finalize(Player & player)
     float z = 0;
     i_destinationHolder.GetLocationNow(player.GetBaseMap(), x, y, z);
     player.SetPosition(x, y, z, player.GetOrientation());
-
 }
 
 bool FlightPathMovementGenerator::Update(Player &player, const uint32 &diff)
@@ -372,8 +371,6 @@ void FlightPathMovementGenerator::DoEventIfAny(Player& player, TaxiPathNodeEntry
     }
 }
 
-
-
 //
 // Unique1's ASTAR Pathfinding Code... For future use & reference...
 //
@@ -447,7 +444,7 @@ This function uses the A* pathfinding algorithm to determine the
 shortest path between any two nodes.
 It's fairly complex, so I'm not really going to explain it much.
 Look up A* and binary heaps for more info.
-pathlist stores the ideal path between the nodes, in reverse order, 
+pathlist stores the ideal path between the nodes, in reverse order,
 and the return value is the number of nodes in that path
 ===========================================================================
 */
@@ -699,5 +696,3 @@ int GetFCost(int to, int num, int parentNum, float *gcost)
     return (int)(gc + hc);
 }
 #endif                                                      //__PATHFINDING__
-
-

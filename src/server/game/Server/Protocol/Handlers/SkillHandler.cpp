@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -63,7 +63,7 @@ void WorldSession::HandleLearnPreviewTalents(WorldPacket& recvPacket)
                 }
             }
         }
-    
+
         if (_player->m_usedTalentCount == 0 || _player->GetTalentBranchSpec(_player->m_activeSpec) == 0)
         {
             if (_player->m_usedTalentCount != 0)
@@ -73,17 +73,17 @@ void WorldSession::HandleLearnPreviewTalents(WorldPacket& recvPacket)
             for (uint32 i = 0; i < sTalentTreePrimarySpellsStore.GetNumRows(); ++i)
             {
                 TalentTreePrimarySpellsEntry const *talentInfo = sTalentTreePrimarySpellsStore.LookupEntry(i);
-                
+
                 if (!talentInfo || talentInfo->TalentTabID != specID)
                     continue;
-                
+
                 _player->learnSpell(talentInfo->SpellID, false);
-            }    
+            }
         }
         else if (_player->GetTalentBranchSpec(_player->m_activeSpec) != specID) //cheat
             return;
     }
-    
+
     uint32 talentId, talentRank;
 
     for (uint32 i = 0; i < talentsCount; ++i)
@@ -92,7 +92,6 @@ void WorldSession::HandleLearnPreviewTalents(WorldPacket& recvPacket)
 
         _player->LearnTalent(talentId, talentRank, false);
     }
-    
 
     bool inOtherBranch = false;
     uint32 pointInBranchSpec = 0;
@@ -101,7 +100,7 @@ void WorldSession::HandleLearnPreviewTalents(WorldPacket& recvPacket)
         for(uint32 i = 0; i < sTalentStore.GetNumRows(); i++)
         {
             const TalentEntry * thisTalent = sTalentStore.LookupEntry(i);
-            if (thisTalent) 
+            if (thisTalent)
             {
                 int thisrank = -1;
                 for(int j = 0; j < 5; j++)
@@ -134,7 +133,7 @@ void WorldSession::HandleLearnPreviewTalents(WorldPacket& recvPacket)
     }
     if (inOtherBranch && pointInBranchSpec < 31)
         _player->resetTalents();
-    
+
     _player->SendTalentsInfoData(false);
 }
 
@@ -174,4 +173,3 @@ void WorldSession::HandleUnlearnSkillOpcode(WorldPacket & recv_data)
     recv_data >> skill_id;
     GetPlayer()->SetSkill(skill_id, 0, 0, 0);
 }
-

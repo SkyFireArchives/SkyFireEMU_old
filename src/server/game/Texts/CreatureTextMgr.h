@@ -41,10 +41,10 @@ struct CreatureTextEntry
 
 enum TextRange
 {
-    TEXT_RANGE_NORMAL   = 0, 
-    TEXT_RANGE_AREA     = 1, 
-    TEXT_RANGE_ZONE     = 2, 
-    TEXT_RANGE_MAP      = 3, 
+    TEXT_RANGE_NORMAL   = 0,
+    TEXT_RANGE_AREA     = 1,
+    TEXT_RANGE_ZONE     = 2,
+    TEXT_RANGE_MAP      = 3,
     TEXT_RANGE_WORLD    = 4
 };
 

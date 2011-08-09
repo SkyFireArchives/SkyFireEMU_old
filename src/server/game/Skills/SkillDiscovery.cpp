@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -107,7 +107,7 @@ void LoadSkillDiscoveryTable()
                 if (reportedReqSpells.find(reqSkillOrSpell) == reportedReqSpells.end())
                 {
                     sLog->outErrorDb("Spell (ID: %u) not have MECHANIC_DISCOVERY (28) value in Mechanic field in spell.dbc"
-                        " and not 100%% chance random discovery ability but listed for spellId %u (and maybe more) in `skill_discovery_template` table", 
+                        " and not 100%% chance random discovery ability but listed for spellId %u (and maybe more) in `skill_discovery_template` table",
                         reqSkillOrSpell, spellId);
                     reportedReqSpells.insert(reqSkillOrSpell);
                 }
@@ -238,4 +238,3 @@ uint32 GetSkillDiscoverySpell(uint32 skillId, uint32 spellId, Player* player)
 
     return 0;
 }
-

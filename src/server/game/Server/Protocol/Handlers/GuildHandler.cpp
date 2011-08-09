@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -119,7 +119,7 @@ void WorldSession::HandleGuildRemoveOpcode(WorldPacket& recvPacket)
 
 // Cata Status: Done
 void WorldSession::HandleGuildAcceptOpcode(WorldPacket& recvPacket)
-{   
+{
     sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_ACCEPT");
     recvPacket.read_skip<uint64>();
 
@@ -181,7 +181,7 @@ void WorldSession::HandleGuildDemoteOpcode(WorldPacket& recvPacket)
     uint64 guid;
     recvPacket >> guid; // target guid
     recvPacket.read_skip<uint64>(); // command issuer's guid?
-       
+
     if (Guild* pGuild = _GetPlayerGuild(this, true))
         pGuild->HandleUpdateMemberRank(this, guid, true);
 }
@@ -248,7 +248,6 @@ void WorldSession::HandleGuildMOTDOpcode(WorldPacket& recvPacket)
         pGuild->HandleSetMOTD(this, motd);
 }
 
-
 void WorldSession::HandleGuildExperienceOpcode(WorldPacket& recvPacket)
 {
     recvPacket.read_skip<uint64>();
@@ -303,7 +302,7 @@ void WorldSession::HandleGuildRewardsOpcode(WorldPacket& recvPacket)
 
     for(uint32 i = 0; i < vec.size(); ++i)
         data << uint32(vec[i]->standing); // // Reputation level (REP_HONORED, REP_FRIENDLY, etc)
-        
+
     for(uint32 i = 0; i < vec.size(); ++i)
         data << uint32(vec[i]->item); // item entry
     SendPacket(&data);
@@ -350,13 +349,12 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
     uint64 guildId;
     recvPacket >> guildId;
 
-
     uint32 old_rights;
     recvPacket >> old_rights;
 
     uint32 money;
     recvPacket >> money;
-    
+
     uint64 playerGuid;
     recvPacket >> playerGuid;
 
@@ -387,7 +385,7 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
         recvPacket.rpos(recvPacket.wpos());
         return;
     }
-    
+
     GuildBankRightsAndSlotsVec rightsAndSlots(GUILD_BANK_MAX_TABS);
     if (old_rankId != GR_GUILDMASTER)
     {
@@ -397,7 +395,6 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
         }
 
         pGuild->HandleSetRankInfo(this, new_rankId, rankName, new_rights, money, rightsAndSlots);
-
     }
     if (old_rankId != new_rankId && old_rankId != GR_GUILDMASTER && new_rankId != GR_GUILDMASTER)
         pGuild->SwitchRank(old_rankId, new_rankId);
@@ -502,7 +499,7 @@ void WorldSession::HandleGuildBankerActivate(WorldPacket & recv_data)
     {
         if (Guild* pGuild = _GetPlayerGuild(this))
             pGuild->SendBankTabsInfo(this);
-        else 
+        else
             Guild::SendCommandResult(this, GUILD_UNK1, ERR_GUILD_PLAYER_NOT_IN_GUILD);
     }
 }

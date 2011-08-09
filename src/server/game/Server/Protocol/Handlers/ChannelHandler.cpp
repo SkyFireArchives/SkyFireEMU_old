@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -50,7 +50,7 @@ void WorldSession::HandleJoinChannel(WorldPacket& recvPacket)
 
     recvPacket >> unknown1 >> unknown2;
     recvPacket >> pass;
-    recvPacket >> channelname;    
+    recvPacket >> channelname;
 
     if (channelname.empty())
         return;
@@ -321,4 +321,3 @@ void WorldSession::HandleSetChannelWatch(WorldPacket &recvPacket)
         if (Channel *chn = cMgr->GetChannel(channelname, _player))
             chn->JoinNotify(_player->GetGUID());*/
 }
-

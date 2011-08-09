@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -152,7 +152,7 @@ void WorldSession::SendTrainerList(uint64 guid, const std::string& strTitle)
     TrainerSpellData const* trainer_spells = unit->GetTrainerSpells();
     if (!trainer_spells)
     {
-        sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: SendTrainerList - Training spells not found for creature (GUID: %u Entry: %u)", 
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: SendTrainerList - Training spells not found for creature (GUID: %u Entry: %u)",
             GUID_LOPART(guid), unit->GetEntry());
         return;
     }
@@ -265,7 +265,7 @@ void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket & recv_data)
 
     WorldPacket data(SMSG_TRAINER_BUY_RESULT, 16);
     data << uint64(guid);
-    data << uint32(spellId);  
+    data << uint32(spellId);
     data << uint32(result);
     SendPacket(&data);
 }
@@ -442,7 +442,7 @@ void WorldSession::SendBindPoint(Creature *npc)
     uint32 bindspell = 3286;
 
     // update sql homebind
-    CharacterDatabase.PExecute("UPDATE character_homebind SET map = '%u', zone = '%u', position_x = '%f', position_y = '%f', position_z = '%f' WHERE guid = '%u'", 
+    CharacterDatabase.PExecute("UPDATE character_homebind SET map = '%u', zone = '%u', position_x = '%f', position_y = '%f', position_z = '%f' WHERE guid = '%u'",
         _player->GetMapId(), _player->GetAreaId(), _player->GetPositionX(), _player->GetPositionY(), _player->GetPositionZ(), _player->GetGUIDLow());
     _player->m_homebindMapId = _player->GetMapId();
     _player->m_homebindAreaId = _player->GetAreaId();
@@ -481,7 +481,7 @@ void WorldSession::SendStablePet(uint64 guid)
 {
     m_sendStabledPetCallback.SetParam(guid);
     m_sendStabledPetCallback.SetFutureResult(
-        CharacterDatabase.AsyncPQuery("SELECT owner, slot, id, entry, level, name FROM character_pet WHERE owner = '%u' AND slot >= '%u' AND slot <= '%u' ORDER BY slot", 
+        CharacterDatabase.AsyncPQuery("SELECT owner, slot, id, entry, level, name FROM character_pet WHERE owner = '%u' AND slot >= '%u' AND slot <= '%u' ORDER BY slot",
             _player->GetGUIDLow(), PET_SLOT_HUNTER_FIRST, PET_SLOT_STABLE_LAST)
         );
 }
@@ -558,13 +558,13 @@ void WorldSession::HandleStableChangeSlot(WorldPacket & recv_data)
         SendStableResult(STABLE_ERR_STABLE);
         return;
     }
-    
+
     // remove fake death
     if (GetPlayer()->HasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
     Pet* pet = _player->GetPet();
-    
+
     //If we move the pet already summoned...
     if (pet && pet->GetCharmInfo() && pet->GetCharmInfo()->GetPetNumber() == pet_number)
         _player->RemovePet(pet, PET_SLOT_ACTUAL_PET_SLOT);
@@ -572,10 +572,10 @@ void WorldSession::HandleStableChangeSlot(WorldPacket & recv_data)
     //If we move to the pet already summoned...
     if (pet && GetPlayer()->m_currentPetSlot == new_slot)
         _player->RemovePet(pet, PET_SLOT_ACTUAL_PET_SLOT);
-    
+
     m_stableChangeSlotCallback.SetParam(new_slot);
     m_stableChangeSlotCallback.SetFutureResult(
-                                               CharacterDatabase.PQuery("SELECT slot, entry, id FROM character_pet WHERE owner = '%u' AND id = '%u'", 
+                                               CharacterDatabase.PQuery("SELECT slot, entry, id FROM character_pet WHERE owner = '%u' AND id = '%u'",
                                                                         _player->GetGUIDLow(), pet_number)
                                                );
 }
@@ -621,10 +621,10 @@ void WorldSession::HandleStableChangeSlotCallback(QueryResult result, uint8 new_
     if (new_slot != 100)
     {
         // We need to remove and add the new pet to there diffrent slots
-        GetPlayer()->setPetSlotUsed((PetSlot)slot, false); 
-        GetPlayer()->setPetSlotUsed((PetSlot)new_slot, true); 
+        GetPlayer()->setPetSlotUsed((PetSlot)slot, false);
+        GetPlayer()->setPetSlotUsed((PetSlot)new_slot, true);
     }
-    
+
     SendStableResult(STABLE_SUCCESS_STABLE);
 }
 
@@ -666,4 +666,3 @@ void WorldSession::HandleRepairItemOpcode(WorldPacket & recv_data)
         TotalCost = _player->DurabilityRepairAll(true, discountMod, guildBank);
     }
 }
-

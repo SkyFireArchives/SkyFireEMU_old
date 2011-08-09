@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -33,7 +33,7 @@ class PointMovementGenerator
 : public MovementGeneratorMedium< T, PointMovementGenerator<T> >
 {
     public:
-        PointMovementGenerator(uint32 _id, float _x, float _y, float _z) : id(_id), 
+        PointMovementGenerator(uint32 _id, float _x, float _y, float _z) : id(_id),
             i_x(_x), i_y(_y), i_z(_z), i_nextMoveTime(0), arrived(false) {}
 
         void Initialize(T &);
@@ -66,5 +66,3 @@ class AssistanceMovementGenerator
 };
 
 #endif
-
-

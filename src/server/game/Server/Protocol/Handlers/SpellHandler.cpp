@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -77,7 +77,7 @@ void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
     uint8 bagIndex, slot, castFlags;
     uint8 castCount;                                       // next cast if exists (single or not)
     uint64 itemGUID;
-    uint32 unk;                                     
+    uint32 unk;
     uint32 spellId;                                         // casted spell id
 
     recvPacket >> bagIndex >> slot >> castCount >> spellId >> itemGUID >> unk >> castFlags;
@@ -227,7 +227,7 @@ void WorldSession::HandleOpenItemOpcode(WorldPacket& recvPacket)
     if (!(proto->Flags & ITEM_PROTO_FLAG_OPENABLE) && !pItem->HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_WRAPPED))
     {
         pUser->SendEquipError(EQUIP_ERR_CANT_DO_RIGHT_NOW, pItem, NULL);
-        sLog->outError("Possible hacking attempt: Player %s [guid: %u] tried to open item [guid: %u, entry: %u] which is not openable!", 
+        sLog->outError("Possible hacking attempt: Player %s [guid: %u] tried to open item [guid: %u, entry: %u] which is not openable!",
                 pUser->GetName(), pUser->GetGUIDLow(), pItem->GetGUIDLow(), proto->ItemId);
         return;
     }
@@ -385,7 +385,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
         return;
     }
 
-    // can't use our own spells when we're in possession of another unit, 
+    // can't use our own spells when we're in possession of another unit,
     if (_player->isPossessing())
     {
         recvPacket.rfinish(); // prevent spam at ignore packet
@@ -626,17 +626,17 @@ void WorldSession::HandleMirrrorImageDataRequest(WorldPacket & recv_data)
 
         static const EquipmentSlots ItemSlots[] =
         {
-            EQUIPMENT_SLOT_HEAD, 
-            EQUIPMENT_SLOT_SHOULDERS, 
-            EQUIPMENT_SLOT_BODY, 
-            EQUIPMENT_SLOT_CHEST, 
-            EQUIPMENT_SLOT_WAIST, 
-            EQUIPMENT_SLOT_LEGS, 
-            EQUIPMENT_SLOT_FEET, 
-            EQUIPMENT_SLOT_WRISTS, 
-            EQUIPMENT_SLOT_HANDS, 
-            EQUIPMENT_SLOT_BACK, 
-            EQUIPMENT_SLOT_TABARD, 
+            EQUIPMENT_SLOT_HEAD,
+            EQUIPMENT_SLOT_SHOULDERS,
+            EQUIPMENT_SLOT_BODY,
+            EQUIPMENT_SLOT_CHEST,
+            EQUIPMENT_SLOT_WAIST,
+            EQUIPMENT_SLOT_LEGS,
+            EQUIPMENT_SLOT_FEET,
+            EQUIPMENT_SLOT_WRISTS,
+            EQUIPMENT_SLOT_HANDS,
+            EQUIPMENT_SLOT_BACK,
+            EQUIPMENT_SLOT_TABARD,
             EQUIPMENT_SLOT_END
         };
 

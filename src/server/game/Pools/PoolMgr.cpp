@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -373,13 +373,13 @@ void PoolGroup<Creature>::Spawn1Object(PoolObject* obj)
             CreatureInfo const *ci = ObjectMgr::GetCreatureTemplate(data->id);
             if (!ci)
                 return;
-            
+
             Creature* pCreature = NULL;
             if (ci->ScriptID)
                 pCreature = sScriptMgr->GetCreatureScriptedClass(ci->ScriptID);
             if (pCreature == NULL)
                 pCreature = new Creature();
-            
+
             //sLog->outDebug(LOG_FILTER_POOLSYS, "Spawning creature %u", guid);
             if (!pCreature->LoadFromDB(obj->guid, map))
             {
@@ -595,7 +595,6 @@ void PoolMgr::LoadFromDB()
 
         PoolTemplateData& pPoolTemplate = mPoolTemplate[pool_id];
         pPoolTemplate.MaxLimit  = fields[1].GetUInt32();
-
     }
     while (result->NextRow());
 
@@ -620,7 +619,6 @@ void PoolMgr::LoadFromDB()
     }
     else
     {
-
         do
         {
             Field *fields = result->Fetch();
@@ -654,7 +652,6 @@ void PoolMgr::LoadFromDB()
             cregroup.AddEntry(plObject, pPoolTemplate->MaxLimit);
             SearchPair p(guid, pool_id);
             mCreatureSearchMap.insert(p);
-
         }
         while (result->NextRow());
 
@@ -721,7 +718,6 @@ void PoolMgr::LoadFromDB()
             gogroup.AddEntry(plObject, pPoolTemplate->MaxLimit);
             SearchPair p(guid, pool_id);
             mGameobjectSearchMap.insert(p);
-
         } while (result->NextRow());
 
         sLog->outString(">> Loaded %u gameobject in pools in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
@@ -783,7 +779,6 @@ void PoolMgr::LoadFromDB()
             plgroup.AddEntry(plObject, pPoolTemplateMother->MaxLimit);
             SearchPair p(child_pool_id, mother_pool_id);
             mPoolSearchMap.insert(p);
-
         }
         while (result->NextRow());
 
@@ -839,8 +834,8 @@ void PoolMgr::LoadQuestPools()
 
     enum eQuestTypes
     {
-        QUEST_NONE   = 0, 
-        QUEST_DAILY  = 1, 
+        QUEST_NONE   = 0,
+        QUEST_DAILY  = 1,
         QUEST_WEEKLY = 2
     };
 
@@ -901,7 +896,6 @@ void PoolMgr::LoadQuestPools()
         questgroup.AddEntry(plObject, pPoolTemplate->MaxLimit);
         SearchPair p(entry, pool_id);
         mQuestSearchMap.insert(p);
-
     }
     while (result->NextRow());
 
@@ -925,7 +919,7 @@ void PoolMgr::Initialize()
             if (!CheckPool(pool_entry))
             {
                 if (pool_pool_id)
-                    // The pool is a child pool in pool_pool table. Ideally we should remove it from the pool handler to ensure it never gets spawned, 
+                    // The pool is a child pool in pool_pool table. Ideally we should remove it from the pool handler to ensure it never gets spawned,
                     // however that could recursively invalidate entire chain of mother pools. It can be done in the future but for now we'll do nothing.
                     sLog->outErrorDb("Pool Id %u has no equal chance pooled entites defined and explicit chance sum is not 100. This broken pool is a child pool of Id %u and cannot be safely removed.", pool_entry, fields[2].GetUInt32());
                 else

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -32,7 +32,7 @@
 
 static uint32 ReputationRankStrIndex[MAX_REPUTATION_RANK] =
 {
-    LANG_REP_HATED,    LANG_REP_HOSTILE, LANG_REP_UNFRIENDLY, LANG_REP_NEUTRAL, 
+    LANG_REP_HATED,    LANG_REP_HOSTILE, LANG_REP_UNFRIENDLY, LANG_REP_NEUTRAL,
     LANG_REP_FRIENDLY, LANG_REP_HONORED, LANG_REP_REVERED,    LANG_REP_EXALTED
 };
 
@@ -68,7 +68,7 @@ class Player;
 class ReputationMgr
 {
     public:                                                 // constructors and global modifiers
-        explicit ReputationMgr(Player* owner) : m_player(owner), 
+        explicit ReputationMgr(Player* owner) : m_player(owner),
             m_visibleFactionCount(0), m_honoredFactionCount(0), m_reveredFactionCount(0), m_exaltedFactionCount(0) {}
         ~ReputationMgr() {}
 

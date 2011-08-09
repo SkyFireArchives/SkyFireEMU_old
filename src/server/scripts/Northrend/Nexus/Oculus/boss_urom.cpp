@@ -84,12 +84,12 @@ static Summons Group[]=
 
 static uint32 TeleportSpells[]=
 {
-    SPELL_SUMMON_MENAGERIE, SPELL_SUMMON_MENAGERIE_2, SPELL_SUMMON_MENAGERIE_3
+    SPELL_SUMMON_MENAGERIE,SPELL_SUMMON_MENAGERIE_2,SPELL_SUMMON_MENAGERIE_3
 };
 
 static int32 SayAggro[]=
 {
-    SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3, SAY_AGGRO_4
+    SAY_AGGRO_1,SAY_AGGRO_2,SAY_AGGRO_3,SAY_AGGRO_4
 };
 
 class boss_urom : public CreatureScript
@@ -111,7 +111,7 @@ public:
 
         InstanceScript* pInstance;
 
-        float x, y;
+        float x,y;
 
         bool bCanCast;
         bool bCanGoBack;
@@ -146,11 +146,11 @@ public:
 
             me->GetMotionMaster()->MoveIdle();
 
-            uiTeleportTimer = urand(30000, 35000);
+            uiTeleportTimer = urand(30000,35000);
             uiArcaneExplosionTimer = 9000;
             uiCastArcaneExplosionTimer = 2000;
-            uiFrostBombTimer = urand(5000, 8000);
-            uiTimeBombTimer = urand(20000, 25000);
+            uiFrostBombTimer = urand(5000,8000);
+            uiTimeBombTimer = urand(20000,25000);
         }
 
         void EnterCombat(Unit* /*pWho*/)
@@ -163,7 +163,7 @@ public:
             CastTeleport();
 
             if (pInstance && pInstance->GetData(DATA_UROM_PLATAFORM) != 3)
-                pInstance->SetData(DATA_UROM_PLATAFORM, pInstance->GetData(DATA_UROM_PLATAFORM)+1);
+                pInstance->SetData(DATA_UROM_PLATAFORM,pInstance->GetData(DATA_UROM_PLATAFORM)+1);
         }
 
         void AttackStart(Unit* pWho)
@@ -178,12 +178,12 @@ public:
             {
                 if (me->Attack(pWho, true))
                 {
-                    DoScriptText(SayAggro[3], me);
+                    DoScriptText(SayAggro[3],me);
 
                     me->SetInCombatWith(pWho);
                     pWho->SetInCombatWith(me);
 
-                    me->GetMotionMaster()->MoveChase(pWho, 0, 0);
+                    me->GetMotionMaster()->MoveChase(pWho, 0,0);
                 }
             }
         }
@@ -195,9 +195,9 @@ public:
 
             while (uiGroup[0] == uiGroup[1] || uiGroup[0] == uiGroup[2] || uiGroup[1] == uiGroup[2])
             {
-                uiGroup[0] = urand(0, 2);
-                uiGroup[1] = urand(0, 2);
-                uiGroup[2] = urand(0, 2);
+                uiGroup[0] = urand(0,2);
+                uiGroup[1] = urand(0,2);
+                uiGroup[2] = urand(0,2);
             }
         }
 
@@ -234,7 +234,7 @@ public:
             for (uint8 uiI = 0; uiI < 4 ; uiI++)
             {
                 SetPosition(uiI);
-                me->SummonCreature(Group[uiGroup[pInstance->GetData(DATA_UROM_PLATAFORM)]].uiEntry[uiI], x, y, me->GetPositionZ(), me->GetOrientation());
+                me->SummonCreature(Group[uiGroup[pInstance->GetData(DATA_UROM_PLATAFORM)]].uiEntry[uiI],x,y,me->GetPositionZ(),me->GetOrientation());
             }
         }
 
@@ -243,7 +243,7 @@ public:
             if (!pInstance || pInstance->GetData(DATA_UROM_PLATAFORM) > 2)
                 return;
 
-            DoScriptText(SayAggro[pInstance->GetData(DATA_UROM_PLATAFORM)], me);
+            DoScriptText(SayAggro[pInstance->GetData(DATA_UROM_PLATAFORM)],me);
             DoCast(TeleportSpells[pInstance->GetData(DATA_UROM_PLATAFORM)]);
         }
 
@@ -259,10 +259,10 @@ public:
             if (uiTeleportTimer <= uiDiff)
             {
                 me->InterruptNonMeleeSpells(false);
-                DoScriptText(SAY_TELEPORT, me);
+                DoScriptText(SAY_TELEPORT,me);
                 me->GetMotionMaster()->MoveIdle();
                 DoCast(SPELL_TELEPORT);
-                uiTeleportTimer = urand(30000, 35000);
+                uiTeleportTimer = urand(30000,35000);
             } else uiTeleportTimer -= uiDiff;
 
             if (bCanCast && !me->FindCurrentSpellBySpellId(SPELL_EMPOWERED_ARCANE_EXPLOSION))
@@ -283,8 +283,8 @@ public:
                     Position pPos;
                     me->getVictim()->GetPosition(&pPos);
 
-                    me->NearTeleportTo(pPos.GetPositionX(), pPos.GetPositionY(), pPos.GetPositionZ(), pPos.GetOrientation());
-                    me->GetMotionMaster()->MoveChase(me->getVictim(), 0, 0);
+                    me->NearTeleportTo(pPos.GetPositionX(),pPos.GetPositionY(),pPos.GetPositionZ(),pPos.GetOrientation());
+                    me->GetMotionMaster()->MoveChase(me->getVictim(),0,0);
                     me->SetUnitMovementFlags(MOVEMENTFLAG_WALKING);
 
                     bCanCast = false;
@@ -298,15 +298,15 @@ public:
                 if (uiFrostBombTimer <= uiDiff)
                 {
                     DoCastVictim(SPELL_FROSTBOMB);
-                    uiFrostBombTimer = urand(5000, 8000);
+                    uiFrostBombTimer = urand(5000,8000);
                 } else uiFrostBombTimer -= uiDiff;
 
                 if (uiTimeBombTimer <= uiDiff)
                 {
                     if (Unit* pUnit = SelectTarget(SELECT_TARGET_RANDOM))
-                        DoCast(pUnit, SPELL_TIME_BOMB);
+                        DoCast(pUnit,SPELL_TIME_BOMB);
 
-                    uiTimeBombTimer = urand(20000, 25000);
+                    uiTimeBombTimer = urand(20000,25000);
                 } else uiTimeBombTimer -= uiDiff;
             }
 
@@ -336,15 +336,15 @@ public:
             switch(pSpell->Id)
             {
                 case SPELL_SUMMON_MENAGERIE:
-                    me->SetHomePosition(968.66f, 1042.53f, 527.32f, 0.077f);
+                    me->SetHomePosition(968.66f,1042.53f,527.32f,0.077f);
                     LeaveCombat();
                     break;
                 case SPELL_SUMMON_MENAGERIE_2:
-                    me->SetHomePosition(1164.02f, 1170.85f, 527.321f, 3.66f);
+                    me->SetHomePosition(1164.02f,1170.85f,527.321f,3.66f);
                     LeaveCombat();
                     break;
                 case SPELL_SUMMON_MENAGERIE_3:
-                    me->SetHomePosition(1118.31f, 1080.377f, 508.361f, 4.25f);
+                    me->SetHomePosition(1118.31f,1080.377f,508.361f,4.25f);
                     LeaveCombat();
                     break;
                 case SPELL_TELEPORT:

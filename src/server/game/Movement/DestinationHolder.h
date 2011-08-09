@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -42,7 +42,7 @@ class DestinationHolder
     float i_destX, i_destY, i_destZ;
 
     public:
-        DestinationHolder() : i_tracker(TRAVELLER_UPDATE_INTERVAL), i_totalTravelTime(0), i_timeElapsed(0), 
+        DestinationHolder() : i_tracker(TRAVELLER_UPDATE_INTERVAL), i_totalTravelTime(0), i_timeElapsed(0),
             i_destSet(false), i_fromX(0), i_fromY(0), i_fromZ(0), i_destX(0), i_destY(0), i_destZ(0) {}
 
         uint32 SetDestination(TRAVELLER &traveller, float dest_x, float dest_y, float dest_z, bool sendMove = true);
@@ -63,7 +63,5 @@ class DestinationHolder
 
     private:
         void _findOffSetPoint(float x1, float y1, float x2, float y2, float offset, float &x, float &y);
-
 };
 #endif
-

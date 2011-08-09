@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -100,7 +100,7 @@ void WorldSession::SendUpdateTrade(bool trader_data /*= true*/)
     TradeData* view_trade = trader_data ? _player->GetTradeData()->GetTraderData() : _player->GetTradeData();
 
     WorldPacket data(SMSG_TRADE_STATUS_EXTENDED, 1+4+4+4+4+4+7*(1+4+4+4+4+8+4+4+4+4+8+4+4+4+4+4+4));
-    
+
     data << uint32(0);
     data << uint32(0);
     data << uint8(1);
@@ -205,9 +205,9 @@ void WorldSession::moveItems(Item* myItems[], Item* hisItems[])
                 sLog->outDebug(LOG_FILTER_NETWORKIO, "partner storing: %u", myItems[i]->GetGUIDLow());
                 if (_player->GetSession()->GetSecurity() > SEC_PLAYER && sWorld->getBoolConfig(CONFIG_GM_LOG_TRADE))
                 {
-                    sLog->outCommand(_player->GetSession()->GetAccountId(), "GM %s (Account: %u) trade: %s (Entry: %d Count: %u) to player: %s (Account: %u)", 
-                        _player->GetName(), _player->GetSession()->GetAccountId(), 
-                        myItems[i]->GetProto()->Name1, myItems[i]->GetEntry(), myItems[i]->GetCount(), 
+                    sLog->outCommand(_player->GetSession()->GetAccountId(), "GM %s (Account: %u) trade: %s (Entry: %d Count: %u) to player: %s (Account: %u)",
+                        _player->GetName(), _player->GetSession()->GetAccountId(),
+                        myItems[i]->GetProto()->Name1, myItems[i]->GetEntry(), myItems[i]->GetCount(),
                         trader->GetName(), trader->GetSession()->GetAccountId());
                 }
 
@@ -223,9 +223,9 @@ void WorldSession::moveItems(Item* myItems[], Item* hisItems[])
                 sLog->outDebug(LOG_FILTER_NETWORKIO, "player storing: %u", hisItems[i]->GetGUIDLow());
                 if (trader->GetSession()->GetSecurity() > SEC_PLAYER && sWorld->getBoolConfig(CONFIG_GM_LOG_TRADE))
                 {
-                    sLog->outCommand(trader->GetSession()->GetAccountId(), "GM %s (Account: %u) trade: %s (Entry: %d Count: %u) to player: %s (Account: %u)", 
-                        trader->GetName(), trader->GetSession()->GetAccountId(), 
-                        hisItems[i]->GetProto()->Name1, hisItems[i]->GetEntry(), hisItems[i]->GetCount(), 
+                    sLog->outCommand(trader->GetSession()->GetAccountId(), "GM %s (Account: %u) trade: %s (Entry: %d Count: %u) to player: %s (Account: %u)",
+                        trader->GetName(), trader->GetSession()->GetAccountId(),
+                        hisItems[i]->GetProto()->Name1, hisItems[i]->GetEntry(), hisItems[i]->GetCount(),
                         _player->GetName(), _player->GetSession()->GetAccountId());
                 }
 
@@ -513,16 +513,16 @@ void WorldSession::HandleAcceptTradeOpcode(WorldPacket& /*recvPacket*/)
         {
             if (_player->GetSession()->GetSecurity() > SEC_PLAYER && my_trade->GetMoney() > 0)
             {
-                sLog->outCommand(_player->GetSession()->GetAccountId(), "GM %s (Account: %u) give money (Amount: %u) to player: %s (Account: %u)", 
-                    _player->GetName(), _player->GetSession()->GetAccountId(), 
-                    my_trade->GetMoney(), 
+                sLog->outCommand(_player->GetSession()->GetAccountId(), "GM %s (Account: %u) give money (Amount: %u) to player: %s (Account: %u)",
+                    _player->GetName(), _player->GetSession()->GetAccountId(),
+                    my_trade->GetMoney(),
                     trader->GetName(), trader->GetSession()->GetAccountId());
             }
             if (trader->GetSession()->GetSecurity() > SEC_PLAYER && his_trade->GetMoney() > 0)
             {
-                sLog->outCommand(trader->GetSession()->GetAccountId(), "GM %s (Account: %u) give money (Amount: %u) to player: %s (Account: %u)", 
-                    trader->GetName(), trader->GetSession()->GetAccountId(), 
-                    his_trade->GetMoney(), 
+                sLog->outCommand(trader->GetSession()->GetAccountId(), "GM %s (Account: %u) give money (Amount: %u) to player: %s (Account: %u)",
+                    trader->GetName(), trader->GetSession()->GetAccountId(),
+                    his_trade->GetMoney(),
                     _player->GetName(), _player->GetSession()->GetAccountId());
             }
         }
@@ -785,4 +785,3 @@ void WorldSession::HandleClearTradeItemOpcode(WorldPacket& recvPacket)
 
     my_trade->SetItem(TradeSlots(tradeSlot), NULL);
 }
-

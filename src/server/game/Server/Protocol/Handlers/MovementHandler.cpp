@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -296,7 +296,7 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
             return;
         }
 
-        if (!Trinity::IsValidMapCoord(movementInfo.pos.GetPositionX() + movementInfo.t_pos.GetPositionX(), movementInfo.pos.GetPositionY() + movementInfo.t_pos.GetPositionY(), 
+        if (!Trinity::IsValidMapCoord(movementInfo.pos.GetPositionX() + movementInfo.t_pos.GetPositionX(), movementInfo.pos.GetPositionY() + movementInfo.t_pos.GetPositionY(),
             movementInfo.pos.GetPositionZ() + movementInfo.t_pos.GetPositionZ(), movementInfo.pos.GetOrientation() + movementInfo.t_pos.GetOrientation()))
         {
             recv_data.rpos(recv_data.wpos());                   // prevent warnings spam
@@ -365,7 +365,7 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
     mover->SetPosition(movementInfo.pos);
 
     if (plMover)                                            // nothing is charmed, or player charmed
-    {    
+    {
         if (plMover->GetEmoteState() != 0 && opcode == MSG_MOVE_START_FORWARD && opcode != MSG_MOVE_SET_FACING &&
             opcode != MSG_MOVE_START_TURN_LEFT && opcode != MSG_MOVE_START_TURN_RIGHT &&
             opcode != MSG_MOVE_STOP_TURN)
@@ -468,13 +468,13 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket &recv_data)
     {
         if (_player->GetSpeed(move_type) > newspeed)         // must be greater - just correct
         {
-            sLog->outError("%sSpeedChange player %s is NOT correct (must be %f instead %f), force set to correct value", 
+            sLog->outError("%sSpeedChange player %s is NOT correct (must be %f instead %f), force set to correct value",
                 move_type_name[move_type], _player->GetName(), _player->GetSpeed(move_type), newspeed);
             _player->SetSpeed(move_type, _player->GetSpeedRate(move_type), true);
         }
         else                                                // must be lesser - cheating
         {
-            sLog->outBasic("Player %s from account id %u kicked for incorrect speed (must be %f instead %f)", 
+            sLog->outBasic("Player %s from account id %u kicked for incorrect speed (must be %f instead %f)",
                 _player->GetName(), _player->GetSession()->GetAccountId(), _player->GetSpeed(move_type), newspeed);
             _player->GetSession()->KickPlayer();
         }
@@ -727,7 +727,7 @@ void WorldSession::HandleRequestVehicleExit(WorldPacket &recv_data)
             if (seat->CanEnterOrExit())
                 GetPlayer()->ExitVehicle();
             else
-                sLog->outError("Player %u tried to exit vehicle, but seatflags %u (ID: %u) don't permit that.", 
+                sLog->outError("Player %u tried to exit vehicle, but seatflags %u (ID: %u) don't permit that.",
                     GetPlayer()->GetGUIDLow(), seat->m_ID, seat->m_flags);
     }
 }
@@ -795,4 +795,3 @@ void WorldSession::HandleSummonResponseOpcode(WorldPacket& recv_data)
 
     _player->SummonIfPossible(agree);
 }
-

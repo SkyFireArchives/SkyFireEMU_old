@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -308,7 +308,6 @@ void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
             }
         }
 
- 
         // Premiere partie, item.dbc
         WorldPacket data(SMSG_ITEM_QUERY_SINGLE_RESPONSE, 12*4);
         data << uint32(0x22);                            // Random uint32 4.0.1
@@ -500,7 +499,7 @@ void WorldSession::HandlePageQuerySkippedOpcode(WorldPacket & recv_data)
 
     recv_data >> itemid >> guid;
 
-    sLog->outDetail("Packet Info: itemid: %u guidlow: %u guidentry: %u guidhigh: %u", 
+    sLog->outDetail("Packet Info: itemid: %u guidlow: %u guidentry: %u guidhigh: %u",
         itemid, GUID_LOPART(guid), GUID_ENPART(guid), GUID_HIPART(guid));
 }
 
@@ -821,7 +820,6 @@ void WorldSession::SendListInventory(uint64 vendorguid)
         }
     }
 
-    
     //TODO: add error messages.
     /*switch ( v13 )
     {
@@ -843,7 +841,7 @@ void WorldSession::SendListInventory(uint64 vendorguid)
       default:
         break;
     }*/
-    
+
     if (count == 0)
     {
         data << uint8(0);
@@ -1308,7 +1306,6 @@ void WorldSession::HandleSocketOpcode(WorldPacket& recv_data)
                         }
                     }
                 }
-
             }
         }
 

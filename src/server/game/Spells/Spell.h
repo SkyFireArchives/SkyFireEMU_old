@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -40,7 +40,7 @@ struct SpellEntry;
 
 enum SpellCastTargetFlags
 {
-    TARGET_FLAG_SELF            = 0x00000000, 
+    TARGET_FLAG_SELF            = 0x00000000,
     TARGET_FLAG_UNUSED1         = 0x00000001,               // not used in any spells as of 3.2.2a (can be set dynamically)
     TARGET_FLAG_UNIT            = 0x00000002,               // pguid
     TARGET_FLAG_UNUSED2         = 0x00000004,               // not used in any spells as of 3.2.2a (can be set dynamically)
@@ -66,69 +66,69 @@ enum SpellCastTargetFlags
 
 enum SpellCastFlags
 {
-    CAST_FLAG_NONE               = 0x00000000, 
+    CAST_FLAG_NONE               = 0x00000000,
     CAST_FLAG_PENDING            = 0x00000001,              // Pending == 1
-    CAST_FLAG_UNKNOWN_2          = 0x00000002, 
-    CAST_FLAG_UNKNOWN_3          = 0x00000004, 
-    CAST_FLAG_UNKNOWN_4          = 0x00000008, 
-    CAST_FLAG_UNKNOWN_5          = 0x00000010, 
+    CAST_FLAG_UNKNOWN_2          = 0x00000002,
+    CAST_FLAG_UNKNOWN_3          = 0x00000004,
+    CAST_FLAG_UNKNOWN_4          = 0x00000008,
+    CAST_FLAG_UNKNOWN_5          = 0x00000010,
     CAST_FLAG_AMMO               = 0x00000020,              // Projectiles visual
-    CAST_FLAG_UNKNOWN_7          = 0x00000040, 
-    CAST_FLAG_UNKNOWN_8          = 0x00000080, 
-    CAST_FLAG_UNKNOWN_9          = 0x00000100, 
-    CAST_FLAG_UNKNOWN_10         = 0x00000200, 
-    CAST_FLAG_UNKNOWN_11         = 0x00000400, 
-    CAST_FLAG_POWER_LEFT_SELF    = 0x00000800, 
-    CAST_FLAG_UNKNOWN_13         = 0x00001000, 
-    CAST_FLAG_UNKNOWN_14         = 0x00002000, 
-    CAST_FLAG_UNKNOWN_15         = 0x00004000, 
-    CAST_FLAG_UNKNOWN_16         = 0x00008000, 
-    CAST_FLAG_UNKNOWN_17         = 0x00010000, 
-    CAST_FLAG_UNKNOWN_18         = 0x00020000, 
-    CAST_FLAG_UNKNOWN_19         = 0x00040000, 
-    CAST_FLAG_UNKNOWN_20         = 0x00080000, 
-    CAST_FLAG_UNKNOWN_21         = 0x00100000, 
-    CAST_FLAG_RUNE_LIST          = 0x00200000, 
-    CAST_FLAG_UNKNOWN_23         = 0x00400000, 
-    CAST_FLAG_UNKNOWN_24         = 0x00800000, 
-    CAST_FLAG_UNKNOWN_25         = 0x01000000, 
-    CAST_FLAG_UNKNOWN_26         = 0x02000000, 
-    CAST_FLAG_UNKNOWN_27         = 0x04000000, 
-    CAST_FLAG_UNKNOWN_28         = 0x08000000, 
-    CAST_FLAG_UNKNOWN_29         = 0x10000000, 
-    CAST_FLAG_UNKNOWN_30         = 0x20000000, 
-    CAST_FLAG_UNKNOWN_31         = 0x40000000, 
-    CAST_FLAG_UNKNOWN_32         = 0x80000000, 
+    CAST_FLAG_UNKNOWN_7          = 0x00000040,
+    CAST_FLAG_UNKNOWN_8          = 0x00000080,
+    CAST_FLAG_UNKNOWN_9          = 0x00000100,
+    CAST_FLAG_UNKNOWN_10         = 0x00000200,
+    CAST_FLAG_UNKNOWN_11         = 0x00000400,
+    CAST_FLAG_POWER_LEFT_SELF    = 0x00000800,
+    CAST_FLAG_UNKNOWN_13         = 0x00001000,
+    CAST_FLAG_UNKNOWN_14         = 0x00002000,
+    CAST_FLAG_UNKNOWN_15         = 0x00004000,
+    CAST_FLAG_UNKNOWN_16         = 0x00008000,
+    CAST_FLAG_UNKNOWN_17         = 0x00010000,
+    CAST_FLAG_UNKNOWN_18         = 0x00020000,
+    CAST_FLAG_UNKNOWN_19         = 0x00040000,
+    CAST_FLAG_UNKNOWN_20         = 0x00080000,
+    CAST_FLAG_UNKNOWN_21         = 0x00100000,
+    CAST_FLAG_RUNE_LIST          = 0x00200000,
+    CAST_FLAG_UNKNOWN_23         = 0x00400000,
+    CAST_FLAG_UNKNOWN_24         = 0x00800000,
+    CAST_FLAG_UNKNOWN_25         = 0x01000000,
+    CAST_FLAG_UNKNOWN_26         = 0x02000000,
+    CAST_FLAG_UNKNOWN_27         = 0x04000000,
+    CAST_FLAG_UNKNOWN_28         = 0x08000000,
+    CAST_FLAG_UNKNOWN_29         = 0x10000000,
+    CAST_FLAG_UNKNOWN_30         = 0x20000000,
+    CAST_FLAG_UNKNOWN_31         = 0x40000000,
+    CAST_FLAG_UNKNOWN_32         = 0x80000000,
 };
 
 enum SpellRangeFlag
 {
-    SPELL_RANGE_DEFAULT             = 0, 
+    SPELL_RANGE_DEFAULT             = 0,
     SPELL_RANGE_MELEE               = 1,     //melee
     SPELL_RANGE_RANGED              = 2,     //hunter range and ranged weapon
 };
 
 enum SpellNotifyPushType
 {
-    PUSH_NONE           = 0, 
-    PUSH_IN_FRONT, 
-    PUSH_IN_BACK, 
-    PUSH_IN_LINE, 
-    PUSH_IN_THIN_LINE, 
-    PUSH_SRC_CENTER, 
-    PUSH_DST_CENTER, 
+    PUSH_NONE           = 0,
+    PUSH_IN_FRONT,
+    PUSH_IN_BACK,
+    PUSH_IN_LINE,
+    PUSH_IN_THIN_LINE,
+    PUSH_SRC_CENTER,
+    PUSH_DST_CENTER,
     PUSH_CASTER_CENTER, //this is never used in grid search
-    PUSH_CHAIN, 
+    PUSH_CHAIN,
 };
 
 enum SpellLogType
 {
-    SPELL_LOG_NON_MELEE_DAMAGE          = 29868, 
-    SPELL_LOG_EXECUTE                   = 46824, 
-    SPELL_LOG_ENERGIZE                  = 61676, 
-    SPELL_LOG_HEAL                      = 28292, 
-    SPELL_LOG_MISS                      = 48548, 
-    SPELL_LOG_PERIODIC_AURA             = 13192, 
+    SPELL_LOG_NON_MELEE_DAMAGE          = 29868,
+    SPELL_LOG_EXECUTE                   = 46824,
+    SPELL_LOG_ENERGIZE                  = 61676,
+    SPELL_LOG_HEAL                      = 28292,
+    SPELL_LOG_MISS                      = 48548,
+    SPELL_LOG_PERIODIC_AURA             = 13192,
     SPELL_LOG_REMOVE_1                  = 0xED7E,       // currently unused (not updated even)
     SPELL_LOG_REMOVE_2                  = 0x9F74,       // currently unused (n/u)
     SPELL_LOG_REMOVE_3                  = 0xD557,       // currently unused (n/u)
@@ -269,30 +269,30 @@ struct SpellValue
 
 enum SpellState
 {
-    SPELL_STATE_NULL      = 0, 
-    SPELL_STATE_PREPARING = 1, 
-    SPELL_STATE_CASTING   = 2, 
-    SPELL_STATE_FINISHED  = 3, 
-    SPELL_STATE_IDLE      = 4, 
+    SPELL_STATE_NULL      = 0,
+    SPELL_STATE_PREPARING = 1,
+    SPELL_STATE_CASTING   = 2,
+    SPELL_STATE_FINISHED  = 3,
+    SPELL_STATE_IDLE      = 4,
     SPELL_STATE_DELAYED   = 5
 };
 
 enum ReplenishType
 {
-    REPLENISH_UNDEFINED = 0, 
-    REPLENISH_HEALTH    = 20, 
-    REPLENISH_MANA      = 21, 
+    REPLENISH_UNDEFINED = 0,
+    REPLENISH_HEALTH    = 20,
+    REPLENISH_MANA      = 21,
     REPLENISH_RAGE      = 22
 };
 
 enum SpellTargets
 {
-    SPELL_TARGETS_NONE      = 0, 
-    SPELL_TARGETS_ALLY, 
-    SPELL_TARGETS_ENEMY, 
-    SPELL_TARGETS_ENTRY, 
-    SPELL_TARGETS_CHAINHEAL, 
-    SPELL_TARGETS_ANY, 
+    SPELL_TARGETS_NONE      = 0,
+    SPELL_TARGETS_ALLY,
+    SPELL_TARGETS_ENEMY,
+    SPELL_TARGETS_ENTRY,
+    SPELL_TARGETS_CHAINHEAL,
+    SPELL_TARGETS_ANY,
     SPELL_TARGETS_GO
 };
 
@@ -765,9 +765,9 @@ namespace Trinity
         const Position * const i_pos;
         bool i_requireDeadTarget;
 
-        SpellNotifierCreatureAndPlayer(Unit *source, std::list<Unit*> &data, float radius, SpellNotifyPushType type, 
+        SpellNotifierCreatureAndPlayer(Unit *source, std::list<Unit*> &data, float radius, SpellNotifyPushType type,
             SpellTargets TargetType = SPELL_TARGETS_ENEMY, const Position *pos = NULL, uint32 entry = 0, bool requireDeadTarget = false)
-            : i_data(&data), i_push_type(type), i_radius(radius), i_TargetType(TargetType), 
+            : i_data(&data), i_push_type(type), i_radius(radius), i_TargetType(TargetType),
             i_source(source), i_entry(entry), i_pos(pos), i_requireDeadTarget(requireDeadTarget)
         {
             ASSERT(i_source);

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -171,7 +171,7 @@ bool LoginQueryHolder::Initialize()
     stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PLAYER_TALENTBRANCHSPECS);
     stmt->setUInt32(0, lowGuid);
     res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS, stmt);
-              
+
     stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_PLAYER_CURRENCY);
     stmt->setUInt32(0, lowGuid);
     res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOAD_CURRENCY, stmt);
@@ -279,7 +279,7 @@ void WorldSession::HandleCharEnumOpcode(WorldPacket & /*recv_data*/)
                 "LEFT JOIN character_declinedname ON characters.guid = character_declinedname.guid "
                 "LEFT JOIN guild_member ON characters.guid = guild_member.guid "
                 "LEFT JOIN character_banned ON characters.guid = character_banned.guid AND character_banned.active = 1 "
-                "WHERE characters.account = '%u' ORDER BY characters.guid", 
+                "WHERE characters.account = '%u' ORDER BY characters.guid",
                 GetAccountId()
             );
 }
@@ -467,7 +467,7 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
 
     if (!AllowTwoSideAccounts || skipCinematics == 1 || class_ == CLASS_DEATH_KNIGHT)
     {
-        QueryResult result2 = CharacterDatabase.PQuery("SELECT level, race, class FROM characters WHERE account = '%u' %s", 
+        QueryResult result2 = CharacterDatabase.PQuery("SELECT level, race, class FROM characters WHERE account = '%u' %s",
             GetAccountId(), (skipCinematics == 1 || class_ == CLASS_DEATH_KNIGHT) ? "" : "LIMIT 1");
         if (result2)
         {
@@ -613,9 +613,9 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
             ASSERT(false);
             break;
     }
-    
+
     ASSERT(pNewChar);
-    
+
     if (!pNewChar->Create(sObjectMgr->GenerateLowGuid(HIGHGUID_PLAYER), name, race_, class_, gender, skin, face, hairStyle, hairColor, facialHair, outfitId))
     {
         // Player not create (race/class problem?)
@@ -647,7 +647,7 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
         pet_id = fields[0].GetUInt32();
         pet_id += 1;
     }
-    else 
+    else
         pet_id = 1;
 
     if (class_ == CLASS_WARLOCK)
@@ -708,7 +708,6 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
     sLog->outChar("Account: %d (IP: %s) Create Character:[%s] (GUID: %u)", GetAccountId(), IP_str.c_str(), name.c_str(), pNewChar->GetGUIDLow());
     sScriptMgr->OnPlayerCreate(pNewChar);
     delete pNewChar;                                        // created only to call SaveToDB()
-
 }
 
 void WorldSession::HandleCharDeleteOpcode(WorldPacket & recv_data)
@@ -830,7 +829,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
 
     // for send server info and strings (config)
     ChatHandler chH = ChatHandler(pCurrChar);
-    
+
     pCurrChar->GetMotionMaster()->Initialize();
 
     SetPlayer(pCurrChar);
@@ -890,11 +889,11 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
             uint32 PlayersNum = sWorld->GetPlayerCount();
             uint32 MaxPlayersNum = sWorld->GetMaxPlayerCount();
             std::string uptime = secsToTimeString(sWorld->GetUptime());
-            
+
             chH.PSendSysMessage(_FULLVERSION);
             chH.PSendSysMessage(LANG_CONNECTED_PLAYERS, PlayersNum, MaxPlayersNum);
             chH.PSendSysMessage(LANG_UPTIME, uptime.c_str());
-            
+
             sLog->outStaticDebug("WORLD: Sent server info");
         }
     }
@@ -918,7 +917,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
         {
             pGuild->SendLoginInfo(this);
             pCurrChar->SetUInt32Value(PLAYER_GUILDLEVEL, uint32(pGuild->GetLevel()));
-            
+
             if (sWorld->getBoolConfig(CONFIG_GUILD_ADVANCEMENT_ENABLED))
             {
                 pCurrChar->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_GLEVEL_ENABLED);
@@ -1050,7 +1049,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
         SendNotification(LANG_GM_ON);
 
     std::string IP_str = GetRemoteAddress();
-    sLog->outChar("Account: %d (IP: %s) Login Character:[%s] (GUID: %u)", 
+    sLog->outChar("Account: %d (IP: %s) Login Character:[%s] (GUID: %u)",
         GetAccountId(), IP_str.c_str(), pCurrChar->GetName() , pCurrChar->GetGUIDLow());
 
     if (!pCurrChar->IsStandState() && !pCurrChar->HasUnitState(UNIT_STAT_STUNNED))
@@ -1213,7 +1212,7 @@ void WorldSession::HandleCharRenameOpcode(WorldPacket& recv_data)
     m_charRenameCallback.SetParam(newname);
     m_charRenameCallback.SetFutureResult(
         CharacterDatabase.AsyncPQuery(
-        "SELECT guid, name FROM characters WHERE guid = %d AND account = %d AND (at_login & %d) = %d AND NOT EXISTS (SELECT NULL FROM characters WHERE name = '%s')", 
+        "SELECT guid, name FROM characters WHERE guid = %d AND account = %d AND (at_login & %d) = %d AND NOT EXISTS (SELECT NULL FROM characters WHERE name = '%s')",
         GUID_LOPART(guid), GetAccountId(), AT_LOGIN_RENAME, AT_LOGIN_RENAME, escaped_newname.c_str()
         )
     );
@@ -1322,7 +1321,7 @@ void WorldSession::HandleSetPlayerDeclinedNames(WorldPacket& recv_data)
 
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     trans->PAppend("DELETE FROM character_declinedname WHERE guid = '%u'", GUID_LOPART(guid));
-    trans->PAppend("INSERT INTO character_declinedname (guid, genitive, dative, accusative, instrumental, prepositional) VALUES ('%u', '%s', '%s', '%s', '%s', '%s')", 
+    trans->PAppend("INSERT INTO character_declinedname (guid, genitive, dative, accusative, instrumental, prepositional) VALUES ('%u', '%s', '%s', '%s', '%s', '%s')",
         GUID_LOPART(guid), declinedname.name[0].c_str(), declinedname.name[1].c_str(), declinedname.name[2].c_str(), declinedname.name[3].c_str(), declinedname.name[4].c_str());
     CharacterDatabase.CommitTransaction(trans);
 
@@ -1883,9 +1882,9 @@ void WorldSession::HandleCharFactionOrRaceChange(WorldPacket& recv_data)
         {
             uint32 achiev_alliance = it->first;
             uint32 achiev_horde = it->second;
-            trans->PAppend("DELETE FROM `character_achievement` WHERE `achievement`=%u AND `guid`=%u", 
+            trans->PAppend("DELETE FROM `character_achievement` WHERE `achievement`=%u AND `guid`=%u",
                             team == BG_TEAM_ALLIANCE ? achiev_alliance : achiev_horde, lowGuid);
-            trans->PAppend("UPDATE `character_achievement` SET achievement = '%u' where achievement = '%u' AND guid = '%u'", 
+            trans->PAppend("UPDATE `character_achievement` SET achievement = '%u' where achievement = '%u' AND guid = '%u'",
                 team == BG_TEAM_ALLIANCE ? achiev_alliance : achiev_horde, team == BG_TEAM_ALLIANCE ? achiev_horde : achiev_alliance, lowGuid);
         }
 
@@ -1894,7 +1893,7 @@ void WorldSession::HandleCharFactionOrRaceChange(WorldPacket& recv_data)
         {
             uint32 item_alliance = it->first;
             uint32 item_horde = it->second;
-            trans->PAppend("UPDATE `item_instance` ii, `character_inventory` ci SET ii.itemEntry = '%u' WHERE ii.itemEntry = '%u' AND ci.guid = '%u' AND ci.item = ii.guid", 
+            trans->PAppend("UPDATE `item_instance` ii, `character_inventory` ci SET ii.itemEntry = '%u' WHERE ii.itemEntry = '%u' AND ci.guid = '%u' AND ci.item = ii.guid",
                 team == BG_TEAM_ALLIANCE ? item_alliance : item_horde, team == BG_TEAM_ALLIANCE ? item_horde : item_alliance, guid);
         }
 
@@ -1903,9 +1902,9 @@ void WorldSession::HandleCharFactionOrRaceChange(WorldPacket& recv_data)
         {
             uint32 spell_alliance = it->first;
             uint32 spell_horde = it->second;
-            trans->PAppend("DELETE FROM `character_spell` WHERE `spell`=%u AND `guid`=%u", 
+            trans->PAppend("DELETE FROM `character_spell` WHERE `spell`=%u AND `guid`=%u",
                             team == BG_TEAM_ALLIANCE ? spell_alliance : spell_horde, lowGuid);
-            trans->PAppend("UPDATE `character_spell` SET spell = '%u' where spell = '%u' AND guid = '%u'", 
+            trans->PAppend("UPDATE `character_spell` SET spell = '%u' where spell = '%u' AND guid = '%u'",
                 team == BG_TEAM_ALLIANCE ? spell_alliance : spell_horde, team == BG_TEAM_ALLIANCE ? spell_horde : spell_alliance, lowGuid);
         }
 
@@ -1914,9 +1913,9 @@ void WorldSession::HandleCharFactionOrRaceChange(WorldPacket& recv_data)
         {
             uint32 reputation_alliance = it->first;
             uint32 reputation_horde = it->second;
-            trans->PAppend("DELETE FROM character_reputation WHERE faction = '%u' AND guid = '%u'", 
+            trans->PAppend("DELETE FROM character_reputation WHERE faction = '%u' AND guid = '%u'",
                 team == BG_TEAM_ALLIANCE ? reputation_alliance : reputation_horde, lowGuid);
-            trans->PAppend("UPDATE `character_reputation` SET faction = '%u' where faction = '%u' AND guid = '%u'", 
+            trans->PAppend("UPDATE `character_reputation` SET faction = '%u' where faction = '%u' AND guid = '%u'",
                 team == BG_TEAM_ALLIANCE ? reputation_alliance : reputation_horde, team == BG_TEAM_ALLIANCE ? reputation_horde : reputation_alliance, lowGuid);
         }
     }

@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -47,7 +47,7 @@ void WorldSession::HandleDismissCritter(WorldPacket &recv_data)
 
     if (!pet)
     {
-        sLog->outDebug(LOG_FILTER_NETWORKIO, "Vanitypet (guid: %u) does not exist - player '%s' (guid: %u / account: %u) attempted to dismiss it (possibly lagged out)", 
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "Vanitypet (guid: %u) does not exist - player '%s' (guid: %u / account: %u) attempted to dismiss it (possibly lagged out)",
             uint32(GUID_LOPART(guid)), GetPlayer()->GetName(), GetPlayer()->GetGUIDLow(), GetAccountId());
         return;
     }
@@ -83,7 +83,7 @@ void WorldSession::HandlePetAction(WorldPacket & recv_data)
 
     // used also for charmed creature
     sLog->outDetail("HandlePetAction: Pet %u - flag: %u, spellid: %u, target: %u.", uint32(GUID_LOPART(guid1)), uint32(flag), spellid, uint32(GUID_LOPART(guid2)));
-    
+
     if (!pet)
     {
         sLog->outError("Pet %u not exist.", uint32(GUID_LOPART(guid1)));
@@ -582,7 +582,6 @@ void WorldSession::HandlePetSetAction(WorldPacket & recv_data)
                     ((Pet*)pet)->ToggleAutocast(spell_id, false);
                 else
                     charmInfo->ToggleCreatureAutocast(spell_id, false);
-
             }
 
             charmInfo->SetActionBar(position[i], spell_id, ActiveStates(act_state));
@@ -654,7 +653,7 @@ void WorldSession::HandlePetRename(WorldPacket & recv_data)
         for (uint8 i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
             CharacterDatabase.EscapeString(declinedname.name[i]);
         trans->PAppend("DELETE FROM character_pet_declinedname WHERE owner = '%u' AND id = '%u'", _player->GetGUIDLow(), pet->GetCharmInfo()->GetPetNumber());
-        trans->PAppend("INSERT INTO character_pet_declinedname (id, owner, genitive, dative, accusative, instrumental, prepositional) VALUES ('%u', '%u', '%s', '%s', '%s', '%s', '%s')", 
+        trans->PAppend("INSERT INTO character_pet_declinedname (id, owner, genitive, dative, accusative, instrumental, prepositional) VALUES ('%u', '%u', '%s', '%s', '%s', '%s', '%s')",
             pet->GetCharmInfo()->GetPetNumber(), _player->GetGUIDLow(), declinedname.name[0].c_str(), declinedname.name[1].c_str(), declinedname.name[2].c_str(), declinedname.name[3].c_str(), declinedname.name[4].c_str());
     }
 

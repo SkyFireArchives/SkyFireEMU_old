@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -227,7 +227,7 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
 
     if (GetSecurity() > SEC_PLAYER && sWorld->getBoolConfig(CONFIG_GM_LOG_TRADE))
     {
-        sLog->outCommand(GetAccountId(), "GM %s (Account: %u) create auction: %s (Entry: %u Count: %u)", 
+        sLog->outCommand(GetAccountId(), "GM %s (Account: %u) create auction: %s (Entry: %u Count: %u)",
             GetPlayerName(), GetAccountId(), it->GetProto()->Name1, it->GetEntry(), count);
     }
 
@@ -598,7 +598,7 @@ void WorldSession::HandleAuctionListItems(WorldPacket & recv_data)
 
     AuctionHouseObject* auctionHouse = sAuctionMgr->GetAuctionsMap(pCreature->getFaction());
 
-    //sLog->outDebug(LOG_FILTER_NETWORKIO, "Auctionhouse search (GUID: %u TypeId: %u)", , list from: %u, searchedname: %s, levelmin: %u, levelmax: %u, auctionSlotID: %u, auctionMainCategory: %u, auctionSubCategory: %u, quality: %u, usable: %u", 
+    //sLog->outDebug(LOG_FILTER_NETWORKIO, "Auctionhouse search (GUID: %u TypeId: %u)", , list from: %u, searchedname: %s, levelmin: %u, levelmax: %u, auctionSlotID: %u, auctionMainCategory: %u, auctionSubCategory: %u, quality: %u, usable: %u",
     //  GUID_LOPART(guid), GuidHigh2TypeId(GUID_HIPART(guid)), listfrom, searchedname.c_str(), levelmin, levelmax, auctionSlotID, auctionMainCategory, auctionSubCategory, quality, usable);
 
     WorldPacket data(SMSG_AUCTION_LIST_RESULT, (4+4+4));
@@ -613,9 +613,9 @@ void WorldSession::HandleAuctionListItems(WorldPacket & recv_data)
 
     wstrToLower(wsearchedname);
 
-    auctionHouse->BuildListAuctionItems(data, _player, 
-        wsearchedname, listfrom, levelmin, levelmax, usable, 
-        auctionSlotID, auctionMainCategory, auctionSubCategory, quality, 
+    auctionHouse->BuildListAuctionItems(data, _player,
+        wsearchedname, listfrom, levelmin, levelmax, usable,
+        auctionSlotID, auctionMainCategory, auctionSubCategory, quality,
         count, totalcount);
 
     data.put<uint32>(0, count);
