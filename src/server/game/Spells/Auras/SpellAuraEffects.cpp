@@ -595,7 +595,7 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
 
                         if (caster->ToPlayer()->HasAuraType(SPELL_AURA_MASTERY))
                         {
-                            if (caster->ToPlayer()->getClass() == CLASS_PALADIN)
+                            if (caster->ToPlayer()->getClass() == CLASS_PRIEST)
                             {
                                 if (caster->ToPlayer()->GetTalentBranchSpec(caster->ToPlayer()->GetActiveSpec()) == BS_PRIEST_DISCIPLINE)
                                 {
