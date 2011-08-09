@@ -20,9 +20,9 @@
 
 enum Says
 {
-    SAY_AGGRO           = 0,
-    SAY_AZURE           = 1,
-    SAY_AZURE_EMOTE     = 2,
+    SAY_AGGRO           = 0, 
+    SAY_AZURE           = 1, 
+    SAY_AZURE_EMOTE     = 2, 
     SAY_DEATH           = 3
 };
 
@@ -33,17 +33,17 @@ enum Spells
     /*SPELL_CALL_AZURE_RING_CAPTAIN_2               = 51006, //Effect    Send Event (10665)
     SPELL_CALL_AZURE_RING_CAPTAIN_3               = 51007, //Effect    Send Event (18454)
     SPELL_CALL_AZURE_RING_CAPTAIN_4               = 51008, //Effect    Send Event (18455)*/
-    SPELL_CALL_AMPLIFY_MAGIC                      = 51054,
+    SPELL_CALL_AMPLIFY_MAGIC                      = 51054, 
 
-    SPELL_CENTRIFUGE_SHIELD                       = 50053,
+    SPELL_CENTRIFUGE_SHIELD                       = 50053, 
 
     SPELL_ICE_BEAM                                = 49549
 };
 
 enum Events
 {
-    EVENT_ENERGIZE_CORES = 1,
-    EVENT_CALL_AZURE,
+    EVENT_ENERGIZE_CORES = 1, 
+    EVENT_CALL_AZURE, 
     EVENT_AMPLIFY_MAGIC
 };
 
@@ -61,17 +61,17 @@ public:
     {
         boss_varosAI(Creature* creature) : BossAI(creature, DATA_VAROS_EVENT)
         {
-            DoCast(me,SPELL_CENTRIFUGE_SHIELD);
+            DoCast(me, SPELL_CENTRIFUGE_SHIELD);
         }
 
         void Reset()
         {
             _Reset();
 
-            events.ScheduleEvent(EVENT_AMPLIFY_MAGIC, urand(20,25) * IN_MILLISECONDS);
-            events.ScheduleEvent(EVENT_ENERGIZE_CORES, urand(0,15) * IN_MILLISECONDS);
+            events.ScheduleEvent(EVENT_AMPLIFY_MAGIC, urand(20, 25) * IN_MILLISECONDS);
+            events.ScheduleEvent(EVENT_ENERGIZE_CORES, urand(0, 15) * IN_MILLISECONDS);
             // not sure if this is handled by a timer or hp percentage
-            events.ScheduleEvent(EVENT_CALL_AZURE, urand(15,30) * IN_MILLISECONDS);
+            events.ScheduleEvent(EVENT_CALL_AZURE, urand(15, 30) * IN_MILLISECONDS);
 
             instance->SetData(DATA_VAROS_EVENT, NOT_STARTED);
         }
@@ -109,19 +109,19 @@ public:
                 switch (eventId)
                 {
                     case EVENT_ENERGIZE_CORES:
-                        DoCast(me,SPELL_ENERGIZE_CORES);
-                        events.ScheduleEvent(EVENT_ENERGIZE_CORES, urand(12,14) * IN_MILLISECONDS);
+                        DoCast(me, SPELL_ENERGIZE_CORES);
+                        events.ScheduleEvent(EVENT_ENERGIZE_CORES, urand(12, 14) * IN_MILLISECONDS);
                         break;
                     case EVENT_CALL_AZURE:
                         // not sure how blizz handles this, i cant see any pattern between the differnt spells
-                        DoCast(me,SPELL_CALL_AZURE_RING_CAPTAIN);
+                        DoCast(me, SPELL_CALL_AZURE_RING_CAPTAIN);
                         Talk(SAY_AZURE);
                         Talk(SAY_AZURE_EMOTE);
-                        events.ScheduleEvent(EVENT_CALL_AZURE, urand(20,25) * IN_MILLISECONDS);
+                        events.ScheduleEvent(EVENT_CALL_AZURE, urand(20, 25) * IN_MILLISECONDS);
                         break;
                     case EVENT_AMPLIFY_MAGIC:
-                        DoCast(me->getVictim(),SPELL_CALL_AMPLIFY_MAGIC);
-                        events.ScheduleEvent(EVENT_AMPLIFY_MAGIC, urand(17,20) * IN_MILLISECONDS);
+                        DoCast(me->getVictim(), SPELL_CALL_AMPLIFY_MAGIC);
+                        events.ScheduleEvent(EVENT_AMPLIFY_MAGIC, urand(17, 20) * IN_MILLISECONDS);
                         break;
                 }
             }
@@ -181,8 +181,8 @@ class npc_azure_ring_captain : public CreatureScript
 
                 me->GetMotionMaster()->MoveIdle();
 
-                if (Unit* target = ObjectAccessor::GetUnit(*me,targetGUID))
-                    DoCast(target,SPELL_ICE_BEAM);
+                if (Unit* target = ObjectAccessor::GetUnit(*me, targetGUID))
+                    DoCast(target, SPELL_ICE_BEAM);
             }
 
             void DoAction(const int32 action)
@@ -192,13 +192,13 @@ class npc_azure_ring_captain : public CreatureScript
                    case ACTION_CALL_DRAGON_EVENT:
                         if (instance)
                         {
-                            if (Creature* varos = ObjectAccessor::GetCreature(*me,instance->GetData64(DATA_VAROS)))
+                            if (Creature* varos = ObjectAccessor::GetCreature(*me, instance->GetData64(DATA_VAROS)))
                             {
-                                if (Unit* victim = varos->AI()->SelectTarget(SELECT_TARGET_RANDOM,0))
+                                if (Unit* victim = varos->AI()->SelectTarget(SELECT_TARGET_RANDOM, 0))
                                 {
                                     me->SetReactState(REACT_PASSIVE);
                                     me->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
-                                    me->GetMotionMaster()->MovePoint(ACTION_CALL_DRAGON_EVENT,victim->GetPositionX(),victim->GetPositionY(),victim->GetPositionZ() + 20.0f);
+                                    me->GetMotionMaster()->MovePoint(ACTION_CALL_DRAGON_EVENT, victim->GetPositionX(), victim->GetPositionY(), victim->GetPositionZ() + 20.0f);
                                     targetGUID = victim->GetGUID();
                                 }
                             }
@@ -251,7 +251,7 @@ class spell_varos_centrifuge_shield : public SpellScriptLoader
 
             void Register()
             {
-                OnEffectRemove += AuraEffectRemoveFn(spell_varos_centrifuge_shield_AuraScript::OnRemove, EFFECT_0,SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
+                OnEffectRemove += AuraEffectRemoveFn(spell_varos_centrifuge_shield_AuraScript::OnRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
                 OnEffectApply += AuraEffectApplyFn(spell_varos_centrifuge_shield_AuraScript::OnApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
             }
         };
