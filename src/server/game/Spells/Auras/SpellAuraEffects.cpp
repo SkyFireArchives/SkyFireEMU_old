@@ -593,6 +593,17 @@ int32 AuraEffect::CalculateAmount(Unit *caster)
                         DoneActualBenefit *= caster->GetTotalAuraMultiplier(SPELL_AURA_MOD_HEALING_DONE_PERCENT);
                         amount = int32(DoneActualBenefit);
 
+                        if (caster->ToPlayer()->HasAuraType(SPELL_AURA_MASTERY))
+                        {
+                            if (caster->ToPlayer()->getClass() == CLASS_PALADIN)
+                            {
+                                if (caster->ToPlayer()->GetTalentBranchSpec(caster->ToPlayer()->GetActiveSpec()) == BS_PRIEST_DISCIPLINE)
+                                {
+                                    int32 bp = int32(amount * (0.2f + (0.025f * caster->ToPlayer()->GetMasteryPoints())));
+                                    amount += bp;
+                                }
+                            }
+                        }
                         return amount;
                     }
                     break;
