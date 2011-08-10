@@ -8434,6 +8434,7 @@ void Player::_ApplyAmmoBonuses()
 
 bool Player::CheckAmmoCompatibility(const ItemPrototype *ammo_proto) const
 {
+    /*
     if (!ammo_proto)
         return false;
 
@@ -8460,7 +8461,7 @@ bool Player::CheckAmmoCompatibility(const ItemPrototype *ammo_proto) const
             break;
         default:
             return false;
-    }
+    }*/
 
     return true;
 }
