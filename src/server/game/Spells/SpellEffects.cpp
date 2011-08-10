@@ -699,29 +699,41 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                 // Starfire
                 else if (m_spellInfo->SpellFamilyFlags[0] & 0x00000004)
                 {
-                    if (m_caster->ToPlayer()->HasAura(16913))   // Tallent from Balance spec, there is no other way how to check spec :S
+                    if (m_caster->GetTypeId() == TYPEID_PLAYER)
                     {
-                        if (m_caster->HasAura(48517))
+                        if (m_caster->ToPlayer()->GetTalentBranchSpec(m_caster->ToPlayer()->GetActiveSpec()) == BS_DRUID_BALANCE)
                         {
-                            m_caster->RemoveAurasDueToSpell(48517);
-                            m_caster->SetEclipsePower(0);
-                        }
+                            if (m_caster->HasAura(48517))
+                            {
+                                m_caster->RemoveAurasDueToSpell(48517);
+                                m_caster->SetEclipsePower(0);
+                            }
+                            if (m_caster->GetEclipsePower() >= -20)
+                                if (m_caster->HasAura(48518))
+                                        m_caster->RemoveAurasDueToSpell(48518);
 
-                        m_caster->SetEclipsePower(int32(m_caster->GetEclipsePower() + 20));
+                            m_caster->SetEclipsePower(int32(m_caster->GetEclipsePower() + 20));
+                        }
                     }
                 }
                 // Wrath
                 else if (m_spellInfo->SpellFamilyFlags[0] & 0x00000001)
                 {
-                    if (m_caster->ToPlayer()->HasAura(16913))   // Tallent from Balance spec, there is no other way how to check spec :S
+                    if (m_caster->GetTypeId() == TYPEID_PLAYER)
                     {
-                        if (m_caster->HasAura(48518))
+                        if (m_caster->ToPlayer()->GetTalentBranchSpec(m_caster->ToPlayer()->GetActiveSpec()) == BS_DRUID_BALANCE)
                         {
-                            m_caster->RemoveAurasDueToSpell(48518);
-                            m_caster->SetEclipsePower(0);
-                        }
+                            if (m_caster->HasAura(48518))
+                            {
+                                m_caster->RemoveAurasDueToSpell(48518);
+                                m_caster->SetEclipsePower(0);
+                            }
+                            if (m_caster->GetEclipsePower() <= 13)
+                                if (m_caster->HasAura(48517))
+                                        m_caster->RemoveAurasDueToSpell(48517);
 
-                        m_caster->SetEclipsePower(int32(m_caster->GetEclipsePower() - 13));
+                            m_caster->SetEclipsePower(int32(m_caster->GetEclipsePower() - 13));
+                        }
                     }
                     // Improved Insect Swarm
                     if (AuraEffect const * aurEff = m_caster->GetDummyAuraEffect(SPELLFAMILY_DRUID, 1771, 0))
