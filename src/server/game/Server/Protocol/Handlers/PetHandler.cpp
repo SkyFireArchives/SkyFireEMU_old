@@ -73,6 +73,12 @@ void WorldSession::HandlePetAction(WorldPacket & recv_data)
 
     Unit* pet= ObjectAccessor::GetUnit(*_player, guid1);
 
+    if (!pet)
+    {
+        sLog->outError("Pet %u not exist.", uint32(GUID_LOPART(guid1)));
+        return;
+    }
+
     float pos_x = pet->GetPositionX();
     float pos_y = pet->GetPositionY();
     float pos_z = pet->GetPositionZ();
@@ -83,12 +89,6 @@ void WorldSession::HandlePetAction(WorldPacket & recv_data)
 
     // used also for charmed creature
     sLog->outDetail("HandlePetAction: Pet %u - flag: %u, spellid: %u, target: %u.", uint32(GUID_LOPART(guid1)), uint32(flag), spellid, uint32(GUID_LOPART(guid2)));
-
-    if (!pet)
-    {
-        sLog->outError("Pet %u not exist.", uint32(GUID_LOPART(guid1)));
-        return;
-    }
 
     if (pet != GetPlayer()->GetFirstControlled())
     {
