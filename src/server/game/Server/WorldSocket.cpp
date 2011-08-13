@@ -167,14 +167,14 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
     if (sWorldLog->LogWorld())
     {
         std::string error = "";
-        if (pct.GetOpcode() > OPCODE_NOT_FOUND)
-            error = "NOT SEND\n";
-        sWorldLog->outTimestampLog ("SERVER:\nSOCKET: %u\nLENGTH: %u\nOPCODE: %s (0x%.4X)\n%sDATA:\n",
+        if(pct.GetOpcode() == 0)
+            error = " NOT SENT";
+        sWorldLog->outTimestampLog ("SERVER:%s\nSOCKET: %u\nLENGTH: %u\nOPCODE: %s (0x%.4X)\nDATA:\n",
+                     error.c_str(),
                      (uint32) get_handle(),
                      pct.size(),
-                     LookupOpcodeName (pct.GetOpcode()),
-                     pct.GetOpcode(),
-                     error.c_str());
+                     LookupOpcodeName (pct.GetOpcodeEnum()),
+                     pct.GetOpcode());
 
         uint32 p = 0;
         while (p < pct.size())
@@ -193,6 +193,10 @@ int WorldSocket::SendPacket (const WorldPacket& pct)
         sLog->outDebug(LOG_FILTER_NETWORKIO, "Packet %s (%X) not send.\n", LookupOpcodeName (pct.GetOpcode()), pct.GetOpcode());
         return 0;
     }
+
+    // Prevent spamming client with non-existant opcodes
+    if (pct.GetOpcode() == 0)
+        return 0;
 
     // Create a copy of the original packet; this is to avoid issues if a hook modifies it.
     sScriptMgr->OnPacketSend(this, WorldPacket(pct));
