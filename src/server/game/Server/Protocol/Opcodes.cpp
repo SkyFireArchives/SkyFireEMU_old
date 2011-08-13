@@ -28,25 +28,82 @@
 #include "Opcodes.h"
 #include "WorldSession.h"
 
-/// Correspondence between opcodes and their names
-OpcodeHandler opcodeTable[NUM_MSG_TYPES];
+/// Correspondence between opcode numbers and their names/handlers
+OpcodeHandler opcodeTable[MAX_MSG_TYPES];
+uint16 opcodesEnumToNumber[NUM_OPCODES];
+char const* opcodesEnumToName[NUM_OPCODES];
 
-static void DefineOpcode(uint32 opcode, const char* name, SessionStatus status, PacketProcessing packetProcessing, void (WorldSession::*handler)(WorldPacket& recvPacket) )
+typedef UNORDERED_MAP< std::string, uint16> OpcodeNameValueMap;
+OpcodeNameValueMap OpcodeNameValues;
+
+bool LoadOpcodes()
 {
-    opcodeTable[opcode].name = name;
-    opcodeTable[opcode].status = status;
-    opcodeTable[opcode].packetProcessing = packetProcessing;
-    opcodeTable[opcode].handler = handler;
+    //uint16 build = 14480;
+	uint16 build = 14333;
+    QueryResult result = WorldDatabase.PQuery("SELECT name, number FROM emuopcodes where version = %u", build);
+
+    if (!result)
+    {
+        sLog->outString();
+        sLog->outErrorDb(">> Failed to load opcode values from the DB. Cannot continue.");
+        return false;
+    }
+
+    uint32 count = 0;
+    do
+    {
+        Field *fields = result->Fetch();
+
+        std::string name = fields[0].GetString();
+        uint16 entry = fields[1].GetUInt16();
+
+        OpcodeNameValues[name] = entry;
+        ++count;
+    } while (result->NextRow());
+
+    sLog->outString();
+    sLog->outString(">> Loaded %u opcodes for build %u", count, build);
+
+    return true;
+}
+
+static void DefineOpcode(Opcodes enumId, const char* name, SessionStatus status, PacketProcessing packetProcessing, void (WorldSession::*handler)(WorldPacket& recvPacket) )
+{
+    opcodesEnumToName[enumId] = name;
+    OpcodeNameValueMap::iterator itr = OpcodeNameValues.find(std::string(name));
+    if (itr != OpcodeNameValues.end())
+    {
+        uint16 opcode = itr->second;
+        opcodesEnumToNumber[enumId] = opcode;
+        if (opcode == 0)
+            return; // opcode unknown yet :(
+
+        opcodeTable[opcode].name = name;
+        opcodeTable[opcode].status = status;
+        opcodeTable[opcode].packetProcessing = packetProcessing;
+        opcodeTable[opcode].handler = handler;
+        opcodeTable[opcode].enumValue = enumId;
+    }
+    else
+    {
+        sLog->outError("Opcode not found in the DB %s", name);
+        opcodesEnumToNumber[enumId] = 0;
+    }
 }
 
 #define OPCODE( name, status, packetProcessing, handler ) DefineOpcode( name, #name, status, packetProcessing, handler )
 
 void InitOpcodeTable()
 {
-    for( int i = 0; i < NUM_MSG_TYPES; ++i )
+    for( int i = 0; i < MAX_MSG_TYPES; ++i )
     {
-        DefineOpcode( i, "UNKNOWN", STATUS_NEVER, PROCESS_INPLACE,  &WorldSession::Handle_NULL );
+        opcodeTable[i].name = "UNKNOWN";
+        opcodeTable[i].status = STATUS_NEVER;
+        opcodeTable[i].packetProcessing = PROCESS_INPLACE;
+        opcodeTable[i].handler = &WorldSession::Handle_NULL;
     }
+
+    LoadOpcodes();
 
     OPCODE( CMSG_WORLD_TELEPORT,                          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleWorldTeleportOpcode       );
     OPCODE( CMSG_TELEPORT_TO_UNIT,                        STATUS_LOGGEDIN, PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
@@ -292,7 +349,6 @@ void InitOpcodeTable()
     OPCODE( CMSG_SWAP_INV_ITEM,                           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleSwapInvItemOpcode         );
     OPCODE( CMSG_SPLIT_ITEM,                              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleSplitItemOpcode           );
     OPCODE( CMSG_AUTOEQUIP_ITEM_SLOT,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleAutoEquipItemSlotOpcode   );
-    OPCODE( OBSOLETE_DROP_ITEM,                           STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
     OPCODE( CMSG_DESTROYITEM,                             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleDestroyItemOpcode         );
     OPCODE( SMSG_INVENTORY_CHANGE_FAILURE,                STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( SMSG_OPEN_CONTAINER,                          STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
@@ -1282,4 +1338,8 @@ void InitOpcodeTable()
     OPCODE( CMSG_GROUP_SET_ROLES,                         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleGroupSetRoles             );
     OPCODE( SMSG_UNKNOWN_1310,                            STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
     OPCODE( CMSG_RETURN_TO_GRAVEYARD,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleMoveToGraveyard           );
+    OPCODE( SMSG_PLAYER_MOVE,                             STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_ServerSide               );
+    OPCODE( MSG_OPCODE_UNKNOWN,                           STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::Handle_NULL                     );
+
+    OpcodeNameValues.clear();
 };
