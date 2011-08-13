@@ -65,12 +65,14 @@ class WorldPacket : public ByteBuffer
             else m_opcode = opcode;
         }
 
+		Opcodes GetOpcodeEnum() const { return m_opcodeEnum; }
         uint32 GetOpcode() const { return m_opcode; }
         void SetOpcode(uint32 opcode) { m_opcode = opcode; }
 
     protected:
 
         uint32 m_opcode;
+		Opcodes m_opcodeEnum;
 };
 #endif
 
