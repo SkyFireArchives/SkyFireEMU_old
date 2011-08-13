@@ -15,94 +15,131 @@
 * with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include"ScriptPCH.h"
-#include"baradin_hold.h"
+#include "ScriptMgr.h"
+#include "ScriptedCreature.h"
+#include "baradin_hold.h"
 
 enum Spells
 {
-    SPELL_BERSERK              = 47008,
-    SPELL_CONSUMING_DARKNESS   = 88954,
-    SPELL_METEOR_SLASH         = 88942,
-    SPELL_FEL_FIRESTORM        = 88972,
+    SPELL_BERSERK				= 47008,
+    SPELL_CONSUMING_DARKNESS	= 88954,
+    H_SPELL_CONSUMING_DARKNESS	= 95173,
+    SPELL_FEL_FIRESTORM			= 88972,
+    SPELL_METEOR_SLASH			= 88942,
+    H_SPELL_METEOR_SLASH		= 95172,
 };
 
 enum Events
 {
-    EVENT_BERSERK = 1,
-    EVENT_CONSUMING_DARKNESS,
-    EVENT_METEOR_SLASH,
+    EVENT_BERSERK				= 1,
+    EVENT_CONSUMING_DARKNESS	= 2,
+    EVENT_METEOR_SLASH			= 3,
 };
 
 class boss_argaloth: public CreatureScript
 {
-    public:
-        boss_argaloth() : CreatureScript("boss_argaloth") { }
+	public:
+		boss_argaloth() : CreatureScript("boss_argaloth") { }
 
-    struct boss_argalothAI: public BossAI
-    {
-        boss_argalothAI(Creature* pCreature) : BossAI(pCreature, DATA_ARGALOTH) { }
+		struct boss_argalothAI: public BossAI
+		{
+			boss_argalothAI(Creature* creature) : BossAI(creature, DATA_ARGALOTH)
+			{
+			}
 
-        uint32 fel_firestorm_casted;
+			void Reset()
+			{
+				events.Reset();
+				instance->SetBossState(DATA_ARGALOTH, NOT_STARTED);
 
-        void Reset()
-        {
-            _Reset();
-            me->RemoveAurasDueToSpell(SPELL_BERSERK);
-            events.ScheduleEvent(EVENT_BERSERK, 300 *IN_MILLISECONDS);
-            events.ScheduleEvent(EVENT_CONSUMING_DARKNESS, 14 *IN_MILLISECONDS);
-            events.ScheduleEvent(EVENT_METEOR_SLASH, 10 *IN_MILLISECONDS);
-            fel_firestorm_casted = 0;
-        }
+				felStormCount = 0;
+			}
 
-        void UpdateAI(const uint32 diff)
-        {
-            if (!UpdateVictim())
-                return;
+			void EnterCombat(Unit* /*who*/)
+			{
+				me->setActive(true);
+				DoZoneInCombat();
+
+				events.ScheduleEvent(EVENT_CONSUMING_DARKNESS, urand(12000, 14000));
+				events.ScheduleEvent(EVENT_METEOR_SLASH, 15000);
+				events.ScheduleEvent(EVENT_BERSERK, 300000);
+			}
+
+			void JustDied(Unit* /*killer*/)
+			{
+				Map* map = instance->instance;
+				Map::PlayerList const &players = map->GetPlayers();
+				if (!players.isEmpty())
+				{
+					if (Player* player = players.begin()->getSource())
+					{
+						if (Is25ManRaid())
+							player->ModifyCurrency(396, 10500);
+						else
+							player->ModifyCurrency(396, 7500);
+					}
+				}
+
+				instance->SetBossState(DATA_ARGALOTH, DONE);
+			}
+
+			void DamageTaken(Unit* /*attack*/, uint32& /*damage*/)
+			{
+				if (HealthBelowPct(67) && felStormCount == 0)
+				{
+					++felStormCount;
+					DoCast(me, SPELL_FEL_FIRESTORM);
+				}
+				else if (HealthBelowPct(34) && felStormCount == 1)
+				{
+					++felStormCount;
+					DoCast(me, SPELL_FEL_FIRESTORM);
+				}
+			}
+
+			void UpdateAI(uint32 const diff)
+			{
+				if (!UpdateVictim())
+					return;
+
+	            events.Update(diff);
+
+				if (me->HasUnitState(UNIT_STAT_CASTING))
+					return;
+
+				while (uint32 eventId = events.ExecuteEvent())
+				{
+					switch(eventId)
+					{
+						case EVENT_CONSUMING_DARKNESS:
+							if (Is25ManRaind())
+								DoCast(H_SPELL_CONSUMING_DARKNESS);
+							else
+								DoCast(SPELL_CONSUMING_DARKNESS);
+							events.ScheduleEvent(EVENT_CONSUMING_DARKNESS, 24000);
+							break;
+						case EVENT_METEOR_SLASH:
+							DoCastVictim(SPELL_METEOR_SLASH);
+							events.ScheduleEvent(EVENT_METEOR_SLASH, 21000);
+							break;
+						case EVENT_BERSERK:
+							DoCast(me, SPELL_BERSERK);
+							break;
+					}
+				}
+
+				DoMeleeAttackIfReady();
             
-            if (me->GetHealthPct() < 66 && fel_firestorm_casted == 0)
-            {
-                DoCast(SPELL_FEL_FIRESTORM);
-                events.DelayEvents(3 *IN_MILLISECONDS);
-                fel_firestorm_casted = 1;
-            }
-            if (me->GetHealthPct() < 33 && fel_firestorm_casted == 1)
-            {
-                DoCast(SPELL_FEL_FIRESTORM);
-                events.DelayEvents(3 *IN_MILLISECONDS);
-                fel_firestorm_casted = 2;
-            }
+			}
 
-            events.Update(diff);
+		private:
+			uint8 felStormCount;
+		};
 
-            if (me->HasUnitState(UNIT_STAT_CASTING))
-                    return;
-
-            while (uint32 eventId = events.ExecuteEvent())
-            {
-                switch (eventId)
-                {
-                case EVENT_CONSUMING_DARKNESS:
-                    DoCast(SPELL_CONSUMING_DARKNESS);
-                    events.RescheduleEvent(EVENT_CONSUMING_DARKNESS, 22 *IN_MILLISECONDS);
-                    break;
-                case EVENT_METEOR_SLASH:
-                    DoCast(SPELL_METEOR_SLASH);
-                    events.RescheduleEvent(EVENT_METEOR_SLASH, 15 *IN_MILLISECONDS);
-                    break;
-                case EVENT_BERSERK:
-                    DoCast(me, SPELL_BERSERK);
-                    break;
-                }
-            }
-
-            DoMeleeAttackIfReady();
-        }
-     };
-
-    CreatureAI* GetAI(Creature* pCreature) const
-    {
-        return new boss_argalothAI(pCreature);
-    }
+		CreatureAI* GetAI(Creature* creature) const
+		{
+			return new boss_argalothAI(creature);
+		}
 };
 
 void AddSC_boss_argaloth()

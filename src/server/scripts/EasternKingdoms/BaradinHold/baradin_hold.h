@@ -18,17 +18,16 @@
 #ifndef DEF_BARADIN_HOLD_H_
 #define DEF_BARADIN_HOLD_H_
 
-enum Creatures
+uint32 const EncounterCount = 1;
+
+enum CreatureIds
 {
-    CREATURE_ARGALOTH  = 47120,
-    CREATURE_OCCUTHAR  = 52363, // will be in 4.2
+    BOSS_ARGALOTH  = 47120,
 };
 
-enum Data
+enum DataTypes
 {
-    DATA_ARGALOTH,
-    DATA_OCCUTHAR,
-    MAX_ENCOUNTER
+	DATA_ARGALOTH = 1,
 };
 
 #endif
