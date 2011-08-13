@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -25,54 +25,49 @@
 
 #include "Common.h"
 #include "ByteBuffer.h"
+#include "Opcodes.h"
 
 class WorldPacket : public ByteBuffer
 {
     public:
                                                             // just container for later use
-        WorldPacket()                                       : ByteBuffer(0), m_opcode(0)
+        WorldPacket()                                       : ByteBuffer(0), m_opcode(0), m_opcodeEnum(MSG_OPCODE_UNKNOWN)
         {
         }
-        explicit WorldPacket(uint32 opcode, size_t res=200, bool hack = false) : ByteBuffer(res), m_opcode(opcode)
-		{
-			// This is a hack fix.
-			// The client will not 'eat' certain opcodes when they're sent under normal circumstances.
-			// This is due to the new redirection system implemented by Blizzard in Cataclysm.
-			// Another solution to get them handled would be to patch the client even heavier than we already do.
-			// In this case, I choose to spread hacks in our code, rather than in Blizzard's
-			// - Dvlpr
-            if (hack)
-            {
-                m_opcode = SMSG_MULTIPLE_PACKETS;
-                *this << uint16(opcode);
-            }
-		}
+        explicit WorldPacket(Opcodes enumVal, size_t res=200) : ByteBuffer(res)
+        {
+            SetOpcode(enumVal);
+        }
+        explicit WorldPacket(uint32 opcode, size_t res=200) : ByteBuffer(res)
+        {
+            SetOpcode(opcode);
+        }
                                                             // copy constructor
-        WorldPacket(const WorldPacket &packet)              : ByteBuffer(packet), m_opcode(packet.m_opcode)
+        WorldPacket(const WorldPacket &packet)              : ByteBuffer(packet), m_opcode(packet.m_opcode), m_opcodeEnum(packet.m_opcodeEnum)
         {
         }
 
-        void Initialize(uint32 opcode, size_t newres=200, bool hack = false)
+        void Initialize(Opcodes enumVal, size_t newres=200)
         {
             clear();
             _storage.reserve(newres);
-
-            if (hack)
-            {
-                m_opcode = SMSG_MULTIPLE_PACKETS;
-                *this << uint16(opcode);
-            }
-            else m_opcode = opcode;
+            SetOpcode(enumVal);
+        }
+        void Initialize(uint32 opcode, size_t newres=200)
+        {
+            clear();
+            _storage.reserve(newres);
+            SetOpcode(opcode);
         }
 
-		Opcodes GetOpcodeEnum() const { return m_opcodeEnum; }
+        Opcodes GetOpcodeEnum() const { return m_opcodeEnum; }
         uint32 GetOpcode() const { return m_opcode; }
-        void SetOpcode(uint32 opcode) { m_opcode = opcode; }
+        inline void SetOpcode(uint32 opcode) { m_opcode = opcode; m_opcodeEnum = LookupOpcodeEnum(opcode); }
+        inline void SetOpcode(Opcodes enumVal) { m_opcode = LookupOpcodeNumber(enumVal); m_opcodeEnum = enumVal; }
 
     protected:
 
         uint32 m_opcode;
-		Opcodes m_opcodeEnum;
+        Opcodes m_opcodeEnum;
 };
 #endif
-

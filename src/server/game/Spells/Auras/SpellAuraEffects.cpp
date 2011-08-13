@@ -4167,9 +4167,9 @@ void AuraEffect::HandleAuraAllowFlight(AuraApplication const *aurApp, uint8 mode
         // allow flying
         WorldPacket data;
         if (apply)
-            data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12, true);
+            data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
         else
-            data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12, true);
+            data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12);
         data.append(target->GetPackGUID());
         data << uint32(0);                                      // unk
         plr->SendDirectMessage(&data);
@@ -4585,9 +4585,9 @@ void AuraEffect::HandleAuraModIncreaseFlightSpeed(AuraApplication const *aurApp,
             {
                 WorldPacket data;
                 if (apply)
-                    data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12, true);
+                    data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
                 else
-                    data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12, true);
+                    data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12);
                 data.append(plr->GetPackGUID());
                 data << uint32(0);                                      // unknown
                 plr->SendDirectMessage(&data);

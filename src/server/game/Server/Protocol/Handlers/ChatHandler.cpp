@@ -71,9 +71,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
     uint32 type = 0;
     uint32 lang;
 
-    // Les types sont maintenant ger�s par opcode, un opcode par type
-    // Changement en place depuis la 4.0.1 13164
-    switch(recv_data.GetOpcode())
+    switch(recv_data.GetOpcodeEnum())
     {
         case CMSG_MESSAGECHAT_SAY:
             type = CHAT_MSG_SAY;

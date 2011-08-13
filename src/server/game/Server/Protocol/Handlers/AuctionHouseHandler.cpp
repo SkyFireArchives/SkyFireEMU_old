@@ -632,7 +632,7 @@ void WorldSession::HandleAuctionListPendingSales(WorldPacket & recv_data)
 
     uint32 count = 0;
 
-    WorldPacket data(SMSG_AUCTION_LIST_PENDING_SALES, 4, true);
+    WorldPacket data(SMSG_AUCTION_LIST_PENDING_SALES, 4);
     data << uint32(count);                                  // count
     SendPacket(&data);
 }
