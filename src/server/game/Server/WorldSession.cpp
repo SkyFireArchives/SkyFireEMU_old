@@ -237,8 +237,14 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
                         packet->GetOpcode());
         #endif*/
 
-		sLog->outDebug(LOG_FILTER_NETWORKIO, "SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode()>OPCODE_NOT_FOUND?"nf":LookupOpcodeName(packet->GetOpcode()));
-		if (packet->GetOpcodeEnum() == MSG_OPCODE_UNKNOWN)
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode()>OPCODE_NOT_FOUND?"nf":LookupOpcodeName(packet->GetOpcode()));
+        if(packet->GetOpcodeEnum() == MSG_OPCODE_UNKNOWN)
+        {
+            time_t t = time(NULL);
+            tm* aTm = localtime(&t);
+            sLog->outError("SESSION: Received unknown opcode %02d:%02d 0x%.4X (%d)", aTm->tm_min, aTm->tm_sec, packet->GetOpcode(), packet->GetOpcode());
+        }
+        if (packet->GetOpcodeEnum() == MAX_MSG_TYPES)
         {
             sLog->outError("SESSION: received non-existed opcode %s (0x%.4X)",
                 LookupOpcodeName(packet->GetOpcode()),

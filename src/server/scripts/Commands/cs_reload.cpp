@@ -120,6 +120,7 @@ public:
             { "npc_spellclick_spells",        SEC_ADMINISTRATOR, true,  &HandleReloadSpellClickSpellsCommand,           "",NULL},
             { "npc_trainer",                  SEC_ADMINISTRATOR, true,  &HandleReloadNpcTrainerCommand,                 "", NULL },
             { "npc_vendor",                   SEC_ADMINISTRATOR, true,  &HandleReloadNpcVendorCommand,                  "", NULL },
+            { "opcodes",                      SEC_ADMINISTRATOR, true,  &HandleReloadOpcodes,                           "", NULL },
             { "page_text",                    SEC_ADMINISTRATOR, true,  &HandleReloadPageTextsCommand,                  "", NULL },
             { "pickpocketing_loot_template",  SEC_ADMINISTRATOR, true,  &HandleReloadLootTemplatesPickpocketingCommand, "",NULL},
             { "points_of_interest",           SEC_ADMINISTRATOR, true,  &HandleReloadPointsOfInterestCommand,           "", NULL },
@@ -1271,6 +1272,14 @@ public:
         sLog->outString("Re-Loading Smart Scripts...");
         sSmartScriptMgr->LoadSmartAIFromDB();
         handler->SendGlobalGMSysMessage("Smart Scripts reloaded.");
+        return true;
+    }
+    
+    static bool HandleReloadOpcodes(ChatHandler* handler, const char* /*args*/)
+    {
+        sLog->outString("Re-Loading Opcodes...");
+        InitOpcodeTable();
+        handler->SendGlobalGMSysMessage("Opcodes reloaded.");
         return true;
     }
 };
