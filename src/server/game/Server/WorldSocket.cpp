@@ -728,7 +728,8 @@ int WorldSocket::ProcessIncoming (WorldPacket* new_pct)
 
     try
     {
-        switch(opcode)
+        Opcodes opcodeEnum = LookupOpcodeEnum(opcode);
+        switch(opcodeEnum)
         {
             case CMSG_PING:
                 return HandlePing (*new_pct);
