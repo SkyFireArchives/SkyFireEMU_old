@@ -3900,14 +3900,29 @@ void SpellMgr::LoadSpellCustomAttr()
         case 35181:                             // Dive Bomb
         case 40810: case 43267: case 43268:     // Saber Lash
         case 42384:                             // Brutal Swipe
-        case 45150:                             // Meteor Slash
+        case 45150: case 95172: case 88942:     // Meteor Slash
         case 64422: case 64688:                 // Sonic Screech
         case 72373:                             // Shared Suffering
         case 71904:                             // Chaos Bane
         case 70492: case 72505:                 // Ooze Eruption
         case 72624: case 72625:                 // Ooze Eruption
+        case 89348: case 95178:                 // Demon Repellent Ray
             // ONLY SPELLS WITH SPELLFAMILY_GENERIC and EFFECT_SCHOOL_DAMAGE
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_SHARE_DAMAGE;
+            count++;
+            break;
+        case 88954:                             // Consuming Darkness
+            spellInfo->EffectRadiusIndex[0] = 12; // (100)
+            spellInfo->MaxAffectedTargets = 3;
+            count++;
+            break;
+        case 95173:                             // Consuming Darkness (H)
+            spellInfo->EffectRadiusIndex[0] = 12; // (100)
+            spellInfo->MaxAffectedTargets = 8;
+            count++;
+            break;
+        case 89000: case 95177:                 // Fel Firestorm
+            spellInfo->EffectRadiusIndex[0] = 15; // (3)
             count++;
             break;
         case 59725:                             // Improved Spell Reflection - aoe aura
