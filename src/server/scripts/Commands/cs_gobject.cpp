@@ -244,14 +244,14 @@ public:
         else
         {
             std::ostringstream eventFilter;
-            eventFilter << " AND (eventEntry IS NULL ";
+            eventFilter << " AND (event IS NULL ";
             bool initString = true;
 
             for (GameEventMgr::ActiveEvents::const_iterator itr = activeEventsList.begin(); itr != activeEventsList.end(); ++itr)
             {
                 if (initString)
                 {
-                    eventFilter  <<  "OR eventEntry IN (" <<*itr;
+                    eventFilter  <<  "OR event IN (" <<*itr;
                     initString =false;
                 }
                 else
