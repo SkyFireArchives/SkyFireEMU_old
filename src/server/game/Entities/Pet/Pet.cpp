@@ -874,8 +874,8 @@ bool Guardian::InitStatsForLevel(uint8 petlevel)
     if (cFamily && cFamily->minScale > 0.0f && petType == HUNTER_PET)
     {
         float scale;
-        // min scale = 0.8 // max scale = 1.8 //
-        scale = 0.8 + (getLevel()  * ((1.8 - 0.8) / 85));
+        // min scale = 0.8 // max scale = 1.8 <-Changed to 1.0 //
+        scale = 0.8 + (getLevel()  * ((1.0 - 0.8) / 85));
 
         SetFloatValue(OBJECT_FIELD_SCALE_X, scale);
     }
