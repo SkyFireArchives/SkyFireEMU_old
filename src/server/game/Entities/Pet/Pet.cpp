@@ -385,8 +385,8 @@ void Pet::SavePetToDB(PetSlot mode)
         mode = pOwner->m_currentPetSlot;
     if (mode >= PET_SLOT_HUNTER_FIRST && mode <= PET_SLOT_HUNTER_LAST && getPetType() != HUNTER_PET)
         assert(false);
-    if (mode == PET_SLOT_OTHER_PET && getPetType() == HUNTER_PET)
-        assert(false);
+    /*if (mode == PET_SLOT_OTHER_PET && getPetType() == HUNTER_PET)
+        assert(false);*/
 
     // not save pet as current if another pet temporary unsummoned
     if (mode == pOwner->m_currentPetSlot && pOwner->GetTemporaryUnsummonedPetNumber() && pOwner->GetTemporaryUnsummonedPetNumber() != m_charmInfo->GetPetNumber())
@@ -874,8 +874,8 @@ bool Guardian::InitStatsForLevel(uint8 petlevel)
     if (cFamily && cFamily->minScale > 0.0f && petType == HUNTER_PET)
     {
         float scale;
-        // min scale = 0.8 // max scale = 1.8 //
-        scale = 0.8 + (getLevel()  * ((1.8 - 0.8) / 85));
+        // min scale = 0.8 // max scale = 1.8 <-Changed to 1.0 //
+        scale = 0.8 + (getLevel()  * ((1.0 - 0.8) / 85));
 
         SetFloatValue(OBJECT_FIELD_SCALE_X, scale);
     }
