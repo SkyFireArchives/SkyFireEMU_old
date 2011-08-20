@@ -36,7 +36,7 @@ enum BattlefieldTypes
 };
 enum BattlefieldBattleID
 {
-    BATTLEFIELD_BATTLEID_WG = 1,   //Wintergrasp battle 
+    BATTLEFIELD_BATTLEID_WG = 1,   //Wintergrasp battle
 };
 
 enum BfObjectiveStates
@@ -134,7 +134,7 @@ public:
     // method for change who control the graveyard
     void ChangeControl(TeamId team);
     TeamId GetControlTeamId() {return m_ControlTeam;}
-    
+
     // use for found the nearest graveyard
     float GetDistance(Player* plr);
 
@@ -142,8 +142,6 @@ public:
 
     void AddPlayer(uint64 player_guid);
     void RemovePlayer(uint64 player_guid);
-    
-
 
     void Resurrect();
     void RelocateDeadPlayers();
@@ -152,7 +150,7 @@ public:
     bool HasPlayer(uint64 guid) {return m_ResurrectQueue.find(guid)!=m_ResurrectQueue.end();}
     uint32 GetGraveYardId() {return m_GraveyardId;}
 protected:
-    
+
     TeamId m_ControlTeam;
     uint32 m_GraveyardId;
     Creature* m_SpiritGuide[2];
@@ -162,7 +160,7 @@ protected:
 class Battlefield : public ZoneScript
 {
     friend class BattlefieldMgr;
-    
+
 public:
     // constructor
     Battlefield();
@@ -192,7 +190,7 @@ public:
     void InvitePlayerInZoneToWar();
     // handle npc/player kill
     virtual void HandleKill(Player * /*killer*/, Unit * /*killed*/){};
-    
+
     uint32 GetTypeId() {return m_TypeId;}
     uint32 GetZoneId() {return m_ZoneId;}
 
@@ -201,12 +199,12 @@ public:
     // return if the war is start or not
     bool IsWarTime() {return m_WarTime;}
 
-	void SetEnable(bool enable) {m_enable = enable;}
-	bool GetEnable() {return m_enable;}
+    void SetEnable(bool enable) {m_enable = enable;}
+    bool GetEnable() {return m_enable;}
 
     // Kick player from the bf, teleport him to kick point
     void KickPlayerFromBf(uint64 guid);
-    
+
     void HandlePlayerEnterZone(Player * plr, uint32 zone);
     void HandlePlayerLeaveZone(Player * plr, uint32 zone);
 
@@ -222,10 +220,10 @@ public:
     TeamId GetDefenderTeam() {return m_DefenderTeam;}
     TeamId GetAttackerTeam() {return TeamId(1-m_DefenderTeam);}
     void SetDefenderTeam(TeamId team) {m_DefenderTeam=team;}
-    
+
     // Group methods
     Group* GetFreeBfRaid(uint32 TeamId);
-	Group* GetGroupPlayer(uint64 guid, uint32 TeamId);
+    Group* GetGroupPlayer(uint64 guid, uint32 TeamId);
     bool AddOrSetPlayerToCorrectBfGroup(Player *plr);
 
     // Graveyard methods
@@ -268,7 +266,7 @@ public:
     bool IncrementQuest(Player *player, uint32 quest, bool complete = false);
     void SendAreaSpiritHealerQueryOpcode(Player *pl, const uint64& guid);
 
-	void StartBattle();
+    void StartBattle();
     void EndBattle(bool endbytimer);
 
     void HideNpc(Creature* p_Creature);
@@ -277,19 +275,19 @@ public:
     GraveYardVect GetGraveYardVect() {return m_GraveYardList;}
 
     uint32 GetTimer() {return m_Timer;}
-	void SetTimer(uint32 timer) {m_Timer = timer;}
-    
+    void SetTimer(uint32 timer) {m_Timer = timer;}
+
     void PlaySoundToAll(uint32 SoundID);
 
-	void InvitePlayerToQueue(Player* plr);
+    void InvitePlayerToQueue(Player* plr);
     void InvitePlayerToWar(Player* plr);
 protected:
-	
+
     uint32 m_Timer;//Global timer for event
-	bool m_enable;
+    bool m_enable;
     bool m_WarTime;
     TeamId m_DefenderTeam;
-	
+
     // the map of the objectives belonging to this outdoorpvp
     BfCapturePointMap m_capturePoints;
 
@@ -298,8 +296,8 @@ protected:
     GuidSet m_PlayersInQueue[2];//Player in the queue
     GuidSet m_PlayersInWar[2];  //Player in the war
     PlayerTimerMap m_InvitedPlayers[2];
-	PlayerTimerMap m_PlayersWillBeKick[2];
-    //Variable witch must be setup for each Bf 
+    PlayerTimerMap m_PlayersWillBeKick[2];
+    //Variable witch must be setup for each Bf
     uint32 m_TypeId;    //View enum BattlefieldTypes
     uint32 m_BattleId;
     uint32 m_ZoneId;    //Zone id of area 4197=WG
@@ -312,18 +310,18 @@ protected:
     uint32 m_TimeForAcceptInvite;
     uint32 m_uiKickDontAcceptTimer;
     WorldLocation KickPosition;
- 
+
     uint32 m_uiKickAfkTimer;
-    
+
     //Graveyard variable
     GraveYardVect m_GraveYardList;
     uint32 m_LastResurectTimer;
-	
+
     uint32 m_StartGroupingTimer;
     bool m_StartGrouping;
-	
+
     GuidSet m_Groups[2];
-	
+
     std::vector<uint64> m_Data64;
     std::vector<uint32> m_Data32;
 
@@ -353,8 +351,6 @@ protected:
     void RegisterZone(uint32 zoneid);
     bool HasPlayer(Player *plr) const;
     void TeamCastSpell(TeamId team, int32 spellId);
-
 };
 
-#endif 
-
+#endif

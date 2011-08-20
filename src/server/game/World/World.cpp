@@ -1227,12 +1227,13 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_DB_PING_INTERVAL] = sConfig->GetIntDefault("MaxPingTime", 30);
 
 	// WINTERGRASP
-	m_bool_configs[CONFIG_WINTERGRASP_ENABLE] = sConfig->GetBoolDefault("Wintergrasp.Enable", false);
-	m_int_configs[CONFIG_WINTERGRASP_PLR_MAX] = sConfig->GetIntDefault("Wintergrasp.PlayerMax", 100);
-	m_int_configs[CONFIG_WINTERGRASP_PLR_MIN] = sConfig->GetIntDefault("Wintergrasp.PlayerMin", 0);
-	m_int_configs[CONFIG_WINTERGRASP_PLR_MIN_LVL] = sConfig->GetIntDefault("Wintergrasp.PlayerMinLvl", 77);
-	m_int_configs[CONFIG_WINTERGRASP_BATTLETIME] = sConfig->GetIntDefault("Wintergrasp.BattleTimer", 30);
-	m_int_configs[CONFIG_WINTERGRASP_NOBATTLETIME] = sConfig->GetIntDefault("Wintergrasp.NoBattleTimer", 150);
+    m_bool_configs[CONFIG_WINTERGRASP_ENABLE] = sConfig->GetBoolDefault("Wintergrasp.Enable", false);
+    m_int_configs[CONFIG_WINTERGRASP_PLR_MAX] = sConfig->GetIntDefault("Wintergrasp.PlayerMax", 100);
+    m_int_configs[CONFIG_WINTERGRASP_PLR_MIN] = sConfig->GetIntDefault("Wintergrasp.PlayerMin", 0);
+    m_int_configs[CONFIG_WINTERGRASP_PLR_MIN_LVL] = sConfig->GetIntDefault("Wintergrasp.PlayerMinLvl", 77);
+    m_int_configs[CONFIG_WINTERGRASP_BATTLETIME] = sConfig->GetIntDefault("Wintergrasp.BattleTimer", 30);
+    m_int_configs[CONFIG_WINTERGRASP_NOBATTLETIME] = sConfig->GetIntDefault("Wintergrasp.NoBattleTimer", 150);
+    m_int_configs[CONFIG_WINTERGRASP_RESTART_AFTER_CRASH] = sConfig->GetIntDefault("Wintergrasp.CrashRestartTimer", 10);
 
     sScriptMgr->OnConfigLoad(reload);
 }
@@ -1739,16 +1740,16 @@ void World::SetInitialWorldSettings()
     LoadWorldStates();
 
     ///- Initialize Battlegrounds
-    sLog->outString("Starting Battleground System");
+    sLog->outString("Starting Battleground System...");
     sBattlegroundMgr->CreateInitialBattlegrounds();
     sBattlegroundMgr->InitAutomaticArenaPointDistribution();
 
     ///- Initialize outdoor pvp
-    sLog->outString("Starting Outdoor PvP System");
+    sLog->outString("Starting Outdoor PvP System...");
     sOutdoorPvPMgr->InitOutdoorPvP();
 
 	///- Initialize Battlefield
-    sLog->outString("Starting Battlefield System");
+    sLog->outString("Starting Battlefield System...");
     sBattlefieldMgr->InitBattlefield();
 
     sLog->outString("Loading Transports...");

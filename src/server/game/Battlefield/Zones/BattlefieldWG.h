@@ -1,9 +1,6 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
- *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
- *
  * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1164,7 +1161,7 @@ struct BfWGGameObjectBuilding
         m_WG->SendUpdateWorldState(m_WorldState,m_State);
         //Send warning message
         if(m_NameId)
-            m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_TOWER_DAMAGE,sObjectMgr->GetTrinityStringForDBCLocale(m_NameId));
+            m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_TOWER_DAMAGE,sObjectMgr->GetSkyFireStringForDBCLocale(m_NameId));
 
         for (GuidSet::const_iterator itr = m_CreatureTopList[m_WG->GetAttackerTeam()].begin(); itr != m_CreatureTopList[m_WG->GetAttackerTeam()].end(); ++itr)
             if (Unit* unit = sObjectAccessor->FindUnit((*itr)))
@@ -1190,7 +1187,7 @@ struct BfWGGameObjectBuilding
         m_WG->SendUpdateWorldState(m_WorldState,m_State);
         //Warning 
         if(m_NameId)
-            m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_TOWER_DESTROY,sObjectMgr->GetTrinityStringForDBCLocale(m_NameId));
+            m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_TOWER_DESTROY,sObjectMgr->GetSkyFireStringForDBCLocale(m_NameId));
         switch(m_Type)
         {
         //If destroy tower, inform WG script of it (using for reward calculation and event with south towers)
@@ -1594,8 +1591,8 @@ struct BfWGWorkShopData
             case BATTLEFIELD_WG_TEAM_NEUTRAL:
             {
                 //Send warning message to all player for inform a faction attack a workshop
-                m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_WORKSHOP_ATTACK,sObjectMgr->GetTrinityStringForDBCLocale(m_NameId),
-                    sObjectMgr->GetTrinityStringForDBCLocale(m_TeamControl?BATTLEFIELD_WG_TEXT_ALLIANCE:BATTLEFIELD_WG_TEXT_HORDE));
+                m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_WORKSHOP_ATTACK,sObjectMgr->GetSkyFireStringForDBCLocale(m_NameId),
+                    sObjectMgr->GetSkyFireStringForDBCLocale(m_TeamControl?BATTLEFIELD_WG_TEXT_ALLIANCE:BATTLEFIELD_WG_TEXT_HORDE));
                 break;
             }
             case BATTLEFIELD_WG_TEAM_ALLIANCE:
@@ -1627,8 +1624,8 @@ struct BfWGWorkShopData
 
                 //Warning message
                 if(!init)
-                    m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_WORKSHOP_TAKEN,sObjectMgr->GetTrinityStringForDBCLocale(m_NameId),
-                    sObjectMgr->GetTrinityStringForDBCLocale(BATTLEFIELD_WG_TEXT_ALLIANCE));
+                    m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_WORKSHOP_TAKEN,sObjectMgr->GetSkyFireStringForDBCLocale(m_NameId),
+                    sObjectMgr->GetSkyFireStringForDBCLocale(BATTLEFIELD_WG_TEXT_ALLIANCE));
                 
                 //Found associate graveyard and update it
                 if(m_Type < BATTLEFIELD_WG_WORKSHOP_KEEP_WEST)
@@ -1666,8 +1663,8 @@ struct BfWGWorkShopData
                 
                 //Warning message
                 if(!init)
-                    m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_WORKSHOP_TAKEN,sObjectMgr->GetTrinityStringForDBCLocale(m_NameId),
-                        sObjectMgr->GetTrinityStringForDBCLocale(BATTLEFIELD_WG_TEXT_HORDE));
+                    m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_WORKSHOP_TAKEN,sObjectMgr->GetSkyFireStringForDBCLocale(m_NameId),
+                        sObjectMgr->GetSkyFireStringForDBCLocale(BATTLEFIELD_WG_TEXT_HORDE));
 
                 //Update graveyard control
                 if(m_Type < BATTLEFIELD_WG_WORKSHOP_KEEP_WEST)

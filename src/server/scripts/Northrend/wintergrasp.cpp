@@ -53,7 +53,7 @@ public:
             return true;
 
         if(BfWG->GetData(pCreature->GetEntry()==30400 ?BATTLEFIELD_WG_DATA_MAX_VEHICLE_H:BATTLEFIELD_WG_DATA_MAX_VEHICLE_A)>BfWG->GetData(pCreature->GetEntry()==30400 ?BATTLEFIELD_WG_DATA_VEHICLE_H:BATTLEFIELD_WG_DATA_VEHICLE_A))
-		{
+        {
             if (pPlayer->HasAura(SPELL_CORPORAL))
                 pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HELLO_DEMO1, GOSSIP_SENDER_MAIN,   GOSSIP_ACTION_INFO_DEF);
             else if (pPlayer->HasAura(SPELL_LIEUTENANT))
@@ -80,7 +80,7 @@ public:
             return true;
 
         if(BfWG->GetData(pCreature->GetEntry()==30400 ?BATTLEFIELD_WG_DATA_MAX_VEHICLE_H:BATTLEFIELD_WG_DATA_MAX_VEHICLE_A)>BfWG->GetData(pCreature->GetEntry()==30400 ?BATTLEFIELD_WG_DATA_VEHICLE_H:BATTLEFIELD_WG_DATA_VEHICLE_A))
-		{
+        {
             switch(uiAction - GOSSIP_ACTION_INFO_DEF)
             {
                 case 0: pPlayer->CastSpell(pPlayer, 56663, false, NULL, NULL, pCreature->GetGUID()); break;
@@ -114,7 +114,7 @@ public:
             {
                 if(gy[i]->GetControlTeamId()==pPlayer->GetTeamId())
                 {
-                    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,sObjectMgr->GetTrinityStringForDBCLocale(((BfGraveYardWG*)gy[i])->GetTextId()), GOSSIP_SENDER_MAIN,   GOSSIP_ACTION_INFO_DEF+i);
+                    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,sObjectMgr->GetSkyFireStringForDBCLocale(((BfGraveYardWG*)gy[i])->GetTextId()), GOSSIP_SENDER_MAIN,   GOSSIP_ACTION_INFO_DEF+i);
                 }
             }
         }
@@ -157,10 +157,9 @@ public:
         BattlefieldWG *BfWG = (BattlefieldWG*)sBattlefieldMgr->GetBattlefieldByBattleId(BATTLEFIELD_BATTLEID_WG);
         if (BfWG)
         {
-
             if(BfWG->IsWarTime())
             {
-                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,sObjectMgr->GetTrinityStringForDBCLocale(WG_NPCQUEUE_TEXTOPTION_JOIN), GOSSIP_SENDER_MAIN,   GOSSIP_ACTION_INFO_DEF);
+                pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,sObjectMgr->GetSkyFireStringForDBCLocale(WG_NPCQUEUE_TEXTOPTION_JOIN), GOSSIP_SENDER_MAIN,   GOSSIP_ACTION_INFO_DEF);
                 pPlayer->SEND_GOSSIP_MENU(BfWG->GetDefenderTeam()?WG_NPCQUEUE_TEXT_H_WAR:WG_NPCQUEUE_TEXT_A_WAR, pCreature->GetGUID());
             }
             else
@@ -169,7 +168,7 @@ public:
                 pPlayer->SendUpdateWorldState(4354,time(NULL)+uiTime);
                 if(uiTime<15*MINUTE)
                 {
-                    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,sObjectMgr->GetTrinityStringForDBCLocale(WG_NPCQUEUE_TEXTOPTION_JOIN), GOSSIP_SENDER_MAIN,   GOSSIP_ACTION_INFO_DEF);
+                    pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,sObjectMgr->GetSkyFireStringForDBCLocale(WG_NPCQUEUE_TEXTOPTION_JOIN), GOSSIP_SENDER_MAIN,   GOSSIP_ACTION_INFO_DEF);
                     pPlayer->SEND_GOSSIP_MENU(BfWG->GetDefenderTeam()?WG_NPCQUEUE_TEXT_H_QUEUE:WG_NPCQUEUE_TEXT_A_QUEUE, pCreature->GetGUID());
                 }
                 else
@@ -214,44 +213,44 @@ public:
     struct go_wintergrasp_teleporterAI : public GameObjectAI
     {
         go_wintergrasp_teleporterAI(GameObject* g) : GameObjectAI(g)
-		{
-		    uiCheckTimer = 1000;
-		}
+        {
+            uiCheckTimer = 1000;
+        }
 
         void UpdateAI(const uint32 diff)
         {
-		    if (uiCheckTimer <= diff)
-			{
-			    for (uint8 i = 0 ; i < 4 ; i++)
-				    if (Creature* pVehicle = go->FindNearestCreature(Vehicules[i], 3.0f, true))
-					    if (!pVehicle->HasAura(SPELL_VEHICLE_TELEPORT))
-						{
-						    if (pVehicle->GetVehicle())
-							{
-							    if (Unit* player = pVehicle->GetVehicle()->GetPassenger(0))
-								{
+            if (uiCheckTimer <= diff)
+            {
+                for (uint8 i = 0 ; i < 4 ; i++)
+                    if (Creature* pVehicle = go->FindNearestCreature(Vehicules[i], 3.0f, true))
+                        if (!pVehicle->HasAura(SPELL_VEHICLE_TELEPORT))
+                        {
+                            if (pVehicle->GetVehicle())
+                            {
+                                if (Unit* player = pVehicle->GetVehicle()->GetPassenger(0))
+                                {
                                     uint32 gofaction = go->GetUInt32Value(GAMEOBJECT_FACTION);
                                     uint32 plfaction = player->getFaction();
                                     if (gofaction == plfaction)
-							        {
-						                pVehicle->CastSpell(pVehicle, SPELL_VEHICLE_TELEPORT, true);
-							            if(Creature* TargetTeleport = pVehicle->FindNearestCreature(23472,100.0f,true))
+                                    {
+                                        pVehicle->CastSpell(pVehicle, SPELL_VEHICLE_TELEPORT, true);
+                                        if(Creature* TargetTeleport = pVehicle->FindNearestCreature(23472,100.0f,true))
                                         {
                                             float x,y,z,o;
                                             TargetTeleport->GetPosition(x,y,z,o);
                                             pVehicle->GetVehicle()->TeleportVehicle(x,y,z,o);
                                         }
-									}
-								}
-							}
-						}
-			    uiCheckTimer = 1000;
-			}
-			else
-			    uiCheckTimer -= diff;
+                                    }
+                                }
+                            }
+                        }
+                uiCheckTimer = 1000;
+            }
+            else
+                uiCheckTimer -= diff;
         }
-		private:
-		    uint32 uiCheckTimer;
+        private:
+            uint32 uiCheckTimer;
     };
 
     GameObjectAI *GetAI(GameObject *go) const
@@ -297,7 +296,7 @@ public:
                     uint32 quest_id = i->second;
                     Quest const* pQuest = sObjectMgr->GetQuestTemplate(quest_id);
                     if (!pQuest)
-						continue;
+                        continue;
 
                     switch(quest_id)
                     {

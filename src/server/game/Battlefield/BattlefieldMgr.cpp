@@ -45,14 +45,14 @@ void BattlefieldMgr::InitBattlefield()
     // respawn, init variables
     if(!pBf->SetupBattlefield())
     {
-	    sLog->outString();
+        sLog->outString();
         sLog->outString("Battlefield : Wintergrasp init failed.");
         delete pBf;
     }
     else
     {
         m_BattlefieldSet.push_back(pBf);
-		sLog->outString();
+        sLog->outString();
         sLog->outString("Battlefield : Wintergrasp successfully initiated.");
     }
 
@@ -85,9 +85,9 @@ void BattlefieldMgr::HandlePlayerEnterZone(Player *plr, uint32 zoneid)
     if (itr->second->HasPlayer(plr))
         return;
     if (itr->second->GetEnable() == false)
-	    return;
+        return;
     itr->second->HandlePlayerEnterZone(plr, zoneid);
-    sLog->outDebug("Player %u entered outdoorpvp id %u", plr->GetGUIDLow(), itr->second->GetTypeId());
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Player %u entered outdoorpvp id %u", plr->GetGUIDLow(), itr->second->GetTypeId());
 }
 
 void BattlefieldMgr::HandlePlayerLeaveZone(Player *plr, uint32 zoneid)
@@ -100,7 +100,7 @@ void BattlefieldMgr::HandlePlayerLeaveZone(Player *plr, uint32 zoneid)
     if (!itr->second->HasPlayer(plr))
         return;
     itr->second->HandlePlayerLeaveZone(plr, zoneid);
-    sLog->outDebug("Player %u left outdoorpvp id %u",plr->GetGUIDLow(), itr->second->GetTypeId());
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Player %u left outdoorpvp id %u",plr->GetGUIDLow(), itr->second->GetTypeId());
 }
 
 Battlefield * BattlefieldMgr::GetBattlefieldToZoneId(uint32 zoneid)
@@ -111,8 +111,8 @@ Battlefield * BattlefieldMgr::GetBattlefieldToZoneId(uint32 zoneid)
         // no handle for this zone, return
         return NULL;
     }
-	if (itr->second->GetEnable() == false)
-	    return NULL;
+    if (itr->second->GetEnable() == false)
+        return NULL;
     return itr->second;
 }
 Battlefield * BattlefieldMgr::GetBattlefieldByBattleId(uint32 battleid)
@@ -131,8 +131,8 @@ void BattlefieldMgr::Update(uint32 diff)
     if (m_UpdateTimer > BATTLEFIELD_OBJECTIVE_UPDATE_INTERVAL)
     {
         for (BattlefieldSet::iterator itr = m_BattlefieldSet.begin(); itr != m_BattlefieldSet.end(); ++itr)
-			if((*itr)->GetEnable())
-			    (*itr)->Update(m_UpdateTimer);
+            if((*itr)->GetEnable())
+                (*itr)->Update(m_UpdateTimer);
         m_UpdateTimer = 0;
     }
 }

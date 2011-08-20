@@ -3228,17 +3228,17 @@ bool SpellArea::IsFitToRequirements(Player const* player, uint32 newZone, uint32
     // Extra conditions -- leaving the possibility add extra conditions...
     switch(spellId)
     {
-	    case 58730:
+        case 58730: // No fly Zone - Wintergrasp
             {
-				if (!player)
-					return false;
+                if (!player)
+                    return false;
 
-				Battlefield * BF = sBattlefieldMgr->GetBattlefieldToZoneId(player->GetZoneId());
-				if (!BF || BF->CanFlyIn()==true || (!player->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) && !player->HasAuraType(SPELL_AURA_FLY)))
-					return false;
-				break;
-			}
-    	case 58600: // No fly Zone - Dalaran
+                Battlefield* Bf = sBattlefieldMgr->GetBattlefieldToZoneId(player->GetZoneId());
+                if (!Bf || Bf->CanFlyIn() || (!player->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) && !player->HasAuraType(SPELL_AURA_FLY)))
+                    return false;
+                break;
+            }
+        case 58600: // No fly Zone - Dalaran
             {
                 if (!player)
                     return false;
@@ -3249,17 +3249,17 @@ bool SpellArea::IsFitToRequirements(Player const* player, uint32 newZone, uint32
                 if (!player->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) && !player->HasAuraType(SPELL_AURA_FLY))
                     return false;
                 break;
-			}
+            }
         case 57940: // Essence of Wintergrasp - Northrend
-			{
-				if (!player)
-					return false;
+            {
+                if (!player)
+                    return false;
 
-				Battlefield *Bf = sBattlefieldMgr->GetBattlefieldToZoneId(4197);
-				if (!Bf || player->GetTeamId() != Bf->GetDefenderTeam())
-					return false;
-				break;
-			}          
+                Battlefield* Bf = sBattlefieldMgr->GetBattlefieldToZoneId(4197);
+                if (!Bf || player->GetTeamId() != Bf->GetDefenderTeam())
+                    return false;
+                break;
+            }
         case 68719: // Oil Refinery - Isle of Conquest.
         case 68720: // Quarry - Isle of Conquest.
             {
@@ -4197,10 +4197,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_INTERRUPT;
             count++;
             break;
-		case 44203: // Tranquility
-			spellInfo->MaxAffectedTargets = 5;
-			count++;
-			break;
+        case 44203: // Tranquility
+            spellInfo->MaxAffectedTargets = 5;
+            count++;
+            break;
         case 26573: // Consecration
             spellInfo->EffectTriggerSpell[2] = 82366;
             count++;
