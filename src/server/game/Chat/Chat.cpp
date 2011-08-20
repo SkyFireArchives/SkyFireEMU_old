@@ -447,6 +447,16 @@ ChatCommand * ChatHandler::getCommandTable()
         { NULL,             0,                  false, NULL,                                                "", NULL }
     };
 
+	static ChatCommand battlefieldcommandTable[] =
+	{
+		{ "start",          SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleBattlefieldStart>,                "", NULL },
+        { "stop",           SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleBattlefieldEnd>,                  "", NULL },
+        { "switch",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleBattlefieldSwitch>,               "", NULL },
+        { "timer",          SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleBattlefieldTimer>,                "", NULL },
+        { "enable",         SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleBattlefieldEnable>,               "", NULL },
+		{ NULL,             0,                  false, NULL,                                                "", NULL }
+	};
+
     static ChatCommand commandTable[] =
     {
         { "gm",             SEC_MODERATOR,      true,  NULL,                                           "", gmCommandTable       },
@@ -543,6 +553,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "unpossess",      SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleUnPossessCommand>,           "", NULL },
         { "bindsight",      SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleBindSightCommand>,           "", NULL },
         { "unbindsight",    SEC_ADMINISTRATOR,  false, OldHandler<&ChatHandler::HandleUnbindSightCommand>,         "", NULL },
+        { "bf",             SEC_ADMINISTRATOR,  false, NULL,                                           "", battlefieldcommandTable },
         { "playall",        SEC_GAMEMASTER,     false, OldHandler<&ChatHandler::HandlePlayAllCommand>,             "", NULL },
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };

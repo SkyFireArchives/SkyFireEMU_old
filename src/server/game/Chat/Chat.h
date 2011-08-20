@@ -380,6 +380,13 @@ class ChatHandler
         bool HandleChangeWeather(const char* args);
         bool HandleKickPlayerCommand(const char * args);
 
+		// Battlefield commands
+		bool HandleBattlefieldStart(const char* args);
+		bool HandleBattlefieldEnd(const char* args);
+		bool HandleBattlefieldSwitch(const char* args);
+		bool HandleBattlefieldTimer(const char* args);
+		bool HandleBattlefieldEnable(const char* args);
+
         // GM ticket command handlers
         bool HandleGMTicketListCommand(const char* args);
         bool HandleGMTicketListOnlineCommand(const char* args);

@@ -2142,6 +2142,31 @@ CharDelete.KeepDays = 30
 #        Default: 0 - off
 #                 1 - on
 #
+#   Wintergrasp.Enable
+#	     Enable wintergrasp
+#		 Default: 0 - off
+#		          1 - on
+#
+#	Wintergrasp.PlayerMax
+#	     Max players allowed in wintergrasp
+#		 Default: 100 (players)
+#
+#	Wintergrasp.PlayerMin
+#	     Min players allowed in wintergrasp
+#		 Default: 0 (players)
+#
+#	Wintergrasp.PlayerMinLvl
+#	     Min player level allowed in wintergrasp
+#		 Default: 77
+#
+#	Wintergrasp.BattleTimer
+#	     Wartime timer
+#		 Default: 30 (in min)
+#
+#	Wintergrasp.NoBattleTimer
+#	     Out of wartime timer
+#		 Default: 150 (in min)
+#
 ###############################################################################
 
 PlayerStart.AllReputation = 0
@@ -2167,3 +2192,9 @@ LevelReq.Mail = 1
 DungeonFinder.Enable = 1^
 AccountInstancesPerHour = 5
 IgnoringMapsVersion = 0
+Wintergrasp.Enable = 0
+Wintergrasp.PlayerMax = 100
+Wintergrasp.PlayerMin = 0
+Wintergrasp.PlayerMinLvl = 77
+Wintergrasp.BattleTimer = 30
+Wintergrasp.NoBattleTimer = 150

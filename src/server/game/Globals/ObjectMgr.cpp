@@ -318,7 +318,6 @@ Group * ObjectMgr::GetGroupByGUID(uint32 guid) const
     for (GroupSet::const_iterator itr = mGroupSet.begin(); itr != mGroupSet.end(); ++itr)
         if ((*itr)->GetLowGUID() == guid)
             return *itr;
-
     return NULL;
 }
 
