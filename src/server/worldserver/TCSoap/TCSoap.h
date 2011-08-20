@@ -1,9 +1,6 @@
 /*
- * Copyright (C) 2005-2011 MaNGOS <http://www.getmangos.com/>
- *
- * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
- *
  * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
+ * Copyright (C) 2008-2011 Trinity <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +31,6 @@
 
 #include <ace/Semaphore.h>
 #include <ace/Task.h>
-#include <ace/Mutex.h>
 
 class TCSoapRunnable: public ACE_Based::Runnable
 {
@@ -47,42 +43,17 @@ class TCSoapRunnable: public ACE_Based::Runnable
             m_port = port;
         }
     private:
+        void process_message(ACE_Message_Block *mb);
+
         std::string m_host;
         uint16 m_port;
-};
-
-class SOAPWorkingThread : public ACE_Task<ACE_MT_SYNCH>
-{
-    public:
-        SOAPWorkingThread() { }
-
-        virtual int svc(void)
-        {
-            while(1)
-            {
-                ACE_Message_Block *mb = 0;
-                if (this->getq(mb) == -1)
-                {
-                    ACE_DEBUG((LM_INFO, 
-                        ACE_TEXT("(%t) Shutting down\n")));
-                    break;
-                }
-
-                // Process the message.
-                process_message(mb);
-            }
-
-            return 0;
-        }
-    private:
-        void process_message(ACE_Message_Block *mb);
 };
 
 class SOAPCommand
 {
     public:
         SOAPCommand():
-            pendingCommands(0, USYNC_THREAD, "pendingCommands"), pendingCommandsMutex(USYNC_THREAD, "pendingCommandsMutex")
+            pendingCommands(0, USYNC_THREAD, "pendingCommands")
         {
         }
 
@@ -96,7 +67,6 @@ class SOAPCommand
         }
 
         ACE_Semaphore pendingCommands;
-        ACE_Mutex pendingCommandsMutex;
 
         void setCommandSuccess(bool val)
         {
