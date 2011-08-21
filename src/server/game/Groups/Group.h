@@ -24,7 +24,7 @@
 #define TRINITYCORE_GROUP_H
 
 #include "Battleground.h"
-#include "Battlefield.h"
+#include "../Battlefield/Battlefield.h"
 #include "DBCEnums.h"
 #include "GroupRefManager.h"
 #include "LootMgr.h"

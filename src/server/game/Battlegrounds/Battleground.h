@@ -551,7 +551,7 @@ class Battleground
 
         virtual void AddPlayer(Player* plr);                // must be implemented in BG subclass
 
-        void AddOrSetPlayerToCorrectBgGroup(Player* player, uint32 team);
+        void AddOrSetPlayerToCorrectBgGroup(Player *plr, uint64 plr_guid, uint32 team);
 
         virtual void RemovePlayerAtLeave(const uint64& guid, bool Transport, bool SendPacket);
                                                             // can be extended in in BG subclass

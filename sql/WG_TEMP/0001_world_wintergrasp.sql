@@ -45,7 +45,7 @@ INSERT INTO `script_texts` (`npc_entry`,`entry`,`content_default`,`content_loc1`
 (0, -1850504, 'Guide me to the Eastspark Graveyard.', NULL, 'Montrez-moi o? est le cimeti?re d''Estincelle.', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, ''),
 (0, -1850505, 'Guide me back to the Horde landing camp.', NULL, 'Ramenez-moi au camp d''arriv?e de la Horde.', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, ''),
 (0, -1850506, 'Guide me back to the Alliance landing camp.', NULL, 'Ramenez-moi au camp d''arriv?e de l''Alliance.', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, ''),
-(0, -1850507, 'Se mettre dans la file pour le Joug-d''hiver.', NULL, 'Se mettre dans la file pour le Joug-d''hiver', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '');
+(0, -1850507, 'Get in the queue for the Batttle for Wintergrasp', NULL, 'Se mettre dans la file pour le Joug-d''hiver', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '');
 
 UPDATE `creature_template` SET `ScriptName` = 'npc_wg_dalaran_queue' WHERE `entry` IN (32169,32170,35599,35596,35600,35601,35598,35603,35602,35597,35612,35611);
 
@@ -59,24 +59,23 @@ UPDATE `creature_template` SET `InhabitType` = '7' WHERE `entry` = 27852;
 UPDATE `creature_template` SET `ScriptName` = 'npc_wg_spiritguide' WHERE `entry` IN (31841,31842);
 UPDATE `creature_template` SET `ScriptName` = 'npc_demolisher_engineerer' WHERE `entry` IN (30400,30499);
 
-UPDATE `trinity_string` SET `content_default` = 'The Wintergrasp fortress has been captured by %s !', `content_loc2` = '%s a capturé la forteresse du Joug d''hiver !' WHERE `trinity_string`.`entry` =12072 LIMIT 1 ;
+UPDATE `trinity_string` SET `content_default` = 'The Wintergrasp fortress has been captured by %s !', `content_loc2` = '%s a capturÊ la forteresse du Joug d''hiver !' WHERE `trinity_string`.`entry` =12072 LIMIT 1 ;
 
-UPDATE `trinity_string` SET `content_loc2` = '%s a défendu la forteresse du Joug-d''hiver !' WHERE `trinity_string`.`entry` =12068 LIMIT 1 ;
+DELETE FROM `spell_area` where `spell` = 58730;
+DELETE FROM `spell_area` where `spell` = 91604;
+insert into spell_area values (91604, 4581, 0, 0, 0, 0, 0, 2, 1);
+insert into spell_area values (91604, 4539, 0, 0, 0, 0, 0, 2, 1);
+insert into spell_area values (91604, 4197, 0, 0, 0, 0, 0, 2, 1);
+insert into spell_area values (91604, 4585, 0, 0, 0, 0, 0, 2, 1);
+insert into spell_area values (91604, 4612, 0, 0, 0, 0, 0, 2, 1);
+insert into spell_area values (91604, 4582, 0, 0, 0, 0, 0, 2, 1);
+insert into spell_area values (91604, 4583, 0, 0, 0, 0, 0, 2, 1);
+insert into spell_area values (91604, 4589, 0, 0, 0, 0, 0, 2, 1);
+insert into spell_area values (91604, 4575, 0, 0, 0, 0, 0, 2, 1);
+insert into spell_area values (91604, 4538, 0, 0, 0, 0, 0, 2, 1);
+insert into spell_area values (91604, 4577, 0, 0, 0, 0, 0, 2, 1);
 
-DELETE FROM `spell_area` where `spell` = 58730 ;
-insert into spell_area values (58730, 4581, 0, 0, 0, 0, 0, 2, 1);
-insert into spell_area values (58730, 4539, 0, 0, 0, 0, 0, 2, 1);
-insert into spell_area values (58730, 4197, 0, 0, 0, 0, 0, 2, 1);
-insert into spell_area values (58730, 4585, 0, 0, 0, 0, 0, 2, 1);
-insert into spell_area values (58730, 4612, 0, 0, 0, 0, 0, 2, 1);
-insert into spell_area values (58730, 4582, 0, 0, 0, 0, 0, 2, 1);
-insert into spell_area values (58730, 4583, 0, 0, 0, 0, 0, 2, 1);
-insert into spell_area values (58730, 4589, 0, 0, 0, 0, 0, 2, 1);
-insert into spell_area values (58730, 4575, 0, 0, 0, 0, 0, 2, 1);
-insert into spell_area values (58730, 4538, 0, 0, 0, 0, 0, 2, 1);
-insert into spell_area values (58730, 4577, 0, 0, 0, 0, 0, 2, 1);
-
-DELETE FROM `spell_area` where `spell` = 57940 ;
+DELETE FROM `spell_area` where `spell` = 57940;
 insert INTO `spell_area` VALUES (57940, 65, 0, 0, 0, 0, 0, 2, 1);
 insert INTO `spell_area` VALUES (57940, 66, 0, 0, 0, 0, 0, 2, 1);
 insert INTO `spell_area` VALUES (57940, 67, 0, 0, 0, 0, 0, 2, 1);
@@ -110,11 +109,11 @@ UPDATE creature_template SET faction_A = '1732', faction_H = '1732' WHERE entry 
 UPDATE creature_template SET faction_A = '1735', faction_H = '1735' WHERE entry IN (30400,30739, 32629);  -- horde
 
 DELETE FROM `command` WHERE name IN ('bf start', 'bf stop', 'bf enable', 'bf switch', 'bf timer');
-INSERT INTO `command` (name, security, help) VALUES ('bf start',3,'Syntaxe: .bf start #battleid');
-INSERT INTO `command` (name, security, help) VALUES ('bf stop',3,'Syntaxe: .bf stop #battleid');
-INSERT INTO `command` (name, security, help) VALUES ('bf enable',3,'Syntaxe: .bf enable #battleid');
-INSERT INTO `command` (name, security, help) VALUES ('bf switch',3,'Syntaxe: .bf switch #battleid');
-INSERT INTO `command` (name, security, help) VALUES ('bf timer',3,'Syntaxe: .bf timer #battleid #timer');
+INSERT INTO `command` (name, security, help) VALUES ('bf start',3,'Syntax: .bf start #battleid');
+INSERT INTO `command` (name, security, help) VALUES ('bf stop',3,'Syntax: .bf stop #battleid');
+INSERT INTO `command` (name, security, help) VALUES ('bf enable',3,'Syntax: .bf enable #battleid');
+INSERT INTO `command` (name, security, help) VALUES ('bf switch',3,'Syntax: .bf switch #battleid');
+INSERT INTO `command` (name, security, help) VALUES ('bf timer',3,'Syntax: .bf timer #battleid #timer');
 
 DELETE FROM `spell_scripts` WHERE `id` = 49899;
 INSERT INTO `spell_scripts` (`id`, `delay`, `command`, `datalong`, `datalong2`, `dataint`, `x`, `y`, `z`, `o`) VALUES ('49899', '0', '1', '406', '0', '0', '0', '0', '0', '0');
@@ -133,7 +132,7 @@ DELETE FROM `creature_addon` WHERE `guid` BETWEEN 131727 AND 131731;
 -- Wintergrasp vehicle teleport
 UPDATE gameobject_template SET ScriptName = "go_wintergrasp_teleporter" WHERE entry = 192951;
 
--- Quètes joug
+-- Quests
 -- Horde
 UPDATE quest_template SET ExclusiveGroup = 13199 WHERE entry IN(13193, 13199);
 UPDATE quest_template SET ExclusiveGroup = 13192 WHERE entry IN(13192, 13202);
