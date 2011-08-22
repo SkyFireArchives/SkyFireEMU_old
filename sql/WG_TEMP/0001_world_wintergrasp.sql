@@ -10,8 +10,8 @@
 -- Flamewatch Tower is under attack!
 
 -- TODO: Remove french trad
-DELETE FROM trinity_string WHERE entry BETWEEN 12050 AND 12072;
-INSERT INTO `trinity_string` (`entry`,`content_default`,`content_loc1`,`content_loc2`,`content_loc3`,`content_loc4`,`content_loc5`,`content_loc6`,`content_loc7`,`content_loc8`)VALUES
+DELETE FROM SkyFire_string WHERE entry BETWEEN 12050 AND 12072;
+INSERT INTO `SkyFire_string` (`entry`,`content_default`,`content_loc1`,`content_loc2`,`content_loc3`,`content_loc4`,`content_loc5`,`content_loc6`,`content_loc7`,`content_loc8`)VALUES
 (12072, 'win keep text', NULL, 'TRAD', NULL, NULL, NULL, NULL, NULL, NULL),
 (12071, 'The western tower', NULL, 'La tour ouest', NULL, NULL, NULL, NULL, NULL, NULL),
 (12070, 'The eastern tower', NULL, 'La tour est', NULL, NULL, NULL, NULL, NULL, NULL),
@@ -59,7 +59,7 @@ UPDATE `creature_template` SET `InhabitType` = '7' WHERE `entry` = 27852;
 UPDATE `creature_template` SET `ScriptName` = 'npc_wg_spiritguide' WHERE `entry` IN (31841,31842);
 UPDATE `creature_template` SET `ScriptName` = 'npc_demolisher_engineerer' WHERE `entry` IN (30400,30499);
 
-UPDATE `trinity_string` SET `content_default` = 'The Wintergrasp fortress has been captured by %s !', `content_loc2` = '%s a capturÊ la forteresse du Joug d''hiver !' WHERE `trinity_string`.`entry` =12072 LIMIT 1 ;
+UPDATE `SkyFire_string` SET `content_default` = 'The Wintergrasp fortress has been captured by %s !', `content_loc2` = '%s a capturÊ la forteresse du Joug d''hiver !' WHERE `SkyFire_string`.`entry` =12072 LIMIT 1 ;
 
 DELETE FROM `spell_area` where `spell` = 58730;
 DELETE FROM `spell_area` where `spell` = 91604;
