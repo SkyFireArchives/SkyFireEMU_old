@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -32,9 +32,9 @@ extern LoginDatabaseWorkerPool LoginDatabase;
 #include <stdio.h>
 
 Log::Log() :
-    raLogfile(NULL), logfile(NULL), gmLogfile(NULL), charLogfile(NULL), 
-    dberLogfile(NULL), chatLogfile(NULL), arenaLogFile(NULL), sqlLogFile(NULL), sqlDevLogFile(NULL), 
-    m_gmlog_per_account(false), m_enableLogDBLater(false), 
+    raLogfile(NULL), logfile(NULL), gmLogfile(NULL), charLogfile(NULL),
+    dberLogfile(NULL), chatLogfile(NULL), arenaLogFile(NULL), sqlLogFile(NULL), sqlDevLogFile(NULL),
+    m_gmlog_per_account(false), m_enableLogDBLater(false),
     m_enableLogDB(false), m_colored(false)
 {
     Initialize();
@@ -275,16 +275,16 @@ void Log::SetColor(bool stdout_stream, ColorTypes color)
         FOREGROUND_GREEN | FOREGROUND_BLUE,                 // CYAN
         FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE, // WHITE
                                                             // YELLOW
-        FOREGROUND_RED | FOREGROUND_GREEN |                   FOREGROUND_INTENSITY, 
+        FOREGROUND_RED | FOREGROUND_GREEN |                   FOREGROUND_INTENSITY,
                                                             // RED_BOLD
-        FOREGROUND_RED |                                      FOREGROUND_INTENSITY, 
+        FOREGROUND_RED |                                      FOREGROUND_INTENSITY,
                                                             // GREEN_BOLD
-        FOREGROUND_GREEN |                   FOREGROUND_INTENSITY, 
+        FOREGROUND_GREEN |                   FOREGROUND_INTENSITY,
         FOREGROUND_BLUE | FOREGROUND_INTENSITY,             // BLUE_BOLD
                                                             // MAGENTA_BOLD
-        FOREGROUND_RED |                    FOREGROUND_BLUE | FOREGROUND_INTENSITY, 
+        FOREGROUND_RED |                    FOREGROUND_BLUE | FOREGROUND_INTENSITY,
                                                             // CYAN_BOLD
-        FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY, 
+        FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY,
                                                             // WHITE_BOLD
         FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY
     };
@@ -294,21 +294,21 @@ void Log::SetColor(bool stdout_stream, ColorTypes color)
     #else
     enum ANSITextAttr
     {
-        TA_NORMAL=0, 
-        TA_BOLD=1, 
-        TA_BLINK=5, 
+        TA_NORMAL=0,
+        TA_BOLD=1,
+        TA_BLINK=5,
         TA_REVERSE=7
     };
 
     enum ANSIFgTextAttr
     {
-        FG_BLACK=30, FG_RED,  FG_GREEN, FG_BROWN, FG_BLUE, 
+        FG_BLACK=30, FG_RED,  FG_GREEN, FG_BROWN, FG_BLUE,
         FG_MAGENTA,  FG_CYAN, FG_WHITE, FG_YELLOW
     };
 
     enum ANSIBgTextAttr
     {
-        BG_BLACK=40, BG_RED,  BG_GREEN, BG_BROWN, BG_BLUE, 
+        BG_BLACK=40, BG_RED,  BG_GREEN, BG_BROWN, BG_BLUE,
         BG_MAGENTA,  BG_CYAN, BG_WHITE
     };
 
@@ -973,7 +973,7 @@ void Log::outCharDump(const char * str, uint32 account_id, uint32 guid, const ch
         file = charLogfile;
     if (file)
     {
-        fprintf(file, "== START DUMP == (account: %u guid: %u name: %s )\n%s\n== END DUMP ==\n", 
+        fprintf(file, "== START DUMP == (account: %u guid: %u name: %s )\n%s\n== END DUMP ==\n",
             account_id, guid, name, str);
         fflush(file);
         if (m_charLog_Dump_Separate)

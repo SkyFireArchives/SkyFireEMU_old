@@ -1219,7 +1219,7 @@ void AddNorthrendScripts()
     AddSC_crystalsong_forest();
     AddSC_isle_of_conquest();
     AddSC_wintergrasp();
-	
+
     // Cataclysm Scripts
     AddSC_the_stonecore();                     //The Stonecore
     AddSC_instance_the_stonecore();

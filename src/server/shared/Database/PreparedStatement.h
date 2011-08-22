@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -45,17 +45,17 @@ union PreparedStatementDataUnion
 //- This enum helps us differ data held in above union
 enum PreparedStatementValueType
 {
-    TYPE_BOOL, 
-    TYPE_UI8, 
-    TYPE_UI16, 
-    TYPE_UI32, 
-    TYPE_UI64, 
-    TYPE_I8, 
-    TYPE_I16, 
-    TYPE_I32, 
-    TYPE_I64, 
-    TYPE_FLOAT, 
-    TYPE_DOUBLE, 
+    TYPE_BOOL,
+    TYPE_UI8,
+    TYPE_UI16,
+    TYPE_UI32,
+    TYPE_UI64,
+    TYPE_I8,
+    TYPE_I16,
+    TYPE_I32,
+    TYPE_I64,
+    TYPE_FLOAT,
+    TYPE_DOUBLE,
     TYPE_STRING
 };
 

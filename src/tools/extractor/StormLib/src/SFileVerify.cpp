@@ -38,7 +38,6 @@ typedef struct _MPQ_SIGNATURE_INFO
     BYTE  Signature[MPQ_STRONG_SIGNATURE_SIZE + 0x10];
     DWORD cbSignatureSize;                  // Length of the signature
     int nSignatureType;                     // See SIGNATURE_TYPE_XXX
-
 } MPQ_SIGNATURE_INFO, *PMPQ_SIGNATURE_INFO;
 
 //-----------------------------------------------------------------------------
@@ -302,7 +301,7 @@ static bool CalculateMpqHashMd5(
         if (dwToRead == 0)
             break;
 
-        // Read the next chunk 
+        // Read the next chunk
         if (!FileStream_Read(ha->pStream, &BeginBuffer, pbDigestBuffer, dwToRead))
         {
             FREEMEM(pbDigestBuffer);
@@ -396,7 +395,7 @@ static bool CalculateMpqHashSha1(
         if (dwToRead == 0)
             break;
 
-        // Read the next chunk 
+        // Read the next chunk
         if (!FileStream_Read(ha->pStream, &BeginBuffer, pbDigestBuffer, dwToRead))
         {
             FREEMEM(pbDigestBuffer);
@@ -556,7 +555,7 @@ static DWORD VerifyStrongSignatureWithKey(
     // Verify the signature
     if (rsa_verify_simple(reversed_signature, MPQ_STRONG_SIGNATURE_SIZE, padded_digest, MPQ_STRONG_SIGNATURE_SIZE, &result, &key) != CRYPT_OK)
         return ERROR_VERIFY_FAILED;
-    
+
     // Free the key and return result
     rsa_free(&key);
     return result ? ERROR_STRONG_SIGNATURE_OK : ERROR_STRONG_SIGNATURE_ERROR;
@@ -676,7 +675,7 @@ DWORD WINAPI SFileVerifyFile(HANDLE hMpq, const char * szFileName, DWORD dwFlags
             // Update CRC32 value
             if (dwFlags & MPQ_ATTRIBUTE_CRC32)
                 dwCrc32 = crc32(dwCrc32, Buffer, dwBytesRead);
-            
+
             // Update MD5 value
             if (dwFlags & MPQ_ATTRIBUTE_MD5)
                 md5_process(&md5_state, Buffer, dwBytesRead);
@@ -765,7 +764,7 @@ int WINAPI SFileVerifyRawData(HANDLE hMpq, DWORD dwWhatToVerify, const char * sz
     switch(dwWhatToVerify)
     {
         case SFILE_VERIFY_MPQ_HEADER:
-            
+
             // Only if the header is of version 4 or newer
             if (pHeader->dwHeaderSize >= (MPQ_HEADER_SIZE_V4 - MD5_DIGEST_SIZE))
                 return VerifyRawMpqData(ha, 0, MPQ_HEADER_SIZE_V4 - MD5_DIGEST_SIZE);
@@ -805,7 +804,7 @@ int WINAPI SFileVerifyRawData(HANDLE hMpq, DWORD dwWhatToVerify, const char * sz
             // Verify a file
             if (szFileName == NULL || *szFileName == 0)
                 return ERROR_INVALID_PARAMETER;
-            
+
             // Get the offset of a file
             pFileEntry = GetFileEntryLocale(ha, szFileName, lcFileLocale);
             if (pFileEntry == NULL)
@@ -816,7 +815,6 @@ int WINAPI SFileVerifyRawData(HANDLE hMpq, DWORD dwWhatToVerify, const char * sz
 
     return ERROR_INVALID_PARAMETER;
 }
-
 
 // Verifies the archive against the signature
 DWORD WINAPI SFileVerifyArchive(HANDLE hMpq)

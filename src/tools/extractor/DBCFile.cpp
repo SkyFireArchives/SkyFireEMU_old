@@ -23,7 +23,6 @@ DBCFile::DBCFile(const std::string &filename):
     filename(filename),
     data(0)
 {
-
 }
 
 bool DBCFile::open()
@@ -98,4 +97,3 @@ DBCFile::Iterator DBCFile::end()
     assert(data);
     return Iterator(*this, stringTable);
 }
-

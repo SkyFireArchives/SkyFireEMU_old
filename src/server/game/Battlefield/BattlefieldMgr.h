@@ -80,5 +80,4 @@ private:
 
 #define sBattlefieldMgr ACE_Singleton<BattlefieldMgr, ACE_Null_Mutex>::instance()
 
-#endif 
-
+#endif

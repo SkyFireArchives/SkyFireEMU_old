@@ -45,7 +45,7 @@ bool BattlefieldWG::SetupBattlefield()
     RegisterZone(m_ZoneId);
     m_Data32.resize(BATTLEFIELD_WG_DATA_MAX);
     m_saveTimer = 60000;
-  
+
     // Init GraveYards
     SetGraveyardNumber(BATTLEFIELD_WG_GY_MAX);
 
@@ -100,7 +100,7 @@ bool BattlefieldWG::SetupBattlefield()
         //Create PvPCapturePoint
         if( WGWorkShopDataBase[i].type < BATTLEFIELD_WG_WORKSHOP_KEEP_WEST )
         {
-            ws->ChangeControl(GetAttackerTeam(),true);//Update control of this point 
+            ws->ChangeControl(GetAttackerTeam(),true);//Update control of this point
             //Create Object
             BfCapturePointWG *workshop = new BfCapturePointWG(this,GetAttackerTeam());
             //Spawn gameobject associate (see in OnGameObjectCreate, of OutdoorPvP for see association)
@@ -188,7 +188,7 @@ bool BattlefieldWG::SetupBattlefield()
     }
     for(GameObjectSet::const_iterator itr = m_KeepGameObject[GetDefenderTeam()].begin(); itr != m_KeepGameObject[GetDefenderTeam()].end(); ++itr)
         (*itr)->SetRespawnTime(RESPAWN_IMMEDIATELY);
-     
+
     for(GameObjectSet::const_iterator itr = m_KeepGameObject[GetAttackerTeam()].begin(); itr != m_KeepGameObject[GetAttackerTeam()].end(); ++itr)
         (*itr)->SetRespawnTime(RESPAWN_ONE_DAY);
 
@@ -268,7 +268,6 @@ void BattlefieldWG::OnBattleStart()
     else
         sLog->outError("Impossible de pop la relique");
 
-  
     // Update tower visibility and update faction
     for(GuidSet::const_iterator itr = CanonList.begin(); itr != CanonList.end(); ++itr)
     {
@@ -281,7 +280,7 @@ void BattlefieldWG::OnBattleStart()
 			}
 		}
     }
-    
+
     // Rebuild all wall
     for(GameObjectBuilding::const_iterator itr = BuildingsInZone.begin(); itr != BuildingsInZone.end(); ++itr)
 	{
@@ -303,7 +302,7 @@ void BattlefieldWG::OnBattleStart()
 	    if ((*itr))
             (*itr)->UpdateGraveYardAndWorkshop();
     }
-    
+
     for (uint8 team = 0; team < 2; ++team)
         for (GuidSet::const_iterator p_itr = m_players[team].begin(); p_itr != m_players[team].end(); ++p_itr)
         {
@@ -353,7 +352,7 @@ void BattlefieldWG::OnBattleEnd(bool endbytimer)
     if(m_relic)
         m_relic->RemoveFromWorld();
     m_relic=NULL;
-    
+
     // Remove turret
     for(GuidSet::const_iterator itr = CanonList.begin(); itr != CanonList.end(); ++itr)
 	{
@@ -538,7 +537,7 @@ void BattlefieldWG::OnBattleEnd(bool endbytimer)
 void BattlefieldWG::DoCompleteOrIncrementAchievement(uint32 achievement, Player * player, uint8 /*incrementNumber*/)
 {
     AchievementEntry const* AE = GetAchievementStore()->LookupEntry(achievement);
-    
+
     switch(achievement)
     {
       case ACHIEVEMENTS_WIN_WG_100 :
@@ -552,7 +551,6 @@ void BattlefieldWG::DoCompleteOrIncrementAchievement(uint32 achievement, Player 
       }
       break;
     }
-
 }
 
 void BattlefieldWG::RewardMarkOfHonor(Player *plr, uint32 count)
@@ -560,7 +558,7 @@ void BattlefieldWG::RewardMarkOfHonor(Player *plr, uint32 count)
     // 'Inactive' this aura prevents the player from gaining honor points and battleground tokens
     if (count == 0)
         return;
- 
+
     ItemPosCountVec dest;
     uint32 no_space_count = 0;
     uint8 msg = plr->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, WG_MARK_OF_HONOR, count, &no_space_count);
@@ -653,7 +651,6 @@ void BattlefieldWG::OnCreatureCreate(Creature *creature, bool add)
 	}
 }
 
-
 void BattlefieldWG::HandleKill(Player *killer, Unit *victim)
 {
     if(killer==victim)
@@ -681,7 +678,7 @@ void BattlefieldWG::HandleKill(Player *killer, Unit *victim)
 				if (victim->GetEntry() == creature->GetEntry() && !again)
 				{
 					again = true;
-					for (GuidSet::const_iterator p_itr = m_PlayersInWar[killer->GetTeamId()].begin(); p_itr != m_PlayersInWar[killer->GetTeamId()].end(); ++p_itr)					
+					for (GuidSet::const_iterator p_itr = m_PlayersInWar[killer->GetTeamId()].begin(); p_itr != m_PlayersInWar[killer->GetTeamId()].end(); ++p_itr)
 					{
 						if(Player* plr=sObjectAccessor->FindPlayer(*p_itr))
 							if(plr->GetDistance2d(killer)<40)
@@ -756,7 +753,7 @@ void BattlefieldWG::OnPlayerJoinWar(Player* plr)
     plr->RemoveAurasDueToSpell(58045);
 
     plr->CastSpell(plr, SPELL_RECRUIT, true);
-    
+
     if(plr->GetZoneId()!=m_ZoneId){
         if(plr->GetTeamId()==GetDefenderTeam())
         {
@@ -768,7 +765,7 @@ void BattlefieldWG::OnPlayerJoinWar(Player* plr)
                 plr->TeleportTo(571,5025.857422f,3674.628906f,362.737122f,4.135169f);
             else
                 plr->TeleportTo(571,5101.284f,2186.564f,373.549f,3.812f);
-        }   
+        }
     }
 
     UpdateTenacity();
@@ -915,7 +912,7 @@ void BattlefieldWG::AddBrokenTower(TeamId team)
         for (GuidSet::const_iterator itr = m_PlayersInWar[GetAttackerTeam()].begin(); itr != m_PlayersInWar[GetAttackerTeam()].end(); ++itr)
             if (Player* plr=sObjectMgr->GetPlayer((*itr)))
                 plr->RemoveAuraFromStack(SPELL_TOWER_CONTROL);
-        
+
         //Add buff stack
         for (GuidSet::const_iterator itr = m_PlayersInWar[GetDefenderTeam()].begin(); itr != m_PlayersInWar[GetDefenderTeam()].end(); ++itr)
             if (Player* plr=sObjectMgr->GetPlayer((*itr)))
@@ -965,7 +962,7 @@ void BattlefieldWG::ProcessEvent(GameObject *obj, uint32 eventId)
 		{
             if((*itr)->m_Build->GetGOInfo()->building.damagedEvent==eventId)
                 (*itr)->Damaged();
-            
+
             if((*itr)->m_Build->GetGOInfo()->building.destroyedEvent==eventId)
                 (*itr)->Destroyed();
 
@@ -980,7 +977,7 @@ void BattlefieldWG::AddDamagedTower(TeamId team)
     {
         m_Data32[BATTLEFIELD_WG_DATA_DAMAGED_TOWER_ATT]++;
         //Remove a stacck
-    
+
     //Add a stack
     }
     else
@@ -1081,7 +1078,6 @@ BfCapturePointWG::BfCapturePointWG(BattlefieldWG *bf,TeamId control) : BfCapture
     m_Bf=bf;
     m_team=control;
 }
-
 
 BfGraveYardWG::BfGraveYardWG(BattlefieldWG* bf) : BfGraveYard(bf)
 {

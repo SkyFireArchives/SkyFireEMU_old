@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -19,7 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 
 #include "Common.h"
 
@@ -38,22 +37,22 @@
 #include "Log.h"
 
 MySQLConnection::MySQLConnection(MySQLConnectionInfo& connInfo) :
-m_reconnecting(false), 
-m_prepareError(false), 
-m_queue(NULL), 
-m_worker(NULL), 
-m_Mysql(NULL), 
-m_connectionInfo(connInfo), 
+m_reconnecting(false),
+m_prepareError(false),
+m_queue(NULL),
+m_worker(NULL),
+m_Mysql(NULL),
+m_connectionInfo(connInfo),
 m_connectionFlags(CONNECTION_SYNCH)
 {
 }
 
 MySQLConnection::MySQLConnection(ACE_Activation_Queue* queue, MySQLConnectionInfo& connInfo) :
-m_reconnecting(false), 
-m_prepareError(false), 
-m_queue(queue), 
-m_Mysql(NULL), 
-m_connectionInfo(connInfo), 
+m_reconnecting(false),
+m_prepareError(false),
+m_queue(queue),
+m_Mysql(NULL),
+m_connectionInfo(connInfo),
 m_connectionFlags(CONNECTION_ASYNC)
 {
     m_worker = new DatabaseWorker(m_queue, this);
@@ -125,7 +124,7 @@ bool MySQLConnection::Open()
     }
     #endif
 
-    m_Mysql = mysql_real_connect(mysqlInit, m_connectionInfo.host.c_str(), m_connectionInfo.user.c_str(), 
+    m_Mysql = mysql_real_connect(mysqlInit, m_connectionInfo.host.c_str(), m_connectionInfo.user.c_str(),
         m_connectionInfo.password.c_str(), m_connectionInfo.database.c_str(), port, unix_socket, 0);
 
     if (m_Mysql)
@@ -282,7 +281,7 @@ bool MySQLConnection::_Query(PreparedStatement* stmt, MYSQL_RES **pResult, uint6
         if (mysql_stmt_execute(msql_STMT))
         {
             uint32 lErrno = mysql_errno(m_Mysql);
-            sLog->outSQLDriver("SQL(p): %s\n [ERROR]: [%u] %s", 
+            sLog->outSQLDriver("SQL(p): %s\n [ERROR]: [%u] %s",
                 m_mStmt->getQueryString(m_queries[index].first).c_str(), lErrno, mysql_stmt_error(msql_STMT));
 
             if (_HandleMySQLErrno(lErrno))  // If it returns true, an error was handled successfully (i.e. reconnection)
@@ -302,7 +301,6 @@ bool MySQLConnection::_Query(PreparedStatement* stmt, MYSQL_RES **pResult, uint6
         *pFieldCount = mysql_stmt_field_count(msql_STMT);
 
         return true;
-
     }
 }
 
@@ -432,7 +430,7 @@ MySQLPreparedStatement* MySQLConnection::GetPreparedStatement(uint32 index)
     ASSERT(index < m_stmts.size());
     MySQLPreparedStatement* ret = m_stmts[index];
     if (!ret)
-        sLog->outSQLDriver("ERROR: Could not fetch prepared statement %u on database `%s`, connection type: %s.", 
+        sLog->outSQLDriver("ERROR: Could not fetch prepared statement %u on database `%s`, connection type: %s.",
             index, m_connectionInfo.database.c_str(), (m_connectionFlags & CONNECTION_ASYNC) ? "asynchronous" : "synchronous");
 
     return ret;
@@ -509,8 +507,8 @@ bool MySQLConnection::_HandleMySQLErrno(uint32 errNo)
             {
                 sLog->outSQLDriver("Connection to the MySQL server is active.");
                 if (oldThreadId != mysql_thread_id(GetHandle()))
-                    sLog->outSQLDriver("Successfully reconnected to %s @%s:%s (%s).", 
-                        m_connectionInfo.database.c_str(), m_connectionInfo.host.c_str(), m_connectionInfo.port_or_socket.c_str(), 
+                    sLog->outSQLDriver("Successfully reconnected to %s @%s:%s (%s).",
+                        m_connectionInfo.database.c_str(), m_connectionInfo.host.c_str(), m_connectionInfo.port_or_socket.c_str(),
                             (m_connectionFlags & CONNECTION_ASYNC) ? "asynchronous" : "synchronous");
 
                 m_reconnecting = false;

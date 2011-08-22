@@ -20,9 +20,9 @@
 
 enum Says
 {
-    SAY_AGGRO           = 0, 
-    SAY_AZURE           = 1, 
-    SAY_AZURE_EMOTE     = 2, 
+    SAY_AGGRO           = 0,
+    SAY_AZURE           = 1,
+    SAY_AZURE_EMOTE     = 2,
     SAY_DEATH           = 3
 };
 
@@ -33,17 +33,17 @@ enum Spells
     /*SPELL_CALL_AZURE_RING_CAPTAIN_2               = 51006, //Effect    Send Event (10665)
     SPELL_CALL_AZURE_RING_CAPTAIN_3               = 51007, //Effect    Send Event (18454)
     SPELL_CALL_AZURE_RING_CAPTAIN_4               = 51008, //Effect    Send Event (18455)*/
-    SPELL_CALL_AMPLIFY_MAGIC                      = 51054, 
+    SPELL_CALL_AMPLIFY_MAGIC                      = 51054,
 
-    SPELL_CENTRIFUGE_SHIELD                       = 50053, 
+    SPELL_CENTRIFUGE_SHIELD                       = 50053,
 
     SPELL_ICE_BEAM                                = 49549
 };
 
 enum Events
 {
-    EVENT_ENERGIZE_CORES = 1, 
-    EVENT_CALL_AZURE, 
+    EVENT_ENERGIZE_CORES = 1,
+    EVENT_CALL_AZURE,
     EVENT_AMPLIFY_MAGIC
 };
 

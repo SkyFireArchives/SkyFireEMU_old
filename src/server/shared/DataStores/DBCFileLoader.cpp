@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -52,7 +52,6 @@ bool DBCFileLoader::Load(const char* filename, const char* fmt)
         fclose(f);
         return false;
     }
-
 
     EndianConvert(header);
 
@@ -173,8 +172,8 @@ char* DBCFileLoader::AutoProduceData(const char* format, uint32& records, char**
     /*
     format STRING, NA, FLOAT, NA, INT <=>
     struct{
-    char* field0, 
-    float field1, 
+    char* field0,
+    float field1,
     int field2
     }entry;
 
@@ -293,4 +292,3 @@ char* DBCFileLoader::AutoProduceStrings(const char* format, char* dataTable)
 
     return stringPool;
 }
-

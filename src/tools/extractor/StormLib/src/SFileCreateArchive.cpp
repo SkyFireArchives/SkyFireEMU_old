@@ -113,7 +113,7 @@ bool WINAPI SFileCreateArchive(const char * szMpqName, DWORD dwFlags, DWORD dwHa
         // Don't allow the hash table size go over allowed maximum
         dwHashTableSize = STORMLIB_MIN(dwHashTableSize, HASH_TABLE_SIZE_MAX);
 
-#ifdef _DEBUG    
+#ifdef _DEBUG
         // Debug code, used for testing StormLib
 //      dwBlockTableSize = dwHashTableSize * 2;
 #endif
@@ -191,7 +191,7 @@ bool WINAPI SFileCreateArchive(const char * szMpqName, DWORD dwFlags, DWORD dwHa
         SetLastError(nError);
         ha = NULL;
     }
-    
+
     // Return the values
     *phMpq = (HANDLE)ha;
     return (nError == ERROR_SUCCESS);

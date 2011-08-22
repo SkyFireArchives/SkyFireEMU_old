@@ -141,7 +141,7 @@ static size_t ReadListFileLine(TListFileCache * pCache, char * szLine, int nMaxC
     char * szLineBegin = szLine;
     char * szLineEnd = szLine + nMaxChars - 1;
     char * szExtraString = NULL;
-    
+
     // Skip newlines, spaces, tabs and another non-printable stuff
     for(;;)
     {
@@ -200,7 +200,7 @@ static size_t ReadListFileLine(TListFileCache * pCache, char * szLine, int nMaxC
     return (szLine - szLineBegin);
 }
 
-static int CompareFileNodes(const void * p1, const void * p2) 
+static int CompareFileNodes(const void * p1, const void * p2)
 {
     char * szFileName1 = *(char **)p1;
     char * szFileName2 = *(char **)p2;
@@ -310,7 +310,7 @@ int SListFileSaveToMpq(TMPQArchive * ha)
         // Count the 0-th item
         dwFileSize += (DWORD)strlen(SortTable[0]) + 2;
         szPrevItem = SortTable[0];
-        
+
         // Count all next items
         for(i = 1; i < nFileNodes; i++)
         {
@@ -377,7 +377,7 @@ int SListFileSaveToMpq(TMPQArchive * ha)
 // File functions
 
 // Adds a listfile into the MPQ archive.
-// Note that the function does not remove the 
+// Note that the function does not remove the
 int WINAPI SFileAddListFile(HANDLE hMpq, const char * szListFile)
 {
     TListFileCache * pCache = NULL;
@@ -459,7 +459,7 @@ HANDLE WINAPI SListFileFindFirstFile(HANDLE hMpq, const char * szListFile, const
 
             // If some mask entered, check it
             if (CheckWildCard(lpFindFileData->cFileName, pCache->szMask))
-                break;                
+                break;
         }
     }
 
@@ -522,4 +522,3 @@ bool WINAPI SListFileFindClose(HANDLE hFind)
 
     return false;
 }
-

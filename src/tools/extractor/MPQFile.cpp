@@ -27,7 +27,7 @@ MPQFile::MPQFile(const char* filename, HANDLE handle_)
     eof = true;
     buffer = NULL;
     pointer = 0;
-    
+
     buffer = ExtractFileToMemory(handle_, filename, size);
     if (buffer == NULL || size == 0)
         eof = true;

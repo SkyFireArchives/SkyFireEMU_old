@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -47,14 +47,14 @@ enum WorldDatabaseStatements
         name for a suiting suffix.
     */
 
-    WORLD_LOAD_QUEST_POOLS, 
-    WORLD_DEL_CRELINKED_RESPAWN, 
-    WORLD_REP_CRELINKED_RESPAWN, 
-    WORLD_LOAD_CRETEXT, 
-    WORLD_LOAD_SMART_SCRIPTS, 
-    WORLD_LOAD_SMARTAI_WP, 
+    WORLD_LOAD_QUEST_POOLS,
+    WORLD_DEL_CRELINKED_RESPAWN,
+    WORLD_REP_CRELINKED_RESPAWN,
+    WORLD_LOAD_CRETEXT,
+    WORLD_LOAD_SMART_SCRIPTS,
+    WORLD_LOAD_SMARTAI_WP,
 
-    MAX_WORLDDATABASE_STATEMENTS, 
+    MAX_WORLDDATABASE_STATEMENTS,
 };
 
 #endif

@@ -5167,7 +5167,6 @@ bool ChatHandler::HandleBattlefieldStart(const char *args)
 	if (battleid == 1)
 		SendGlobalGMSysMessage("Wintergrasp (Command start used)");
     return true;
-
 }
 bool ChatHandler::HandleBattlefieldEnd(const char *args)
 {
@@ -5187,7 +5186,6 @@ bool ChatHandler::HandleBattlefieldEnd(const char *args)
 	if (battleid == 1)
 		SendGlobalGMSysMessage("Wintergrasp (Command stop used)");
     return true;
-
 }
 bool ChatHandler::HandleBattlefieldEnable(const char *args)
 {
@@ -5215,7 +5213,6 @@ bool ChatHandler::HandleBattlefieldEnable(const char *args)
 			SendGlobalGMSysMessage("Wintergrasp is enable");
 	}
     return true;
-
 }
 bool ChatHandler::HandleBattlefieldSwitch(const char *args)
 {
@@ -5235,7 +5232,6 @@ bool ChatHandler::HandleBattlefieldSwitch(const char *args)
 	if (battleid == 1)
 		SendGlobalGMSysMessage("Wintergrasp (Command switch used)");
     return true;
-
 }
 bool ChatHandler::HandleBattlefieldTimer(const char *args)
 {

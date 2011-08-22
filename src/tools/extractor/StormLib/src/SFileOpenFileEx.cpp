@@ -20,7 +20,7 @@ static bool OpenLocalFile(const char * szFileName, HANDLE * phFile)
 {
     TFileStream * pStream;
     TMPQFile * hf = NULL;
-    
+
     pStream = FileStream_OpenFile(szFileName, false);
     if (pStream != NULL)
     {
@@ -86,7 +86,7 @@ bool OpenPatchedFile(HANDLE hMpq, const char * szFileName, DWORD dwReserved, HAN
         SetLastError(ERROR_FILE_NOT_FOUND);
         return false;
     }
-    
+
     // Move to the patch MPQ
     ha = ha->haPatch;
 
@@ -101,7 +101,7 @@ bool OpenPatchedFile(HANDLE hMpq, const char * szFileName, DWORD dwReserved, HAN
             // Remember the new version
             hfPatch = (TMPQFile *)hPatchFile;
 
-            // If we encountered a full replacement of the file, 
+            // If we encountered a full replacement of the file,
             // we have to remember the highest full file
             if ((hfPatch->pFileEntry->dwFlags & MPQ_FILE_PATCH_FILE) == 0)
                 hfLast = hfPatch;
@@ -139,7 +139,7 @@ bool OpenPatchedFile(HANDLE hMpq, const char * szFileName, DWORD dwReserved, HAN
 /*****************************************************************************/
 
 //-----------------------------------------------------------------------------
-// SFileEnumLocales enums all locale versions within MPQ. 
+// SFileEnumLocales enums all locale versions within MPQ.
 // Functions fills all available language identifiers on a file into the buffer
 // pointed by plcLocales. There must be enough entries to copy the localed,
 // otherwise the function returns ERROR_INSUFFICIENT_BUFFER.
@@ -245,7 +245,6 @@ bool WINAPI SFileHasFile(HANDLE hMpq, const char * szFileName)
     return (nError == ERROR_SUCCESS);
 }
 
-
 //-----------------------------------------------------------------------------
 // SFileOpenFileEx
 //
@@ -277,7 +276,7 @@ bool WINAPI SFileOpenFileEx(HANDLE hMpq, const char * szFileName, DWORD dwSearch
                 return OpenPatchedFile(hMpq, szFileName, 0, phFile);
 
             case SFILE_OPEN_FROM_MPQ:
-                
+
                 if (!IsValidMpqHandle(ha))
                 {
                     nError = ERROR_INVALID_HANDLE;
@@ -340,7 +339,7 @@ bool WINAPI SFileOpenFileEx(HANDLE hMpq, const char * szFileName, DWORD dwSearch
                     break;
                 }
 
-                return OpenLocalFile(szFileName, phFile); 
+                return OpenLocalFile(szFileName, phFile);
 
             default:
 
@@ -435,7 +434,7 @@ bool WINAPI SFileOpenFileEx(HANDLE hMpq, const char * szFileName, DWORD dwSearch
 bool WINAPI SFileCloseFile(HANDLE hFile)
 {
     TMPQFile * hf = (TMPQFile *)hFile;
-    
+
     if (!IsValidFileHandle(hf))
     {
         SetLastError(ERROR_INVALID_HANDLE);

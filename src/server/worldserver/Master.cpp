@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -129,14 +129,14 @@ int Master::Run()
 
     sLog->outString("%s (worldserver-daemon)", _FULLVERSION);
     sLog->outString("<Ctrl-C> to stop.\n");
-	
+
 	sLog->outString(" ");
-    sLog->outString("   ______  __  __  __  __  ______ __  ______  ______ ");  
-    sLog->outString("  /\\  ___\\/\\ \\/ / /\\ \\_\\ \\/\\  ___/\\ \\/\\  == \\/\\  ___\\ ");  
-    sLog->outString("  \\ \\___  \\ \\  _'-\\ \\____ \\ \\  __\\ \\ \\ \\  __<\\ \\  __\\ ");  
+    sLog->outString("   ______  __  __  __  __  ______ __  ______  ______ ");
+    sLog->outString("  /\\  ___\\/\\ \\/ / /\\ \\_\\ \\/\\  ___/\\ \\/\\  == \\/\\  ___\\ ");
+    sLog->outString("  \\ \\___  \\ \\  _'-\\ \\____ \\ \\  __\\ \\ \\ \\  __<\\ \\  __\\ ");
     sLog->outString("   \\/\\_____\\ \\_\\ \\_\\/\\_____\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_____\\ ");
     sLog->outString("    \\/_____/\\/_/\\/_/\\/_____/\\/_/   \\/_/\\/_/ /_/\\/_____/ ");
-    sLog->outString("  Project SkyFireEmu 2011(c) Open-sourced Game Emulation ");                                                   
+    sLog->outString("  Project SkyFireEmu 2011(c) Open-sourced Game Emulation ");
 	sLog->outString("           <http://www.projectskyfire.org/> ");
 	sLog->outString(" ");
 
@@ -353,7 +353,7 @@ int Master::Run()
 
         delete cliThread;
     }
-	
+
 	// for some unknown reason, unloading scripts here and not in worldrunnable
     // fixes a memory leak related to detaching threads from the module
     //UnloadScriptingModule();

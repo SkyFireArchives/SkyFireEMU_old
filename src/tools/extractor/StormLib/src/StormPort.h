@@ -35,10 +35,10 @@
   #define _CRT_NON_CONFORMING_SWPRINTFS
   #endif
 
-  #include <assert.h>      
-  #include <ctype.h>      
-  #include <stdio.h>      
-  #include <windows.h>      
+  #include <assert.h>
+  #include <ctype.h>
+  #include <stdio.h>
+  #include <windows.h>
   #define PLATFORM_LITTLE_ENDIAN
 
   #ifdef WIN64
@@ -52,12 +52,12 @@
 
 #endif
 
-// Defines for Mac Carbon 
+// Defines for Mac Carbon
 #if !defined(PLATFORM_DEFINED) && defined(__APPLE__)  // Mac Carbon API
 
   // Macintosh using Carbon
   #include <Carbon/Carbon.h> // Mac OS X
-  
+
   #define    PKEXPORT
   #define    __SYS_ZLIB
   #define    __SYS_BZLIB
@@ -65,7 +65,7 @@
   #ifndef __BIG_ENDIAN__
     #define PLATFORM_LITTLE_ENDIAN          // Apple is now making Macs with Intel CPUs
   #endif
-  
+
   #define PLATFORM_MAC
   #define PLATFORM_DEFINED                  // The platform is known now
 
@@ -128,7 +128,7 @@
     #define MAX_PATH 1024
   #endif
 
-  #define WINAPI 
+  #define WINAPI
 
   #define FILE_BEGIN    SEEK_SET
   #define FILE_CURRENT  SEEK_CUR
@@ -136,10 +136,9 @@
 
   #define _stricmp strcasecmp
   #define _strnicmp strncasecmp
-  
+
   void  SetLastError(int err);
   int   GetLastError();
-
 
 #endif // !WIN32
 

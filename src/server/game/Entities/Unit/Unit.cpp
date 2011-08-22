@@ -8734,7 +8734,7 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
             {
                 if (!ToPlayer()->HasSpellCooldown(trigger_spell_id))
                 {
-                    AddAura(trigger_spell_id, this);        
+                    AddAura(trigger_spell_id, this);
                     ToPlayer()->AddSpellCooldown(trigger_spell_id, 0, time(NULL) + 120);
                 }
             }

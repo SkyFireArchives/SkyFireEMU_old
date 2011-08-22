@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -32,7 +32,6 @@ AuthCrypt::AuthCrypt() : _clientDecrypt(SHA_DIGEST_LENGTH), _serverEncrypt(SHA_D
 
 AuthCrypt::~AuthCrypt()
 {
-
 }
 
 void AuthCrypt::Init(BigNumber *K)
@@ -80,4 +79,3 @@ void AuthCrypt::EncryptSend(uint8 *data, size_t len)
 
     _serverEncrypt.UpdateData(len, data);
 }
-

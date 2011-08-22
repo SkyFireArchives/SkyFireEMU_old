@@ -31,8 +31,6 @@ const uint32 MaxVehNumWorldState[2] = {3681,3491};
 const uint32 ClockWorldState[2] = {3781,4354};
 const uint32 WintergraspFaction[3] = {1732, 1735, 35};
 
-
-
 class BattlefieldWG;
 class BfCapturePointWG;
 
@@ -74,7 +72,7 @@ enum eWGpell
 
     SPELL_TELEPORT_DALARAN                       = 53360,
     SPELL_VICTORY_AURA                           = 60044,
-	
+
     // Other spells
     SPELL_WINTERGRASP_WATER                      = 36444,
 };
@@ -109,7 +107,6 @@ enum WB_ACHIEVEMENTS
 	ACHIEVEMENTS_WG_RANGER		  = 2199, //todo
 	ACHIEVEMENTS_DESTRUCTION_DERBY_H  = 2476, //todo
 	ACHIEVEMENTS_WG_MASTER_H	  = 2776, //todo
-
 };
 
 /*#########################
@@ -226,16 +223,16 @@ public:
 
     bool CanClickOnOrb() {return m_bCanClickOnOrb;}
     void AllowToClickOnOrb(bool allow) {m_bCanClickOnOrb = allow;}
-    
+
     void RewardMarkOfHonor(Player *plr, uint32 count);
-    
+
     void UpdateVehicleCountWG();
 	void UpdateCounterVehicle(bool init);
 
     WorldPacket BuildInitWorldStates();
     void SendInitWorldStatesTo(Player* plr);
     void SendInitWorldStatesToAll();
-    
+
     void HandleKill(Player *killer, Unit *victim);
     void PromotePlayer(Player *killer);
 
@@ -247,7 +244,7 @@ protected:
     GameObjectBuilding BuildingsInZone;
     GuidSet KeepCreature[2];
 	GuidSet OutsideCreature[2];
-    WorkShop WorkShopList; 
+    WorkShop WorkShopList;
     GuidSet CanonList;
     GameObjectSet DefenderPortalList;
     GameObjectSet m_KeepGameObject[2];
@@ -272,7 +269,6 @@ enum eWGGameObjectBuildingType
 enum eWGGameObjectState
 {
     BATTLEFIELD_WG_OBJECTSTATE_NONE,
-
 
     BATTLEFIELD_WG_OBJECTSTATE_NEUTRAL_INTACT,
     BATTLEFIELD_WG_OBJECTSTATE_NEUTRAL_DAMAGE,
@@ -299,7 +295,7 @@ enum eWGTeamControl
 {
     BATTLEFIELD_WG_TEAM_ALLIANCE,
     BATTLEFIELD_WG_TEAM_HORDE,
-    BATTLEFIELD_WG_TEAM_NEUTRAL,    
+    BATTLEFIELD_WG_TEAM_NEUTRAL,
 };
 enum eWGText
 {
@@ -362,7 +358,7 @@ struct BfWGBuildingSpawnData
     uint32 nameid;
 };
 #define WG_MAX_OBJ 32
-const BfWGBuildingSpawnData WGGameObjectBuillding[WG_MAX_OBJ] = 
+const BfWGBuildingSpawnData WGGameObjectBuillding[WG_MAX_OBJ] =
 {
     // Wall
     // Entry WS    X        Y        Z        O         type                          NameID
@@ -409,7 +405,6 @@ const BfWGBuildingSpawnData WGGameObjectBuillding[WG_MAX_OBJ] =
     //Last door
     {191810, 3773, 5397.11f, 2841.54f, 425.899f, 3.14159f,  BATTLEFIELD_WG_OBJECTTYPE_DOOR_LAST, 0},
 };
-
 
 //*********************************************************
 //**********Keep Element(GameObject,Creature)**************
@@ -492,13 +487,12 @@ const BfWGTurretPos WGTurret[WG_MAX_TURRET]=
     {5147.98f, 2861.93f, 421.63f, 3.18792f},
 };
 
-
 //Here there is all npc keeper spawn point
 #define WG_MAX_KEEP_NPC 39
 const BfWGObjectPosition WGKeepNPC[WG_MAX_KEEP_NPC] =
 {
     // X          Y            Z           O         horde                          alliance
-    // North East 
+    // North East
     {5326.203125f, 2660.026367f, 409.100891f, 2.543383f, BATTLEFIELD_WG_NPC_GUARD_H, BATTLEFIELD_WG_NPC_GUARD_A}, // Roaming Guard
     {5298.430176f, 2738.760010f, 409.316010f, 3.971740f, 31102, 31052}, // Vieron Plumembrase /
     {5335.310059f, 2764.110107f, 409.274994f, 4.834560f, BATTLEFIELD_WG_NPC_GUARD_H, BATTLEFIELD_WG_NPC_GUARD_A}, // Standing Guard
@@ -575,7 +569,7 @@ struct BfWGWGTeleporterData
     float o;        //  --
 };
 #define WG_MAX_TELEPORTER 12
-const BfWGWGTeleporterData WGPortalDefenderData[WG_MAX_TELEPORTER] = 
+const BfWGWGTeleporterData WGPortalDefenderData[WG_MAX_TELEPORTER] =
 {
     {190763, 5153.41f, 2901.35f, 409.191f, -0.069812f},
     {190763, 5268.7f,  2666.42f, 409.099f, -0.715585f},
@@ -596,7 +590,7 @@ const BfWGWGTeleporterData WGPortalDefenderData[WG_MAX_TELEPORTER] =
 //*********************************************************
 
 struct BfWGTowerData {
-	uint32 towerentry; //Gameobject id of tower // TODO: needed ? 
+	uint32 towerentry; //Gameobject id of tower // TODO: needed ?
 	uint8 nbObject; //Number of gameobject spawned on this point
 	BfWGObjectPosition GameObject[6];//Gameobject position and entry (Horde/Alliance)
     //Creature : Turrets and Guard, TODO: check if killed on tower destroy ? tower damage ?
@@ -700,7 +694,6 @@ const BfWGTowerData AttackTowers[WG_MAX_ATTACKTOWERS]={
         },
         0,
         {
-
 			{0,0,0,0,0,0},
 			{0,0,0,0,0,0},
 			{0,0,0,0,0,0},
@@ -1071,12 +1064,7 @@ const BfWGWorkShopDataBase WGWorkShopDataBase[WG_MAX_WORKSHOP]=
     }
 };
 
-
-
-
-
 //*********************************
-
 
 //********************************************************************
 //*                Structs using for Building,Graveyard,Workshop         *
@@ -1094,7 +1082,6 @@ struct BfWGGameObjectBuilding
         m_WorldState = 0;
         m_State = 0;
         m_NameId = 0;
-
     }
     //Team witch control this point
     uint8 m_Team;
@@ -1103,7 +1090,7 @@ struct BfWGGameObjectBuilding
     BattlefieldWG* m_WG;
 
     //Linked gameobject
-    GameObject* m_Build; 
+    GameObject* m_Build;
 
     //eWGGameObjectBuildingType
     uint32 m_Type;
@@ -1113,7 +1100,7 @@ struct BfWGGameObjectBuilding
 
     //eWGGameObjectState
     uint32 m_State;
-    
+
     //Name id for warning text
     uint32 m_NameId;
 
@@ -1178,14 +1165,14 @@ struct BfWGGameObjectBuilding
         else if (m_Type==BATTLEFIELD_WG_OBJECTTYPE_TOWER)
             m_WG->AddDamagedTower(m_WG->GetAttackerTeam());
     }
-    
+
     //Called when associate gameobject is destroy
     void Destroyed()
     {
         //Updating worldstate
         m_State=BATTLEFIELD_WG_OBJECTSTATE_ALLIANCE_DESTROY-(m_Team*3);
         m_WG->SendUpdateWorldState(m_WorldState,m_State);
-        //Warning 
+        //Warning
         if(m_NameId)
             m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_TOWER_DESTROY,sObjectMgr->GetSkyFireStringForDBCLocale(m_NameId));
         switch(m_Type)
@@ -1227,7 +1214,7 @@ struct BfWGGameObjectBuilding
         case BATTLEFIELD_WG_OBJECTTYPE_TOWER:
             m_Team=m_WG->GetAttackerTeam();//Tower in south are for attacker
             break;
-        default: 
+        default:
             m_Team=TEAM_NEUTRAL;
             break;
         }
@@ -1256,7 +1243,6 @@ struct BfWGGameObjectBuilding
                 break;
         }
 
-	    
         int32 towerid = -1;
 	    switch(go->GetEntry())
 	    {
@@ -1381,7 +1367,7 @@ struct BfWGGameObjectBuilding
           	if (Unit* unit = sObjectAccessor->FindUnit((*itr)))
 			    if (Creature* creature = unit->ToCreature())
 				    m_WG->HideNpc(creature);
-        
+
         for (GuidSet::const_iterator itr = m_CreatureTopList[m_WG->GetAttackerTeam()].begin(); itr != m_CreatureTopList[m_WG->GetAttackerTeam()].end(); ++itr)
             if (Unit* unit = sObjectAccessor->FindUnit((*itr)))
 			    if (Creature* creature = unit->ToCreature())
@@ -1391,7 +1377,7 @@ struct BfWGGameObjectBuilding
             if (Unit* unit = sObjectAccessor->FindUnit((*itr)))
 			    if (Creature* creature = unit->ToCreature())
 				    m_WG->HideNpc(creature);
-        
+
         for (GuidSet::const_iterator itr = m_CreatureBottomList[m_WG->GetAttackerTeam()].begin(); itr != m_CreatureBottomList[m_WG->GetAttackerTeam()].end(); ++itr)
             if (Unit* unit = sObjectAccessor->FindUnit((*itr)))
 			    if (Creature* creature = unit->ToCreature())
@@ -1564,7 +1550,6 @@ struct BfWGWorkShopData
 
         if(Creature* creature = m_WG->SpawnCreature(obj.entrya, obj.x, obj.y, obj.z, obj.o, TEAM_ALLIANCE))
         	m_CreatureOnPoint[TEAM_ALLIANCE].insert(creature->GetGUID());
-
     }
     //Spawning Associate gameobject and store them
     void AddGameObject(BfWGObjectPosition obj)
@@ -1574,7 +1559,7 @@ struct BfWGWorkShopData
         if(GameObject* gameobject = m_WG->SpawnGameObject(obj.entrya, obj.x, obj.y, obj.z, obj.o))
             m_GameObjectOnPoint[TEAM_ALLIANCE].insert(gameobject);
     }
-    
+
     //Init method, setup variable
     void Init(uint32 worldstate, uint32 type,uint32 nameid)
     {
@@ -1617,7 +1602,6 @@ struct BfWGWorkShopData
                 for(GameObjectSet::const_iterator itr = m_GameObjectOnPoint[TEAM_HORDE].begin(); itr != m_GameObjectOnPoint[TEAM_HORDE].end(); ++itr)
                     (*itr)->SetRespawnTime(RESPAWN_ONE_DAY);
 
-
                 //Updating worldstate
                 m_State=BATTLEFIELD_WG_OBJECTSTATE_ALLIANCE_INTACT;
                 m_WG->SendUpdateWorldState(m_WorldState,m_State);
@@ -1626,12 +1610,12 @@ struct BfWGWorkShopData
                 if(!init)
                     m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_WORKSHOP_TAKEN,sObjectMgr->GetSkyFireStringForDBCLocale(m_NameId),
                     sObjectMgr->GetSkyFireStringForDBCLocale(BATTLEFIELD_WG_TEXT_ALLIANCE));
-                
+
                 //Found associate graveyard and update it
                 if(m_Type < BATTLEFIELD_WG_WORKSHOP_KEEP_WEST)
                     if(m_WG && m_WG->GetGraveYardById(m_Type))
                         m_WG->GetGraveYardById(m_Type)->ChangeControl(TEAM_ALLIANCE);
-                              
+
                 m_TeamControl=team;
                 break;
             }
@@ -1642,7 +1626,7 @@ struct BfWGWorkShopData
                     if (Unit* unit = sObjectAccessor->FindUnit((*itr)))
 					    if (Creature* creature = unit->ToCreature())
 						    m_WG->ShowNpc(creature,creature->GetEntry()!=30400);
-                
+
                 //Hide Alliance creature
                 for(GuidSet::const_iterator itr = m_CreatureOnPoint[TEAM_ALLIANCE].begin(); itr != m_CreatureOnPoint[TEAM_ALLIANCE].end(); ++itr)
                     if (Unit* unit = sObjectAccessor->FindUnit((*itr)))
@@ -1660,7 +1644,7 @@ struct BfWGWorkShopData
                 //Update worlstate
                 m_State=BATTLEFIELD_WG_OBJECTSTATE_HORDE_INTACT;
                 m_WG->SendUpdateWorldState(m_WorldState,m_State);
-                
+
                 //Warning message
                 if(!init)
                     m_WG->SendWarningToAllInZone(BATTLEFIELD_WG_TEXT_WORKSHOP_TAKEN,sObjectMgr->GetSkyFireStringForDBCLocale(m_NameId),

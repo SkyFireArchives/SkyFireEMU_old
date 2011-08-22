@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -25,7 +25,7 @@
 #include "Log.h"
 
 PreparedStatement::PreparedStatement(uint32 index) :
-m_stmt(NULL), 
+m_stmt(NULL),
 m_index(index)
 {
 }
@@ -189,7 +189,7 @@ void PreparedStatement::setString(const uint8 index, const std::string& value)
 }
 
 MySQLPreparedStatement::MySQLPreparedStatement(MYSQL_STMT* stmt) :
-m_Mstmt(stmt), 
+m_Mstmt(stmt),
 m_bind(NULL)
 {
     /// Initialize variable parameters
@@ -387,18 +387,17 @@ std::string MySQLPreparedStatement::getQueryString(const char *query)
 
 //- Execution
 PreparedStatementTask::PreparedStatementTask(PreparedStatement* stmt) :
-m_stmt(stmt), 
+m_stmt(stmt),
 m_has_result(false)
 {
 }
 
 PreparedStatementTask::PreparedStatementTask(PreparedStatement* stmt, PreparedQueryResultFuture result) :
-m_stmt(stmt), 
-m_has_result(true), 
+m_stmt(stmt),
+m_has_result(true),
 m_result(result)
 {
 }
-
 
 PreparedStatementTask::~PreparedStatementTask()
 {

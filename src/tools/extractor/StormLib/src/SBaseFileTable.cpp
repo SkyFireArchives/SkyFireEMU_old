@@ -37,7 +37,6 @@ typedef struct _HET_TABLE_HEADER
     DWORD dwUnknown14;
     DWORD dwIndexSize;                      // Effective size of the index entry
     DWORD dwBlockTableSize;                 // Size of the block index subtable (in bytes)
-
 } HET_TABLE_HEADER, *PHET_TABLE_HEADER;
 
 // Structure for BET table header
@@ -62,7 +61,6 @@ typedef struct _BET_TABLE_HEADER
     DWORD NameHash2Size;                    // Effective size of NameHashPart2 (in bits)
     DWORD dwUnknown44;
     DWORD dwFlagCount;                      // Number of flags in the following array
-
 } BET_TABLE_HEADER, *PBET_TABLE_HEADER;
 
 typedef struct _MPQ_FILE_BLOCK_ENTRY
@@ -82,7 +80,6 @@ typedef struct _MPQ_FILE_BLOCK_ENTRY
     DWORD result128_3;
     DWORD result128_4;
     USHORT field_38;
-
 } MPQ_FILE_BLOCK_ENTRY, *PMPQ_FILE_BLOCK_ENTRY;
 
 // Structure for bit array
@@ -95,7 +92,6 @@ typedef struct _BIT_ARRAY
 
     DWORD NumberOfBits;                     // Total number of bits that are available
     BYTE Elements[1];                       // Array of elements (variable length)
-
 } BIT_ARRAY, *PBIT_ARRAY;
 
 // Header for HET and BET tables
@@ -153,7 +149,6 @@ struct TMPQBetTable
 //  vector<INT128> field_8C;
 //  vector<BYTE>   field_A4;
     DWORD dwOpenFlags;
-
 };
 
 //-----------------------------------------------------------------------------
@@ -290,7 +285,7 @@ static TMPQHetTable * TranslateHetTable(TMPQExtTable * pExtTable)
                 pHetTable->dwTotalIndexSize = HetHeader.dwTotalIndexSize;
                 pHetTable->field_4          = HetHeader.dwUnknown14;
                 pHetTable->dwIndexSize      = HetHeader.dwIndexSize;
-                
+
                 // Copy the hash table
                 pHetTable->pHashPart1 = ALLOCMEM(BYTE, HetHeader.dwHashTableSize);
                 if (pHetTable->pHashPart1 != NULL)
@@ -339,7 +334,7 @@ TMPQBetTable * CreateBetTable(DWORD dwFileCount, DWORD dwOpenFlags)
 /*
         if (dwOpenFlags & 0x80)
             field_74.resize(dwFileCount);
-    
+
         if (dwOpenFlags & 0x40)
             field_8C.resize(dwFileCount);
 
@@ -411,7 +406,7 @@ static TMPQBetTable * TranslateBetTable(TMPQExtTable * pExtTable, DWORD dwOpenFl
                     pBetTable->dwFlagCount = BetHeader.dwFlagCount;
                 }
 
-                // Load the block table 
+                // Load the block table
                 pBetTable->pBlockTable = CreateBitArray(pBetTable->dwTableEntrySize * pBetTable->dwFileCount, 0);
                 LengthInBytes = (pBetTable->pBlockTable->NumberOfBits + 7) / 8;
                 if (pBetTable->pBlockTable != NULL)
@@ -422,8 +417,8 @@ static TMPQBetTable * TranslateBetTable(TMPQExtTable * pExtTable, DWORD dwOpenFl
                 pBetTable->TotalNameHash2Size = BetHeader.TotalNameHash2Size;
                 pBetTable->field_48           = BetHeader.dwUnknown3C;
                 pBetTable->NameHash2Size      = BetHeader.NameHash2Size;
-                
-                // 
+
+                //
                 pBetTable->pHashPart2 = CreateBitArray(pBetTable->TotalNameHash2Size * pBetTable->dwFileCount, 0);
                 LengthInBytes = (pBetTable->pHashPart2->NumberOfBits + 7) / 8;
                 if (pBetTable->pHashPart2 != NULL)
@@ -475,7 +470,7 @@ static TMPQHash * GetHashEntryAny(TMPQArchive * ha, const char * szFileName)
             pHashAny = pHash;
 
         // Get the next hash entry for that file
-        pHash = GetNextHashEntry(ha, pFirstHash, pHash); 
+        pHash = GetNextHashEntry(ha, pFirstHash, pHash);
     }
 
     // At the end, return neutral hash (if found), otherwise NULL
@@ -498,13 +493,13 @@ static TMPQHash * GetHashEntryLocale(TMPQArchive * ha, const char * szFileName, 
         // If the locales match, return it
         if (pHash->lcLocale == lcLocale)
             return pHash;
-        
+
         // If we found neutral hash, remember it
         if (pHash->lcLocale == 0)
             pHashNeutral = pHash;
 
         // Get the next hash entry for that file
-        pHash = GetNextHashEntry(ha, pFirstHash, pHash); 
+        pHash = GetNextHashEntry(ha, pFirstHash, pHash);
     }
 
     // At the end, return neutral hash (if found), otherwise NULL
@@ -525,9 +520,9 @@ static TMPQHash * GetHashEntryExact(TMPQArchive * ha, const char * szFileName, L
         // If the locales match, return it
         if (pHash->lcLocale == lcLocale)
             return pHash;
-        
+
         // Get the next hash entry for that file
-        pHash = GetNextHashEntry(ha, pFirstHash, pHash); 
+        pHash = GetNextHashEntry(ha, pFirstHash, pHash);
     }
 
     // Not found
@@ -555,7 +550,7 @@ static TMPQExtTable * LoadExtTable(
             FREEMEM(pExtTable);
             return NULL;
         }
-        
+
         // Swap the ext table header
         BSWAP_ARRAY32_UNSIGNED(pExtTable, sizeof(TMPQExtTable));
 
@@ -574,7 +569,7 @@ static TMPQExtTable * LoadExtTable(
                 int cbOutBuffer = (int)pCompressed->dwDataSize;
                 int cbInBuffer = (int)Size;
 
-                // Decompress the XXX block 
+                // Decompress the XXX block
                 pExtTable->dwSignature = pCompressed->dwSignature;
                 pExtTable->dwVersion   = pCompressed->dwVersion;
                 pExtTable->dwDataSize  = pCompressed->dwDataSize;
@@ -622,7 +617,7 @@ static void CalculateTablePositions(TMPQArchive * ha, bool bNeedHiBlockTable)
 
     // Hi-block table follows the old block table
     // Note that we will only use hi-block table
-    // if the current position is beyond 4 GB. 
+    // if the current position is beyond 4 GB.
     if (bNeedHiBlockTable)
     {
         pHeader->HiBlockTablePos64 = TablePos;
@@ -639,7 +634,6 @@ static void CalculateTablePositions(TMPQArchive * ha, bool bNeedHiBlockTable)
     pHeader->dwArchiveSize = (DWORD)TablePos;
     pHeader->ArchiveSize64 = TablePos;
 }
-
 
 int LoadHashTable(TMPQArchive * ha)
 {
@@ -720,7 +714,7 @@ int BuildFileTable(TMPQArchive * ha, ULONGLONG FileSize)
             dwTableSize = dwCmpSize = (DWORD)(FileSize - ByteOffset);
 
         //
-        // One of the first cracked versions of Diablo had block table unencrypted 
+        // One of the first cracked versions of Diablo had block table unencrypted
         // StormLib does NOT support such MPQs anymore, as they are incompatible
         // with compressed block table feature
         //
@@ -827,7 +821,7 @@ int SaveMPQTables(TMPQArchive * ha)
     pBlockTable = ALLOCMEM(TMPQBlock, ha->dwFileTableSize);
     pHashTable = ALLOCMEM(TMPQHash, ha->pHeader->dwHashTableSize);
     if (pHiBlockTable == NULL || pBlockTable == NULL || pHashTable == NULL)
-        nError = ERROR_SUCCESS;        
+        nError = ERROR_SUCCESS;
 
     // Construct the block table and hi-block table
     if (nError == ERROR_SUCCESS)
@@ -892,7 +886,7 @@ int SaveMPQTables(TMPQArchive * ha)
 
         // Encrypt the block table and write it to the file
         EncryptMpqBlock(pBlockTable, dwBytesToWrite, MPQ_KEY_BLOCK_TABLE);
-        
+
         // Convert to little endian for file save
         ByteOffset = ha->MpqPos + MAKE_OFFSET64(pHeader->wBlockTablePosHi, pHeader->dwBlockTablePos);
         BSWAP_ARRAY32_UNSIGNED(pBlockTable, dwBytesToWrite);
@@ -1004,7 +998,7 @@ static TFileEntry * GetFileEntry_HetBet(
     // Change the file name hash, so it only contains required
     // number of bits, and always has the highest bit set
     MaskedHash64 = (FileNameHash & AndMask64) | OrMask64;
-    
+
     // Calculate the starting index to the hash table
     StartIndex = Index = (DWORD)(MaskedHash64 % pHetTable->dwTableSize);
 
@@ -1040,7 +1034,7 @@ static TFileEntry * GetFileEntry_HetBet(
 
         // Move to the next entry in the primary search table
         Index = (Index + 1) % pHetTable->dwTableSize;
-        
+
         // If we came to the start index again, we are done
         if (Index == StartIndex)
             break;
@@ -1152,7 +1146,6 @@ TFileEntry * FindFreeFileEntry(TMPQArchive * ha)
     return ha->pFileTable + ha->dwFileTableSize;
 }
 
-
 TFileEntry * AllocateFileEntry(TMPQArchive * ha, const char * szFileName, LCID lcLocale)
 {
     TFileEntry * pFileTableEnd = ha->pFileTable + ha->dwFileTableSize;
@@ -1226,7 +1219,7 @@ TFileEntry * RenameFile(
     memcpy(&TempHash, pOldHash, sizeof(TMPQHash));
     memset(pOldHash, 0xFF, sizeof(TMPQHash));
     pOldHash->dwBlockIndex = HASH_ENTRY_DELETED;
-    
+
     // Try to find new hash table entry
     pNewHash = AllocateHashEntry(ha, szNewFileName, lcFileLocale);
     if (pNewHash == NULL)
@@ -1252,9 +1245,8 @@ TFileEntry * RenameFile(
     }
 
     // Return the found file entry
-    return pFileEntry; 
+    return pFileEntry;
 }
-
 
 void FreeFileEntry(
     TMPQArchive * ha,
@@ -1274,7 +1266,6 @@ void FreeFileEntry(
     // Make sure that the block table has the proper size
     ha->pHeader->dwBlockTableSize = ha->dwFileTableSize;
 }
-
 
 //-----------------------------------------------------------------------------
 // Support for finding files in the BET table
@@ -1316,7 +1307,7 @@ static bool GetFileBlockEntry_BetData(
                                          pBetTable->dwFlagsBits,
                                         &dwFlagIndex,
                                          4);
-        
+
         if (dwFlagIndex > pBetTable->dwFlagCount)
             return false;
         pBlockEntry->dwFlags = pBetTable->pFileFlags[dwFlagIndex];
@@ -1342,7 +1333,7 @@ static bool GetFileBlockEntry_BetData(
 
 static void GetFileBlockEntry(TMPQArchive * ha, TMPQBetTable * pBetTable, PMPQ_FILE_BLOCK_ENTRY pBlockEntry, DWORD dwBlockIndex)
 {
-    MPQ_FILE_BLOCK_ENTRY BlockEntry;    
+    MPQ_FILE_BLOCK_ENTRY BlockEntry;
 //  LPBYTE pointer_to_struct_3A;
     BYTE byte_A9E170[] = {0x80, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01};
 
@@ -1369,7 +1360,7 @@ static void GetFileBlockEntry(TMPQArchive * ha, TMPQBetTable * pBetTable, PMPQ_F
         }
 
         if (dwOpenFlags & 0x100)
-        {         
+        {
             INT64 result64 = pParsedBetData->field_5C[dwBlockIndex];
 
             BlockEntry.result64_hi = (DWORD)(result64 >> 0x20);

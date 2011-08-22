@@ -100,7 +100,7 @@ class boss_drakkari_colossus : public CreatureScript
             void Reset()
             {
                 _Reset();
-                
+
 				if (GetData(DATA_INTRO_DONE))
                 {
                     me->SetReactState(REACT_AGGRESSIVE);
@@ -113,7 +113,6 @@ class boss_drakkari_colossus : public CreatureScript
 
                 phase = COLOSSUS_PHASE_NORMAL;
 
-
                 // Note: This should not be called, but before use SetBossState function we should use BossAI
                 //        in all the bosses of the instance
                 instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, NOT_STARTED);
@@ -121,13 +120,13 @@ class boss_drakkari_colossus : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                _EnterCombat();               
+                _EnterCombat();
 
                 me->RemoveAura(SPELL_FREEZE_ANIM);
 
                 // Note: This should not be called, but before use SetBossState function we should use BossAI
                 //        in all the bosses of the instance
-                instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, IN_PROGRESS);            
+                instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, IN_PROGRESS);
 			}
 
             void JustDied(Unit* /*killer*/)
@@ -346,7 +345,7 @@ class boss_drakkari_elemental : public CreatureScript
                             if (me->HasUnitState(UNIT_STAT_CHARGING))
                                 return;
 
-                            // not sure about this, the idea of this code is to prevent bug the elemental 
+                            // not sure about this, the idea of this code is to prevent bug the elemental
                             // if it is not in a acceptable distance to cast the charge spell.
                             /*if (me->GetDistance(colossus) > 80.0f)
                             {
@@ -356,7 +355,7 @@ class boss_drakkari_elemental : public CreatureScript
                                 me->GetMotionMaster()->MovePoint(0,colossus->GetPositionX(),colossus->GetPositionY(),colossus->GetPositionZ());
                                 return;
                             }*/
-                            DoAction(ACTION_RETURN_TO_COLOSSUS);                        
+                            DoAction(ACTION_RETURN_TO_COLOSSUS);
 						}
                     }
                 }

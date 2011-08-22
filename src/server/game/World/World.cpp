@@ -2011,7 +2011,7 @@ void World::Update(uint32 diff)
 
     sOutdoorPvPMgr->Update(diff);
     RecordTimeDiff("UpdateOutdoorPvPMgr");
-	
+
     sBattlefieldMgr->Update(diff);
     RecordTimeDiff("BattlefieldMgr");
 

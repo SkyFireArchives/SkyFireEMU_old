@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -30,7 +30,6 @@
 
 namespace ACE_Based
 {
-
     class Runnable
     {
         public:
@@ -49,13 +48,13 @@ namespace ACE_Based
 
     enum Priority
     {
-        Idle, 
-        Lowest, 
-        Low, 
-        Normal, 
-        High, 
-        Highest, 
-        Realtime, 
+        Idle,
+        Lowest,
+        Low,
+        Normal,
+        High,
+        Highest,
+        Realtime,
     };
 
 #define MAXPRIORITYNUM (Realtime + 1)
@@ -107,6 +106,5 @@ namespace ACE_Based
             //use this object to determine current OS thread priority values mapped to enum Priority{}
             static ThreadPriority m_TpEnum;
     };
-
 }
 #endif

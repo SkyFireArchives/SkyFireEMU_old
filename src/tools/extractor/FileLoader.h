@@ -43,9 +43,9 @@ class FileLoader : public MPQFile
 {
 public:
     FileLoader(const char* filename, HANDLE handle): MPQFile(filename, handle) {};
-    
+
     virtual bool prepareLoadedData();
-    
+
     file_MVER *version;
 };
 

@@ -474,7 +474,7 @@ class GameObjectScript : public ScriptObject, public UpdatableScript<GameObject>
 
         // Called when the gameobject is destroyed (destructible buildings only).
         virtual void OnDestroyed(Player* /*player*/, GameObject* /*go*/, uint32 /*eventId*/) { }
-		
+
 		// Called when a CreatureAI object is needed for the creature.
 		virtual GameObjectAI* GetAI(GameObject* /*gameobject*/) const { return NULL; }
 };
