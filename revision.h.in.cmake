@@ -1,9 +1,11 @@
 #ifndef __REVISION_H__
 #define __REVISION_H__
- #define _REVISION      "@rev_id_str@"
- #define _HASH          "@rev_hash_str@"
- #define FILEVER        0,0,@rev_id@,0
- #define PRODUCTVER     0,0,@rev_id@,0
- #define STRFILEVER     "0, 0, @rev_id@, @rev_hash@"
- #define STRPRODUCTVER  "0, 0, @rev_id@, @rev_hash@"
+ #define _HASH                      "@rev_hash@"
+ #define _DATE                      "@rev_date@"
+ #define VER_COMPANYNAME_STR        "SkyFire Emulation Developers"
+ #define VER_LEGALCOPYRIGHT_STR     "(c)2010-2011 SkyFireEMU"
+ #define VER_FILEVERSION            0,0,0
+ #define VER_FILEVERSION_STR        "@rev_date@ (@rev_hash@)"
+ #define VER_PRODUCTVERSION         VER_FILEVERSION
+ #define VER_PRODUCTVERSION_STR     VER_FILEVERSION_STR
 #endif // __REVISION_H__
