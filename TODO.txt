@@ -9,10 +9,11 @@ TODO (add new things to sort out here) :
     - Clean up some minor hacks
 
 * DB:
-    - Adjust SQL structures to fit SkyFireDB
+
 	- Template updates for npcs and GOs (few missing)
     - Npc 30488 (Travis Day) needs vendor data
     - Get official texts for horde in db
     - Spawn NPC/GO in their correct phase
 
 COMPLETED (move completed things from the above list here) :
+    - Adjust SQL structures to fit SkyFireDB
