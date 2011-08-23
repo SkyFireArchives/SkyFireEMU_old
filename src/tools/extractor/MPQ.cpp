@@ -22,7 +22,7 @@
 void LoadLocaleMPQFiles(int const locale)
 {
     char filename[512];
-	
+
     //Locale-xxXX.MPQ
     sprintf(filename,"%s/Data/%s/locale-%s.MPQ", input_path, langs[locale], langs[locale]);
     printf("Loading %s\n", filename);
@@ -31,12 +31,12 @@ void LoadLocaleMPQFiles(int const locale)
         printf("%i\n", GetLastError());
         assert(false && "\nLoad of MPQ failed");
     }
-	
+
     for(int i = 0; i < PATCH_REV_COUNT; ++i)
     {
         char ext[7] = "";
         sprintf(ext, "-%i", patchRev[i]);
-		
+
         sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
         if (!SFileOpenPatchArchive(localeMPQ[0], filename, langs[locale], MPQ_OPEN_READ_ONLY))
         {
@@ -46,13 +46,13 @@ void LoadLocaleMPQFiles(int const locale)
     }
     if (!SFileIsPatchedArchive(localeMPQ[0]))
         assert(false && "An error occured");
-	
+
     //Others
     for(int i = 0; i < PATCH_REV_COUNT; ++i)
     {
         char ext[7] = "";
         sprintf(ext, "-%i", patchRev[i]);
-		
+
         sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
         printf("Loading %s\n", filename);
         if (!SFileOpenArchive(filename, 0, MPQ_OPEN_READ_ONLY, &localeMPQ[i+1]))
@@ -60,12 +60,12 @@ void LoadLocaleMPQFiles(int const locale)
             printf("%i\n", GetLastError());
             assert(false && "Load of MPQ failed");
         }
-		
+
         for(int j = i; j < PATCH_REV_COUNT; ++j)
         {
             char ext[7] = "";
             sprintf(ext, "-%i", patchRev[j]);
-			
+
             sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
             if (!SFileOpenPatchArchive(localeMPQ[i+1], filename, langs[locale], MPQ_OPEN_READ_ONLY))
             {
@@ -81,7 +81,7 @@ void LoadLocaleMPQFiles(int const locale)
 void LoadMapMPQFiles()
 {
     char filename[512];
-	
+
     //Locale-xxXX.MPQ
     sprintf(filename,"%s/Data/world.MPQ", input_path);
     printf("Loading %s\n", filename);
@@ -90,12 +90,12 @@ void LoadMapMPQFiles()
         printf("%i\n", GetLastError());
         assert(false && "\nLoad of MPQ failed");
     }
-	
+
     for(int i = 0; i < PATCH_REV_COUNT; ++i)
     {
         char ext[7] = "";
         sprintf(ext, "-%i", patchRev[i]);
-		
+
         sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
         printf("    -%i\n", patchRev[i]);
         if (!SFileOpenPatchArchive(WorldMPQ, filename, "base", MPQ_OPEN_READ_ONLY))
@@ -106,7 +106,7 @@ void LoadMapMPQFiles()
     }
     if (!SFileIsPatchedArchive(WorldMPQ))
         assert(false && "An error occured");
-    
+
     for(int j = 0; j < 3; j++)
     {
         sprintf(filename, "%s/Data/expansion%u.MPQ", input_path, j+1);
@@ -116,19 +116,19 @@ void LoadMapMPQFiles()
             printf("%i\n", GetLastError());
             assert(false && "\nLoad of MPQ failed");
         }
-        
+
         if (!IsValidMpqHandle((TMPQArchive*)ExpansionsMPQ[j]))
         {
             printf("Load of Expansion%u.MPQ Failed!\n", j+1);
             printf("\nPlease verify you downloaded all the MPQs. You should replace\n'SET accountType \"xx\"'\nin your WTF/config.wtf and WTF/launcher.wtf by\n'SET accountType \"CT\"'\nand then restart your launcher\n");
             exit(1);
         }
-        
+
         for(int i = 0; i < PATCH_REV_COUNT; ++i)
         {
             char ext[7] = "";
             sprintf(ext, "-%i", patchRev[i]);
-            
+
             sprintf(filename,"%s/Data/wow-update%s.MPQ", input_path, ext);
             printf("    -%i\n", patchRev[i]);
             if (!SFileOpenPatchArchive(ExpansionsMPQ[j], filename, "base", MPQ_OPEN_READ_ONLY))
@@ -145,13 +145,13 @@ int ExtractFileToHardDrive(HANDLE &MPQ_handle, const char * szArchivedFile, cons
     HANDLE hFile  = NULL;          // Archived file handle
     TFileStream* handle = NULL;          // Disk file handle
     int    nError = ERROR_SUCCESS; // Result value
-    
-    if (nError == ERROR_SUCCESS)            
+
+    if (nError == ERROR_SUCCESS)
     {
         if (!SFileOpenFileEx(MPQ_handle, szArchivedFile, SFILE_OPEN_PATCHED_FILE, &hFile))
             nError = GetLastError();
     }
-	
+
     // Create the target file
     if (nError == ERROR_SUCCESS)
     {
@@ -159,7 +159,7 @@ int ExtractFileToHardDrive(HANDLE &MPQ_handle, const char * szArchivedFile, cons
         if (handle == NULL)
             nError = GetLastError();
     }
-	
+
     // Read the file from the archive
     if (nError == ERROR_SUCCESS)
     {
@@ -170,7 +170,7 @@ int ExtractFileToHardDrive(HANDLE &MPQ_handle, const char * szArchivedFile, cons
             // Allocate space for the full file
             BYTE * pbFullFile = new BYTE[dwFileSize];
             if (!SFileReadFile(hFile, pbFullFile, dwFileSize))
-			{           
+			{
 				nError = GetLastError();
 				printf("Failed to read full patched file data \"%s\"\n", szFileName);
 				assert(false);
@@ -179,13 +179,13 @@ int ExtractFileToHardDrive(HANDLE &MPQ_handle, const char * szArchivedFile, cons
 			delete [] pbFullFile;
         }
     }
-	
+
     // Cleanup and exit
     if (handle != NULL)
         FileStream_Close(handle);
     if (hFile != NULL)
         SFileCloseFile(hFile);
-	
+
     return nError;
 }
 
@@ -194,13 +194,13 @@ char* ExtractFileToMemory(HANDLE &MPQ_handle, const char * szArchivedFile, int &
     HANDLE hFile  = NULL;          // Archived file handle
     int    nError = ERROR_SUCCESS; // Result value
     char * pbFullFile = NULL;
-    
-    if (nError == ERROR_SUCCESS)            
+
+    if (nError == ERROR_SUCCESS)
     {
         if (!SFileOpenFileEx(MPQ_handle, szArchivedFile, SFILE_OPEN_PATCHED_FILE, &hFile))
             nError = GetLastError();
     }
-	
+
     // Read the file from the archive
     if (nError == ERROR_SUCCESS)
     {
@@ -211,17 +211,17 @@ char* ExtractFileToMemory(HANDLE &MPQ_handle, const char * szArchivedFile, int &
             // Allocate space for the full file
             pbFullFile = new char[size];
             if (!SFileReadFile(hFile, pbFullFile, size))
-			{           
+			{
 				nError = GetLastError();
 				printf("Failed to read full patched file data \"%s\"\n", szArchivedFile);
 				assert(false);
 			}
         }
     }
-	
+
     // Cleanup and exit
     if (nError == ERROR_SUCCESS && hFile != NULL)
         SFileCloseFile(hFile);
-	
+
     return pbFullFile;
 }

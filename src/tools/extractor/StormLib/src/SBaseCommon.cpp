@@ -87,7 +87,7 @@ void InitializeMpqCryptography()
         register_hash(&sha1_desc);
 
         // Use LibTomMath as support math library for LibTomCrypt
-        ltc_mp = ltm_desc;    
+        ltc_mp = ltm_desc;
 
         // Don't do that again
         bMpqCryptographyInitialized = true;
@@ -442,16 +442,16 @@ DWORD DetectFileKeyByKnownContent(void * pvFileContent, DWORD nDwords, ...)
     DWORD saveKey1;
     DWORD dwTemp;
     DWORD i, j;
-    
+
     // We need at least two DWORDS to detect the file key
     if (nDwords < 0x02 || nDwords > 0x10)
         return 0;
-    
+
     va_start(argList, nDwords);
     for(i = 0; i < nDwords; i++)
         dwDecrypted[i] = va_arg(argList, DWORD);
     va_end(argList);
-    
+
     dwTemp = (*pdwContent ^ dwDecrypted[0]) - 0xEEEEEEEE;
     for(i = 0; i < 0x100; i++)      // Try all 256 possibilities
     {
@@ -547,7 +547,7 @@ bool IsValidMpqHandle(TMPQArchive * ha)
         return false;
     if (ha->pHeader == NULL || ha->pHeader->dwID != ID_MPQ)
         return false;
-    
+
     return (bool)(ha->pHeader->dwID == ID_MPQ);
 }
 
@@ -785,7 +785,7 @@ int LoadMpqTable(
 }
 
 void CalculateRawSectorOffset(
-    ULONGLONG & RawFilePos, 
+    ULONGLONG & RawFilePos,
     TMPQFile * hf,
     DWORD dwSectorOffset)
 {
@@ -985,7 +985,7 @@ int AllocateSectorOffsets(TMPQFile * hf, bool bLoadFromFile)
             // (Example: expansion-locale-frFR.MPQ from WoW Cataclysm BETA)
             // We detect such behavior here by verifying the value
             // of the first entry in the sector offset table
-            // 
+            //
 
             if (hf->SectorOffsets[0] == ((hf->dwSectorCount + 1) * sizeof(DWORD)))
             {
@@ -1068,7 +1068,7 @@ int AllocateSectorChecksums(TMPQFile * hf, bool bLoadFromFile)
     // Calculate offset of the CRC table
     dwCrcSize = hf->dwDataSectors * sizeof(DWORD);
     dwCrcOffset = hf->SectorOffsets[hf->dwDataSectors];
-    CalculateRawSectorOffset(RawFilePos, hf, dwCrcOffset); 
+    CalculateRawSectorOffset(RawFilePos, hf, dwCrcOffset);
 
     // Now read the table from the MPQ
     return LoadMpqTable(ha, RawFilePos, hf->SectorChksums, dwCompressedSize, dwCrcSize, 0);
@@ -1115,13 +1115,12 @@ int WriteSectorOffsets(TMPQFile * hf)
     // Write sector offsets to the archive
     if (!FileStream_Write(ha->pStream, &RawFilePos, hf->SectorOffsets, dwSectorPosLen))
         return GetLastError();
-    
+
     // Not necessary, as the sector checksums
     // are going to be freed when this is done.
 //  BSWAP_ARRAY32_UNSIGNED(hf->SectorOffsets, dwSectorPosLen);
     return ERROR_SUCCESS;
 }
-
 
 int WriteSectorChecksums(TMPQFile * hf)
 {
@@ -1166,7 +1165,7 @@ int WriteSectorChecksums(TMPQFile * hf)
     // are going to be freed when this is done.
 //  BSWAP_ARRAY32_UNSIGNED(hf->SectorChksums, dwCrcSize);
 
-    // Store the sector CRCs 
+    // Store the sector CRCs
     hf->SectorOffsets[hf->dwSectorCount - 1] = hf->SectorOffsets[hf->dwSectorCount - 2] + dwCompressedSize;
     pFileEntry->dwCmpSize += dwCompressedSize;
     FREEMEM(pbCompressed);
@@ -1362,7 +1361,7 @@ void ConvertTMPQUserData(void *userData)
 void ConvertTMPQHeader(void *header)
 {
 	TMPQHeader2 * theHeader = (TMPQHeader2 *)header;
-	
+
 	theHeader->dwID = SwapUInt32(theHeader->dwID);
 	theHeader->dwHeaderSize = SwapUInt32(theHeader->dwHeaderSize);
 	theHeader->dwArchiveSize = SwapUInt32(theHeader->dwArchiveSize);
@@ -1377,7 +1376,7 @@ void ConvertTMPQHeader(void *header)
 	{
 		// Swap the hi-block table position
 		theHeader->HiBlockTablePos64 = SwapUInt64(theHeader->HiBlockTablePos64);
-		
+
         theHeader->wHashTablePosHi = SwapUInt16(theHeader->wHashTablePosHi);
 		theHeader->wBlockTablePosHi = SwapUInt16(theHeader->wBlockTablePosHi);
 

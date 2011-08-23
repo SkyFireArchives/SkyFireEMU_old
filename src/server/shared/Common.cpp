@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -23,14 +23,14 @@
 #include "Common.h"
 
 char const* localeNames[TOTAL_LOCALES] = {
-  "enUS", 
-  "koKR", 
-  "frFR", 
-  "deDE", 
-  "zhCN", 
-  "zhTW", 
-  "esES", 
-  "esMX", 
+  "enUS",
+  "koKR",
+  "frFR",
+  "deDE",
+  "zhCN",
+  "zhTW",
+  "esES",
+  "esMX",
   "ruRU"
 };
 
@@ -42,4 +42,3 @@ LocaleConstant GetLocaleByName(const std::string& name)
 
     return LOCALE_enUS;                                     // including enGB case
 }
-

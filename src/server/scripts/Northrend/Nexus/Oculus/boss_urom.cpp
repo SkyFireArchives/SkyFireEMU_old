@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -35,12 +35,12 @@ EndScriptData */
 enum Spells
 {
     SPELL_ARCANE_SHIELD                           = 53813, //Dummy --> Channeled, shields the caster from damage.
-    SPELL_EMPOWERED_ARCANE_EXPLOSION              = 51110, 
-    SPELL_EMPOWERED_ARCANE_EXPLOSION_2            = 59377, 
+    SPELL_EMPOWERED_ARCANE_EXPLOSION              = 51110,
+    SPELL_EMPOWERED_ARCANE_EXPLOSION_2            = 59377,
     SPELL_FROSTBOMB                               = 51103, //Urom throws a bomb, hitting its target with the highest aggro which inflict directly 650 frost damage and drops a frost zone on the ground. This zone deals 650 frost damage per second and reduce the movement speed by 35%. Lasts 1 minute.
     SPELL_SUMMON_MENAGERIE                        = 50476, //Summons an assortment of creatures and teleports the caster to safety.
-    SPELL_SUMMON_MENAGERIE_2                      = 50495, 
-    SPELL_SUMMON_MENAGERIE_3                      = 50496, 
+    SPELL_SUMMON_MENAGERIE_2                      = 50495,
+    SPELL_SUMMON_MENAGERIE_3                      = 50496,
     SPELL_TELEPORT                                = 51112, //Teleports to the center of Oculus
     SPELL_TIME_BOMB                               = 51121, //Deals arcane damage to a random player, and after 6 seconds, deals zone damage to nearby equal to the health missing of the target afflicted by the debuff.
     SPELL_TIME_BOMB_2                             = 59376
@@ -48,25 +48,25 @@ enum Spells
 
 enum Yells
 {
-    SAY_AGGRO_1                                   = -1578000, 
-    SAY_AGGRO_2                                   = -1578001, 
-    SAY_AGGRO_3                                   = -1578002, 
-    SAY_AGGRO_4                                   = -1578003, 
-    SAY_TELEPORT                                  = -1578004, 
+    SAY_AGGRO_1                                   = -1578000,
+    SAY_AGGRO_2                                   = -1578001,
+    SAY_AGGRO_3                                   = -1578002,
+    SAY_AGGRO_4                                   = -1578003,
+    SAY_TELEPORT                                  = -1578004,
 };
 
 enum eCreature
 {
-    NPC_PHANTASMAL_CLOUDSCRAPER                   = 27645, 
-    NPC_PHANTASMAL_MAMMOTH                        = 27642, 
-    NPC_PHANTASMAL_WOLF                           = 27644, 
+    NPC_PHANTASMAL_CLOUDSCRAPER                   = 27645,
+    NPC_PHANTASMAL_MAMMOTH                        = 27642,
+    NPC_PHANTASMAL_WOLF                           = 27644,
 
-    NPC_PHANTASMAL_AIR                            = 27650, 
-    NPC_PHANTASMAL_FIRE                           = 27651, 
-    NPC_PHANTASMAL_WATER                          = 27653, 
+    NPC_PHANTASMAL_AIR                            = 27650,
+    NPC_PHANTASMAL_FIRE                           = 27651,
+    NPC_PHANTASMAL_WATER                          = 27653,
 
-    NPC_PHANTASMAL_MURLOC                         = 27649, 
-    NPC_PHANTASMAL_NAGAL                          = 27648, 
+    NPC_PHANTASMAL_MURLOC                         = 27649,
+    NPC_PHANTASMAL_NAGAL                          = 27648,
     NPC_PHANTASMAL_OGRE                           = 27647
 };
 
@@ -77,8 +77,8 @@ struct Summons
 
 static Summons Group[]=
 {
-    { {NPC_PHANTASMAL_CLOUDSCRAPER, NPC_PHANTASMAL_CLOUDSCRAPER, NPC_PHANTASMAL_MAMMOTH, NPC_PHANTASMAL_WOLF} }, 
-    { {NPC_PHANTASMAL_AIR, NPC_PHANTASMAL_AIR, NPC_PHANTASMAL_WATER, NPC_PHANTASMAL_FIRE} }, 
+    { {NPC_PHANTASMAL_CLOUDSCRAPER, NPC_PHANTASMAL_CLOUDSCRAPER, NPC_PHANTASMAL_MAMMOTH, NPC_PHANTASMAL_WOLF} },
+    { {NPC_PHANTASMAL_AIR, NPC_PHANTASMAL_AIR, NPC_PHANTASMAL_WATER, NPC_PHANTASMAL_FIRE} },
     { {NPC_PHANTASMAL_OGRE, NPC_PHANTASMAL_OGRE, NPC_PHANTASMAL_NAGAL, NPC_PHANTASMAL_MURLOC} }
 };
 

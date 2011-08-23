@@ -295,12 +295,11 @@ class adt_MHDR
 public:
     bool prepareLoadedData();
     adt_MH2O *getMH2O()
-    { 
+    {
         if (offsMH2O)
             return (adt_MH2O *)((uint8 *)&pad+offsMH2O);
         return 0;
     }
-
 };
 
 class ADT_file : public FileLoader
@@ -316,7 +315,7 @@ public:
             return mcnk_offsets[y][x];
         return 0;
     }
-    
+
     adt_MHDR* a_grid;
     adt_MCNK* mcnk_offsets[ADT_CELLS_PER_GRID][ADT_CELLS_PER_GRID];
 };

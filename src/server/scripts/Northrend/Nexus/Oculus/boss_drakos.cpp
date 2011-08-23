@@ -12,7 +12,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -27,36 +27,36 @@
 
 enum Spells
 {
-    SPELL_MAGIC_PULL                              = 51336, 
-    SPELL_MAGIC_PULL_EFFECT                       = 50770, 
-    SPELL_THUNDERING_STOMP                        = 50774, 
-    SPELL_THUNDERING_STOMP_H                      = 59370, 
-    SPELL_UNSTABLE_SPHERE_PASSIVE                 = 50756, 
-    SPELL_UNSTABLE_SPHERE_PULSE                   = 50757, 
-    SPELL_UNSTABLE_SPHERE_TIMER                   = 50758, 
-    NPC_UNSTABLE_SPHERE                           = 28166, 
+    SPELL_MAGIC_PULL                              = 51336,
+    SPELL_MAGIC_PULL_EFFECT                       = 50770,
+    SPELL_THUNDERING_STOMP                        = 50774,
+    SPELL_THUNDERING_STOMP_H                      = 59370,
+    SPELL_UNSTABLE_SPHERE_PASSIVE                 = 50756,
+    SPELL_UNSTABLE_SPHERE_PULSE                   = 50757,
+    SPELL_UNSTABLE_SPHERE_TIMER                   = 50758,
+    NPC_UNSTABLE_SPHERE                           = 28166,
 };
 
 //not in db
 enum Yells
 {
-    SAY_AGGRO                                     = -1578000, 
-    SAY_KILL_1                                    = -1578001, 
-    SAY_KILL_2                                    = -1578002, 
-    SAY_KILL_3                                    = -1578003, 
-    SAY_DEATH                                     = -1578004, 
-    SAY_PULL_1                                    = -1578005, 
-    SAY_PULL_2                                    = -1578006, 
-    SAY_PULL_3                                    = -1578007, 
-    SAY_PULL_4                                    = -1578008, 
-    SAY_STOMP_1                                   = -1578009, 
-    SAY_STOMP_2                                   = -1578010, 
+    SAY_AGGRO                                     = -1578000,
+    SAY_KILL_1                                    = -1578001,
+    SAY_KILL_2                                    = -1578002,
+    SAY_KILL_3                                    = -1578003,
+    SAY_DEATH                                     = -1578004,
+    SAY_PULL_1                                    = -1578005,
+    SAY_PULL_2                                    = -1578006,
+    SAY_PULL_3                                    = -1578007,
+    SAY_PULL_4                                    = -1578008,
+    SAY_STOMP_1                                   = -1578009,
+    SAY_STOMP_2                                   = -1578010,
     SAY_STOMP_3                                   = -1578011
 };
 
 enum
 {
-    ACHIEV_TIMED_START_EVENT                      = 18153, 
+    ACHIEV_TIMED_START_EVENT                      = 18153,
 };
 
 class boss_drakos : public CreatureScript

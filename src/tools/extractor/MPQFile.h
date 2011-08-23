@@ -29,11 +29,11 @@ protected:
     char *buffer;
     int pointer;
     int size;
-    
+
     // disable copying
     MPQFile(const MPQFile &f) {}
     void operator=(const MPQFile &f) {}
-    
+
 public:
     MPQFile(const char* filename, HANDLE handle);    // filenames are not case sensitive
     ~MPQFile() { close(); }

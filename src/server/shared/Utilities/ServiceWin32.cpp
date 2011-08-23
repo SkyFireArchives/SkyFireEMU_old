@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -67,12 +67,12 @@ bool WinServiceInstall()
         {
             SC_HANDLE service;
             std::strcat(path, " --service");
-            service = CreateService(serviceControlManager, 
+            service = CreateService(serviceControlManager,
                 serviceName,                                // name of service
                 serviceLongName,                            // service name to display
                 SERVICE_ALL_ACCESS,                         // desired access
                                                             // service type
-                SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS, 
+                SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS,
                 SERVICE_AUTO_START,                         // start type
                 SERVICE_ERROR_IGNORE,                       // error control type
                 path,                                       // service's binary
@@ -120,7 +120,6 @@ bool WinServiceInstall()
                     &sfa);                                  // new data
 
                 CloseServiceHandle(service);
-
             }
         }
         CloseServiceHandle(serviceControlManager);
@@ -134,7 +133,7 @@ bool WinServiceUninstall()
 
     if (serviceControlManager)
     {
-        SC_HANDLE service = OpenService(serviceControlManager, 
+        SC_HANDLE service = OpenService(serviceControlManager,
             serviceName, SERVICE_QUERY_STATUS | DELETE);
         if (service)
         {
@@ -255,7 +254,7 @@ bool WinServiceRun()
 {
     SERVICE_TABLE_ENTRY serviceTable[] =
     {
-        { serviceName, ServiceMain }, 
+        { serviceName, ServiceMain },
         { 0, 0 }
     };
 
@@ -267,4 +266,3 @@ bool WinServiceRun()
     return true;
 }
 #endif
-

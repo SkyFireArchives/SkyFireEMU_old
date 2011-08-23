@@ -148,7 +148,7 @@ static int CopyMpqFileSectors(
     FileStream_GetPos(pNewStream, MpqFilePos);
     MpqFilePos -= ha->MpqPos;
 
-    // Resolve decryption keys. Note that the file key given 
+    // Resolve decryption keys. Note that the file key given
     // in the TMPQFile structure also includes the key adjustment
     if (nError == ERROR_SUCCESS && (pFileEntry->dwFlags & MPQ_FILE_ENCRYPTED))
     {
@@ -230,7 +230,7 @@ static int CopyMpqFileSectors(
 
             // Calculate the raw file offset of the file sector
             CalculateRawSectorOffset(RawFilePos, hf, dwRawByteOffset);
-            
+
             // Read the file sector
             if (!FileStream_Read(ha->pStream, &RawFilePos, hf->pbFileSector, dwRawDataInSector))
             {
@@ -239,7 +239,7 @@ static int CopyMpqFileSectors(
             }
 
             // If necessary, re-encrypt the sector
-            // Note: Recompression is not necessary here. Unlike encryption, 
+            // Note: Recompression is not necessary here. Unlike encryption,
             // the compression does not depend on the position of the file in MPQ.
             if ((pFileEntry->dwFlags & MPQ_FILE_ENCRYPTED) && dwFileKey1 != dwFileKey2)
             {
@@ -302,7 +302,7 @@ static int CopyMpqFileSectors(
         // At this point, number of bytes written should be exactly
         // the same like the compressed file size. If it isn't,
         // there's something wrong (an unknown archive version, MPQ protection, ...)
-        // 
+        //
         // Note: Diablo savegames have very weird layout, and the file "hero"
         // seems to have improper compressed size. Instead of real compressed size,
         // the "dwCmpSize" member of the block table entry contains
@@ -395,7 +395,6 @@ static int CopyMpqFiles(TMPQArchive * ha, LPDWORD pFileKeys, TFileStream * pNewS
         FreeMPQFile(hf);
     return nError;
 }
-
 
 /*****************************************************************************/
 /* Public functions                                                          */
@@ -526,7 +525,7 @@ bool WINAPI SFileCompactArchive(HANDLE hMpq, const char * szListFile, bool /* bR
         //
         // Note: We don't recalculate position of the MPQ tables at this point.
         // SaveMPQTables does it automatically.
-        // 
+        //
 
         nError = SaveMPQTables(ha);
         if (nError == ERROR_SUCCESS && CompactCB != NULL)
@@ -573,7 +572,7 @@ bool WINAPI SFileSetHashTableSize(HANDLE hMpq, DWORD dwNewTableSize)
         nError = ERROR_ACCESS_DENIED;
     if (ha->pHetTable != NULL || ha->pHetTable != NULL)
         nError = ERROR_ACCESS_DENIED;
-    
+
     // New hash table size must be a power of two
     if (dwNewTableSize & (dwNewTableSize - 1))
         nError = ERROR_INVALID_PARAMETER;
@@ -602,7 +601,7 @@ bool WINAPI SFileSetHashTableSize(HANDLE hMpq, DWORD dwNewTableSize)
         memset(pNewHashTable, 0xFF, dwNewTableSize * sizeof(TMPQHash));
         ha->pHashTable = pNewHashTable;
         ha->pHeader->dwHashTableSize = dwNewTableSize;
-        
+
         // Make new hash table entry for each file
         for(pFileEntry = ha->pFileTable; pFileEntry < pFileTableEnd; pFileEntry++)
         {
@@ -610,7 +609,7 @@ bool WINAPI SFileSetHashTableSize(HANDLE hMpq, DWORD dwNewTableSize)
             {
                 // The file name must be known
                 assert(pFileEntry->szFileName != NULL);
-                
+
                 // Create new hashtable entry
                 pHash = AllocateHashEntry(ha, pFileEntry->szFileName, pFileEntry->lcLocale);
                 if (pHash == NULL)

@@ -68,7 +68,7 @@
 #define __STORMLIB_H_
 
 #ifdef _MSC_VER
-#pragma warning(disable:4668)       // 'XXX' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif' 
+#pragma warning(disable:4668)       // 'XXX' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
 #pragma warning(disable:4820)       // 'XXX' : '2' bytes padding added after data member 'XXX::yyy'
 #endif
 
@@ -79,7 +79,7 @@
 //
 // The library type is encoded in the library name as the following
 // StormLibXYZ.lib
-// 
+//
 //  X - D for Debug version, R for Release version
 //  Y - A for ANSI version, U for Unicode version (Unicode version does not exist yet)
 //  Z - S for static C library, D for multithreaded DLL C-library
@@ -87,15 +87,15 @@
 
 #if defined(_MSC_VER) && !defined (__STORMLIB_SELF__)
   #ifdef _DEBUG                                 // DEBUG VERSIONS
-    #ifdef _DLL                               
+    #ifdef _DLL
       #pragma comment(lib, "StormLibDAD.lib")   // Debug Ansi Dynamic version
-    #else        
+    #else
       #pragma comment(lib, "StormLibDAS.lib")   // Debug Ansi Static version
     #endif
   #else                                         // RELEASE VERSIONS
     #ifdef _DLL
       #pragma comment(lib, "StormLibRAD.lib")   // Release Ansi Dynamic version
-    #else        
+    #else
       #pragma comment(lib, "StormLibRAS.lib")   // Release Ansi Static version
     #endif
   #endif
@@ -156,7 +156,7 @@
 #define MPQ_FILE_IMPLODE         0x00000100 // Implode method (By PKWARE Data Compression Library)
 #define MPQ_FILE_COMPRESS        0x00000200 // Compress methods (By multiple methods)
 #define MPQ_FILE_COMPRESSED      0x0000FF00 // File is compressed
-#define MPQ_FILE_ENCRYPTED       0x00010000 // Indicates whether file is encrypted 
+#define MPQ_FILE_ENCRYPTED       0x00010000 // Indicates whether file is encrypted
 #define MPQ_FILE_FIX_KEY         0x00020000 // File decryption key has to be fixed
 #define MPQ_FILE_PATCH_FILE      0x00100000 // The file is a patch file. Raw file data begin with TPatchInfo structure
 #define MPQ_FILE_SINGLE_UNIT     0x01000000 // File is stored as a single unit, rather than split into sectors (Thx, Quantam)
@@ -192,7 +192,6 @@
 
 // LZMA compression. Added in Starcraft 2. This value is NOT a combination of flags.
 #define MPQ_COMPRESSION_LZMA           0x12
-
 
 // Constants for SFileAddWave
 #define MPQ_WAVE_QUALITY_HIGH        0      // Best quality, the worst compression
@@ -232,7 +231,7 @@
 #define STORMLIB_VERSION_STRING      "8.00"
 
 #define MPQ_FORMAT_VERSION_1              0 // Up to The Burning Crusade
-#define MPQ_FORMAT_VERSION_2              1 // The Burning Crusade and newer 
+#define MPQ_FORMAT_VERSION_2              1 // The Burning Crusade and newer
 #define MPQ_FORMAT_VERSION_3              2 // WoW Cataclysm Beta and newer
 #define MPQ_FORMAT_VERSION_4              3 // WoW Cataclysm Beta and newer
 
@@ -309,7 +308,7 @@
 #define CCB_COPYING_NON_MPQ_DATA          3 // Copying non-MPQ data: No params used
 #define CCB_COMPACTING_FILES              4 // Compacting archive (dwParam1 = current, dwParam2 = total)
 #define CCB_CLOSING_ARCHIVE               5 // Closing archive: No params used
-                                      
+
 typedef void (WINAPI * SFILE_ADDFILE_CALLBACK)(void * pvUserData, DWORD dwBytesWritten, DWORD dwTotalBytes, bool bFinalCall);
 typedef void (WINAPI * SFILE_COMPACT_CALLBACK)(void * pvUserData, DWORD dwWorkType, ULONGLONG BytesProcessed, ULONGLONG TotalBytes);
 
@@ -396,10 +395,10 @@ struct TMPQUserData
 struct TMPQHeader
 {
     // The ID_MPQ ('MPQ\x1A') signature
-    DWORD dwID;                         
+    DWORD dwID;
 
     // Size of the archive header
-    DWORD dwHeaderSize;                   
+    DWORD dwHeaderSize;
 
     // 32-bit size of MPQ archive
     // This field is deprecated in the Burning Crusade MoPaQ format, and the size of the archive
@@ -419,14 +418,14 @@ struct TMPQHeader
 
     // Offset to the beginning of the hash table, relative to the beginning of the archive.
     DWORD dwHashTablePos;
-    
+
     // Offset to the beginning of the block table, relative to the beginning of the archive.
     DWORD dwBlockTablePos;
-    
+
     // Number of entries in the hash table. Must be a power of two, and must be less than 2^16 for
     // the original MoPaQ format, or less than 2^20 for the Burning Crusade format.
     DWORD dwHashTableSize;
-    
+
     // Number of entries in the block table
     DWORD dwBlockTableSize;
 
@@ -471,7 +470,7 @@ struct TMPQHeader
 
     // Size of raw data chunk to calculate MD5.
     // MD5 of each data chunk follows the raw file data.
-    DWORD dwRawChunkSize;                                 
+    DWORD dwRawChunkSize;
 
     // Array of MD5's
     unsigned char MD5_BlockTable[MD5_DIGEST_SIZE];      // MD5 of the block table before decryption
@@ -483,13 +482,12 @@ struct TMPQHeader
 };
 #pragma pack(pop)
 
-
 // Hash entry. All files in the archive are searched by their hashes.
 struct TMPQHash
 {
     // The hash of the file path, using method A.
     DWORD dwName1;
-    
+
     // The hash of the file path, using method B.
     DWORD dwName2;
 
@@ -520,22 +518,21 @@ struct TMPQHash
     DWORD dwBlockIndex;
 };
 
-
 // File description block contains informations about the file
 struct TMPQBlock
 {
     // Offset of the beginning of the file, relative to the beginning of the archive.
     DWORD dwFilePos;
-    
+
     // Compressed file size
     DWORD dwCSize;
-    
+
     // Only valid if the block is a file; otherwise meaningless, and should be 0.
     // If the file is compressed, this is the size of the uncompressed file data.
-    DWORD dwFSize;                      
-    
+    DWORD dwFSize;
+
     // Flags for the file. See MPQ_FILE_XXXX constants
-    DWORD dwFlags;                      
+    DWORD dwFlags;
 };
 
 // Patch file information, preceding the sector offset table
@@ -549,7 +546,7 @@ struct TPatchInfo
     // Followed by the sector table (variable length)
 };
 
-// Header for PTCH files 
+// Header for PTCH files
 struct TPatchHeader
 {
     //-- PATCH header -----------------------------------
@@ -557,7 +554,7 @@ struct TPatchHeader
     DWORD dwSizeOfPatchData;            // Size of the entire patch (decompressed)
     DWORD dwSizeBeforePatch;            // Size of the file before patch
     DWORD dwSizeAfterPatch;             // Size of file after patch
-    
+
     //-- MD5 block --------------------------------------
     DWORD dwMD5;                        // 'MD5_'
     DWORD dwMd5BlockSize;               // Size of the MD5 block, including the signature and size itself
@@ -611,7 +608,7 @@ struct TMPQArchive
     TFileEntry   * pFileTable;          // File table
     TMPQHetTable * pHetTable;           // Het table
     TMPQBetTable * pBetTable;           // Bet table
-    
+
     TMPQUserData   UserData;            // MPQ user data. Valid only when ID_MPQ_USERDATA has been found
     BYTE           HeaderData[MPQ_HEADER_SIZE_V4];  // Storage for MPQ header
 
@@ -622,7 +619,7 @@ struct TMPQArchive
     DWORD          dwSectorSize;        // Default size of one file sector
     DWORD          dwAttrFlags;         // Flags for the (attributes) file
     DWORD          dwFlags;             // See MPQ_FLAG_XXXXX
-};                                      
+};
 
 // File handle structure
 struct TMPQFile
@@ -675,7 +672,6 @@ typedef struct _SFILE_FIND_DATA
     DWORD  dwFileTimeLo;                // Low 32-bits of the file time (0 if not present)
     DWORD  dwFileTimeHi;                // High 32-bits of the file time (0 if not present)
     LCID   lcLocale;                    // Locale version
-
 } SFILE_FIND_DATA, *PSFILE_FIND_DATA;
 
 //-----------------------------------------------------------------------------
@@ -825,9 +821,9 @@ int    WINAPI SFileEnumLocales(HANDLE hMpq, const char * szFileName, LCID * plcL
 bool   WINAPI SFileCreateFile(HANDLE hMpq, const char * szArchivedName, ULONGLONG FileTime, DWORD dwFileSize, LCID lcLocale, DWORD dwFlags, HANDLE * phFile);
 bool   WINAPI SFileWriteFile(HANDLE hFile, const void * pvData, DWORD dwSize, DWORD dwCompression);
 bool   WINAPI SFileFinishFile(HANDLE hFile);
-bool   WINAPI SFileAddFileEx(HANDLE hMpq, const char * szFileName, const char * szArchivedName, DWORD dwFlags, DWORD dwCompression, DWORD dwCompressionNext = 0xFFFFFFFF); 
-bool   WINAPI SFileAddFile(HANDLE hMpq, const char * szFileName, const char * szArchivedName, DWORD dwFlags); 
-bool   WINAPI SFileAddWave(HANDLE hMpq, const char * szFileName, const char * szArchivedName, DWORD dwFlags, DWORD dwQuality); 
+bool   WINAPI SFileAddFileEx(HANDLE hMpq, const char * szFileName, const char * szArchivedName, DWORD dwFlags, DWORD dwCompression, DWORD dwCompressionNext = 0xFFFFFFFF);
+bool   WINAPI SFileAddFile(HANDLE hMpq, const char * szFileName, const char * szArchivedName, DWORD dwFlags);
+bool   WINAPI SFileAddWave(HANDLE hMpq, const char * szFileName, const char * szArchivedName, DWORD dwFlags, DWORD dwQuality);
 bool   WINAPI SFileRemoveFile(HANDLE hMpq, const char * szFileName, DWORD dwSearchScope);
 bool   WINAPI SFileRenameFile(HANDLE hMpq, const char * szOldFileName, const char * szNewFileName);
 bool   WINAPI SFileSetFileLocale(HANDLE hFile, LCID lcNewLocale);

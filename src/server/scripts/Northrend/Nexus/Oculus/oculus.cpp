@@ -30,23 +30,23 @@
 
 enum Drakes
 {
-    GOSSIP_TEXTID_DRAKES                          = 13267, 
-    GOSSIP_TEXTID_BELGARISTRASZ1                  = 12916, 
-    GOSSIP_TEXTID_BELGARISTRASZ2                  = 13466, 
-    GOSSIP_TEXTID_BELGARISTRASZ3                  = 13254, 
-    GOSSIP_TEXTID_VERDISA1                        = 1, 
-    GOSSIP_TEXTID_VERDISA2                        = 1, 
-    GOSSIP_TEXTID_VERDISA3                        = 1, 
-    GOSSIP_TEXTID_ETERNOS1                        = 1, 
-    GOSSIP_TEXTID_ETERNOS2                        = 1, 
-    GOSSIP_TEXTID_ETERNOS3                        = 13256, 
+    GOSSIP_TEXTID_DRAKES                          = 13267,
+    GOSSIP_TEXTID_BELGARISTRASZ1                  = 12916,
+    GOSSIP_TEXTID_BELGARISTRASZ2                  = 13466,
+    GOSSIP_TEXTID_BELGARISTRASZ3                  = 13254,
+    GOSSIP_TEXTID_VERDISA1                        = 1,
+    GOSSIP_TEXTID_VERDISA2                        = 1,
+    GOSSIP_TEXTID_VERDISA3                        = 1,
+    GOSSIP_TEXTID_ETERNOS1                        = 1,
+    GOSSIP_TEXTID_ETERNOS2                        = 1,
+    GOSSIP_TEXTID_ETERNOS3                        = 13256,
 
-    ITEM_EMERALD_ESSENCE                          = 37815, 
-    ITEM_AMBER_ESSENCE                            = 37859, 
-    ITEM_RUBY_ESSENCE                             = 37860, 
+    ITEM_EMERALD_ESSENCE                          = 37815,
+    ITEM_AMBER_ESSENCE                            = 37859,
+    ITEM_RUBY_ESSENCE                             = 37860,
 
-    NPC_VERDISA                                   = 27657, 
-    NPC_BELGARISTRASZ                             = 27658, 
+    NPC_VERDISA                                   = 27657,
+    NPC_BELGARISTRASZ                             = 27658,
     NPC_ETERNOS                                   = 27659
 };
 

@@ -58,7 +58,7 @@ bool ADT_file::prepareLoadedData()
     a_grid = (adt_MHDR *)(buffer+8+version->size);
     if (!a_grid->prepareLoadedData())
         return false;
-    
+
     //mcnk_offsets
     int ptr = 0;
     int found = 0;
@@ -78,7 +78,7 @@ bool ADT_file::prepareLoadedData()
             found ++;
             mcnk->prepareLoadedData();
         }
-        else 
+        else
         {
             ptr += 4;//go to size
             ptr += 4 + *((uint32*)(buffer + ptr)); //skip all datas AND size.

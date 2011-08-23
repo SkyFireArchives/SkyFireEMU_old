@@ -58,7 +58,7 @@ class boss_argaloth: public CreatureScript
         {
             if (!UpdateVictim())
                 return;
-            
+
             if (me->GetHealthPct() < 66 && fel_firestorm_casted == 0)
             {
                 DoCast(SPELL_FEL_FIRESTORM);

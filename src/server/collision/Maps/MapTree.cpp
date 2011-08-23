@@ -41,7 +41,6 @@ using G3D::Vector3;
 
 namespace VMAP
 {
-
     class MapRayCallback
     {
         public:
@@ -92,7 +91,6 @@ namespace VMAP
             LocationInfo &locInfo;
             bool result;
     };
-
 
     //=========================================================
 
@@ -485,5 +483,4 @@ namespace VMAP
         }
         iLoadedTiles.erase(tile);
     }
-
 }

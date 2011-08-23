@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -50,7 +50,7 @@ void CharacterDatabaseConnection::DoPrepareStatements()
         "position_x, position_y, position_z, map, orientation, taximask, cinematic, totaltime, leveltime, rest_bonus, logout_time, is_logout_resting, resettalents_cost, "
         "resettalents_time, trans_x, trans_y, trans_z, trans_o, transguid, extra_flags, stable_slots, at_login, zone, online, death_expire_time, taxi_path, instance_mode_mask, "
         "arenaPoints, totalHonorPoints, todayHonorPoints, yesterdayHonorPoints, totalKills, todayKills, yesterdayKills, chosenTitle, knownCurrencies, watchedFaction, drunk, "
-        "health, power1, power2, power3, power4, power5, power6, power7, power8, power9, power10, instance_id, speccount, activespec, exploredZones, equipmentCache, ammoId, " 
+        "health, power1, power2, power3, power4, power5, power6, power7, power8, power9, power10, instance_id, speccount, activespec, exploredZones, equipmentCache, ammoId, "
         "knownTitles, actionBars, currentPetSlot, petSlotUsed FROM characters WHERE guid = ?", CONNECTION_ASYNC);
     PREPARE_STATEMENT(CHAR_LOAD_PLAYER_GROUP, "SELECT guid FROM group_member WHERE memberGuid = ?", CONNECTION_ASYNC);
     PREPARE_STATEMENT(CHAR_LOAD_PLAYER_BOUNDINSTANCES, "SELECT id, permanent, map, difficulty, resettime FROM character_instance LEFT JOIN instance ON instance = id WHERE guid = ?", CONNECTION_ASYNC);
@@ -198,7 +198,7 @@ void CharacterDatabaseConnection::DoPrepareStatements()
     PREPARE_STATEMENT(CHAR_RESET_GUILD_RANK_BANK_TIME3, "UPDATE guild_member SET BankResetTimeTab3 = 0 WHERE guildid = ? AND rank = ?", CONNECTION_ASYNC);
     PREPARE_STATEMENT(CHAR_RESET_GUILD_RANK_BANK_TIME4, "UPDATE guild_member SET BankResetTimeTab4 = 0 WHERE guildid = ? AND rank = ?", CONNECTION_ASYNC);
     PREPARE_STATEMENT(CHAR_RESET_GUILD_RANK_BANK_TIME5, "UPDATE guild_member SET BankResetTimeTab5 = 0 WHERE guildid = ? AND rank = ?", CONNECTION_ASYNC);
-    PREPARE_STATEMENT(CHAR_LOAD_GUILDS, 
+    PREPARE_STATEMENT(CHAR_LOAD_GUILDS,
     //          0          1       2             3              4              5              6
         "SELECT g.guildid, g.name, g.leaderguid, g.EmblemStyle, g.EmblemColor, g.BorderStyle, g.BorderColor, "
     //   7                  8       9       10            11           12                  13  14
@@ -207,7 +207,7 @@ void CharacterDatabaseConnection::DoPrepareStatements()
     //                                              0        1    2      3       4
     PREPARE_STATEMENT(CHAR_LOAD_GUILD_RANKS, "SELECT guildid, rid, rname, rights, BankMoneyPerDay FROM guild_rank ORDER BY guildid ASC, rid ASC", CONNECTION_SYNCH);
     PREPARE_STATEMENT(CHAR_LOAD_CHAR_DATA_FOR_GUILD, "SELECT name, level, class, zone, account FROM characters WHERE guid = ?", CONNECTION_SYNCH);
-    PREPARE_STATEMENT(CHAR_LOAD_GUILD_MEMBERS, 
+    PREPARE_STATEMENT(CHAR_LOAD_GUILD_MEMBERS,
     //          0        1        2     3      4        5                   6
         "SELECT guildid, gm.guid, rank, pnote, offnote, BankResetTimeMoney, BankRemMoney, "
     //   7                  8                 9                  10                11                 12
@@ -217,18 +217,18 @@ void CharacterDatabaseConnection::DoPrepareStatements()
     //   19      20       21       22      23         24
         "c.name, c.level, c.class, c.zone, c.account, c.logout_time "
         "FROM guild_member gm LEFT JOIN characters c ON c.guid = gm.guid ORDER BY guildid ASC", CONNECTION_SYNCH);
-    PREPARE_STATEMENT(CHAR_LOAD_GUILD_BANK_RIGHTS, 
+    PREPARE_STATEMENT(CHAR_LOAD_GUILD_BANK_RIGHTS,
     //          0        1      2    3        4
         "SELECT guildid, TabId, rid, gbright, SlotPerDay FROM guild_bank_right ORDER BY guildid ASC, TabId ASC", CONNECTION_SYNCH);
     //                                                  0        1      2        3        4
     PREPARE_STATEMENT(CHAR_LOAD_GUILD_BANK_TABS, "SELECT guildid, TabId, TabName, TabIcon, TabText FROM guild_bank_tab ORDER BY guildid ASC, TabId ASC", CONNECTION_SYNCH);
-    PREPARE_STATEMENT(CHAR_LOAD_GUILD_EVENTLOGS, 
+    PREPARE_STATEMENT(CHAR_LOAD_GUILD_EVENTLOGS,
     //          0        1        2          3            4            5        6
         "SELECT guildid, LogGuid, EventType, PlayerGuid1, PlayerGuid2, NewRank, TimeStamp FROM guild_eventlog ORDER BY TimeStamp DESC, LogGuid DESC", CONNECTION_SYNCH);
-    PREPARE_STATEMENT(CHAR_LOAD_GUILD_BANK_EVENTLOGS, 
+    PREPARE_STATEMENT(CHAR_LOAD_GUILD_BANK_EVENTLOGS,
     //          0        1      2        3          4           5            6               7          8
         "SELECT guildid, TabId, LogGuid, EventType, PlayerGuid, ItemOrMoney, ItemStackCount, DestTabId, TimeStamp FROM guild_bank_eventlog ORDER BY TimeStamp DESC, LogGuid DESC", CONNECTION_SYNCH);
-    PREPARE_STATEMENT(CHAR_LOAD_GUILD_BANK_ITEMS, 
+    PREPARE_STATEMENT(CHAR_LOAD_GUILD_BANK_ITEMS,
     //          0            1                2      3         4        5      6             7                 8           9           10
         "SELECT creatorGuid, giftCreatorGuid, count, duration, charges, flags, enchantments, randomPropertyId, durability, playedTime, text, "
     //   11       12     13      14         15
@@ -260,7 +260,7 @@ void CharacterDatabaseConnection::DoPrepareStatements()
     // Instance saves
     PREPARE_STATEMENT(CHAR_ADD_INSTANCE_SAVE, "INSERT INTO instance (id, map, resettime, difficulty, completedEncounters, data) VALUES (?, ?, ?, ?, ?, ?)", CONNECTION_ASYNC);
     PREPARE_STATEMENT(CHAR_UPDATE_INSTANCE_DATA, "UPDATE instance SET completedEncounters=?, data=? WHERE id=?", CONNECTION_ASYNC);
-	
+
      // Currency
     PREPARE_STATEMENT(CHAR_LOAD_PLAYER_CURRENCY, "SELECT currency, count, thisweek FROM character_currency WHERE guid = ?", CONNECTION_ASYNC);
     PREPARE_STATEMENT(CHAR_LOAD_PLAYER_CP_WEEK_CAP, "SELECT source, maxWeekRating, weekCap FROM character_cp_weekcap WHERE guid = ?", CONNECTION_ASYNC);
@@ -298,13 +298,13 @@ void CharacterDatabaseConnection::DoPrepareStatements()
 
     // Creature respawn
     PREPARE_STATEMENT(CHAR_DEL_CREATURE_RESPAWN, "DELETE FROM creature_respawn WHERE guid = ? AND instanceId = ?", CONNECTION_ASYNC);
-    PREPARE_STATEMENT(CHAR_ADD_CREATURE_RESPAWN, "REPLACE INTO creature_respawn (guid, respawnTime, instanceId) VALUES (?, ?, ?)", CONNECTION_ASYNC);  
+    PREPARE_STATEMENT(CHAR_ADD_CREATURE_RESPAWN, "REPLACE INTO creature_respawn (guid, respawnTime, instanceId) VALUES (?, ?, ?)", CONNECTION_ASYNC);
     PREPARE_STATEMENT(CHAR_GET_MAX_CREATURE_RESPAWNS, "SELECT MAX(respawnTime), instanceId FROM creature_respawn WHERE instanceId > 0 GROUP BY instanceId", CONNECTION_SYNCH);
     PREPARE_STATEMENT(CHAR_DEL_NONEXISTENT_INSTANCE_CREATURE_RESPAWNS, "DELETE FROM creature_respawn WHERE instanceId > 0 AND instanceId NOT IN (SELECT instanceId FROM instance)", CONNECTION_SYNCH);
 
     // Gameobject respawn
     PREPARE_STATEMENT(CHAR_DEL_GO_RESPAWN, "DELETE FROM gameobject_respawn WHERE guid = ? AND instanceId = ?", CONNECTION_ASYNC);
-    PREPARE_STATEMENT(CHAR_ADD_GO_RESPAWN, "REPLACE INTO gameobject_respawn (guid, respawnTime, instanceId) VALUES (?, ?, ?)", CONNECTION_ASYNC); 
+    PREPARE_STATEMENT(CHAR_ADD_GO_RESPAWN, "REPLACE INTO gameobject_respawn (guid, respawnTime, instanceId) VALUES (?, ?, ?)", CONNECTION_ASYNC);
     PREPARE_STATEMENT(CHAR_DEL_EXPIRED_GO_RESPAWNS, "DELETE FROM gameobject_respawn WHERE respawnTime <= UNIX_TIMESTAMP(NOW())", CONNECTION_SYNCH);
-    PREPARE_STATEMENT(CHAR_DEL_NONEXISTENT_INSTANCE_GO_RESPAWNS, "DELETE FROM gameobject_respawn WHERE instanceId > 0 AND instanceId NOT IN (SELECT instanceId FROM instance)", CONNECTION_SYNCH);  
+    PREPARE_STATEMENT(CHAR_DEL_NONEXISTENT_INSTANCE_GO_RESPAWNS, "DELETE FROM gameobject_respawn WHERE instanceId > 0 AND instanceId NOT IN (SELECT instanceId FROM instance)", CONNECTION_SYNCH);
 }

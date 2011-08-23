@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -24,9 +24,9 @@
 #include "Log.h"
 
 ResultSet::ResultSet(MYSQL_RES *result, MYSQL_FIELD *fields, uint64 rowCount, uint32 fieldCount) :
-m_rowCount(rowCount), 
-m_fieldCount(fieldCount), 
-m_result(result), 
+m_rowCount(rowCount),
+m_fieldCount(fieldCount),
+m_result(result),
 m_fields(fields)
 {
     m_currentRow = new Field[m_fieldCount];
@@ -34,13 +34,13 @@ m_fields(fields)
 }
 
 PreparedResultSet::PreparedResultSet(MYSQL_STMT* stmt, MYSQL_RES *result, uint64 rowCount, uint32 fieldCount) :
-m_rowCount(rowCount), 
-m_rowPosition(0), 
-m_fieldCount(fieldCount), 
-m_rBind(NULL), 
-m_stmt(stmt), 
-m_res(result), 
-m_isNull(NULL), 
+m_rowCount(rowCount),
+m_rowPosition(0),
+m_fieldCount(fieldCount),
+m_rBind(NULL),
+m_stmt(stmt),
+m_res(result),
+m_isNull(NULL),
 m_length(NULL)
 {
     if (!m_res)
@@ -106,9 +106,9 @@ m_length(NULL)
         for (uint64 fIndex = 0; fIndex < m_fieldCount; ++fIndex)
         {
             if (!*m_rBind[fIndex].is_null)
-                m_rows[uint32(m_rowPosition)][fIndex].SetByteValue( m_rBind[fIndex].buffer, 
-                                                            m_rBind[fIndex].buffer_length, 
-                                                            m_rBind[fIndex].buffer_type, 
+                m_rows[uint32(m_rowPosition)][fIndex].SetByteValue( m_rBind[fIndex].buffer,
+                                                            m_rBind[fIndex].buffer_length,
+                                                            m_rBind[fIndex].buffer_type,
                                                            *m_rBind[fIndex].length );
             else
                 switch (m_rBind[fIndex].buffer_type)
@@ -119,15 +119,15 @@ m_length(NULL)
                     case MYSQL_TYPE_BLOB:
                     case MYSQL_TYPE_STRING:
                     case MYSQL_TYPE_VAR_STRING:
-                    m_rows[uint32(m_rowPosition)][fIndex].SetByteValue( "", 
-                                                            m_rBind[fIndex].buffer_length, 
-                                                            m_rBind[fIndex].buffer_type, 
+                    m_rows[uint32(m_rowPosition)][fIndex].SetByteValue( "",
+                                                            m_rBind[fIndex].buffer_length,
+                                                            m_rBind[fIndex].buffer_type,
                                                            *m_rBind[fIndex].length );
                     break;
                     default:
-                    m_rows[uint32(m_rowPosition)][fIndex].SetByteValue( 0, 
-                                                            m_rBind[fIndex].buffer_length, 
-                                                            m_rBind[fIndex].buffer_type, 
+                    m_rows[uint32(m_rowPosition)][fIndex].SetByteValue( 0,
+                                                            m_rBind[fIndex].buffer_length,
+                                                            m_rBind[fIndex].buffer_type,
                                                            *m_rBind[fIndex].length );
                 }
         }

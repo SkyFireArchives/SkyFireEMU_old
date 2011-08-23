@@ -83,7 +83,6 @@ public:
 
             if (nearestDragon)
                 nearestDragon->AI()->DoAction(ACTION_CALL_DRAGON_EVENT);
-           
         }
 
         void OnCreatureCreate(Creature* creature)
@@ -226,7 +225,6 @@ public:
                 for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
                     if (encounter[i] == IN_PROGRESS)
                         encounter[i] = NOT_STARTED;
-
             } else OUT_LOAD_INST_DATA_FAIL;
 
             OUT_LOAD_INST_DATA_COMPLETE;
@@ -245,9 +243,7 @@ public:
             std::list<uint64> gameObjectList;
             std::list<uint64> azureDragonsList;
     };
-
 };
-
 
 void AddSC_instance_oculus()
 {

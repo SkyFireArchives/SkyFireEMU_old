@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -226,12 +226,12 @@ void ChatHandler::HandleCharacterDeletedListHelper(DeletedInfoList const& foundL
         std::string dateStr = TimeToTimestampStr(itr->deleteDate);
 
         if (!m_session)
-            PSendSysMessage(LANG_CHARACTER_DELETED_LIST_LINE_CONSOLE, 
-                itr->lowguid, itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(), 
+            PSendSysMessage(LANG_CHARACTER_DELETED_LIST_LINE_CONSOLE,
+                itr->lowguid, itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(),
                 itr->accountId, dateStr.c_str());
         else
-            PSendSysMessage(LANG_CHARACTER_DELETED_LIST_LINE_CHAT, 
-                itr->lowguid, itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(), 
+            PSendSysMessage(LANG_CHARACTER_DELETED_LIST_LINE_CHAT,
+                itr->lowguid, itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(),
                 itr->accountId, dateStr.c_str());
     }
 
@@ -298,7 +298,7 @@ void ChatHandler::HandleCharacterDeletedRestoreHelper(DeletedInfo const& delInfo
         return;
     }
 
-    CharacterDatabase.PExecute("UPDATE characters SET name='%s', account='%u', deleteDate=NULL, deleteInfos_Name=NULL, deleteInfos_Account=NULL WHERE deleteDate IS NOT NULL AND guid = %u", 
+    CharacterDatabase.PExecute("UPDATE characters SET name='%s', account='%u', deleteDate=NULL, deleteInfos_Name=NULL, deleteInfos_Account=NULL WHERE deleteDate IS NOT NULL AND guid = %u",
         delInfo.name.c_str(), delInfo.accountId, delInfo.lowguid);
 }
 
@@ -624,12 +624,10 @@ void CliRunnable::run()
             #if PLATFORM != PLATFORM_WINDOWS
             add_history(command.c_str());
             #endif
-
         }
         else if (feof(stdin))
         {
             World::StopNow(SHUTDOWN_EXIT_CODE);
         }
-
     }
 }

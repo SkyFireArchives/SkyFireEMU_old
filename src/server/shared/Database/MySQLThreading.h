@@ -10,7 +10,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
@@ -28,7 +28,7 @@
 class MySQL
 {
     public:
-        /*! Create a thread on the MySQL server to mirrior the calling thread, 
+        /*! Create a thread on the MySQL server to mirrior the calling thread,
             initializes thread-specific variables and allows thread-specific
             operations without concurrence from other threads.
             This should only be called if multiple core threads are running
@@ -38,7 +38,7 @@ class MySQL
         static void Thread_Init()
         {
             mysql_thread_init();
-            sLog->outSQLDriver("Core thread with ID ["UI64FMTD"] initializing MySQL thread.", 
+            sLog->outSQLDriver("Core thread with ID ["UI64FMTD"] initializing MySQL thread.",
                     (uint64)ACE_Based::Thread::currentId());
         }
 
@@ -49,7 +49,7 @@ class MySQL
         static void Thread_End()
         {
             mysql_thread_end();
-            sLog->outSQLDriver("Core thread with ID ["UI64FMTD"] shutting down MySQL thread.", 
+            sLog->outSQLDriver("Core thread with ID ["UI64FMTD"] shutting down MySQL thread.",
                 (uint64)ACE_Based::Thread::currentId());
         }
 
