@@ -4246,9 +4246,9 @@ void AuraEffect::HandleAuraHover(AuraApplication const *aurApp, uint8 mode, bool
 
     WorldPacket data;
     if (apply)
-        data.Initialize(SMSG_MOVE_SET_HOVER, 8+4);
+        data.Initialize(SMSG_MOVE_SET_HOVER, 8+4, true);
     else
-        data.Initialize(SMSG_MOVE_UNSET_HOVER, 8+4);
+        data.Initialize(SMSG_MOVE_UNSET_HOVER, 8+4, true);
     data.append(target->GetPackGUID());
     data << uint32(0);
     target->SendMessageToSet(&data, true);

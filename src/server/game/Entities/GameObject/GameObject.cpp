@@ -615,7 +615,7 @@ void GameObject::Delete()
         if (Unit * owner = GetOwner())
             owner->RemoveGameObject(this, false);
 
-    ASSERT (!GetOwnerGUID());
+    ASSERT (GetOwnerGUID());
     SendObjectDeSpawnAnim(GetGUID());
 
     SetGoState(GO_STATE_READY);
