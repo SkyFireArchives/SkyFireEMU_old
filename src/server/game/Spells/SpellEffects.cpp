@@ -5036,10 +5036,12 @@ void Spell::EffectScriptEffect(SpellEffIndex effIndex)
                     return;
                 }
                 case 35376:
-                    m_caster->TeleportTo(0, 1805.99f, 341.32f, 70.66f, 1.6f);
+                    if (unitTarget)
+                        unitTarget->ToPlayer()->TeleportTo(0, 1805.99f, 341.32f, 70.66f, 1.6f);
                     break;
                 case 35727:
-                    m_caster->TeleportTo(530, 10038.7f, -7000.9f, 61.86f, 3.05f);
+                    if (unitTarget)
+                        unitTarget->ToPlayer()->TeleportTo(530, 10038.7f, -7000.9f, 61.86f, 3.05f);
                     break;
                 case 45204: // Clone Me!
                 case 41055: // Copy Weapon
