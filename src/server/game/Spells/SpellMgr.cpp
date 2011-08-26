@@ -3966,12 +3966,23 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->MaxAffectedTargets = 1;
             count++;
             break;
-        case 52479: // Gift of the Harvester
+        case 62016: // Charge Orb
+            spellInfo->MaxAffectedTargets = 1;
+            count++;
+            break;
+	    case 52479: // Gift of the Harvester
             spellInfo->MaxAffectedTargets = 1;
             // a trap always has dst = src?
             spellInfo->EffectImplicitTargetA[0] = TARGET_DST_CASTER;
             spellInfo->EffectImplicitTargetA[1] = TARGET_DST_CASTER;
             count++;
+            break;       
+	    case 85113:
+        case 85114:
+            spellInfo->Targets = TARGET_UNIT_TARGET_ENEMY;
+            break;
+        case 31818:
+            spellInfo->Effect[0] = SPELL_EFFECT_ENERGIZE_PCT;
             break;
         case 41376: // Spite
         case 39992: // Needle Spine
