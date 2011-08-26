@@ -8137,8 +8137,23 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                 }
                 break;
             case SPELLFAMILY_WARRIOR:
-                if (auraSpellInfo->Id == 50421)             // Scent of Blood
-                    trigger_spell_id = 50422;
+                switch (auraSpellInfo->Id)
+                {
+                    case 50421: // Scent of Blood
+                        trigger_spell_id = 50422;
+                        break;
+                    case 80128: // Impending Victory Rank 1
+                    case 80129: // Impending Victory Rank 2
+                        if (!pVictim->HealthBelowPct(20))
+                            return false;
+                    case 93098:
+                        if(damage > 0)
+                        {
+                            int bp = damage * 0.05f; //5% from damage
+                            CastCustomSpell(this, 76691, &bp, &bp, &bp, true, 0, 0, GetGUID());
+                        }
+                        break;
+                }
                 break;
             case SPELLFAMILY_WARLOCK:
             {

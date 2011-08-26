@@ -2843,6 +2843,9 @@ void Spell::EffectHealPct(SpellEffIndex effIndex)
     if (m_spellInfo->Id == 59754 && unitTarget == m_caster)
         return;
 
+    if (m_spellInfo->Id == 34428 && m_originalCaster->HasAura(82368))
+        damage = 5;
+
     m_healing += m_originalCaster->SpellHealingBonus(unitTarget, m_spellInfo, effIndex, unitTarget->CountPctFromMaxHealth(damage), HEAL);
 }
 
@@ -4458,6 +4461,32 @@ void Spell::EffectTaunt(SpellEffIndex /*effIndex*/)
 
 void Spell::EffectWeaponDmg(SpellEffIndex /*effIndex*/)
 {
+    switch (m_spellInfo->Id)
+    {
+        case 35395:     // Crusader Strike
+        {
+            m_caster->CastSpell(m_caster, 85705, true);
+            break;
+        }
+        case 8676:
+        {
+            if (m_caster->GetTypeId() == TYPEID_PLAYER)
+                if (Item* item = m_caster->ToPlayer()->GetWeaponForAttack(m_attackType, true))
+                    if (item->GetProto()->SubClass == ITEM_SUBCLASS_WEAPON_DAGGER)
+                        damage += m_spellInfo->EffectBasePoints[1];
+        }
+        case 20243:
+        {
+            if(Aura* aura = unitTarget->GetAura(7386))
+            {
+                uint8 stackAmount = aura->GetStackAmount();
+                if(stackAmount == 0)
+                    stackAmount = 1;
+
+                damage *= stackAmount;
+            }
+        }
+    }
 }
 
 void Spell::SpellDamageWeaponDmg(SpellEffIndex effIndex)

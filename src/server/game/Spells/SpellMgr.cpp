@@ -4033,6 +4033,21 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectTriggerSpell[0] = 33760;
             count++;
             break;
+        case 80128: // Impending Victory Rank 1
+        case 80129: // Impending Victory Rank 2
+            spellInfo->EffectTriggerSpell[0] = 0;
+            count++;
+            break;
+        case 80979: // Thunderstruck Rank 1
+        case 80980: // Thunderstruck Rank 2
+            spellInfo->EffectTriggerSpell[1] = 0;
+            count++;
+            break;
+        case 84604: // Hold the Line Rank 1
+        case 84621: // Hold the Line Rank 2
+            spellInfo->EffectTriggerSpell[0] = 0;
+            count++;
+            break;
         case 17941:    // Shadow Trance
         case 22008:    // Netherwind Focus
         case 31834:    // Light's Grace
