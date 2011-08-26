@@ -3344,8 +3344,8 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const *aurApp, uint8 mo
             case FORM_FLIGHT:
             case FORM_MOONKIN:
             {
-                // remove movement affects
-                target->RemoveMovementImpairingAuras();
+                // remove movement affects without root
+                target->RemoveAurasWithMechanic((1 << MECHANIC_SNARE));
 
                 // and polymorphic affects
                 if (target->IsPolymorphed())
@@ -3426,8 +3426,8 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const *aurApp, uint8 mo
             if (target->getClass() == CLASS_DRUID)
             {
                 target->setPowerType(POWER_MANA);
-                // Remove movement impairing effects also when shifting out
-                target->RemoveMovementImpairingAuras();
+                // Remove movement impairing effects(without root 4.0.6) also when shifting out
+                target->RemoveAurasWithMechanic((1 << MECHANIC_SNARE));
             }
         }
 
