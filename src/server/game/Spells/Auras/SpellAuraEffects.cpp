@@ -6596,13 +6596,11 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
 
                     if (apply)
                     {
-                        if (!target->IsInFeralForm())
-                            break;
-
-                        target->CastSpell(target, 50322, true);
+                        if (target->IsInFeralForm())
+                            target->CastSpell(target, 50322, true);
                     }
                     else
-                        target-> RemoveAurasDueToSpell(50322);
+                        target->RemoveAurasDueToSpell(50322);
                     break;
                 }
             }
