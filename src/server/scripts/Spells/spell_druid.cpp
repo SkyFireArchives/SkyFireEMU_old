@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2010-2011 MigCore <http://wow-mig.ru/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -33,15 +34,15 @@ enum DruidSpells
 // 62606 - Savage Defense
 class spell_dru_savage_defense : public SpellScriptLoader
 {
-public:
-    spell_dru_savage_defense() : SpellScriptLoader("spell_dru_savage_defense") { }
+    public:
+        spell_dru_savage_defense() : SpellScriptLoader("spell_dru_savage_defense") { }
 
-    class spell_dru_savage_defense_AuraScript : public AuraScript
-    {
-        PrepareAuraScript(spell_dru_savage_defense_AuraScript);
+        class spell_dru_savage_defense_AuraScript : public AuraScript
+        {
+            PrepareAuraScript(spell_dru_savage_defense_AuraScript);
 
-        uint32 absorbPct;
-
+            uint32 absorbPct;
+            
             bool Load()
             {
                 absorbPct = SpellMgr::CalculateSpellEffectAmount(GetSpellProto(), EFFECT_0, GetCaster());
@@ -82,38 +83,19 @@ class spell_dru_t10_restoration_4p_bonus : public SpellScriptLoader
         {
             PrepareSpellScript(spell_dru_t10_restoration_4p_bonus_SpellScript);
 
-            bool Load()
-            {
-                return GetCaster()->GetTypeId() == TYPEID_PLAYER;
-            }
-
             void FilterTargets(std::list<Unit*>& unitList)
             {
-                if (!GetCaster()->ToPlayer()->GetGroup())
-                {
-                    unitList.clear();
-                    unitList.push_back(GetCaster());
-                }
-                else
-                {
-                    unitList.remove(GetTargetUnit());
-                    std::list<Unit*> tempTargets;
-                    for (std::list<Unit*>::const_iterator itr = unitList.begin(); itr != unitList.end(); ++itr)
-                        if ((*itr)->GetTypeId() == TYPEID_PLAYER && GetCaster()->IsInRaidWith(*itr))
-                            tempTargets.push_back(*itr);
+                unitList.remove(GetTargetUnit());
+                std::list<Unit*> tempTargets;
+                std::list<Unit*>::iterator end = unitList.end(), itr = unitList.begin();
+                for (; itr != end; ++itr)
+                    if (GetCaster()->IsInRaidWith(*itr))
+                        tempTargets.push_back(*itr);
 
-                    if (tempTargets.empty())
-                    {
-                        unitList.clear();
-                        FinishCast(SPELL_FAILED_DONT_REPORT);
-                        return;
-                    }
-
-                    std::list<Unit*>::const_iterator it2 = tempTargets.begin();
-                    std::advance(it2, urand(0, tempTargets.size() - 1));
-                    unitList.clear();
-                    unitList.push_back(*it2);
-               }
+                itr = tempTargets.begin();
+                std::advance(itr, urand(0, tempTargets.size()-1));
+                unitList.clear();
+                unitList.push_back(*itr);
             }
 
             void Register()
@@ -142,6 +124,7 @@ class spell_dru_glyph_of_starfire : public SpellScriptLoader
             {
                 if (!sSpellStore.LookupEntry(DRUID_INCREASED_MOONFIRE_DURATION))
                     return false;
+
                 if (!sSpellStore.LookupEntry(DRUID_NATURES_SPLENDOR))
                     return false;
                 return true;
@@ -157,8 +140,10 @@ class spell_dru_glyph_of_starfire : public SpellScriptLoader
 
                         uint32 countMin = aura->GetMaxDuration();
                         uint32 countMax = GetSpellMaxDuration(aura->GetSpellProto()) + 9000;
+
                         if (caster->HasAura(DRUID_INCREASED_MOONFIRE_DURATION))
                             countMax += 3000;
+
                         if (caster->HasAura(DRUID_NATURES_SPLENDOR))
                             countMax += 3000;
 
@@ -279,6 +264,7 @@ class spell_dru_berserk : public SpellScriptLoader
         class spell_dru_berserk_AuraScript : public AuraScript
         {
             PrepareAuraScript(spell_dru_berserk_AuraScript);
+
             void HandleEffectApply(AuraEffect const * /*aurEff*/, AuraEffectHandleModes /*mode*/)
             {
                 if (Unit* target = GetTarget())
@@ -324,13 +310,51 @@ class spell_dru_starfall_aoe : public SpellScriptLoader
         }
 };
 
+class spell_druid_rejuvenation : public SpellScriptLoader
+{
+    public:
+        spell_druid_rejuvenation() : SpellScriptLoader("spell_druid_rejuvenation") { }
+
+        class spell_druid_rejuvenation_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_druid_rejuvenation_SpellScript)
+
+            bool Validate(SpellEntry const * /*spellEntry*/)
+            {
+                return true;
+            }
+
+            void HandleDummy(SpellEffIndex /*effIndex*/)
+            {
+                if (Unit * caster = GetCaster())
+                {
+                    if (caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+
+                    caster->ToPlayer()->KilledMonsterCredit(44175, 0);
+                }
+            }
+
+            void Register()
+            {
+                OnEffect += SpellEffectFn(spell_druid_rejuvenation_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_APPLY_AURA);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_druid_rejuvenation_SpellScript();
+        }
+};
+
 void AddSC_druid_spell_scripts()
 {
     new spell_dru_savage_defense();
+    new spell_dru_t10_restoration_4p_bonus();
     new spell_dru_glyph_of_starfire();
     new spell_dru_moonkin_form_passive();
     new spell_dru_primal_tenacity();
-    new spell_dru_t10_restoration_4p_bonus();
     new spell_dru_berserk();
     new spell_dru_starfall_aoe();
+    new spell_druid_rejuvenation();
 }

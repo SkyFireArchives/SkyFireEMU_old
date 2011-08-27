@@ -35,7 +35,7 @@ class spell_warr_last_stand : public SpellScriptLoader
 
         class spell_warr_last_stand_SpellScript : public SpellScript
         {
-            PrepareSpellScript(spell_warr_last_stand_SpellScript);
+            PrepareSpellScript(spell_warr_last_stand_SpellScript)
 
             bool Validate(SpellEntry const * /*spellEntry*/)
             {
@@ -60,6 +60,43 @@ class spell_warr_last_stand : public SpellScriptLoader
         SpellScript *GetSpellScript() const
         {
             return new spell_warr_last_stand_SpellScript();
+        }
+};
+
+class spell_warr_charge : public SpellScriptLoader
+{
+    public:
+        spell_warr_charge() : SpellScriptLoader("spell_warr_charge") { }
+
+        class spell_warr_charge_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_warr_charge_SpellScript)
+
+            bool Validate(SpellEntry const * /*spellEntry*/)
+            {
+                return true;
+            }
+
+            void HandleDummy(SpellEffIndex /*effIndex*/)
+            {
+                if (Unit * caster = GetCaster())
+                {
+                    if (caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+
+                    caster->ToPlayer()->KilledMonsterCredit(44175, 0);
+                }
+            }
+
+            void Register()
+            {
+                OnEffect += SpellEffectFn(spell_warr_charge_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_CHARGE);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_warr_charge_SpellScript();
         }
 };
 
@@ -91,6 +128,7 @@ class spell_warr_improved_spell_reflection : public SpellScriptLoader
 
 void AddSC_warrior_spell_scripts()
 {
-    new spell_warr_last_stand();
-    new spell_warr_improved_spell_reflection();
+    new spell_warr_last_stand;
+    new spell_warr_charge;
+	new spell_warr_improved_spell_reflection();
 }

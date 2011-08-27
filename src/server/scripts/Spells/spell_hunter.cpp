@@ -34,7 +34,8 @@ enum HunterSpells
     HUNTER_PET_HEART_OF_THE_PHOENIX_DEBUFF       = 55711,
     HUNTER_PET_SPELL_CARRION_FEEDER_TRIGGERED    = 54045,
     HUNTER_SPELL_INVIGORATION_TRIGGERED          = 53398,
-    HUNTER_SPELL_MASTERS_CALL_TRIGGERED          = 62305
+    HUNTER_SPELL_MASTERS_CALL_TRIGGERED          = 62305,
+    HUNTER_SPELL_STREADY_SHOT_ATTACK_SPEED       = 53220
 };
 
 // 53412 Invigoration
@@ -182,7 +183,7 @@ public:
                     spellInfo->Id != HUNTER_SPELL_READINESS &&
                     spellInfo->Id != HUNTER_SPELL_BESTIAL_WRATH &&
                     GetSpellRecoveryTime(spellInfo) > 0)
-                    caster->ToPlayer()->RemoveSpellCooldown((itr++)->first, true);
+                    caster->ToPlayer()->RemoveSpellCooldown((itr++)->first,true);
                 else
                     ++itr;
             }
@@ -265,10 +266,12 @@ public:
                 return;
 
             Unit * pTarget = GetTarget();
+
             if (!pTarget->ToPlayer()->isInCombat())
                 return;
 
             uint32 spellId = SPELL_SNIPER_TRAINING_BUFF_R1 + GetId() - SPELL_SNIPER_TRAINING_R1;
+
             if (!pTarget->HasAura(spellId))
             {
                 SpellEntry const * triggeredSpellInfo = sSpellStore.LookupEntry(spellId);
@@ -393,6 +396,59 @@ public:
     }
 };
 
+// 56641 Steady Shot
+class spell_hun_steady_shot : public SpellScriptLoader
+{
+public:
+    spell_hun_steady_shot() : SpellScriptLoader("spell_hun_steady_shot") { }
+
+    class spell_hun_steady_shot_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_hun_steady_shot_SpellScript)
+
+        void HandleDummy(SpellEffIndex /*effIndex*/)
+        {
+            ++castCount;
+            if(castCount > 1)
+            {
+                if(Unit* caster = GetCaster())
+                {
+                    int32 speed0 = 0;
+                    if(caster->HasAura(53221))
+                        speed0 = 5;
+                    if(caster->HasAura(53222))
+                        speed0 = 10;
+                    if(caster->HasAura(53224))
+                        speed0 = 15;
+
+                    if(speed0)
+                        caster->CastCustomSpell(caster, HUNTER_SPELL_STREADY_SHOT_ATTACK_SPEED, &speed0, NULL, NULL, true, 0, 0, caster->GetGUID());
+
+                    castCount = 0;
+
+                    if (caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+
+                    caster->ToPlayer()->KilledMonsterCredit(44175, 0);
+                }
+            }
+        }
+
+        void Register()
+        {
+            OnEffect += SpellEffectFn(spell_hun_steady_shot_SpellScript::HandleDummy, EFFECT_2, SPELL_EFFECT_DUMMY);
+        }
+
+        private:
+            int castCount;
+    };
+
+    SpellScript* GetSpellScript() const
+    {
+        return new spell_hun_steady_shot_SpellScript();
+    }
+};
+
 void AddSC_hunter_spell_scripts()
 {
     new spell_hun_invigoration();
@@ -403,4 +459,5 @@ void AddSC_hunter_spell_scripts()
     new spell_hun_sniper_training();
     new spell_hun_pet_heart_of_the_phoenix();
     new spell_hun_pet_carrion_feeder();
+    new spell_hun_steady_shot();
 }

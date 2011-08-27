@@ -236,6 +236,7 @@ public:
             OnEffectApply += AuraEffectApplyFn(spell_q11396_11399_force_shield_arcane_purple_x3_AuraScript::HandleEffectApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
             OnEffectRemove += AuraEffectRemoveFn(spell_q11396_11399_force_shield_arcane_purple_x3_AuraScript::HandleEffectRemove, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
         }
+
     };
 
     AuraScript* GetAuraScript() const
@@ -647,7 +648,7 @@ public:
             Unit* pCaster = GetCaster();
             if (Player* pPlayer = pCaster->ToPlayer())
             {
-                if (Creature* pTarget = GetHitCreature())
+                if(Creature* pTarget = GetHitCreature())
                 {
                     pPlayer->CastSpell(pPlayer, SPELL_TRIGGER_AID_OF_THE_EARTHEN, true, NULL);
                     pPlayer->KilledMonsterCredit(NPC_FALLEN_EARTHEN_DEFENDER, 0);

@@ -256,6 +256,43 @@ public:
     }
 };
 
+class spell_priest_flash_heal : public SpellScriptLoader
+{
+    public:
+        spell_priest_flash_heal() : SpellScriptLoader("spell_priest_flash_heal") { }
+
+        class spell_priest_flash_heal_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_priest_flash_heal_SpellScript)
+
+            bool Validate(SpellEntry const * /*spellEntry*/)
+            {
+                return true;
+            }
+
+            void HandleDummy(SpellEffIndex /*effIndex*/)
+            {
+                if (Unit * caster = GetCaster())
+                {
+                    if (caster->GetTypeId() != TYPEID_PLAYER)
+                        return;
+
+                    caster->ToPlayer()->KilledMonsterCredit(44175, 0);
+                }
+            }
+
+            void Register()
+            {
+                OnEffect += SpellEffectFn(spell_priest_flash_heal_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_HEAL);
+            }
+        };
+
+        SpellScript* GetSpellScript() const
+        {
+            return new spell_priest_flash_heal_SpellScript();
+        }
+};
+
 void AddSC_priest_spell_scripts()
 {
     new spell_pri_guardian_spirit();
@@ -263,4 +300,5 @@ void AddSC_priest_spell_scripts()
     new spell_pri_pain_and_suffering_proc;
     new spell_pri_penance;
     new spell_pri_reflective_shield_trigger();
+	new spell_priest_flash_heal;
 }
