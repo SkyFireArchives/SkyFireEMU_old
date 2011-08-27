@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/> 
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
  * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
@@ -189,7 +189,6 @@ class spell_warl_drain_soul : public SpellScriptLoader
 {
     public:
         spell_warl_drain_soul() : SpellScriptLoader("spell_warl_drain_soul") { } //1120
-
 
         class spell_warl_drain_soul_AuraScript : public AuraScript
         {
@@ -389,5 +388,5 @@ void AddSC_warlock_spell_scripts()
     new spell_warlock_dark_intent();
     new spell_warl_immolate();
     new spell_warl_seed_of_corruption();
-    new spell_warl_shadow_bite();	
+    new spell_warl_shadow_bite();
 }

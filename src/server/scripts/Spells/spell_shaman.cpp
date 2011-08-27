@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/> 
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
  * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
@@ -45,7 +45,7 @@ enum ShamanSpells
     SHAMAN_TOTEM_SPELL_EARTHGRAB        = 64695,
 
     SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH    = 77746,
-    SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH_AURA = 77747,    
+    SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH_AURA = 77747,
     SHAMAN_SPELL_UNLEASH_ELEMENTS       = 73680,
 };
 
@@ -164,7 +164,7 @@ public:
                     if (roll_chance_i(aur->GetBaseAmount()))
                         target->CastSpell(target, SHAMAN_TOTEM_SPELL_EARTHEN_POWER, true, NULL, aurEff);
         }
- 
+
         void HandleEffectApply(AuraEffect const * aurEff, AuraEffectHandleModes /*mode*/)
         {
             Unit* target = GetTarget();
@@ -228,7 +228,7 @@ public:
                 Unit *target = GetTargetUnit();
                 bool hostileTarget = plr->IsHostileTo(target);
                 bool hostileSpell = true;
-       
+
                 switch (weapons[i]->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
                 {
                     case 3345: // Earthliving Weapon
@@ -282,12 +282,11 @@ public:
 
     class spell_sha_totemic_wrath_AuraScript : public AuraScript
     {
-
-        PrepareAuraScript(spell_sha_totemic_wrath_AuraScript); 
+        PrepareAuraScript(spell_sha_totemic_wrath_AuraScript);
 
         bool Validate(SpellEntry const * /*spellEntry*/)
         {
-            if (!sSpellStore.LookupEntry(SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH)) 
+            if (!sSpellStore.LookupEntry(SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH))
                 return false;
 
             if (!sSpellStore.LookupEntry(SHAMAN_TOTEM_SPELL_TOTEMIC_WRATH_AURA))
@@ -311,7 +310,6 @@ public:
 
         void Register()
         {
-
             OnEffectApply += AuraEffectApplyFn(spell_sha_totemic_wrath_AuraScript::HandleEffectApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL);
         }
     };
@@ -348,7 +346,6 @@ public:
 
         void HandleFulmination(SpellEffIndex effIndex)
         {
-
             // make caster cast a spell on a unit target of effect
 
             Unit *target = GetHitUnit();
@@ -364,16 +361,16 @@ public:
                 return;
 
             Aura * lightningShield = caster->GetAura(324);
-    
+
             if(!lightningShield)
                 return;
-    
+
             uint8 lsCharges = lightningShield->GetCharges();
-    
+
             if(lsCharges <= 3)
                 return;
             uint8 usedCharges = lsCharges - 3;
-    
+
             SpellEntry const* spellInfo = sSpellStore.LookupEntry(SHAMAN_SPELL_LIGHTNING_SHIELD_PROC);
             int32 basePoints = caster->CalculateSpellDamage(target, spellInfo, 0);
             uint32 damage = usedCharges * caster->SpellDamageBonus(target, spellInfo, effIndex, basePoints, SPELL_DIRECT_DAMAGE);
@@ -387,7 +384,7 @@ public:
             OnEffect += SpellEffectFn(spell_sha_fulminationSpellScript::HandleFulmination, EFFECT_FIRST_FOUND, SPELL_EFFECT_ANY);
         }
     };
-    
+
     // function which creates SpellScript
     SpellScript *GetSpellScript() const
     {

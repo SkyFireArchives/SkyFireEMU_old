@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/> 
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
  * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
@@ -214,7 +214,7 @@ public:
                             {
                                 int32 bp0 = int32(caster->ToPlayer()->GetHealingDoneInPastSecs(15) * (12.0f + (1.5f * caster->ToPlayer()->GetMasteryPoints())) /100);
                                 caster->CastCustomSpell(caster, 86273, &bp0, NULL, NULL, true);
-                                caster->ToPlayer()->ResetHealingDoneInPastSecs(15);                            
+                                caster->ToPlayer()->ResetHealingDoneInPastSecs(15);
                             }
                         }
                     }
