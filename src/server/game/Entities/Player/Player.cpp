@@ -6054,7 +6054,7 @@ bool Player::UpdateFishingSkill()
 	
 	else if (SkillValue > 365 && SkillValue <= 450)
 	{
-		chance = 9,09;
+		chance = 9,1;
 	}
 	
 	else if (SkillValue > 450 && SkillValue <= 500)
