@@ -6186,8 +6186,16 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                     break;
                 }
                 case 71563:
+                    {
                     if (Aura* newAura = target->AddAura(71564, target))
                         newAura->SetStackAmount(newAura->GetSpellProto()->StackAmount);
+                               break;
+                       }
+                       case 73667: // Stardust No. 2
+                       {
+                               caster->ToPlayer()->KilledMonsterCredit(39237, NULL);
+                               break;
+                       }
             }
         }
         // AT REMOVE
