@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/> 
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
  * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
@@ -20,7 +20,7 @@
 /* ScriptData
 Name: Gilneas City
 %Complete: 10
-Comment: 
+Comment:
 Category: Gilneas
 EndScriptData */
 
@@ -68,7 +68,7 @@ enum eGilneasCityPhase2
 
 	//Spells
 	SPELL_PHASE_4 = 59074,
-	
+
 	//NPCs
 	NPC_PRINCE_LIAM_GREYMANE = 34913,
 	NPC_GILNEAS_CITY_GUARD = 34916,
@@ -171,7 +171,7 @@ public:
 	struct npc_panicked_citizenAI : public ScriptedAI
 	{
 		npc_panicked_citizenAI(Creature *c) : ScriptedAI(c) {}
-		
+
 		uint32 tEmote; //Time left for doing an emote
 
 		//Evade or Respawn
@@ -183,7 +183,7 @@ public:
 				me->SetUInt32Value(UNIT_NPC_EMOTESTATE, 0); //Reset emote state
 			}
 		}
-		
+
 		void UpdateAI(const uint32 diff)
 		{
 			//Out of combat and in Phase 1
@@ -222,13 +222,12 @@ public:
 					//Timed say
 					if(tSay_panicked <= diff)
 					{
-					
 						//Say random
 						DoScriptText(RAND(
 							SAY_PANICKED_CITIZEN_1,
 							SAY_PANICKED_CITIZEN_2,
 							SAY_PANICKED_CITIZEN_3,
-							SAY_PANICKED_CITIZEN_4), 
+							SAY_PANICKED_CITIZEN_4),
 						me);
 
 						guid_panicked_nextsay = 0; //Reset Selected next NPC
@@ -242,7 +241,6 @@ public:
 			}
 		}
 	};
-
 };
 
 /*######
@@ -332,7 +330,7 @@ public:
 
 		void JustRespawned()
 		{
-			if (me->GetDefaultMovementType() == WAYPOINT_MOTION_TYPE) 
+			if (me->GetDefaultMovementType() == WAYPOINT_MOTION_TYPE)
 			{
 				me->SetUInt32Value(UNIT_NPC_EMOTESTATE, 0);
 				runDelay = urand(2000, 8000);
@@ -340,7 +338,6 @@ public:
 				onceRun = true;
 			}
 			else running = false;
-			
 		}
 
 		void UpdateAI(const uint32 diff)
@@ -378,14 +375,13 @@ public:
 	struct npc_lieutenant_waldenAI : public ScriptedAI
 	{
 		npc_lieutenant_waldenAI(Creature *c) : ScriptedAI(c) {}
-		
+
 		void sQuestReward(Player *pPlayer, const Quest *pQuest, uint32 data)
 		{
 			if (pQuest->GetQuestId() == QUEST_LOCKDOWN && pPlayer->GetPhaseMask() == 1)
 				pPlayer->SetAuraStack(SPELL_PHASE_2, pPlayer, 1); //phaseshift
 		}
 	};
-
 };
 
 /*######
@@ -404,7 +400,7 @@ public:
 	struct npc_gilneas_city_guard_phase1AI : public ScriptedAI
 	{
 		npc_gilneas_city_guard_phase1AI(Creature *c) : ScriptedAI(c) {}
-		
+
 		uint32 tSay; //Time left for say
 
 		//Evade or Respawn
@@ -415,7 +411,7 @@ public:
 				tSay = DELAY_SAY_GILNEAS_CITY_GUARD_GATE; //Reset timer
 			}
 		}
-		
+
 		void UpdateAI(const uint32 diff)
 		{
 			//Out of combat and
@@ -440,7 +436,6 @@ public:
 			}
 		}
 	};
-
 };
 
 /*######
@@ -535,11 +530,9 @@ public:
 				}
 				else
 					tAnimate -= diff;
-				
 			}
 		}
 	};
-
 };
 
 /*######
@@ -573,7 +566,7 @@ public:
 			doYell = true;
 			tYell = DELAY_YELL_PRINCE_LIAM_GREYMANE;
 		}
-		
+
 		void sGossipHello(Player *pPlayer)
 		{
 			if ((pPlayer->GetQuestStatus(14094) == QUEST_STATUS_REWARDED) && (pPlayer->GetPhaseMask() == 2))
@@ -668,7 +661,6 @@ public:
 					}
 					else
 						tAnimate -= diff;
-				
 				}
 
 				//Stop yell timer on combat
@@ -676,7 +668,6 @@ public:
 			}
 		}
 	};
-
 };
 
 /*######
@@ -708,7 +699,7 @@ public:
 		uint32 tAnimate;
 		uint32 tSound;
 		bool playSound, willCastEnrage;
-		
+
 		void Reset()
 		{
 			tEnrage = 0;
@@ -743,7 +734,7 @@ public:
 				dmgCount = 0;
 			}
 		}
-		
+
 		void UpdateAI(const uint32 diff)
 		{
 			if (!UpdateVictim())
@@ -769,7 +760,7 @@ public:
 				tSound = DELAY_SOUND;
 				playSound = false;
 			}
-			
+
 			if (dmgCount < 2)
 				DoMeleeAttackIfReady();
 			else if (me->getVictim()->GetTypeId() == TYPEID_PLAYER) dmgCount = 0;
@@ -785,10 +776,8 @@ public:
 				else
 				tAnimate -= diff;
 			}
-			
 		}
 	};
-
 };
 
 class npc_rampaging_worgen2 : public CreatureScript
@@ -846,7 +835,6 @@ public:
 			DoMeleeAttackIfReady();
 		}
 	};
-
 };
 
 /*######
@@ -885,7 +873,7 @@ public:
 			z=pGO->GetPositionZ();
 			wx = x-cos(angle)*2;
 			wy = y-sin(angle)*2;
-			
+
 			if (spawnKind < 3)
 			{
 				if (Creature *spawnedCreature = pGO->SummonCreature(NPC_FRIGHTENED_CITIZEN_1,x,y,z,angle,TEMPSUMMON_TIMED_DESPAWN,SUMMON1_TTL))
@@ -903,10 +891,10 @@ public:
 				}
 			}
 			return true;
-		}	
+		}
 		return false;
 	}
-	
+
 	void OnUpdate(GameObject *pGO, uint32 diff)
 	{
 		if (opened == 1)
@@ -989,7 +977,7 @@ public:
 		float x, y, z;
 		WayPointID nearestPointID;
 		Paths paths;
-		
+
 		Paths LoadPaths()
 		{
 			Paths paths;
@@ -1072,7 +1060,7 @@ public:
 			}
 			return nearestPointID;
 		}
-		
+
 		void JustRespawned()
 		{
 			paths = LoadPaths();
@@ -1103,7 +1091,7 @@ public:
 				onceSay = false;
 			}
 			else tSay -= diff;
-			
+
 			if (tRun2 <= diff)
 			{
 				if (onceGet)
@@ -1124,8 +1112,6 @@ public:
 		}
 	};
 };
-
-
 
 void AddSC_gilneas()
 {
