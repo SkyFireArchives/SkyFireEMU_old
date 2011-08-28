@@ -4194,9 +4194,9 @@ void AuraEffect::HandleAuraWaterWalk(AuraApplication const *aurApp, uint8 mode, 
 
     WorldPacket data;
     if (apply)
-        data.Initialize(SMSG_MOVE_WATER_WALK, 8+4);
+        data.Initialize(SMSG_MOVE_WATER_WALK, 8+4, true);
     else
-        data.Initialize(SMSG_MOVE_LAND_WALK, 8+4);
+        data.Initialize(SMSG_MOVE_LAND_WALK, 8+4, true);
     data.append(target->GetPackGUID());
     data << uint32(0);
     target->SendMessageToSet(&data, true);
@@ -4218,9 +4218,9 @@ void AuraEffect::HandleAuraFeatherFall(AuraApplication const *aurApp, uint8 mode
 
     WorldPacket data;
     if (apply)
-        data.Initialize(SMSG_MOVE_FEATHER_FALL, 8 + 4);
+        data.Initialize(SMSG_MOVE_FEATHER_FALL, 8+4, true);
     else
-        data.Initialize(SMSG_MOVE_NORMAL_FALL, 8 + 4);
+        data.Initialize(SMSG_MOVE_NORMAL_FALL, 8+4, true);
     data.append(target->GetPackGUID());
     data << uint32(0);
     target->SendMessageToSet(&data, true);
@@ -6186,8 +6186,16 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                     break;
                 }
                 case 71563:
+                    {
                     if (Aura* newAura = target->AddAura(71564, target))
                         newAura->SetStackAmount(newAura->GetSpellProto()->StackAmount);
+                               break;
+                       }
+                       case 73667: // Stardust No. 2
+                       {
+                               caster->ToPlayer()->KilledMonsterCredit(39237, NULL);
+                               break;
+                       }
             }
         }
         // AT REMOVE
