@@ -472,3 +472,15 @@ DELETE FROM `creature` WHERE `id` = 34511 and `map` = 638;
 -- 35118 Bloodfang Worgen (Phase 1) no spawned, will be added into phase 2 again with sniffed positions
 DELETE FROM `creature` WHERE `id` = 35118 and `map` = 638; 
  
+-- new additions sql
+DELETE FROM `spell_script_names` WHERE `spell_id` = '68228';
+INSERT `spell_script_names` (`spell_id`,`ScriptName`) VALUES ('68228', 'spell_rescue_krennan');
+
+UPDATE `creature_template` SET `ScriptName` = 'npc_lord_darius_crowley' WHERE `entry` = '35077';
+UPDATE `creature_template` SET `ScriptName` = 'npc_king_genn_greymane' WHERE `entry` = '35550';
+UPDATE `creature_template` SET `ScriptName` = 'npc_lord_darius_crowley_c2' WHERE `entry` = '35552';
+UPDATE `creature_template` SET `ScriptName` = 'npc_lord_darius_crowley_c3' WHERE `entry` = '35566';
+UPDATE `creature_template` SET `ScriptName` = 'npc_king_genn_greymane_c2' WHERE `entry` = '36332';
+
+DELETE FROM `spell_script_names` WHERE `spell_id` = '68555';
+INSERT `spell_script_names` (`spell_id`,`ScriptName`) VALUES ('68555', 'spell_keg_placed');
