@@ -749,9 +749,9 @@ void AddEasternKingdomsScripts()
     AddSC_instance_deadmines();
     AddSC_boss_mr_smite();
     AddSC_boss_glubtok();
-    AddSC_gnomeregan();                     //Gnomeregan
-    AddSC_gilneas();                        // gilneas   
+    AddSC_gnomeregan();                     //Gnomeregan 
     AddSC_instance_gnomeregan();
+    AddSC_gilneas();                        // gilneas      
     AddSC_boss_attumen();                   //Karazhan
     AddSC_boss_curator();
     AddSC_boss_maiden_of_virtue();
