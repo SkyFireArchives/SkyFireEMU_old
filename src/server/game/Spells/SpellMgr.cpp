@@ -3977,11 +3977,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[1] = TARGET_DST_CASTER;
             count++;
             break;       
-        case 85113:
-        case 85114:
+        case 85113:  // Aftermath
+        case 85114: 
             spellInfo->Targets = TARGET_UNIT_TARGET_ENEMY;
             break;
-        case 31818:
+        case 31818: // Life Tap
             spellInfo->Effect[0] = SPELL_EFFECT_ENERGIZE_PCT;
             break;
         case 41376: // Spite
