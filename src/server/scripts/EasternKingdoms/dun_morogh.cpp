@@ -105,10 +105,57 @@ public:
                 spellHit = true;
             }
         }
+
+    };
+
+};
+
+/*######
+## npc_gs_9x_multi_bot
+######*/
+
+enum eMultiBotData
+{
+    OBJECT_TOXIC_POOL = 203975,
+    SPELL_CLEAN_UP_TOXIC_POOL = 79424,
+    SPELL_TOXIC_POOL_CREDIT_TO_MASTER = 79422,
+    SAY_MULTI_BOT = -1610001
+};
+
+class npc_gs_9x_multi_bot : public CreatureScript
+{
+public:
+    npc_gs_9x_multi_bot() : CreatureScript("npc_gs_9x_multi_bot") { }
+
+    CreatureAI* GetAI(Creature* creature) const
+    {
+        return new npc_gs_9x_multi_botAI (creature);
+    }
+
+    struct npc_gs_9x_multi_botAI : public ScriptedAI
+    {
+        npc_gs_9x_multi_botAI(Creature* c): ScriptedAI(c) { }
+
+        void UpdateAI(const uint32 /*diff*/)
+        {
+            GameObject* pool = me->FindNearestGameObject(OBJECT_TOXIC_POOL, 2.0f);
+                
+            if (pool)
+            {
+                if (Player* player = me->GetCharmerOrOwnerPlayerOrPlayerItself())
+                {
+                    me->Say(SAY_MULTI_BOT, LANG_UNIVERSAL, 0);
+                    me->CastSpell(me, SPELL_CLEAN_UP_TOXIC_POOL, true);
+                    me->CastSpell(player, SPELL_TOXIC_POOL_CREDIT_TO_MASTER, true);
+                    pool->Delete();
+                }
+            }
+        }
     };
 };
 
 void AddSC_dun_morogh()
 {
     new npc_narm_faulk();
+    new npc_gs_9x_multi_bot();
 }
