@@ -1519,8 +1519,6 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
                             break;
                     }
                 }
-                if (GetSpellProto()->Id == 589 && GetCaster()->GetPlayer) // Shadow word: Pain
-                    damage += GetCaster()->ToPlayer()->GetTotalAttackPowerValue(RANGED_ATTACK) * 0.1833f;
             }
             else
                 damage = uint32(target->CountPctFromMaxHealth(damage));
