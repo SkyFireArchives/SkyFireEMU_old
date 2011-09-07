@@ -3856,6 +3856,16 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->excludeCasterAuraSpell = 57724; // Sated
             count++;
             break;
+        // Time Warp
+        case 80353:
+            spellInfo->excludeCasterAuraSpell = 80354; // Temporal Displacement
+            count++;
+            break;
+        // Ancient Hysteria
+        case 90355:
+            spellInfo->excludeCasterAuraSpell = 95809; // Insanity
+            count++;
+            break;
         // Heart of the Crusader
         case 20335:
         case 20336:

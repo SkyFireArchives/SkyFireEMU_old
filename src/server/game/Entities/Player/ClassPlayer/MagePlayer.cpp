@@ -46,8 +46,6 @@ public:
     }
     void OnAura(Player* player, SpellEntry const *spellProto)
     {
-        if (spellProto->Id == 80353 && !player->HasAura(80354))
-            player->AddAura(80354, player);
     }
 };
 
