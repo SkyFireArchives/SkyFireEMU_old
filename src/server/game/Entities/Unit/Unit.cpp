@@ -1049,6 +1049,21 @@ void Unit::CalculateSpellDamageTaken(SpellNonMeleeDamage *damageInfo, int32 dama
 
     if (spellInfo->AttributesEx4 & SPELL_ATTR4_FIXED_DAMAGE)
     {
+        Unit *pVictim = damageInfo->target;
+        if (!pVictim || !pVictim->isAlive())
+            return;
+
+        SpellSchoolMask damageSchoolMask = SpellSchoolMask(damageInfo->schoolMask);
+
+        // Calculate absorb resist
+        if (damage > 0)
+        {
+            CalcAbsorbResist(pVictim, damageSchoolMask, SPELL_DIRECT_DAMAGE, damage, &damageInfo->absorb, &damageInfo->resist, spellInfo);
+            damage -= damageInfo->absorb + damageInfo->resist;
+        }
+        else
+            damage = 0;
+
         damageInfo->damage = damage;
         return;
     }
