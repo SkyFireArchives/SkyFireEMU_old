@@ -67,6 +67,11 @@ public:
             events.ScheduleEvent(EVENT_DOOM, 120000);
         }
 
+		void JustDied(Unit* /*killer*/)
+		{
+			_JustDied();
+		}
+
         void UpdateAI(const uint32 diff)
         {
             if (!UpdateVictim())

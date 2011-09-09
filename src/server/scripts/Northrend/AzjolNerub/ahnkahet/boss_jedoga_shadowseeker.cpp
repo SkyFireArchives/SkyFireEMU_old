@@ -75,18 +75,15 @@ class boss_jedoga_shadowseeker : public CreatureScript
 public:
     boss_jedoga_shadowseeker() : CreatureScript("boss_jedoga_shadowseeker") { }
 
-    struct boss_jedoga_shadowseekerAI : public ScriptedAI
+    struct boss_jedoga_shadowseekerAI : public BossAI
     {
-        boss_jedoga_shadowseekerAI(Creature* c) : ScriptedAI(c)
+        boss_jedoga_shadowseekerAI(Creature* c) : BossAI(c, DATA_JEDOGA_SHADOWSEEKER_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             bFirstTime = true;
             bPreDone = false;
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         uint32 uiOpFerTimer;
         uint32 uiCycloneTimer;
@@ -114,14 +111,14 @@ public:
             bOnGround = false;
             bCanDown = false;
 
-            if (pInstance)
+            if (instance)
             {
                 if (!bFirstTime)
-                    pInstance->SetData(DATA_JEDOGA_SHADOWSEEKER_EVENT, FAIL);
+                    instance->SetData(DATA_JEDOGA_SHADOWSEEKER_EVENT, FAIL);
 
-                pInstance->SetData64(DATA_PL_JEDOGA_TARGET, 0);
-                pInstance->SetData64(DATA_ADD_JEDOGA_OPFER, 0);
-                pInstance->SetData(DATA_JEDOGA_RESET_INITIANDS, 0);
+                instance->SetData64(DATA_PL_JEDOGA_TARGET, 0);
+                instance->SetData64(DATA_ADD_JEDOGA_OPFER, 0);
+                instance->SetData(DATA_JEDOGA_RESET_INITIANDS, 0);
             }
             MoveUp();
 
@@ -130,12 +127,12 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            if (!pInstance || (who->GetTypeId() == TYPEID_UNIT && who->GetEntry() == NPC_JEDOGA_CONTROLLER))
+            if (!instance || (who->GetTypeId() == TYPEID_UNIT && who->GetEntry() == NPC_JEDOGA_CONTROLLER))
                 return;
 
             DoScriptText(TEXT_AGGRO, me);
             me->SetInCombatWithZone();
-            pInstance->SetData(DATA_JEDOGA_SHADOWSEEKER_EVENT, IN_PROGRESS);
+            instance->SetData(DATA_JEDOGA_SHADOWSEEKER_EVENT, IN_PROGRESS);
         }
 
         void AttackStart(Unit* who)
@@ -156,14 +153,15 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
+			_JustDied();
             DoScriptText(TEXT_DEATH, me);
-            if (pInstance)
-                pInstance->SetData(DATA_JEDOGA_SHADOWSEEKER_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_JEDOGA_SHADOWSEEKER_EVENT, DONE);
         }
 
         void MoveInLineOfSight(Unit* who)
         {
-            if (!pInstance || !who || (who->GetTypeId() == TYPEID_UNIT && who->GetEntry() == NPC_JEDOGA_CONTROLLER))
+            if (!instance || !who || (who->GetTypeId() == TYPEID_UNIT && who->GetEntry() == NPC_JEDOGA_CONTROLLER))
                 return;
 
             if (!bPreDone && who->GetTypeId() == TYPEID_PLAYER && me->GetDistance(who) < 100.0f)
@@ -172,7 +170,7 @@ public:
                 bPreDone = true;
             }
 
-            if (pInstance->GetData(DATA_JEDOGA_SHADOWSEEKER_EVENT) != IN_PROGRESS || !bOnGround)
+            if (instance->GetData(DATA_JEDOGA_SHADOWSEEKER_EVENT) != IN_PROGRESS || !bOnGround)
                 return;
 
             if (!me->getVictim() && who->isTargetableForAttack() && me->IsHostileTo(who) && who->isInAccessiblePlaceFor(me))
@@ -196,12 +194,12 @@ public:
 
         void MoveDown()
         {
-            if (!pInstance)
+            if (!instance)
                 return;
 
             bOpFerokFail = false;
 
-            pInstance->SetData(DATA_JEDOGA_TRIGGER_SWITCH, 0);
+            instance->SetData(DATA_JEDOGA_TRIGGER_SWITCH, 0);
             me->GetMotionMaster()->MovePoint(1, JedogaPosition[1]);
             me->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, false);
             me->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_MAGIC, false);
@@ -218,11 +216,11 @@ public:
             }
             else
             {
-                if (Unit* pTarget = Unit::GetUnit(*me, pInstance->GetData64(DATA_PL_JEDOGA_TARGET)))
+                if (Unit* pTarget = Unit::GetUnit(*me, instance->GetData64(DATA_PL_JEDOGA_TARGET)))
                 {
                     AttackStart(pTarget);
-                    pInstance->SetData(DATA_JEDOGA_RESET_INITIANDS, 0);
-                    if (pInstance->GetData(DATA_JEDOGA_SHADOWSEEKER_EVENT) != IN_PROGRESS)
+                    instance->SetData(DATA_JEDOGA_RESET_INITIANDS, 0);
+                    if (instance->GetData(DATA_JEDOGA_SHADOWSEEKER_EVENT) != IN_PROGRESS)
                         EnterCombat(pTarget);
                 }
                 else if (!me->isInCombat())
@@ -232,7 +230,7 @@ public:
 
         void MoveUp()
         {
-            if (!pInstance)
+            if (!instance)
                 return;
 
             me->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, true);
@@ -244,8 +242,8 @@ public:
             me->LoadCreaturesAddon();
             me->GetMotionMaster()->MovePoint(0, JedogaPosition[0]);
 
-            pInstance->SetData(DATA_JEDOGA_TRIGGER_SWITCH, 1);
-            if (pInstance->GetData(DATA_JEDOGA_SHADOWSEEKER_EVENT) == IN_PROGRESS) OpferRufen();
+            instance->SetData(DATA_JEDOGA_TRIGGER_SWITCH, 1);
+            if (instance->GetData(DATA_JEDOGA_SHADOWSEEKER_EVENT) == IN_PROGRESS) OpferRufen();
 
             bOnGround = false;
             uiOpFerTimer = urand(15*IN_MILLISECONDS, 30*IN_MILLISECONDS);
@@ -253,15 +251,15 @@ public:
 
         void OpferRufen()
         {
-            if (!pInstance)
+            if (!instance)
                 return;
 
-            uint64 opfer = pInstance->GetData64(DATA_ADD_JEDOGA_INITIAND);
+            uint64 opfer = instance->GetData64(DATA_ADD_JEDOGA_INITIAND);
 
             if (opfer)
             {
                 DoScriptText(RAND(TEXT_SACRIFICE_1_1, TEXT_SACRIFICE_1_2), me);
-                pInstance->SetData64(DATA_ADD_JEDOGA_OPFER, opfer);
+                instance->SetData64(DATA_ADD_JEDOGA_OPFER, opfer);
             } else
                 bCanDown = true;
         }
@@ -279,10 +277,10 @@ public:
 
         void UpdateAI(const uint32 diff)
         {
-            if (!pInstance)
+            if (!instance)
                 return;
 
-            if (pInstance->GetData(DATA_JEDOGA_SHADOWSEEKER_EVENT) != IN_PROGRESS && pInstance->GetData(DATA_ALL_INITIAND_DEAD))
+            if (instance->GetData(DATA_JEDOGA_SHADOWSEEKER_EVENT) != IN_PROGRESS && instance->GetData(DATA_ALL_INITIAND_DEAD))
                 MoveDown();
 
             if (bOpFerok && !bOnGround && !bCanDown) Opfern();

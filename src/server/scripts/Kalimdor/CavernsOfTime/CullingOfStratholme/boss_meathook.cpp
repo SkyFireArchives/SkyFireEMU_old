@@ -62,12 +62,11 @@ public:
         return new boss_meathookAI (pCreature);
     }
 
-    struct boss_meathookAI : public ScriptedAI
+    struct boss_meathookAI : public BossAI
     {
-        boss_meathookAI(Creature *c) : ScriptedAI(c)
+        boss_meathookAI(Creature *c) : BossAI(c, DATA_MEATHOOK_EVENT)
         {
-            pInstance = c->GetInstanceScript();
-            if (pInstance)
+            if (instance)
                 DoScriptText(SAY_SPAWN, me);
         }
 
@@ -75,24 +74,22 @@ public:
         uint32 uiDiseaseTimer;
         uint32 uiFrenzyTimer;
 
-        InstanceScript* pInstance;
-
         void Reset()
         {
             uiChainTimer = urand(12000, 17000);   //seen on video 13, 17, 15, 12, 16
             uiDiseaseTimer = urand(2000, 4000);   //approx 3s
             uiFrenzyTimer = urand(21000, 26000);  //made it up
 
-            if (pInstance)
-                pInstance->SetData(DATA_MEATHOOK_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_MEATHOOK_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_MEATHOOK_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_MEATHOOK_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -125,10 +122,11 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_MEATHOOK_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_MEATHOOK_EVENT, DONE);
         }
 
         void KilledUnit(Unit * victim)

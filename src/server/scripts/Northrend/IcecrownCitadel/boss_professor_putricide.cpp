@@ -263,11 +263,7 @@ class boss_professor_putricide : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
-                events.Reset();
-				summons.DespawnAll();
-
-				instance->SetBossState(DATA_PROFESSOR_PUTRICIDE, DONE);
-				instance->SaveToDB();
+                _JustDied();
                 Talk(SAY_DEATH);
             }
 

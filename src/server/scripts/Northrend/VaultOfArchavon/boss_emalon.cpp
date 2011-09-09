@@ -122,6 +122,11 @@ class boss_emalon : public CreatureScript
                 _EnterCombat();
             }
 
+			void JustDied(Unit* /*killer*/)
+			{
+				_JustDied();
+			}
+
             void UpdateAI(const uint32 diff)
             {
                 if (!UpdateVictim())

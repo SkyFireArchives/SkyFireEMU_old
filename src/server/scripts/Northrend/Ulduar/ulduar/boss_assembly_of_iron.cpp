@@ -209,11 +209,10 @@ public:
         return new boss_steelbreakerAI (pCreature);
     }
 
-    struct boss_steelbreakerAI : public ScriptedAI
+    struct boss_steelbreakerAI : public BossAI
     {
-        boss_steelbreakerAI(Creature *c) : ScriptedAI(c)
+        boss_steelbreakerAI(Creature *c) : BossAI(c, DATA_STEELBREAKER)
         {
-            pInstance = c->GetInstanceScript();
         }
 
         void Reset()
@@ -221,20 +220,18 @@ public:
             events.Reset();
             phase = 0;
             me->RemoveAllAuras();
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetBossState(TYPE_ASSEMBLY, NOT_STARTED);
-                RespawnEncounter(pInstance, me);
+                instance->SetBossState(TYPE_ASSEMBLY, NOT_STARTED);
+                RespawnEncounter(instance, me);
             }
         }
 
-        EventMap events;
-        InstanceScript* pInstance;
         uint32 phase;
 
         void EnterCombat(Unit * who)
         {
-            StartEncounter(pInstance, me, who);
+            StartEncounter(instance, me, who);
             DoScriptText(SAY_STEELBREAKER_AGGRO, me);
             DoZoneInCombat();
             DoCast(me, RAID_MODE(SPELL_HIGH_VOLTAGE, SPELL_HIGH_VOLTAGE_H));
@@ -263,7 +260,7 @@ public:
             {
                 bool has_supercharge = false;
 
-                if (Creature* Brundir = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_BRUNDIR) : 0))
+                if (Creature* Brundir = Unit::GetCreature(*me, instance ? instance->GetData64(DATA_BRUNDIR) : 0))
                 {
                     if (Brundir->isAlive())
                     {
@@ -272,7 +269,7 @@ public:
                     }
                 }
 
-                if (Creature* Molgeim = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_MOLGEIM) : 0))
+                if (Creature* Molgeim = Unit::GetCreature(*me, instance ? instance->GetData64(DATA_MOLGEIM) : 0))
                 {
                     if (Molgeim->isAlive())
                     {
@@ -288,9 +285,10 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
+			_JustDied();
             DoScriptText(RAND(SAY_STEELBREAKER_DEATH_1, SAY_STEELBREAKER_DEATH_2), me);
-            if (IsEncounterComplete(pInstance, me) && pInstance)
-                pInstance->SetData(TYPE_ASSEMBLY, DONE);
+            if (IsEncounterComplete(instance, me) && instance)
+                instance->SetData(TYPE_ASSEMBLY, DONE);
         }
 
         void KilledUnit(Unit * /*who*/)
@@ -354,19 +352,18 @@ public:
         return new boss_runemaster_molgeimAI (pCreature);
     }
 
-    struct boss_runemaster_molgeimAI : public ScriptedAI
+    struct boss_runemaster_molgeimAI : public BossAI
     {
-        boss_runemaster_molgeimAI(Creature *c) : ScriptedAI(c)
+        boss_runemaster_molgeimAI(Creature *c) : BossAI(c, DATA_MOLGEIM)
         {
-            pInstance = c->GetInstanceScript();
         }
 
         void Reset()
         {
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(TYPE_ASSEMBLY, NOT_STARTED);
-                RespawnEncounter(pInstance, me);
+                instance->SetData(TYPE_ASSEMBLY, NOT_STARTED);
+                RespawnEncounter(instance, me);
             }
 
             events.Reset();
@@ -374,13 +371,11 @@ public:
             phase = 0;
         }
 
-        InstanceScript* pInstance;
-        EventMap events;
         uint32 phase;
 
         void EnterCombat(Unit* who)
         {
-            StartEncounter(pInstance, me, who);
+            StartEncounter(instance, me, who);
             DoScriptText(SAY_MOLGEIM_AGGRO, me);
             DoZoneInCombat();
             events.ScheduleEvent(EVENT_ENRAGE, 900000);
@@ -409,7 +404,7 @@ public:
             {
                 bool has_supercharge = false;
 
-                if (Creature* Steelbreaker = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_STEELBREAKER) : 0))
+                if (Creature* Steelbreaker = Unit::GetCreature(*me, instance ? instance->GetData64(DATA_STEELBREAKER) : 0))
                 {
                     if (Steelbreaker->isAlive())
                     {
@@ -418,7 +413,7 @@ public:
                     }
                 }
 
-                if (Creature* Brundir = Unit::GetCreature((*me), pInstance ? pInstance->GetData64(DATA_BRUNDIR) : 0))
+                if (Creature* Brundir = Unit::GetCreature((*me), instance ? instance->GetData64(DATA_BRUNDIR) : 0))
                 {
                     if (Brundir->isAlive())
                     {
@@ -434,9 +429,10 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
+			_JustDied();
             DoScriptText(RAND(SAY_MOLGEIM_DEATH_1, SAY_MOLGEIM_DEATH_2), me);
-            if (IsEncounterComplete(pInstance, me) && pInstance)
-                pInstance->SetData(TYPE_ASSEMBLY, DONE);
+            if (IsEncounterComplete(instance, me) && instance)
+                instance->SetData(TYPE_ASSEMBLY, DONE);
         }
 
         void KilledUnit(Unit * /*who*/)
@@ -595,19 +591,18 @@ public:
         return new boss_stormcaller_brundirAI (pCreature);
     }
 
-    struct boss_stormcaller_brundirAI : public ScriptedAI
+    struct boss_stormcaller_brundirAI : public BossAI
     {
-        boss_stormcaller_brundirAI(Creature *c) : ScriptedAI(c)
+        boss_stormcaller_brundirAI(Creature *c) : BossAI(c, DATA_BRUNDIR)
         {
-            pInstance = c->GetInstanceScript();
         }
 
         void Reset()
         {
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(TYPE_ASSEMBLY, NOT_STARTED);
-                RespawnEncounter(pInstance, me);
+                instance->SetData(TYPE_ASSEMBLY, NOT_STARTED);
+                RespawnEncounter(instance, me);
             }
 
             me->RemoveAllAuras();
@@ -615,13 +610,11 @@ public:
             phase = 0;
         }
 
-        EventMap events;
-        InstanceScript* pInstance;
         uint32 phase;
 
         void EnterCombat(Unit* who)
         {
-            StartEncounter(pInstance, me, who);
+            StartEncounter(instance, me, who);
             DoScriptText(SAY_BRUNDIR_AGGRO, me);
             DoZoneInCombat();
             events.ScheduleEvent(EVENT_ENRAGE, 900000);
@@ -653,7 +646,7 @@ public:
             {
                 bool has_supercharge = false;
 
-                if (Creature* Steelbreaker = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_STEELBREAKER) : 0))
+                if (Creature* Steelbreaker = Unit::GetCreature(*me, instance ? instance->GetData64(DATA_STEELBREAKER) : 0))
                 {
                     if (Steelbreaker->isAlive())
                     {
@@ -662,7 +655,7 @@ public:
                     }
                 }
 
-                if (Creature* Molgeim = Unit::GetCreature(*me, pInstance ? pInstance->GetData64(DATA_MOLGEIM) : 0))
+                if (Creature* Molgeim = Unit::GetCreature(*me, instance ? instance->GetData64(DATA_MOLGEIM) : 0))
                 {
                     if (Molgeim->isAlive())
                     {
@@ -678,9 +671,10 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
+			_JustDied();
             DoScriptText(RAND(SAY_BRUNDIR_DEATH_1, SAY_BRUNDIR_DEATH_2), me);
-            if (IsEncounterComplete(pInstance, me) && pInstance)
-                pInstance->SetData(TYPE_ASSEMBLY, DONE);
+            if (IsEncounterComplete(instance, me) && instance)
+                instance->SetData(TYPE_ASSEMBLY, DONE);
         }
 
         void KilledUnit(Unit * /*who*/)

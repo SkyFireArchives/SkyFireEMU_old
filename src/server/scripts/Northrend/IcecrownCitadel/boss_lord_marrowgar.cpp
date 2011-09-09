@@ -135,11 +135,7 @@ class boss_lord_marrowgar : public CreatureScript
             {
                 Talk(SAY_DEATH);
 
-                events.Reset();
-				summons.DespawnAll();
-
-				instance->SetBossState(DATA_LORD_MARROWGAR, DONE);
-				instance->SaveToDB();
+                _JustDied();
             }
 
             void JustReachedHome()

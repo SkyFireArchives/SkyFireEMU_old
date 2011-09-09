@@ -75,11 +75,10 @@ class boss_novos : public CreatureScript
 public:
     boss_novos() : CreatureScript("boss_novos") { }
 
-    struct boss_novosAI : public Scripted_NoMovementAI
+    struct boss_novosAI : public BossAI
     {
-        boss_novosAI(Creature *c) : Scripted_NoMovementAI(c), lSummons(me)
+        boss_novosAI(Creature *c) : BossAI(c, DATA_NOVOS_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -90,13 +89,9 @@ public:
 
         bool bAchiev;
 
-        SummonList lSummons;
-
         std::list<uint64> luiCrystals;
 
         CombatPhase Phase;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
@@ -104,7 +99,7 @@ public:
             luiCrystals.clear();
             bAchiev = true;
             me->CastStop();
-            lSummons.DespawnAll();
+            summons.DespawnAll();
             crystalHandlerAmount = 0;
 
             if (me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE))
@@ -114,16 +109,16 @@ public:
             if (me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE))
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_NOVOS_EVENT, NOT_STARTED);
-                luiCrystals.push_back(pInstance->GetData64(DATA_NOVOS_CRYSTAL_1));
-                luiCrystals.push_back(pInstance->GetData64(DATA_NOVOS_CRYSTAL_2));
-                luiCrystals.push_back(pInstance->GetData64(DATA_NOVOS_CRYSTAL_3));
-                luiCrystals.push_back(pInstance->GetData64(DATA_NOVOS_CRYSTAL_4));
+                instance->SetData(DATA_NOVOS_EVENT, NOT_STARTED);
+                luiCrystals.push_back(instance->GetData64(DATA_NOVOS_CRYSTAL_1));
+                luiCrystals.push_back(instance->GetData64(DATA_NOVOS_CRYSTAL_2));
+                luiCrystals.push_back(instance->GetData64(DATA_NOVOS_CRYSTAL_3));
+                luiCrystals.push_back(instance->GetData64(DATA_NOVOS_CRYSTAL_4));
                 for (std::list<uint64>::const_iterator itr = luiCrystals.begin(); itr != luiCrystals.end(); ++itr)
                 {
-                    if (GameObject* pTemp = pInstance->instance->GetGameObject(*itr))
+                    if (GameObject* pTemp = instance->instance->GetGameObject(*itr))
                         pTemp->SetGoState(GO_STATE_READY);
                 }
             }
@@ -136,18 +131,19 @@ public:
             uiCrystalHandlerTimer = 30*IN_MILLISECONDS;
             uiTimer = 1*IN_MILLISECONDS;
             DoCast(SPELL_ARCANE_FIELD);
-            if (pInstance)
+            if (instance)
             {
                 for (std::list<uint64>::const_iterator itr = luiCrystals.begin(); itr != luiCrystals.end(); ++itr)
                 {
-                    if (GameObject *pTemp = pInstance->instance->GetGameObject(*itr))
+                    if (GameObject *pTemp = instance->instance->GetGameObject(*itr))
                         pTemp->SetGoState(GO_STATE_ACTIVE);
                 }
-                pInstance->SetData(DATA_NOVOS_EVENT, IN_PROGRESS);
+                instance->SetData(DATA_NOVOS_EVENT, IN_PROGRESS);
             }
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+			me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
         }
 
         void UpdateAI(const uint32 diff)
@@ -193,15 +189,15 @@ public:
         }
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_NOVOS_EVENT, DONE);
+                instance->SetData(DATA_NOVOS_EVENT, DONE);
 
                 if (IsHeroic() && bAchiev)
-                    pInstance->DoCompleteAchievement(ACHIEV_OH_NOVOS);
+                    instance->DoCompleteAchievement(ACHIEV_OH_NOVOS);
             }
-            lSummons.DespawnAll();
         }
 
         void KilledUnit(Unit * victim)
@@ -216,15 +212,15 @@ public:
             if (summon->GetEntry() == CREATURE_CRYSTAL_HANDLER)
                 crystalHandlerAmount++;
 
-            lSummons.Summon(summon);
+            summons.Summon(summon);
         }
 
         void RemoveCrystal()
         {
             if (!luiCrystals.empty())
             {
-                if (pInstance)
-                    if (GameObject *pTemp = pInstance->instance->GetGameObject(luiCrystals.back()))
+                if (instance)
+                    if (GameObject *pTemp = instance->instance->GetGameObject(luiCrystals.back()))
                         pTemp->SetGoState(GO_STATE_READY);
                 luiCrystals.pop_back();
             }

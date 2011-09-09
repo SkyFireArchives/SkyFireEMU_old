@@ -136,36 +136,31 @@ public:
         return new boss_ickAI(pCreature);
     }
 
-    struct boss_ickAI : public ScriptedAI
+    struct boss_ickAI : public BossAI
     {
-        boss_ickAI(Creature *c) : ScriptedAI(c)
+        boss_ickAI(Creature *c) : BossAI(c, DATA_KRICKANDICK_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
-
-        EventMap events;
 
         void Reset()
         {
             events.Reset();
 
-            if (pInstance)
-                pInstance->SetData(DATA_KRICKANDICK_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_KRICKANDICK_EVENT, NOT_STARTED);
         }
 
         Creature* GetKrick()
         {
-            return me->GetCreature(*me, pInstance ? pInstance->GetData64(DATA_KRICK) : 0);
+            return me->GetCreature(*me, instance ? instance->GetData64(DATA_KRICK) : 0);
         }
 
         void EnterCombat(Unit * /*who*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_KRICKANDICK_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_KRICKANDICK_EVENT, IN_PROGRESS);
 
             Creature* pKrick = GetKrick();
             if (!pKrick)
@@ -190,14 +185,15 @@ public:
 
         void JustDied(Unit* /*pKiller*/)
         {
+			_JustDied();
             if (Creature* pKrick = GetKrick())
             {
                 if (pKrick->AI())
                     pKrick->AI()->DoAction(ACTION_OUTRO);
             }
 
-            if (pInstance)
-                pInstance->SetData(DATA_KRICKANDICK_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_KRICKANDICK_EVENT, DONE);
         }
 
         void UpdateAI(const uint32 diff)

@@ -31,6 +31,7 @@ SDCategory:
 Script Data End */
 
 #include "ScriptPCH.h"
+#include "nexus.h"
 
 #define SPELL_BATTLE_SHOUT                                    31403
 #define SPELL_CHARGE                                          60067
@@ -54,14 +55,20 @@ public:
         return new boss_commander_kolurgAI (pCreature);
     }
 
-    struct boss_commander_kolurgAI : public ScriptedAI
+    struct boss_commander_kolurgAI : public BossAI
     {
-        boss_commander_kolurgAI(Creature *c) : ScriptedAI(c) {
+        boss_commander_kolurgAI(Creature *c) : BossAI(c, DATA_KOLURG) {
         me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
         void Reset() {}
         void EnterCombat(Unit* /*who*/) {}
+
+		void JustDied(Unit* /*killer*/)
+		{
+			_JustDied();
+		}
+
         void AttackStart(Unit* /*who*/) {}
         void MoveInLineOfSight(Unit* /*who*/) {}
         void UpdateAI(const uint32 /*diff*/)
@@ -72,7 +79,6 @@ public:
 
             DoMeleeAttackIfReady();
         }
-        void JustDied(Unit* /*killer*/)  {}
     };
 };
 

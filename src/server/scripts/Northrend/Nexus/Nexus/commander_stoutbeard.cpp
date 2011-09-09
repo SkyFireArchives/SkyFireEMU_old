@@ -31,6 +31,7 @@ SDCategory:
 Script Data End */
 
 #include "ScriptPCH.h"
+#include "nexus.h"
 
 #define SPELL_BATTLE_SHOUT                                       31403
 #define SPELL_CHARGE                                             60067
@@ -54,9 +55,9 @@ public:
         return new boss_commander_stoutbeardAI (pCreature);
     }
 
-    struct boss_commander_stoutbeardAI : public ScriptedAI
+    struct boss_commander_stoutbeardAI : public BossAI
     {
-        boss_commander_stoutbeardAI(Creature *c) : ScriptedAI(c) {
+        boss_commander_stoutbeardAI(Creature *c) : BossAI(c, DATA_STOUTBEARD) {
         me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
@@ -77,6 +78,7 @@ public:
         }
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
         }
     };

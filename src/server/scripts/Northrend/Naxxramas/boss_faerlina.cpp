@@ -118,18 +118,11 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            events.Reset();
-			summons.DespawnAll();
-
-			if (instance)
-			{
-				instance->SetBossState(BOSS_FAERLINA, DONE);
-				instance->SaveToDB();
-			}
+            _JustDied();
 
             DoScriptText(SAY_DEATH, me);
 
-            if (instance && bAchievement)
+            if (bAchievement)
                 instance->DoCompleteAchievement(RAID_MODE(ACHIEVEMENT_MOMMA_SAID_KNOCK_YOU_OUT_10, ACHIEVEMENT_MOMMA_SAID_KNOCK_YOU_OUT_25));
         }
 

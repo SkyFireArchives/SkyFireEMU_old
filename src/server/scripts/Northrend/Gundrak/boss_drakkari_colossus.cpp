@@ -131,6 +131,7 @@ class boss_drakkari_colossus : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
+				_JustDied();
                 // Note: This should not be called, but before use SetBossState function we should use BossAI
                 //        in all the bosses of the instance
                 instance->SetData(DATA_DRAKKARI_COLOSSUS_EVENT, FAIL);
@@ -138,7 +139,11 @@ class boss_drakkari_colossus : public CreatureScript
 
             void JustReachedHome()
             {
-                _JustDied();
+                events.Reset();
+				summons.DespawnAll();
+
+				instance->SetBossState(DATA_DRAKKARI_COLOSSUS_EVENT, DONE);
+				instance->SaveToDB();
 
                 // Note: This should not be called, but before use SetBossState function we should use BossAI
                 //        in all the bosses of the instance

@@ -96,16 +96,13 @@ class boss_anub_arak : public CreatureScript
 public:
     boss_anub_arak() : CreatureScript("boss_anub_arak") { }
 
-    struct boss_anub_arakAI : public ScriptedAI
+    struct boss_anub_arakAI : public BossAI
     {
-        boss_anub_arakAI(Creature *c) : ScriptedAI(c), lSummons(me)
+        boss_anub_arakAI(Creature *c) : BossAI(c, DATA_ANUBARAK_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript *pInstance;
 
         bool bChanneling;
         bool bGuardianSummoned;
@@ -125,8 +122,6 @@ public:
         uint32 uiImpalePhase;
         uint64 uiImpaleTarget;
 
-        SummonList lSummons;
-
         void Reset()
         {
             uiCarrionBeetlesTimer = 8*IN_MILLISECONDS;
@@ -142,12 +137,12 @@ public:
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
             me->RemoveAura(SPELL_SUBMERGE);
 
-            lSummons.DespawnAll();
+            summons.DespawnAll();
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_ANUBARAK_EVENT, NOT_STARTED);
-                pInstance->DoStopTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMED_START_EVENT);
+                instance->SetData(DATA_ANUBARAK_EVENT, NOT_STARTED);
+                instance->DoStopTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMED_START_EVENT);
             }
         }
 
@@ -171,10 +166,10 @@ public:
         void EnterCombat(Unit * /*pWho*/)
         {
             DoScriptText(SAY_AGGRO, me);
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_ANUBARAK_EVENT, IN_PROGRESS);
-                pInstance->DoStartTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMED_START_EVENT);
+                instance->SetData(DATA_ANUBARAK_EVENT, IN_PROGRESS);
+                instance->DoStartTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMED_START_EVENT);
             }
         }
 
@@ -336,10 +331,10 @@ public:
 
         void JustDied(Unit * /*pKiller*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
-            lSummons.DespawnAll();
-            if (pInstance)
-                pInstance->SetData(DATA_ANUBARAK_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_ANUBARAK_EVENT, DONE);
         }
 
         void KilledUnit(Unit *pVictim)
@@ -351,7 +346,7 @@ public:
 
         void JustSummoned(Creature* summon)
         {
-            lSummons.Summon(summon);
+            summons.Summon(summon);
         }
     };
 

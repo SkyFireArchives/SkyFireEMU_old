@@ -111,11 +111,10 @@ public:
         return new boss_ymironAI(pCreature);
     }
 
-    struct boss_ymironAI : public ScriptedAI
+    struct boss_ymironAI : public BossAI
     {
-        boss_ymironAI(Creature *c) : ScriptedAI(c)
+        boss_ymironAI(Creature *c) : BossAI(c, DATA_KING_YMIRON_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
             for (int i = 0; i < 4; ++i)
@@ -156,8 +155,6 @@ public:
         uint64 m_uiActivedCreatureGUID;
         uint64 m_uiOrbGUID;
 
-        InstanceScript *pInstance;
-
         void Reset()
         {
             m_bIsPause = false;
@@ -184,16 +181,16 @@ public:
             DespawnBoatGhosts(m_uiActivedCreatureGUID);
             DespawnBoatGhosts(m_uiOrbGUID);
 
-            if (pInstance)
-                pInstance->SetData(DATA_KING_YMIRON_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_KING_YMIRON_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_KING_YMIRON_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_KING_YMIRON_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -356,13 +353,14 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
             DespawnBoatGhosts(m_uiActivedCreatureGUID);
             DespawnBoatGhosts(m_uiOrbGUID);
 
-            if (pInstance)
-                pInstance->SetData(DATA_KING_YMIRON_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_KING_YMIRON_EVENT, DONE);
         }
 
         void KilledUnit(Unit * /*victim*/)

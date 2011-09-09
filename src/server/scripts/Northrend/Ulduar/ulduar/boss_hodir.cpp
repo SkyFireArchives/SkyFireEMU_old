@@ -67,11 +67,7 @@ public:
         void JustDied(Unit * /*victim*/)
         {
             DoScriptText(SAY_DEATH, me);
-            events.Reset();
-			summons.DespawnAll();
-
-			instance->SetBossState(TYPE_HODIR, DONE);
-			instance->SaveToDB();
+            _JustDied();
         }
 
         void EnterCombat(Unit* /*pWho*/)

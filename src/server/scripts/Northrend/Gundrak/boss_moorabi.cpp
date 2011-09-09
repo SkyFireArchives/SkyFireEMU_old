@@ -65,16 +65,13 @@ public:
         return new boss_moorabiAI(pCreature);
     }
 
-    struct boss_moorabiAI : public ScriptedAI
+    struct boss_moorabiAI : public BossAI
     {
-        boss_moorabiAI(Creature* pCreature) : ScriptedAI(pCreature)
+        boss_moorabiAI(Creature* pCreature) : BossAI(pCreature, DATA_MOORABI_EVENT)
         {
-            pInstance = pCreature->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         bool bPhase;
 
@@ -91,8 +88,8 @@ public:
             uiTransformationTImer = 12*IN_MILLISECONDS;
             bPhase = false;
 
-            if (pInstance)
-                pInstance->SetData(DATA_MOORABI_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_MOORABI_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*pWho*/)
@@ -100,8 +97,8 @@ public:
             DoScriptText(SAY_AGGRO, me);
             DoCast(me, SPELL_MOJO_FRENZY, true);
 
-            if (pInstance)
-                pInstance->SetData(DATA_MOORABI_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_MOORABI_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 uiDiff)
@@ -157,14 +154,15 @@ public:
 
          void JustDied(Unit* /*pKiller*/)
          {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_MOORABI_EVENT, DONE);
+                instance->SetData(DATA_MOORABI_EVENT, DONE);
 
                 if (IsHeroic() && !bPhase)
-                    pInstance->DoCompleteAchievement(ACHIEV_LESS_RABI);
+                    instance->DoCompleteAchievement(ACHIEV_LESS_RABI);
             }
         }
 

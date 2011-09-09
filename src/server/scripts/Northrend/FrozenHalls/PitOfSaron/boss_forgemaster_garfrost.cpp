@@ -79,11 +79,10 @@ public:
         return new boss_garfrostAI (pCreature);
     }
 
-    struct boss_garfrostAI : public ScriptedAI
+    struct boss_garfrostAI : public BossAI
     {
-        boss_garfrostAI(Creature *c) : ScriptedAI(c)
+        boss_garfrostAI(Creature *c) : BossAI(c, DATA_GARFROST_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -91,9 +90,6 @@ public:
         bool phase2;
         bool phase3;
         bool bAchievement;
-
-        InstanceScript* pInstance;
-        EventMap events;
 
         void Reset()
         {
@@ -103,8 +99,8 @@ public:
             phase3 = false;
             bAchievement = true;
 
-            if (pInstance)
-                pInstance->SetData(DATA_GARFROST_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_GARFROST_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -112,8 +108,8 @@ public:
             DoScriptText(SAY_AGGRO, me);
             DoCast(me, SPELL_PERMAFROST);
 
-            if (pInstance)
-                pInstance->SetData(DATA_GARFROST_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_GARFROST_EVENT, IN_PROGRESS);
 
             events.ScheduleEvent(EVENT_THROW_SARONITE, 45000);
         }
@@ -156,15 +152,16 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
-            if (pInstance)
+            if (instance)
             {
-                if (Creature *pTyrannus = me->GetCreature(*me, pInstance->GetData64(DATA_TYRANNUS)))
+                if (Creature *pTyrannus = me->GetCreature(*me, instance->GetData64(DATA_TYRANNUS)))
                     DoScriptText(SAY_TYRANNUS_DEATH, pTyrannus);
 
-                pInstance->SetData(DATA_GARFROST_EVENT, DONE);
+                instance->SetData(DATA_GARFROST_EVENT, DONE);
                 if (IsHeroic() && bAchievement)
-                    pInstance->DoCompleteAchievement(ACHIEV_DOESNT_GO_TO_ELEVEN);
+                    instance->DoCompleteAchievement(ACHIEV_DOESNT_GO_TO_ELEVEN);
             }
         }
 

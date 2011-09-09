@@ -71,16 +71,13 @@ public:
         return new boss_magus_telestraAI (pCreature);
     }
 
-    struct boss_magus_telestraAI : public ScriptedAI
+    struct boss_magus_telestraAI : public BossAI
     {
-        boss_magus_telestraAI(Creature* c) : ScriptedAI(c)
+        boss_magus_telestraAI(Creature* c) : BossAI(c, DATA_MAGUS_TELESTRA_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         uint64 uiFireMagusGUID;
         uint64 uiFrostMagusGUID;
@@ -124,27 +121,28 @@ public:
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             me->SetVisible(true);
 
-            if (pInstance)
-                pInstance->SetData(DATA_MAGUS_TELESTRA_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_MAGUS_TELESTRA_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_MAGUS_TELESTRA_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_MAGUS_TELESTRA_EVENT, IN_PROGRESS);
         }
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
+            if (instance)
             {
                 if (IsHeroic() && uiAchievementProgress == 2)
-                    pInstance->DoCompleteAchievement(ACHIEV_SPLIT_PERSONALITY);
-                pInstance->SetData(DATA_MAGUS_TELESTRA_EVENT, DONE);
+                    instance->DoCompleteAchievement(ACHIEV_SPLIT_PERSONALITY);
+                instance->SetData(DATA_MAGUS_TELESTRA_EVENT, DONE);
             }
         }
 

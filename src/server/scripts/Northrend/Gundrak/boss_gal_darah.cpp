@@ -85,11 +85,10 @@ public:
         return new boss_gal_darahAI (pCreature);
     }
 
-    struct boss_gal_darahAI : public ScriptedAI
+    struct boss_gal_darahAI : public BossAI
     {
-        boss_gal_darahAI(Creature *c) : ScriptedAI(c)
+        boss_gal_darahAI(Creature *c) : BossAI(c, DATA_GAL_DARAH_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -108,8 +107,6 @@ public:
         uint8 uiPhaseCounter;
 
         bool bStartOfTransformation;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
@@ -130,16 +127,16 @@ public:
 
             me->SetDisplayId(DISPLAY_TROLL);
 
-            if (pInstance)
-                pInstance->SetData(DATA_GAL_DARAH_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_GAL_DARAH_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_GAL_DARAH_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_GAL_DARAH_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -258,26 +255,27 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
+            if (instance)
             {
                 if (IsHeroic())
                 {
                     if (lImpaledPlayers.size() == 5)
-                        pInstance->DoCompleteAchievement(ACHIEV_SHARE_THE_LOVE);
+                        instance->DoCompleteAchievement(ACHIEV_SHARE_THE_LOVE);
 
                     AchievementEntry const *achievWhatTheEck = GetAchievementStore()->LookupEntry(ACHIEV_WHAT_THE_ECK);
                     if (achievWhatTheEck)
                     {
-                        Map::PlayerList const &players = pInstance->instance->GetPlayers();
+                        Map::PlayerList const &players = instance->instance->GetPlayers();
                         for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
                             if (itr->getSource()->HasAura(SPELL_ECK_RESIDUE))
                                 itr->getSource()->CompletedAchievement(achievWhatTheEck);
                     }
                 }
 
-                pInstance->SetData(DATA_GAL_DARAH_EVENT, DONE);
+                instance->SetData(DATA_GAL_DARAH_EVENT, DONE);
             }
         }
 

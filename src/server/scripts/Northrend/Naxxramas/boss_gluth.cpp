@@ -101,6 +101,11 @@ public:
             summons.Summon(summon);
         }
 
+		void JustDied(Unit* /*killer*/)
+		{
+			_JustDied();
+		}
+
         void UpdateAI(const uint32 diff)
         {
             if (!UpdateVictimWithGaze() || !CheckInRoom())

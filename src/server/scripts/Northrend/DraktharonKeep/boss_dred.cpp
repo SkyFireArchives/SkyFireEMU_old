@@ -58,11 +58,10 @@ class boss_dred : public CreatureScript
 public:
     boss_dred() : CreatureScript("boss_dred") { }
 
-    struct boss_dredAI : public ScriptedAI
+    struct boss_dredAI : public BossAI
     {
-        boss_dredAI(Creature *c) : ScriptedAI(c)
+        boss_dredAI(Creature *c) : BossAI(c, DATA_DRED_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -74,14 +73,12 @@ public:
         uint32 uiPiercingSlashTimer;
         uint32 uiRaptorCallTimer;
 
-        InstanceScript* pInstance;
-
         void Reset()
         {
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_DRED_EVENT, NOT_STARTED);
-                pInstance->SetData(DATA_KING_DRED_ACHIEV, 0);
+                instance->SetData(DATA_DRED_EVENT, NOT_STARTED);
+                instance->SetData(DATA_KING_DRED_ACHIEV, 0);
             }
 
             uiBellowingRoarTimer = 33*IN_MILLISECONDS;
@@ -94,8 +91,8 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_DRED_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_DRED_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -151,12 +148,13 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            if (pInstance)
+			_JustDied();
+            if (instance)
             {
-                pInstance->SetData(DATA_DRED_EVENT, DONE);
+                instance->SetData(DATA_DRED_EVENT, DONE);
 
-                if (IsHeroic() && pInstance->GetData(DATA_KING_DRED_ACHIEV) == 6)
-                    pInstance->DoCompleteAchievement(ACHIEV_BETTER_OFF_DRED);
+                if (IsHeroic() && instance->GetData(DATA_KING_DRED_ACHIEV) == 6)
+                    instance->DoCompleteAchievement(ACHIEV_BETTER_OFF_DRED);
             }
         }
     };

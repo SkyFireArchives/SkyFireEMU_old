@@ -64,16 +64,13 @@ public:
         return new boss_zuramatAI (pCreature);
     }
 
-    struct boss_zuramatAI : public ScriptedAI
+    struct boss_zuramatAI : public BossAI
     {
-        boss_zuramatAI(Creature *c) : ScriptedAI(c)
+        boss_zuramatAI(Creature *c) : BossAI(c, DATA_ZURAMAT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         uint32 SpellVoidShiftTimer;
         uint32 SpellSummonVoidTimer;
@@ -81,12 +78,12 @@ public:
 
         void Reset()
         {
-            if (pInstance)
+            if (instance)
             {
-                if (pInstance->GetData(DATA_WAVE_COUNT) == 6)
-                    pInstance->SetData(DATA_1ST_BOSS_EVENT, NOT_STARTED);
-                else if (pInstance->GetData(DATA_WAVE_COUNT) == 12)
-                    pInstance->SetData(DATA_2ND_BOSS_EVENT, NOT_STARTED);
+                if (instance->GetData(DATA_WAVE_COUNT) == 6)
+                    instance->SetData(DATA_1ST_BOSS_EVENT, NOT_STARTED);
+                else if (instance->GetData(DATA_WAVE_COUNT) == 12)
+                    instance->SetData(DATA_2ND_BOSS_EVENT, NOT_STARTED);
             }
 
             SpellShroudOfDarknessTimer = 22000;
@@ -111,18 +108,18 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
-            if (pInstance)
+            if (instance)
             {
-                if (GameObject *pDoor = pInstance->instance->GetGameObject(pInstance->GetData64(DATA_ZURAMAT_CELL)))
+                if (GameObject *pDoor = instance->instance->GetGameObject(instance->GetData64(DATA_ZURAMAT_CELL)))
                     if (pDoor->GetGoState() == GO_STATE_READY)
                     {
                         EnterEvadeMode();
                         return;
                     }
-                if (pInstance->GetData(DATA_WAVE_COUNT) == 6)
-                    pInstance->SetData(DATA_1ST_BOSS_EVENT, IN_PROGRESS);
-                else if (pInstance->GetData(DATA_WAVE_COUNT) == 12)
-                    pInstance->SetData(DATA_2ND_BOSS_EVENT, IN_PROGRESS);
+                if (instance->GetData(DATA_WAVE_COUNT) == 6)
+                    instance->SetData(DATA_1ST_BOSS_EVENT, IN_PROGRESS);
+                else if (instance->GetData(DATA_WAVE_COUNT) == 12)
+                    instance->SetData(DATA_2ND_BOSS_EVENT, IN_PROGRESS);
             }
         }
 
@@ -158,19 +155,20 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
+            if (instance)
             {
-                if (pInstance->GetData(DATA_WAVE_COUNT) == 6)
+                if (instance->GetData(DATA_WAVE_COUNT) == 6)
                 {
-                    pInstance->SetData(DATA_1ST_BOSS_EVENT, DONE);
-                    pInstance->SetData(DATA_WAVE_COUNT, 7);
+                    instance->SetData(DATA_1ST_BOSS_EVENT, DONE);
+                    instance->SetData(DATA_WAVE_COUNT, 7);
                 }
-                else if (pInstance->GetData(DATA_WAVE_COUNT) == 12)
+                else if (instance->GetData(DATA_WAVE_COUNT) == 12)
                 {
-                    pInstance->SetData(DATA_2ND_BOSS_EVENT, DONE);
-                    pInstance->SetData(DATA_WAVE_COUNT, 13);
+                    instance->SetData(DATA_2ND_BOSS_EVENT, DONE);
+                    instance->SetData(DATA_WAVE_COUNT, 13);
                 }
             }
         }

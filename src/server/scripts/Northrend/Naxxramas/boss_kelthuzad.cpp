@@ -338,11 +338,7 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            events.Reset();
-			summons.DespawnAll();
-
-			instance->SetBossState(BOSS_KELTHUZAD, DONE);
-			instance->SaveToDB();
+            _JustDied();
 
             DoScriptText(SAY_DEATH, me);
 

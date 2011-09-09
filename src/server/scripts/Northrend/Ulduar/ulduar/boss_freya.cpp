@@ -100,11 +100,7 @@ public:
         void JustDied(Unit * /*victim*/)
         {
             DoScriptText(SAY_DEATH, me);
-            events.Reset();
-			summons.DespawnAll();
-
-			instance->SetBossState(TYPE_FREYA, DONE);
-			instance->SaveToDB();
+            _JustDied();
 
             // cast is not rewarding the achievement.
             // DoCast(SPELL_ACHIEVEMENT_CHECK);

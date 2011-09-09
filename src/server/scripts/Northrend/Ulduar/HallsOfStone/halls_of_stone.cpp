@@ -605,6 +605,20 @@ public:
 
                             if (!bHasBeenDamaged)
                                 pInstance->DoCompleteAchievement(ACHIEV_BRANN_SPANKIN_NEW);
+
+							// Award Justice Points
+							if (Map* map = pInstance->instance)
+							{
+								Map::PlayerList const &PlayerList = map->GetPlayers();
+								if (!PlayerList.isEmpty())
+								{
+									for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+									{
+										if (Player* player = i->getSource())
+											player->ModifyCurrency(395, 1600);
+									}
+								}
+							}
                         }
 
                         JumpToNextStep(5500);

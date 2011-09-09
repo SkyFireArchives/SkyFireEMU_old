@@ -74,16 +74,13 @@ public:
         return new boss_skarvald_the_constructorAI (pCreature);
     }
 
-    struct boss_skarvald_the_constructorAI : public ScriptedAI
+    struct boss_skarvald_the_constructorAI : public BossAI
     {
-        boss_skarvald_the_constructorAI(Creature *c) : ScriptedAI(c)
+        boss_skarvald_the_constructorAI(Creature *c) : BossAI(c, DATA_SKARVALD)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         bool ghost;
         uint32 Charge_Timer;
@@ -100,42 +97,43 @@ public:
             Check_Timer = 5000;
 
             ghost = (me->GetEntry() == MOB_SKARVALD_GHOST);
-            if (!ghost && pInstance)
+            if (!ghost && instance)
             {
-                Unit* dalronn = Unit::GetUnit((*me), pInstance->GetData64(DATA_DALRONN));
+                Unit* dalronn = Unit::GetUnit((*me), instance->GetData64(DATA_DALRONN));
                 if (dalronn && dalronn->isDead())
                     CAST_CRE(dalronn)->Respawn();
 
-                pInstance->SetData(DATA_SKARVALD_DALRONN_EVENT, NOT_STARTED);
+                instance->SetData(DATA_SKARVALD_DALRONN_EVENT, NOT_STARTED);
             }
         }
 
         void EnterCombat(Unit * who)
         {
-            if (!ghost && pInstance)
+            if (!ghost && instance)
             {
                 DoScriptText(YELL_SKARVALD_AGGRO, me);
 
-                Unit* dalronn = Unit::GetUnit((*me), pInstance->GetData64(DATA_DALRONN));
+                Unit* dalronn = Unit::GetUnit((*me), instance->GetData64(DATA_DALRONN));
                 if (dalronn && dalronn->isAlive() && !dalronn->getVictim())
                     dalronn->getThreatManager().addThreat(who, 0.0f);
 
-                pInstance->SetData(DATA_SKARVALD_DALRONN_EVENT, IN_PROGRESS);
+                instance->SetData(DATA_SKARVALD_DALRONN_EVENT, IN_PROGRESS);
             }
         }
 
         void JustDied(Unit* Killer)
         {
-            if (!ghost && pInstance)
+			_JustDied();
+            if (!ghost && instance)
             {
-                Unit* dalronn = Unit::GetUnit((*me), pInstance->GetData64(DATA_DALRONN));
+                Unit* dalronn = Unit::GetUnit((*me), instance->GetData64(DATA_DALRONN));
                 if (dalronn)
                 {
                     if (dalronn->isDead())
                     {
                         DoScriptText(YELL_SKARVALD_DAL_DIED, me);
 
-                        pInstance->SetData(DATA_SKARVALD_DALRONN_EVENT, DONE);
+                        instance->SetData(DATA_SKARVALD_DALRONN_EVENT, DONE);
                     }
                     else
                     {
@@ -166,7 +164,7 @@ public:
         {
             if (ghost)
             {
-                if (pInstance && pInstance->GetData(DATA_SKARVALD_DALRONN_EVENT) != IN_PROGRESS)
+                if (instance && instance->GetData(DATA_SKARVALD_DALRONN_EVENT) != IN_PROGRESS)
                     me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
             }
 
@@ -180,7 +178,7 @@ public:
                     if (Check_Timer <= diff)
                     {
                         Check_Timer = 5000;
-                        Unit* dalronn = Unit::GetUnit(*me, pInstance ? pInstance->GetData64(DATA_DALRONN) : 0);
+                        Unit* dalronn = Unit::GetUnit(*me, instance ? instance->GetData64(DATA_DALRONN) : 0);
                         if (dalronn && dalronn->isDead())
                         {
                             Dalronn_isDead = true;

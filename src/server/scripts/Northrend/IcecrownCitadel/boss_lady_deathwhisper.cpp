@@ -352,11 +352,7 @@ class boss_lady_deathwhisper : public CreatureScript
                     }
                 }
 
-                events.Reset();
-				summons.DespawnAll();
-
-				instance->SetBossState(DATA_LADY_DEATHWHISPER, DONE);
-				instance->SaveToDB();
+                _JustDied();
             }
 
             void JustReachedHome()

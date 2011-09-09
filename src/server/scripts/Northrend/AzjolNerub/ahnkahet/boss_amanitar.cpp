@@ -53,17 +53,14 @@ class boss_amanitar : public CreatureScript
 public:
     boss_amanitar() : CreatureScript("boss_amanitar") { }
 
-    struct boss_amanitarAI : public ScriptedAI
+    struct boss_amanitarAI : public BossAI
     {
-        boss_amanitarAI(Creature *c) : ScriptedAI(c)
+        boss_amanitarAI(Creature *c) : BossAI(c, DATA_AMANITAR_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             bFirstTime = true;
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         uint32 uiRootTimer;
         uint32 uiBashTimer;
@@ -82,11 +79,11 @@ public:
             me->SetMeleeDamageSchool(SPELL_SCHOOL_NATURE);
             me->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_NATURE, true);
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->DoRemoveAurasDueToSpellOnPlayers(SPELL_MINI);
+                instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_MINI);
                 if (!bFirstTime)
-                    pInstance->SetData(DATA_AMANITAR_EVENT, FAIL);
+                    instance->SetData(DATA_AMANITAR_EVENT, FAIL);
                 else
                     bFirstTime = false;
             }
@@ -94,17 +91,18 @@ public:
 
         void JustDied(Unit * /*Killer*/)
         {
-            if (pInstance)
+			_JustDied();
+            if (instance)
             {
-                pInstance->SetData(DATA_AMANITAR_EVENT, DONE);
-                pInstance->DoRemoveAurasDueToSpellOnPlayers(SPELL_MINI);
+                instance->SetData(DATA_AMANITAR_EVENT, DONE);
+                instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_MINI);
             }
         }
 
         void EnterCombat(Unit * /*who*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_AMANITAR_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_AMANITAR_EVENT, IN_PROGRESS);
 
             DoCast(me, SPELL_MINI, false);
         }

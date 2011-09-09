@@ -156,11 +156,7 @@ public:
 
         void JustDied(Unit* /*who*/)
         {
-            events.Reset();
-			summons.DespawnAll();
-
-			instance->SetBossState(BOSS_SAPPHIRON, DONE);
-			instance->SaveToDB();
+			_JustDied();
             me->CastSpell(me, SPELL_DIES, true);
 
             CheckPlayersFrostResist();

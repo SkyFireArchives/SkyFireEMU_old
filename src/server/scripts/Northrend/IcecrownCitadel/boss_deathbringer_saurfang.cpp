@@ -317,11 +317,7 @@ class boss_deathbringer_saurfang : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
-                events.Reset();
-				summons.DespawnAll();
-
-				instance->SetBossState(DATA_DEATHBRINGER_SAURFANG, DONE);
-				instance->SaveToDB();
+                _JustDied();
 
                 DoCastAOE(SPELL_ACHIEVEMENT, true);
                 Talk(SAY_DEATH);

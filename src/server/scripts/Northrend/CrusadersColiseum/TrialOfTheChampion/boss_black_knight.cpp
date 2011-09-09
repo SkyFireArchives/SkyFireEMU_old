@@ -112,16 +112,13 @@ public:
         return new boss_black_knightAI (pCreature);
     }
 
-    struct boss_black_knightAI : public ScriptedAI
+    struct boss_black_knightAI : public BossAI
     {
-        boss_black_knightAI(Creature* pCreature) : ScriptedAI(pCreature)
+        boss_black_knightAI(Creature* pCreature) : BossAI(pCreature, BOSS_BLACK_KNIGHT)
         {
-            pInstance = pCreature->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
         std::list<uint64> SummonList;
 
         bool bEventInProgress;
@@ -166,8 +163,8 @@ public:
             bEventInBattle = false;
             bFight = false;
 
-            if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                pInstance->HandleGameObject(pGO->GetGUID(), true);
+            if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE1)))
+                instance->HandleGameObject(pGO->GetGUID(), true);
 
             uiPhase = PHASE_UNDEAD;
 
@@ -190,7 +187,7 @@ public:
 
         void EnterEvadeMode()
         {
-            if (!pInstance) return;
+            if (!instance) return;
 
             if (bEventInBattle)
             {
@@ -369,16 +366,16 @@ public:
             bEventInBattle = true;
             DoScriptText(SAY_AGGRO_2, me);
             SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
-            if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                    pInstance->HandleGameObject(pGO->GetGUID(), false);
-            if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                    pInstance->HandleGameObject(pGO->GetGUID(), false);
+            if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE1)))
+                    instance->HandleGameObject(pGO->GetGUID(), false);
+            if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                    instance->HandleGameObject(pGO->GetGUID(), false);
         }
 
         void KilledUnit(Unit* pVictim)
         {
-            if (pInstance)
-                pInstance->SetData(BOSS_BLACK_KNIGHT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(BOSS_BLACK_KNIGHT, IN_PROGRESS);
         }
 
         void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
@@ -406,16 +403,17 @@ public:
 
         void JustDied(Unit* pKiller)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH_3, me);
-            if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                pInstance->HandleGameObject(pGO->GetGUID(), true);
+            if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE1)))
+                instance->HandleGameObject(pGO->GetGUID(), true);
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(BOSS_BLACK_KNIGHT, DONE);
+                instance->SetData(BOSS_BLACK_KNIGHT, DONE);
 
                 if (IsHeroic())
-                pInstance->DoCompleteAchievement(ACHIEV_WORSE);
+                instance->DoCompleteAchievement(ACHIEV_WORSE);
             }
         }
     };

@@ -88,16 +88,13 @@ public:
         return new boss_ingvar_the_plundererAI(pCreature);
     }
 
-    struct boss_ingvar_the_plundererAI : public ScriptedAI
+    struct boss_ingvar_the_plundererAI : public BossAI
     {
-        boss_ingvar_the_plundererAI(Creature *c) : ScriptedAI(c)
+        boss_ingvar_the_plundererAI(Creature *c) : BossAI(c, DATA_INGVAR)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         bool bIsUndead;
         bool bEventInProgress;
@@ -126,8 +123,8 @@ public:
 
             uiSpawnResTimer = 3000;
 
-            if (pInstance)
-                pInstance->SetData(DATA_INGVAR_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_INGVAR_EVENT, NOT_STARTED);
         }
 
         void DamageTaken(Unit * /*done_by*/, uint32 &damage)
@@ -173,16 +170,17 @@ public:
         {
             DoScriptText(YELL_AGGRO_1, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_INGVAR_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_INGVAR_EVENT, IN_PROGRESS);
         }
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(YELL_DEAD_2, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_INGVAR_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_INGVAR_EVENT, DONE);
         }
 
         void KilledUnit(Unit * /*victim*/)

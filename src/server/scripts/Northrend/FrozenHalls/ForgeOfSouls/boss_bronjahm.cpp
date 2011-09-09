@@ -109,9 +109,8 @@ class boss_bronjahm : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
+				_JustDied();
                 DoScriptText(SAY_DEATH, me);
-
-                instance->SetBossState(DATA_BRONJAHM, DONE);
             }
 
             void KilledUnit(Unit * who)

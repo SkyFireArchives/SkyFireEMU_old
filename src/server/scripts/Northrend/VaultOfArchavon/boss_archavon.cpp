@@ -82,6 +82,11 @@ class boss_archavon : public CreatureScript
                 _EnterCombat();
             }
 
+			void JustDied(Unit* /*killer*/)
+			{
+				_JustDied();
+			}
+
             // Below UpdateAI may need review/debug.
             void UpdateAI(const uint32 diff)
             {

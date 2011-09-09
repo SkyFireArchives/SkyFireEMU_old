@@ -27,6 +27,7 @@
 
 enum Data
 {
+	DATA_HOR,
     DATA_FALRIC_EVENT,
     DATA_MARWYN_EVENT,
     DATA_LICHKING_EVENT,
@@ -84,16 +85,11 @@ enum Actions
 
 // Base class for FALRIC and MARWYN
 // handled the summonList and the notification events to/from the InstanceScript
-struct boss_horAI : ScriptedAI
+struct boss_horAI : BossAI
 {
-    boss_horAI(Creature *pCreature) : ScriptedAI(pCreature), summons(pCreature)
+    boss_horAI(Creature *pCreature, uint32 id) : BossAI(pCreature, DATA_HOR)
     {
-        pInstance = me->GetInstanceScript();
     }
-
-    InstanceScript* pInstance;
-    EventMap events;
-    SummonList summons;
 
     void Reset()
     {
@@ -154,9 +150,9 @@ struct boss_horAI : ScriptedAI
         if (summons.empty())
         {
             if (pSummoned->isAlive())
-                pInstance->SetData(DATA_WAVE_COUNT, NOT_STARTED);
+                instance->SetData(DATA_WAVE_COUNT, NOT_STARTED);
             else
-                pInstance->SetData(DATA_WAVE_COUNT, SPECIAL);
+                instance->SetData(DATA_WAVE_COUNT, SPECIAL);
         }
     }
 };

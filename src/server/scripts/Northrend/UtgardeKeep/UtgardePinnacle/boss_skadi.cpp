@@ -173,17 +173,14 @@ public:
         return new boss_skadiAI (pCreature);
     }
 
-    struct boss_skadiAI : public ScriptedAI
+    struct boss_skadiAI : public BossAI
     {
-        boss_skadiAI(Creature *c) : ScriptedAI(c), Summons(me)
+        boss_skadiAI(Creature *c) : BossAI(c, DATA_SKADI_THE_RUTHLESS_EVENT)
         {
-            m_pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
-        InstanceScript* m_pInstance;
-        SummonList Summons;
         uint64 m_uiGraufGUID;
         std::vector<uint64> triggersGUID;
 
@@ -213,14 +210,14 @@ public:
 
             Phase = SKADI;
 
-            Summons.DespawnAll();
+            summons.DespawnAll();
             me->SetSpeed(MOVE_FLIGHT, 3.0f);
             if ((Unit::GetCreature((*me), m_uiGraufGUID) == NULL) && !me->IsMounted())
                  me->SummonCreature(CREATURE_GRAUF, Location[0].GetPositionX(), Location[0].GetPositionY(), Location[0].GetPositionZ(), 3.0f);
-            if (m_pInstance)
+            if (instance)
             {
-                m_pInstance->SetData(DATA_SKADI_THE_RUTHLESS_EVENT, NOT_STARTED);
-                m_pInstance->DoStopTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMED_START_EVENT);
+                instance->SetData(DATA_SKADI_THE_RUTHLESS_EVENT, NOT_STARTED);
+                instance->DoStopTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMED_START_EVENT);
             }
         }
 
@@ -244,14 +241,14 @@ public:
             m_uiMovementTimer = 1000;
             m_uiSummonTimer = 10000;
             me->SetInCombatWithZone();
-            if (m_pInstance)
+            if (instance)
             {
-                m_pInstance->SetData(DATA_SKADI_THE_RUTHLESS_EVENT, IN_PROGRESS);
-                m_pInstance->DoStartTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMED_START_EVENT);
+                instance->SetData(DATA_SKADI_THE_RUTHLESS_EVENT, IN_PROGRESS);
+                instance->DoStartTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMED_START_EVENT);
                 me->GetMotionMaster()->MoveJump(Location[0].GetPositionX(), Location[0].GetPositionY(), Location[0].GetPositionZ(), 5.0f, 10.0f);
                 me->RemoveUnitMovementFlag(MOVEMENTFLAG_WALKING);
                 m_uiMountTimer = 1000;
-                Summons.DespawnEntry(CREATURE_GRAUF);
+                summons.DespawnEntry(CREATURE_GRAUF);
             }
         }
 
@@ -275,14 +272,14 @@ public:
                     pSummoned->ForcedDespawn(10*IN_MILLISECONDS);
                     break;
             }
-            Summons.Summon(pSummoned);
+            summons.Summon(pSummoned);
         }
 
         void SummonedCreatureDespawn(Creature* pSummoned)
         {
             if (pSummoned->GetEntry() == CREATURE_GRAUF)
                 m_uiGraufGUID = 0;
-            Summons.Despawn(pSummoned);
+            summons.Despawn(pSummoned);
         }
 
         void SpellHit(Unit * /*caster*/, const SpellEntry *spell)
@@ -418,10 +415,11 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
-            Summons.DespawnAll();
-            if (m_pInstance)
-                m_pInstance->SetData(DATA_SKADI_THE_RUTHLESS_EVENT, DONE);
+            summons.DespawnAll();
+            if (instance)
+                instance->SetData(DATA_SKADI_THE_RUTHLESS_EVENT, DONE);
         }
 
         void KilledUnit(Unit * /*victim*/)

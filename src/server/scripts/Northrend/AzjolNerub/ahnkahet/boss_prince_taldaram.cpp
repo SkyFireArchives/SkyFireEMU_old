@@ -84,11 +84,10 @@ class boss_taldaram : public CreatureScript
 public:
     boss_taldaram() : CreatureScript("boss_taldaram") { }
 
-    struct boss_taldaramAI : public ScriptedAI
+    struct boss_taldaramAI : public BossAI
     {
-        boss_taldaramAI(Creature *c) : ScriptedAI(c)
+        boss_taldaramAI(Creature *c) : BossAI(c, DATA_PRINCE_TALDARAM_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
@@ -107,8 +106,6 @@ public:
 
         CombatPhase Phase;
 
-        InstanceScript* pInstance;
-
         void Reset()
         {
             uiBloodthirstTimer = 10*IN_MILLISECONDS;
@@ -119,14 +116,14 @@ public:
             Phase = NORMAL;
             uiPhaseTimer = 0;
             uiEmbraceTarget = 0;
-            if (pInstance)
-                pInstance->SetData(DATA_PRINCE_TALDARAM_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_PRINCE_TALDARAM_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_PRINCE_TALDARAM_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_PRINCE_TALDARAM_EVENT, IN_PROGRESS);
             DoScriptText(SAY_AGGRO, me);
         }
 
@@ -268,10 +265,11 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_PRINCE_TALDARAM_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_PRINCE_TALDARAM_EVENT, DONE);
         }
 
         void KilledUnit(Unit * victim)
@@ -291,16 +289,16 @@ public:
 
         bool CheckSpheres()
         {
-            if (!pInstance)
+            if (!instance)
                 return false;
 
             uint64 uiSphereGuids[2];
-            uiSphereGuids[0] = pInstance->GetData64(DATA_SPHERE1);
-            uiSphereGuids[1] = pInstance->GetData64(DATA_SPHERE2);
+            uiSphereGuids[0] = instance->GetData64(DATA_SPHERE1);
+            uiSphereGuids[1] = instance->GetData64(DATA_SPHERE2);
 
             for (uint8 i=0; i < 2; ++i)
             {
-                GameObject *pSpheres = pInstance->instance->GetGameObject(uiSphereGuids[i]);
+                GameObject *pSpheres = instance->instance->GetGameObject(uiSphereGuids[i]);
                 if (!pSpheres)
                     return false;
                 if (pSpheres->GetGoState() != GO_STATE_ACTIVE)
@@ -320,15 +318,15 @@ public:
 
         void RemovePrison()
         {
-            if (!pInstance)
+            if (!instance)
                 return;
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             me->RemoveAurasDueToSpell(SPELL_BEAM_VISUAL);
             me->SetUnitMovementFlags(MOVEMENTFLAG_WALKING);
             me->SetHomePosition(me->GetPositionX(), me->GetPositionY(), DATA_GROUND_POSITION_Z, me->GetOrientation());
-            uint64 prison_GUID = pInstance->GetData64(DATA_PRINCE_TALDARAM_PLATFORM);
-            pInstance->HandleGameObject(prison_GUID, true);
+            uint64 prison_GUID = instance->GetData64(DATA_PRINCE_TALDARAM_PLATFORM);
+            instance->HandleGameObject(prison_GUID, true);
         }
     };
 

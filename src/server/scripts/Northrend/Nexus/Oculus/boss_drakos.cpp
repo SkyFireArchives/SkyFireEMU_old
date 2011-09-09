@@ -69,11 +69,10 @@ public:
         return new boss_drakosAI (pCreature);
     }
 
-    struct boss_drakosAI : public ScriptedAI
+    struct boss_drakosAI : public BossAI
     {
-        boss_drakosAI(Creature* pCreature) : ScriptedAI(pCreature), lSummons(me)
+        boss_drakosAI(Creature* pCreature) : BossAI(pCreature, DATA_DRAKOS_EVENT)
         {
-            pInstance = pCreature->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -84,33 +83,30 @@ public:
 
         bool bPostPull;
 
-        InstanceScript* pInstance;
-        SummonList lSummons;
-
         void Reset()
         {
-            lSummons.DespawnAll();
+            summons.DespawnAll();
             uiMagicPullTimer = 15000;
             uiStompTimer = 17000;
             uiBombSummonTimer = 2000;
 
             bPostPull = false;
 
-            if (pInstance)
-                pInstance->SetData(DATA_DRAKOS_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_DRAKOS_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_DRAKOS_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_DRAKOS_EVENT, IN_PROGRESS);
         }
 
         void JustSummoned(Creature* pSummon)
         {
-            lSummons.Summon(pSummon);
+            summons.Summon(pSummon);
         }
 
         void UpdateAI(const uint32 uiDiff)
@@ -162,16 +158,17 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_DRAKOS_EVENT, DONE);
+                instance->SetData(DATA_DRAKOS_EVENT, DONE);
                 // start achievement timer (kill Eregos within 20 min)
-                pInstance->DoStartTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMED_START_EVENT);
+                instance->DoStartTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMED_START_EVENT);
             }
 
-            lSummons.DespawnAll();
+            summons.DespawnAll();
         }
         void KilledUnit(Unit* /*victim*/)
         {

@@ -215,6 +215,7 @@ class boss_devourer_of_souls : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
+				_JustDied();
                 Position spawnPoint = {5618.139f, 2451.873f, 705.854f, 0};
 
                 DoScriptText(RAND(SAY_FACE_SORROW_DEATH, SAY_FACE_DESIRE_DEATH), me);

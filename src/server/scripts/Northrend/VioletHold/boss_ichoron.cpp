@@ -89,11 +89,10 @@ public:
         return new boss_ichoronAI (pCreature);
     }
 
-    struct boss_ichoronAI : public ScriptedAI
+    struct boss_ichoronAI : public BossAI
     {
-        boss_ichoronAI(Creature* pCreature) : ScriptedAI(pCreature), m_waterElements(pCreature)
+        boss_ichoronAI(Creature* pCreature) : BossAI(pCreature, DATA_ICHORON)
         {
-            pInstance  = pCreature->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -105,10 +104,6 @@ public:
         uint32 uiBubbleCheckerTimer;
         uint32 uiWaterBoltVolleyTimer;
 
-        InstanceScript* pInstance;
-
-        SummonList m_waterElements;
-
         void Reset()
         {
             bIsExploded = false;
@@ -118,14 +113,14 @@ public:
             uiWaterBoltVolleyTimer = urand(10000, 15000);
 
             me->SetVisible(true);
-            DespawnWaterElements();
+			summons.DespawnAll();
 
-            if (pInstance)
+            if (instance)
             {
-                if (pInstance->GetData(DATA_WAVE_COUNT) == 6)
-                    pInstance->SetData(DATA_1ST_BOSS_EVENT, NOT_STARTED);
-                else if (pInstance->GetData(DATA_WAVE_COUNT) == 12)
-                    pInstance->SetData(DATA_2ND_BOSS_EVENT, NOT_STARTED);
+                if (instance->GetData(DATA_WAVE_COUNT) == 6)
+                    instance->SetData(DATA_1ST_BOSS_EVENT, NOT_STARTED);
+                else if (instance->GetData(DATA_WAVE_COUNT) == 12)
+                    instance->SetData(DATA_2ND_BOSS_EVENT, NOT_STARTED);
             }
         }
 
@@ -135,18 +130,18 @@ public:
 
             DoCast(me, SPELL_PROTECTIVE_BUBBLE);
 
-            if (pInstance)
+            if (instance)
             {
-                if (GameObject *pDoor = pInstance->instance->GetGameObject(pInstance->GetData64(DATA_ICHORON_CELL)))
+                if (GameObject *pDoor = instance->instance->GetGameObject(instance->GetData64(DATA_ICHORON_CELL)))
                     if (pDoor->GetGoState() == GO_STATE_READY)
                     {
                         EnterEvadeMode();
                         return;
                     }
-                if (pInstance->GetData(DATA_WAVE_COUNT) == 6)
-                    pInstance->SetData(DATA_1ST_BOSS_EVENT, IN_PROGRESS);
-                else if (pInstance->GetData(DATA_WAVE_COUNT) == 12)
-                    pInstance->SetData(DATA_2ND_BOSS_EVENT, IN_PROGRESS);
+                if (instance->GetData(DATA_WAVE_COUNT) == 6)
+                    instance->SetData(DATA_1ST_BOSS_EVENT, IN_PROGRESS);
+                else if (instance->GetData(DATA_WAVE_COUNT) == 12)
+                    instance->SetData(DATA_2ND_BOSS_EVENT, IN_PROGRESS);
             }
         }
 
@@ -185,11 +180,6 @@ public:
                     me->LowerPlayerDamageReq(damage);
                     break;
             }
-        }
-
-        void DespawnWaterElements()
-        {
-            m_waterElements.DespawnAll();
         }
 
         // call when explode shall stop.
@@ -247,9 +237,9 @@ public:
                     else
                     {
                         bool bIsWaterElementsAlive = false;
-                        if (!m_waterElements.empty())
+                        if (!summons.empty())
                         {
-                            for (std::list<uint64>::const_iterator itr = m_waterElements.begin(); itr != m_waterElements.end(); ++itr)
+                            for (std::list<uint64>::const_iterator itr = summons.begin(); itr != summons.end(); ++itr)
                                 if (Creature* pTemp = Unit::GetCreature(*me, *itr))
                                     if (pTemp->isAlive())
                                     {
@@ -281,6 +271,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
             if (bIsExploded)
@@ -289,22 +280,22 @@ public:
                 me->SetVisible(true);
             }
 
-            DespawnWaterElements();
+			summons.DespawnAll();
 
-            if (pInstance)
+            if (instance)
             {
                 if (IsHeroic() && bAchievement)
-                    pInstance->DoCompleteAchievement(ACHIEVEMENT_DEHYDRATION);
+                    instance->DoCompleteAchievement(ACHIEVEMENT_DEHYDRATION);
 
-                if (pInstance->GetData(DATA_WAVE_COUNT) == 6)
+                if (instance->GetData(DATA_WAVE_COUNT) == 6)
                 {
-                    pInstance->SetData(DATA_1ST_BOSS_EVENT, DONE);
-                    pInstance->SetData(DATA_WAVE_COUNT, 7);
+                    instance->SetData(DATA_1ST_BOSS_EVENT, DONE);
+                    instance->SetData(DATA_WAVE_COUNT, 7);
                 }
-                else if (pInstance->GetData(DATA_WAVE_COUNT) == 12)
+                else if (instance->GetData(DATA_WAVE_COUNT) == 12)
                 {
-                    pInstance->SetData(DATA_2ND_BOSS_EVENT, DONE);
-                    pInstance->SetData(DATA_WAVE_COUNT, 13);
+                    instance->SetData(DATA_2ND_BOSS_EVENT, DONE);
+                    instance->SetData(DATA_WAVE_COUNT, 13);
                 }
             }
         }
@@ -315,8 +306,8 @@ public:
             {
                 pSummoned->SetSpeed(MOVE_RUN, 0.3f);
                 pSummoned->GetMotionMaster()->MoveFollow(me, 0, 0);
-                m_waterElements.push_back(pSummoned->GetGUID());
-                pInstance->SetData64(DATA_ADD_TRASH_MOB, pSummoned->GetGUID());
+                summons.push_back(pSummoned->GetGUID());
+                instance->SetData64(DATA_ADD_TRASH_MOB, pSummoned->GetGUID());
             }
         }
 
@@ -324,8 +315,8 @@ public:
         {
             if (pSummoned)
             {
-                m_waterElements.remove(pSummoned->GetGUID());
-                pInstance->SetData64(DATA_DEL_TRASH_MOB, pSummoned->GetGUID());
+                summons.remove(pSummoned->GetGUID());
+                instance->SetData64(DATA_DEL_TRASH_MOB, pSummoned->GetGUID());
             }
         }
 

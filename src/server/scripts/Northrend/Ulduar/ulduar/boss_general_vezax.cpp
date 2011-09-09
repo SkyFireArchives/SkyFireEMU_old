@@ -218,11 +218,7 @@ public:
 
         void JustDied(Unit * /*pWho*/)
         {
-            events.Reset();
-			summons.DespawnAll();
-
-			instance->SetBossState(TYPE_VEZAX, DONE);
-			instance->SaveToDB();
+            _JustDied();
 
             DoScriptText(SAY_DEATH, me);
 

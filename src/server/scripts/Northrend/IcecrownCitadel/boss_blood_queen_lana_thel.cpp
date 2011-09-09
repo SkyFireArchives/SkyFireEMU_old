@@ -181,11 +181,7 @@ class boss_blood_queen_lana_thel : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
-                events.Reset();
-				summons.DespawnAll();
-
-				instance->SetBossState(DATA_BLOOD_QUEEN_LANA_THEL, DONE);
-				instance->SaveToDB();
+                _JustDied();
 
                 Talk(SAY_DEATH);
                 instance->DoRemoveAurasDueToSpellOnPlayers(ESSENCE_OF_BLOOD_QUEEN);

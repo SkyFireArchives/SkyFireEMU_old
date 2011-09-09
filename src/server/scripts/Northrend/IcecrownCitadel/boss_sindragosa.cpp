@@ -209,7 +209,7 @@ class boss_sindragosa : public CreatureScript
 
             void JustDied(Unit* killer)
             {
-                BossAI::JustDied(killer);
+                _JustDied();
                 Talk(SAY_DEATH);
             }
 

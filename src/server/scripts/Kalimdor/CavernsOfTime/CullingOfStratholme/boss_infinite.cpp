@@ -48,25 +48,22 @@ public:
         return new boss_infinite_corruptorAI(pCreature);
     }
 
-    struct boss_infinite_corruptorAI : public ScriptedAI
+    struct boss_infinite_corruptorAI : public BossAI
     {
-        boss_infinite_corruptorAI(Creature *c) : ScriptedAI(c)
+        boss_infinite_corruptorAI(Creature *c) : BossAI(c, DATA_INFINITE_EVENT)
         {
-            pInstance = c->GetInstanceScript();
         }
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
-            if (pInstance)
-                pInstance->SetData(DATA_INFINITE_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_INFINITE_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_INFINITE_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_INFINITE_EVENT, IN_PROGRESS);
         }
 
         void AttackStart(Unit* /*who*/) {}
@@ -82,8 +79,9 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_INFINITE_EVENT, DONE);
+			_JustDied();
+            if (instance)
+                instance->SetData(DATA_INFINITE_EVENT, DONE);
         }
     };
 };

@@ -106,16 +106,11 @@ public:
         return new boss_ionarAI(pCreature);
     }
 
-    struct boss_ionarAI : public ScriptedAI
+    struct boss_ionarAI : public BossAI
     {
-        boss_ionarAI(Creature *pCreature) : ScriptedAI(pCreature), lSparkList(pCreature)
+        boss_ionarAI(Creature *pCreature) : BossAI(pCreature, DATA_IONAR)
         {
-            pInstance = pCreature->GetInstanceScript();
         }
-
-        InstanceScript* pInstance;
-
-        SummonList lSparkList;
 
         bool bIsSplitPhase;
         bool bHasDispersed;
@@ -129,7 +124,7 @@ public:
 
         void Reset()
         {
-            lSparkList.DespawnAll();
+            summons.DespawnAll();
 
             bIsSplitPhase = true;
             bHasDispersed = false;
@@ -146,26 +141,28 @@ public:
             if (!me->IsVisible())
                 me->SetVisible(true);
 
-            if (pInstance)
-                pInstance->SetData(TYPE_IONAR, NOT_STARTED);
+            if (instance)
+                instance->SetData(TYPE_IONAR, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
+			_JustDied();
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(TYPE_IONAR, IN_PROGRESS);
+            if (instance)
+                instance->SetData(TYPE_IONAR, IN_PROGRESS);
         }
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            lSparkList.DespawnAll();
+            summons.DespawnAll();
 
-            if (pInstance)
-                pInstance->SetData(TYPE_IONAR, DONE);
+            if (instance)
+                instance->SetData(TYPE_IONAR, DONE);
         }
 
         void KilledUnit(Unit * /*victim*/)
@@ -177,13 +174,13 @@ public:
         void CallBackSparks()
         {
             //should never be empty here, but check
-            if (lSparkList.empty())
+            if (summons.empty())
                 return;
 
             Position pos;
             me->GetPosition(&pos);
 
-            for (std::list<uint64>::const_iterator itr = lSparkList.begin(); itr != lSparkList.end(); ++itr)
+            for (std::list<uint64>::const_iterator itr = summons.begin(); itr != summons.end(); ++itr)
             {
                 if (Creature* pSpark = Unit::GetCreature(*me, *itr))
                 {
@@ -209,7 +206,7 @@ public:
         {
             if (pSummoned->GetEntry() == NPC_SPARK_OF_IONAR)
             {
-                lSparkList.Summon(pSummoned);
+                summons.Summon(pSummoned);
 
                 pSummoned->CastSpell(pSummoned, DUNGEON_MODE(SPELL_SPARK_VISUAL_TRIGGER, H_SPELL_SPARK_VISUAL_TRIGGER), true);
 
@@ -226,7 +223,7 @@ public:
         void SummonedCreatureDespawn(Creature *pSummoned)
         {
             if (pSummoned->GetEntry() == NPC_SPARK_OF_IONAR)
-                lSparkList.Despawn(pSummoned);
+                summons.Despawn(pSummoned);
         }
 
         void UpdateAI(const uint32 uiDiff)
@@ -249,7 +246,7 @@ public:
                         bIsSplitPhase = false;
                     }
                     // Lightning effect and restore Ionar
-                    else if (lSparkList.empty())
+                    else if (summons.empty())
                     {
                         me->SetVisible(true);
                         me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE|UNIT_FLAG_DISABLE_MOVE);

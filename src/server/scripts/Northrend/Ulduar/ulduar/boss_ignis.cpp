@@ -169,11 +169,7 @@ public:
 
         void JustDied(Unit* /*victim*/)
         {
-            events.Reset();
-			summons.DespawnAll();
-
-			instance->SetBossState(TYPE_IGNIS, DONE);
-			instance->SaveToDB();
+			_JustDied();
 
             DoScriptText(SAY_DEATH, me);
 
