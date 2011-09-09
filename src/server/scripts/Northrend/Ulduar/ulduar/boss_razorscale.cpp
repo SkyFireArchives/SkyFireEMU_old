@@ -215,7 +215,11 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            _JustDied();
+            events.Reset();
+			summons.DespawnAll();
+
+			instance->SetBossState(TYPE_RAZORSCALE, DONE);
+			instance->SaveToDB();
 
             if (instance)
             {

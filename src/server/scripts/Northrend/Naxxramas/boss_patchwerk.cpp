@@ -91,7 +91,11 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            _JustDied();
+            events.Reset();
+			summons.DespawnAll();
+
+			instance->SetBossState(BOSS_PATCHWERK, DONE);
+			instance->SaveToDB();
             DoScriptText(SAY_DEATH, me);
         }
 

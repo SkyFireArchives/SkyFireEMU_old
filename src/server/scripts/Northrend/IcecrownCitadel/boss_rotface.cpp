@@ -133,7 +133,11 @@ class boss_rotface : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
-                _JustDied();
+                events.Reset();
+				summons.DespawnAll();
+
+				instance->SetBossState(DATA_ROTFACE, DONE);
+				instance->SaveToDB();
                 Talk(SAY_DEATH);
                 if (Creature* professor = Unit::GetCreature(*me, instance->GetData64(DATA_PROFESSOR_PUTRICIDE)))
                     professor->AI()->DoAction(ACTION_ROTFACE_DEATH);

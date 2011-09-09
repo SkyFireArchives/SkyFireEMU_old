@@ -287,7 +287,11 @@ public:
         void JustDied(Unit * /*victim*/)
         {
             DoScriptText(SAY_DEATH, me);
-            _JustDied();
+            events.Reset();
+			summons.DespawnAll();
+
+			instance->SetBossState(TYPE_XT002, DONE);
+			instance->SaveToDB();
         }
 
         void UpdateAI(const uint32 diff)

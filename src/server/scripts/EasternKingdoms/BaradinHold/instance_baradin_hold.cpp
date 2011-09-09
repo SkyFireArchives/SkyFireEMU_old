@@ -20,42 +20,82 @@
 
 class instance_baradin_hold: public InstanceMapScript
 {
-public:
-    instance_baradin_hold() : InstanceMapScript("instance_baradin_hold", 757) { }
+	public:
+		instance_baradin_hold() : InstanceMapScript(BHScriptName, 757) { }
+    
+		struct instance_baradin_hold_InstanceMapScript: public InstanceScript
+		{
+			instance_baradin_hold_InstanceMapScript(InstanceMap *map) : InstanceScript(map)
+			{
+				SetBossNumber(EncounterCount);
+				ArgalothGUID = 0;
+			}
 
-    InstanceScript* GetInstanceScript(InstanceMap *map) const
-    {
-        return new instance_baradin_hold_InstanceMapScript(map);
-    }
+			void OnCreatureCreate(Creature* creature)
+			{
+				if (creature->GetEntry() == NPC_ARGALOTH)
+					ArgalothGUID = creature->GetGUID();
+			}
 
-    struct instance_baradin_hold_InstanceMapScript: public InstanceScript
-    {
-        instance_baradin_hold_InstanceMapScript(InstanceMap *map) : InstanceScript(map)
-        {
-            SetBossNumber(MAX_ENCOUNTER);
-        }
+			uint64 GetData64(uint32 type)
+			{
+				if (type == DATA_ARGALOTH)
+					return ArgalothGUID;
 
-        /*
-        void Initialize()
-        {
-            memset(&guid, 0, sizeof(guid));
-        }
+				return 0;
+			}
 
-        void OnCreatureCreate(Creature* creature)
-        {
-            switch (creature->GetEntry())
-            {
-            case CREATURE_ARGALOTH: guid[DATA_ARGALOTH] = creature->GetGUID(); break;
-            case CREATURE_OCCUTHAR: guid[DATA_OCCUTHAR] = creature->GetGUID(); break;
-            }
-        }
+			std::string GetSaveData()
+			{
+				OUT_SAVE_INST_DATA;
 
-        uint64 GetData64(uint32 identifier) { return guid[identifier]; }
+				std::ostringstream saveStream;
+				saveStream << "B H" << EncounterCount;
 
-    private:
-        uint64 guid[MAX_ENCOUNTER];
-    */
-    };
+				OUT_SAVE_INST_DATA_COMPLETE;
+				return saveStream.str();
+			}
+
+			void Load(const char* in)
+			{
+				if (!in)
+				{
+					OUT_LOAD_INST_DATA_FAIL;
+					return;
+				}
+
+				OUT_LOAD_INST_DATA(in);
+
+				char dataHead1, dataHead2;
+
+				std::istringstream loadStream(in);
+				loadStream >> dataHead1 >> dataHead2;
+
+				if (dataHead1 == 'B' && dataHead2 == 'H')
+				{
+					for (uint32 i = 0; i < EncounterCount; ++i)
+					{
+						uint32 tmpState;
+                        loadStream >> tmpState;
+                        if (tmpState == IN_PROGRESS || tmpState > SPECIAL)
+                            tmpState = NOT_STARTED;
+                        SetBossState(i, EncounterState(tmpState));
+					}
+				}
+				else
+					OUT_LOAD_INST_DATA_FAIL;
+
+				OUT_LOAD_INST_DATA_COMPLETE;
+			}
+
+		protected:
+			uint64 ArgalothGUID;
+		};
+
+		InstanceScript* GetInstanceScript(InstanceMap *map) const
+		{
+			return new instance_baradin_hold_InstanceMapScript(map);
+		}
 };
 
 void AddSC_instance_baradin_hold()

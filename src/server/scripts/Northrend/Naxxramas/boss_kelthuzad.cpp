@@ -338,7 +338,12 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            _JustDied();
+            events.Reset();
+			summons.DespawnAll();
+
+			instance->SetBossState(BOSS_KELTHUZAD, DONE);
+			instance->SaveToDB();
+
             DoScriptText(SAY_DEATH, me);
 
             std::map<uint64, float>::const_iterator itr;

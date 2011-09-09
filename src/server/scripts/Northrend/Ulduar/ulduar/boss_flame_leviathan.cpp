@@ -349,7 +349,12 @@ public:
 
         void JustDied(Unit* /*victim*/)
         {
-            _JustDied();
+            events.Reset();
+			summons.DespawnAll();
+
+			instance->SetBossState(TYPE_LEVIATHAN, DONE);
+			instance->SaveToDB();
+
             DoScriptText(SAY_DEATH, me);
 
             if (ActiveTowers)

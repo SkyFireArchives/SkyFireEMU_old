@@ -80,7 +80,11 @@ public:
         void JustDied(Unit * /*victim*/)
         {
             DoScriptText(SAY_DEATH, me);
-            _JustDied();
+            events.Reset();
+			summons.DespawnAll();
+
+			instance->SetBossState(TYPE_AURIAYA, DONE);
+			instance->SaveToDB();
         }
 
         void MoveInLineOfSight(Unit* /*who*/) {}

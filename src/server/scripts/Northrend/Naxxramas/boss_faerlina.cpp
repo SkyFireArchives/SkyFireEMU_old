@@ -118,7 +118,15 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            _JustDied();
+            events.Reset();
+			summons.DespawnAll();
+
+			if (instance)
+			{
+				instance->SetBossState(BOSS_FAERLINA, DONE);
+				instance->SaveToDB();
+			}
+
             DoScriptText(SAY_DEATH, me);
 
             if (instance && bAchievement)

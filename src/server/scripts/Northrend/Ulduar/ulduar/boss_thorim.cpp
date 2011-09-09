@@ -82,7 +82,11 @@ public:
         void JustDied(Unit * /*victim*/)
         {
             DoScriptText(SAY_DEATH, me);
-            _JustDied();
+            events.Reset();
+			summons.DespawnAll();
+
+			instance->SetBossState(TYPE_THORIM, DONE);
+			instance->SaveToDB();
         }
 
         void EnterCombat(Unit* /*pWho*/)

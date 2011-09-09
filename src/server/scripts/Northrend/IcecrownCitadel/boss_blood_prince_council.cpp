@@ -297,7 +297,11 @@ class boss_blood_council_controller : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
-                _JustDied();
+                events.Reset();
+				summons.DespawnAll();
+
+				instance->SetBossState(DATA_BLOOD_PRINCE_COUNCIL, DONE);
+				instance->SaveToDB();
                 // kill the other 2 princes too
                 for (uint8 i = 0; i < 2; ++i)
                 {

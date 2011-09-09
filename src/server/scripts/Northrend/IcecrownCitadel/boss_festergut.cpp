@@ -144,7 +144,12 @@ class boss_festergut : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
-                _JustDied();
+                events.Reset();
+				summons.DespawnAll();
+
+				instance->SetBossState(DATA_FESTERGUT, DONE);
+				instance->SaveToDB();
+
                 Talk(SAY_DEATH);
                 if (Creature* professor = ObjectAccessor::GetCreature(*me, instance->GetData64(DATA_PROFESSOR_PUTRICIDE)))
                     professor->AI()->DoAction(ACTION_FESTERGUT_DEATH);

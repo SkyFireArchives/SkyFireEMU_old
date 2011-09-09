@@ -92,7 +92,11 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            _JustDied();
+            events.Reset();
+			summons.DespawnAll();
+
+			instance->SetBossState(BOSS_RAZUVIOUS, DONE);
+			instance->SaveToDB();
             DoPlaySoundToSet(me, SOUND_DEATH);
             me->CastSpell(me, SPELL_HOPELESS, true); // TODO: this may affect other creatures
         }

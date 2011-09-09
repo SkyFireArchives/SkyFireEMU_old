@@ -249,7 +249,13 @@ public:
         {
             LiveTriggerGUID.clear();
             DeadTriggerGUID.clear();
-            _JustDied();
+
+            events.Reset();
+			summons.DespawnAll();
+
+			instance->SetBossState(BOSS_GOTHIK, DONE);
+			instance->SaveToDB();
+
             DoScriptText(SAY_DEATH, me);
             if (instance)
                 instance->SetData(DATA_GOTHIK_GATE, GO_STATE_ACTIVE);

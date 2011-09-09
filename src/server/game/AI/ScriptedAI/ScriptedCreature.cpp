@@ -578,6 +578,28 @@ void BossAI::_JustDied()
         instance->SetBossState(bossId, DONE);
         instance->SaveToDB();
     }
+
+	// Award Points
+	// TODO: Update Points award system to reward valor points for WOTLK dungeons and instances
+	if (Map* map = instance->instance)
+	{
+		Map::PlayerList const &PlayerList = map->GetPlayers();
+		if (!PlayerList.isEmpty())
+		{
+			for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+			{
+				if (Player* player = i->getSource())
+				{
+					if (map->IsNonRaidDungeon())
+						player->ModifyCurrency(395, 7500);
+					else if (map->IsRaid() && !Is25ManRaid())
+						player->ModifyCurrency(396, 7500);
+					else if (Is25ManRaid())
+						player->ModifyCurrency(396, 10500);
+				}
+			}
+		}
+	}
 }
 
 void BossAI::_EnterCombat()
