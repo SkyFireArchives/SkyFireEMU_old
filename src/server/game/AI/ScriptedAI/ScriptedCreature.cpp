@@ -580,7 +580,6 @@ void BossAI::_JustDied()
     }
 
 	// Award Points
-	// TODO: Update Points award system to reward valor points for WOTLK dungeons and instances
 	if (Map* map = instance->instance)
 	{
 		Map::PlayerList const &PlayerList = map->GetPlayers();
@@ -590,11 +589,15 @@ void BossAI::_JustDied()
 			{
 				if (Player* player = i->getSource())
 				{
-					if (map->IsNonRaidDungeon())
+					if (map->IsLichKingDungeon())
+						player->ModifyCurrency(395, 1600);
+					else if (map->IsLichKingRaid())
+						player->ModifyCurrency(395, 2300);
+					else if (map->IsCataclysmDungeon())
 						player->ModifyCurrency(395, 7500);
-					else if (map->IsRaid() && !Is25ManRaid())
+					else if (map->IsCataclysmRaid() && !Is25ManRaid())
 						player->ModifyCurrency(396, 7500);
-					else if (Is25ManRaid())
+					else if (map->IsCataclysmRaid() && Is25ManRaid())
 						player->ModifyCurrency(396, 10500);
 				}
 			}
