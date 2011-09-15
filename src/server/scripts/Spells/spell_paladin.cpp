@@ -37,7 +37,8 @@ enum PaladinSpells
     SPELL_BLESSING_OF_LOWER_CITY_DRUID           = 37878,
     SPELL_BLESSING_OF_LOWER_CITY_PALADIN         = 37879,
     SPELL_BLESSING_OF_LOWER_CITY_PRIEST          = 37880,
-    SPELL_BLESSING_OF_LOWER_CITY_SHAMAN          = 37881
+    SPELL_BLESSING_OF_LOWER_CITY_SHAMAN          = 37881,
+    SPELL_GUARDIAN_OF_ANCIENT_KINGS              = 86150
 };
 
 // 31850 - Ardent Defender
@@ -238,9 +239,46 @@ public:
     }
 };
 
+class spell_pal_guardian_kings : public SpellScriptLoader
+{
+public:
+    spell_pal_guardian_kings() : SpellScriptLoader("spell_pal_guardian_kings") { }
+
+    class spell_pal_guardian_kings_SpellScript : public SpellScript
+    {
+                PrepareSpellScript(spell_pal_guardian_kings_SpellScript)
+                bool Validate(SpellEntry const * /*spellEntry*/)
+        {
+                        if (!sSpellStore.LookupEntry(SPELL_GUARDIAN_OF_ANCIENT_KINGS))
+                                        return false;
+                        return true;
+                }
+
+        void HandleDummy(SpellEffIndex /*effIndex*/)
+        {
+            if (Unit *unitTarget = GetHitUnit())
+            {
+                uint32 spell_id = 86698;
+                GetCaster()->CastSpell(GetCaster(), spell_id, true);
+            }
+        }
+
+        void Register()
+        {
+            OnEffect += SpellEffectFn(spell_pal_guardian_kings_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+        }
+        };
+
+        SpellScript *GetSpellScript() const
+    {
+        return new spell_pal_guardian_kings_SpellScript();
+    }
+};
+
 void AddSC_paladin_spell_scripts()
 {
     new spell_pal_ardent_defender();
     new spell_pal_blessing_of_faith();
     new spell_pal_holy_shock();
+    new spell_pal_guardian_kings();
 }

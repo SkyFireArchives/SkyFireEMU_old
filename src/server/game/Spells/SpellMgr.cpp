@@ -3986,9 +3986,9 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectImplicitTargetA[0] = TARGET_DST_CASTER;
             spellInfo->EffectImplicitTargetA[1] = TARGET_DST_CASTER;
             count++;
-            break;       
+            break;
         case 85113:  // Aftermath
-        case 85114: 
+        case 85114:
             spellInfo->Targets = TARGET_UNIT_TARGET_ENEMY;
             break;
         case 31818: // Life Tap
@@ -4212,10 +4212,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_INTERRUPT;
             count++;
             break;
-		case 44203: // Tranquility
-			spellInfo->MaxAffectedTargets = 5;
-			count++;
-			break;
+        case 44203: // Tranquility
+            spellInfo->MaxAffectedTargets = 5;
+            count++;
+            break;
         case 26573 : //Consecration
             spellInfo->EffectTriggerSpell[1] = 82366;
             spellInfo->EffectTriggerSpell[2] = 36946;
@@ -4422,7 +4422,12 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->Category = 59;
             spellInfo->EffectApplyAuraName[1] = SPELL_AURA_MOD_POWER_REGEN;
             count++;
-            break;			
+            break;
+      case 86150: // Guardian of Ancient Kings
+           spellInfo->EffectTriggerSpell[0] = 86698;
+           spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
+           count++;
+           break;
         default:
             break;
         }
