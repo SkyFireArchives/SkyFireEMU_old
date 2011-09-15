@@ -110,7 +110,7 @@ class Vehicle
 {
     friend class Unit;
     friend class WorldSession;
-	public:
+    public:
         explicit Vehicle(Unit *unit, VehicleEntry const *vehInfo);
         virtual ~Vehicle();
 

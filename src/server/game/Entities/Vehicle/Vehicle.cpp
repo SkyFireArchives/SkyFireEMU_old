@@ -310,7 +310,7 @@ bool Vehicle::AddPassenger(Unit *unit, int8 seatId, bool byAura)
             else
                 seat->second.passenger = NULL;
 
-		ASSERT(!seat->second.passenger);
+        ASSERT(!seat->second.passenger);
     }
 
     sLog->outDebug(LOG_FILTER_VEHICLES, "Unit %s enter vehicle entry %u id %u dbguid %u seat %d", unit->GetName(), me->GetEntry(), m_vehicleInfo->m_ID, me->GetGUIDLow(), (int32)seat->first);

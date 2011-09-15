@@ -363,7 +363,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffIndex effIndex)
                     case 86150: // Guardian of Ancient Kings
                         if (unitTarget)
                         m_caster->CastSpell(m_caster, 86698, false, NULL);
-                    return;				
+                    return;
                     // Positive/Negative Charge
                     case 28062:
                     case 28085:

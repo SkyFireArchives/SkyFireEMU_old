@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/> 
+ * Copyright (C) 2010-2011 Project SkyFire <http://www.projectskyfire.org/>
  * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
@@ -672,7 +672,7 @@ void AddCommandScripts()
     //AddSC_learn_commandscript();
     //AddSC_modify_commandscript();
     AddSC_npc_commandscript();
-	AddSC_debug_commandscript();
+    AddSC_debug_commandscript();
     AddSC_reload_commandscript();
     AddSC_reload_commandscript();
     AddSC_titles_commandscript();
@@ -749,9 +749,9 @@ void AddEasternKingdomsScripts()
     AddSC_instance_deadmines();
     AddSC_boss_mr_smite();
     AddSC_boss_glubtok();
-    AddSC_gnomeregan();                     //Gnomeregan 
+    AddSC_gnomeregan();                     //Gnomeregan
     AddSC_instance_gnomeregan();
-    AddSC_gilneas();                        // gilneas      
+    AddSC_gilneas();                        // gilneas
     AddSC_boss_attumen();                   //Karazhan
     AddSC_boss_curator();
     AddSC_boss_maiden_of_virtue();

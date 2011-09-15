@@ -281,7 +281,7 @@ void AuthSocket::_SetVSFields(const std::string& rI)
     x.SetBinary(sha.GetDigest(), sha.GetLength());
     v = g.ModExp(x, N);
 
-	// No SQL injection (username escaped)
+    // No SQL injection (username escaped)
     const char *v_hex, *s_hex;
     v_hex = v.AsHexStr();
     s_hex = s.AsHexStr();
@@ -313,7 +313,7 @@ bool AuthSocket::_HandleLogonChallenge()
     EndianConvert(*((uint16*)(buf[0])));
 #endif
 
-	uint16 remaining = ((sAuthLogonChallenge_C *)&buf[0])->size;
+    uint16 remaining = ((sAuthLogonChallenge_C *)&buf[0])->size;
     sLog->outStaticDebug("[AuthChallenge] got header, body is %#04x bytes", remaining);
 
     if ((remaining < sizeof(sAuthLogonChallenge_C) - buf.size()) || (socket().recv_len() < remaining))
@@ -381,7 +381,7 @@ bool AuthSocket::_HandleLogonChallenge()
                 sLog->outStaticDebug("[AuthChallenge] Account '%s' is locked to IP - '%s'", _login.c_str(), fields[3].GetCString());
                 sLog->outStaticDebug("[AuthChallenge] Player address is '%s'", ip_address.c_str());
 
-				if (strcmp(fields[3].GetCString(), ip_address.c_str()))
+                if (strcmp(fields[3].GetCString(), ip_address.c_str()))
                 {
                     sLog->outStaticDebug("[AuthChallenge] Account IP differs");
                     pkt << (uint8) WOW_FAIL_SUSPENDED;
@@ -511,7 +511,7 @@ bool AuthSocket::_HandleLogonProof()
         // Check if we have the appropriate patch on the disk
         sLog->outDebug(LOG_FILTER_NETWORKIO, "Client with invalid version, patching is not implemented");
 
-		socket().shutdown();
+        socket().shutdown();
         return true;
     }
 
@@ -539,23 +539,23 @@ bool AuthSocket::_HandleLogonProof()
     uint8 vK[40];
     memcpy(t, S.AsByteArray(32), 32);
 
-	for (int i = 0; i < 16; ++i)
+    for (int i = 0; i < 16; ++i)
         t1[i] = t[i * 2];
 
     sha.Initialize();
     sha.UpdateData(t1, 16);
     sha.Finalize();
 
-	for (int i = 0; i < 20; ++i)
+    for (int i = 0; i < 20; ++i)
         vK[i * 2] = sha.GetDigest()[i];
 
-	for (int i = 0; i < 16; ++i)
+    for (int i = 0; i < 16; ++i)
         t1[i] = t[i * 2 + 1];
     sha.Initialize();
     sha.UpdateData(t1, 16);
     sha.Finalize();
 
-	for (int i = 0; i < 20; ++i)
+    for (int i = 0; i < 20; ++i)
         vK[i * 2 + 1] = sha.GetDigest()[i];
     K.SetBinary(vK, 40);
 
@@ -569,7 +569,7 @@ bool AuthSocket::_HandleLogonProof()
     sha.UpdateBigNumbers(&g, NULL);
     sha.Finalize();
 
-	for (int i = 0; i < 20; ++i)
+    for (int i = 0; i < 20; ++i)
         hash[i] ^= sha.GetDigest()[i];
 
     BigNumber t3;
@@ -596,7 +596,7 @@ bool AuthSocket::_HandleLogonProof()
 
         // Update the sessionkey, last_ip, last login time and reset number of failed logins in the account table for this account
         // No SQL injection (escaped user name) and IP address as received by socket
-		const char* K_hex = K.AsHexStr();
+        const char* K_hex = K.AsHexStr();
 
         PreparedStatement *stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_LOGONPROOF);
         stmt->setString(0, K_hex);
@@ -707,7 +707,7 @@ bool AuthSocket::_HandleReconnectChallenge()
     EndianConvert(*((uint16*)(buf[0])));
 #endif //TRINITY_ENDIAN
 
-	uint16 remaining = ((sAuthLogonChallenge_C *)&buf[0])->size;
+    uint16 remaining = ((sAuthLogonChallenge_C *)&buf[0])->size;
     sLog->outStaticDebug("[ReconnectChallenge] got header, body is %#04x bytes", remaining);
 
     if ((remaining < sizeof(sAuthLogonChallenge_C) - buf.size()) || (socket().recv_len() < remaining))
@@ -809,7 +809,7 @@ bool AuthSocket::_HandleRealmList()
 
     // Get the user id (else close the connection)
     // No SQL injection (prepared statement)
-	PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCIDBYNAME);
+    PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCIDBYNAME);
     stmt->setString(0, _login);
     PreparedQueryResult result = LoginDatabase.Query(stmt);
     if (!result)
@@ -846,7 +846,7 @@ bool AuthSocket::_HandleRealmList()
 
         uint8 AmountOfCharacters;
 
-		// No SQL injection. id of realm is controlled by the database.
+        // No SQL injection. id of realm is controlled by the database.
         stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_NUMCHARSONREALM);
         stmt->setUInt32(0, i->second.m_ID);
         stmt->setUInt32(1, id);
