@@ -6004,7 +6004,7 @@ SpellCastResult Spell::CheckCasterAuras() const
                 prevented_reason = SPELL_FAILED_STUNNED;
         }
         else
-			prevented_reason = SPELL_FAILED_STUNNED;
+            prevented_reason = SPELL_FAILED_STUNNED;
     }
 
     else if (unitflag & UNIT_FLAG_CONFUSED && !(m_spellInfo->AttributesEx5 & SPELL_ATTR5_USABLE_WHILE_CONFUSED))

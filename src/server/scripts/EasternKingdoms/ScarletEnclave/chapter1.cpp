@@ -380,7 +380,7 @@ public:
         uint32 m_uiStartTimer;
         bool m_bIsActive;
 
-		void Reset()
+        void Reset()
         {
             if (Unit* pController = me->GetCharmer())
             me->SetLevel(pController->getLevel());
@@ -388,13 +388,13 @@ public:
             me->CastSpell(me, 51890, true);
             me->SetDisplayId(26320);
 
-			DoScriptText(SAY_EYE_LAUNCHED, me);
+            DoScriptText(SAY_EYE_LAUNCHED, me);
             me->SetHomePosition(2363.970589f, -5659.861328f, 504.316833f, 0);
             me->GetMotionMaster()->MoveCharge(1752.858276f, -5878.270996f, 145.136444f, 0); //position center
             me->SetReactState(REACT_AGGRESSIVE);
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_STUNNED);
 
-			m_bIsActive = false;
+            m_bIsActive = false;
             m_uiStartTimer = 2000;
         }
 
@@ -442,8 +442,8 @@ public:
             // for some reason it does not work when this spell is casted before the waypoint movement
             me->CastSpell(me, 51892, true);
             me->CastSpell(me, 51890, true);
- 			DoScriptText(SAY_EYE_UNDER_CONTROL, me);
-			((Player*)(me->GetCharmer()))->SetClientControl(me, 1);
+            DoScriptText(SAY_EYE_UNDER_CONTROL, me);
+            ((Player*)(me->GetCharmer()))->SetClientControl(me, 1);
         }
     };
 };
@@ -1197,7 +1197,7 @@ void AddSC_the_scarlet_enclave_c1()
     new npc_unworthy_initiate_anchor();
     new go_acherus_soul_prison();
     new npc_eye_of_acherus();
-	new npc_death_knight_initiate();
+    new npc_death_knight_initiate();
     new npc_salanar_the_horseman();
     new npc_dark_rider_of_acherus();
     new npc_ros_dark_rider();

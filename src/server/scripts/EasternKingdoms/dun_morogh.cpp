@@ -105,9 +105,7 @@ public:
                 spellHit = true;
             }
         }
-
     };
-
 };
 
 /*######
@@ -139,7 +137,7 @@ public:
         void UpdateAI(const uint32 /*diff*/)
         {
             GameObject* pool = me->FindNearestGameObject(OBJECT_TOXIC_POOL, 2.0f);
-                
+
             if (pool)
             {
                 if (Player* player = me->GetCharmerOrOwnerPlayerOrPlayerItself())

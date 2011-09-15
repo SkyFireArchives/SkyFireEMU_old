@@ -1,7 +1,7 @@
 /*
-	stdsoap2.h 2.8.2
+    stdsoap2.h 2.8.2
 
-	gSOAP runtime engine
+    gSOAP runtime engine
 
 gSOAP XML Web services tools
 Copyright (C) 2000-2011, Robert van Engelen, Genivia Inc., All Rights Reserved.

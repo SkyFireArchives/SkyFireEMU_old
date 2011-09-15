@@ -1413,7 +1413,7 @@ class ObjectMgr
         GameObjectLocaleMap mGameObjectLocaleMap;
 
         ItemTemplateContainer ItemTemplateStore;
-		ItemLocaleMap mItemLocaleMap;
+        ItemLocaleMap mItemLocaleMap;
         ItemSetNameLocaleMap mItemSetNameLocaleMap;
         QuestLocaleMap mQuestLocaleMap;
         NpcTextLocaleMap mNpcTextLocaleMap;

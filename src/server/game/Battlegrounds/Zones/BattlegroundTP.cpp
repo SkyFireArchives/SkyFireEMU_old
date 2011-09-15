@@ -178,11 +178,11 @@ void BattlegroundTP::Update(uint32 diff)
 
 void BattlegroundTP::StartingEventCloseDoors()
 {
-	for (uint32 i = BG_TP_OBJECT_DOOR_A_1; i <= BG_TP_OBJECT_DOOR_H_3; ++i)
-	{
-		DoorClose(i);
-		SpawnBGObject(i, RESPAWN_IMMEDIATELY);
-	}
+    for (uint32 i = BG_TP_OBJECT_DOOR_A_1; i <= BG_TP_OBJECT_DOOR_H_3; ++i)
+    {
+        DoorClose(i);
+        SpawnBGObject(i, RESPAWN_IMMEDIATELY);
+    }
 
     for (uint32 i = BG_TP_OBJECT_A_FLAG; i <= BG_TP_OBJECT_BERSERKBUFF_2; ++i)
         SpawnBGObject(i, RESPAWN_ONE_DAY);
@@ -193,11 +193,11 @@ void BattlegroundTP::StartingEventCloseDoors()
 
 void BattlegroundTP::StartingEventOpenDoors()
 {
-	for (uint32 i = BG_TP_OBJECT_DOOR_A_1; i <= BG_TP_OBJECT_DOOR_H_3; ++i)
-	{
-		DoorOpen(i);
-		SpawnBGObject(i, RESPAWN_ONE_DAY);
-	}
+    for (uint32 i = BG_TP_OBJECT_DOOR_A_1; i <= BG_TP_OBJECT_DOOR_H_3; ++i)
+    {
+        DoorOpen(i);
+        SpawnBGObject(i, RESPAWN_ONE_DAY);
+    }
 
     for (uint32 i = BG_TP_OBJECT_A_FLAG; i <= BG_TP_OBJECT_BERSERKBUFF_2; ++i)
         SpawnBGObject(i, RESPAWN_IMMEDIATELY);

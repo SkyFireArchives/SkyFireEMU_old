@@ -1,7 +1,7 @@
 /*
-	stdsoap2.c[pp] 2.8.2
+    stdsoap2.c[pp] 2.8.2
 
-	gSOAP runtime engine
+    gSOAP runtime engine
 
 gSOAP XML Web services tools
 Copyright (C) 2000-2011, Robert van Engelen, Genivia Inc., All Rights Reserved.
@@ -4194,7 +4194,7 @@ again:
 #endif
               if (ext_data)
               { val = meth->i2v(meth, ext_data, NULL);
-        	if (val)
+            if (val)
                 { for (j = 0; j < sk_CONF_VALUE_num(val); j++)
                   { CONF_VALUE *nval = sk_CONF_VALUE_value(val, j);
                     if (nval && !strcmp(nval->name, "DNS") && !strcmp(nval->value, host))

@@ -302,5 +302,5 @@ void AddSC_priest_spell_scripts()
     new spell_pri_pain_and_suffering_proc;
     new spell_pri_penance;
     new spell_pri_reflective_shield_trigger();
-	new spell_priest_flash_heal;
+    new spell_priest_flash_heal;
 }

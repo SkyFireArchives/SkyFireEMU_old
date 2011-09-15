@@ -168,7 +168,7 @@ extern int main(int argc, char **argv)
     sLog->Initialize();
 
     sLog->outString("%s (realm-daemon)", _FULLVERSION);
-	sLog->outString("   ______  __  __  __  __  ______ __  ______  ______ ");
+    sLog->outString("   ______  __  __  __  __  ______ __  ______  ______ ");
     sLog->outString("  /\\  ___\\/\\ \\/ / /\\ \\_\\ \\/\\  ___/\\ \\/\\  == \\/\\  ___\\ ");
     sLog->outString("  \\ \\___  \\ \\  _'-\\ \\____ \\ \\  __\\ \\ \\ \\  __<\\ \\  __\\ ");
     sLog->outString("   \\/\\_____\\ \\_\\ \\_\\/\\_____\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_____\\ ");

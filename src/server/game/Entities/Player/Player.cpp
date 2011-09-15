@@ -6000,8 +6000,8 @@ bool Player::UpdateFishingSkill()
 
     uint32 SkillValue = GetPureSkillValue(SKILL_FISHING);
 
-    float chance = 0.0f; 
-    
+    float chance = 0.0f;
+
     if (SkillValue <= 115)
         chance = 100.0f;
     else if (SkillValue <= 150)
@@ -14252,7 +14252,7 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
 
     GossipMenuItemData pMenuData = gossipmenu.GetItemData(gossipListId);
 
-	uint32 cost = gossipmenu.GetItem(gossipListId).m_gBoxMoney;
+    uint32 cost = gossipmenu.GetItem(gossipListId).m_gBoxMoney;
     if (!HasEnoughMoney(cost))
     {
         SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, 0, 0, 0);
@@ -14361,7 +14361,7 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
         }
     }
 
-	ModifyMoney(-cost);
+    ModifyMoney(-cost);
 }
 
 uint32 Player::GetGossipTextId(WorldObject *pSource)

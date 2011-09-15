@@ -49,7 +49,7 @@ class SummonList : public std::list<uint64>
         void Despawn(Creature *summon) { remove(summon->GetGUID()); }
         void DespawnEntry(uint32 entry);
         void DespawnAll();
-		bool HasEntry(uint32 entry);
+        bool HasEntry(uint32 entry);
         void RemoveNotExisting();
         void DoAction(uint32 entry, uint32 info);
         void DoZoneInCombat(uint32 entry = 0);

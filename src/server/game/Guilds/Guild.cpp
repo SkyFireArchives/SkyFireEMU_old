@@ -1164,8 +1164,8 @@ bool Guild::Create(Player* pLeader, const std::string& name)
     trans->Append(stmt);
 
     CharacterDatabase.CommitTransaction(trans);
-	// Add reputation to leader
-	pLeader->SetReputation(1168, 1);
+    // Add reputation to leader
+    pLeader->SetReputation(1168, 1);
     // Create default ranks
     _CreateDefaultGuildRanks(pLeaderSession->GetSessionDbLocaleIndex());
     // Add guildmaster
@@ -1660,7 +1660,7 @@ void Guild::HandleAcceptMember(WorldSession* session)
     {
         _LogEvent(GUILD_EVENT_LOG_JOIN_GUILD, player->GetGUIDLow());
         _BroadcastEvent(GE_JOINED, player->GetGUID(), player->GetName());
-		player->SetReputation(1168, 1);
+        player->SetReputation(1168, 1);
     }
 }
 
@@ -1682,7 +1682,7 @@ void Guild::HandleLeaveMember(WorldSession* session)
         DeleteMember(player->GetGUID(), false, false);
         _LogEvent(GUILD_EVENT_LOG_LEAVE_GUILD, player->GetGUIDLow());
         _BroadcastEvent(GE_LEFT, player->GetGUID(), player->GetName());
-		player->SetReputation(1168, -1);
+        player->SetReputation(1168, -1);
 
         SendCommandResult(session, GUILD_QUIT_S, ERR_PLAYER_NO_MORE_IN_GUILD, m_name);
     }
@@ -1711,7 +1711,7 @@ void Guild::HandleRemoveMember(WorldSession* session, uint64 guid)
             DeleteMember(guid, false, true);
             _LogEvent(GUILD_EVENT_LOG_UNINVITE_PLAYER, player->GetGUIDLow(), GUID_LOPART(guid));
             _BroadcastEvent(GE_REMOVED, 0, name.c_str(), player->GetName());
-			player->SetReputation(1168, -1);
+            player->SetReputation(1168, -1);
         }
     }
 }

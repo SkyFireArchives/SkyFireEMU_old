@@ -63,7 +63,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
         {
             return new boss_temple_guardian_anhuurAI(pCreature);
         }
-	 struct boss_temple_guardian_anhuurAI : public ScriptedAI
+     struct boss_temple_guardian_anhuurAI : public ScriptedAI
         {
             boss_temple_guardian_anhuurAI(Creature* pCreature) : ScriptedAI(pCreature)
             {
@@ -99,7 +99,7 @@ class boss_temple_guardian_anhuur : public CreatureScript
             void EnterCombat(Unit* /*Ent*/)
             {
                 DoScriptText(SAY_AGGRO, me);
-				if (pInstance)
+                if (pInstance)
                     pInstance->SetData(DATA_TEMPLE_GUARDIAN_ANHUUR_EVENT, IN_PROGRESS);
 
                 DoZoneInCombat();

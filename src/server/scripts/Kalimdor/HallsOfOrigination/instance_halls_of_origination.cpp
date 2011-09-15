@@ -108,7 +108,7 @@ public:
             }
         }
 
-	void OnGameObjectCreate(GameObject* go)
+    void OnGameObjectCreate(GameObject* go)
         {
             switch (go->GetEntry()) /* Elevator active switch to second level. Need more info on Id */
                 {
