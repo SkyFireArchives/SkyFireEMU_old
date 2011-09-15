@@ -4418,6 +4418,11 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->Effect[1] = 0;
             count++;
             break;
+       case 87959: // Drink
+            spellInfo->Category = 59;
+            spellInfo->EffectApplyAuraName[1] = SPELL_AURA_MOD_POWER_REGEN;
+            count++;
+            break;			
         default:
             break;
         }
