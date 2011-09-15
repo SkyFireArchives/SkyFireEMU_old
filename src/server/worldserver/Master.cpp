@@ -130,15 +130,15 @@ int Master::Run()
     sLog->outString("%s (worldserver-daemon)", _FULLVERSION);
     sLog->outString("<Ctrl-C> to stop.\n");
 
-	sLog->outString(" ");
+    sLog->outString(" ");
     sLog->outString("   ______  __  __  __  __  ______ __  ______  ______ ");
     sLog->outString("  /\\  ___\\/\\ \\/ / /\\ \\_\\ \\/\\  ___/\\ \\/\\  == \\/\\  ___\\ ");
     sLog->outString("  \\ \\___  \\ \\  _'-\\ \\____ \\ \\  __\\ \\ \\ \\  __<\\ \\  __\\ ");
     sLog->outString("   \\/\\_____\\ \\_\\ \\_\\/\\_____\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_____\\ ");
     sLog->outString("    \\/_____/\\/_/\\/_/\\/_____/\\/_/   \\/_/\\/_/ /_/\\/_____/ ");
     sLog->outString("  Project SkyFireEmu 2011(c) Open-sourced Game Emulation ");
-	sLog->outString("           <http://www.projectskyfire.org/> ");
-	sLog->outString(" ");
+    sLog->outString("           <http://www.projectskyfire.org/> ");
+    sLog->outString(" ");
 
 #ifdef USE_SFMT_FOR_RNG
     sLog->outString("\n");
@@ -354,7 +354,7 @@ int Master::Run()
         delete cliThread;
     }
 
-	// for some unknown reason, unloading scripts here and not in worldrunnable
+    // for some unknown reason, unloading scripts here and not in worldrunnable
     // fixes a memory leak related to detaching threads from the module
     //UnloadScriptingModule();
 
