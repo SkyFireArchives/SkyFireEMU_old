@@ -2815,7 +2815,7 @@ public:
         void Reset()
         {
             checker = false;
-			cron = 10000;
+            cron = 10000;
             DoCast(me, 81781);
         }
 
@@ -2824,7 +2824,7 @@ public:
             ScriptedAI::InitializeAI();
             Unit * owner = me->GetOwner();
             if (!owner || owner->GetTypeId() != TYPEID_PLAYER)
-		        return;
+                return;
 
             me->SetReactState(REACT_PASSIVE);
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -2833,21 +2833,21 @@ public:
 
         void BarrierChecker(Unit *who)
         {
-			if (who->isAlive() && !who->HasAura(81782))
-			{
-				me->CastSpell(who, 81782, true);
-			}
-			if (who->isAlive() && who->HasAura(81782))
-			{
-			    if (AuraEffect const* aur = who->GetAuraEffect(81782, 0))
+            if (who->isAlive() && !who->HasAura(81782))
+            {
+                me->CastSpell(who, 81782, true);
+            }
+            if (who->isAlive() && who->HasAura(81782))
+            {
+                if (AuraEffect const* aur = who->GetAuraEffect(81782, 0))
                     aur->GetBase()->SetDuration(GetSpellMaxDuration(aur->GetSpellProto()), true);
             }
-		}
+        }
 
         void UpdateAI(const uint32 diff)
         {
             if (cron <= diff)
-			{
+            {
                 if (!checker)
                 {
                     checker = true;
@@ -2859,7 +2859,7 @@ public:
             else
                 cron -= diff;
 
-		   //Check friendly entities
+           //Check friendly entities
            std::list<Unit*> targets;
             Trinity::AnyFriendlyUnitInObjectRangeCheck u_check(me, me, 7.0f);
             Trinity::UnitListSearcher<Trinity::AnyFriendlyUnitInObjectRangeCheck> searcher(me, targets, u_check);
