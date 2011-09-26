@@ -84,6 +84,7 @@ const char ItemExtendedCostEntryfmt[]="nxxiiiiiiiiiiiixiiiiiiiiiixxxxx";
 const char ItemLimitCategoryEntryfmt[]="nxii";
 const char ItemRandomPropertiesfmt[]="nxiiiiis";
 const char ItemRandomSuffixfmt[]="nsxiiiiiiiiii";
+const char ItemReforgefmt[]="nifif";
 const char ItemSetEntryfmt[]="dsiiiiiiiiiixxxxxxxiiiiiiiiiiiiiiiiii"; /// "dsxxxxxxxxxxxxxxxxxiiiiiiiiiiiiiiiiii"
 const char LFGDungeonEntryfmt[]="nxiiiiiiixixxixix";
 const char LockEntryfmt[]="niiiiiiiiiiiiiiiiiiiiiiiixxxxxxxx";

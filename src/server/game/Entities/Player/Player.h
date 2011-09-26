@@ -1371,6 +1371,8 @@ class Player : public Unit, public GridObject<Player>
         void AddEnchantmentDuration(Item *item, EnchantmentSlot slot, uint32 duration);
         void ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool apply_dur = true, bool ignore_condition = false);
         void ApplyEnchantment(Item *item, bool apply);
+        void ApplyItemReforge(Item* item, uint32 reforgeEntry);
+        void RemoveItemReforge(Item* item, uint32 oldReforgeEntry);
         void UpdateSkillEnchantments(uint16 skill_id, uint16 curr_value, uint16 new_value);
         void SendEnchantmentDurations();
         void BuildEnchantmentsInfoData(WorldPacket *data);

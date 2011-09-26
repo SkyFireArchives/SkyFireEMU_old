@@ -7559,6 +7559,9 @@ void Player::_ApplyItemMods(Item *item, uint8 slot, bool apply)
     ApplyItemEquipSpell(item, apply);
     ApplyEnchantment(item, apply);
 
+    if (item->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1) && !item->m_reforged_applied)
+        ApplyItemReforge(item, item->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1));
+
     sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "_ApplyItemMods complete.");
 }
 
@@ -8360,6 +8363,9 @@ void Player::_RemoveAllItemMods()
 
             _ApplyItemBonuses(proto, i, false);
 
+            if (m_items[i]->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1) && m_items[i]->m_reforged_applied && m_items[i]->IsEquipped())
+                RemoveItemReforge(m_items[i], m_items[i]->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1));
+
             if (i == EQUIPMENT_SLOT_RANGED)
                 _ApplyAmmoBonuses();
         }
@@ -8388,6 +8394,9 @@ void Player::_ApplyAllItemMods()
                 _ApplyWeaponDependentAuraMods(m_items[i], WeaponAttackType(attacktype), true);
 
             _ApplyItemBonuses(proto, i, true);
+
+            if (m_items[i]->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1) && !m_items[i]->m_reforged_applied)
+                ApplyItemReforge(m_items[i], m_items[i]->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1));
 
             if (i == EQUIPMENT_SLOT_RANGED)
                 _ApplyAmmoBonuses();
@@ -12356,7 +12365,10 @@ void Player::RemoveItem(uint8 bag, uint8 slot, bool update)
                         default:
                             break;
                     }
+                if (pItem->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1) && pItem->m_reforged_applied)
+                    RemoveItemReforge(pItem, pItem->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1));
                 }
+
             }
 
             m_items[slot] = NULL;
@@ -12466,6 +12478,9 @@ void Player::DestroyItem(uint8 bag, uint8 slot, bool update)
                     RemoveItemsSetItem(this, pProto);
 
                 _ApplyItemMods(pItem, slot, false);
+
+                if (pItem->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1) && pItem->m_reforged_applied && pItem->IsEquipped())
+                    RemoveItemReforge(pItem, pItem->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1));
             }
 
             if (slot < EQUIPMENT_SLOT_END)
@@ -13953,6 +13968,153 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
             AddEnchantmentDuration(item, slot, 0);
         }
     }
+}
+
+void Player::ApplyItemReforge(Item* item, uint32 reforgeEntry)
+{
+    ItemReforgeEntry const *reforge = sItemReforgeStore.LookupEntry(reforgeEntry);
+
+    item->m_reforged_applied = 1;
+
+    if (reforge)
+    {
+        int32 bonus[2];
+        int32 base[2];
+        int32 type[2];
+
+        for (int32 i = 0; i < MAX_ITEM_PROTO_STATS; i++)
+        {
+            if (item->GetProto()->ItemStat[i].ItemStatType == reforge->oldstat)
+                base[0] = item->GetProto()->ItemStat[i].ItemStatValue;
+        }
+
+        bonus[0] = int32((base[0] * reforge->oldstat_coef) * -1);
+        bonus[1] = int32(bonus[0] * reforge->newstat_coef *-1);
+
+        type[0] = reforge->oldstat;
+        type[1] = reforge->newstat;
+
+        bool apply = true;
+        for (int32 i = 0; i < 2; i++)
+        {
+        switch (type[i])
+        {
+            case ITEM_MOD_SPIRIT:
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u SPIRIT", bonus[i]);
+                HandleStatModifier(UNIT_MOD_STAT_SPIRIT, TOTAL_VALUE, float(bonus[i]), apply);
+                ApplyStatBuffMod(STAT_SPIRIT, (float)bonus[i], apply);
+            case  ITEM_MOD_DODGE_RATING:
+                ApplyRatingMod(CR_DODGE, bonus[i], apply);
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u DODGE", bonus[i]);
+                break;
+            case ITEM_MOD_PARRY_RATING:
+                ApplyRatingMod(CR_PARRY, bonus[i], apply);
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u PARRY", bonus[i]);
+                break;
+            case ITEM_MOD_HIT_RATING:
+                ApplyRatingMod(CR_HIT_MELEE, bonus[i], apply);
+                ApplyRatingMod(CR_HIT_RANGED, bonus[i], apply);
+                ApplyRatingMod(CR_HIT_SPELL, bonus[i], apply);
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HIT", bonus[i]);
+                break;
+            case ITEM_MOD_CRIT_RATING:
+                ApplyRatingMod(CR_CRIT_MELEE, bonus[i], apply);
+                ApplyRatingMod(CR_CRIT_RANGED, bonus[i], apply);
+                ApplyRatingMod(CR_CRIT_SPELL, bonus[i], apply);
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u CRITICAL", bonus[i]);
+                break;
+            case ITEM_MOD_HASTE_RATING:
+                ApplyRatingMod(CR_HASTE_MELEE, bonus[i], apply);
+                ApplyRatingMod(CR_HASTE_RANGED, bonus[i], apply);
+                ApplyRatingMod(CR_HASTE_SPELL, bonus[i], apply);
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HASTE", bonus[i]);
+                break;
+            case ITEM_MOD_EXPERTISE_RATING:
+                 ApplyRatingMod(CR_EXPERTISE, bonus[i], apply);
+                 sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u EXPERTISE", bonus[i]);
+                 break;
+            case ITEM_MOD_MASTERY_RATING:
+                 ApplyRatingMod(CR_MASTERY, int32(bonus[i]), apply);
+                 break;
+            default:
+                 break;
+            }
+        }
+    }
+}
+
+void Player::RemoveItemReforge(Item* item, uint32 oldReforgeEntry)
+{
+    ItemReforgeEntry const *reforge = sItemReforgeStore.LookupEntry(oldReforgeEntry);
+
+    item->m_reforged_applied = 0;
+    if (reforge)
+    {
+        int32 bonus[2];
+        int32 base[2];
+        int32 type[2];
+
+        for (int32 i = 0; i < MAX_ITEM_PROTO_STATS; i++)
+        {
+            if (item->GetProto()->ItemStat[i].ItemStatType == reforge->oldstat)
+                base[0] = item->GetProto()->ItemStat[i].ItemStatValue;
+        }
+
+        bonus[0] = int32((base[0] * reforge->oldstat_coef));
+        bonus[1] = int32(bonus[0] * reforge->newstat_coef * -1);
+
+        type[0] = reforge->oldstat;
+        type[1] = reforge->newstat;
+
+        bool apply = true;
+        for (int32 i = 0; i < 2; i++)
+        {
+        switch (type[i])
+        {
+            case ITEM_MOD_SPIRIT:
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u SPIRIT", bonus[i]);
+                HandleStatModifier(UNIT_MOD_STAT_SPIRIT, TOTAL_VALUE, float(bonus[i]), apply);
+                ApplyStatBuffMod(STAT_SPIRIT, (float)bonus[i], apply);
+            case  ITEM_MOD_DODGE_RATING:
+                ApplyRatingMod(CR_DODGE, bonus[i], apply);
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u DODGE", bonus[i]);
+                break;
+            case ITEM_MOD_PARRY_RATING:
+                ApplyRatingMod(CR_PARRY, bonus[i], apply);
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u PARRY", bonus[i]);
+                break;
+            case ITEM_MOD_HIT_RATING:
+                ApplyRatingMod(CR_HIT_MELEE, bonus[i], apply);
+                ApplyRatingMod(CR_HIT_RANGED, bonus[i], apply);
+                ApplyRatingMod(CR_HIT_SPELL, bonus[i], apply);
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HIT", bonus[i]);
+                break;
+            case ITEM_MOD_CRIT_RATING:
+                ApplyRatingMod(CR_CRIT_MELEE, bonus[i], apply);
+                ApplyRatingMod(CR_CRIT_RANGED, bonus[i], apply);
+                ApplyRatingMod(CR_CRIT_SPELL, bonus[i], apply);
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u CRITICAL", bonus[i]);
+                break;
+            case ITEM_MOD_HASTE_RATING:
+                ApplyRatingMod(CR_HASTE_MELEE, bonus[i], apply);
+                ApplyRatingMod(CR_HASTE_RANGED, bonus[i], apply);
+                ApplyRatingMod(CR_HASTE_SPELL, bonus[i], apply);
+                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HASTE", bonus[i]);
+                break;
+            case ITEM_MOD_EXPERTISE_RATING:
+                 ApplyRatingMod(CR_EXPERTISE, bonus[i], apply);
+                 sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u EXPERTISE", bonus[i]);
+                 break;
+            case ITEM_MOD_MASTERY_RATING:
+                 ApplyRatingMod(CR_MASTERY, int32(bonus[i]), apply);
+                 break;
+            default:
+                 break;
+            }
+        }
+    }
+    else
+        sLog->outError("Cannot remove REFORGE from item",item->GetEntry());
 }
 
 void Player::UpdateSkillEnchantments(uint16 skill_id, uint16 curr_value, uint16 new_value)

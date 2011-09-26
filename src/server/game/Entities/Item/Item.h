@@ -292,6 +292,7 @@ class Item : public Object
 
         uint32 GetSkill();
         uint32 GetSpell();
+        uint8 m_reforged_applied;
 
         // RandomPropertyId (signed but stored as unsigned)
         int32 GetItemRandomPropertyId() const { return GetInt32Value(ITEM_FIELD_RANDOM_PROPERTIES_ID); }

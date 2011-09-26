@@ -1300,6 +1300,7 @@ enum Opcodes
     CMSG_WORLD_LOGIN                                 = 0x08508, // 4.0.6a 13623
     CMSG_RETURN_TO_GRAVEYARD                         = 0x00593, // 4.0.6a 13623
     SMSG_UNKNOWN_1330                                = 0x0618C, // 4.0.6a 13623
+    CMSG_REFORGE                                     = 0x00313, // 4.0.6a 13623
     NUM_MSG_TYPES                                    = 0x102B7  // last unknown opcode + 1.
 };
 

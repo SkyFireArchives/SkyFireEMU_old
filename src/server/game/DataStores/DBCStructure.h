@@ -1201,6 +1201,15 @@ struct ItemRandomSuffixEntry
     uint32    prefix[5];                                    // 8-12     m_allocationPct};
 };
 
+struct ItemReforgeEntry
+{
+    uint32    ID;                                           // 0
+    uint32    oldstat;                                      // 1
+    float     oldstat_coef;                                 // 2
+    uint32    newstat;                                      // 2
+    float     newstat_coef;                                 // 3
+};
+
 #define MAX_ITEM_SET_ITEMS 10
 #define MAX_ITEM_SET_SPELLS 8
 

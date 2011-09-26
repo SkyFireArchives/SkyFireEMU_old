@@ -1473,3 +1473,46 @@ void WorldSession::HandleItemTextQuery(WorldPacket & recv_data )
 
     SendPacket(&data);
 }
+
+void WorldSession::HandleReforgeOpcode(WorldPacket & recv_data )
+{
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "Received packet CMSG_REFORGE");
+
+    uint32 slot, reforgeEntry, bag;
+    int64 vendor_GUID;
+
+    recv_data >> slot;
+    recv_data >> reforgeEntry;
+    recv_data >> vendor_GUID;
+    recv_data >> bag;
+
+    Item *item = _player->GetItemByPos(bag, slot);
+
+    if (!item)
+    {
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "Item reforge: item not found!");
+        return;
+    }
+
+    if ((item->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1)) && reforgeEntry)  // prevent hackers and exploiting
+    {
+        sLog->outError("Item %u was been alrdy reforged!");
+        return;
+    }
+
+    Creature *creature = GetPlayer()->GetNPCIfCanInteractWith(vendor_GUID, UNIT_NPC_FLAG_REFORGER);
+    if (_player->GetMoney() < item->GetProto()->SellPrice)
+    {
+        _player->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, creature, item->GetEntry(), 0);
+        return;
+    }
+    else
+        _player->SetMoney(_player->GetMoney() - item->GetProto()->SellPrice);
+
+    if (reforgeEntry && item->IsEquipped())
+        _player->ApplyItemReforge(item, reforgeEntry);
+    else if (reforgeEntry == 0 && item->IsEquipped())
+        _player->RemoveItemReforge(item, item->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1)); // old reforge
+
+    item->SetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1, reforgeEntry);
+}
