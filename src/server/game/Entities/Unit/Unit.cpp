@@ -10652,6 +10652,10 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
             }
         break;
     }
+    if (damagetype == SPELL_DIRECT_DAMAGE && spellProto->powerType == POWER_RAGE
+        && HasAuraType(SPELL_AURA_MASTERY) && GetTypeId() == TYPEID_PLAYER &&
+        ToPlayer()->GetTalentBranchSpec(ToPlayer()->GetActiveSpec()) == BS_WARRIOR_FURY)
+            DoneTotalMod *= float(1.0f + (0.45f + (ToPlayer()->GetMasteryPoints() * 0.056f)));
 
     // ..taken
     int32 maxPositiveMod = 0; // max of the positive amount aura (that increase the damage taken)
