@@ -14548,7 +14548,7 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
             break;
     }
 
-    ModifyMoney(-cost);
+    ModifyMoney(-int32(cost));
 }
 
 uint32 Player::GetGossipTextId(WorldObject *pSource)
