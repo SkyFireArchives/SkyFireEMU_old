@@ -13973,72 +13973,86 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
 void Player::ApplyItemReforge(Item* item, uint32 reforgeEntry)
 {
     ItemReforgeEntry const *reforge = sItemReforgeStore.LookupEntry(reforgeEntry);
+	if (!reforge)
+	{
+		sLog->outError("ApplyItemReforge : item reforge entry %u not exists", reforgeEntry);
+		return;
+	}
 
     item->m_reforged_applied = 1;
 
-    if (reforge)
+    int32 statBaseValue = 0;
+    int32 statValue[2];
+    int32 statType[2];
+
+    for (int32 i = 0; i < MAX_ITEM_PROTO_STATS; i++)
     {
-        int32 bonus[2];
-        int32 base[2];
-        int32 type[2];
+		if (item->GetProto()->ItemStat[i].ItemStatType == reforge->newstat)
+		{
+			sLog->outError("ApplyItemReforge : new stat %u already exists on item %u", reforge->newstat, item->GetEntry());
+			return;
+		}
 
-        for (int32 i = 0; i < MAX_ITEM_PROTO_STATS; i++)
+        if (item->GetProto()->ItemStat[i].ItemStatType == reforge->oldstat)
+            statBaseValue = item->GetProto()->ItemStat[i].ItemStatValue;
+    }
+
+    if (!statBaseValue)
+    {
+        sLog->outError("ApplyItemReforge : old stat %u not found on item %u", reforge->oldstat, item->GetEntry());
+        return;
+    }
+
+    statValue[0] = -int32(statBaseValue * reforge->oldstat_coef); // old stat: minus
+    statValue[1] = -int32(statValue[0] * reforge->newstat_coef);  // new stat: minus minus is plus
+
+    statType[0] = reforge->oldstat;
+    statType[1] = reforge->newstat;
+
+    bool apply = true;
+    for (int32 i = 0; i < 2; i++)
+    {
+        switch (statType[i])
         {
-            if (item->GetProto()->ItemStat[i].ItemStatType == reforge->oldstat)
-                base[0] = item->GetProto()->ItemStat[i].ItemStatValue;
-        }
-
-        bonus[0] = int32((base[0] * reforge->oldstat_coef) * -1);
-        bonus[1] = int32(bonus[0] * reforge->newstat_coef *-1);
-
-        type[0] = reforge->oldstat;
-        type[1] = reforge->newstat;
-
-        bool apply = true;
-        for (int32 i = 0; i < 2; i++)
-        {
-        switch (type[i])
-        {
-            case ITEM_MOD_SPIRIT:
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u SPIRIT", bonus[i]);
-                HandleStatModifier(UNIT_MOD_STAT_SPIRIT, TOTAL_VALUE, float(bonus[i]), apply);
-                ApplyStatBuffMod(STAT_SPIRIT, (float)bonus[i], apply);
-            case  ITEM_MOD_DODGE_RATING:
-                ApplyRatingMod(CR_DODGE, bonus[i], apply);
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u DODGE", bonus[i]);
-                break;
-            case ITEM_MOD_PARRY_RATING:
-                ApplyRatingMod(CR_PARRY, bonus[i], apply);
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u PARRY", bonus[i]);
-                break;
-            case ITEM_MOD_HIT_RATING:
-                ApplyRatingMod(CR_HIT_MELEE, bonus[i], apply);
-                ApplyRatingMod(CR_HIT_RANGED, bonus[i], apply);
-                ApplyRatingMod(CR_HIT_SPELL, bonus[i], apply);
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HIT", bonus[i]);
-                break;
-            case ITEM_MOD_CRIT_RATING:
-                ApplyRatingMod(CR_CRIT_MELEE, bonus[i], apply);
-                ApplyRatingMod(CR_CRIT_RANGED, bonus[i], apply);
-                ApplyRatingMod(CR_CRIT_SPELL, bonus[i], apply);
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u CRITICAL", bonus[i]);
-                break;
-            case ITEM_MOD_HASTE_RATING:
-                ApplyRatingMod(CR_HASTE_MELEE, bonus[i], apply);
-                ApplyRatingMod(CR_HASTE_RANGED, bonus[i], apply);
-                ApplyRatingMod(CR_HASTE_SPELL, bonus[i], apply);
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HASTE", bonus[i]);
-                break;
-            case ITEM_MOD_EXPERTISE_RATING:
-                 ApplyRatingMod(CR_EXPERTISE, bonus[i], apply);
-                 sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u EXPERTISE", bonus[i]);
-                 break;
-            case ITEM_MOD_MASTERY_RATING:
-                 ApplyRatingMod(CR_MASTERY, int32(bonus[i]), apply);
-                 break;
-            default:
-                 break;
-            }
+        case ITEM_MOD_SPIRIT:
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u SPIRIT", statValue[i]);
+            HandleStatModifier(UNIT_MOD_STAT_SPIRIT, TOTAL_VALUE, float(statValue[i]), apply);
+            ApplyStatBuffMod(STAT_SPIRIT, (float)statValue[i], apply);
+        case  ITEM_MOD_DODGE_RATING:
+            ApplyRatingMod(CR_DODGE, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u DODGE", statValue[i]);
+            break;
+        case ITEM_MOD_PARRY_RATING:
+            ApplyRatingMod(CR_PARRY, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u PARRY", statValue[i]);
+            break;
+        case ITEM_MOD_HIT_RATING:
+            ApplyRatingMod(CR_HIT_MELEE, statValue[i], apply);
+            ApplyRatingMod(CR_HIT_RANGED, statValue[i], apply);
+            ApplyRatingMod(CR_HIT_SPELL, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HIT", statValue[i]);
+            break;
+        case ITEM_MOD_CRIT_RATING:
+            ApplyRatingMod(CR_CRIT_MELEE, statValue[i], apply);
+            ApplyRatingMod(CR_CRIT_RANGED, statValue[i], apply);
+            ApplyRatingMod(CR_CRIT_SPELL, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u CRITICAL", statValue[i]);
+            break;
+        case ITEM_MOD_HASTE_RATING:
+            ApplyRatingMod(CR_HASTE_MELEE, statValue[i], apply);
+            ApplyRatingMod(CR_HASTE_RANGED, statValue[i], apply);
+            ApplyRatingMod(CR_HASTE_SPELL, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HASTE", statValue[i]);
+            break;
+        case ITEM_MOD_EXPERTISE_RATING:
+            ApplyRatingMod(CR_EXPERTISE, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u EXPERTISE", statValue[i]);
+            break;
+        case ITEM_MOD_MASTERY_RATING:
+            ApplyRatingMod(CR_MASTERY, int32(statValue[i]), apply);
+            break;
+        default:
+            break;
         }
     }
 }
@@ -14046,75 +14060,82 @@ void Player::ApplyItemReforge(Item* item, uint32 reforgeEntry)
 void Player::RemoveItemReforge(Item* item, uint32 oldReforgeEntry)
 {
     ItemReforgeEntry const *reforge = sItemReforgeStore.LookupEntry(oldReforgeEntry);
+	if (!reforge)
+	{
+		sLog->outError("RemoveItemReforge : item reforge entry %u not exists", oldReforgeEntry);
+		return;
+	}
 
     item->m_reforged_applied = 0;
-    if (reforge)
+
+	int32 statBaseValue = 0;
+	int32 statValue[2];
+	int32 statType[2];
+
+	for (int32 i = 0; i < MAX_ITEM_PROTO_STATS; i++)
+	{
+		if (item->GetProto()->ItemStat[i].ItemStatType == reforge->oldstat)
+			statBaseValue = item->GetProto()->ItemStat[i].ItemStatValue;
+	}
+
+    if (!statBaseValue)
     {
-        int32 bonus[2];
-        int32 base[2];
-        int32 type[2];
+        sLog->outError("RemoveItemReforge : old stat %u not found on item %u", reforge->oldstat, item->GetEntry());
+        return;
+    }
 
-        for (int32 i = 0; i < MAX_ITEM_PROTO_STATS; i++)
+    statValue[0] = int32(statBaseValue * reforge->oldstat_coef); // old stat: plus back
+    statValue[1] = -int32(statValue[0] * reforge->newstat_coef); // new stat: minus
+
+    statType[0] = reforge->oldstat;
+    statType[1] = reforge->newstat;
+
+    bool apply = true;
+    for (int32 i = 0; i < 2; i++)
+    {
+        switch (statType[i])
         {
-            if (item->GetProto()->ItemStat[i].ItemStatType == reforge->oldstat)
-                base[0] = item->GetProto()->ItemStat[i].ItemStatValue;
-        }
-
-        bonus[0] = int32((base[0] * reforge->oldstat_coef));
-        bonus[1] = int32(bonus[0] * reforge->newstat_coef * -1);
-
-        type[0] = reforge->oldstat;
-        type[1] = reforge->newstat;
-
-        bool apply = true;
-        for (int32 i = 0; i < 2; i++)
-        {
-        switch (type[i])
-        {
-            case ITEM_MOD_SPIRIT:
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u SPIRIT", bonus[i]);
-                HandleStatModifier(UNIT_MOD_STAT_SPIRIT, TOTAL_VALUE, float(bonus[i]), apply);
-                ApplyStatBuffMod(STAT_SPIRIT, (float)bonus[i], apply);
-            case  ITEM_MOD_DODGE_RATING:
-                ApplyRatingMod(CR_DODGE, bonus[i], apply);
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u DODGE", bonus[i]);
-                break;
-            case ITEM_MOD_PARRY_RATING:
-                ApplyRatingMod(CR_PARRY, bonus[i], apply);
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u PARRY", bonus[i]);
-                break;
-            case ITEM_MOD_HIT_RATING:
-                ApplyRatingMod(CR_HIT_MELEE, bonus[i], apply);
-                ApplyRatingMod(CR_HIT_RANGED, bonus[i], apply);
-                ApplyRatingMod(CR_HIT_SPELL, bonus[i], apply);
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HIT", bonus[i]);
-                break;
-            case ITEM_MOD_CRIT_RATING:
-                ApplyRatingMod(CR_CRIT_MELEE, bonus[i], apply);
-                ApplyRatingMod(CR_CRIT_RANGED, bonus[i], apply);
-                ApplyRatingMod(CR_CRIT_SPELL, bonus[i], apply);
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u CRITICAL", bonus[i]);
-                break;
-            case ITEM_MOD_HASTE_RATING:
-                ApplyRatingMod(CR_HASTE_MELEE, bonus[i], apply);
-                ApplyRatingMod(CR_HASTE_RANGED, bonus[i], apply);
-                ApplyRatingMod(CR_HASTE_SPELL, bonus[i], apply);
-                sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HASTE", bonus[i]);
-                break;
-            case ITEM_MOD_EXPERTISE_RATING:
-                 ApplyRatingMod(CR_EXPERTISE, bonus[i], apply);
-                 sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u EXPERTISE", bonus[i]);
-                 break;
-            case ITEM_MOD_MASTERY_RATING:
-                 ApplyRatingMod(CR_MASTERY, int32(bonus[i]), apply);
-                 break;
-            default:
-                 break;
-            }
+        case ITEM_MOD_SPIRIT:
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u SPIRIT", statValue[i]);
+            HandleStatModifier(UNIT_MOD_STAT_SPIRIT, TOTAL_VALUE, float(statValue[i]), apply);
+            ApplyStatBuffMod(STAT_SPIRIT, (float)statValue[i], apply);
+        case  ITEM_MOD_DODGE_RATING:
+            ApplyRatingMod(CR_DODGE, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u DODGE", statValue[i]);
+            break;
+        case ITEM_MOD_PARRY_RATING:
+            ApplyRatingMod(CR_PARRY, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u PARRY", statValue[i]);
+            break;
+        case ITEM_MOD_HIT_RATING:
+            ApplyRatingMod(CR_HIT_MELEE, statValue[i], apply);
+            ApplyRatingMod(CR_HIT_RANGED, statValue[i], apply);
+            ApplyRatingMod(CR_HIT_SPELL, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HIT", statValue[i]);
+            break;
+        case ITEM_MOD_CRIT_RATING:
+            ApplyRatingMod(CR_CRIT_MELEE, statValue[i], apply);
+            ApplyRatingMod(CR_CRIT_RANGED, statValue[i], apply);
+            ApplyRatingMod(CR_CRIT_SPELL, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u CRITICAL", statValue[i]);
+            break;
+        case ITEM_MOD_HASTE_RATING:
+            ApplyRatingMod(CR_HASTE_MELEE, statValue[i], apply);
+            ApplyRatingMod(CR_HASTE_RANGED, statValue[i], apply);
+            ApplyRatingMod(CR_HASTE_SPELL, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u HASTE", statValue[i]);
+            break;
+        case ITEM_MOD_EXPERTISE_RATING:
+            ApplyRatingMod(CR_EXPERTISE, statValue[i], apply);
+            sLog->outDebug(LOG_FILTER_PLAYER_ITEMS, "+ %u EXPERTISE", statValue[i]);
+            break;
+        case ITEM_MOD_MASTERY_RATING:
+            ApplyRatingMod(CR_MASTERY, int32(statValue[i]), apply);
+            break;
+        default:
+            break;
         }
     }
-    else
-        sLog->outError("Cannot remove REFORGE from item",item->GetEntry());
 }
 
 void Player::UpdateSkillEnchantments(uint16 skill_id, uint16 curr_value, uint16 new_value)
@@ -14300,6 +14321,7 @@ void Player::PrepareGossipMenu(WorldObject *pSource, uint32 menuId, bool showQue
                 case GOSSIP_OPTION_PETITIONER:
                 case GOSSIP_OPTION_TABARDDESIGNER:
                 case GOSSIP_OPTION_AUCTIONEER:
+                case GOSSIP_OPTION_REFORGE:
                     break;                                  // no checks
                 case GOSSIP_OPTION_OUTDOORPVP:
                     if (!sOutdoorPvPMgr->CanTalkTo(this, pCreature, itr->second))
@@ -14521,6 +14543,9 @@ void Player::OnGossipSelect(WorldObject* pSource, uint32 gossipListId, uint32 me
             GetSession()->SendBattlegGroundList(guid);
             break;
         }
+        case GOSSIP_OPTION_REFORGE:
+            GetSession()->SendShowReforge(guid);
+            break;
     }
 
     ModifyMoney(-cost);

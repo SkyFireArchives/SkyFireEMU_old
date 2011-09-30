@@ -1501,17 +1501,44 @@ void WorldSession::HandleReforgeOpcode(WorldPacket & recv_data )
     }
 
     Creature *creature = GetPlayer()->GetNPCIfCanInteractWith(vendor_GUID, UNIT_NPC_FLAG_REFORGER);
-    if (_player->GetMoney() < item->GetProto()->SellPrice)
+    if (!creature)
     {
-        _player->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, creature, item->GetEntry(), 0);
+        sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: HandleReforgeOpcode - Unit (GUID: %u) not found or you can not interact with him.", uint32(GUID_LOPART(vendor_GUID)));
+        _player->SendSellError(SELL_ERR_CANT_FIND_VENDOR, NULL, item->GetGUID(), 0);
         return;
     }
-    else
-        _player->SetMoney(_player->GetMoney() - item->GetProto()->SellPrice);
 
-    if (reforgeEntry && item->IsEquipped())
+    ItemPrototype const* proto = item->GetProto();
+    if (!proto)
+    {
+        // this can't happen
+        return;
+    }
+
+    if (proto->ItemLevel < 200)
+    {
+        // client should have already checked this so no client message is needed
+        sLog->outError("Item %u level %u too low to reforge", proto->ItemId, proto->ItemLevel);
+        return;
+    }
+
+    if (reforgeEntry)
+    {
+        int32 price = proto->SellPrice;
+        if (price < 1 * GOLD)
+            price = 1 * GOLD; // blizz: minimum reforge cost is 1 gold
+
+        if (!_player->HasEnoughMoney(price))
+        {
+            _player->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, creature, item->GetEntry(), 0);
+            return;
+        }
+
+        _player->ModifyMoney(-price);
+
         _player->ApplyItemReforge(item, reforgeEntry);
-    else if (reforgeEntry == 0 && item->IsEquipped())
+    }
+    else if (reforgeEntry == 0)
         _player->RemoveItemReforge(item, item->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1)); // old reforge
 
     item->SetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1, reforgeEntry);
