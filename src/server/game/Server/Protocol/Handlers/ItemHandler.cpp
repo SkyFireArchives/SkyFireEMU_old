@@ -1535,15 +1535,15 @@ void WorldSession::HandleReforgeOpcode(WorldPacket & recv_data )
         }
 
         _player->ModifyMoney(-price);
-
-        if (item->IsEquipped())
-            _player->ApplyItemReforge(item, reforgeEntry);
-    }
-    else
-    {
-        if (item->IsEquipped())
-            _player->RemoveItemReforge(item, item->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1)); // old reforge
     }
 
-    item->SetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1, reforgeEntry);
+    // remove old reforge before applying new if equipped
+    _player->ApplyEnchantment(item, REFORGE_ENCHANTMENT_SLOT, false);
+
+    item->SetEnchantment(REFORGE_ENCHANTMENT_SLOT, reforgeEntry, 0, 0);
+
+    // add new reforge if equipped
+    _player->ApplyEnchantment(item, REFORGE_ENCHANTMENT_SLOT, true);
+
+    item->SetSoulboundTradeable(NULL, _player, false);
 }

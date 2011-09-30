@@ -159,21 +159,26 @@ enum SellFailure
 // -1 from client enchantment slot number
 enum EnchantmentSlot
 {
-    PERM_ENCHANTMENT_SLOT           = 0,
-    TEMP_ENCHANTMENT_SLOT           = 1,
-    SOCK_ENCHANTMENT_SLOT           = 2,
-    SOCK_ENCHANTMENT_SLOT_2         = 3,
-    SOCK_ENCHANTMENT_SLOT_3         = 4,
-    BONUS_ENCHANTMENT_SLOT          = 5,
-    PRISMATIC_ENCHANTMENT_SLOT      = 6,                    // added at apply special permanent enchantment
+    PERM_ENCHANTMENT_SLOT           = 0,                    // ITEM_FIELD_ENCHANTMENT_1_1
+    TEMP_ENCHANTMENT_SLOT           = 1,                    // ITEM_FIELD_ENCHANTMENT_2_1
+    SOCK_ENCHANTMENT_SLOT           = 2,                    // ITEM_FIELD_ENCHANTMENT_3_1
+    SOCK_ENCHANTMENT_SLOT_2         = 3,                    // ITEM_FIELD_ENCHANTMENT_4_1
+    SOCK_ENCHANTMENT_SLOT_3         = 4,                    // ITEM_FIELD_ENCHANTMENT_5_1
+    BONUS_ENCHANTMENT_SLOT          = 5,                    // ITEM_FIELD_ENCHANTMENT_6_1
+    PRISMATIC_ENCHANTMENT_SLOT      = 6,                    // ITEM_FIELD_ENCHANTMENT_7_1  added at apply special permanent enchantment
     MAX_INSPECTED_ENCHANTMENT_SLOT  = 7,
 
-    PROP_ENCHANTMENT_SLOT_0         = 7,                    // used with RandomSuffix
-    PROP_ENCHANTMENT_SLOT_1         = 8,                    // used with RandomSuffix
-    PROP_ENCHANTMENT_SLOT_2         = 9,                    // used with RandomSuffix and RandomProperty
-    PROP_ENCHANTMENT_SLOT_3         = 10,                   // used with RandomProperty
-    PROP_ENCHANTMENT_SLOT_4         = 11,                   // used with RandomProperty
-    MAX_ENCHANTMENT_SLOT            = 12
+    ENCHANTMENT_SLOT_7              = 7,                    // ITEM_FIELD_ENCHANTMENT_8_1  unknown
+    REFORGE_ENCHANTMENT_SLOT        = 8,                    // ITEM_FIELD_ENCHANTMENT_9_1  used with Reforge
+
+    // NOTE: the following definitions are unconfirmed and the random property system is not working atm
+
+    PROP_ENCHANTMENT_SLOT_0         = 9,                    // ITEM_FIELD_ENCHANTMENT_10_1 used with RandomSuffix
+    PROP_ENCHANTMENT_SLOT_1         = 10,                   // ITEM_FIELD_ENCHANTMENT_11_1 used with RandomSuffix
+    PROP_ENCHANTMENT_SLOT_2         = 11,                   // ITEM_FIELD_ENCHANTMENT_12_1 used with RandomSuffix and RandomProperty
+    PROP_ENCHANTMENT_SLOT_3         = 12,                   // ITEM_FIELD_ENCHANTMENT_13_1 used with RandomProperty
+    PROP_ENCHANTMENT_SLOT_4         = 13,                   // ITEM_FIELD_ENCHANTMENT_14_1 used with RandomProperty
+    MAX_ENCHANTMENT_SLOT            = 14
 };
 
 #define MAX_VISIBLE_ITEM_OFFSET       2                     // 2 fields per visible item (entry+enchantment)
@@ -292,7 +297,6 @@ class Item : public Object
 
         uint32 GetSkill();
         uint32 GetSpell();
-        uint8 m_reforged_applied;
 
         // RandomPropertyId (signed but stored as unsigned)
         int32 GetItemRandomPropertyId() const { return GetInt32Value(ITEM_FIELD_RANDOM_PROPERTIES_ID); }
