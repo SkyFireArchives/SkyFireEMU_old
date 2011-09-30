@@ -1536,10 +1536,14 @@ void WorldSession::HandleReforgeOpcode(WorldPacket & recv_data )
 
         _player->ModifyMoney(-price);
 
-        _player->ApplyItemReforge(item, reforgeEntry);
+        if (item->IsEquipped())
+            _player->ApplyItemReforge(item, reforgeEntry);
     }
-    else if (reforgeEntry == 0)
-        _player->RemoveItemReforge(item, item->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1)); // old reforge
+    else
+    {
+        if (item->IsEquipped())
+            _player->RemoveItemReforge(item, item->GetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1)); // old reforge
+    }
 
     item->SetUInt32Value(ITEM_FIELD_ENCHANTMENT_9_1, reforgeEntry);
 }
