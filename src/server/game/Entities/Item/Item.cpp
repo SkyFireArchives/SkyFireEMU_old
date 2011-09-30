@@ -557,7 +557,26 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entr
     }
 
     std::string enchants = fields[6].GetString();
-    _LoadIntoDataField(enchants.c_str(), ITEM_FIELD_ENCHANTMENT_1_1, MAX_ENCHANTMENT_SLOT * MAX_ENCHANTMENT_OFFSET);
+    //_LoadIntoDataField(enchants.c_str(), ITEM_FIELD_ENCHANTMENT_1_1, MAX_ENCHANTMENT_SLOT * MAX_ENCHANTMENT_OFFSET);
+    {
+        // NOTE:
+        // in the recent update of reforge system, definition of EnchantmentSlot has been changed,
+        // and MAX_ENCHANTMENT_SLOT has been changed from 13 to 14,
+        // which makes enchantments column of item_instance table incompatible with previous version.
+        // in this case we will load only first 9 enchantment slots (0-8, for permanent, temporary, sockets, bonus, prismatic and reforge)
+        // and ignore the remaining ones (9-13, for random properties).
+        // which means item random properties will be lost after this update.
+        // after player logging in and saving the inventory, enchantments column will be properly updated.
+
+        uint32 count = MAX_ENCHANTMENT_SLOT * MAX_ENCHANTMENT_OFFSET;
+        Tokens tokens(enchants, ' ', count);
+
+        if (tokens.size() < MAX_ENCHANTMENT_SLOT * MAX_ENCHANTMENT_OFFSET)
+            count = REFORGE_ENCHANTMENT_SLOT * MAX_ENCHANTMENT_OFFSET;
+
+        for (uint32 index = 0; index < count; ++index)
+            m_uint32Values[ITEM_FIELD_ENCHANTMENT_1_1 + index] = index < tokens.size() ? atol(tokens[index]) : 0;
+    }
     SetInt32Value(ITEM_FIELD_RANDOM_PROPERTIES_ID, fields[7].GetInt16());
     // recalculate suffix factor
     if (GetItemRandomPropertyId() < 0)
