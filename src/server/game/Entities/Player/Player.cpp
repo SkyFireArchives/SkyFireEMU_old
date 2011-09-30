@@ -13973,11 +13973,11 @@ void Player::ApplyEnchantment(Item *item, EnchantmentSlot slot, bool apply, bool
 void Player::ApplyItemReforge(Item* item, uint32 reforgeEntry)
 {
     ItemReforgeEntry const *reforge = sItemReforgeStore.LookupEntry(reforgeEntry);
-	if (!reforge)
-	{
-		sLog->outError("ApplyItemReforge : item reforge entry %u not exists", reforgeEntry);
-		return;
-	}
+    if (!reforge)
+    {
+        sLog->outError("ApplyItemReforge : item reforge entry %u not exists", reforgeEntry);
+        return;
+    }
 
     item->m_reforged_applied = 1;
 
@@ -13987,11 +13987,11 @@ void Player::ApplyItemReforge(Item* item, uint32 reforgeEntry)
 
     for (int32 i = 0; i < MAX_ITEM_PROTO_STATS; i++)
     {
-		if (item->GetProto()->ItemStat[i].ItemStatType == reforge->newstat)
-		{
-			sLog->outError("ApplyItemReforge : new stat %u already exists on item %u", reforge->newstat, item->GetEntry());
-			return;
-		}
+        if (item->GetProto()->ItemStat[i].ItemStatType == reforge->newstat)
+        {
+            sLog->outError("ApplyItemReforge : new stat %u already exists on item %u", reforge->newstat, item->GetEntry());
+            return;
+        }
 
         if (item->GetProto()->ItemStat[i].ItemStatType == reforge->oldstat)
             statBaseValue = item->GetProto()->ItemStat[i].ItemStatValue;
@@ -14060,23 +14060,23 @@ void Player::ApplyItemReforge(Item* item, uint32 reforgeEntry)
 void Player::RemoveItemReforge(Item* item, uint32 oldReforgeEntry)
 {
     ItemReforgeEntry const *reforge = sItemReforgeStore.LookupEntry(oldReforgeEntry);
-	if (!reforge)
-	{
-		sLog->outError("RemoveItemReforge : item reforge entry %u not exists", oldReforgeEntry);
-		return;
-	}
+    if (!reforge)
+    {
+        sLog->outError("RemoveItemReforge : item reforge entry %u not exists", oldReforgeEntry);
+        return;
+    }
 
     item->m_reforged_applied = 0;
 
-	int32 statBaseValue = 0;
-	int32 statValue[2];
-	int32 statType[2];
+    int32 statBaseValue = 0;
+    int32 statValue[2];
+    int32 statType[2];
 
-	for (int32 i = 0; i < MAX_ITEM_PROTO_STATS; i++)
-	{
-		if (item->GetProto()->ItemStat[i].ItemStatType == reforge->oldstat)
-			statBaseValue = item->GetProto()->ItemStat[i].ItemStatValue;
-	}
+    for (int32 i = 0; i < MAX_ITEM_PROTO_STATS; i++)
+    {
+        if (item->GetProto()->ItemStat[i].ItemStatType == reforge->oldstat)
+            statBaseValue = item->GetProto()->ItemStat[i].ItemStatValue;
+    }
 
     if (!statBaseValue)
     {
