@@ -6104,17 +6104,13 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                     break;
                 }
 				case 33763:
-				{
-				Aura *owner_aura_rank1 = target->GetAura(92363, GetCasterGUID()); // Get talent Malfurion's gift rank 1
-				Aura *owner_aura_rank2 = target->GetAura(92364, GetCasterGUID()); // Get talent Malfurion's gift rank 2
-                    if (owner_aura_rank1) // Malfurion's Gift rank 1
+					if (target->HasAura(92363, GetCasterGUID())) // Get talent Malfurion's gift rank 1
 						if (roll_chance_i(2)) // Procs only 2% of the time
 							target->CastSpell(caster, 16870, true, NULL, this); // Clearcasting
-					if (owner_aura_rank2) // Malfurion's Gift rank 2
+					if (target->HasAura(92364, GetCasterGUID())) // Get talent Malfurion's gift rank 2
 						if (roll_chance_i(4)) // Procs only 4% of the time
 							target->CastSpell(caster, 16870, true, NULL, this); // Clearcasting
 				break;
-				}
                 case 39850:                                     // Rocket Blast
                     if (roll_chance_i(20))                       // backfire stun
                         target->CastSpell(target, 51581, true, NULL, this);
