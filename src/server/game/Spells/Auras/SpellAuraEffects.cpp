@@ -1762,6 +1762,7 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
                     addition += abs(int32((addition * aurEff->GetAmount()) / 50));
 
                 damage += addition;
+                damage = caster->SpellHealingBonus(target, GetSpellProto(), GetEffIndex(), damage, DOT, GetBase()->GetStackAmount());
             }
             switch (m_spellProto->Id)
             {
