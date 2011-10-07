@@ -12357,7 +12357,6 @@ void Player::RemoveItem(uint8 bag, uint8 slot, bool update)
                             break;
                     }
                 }
-
             }
 
             m_items[slot] = NULL;
