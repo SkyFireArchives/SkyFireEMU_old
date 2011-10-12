@@ -46,7 +46,6 @@ go_resonite_cask
 go_tablet_of_madness
 go_tablet_of_the_seven
 go_tele_to_dalaran_crystal
-go_tele_to_violet_stand
 go_rusty_cage
 go_scourge_cage
 go_jotunheim_cage
@@ -512,24 +511,6 @@ public:
         }
         else
             pPlayer->GetSession()->SendNotification(GO_TELE_TO_DALARAN_CRYSTAL_FAILED);
-
-        return true;
-    }
-};
-
-/*######
-## go_tele_to_violet_stand
-######*/
-
-class go_tele_to_violet_stand : public GameObjectScript
-{
-public:
-    go_tele_to_violet_stand() : GameObjectScript("go_tele_to_violet_stand") { }
-
-    bool OnGossipHello(Player *pPlayer, GameObject * /*pGO*/)
-    {
-        if (pPlayer->GetQuestRewardStatus(QUEST_LEARN_LEAVE_RETURN) || pPlayer->GetQuestStatus(QUEST_LEARN_LEAVE_RETURN) == QUEST_STATUS_INCOMPLETE)
-            return false;
 
         return true;
     }
