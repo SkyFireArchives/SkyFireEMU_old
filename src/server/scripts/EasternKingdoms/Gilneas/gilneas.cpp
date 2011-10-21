@@ -1280,22 +1280,22 @@ public:
     }
 };
 
-class spell_rescue_krennan : public SpellScriptLoader
+/*class spell_rescue_krennan : public SpellScriptLoader
 {
     public:
         spell_rescue_krennan() : SpellScriptLoader("spell_rescue_krennan") { }
 
         class spell_rescue_krennan_SpellScript : public SpellScript
         {
-            PrepareSpellScript(spell_rescue_krennan_SpellScript)
+            PrepareSpellScript(spell_rescue_krennan_SpellScript)*/
 
-            bool Validate(SpellEntry const * /*spellEntry*/)
-            {
-                return true;
-            }
+            //bool Validate(SpellEntry const * /*spellEntry*/)
+            //{
+            //    return true;
+            //}
 
-            void HandleDummy(SpellEffIndex /*effIndex*/)
-            {
+            //void HandleDummy(SpellEffIndex /*effIndex*/)
+            /*{
                 if (Unit * caster = GetCaster())
                 {
                     if (Creature *krennan = caster->FindNearestCreature(35905, 30))
@@ -1323,7 +1323,7 @@ class spell_rescue_krennan : public SpellScriptLoader
         {
             return new spell_rescue_krennan_SpellScript();
         }
-};
+};*/
 
 class npc_lord_darius_crowley_c2 : public CreatureScript
 {
@@ -1388,7 +1388,7 @@ public:
     }
 };
 
-class spell_keg_placed : public SpellScriptLoader
+/*class spell_keg_placed : public SpellScriptLoader
 {
     public:
         spell_keg_placed() : SpellScriptLoader("spell_keg_placed") { }
@@ -1397,10 +1397,10 @@ class spell_keg_placed : public SpellScriptLoader
         {
             PrepareAuraScript(spell_keg_placed_AuraScript);
 
-            uint32 tick, tickcount;
+            uint32 tick, tickcount;*/
 
-            void HandleEffectApply(AuraEffect const * /*aurEff*/, AuraEffectHandleModes /*mode*/)
-            {
+            // void HandleEffectApply(AuraEffect const * /*aurEff*/, AuraEffectHandleModes /*mode*/)
+            /*{
                 tick = urand(1, 4);
                 tickcount = 0;
             }
@@ -1434,7 +1434,7 @@ class spell_keg_placed : public SpellScriptLoader
         {
             return new spell_keg_placed_AuraScript();
         }
-};
+};*/
 
 void AddSC_gilneas()
 {
@@ -1452,9 +1452,9 @@ void AddSC_gilneas()
     new npc_lord_darius_crowley();
     new npc_josiah_avery();
     new npc_king_genn_greymane();
-    new spell_rescue_krennan();
+    //new spell_rescue_krennan();
     new npc_lord_darius_crowley_c2();
     new npc_lord_darius_crowley_c3();
     new npc_king_genn_greymane_c2();
-    new spell_keg_placed();
+    //new spell_keg_placed();
 }
