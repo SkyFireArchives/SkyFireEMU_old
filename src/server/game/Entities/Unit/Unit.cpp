@@ -6710,9 +6710,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                 case 87168:
                 case 87172:
                 {
-                    float chance = dummySpell->EffectBasePoints[0];
-
-                    if (roll_chance_f(chance) && !this->IsWithinDistInMap(pVictim, 15.0f))
+                    if (!this->IsWithinDistInMap(pVictim, 15.0f))
                     {
                         target = this;
                         triggered_spell_id = 87173;
