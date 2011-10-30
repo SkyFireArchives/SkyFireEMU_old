@@ -269,8 +269,10 @@ inline bool IsSealSpell(SpellEntry const *spellInfo)
 {
     //Collection of all the seal family flags. No other paladin spell has any of those.
     return spellInfo->SpellFamilyName == SPELLFAMILY_PALADIN &&
-        (spellInfo->SpellFamilyFlags[1] & 0x26000C00
-        || spellInfo->SpellFamilyFlags[0] & 0x0A000000);
+        (spellInfo->SpellFamilyFlags[1] & 0x80000000 // Seal of Justice
+        || spellInfo->SpellFamilyFlags[1] & 0x20000000 // Seal of Righteoussness
+        || spellInfo->SpellFamilyFlags[1] & 0x00000800  // Seal of Truth
+        || spellInfo->SpellFamilyFlags[1] & 0x02000000); // Seal of Insigth
 }
 
 inline bool IsElementalShield(SpellEntry const *spellInfo)

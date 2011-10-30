@@ -1134,6 +1134,10 @@ void Aura::HandleAuraSpecificMods(AuraApplication const * aurApp, Unit * caster,
                         target->SetSpeed(MOVE_RUN, 1.6f, true);
                     }
                 }
+                // Sanctfied Wrath Cataclysm proc
+                if (GetId() == 31884)
+                    if (caster->HasAura(53375) || caster->HasAura(53376) || caster->HasAura(90286))
+                        caster->CastSpell(caster,57318,true);
                 break;
             case SPELLFAMILY_DEATHKNIGHT:
                 if (!caster)
