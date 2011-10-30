@@ -695,8 +695,8 @@ SpellSpecific GetSpellSpecific(SpellEntry const * spellInfo)
             if (spellInfo->SpellFamilyFlags[0] & 0x00002190)
                 return SPELL_SPECIFIC_HAND;
 
-            // Judgement of Wisdom, Judgement of Light, Judgement of Justice
-            if (spellInfo->Id == 20184 || spellInfo->Id == 20185 || spellInfo->Id == 20186)
+            // Judgement, Judgement of Truth, Judgement of Righteoussness, Judgement of Light
+            if (spellInfo->Id == 20271 || spellInfo->Id == 31804 || spellInfo->Id == 20187 || spellInfo->Id == 54158)
                 return SPELL_SPECIFIC_JUDGEMENT;
 
             // only paladin auras have this (for palaldin class family)
