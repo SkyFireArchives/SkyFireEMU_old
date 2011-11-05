@@ -239,40 +239,35 @@ public:
     }
 };
 
-class spell_pal_guardian_kings : public SpellScriptLoader
+class spell_pal_judgements_of_the_bold : public SpellScriptLoader
 {
-public:
-    spell_pal_guardian_kings() : SpellScriptLoader("spell_pal_guardian_kings") { }
+    public:
+        spell_pal_judgements_of_the_bold() : SpellScriptLoader("spell_pal_judgements_of_the_bold") { }
 
-    class spell_pal_guardian_kings_SpellScript : public SpellScript
-    {
-                PrepareSpellScript(spell_pal_guardian_kings_SpellScript)
-                bool Validate(SpellEntry const * /*spellEntry*/)
+        class spell_pal_judgements_of_the_bold_AuraScript : public AuraScript
         {
-                        if (!sSpellStore.LookupEntry(SPELL_GUARDIAN_OF_ANCIENT_KINGS))
-                                        return false;
-                        return true;
-                }
+            PrepareAuraScript(spell_pal_judgements_of_the_bold_AuraScript);
 
-        void HandleDummy(SpellEffIndex /*effIndex*/)
-        {
-            if (Unit *unitTarget = GetHitUnit())
+            void CalculateMana(AuraEffect const* /*aurEff*/, int32& amount, bool& canBeRecalculated)
             {
-                uint32 spell_id = 86698;
-                GetCaster()->CastSpell(GetCaster(), spell_id, true);
+                if (Unit* caster = GetCaster())
+                {
+                    canBeRecalculated = true;
+                    int32 basemana = caster->ToPlayer()->GetCreateMana();
+                    amount = (3 * basemana) / 100; // 3% of base mana
+                }
             }
-        }
 
-        void Register()
-        {
-            OnEffect += SpellEffectFn(spell_pal_guardian_kings_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
-        }
+            void Register()
+            {
+                DoEffectCalcAmount += AuraEffectCalcAmountFn(spell_pal_judgements_of_the_bold_AuraScript::CalculateMana, EFFECT_0, SPELL_AURA_PERIODIC_ENERGIZE);
+            }
         };
 
-        SpellScript *GetSpellScript() const
-    {
-        return new spell_pal_guardian_kings_SpellScript();
-    }
+        AuraScript* GetAuraScript() const
+        {
+            return new spell_pal_judgements_of_the_bold_AuraScript();
+        }
 };
 
 void AddSC_paladin_spell_scripts()
@@ -280,5 +275,5 @@ void AddSC_paladin_spell_scripts()
     new spell_pal_ardent_defender();
     new spell_pal_blessing_of_faith();
     new spell_pal_holy_shock();
-    new spell_pal_guardian_kings();
+    new spell_pal_judgements_of_the_bold();
 }
