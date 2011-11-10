@@ -97,16 +97,13 @@ public:
         return new boss_bjarngrimAI(pCreature);
     }
 
-    struct boss_bjarngrimAI : public ScriptedAI
+    struct boss_bjarngrimAI : public BossAI
     {
-        boss_bjarngrimAI(Creature *pCreature) : ScriptedAI(pCreature)
+        boss_bjarngrimAI(Creature *pCreature) : BossAI(pCreature, TYPE_BJARNGRIM)
         {
-            m_pInstance = pCreature->GetInstanceScript();
             m_uiStance = STANCE_DEFENSIVE;
             memset(&m_auiStormforgedLieutenantGUID, 0, sizeof(m_auiStormforgedLieutenantGUID));
         }
-
-        InstanceScript* m_pInstance;
 
         bool m_bIsChangingStance;
 
@@ -169,8 +166,8 @@ public:
 
             SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_SHIELD, EQUIP_NO_CHANGE);
 
-            if (m_pInstance)
-                m_pInstance->SetData(TYPE_BJARNGRIM, NOT_STARTED);
+            if (instance)
+                instance->SetData(TYPE_BJARNGRIM, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*pWho*/)
@@ -180,8 +177,8 @@ public:
             //must get both lieutenants here and make sure they are with him
             me->CallForHelp(30.0f);
 
-            if (m_pInstance)
-                m_pInstance->SetData(TYPE_BJARNGRIM, IN_PROGRESS);
+            if (instance)
+                instance->SetData(TYPE_BJARNGRIM, IN_PROGRESS);
         }
 
         void KilledUnit(Unit* /*pVictim*/)
@@ -191,10 +188,11 @@ public:
 
         void JustDied(Unit* /*pKiller*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (m_pInstance)
-                m_pInstance->SetData(TYPE_BJARNGRIM, DONE);
+            if (instance)
+                instance->SetData(TYPE_BJARNGRIM, DONE);
         }
 
         //TODO: remove when removal is done by the core

@@ -92,27 +92,24 @@ public:
         return new boss_eregosAI (pCreature);
     }
 
-    struct boss_eregosAI : public ScriptedAI
+    struct boss_eregosAI : public BossAI
     {
-        boss_eregosAI(Creature *c) : ScriptedAI(c)
+        boss_eregosAI(Creature *c) : BossAI(c, DATA_EREGOS_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
 
-        InstanceScript* pInstance;
-
         void Reset()
         {
-            if (pInstance)
-                pInstance->SetData(DATA_EREGOS_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_EREGOS_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_EREGOS_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_EREGOS_EVENT, IN_PROGRESS);
         }
 
         void AttackStart(Unit* /*who*/) {}
@@ -128,8 +125,9 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_EREGOS_EVENT, DONE);
+			_JustDied();
+            if (instance)
+                instance->SetData(DATA_EREGOS_EVENT, DONE);
         }
     };
 };

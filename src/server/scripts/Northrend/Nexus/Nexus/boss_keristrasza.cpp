@@ -66,16 +66,13 @@ public:
         return new boss_keristraszaAI (pCreature);
     }
 
-    struct boss_keristraszaAI : public ScriptedAI
+    struct boss_keristraszaAI : public BossAI
     {
-        boss_keristraszaAI(Creature *c) : ScriptedAI(c)
+        boss_keristraszaAI(Creature *c) : BossAI(c, DATA_KERISTRASZA_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         uint32 uiCrystalfireBreathTimer;
         uint32 uiCrystalChainsCrystalizeTimer;
@@ -101,8 +98,8 @@ public:
 
             RemovePrison(CheckContainmentSpheres());
 
-            if (pInstance)
-                pInstance->SetData(DATA_KERISTRASZA_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_KERISTRASZA_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -110,19 +107,20 @@ public:
             DoScriptText(SAY_AGGRO, me);
             DoCastAOE(SPELL_INTENSE_COLD);
 
-            if (pInstance)
-                pInstance->SetData(DATA_KERISTRASZA_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_KERISTRASZA_EVENT, IN_PROGRESS);
         }
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
+            if (instance)
             {
                 if (IsHeroic() && !bMoreThanTwoIntenseCold)
-                    pInstance->DoCompleteAchievement(ACHIEV_INTENSE_COLD);
-                pInstance->SetData(DATA_KERISTRASZA_EVENT, DONE);
+                    instance->DoCompleteAchievement(ACHIEV_INTENSE_COLD);
+                instance->SetData(DATA_KERISTRASZA_EVENT, DONE);
             }
         }
 
@@ -133,18 +131,18 @@ public:
 
         bool CheckContainmentSpheres(bool remove_prison = false)
         {
-            if (!pInstance)
+            if (!instance)
                 return false;
 
-            auiContainmentSphereGUIDs[0] = pInstance->GetData64(ANOMALUS_CONTAINMET_SPHERE);
-            auiContainmentSphereGUIDs[1] = pInstance->GetData64(ORMOROKS_CONTAINMET_SPHERE);
-            auiContainmentSphereGUIDs[2] = pInstance->GetData64(TELESTRAS_CONTAINMET_SPHERE);
+            auiContainmentSphereGUIDs[0] = instance->GetData64(ANOMALUS_CONTAINMET_SPHERE);
+            auiContainmentSphereGUIDs[1] = instance->GetData64(ORMOROKS_CONTAINMET_SPHERE);
+            auiContainmentSphereGUIDs[2] = instance->GetData64(TELESTRAS_CONTAINMET_SPHERE);
 
             GameObject *ContainmentSpheres[DATA_CONTAINMENT_SPHERES];
 
             for (uint8 i = 0; i < DATA_CONTAINMENT_SPHERES; ++i)
             {
-                ContainmentSpheres[i] = pInstance->instance->GetGameObject(auiContainmentSphereGUIDs[i]);
+                ContainmentSpheres[i] = instance->instance->GetGameObject(auiContainmentSphereGUIDs[i]);
                 if (!ContainmentSpheres[i])
                     return false;
                 if (ContainmentSpheres[i]->GetGoState() != GO_STATE_ACTIVE)

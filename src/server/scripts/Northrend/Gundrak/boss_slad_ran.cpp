@@ -82,11 +82,10 @@ public:
         return new boss_slad_ranAI (pCreature);
     }
 
-    struct boss_slad_ranAI : public ScriptedAI
+    struct boss_slad_ranAI : public BossAI
     {
-        boss_slad_ranAI(Creature *c) : ScriptedAI(c), lSummons(me)
+        boss_slad_ranAI(Creature *c) : BossAI(c, DATA_SLAD_RAN_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -98,10 +97,6 @@ public:
 
         uint8 uiPhase;
 
-        SummonList lSummons;
-
-        InstanceScript* pInstance;
-
         void Reset()
         {
             uiPoisonNovaTimer = 10*IN_MILLISECONDS;
@@ -110,18 +105,18 @@ public:
             uiSpawnTimer = 5*IN_MILLISECONDS;
             uiPhase = 0;
 
-            lSummons.DespawnAll();
+            summons.DespawnAll();
 
-            if (pInstance)
-                pInstance->SetData(DATA_SLAD_RAN_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_SLAD_RAN_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_SLAD_RAN_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_SLAD_RAN_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -179,10 +174,11 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_SLAD_RAN_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_SLAD_RAN_EVENT, DONE);
         }
 
         void KilledUnit(Unit * /*victim*/)
@@ -193,7 +189,7 @@ public:
         void JustSummoned(Creature* summoned)
         {
             summoned->GetMotionMaster()->MovePoint(0, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ());
-            lSummons.Summon(summoned);
+            summons.Summon(summoned);
         }
     };
 };

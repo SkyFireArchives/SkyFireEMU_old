@@ -129,19 +129,16 @@ public:
         return new boss_eadricAI(pCreature);
     }
 
-    struct boss_eadricAI : public ScriptedAI
+    struct boss_eadricAI : public BossAI
     {
-        boss_eadricAI(Creature* pCreature) : ScriptedAI(pCreature)
+        boss_eadricAI(Creature* pCreature) : BossAI(pCreature, BOSS_ARGENT_CHALLENGE_E)
         {
-            pInstance = (InstanceScript*)pCreature->GetInstanceScript();
             pCreature->SetReactState(REACT_PASSIVE);
             pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         uint32 uiVenganceTimer;
         uint32 uiRadianceTimer;
@@ -173,12 +170,12 @@ public:
                 DoScriptText(SAY_START_8, me);
                 me->setFaction(35);
                 bDone = true;
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                    pInstance->HandleGameObject(pGO->GetGUID(), true);
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                    pInstance->HandleGameObject(pGO->GetGUID(), true);
-                if (pInstance)
-                    pInstance->SetData(BOSS_ARGENT_CHALLENGE_E, DONE);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                    instance->HandleGameObject(pGO->GetGUID(), true);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE1)))
+                    instance->HandleGameObject(pGO->GetGUID(), true);
+                if (instance)
+                    instance->SetData(BOSS_ARGENT_CHALLENGE_E, DONE);
             }
         }
 
@@ -194,8 +191,8 @@ public:
             {
                 me->GetMotionMaster()->MovePoint(0, 746.843f, 695.68f, 412.339f);
                 bDone = false;
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                        pInstance->HandleGameObject(pGO->GetGUID(), true);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                        instance->HandleGameObject(pGO->GetGUID(), true);
             } else uiResetTimer -= uiDiff;
 
             if (!UpdateVictim())
@@ -232,6 +229,11 @@ public:
 
             DoMeleeAttackIfReady();
         }
+
+		void JustDied(Unit* /*killer*/)
+		{
+			_JustDied();
+		}
     };
 };
 
@@ -245,12 +247,10 @@ public:
         return new boss_paletressAI(pCreature);
     }
 
-    struct boss_paletressAI : public ScriptedAI
+    struct boss_paletressAI : public BossAI
     {
-        boss_paletressAI(Creature* pCreature) : ScriptedAI(pCreature)
+        boss_paletressAI(Creature* pCreature) : BossAI(pCreature, BOSS_ARGENT_CHALLENGE_P)
         {
-            pInstance = (InstanceScript*)pCreature->GetInstanceScript();
-
             MemoryGUID = 0;
             pCreature->SetReactState(REACT_PASSIVE);
             pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -259,8 +259,6 @@ public:
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         Creature* pMemory;
         uint64 MemoryGUID;
@@ -311,13 +309,13 @@ public:
                 DoScriptText(SAY_START_7, me);
                 me->setFaction(35);
                 bDone = true;
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                        pInstance->HandleGameObject(pGO->GetGUID(), true);
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE1)))
-                        pInstance->HandleGameObject(pGO->GetGUID(), true);
-                pInstance->SetData(BOSS_ARGENT_CHALLENGE_P, DONE);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                    instance->HandleGameObject(pGO->GetGUID(), true);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE1)))
+                    instance->HandleGameObject(pGO->GetGUID(), true);
+                instance->SetData(BOSS_ARGENT_CHALLENGE_P, DONE);
                 if (IsHeroic())
-                    pInstance->DoCompleteAchievement(ACHIEV_CONF);
+                    instance->DoCompleteAchievement(ACHIEV_CONF);
             }
         }
 
@@ -333,8 +331,8 @@ public:
             {
                 me->GetMotionMaster()->MovePoint(0, 746.843f, 695.68f, 412.339f);
                 bDone = false;
-                if (GameObject* pGO = GameObject::GetGameObject(*me, pInstance->GetData64(DATA_MAIN_GATE)))
-                        pInstance->HandleGameObject(pGO->GetGUID(), true);
+                if (GameObject* pGO = GameObject::GetGameObject(*me, instance->GetData64(DATA_MAIN_GATE)))
+                    instance->HandleGameObject(pGO->GetGUID(), true);
             } else uiResetTimer -= uiDiff;
 
             if (!UpdateVictim())
@@ -451,6 +449,11 @@ public:
 
             DoMeleeAttackIfReady();
         }
+
+		void JustDied(Unit* /*killer*/)
+		{
+			_JustDied();
+		}
 
         void JustSummoned(Creature* pSummon)
         {

@@ -101,11 +101,10 @@ public:
         return new boss_svalaAI (pCreature);
     }
 
-    struct boss_svalaAI : public ScriptedAI
+    struct boss_svalaAI : public BossAI
     {
-        boss_svalaAI(Creature *c) : ScriptedAI(c)
+        boss_svalaAI(Creature *c) : BossAI(c, DATA_SVALA_SORROWGRAVE_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -119,8 +118,6 @@ public:
         TempSummon* pArthas;
         uint64 uiArthasGUID;
 
-        InstanceScript* pInstance;
-
         void Reset()
         {
             Phase = IDLE;
@@ -128,8 +125,8 @@ public:
             uiIntroPhase = 0;
             uiArthasGUID = 0;
 
-            if (pInstance)
-                pInstance->SetData(DATA_SVALA_SORROWGRAVE_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_SVALA_SORROWGRAVE_EVENT, NOT_STARTED);
         }
 
         void MoveInLineOfSight(Unit* pWho)
@@ -150,6 +147,11 @@ public:
                 }
             }
         }
+
+		void JustDied(Unit* /*killer*/)
+		{
+			_JustDied();
+		}
 
         void AttackStart(Unit* /*who*/) {}
 

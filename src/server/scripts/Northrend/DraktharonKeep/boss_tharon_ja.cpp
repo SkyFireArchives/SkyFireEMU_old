@@ -76,11 +76,10 @@ class boss_tharon_ja : public CreatureScript
 public:
     boss_tharon_ja() : CreatureScript("boss_tharon_ja") { }
 
-    struct boss_tharon_jaAI : public ScriptedAI
+    struct boss_tharon_jaAI : public BossAI
     {
-        boss_tharon_jaAI(Creature *c) : ScriptedAI(c)
+        boss_tharon_jaAI(Creature *c) : BossAI(c, DATA_THARON_JA_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -95,8 +94,6 @@ public:
 
         CombatPhase Phase;
 
-        InstanceScript* pInstance;
-
         void Reset()
         {
             uiPhaseTimer = 20*IN_MILLISECONDS;
@@ -105,16 +102,16 @@ public:
             uiShadowVolleyTimer = urand(8*IN_MILLISECONDS, 10*IN_MILLISECONDS);
             Phase = SKELETAL;
             me->SetDisplayId(me->GetNativeDisplayId());
-            if (pInstance)
-                pInstance->SetData(DATA_THARON_JA_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_THARON_JA_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_THARON_JA_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_THARON_JA_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -236,19 +233,20 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
+            if (instance)
             {
                 // clean morph on players
-                Map::PlayerList const &PlayerList = pInstance->instance->GetPlayers();
+                Map::PlayerList const &PlayerList = instance->instance->GetPlayers();
 
                 for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
                     if (Player *pPlayer = i->getSource())
                         pPlayer->DeMorph();
-                pInstance->DoUpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET2, SPELL_ACHIEVEMENT_CHECK);
+                instance->DoUpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET2, SPELL_ACHIEVEMENT_CHECK);
 
-                pInstance->SetData(DATA_THARON_JA_EVENT, DONE);
+                instance->SetData(DATA_THARON_JA_EVENT, DONE);
             }
         }
     };

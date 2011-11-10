@@ -104,16 +104,13 @@ class boss_krik_thir : public CreatureScript
 public:
     boss_krik_thir() : CreatureScript("boss_krik_thir") { }
 
-    struct boss_krik_thirAI : public ScriptedAI
+    struct boss_krik_thirAI : public BossAI
     {
-        boss_krik_thirAI(Creature *c) : ScriptedAI(c)
+        boss_krik_thirAI(Creature *c) : BossAI(c, DATA_KRIKTHIR_THE_GATEWATCHER_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         uint32 uiMindFlayTimer;
         uint32 uiCurseFatigueTimer;
@@ -124,8 +121,8 @@ public:
             uiMindFlayTimer = 15*IN_MILLISECONDS;
             uiCurseFatigueTimer = 12*IN_MILLISECONDS;
 
-            if (pInstance)
-                pInstance->SetData(DATA_KRIKTHIR_THE_GATEWATCHER_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_KRIKTHIR_THE_GATEWATCHER_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -134,8 +131,8 @@ public:
             Summon();
             uiSummonTimer = 15*IN_MILLISECONDS;
 
-            if (pInstance)
-                pInstance->SetData(DATA_KRIKTHIR_THE_GATEWATCHER_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_KRIKTHIR_THE_GATEWATCHER_EVENT, IN_PROGRESS);
         }
 
         void Summon()
@@ -194,26 +191,27 @@ public:
         }
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (!pInstance)
+            if (!instance)
                 return;
 
-            pInstance->SetData(DATA_KRIKTHIR_THE_GATEWATCHER_EVENT, DONE);
+            instance->SetData(DATA_KRIKTHIR_THE_GATEWATCHER_EVENT, DONE);
             //Achievement: Watch him die
-            Creature *pAdd = Unit::GetCreature(*me, pInstance->GetData64(DATA_WATCHER_GASHRA));
+            Creature *pAdd = Unit::GetCreature(*me, instance->GetData64(DATA_WATCHER_GASHRA));
             if (!pAdd || !pAdd->isAlive())
                 return;
 
-            pAdd = Unit::GetCreature(*me, pInstance->GetData64(DATA_WATCHER_SILTHIK));
+            pAdd = Unit::GetCreature(*me, instance->GetData64(DATA_WATCHER_SILTHIK));
             if (!pAdd || !pAdd->isAlive())
                 return;
 
-            pAdd = Unit::GetCreature(*me, pInstance->GetData64(DATA_WATCHER_NARJIL));
+            pAdd = Unit::GetCreature(*me, instance->GetData64(DATA_WATCHER_NARJIL));
             if (!pAdd || !pAdd->isAlive())
                 return;
 
-            pInstance->DoCompleteAchievement(ACHIEV_WATH_HIM_DIE);
+            instance->DoCompleteAchievement(ACHIEV_WATH_HIM_DIE);
         }
 
         void KilledUnit(Unit * victim)

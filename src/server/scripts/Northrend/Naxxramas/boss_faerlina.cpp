@@ -119,9 +119,10 @@ public:
         void JustDied(Unit* /*Killer*/)
         {
             _JustDied();
+
             DoScriptText(SAY_DEATH, me);
 
-            if (instance && bAchievement)
+            if (bAchievement)
                 instance->DoCompleteAchievement(RAID_MODE(ACHIEVEMENT_MOMMA_SAID_KNOCK_YOU_OUT_10, ACHIEVEMENT_MOMMA_SAID_KNOCK_YOU_OUT_25));
         }
 

@@ -169,7 +169,8 @@ public:
 
         void JustDied(Unit* /*victim*/)
         {
-            _JustDied();
+			_JustDied();
+
             DoScriptText(SAY_DEATH, me);
 
             // Achievements

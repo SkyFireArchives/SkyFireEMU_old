@@ -99,11 +99,10 @@ public:
         return new boss_palehoofAI (pCreature);
     }
 
-    struct boss_palehoofAI : public ScriptedAI
+    struct boss_palehoofAI : public BossAI
     {
-        boss_palehoofAI(Creature *c) : ScriptedAI(c)
+        boss_palehoofAI(Creature *c) : BossAI(c, DATA_GORTOK_PALEHOOF_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -115,8 +114,6 @@ public:
         Phase currentPhase;
         uint8 AddCount;
         bool DoneAdds[4];
-
-        InstanceScript *pInstance;
 
         void Reset()
         {
@@ -132,27 +129,27 @@ public:
 
             currentPhase = PHASE_NONE;
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_GORTOK_PALEHOOF_EVENT, NOT_STARTED);
+                instance->SetData(DATA_GORTOK_PALEHOOF_EVENT, NOT_STARTED);
 
-                Creature* pTemp = Unit::GetCreature((*me), pInstance->GetData64(DATA_MOB_FRENZIED_WORGEN));
+                Creature* pTemp = Unit::GetCreature((*me), instance->GetData64(DATA_MOB_FRENZIED_WORGEN));
                 if (pTemp && !pTemp->isAlive())
                     pTemp->Respawn();
 
-                pTemp = Unit::GetCreature((*me), pInstance->GetData64(DATA_MOB_FEROCIOUS_RHINO));
+                pTemp = Unit::GetCreature((*me), instance->GetData64(DATA_MOB_FEROCIOUS_RHINO));
                 if (pTemp && !pTemp->isAlive())
                     pTemp->Respawn();
 
-                pTemp = Unit::GetCreature((*me), pInstance->GetData64(DATA_MOB_MASSIVE_JORMUNGAR));
+                pTemp = Unit::GetCreature((*me), instance->GetData64(DATA_MOB_MASSIVE_JORMUNGAR));
                 if (pTemp && !pTemp->isAlive())
                     pTemp->Respawn();
 
-                pTemp = Unit::GetCreature((*me), pInstance->GetData64(DATA_MOB_RAVENOUS_FURBOLG));
+                pTemp = Unit::GetCreature((*me), instance->GetData64(DATA_MOB_RAVENOUS_FURBOLG));
                 if (pTemp && !pTemp->isAlive())
                     pTemp->Respawn();
 
-                GameObject* pGo = pInstance->instance->GetGameObject(pInstance->GetData64(DATA_GORTOK_PALEHOOF_SPHERE));
+                GameObject* pGo = instance->instance->GetGameObject(instance->GetData64(DATA_GORTOK_PALEHOOF_SPHERE));
                 if (pGo)
                 {
                     pGo->SetGoState(GO_STATE_READY);
@@ -192,7 +189,7 @@ public:
             if (!UpdateVictim())
                 return;
 
-            Creature* pTemp = Unit::GetCreature((*me), pInstance ? pInstance->GetData64(DATA_MOB_ORB) : 0);
+            Creature* pTemp = Unit::GetCreature((*me), instance ? instance->GetData64(DATA_MOB_ORB) : 0);
             if (pTemp && pTemp->isAlive())
                 pTemp->DisappearAndDie();
 
@@ -220,10 +217,11 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
-            if (pInstance)
-                pInstance->SetData(DATA_GORTOK_PALEHOOF_EVENT, DONE);
-            Creature* pTemp = Unit::GetCreature((*me), pInstance ? pInstance->GetData64(DATA_MOB_ORB) : 0);
+            if (instance)
+                instance->SetData(DATA_GORTOK_PALEHOOF_EVENT, DONE);
+            Creature* pTemp = Unit::GetCreature((*me), instance ? instance->GetData64(DATA_MOB_ORB) : 0);
             if (pTemp && pTemp->isAlive())
                 pTemp->DisappearAndDie();
         }
@@ -237,7 +235,7 @@ public:
         {
             if (currentPhase == PHASE_NONE)
             {
-                pInstance->SetData(DATA_GORTOK_PALEHOOF_EVENT, IN_PROGRESS);
+                instance->SetData(DATA_GORTOK_PALEHOOF_EVENT, IN_PROGRESS);
                 me->SummonCreature(MOB_STASIS_CONTROLLER, moveLocs[5].x, moveLocs[5].y, moveLocs[5].z, 0, TEMPSUMMON_CORPSE_DESPAWN);
             }
             Phase move = PHASE_NONE;
@@ -263,7 +261,7 @@ public:
                 move = (Phase)(move % 4);
             }
             //send orb to summon spot
-            Creature *pOrb = Unit::GetCreature((*me), pInstance ? pInstance->GetData64(DATA_MOB_ORB) : 0);
+            Creature *pOrb = Unit::GetCreature((*me), instance ? instance->GetData64(DATA_MOB_ORB) : 0);
             if (pOrb && pOrb->isAlive())
             {
                 if (currentPhase == PHASE_NONE)

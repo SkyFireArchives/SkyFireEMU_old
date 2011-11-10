@@ -67,11 +67,10 @@ class boss_elder_nadox : public CreatureScript
 public:
     boss_elder_nadox() : CreatureScript("boss_elder_nadox") { }
 
-    struct boss_elder_nadoxAI : public ScriptedAI
+    struct boss_elder_nadoxAI : public BossAI
     {
-        boss_elder_nadoxAI(Creature *c) : ScriptedAI(c)
+        boss_elder_nadoxAI(Creature *c) : BossAI(c, DATA_ELDER_NADOX_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -84,8 +83,6 @@ public:
         uint32 uiEnragueTimer;
 
         bool bGuardSpawned;
-
-        InstanceScript *pInstance;
 
         void Reset()
         {
@@ -100,16 +97,16 @@ public:
             DeadAhnkaharGuardian = false;
             bGuardSpawned = false;
 
-            if (pInstance)
-                pInstance->SetData(DATA_ELDER_NADOX_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_ELDER_NADOX_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit * /*who*/)
         {
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_ELDER_NADOX_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_ELDER_NADOX_EVENT, IN_PROGRESS);
         }
 
         void KilledUnit(Unit * /*victim*/)
@@ -119,13 +116,14 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_SLAY_3, me); //SAY_SLAY_3 on death?
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_ELDER_NADOX_EVENT, DONE);
+                instance->SetData(DATA_ELDER_NADOX_EVENT, DONE);
                 if (IsHeroic() && !DeadAhnkaharGuardian)
-                    pInstance->DoCompleteAchievement(ACHIEV_RESPECT_YOUR_ELDERS);
+                    instance->DoCompleteAchievement(ACHIEV_RESPECT_YOUR_ELDERS);
             }
         }
 

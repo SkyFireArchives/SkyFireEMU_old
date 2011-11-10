@@ -62,11 +62,10 @@ public:
         return new boss_cyanigosaAI (pCreature);
     }
 
-    struct boss_cyanigosaAI : public ScriptedAI
+    struct boss_cyanigosaAI : public BossAI
     {
-        boss_cyanigosaAI(Creature *c) : ScriptedAI(c)
+        boss_cyanigosaAI(Creature *c) : BossAI(c, DATA_CYANIGOSA)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -77,8 +76,6 @@ public:
         uint32 uiTailSweepTimer;
         uint32 uiUncontrollableEnergyTimer;
 
-        InstanceScript* pInstance;
-
         void Reset()
         {
             uiArcaneVacuumTimer = 10000;
@@ -86,26 +83,26 @@ public:
             uiManaDestructionTimer = 30000;
             uiTailSweepTimer = 20000;
             uiUncontrollableEnergyTimer = 25000;
-            if (pInstance)
-                pInstance->SetData(DATA_CYANIGOSA_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_CYANIGOSA_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_CYANIGOSA_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_CYANIGOSA_EVENT, IN_PROGRESS);
         }
 
         void MoveInLineOfSight(Unit* /*who*/) {}
 
         void UpdateAI(const uint32 diff)
         {
-            if (pInstance && pInstance->GetData(DATA_REMOVE_NPC) == 1)
+            if (instance && instance->GetData(DATA_REMOVE_NPC) == 1)
             {
                 me->ForcedDespawn();
-                pInstance->SetData(DATA_REMOVE_NPC, 0);
+                instance->SetData(DATA_REMOVE_NPC, 0);
             }
 
             //Return since we have no target
@@ -152,10 +149,11 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_CYANIGOSA_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_CYANIGOSA_EVENT, DONE);
         }
 
         void KilledUnit(Unit * victim)

@@ -156,7 +156,7 @@ public:
 
         void JustDied(Unit* /*who*/)
         {
-            _JustDied();
+			_JustDied();
             me->CastSpell(me, SPELL_DIES, true);
 
             CheckPlayersFrostResist();

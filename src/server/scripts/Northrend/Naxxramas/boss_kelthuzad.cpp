@@ -339,6 +339,7 @@ public:
         void JustDied(Unit* /*Killer*/)
         {
             _JustDied();
+
             DoScriptText(SAY_DEATH, me);
 
             std::map<uint64, float>::const_iterator itr;

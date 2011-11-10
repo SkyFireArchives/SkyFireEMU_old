@@ -305,17 +305,13 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            events.Reset();
-            summons.DespawnAll();
+            _JustDied();
 
             if (instance)
                 instance->SetData(DATA_HORSEMEN0 + id, DONE);
 
             if (instance && DoEncounterAction(NULL, false, false, true))
             {
-                instance->SetBossState(BOSS_HORSEMEN, DONE);
-                instance->SaveToDB();
-
                 // Achievements related to the 4-horsemen are given through spell 59450 which does not exist.
                 // There is thus no way it can be given by casting the spell on the players.
                 instance->DoUpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, 59450);

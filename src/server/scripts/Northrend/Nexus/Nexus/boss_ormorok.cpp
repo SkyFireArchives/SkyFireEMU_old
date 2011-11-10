@@ -65,16 +65,13 @@ public:
         return new boss_ormorokAI (pCreature);
     }
 
-    struct boss_ormorokAI : public ScriptedAI
+    struct boss_ormorokAI : public BossAI
     {
-        boss_ormorokAI(Creature *c) : ScriptedAI(c)
+        boss_ormorokAI(Creature *c) : BossAI(c, DATA_ORMOROK_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         bool bFrenzy;
         bool bCrystalSpikes;
@@ -101,24 +98,25 @@ public:
             bFrenzy = false;
             bCrystalSpikes = false;
 
-            if (pInstance)
-                pInstance->SetData(DATA_ORMOROK_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_ORMOROK_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_ORMOROK_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_ORMOROK_EVENT, IN_PROGRESS);
         }
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_ORMOROK_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_ORMOROK_EVENT, DONE);
         }
 
         void KilledUnit(Unit * /*victim*/)
@@ -129,9 +127,8 @@ public:
         void UpdateAI(const uint32 diff)
         {
             if (!UpdateVictim())
-            {
                 return;
-            }
+
             if (bCrystalSpikes)
             {
                 if (uiCrystalSpikesTimer2 <= diff)

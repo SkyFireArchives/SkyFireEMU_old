@@ -350,6 +350,7 @@ public:
         void JustDied(Unit* /*victim*/)
         {
             _JustDied();
+
             DoScriptText(SAY_DEATH, me);
 
             if (ActiveTowers)

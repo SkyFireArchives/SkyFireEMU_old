@@ -110,14 +110,11 @@ public:
         return new boss_volkhanAI(pCreature);
     }
 
-    struct boss_volkhanAI : public ScriptedAI
+    struct boss_volkhanAI : public BossAI
     {
-        boss_volkhanAI(Creature *pCreature) : ScriptedAI(pCreature)
+        boss_volkhanAI(Creature *pCreature) : BossAI(pCreature, DATA_VOLKHAN)
         {
-            m_pInstance = pCreature->GetInstanceScript();
         }
-
-        InstanceScript* m_pInstance;
 
         std::list<uint64> m_lGolemGUIDList;
 
@@ -148,16 +145,16 @@ public:
             DespawnGolem();
             m_lGolemGUIDList.clear();
 
-            if (m_pInstance)
-                m_pInstance->SetData(TYPE_VOLKHAN, NOT_STARTED);
+            if (instance)
+                instance->SetData(TYPE_VOLKHAN, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*pWho*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (m_pInstance)
-                m_pInstance->SetData(TYPE_VOLKHAN, IN_PROGRESS);
+            if (instance)
+                instance->SetData(TYPE_VOLKHAN, IN_PROGRESS);
         }
 
         void AttackStart(Unit* pWho)
@@ -175,11 +172,12 @@ public:
 
         void JustDied(Unit* /*pKiller*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
             DespawnGolem();
 
-            if (m_pInstance)
-                m_pInstance->SetData(TYPE_VOLKHAN, DONE);
+            if (instance)
+                instance->SetData(TYPE_VOLKHAN, DONE);
 
             if (IsHeroic() && GolemsShattered < 5)
             {

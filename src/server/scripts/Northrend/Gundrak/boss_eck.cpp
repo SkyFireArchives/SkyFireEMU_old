@@ -46,11 +46,10 @@ public:
         return new boss_eckAI (pCreature);
     }
 
-    struct boss_eckAI : public ScriptedAI
+    struct boss_eckAI : public BossAI
     {
-        boss_eckAI(Creature *c) : ScriptedAI(c)
+        boss_eckAI(Creature *c) : BossAI(c, DATA_ECK_THE_FEROCIOUS_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -62,8 +61,6 @@ public:
 
         bool bBerserk;
 
-        InstanceScript* pInstance;
-
         void Reset()
         {
             uiBerserkTimer = urand(60*IN_MILLISECONDS, 90*IN_MILLISECONDS); //60-90 secs according to wowwiki
@@ -73,14 +70,14 @@ public:
 
             bBerserk = false;
 
-            if (pInstance)
-                pInstance->SetData(DATA_ECK_THE_FEROCIOUS_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_ECK_THE_FEROCIOUS_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_ECK_THE_FEROCIOUS_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_ECK_THE_FEROCIOUS_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -135,8 +132,9 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_ECK_THE_FEROCIOUS_EVENT, DONE);
+			_JustDied();
+            if (instance)
+                instance->SetData(DATA_ECK_THE_FEROCIOUS_EVENT, DONE);
         }
     };
 };

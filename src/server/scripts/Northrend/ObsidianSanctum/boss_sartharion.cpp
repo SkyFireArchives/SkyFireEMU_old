@@ -241,16 +241,13 @@ public:
         return new boss_sartharionAI(pCreature);
     }
 
-    struct boss_sartharionAI : public ScriptedAI
+    struct boss_sartharionAI : public BossAI
     {
-        boss_sartharionAI(Creature* pCreature) : ScriptedAI(pCreature)
+        boss_sartharionAI(Creature* pCreature) : BossAI(pCreature, DATA_SARTHARION)
         {
-            pInstance = pCreature->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         bool m_bIsBerserk;
         bool m_bIsSoftEnraged;
@@ -304,11 +301,11 @@ public:
             achievProgress = 0;
 
             // Drakes respawning system
-            if (pInstance)
+            if (instance)
             {
-                Creature* pTenebron = Unit::GetCreature(*me, pInstance->GetData64(DATA_TENEBRON));
-                Creature* pShadron = Unit::GetCreature(*me, pInstance->GetData64(DATA_SHADRON));
-                Creature* pVesperon = Unit::GetCreature(*me, pInstance->GetData64(DATA_VESPERON));
+                Creature* pTenebron = Unit::GetCreature(*me, instance->GetData64(DATA_TENEBRON));
+                Creature* pShadron = Unit::GetCreature(*me, instance->GetData64(DATA_SHADRON));
+                Creature* pVesperon = Unit::GetCreature(*me, instance->GetData64(DATA_VESPERON));
                 if (pTenebron)
                 {
                     pTenebron->SetHomePosition(3239.07f, 657.235f, 86.8775f, 4.74729f);
@@ -319,7 +316,7 @@ public:
                         pTenebron->GetMotionMaster()->MoveTargetedHome();
                     }else
                     {
-                        if (pInstance->GetData(TYPE_TENEBRON_PREKILLED) == false)
+                        if (instance->GetData(TYPE_TENEBRON_PREKILLED) == false)
                         {
                             pTenebron->Respawn();
                             pTenebron->GetMotionMaster()->MoveTargetedHome();
@@ -337,7 +334,7 @@ public:
                         pShadron->GetMotionMaster()->MoveTargetedHome();
                     }else
                     {
-                        if (pInstance->GetData(TYPE_SHADRON_PREKILLED) == false)
+                        if (instance->GetData(TYPE_SHADRON_PREKILLED) == false)
                         {
                             pShadron->Respawn();
                             pShadron->GetMotionMaster()->MoveTargetedHome();
@@ -355,7 +352,7 @@ public:
                         pVesperon->GetMotionMaster()->MoveTargetedHome();
                     }else
                     {
-                        if (pInstance->GetData(TYPE_VESPERON_PREKILLED) == false)
+                        if (instance->GetData(TYPE_VESPERON_PREKILLED) == false)
                         {
                             pVesperon->Respawn();
                             pVesperon->GetMotionMaster()->MoveTargetedHome();
@@ -368,8 +365,8 @@ public:
 
         void JustReachedHome()
         {
-            if (pInstance)
-                pInstance->SetData(TYPE_SARTHARION_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(TYPE_SARTHARION_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*pWho*/)
@@ -377,9 +374,9 @@ public:
             DoScriptText(SAY_SARTHARION_AGGRO, me);
             DoZoneInCombat();
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(TYPE_SARTHARION_EVENT, IN_PROGRESS);
+                instance->SetData(TYPE_SARTHARION_EVENT, IN_PROGRESS);
                 FetchDragons();
                 DoCast(SPELL_PYROBUFFET_TRIGGER_AURA);
             }
@@ -387,13 +384,14 @@ public:
 
         void JustDied(Unit* /*pKiller*/)
         {
+			_JustDied();
             DoScriptText(SAY_SARTHARION_DEATH, me);
 
-            if (pInstance)
+            if (instance)
             {
-                Creature* pTenebron = Unit::GetCreature(*me, pInstance->GetData64(DATA_TENEBRON));
-                Creature* pShadron = Unit::GetCreature(*me, pInstance->GetData64(DATA_SHADRON));
-                Creature* pVesperon = Unit::GetCreature(*me, pInstance->GetData64(DATA_VESPERON));
+                Creature* pTenebron = Unit::GetCreature(*me, instance->GetData64(DATA_TENEBRON));
+                Creature* pShadron = Unit::GetCreature(*me, instance->GetData64(DATA_SHADRON));
+                Creature* pVesperon = Unit::GetCreature(*me, instance->GetData64(DATA_VESPERON));
                 if (pTenebron && pTenebron->isAlive())
                     pTenebron->DisappearAndDie();
                 if (pShadron && pShadron->isAlive())
@@ -402,20 +400,20 @@ public:
                     pVesperon->DisappearAndDie();
 
                 if (achievProgress == 1)
-                    pInstance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_ASSIST, H_ACHIEV_TWILIGHT_ASSIST));
+                    instance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_ASSIST, H_ACHIEV_TWILIGHT_ASSIST));
                 else if (achievProgress == 2)
                 {
-                    pInstance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_ASSIST, H_ACHIEV_TWILIGHT_ASSIST));
-                    pInstance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_DUO, H_ACHIEV_TWILIGHT_DUO));
+                    instance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_ASSIST, H_ACHIEV_TWILIGHT_ASSIST));
+                    instance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_DUO, H_ACHIEV_TWILIGHT_DUO));
                 }
                 else if (achievProgress == 3)
                 {
-                    pInstance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_ASSIST, H_ACHIEV_TWILIGHT_ASSIST));
-                    pInstance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_DUO, H_ACHIEV_TWILIGHT_DUO));
-                    pInstance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_ZONE, H_ACHIEV_TWILIGHT_ZONE));
+                    instance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_ASSIST, H_ACHIEV_TWILIGHT_ASSIST));
+                    instance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_DUO, H_ACHIEV_TWILIGHT_DUO));
+                    instance->DoCompleteAchievement(RAID_MODE(ACHIEV_TWILIGHT_ZONE, H_ACHIEV_TWILIGHT_ZONE));
                 }
 
-                pInstance->SetData(TYPE_SARTHARION_EVENT, DONE);
+                instance->SetData(TYPE_SARTHARION_EVENT, DONE);
             }
         }
 
@@ -438,15 +436,15 @@ public:
 
         void FetchDragons()
         {
-            if (!pInstance)
+            if (!instance)
                 return;
 
             me->ResetLootMode();
             achievProgress = 0;
 
-            Creature* pFetchTene = Unit::GetCreature(*me, pInstance->GetData64(DATA_TENEBRON));
-            Creature* pFetchShad = Unit::GetCreature(*me, pInstance->GetData64(DATA_SHADRON));
-            Creature* pFetchVesp = Unit::GetCreature(*me, pInstance->GetData64(DATA_VESPERON));
+            Creature* pFetchTene = Unit::GetCreature(*me, instance->GetData64(DATA_TENEBRON));
+            Creature* pFetchShad = Unit::GetCreature(*me, instance->GetData64(DATA_SHADRON));
+            Creature* pFetchVesp = Unit::GetCreature(*me, instance->GetData64(DATA_VESPERON));
 
             //if at least one of the dragons are alive and are being called
             bool bCanUseWill = false;
@@ -499,9 +497,9 @@ public:
 
         void CallDragon(uint32 uiDataId)
         {
-            if (pInstance)
+            if (instance)
             {
-                if (Creature *pTemp = Unit::GetCreature(*me, pInstance->GetData64(uiDataId)))
+                if (Creature *pTemp = Unit::GetCreature(*me, instance->GetData64(uiDataId)))
                 {
                     if (pTemp->isAlive() && !pTemp->getVictim())
                     {
@@ -579,9 +577,9 @@ public:
             if (!UpdateVictim())
                 return;
 
-            Unit* pTene = Unit::GetUnit(*me, pInstance ? pInstance->GetData64(DATA_TENEBRON) : 0);
-            Unit* pShad = Unit::GetUnit(*me, pInstance ? pInstance->GetData64(DATA_SHADRON) : 0);
-            Unit* pVesp = Unit::GetUnit(*me, pInstance ? pInstance->GetData64(DATA_VESPERON) : 0);
+            Unit* pTene = Unit::GetUnit(*me, instance ? instance->GetData64(DATA_TENEBRON) : 0);
+            Unit* pShad = Unit::GetUnit(*me, instance ? instance->GetData64(DATA_SHADRON) : 0);
+            Unit* pVesp = Unit::GetUnit(*me, instance ? instance->GetData64(DATA_VESPERON) : 0);
 
             //spell will target dragons, if they are still alive at 35%
             if (!m_bIsBerserk && !HealthAbovePct(35)

@@ -74,14 +74,11 @@ public:
         return new boss_lokenAI(pCreature);
     }
 
-    struct boss_lokenAI : public ScriptedAI
+    struct boss_lokenAI : public BossAI
     {
-        boss_lokenAI(Creature* pCreature) : ScriptedAI(pCreature)
+        boss_lokenAI(Creature* pCreature) : BossAI(pCreature, DATA_LOKEN)
         {
-            m_pInstance = pCreature->GetInstanceScript();
         }
-
-        InstanceScript* m_pInstance;
 
         bool m_bIsAura;
 
@@ -103,10 +100,10 @@ public:
 
             m_uiHealthAmountModifier = 1;
 
-            if (m_pInstance)
+            if (instance)
             {
-                m_pInstance->SetData(TYPE_LOKEN, NOT_STARTED);
-                m_pInstance->DoStopTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMELY_DEATH_START_EVENT);
+                instance->SetData(TYPE_LOKEN, NOT_STARTED);
+                instance->DoStopTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMELY_DEATH_START_EVENT);
             }
         }
 
@@ -114,19 +111,20 @@ public:
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (m_pInstance)
+            if (instance)
             {
-                m_pInstance->SetData(TYPE_LOKEN, IN_PROGRESS);
-                m_pInstance->DoStartTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMELY_DEATH_START_EVENT);
+                instance->SetData(TYPE_LOKEN, IN_PROGRESS);
+                instance->DoStartTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMELY_DEATH_START_EVENT);
             }
         }
 
         void JustDied(Unit* /*pKiller*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (m_pInstance)
-                m_pInstance->SetData(TYPE_LOKEN, DONE);
+            if (instance)
+                instance->SetData(TYPE_LOKEN, DONE);
         }
 
         void KilledUnit(Unit* /*pVictim*/)

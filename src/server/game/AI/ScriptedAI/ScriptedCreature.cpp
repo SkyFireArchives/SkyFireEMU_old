@@ -578,6 +578,41 @@ void BossAI::_JustDied()
         instance->SetBossState(bossId, DONE);
         instance->SaveToDB();
     }
+
+	/*
+	Award Points
+	For 4.0.6a version: 
+	BCRaid = 10 JP/boss
+	LKHcs = 16 JP/boss
+	LKRaid = 23 JP/boss
+	CataclysmHcs = 75 JP/boss
+	CataclysmRaid = 75 VP/10man and 105 VP/25man
+	*/
+	if (Map* map = instance->instance)
+	{
+		Map::PlayerList const &PlayerList = map->GetPlayers();
+		if (!PlayerList.isEmpty())
+		{
+			for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+			{
+				if (Player* player = i->getSource())
+				{
+					if (map->GetEntry()->Expansion() == 1 && map->GetEntry()->IsRaid())
+						player->ModifyCurrency(395, 1000);
+					else if (map->GetEntry()->Expansion() == 2 && !map->IsRaid() && map->IsHeroic())
+						player->ModifyCurrency(395, 1600);
+					else if (map->GetEntry()->Expansion() == 2 && map->IsRaid())
+						player->ModifyCurrency(395, 2300);
+					else if (map->GetEntry()->Expansion() == 3 && !map->IsRaid() && map->IsHeroic())
+						player->ModifyCurrency(395, 7500);
+					else if (map->GetEntry()->Expansion() == 3 && map->IsRaid() && !Is25ManRaid())
+						player->ModifyCurrency(396, 7500);
+					else if (map->GetEntry()->Expansion() == 3 && Is25ManRaid())
+						player->ModifyCurrency(396, 10500);
+				}
+			}
+		}
+	}
 }
 
 void BossAI::_EnterCombat()

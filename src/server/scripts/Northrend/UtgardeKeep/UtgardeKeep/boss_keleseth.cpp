@@ -128,16 +128,13 @@ public:
         return new boss_kelesethAI (pCreature);
     }
 
-    struct boss_kelesethAI : public ScriptedAI
+    struct boss_kelesethAI : public BossAI
     {
-        boss_kelesethAI(Creature *c) : ScriptedAI(c)
+        boss_kelesethAI(Creature *c) : BossAI(c, DATA_PRINCEKELESETH)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         uint32 FrostTombTimer;
         uint32 SummonSkeletonsTimer;
@@ -156,8 +153,8 @@ public:
 
             ResetTimer();
 
-            if (pInstance)
-                pInstance->SetData(DATA_PRINCEKELESETH_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_PRINCEKELESETH_EVENT, NOT_STARTED);
         }
 
         void KilledUnit(Unit * victim)
@@ -170,6 +167,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
             if (IsHeroic() && !ShatterFrostTomb)
@@ -187,8 +185,8 @@ public:
                 }
             }
 
-            if (pInstance)
-                pInstance->SetData(DATA_PRINCEKELESETH_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_PRINCEKELESETH_EVENT, DONE);
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -196,8 +194,8 @@ public:
             DoScriptText(SAY_AGGRO, me);
             DoZoneInCombat();
 
-            if (pInstance)
-                pInstance->SetData(DATA_PRINCEKELESETH_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_PRINCEKELESETH_EVENT, IN_PROGRESS);
         }
 
         void ResetTimer(uint32 inc = 0)

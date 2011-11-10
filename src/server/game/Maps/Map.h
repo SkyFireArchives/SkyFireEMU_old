@@ -383,6 +383,7 @@ class Map : public GridRefManager<NGridType>
         bool IsBattleground() const { return i_mapEntry && i_mapEntry->IsBattleground(); }
         bool IsBattleArena() const { return i_mapEntry && i_mapEntry->IsBattleArena(); }
         bool IsBattlegroundOrArena() const { return i_mapEntry && i_mapEntry->IsBattlegroundOrArena(); }
+        
         bool GetEntrancePos(int32 &mapid, float &x, float &y)
         {
             if (!i_mapEntry)

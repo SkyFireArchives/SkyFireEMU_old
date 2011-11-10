@@ -249,7 +249,9 @@ public:
         {
             LiveTriggerGUID.clear();
             DeadTriggerGUID.clear();
+
             _JustDied();
+
             DoScriptText(SAY_DEATH, me);
             if (instance)
                 instance->SetData(DATA_GOTHIK_GATE, GO_STATE_ACTIVE);

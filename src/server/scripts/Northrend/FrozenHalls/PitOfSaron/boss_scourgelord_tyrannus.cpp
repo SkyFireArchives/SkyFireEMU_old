@@ -103,29 +103,25 @@ public:
         return new boss_tyrannusAI(pCreature);
     }
 
-    struct boss_tyrannusAI : public ScriptedAI
+    struct boss_tyrannusAI : public BossAI
     {
-        boss_tyrannusAI(Creature *c) : ScriptedAI(c)
+        boss_tyrannusAI(Creature *c) : BossAI(c, DATA_TYRANNUS_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
-        EventMap events;
 
         void Reset()
         {
             events.Reset();
 
-            if (pInstance)
-                pInstance->SetData(DATA_TYRANNUS_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_TYRANNUS_EVENT, NOT_STARTED);
         }
 
         Creature* GetRimefang()
         {
-            return me->GetCreature(*me, pInstance->GetData64(DATA_RIMEFANG));
+            return me->GetCreature(*me, instance->GetData64(DATA_RIMEFANG));
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -136,8 +132,8 @@ public:
             // restore health if any damage done during intro
             me->SetFullHealth();
 
-            if (pInstance)
-                pInstance->SetData(DATA_TYRANNUS_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_TYRANNUS_EVENT, IN_PROGRESS);
 
             events.ScheduleEvent(EVENT_FORCEFUL_SMASH, 10000);
             events.ScheduleEvent(EVENT_OVERLORDS_BRAND, 35000);
@@ -151,11 +147,12 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_TYRANNUS_EVENT, DONE);
+                instance->SetData(DATA_TYRANNUS_EVENT, DONE);
                 if (Creature* pRimefang = GetRimefang())
                     pRimefang->ForcedDespawn();
             }

@@ -66,11 +66,10 @@ public:
         return new boss_krystallusAI (pCreature);
     }
 
-    struct boss_krystallusAI : public ScriptedAI
+    struct boss_krystallusAI : public BossAI
     {
-        boss_krystallusAI(Creature *c) : ScriptedAI(c)
+        boss_krystallusAI(Creature *c) : BossAI(c, DATA_KRYSTALLUS_EVENT)
         {
-            pInstance = c->GetInstanceScript();
         }
 
         uint32 uiBoulderTossTimer;
@@ -80,8 +79,6 @@ public:
         uint32 uiStompTimer;
 
         bool bIsSlam;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
@@ -93,15 +90,15 @@ public:
             uiStompTimer = 20000 + rand()%9000;
             uiShatterTimer = 0;
 
-            if (pInstance)
-                pInstance->SetData(DATA_KRYSTALLUS_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_KRYSTALLUS_EVENT, NOT_STARTED);
         }
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_KRYSTALLUS_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_KRYSTALLUS_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -151,10 +148,11 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_KRYSTALLUS_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_KRYSTALLUS_EVENT, DONE);
         }
 
         void KilledUnit(Unit * victim)

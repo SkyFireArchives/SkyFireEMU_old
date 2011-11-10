@@ -56,18 +56,15 @@ class boss_hadronox : public CreatureScript
 public:
     boss_hadronox() : CreatureScript("boss_hadronox") { }
 
-    struct boss_hadronoxAI : public ScriptedAI
+    struct boss_hadronoxAI : public BossAI
     {
-        boss_hadronoxAI(Creature* c) : ScriptedAI(c)
+        boss_hadronoxAI(Creature* c) : BossAI(c, DATA_HADRONOX_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             fMaxDistance = 50.0f;
             bFirstTime = true;
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript* pInstance;
 
         uint32 uiAcidTimer;
         uint32 uiLeechTimer;
@@ -92,8 +89,8 @@ public:
             uiDoorsTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS);
             uiCheckDistanceTimer = 2*IN_MILLISECONDS;
 
-            if (pInstance && (pInstance->GetData(DATA_HADRONOX_EVENT) != DONE && !bFirstTime))
-                pInstance->SetData(DATA_HADRONOX_EVENT, FAIL);
+            if (instance && (instance->GetData(DATA_HADRONOX_EVENT) != DONE && !bFirstTime))
+                instance->SetData(DATA_HADRONOX_EVENT, FAIL);
 
             bFirstTime = false;
         }
@@ -110,14 +107,15 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_HADRONOX_EVENT, DONE);
+			_JustDied();
+            if (instance)
+                instance->SetData(DATA_HADRONOX_EVENT, DONE);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_HADRONOX_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_HADRONOX_EVENT, IN_PROGRESS);
             me->SetInCombatWithZone();
         }
 

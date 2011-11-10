@@ -66,11 +66,10 @@ class boss_trollgore : public CreatureScript
 public:
     boss_trollgore() : CreatureScript("boss_trollgore") { }
 
-    struct boss_trollgoreAI : public ScriptedAI
+    struct boss_trollgoreAI : public BossAI
     {
-        boss_trollgoreAI(Creature *c) : ScriptedAI(c), lSummons(me)
+        boss_trollgoreAI(Creature *c) : BossAI(c, DATA_TROLLGORE_EVENT)
         {
-            pInstance = c->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
@@ -84,10 +83,6 @@ public:
 
         bool bAchiev;
 
-        SummonList lSummons;
-
-        InstanceScript* pInstance;
-
         void Reset()
         {
             uiConsumeTimer = 15*IN_MILLISECONDS;
@@ -99,20 +94,20 @@ public:
 
             bAchiev = IsHeroic();
 
-            lSummons.DespawnAll();
+            summons.DespawnAll();
 
             me->RemoveAura(DUNGEON_MODE(SPELL_CONSUME_AURA, H_SPELL_CONSUME_AURA));
 
-            if (pInstance)
-                pInstance->SetData(DATA_TROLLGORE_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_TROLLGORE_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_TROLLGORE_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_TROLLGORE_EVENT, IN_PROGRESS);
         }
 
         void UpdateAI(const uint32 diff)
@@ -167,15 +162,14 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            lSummons.DespawnAll();
-
-            if (pInstance)
+            if (instance)
             {
                 if (bAchiev)
-                    pInstance->DoCompleteAchievement(ACHIEV_CONSUMPTION_JUNCTION);
-                pInstance->SetData(DATA_TROLLGORE_EVENT, DONE);
+                    instance->DoCompleteAchievement(ACHIEV_CONSUMPTION_JUNCTION);
+                instance->SetData(DATA_TROLLGORE_EVENT, DONE);
             }
         }
 
@@ -188,7 +182,7 @@ public:
 
         void JustSummoned(Creature* summon)
         {
-            lSummons.push_back(summon->GetGUID());
+            summons.push_back(summon->GetGUID());
             if (summon->AI())
                 summon->AI()->AttackStart(me);
         }

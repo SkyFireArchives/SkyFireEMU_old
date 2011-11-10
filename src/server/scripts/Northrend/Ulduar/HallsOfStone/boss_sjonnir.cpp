@@ -96,11 +96,10 @@ public:
         return new boss_sjonnirAI (pCreature);
     }
 
-    struct boss_sjonnirAI : public ScriptedAI
+    struct boss_sjonnirAI : public BossAI
     {
-        boss_sjonnirAI(Creature *c) : ScriptedAI(c), lSummons(me)
+        boss_sjonnirAI(Creature *c) : BossAI(c, DATA_SJONNIR_EVENT)
         {
-            pInstance = c->GetInstanceScript();
         }
 
         bool bIsFrenzy;
@@ -113,10 +112,6 @@ public:
         uint32 uiFrenzyTimer;
         uint32 uiEncounterTimer;
         uint32 uiKilledIronSludges;
-
-        SummonList lSummons;
-
-        InstanceScript* pInstance;
 
         void Reset()
         {
@@ -131,10 +126,10 @@ public:
             uiFrenzyTimer = 300000; //5 minutes
             uiKilledIronSludges = 0;
 
-            lSummons.DespawnAll();
+            summons.DespawnAll();
 
-            if (pInstance)
-                pInstance->SetData(DATA_SJONNIR_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_SJONNIR_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -143,16 +138,16 @@ public:
 
             uiEncounterTimer = 0;
 
-            if (pInstance)
+            if (instance)
             {
-                if (GameObject *pDoor = pInstance->instance->GetGameObject(pInstance->GetData64(DATA_SJONNIR_DOOR)))
+                if (GameObject *pDoor = instance->instance->GetGameObject(instance->GetData64(DATA_SJONNIR_DOOR)))
                     if (pDoor->GetGoState() == GO_STATE_READY)
                     {
                         EnterEvadeMode();
                         return;
                     }
 
-                pInstance->SetData(DATA_SJONNIR_EVENT, IN_PROGRESS);
+                instance->SetData(DATA_SJONNIR_EVENT, IN_PROGRESS);
             }
         }
 
@@ -219,19 +214,19 @@ public:
             summon->GetMotionMaster()->MovePoint(0, CenterPoint.x, CenterPoint.y, CenterPoint.z);
             /*if (Unit* pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                 summon->AI()->AttackStart(pTarget);*/
-            lSummons.Summon(summon);
+            summons.Summon(summon);
         }
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
-            lSummons.DespawnAll();
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_SJONNIR_EVENT, DONE);
+                instance->SetData(DATA_SJONNIR_EVENT, DONE);
                 if (IsHeroic() && uiKilledIronSludges > 4)
-                    pInstance->DoCompleteAchievement(ACHIEV_ABUSE_THE_OOZE);
+                    instance->DoCompleteAchievement(ACHIEV_ABUSE_THE_OOZE);
             }
         }
         void KilledUnit(Unit * victim)

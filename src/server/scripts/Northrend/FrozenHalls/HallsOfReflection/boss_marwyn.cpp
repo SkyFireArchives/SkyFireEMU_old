@@ -64,7 +64,7 @@ public:
 
     struct boss_marwynAI : public boss_horAI
     {
-        boss_marwynAI(Creature *pCreature) : boss_horAI(pCreature) {
+        boss_marwynAI(Creature *pCreature) : boss_horAI(pCreature, DATA_MARWYN_EVENT) {
         me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);}
 
@@ -72,15 +72,15 @@ public:
         {
             boss_horAI::Reset();
 
-            if (pInstance)
-                pInstance->SetData(DATA_MARWYN_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_MARWYN_EVENT, NOT_STARTED);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             DoScriptText(SAY_AGGRO, me);
-            if (pInstance)
-                pInstance->SetData(DATA_MARWYN_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_MARWYN_EVENT, IN_PROGRESS);
 
             events.ScheduleEvent(EVENT_OBLITERATE, 30000);          // TODO Check timer
             events.ScheduleEvent(EVENT_WELL_OF_CORRUPTION, 13000);
@@ -90,10 +90,11 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_MARWYN_EVENT, DONE);
+            if (instance)
+                instance->SetData(DATA_MARWYN_EVENT, DONE);
         }
 
         void KilledUnit(Unit * /*victim*/)

@@ -72,22 +72,18 @@ class boss_volazj : public CreatureScript
 public:
     boss_volazj() : CreatureScript("boss_volazj") { }
 
-    struct boss_volazjAI : public ScriptedAI
+    struct boss_volazjAI : public BossAI
     {
-        boss_volazjAI(Creature* pCreature) : ScriptedAI(pCreature), Summons(me)
+        boss_volazjAI(Creature* pCreature) : BossAI(pCreature, DATA_HERALD_VOLAZJ_EVENT)
         {
-            pInstance = pCreature->GetInstanceScript();
             me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
             me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_GRIP, true);
         }
-
-        InstanceScript *pInstance;
 
         uint32 uiMindFlayTimer;
         uint32 uiShadowBoltVolleyTimer;
         uint32 uiShiverTimer;
         uint32 insanityHandled;
-        SummonList Summons;
 
         // returns the percentage of health after taking the given damage.
         uint32 GetHealthPct(uint32 damage)
@@ -164,10 +160,10 @@ public:
             uiShadowBoltVolleyTimer = 5*IN_MILLISECONDS;
             uiShiverTimer = 15*IN_MILLISECONDS;
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_HERALD_VOLAZJ, NOT_STARTED);
-                pInstance->DoStopTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_QUICK_DEMISE_START_EVENT);
+                instance->SetData(DATA_HERALD_VOLAZJ, NOT_STARTED);
+                instance->DoStopTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_QUICK_DEMISE_START_EVENT);
             }
 
             // Visible for all players in insanity
@@ -178,7 +174,7 @@ public:
             ResetPlayersPhaseMask();
 
             // Cleanup
-            Summons.DespawnAll();
+            summons.DespawnAll();
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         }
 
@@ -186,16 +182,16 @@ public:
         {
             DoScriptText(SAY_AGGRO, me);
 
-            if (pInstance)
+            if (instance)
             {
-                pInstance->SetData(DATA_HERALD_VOLAZJ, IN_PROGRESS);
-                pInstance->DoStartTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_QUICK_DEMISE_START_EVENT);
+                instance->SetData(DATA_HERALD_VOLAZJ, IN_PROGRESS);
+                instance->DoStartTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_QUICK_DEMISE_START_EVENT);
             }
         }
 
         void JustSummoned(Creature *summon)
         {
-            Summons.Summon(summon);
+            summons.Summon(summon);
         }
 
         uint32 GetSpellForPhaseMask(uint32 phase)
@@ -226,10 +222,10 @@ public:
         {
             uint32 phase= summon->GetPhaseMask();
             uint32 nextPhase = 0;
-            Summons.Despawn(summon);
+            summons.Despawn(summon);
 
             // Check if all summons in this phase killed
-            for (SummonList::const_iterator iter = Summons.begin(); iter != Summons.end(); ++iter)
+            for (SummonList::const_iterator iter = summons.begin(); iter != summons.end(); ++iter)
             {
                 if (Creature *visage = Unit::GetCreature(*me, *iter))
                 {
@@ -274,7 +270,7 @@ public:
 
             if (insanityHandled)
             {
-                if (!Summons.empty())
+                if (!summons.empty())
                     return;
 
                 insanityHandled = 0;
@@ -307,12 +303,11 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
+			_JustDied();
             DoScriptText(SAY_DEATH_1, me);
 
-            if (pInstance)
-                pInstance->SetData(DATA_HERALD_VOLAZJ, DONE);
-
-            Summons.DespawnAll();
+            if (instance)
+                instance->SetData(DATA_HERALD_VOLAZJ, DONE);
             ResetPlayersPhaseMask();
         }
 

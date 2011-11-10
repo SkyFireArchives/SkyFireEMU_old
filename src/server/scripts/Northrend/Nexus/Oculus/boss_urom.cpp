@@ -102,14 +102,11 @@ public:
         return new boss_uromAI (pCreature);
     }
 
-    struct boss_uromAI : public ScriptedAI
+    struct boss_uromAI : public BossAI
     {
-        boss_uromAI(Creature* pCreature) : ScriptedAI(pCreature)
+        boss_uromAI(Creature* pCreature) : BossAI(pCreature, DATA_UROM_EVENT)
         {
-            pInstance = pCreature->GetInstanceScript();
         }
-
-        InstanceScript* pInstance;
 
         float x, y;
 
@@ -126,13 +123,13 @@ public:
 
         void Reset()
         {
-            if (pInstance && pInstance->GetData(DATA_VAROS_EVENT) != DONE)
+            if (instance && instance->GetData(DATA_VAROS_EVENT) != DONE)
                 DoCast(SPELL_ARCANE_SHIELD);
 
-            if (pInstance)
-                pInstance->SetData(DATA_UROM_EVENT, NOT_STARTED);
+            if (instance)
+                instance->SetData(DATA_UROM_EVENT, NOT_STARTED);
 
-            if (pInstance && pInstance->GetData(DATA_UROM_PLATAFORM) == 0)
+            if (instance && instance->GetData(DATA_UROM_PLATAFORM) == 0)
             {
                 uiGroup[0] = 0;
                 uiGroup[1] = 0;
@@ -155,15 +152,15 @@ public:
 
         void EnterCombat(Unit* /*pWho*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_UROM_EVENT, IN_PROGRESS);
+            if (instance)
+                instance->SetData(DATA_UROM_EVENT, IN_PROGRESS);
 
             SetGroups();
             SummonGroups();
             CastTeleport();
 
-            if (pInstance && pInstance->GetData(DATA_UROM_PLATAFORM) != 3)
-                pInstance->SetData(DATA_UROM_PLATAFORM, pInstance->GetData(DATA_UROM_PLATAFORM)+1);
+            if (instance && instance->GetData(DATA_UROM_PLATAFORM) != 3)
+                instance->SetData(DATA_UROM_PLATAFORM, instance->GetData(DATA_UROM_PLATAFORM)+1);
         }
 
         void AttackStart(Unit* pWho)
@@ -190,7 +187,7 @@ public:
 
         void SetGroups()
         {
-            if (!pInstance || pInstance->GetData(DATA_UROM_PLATAFORM) != 0)
+            if (!instance || instance->GetData(DATA_UROM_PLATAFORM) != 0)
                 return;
 
             while (uiGroup[0] == uiGroup[1] || uiGroup[0] == uiGroup[2] || uiGroup[1] == uiGroup[2])
@@ -228,23 +225,23 @@ public:
 
         void SummonGroups()
         {
-            if (!pInstance || pInstance->GetData(DATA_UROM_PLATAFORM) > 2)
+            if (!instance || instance->GetData(DATA_UROM_PLATAFORM) > 2)
                 return;
 
             for (uint8 uiI = 0; uiI < 4 ; uiI++)
             {
                 SetPosition(uiI);
-                me->SummonCreature(Group[uiGroup[pInstance->GetData(DATA_UROM_PLATAFORM)]].uiEntry[uiI], x, y, me->GetPositionZ(), me->GetOrientation());
+                me->SummonCreature(Group[uiGroup[instance->GetData(DATA_UROM_PLATAFORM)]].uiEntry[uiI], x, y, me->GetPositionZ(), me->GetOrientation());
             }
         }
 
         void CastTeleport()
         {
-            if (!pInstance || pInstance->GetData(DATA_UROM_PLATAFORM) > 2)
+            if (!instance || instance->GetData(DATA_UROM_PLATAFORM) > 2)
                 return;
 
-            DoScriptText(SayAggro[pInstance->GetData(DATA_UROM_PLATAFORM)], me);
-            DoCast(TeleportSpells[pInstance->GetData(DATA_UROM_PLATAFORM)]);
+            DoScriptText(SayAggro[instance->GetData(DATA_UROM_PLATAFORM)], me);
+            DoCast(TeleportSpells[instance->GetData(DATA_UROM_PLATAFORM)]);
         }
 
         void UpdateAI(const uint32 uiDiff)
@@ -253,7 +250,7 @@ public:
             if (!UpdateVictim())
                 return;
 
-            if (!pInstance || pInstance->GetData(DATA_UROM_PLATAFORM) < 2)
+            if (!instance || instance->GetData(DATA_UROM_PLATAFORM) < 2)
                 return;
 
             if (uiTeleportTimer <= uiDiff)
@@ -315,8 +312,9 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            if (pInstance)
-                pInstance->SetData(DATA_UROM_EVENT, DONE);
+			_JustDied();
+            if (instance)
+                instance->SetData(DATA_UROM_EVENT, DONE);
         }
 
         void JustSummoned(Creature* pSummon)

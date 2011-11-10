@@ -298,6 +298,7 @@ class boss_blood_council_controller : public CreatureScript
             void JustDied(Unit* /*killer*/)
             {
                 _JustDied();
+
                 // kill the other 2 princes too
                 for (uint8 i = 0; i < 2; ++i)
                 {
