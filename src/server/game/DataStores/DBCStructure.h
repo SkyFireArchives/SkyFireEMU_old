@@ -1289,10 +1289,6 @@ struct MapEntry
     bool IsBattleground() const { return map_type == MAP_BATTLEGROUND; }
     bool IsBattleArena() const { return map_type == MAP_ARENA; }
     bool IsBattlegroundOrArena() const { return map_type == MAP_BATTLEGROUND || map_type == MAP_ARENA; }
-	bool IsLichKingDungeon() const { return MapID == 619 || MapID == 601 || MapID == 595 || MapID == 650 || MapID == 600 || MapID == 604 || MapID == 632 || MapID == 658 || MapID == 668 || MapID == 576 || MapID == 578 || MapID == 608 || MapID == 602 || MapID == 599 || MapID == 574 || MapID == 575; }
-	bool IsLichKingRaid() const { return MapID == 649 || MapID == 631 || MapID == 533 || MapID == 249 || MapID == 616 || MapID == 603 || MapID == 624 || MapID == 615 || MapID == 724; }
-	bool IsCataclysmDungeon() const { return MapID == 643 || MapID == 645 || MapID == 670 || MapID == 644 || MapID == 755 || MapID == 725 || MapID == 657; }
-	bool IsCataclysmRaid() const { return MapID == 757 || MapID == 669 || MapID == 671 || MapID == 754; }
 
     bool GetEntrancePos(int32 &mapid, float &x, float &y) const
     {
