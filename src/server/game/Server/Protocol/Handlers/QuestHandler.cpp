@@ -524,6 +524,7 @@ void WorldSession::HandleQuestgiverCompleteQuest(WorldPacket& recv_data)
 
 void WorldSession::HandleQuestgiverQuestAutoLaunch(WorldPacket& recvPacket)
 {
+    //Hack fix to suppress an error. Will fix this another night. To tired to research.
     recvPacket.read_skip<uint64>();
 	sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUESTGIVER_QUEST_AUTOLAUNCH");
 }
