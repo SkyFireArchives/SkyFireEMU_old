@@ -409,7 +409,7 @@ enum Opcodes
     CMSG_QUESTGIVER_HELLO                            = 0x036AC, // 4.0.6a 13623
     SMSG_QUESTGIVER_QUEST_LIST                       = 0x02B88, // 4.0.6a 13623
     CMSG_QUESTGIVER_QUERY_QUEST                      = 0x02CC0, // 4.0.6a 13623
-    CMSG_QUESTGIVER_QUEST_AUTOLAUNCH                 = 0x10064, //
+    CMSG_QUESTGIVER_QUEST_AUTOLAUNCH                 = 0x00613, //  ??????????
     SMSG_QUESTGIVER_QUEST_DETAILS                    = 0x068A0, // 4.0.6a 13623
     CMSG_QUESTGIVER_ACCEPT_QUEST                     = 0x020C4, // 4.0.6a 13623
     CMSG_QUESTGIVER_COMPLETE_QUEST                   = 0x0B5AC, // 4.0.6a 13623
@@ -1172,7 +1172,7 @@ enum Opcodes
     SMSG_CONVERT_RUNE                                = 0x0B4AC, // 4.0.6a 13623
     SMSG_RESYNC_RUNES                                = 0x101E9, //
     SMSG_ADD_RUNE_POWER                              = 0x101EA, //
-    CMSG_START_QUEST                                 = 0x00613, // 4.0.6a 13623
+    CMSG_START_QUEST                                 = 0x10000, // 4.0.6a 13623  0x00613
     CMSG_REMOVE_GLYPH                                = 0x101EC, //
     CMSG_DUMP_OBJECTS                                = 0x101ED, //
     SMSG_DUMP_OBJECTS_DATA                           = 0x101EE, //
