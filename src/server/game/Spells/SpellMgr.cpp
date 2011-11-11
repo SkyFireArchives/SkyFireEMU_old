@@ -3917,6 +3917,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 70492: case 72505:                 // Ooze Eruption
         case 72624: case 72625:                 // Ooze Eruption
         case 89348: case 95178:                 // Demon Repellent Ray
+        case 86704:                             // Ancient Fury
             // ONLY SPELLS WITH SPELLFAMILY_GENERIC and EFFECT_SCHOOL_DAMAGE
             mSpellCustomAttr[i] |= SPELL_ATTR0_CU_SHARE_DAMAGE;
             count++;
@@ -4280,6 +4281,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->AttributesEx3 |= SPELL_ATTR3_NO_DONE_BONUS;
             count++;
             break;
+        case 86674: // Ancient Healer
+            spellInfo->procCharges = 5;
+            count++;
+            break;
         case 81782: // Power Word : Barrier
             spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ALLY;
             spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ALLY;
@@ -4423,11 +4428,6 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectApplyAuraName[1] = SPELL_AURA_MOD_POWER_REGEN;
             count++;
             break;
-      case 86150: // Guardian of Ancient Kings
-           spellInfo->EffectTriggerSpell[0] = 86698;
-           spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
-           count++;
-           break;
         default:
             break;
         }
