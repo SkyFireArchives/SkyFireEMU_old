@@ -6695,6 +6695,15 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     triggered_spell_id = 89906;
                     break;
                 }
+                // Selfless Healer
+                case 85803:
+                case 85804:
+                {
+                    if (pVictim == this)
+                        return false;
+
+                    break;
+                }
                 // Ancient Healer
                 case 86674:
                 {
