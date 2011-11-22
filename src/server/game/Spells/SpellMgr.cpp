@@ -3828,6 +3828,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectApplyAuraName[0] = SPELL_AURA_MOD_STALKED;
             count++;
             break;
+        case 89024: // Pursuit of justice triggered
+            spellInfo->AttributesEx6 = 0;
+            count++;
+            break;
         case 49838: // Stop Time
         case 52916: // Honor Among Thieves
         case 50526: // Wandering Plague
