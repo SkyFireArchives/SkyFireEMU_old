@@ -8662,6 +8662,16 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                 return false;
             break;
         }
+        // Protector of the Innocent
+        case 20138:
+        case 20139:
+        case 20140:
+        {
+            if (pVictim == this)
+                return false;
+            
+            break;
+        }
         // Deadly Swiftness (Rank 1)
         case 31255:
         {
