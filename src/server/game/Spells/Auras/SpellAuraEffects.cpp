@@ -1448,6 +1448,12 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
                         }
                         break;
                     }
+                    case 603: // Bane of Doom
+                    {
+                        // There is a chance to summon an Ebon Imp when Bane of Doom does damage
+                        if (roll_chance_i(20))
+                            caster->CastSpell(caster, 18662, true);
+                    }
                 }
             }
 
