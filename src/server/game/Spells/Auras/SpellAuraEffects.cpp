@@ -6334,6 +6334,17 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                     }
                     break;
                 case SPELLFAMILY_WARLOCK:
+                {
+                    // Shadowburn
+                    if (GetId() == 29341)
+                    {
+                        if (caster->GetTypeId() == TYPEID_PLAYER && caster->ToPlayer()->isHonorOrXPTarget(target) && !target->isAlive())
+                        {
+                            int32 amount = GetAmount();
+                            for (int i = 0; i < amount; i++)
+                                caster->CastSpell(target, 43836, true);
+                        }
+                    }
                     // Haunt
                     if (m_spellProto->SpellFamilyFlags[1] & 0x40000)
                     {
@@ -6341,6 +6352,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             target->CastCustomSpell(caster, 48210, &m_amount, 0, 0, true, NULL, this, GetCasterGUID());
                     }
                     break;
+                }
                 case SPELLFAMILY_DRUID:
                     // Lifebloom
                     if (GetSpellProto()->SpellFamilyFlags[1] & 0x10)
