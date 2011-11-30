@@ -6050,7 +6050,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                         }
                     }
                     // health
-                    basepoints0 = int32(damage*triggerAmount/100);
+                    basepoints0 = int32(GetHealth()*triggerAmount/100);
                     target = this;
                     triggered_spell_id = 30294;
                     break;
