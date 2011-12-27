@@ -9547,7 +9547,8 @@ bool Unit::Attack(Unit *victim, bool meleeAttack)
     }
     else
     {
-        if (victim->ToCreature()->IsInEvadeMode())
+           //!creature -> WHO ARE U??
+           if (!victim->ToCreature() || victim->ToCreature()->IsInEvadeMode())
             return false;
     }
 
