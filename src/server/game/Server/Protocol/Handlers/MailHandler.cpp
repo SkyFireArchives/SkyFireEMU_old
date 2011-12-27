@@ -372,7 +372,6 @@ void WorldSession::HandleMailReturnToSender(WorldPacket & recv_data)
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
     trans->PAppend("DELETE FROM mail WHERE id = '%u'", mailId);             // needed?
     trans->PAppend("DELETE FROM mail_items WHERE mail_id = '%u'", mailId);
-    CharacterDatabase.CommitTransaction(trans);
     pl->RemoveMail(mailId);
 
     // only return mail if the player exists (and delete if not existing)
