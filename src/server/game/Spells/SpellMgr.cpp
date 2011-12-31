@@ -488,6 +488,10 @@ uint32 CalculatePowerCost(SpellEntry const * spellInfo, Unit const * caster, Spe
                 return 0;
         }
     }
+
+    if (spellInfo->Id == 85696) // Zealotry
+        return 0;
+
     SpellSchools school = GetFirstSchoolInMask(schoolMask);
     // Flat mod from caster auras by spell school
     powerCost += caster->GetInt32Value(UNIT_FIELD_POWER_COST_MODIFIER + school);
@@ -3824,6 +3828,10 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->EffectApplyAuraName[0] = SPELL_AURA_MOD_STALKED;
             count++;
             break;
+        case 89024: // Pursuit of justice triggered
+            spellInfo->AttributesEx6 = 0;
+            count++;
+            break;
         case 49838: // Stop Time
         case 52916: // Honor Among Thieves
         case 50526: // Wandering Plague
@@ -3873,7 +3881,7 @@ void SpellMgr::LoadSpellCustomAttr()
         // Glyph of Life Tap
         case 63320:
         // Entries were not updated after spell effect change, we have to do that manually :/
-            spellInfo->AttributesEx3 |= SPELL_ATTR3_CAN_PROC_TRIGGERED;
+            spellInfo->AttributesEx3 |= SPELL_ATTR3_CAN_PROC_WITH_TRIGGERED;
             count++;
             break;
         case 16007: // Draco-Incarcinatrix 900
@@ -4071,6 +4079,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 39805:    // Lightning Overload
         case 64823:    // Item - Druid T8 Balance 4P Bonus
         case 44401:
+        case 90174:    // Divine Purpose
             spellInfo->procCharges = 1;
             count++;
             break;
@@ -4206,7 +4215,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 35098: // Rapid Killing
         case 35099:
             // just a temp solution to make Rapid Recuperation proc from this
-            spellInfo->AttributesEx2 |= SPELL_ATTR2_TRIGGERED_CAN_TRIGGER;
+            spellInfo->AttributesEx2 |= SPELL_ATTR2_TRIGGERED_CAN_TRIGGER_PROC;
             count++;
             break;
         case 12051: // Evocation - now we can interrupt this

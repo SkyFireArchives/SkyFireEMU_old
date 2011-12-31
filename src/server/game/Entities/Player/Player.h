@@ -2582,6 +2582,7 @@ class Player : public Unit, public GridObject<Player>
         uint32 m_GuildMoneyModifier;
         uint32 m_AreaID;
         uint32 m_regenTimerCount;
+        uint32 m_holyPowerRegenTimerCount; // Holy power updates ticks at every 10s thats wy we need this.
         float m_powerFraction[MAX_POWERS];
         uint32 m_contestedPvPTimer;
 

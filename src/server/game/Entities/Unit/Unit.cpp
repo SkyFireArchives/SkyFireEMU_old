@@ -3983,8 +3983,9 @@ void Unit::RemoveMovementImpairingAuras()
     RemoveAurasWithMechanic((1<<MECHANIC_SNARE)|(1<<MECHANIC_ROOT));
 }
 
-void Unit::RemoveAurasWithMechanic(uint32 mechanic_mask, AuraRemoveMode removemode, uint32 except)
+void Unit::RemoveAurasWithMechanic(uint32 mechanic_mask, AuraRemoveMode removemode, uint32 except, int32 count)
 {
+    int32 auracount = 0;
     for (AuraApplicationMap::iterator iter = m_appliedAuras.begin(); iter != m_appliedAuras.end();)
     {
         Aura const * aura = iter->second->GetBase();
@@ -3993,6 +3994,9 @@ void Unit::RemoveAurasWithMechanic(uint32 mechanic_mask, AuraRemoveMode removemo
             if (GetAllSpellMechanicMask(aura->GetSpellProto()) & mechanic_mask)
             {
                 RemoveAura(iter, removemode);
+                auracount++;
+                if (count && auracount == count)
+                    break;
                 continue;
             }
         }
@@ -5435,18 +5439,6 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     owner->CastSpell(owner, 58227, true, castItem, triggeredByAura);
                     return true;
                 }
-                // Divine purpose
-                case 31871:
-                case 31872:
-                {
-                    // Roll chane
-                    if (!pVictim || !pVictim->isAlive() || !roll_chance_i(triggerAmount))
-                        return false;
-
-                    // Remove any stun effect on target
-                    pVictim->RemoveAurasWithMechanic(1<<MECHANIC_STUN, AURA_REMOVE_BY_ENEMY_SPELL);
-                    return true;
-                }
                 // Glyph of Life Tap
                 case 63320:
                 {
@@ -5749,6 +5741,24 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
             }
             switch(dummySpell->Id)
             {
+                //Nether Vortex
+                case 86181:
+                case 86209:
+                {
+                    AuraMap const &slowAura = GetOwnedAuras();
+                    for (Unit::AuraMap::const_iterator itr = slowAura.begin(); itr != slowAura.end();)
+                        if ((*itr).second->GetId() == 31589) // Found Slow, dont proc
+                            break;
+                        else
+                            itr++;
+
+                    target = this;
+                    triggered_spell_id = 86262;
+
+                    if (pVictim)
+                        CastSpell(pVictim,31589,false);
+                    break;	
+                }
                 // Glyph of Polymorph
                 case 56375:
                 {
@@ -6685,6 +6695,15 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     triggered_spell_id = 89906;
                     break;
                 }
+                // Selfless Healer
+                case 85803:
+                case 85804:
+                {
+                    if (pVictim == this)
+                        return false;
+
+                    break;
+                }
                 // Ancient Healer
                 case 86674:
                 {
@@ -6732,7 +6751,17 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                         break;
                     }
                 }
-
+                // Divine purpose
+                case 85117:
+                case 86172:
+                {
+                    if (roll_chance_f(triggerAmount))
+                    {
+                        target = this;
+                        triggered_spell_id = 90174;
+                        break;
+                    }
+                }
                 // Judgement of Light
                 case 20185:
                 {
@@ -7873,6 +7902,22 @@ bool Unit::HandleAuraProc(Unit * pVictim, uint32 damage, Aura * triggeredByAura,
         case SPELLFAMILY_GENERIC:
             switch (dummySpell->Id)
             {
+                // Pursuit of Justice
+                case 26022:
+                case 26023:
+                {
+                    *handled = true;
+                    // Hack, we need the new spell dbcs implemented in
+                    // order to add the missing spell 32733 wich i suppose,
+                    // is the cooldown marker used by blizz to share the cd
+                    // of Pursuit of justice and Blessed life proc.
+                    if (!HasAura(31828) && !HasAura(31829) && ((GetAllSpellMechanicMask(procSpell) & ((1<<MECHANIC_ROOT)|(1<<MECHANIC_STUN)|(1<<MECHANIC_FEAR)))))
+                    {
+                        CastSpell(pVictim, 89024, true);
+                        return true;
+                    }
+                    break;
+                }
                 // Bone Shield cooldown
                 case 49222:
                 {
@@ -8615,6 +8660,16 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
             // When your health drops below 20%
             if (HealthBelowPctDamaged(20, damage) || HealthBelowPct(20))
                 return false;
+            break;
+        }
+        // Protector of the Innocent
+        case 20138:
+        case 20139:
+        case 20140:
+        {
+            if (pVictim == this)
+                return false;
+            
             break;
         }
         // Deadly Swiftness (Rank 1)
@@ -14339,7 +14394,7 @@ void Unit::ProcDamageAndSpellFor(bool isVictim, Unit * pTarget, uint32 procFlag,
             continue;
 
         // Triggered spells not triggering additional spells
-        bool triggered= !(spellProto->AttributesEx3 & SPELL_ATTR3_CAN_PROC_TRIGGERED) ?
+        bool triggered= !(spellProto->AttributesEx3 & SPELL_ATTR3_CAN_PROC_WITH_TRIGGERED) ?
             (procExtra & PROC_EX_INTERNAL_TRIGGERED && !(procFlag & PROC_FLAG_DONE_TRAP_ACTIVATION)) : false;
 
         for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
@@ -15158,7 +15213,7 @@ bool Unit::IsTriggeredAtSpellProcEvent(Unit *pVictim, Aura * aura, SpellEntry co
     // Additional checks for triggered spells (ignore trap casts)
     if (procExtra & PROC_EX_INTERNAL_TRIGGERED && !(procFlag & PROC_FLAG_DONE_TRAP_ACTIVATION))
     {
-        if (!(spellProto->AttributesEx3 & SPELL_ATTR3_CAN_PROC_TRIGGERED))
+        if (!(spellProto->AttributesEx3 & SPELL_ATTR3_CAN_PROC_WITH_TRIGGERED))
             return false;
     }
 

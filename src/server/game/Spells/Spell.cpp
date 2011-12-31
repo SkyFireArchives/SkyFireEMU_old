@@ -432,6 +432,7 @@ m_spellInfo(sSpellMgr->GetSpellForDifficultyFromSpell(info, Caster)),
 m_caster(Caster), m_spellValue(new SpellValue(m_spellInfo))
 {
     m_customAttr = sSpellMgr->GetSpellCustomAttr(m_spellInfo->Id);
+    m_customError = SPELL_CUSTOM_ERROR_NONE;
     m_skipCheck = skipCheck;
     m_selfContainer = NULL;
     m_referencedFromCurrentSpell = false;
@@ -914,8 +915,8 @@ void Spell::prepareDataForTriggerSystem(AuraEffect const * /*triggeredByAura*/)
     if (!(m_procAttacker & PROC_FLAG_DONE_RANGED_AUTO_ATTACK))
     {
         if (m_IsTriggeredSpell &&
-            (m_spellInfo->AttributesEx2 & SPELL_ATTR2_TRIGGERED_CAN_TRIGGER ||
-            m_spellInfo->AttributesEx3 & SPELL_ATTR3_TRIGGERED_CAN_TRIGGER_2))
+            (m_spellInfo->AttributesEx2 & SPELL_ATTR2_TRIGGERED_CAN_TRIGGER_PROC ||
+            m_spellInfo->AttributesEx3 & SPELL_ATTR3_TRIGGERED_CAN_TRIGGER_PROC_2))
             m_procEx |= PROC_EX_INTERNAL_CANT_PROC;
         else if (m_IsTriggeredSpell)
             m_procEx |= PROC_EX_INTERNAL_TRIGGERED;
@@ -1177,7 +1178,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
 
                             //Spells with this flag cannot trigger if effect is casted on self
                             // Slice and Dice, relentless strikes, eviscerate
-    bool canEffectTrigger = unitTarget->CanProc() && (m_spellInfo->AttributesEx4 & (SPELL_ATTR4_CANT_PROC_FROM_SELFCAST) ? m_caster != unitTarget : true);
+    bool canEffectTrigger = unitTarget->CanProc() && !(m_spellInfo->AttributesEx3 & SPELL_ATTR3_CANT_TRIGGER_PROC) && (m_spellInfo->AttributesEx4 & (SPELL_ATTR4_CANT_PROC_FROM_SELFCAST) ? m_caster != unitTarget : true);
     Unit * spellHitTarget = NULL;
 
     if (missInfo == SPELL_MISS_NONE)                          // In case spell hit target, do all effect on that target
@@ -3692,6 +3693,8 @@ void Spell::_handle_finish_phase()
         // Real add combo points from effects
         if (m_comboPointGain)
             m_caster->m_movedPlayer->GainSpellComboPoints(m_comboPointGain);
+        // Handle holy power only after the spell has made its job
+        HandleHolyPower(m_caster->m_movedPlayer);
     }
 }
 
@@ -3898,6 +3901,7 @@ void Spell::finish(bool ok)
     if (m_spellInfo->Attributes & SPELL_ATTR0_STOP_ATTACK_TARGET)
         m_caster->AttackStop();
 
+    // TODO: Kill these hacks
     switch (m_spellInfo->Id)
         {
             case 49143: // Frost Strike
@@ -3934,12 +3938,6 @@ void Spell::finish(bool ok)
                 if (m_caster->HasAura(88688)) // Surge of Light
                     m_caster->RemoveAura(88688);
                 break;
-            case 85673: // Word of Glory
-            case 53600: // Shield of the Righteous
-            case 85256: // Templar's Verdict
-            case 84963: // Inquisition
-                m_caster->SetPower(POWER_HOLY_POWER, 0);
-                break;
         }
 }
 
@@ -3954,10 +3952,10 @@ void Spell::SendCastResult(SpellCastResult result)
     if (m_caster->ToPlayer()->GetSession()->PlayerLoading())  // don't send cast results at loading time
         return;
 
-    SendCastResult((Player*)m_caster, m_spellInfo, m_cast_count, result);
+    SendCastResult(m_caster->ToPlayer(), m_spellInfo, m_cast_count, result, m_customError);
 }
 
-void Spell::SendCastResult(Player* caster, SpellEntry const* spellInfo, uint8 cast_count, SpellCastResult result)
+void Spell::SendCastResult(Player* caster, SpellEntry const* spellInfo, uint8 cast_count, SpellCastResult result, SpellCustomErrors customError /*= SPELL_CUSTOM_ERROR_NONE*/)
 {
     if (result == SPELL_CAST_OK)
         return;
@@ -3970,6 +3968,9 @@ void Spell::SendCastResult(Player* caster, SpellEntry const* spellInfo, uint8 ca
     {
         case SPELL_FAILED_REQUIRES_SPELL_FOCUS:
             data << uint32(spellInfo->RequiresSpellFocus);
+            break;
+        case SPELL_FAILED_CUSTOM_ERROR:
+            data << uint32(customError);
             break;
         case SPELL_FAILED_REQUIRES_AREA:
             // hardcode areas limitation case
@@ -4148,12 +4149,8 @@ void Spell::SendSpellGo()
         for (uint8 i = 0; i < MAX_RUNES; ++i)
         {
             uint8 mask = (1 << i);
-            if (mask & runeMaskInitial && !(mask & runeMaskAfterCast))  // usable before andon cooldown now...
-            {
-                // float casts ensure the division is performed on floats as we need float result
-                float baseCd = float(player->GetRuneBaseCooldown(i));
-                data << uint8((baseCd - float(player->GetRuneCooldown(i))) / baseCd * 255); // rune cooldown passed
-            }
+            float baseCd = float(player->GetRuneBaseCooldown(i));
+            data << uint8((baseCd - float(player->GetRuneCooldown(i))) / baseCd * 255); // rune cooldown passed
         }
     }
 
@@ -4629,6 +4626,7 @@ void Spell::TakePower()
         m_caster->SetLastManaUse(getMSTime());
 }
 
+
 void Spell::TakeAmmo()
 {
     if (m_attackType == RANGED_ATTACK && m_caster->GetTypeId() == TYPEID_PLAYER)
@@ -4851,6 +4849,50 @@ void Spell::HandleThreatSpells(uint32 spellId)
     sLog->outStaticDebug("Spell %u, rank %u, added an additional %i threat", spellId, sSpellMgr->GetSpellRank(spellId), threat);
 }
 
+// Disclaimer: this function is needed and called on handle_finish_phase
+// due to the fact that the current spellsystem applyes power-based spellmods
+// taking the remaining power as base for its calculations, since holy power abilities
+// leaves no holy power on the player, its undoable to handle it either on CalculatePowerCost  or 
+// TakePower functions.
+void Spell::HandleHolyPower(Player* caster)
+{
+    if (!caster)
+        return;
+
+    bool hit = true;
+    m_powerCost = caster->GetPower(POWER_HOLY_POWER); // Always use all the holy power we have
+    Player *modOwner = caster->GetSpellModOwner();
+
+    if (!m_powerCost || !modOwner)
+        return;
+
+    if (m_spellInfo->powerType == POWER_HOLY_POWER)
+    {
+        if (uint64 targetGUID = m_targets.getUnitTargetGUID())
+        {
+            for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
+            {
+                if (ihit->targetGUID == targetGUID)
+                {
+                    if (ihit->missCondition != SPELL_MISS_NONE) 
+                    {
+                        hit = false;
+                        // Without this, the player will loose all charges of holy power on a failed hit.
+                        // On retail they just loose 1 charge of holy power if this happens
+                        modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_SPELL_COST_REFUND_ON_FAIL, m_powerCost);
+                    }
+                    break;
+                }
+            }
+            // The spell did hit the target, apply cost mods if there are any.
+            if (hit)
+                modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_COST, m_powerCost);
+
+            caster->ModifyPower(POWER_HOLY_POWER, -m_powerCost);
+        }
+    }
+}
+
 void Spell::HandleEffects(Unit *pUnitTarget, Item *pItemTarget, GameObject *pGOTarget, uint32 i)
 {
     //effect has been handled, skip it
@@ -4876,6 +4918,17 @@ void Spell::HandleEffects(Unit *pUnitTarget, Item *pItemTarget, GameObject *pGOT
     }
 }
 
+bool ActsOfSacrificeCheck(Unit* caster)
+{
+    if (!caster)
+        return false;
+
+    if (caster->GetAuraEffect(SPELL_AURA_ADD_PCT_MODIFIER, SPELLFAMILY_PALADIN, 3022, 0) && 
+        caster->HasAuraType(SPELL_AURA_MOD_ROOT) || caster->HasAuraType(SPELL_AURA_MOD_DECREASE_SPEED))
+        return true;
+
+    return false;
+}
 SpellCastResult Spell::CheckCast(bool strict)
 {
     Unit* Target = m_targets.getUnitTarget();
@@ -5173,7 +5226,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                     return SPELL_FAILED_TARGET_AURASTATE;
 
         //Must be behind the target.
-        if (m_spellInfo->AttributesEx2 == SPELL_ATTR2_UNK20 && m_spellInfo->AttributesEx & SPELL_ATTR1_UNK9 && target->HasInArc(static_cast<float>(M_PI), m_caster)
+        if (m_spellInfo->AttributesEx2 == SPELL_ATTR2_UNK20 && m_spellInfo->AttributesEx & SPELL_ATTR1_MELEE_COMBAT_SPELL && target->HasInArc(static_cast<float>(M_PI), m_caster)
             //Exclusion for Pounce: Facing Limitation was removed in 2.0.1, but it still uses the same, old Ex-Flags
             && (!(m_spellInfo->SpellFamilyName == SPELLFAMILY_DRUID && m_spellInfo->SpellFamilyFlags.IsEqual(0x20000, 0, 0)))
             //Mutilate no longer requires you be behind the target as of patch 3.0.3
@@ -5262,7 +5315,7 @@ SpellCastResult Spell::CheckCast(bool strict)
 
     // Dispel check - only if the first effect is dispel
     if (!m_IsTriggeredSpell && (m_spellInfo->Effect[EFFECT_0] == SPELL_EFFECT_DISPEL))
-        if (Unit const * target = m_targets.getUnitTarget())
+        if (Unit* target = m_targets.getUnitTarget())
             if (!GetSpellRadius(m_spellInfo, EFFECT_0, target->IsFriendlyTo(m_caster)))
             {
                 bool check = true;
@@ -5280,7 +5333,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                     }
                 }
 
-                if (check)
+                if (check || ActsOfSacrificeCheck(m_caster))
                 {
                     bool failed = true;
 
@@ -5297,7 +5350,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                             bool positive = aurApp->IsPositive() ? !(aura->GetSpellProto()->AttributesEx & SPELL_ATTR1_NEGATIVE) : false;
 
                             // Can only dispel positive auras on enemies and negative on allies
-                            if (positive != target->IsFriendlyTo(m_caster))
+                            if (positive != target->IsFriendlyTo(m_caster) || ActsOfSacrificeCheck(m_caster))
                             {
                                 failed = false;
                                 break;
@@ -5309,6 +5362,12 @@ SpellCastResult Spell::CheckCast(bool strict)
                         return SPELL_FAILED_NOTHING_TO_DISPEL;
                 }
             }
+
+    // script hook
+    castResult = CallScriptCheckCastHandlers();
+    if (castResult != SPELL_CAST_OK)
+        return castResult;
+
 
     for (int i = 0; i < MAX_SPELL_EFFECTS; i++)
     {
@@ -7557,6 +7616,25 @@ void Spell::PrepareScriptHitHandlers()
     {
         (*scritr)->_InitHit();
     }
+}
+
+SpellCastResult Spell::CallScriptCheckCastHandlers()
+{
+    SpellCastResult retVal = SPELL_CAST_OK;
+    for (std::list<SpellScript *>::iterator scritr = m_loadedScripts.begin(); scritr != m_loadedScripts.end() ; ++scritr)
+    {
+        (*scritr)->_PrepareScriptCall(SPELL_SCRIPT_HOOK_CHECK_CAST);
+        std::list<SpellScript::CheckCastHandler>::iterator hookItrEnd = (*scritr)->OnCheckCast.end(), hookItr = (*scritr)->OnCheckCast.begin();
+        for (; hookItr != hookItrEnd; ++hookItr)
+        {
+            SpellCastResult tempResult = (*hookItr).Call(*scritr);
+            if (retVal == SPELL_CAST_OK)
+                retVal = tempResult;
+        }
+
+        (*scritr)->_FinishScriptCall();
+    }
+    return retVal;
 }
 
 bool Spell::CallScriptEffectHandlers(SpellEffIndex effIndex)

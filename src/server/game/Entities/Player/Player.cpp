@@ -2269,6 +2269,8 @@ void Player::RegenerateAll()
     //    return;
 
     m_regenTimerCount += m_regenTimer;
+    if (getClass() == CLASS_PALADIN)
+        m_holyPowerRegenTimerCount += m_regenTimer;
 
     Regenerate(POWER_ENERGY);
 
@@ -2276,9 +2278,16 @@ void Player::RegenerateAll()
 
     // Runes act as cooldowns, and they don't need to send any data
     if (getClass() == CLASS_DEATH_KNIGHT)
-        for (uint32 i = 0; i < MAX_RUNES; ++i)
-            if (uint32 cd = GetRuneCooldown(i))
-                SetRuneCooldown(i, (cd > m_regenTimer) ? cd - m_regenTimer : 0);
+        for (uint32 i = 0; i < MAX_RUNES; i += 2)
+        {
+            uint32 cd1 = GetRuneCooldown(i);
+            uint32 cd2 = GetRuneCooldown(i + 1);
+
+            if (cd1 && (!cd2 || cd1 <= cd2))
+                SetRuneCooldown(i, (cd1 > m_regenTimer) ? cd1 - m_regenTimer : 0);
+            else if (cd2)
+                SetRuneCooldown(i + 1, (cd2 > m_regenTimer) ? cd2 - m_regenTimer : 0);
+        }
 
     if (m_regenTimerCount >= 2000)
     {
@@ -2297,6 +2306,12 @@ void Player::RegenerateAll()
             Regenerate(POWER_FOCUS);
 
         m_regenTimerCount -= 2000;
+    }
+
+    if (m_holyPowerRegenTimerCount >= 10000 && getClass() == CLASS_PALADIN)
+    {
+        Regenerate(POWER_HOLY_POWER);
+        m_holyPowerRegenTimerCount -= 10000;
     }
 
     m_regenTimer = 0;
@@ -2344,6 +2359,14 @@ void Player::Regenerate(Powers power)
         case POWER_FOCUS:
             addvalue = 12 * haste;
             break;
+        case POWER_HOLY_POWER:
+        {
+            if (!isInCombat() && !HasAuraType(SPELL_AURA_INTERRUPT_REGEN))
+            {
+                addvalue += -1;               
+            }
+            break;
+        }
         case POWER_ENERGY:                                  // Regenerate energy (rogue)
             addvalue += 0.01f * m_regenTimer * haste * sWorld->getRate(RATE_POWER_ENERGY);
             break;
@@ -2417,7 +2440,7 @@ void Player::Regenerate(Powers power)
         else
             m_powerFraction[power] = addvalue - integerValue;
     }
-    if (m_regenTimerCount >= 2000)
+    if (m_regenTimerCount >= 2000 || m_holyPowerRegenTimerCount >= 10000)
         SetPower(power, curValue);
     else
         UpdateUInt32Value(UNIT_FIELD_POWER1 + power, curValue);
