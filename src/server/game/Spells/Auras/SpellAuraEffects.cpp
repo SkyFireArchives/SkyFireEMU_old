@@ -1446,6 +1446,12 @@ void AuraEffect::PeriodicTick(AuraApplication * aurApp, Unit * caster) const
                         }
                         break;
                     }
+                    case 603: // Bane of Doom
+                    {
+                        // There is a chance to summon an Ebon Imp when Bane of Doom does damage
+                        if (roll_chance_i(20))
+                            caster->CastSpell(caster, 18662, true);
+                    }
                 }
             }
 
@@ -6326,6 +6332,13 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                     }
                     break;
                 case SPELLFAMILY_WARLOCK:
+                {
+                    // Shadowburn
+                    if (GetId() == 29341)
+                    {
+                        if (caster->GetTypeId() == TYPEID_PLAYER && caster->ToPlayer()->isHonorOrXPTarget(target) && !target->isAlive())
+                            caster->CastSpell(target, 95810, true);
+                    }
                     // Haunt
                     if (m_spellProto->SpellFamilyFlags[1] & 0x40000)
                     {
@@ -6333,6 +6346,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const *aurApp, uint8 mode, bool
                             target->CastCustomSpell(caster, 48210, &m_amount, 0, 0, true, NULL, this, GetCasterGUID());
                     }
                     break;
+                }
                 case SPELLFAMILY_DRUID:
                     // Lifebloom
                     if (GetSpellProto()->SpellFamilyFlags[1] & 0x10)
